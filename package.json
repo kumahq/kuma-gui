@@ -10,9 +10,14 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.19.0",
+    "axios-cache-adapter": "^2.4.1",
+    "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
+    "tailwindcss": "^1.1.2",
     "vue": "^2.6.10",
+    "vue-meta": "^2.3.1",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
   },
