@@ -10,7 +10,7 @@
       </thead>
       <tbody>
         <tr v-for="(item, index) in items" :key="index">
-          <td>{{ item.label }}</td>
+          <td v-if="item.label">{{ item.label }}</td>
           <td>{{ item.value }}</td>
         </tr>
       </tbody>
