@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
     <stat-table :items="items">
       <template v-slot:stat-heading>Statistics Information</template>
     </stat-table>

@@ -1,0 +1,11 @@
+// Tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap");
+
+#app {
+  font-family: "Roboto", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  color: #2c3e50;
+}
