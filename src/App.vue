@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="antialiased">
     <global-header />
-    <div class="content-container /*container max-w-8xl*/">
+    <div class="content-container container">
       <div class="flex">
         <div class="w-1/4">
           <sidebar />

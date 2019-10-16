@@ -1,6 +1,6 @@
 <template>
   <aside class="sidebar" id="main-nav">
-    <h3>Meshes</h3>
+    <h3 class="font-bold uppercase">Meshes</h3>
     <select name id>
       <option value>Finance</option>
       <option value>Another Mesh</option>
@@ -8,7 +8,7 @@
       <option value>There Is A Mesh</option>
     </select>
 
-    <h3>Entities</h3>
+    <h3 class="font-bold uppercase">Entities</h3>
     <ul>
       <li>
         <router-link to="/">Overview</router-link>

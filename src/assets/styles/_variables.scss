@@ -11,10 +11,16 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap");
 
 $body-font: "Roboto", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-$heading-font: $body-font;
-$heading-weight-light: 400;
-$heading-weight-bold: 700;
+$root-font-size: 100%;
+$base-font-size: 15px;
+$base-heading-font-family: $body-font;
+$fw-light: 400;
+$fw-bold: 700;
 
 // colors
 
 // misc
+$image-path: "/images/";
+$container-width: 76.88rem; // 1230px;
+$container-width-compact: 65rem; // 1040px
+$gutter: 1.875rem; // 30px
