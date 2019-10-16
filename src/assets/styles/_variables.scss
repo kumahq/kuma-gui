@@ -1,0 +1,20 @@
+//
+// Variables / Settings
+//
+
+// Tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// fonts
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap");
+
+$body-font: "Roboto", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+$heading-font: $body-font;
+$heading-weight-light: 400;
+$heading-weight-bold: 700;
+
+// colors
+
+// misc

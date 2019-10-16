@@ -1,11 +1,18 @@
-// Tailwind
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+//
+// App Styles
+//
 
-@import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap");
+// settings, tools
+@import "./variables";
+@import "./mixins";
 
-#app {
-  font-family: "Roboto", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  color: #2c3e50;
-}
+// global
+@import "./global/header";
+@import "./global/footer";
+@import "./global/sidebar";
+
+// components
+@import "./components/charts";
+@import "./components/stat-box";
+@import "./components/stat-table";
+@import "./components/dropdown";
