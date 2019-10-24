@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Overview from "./views/Overview.vue";
 
 Vue.use(Router);
 
@@ -10,8 +10,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: () => import(/* webpackChunkName: "home" */ "./views/Home.vue")
+      name: "overview",
+      component: () => import(/* webpackChunkName: "overview" */ "./views/Overview.vue")
     },
     {
       path: "/services",
@@ -27,6 +27,12 @@ export default new Router({
       path: "/traffic-routes",
       name: "traffic-routes",
       component: () => import(/* webpackChunkName: "traffic-routes" */ "./views/Traffic/Routes.vue")
+    },
+    // dynamic routes
+    {
+      path: "/overview/:entity",
+      name: "overview-entity",
+      component: () => import(/* webpackChunkName: "overview-entity" */ "./views/Overview.vue")
     }
   ]
 });
