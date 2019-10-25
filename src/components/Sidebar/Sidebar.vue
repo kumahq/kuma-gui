@@ -40,6 +40,7 @@ export default {};
   background: rgba(255, 255, 255, 0.1);
   border-right: 1px solid rgba(0, 0, 0, 0.08);
   padding: 32px;
+  font-size: var(--type-md);
 }
 
 .sidebar__title {
@@ -62,5 +63,8 @@ export default {};
 .main-nav .router-link-active {
   background: rgba(61, 136, 242, 0.07);
   box-shadow: inset -2px 0 0 0 rgba(61, 136, 242, 0.75);
+  margin: 0 -32px;
+  padding-left: 32px;
+  padding-right: 32px;
 }
 </style>

@@ -7,11 +7,21 @@
         </router-link>
       </div>
       <div class="px-4">
-        <p>Connected to Kuma at localhost:8000</p>
+        <status content="Connected to Kuma at localhost:8000" active></status>
       </div>
     </div>
   </header>
 </template>
+
+<script>
+import Status from "@/components/Utils/Status";
+
+export default {
+  components: {
+    Status
+  }
+};
+</script>
 
 <style scoped>
 .main-header {
