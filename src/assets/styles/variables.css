@@ -58,11 +58,15 @@
     sans-serif;
   --base-font-size-root: 62.5%;
   --base-font-size: 15px;
+  --font-weight-light: 400;
+  --font-weight-bold: 700;
+
+  /* Colors */
   --gray-1: #faf5f9;
   --gray-2: #dbbbd5;
   --gray-3: rgba(0, 0, 0, 0.45);
-  --font-weight-light: 400;
-  --font-weight-bold: 700;
+  --blue-1: #2d64b3;
+  --black-1: rgba(0, 0, 0, 0.75);
 
   /* Topbar */
   --topbar-height: 4rem;

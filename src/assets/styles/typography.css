@@ -1,0 +1,5 @@
+/* Typography */
+
+.title-3x {
+  font-size: var(--type-xxxl);
+}

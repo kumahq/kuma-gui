@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
+  <div class="overview">
     <page-header>
       <template v-slot:content>
         <div>
-          <h2 class="text-4xl">Global Overview</h2>
+          <h2 class="title-3x">Global Overview</h2>
         </div>
         <div>
           <form action>
@@ -20,8 +20,8 @@
     <!-- page-header -->
 
     <div class="metric-box-container">
-      <div class="flex">
-        <metric-box class="flex-1" v-for="(item, index) in overviewData" :key="index">
+      <div class="flex -mx-4">
+        <metric-box class="flex-1 mx-4" v-for="(item, index) in overviewData" :key="index">
           <template v-slot:title>
             <h3>{{ item.metric }}</h3>
           </template>
@@ -33,12 +33,12 @@
     </div>
     <!-- .metric-box-container -->
 
-    <div class="pills">
+    <!-- <div class="pills">
       <pill label="mesh-name-01" background="green" color="white"></pill>
       <pill label="mesh-name-02" background="red" color="white"></pill>
       <pill label="mesh-name-03" background="red" color="white"></pill>
       <pill label="finance" background="rebeccapurple" color="white"></pill>
-    </div>
+    </div>-->
 
     <div class="graph-container"></div>
     <!-- .graph-container -->
@@ -47,12 +47,12 @@
 
 <script>
 import PageHeader from "@/components/Utils/PageHeader.vue";
-import Pill from "@/components/Utils/Pill.vue";
+// import Pill from "@/components/Utils/Pill.vue";
 import MetricBox from "@/components/Metrics/MetricBox.vue";
 import shortNum from "@/mixins/ShortNum";
 
 export default {
-  name: "home",
+  name: "Overview",
   data() {
     return {
       overviewData: [
@@ -78,8 +78,8 @@ export default {
   mixins: [shortNum],
   components: {
     PageHeader,
-    MetricBox,
-    Pill
+    MetricBox
+    // Pill
   }
 };
 </script>

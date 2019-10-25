@@ -1,9 +1,13 @@
 <template>
   <div id="app" class="antialiased">
     <global-header />
-    <div class="flex justify-between">
-      <sidebar />
-      <router-view />
+    <div class="flex flex-grow justify-between">
+      <div class="sidebar-wrap">
+        <sidebar />
+      </div>
+      <main class="flex-1 main-content">
+        <router-view />
+      </main>
     </div>
   </div>
 </template>
@@ -26,3 +30,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.main-content {
+  padding: 44px;
+}
+</style>

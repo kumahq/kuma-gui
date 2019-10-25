@@ -10,6 +10,7 @@ import "@/assets/styles/variables.css";
 import "@/assets/styles/utilities.css";
 import "@/assets/styles/fonts.css";
 import "@/assets/styles/main.css";
+import "@/assets/styles/typography.css";
 
 Vue.use(VueMeta);
 
