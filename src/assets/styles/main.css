@@ -1,0 +1,14 @@
+/* Base */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: var(--base-font-size-root);
+}
+
+body {
+  font-family: var(--base-font-family);
+  font-size: var(--base-font-size);
+}

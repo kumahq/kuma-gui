@@ -1,15 +1,9 @@
 <template>
   <div id="app" class="antialiased">
     <global-header />
-    <div class="content-container container">
-      <div class="flex">
-        <div class="w-1/4">
-          <sidebar />
-        </div>
-        <div class="w-3/4">
-          <router-view />
-        </div>
-      </div>
+    <div class="flex justify-between">
+      <sidebar />
+      <router-view />
     </div>
   </div>
 </template>

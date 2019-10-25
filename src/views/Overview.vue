@@ -19,22 +19,22 @@
     </page-header>
     <!-- page-header -->
 
-    <div class="stat-box-container">
+    <div class="metric-box-container">
       <div class="flex">
-        <stat-box class="flex-1" v-for="(item, index) in overviewData" :key="index">
+        <metric-box class="flex-1" v-for="(item, index) in overviewData" :key="index">
           <template v-slot:title>
             <h3>{{ item.metric }}</h3>
           </template>
           <template v-slot:content>
             <p>{{ shortNum(item.value) }}</p>
           </template>
-        </stat-box>
+        </metric-box>
       </div>
     </div>
-    <!-- .stat-box-container -->
+    <!-- .metric-box-container -->
 
     <div class="pills">
-      <pill label="mesh-name-01" background="red" color="white"></pill>
+      <pill label="mesh-name-01" background="green" color="white"></pill>
       <pill label="mesh-name-02" background="red" color="white"></pill>
       <pill label="mesh-name-03" background="red" color="white"></pill>
       <pill label="finance" background="rebeccapurple" color="white"></pill>
@@ -48,7 +48,7 @@
 <script>
 import PageHeader from "@/components/Utils/PageHeader.vue";
 import Pill from "@/components/Utils/Pill.vue";
-import StatBox from "@/components/Stats/StatBox.vue";
+import MetricBox from "@/components/Metrics/MetricBox.vue";
 import shortNum from "@/mixins/ShortNum";
 
 export default {
@@ -78,7 +78,7 @@ export default {
   mixins: [shortNum],
   components: {
     PageHeader,
-    StatBox,
+    MetricBox,
     Pill
   }
 };

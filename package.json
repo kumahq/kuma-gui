@@ -14,6 +14,7 @@
     "axios-cache-adapter": "^2.4.1",
     "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
+    "js-yaml": "^3.13.1",
     "register-service-worker": "^1.6.2",
     "tailwindcss": "^1.1.2",
     "vue": "^2.6.10",
@@ -52,7 +53,64 @@
       "@vue/prettier"
     ],
     "rules": {
-      "no-console": "off"
+      "no-console": "off",
+      "arrow-parens": 0,
+      "generator-star-spacing": 0,
+      "object-property-newline": "error",
+      "lines-between-class-members": [
+        "error",
+        "always"
+      ],
+      "curly": "error",
+      "padding-line-between-statements": [
+        "error",
+        {
+          "blankLine": "always",
+          "prev": [
+            "block",
+            "block-like"
+          ],
+          "next": "*"
+        },
+        {
+          "blankLine": "always",
+          "prev": "*",
+          "next": "return"
+        },
+        {
+          "blankLine": "always",
+          "prev": [
+            "const",
+            "let",
+            "var"
+          ],
+          "next": "*"
+        },
+        {
+          "blankLine": "any",
+          "prev": [
+            "const",
+            "let",
+            "var"
+          ],
+          "next": [
+            "const",
+            "let",
+            "var",
+            "if"
+          ]
+        },
+        {
+          "blankLine": "always",
+          "prev": "directive",
+          "next": "*"
+        },
+        {
+          "blankLine": "any",
+          "prev": "directive",
+          "next": "directive"
+        }
+      ]
     },
     "parserOptions": {
       "parser": "babel-eslint"
@@ -67,12 +125,6 @@
         }
       }
     ]
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {},
-      "tailwindcss": {}
-    }
   },
   "browserslist": [
     "> 1%",

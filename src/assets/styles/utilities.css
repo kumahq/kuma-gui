@@ -1,0 +1,91 @@
+/* Utilities */
+
+.kutil-sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.kutil-img-full {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.kutil-img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.kutil-clear-text {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.kutil-button-base {
+  font-family: $base-font-family;
+  font-weight: $fw-medium;
+  color: #fff !important;
+  background-color: $green-base;
+  padding: 0.563rem 2.25rem;
+  border-radius: 3px;
+  box-shadow: $base-soft-shadow;
+  text-align: center;
+  text-shadow: 0 2px 0 $green-dark;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.kutil-button-base:hover,
+.kutil-button-base:active,
+.kutil-button-base:focus,
+.kutil-button-base:visited {
+  color: #fff !important;
+}
+
+.kutil-button-base:hover {
+  /* background-color: lighten($green-base, 3.5); */
+}
+
+.kutil-quotify {
+  quotes: "“" "”" "‘" "’";
+}
+
+.kutil-quotify:before {
+  content: open-quote;
+}
+
+.kutil-quotify:after {
+  content: close-quote;
+}
+
+/* @mixin retina-mq {
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+@mixin target-ie {
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    @content;
+  }
+} */
+
+.kutil-sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+.kutil-sticky:before,
+.kutil-sticky:after {
+  content: "";
+  display: table;
+}

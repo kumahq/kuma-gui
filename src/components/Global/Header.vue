@@ -12,3 +12,14 @@
     </div>
   </header>
 </template>
+
+<style scoped>
+.main-header {
+  min-height: var(--topbar-height);
+  border-bottom: 1px solid #eaecef;
+}
+
+.main-header__content {
+  margin: 0 auto;
+}
+</style>
