@@ -12,9 +12,11 @@
   "dependencies": {
     "axios": "^0.19.0",
     "axios-cache-adapter": "^2.4.1",
+    "axios-mock-adapter": "^1.17.0",
     "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
     "js-yaml": "^3.13.1",
+    "moment": "^2.24.0",
     "register-service-worker": "^1.6.2",
     "tailwindcss": "^1.1.2",
     "vue": "^2.6.10",
@@ -36,95 +38,15 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
+    "eslint-plugin-html": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.0",
     "prettier": "^1.18.2",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/prettier"
-    ],
-    "rules": {
-      "no-console": "off",
-      "arrow-parens": 0,
-      "generator-star-spacing": 0,
-      "object-property-newline": "error",
-      "lines-between-class-members": [
-        "error",
-        "always"
-      ],
-      "curly": "error",
-      "padding-line-between-statements": [
-        "error",
-        {
-          "blankLine": "always",
-          "prev": [
-            "block",
-            "block-like"
-          ],
-          "next": "*"
-        },
-        {
-          "blankLine": "always",
-          "prev": "*",
-          "next": "return"
-        },
-        {
-          "blankLine": "always",
-          "prev": [
-            "const",
-            "let",
-            "var"
-          ],
-          "next": "*"
-        },
-        {
-          "blankLine": "any",
-          "prev": [
-            "const",
-            "let",
-            "var"
-          ],
-          "next": [
-            "const",
-            "let",
-            "var",
-            "if"
-          ]
-        },
-        {
-          "blankLine": "always",
-          "prev": "directive",
-          "next": "*"
-        },
-        {
-          "blankLine": "any",
-          "prev": "directive",
-          "next": "directive"
-        }
-      ]
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/__tests__/*.{j,t}s?(x)"
-        ],
-        "env": {
-          "jest": true
-        }
-      }
-    ]
   },
   "browserslist": [
     "> 1%",
