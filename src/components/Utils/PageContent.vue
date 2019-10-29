@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style>
+.page-content {
 
+}
 </style>
