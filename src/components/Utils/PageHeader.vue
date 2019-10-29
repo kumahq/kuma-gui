@@ -3,7 +3,7 @@
     class="page-header"
     :class="{ 'flex justify-between items-center my-6' : !noflex }"
   >
-    <slot name="content" />
+    <slot />
   </header>
 </template>
 

@@ -1,32 +1,30 @@
 <template>
   <div class="overview">
     <page-header>
-      <template v-slot:content>
-        <div>
-          <h2 class="title-3x">
-            Global Overview
-          </h2>
-        </div>
-        <div>
-          <form action>
-            <label for="overview-timeframe">Timeframe:</label>
-            <select
-              id="overview-timeframe"
-              name="overview-timeframe"
-            >
-              <option value>
-                Last Hour
-              </option>
-              <option value>
-                Option Two
-              </option>
-              <option value>
-                Option Three
-              </option>
-            </select>
-          </form>
-        </div>
-      </template>
+      <div>
+        <h2 class="title-3x">
+          Global Overview
+        </h2>
+      </div>
+      <div>
+        <form action>
+          <label for="overview-timeframe">Timeframe:</label>
+          <select
+            id="overview-timeframe"
+            name="overview-timeframe"
+          >
+            <option value>
+              Last Hour
+            </option>
+            <option value>
+              Option Two
+            </option>
+            <option value>
+              Option Three
+            </option>
+          </select>
+        </form>
+      </div>
     </page-header>
     <!-- page-header -->
 

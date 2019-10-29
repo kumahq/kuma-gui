@@ -1,14 +1,12 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <template v-slot:content>
-        <h2 class="title-3x">
-          404
-        </h2>
-        <h3 class="title-2x">
-          {{ $route.meta.title }}
-        </h3>
-      </template>
+      <h2 class="title-3x">
+        404
+      </h2>
+      <h3 class="title-2x">
+        {{ $route.meta.title }}
+      </h3>
     </page-header>
     <page-content>
       <p>

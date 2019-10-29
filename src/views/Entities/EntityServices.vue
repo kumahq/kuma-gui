@@ -1,24 +1,22 @@
 <template>
   <div class="services">
     <page-header>
-      <template v-slot:content>
-        <div>
-          <h2 class="title-3x">
-            Services
-          </h2>
-        </div>
-        <div>
-          <form action>
-            <label for="service-search">Search:</label>
-            <input
-              id="service-search"
-              type="search"
-              name="service-search"
-              placeholder="Search..."
-            >
-          </form>
-        </div>
-      </template>
+      <div>
+        <h2 class="title-3x">
+          Services
+        </h2>
+      </div>
+      <div>
+        <form action>
+          <label for="service-search">Search:</label>
+          <input
+            id="service-search"
+            type="search"
+            name="service-search"
+            placeholder="Search..."
+          >
+        </form>
+      </div>
     </page-header>
     <!-- page-header -->
   </div>
