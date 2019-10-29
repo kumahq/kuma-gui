@@ -1,6 +1,6 @@
 <template>
   <div class="overview">
-    <page-header>
+    <page-header noflex>
       <template v-slot:content>
         <h2 class="title-3x">
           404
@@ -10,23 +10,27 @@
         </h3>
       </template>
     </page-header>
-    <p>
-      Sorry. We cannot find the page you were looking for.
-      You could reload the page or go back
-      <router-link to="/">
-        Home
-      </router-link>.
-    </p>
+    <page-content>
+      <p>
+        Sorry. We cannot find the page you were looking for.
+        You could reload the page or go back
+        <router-link to="/">
+          Home
+        </router-link>.
+      </p>
+    </page-content>
   </div>
 </template>
 
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
+import PageContent from '@/components/Utils/PageContent.vue'
 
 export default {
   name: 'NotFound',
   components: {
-    PageHeader
+    PageHeader,
+    PageContent
   }
 }
 </script>

@@ -1,5 +1,7 @@
 <template>
-
+  <section class="page-content">
+    <slot />
+  </section>
 </template>
 
 <script>

@@ -1,16 +1,16 @@
 <template>
   <div class="metric">
     <header class="metric__title">
-      <slot name="title"></slot>
+      <slot name="title" />
     </header>
     <div class="metric__content">
-      <slot name="content"></slot>
+      <slot name="content" />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style scoped>
