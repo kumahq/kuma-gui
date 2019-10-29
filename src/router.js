@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Overview from './views/Overview.vue'
 
 Vue.use(Router)
 
@@ -9,40 +8,69 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/404',
+      name: 'not-found',
+      alias: '*',
+      meta: { title: 'Page not found' },
+      component: () => import('@/views/NotFound')
+    },
+    {
       path: '/',
       name: 'overview',
-      component: () => import(/* webpackChunkName: "overview" */ './views/Overview.vue')
+      component: () => import('@/views/Overview')
     },
     {
       path: '/entities/services',
       name: 'services',
-      component: () => import(/* webpackChunkName: "entity-services" */ './views/Entities/EntityServices.vue')
+      component: () => import('@/views/Entities/EntityServices')
     },
     {
       path: '/entities/dataplanes',
       name: 'dataplanes',
-      component: () => import(/* webpackChunkName: "entity-dataplanes" */ './views/Entities/EntityDataplanes.vue')
+      component: () => import('@/views/Entities/EntityDataplanes')
     },
     {
       path: '/policies/traffic-permissions',
       name: 'traffic-permissions',
-      component: () => import(/* webpackChunkName: "traffic-permissions" */ './views/Policies/TrafficPermissions.vue')
+      component: () => import('@/views/Policies/TrafficPermissions')
     },
     {
       path: '/policies/traffic-routes',
       name: 'traffic-routes',
-      component: () => import(/* webpackChunkName: "traffic-routes" */ './views/Policies/TrafficRoutes.vue')
+      component: () => import('@/views/Policies/TrafficRoutes')
     },
     {
       path: '/policies/traffic-log',
       name: 'traffic-log',
-      component: () => import(/* webpackChunkName: "traffic-log" */ './views/Policies/TrafficLog.vue')
+      component: () => import('@/views/Policies/TrafficLog')
     },
     // dynamic routes
     {
-      path: '/overview/:entity',
-      name: 'overview-entity',
-      component: () => import(/* webpackChunkName: "overview-entity" */ './views/Overview.vue')
+      path: '/:mesh/overview',
+      name: 'mesh-overview',
+      component: () => import('@/views/Overview')
+    },
+    {
+      path: '/:mesh/services',
+      name: 'mesh-services',
+      component: () => import('@/views/Entities/EntityServices')
+    },
+    {
+      path: '/:mesh/services/:service',
+      name: 'mesh-service-details',
+      // this needs to be changed to a detail view
+      component: () => import('@/views/Entities/EntityServices')
+    },
+    {
+      path: '/:mesh/dataplanes',
+      name: 'mesh-dataplanes',
+      component: () => import('@/views/Entities/EntityDataplanes')
+    },
+    {
+      path: '/:mesh/dataplanes/:dataplane',
+      name: 'mesh-dataplane-details',
+      // this needs to be changed to a detail view
+      component: () => import('@/views/Entities/EntityDataplanes')
     }
   ]
 })

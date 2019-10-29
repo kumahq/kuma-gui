@@ -29,9 +29,9 @@ import PageHeader from '@/components/Utils/PageHeader.vue'
 import MetricTable from '@/components/Metrics/MetricTable.vue'
 
 export default {
-  name: 'Services',
+  name: 'Dataplanes',
   metaInfo: {
-    title: 'Services'
+    title: 'Dataplanes'
   },
   components: {
     PageHeader,
