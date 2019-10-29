@@ -5,11 +5,11 @@
   "description": "Kuma Manager",
   "author": "Kong",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "serve": "yarn vue-cli-service serve",
+    "build": "yarn vue-cli-service build --mode production",
+    "lint": "yarn vue-cli-service lint",
+    "test:e2e": "yarn vue-cli-service test:e2e",
+    "test:unit": "yarn vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -23,6 +23,7 @@
     "tailwindcss": "^1.1.2",
     "vue": "^2.6.10",
     "vue-chartjs": "^3.4.2",
+    "vue-form-generator": "^2.3.4",
     "vue-meta": "^2.3.1",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
@@ -34,26 +35,25 @@
     "@vue/cli-plugin-pwa": "^3.11.0",
     "@vue/cli-plugin-unit-jest": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
-    "@vue/eslint-config-prettier": "^5.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^3.0.2",
     "eslint-plugin-html": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.9.0",
-    "prettier": "^1.18.2",
     "sass-loader": "^7.1.0",
+    "standard": "^14.3.1",
     "vue-template-compiler": "^2.6.10"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ],
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -83,5 +83,14 @@
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ]
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0",
+    "yarn": "^1.13.0"
   }
 }

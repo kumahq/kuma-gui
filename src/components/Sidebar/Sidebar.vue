@@ -1,28 +1,78 @@
 <template>
   <aside class="sidebar">
-    <h3 class="sidebar__title">Meshes</h3>
-    <select name id>
-      <option value>Finance</option>
-      <option value>Another Mesh</option>
-      <option value>Here Is A Mesh</option>
-      <option value>There Is A Mesh</option>
+    <h3 class="sidebar__title">
+      Meshes
+    </h3>
+    <select>
+      <option value>
+        Finance
+      </option>
+      <option value>
+        Another Mesh
+      </option>
+      <option value>
+        Here Is A Mesh
+      </option>
+      <option value>
+        There Is A Mesh
+      </option>
     </select>
 
-    <h3 class="sidebar__title">Entities</h3>
-
     <nav class="main-nav">
-      <ul>
+      <ul class="main-nav__group">
         <li>
-          <router-link to="/" exact>Overview</router-link>
+          <h3 class="sidebar__title">
+            General
+          </h3>
         </li>
         <li>
-          <router-link to="/services">Services</router-link>
+          <router-link
+            to="/"
+            exact
+          >
+            Overview
+          </router-link>
+        </li>
+      </ul>
+
+      <ul class="main-nav__group">
+        <li>
+          <h3 class="sidebar__title">
+            Entities
+          </h3>
         </li>
         <li>
-          <router-link to="/traffic-permissions">Traffic Permissions</router-link>
+          <router-link to="/entities/services">
+            Services
+          </router-link>
         </li>
         <li>
-          <router-link to="/traffic-routes">Traffic Routes</router-link>
+          <router-link to="/entities/dataplanes">
+            Dataplanes
+          </router-link>
+        </li>
+      </ul>
+
+      <ul class="main-nav__group">
+        <li>
+          <h3 class="sidebar__title">
+            Policies
+          </h3>
+        </li>
+        <li>
+          <router-link to="/policies/traffic-permissions">
+            Traffic Permissions
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/policies/traffic-routes">
+            Traffic Routes
+          </router-link>
+        </li>
+        <li>
+          <router-link to="/policies/traffic-log">
+            Traffic Routes
+          </router-link>
         </li>
       </ul>
     </nav>
@@ -30,7 +80,7 @@
 </template>
 
 <script>
-export default {};
+export default {}
 </script>
 
 <style scoped>
@@ -66,5 +116,9 @@ export default {};
   margin: 0 -32px;
   padding-left: 32px;
   padding-right: 32px;
+}
+
+.main-nav__group {
+
 }
 </style>

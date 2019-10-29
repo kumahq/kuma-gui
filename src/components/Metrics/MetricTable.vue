@@ -4,14 +4,21 @@
       <thead>
         <tr>
           <th colspan="2">
-            <slot name="metric-heading"></slot>
+            <slot name="metric-heading" />
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in items" :key="index">
-          <td v-if="item.label">{{ item.label }}</td>
-          <td>{{ item.value }}</td>
+        <tr
+          v-for="(item, index) in items"
+          :key="index"
+        >
+          <td v-if="item.label">
+            {{ item.label }}
+          </td>
+          <td>
+            {{ item.value }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -26,7 +33,7 @@ export default {
       required: true
     }
   }
-};
+}
 </script>
 
 <style scoped>

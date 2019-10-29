@@ -1,0 +1,16 @@
+/* Form inputs */
+
+select {
+  appearance: none;
+  border-radius: 3px;
+  border: 1px solid rgba(23,130,207,0.35);
+  font-size: 16px;
+  color: #1155CB;
+  line-height: 20px;
+  padding: 10px 13px;
+
+  background-color: #fff;
+  background-image: url("../images/chevron-down.svg");
+  background-position: 90% 50%;
+  background-repeat: no-repeat;
+}

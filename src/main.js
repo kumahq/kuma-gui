@@ -1,23 +1,30 @@
-import Vue from "vue";
-import App from "@/App.vue";
-import router from "@/router";
-import store from "@/store";
-import VueMeta from "vue-meta";
-import "@/registerServiceWorker";
+import Vue from 'vue'
+import App from '@/App.vue'
+import router from '@/router'
+import store from '@/store'
+import VueMeta from 'vue-meta'
+import '@/registerServiceWorker'
 
-// styles
-import "@/assets/styles/variables.css";
-import "@/assets/styles/utilities.css";
-import "@/assets/styles/fonts.css";
-import "@/assets/styles/main.css";
-import "@/assets/styles/typography.css";
+// Third party styles
+import '@/assets/styles/third-party/tailwind.css'
 
-Vue.use(VueMeta);
+// Kong Manager styles
+import '@/assets/styles/kong-manager/inputs.css'
 
-Vue.config.productionTip = false;
+// Kuma styles
+import '@/assets/styles/variables.css'
+import '@/assets/styles/utilities.css'
+import '@/assets/styles/fonts.css'
+import '@/assets/styles/main.css'
+import '@/assets/styles/typography.css'
+import '@/assets/styles/inputs.css'
+
+Vue.use(VueMeta)
+
+Vue.config.productionTip = false
 
 new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app");
+}).$mount('#app')
