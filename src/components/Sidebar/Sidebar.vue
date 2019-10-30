@@ -149,6 +149,80 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss'>
+$top-nav-height: 75px;
+.workspace-tile {
+  padding: 24px 0;
+  border-bottom: 1px solid #e0e1e2;
+  margin: 0 1rem;
 
+  a:hover, a:focus {
+    text-decoration: none;
+  }
+}
+.gry-bounding {
+  display: flex;
+  position: relative;
+  align-items: center;
+  padding: 20px;
+  height: 36px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  border-bottom: 1px solid #e0e1e2;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  span {
+    position: absolute;
+    left: 60px;
+    white-space: nowrap;
+  }
+  .workspace-toggle {
+    border-bottom: 1px solid;
+  }
+  &:hover {
+    background: darken(#f5f6f7, 2%);
+  }
+
+  nav.closed & {
+    box-shadow: none;
+    background: none;
+    span {
+      display: none;
+    }
+  }
+}
+
+nav {
+  .menu-container {
+    width: 240px;
+    height: calc(100vh - 145px); // 100vh - (Header + ws picker + collapse btn)
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  &.closed {
+    .workspace-tile {
+      border-top: 1px solid #e0e1e2;
+    }
+    .gry-bounding {
+      height: auto;
+      border: none;
+      padding: 20px;
+    }
+    .menu-container {
+      width: 63px;
+      overflow: hidden;
+    }
+  }
+}
+
+.workspace-toggle,
+.sidebar-toggle {
+  @extend .gry-bounding;
+}
+
+/* Fix for IE */
+.workspace-toggle>span{
+  top: 10px
+}
 </style>

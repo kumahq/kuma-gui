@@ -3,8 +3,10 @@
     <global-header />
     <div class="main-content-container">
       <sidebar />
-      <main class="flex-1 main-content">
-        <router-view />
+      <main class="main-content">
+        <div class="page">
+          <router-view />
+        </div>
       </main>
     </div>
   </div>
