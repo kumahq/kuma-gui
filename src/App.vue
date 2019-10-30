@@ -1,10 +1,8 @@
 <template>
-  <div id="app" class="antialiased">
+  <div id="app">
     <global-header />
-    <div class="flex flex-grow justify-between">
-      <div class="sidebar-wrap">
-        <sidebar />
-      </div>
+    <div class="main-content-container">
+      <sidebar />
       <main class="flex-1 main-content">
         <router-view />
       </main>
@@ -13,8 +11,8 @@
 </template>
 
 <script>
-import GlobalHeader from "@/components/Global/Header";
-import Sidebar from "@/components/Sidebar/Sidebar";
+import GlobalHeader from '@/components/Global/Header'
+import Sidebar from '@/components/Sidebar/Sidebar'
 
 export default {
   components: {
@@ -22,13 +20,13 @@ export default {
     Sidebar
   },
   metaInfo: {
-    title: "Home",
-    titleTemplate: "%s | Kuma",
+    title: 'Home',
+    titleTemplate: '%s | Kuma',
     htmlAttrs: {
-      lang: "en"
+      lang: 'en'
     }
   }
-};
+}
 </script>
 
 <style scoped>
