@@ -5,12 +5,12 @@
     @mouseout="_isHovering(false)"
     @mouseover="_isHovering(true)"
   >
-    <div
+    <!-- <div
       :class="{'active' : isMenuActive}"
       class="icon"
     >
-      <!-- <KIcon :icon="menu.id" /> -->
-    </div>
+      <KIcon :icon="menu.id" />
+    </div> -->
     <div class="item-wrapper">
       <MenuList
         :menu-items="menu.items"
@@ -71,16 +71,18 @@ export default {
 
 <style lang='scss'>
 .menu-wrapper {
-  display: flex;
-  position: relative;
-  margin-bottom: 24px;
+  // display: flex;
+  // position: relative;
+  margin-bottom: 18px;
 
   &.first {
-    margin: 24px 0 0;
+    margin: 18px 0 0;
   }
+
   &.last {
     margin-bottom: 45px;
   }
+
   .icon {
     color: #dcddde;
     padding: .5rem 1.2rem;

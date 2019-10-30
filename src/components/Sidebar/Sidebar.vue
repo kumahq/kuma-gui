@@ -150,41 +150,5 @@ export default {
 </script>
 
 <style scoped>
-.sidebar {
-  width: var(--sidebar-width);
-  height: calc(100vh - var(--topbar-height));
-  background: rgba(255, 255, 255, 0.1);
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 32px;
-  font-size: var(--type-md);
-}
 
-.sidebar__title {
-  font-size: var(--type-xs);
-  font-weight: normal;
-  text-transform: uppercase;
-  margin: 24px 0 10px 0;
-}
-
-.main-nav {
-}
-
-.main-nav a {
-  display: block;
-  /* padding: 0 32px; */
-  color: var(--black-1);
-  line-height: 38px;
-}
-
-.main-nav .router-link-active {
-  background: rgba(61, 136, 242, 0.07);
-  box-shadow: inset -2px 0 0 0 rgba(61, 136, 242, 0.75);
-  margin: 0 -32px;
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
-.main-nav__group {
-
-}
 </style>

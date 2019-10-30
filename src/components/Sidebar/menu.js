@@ -7,6 +7,10 @@ export default {
       skipRbac: true,
       items: [
         {
+          name: 'General',
+          title: true
+        },
+        {
           name: 'Overview',
           link: '/overview',
           title: false
@@ -18,6 +22,10 @@ export default {
       id: 'entities',
       skipRbac: true,
       items: [
+        {
+          name: 'Entities',
+          title: true
+        },
         {
           name: 'Services',
           link: '/services',
@@ -35,6 +43,10 @@ export default {
       id: 'policies',
       skipRbac: true,
       items: [
+        {
+          name: 'Policies',
+          title: true
+        },
         {
           name: 'Traffic Permissions',
           link: '/traffic-permissions',
