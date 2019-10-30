@@ -728,6 +728,89 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@kongponents/kalert@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@kongponents/kalert/-/kalert-0.1.4.tgz#81cadef73be7ec6266d0be5eb5dd5dbd42bf2630"
+  integrity sha512-OcrK3G/xR+aIT7UDKF0sPCggQYQGmNz+Oz6jt1S0qKM8EkewrHMpVjO5Qs6DXuYSOFgBRsyn6CatdeANnCijjg==
+  dependencies:
+    "@kongponents/kicon" "^0.3.1"
+
+"@kongponents/kbadge@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/kbadge/-/kbadge-0.1.2.tgz#969ae712ba27ec8e6dea61be2e79a6116583410f"
+  integrity sha512-rM4bGuYj+YcCSy8IG6ALyH4+DSQR3Xpviwreamgn/wB2iyamjLvfz4PZAIQ4Cmww7J2ticNYFkxFoJBFAgfoOg==
+
+"@kongponents/kbutton@^0.1.10-1":
+  version "0.1.10-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-0.1.10-1.tgz#d8504dab7db57007483ee4a964c6116c2dbd73bf"
+  integrity sha512-LukWutaRvRFIIvTxgHzJ3YQDxxcVttDQ354XCS4z4xRfAsWwQnhnaxcwKzxcoH49khSkREp8P4UfzP1AoNg9xQ==
+
+"@kongponents/kcard@^0.1.3-1":
+  version "0.1.3-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kcard/-/kcard-0.1.3-1.tgz#8eca57b6a472298853217067b9e66e9c75d8d44d"
+  integrity sha512-mba/9L7HZJxFsQZRKxxqZ3ugqD5XSyI9tzBRTr3WDdBHWcZfqvmn3qZA5gIE67cc/djDv57Wv1Lq96bBjLvkKw==
+
+"@kongponents/kclipboardprovider@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/kclipboardprovider/-/kclipboardprovider-0.1.2.tgz#ec89183c9ef6c1485055aa4194560d38068b0234"
+  integrity sha512-OTKqzUqx1NQGc6PxHISVIdLlmqb0UD/FK6OcrkNawahpNSU9dgToBWo18GO8f6a7V8dikmk+ZZUmABPTfQ/L5A==
+
+"@kongponents/kemptystate@^0.1.9-1":
+  version "0.1.9-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kemptystate/-/kemptystate-0.1.9-1.tgz#07257bd396101c91c17b25af903a1e2596ec62dd"
+  integrity sha512-96d5hnk0j9ceNoXnwGp9J/EwBPzc91v657FgpoCoLd4dcZGTHDriUclZYijWnGemX//pZa2RA/Tp7p/qaNB2Dw==
+  dependencies:
+    "@kongponents/kbutton" "^0.1.10-1"
+
+"@kongponents/kicon@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-0.3.1.tgz#f404f532627f43f08de6d9dea502a03a2adb3c00"
+  integrity sha512-dhWKX2YswMrp28fvZeggThA2+m86dkJpTZIYUkSfWAwNoyJvAbf9uq1IM6iE3ynI1SDScMWdxj3tRmyFNhlpsQ==
+
+"@kongponents/kmodal@^0.1.4-1":
+  version "0.1.4-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-0.1.4-1.tgz#dab0be4da77b996c62c9250f5cf5fa875b55c6a1"
+  integrity sha512-iwFB63zo9Fp+J/xgjuWHRK4kI5eK8QbcVjeLkDEEnWGaC9mMEvC1KAZzHtKgEXPkVdFZmJiL9qp7ZLUTDkUXRg==
+  dependencies:
+    "@kongponents/kbutton" "^0.1.10-1"
+
+"@kongponents/kooltip@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@kongponents/kooltip/-/kooltip-0.2.0.tgz#2ac560d3bcab5dfdd79045e8565bb59c608b97ea"
+  integrity sha512-d8PqU2+M30ZqK9Gj9oOWqt84aHsPkediB2WJTMl9ZiATUwww3luTBhdJ5v67NP5MwxK7meenRd0p6Ou0N70P1w==
+
+"@kongponents/kpop@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@kongponents/kpop/-/kpop-0.2.10.tgz#2d236e366c4adaf0818dc32d240acadf41a41caf"
+  integrity sha512-aATzNt5VKPtXdjptVApabDhEt1P4Vz2OYizBAQVY6zJadLTwQCEsysZGyAOPUTQdXueUFq/5j4HTZXXh4oyz/A==
+  dependencies:
+    popper.js "^1.15.0"
+
+"@kongponents/krumbs@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/krumbs/-/krumbs-0.1.2.tgz#438c562f1c3126b31eeea6af0683007cfc8f2980"
+  integrity sha512-hncpy6LKmrV58gXN2AaWlI4Fvt+ty4dXN6pljwflI2IuYRpZjw76So/8NPWiNPKoArJCRB00554vUGFM9wuFCg==
+
+"@kongponents/ktable@^0.1.4-1":
+  version "0.1.4-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/ktable/-/ktable-0.1.4-1.tgz#f24ae162e819aa46c5626ba6ee6b14462c6ad875"
+  integrity sha512-iADp3NbwDqffCi/YGgar477uNtk/s4pB2NgIXfCjed8sF7DukepbZi+ehqrHKccGSMynch0vcqivXqgHwRydwQ==
+
+"@kongponents/ktoaster@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/ktoaster/-/ktoaster-0.1.2.tgz#7b69fb9a9a222da74277c160673398cf785c1dda"
+  integrity sha512-Hzb7VOIJwwL/KDJcLP/yh9plu65Uy9+c0yDZ0hNAeVA8aEPrbJpP8dYGzwKV0zvN8kl8fnjK9jmwqGsFwtghWQ==
+
+"@kongponents/ktoggle@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@kongponents/ktoggle/-/ktoggle-0.1.1.tgz#2cf4b26bd414540d2c379bc6dcc9a9de999d9bbc"
+  integrity sha512-Z4AWAaHB0ivqNnjoJley3o19YZs0kJeRap61LpjMKXxZm1H6jzjhut7V2jrXiUvXLjCedQqXJO+SLIRzT05Vuw==
+
+"@kongponents/styles@^0.0.4-1":
+  version "0.0.4-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/styles/-/styles-0.0.4-1.tgz#b5ac4dddfb634f5dff48986036857d9631038279"
+  integrity sha512-/EZeo6yvuPrICZ/fvdVo3guLZmVl4yQa8nttSJZsPTEeO6aZEGZRegu8vA2CxabLoccof5OvhtfDS9wDQ25fug==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1602,29 +1685,12 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
 
-axios-cache-adapter@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/axios-cache-adapter/-/axios-cache-adapter-2.4.1.tgz#c9b736dae5fe17a5e12c2a2d0a595c3bf990ebd3"
-  integrity sha512-RTqieW2OjRyEqzWr3cJjNIG8J7SwoPkW0JIkc5OQaJ1n35yBJ4HgqiZC+O56YmIicUPaDTXq8kdtGA9O5B+/fQ==
-  dependencies:
-    axios "0.18.1"
-    cache-control-esm "1.0.0"
-    lodash "^4.17.11"
-
 axios-mock-adapter@^1.17.0:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/axios-mock-adapter/-/axios-mock-adapter-1.17.0.tgz#0dbee43c606d4aaba5a43d88d96d6661a7cc3c04"
   integrity sha512-q3efmwJUOO4g+wsLNSk9Ps1UlJoF3fQ3FSEe4uEEhkRtu7SoiAVPj8R3Hc/WP55MBTVFzaDP9QkdJhdVhP8A1Q==
   dependencies:
     deep-equal "^1.0.1"
-
-axios@0.18.1:
-  version "0.18.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.1.tgz#ff3f0de2e7b5d180e757ad98000f1081b87bcea3"
-  integrity sha512-0BfJq4NSfQXd+SkFdrvFbG7addhYSBA2mQwISr46pD6E5iqkWg02RAs8vyTT/j0RTnoYmeXauBuSv1qKwR179g==
-  dependencies:
-    follow-redirects "1.5.10"
-    is-buffer "^2.0.2"
 
 axios@^0.19.0:
   version "0.19.0"
@@ -2211,11 +2277,6 @@ cache-base@^1.0.1:
     to-object-path "^0.3.0"
     union-value "^1.0.0"
     unset-value "^1.0.0"
-
-cache-control-esm@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/cache-control-esm/-/cache-control-esm-1.0.0.tgz#417647ecf1837a5e74155f55d5a4ae32a84e2581"
-  integrity sha512-Fa3UV4+eIk4EOih8FTV6EEsVKO0W5XWtNs6FC3InTfVz+EjurjPfDXY5wZDo/lxjDxg5RjNcurLyxEJBcEUx9g==
 
 cache-loader@^2.0.1:
   version "2.0.1"
@@ -8313,6 +8374,11 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
+
+popper.js@^1.15.0:
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.0.tgz#2e1816bcbbaa518ea6c2e15a466f4cb9c6e2fbb3"
+  integrity sha512-+G+EkOPoE5S/zChTpmBSSDYmhXJ5PsW8eMhH8cP/CQHMFPBG/kC9Y5IIw6qNYgdJ+/COf0ddY2li28iHaZRSjw==
 
 portfinder@^1.0.20, portfinder@^1.0.25:
   version "1.0.25"

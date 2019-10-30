@@ -1,86 +1,152 @@
 <template>
-  <aside class="sidebar">
-    <h3 class="sidebar__title">
-      Meshes
-    </h3>
-    <select>
-      <option value>
-        Finance
-      </option>
-      <option value>
-        Another Mesh
-      </option>
-      <option value>
-        Here Is A Mesh
-      </option>
-      <option value>
-        There Is A Mesh
-      </option>
-    </select>
-
-    <nav class="main-nav">
-      <ul class="main-nav__group">
-        <li>
-          <h3 class="sidebar__title">
-            General
-          </h3>
-        </li>
-        <li>
-          <router-link
-            to="/"
-            exact
-          >
-            Overview
-          </router-link>
-        </li>
-      </ul>
-
-      <ul class="main-nav__group">
-        <li>
-          <h3 class="sidebar__title">
-            Entities
-          </h3>
-        </li>
-        <li>
-          <router-link to="/entities/services">
-            Services
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/entities/dataplanes">
-            Dataplanes
-          </router-link>
-        </li>
-      </ul>
-
-      <ul class="main-nav__group">
-        <li>
-          <h3 class="sidebar__title">
-            Policies
-          </h3>
-        </li>
-        <li>
-          <router-link to="/policies/traffic-permissions">
-            Traffic Permissions
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/policies/traffic-routes">
-            Traffic Routes
-          </router-link>
-        </li>
-        <li>
-          <router-link to="/policies/traffic-log">
-            Traffic Routes
-          </router-link>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+  <KNav :is-collapsed="isCollapsed">
+    <div
+      slot="NavMenu"
+      :class="{'is-hovering': hovering}"
+      class="menu-container"
+    >
+      <SidebarMenu
+        v-for="(menu, i) in menuList.sections"
+        :key="i"
+        :menu="menu"
+        :trigger-hovering="isHovering"
+        :index="i"
+        :is-last="i === lastMenuList"
+      />
+      <CollapseToggle
+        :handle-toggle-collapse="handleToggleCollapse"
+      />
+    </div>
+  </KNav>
 </template>
 
 <script>
-export default {}
+import KNav from './KNav'
+import SidebarMenu from './SidebarMenu'
+import CollapseToggle from './CollapseToggle'
+
+import { getItemFromStorage, setItemToStorage } from '@/Cache'
+import { mapState, mapMutations } from 'vuex'
+
+export default {
+  components: {
+    KNav,
+    SidebarMenu,
+    CollapseToggle
+  },
+
+  data () {
+    return {
+      isCollapsed: false,
+      sidebarSavedState: null,
+      toggleWorkspaces: false,
+      hovering: false
+    }
+  },
+
+  computed: {
+    ...mapState('auth', {
+      perms: state => state.permissions
+    }),
+
+    ...mapState('workspaces', {
+      workspace: state => state.workspace,
+      workspaces: state => state.workspaces
+    }),
+
+    ...mapState('sidebar', {
+      menu: state => state.menu
+    }),
+
+    workspaceList () {
+      return this.workspaces
+    },
+
+    currentWorkspace () {
+      return this.workspaceList.filter(w => w.name === this.workspace)[0]
+    },
+
+    portalIsLegacy () {
+      return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal_is_legacy')
+    },
+
+    portalIsEnabled () {
+      return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal')
+    },
+
+    /**
+     * Main property for items in the sidebar menu. Filters out menu.js items by
+     * RBAC permissions and fetches Kong Admin Plugin routes
+     * @returns {{sections:Array<MenuItem>}}
+     */
+    menuList () {
+      // get routes allowed by rbac
+      // const routes = this.$rbac.filterRoutes(this.perms, this.$router.allRoutes,
+      //   this.currentWorkspace && this.currentWorkspace.name)
+
+      // const routes = this.$router.allRoutes
+
+      const filteredMenu = JSON.parse(JSON.stringify(this.menu))
+
+      return filteredMenu
+    },
+
+    lastMenuList () {
+      return Object.keys(this.menuList.sections).length - 1
+    }
+  },
+
+  mounted () {
+    const sidebarState = getItemFromStorage('sidebarCollapsed')
+
+    if (document.documentElement.clientWidth <= 900) {
+      this.isCollapsed = true
+    } else {
+      this.isCollapsed = sidebarState || false
+    }
+
+    window.addEventListener('resize', this.handleResize)
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('resize', this.handleResize)
+  },
+
+  methods: {
+    ...mapMutations('sidebar', [
+      'setMenu'
+    ]),
+
+    handleToggleCollapse () {
+      this.isCollapsed = !this.isCollapsed
+      this.setCollapsedState(this.isCollapsed)
+    },
+
+    isHovering (a) {
+      this.hovering = a
+    },
+
+    setCollapsedState (collapsedState) {
+      setItemToStorage('sidebarCollapsed', collapsedState)
+    },
+
+    handleResize () {
+      const sidebarState = getItemFromStorage('sidebarCollapsed')
+
+      if (document.documentElement.clientWidth <= 900) {
+        this.isCollapsed = sidebarState || true
+      }
+
+      if (document.documentElement.clientWidth >= 900) {
+        this.isCollapsed = sidebarState || false
+      }
+    },
+
+    openWorkspaces () {
+      this.toggleWorkspaces = !this.toggleWorkspaces
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -5,6 +5,9 @@ import store from '@/store'
 import VueMeta from 'vue-meta'
 import '@/registerServiceWorker'
 
+// Globally import all Kongponents
+import '@/kongponents'
+
 // Third party styles
 import '@/assets/styles/third-party/tailwind.css'
 
@@ -18,6 +21,9 @@ import '@/assets/styles/fonts.css'
 import '@/assets/styles/main.css'
 import '@/assets/styles/typography.css'
 import '@/assets/styles/inputs.css'
+
+// Kong Design System styles
+import '@kongponents/styles/styles.css'
 
 Vue.use(VueMeta)
 

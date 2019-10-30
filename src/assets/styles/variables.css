@@ -1,58 +1,6 @@
 /* Variables */
 
 :root {
-  /* Kong brand */
-  --blue-lightest: #f0f9ff;
-  --blue-lighter: #e6f4ff;
-  --blue-light-01: #a3d9ff;
-  --blue-light: #70c4ff;
-  --blue-base: #0089eb;
-  --blue-link: #1782cf;
-  --blue-dark: #0f578a;
-  --red-lightest: #fff5f5;
-  --red-lighter: #ffe6e6;
-  --red-light-01: #faa8a8;
-  --red-light: #f47171;
-  --red-base: #e61a1a;
-  --red-link: #cf1717;
-  --red-dark: #b30000;
-  --green-lighter: #e9f7ef;
-  --green-light-01: #bce6ce;
-  --green-light: #90d5ad;
-  --green-base: #3fa66a;
-  --green-dark: #318153;
-  --yellow-lighter: #fff7e6;
-  --yellow-light: #ffe8a3;
-  --yellow-base: #ffd966;
-  --yellow-darker: #806000;
-  --tblack-85: rgba(0, 0, 0, 0.85);
-  --tblack-70: rgba(0, 0, 0, 0.7);
-  --tblack-45: rgba(0, 0, 0, 0.45);
-  --tblack-25: rgba(0, 0, 0, 0.25);
-  --tblack-10: rgba(0, 0, 0, 0.1);
-  --grey-98: #fafafa;
-  --grey-92: #ebebeb;
-  --grey-88: #e0e0e0;
-  --grey-84: #d6d6d6;
-  --twhite-75: hsla(0, 0%, 100%, 0.75);
-  --twhite-50: hsla(0, 0%, 100%, 0.5);
-  --twhite-1: #fff;
-  --spacing-xxs: 4px;
-  --spacing-xs: 8px;
-  --spacing-sm: 12px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 48px;
-  --type-xxxl: 32px;
-  --type-xxl: 28px;
-  --type-xl: 22px;
-  --type-lg: 18px;
-  --type-md: 16px;
-  --type-sm: 14px;
-  --type-xs: 12px;
-  --font-family-sans: Roboto;
-
   /* Kuma */
   --base-font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial,
     sans-serif;
