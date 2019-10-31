@@ -767,6 +767,11 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-0.3.1.tgz#f404f532627f43f08de6d9dea502a03a2adb3c00"
   integrity sha512-dhWKX2YswMrp28fvZeggThA2+m86dkJpTZIYUkSfWAwNoyJvAbf9uq1IM6iE3ynI1SDScMWdxj3tRmyFNhlpsQ==
 
+"@kongponents/kinput@^0.1.3-1":
+  version "0.1.3-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kinput/-/kinput-0.1.3-1.tgz#936c500a49c5d70472dbdf2b8a3ec262423de1d3"
+  integrity sha512-OnCTE3+e9uNngaPrMCWQZXxp8jNs6LJmBfk6IeiR3f++HjH0isKSJ//ZmVH9telRSLCY0fWDGIQPrGlcHjLiMw==
+
 "@kongponents/kmodal@^0.1.4-1":
   version "0.1.4-1"
   resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-0.1.4-1.tgz#dab0be4da77b996c62c9250f5cf5fa875b55c6a1"

@@ -14,6 +14,7 @@ import KClipboardProvider from '@kongponents/kclipboardprovider'
 import Krumbs from '@kongponents/krumbs'
 import KPop from '@kongponents/kpop'
 import KToggle from '@kongponents/ktoggle'
+import KInput from '@kongponents/kinput'
 
 Vue.component('KAlert', KAlert)
 Vue.component('KModal', KModal)
@@ -29,3 +30,4 @@ Vue.component('KClipboardProvider', KClipboardProvider)
 Vue.component('Krumbs', Krumbs)
 Vue.component('KPop', KPop)
 Vue.component('KToggle', KToggle)
+Vue.component('KInput', KInput)

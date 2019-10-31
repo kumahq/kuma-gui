@@ -21,7 +21,7 @@ export default new Router({
       path: '/:mesh/overview',
       name: 'overview',
       meta: { title: 'Global Overview' },
-      component: () => import('@/views/GlobalOverview')
+      component: () => import('@/views/Overview/GlobalOverview')
     },
     {
       // endpoint: /meshes/{name}/dataplanes
@@ -55,6 +55,24 @@ export default new Router({
           component: () => import('@/views/Entities/EntityServicesDetail')
         }
       ]
+    },
+    {
+      // endpoint: ??????
+      path: '/:mesh/traffic-permissions',
+      name: 'traffic-permissions',
+      component: () => import('@/views/Policies/TrafficPermissions')
+    },
+    {
+      // endpoint: ??????
+      path: '/:mesh/traffic-routes',
+      name: 'traffic-routes',
+      component: () => import('@/views/Policies/TrafficRoutes')
+    },
+    {
+      // endpoint: ??????
+      path: '/:mesh/traffic-log',
+      name: 'traffic-log',
+      component: () => import('@/views/Policies/TrafficLog')
     }
   ]
 })

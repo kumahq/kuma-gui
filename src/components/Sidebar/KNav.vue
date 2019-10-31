@@ -41,7 +41,7 @@ nav {
   height: auto;
   min-height: 100%;
   border-right: 1px solid #e6e7e8;
-  background: #f9f9f9;
+  background: #fff;
   z-index: 1000;
 
   &.closed {

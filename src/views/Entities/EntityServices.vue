@@ -7,15 +7,7 @@
         </h2>
       </div>
       <div>
-        <form action>
-          <label for="service-search">Search:</label>
-          <input
-            id="service-search"
-            type="search"
-            name="service-search"
-            placeholder="Search..."
-          >
-        </form>
+        <DataFilterSearch />
       </div>
     </page-header>
     <page-content />
@@ -25,6 +17,7 @@
 <script>
 import PageHeader from '@/components/Utils/PageHeader'
 import PageContent from '@/components/Utils/PageContent'
+import DataFilterSearch from '@/components/Utils/DataFilterSearch'
 
 export default {
   name: 'Services',
@@ -33,7 +26,8 @@ export default {
   },
   components: {
     PageHeader,
-    PageContent
+    PageContent,
+    DataFilterSearch
   },
   data () {
     return {

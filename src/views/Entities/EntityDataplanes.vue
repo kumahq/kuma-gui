@@ -7,24 +7,20 @@
         </h2>
       </div>
       <div>
-        <form action>
-          <label for="service-search">Search:</label>
-          <input
-            id="service-search"
-            type="search"
-            name="service-search"
-            placeholder="Search..."
-          >
-        </form>
+        <DataFilterSearch />
       </div>
     </page-header>
-    <!-- page-header -->
+    <page-content>
+      <router-view />
+    </page-content>
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import MetricTable from '@/components/Metrics/MetricTable.vue'
+import PageHeader from '@/components/Utils/PageHeader'
+import PageContent from '@/components/Utils/PageContent'
+import MetricTable from '@/components/Metrics/MetricTable'
+import DataFilterSearch from '@/components/Utils/DataFilterSearch'
 
 export default {
   name: 'Dataplanes',
@@ -33,7 +29,9 @@ export default {
   },
   components: {
     PageHeader,
-    MetricTable
+    PageContent,
+    MetricTable,
+    DataFilterSearch
   }
 }
 </script>
