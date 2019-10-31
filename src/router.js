@@ -3,6 +3,8 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+const DEFAULT_WORKSPACE = 'all'
+
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -15,62 +17,44 @@ export default new Router({
       component: () => import('@/views/NotFound')
     },
     {
-      path: '/',
-      name: 'overview',
-      component: () => import('@/views/Overview')
-    },
-    {
-      path: '/entities/services',
-      name: 'services',
-      component: () => import('@/views/Entities/EntityServices')
-    },
-    {
-      path: '/entities/dataplanes',
-      name: 'dataplanes',
-      component: () => import('@/views/Entities/EntityDataplanes')
-    },
-    {
-      path: '/policies/traffic-permissions',
-      name: 'traffic-permissions',
-      component: () => import('@/views/Policies/TrafficPermissions')
-    },
-    {
-      path: '/policies/traffic-routes',
-      name: 'traffic-routes',
-      component: () => import('@/views/Policies/TrafficRoutes')
-    },
-    {
-      path: '/policies/traffic-log',
-      name: 'traffic-log',
-      component: () => import('@/views/Policies/TrafficLog')
-    },
-    // dynamic routes
-    {
+      // endpoint: /meshes/{name}/
       path: '/:mesh/overview',
-      name: 'mesh-overview',
-      component: () => import('@/views/Overview')
+      name: 'overview',
+      meta: { title: 'Global Overview' },
+      component: () => import('@/views/GlobalOverview')
     },
     {
-      path: '/:mesh/services',
-      name: 'mesh-services',
-      component: () => import('@/views/Entities/EntityServices')
-    },
-    {
-      path: '/:mesh/services/:service',
-      name: 'mesh-service-details',
-      // this needs to be changed to a detail view
-      component: () => import('@/views/Entities/EntityServices')
-    },
-    {
+      // endpoint: /meshes/{name}/dataplanes
       path: '/:mesh/dataplanes',
       name: 'mesh-dataplanes',
-      component: () => import('@/views/Entities/EntityDataplanes')
+      component: () => import('@/views/Entities/EntityDataplanes'),
+      children: [
+        {
+          // endpoint: /meshes/{name}/dataplanes/{name}
+          path: ':dataplane',
+          name: 'mesh-dataplane-details',
+          meta: {
+            title: 'Dataplane Details'
+          },
+          component: () => import('@/views/Entities/EntityDataplanesDetail')
+        }
+      ]
     },
     {
-      path: '/:mesh/dataplanes/:dataplane',
-      name: 'mesh-dataplane-details',
-      // this needs to be changed to a detail view
-      component: () => import('@/views/Entities/EntityDataplanes')
+      // endpoint: ??????
+      path: '/:mesh/services',
+      name: 'services',
+      component: () => import('@/views/Entities/EntityServices'),
+      children: [
+        {
+          path: ':service',
+          name: 'service-details',
+          meta: {
+            title: 'Service Details'
+          },
+          component: () => import('@/views/Entities/EntityServicesDetail')
+        }
+      ]
     }
   ]
 })

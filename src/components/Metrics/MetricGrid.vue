@@ -66,9 +66,9 @@ export default {
   .info-grid {
     display: flex;
     width: 100%;
-    margin: 0 auto 2rem;
+    margin: 0 -16px 2em -16px;
     padding: 2rem 0;
-    border-top: 1px solid rgba(0,0,0,.10);
+    // border-top: 1px solid rgba(0,0,0,.10);
 
     .metric {
       display: flex;
@@ -78,15 +78,19 @@ export default {
       justify-content: space-between;
       text-align: left;
       border-left: 3px solid;
-      padding-left: 20px;
+      padding: 16px 26px;
       border-color: rgba(0,0,0,.1);
+      background-color: rgba(150,58,133,0.05);
+      margin: 0 16px;
+
       .metric-title {
+        font-size: 16px;
         color: rgba(0,0,0,.45);
       }
       .metric-value {
-        font-weight: 500;
-        font-size: 24px;
-        color: rgba(0,0,0,.7);
+        font-weight: 400;
+        font-size: 28px;
+        color: rgba(0,0,0,.75);
         &:last-child {
           margin-bottom: auto;
         }

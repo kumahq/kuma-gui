@@ -5,6 +5,7 @@
       :class="{'is-hovering': hovering}"
       class="menu-container"
     >
+      <MeshSelector />
       <SidebarMenu
         v-for="(menu, i) in menuList.sections"
         :key="i"
@@ -21,9 +22,10 @@
 </template>
 
 <script>
-import KNav from './KNav'
-import SidebarMenu from './SidebarMenu'
-import CollapseToggle from './CollapseToggle'
+import KNav from '@/components/Sidebar/KNav'
+import SidebarMenu from '@/components/Sidebar/SidebarMenu'
+import CollapseToggle from '@/components/Sidebar/CollapseToggle'
+import MeshSelector from '@/components/Utils/MeshSelector'
 
 import { getItemFromStorage, setItemToStorage } from '@/Cache'
 import { mapState, mapMutations } from 'vuex'
@@ -32,7 +34,8 @@ export default {
   components: {
     KNav,
     SidebarMenu,
-    CollapseToggle
+    CollapseToggle,
+    MeshSelector
   },
 
   data () {

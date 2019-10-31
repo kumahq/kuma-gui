@@ -18,13 +18,13 @@
         </form>
       </div>
     </page-header>
-    <!-- page-header -->
+    <page-content />
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import MetricTable from '@/components/Metrics/MetricTable.vue'
+import PageHeader from '@/components/Utils/PageHeader'
+import PageContent from '@/components/Utils/PageContent'
 
 export default {
   name: 'Services',
@@ -33,7 +33,12 @@ export default {
   },
   components: {
     PageHeader,
-    MetricTable
+    PageContent
+  },
+  data () {
+    return {
+
+    }
   }
 }
 </script>

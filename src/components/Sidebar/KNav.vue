@@ -2,7 +2,7 @@
   <nav
     id="the-sidebar"
     :class="{ closed: isCollapsed }"
->
+  >
     <slot />
     <slot name="topNavAction" />
     <slot name="topNavTitle" />
@@ -10,7 +10,7 @@
       :isClosed="isCollapsed"
       :isHovering="triggerHovering"
       name="NavMenu"
-/>
+    />
     <slot name="NavToggle" />
   </nav>
 </template>
@@ -43,6 +43,7 @@ nav {
   border-right: 1px solid #e6e7e8;
   background: #f9f9f9;
   z-index: 1000;
+
   &.closed {
     width: 63px;
   }
@@ -50,11 +51,11 @@ nav {
 </style>
 
 <style lang="scss">
-  nav#the-sidebar + .main-content {
-    margin-left: 240px;
-  }
-  nav#the-sidebar.closed + .main-content {
-    margin-left: 63px;
-  }
+nav#the-sidebar + .main-content {
+  margin-left: 240px;
+}
 
+nav#the-sidebar.closed + .main-content {
+  margin-left: 63px;
+}
 </style>

@@ -11,14 +11,14 @@
           :to="{ path: '/' + workspace + preparePath(item.link) }"
         >
           {{ item.name }}
-          <span
+          <!-- <span
             v-if="item.badge"
             class="badge"
-          >{{ item.badge }}</span>
-          <span
+          >{{ item.badge }}</span> -->
+          <!-- <span
             v-if="item.badgeSecondary"
             class="badge secondary"
-          >{{ item.badgeSecondary }}</span>
+          >{{ item.badgeSecondary }}</span> -->
         </router-link>
         <span v-else-if="!item.hidden">{{ item.name }}</span>
       </li>

@@ -12,9 +12,7 @@
       <KIcon :icon="menu.id" />
     </div> -->
     <div class="item-wrapper">
-      <MenuList
-        :menu-items="menu.items"
-      />
+      <MenuList :menu-items="menu.items" />
     </div>
   </div>
 </template>

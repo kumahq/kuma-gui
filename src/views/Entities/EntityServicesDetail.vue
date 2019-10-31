@@ -3,7 +3,7 @@
     <page-header>
       <div>
         <h2 class="title-3x">
-          Dataplanes
+          Service Details
         </h2>
       </div>
       <div>
@@ -18,22 +18,27 @@
         </form>
       </div>
     </page-header>
-    <!-- page-header -->
+    <page-content />
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import MetricTable from '@/components/Metrics/MetricTable.vue'
+import PageHeader from '@/components/Utils/PageHeader'
+import PageContent from '@/components/Utils/PageContent'
 
 export default {
-  name: 'Dataplanes',
+  name: 'ServicesDetail',
   metaInfo: {
-    title: 'Dataplanes'
+    title: 'Services Detail'
   },
   components: {
     PageHeader,
-    MetricTable
+    PageContent
+  },
+  data () {
+    return {
+
+    }
   }
 }
 </script>

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
 
@@ -27,6 +28,11 @@ export default {
     htmlAttrs: {
       lang: 'en'
     }
+  },
+  computed: {
+    ...mapState('workspaces', {
+      workspaces: state => state.workspaces
+    })
   }
 }
 </script>
