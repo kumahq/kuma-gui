@@ -5,6 +5,8 @@ import store from '@/store'
 import VueMeta from 'vue-meta'
 import '@/registerServiceWorker'
 
+import Kuma from '@/services/kuma'
+
 // Globally import all Kongponents
 import '@/kongponents'
 
@@ -24,6 +26,14 @@ import '@/assets/styles/inputs.css'
 
 // Kong Design System styles
 import '@kongponents/styles/styles.css'
+
+const kuma = new Kuma({
+  url: process.env.VUE_APP_KUMA_API || false
+})
+
+// Instance properties
+// https://vuejs.org/v2/cookbook/adding-instance-properties.html
+Vue.prototype.$api = kuma
 
 Vue.use(VueMeta)
 

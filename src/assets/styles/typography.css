@@ -3,3 +3,11 @@
 .title-3x {
   font-size: var(--type-xxxl);
 }
+
+.title-2x {
+  font-size: var(--type-xxl);
+}
+
+.title-1x {
+  font-size: var(--type-xl);
+}

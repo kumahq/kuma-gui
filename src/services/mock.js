@@ -17,53 +17,149 @@ export default class Mock {
       'background: gray; color: white; display: block; padding: 0.25rem;')
 
     this.mock
-      .onGet('/default/groups').reply(200, {
-        total: 1,
+      .onGet('/meshes').reply(200, {
         data: [
           {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071b',
-            comment: 'cool group name',
-            name: 'cool mapping'
+            name: 'mesh-1',
+            type: 'Mesh',
+            mtls: {
+              ca: {
+                builtin: {}
+              },
+              enabled: true
+            },
+            tracing: {},
+            logging: {
+              backends: [
+                {
+                  name: 'file-tmp',
+                  format: '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
+                  file: {
+                    path: '/tmp/access.log'
+                  }
+                },
+                {
+                  name: 'logstash',
+                  tcp: {
+                    address: 'logstash.internal:9000'
+                  }
+                }
+              ]
+            }
           },
           {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071c',
-            comment: 'cool group name1',
-            name: 'cool mapping1'
+            name: 'mesh-2',
+            type: 'Mesh',
+            mtls: {
+              ca: {
+                builtin: {}
+              },
+              enabled: true
+            },
+            tracing: {},
+            logging: {
+              backends: [
+                {
+                  name: 'file-tmp',
+                  format: '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
+                  file: {
+                    path: '/tmp/access.log'
+                  }
+                },
+                {
+                  name: 'logstash',
+                  tcp: {
+                    address: 'logstash.internal:9000'
+                  }
+                }
+              ]
+            }
           },
           {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071d',
-            comment: 'cool group name2',
-            name: 'cool mapping2'
+            name: 'mesh-3',
+            type: 'Mesh',
+            mtls: {
+              ca: {
+                builtin: {}
+              },
+              enabled: true
+            },
+            tracing: {},
+            logging: {
+              backends: [
+                {
+                  name: 'file-tmp',
+                  format: '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
+                  file: {
+                    path: '/tmp/access.log'
+                  }
+                },
+                {
+                  name: 'logstash',
+                  tcp: {
+                    address: 'logstash.internal:9000'
+                  }
+                }
+              ]
+            }
           },
           {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071e',
-            comment: 'cool group name3',
-            name: 'cool mapping3'
+            name: 'mesh-4',
+            type: 'Mesh',
+            mtls: {
+              ca: {
+                builtin: {}
+              },
+              enabled: true
+            },
+            tracing: {},
+            logging: {
+              backends: [
+                {
+                  name: 'file-tmp',
+                  format: '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
+                  file: {
+                    path: '/tmp/access.log'
+                  }
+                },
+                {
+                  name: 'logstash',
+                  tcp: {
+                    address: 'logstash.internal:9000'
+                  }
+                }
+              ]
+            }
           },
           {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071f',
-            comment: 'cool group name4',
-            name: 'cool mapping4'
-          },
-          {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071g',
-            comment: 'cool group name5',
-            name: 'cool mapping5'
-          },
-          {
-            created_at: 1566421282,
-            id: '83bc4d30-1ced-4df3-b87e-84e648a8071g',
-            comment: 'cool group name6',
-            name: 'cool mapping6'
+            name: 'mesh-5',
+            type: 'Mesh',
+            mtls: {
+              ca: {
+                builtin: {}
+              },
+              enabled: true
+            },
+            tracing: {},
+            logging: {
+              backends: [
+                {
+                  name: 'file-tmp',
+                  format: '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
+                  file: {
+                    path: '/tmp/access.log'
+                  }
+                },
+                {
+                  name: 'logstash',
+                  tcp: {
+                    address: 'logstash.internal:9000'
+                  }
+                }
+              ]
+            }
           }
-        ],
-        offset: 'WyJmOTFhYTc4My1hYTY1LTQ5YTItOGYzZC1kZmM1ZDIxMDIxYzIiXQ'
+        ]
       })
       .onAny().passThrough()
   }

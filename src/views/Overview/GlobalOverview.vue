@@ -19,6 +19,18 @@
     </page-header>
     <page-content>
       <MetricGrid :metrics="mockMetricsData" />
+
+      <h3 class="title-2x">
+        Get all meshes
+      </h3>
+      <ul>
+        <li
+          v-for="(item, index) of mockItems"
+          :key="index"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
     </page-content>
   </div>
 </template>
@@ -40,7 +52,8 @@ export default {
   },
   data () {
     return {
-      // timeFrameOptions
+      // timeFrameOptions,
+      mockItems: [],
       mockMetricsData: [
         {
           metric: 'Number of Meshes',
@@ -59,6 +72,20 @@ export default {
           value: 4584997110
         }
       ]
+    }
+  },
+  mounted () {
+    this.fetchMockItems()
+  },
+  methods: {
+    fetchMockItems () {
+      return this.$api.getAllMeshes()
+        .then(response => {
+          this.mockItems = response
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
 }
