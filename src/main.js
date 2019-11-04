@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
-import store from '@/store'
 import VueMeta from 'vue-meta'
 import '@/registerServiceWorker'
-
+import Store from '@/store'
 import Kuma from '@/services/kuma'
 
 // Globally import all Kongponents
@@ -35,6 +34,8 @@ const kuma = new Kuma({
 // Instance properties
 // https://vuejs.org/v2/cookbook/adding-instance-properties.html
 Vue.prototype.$api = kuma
+
+const store = Store(kuma)
 
 Vue.use(VueMeta)
 

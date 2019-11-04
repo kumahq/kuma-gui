@@ -5,7 +5,7 @@
       :class="{'is-hovering': hovering}"
       class="menu-container"
     >
-      <MeshSelector />
+      <MeshSelector :items="meshList" />
       <SidebarMenu
         v-for="(menu, i) in menuList.sections"
         :key="i"
@@ -43,7 +43,9 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      hovering: false
+      hovering: false,
+      // Kuma-specific
+      meshList: []
     }
   },
 
@@ -109,6 +111,9 @@ export default {
     }
 
     window.addEventListener('resize', this.handleResize)
+
+    // populate the mesh selector
+    this.getMeshList()
   },
 
   beforeDestroy () {
@@ -147,6 +152,21 @@ export default {
 
     openWorkspaces () {
       this.toggleWorkspaces = !this.toggleWorkspaces
+    },
+
+    //
+    // Kuma
+    //
+
+    // get the list of meshes and populate the mesh selector
+    getMeshList () {
+      return this.$api.getAllMeshes()
+        .then(res => {
+          this.meshList = res
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
 }

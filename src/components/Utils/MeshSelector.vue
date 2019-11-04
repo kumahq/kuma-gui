@@ -1,6 +1,6 @@
 <template>
   <div class="mesh-selector-container">
-    <div v-if="options.length > 0">
+    <div>
       <h3 class="menu-title">
         Meshes
       </h3>
@@ -10,10 +10,11 @@
         name="mesh-selector"
       >
         <option
-          v-for="(option, index) in options"
+          v-for="(item, index) in items"
           :key="index"
+          :value="item.name"
         >
-          {{ option }}
+          {{ item.name }}
         </option>
       </select>
     </div>
@@ -22,12 +23,11 @@
 
 <script>
 export default {
-  data () {
-    return {
-      options: {
-        type: Array,
-        required: true
-      }
+  name: 'MeshSelector',
+  props: {
+    items: {
+      type: Array,
+      required: true
     }
   }
 }
