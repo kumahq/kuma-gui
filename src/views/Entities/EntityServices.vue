@@ -1,22 +1,11 @@
 <template>
   <div class="services">
-    <page-header>
-      <div>
-        <h2 class="title-3x">
-          Services
-        </h2>
-      </div>
-      <div>
-        <DataFilterSearch />
-      </div>
-    </page-header>
-    <page-content />
+    <p>Services will appear here.</p>
+    <p>Service: {{ this.$route.params.service }}</p>
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader'
-import PageContent from '@/components/Utils/PageContent'
 import DataFilterSearch from '@/components/Utils/DataFilterSearch'
 
 export default {
@@ -25,8 +14,6 @@ export default {
     title: 'Services'
   },
   components: {
-    PageHeader,
-    PageContent,
     DataFilterSearch
   },
   data () {

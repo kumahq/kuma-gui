@@ -26,11 +26,11 @@ export default {
           name: 'Entities',
           title: true
         },
-        {
-          name: 'Services',
-          link: '/services',
-          title: false
-        },
+        // {
+        //   name: 'Services',
+        //   link: '/services',
+        //   title: false
+        // },
         {
           name: 'Dataplanes',
           link: '/dataplanes',

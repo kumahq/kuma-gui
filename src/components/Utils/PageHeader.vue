@@ -18,5 +18,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.page-header {
+  margin-bottom: 30px;
+}
 </style>

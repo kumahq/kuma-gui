@@ -1,6 +1,6 @@
 <template>
   <div class="dataplanes-detail">
-    <MetricGrid :metrics="mockMetricsData" />
+    <p>This is the Dataplanes Detail view.</p>
   </div>
 </template>
 
@@ -13,31 +13,10 @@ export default {
     title: 'Dataplanes'
   },
   components: {
-    PageHeader,
-    PageContent,
     MetricGrid
   },
   data () {
     return {
-      // timeFrameOptions
-      mockMetricsData: [
-        {
-          metric: 'Number of Meshes',
-          value: 15
-        },
-        {
-          metric: 'Number of Dataplanes',
-          value: 8011
-        },
-        {
-          metric: 'Number of Services',
-          value: 120
-        },
-        {
-          metric: 'Total Requests',
-          value: 4584997110
-        }
-      ]
     }
   }
 }

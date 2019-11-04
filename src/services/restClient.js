@@ -10,7 +10,7 @@ export default class RestClient {
 
     RestClient.setupMocks(opts.injectMocks)
     this.client = axios.create({
-      baseURL: `${process.env.VUE_APP_KUMA_API}:${process.env.VUE_APP_KUMA_API_PORT}`,
+      baseURL: this.host,
       headers: this.headers,
       ...opts.axiosConfig
     })

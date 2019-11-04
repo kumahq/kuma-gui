@@ -1,26 +1,11 @@
 <template>
   <div class="services">
-    <page-header>
-      <div>
-        <h2 class="title-3x">
-          Dataplanes
-        </h2>
-      </div>
-      <div>
-        <DataFilterSearch />
-      </div>
-    </page-header>
-    <page-content>
-      <router-view />
-    </page-content>
+    <p>Table displaying list of dataplanes.</p>
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader'
-import PageContent from '@/components/Utils/PageContent'
 import MetricTable from '@/components/Metrics/MetricTable'
-import DataFilterSearch from '@/components/Utils/DataFilterSearch'
 
 export default {
   name: 'Dataplanes',
@@ -28,10 +13,7 @@ export default {
     title: 'Dataplanes'
   },
   components: {
-    PageHeader,
-    PageContent,
-    MetricTable,
-    DataFilterSearch
+    MetricTable
   }
 }
 </script>

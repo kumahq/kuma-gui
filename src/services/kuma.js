@@ -6,12 +6,17 @@ export default class Kuma {
 
     this.options = opts
     this.client = opts.client || new RestClient(opts)
-    // `workspace` = `mesh` in this context
+
+    // `workspace` is `mesh` in this context
     this.workspace = opts.workspace
   }
 
   buildUrl (path) {
     return this.client.buildUrl(path)
+  }
+
+  getInfo (workspace) {
+    return this.client.get(`/${workspace}`)
   }
 
   getAllMeshes () {

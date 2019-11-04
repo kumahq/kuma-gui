@@ -1,37 +1,17 @@
 <template>
   <div class="overview">
-    <page-header>
-      <div>
-        <h2 class="title-3x">
-          {{ this.$route.meta.title }}
-        </h2>
-      </div>
-      <div class="dashboard-control d-flex flex-wrap">
-        <!--
-          TimeFramePicker disabled for now because it has a lot of other
-          dependencies I haven't tracked down yet
-        -->
-        <!-- <TimeFramePicker
-          :update-controls="updateControls"
-          :options="timeFrameOptions"
-        /> -->
-      </div>
-    </page-header>
-    <page-content>
-      <MetricGrid :metrics="mockMetricsData" />
-
-      <h3 class="title-2x">
-        Get all meshes
-      </h3>
-      <ul>
-        <li
-          v-for="(item, index) of mockItems"
-          :key="index"
-        >
-          {{ item.name }}
-        </li>
-      </ul>
-    </page-content>
+    <MetricGrid :metrics="mockMetricsData" />
+    <h3 class="title-2x">
+      Get all meshes
+    </h3>
+    <ul>
+      <li
+        v-for="(item, index) of mockItems"
+        :key="index"
+      >
+        {{ item.name }}
+      </li>
+    </ul>
   </div>
 </template>
 

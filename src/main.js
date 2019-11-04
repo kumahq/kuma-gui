@@ -28,7 +28,8 @@ import '@/assets/styles/inputs.css'
 import '@kongponents/styles/styles.css'
 
 const kuma = new Kuma({
-  url: process.env.VUE_APP_KUMA_API || false
+  url: `${process.env.VUE_APP_KUMA_API}:${process.env.VUE_APP_KUMA_API_PORT}` || false,
+  workspace: 'default' // Kuma's default mesh is called 'default'
 })
 
 // Instance properties
@@ -40,7 +41,7 @@ Vue.use(VueMeta)
 Vue.config.productionTip = false
 
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app')
