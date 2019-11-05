@@ -5,8 +5,11 @@ export default class RestClient {
   constructor (options) {
     const opts = options || {}
 
-    this.headers = { 'Cache-Control': 'no-cache' }
     this.host = opts.url
+    this.headers = {
+      'Cache-Control': 'no-cache',
+      'Access-Control-Allow-Origin': '*'
+    }
 
     RestClient.setupMocks(opts.injectMocks)
     this.client = axios.create({
