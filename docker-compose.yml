@@ -1,21 +1,36 @@
-version: '3.4'
+version: '3.7'
 
 services:
+  # Kuma
   kuma-http-api:
+    image: node:8-alpine
     build:
-      context: .
+      context: docker/api
       dockerfile: Dockerfile
-    restart: always
+    container_name: api
     ports:
       - "5681:5681"
+    restart: always
     tty: true
-  # kuma-db:
-  #   image: postgres:9.5
-  #   environment:
-  #     - POSTGRES_USER=kuma
-  #     - POSTGRES_DB=kuma
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready"]
-  #     interval: 30s
-  #     retries: 3
-  #   restart: always
+    command: [sh, -c, "kuma-cp run"]
+
+  # The GUI
+  kuma-app:
+    image: node:8-alpine
+    build:
+      context: docker/web
+      dockerfile: Dockerfile
+      args:
+        - NPM_TOKEN
+    depends_on:
+      - kuma-http-api
+    environment:
+      - NPM_TOKEN=${NPM_TOKEN}
+    container_name: app
+    ports:
+      - "8080:8080"
+    restart: always
+    tty: true
+    volumes:
+      - .:/opt/app
+    command: [sh, -c, "npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN && npm install -g yarn && cd /opt/app && yarn && yarn global add @vue/cli && yarn vue-cli-service serve"]

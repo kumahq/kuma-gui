@@ -1,7 +1,9 @@
-FROM centos
+FROM node:8-alpine
 
 # install things we'll need
-RUN yum -y install wget curl which
+RUN apk update \
+    && apk upgrade \
+    && apk add bash curl
 
 # setup Kuma
 RUN mkdir kuma/ \
@@ -10,6 +12,3 @@ RUN mkdir kuma/ \
     && tar -xvzf kuma-0.2.2-centos-amd64.tar.gz \
     && chmod +x bin/* \
     && cp bin/* /usr/bin/
-
-# expose the port so we can access data
-EXPOSE 5681
