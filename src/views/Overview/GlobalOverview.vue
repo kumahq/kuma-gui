@@ -1,17 +1,7 @@
 <template>
   <div class="overview">
     <MetricGrid :metrics="mockMetricsData" />
-    <h3 class="title-2x">
-      Get all meshes
-    </h3>
-    <ul>
-      <li
-        v-for="(item, index) of mockItems"
-        :key="index"
-      >
-        {{ item.name }}
-      </li>
-    </ul>
+    <!-- charts and stats will go here once we have data to work with -->
   </div>
 </template>
 
@@ -25,8 +15,6 @@ import MetricGrid from '@/components/Metrics/MetricGrid'
 export default {
   name: 'Overview',
   components: {
-    PageHeader,
-    PageContent,
     MetricGrid
     // TimeFramePicker
   },
@@ -52,20 +40,6 @@ export default {
           value: 4584997110
         }
       ]
-    }
-  },
-  mounted () {
-    this.fetchMockItems()
-  },
-  methods: {
-    fetchMockItems () {
-      return this.$api.getAllMeshes()
-        .then(response => {
-          this.mockItems = response
-        })
-        .catch(error => {
-          console.error(error)
-        })
     }
   }
 }

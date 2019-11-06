@@ -29,10 +29,8 @@ export default {
       lang: 'en'
     }
   },
-  computed: {
-    ...mapState('workspaces', {
-      workspaces: state => state.workspaces
-    })
+  mounted () {
+    this.$store.dispatch('fetchMeshList')
   }
 }
 </script>

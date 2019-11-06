@@ -13,6 +13,7 @@
           v-for="(item, index) in items"
           :key="index"
           :value="item.name"
+          :selected="item.name === selectedMesh"
         >
           {{ item.name }}
         </option>
@@ -22,6 +23,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'MeshSelector',
   props: {
@@ -29,6 +32,9 @@ export default {
       type: Array,
       required: true
     }
+  },
+  computed: {
+    ...mapState(['selectedMesh'])
   }
 }
 </script>

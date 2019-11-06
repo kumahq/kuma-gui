@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import * as getters from '@/store/getters'
 import sidebar from '@/store/modules/sidebar'
 import workspaces from '@/store/modules/workspaces'
-import Actions from '@/store/actions'
 
 Vue.use(Vuex)
 
@@ -15,11 +13,31 @@ export default (api) => {
       workspaces
     },
     state: {
-      selectedMesh: 'default'
+      meshes: [],
+      selectedMesh: 'default',
+      onboardingFinished: null
     },
-    getters,
-    mutations: {},
-    actions: Actions(api)
+    getters: {
+      getSelectedMesh () {
+        return state.selectedMesh
+      },
+      getMeshList () {
+        return state.meshes
+      }
+    },
+    mutations: {
+      FETCH_MESHES (state, meshes) {
+        state.meshes = meshes
+      }
+    },
+    actions: {
+      fetchMeshList ({ commit }) {
+        return api.getAllMeshes()
+          .then(response => {
+            commit('FETCH_MESHES', response)
+          })
+      }
+    }
   })
 
   return store

@@ -10,7 +10,7 @@ select {
   padding: 10px 13px;
 
   background-color: #fff;
-  background-image: url("../images/chevron-down.svg");
+  background-image: url("../images/chevron-down.svg?external");
   background-position: 90% 50%;
   background-repeat: no-repeat;
 }

@@ -43,9 +43,7 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      hovering: false,
-      // Kuma-specific
-      meshList: []
+      hovering: false
     }
   },
 
@@ -63,21 +61,21 @@ export default {
       menu: state => state.menu
     }),
 
-    workspaceList () {
-      return this.workspaces
-    },
+    // workspaceList () {
+    //   return this.workspaces
+    // },
 
-    currentWorkspace () {
-      return this.workspaceList.filter(w => w.name === this.workspace)[0]
-    },
+    // currentWorkspace () {
+    //   return this.workspaceList.filter(w => w.name === this.workspace)[0]
+    // },
 
-    portalIsLegacy () {
-      return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal_is_legacy')
-    },
+    // portalIsLegacy () {
+    //   return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal_is_legacy')
+    // },
 
-    portalIsEnabled () {
-      return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal')
-    },
+    // portalIsEnabled () {
+    //   return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal')
+    // },
 
     /**
      * Main property for items in the sidebar menu. Filters out menu.js items by
@@ -98,6 +96,10 @@ export default {
 
     lastMenuList () {
       return Object.keys(this.menuList.sections).length - 1
+    },
+
+    meshList () {
+      return this.$store.state.meshes
     }
   },
 
@@ -111,9 +113,6 @@ export default {
     }
 
     window.addEventListener('resize', this.handleResize)
-
-    // populate the mesh selector
-    this.getMeshList()
   },
 
   beforeDestroy () {
@@ -148,26 +147,11 @@ export default {
       if (document.documentElement.clientWidth >= 900) {
         this.isCollapsed = sidebarState || false
       }
-    },
-
-    openWorkspaces () {
-      this.toggleWorkspaces = !this.toggleWorkspaces
-    },
-
-    //
-    // Kuma
-    //
-
-    // get the list of meshes and populate the mesh selector
-    getMeshList () {
-      return this.$api.getAllMeshes()
-        .then(res => {
-          this.meshList = res
-        })
-        .catch(error => {
-          console.error(error)
-        })
     }
+
+    // openWorkspaces () {
+    //   this.toggleWorkspaces = !this.toggleWorkspaces
+    // },
   }
 }
 </script>

@@ -7,7 +7,7 @@
           exact
         >
           <img
-            src="@/assets/images/kuma-logo.svg"
+            src="@/assets/images/kuma-logo.svg?external"
             alt="Kuma Logo"
           >
         </router-link>
