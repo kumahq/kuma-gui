@@ -5,7 +5,7 @@ services:
   kuma-http-api:
     image: node:8-alpine
     build:
-      context: docker/api
+      context: .
       dockerfile: Dockerfile
     container_name: api
     ports:
@@ -15,22 +15,17 @@ services:
     command: [sh, -c, "kuma-cp run"]
 
   # The GUI
-  kuma-app:
-    image: node:8-alpine
-    build:
-      context: docker/web
-      dockerfile: Dockerfile
-      args:
-        - NPM_TOKEN
-    depends_on:
-      - kuma-http-api
-    environment:
-      - NPM_TOKEN=${NPM_TOKEN}
-    container_name: app
-    ports:
-      - "8080:8080"
-    restart: always
-    tty: true
-    volumes:
-      - .:/opt/app
-    command: [sh, -c, "npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN && npm install -g yarn && cd /opt/app && yarn && yarn global add @vue/cli && yarn vue-cli-service serve"]
+  # kuma-app:
+  #   image: node:8-alpine
+  #   depends_on:
+  #     - kuma-http-api
+  #   environment:
+  #     - NPM_TOKEN=${NPM_TOKEN}
+  #   container_name: app
+  #   ports:
+  #     - "8080:8080"
+  #   restart: always
+  #   tty: true
+  #   volumes:
+  #     - .:/opt/app
+  #   command: [sh, -c, "npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN && npm install -g yarn && cd /opt/app && yarn && yarn global add @vue/cli && yarn vue-cli-service serve"]
