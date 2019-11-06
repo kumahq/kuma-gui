@@ -8,7 +8,7 @@
       >
         <router-link
           v-if="item.link"
-          :to="{ path: '/' + workspace + preparePath(item.link) }"
+          :to="{ path: '/' + meshPath + preparePath(item.link) }"
         >
           {{ item.name }}
           <!-- <span
@@ -37,14 +37,35 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      meshPath: null
+    }
+  },
   computed: {
     ...mapState('workspaces', {
       workspace: state => state.workspace
     })
   },
+  beforeMount () {
+    this.setMeshPath()
+  },
   methods: {
     preparePath (path) {
       return path[0] === '/' ? path : `/${path}`
+    },
+
+    // Kuma
+    setMeshPath () {
+      const meshFromLocalStorage = localStorage.getItem('selectedMesh')
+
+      if (meshFromLocalStorage && meshFromLocalStorage.length > 0) {
+        // if the localStorage value is present, use that
+        this.meshPath = meshFromLocalStorage
+      } else {
+        // otherwise fallback to what's in the store
+        this.meshPath = this.$store.getters.getSelectedMesh
+      }
     }
   }
 }

@@ -8,12 +8,13 @@
         id="mesh-selector"
         class="mesh-selector"
         name="mesh-selector"
+        @change="changeMesh"
       >
         <option
           v-for="(item, index) in items"
           :key="index"
-          :value="item.name"
-          :selected="item.name === selectedMesh"
+          :value="item.name.toString()"
+          :selected="item.name === getMeshFromLocalStorage"
         >
           {{ item.name }}
         </option>
@@ -34,7 +35,20 @@ export default {
     }
   },
   computed: {
-    ...mapState(['selectedMesh'])
+    getMeshFromLocalStorage () {
+      return localStorage.getItem('selectedMesh')
+    }
+  },
+  methods: {
+    changeMesh (event) {
+      const val = event.target.value
+
+      // update the selected mesh in the store
+      this.$store.dispatch('updateSelectedMesh', val)
+
+      // update the localStorage item so that it persists
+      localStorage.setItem('selectedMesh', val)
+    }
   }
 }
 </script>

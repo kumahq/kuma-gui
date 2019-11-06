@@ -30,7 +30,7 @@ export default class Kuma {
   }
 
   // get a list of all dataplanes
-  getAllDataplanes (name, params) {
+  getAllDataplanesFromMesh (name, params) {
     return this.client.get(`/meshes/${name}/dataplanes`, { params })
   }
 

@@ -30,7 +30,25 @@ export default {
     }
   },
   mounted () {
+    // fetch the mesh list
     this.$store.dispatch('fetchMeshList')
+
+    // fetch the dataplanes for the current mesh
+    this.$store.dispatch('fetchDataplanesFromMesh')
+
+    // set a localStorage reference for the selected mesh
+
+    /**
+     * <select> NOTE:
+     *
+     * we have to check the $route first and see where the
+     * user is at first so we can determine if we should match
+     * the mesh value in the <select> to the $route
+     */
+
+    if (!localStorage.getItem('selectedMesh')) {
+      localStorage.setItem('selectedMesh', this.$store.getters.getSelectedMesh)
+    }
   }
 }
 </script>

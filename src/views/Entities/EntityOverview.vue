@@ -11,9 +11,9 @@
 <script>
 export default {
   metaInfo: {
-    title: "Entities"
+    title: 'Entities'
   }
-};
+}
 </script>
 
 <style>

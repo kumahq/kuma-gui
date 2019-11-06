@@ -25,20 +25,20 @@ export default {
       mockMetricsData: [
         {
           metric: 'Number of Meshes',
-          value: 15
+          value: this.$store.state.meshes.length
         },
         {
           metric: 'Number of Dataplanes',
-          value: 8011
-        },
-        {
-          metric: 'Number of Services',
-          value: 120
-        },
-        {
-          metric: 'Total Requests',
-          value: 4584997110
+          value: this.$store.state.dataplanes.length
         }
+        // {
+        //   metric: 'Number of Services',
+        //   value: 120
+        // },
+        // {
+        //   metric: 'Total Requests',
+        //   value: 4584997110
+        // }
       ]
     }
   }
