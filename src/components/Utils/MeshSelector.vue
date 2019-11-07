@@ -11,9 +11,9 @@
         @change="changeMesh"
       >
         <option
-          v-for="(item, index) in items"
-          :key="index"
-          :value="item.name.toString()"
+          v-for="item in items.items"
+          :key="item.name"
+          :value="item.name"
           :selected="item.name === getMeshFromLocalStorage"
         >
           {{ item.name }}
@@ -30,7 +30,7 @@ export default {
   name: 'MeshSelector',
   props: {
     items: {
-      type: Array,
+      type: Object,
       required: true
     }
   },

@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { getItemFromStorage, setItemToStorage } from '@/Cache'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -34,7 +35,7 @@ export default {
     this.$store.dispatch('fetchMeshList')
 
     // fetch the dataplanes for the current mesh
-    this.$store.dispatch('fetchDataplanesFromMesh')
+    // this.$store.dispatch('fetchDataplanesFromMesh')
 
     // set a localStorage reference for the selected mesh
 
@@ -47,7 +48,7 @@ export default {
      */
 
     if (!localStorage.getItem('selectedMesh')) {
-      localStorage.setItem('selectedMesh', this.$store.getters.getSelectedMesh)
+      setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
     }
   }
 }
