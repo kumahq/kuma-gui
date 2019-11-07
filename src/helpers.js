@@ -136,9 +136,9 @@ export function getPluginIcon (pluginName) {
   let icon
 
   try {
-    icon = require(`@/assets/images/plugin-icons/${pluginName}.png`)
+    icon = require(`./assets/images/plugin-icons/${pluginName}.png`)
   } catch (_) {
-    icon = require('@/assets/images/plugin-icons/missing.png')
+    icon = require('./assets/images/plugin-icons/missing.png')
   }
 
   return icon

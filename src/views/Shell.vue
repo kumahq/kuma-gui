@@ -1,11 +1,9 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <div v-if="this.$route.meta.breadcrumbs">
-        <p>Breadcrumbs display here if true</p>
-      </div>
+      <Breadcrumbs />
       <h2 class="title-3x">
-        {{ this.$route.meta.title }}
+        {{ this.$route.meta.title }}<span v-if="this.$route.params.mesh"> for {{ this.$route.params.mesh }}</span>
       </h2>
     </page-header>
     <page-content>
@@ -17,12 +15,14 @@
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import PageContent from '@/components/Utils/PageContent.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Shell',
   components: {
     PageHeader,
-    PageContent
+    PageContent,
+    Breadcrumbs
   }
 }
 </script>

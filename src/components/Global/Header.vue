@@ -14,7 +14,7 @@
       </div>
       <div class="px-4">
         <status
-          content="Connected to Kuma at localhost:8000"
+          :content="status"
           active
         />
       </div>
@@ -28,6 +28,11 @@ import Status from '@/components/Utils/Status'
 export default {
   components: {
     Status
+  },
+  computed: {
+    status () {
+      return `Connected to Kuma at ${process.env.VUE_APP_KUMA_API}:${process.env.VUE_APP_KUMA_API_PORT}`
+    }
   }
 }
 </script>

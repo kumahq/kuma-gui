@@ -47,6 +47,7 @@ export default {
   },
   watch: {
     $route (to, from) {
+      // set the menu links accordingly
       this.setMeshPath()
     }
   },
@@ -66,15 +67,12 @@ export default {
       if (meshFromRoute && meshFromRoute.length > 0) {
         // if the route has a mesh param set, use that for the path
         this.meshPath = meshFromRoute
-        console.log('mesh from route')
       } else if (meshFromLocalStorage && meshFromLocalStorage.length > 0) {
         // otherwise fall back to what's present in localStorage
         this.meshPath = meshFromLocalStorage
-        console.log('mesh from localStorage')
       } else {
         // otherwise fallback to what's in the store (it has a default value)
         this.meshPath = this.$store.getters.getSelectedMesh
-        console.log('default mesh from store')
       }
     }
   }

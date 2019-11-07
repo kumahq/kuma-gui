@@ -1,7 +1,6 @@
 <template>
   <div class="overview">
-    <p>global overview</p>
-    <!-- <MetricGrid :metrics="mockMetricsData" /> -->
+    <MetricGrid :metrics="mockMetricsData" />
     <!-- charts and stats will go here once we have data to work with -->
   </div>
 </template>
@@ -26,13 +25,11 @@ export default {
       mockMetricsData: [
         {
           metric: 'Number of Meshes',
-          value: 10
-          // value: this.$store.state.meshes.length
+          value: this.$store.state.meshes.length
         },
         {
           metric: 'Number of Dataplanes',
-          value: 10
-          // value: this.$store.state.dataplanes.length
+          value: this.$store.state.dataplanes.length
         }
         // {
         //   metric: 'Number of Services',
@@ -43,6 +40,11 @@ export default {
         //   value: 4584997110
         // }
       ]
+    }
+  },
+  computed: {
+    routes () {
+      return false
     }
   }
 }

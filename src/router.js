@@ -13,38 +13,51 @@ const routes = [
   },
   {
     path: '/',
-    redirect: {
-      name: 'overview'
-    }
+    redirect: { name: 'overview' }
   },
   {
     path: '/overview',
     name: 'overview',
-    meta: { title: 'Global Overview' },
+    meta: {
+      title: 'Global Overview',
+      excludeAsBreadcrumb: true
+    },
     component: () => import('@/views/Overview/GlobalOverview')
   },
   {
     path: '/:mesh',
     name: 'mesh',
-    meta: { title: 'mesh' },
+    meta: {
+      title: 'mesh',
+      excludeAsBreadcrumb: true
+    },
     params: { mesh: ':mesh' },
     component: () => import('@/views/Shell'),
     children: [
       {
         path: 'overview',
         name: 'mesh-overview',
-        meta: { title: 'Global Overview' },
+        meta: { title: 'Overview' },
         component: () => import('@/views/Overview/GlobalOverview')
       },
       {
         path: 'dataplanes',
         name: 'dataplanes',
-        meta: { title: 'Dataplanes' },
+        meta: {
+          title: 'Dataplanes',
+          breadcrumb: 'Dataplanes',
+          parent: 'mesh'
+        },
         component: () => import('@/views/Entities/EntityDataplanes'),
         children: [
           {
             path: ':dataplane',
             name: 'dataplane-details',
+            meta: {
+              title: 'Dataplanes',
+              breadcrumb: 'Dataplane',
+              parent: 'dataplanes'
+            },
             params: { dataplane: ':dataplane' },
             component: () => import('@/views/Entities/EntityDataplanesDetail')
           }
@@ -69,18 +82,21 @@ const routes = [
         name: 'traffic-permissions',
         meta: { title: 'Traffic Permissions' },
         component: () => import('@/views/Policies/TrafficPermissions')
+        // child routes?
       },
       {
         path: 'traffic-routes',
         name: 'traffic-routes',
         meta: { title: 'Traffic Routes' },
         component: () => import('@/views/Policies/TrafficRoutes')
+        // child routes?
       },
       {
         path: 'traffic-log',
         name: 'traffic-log',
         meta: { title: 'Traffic Log' },
         component: () => import('@/views/Policies/TrafficLog')
+        // child routes?
       }
     ]
   }
