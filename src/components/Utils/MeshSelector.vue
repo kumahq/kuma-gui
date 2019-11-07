@@ -1,6 +1,6 @@
 <template>
   <div class="mesh-selector-container">
-    <div>
+    <div v-if="items">
       <h3 class="menu-title">
         Meshes
       </h3>
@@ -14,11 +14,14 @@
           v-for="item in items.items"
           :key="item.name"
           :value="item.name"
-          :selected="item.name === getMeshFromLocalStorage"
+          :selected="item.name === ($route.params.mesh ? $route.params.mesh : getMeshFromLocalStorage)"
         >
           {{ item.name }}
         </option>
       </select>
+    </div>
+    <div v-else>
+      <p>No meshes.</p>
     </div>
   </div>
 </template>
@@ -48,6 +51,14 @@ export default {
 
       // update the localStorage item so that it persists
       localStorage.setItem('selectedMesh', val)
+
+      // update the route accordingly
+      this.$router.push({
+        name: 'mesh-overview',
+        params: {
+          mesh: val
+        }
+      })
     }
   }
 }

@@ -12,15 +12,22 @@ const routes = [
     component: () => import('@/views/NotFound')
   },
   {
+    path: '/',
+    redirect: {
+      name: 'overview'
+    }
+  },
+  {
     path: '/overview',
     name: 'overview',
     meta: { title: 'Global Overview' },
     component: () => import('@/views/Overview/GlobalOverview')
   },
   {
-    path: '/:workspace',
+    path: '/:mesh',
     name: 'mesh',
     meta: { title: 'mesh' },
+    params: { mesh: ':mesh' },
     component: () => import('@/views/Shell'),
     children: [
       {
@@ -38,6 +45,7 @@ const routes = [
           {
             path: ':dataplane',
             name: 'dataplane-details',
+            params: { dataplane: ':dataplane' },
             component: () => import('@/views/Entities/EntityDataplanesDetail')
           }
         ]
@@ -51,6 +59,7 @@ const routes = [
           {
             path: ':service',
             name: 'service-details',
+            params: { service: ':service' },
             component: () => import('@/views/Entities/EntityServicesDetail')
           }
         ]

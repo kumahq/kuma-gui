@@ -43,12 +43,15 @@ export default {
     }
   },
   computed: {
-    ...mapState('workspaces', {
-      workspace: state => state.workspace
-    })
+    ...mapState(['selectedMesh'])
+  },
+  watch: {
+    $route (to, from) {
+      this.setMeshPath()
+    }
   },
   beforeMount () {
-    this.setMeshPath()
+    // this.setMeshPath()
   },
   methods: {
     preparePath (path) {
@@ -58,13 +61,20 @@ export default {
     // Kuma
     setMeshPath () {
       const meshFromLocalStorage = localStorage.getItem('selectedMesh')
+      const meshFromRoute = this.$route.params.mesh
 
-      if (meshFromLocalStorage && meshFromLocalStorage.length > 0) {
-        // if the localStorage value is present, use that
+      if (meshFromRoute && meshFromRoute.length > 0) {
+        // if the route has a mesh param set, use that for the path
+        this.meshPath = meshFromRoute
+        console.log('mesh from route')
+      } else if (meshFromLocalStorage && meshFromLocalStorage.length > 0) {
+        // otherwise fall back to what's present in localStorage
         this.meshPath = meshFromLocalStorage
+        console.log('mesh from localStorage')
       } else {
-        // otherwise fallback to what's in the store
+        // otherwise fallback to what's in the store (it has a default value)
         this.meshPath = this.$store.getters.getSelectedMesh
+        console.log('default mesh from store')
       }
     }
   }
