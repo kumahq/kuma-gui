@@ -25,22 +25,25 @@ export default {
     mockMetricsData () {
       return [
         {
-          metric: 'Total Number of Meshes',
-          value: this.$store.state.totalMeshCount
-        },
-        {
           metric: 'Number of Dataplanes',
           value: this.$store.state.totalDataplaneCountFromMesh
         }
       ]
     }
   },
+  watch: {
+    $route (to, from) {
+      this.setAndGetDataplaneCount()
+    }
+  },
   beforeMount () {
-    // fetch the the dataplanes from this mesh
-    this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
-
-    // set the total mesh count so we can fetch it from state
-    this.$store.dispatch('getMeshTotalCount')
+    this.setAndGetDataplaneCount()
+  },
+  methods: {
+    // get the total number of dataplanes from selected mesh
+    setAndGetDataplaneCount () {
+      this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
+    }
   }
 }
 </script>

@@ -8,14 +8,18 @@
     <MetricGrid
       :metrics="mockMetricsData"
     />
+    <KTable
+      has-hover
+      :options="tableData"
+    />
   </div>
 </template>
 
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
-import PageContent from '@/components/Utils/PageContent.vue'
-// import { options as timeFrameOptions } from '@/schemas/TimeFrames'
 import MetricGrid from '@/components/Metrics/MetricGrid'
+import KSkeleton from '@/components/Skeletons/KSkeleton'
+// import { options as timeFrameOptions } from '@/schemas/TimeFrames'
 // import TimeFramePicker from '@/pdk/components/TimeFramePicker'
 
 export default {
@@ -29,6 +33,19 @@ export default {
     MetricGrid,
     PageHeader
   },
+  data () {
+    return {
+      tableData: {
+        headers: [
+          { label: 'Name', key: 'name' },
+          { label: 'ID', key: 'id' },
+          { label: 'Enabled', key: 'enabled' },
+          { key: 'actions', hideLabel: true }
+        ],
+        data: []
+      }
+    }
+  },
   computed: {
     mockMetricsData () {
       return [
@@ -37,15 +54,25 @@ export default {
           value: this.$store.state.totalMeshCount
         },
         {
-          metric: 'Number of Dataplanes',
-          value: 123 // TODO: find a way to calculate this
+          metric: 'Total Number of Dataplanes',
+          value: 123
         }
       ]
     }
   },
+  watch: {
+    $route (to, from) {
+      this.bootstrap()
+    }
+  },
   beforeMount () {
-    // set the total mesh count so we can fetch it from state
-    this.$store.dispatch('getMeshTotalCount')
+    this.bootstrap()
+  },
+  methods: {
+    bootstrap () {
+      this.$store.dispatch('getMeshTotalCount')
+      this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
+    }
   }
 }
 </script>

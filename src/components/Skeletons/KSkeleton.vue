@@ -13,26 +13,29 @@
       :columns="tableColumns"
       :rows="tableRows"
     />
-    <FormSkeleton v-else-if="type === 'form'" />
+    <!-- <FormSkeleton v-else-if="type === 'form'" /> -->
     <KIcon
       v-else-if="type === 'spinner'"
       icon="spinner"
       view-box="0 0 16 16"
       color="#000"
     />
-    <Skeleton v-else />
+    <!-- <Skeleton v-else /> -->
   </div>
 </template>
 
 <script>
-import Skeleton from './Skeleton'
+// import Skeleton from './Skeleton'
 import CardSkeleton from './CardSkeleton'
 import TableSkeleton from './TableSkeleton'
-import FormSkeleton from './FormSkeleton'
+// import FormSkeleton from './FormSkeleton'
 
 export default {
   name: 'KSkeleton',
-  components: { Skeleton, CardSkeleton, TableSkeleton, FormSkeleton },
+  components: {
+    CardSkeleton,
+    TableSkeleton
+  },
   props: {
     delayMilliseconds: {
       type: Number,
