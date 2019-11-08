@@ -22,13 +22,13 @@ const routes = [
       title: 'Global Overview',
       excludeAsBreadcrumb: true
     },
-    component: () => import('@/views/Overview/GlobalOverview')
+    component: () => import('@/views/Overview')
   },
   {
     path: '/:mesh',
     name: 'mesh',
     meta: {
-      title: 'mesh',
+      title: 'Overview',
       excludeAsBreadcrumb: true
     },
     params: { mesh: ':mesh' },
@@ -38,7 +38,7 @@ const routes = [
         path: 'overview',
         name: 'mesh-overview',
         meta: { title: 'Overview' },
-        component: () => import('@/views/Overview/GlobalOverview')
+        component: () => import('@/views/Entities/EntityOverview')
       },
       {
         path: 'dataplanes',

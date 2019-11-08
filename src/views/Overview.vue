@@ -1,11 +1,19 @@
 <template>
   <div class="overview">
-    <MetricGrid :metrics="mockMetricsData" />
-    <!-- charts and stats will go here once we have data to work with -->
+    <page-header noflex>
+      <h2 class="title-3x">
+        {{ this.$route.meta.title }}
+      </h2>
+    </page-header>
+    <MetricGrid
+      :metrics="mockMetricsData"
+    />
   </div>
 </template>
 
 <script>
+import PageHeader from '@/components/Utils/PageHeader.vue'
+import PageContent from '@/components/Utils/PageContent.vue'
 // import { options as timeFrameOptions } from '@/schemas/TimeFrames'
 import MetricGrid from '@/components/Metrics/MetricGrid'
 // import TimeFramePicker from '@/pdk/components/TimeFramePicker'
@@ -14,12 +22,12 @@ export default {
   name: 'Overview',
   metaInfo () {
     return {
-      title: `${this.$route.meta.title} for ${this.$route.params.mesh}`
+      title: this.$route.meta.title
     }
   },
   components: {
-    MetricGrid
-    // TimeFramePicker
+    MetricGrid,
+    PageHeader
   },
   computed: {
     mockMetricsData () {
@@ -30,15 +38,12 @@ export default {
         },
         {
           metric: 'Number of Dataplanes',
-          value: this.$store.state.totalDataplaneCountFromMesh
+          value: 123 // TODO: find a way to calculate this
         }
       ]
     }
   },
   beforeMount () {
-    // fetch the the dataplanes from this mesh
-    this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
-
     // set the total mesh count so we can fetch it from state
     this.$store.dispatch('getMeshTotalCount')
   }

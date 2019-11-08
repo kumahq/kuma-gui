@@ -48,14 +48,14 @@ export default {
   },
 
   computed: {
-    ...mapState('auth', {
-      perms: state => state.permissions
-    }),
+    // ...mapState('auth', {
+    //   perms: state => state.permissions
+    // }),
 
-    ...mapState('workspaces', {
-      workspace: state => state.workspace,
-      workspaces: state => state.workspaces
-    }),
+    // ...mapState('workspaces', {
+    //   workspace: state => state.workspace,
+    //   workspaces: state => state.workspaces
+    // }),
 
     ...mapState('sidebar', {
       menu: state => state.menu

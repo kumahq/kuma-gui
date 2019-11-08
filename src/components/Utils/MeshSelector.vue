@@ -10,6 +10,12 @@
         name="mesh-selector"
         @change="changeMesh"
       >
+        <!-- <option
+          value=""
+          disabled
+        >
+          All (global)
+        </option> -->
         <option
           v-for="item in items.items"
           :key="item.name"

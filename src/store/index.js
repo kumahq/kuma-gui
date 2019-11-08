@@ -2,21 +2,23 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import sidebar from '@/store/modules/sidebar'
-import workspaces from '@/store/modules/workspaces'
+// import workspaces from '@/store/modules/workspaces'
 
 Vue.use(Vuex)
 
 export default (api) => {
   const store = new Vuex.Store({
     modules: {
-      sidebar,
-      workspaces
+      sidebar
+      // workspaces
     },
     state: {
       meshes: [],
       dataplanes: [],
       selectedMesh: 'default',
-      onboardingFinished: null
+      onboardingFinished: null,
+      totalMeshCount: 0,
+      totalDataplaneCountFromMesh: 0
     },
     getters: {
       getSelectedMesh (state) {
@@ -27,6 +29,12 @@ export default (api) => {
       },
       getDataplanes (state) {
         return state.dataplanes
+      },
+      getTotalMeshCount (state) {
+        return state.totalMeshCount
+      },
+      getTotalDataplaneCountFromMesh (state) {
+        return state.totalDataplaneCountFromMesh
       }
     },
     mutations: {
@@ -38,6 +46,12 @@ export default (api) => {
       },
       SET_SELECTED_MESH (state, mesh) {
         state.selectedMesh = mesh
+      },
+      SET_TOTAL_MESH_COUNT (state, count) {
+        state.totalMeshCount = count
+      },
+      SET_TOTAL_DP_COUNT_FROM_MESH (state, count) {
+        state.totalDataplaneCountFromMesh = count
       }
     },
     actions: {
@@ -52,11 +66,11 @@ export default (api) => {
           })
       },
 
-      // fetch all dataplanes from a mesh
-      fetchDataplanesFromMesh ({ commit }) {
-        return api.getAllDataplanesFromMesh()
-          .then(() => {
-            commit('FETCH_DATAPLANES_FROM_MESH')
+      // fetch all dataplanes from a specific mesh
+      fetchDataplanesFromMesh ({ commit }, mesh) {
+        return api.getAllDataplanesFromMesh(mesh)
+          .then(response => {
+            commit('FETCH_DATAPLANES_FROM_MESH', response)
           })
           .catch(error => {
             console.error(error)
@@ -66,7 +80,32 @@ export default (api) => {
       // update the selected mesh
       updateSelectedMesh ({ commit }, mesh) {
         commit('SET_SELECTED_MESH', mesh)
-        console.log(mesh)
+      },
+
+      // get the total number of meshes
+      getMeshTotalCount ({ commit }) {
+        return api.getAllMeshes()
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_MESH_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of dataplanes from a mesh
+      getDataplanFromMeshTotalCount ({ commit }, mesh) {
+        return api.getAllDataplanesFromMesh(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_DP_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       }
     }
   })
