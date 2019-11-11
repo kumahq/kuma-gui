@@ -12,8 +12,18 @@
       has-hover
       :options="tableData"
     >
-      <template v-slot:actions>
-        <router-link to="/">
+      <template
+        slot="actions"
+        slot-scope="{row}"
+      >
+        <router-link
+          :to="{
+            name: 'mesh-overview',
+            params: {
+              mesh: row.name
+            }
+          }"
+        >
           View Entity
         </router-link>
       </template>
@@ -61,7 +71,7 @@ export default {
         },
         {
           metric: 'Total Number of Dataplanes',
-          value: 123
+          value: 1234567
         }
       ]
     }
@@ -79,9 +89,23 @@ export default {
       this.$store.dispatch('getMeshTotalCount')
       this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
 
-      const rows = this.$store.getters.getMeshList.items[0]
+      const getMeshData = () => {
+        return this.$api.getAllMeshes()
+          .then(response => {
+            const items = response.items
+            const rows = items.map(item => ({
+              name: item.name,
+              type: item.type
+            }))
 
-      this.tableData.data.push(rows)
+            this.tableData.data.push(...rows)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
+
+      getMeshData()
     }
   }
 }
