@@ -39,9 +39,18 @@ export default class Kuma {
     return this.client.get(`/meshes/${name}/dataplanes/${dataplane}`, { params })
   }
 
-  //
-  // NOTE: there are no endpoints yet for fetching service information
-  //
+  // get dataplane overviews
+  getDataplaneOverviews (mesh, dataplane, params) {
+    return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
+  }
+
+  /**
+   *
+   * NOTE:
+   * There are no endpoints yet for fetching service information.
+   * The below calls are placeholders.
+   *
+   */
 
   // get a list of all services
   getAllServices (name, params) {
@@ -51,5 +60,10 @@ export default class Kuma {
   // get a single service
   getService (name, service, params) {
     return this.client.get(`/meshes/${name}/services/${service}`, { params })
+  }
+
+  // get service overviews
+  getServiceOverviews (mesh, service, params) {
+    return this.client.get(`/meshes/${mesh}/services+insights/${service}`, { params })
   }
 }

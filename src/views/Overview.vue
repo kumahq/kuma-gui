@@ -6,16 +6,23 @@
       </h2>
     </page-header>
     <MetricGrid
-      :metrics="mockMetricsData"
+      :metrics="overviewMetrics"
     />
     <KTable
       has-hover
       :options="tableData"
-    />
+    >
+      <template v-slot:actions>
+        <router-link to="/">
+          View Entity
+        </router-link>
+      </template>
+    </KTable>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid'
 import KSkeleton from '@/components/Skeletons/KSkeleton'
@@ -37,9 +44,8 @@ export default {
     return {
       tableData: {
         headers: [
-          { label: 'Name', key: 'name' },
-          { label: 'ID', key: 'id' },
-          { label: 'Enabled', key: 'enabled' },
+          { label: 'Mesh', key: 'name' },
+          { label: 'Type', key: 'type' },
           { key: 'actions', hideLabel: true }
         ],
         data: []
@@ -47,7 +53,7 @@ export default {
     }
   },
   computed: {
-    mockMetricsData () {
+    overviewMetrics () {
       return [
         {
           metric: 'Total Number of Meshes',
@@ -72,6 +78,10 @@ export default {
     bootstrap () {
       this.$store.dispatch('getMeshTotalCount')
       this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
+
+      const rows = this.$store.getters.getMeshList.items[0]
+
+      this.tableData.data.push(rows)
     }
   }
 }

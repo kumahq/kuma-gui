@@ -10,12 +10,6 @@
         name="mesh-selector"
         @change="changeMesh"
       >
-        <!-- <option
-          value=""
-          disabled
-        >
-          All (global)
-        </option> -->
         <option
           v-for="item in items.items"
           :key="item.name"
@@ -33,8 +27,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: 'MeshSelector',
   props: {
@@ -61,9 +53,7 @@ export default {
       // update the route accordingly
       this.$router.push({
         name: 'mesh-overview',
-        params: {
-          mesh: val
-        }
+        params: { mesh: val }
       })
     }
   }

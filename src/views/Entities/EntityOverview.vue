@@ -1,6 +1,9 @@
 <template>
   <div class="overview">
-    <MetricGrid :metrics="mockMetricsData" />
+    <MetricGrid
+      v-if="isLoaded"
+      :metrics="mockMetricsData"
+    />
     <!-- charts and stats will go here once we have data to work with -->
   </div>
 </template>
@@ -21,6 +24,11 @@ export default {
     MetricGrid
     // TimeFramePicker
   },
+  data () {
+    return {
+      isLoaded: false
+    }
+  },
   computed: {
     mockMetricsData () {
       return [
@@ -33,16 +41,18 @@ export default {
   },
   watch: {
     $route (to, from) {
-      this.setAndGetDataplaneCount()
+      this.bootstrap()
     }
   },
   beforeMount () {
-    this.setAndGetDataplaneCount()
+    this.bootstrap()
   },
   methods: {
-    // get the total number of dataplanes from selected mesh
-    setAndGetDataplaneCount () {
+    bootstrap () {
+      // get the total number of dataplanes from selected mesh
       this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
+
+      this.isLoaded = true
     }
   }
 }
