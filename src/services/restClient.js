@@ -6,10 +6,8 @@ export default class RestClient {
     const opts = options || {}
 
     this.host = opts.url
-    // this.headers = {
-    //   'Cache-Control': 'no-cache'
-    // }
 
+    // leave this blank!
     this.headers = {}
 
     RestClient.setupMocks(opts.injectMocks)

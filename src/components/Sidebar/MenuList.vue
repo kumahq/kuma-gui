@@ -8,7 +8,9 @@
       >
         <router-link
           v-if="item.link"
-          :to="{ path: '/' + meshPath + preparePath(item.link) }"
+          :to="{
+            path: item.root ? preparePath(item.link) : '/' + meshPath + preparePath(item.link)
+          }"
         >
           {{ item.name }}
           <!-- <span

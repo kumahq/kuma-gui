@@ -2,6 +2,19 @@ export default {
 
   sections: [
     {
+      name: 'Global',
+      id: 'global',
+      skipRbac: true,
+      items: [
+        {
+          name: 'Global Overview',
+          link: '/overview',
+          title: false,
+          root: true
+        }
+      ]
+    },
+    {
       name: 'General',
       id: 'general',
       skipRbac: true,

@@ -7,17 +7,22 @@ export default class Kuma {
     this.options = opts
     this.client = opts.client || new RestClient(opts)
 
-    // `workspace` is `mesh` in this context
-    this.workspace = opts.workspace
+    // this.workspace = opts.workspace
   }
 
   buildUrl (path) {
     return this.client.buildUrl(path)
   }
 
-  getInfo (workspace) {
-    return this.client.get(`/${workspace}`)
-  }
+  // getInfo (workspace) {
+  //   return this.client.get(`/${workspace}`)
+  // }
+
+  // get info about Kuma from the root of the HTTP API
+  // NOTE: this one doesn't work because of a CORS issue
+  // getInfo () {
+  //   return this.client.get('')
+  // }
 
   // get a list of all meshes
   getAllMeshes () {

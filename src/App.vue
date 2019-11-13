@@ -34,8 +34,11 @@ export default {
     // fetch the mesh list
     this.$store.dispatch('fetchMeshList')
 
-    // fetch the dataplanes for the current mesh
-    // this.$store.dispatch('fetchDataplanesFromMesh')
+    // fetch the version
+    // this.$store.dispatch('getVersion')
+
+    // fetch the tagline
+    // this.$store.dispatch('getTagline')
 
     if (!localStorage.getItem('selectedMesh')) {
       setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)

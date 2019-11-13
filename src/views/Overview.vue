@@ -54,7 +54,7 @@ export default {
     return {
       tableData: {
         headers: [
-          { label: 'Mesh', key: 'name' },
+          { label: 'Name', key: 'name' },
           { label: 'Type', key: 'type' },
           { key: 'actions', hideLabel: true }
         ],
@@ -71,7 +71,7 @@ export default {
         },
         {
           metric: 'Total Number of Dataplanes',
-          value: 1234567
+          value: this.$store.state.totalDataplaneCount
         }
       ]
     }
@@ -86,19 +86,20 @@ export default {
   },
   methods: {
     bootstrap () {
+      // get the total mesh count
       this.$store.dispatch('getMeshTotalCount')
+
+      // get the total dataplane count within this mesh
       this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
 
+      // get the total dataplane count
+      this.$store.dispatch('getDataplaneTotalCount')
+
+      // prepare and populate the table data
       const getMeshData = () => {
         return this.$api.getAllMeshes()
           .then(response => {
-            const items = response.items
-            const rows = items.map(item => ({
-              name: item.name,
-              type: item.type
-            }))
-
-            this.tableData.data.push(...rows)
+            this.tableData.data.push(...response.items)
           })
           .catch(error => {
             console.error(error)
