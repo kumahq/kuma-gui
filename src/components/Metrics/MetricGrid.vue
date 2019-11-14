@@ -40,7 +40,8 @@ export default {
 
   props: {
     metrics: {
-      type: Object,
+      // type: Object,
+      type: Array,
       required: true,
       default: () => {}
     }

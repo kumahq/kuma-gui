@@ -1,6 +1,7 @@
 <template>
   <div class="overview">
     <page-header noflex>
+      <!-- <Breadcrumbs /> -->
       <h2 class="title-3x">
         {{ this.$route.meta.title }}
       </h2>
@@ -9,6 +10,7 @@
       :metrics="overviewMetrics"
     />
     <KTable
+      v-if="tableData.data.length"
       has-hover
       :options="tableData"
     >
@@ -28,16 +30,16 @@
         </router-link>
       </template>
     </KTable>
+    <div v-else>
+      <p>There are no meshes present!</p>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import PageHeader from '@/components/Utils/PageHeader.vue'
-import MetricGrid from '@/components/Metrics/MetricGrid'
-import KSkeleton from '@/components/Skeletons/KSkeleton'
-// import { options as timeFrameOptions } from '@/schemas/TimeFrames'
-// import TimeFramePicker from '@/pdk/components/TimeFramePicker'
+import MetricGrid from '@/components/Metrics/MetricGrid.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Overview',
@@ -48,7 +50,8 @@ export default {
   },
   components: {
     MetricGrid,
-    PageHeader
+    PageHeader,
+    Breadcrumbs
   },
   data () {
     return {
@@ -99,7 +102,11 @@ export default {
       const getMeshData = () => {
         return this.$api.getAllMeshes()
           .then(response => {
-            this.tableData.data.push(...response.items)
+            const items = response.items
+
+            if (items && items.length) {
+              this.tableData.data = [...items]
+            }
           })
           .catch(error => {
             console.error(error)

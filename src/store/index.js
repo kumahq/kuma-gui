@@ -121,15 +121,12 @@ export default (api) => {
         const getDataplanes = async () => {
           const meshes = await api.getAllMeshes()
           const result = []
-          let total
 
           for (let i = 0; i < meshes.items.length; i++) {
             const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
             const dpCount = await dataplanes.items.length
 
-            total += dpCount
-
-            await result.push(dpCount)
+            result.push(dpCount)
           }
 
           const reduced = result.reduce((a, b) => a + b, 0)

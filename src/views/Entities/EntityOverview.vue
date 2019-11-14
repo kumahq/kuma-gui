@@ -1,7 +1,9 @@
 <template>
-  <div class="overview">
+  <div
+    v-if="isLoaded"
+    class="overview"
+  >
     <MetricGrid
-      v-if="isLoaded"
       :metrics="mockMetricsData"
     />
     <!-- charts and stats will go here once we have data to work with -->
@@ -40,7 +42,7 @@ export default {
     }
   },
   watch: {
-    $route (to, from) {
+    '$route' (to, from) {
       this.bootstrap()
     }
   },

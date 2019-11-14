@@ -13,11 +13,11 @@ const routes = [
   },
   {
     path: '/',
-    redirect: { name: 'overview' }
+    redirect: { name: 'global-overview' }
   },
   {
     path: '/overview',
-    name: 'overview',
+    name: 'global-overview',
     meta: {
       title: 'Global Overview',
       excludeAsBreadcrumb: true
@@ -28,8 +28,7 @@ const routes = [
     path: '/:mesh',
     name: 'mesh',
     meta: {
-      title: 'Overview',
-      excludeAsBreadcrumb: true
+      title: 'Overview'
     },
     params: { mesh: ':mesh' },
     component: () => import('@/views/Shell'),
@@ -37,7 +36,11 @@ const routes = [
       {
         path: 'overview',
         name: 'mesh-overview',
-        meta: { title: 'Overview' },
+        meta: {
+          title: 'Overview',
+          breadcrumb: 'Overview',
+          parent: 'global-overview'
+        },
         component: () => import('@/views/Entities/EntityOverview')
       },
       {
@@ -46,16 +49,16 @@ const routes = [
         meta: {
           title: 'Dataplanes',
           breadcrumb: 'Dataplanes',
-          parent: 'mesh'
+          parent: 'gtlobal-overview'
         },
         component: () => import('@/views/Entities/EntityDataplanes'),
         children: [
           {
-            path: ':dataplane',
+            path: ':dataplane?',
             name: 'dataplane-details',
             meta: {
               title: 'Dataplanes',
-              breadcrumb: 'Dataplane',
+              breadcrumb: ':dataplane',
               parent: 'dataplanes'
             },
             params: { dataplane: ':dataplane' },
@@ -106,6 +109,12 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: routes
+})
+
+// Set $router.previous on each route
+router.beforeResolve((to, from, next) => {
+  router.previous = from
+  next()
 })
 
 export default router

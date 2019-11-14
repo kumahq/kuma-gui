@@ -2,7 +2,7 @@
   <Krumbs
     v-if="!hideBreadcrumbs"
     :items="routes"
- />
+  />
 </template>
 
 <script>
@@ -89,7 +89,7 @@ export default {
     calculateRouteText (route) {
       // TODO: support child routes that are children of :id to support routes
       // like /workspaces/:id/services/:id/update
-      if (route.path && route.path.indexOf(':id') > -1) {
+      if (route.path && route.path.indexOf(':mesh') > -1) {
         const params = this.$router.currentRoute.params
 
         return (

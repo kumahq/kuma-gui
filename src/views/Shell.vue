@@ -1,9 +1,9 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <Breadcrumbs />
+      <!-- <Breadcrumbs /> -->
       <h2 class="title-3x">
-        {{ this.$route.meta.title }}<span v-if="this.$route.params.mesh"> for {{ this.$route.params.mesh }}</span>
+        {{ this.$route.meta.title }}<span v-if="this.$route.params.mesh"> for &quot;{{ this.$route.params.mesh }}&quot; mesh</span>
       </h2>
     </page-header>
     <page-content>
@@ -23,6 +23,11 @@ export default {
     PageHeader,
     PageContent,
     Breadcrumbs
+  },
+  metaInfo () {
+    return {
+      title: this.$route.meta.title
+    }
   }
 }
 </script>
