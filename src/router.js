@@ -20,12 +20,13 @@ const routes = [
     name: 'global-overview',
     meta: {
       title: 'Global Overview',
-      excludeAsBreadcrumb: true
+      excludeAsBreadcrumb: false
     },
     component: () => import('@/views/Overview')
   },
   {
     path: '/:mesh',
+    redirect: { name: 'mesh-overview' },
     name: 'mesh',
     meta: {
       title: 'Overview'
@@ -49,36 +50,32 @@ const routes = [
         meta: {
           title: 'Dataplanes',
           breadcrumb: 'Dataplanes',
-          parent: 'gtlobal-overview'
+          parent: 'global-overview'
         },
-        component: () => import('@/views/Entities/EntityDataplanes'),
-        children: [
-          {
-            path: ':dataplane?',
-            name: 'dataplane-details',
-            meta: {
-              title: 'Dataplanes',
-              breadcrumb: ':dataplane',
-              parent: 'dataplanes'
-            },
-            params: { dataplane: ':dataplane' },
-            component: () => import('@/views/Entities/EntityDataplanesDetail')
-          }
-        ]
+        component: () => import('@/views/Entities/EntityDataplanes')
+      },
+      {
+        path: 'dataplanes/:dataplane',
+        name: 'dataplane-details',
+        meta: {
+          title: 'Dataplane Details',
+          breadcrumb: ':dataplane',
+          parent: 'dataplanes'
+        },
+        params: { dataplane: ':dataplane' },
+        component: () => import('@/views/Entities/EntityDataplanesDetail')
       },
       {
         path: 'services',
         name: 'services',
         meta: { title: 'Services' },
-        component: () => import('@/views/Entities/EntityServices'),
-        children: [
-          {
-            path: ':service',
-            name: 'service-details',
-            params: { service: ':service' },
-            component: () => import('@/views/Entities/EntityServicesDetail')
-          }
-        ]
+        component: () => import('@/views/Entities/EntityServices')
+      },
+      {
+        path: 'services/:service',
+        name: 'service-details',
+        params: { service: ':service' },
+        component: () => import('@/views/Entities/EntityServicesDetail')
       },
       {
         path: 'traffic-permissions',
@@ -97,7 +94,7 @@ const routes = [
       {
         path: 'traffic-log',
         name: 'traffic-log',
-        meta: { title: 'Traffic Log' },
+        meta: { title: 'Traffic Logs' },
         component: () => import('@/views/Policies/TrafficLog')
         // child routes?
       }

@@ -4,7 +4,7 @@
     class="overview"
   >
     <MetricGrid
-      :metrics="mockMetricsData"
+      :metrics="metricsData"
     />
     <!-- charts and stats will go here once we have data to work with -->
   </div>
@@ -32,7 +32,7 @@ export default {
     }
   },
   computed: {
-    mockMetricsData () {
+    metricsData () {
       return [
         {
           metric: 'Number of Dataplanes',

@@ -11,9 +11,9 @@
       >
         <router-link
           :to="{
-            name: 'mesh-overview',
+            name: 'dataplane-details',
             params: {
-              mesh: row.name
+              dataplane: row.name
             }
           }"
         >
@@ -22,7 +22,7 @@
       </template>
     </KTable>
     <div v-else>
-      <p>There are no dataplanes for {{ this.$route.params.mesh }}</p>
+      <p>There are no dataplanes tied to <strong>{{ this.$route.params.mesh }}</strong></p>
     </div>
   </div>
 </template>
@@ -63,6 +63,8 @@ export default {
 
             if (items && items.length) {
               this.tableData.data = [...items]
+            } else {
+              this.tableData.data = []
             }
           })
           .catch(error => {

@@ -1,5 +1,6 @@
 <template>
   <div class="dataplanes-detail">
+    <p>Hello world</p>
     <p>This is the Dataplanes Detail view.</p>
   </div>
 </template>
@@ -8,9 +9,9 @@
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
-  name: 'Dataplanes',
+  name: 'DataplanesDetails',
   metaInfo: {
-    title: 'Dataplanes'
+    title: 'Dataplane Details'
   },
   components: {
     MetricGrid

@@ -21,7 +21,8 @@ export default (api) => {
       totalDataplaneCount: 0,
       totalDataplaneCountFromMesh: 0,
       tagline: null,
-      version: null
+      version: null,
+      status: null
     },
     getters: {
       getSelectedMesh (state) {
@@ -47,6 +48,9 @@ export default (api) => {
       },
       getTagline (state) {
         return state.tagline
+      },
+      getStatus (state) {
+        return state.status
       }
     },
     mutations: {
@@ -73,6 +77,9 @@ export default (api) => {
       },
       SET_TAGLINE (state, tagline) {
         state.tagline = tagline
+      },
+      SET_STATUS (state, status) {
+        state.status = status
       }
     },
     actions: {
@@ -169,6 +176,14 @@ export default (api) => {
           })
           .catch(error => {
             console.error(error)
+          })
+      },
+
+      // get the status of the API
+      getStatus ({ commit }) {
+        return api.getStatus()
+          .then(response => {
+            commit('SET_STATUS', response.statusText)
           })
       }
     }

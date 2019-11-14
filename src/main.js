@@ -27,8 +27,7 @@ import '@/assets/styles/inputs.css'
 import '@kongponents/styles/styles.css'
 
 const kuma = new Kuma({
-  url: `${process.env.VUE_APP_KUMA_API}:${process.env.VUE_APP_KUMA_API_PORT}` || false,
-  workspace: 'default' // Kuma's default mesh is called 'default'
+  url: process.env.VUE_APP_KUMA_API || false
 })
 
 // Instance properties

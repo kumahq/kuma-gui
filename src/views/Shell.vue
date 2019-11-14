@@ -3,7 +3,7 @@
     <page-header noflex>
       <!-- <Breadcrumbs /> -->
       <h2 class="title-3x">
-        {{ this.$route.meta.title }}<span v-if="this.$route.params.mesh"> for &quot;{{ this.$route.params.mesh }}&quot; mesh</span>
+        {{ this.$route.meta.title }}
       </h2>
     </page-header>
     <page-content>

@@ -6,23 +6,15 @@ export default class Kuma {
 
     this.options = opts
     this.client = opts.client || new RestClient(opts)
-
-    // this.workspace = opts.workspace
   }
 
   buildUrl (path) {
     return this.client.buildUrl(path)
   }
 
-  // getInfo (workspace) {
-  //   return this.client.get(`/${workspace}`)
-  // }
-
-  // get info about Kuma from the root of the HTTP API
-  // NOTE: this one doesn't work because of a CORS issue
-  // getInfo () {
-  //   return this.client.get('')
-  // }
+  /**
+   * Meshes
+   */
 
   // get a list of all meshes
   getAllMeshes () {
@@ -33,6 +25,10 @@ export default class Kuma {
   getMesh (name, params) {
     return this.client.get(`/meshes/${name}`, { params })
   }
+
+  /**
+   * Dataplanes
+   */
 
   // get a list of all dataplanes
   getAllDataplanesFromMesh (name, params) {
@@ -47,6 +43,33 @@ export default class Kuma {
   // get dataplane overviews
   getDataplaneOverviews (mesh, dataplane, params) {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
+  }
+
+  /**
+   * Traffic / Policies
+   */
+
+  // get traffic logs
+  getTrafficLogs (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-logs/`, { params })
+  }
+
+  // get traffic permissions
+  getTrafficPermissions (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-permissions`, { params })
+  }
+
+  // get traffic routes
+  getTrafficRoutes (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-routes`, { params })
+  }
+
+  /**
+   * Proxies
+   */
+
+  getProxyTemplates (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/proxytemplates`, { params })
   }
 
   /**
