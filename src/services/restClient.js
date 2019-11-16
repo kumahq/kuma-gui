@@ -5,17 +5,61 @@ export default class RestClient {
   constructor (options) {
     const opts = options || {}
 
-    this.host = opts.url
+    // this.host = opts.url
 
     // leave this blank!
     this.headers = {}
 
     RestClient.setupMocks(opts.injectMocks)
 
-    this.client = axios.create({
-      baseURL: this.host,
+    RestClient.apiConfig()
+
+    this.client = RestClient.axiosInit()
+  }
+
+  /**
+   * apiConfig
+   *
+   * This function looks the API URL in a config endpoint.
+   * It will then use that URL as the source for querying data.
+   * The URL and Kuma environment are stored in localStorage
+   * for use throughout the app as needed.
+   */
+
+  static apiConfig () {
+    axios
+      .get(process.env.VUE_APP_KUMA_CONFIG)
+      .then(response => {
+        const apiUrl = response.data.apiUrl
+        const kumaEnv = response.data.environment
+
+        if (!localStorage.getItem('kumaApiUrl')) {
+          localStorage.setItem('kumaApiUrl', apiUrl)
+        }
+
+        if (!localStorage.getItem('kumaEnv')) {
+          localStorage.setItem('kumaEnv', kumaEnv)
+        }
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  /**
+   * axiosInit
+   *
+   * This function creates the Axios endpoint with the
+   * value from localStorage
+   */
+  static axiosInit () {
+    const apiUrlFromLS = localStorage.getItem('kumaApiUrl')
+    const kumaEnvFromLS = localStorage.getItem('kumaEnv')
+
+    return axios.create({
+      baseURL: apiUrlFromLS,
       headers: this.headers,
-      ...opts.axiosConfig
+      ...this.axiosConfig
     })
   }
 
@@ -43,19 +87,18 @@ export default class RestClient {
     return `${this.host}${path}`
   }
 
-  get (path, options) {
-    const opts = options || {}
-    const url = this.buildUrl(path)
+  async get (path, options) {
+    const opts = await options || {}
+    // const url = this.buildUrl(path)
+    const url = await path
+    const client = await this.client
 
-    const promise = this.client
-      .get(url, opts)
+    return client.get(url, opts)
       .then(response => {
         return response.data
       })
       .catch(error => {
         console.error(error)
       })
-
-    return promise
   }
 }

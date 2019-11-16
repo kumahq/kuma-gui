@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     status () {
-      return `Connected to Kuma at ${process.env.VUE_APP_KUMA_API}:${process.env.VUE_APP_KUMA_API_PORT}`
+      return `Connected to Kuma at ${process.env.VUE_APP_KUMA_API}`
     }
   }
 }

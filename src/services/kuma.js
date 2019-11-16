@@ -5,7 +5,7 @@ export default class Kuma {
     const opts = options || {}
 
     this.options = opts
-    this.client = opts.client || new RestClient(opts)
+    this.client = new RestClient(opts)
   }
 
   buildUrl (path) {

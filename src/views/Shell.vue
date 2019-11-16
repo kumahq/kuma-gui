@@ -3,7 +3,7 @@
     <page-header noflex>
       <!-- <Breadcrumbs /> -->
       <h2 class="title-3x">
-        {{ this.$route.meta.title }}
+        {{ pageTitle }}
       </h2>
     </page-header>
     <page-content>
@@ -24,9 +24,23 @@ export default {
     PageContent,
     Breadcrumbs
   },
-  metaInfo () {
-    return {
-      title: this.$route.meta.title
+  computed: {
+    pageTitle () {
+      const title = this.$route.meta.title
+      const mesh = this.$route.params.mesh
+      const dataplane = this.$route.params.dataplane
+
+      let assembled
+
+      if (dataplane) {
+        assembled = `${title} for ${dataplane}`
+      } else if (mesh) {
+        assembled = `${title} for ${mesh}`
+      } else {
+        assembled = title
+      }
+
+      return assembled
     }
   }
 }

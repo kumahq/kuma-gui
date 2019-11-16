@@ -26,9 +26,11 @@ import '@/assets/styles/inputs.css'
 // Kong Design System styles
 import '@kongponents/styles/styles.css'
 
-const kuma = new Kuma({
-  url: process.env.VUE_APP_KUMA_API || false
-})
+// const kuma = new Kuma({
+//   url: process.env.VUE_APP_KUMA_API || false
+// })
+
+const kuma = new Kuma()
 
 // Instance properties
 // https://vuejs.org/v2/cookbook/adding-instance-properties.html

@@ -1,19 +1,13 @@
 <template>
-  <div
-    v-if="isLoaded"
-    class="overview"
-  >
+  <div class="overview">
     <MetricGrid
       :metrics="metricsData"
     />
-    <!-- charts and stats will go here once we have data to work with -->
   </div>
 </template>
 
 <script>
-// import { options as timeFrameOptions } from '@/schemas/TimeFrames'
 import MetricGrid from '@/components/Metrics/MetricGrid'
-// import TimeFramePicker from '@/pdk/components/TimeFramePicker'
 
 export default {
   name: 'Overview',
@@ -24,25 +18,31 @@ export default {
   },
   components: {
     MetricGrid
-    // TimeFramePicker
-  },
-  data () {
-    return {
-      isLoaded: false
-    }
   },
   computed: {
     metricsData () {
       return [
         {
-          metric: 'Number of Dataplanes',
+          metric: 'Dataplanes',
           value: this.$store.state.totalDataplaneCountFromMesh
+        },
+        {
+          metric: 'Traffic Routes',
+          value: this.$store.state.totalTrafficRoutesCountFromMesh
+        },
+        {
+          metric: 'Traffic Permissions',
+          value: this.$store.state.totalTrafficPermissionsCountFromMesh
+        },
+        {
+          metric: 'Traffic Logs',
+          value: this.$store.state.totalTrafficLogsCountFromMesh
         }
       ]
     }
   },
   watch: {
-    '$route' (to, from) {
+    $route (to, from) {
       this.bootstrap()
     }
   },
@@ -52,9 +52,16 @@ export default {
   methods: {
     bootstrap () {
       // get the total number of dataplanes from selected mesh
-      this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
+      this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
 
-      this.isLoaded = true
+      // get the total number of traffic routes from selected mesh
+      this.$store.dispatch('getTrafficRoutesFromMeshTotalCount', this.$route.params.mesh)
+
+      // get the total number of traffic permissions from selected mesh
+      this.$store.dispatch('getTrafficPermissionsFromMeshTotalCount', this.$route.params.mesh)
+
+      // get the total number of traffic logs from selected mesh
+      this.$store.dispatch('getTrafficLogsFromMeshTotalCount', this.$route.params.mesh)
     }
   }
 }

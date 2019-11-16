@@ -20,7 +20,8 @@ const routes = [
     name: 'global-overview',
     meta: {
       title: 'Global Overview',
-      excludeAsBreadcrumb: false
+      excludeAsBreadcrumb: true,
+      parent: 'global-overview'
     },
     component: () => import('@/views/Overview')
   },
@@ -106,12 +107,6 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: routes
-})
-
-// Set $router.previous on each route
-router.beforeResolve((to, from, next) => {
-  router.previous = from
-  next()
 })
 
 export default router

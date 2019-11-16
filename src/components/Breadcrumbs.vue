@@ -1,8 +1,11 @@
 <template>
-  <Krumbs
-    v-if="!hideBreadcrumbs"
-    :items="routes"
-  />
+  <div>
+    <Krumbs
+      v-if="!hideBreadcrumbs"
+      :items="routes"
+    />
+    {{ routes }}
+  </div>
 </template>
 
 <script>

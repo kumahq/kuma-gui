@@ -93,7 +93,7 @@ export default {
       this.$store.dispatch('getMeshTotalCount')
 
       // get the total dataplane count within this mesh
-      this.$store.dispatch('getDataplanFromMeshTotalCount', this.$route.params.mesh)
+      this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
 
       // get the total dataplane count
       this.$store.dispatch('getDataplaneTotalCount')

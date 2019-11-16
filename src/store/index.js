@@ -20,6 +20,9 @@ export default (api) => {
       totalMeshCount: 0,
       totalDataplaneCount: 0,
       totalDataplaneCountFromMesh: 0,
+      totalTrafficRoutesCountFromMesh: 0,
+      totalTrafficPermissionsCountFromMesh: 0,
+      totalTrafficLogsCountFromMesh: 0,
       tagline: null,
       version: null,
       status: null
@@ -42,6 +45,15 @@ export default (api) => {
       },
       getTotalDataplaneCountFromMesh (state) {
         return state.totalDataplaneCountFromMesh
+      },
+      getTotalTrafficRoutesCountFromMesh (state) {
+        return state.totalTrafficRoutesCountFromMesh
+      },
+      getTotalTrafficPermissionsCountFromMesh (state) {
+        return state.totalTrafficPermissionsCountFromMesh
+      },
+      getTrafficLogsFromMeshTotalCount (state) {
+        return state.totalTrafficLogsCountFromMesh
       },
       getVersion (state) {
         return state.version
@@ -71,6 +83,15 @@ export default (api) => {
       },
       SET_TOTAL_DP_COUNT_FROM_MESH (state, count) {
         state.totalDataplaneCountFromMesh = count
+      },
+      SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH (state, count) {
+        state.totalTrafficRoutesCountFromMesh = count
+      },
+      SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH (state, count) {
+        state.totalTrafficPermissionsCountFromMesh = count
+      },
+      SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH (state, count) {
+        state.totalTrafficLogsCountFromMesh = count
       },
       SET_VERSION (state, version) {
         state.version = version
@@ -145,12 +166,51 @@ export default (api) => {
       },
 
       // get the total number of dataplanes from a mesh
-      getDataplanFromMeshTotalCount ({ commit }, mesh) {
+      getDataplaneFromMeshTotalCount ({ commit }, mesh) {
         return api.getAllDataplanesFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
             commit('SET_TOTAL_DP_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic routes from a mesh
+      getTrafficRoutesFromMeshTotalCount ({ commit }, mesh) {
+        return api.getTrafficRoutes(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic permissions from a mesh
+      getTrafficPermissionsFromMeshTotalCount ({ commit }, mesh) {
+        return api.getTrafficPermissions(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic logs from a mesh
+      getTrafficLogsFromMeshTotalCount ({ commit }, mesh) {
+        return api.getTrafficLogs(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

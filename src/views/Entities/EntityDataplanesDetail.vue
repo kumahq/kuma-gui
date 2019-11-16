@@ -1,7 +1,6 @@
 <template>
   <div class="dataplanes-detail">
-    <p>Hello world</p>
-    <p>This is the Dataplanes Detail view.</p>
+    {{ content }}
   </div>
 </template>
 
@@ -18,6 +17,29 @@ export default {
   },
   data () {
     return {
+      content: null
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.bootstrap()
+    }
+  },
+  beforeMount () {
+    this.bootstrap()
+  },
+  methods: {
+    bootstrap () {
+      const mesh = this.$route.params.mesh
+      const dataplane = this.$route.params.dataplane
+
+      return this.$api.getDataplaneOverviews(mesh, dataplane)
+        .then(response => {
+          this.content = response
+        })
+        .catch(error => {
+          console.error(error)
+        })
     }
   }
 }
