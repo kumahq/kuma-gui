@@ -13,6 +13,14 @@ export default class Kuma {
   }
 
   /**
+   * Root
+   */
+
+  getApiRoot () {
+    return this.client.get('/')
+  }
+
+  /**
    * Meshes
    */
 

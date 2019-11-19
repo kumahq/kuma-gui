@@ -20,7 +20,7 @@ export default class RestClient {
   /**
    * apiConfig
    *
-   * This function looks the API URL in a config endpoint.
+   * This function looks for the API URL in a config endpoint.
    * It will then use that URL as the source for querying data.
    * The URL and Kuma environment are stored in localStorage
    * for use throughout the app as needed.
@@ -95,7 +95,9 @@ export default class RestClient {
 
     return client.get(url, opts)
       .then(response => {
-        return response.data
+        const data = response.data
+
+        return data
       })
       .catch(error => {
         console.error(error)

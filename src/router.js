@@ -11,12 +11,15 @@ const routes = [
     meta: { title: 'Page not found' },
     component: () => import('@/views/NotFound')
   },
+  // for testing
   {
-    path: '/',
-    redirect: { name: 'global-overview' }
+    path: '/test',
+    name: 'test-overview',
+    component: () => import('@/views/Entities/TestOverview')
   },
   {
     path: '/overview',
+    alias: '/',
     name: 'global-overview',
     meta: {
       title: 'Global Overview',

@@ -5,7 +5,7 @@
       has-hover
       :options="tableData"
     >
-      <template
+      <!-- <template
         slot="actions"
         slot-scope="{row}"
       >
@@ -19,7 +19,7 @@
         >
           View Entity
         </router-link>
-      </template>
+      </template> -->
     </KTable>
     <div v-else>
       <p>There are no dataplanes tied to <strong>{{ this.$route.params.mesh }}</strong></p>

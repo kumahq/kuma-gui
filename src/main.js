@@ -2,7 +2,6 @@ import Vue from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 import VueMeta from 'vue-meta'
-import '@/registerServiceWorker'
 import Store from '@/store'
 import Kuma from '@/services/kuma'
 

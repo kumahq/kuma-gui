@@ -1,43 +1,48 @@
 <template>
-  <div class="overview">
-    <MetricGrid
-      v-if="dataLoaded"
-      :metrics="metricsData"
-    />
-    <KEmptyState
-      v-else
-      cta-is-hidden
+  <div class="test-overview">
+    <DataOverview
+      :display-metrics="true"
+      :metrics-data="tableData"
+      :cta-action="ctaAction"
+      :empty-state="empty_state"
     >
-      <template v-slot:title>
-        <div class="card-icon mb-3">
-          <img src="~@/assets/images/icon-empty-table.svg?external">
-        </div>
-        No Data Found
+      <template slot="content">
+        <p>Hello world</p>
       </template>
-    </KEmptyState>
+    </DataOverview>
   </div>
 </template>
 
 <script>
-import MetricGrid from '@/components/Metrics/MetricGrid'
+import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
-  name: 'Overview',
+  name: 'TestOverview',
   metaInfo () {
     return {
       title: `${this.$route.meta.title} for ${this.$route.params.mesh}`
     }
   },
   components: {
-    MetricGrid
+    DataOverview
   },
   data () {
     return {
-      dataLoaded: false
+      isLoading: true,
+      isEmpty: false,
+      hasError: false,
+      empty_state: {
+        title: 'No Data',
+        message: 'There are no items present.',
+        ctaText: 'Hello World'
+      }
     }
   },
   computed: {
-    metricsData () {
+    ctaAction () {
+      return { name: 'global-overview' }
+    },
+    tableData () {
       return [
         {
           metric: 'Dataplanes',
@@ -68,7 +73,8 @@ export default {
   },
   methods: {
     bootstrap () {
-      this.dataLoaded = true
+      this.isLoading = true
+      this.isEmpty = false
 
       // get the total number of dataplanes from selected mesh
       this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
@@ -85,18 +91,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.empty-state-title {
-
-  .card-icon {
-    text-align: center;
-
-    img {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-}
-</style>

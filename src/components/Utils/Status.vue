@@ -1,13 +1,18 @@
 <template>
   <div class="status">
-    <span class="status__dot" :class="{ 'is-active': active }"></span>
-    <span class="status__label">{{ content }}</span>
+    <span
+      class="status__dot"
+      :class="{ 'is-active': active }"
+    />
+    <span class="status__label">
+      {{ content }}
+    </span>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Status",
+  name: 'Status',
   props: {
     content: {
       type: String,
@@ -18,7 +23,7 @@ export default {
       default: false
     }
   }
-};
+}
 </script>
 
 <style scoped>

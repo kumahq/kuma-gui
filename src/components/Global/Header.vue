@@ -15,7 +15,7 @@
       <div class="px-4">
         <status
           :content="status"
-          active
+          :active="true"
         />
       </div>
     </div>
@@ -29,9 +29,27 @@ export default {
   components: {
     Status
   },
+  data () {
+    return {
+      appStatus: false
+    }
+  },
   computed: {
     status () {
-      return `Connected to Kuma at ${process.env.VUE_APP_KUMA_API}`
+      const env = localStorage.getItem('kumaEnv')
+      const apiUrl = localStorage.getItem('kumaApiUrl')
+
+      if (env) {
+        this.appStatus = true
+
+        return `Running Kuma on ${env}`
+      } else if (!apiUrl) {
+        this.appStatus = false
+
+        return 'Kuma is offline'
+      }
+
+      return false
     }
   }
 }

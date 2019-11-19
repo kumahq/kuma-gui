@@ -1,10 +1,10 @@
 /* Base */
 
 html {
-  font-size: var(--base-font-size-root);
+  /* font-size: var(--base-font-size-root); */
 }
 
 body {
   font-family: var(--base-font-family);
-  font-size: var(--base-font-size);
+  /* font-size: var(--base-font-size); */
 }
