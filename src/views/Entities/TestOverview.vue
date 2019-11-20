@@ -5,7 +5,13 @@
       :metrics-data="tableData"
       :cta-action="ctaAction"
       :empty-state="empty_state"
+      :display-data-table="true"
+      :table-data="tableRowData"
+      table-actions-route-name="mesh-overview"
     >
+      <template slot="tableDataActionsLinkText">
+        View Entity
+      </template>
       <template slot="content">
         <p>Hello world</p>
       </template>
@@ -35,6 +41,14 @@ export default {
         title: 'No Data',
         message: 'There are no items present.',
         ctaText: 'Hello World'
+      },
+      tableRowData: {
+        headers: [
+          { label: 'Name', key: 'name' },
+          { label: 'Type', key: 'type' },
+          { key: 'actions', hideLabel: true }
+        ],
+        data: []
       }
     }
   },
@@ -87,6 +101,28 @@ export default {
 
       // get the total number of traffic logs from selected mesh
       this.$store.dispatch('getTrafficLogsFromMeshTotalCount', this.$route.params.mesh)
+
+      // get the mesh from our route params
+      const mesh = 'default'
+
+      // prepare and populate the table data
+      const getMeshData = () => {
+        return this.$api.getAllDataplanesFromMesh(mesh)
+          .then(response => {
+            const items = response.items
+
+            if (items && items.length) {
+              this.tableRowData.data = [...items]
+            } else {
+              this.tableRowData.data = []
+            }
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
+
+      getMeshData()
     }
   }
 }

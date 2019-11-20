@@ -8,12 +8,12 @@
       v-if="isLoading"
       cta-is-hidden
     >
-      <template v-slot:title>
+      <template slot="title">
         {{ emptyState.title }}
       </template>
       <template
         v-if="showCta"
-        v-slot:message
+        slot="message"
       >
         <router-link
           v-if="ctaAction && ctaAction.length"
@@ -24,7 +24,31 @@
         {{ emptyState.message }}
       </template>
     </KEmptyState>
-    <div v-if="isReady">
+    <KTable
+      v-if="displayDataTable && tableData"
+      :options="tableData"
+    >
+      <template
+        slot="actions"
+        slot-scope="{ row }"
+      >
+        <router-link
+          :to="{
+            name: tableActionsRouteName,
+            params: {
+              mesh: row.name,
+              dataplane: row.dataplane !== undefined ? row.dataplane : ''
+            }
+          }"
+        >
+          <slot name="tableDataActionsLinkText" />
+        </router-link>
+      </template>
+    </KTable>
+    <div
+      v-if="$slots.content"
+      class="data-overview-content mt-4"
+    >
       <slot name="content" />
     </div>
   </div>
@@ -70,6 +94,22 @@ export default {
     showCta: {
       type: Boolean,
       default: true
+    },
+    displayDataTable: {
+      type: Boolean,
+      default: false
+    },
+    tableData: {
+      type: Object,
+      default: null
+    },
+    tableDataActionsLink: {
+      type: String,
+      default: null
+    },
+    tableActionsRouteName: {
+      type: String,
+      default: null
     }
   },
   computed: {
