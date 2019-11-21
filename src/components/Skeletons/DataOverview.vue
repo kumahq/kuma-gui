@@ -10,7 +10,7 @@
         :metrics="metricsData"
       />
       <KEmptyState
-        v-if="isLoading"
+        v-else-if="isLoading && displayMetrics"
         cta-is-hidden
       >
         <template slot="title">
@@ -43,8 +43,8 @@
             :to="{
               name: tableActionsRouteName,
               params: {
-                mesh: row.name,
-                dataplane: row.dataplane !== undefined ? row.dataplane : ''
+                mesh: row.type === 'Mesh' ? row.name : row.mesh,
+                dataplane: row.type === 'Dataplane' ? row.name : null
               }
             }"
           >

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from '@/App.vue'
-import router from '@/router'
+import Router from '@/router'
 import VueMeta from 'vue-meta'
 import Store from '@/store'
 import Kuma from '@/services/kuma'
@@ -36,6 +36,8 @@ const kuma = new Kuma()
 Vue.prototype.$api = kuma
 
 const store = Store(kuma)
+
+const router = Router(store)
 
 Vue.use(VueMeta)
 

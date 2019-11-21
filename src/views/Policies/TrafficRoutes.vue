@@ -1,24 +1,30 @@
 <template>
   <div class="traffic-permissions">
-    <KTable
-      v-if="tableData.data.length"
-      has-hover
-      :options="tableData"
+    <DataOverview
+      :display-data-table="true"
+      :table-data="tableData"
+      :table-data-is-empty="tableDataIsEmpty"
     />
-    <div v-else>
-      <p>There are no traffic routes tied to <strong>{{ this.$route.params.mesh }}</strong></p>
-    </div>
   </div>
 </template>
 
 <script>
+import DataOverview from '@/components/Skeletons/DataOverview'
+
 export default {
   name: 'TrafficRoutes',
   metaInfo: {
     title: 'Traffic Routes'
   },
+  components: {
+    DataOverview
+  },
   data () {
     return {
+      isLoading: true,
+      isEmpty: false,
+      hasError: false,
+      tableDataIsEmpty: false,
       tableData: {
         headers: [
           { label: 'Name', key: 'name' },
@@ -48,11 +54,16 @@ export default {
 
             if (items && items.length) {
               this.tableData.data = [...items]
+              this.tableDataIsEmpty = false
             } else {
               this.tableData.data = []
+              this.tableDataIsEmpty = true
             }
           })
           .catch(error => {
+            this.tableDataIsEmpty = true
+            this.isEmpty = true
+
             console.error(error)
           })
       }

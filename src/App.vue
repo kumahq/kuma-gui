@@ -3,7 +3,16 @@
     <global-header />
     <div class="main-content-container">
       <sidebar />
-      <main class="main-content">
+      <div
+        v-if="loading"
+        class="full-screen"
+      >
+        <KLoader />
+      </div>
+      <main
+        v-if="!loading && loading !== null"
+        class="main-content"
+      >
         <div class="page">
           <router-view />
         </div>
@@ -13,15 +22,17 @@
 </template>
 
 <script>
-import { getItemFromStorage, setItemToStorage } from '@/Cache'
+import { setItemToStorage } from '@/Cache'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
+import KLoader from '@/components/KLoader'
 
 export default {
   components: {
     GlobalHeader,
-    Sidebar
+    Sidebar,
+    KLoader
   },
   metaInfo: {
     title: 'Home',
@@ -30,7 +41,12 @@ export default {
       lang: 'en'
     }
   },
-  mounted () {
+  computed: {
+    ...mapState({
+      loading: state => state.globalLoading
+    })
+  },
+  beforeMount () {
     // fetch the mesh list
     this.$store.dispatch('fetchMeshList')
 
@@ -47,8 +63,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .main-content {
   padding: 44px;
+}
+
+.full-screen {
+  background: #fff;
+  position: fixed;
+  top: 4rem;
+  bottom: 0;
+  width: 100%;
+  z-index: 50000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

@@ -13,6 +13,7 @@ export default (api) => {
       // workspaces
     },
     state: {
+      globalLoading: null,
       meshes: [],
       dataplanes: [],
       selectedMesh: 'default',
@@ -28,6 +29,9 @@ export default (api) => {
       status: null
     },
     getters: {
+      globalLoading (state) {
+        return state.globalLoading
+      },
       getSelectedMesh (state) {
         return state.selectedMesh
       },
@@ -66,6 +70,9 @@ export default (api) => {
       }
     },
     mutations: {
+      SET_GLOBAL_LOADING (state, { globalLoading }) {
+        state.globalLoading = globalLoading
+      },
       FETCH_ALL_MESHES (state, meshes) {
         state.meshes = meshes
       },

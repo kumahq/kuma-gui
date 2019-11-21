@@ -1,25 +1,15 @@
 <template>
   <div class="overview">
-    <MetricGrid
-      v-if="dataLoaded"
-      :metrics="metricsData"
+    <DataOverview
+      :display-metrics="true"
+      :metrics-data="metricsData"
+      :empty-state="empty_state"
     />
-    <KEmptyState
-      v-else
-      cta-is-hidden
-    >
-      <template slot="title">
-        <div class="card-icon mb-3">
-          <img src="~@/assets/images/icon-empty-table.svg?external">
-        </div>
-        No Data Found
-      </template>
-    </KEmptyState>
   </div>
 </template>
 
 <script>
-import MetricGrid from '@/components/Metrics/MetricGrid'
+import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
   name: 'Overview',
@@ -29,11 +19,18 @@ export default {
     }
   },
   components: {
-    MetricGrid
+    DataOverview
   },
   data () {
     return {
-      dataLoaded: false
+      isLoading: true,
+      isEmpty: false,
+      hasError: false,
+      tableDataIsEmpty: false,
+      empty_state: {
+        title: 'No Data',
+        message: 'There are no meshes present.'
+      }
     }
   },
   computed: {
@@ -68,7 +65,8 @@ export default {
   },
   methods: {
     bootstrap () {
-      this.dataLoaded = true
+      this.isLoading = true
+      this.isEmpty = false
 
       // get the total number of dataplanes from selected mesh
       this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
