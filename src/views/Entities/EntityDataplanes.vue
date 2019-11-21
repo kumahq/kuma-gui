@@ -4,23 +4,7 @@
       v-if="tableData.data.length"
       has-hover
       :options="tableData"
-    >
-      <!-- <template
-        slot="actions"
-        slot-scope="{row}"
-      >
-        <router-link
-          :to="{
-            name: 'dataplane-details',
-            params: {
-              dataplane: row.name
-            }
-          }"
-        >
-          View Entity
-        </router-link>
-      </template> -->
-    </KTable>
+    />
     <div v-else>
       <p>There are no dataplanes tied to <strong>{{ this.$route.params.mesh }}</strong></p>
     </div>

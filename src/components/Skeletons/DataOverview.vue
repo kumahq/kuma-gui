@@ -1,56 +1,91 @@
 <template>
   <div class="data-overview">
-    <MetricGrid
-      v-if="!isLoading && displayMetrics && metricsData"
-      :metrics="metricsData"
-    />
+    <div
+      v-if="isReady"
+      class="data-overview-content"
+    >
+      <!-- metrics -->
+      <MetricGrid
+        v-if="!isLoading && displayMetrics && metricsData"
+        :metrics="metricsData"
+      />
+      <KEmptyState
+        v-if="isLoading"
+        cta-is-hidden
+      >
+        <template slot="title">
+          {{ emptyState.title }}
+        </template>
+        <template
+          v-if="showCta"
+          slot="message"
+        >
+          <router-link
+            v-if="ctaAction && ctaAction.length"
+            :to="ctaAction"
+          >
+            {{ emptyState.ctaText }}
+          </router-link>
+          {{ emptyState.message }}
+        </template>
+      </KEmptyState>
+
+      <!-- data -->
+      <KTable
+        v-if="displayDataTable && tableDataIsEmpty === false && tableData"
+        :options="tableData"
+      >
+        <template
+          slot="actions"
+          slot-scope="{ row }"
+        >
+          <router-link
+            :to="{
+              name: tableActionsRouteName,
+              params: {
+                mesh: row.name,
+                dataplane: row.dataplane !== undefined ? row.dataplane : ''
+              }
+            }"
+          >
+            <slot name="tableDataActionsLinkText" />
+          </router-link>
+        </template>
+      </KTable>
+      <KEmptyState
+        v-if="tableDataIsEmpty === true"
+        cta-is-hidden
+      >
+        <template slot="title">
+          <div class="card-icon mb-3">
+            <img src="~@/assets/images/icon-empty-table.svg?external">
+          </div>
+          No Items Found
+        </template>
+      </KEmptyState>
+      <!-- additional page content -->
+      <div
+        v-if="$slots.content"
+        class="data-overview-content mt-6"
+      >
+        <slot name="content" />
+      </div>
+    </div>
     <KEmptyState
-      v-if="isLoading"
+      v-else
       cta-is-hidden
     >
       <template slot="title">
-        {{ emptyState.title }}
-      </template>
-      <template
-        v-if="showCta"
-        slot="message"
-      >
-        <router-link
-          v-if="ctaAction && ctaAction.length"
-          :to="ctaAction"
-        >
-          {{ emptyState.ctaText }}
-        </router-link>
-        {{ emptyState.message }}
+        <div class="card-icon mb-3">
+          <KIcon
+            icon="spinner"
+            color="rgba(0, 0, 0, 0.1)"
+            size="48"
+          />
+        </div>
+        Data Loading...
       </template>
     </KEmptyState>
-    <KTable
-      v-if="displayDataTable && tableData"
-      :options="tableData"
-    >
-      <template
-        slot="actions"
-        slot-scope="{ row }"
-      >
-        <router-link
-          :to="{
-            name: tableActionsRouteName,
-            params: {
-              mesh: row.name,
-              dataplane: row.dataplane !== undefined ? row.dataplane : ''
-            }
-          }"
-        >
-          <slot name="tableDataActionsLinkText" />
-        </router-link>
-      </template>
-    </KTable>
-    <div
-      v-if="$slots.content"
-      class="data-overview-content mt-4"
-    >
-      <slot name="content" />
-    </div>
   </div>
 </template>
 
@@ -103,6 +138,10 @@ export default {
       type: Object,
       default: null
     },
+    tableDataIsEmpty: {
+      type: Boolean,
+      default: false
+    },
     tableDataActionsLink: {
       type: String,
       default: null
@@ -126,7 +165,7 @@ export default {
   .card-icon {
     text-align: center;
 
-    img {
+    img, svg {
       display: block;
       margin-left: auto;
       margin-right: auto;

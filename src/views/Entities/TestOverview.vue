@@ -7,13 +7,17 @@
       :empty-state="empty_state"
       :display-data-table="true"
       :table-data="tableRowData"
+      :table-data-is-empty="tableDataIsEmpty"
       table-actions-route-name="mesh-overview"
     >
       <template slot="tableDataActionsLinkText">
         View Entity
       </template>
       <template slot="content">
-        <p>Hello world</p>
+        <h2 class="title-2x">
+          Optional Extra Content Here
+        </h2>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
       </template>
     </DataOverview>
   </div>
@@ -37,6 +41,7 @@ export default {
       isLoading: true,
       isEmpty: false,
       hasError: false,
+      tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
         message: 'There are no items present.',
@@ -113,11 +118,16 @@ export default {
 
             if (items && items.length) {
               this.tableRowData.data = [...items]
+              this.tableDataIsEmpty = false
             } else {
               this.tableRowData.data = []
+              this.tableDataIsEmpty = true
             }
           })
           .catch(error => {
+            this.tableDataIsEmpty = true
+            this.isEmpty = true
+
             console.error(error)
           })
       }

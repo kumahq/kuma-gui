@@ -15,7 +15,7 @@
       <div class="px-4">
         <status
           :content="status"
-          :active="true"
+          :active="appStatus"
         />
       </div>
     </div>
