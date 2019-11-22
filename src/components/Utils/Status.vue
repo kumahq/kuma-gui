@@ -14,10 +14,6 @@
 export default {
   name: 'Status',
   props: {
-    content: {
-      type: String,
-      required: true
-    },
     active: {
       type: Boolean,
       default: false

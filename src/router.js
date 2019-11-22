@@ -19,6 +19,10 @@ export default (store) => {
       component: () => import('@/views/Entities/TestOverview')
     },
     {
+      path: '/',
+      redirect: { name: 'global-overview' }
+    },
+    {
       path: '/overview',
       alias: '/',
       name: 'global-overview',
@@ -108,7 +112,7 @@ export default (store) => {
   ]
 
   const router = new VueRouter({
-    mode: 'history',
+    // mode: 'history',
     base: process.env.BASE_URL,
     routes: routes
   })

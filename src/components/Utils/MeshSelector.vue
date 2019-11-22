@@ -14,7 +14,7 @@
           v-for="item in items.items"
           :key="item.name"
           :value="item.name"
-          :selected="item.name === ($route.params.mesh ? $route.params.mesh : getMeshFromLocalStorage)"
+          :selected="item.name === (meshFromLocalStorage || $route.params.mesh)"
         >
           {{ item.name }}
         </option>
@@ -36,7 +36,7 @@ export default {
     }
   },
   computed: {
-    getMeshFromLocalStorage () {
+    meshFromLocalStorage () {
       return localStorage.getItem('selectedMesh')
     }
   },
