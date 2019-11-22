@@ -1,7 +1,6 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <!-- <Breadcrumbs /> -->
       <h2 class="title-3x">
         {{ pageTitle }}
       </h2>

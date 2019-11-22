@@ -4,7 +4,6 @@
       v-if="!hideBreadcrumbs"
       :items="routes"
     />
-    {{ routes }}
   </div>
 </template>
 

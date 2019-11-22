@@ -5,7 +5,7 @@
       :class="{ 'is-active': active }"
     />
     <span class="status__label">
-      {{ content }}
+      <slot />
     </span>
   </div>
 </template>

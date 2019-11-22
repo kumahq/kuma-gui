@@ -14,6 +14,20 @@
         :index="i"
         :is-last="i === lastMenuList"
       />
+      <div class="sidebar-message">
+        <p>
+          Looking for Analytics Segmentation, Longer Timeframes,
+          business reports, and more?
+        </p>
+        <p>
+          <a
+            href="https://konghq.com/products/kong-enterprise"
+            target="_blank"
+          >
+            Try Kong Enterprise
+          </a>
+        </p>
+      </div>
       <CollapseToggle
         :handle-toggle-collapse="handleToggleCollapse"
       />
@@ -231,5 +245,29 @@ nav {
 /* Fix for IE */
 .workspace-toggle>span{
   top: 10px
+}
+
+.sidebar-message {
+  position: fixed;
+  bottom: 36px;
+  width: 240px;
+  background-color: #FFF5E0;
+  box-shadow: inset 0 1px 0 0 rgba(0,0,0,0.10);
+  padding: 32px;
+  font-size: 14px;
+  line-height: 25px;
+  color: rgba(0, 0, 0, .75);
+
+  nav.closed & {
+    display: none;
+  }
+
+  p:first-of-type {
+    margin-bottom: 16px;
+  }
+
+  a {
+    color: #1782CF;
+  }
 }
 </style>

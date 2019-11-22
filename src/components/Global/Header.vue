@@ -13,10 +13,9 @@
         </router-link>
       </div>
       <div class="px-4">
-        <status
-          :content="status"
-          :active="appStatus"
-        />
+        <status :active="appStatus">
+          {{ statusContent }}
+        </status>
       </div>
     </div>
   </header>
@@ -31,25 +30,25 @@ export default {
   },
   data () {
     return {
-      appStatus: false
+      appStatus: false,
+      statusContent: null
     }
   },
-  computed: {
+  beforeMount () {
+    this.status()
+  },
+  methods: {
     status () {
       const env = localStorage.getItem('kumaEnv')
       const apiUrl = localStorage.getItem('kumaApiUrl')
 
-      if (env) {
+      if (env && apiUrl) {
+        this.statusContent = `Kuma is running on ${env}`
         this.appStatus = true
-
-        return `Running Kuma on ${env}`
-      } else if (!apiUrl) {
+      } else {
+        this.statusContent = 'Unable to determine Kuma\'s status'
         this.appStatus = false
-
-        return 'Kuma is offline'
       }
-
-      return false
     }
   }
 }
