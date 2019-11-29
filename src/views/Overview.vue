@@ -30,9 +30,17 @@
         </router-link>
       </template>
     </KTable>
-    <div v-else>
-      <p>There are no meshes present!</p>
-    </div>
+    <KEmptyState
+      v-else
+      cta-is-hidden
+    >
+      <template slot="title">
+        <div class="card-icon mb-3">
+          <img src="~@/assets/images/icon-empty-table.svg?external">
+        </div>
+        No meshes found!
+      </template>
+    </KEmptyState>
   </div>
 </template>
 
@@ -118,3 +126,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.empty-state-title {
+
+  .card-icon {
+    text-align: center;
+
+    img, svg {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+</style>

@@ -20,9 +20,11 @@
         </option>
       </select>
     </div>
-    <div v-else>
-      <p>No meshes.</p>
-    </div>
+    <KAlert
+      v-else
+      appearance="danger"
+      alert-message="No meshes found!"
+    />
   </div>
 </template>
 
