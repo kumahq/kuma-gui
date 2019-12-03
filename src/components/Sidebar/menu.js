@@ -21,12 +21,14 @@ export default {
       items: [
         {
           name: 'General',
-          title: true
+          title: true,
+          parent: 'general'
         },
         {
           name: 'Overview',
           link: '/overview',
-          title: false
+          title: false,
+          parent: 'general'
         }
       ]
     },
@@ -42,12 +44,14 @@ export default {
         // {
         //   name: 'Services',
         //   link: '/services',
-        //   title: false
+        //   title: false,
+        //   parent: entities
         // },
         {
           name: 'Dataplanes',
           link: '/dataplanes',
-          title: false
+          title: false,
+          parent: 'entities'
         }
       ]
     },
@@ -63,17 +67,20 @@ export default {
         {
           name: 'Traffic Permissions',
           link: '/traffic-permissions',
-          title: false
+          title: false,
+          parent: 'policies'
         },
         {
           name: 'Traffic Routes',
           link: '/traffic-routes',
-          title: false
+          title: false,
+          parent: 'policies'
         },
         {
           name: 'Traffic Log',
           link: '/traffic-log',
-          title: false
+          title: false,
+          parent: 'policies'
         }
       ]
     }

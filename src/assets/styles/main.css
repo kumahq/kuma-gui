@@ -5,6 +5,7 @@ html {
 }
 
 body {
+  padding-top: var(--topbar-height);
   font-family: var(--base-font-family);
   /* font-size: var(--base-font-size); */
 }

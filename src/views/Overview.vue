@@ -1,7 +1,6 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <!-- <Breadcrumbs /> -->
       <h2 class="title-3x">
         {{ this.$route.meta.title }}
       </h2>
@@ -47,7 +46,6 @@
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Overview',
@@ -58,8 +56,7 @@ export default {
   },
   components: {
     MetricGrid,
-    PageHeader,
-    Breadcrumbs
+    PageHeader
   },
   data () {
     return {

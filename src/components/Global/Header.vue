@@ -56,8 +56,14 @@ export default {
 
 <style scoped>
 .main-header {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
   min-height: var(--topbar-height);
   border-bottom: 1px solid #eaecef;
+  background-color: #fff;
 }
 
 .main-header__content {

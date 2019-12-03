@@ -1,6 +1,6 @@
 <template>
   <div class="dataplanes-detail">
-    {{ content }}
+    <code><pre>{{ content }}</pre></code>
   </div>
 </template>
 
@@ -17,7 +17,8 @@ export default {
   },
   data () {
     return {
-      content: null
+      content: null,
+      networkData: null
     }
   },
   watch: {

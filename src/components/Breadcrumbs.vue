@@ -14,21 +14,85 @@ export default {
     routes () {
       const { query } = this.$router.currentRoute
 
-      return this.calculateRouteFromQuery(query) ||
-        this.$route.matched.map(r => {
-          const text = this.calculateRouteText(r)
-          const title = this.calculateRouteTitle(r)
+      const items = []
 
-          if (this.isCurrentRoute(r) || (!text && !title) || r.meta.excludeAsBreadcrumb) {
-            return
-          }
+      // const items = [
+      //   {
+      //     key: 'home',
+      //     to: { path: '/' },
+      //     title: 'Home',
+      //     text: 'Home'
+      //   },
+      //   {
+      //     key: 'google',
+      //     to: 'https://google.com',
+      //     title: 'Search at Google',
+      //     text: 'Google'
+      //   }
+      // ]
 
-          return this.getBreadcrumbItem(r.name,
-            { name: r.redirect || r.name, params: r.params },
-            this.calculateRouteTitle(r),
-            this.calculateRouteText(r))
-        })
-          .filter(Boolean)
+      this.$route.matched.map(r => {
+        const text = this.calculateRouteText(r)
+        const title = this.calculateRouteTitle(r)
+        const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
+
+        if (this.isCurrentRoute(r) && !r.meta.excludeAsBreadcrumb) {
+          items.push({
+            key: key,
+            to: { name: key },
+            title: r.meta.title,
+            text: r.meta.breadcrumb || r.meta.title
+          })
+        } else if (r.meta.parent && r.meta.parent !== 'undefined') {
+          items.push({
+            key: r.meta.parent,
+            to: { name: r.meta.parent },
+            title: r.meta.title,
+            text: r.meta.breadcrumb || r.meta.title
+          })
+        } else {
+          items = []
+        }
+      })
+
+      return items
+
+      // return this.calculateRouteFromQuery(query) ||
+      //   this.$route.matched.map(r => {
+      //     const text = this.calculateRouteText(r)
+      //     const title = this.calculateRouteTitle(r)
+
+      //     if (this.isCurrentRoute(r) || (!text && !title) || r.meta.excludeAsBreadcrumb) {
+      //       return
+      //     }
+
+      //     // return this.getBreadcrumbItem(r.name,
+      //     //   { name: r.redirect || r.name, params: r.params },
+      //     //   this.calculateRouteTitle(r),
+      //     //   this.calculateRouteText(r))
+
+      //     /**
+      //      * This "fix" addresses an issue where the entire
+      //      * route `name` object was being pulled in and not
+      //      * simply the name value itself. The end result was
+      //      * that the `name` was being doubled up and throwing
+      //      * an `[Object object]` warning
+      //      */
+
+      //     const item = this.getBreadcrumbItem(
+      //       r.name,
+      //       {
+      //         // name: r.redirect.name || r.name,
+      //         name: r.meta.parent || r.name,
+      //         params: r.params
+      //       },
+      //       r.meta.title,
+      //       r.meta.title
+      //     )
+
+      //     return item
+      //   })
+      //     .filter(Boolean)
     },
 
     hideBreadcrumbs () {
@@ -95,7 +159,7 @@ export default {
         const params = this.$router.currentRoute.params
 
         return (
-          params && params.id && isValidUuid(params.id) ? params.id.split('-')[0].trim() : params.id
+          params && params.mesh && isValidUuid(params.mesh) ? params.mesh.split('-')[0].trim() : params.mesh
         ) || route.meta.breadcrumb || route.meta.title
       }
 
@@ -107,12 +171,26 @@ export default {
 
     calculateRouteTitle (route) {
       return (
-        (route.params && route.params.id) ||
-        (route.path.indexOf(':id') > -1 &&
+        (route.params && route.params.mesh) ||
+        (route.path.indexOf(':mesh') > -1 &&
           this.$router.currentRoute.params &&
-          this.$router.currentRoute.params.id)
+          this.$router.currentRoute.params.mesh)
       )
     }
   }
 }
 </script>
+
+<style lang="scss">
+.krumbs {
+  font-size: 14px;
+
+  .krumb-item {
+
+    &:after, a {
+      color: #8c8c8c !important;
+    }
+  }
+}
+
+</style>
