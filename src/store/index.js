@@ -13,11 +13,11 @@ export default (api) => {
       // workspaces
     },
     state: {
+      onboardingComplete: false,
       globalLoading: null,
       meshes: [],
       dataplanes: [],
       selectedMesh: 'default',
-      onboardingFinished: null,
       totalMeshCount: 0,
       totalDataplaneCount: 0,
       totalDataplaneCountFromMesh: 0,
@@ -29,6 +29,9 @@ export default (api) => {
       status: null
     },
     getters: {
+      getOnboardingStatus (state) {
+        return state.onboardingComplete
+      },
       globalLoading (state) {
         return state.globalLoading
       },
@@ -70,6 +73,9 @@ export default (api) => {
       }
     },
     mutations: {
+      SET_ONBOARDING_STATUS (state, { onboardingComplete }) {
+        state.onboardingComplete = onboardingComplete
+      },
       SET_GLOBAL_LOADING (state, { globalLoading }) {
         state.globalLoading = globalLoading
       },
@@ -111,6 +117,11 @@ export default (api) => {
       }
     },
     actions: {
+      // update the onboarding state
+      updateOnboardingStatus ({ commit }, status) {
+        commit('SET_ONBOARDING_STATUS', status)
+      },
+
       // fetch all of the meshes from the API
       fetchMeshList ({ commit }) {
         return api.getAllMeshes()

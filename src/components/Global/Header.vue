@@ -12,7 +12,10 @@
           >
         </router-link>
       </div>
-      <div class="px-4">
+      <div
+        v-if="!$route.meta.hideStatus"
+        class="px-4"
+      >
         <status :active="appStatus">
           {{ statusContent }}
         </status>

@@ -25,6 +25,43 @@ export default (store) => {
       path: '/',
       redirect: { name: 'global-overview' }
     },
+    // Onboarding
+    {
+      path: '/get-started',
+      name: 'get-started',
+      meta: {
+        title: 'Welcome to Kuma!',
+        excludeAsBreadcrumb: true,
+        hideSidebar: true,
+        hideStatus: true
+      },
+      component: () => import('@/views/ShellEmpty'),
+      children: [
+        {
+          path: 'setup-dataplanes',
+          name: 'setup-dataplanes',
+          meta: {
+            title: 'Adding New Data Planes',
+            excludeAsBreadcrumb: true,
+            hideSidebar: true,
+            hideStatus: true
+          },
+          component: () => import('@/views/Onboarding/SetupDataplanes')
+        },
+        {
+          path: 'setup-complete',
+          name: 'setup-complete',
+          meta: {
+            title: 'Congratulations!',
+            excludeAsBreadcrumb: true,
+            hideSidebar: true,
+            hideStatus: true
+          },
+          component: () => import('@/views/Onboarding/Complete')
+        }
+      ]
+    },
+    // App
     {
       path: '/overview',
       alias: '/',

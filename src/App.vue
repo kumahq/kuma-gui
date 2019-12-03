@@ -2,7 +2,9 @@
   <div id="app">
     <global-header />
     <div class="main-content-container">
-      <sidebar />
+      <sidebar
+        v-if="!loading && loading !== null && !($route.meta.hideSidebar || $route.meta.fullScreen)"
+      />
       <div
         v-if="loading"
         class="full-screen"

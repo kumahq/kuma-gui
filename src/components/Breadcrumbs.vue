@@ -12,24 +12,9 @@ import { isValidUuid } from '@/helpers'
 export default {
   computed: {
     routes () {
-      const { query } = this.$router.currentRoute
+      // const { query } = this.$router.currentRoute
 
       const items = []
-
-      // const items = [
-      //   {
-      //     key: 'home',
-      //     to: { path: '/' },
-      //     title: 'Home',
-      //     text: 'Home'
-      //   },
-      //   {
-      //     key: 'google',
-      //     to: 'https://google.com',
-      //     title: 'Search at Google',
-      //     text: 'Google'
-      //   }
-      // ]
 
       this.$route.matched.map(r => {
         const text = this.calculateRouteText(r)
@@ -50,8 +35,6 @@ export default {
             title: r.meta.title,
             text: r.meta.breadcrumb || r.meta.title
           })
-        } else {
-          items = []
         }
       })
 
