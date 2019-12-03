@@ -28,15 +28,22 @@ export default (store) => {
     // Onboarding
     {
       path: '/get-started',
-      name: 'get-started',
-      meta: {
-        title: 'Welcome to Kuma!',
-        excludeAsBreadcrumb: true,
-        hideSidebar: true,
-        hideStatus: true
-      },
+      redirect: { name: 'setup-welcome' },
       component: () => import('@/views/ShellEmpty'),
       children: [
+        {
+          path: 'welcome',
+          name: 'setup-welcome',
+          meta: {
+            title: 'Welcome to Kuma!',
+            excludeAsBreadcrumb: true,
+            hideSidebar: true,
+            hideStatus: true,
+            simpleHeader: true,
+            simpleContent: true
+          },
+          component: () => import('@/views/Onboarding/GetStarted')
+        },
         {
           path: 'setup-dataplanes',
           name: 'setup-dataplanes',
@@ -44,7 +51,9 @@ export default (store) => {
             title: 'Adding New Data Planes',
             excludeAsBreadcrumb: true,
             hideSidebar: true,
-            hideStatus: true
+            hideStatus: true,
+            simpleHeader: true,
+            simpleContent: true
           },
           component: () => import('@/views/Onboarding/SetupDataplanes')
         },
@@ -55,7 +64,9 @@ export default (store) => {
             title: 'Congratulations!',
             excludeAsBreadcrumb: true,
             hideSidebar: true,
-            hideStatus: true
+            hideStatus: true,
+            simpleHeader: true,
+            simpleContent: true
           },
           component: () => import('@/views/Onboarding/Complete')
         }

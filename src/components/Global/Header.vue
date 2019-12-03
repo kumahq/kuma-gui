@@ -5,6 +5,7 @@
         <router-link
           to="/"
           exact
+          class="logo"
         >
           <img
             src="@/assets/images/kuma-logo.svg?external"
@@ -57,7 +58,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .main-header {
   position: fixed;
   z-index: 9999;
@@ -71,5 +72,17 @@ export default {
 
 .main-header__content {
   margin: 0 auto;
+}
+
+.main-header--simple {
+  border-bottom: 0;
+  background: none;
+
+  .logo {
+
+    img {
+      // transform: translateY(68px);
+    }
+  }
 }
 </style>

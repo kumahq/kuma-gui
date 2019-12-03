@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <global-header />
+    <global-header
+      v-if="!loading && loading !== null"
+      :class="{ 'main-header--simple': $route.meta.simpleHeader }"
+    />
     <div class="main-content-container">
       <sidebar
         v-if="!loading && loading !== null && !($route.meta.hideSidebar || $route.meta.fullScreen)"

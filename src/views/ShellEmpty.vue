@@ -1,5 +1,8 @@
 <template>
-  <div class="overview">
+  <div
+    class="overview"
+    :class="{ 'overview--simple': $route.meta.simpleContent }"
+  >
     <page-header noflex>
       <h2 class="title-3x">
         {{ pageTitle }}
@@ -42,3 +45,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.overview--simple {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
