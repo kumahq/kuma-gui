@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="32px" viewBox="0 0 40 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>icn--dataplane</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1st-step" transform="translate(-424.000000, -432.000000)" fill="#959FA6">
+            <g id="A-let's-setup-your-app" transform="translate(400.000000, 250.000000)">
+                <g id="banner--no-data-planes" transform="translate(0.000000, 158.000000)">
+                    <path d="M30,38 L30,54 L58,54 L58,48 L60,48 L60,54 C60,55.1045695 59.1045695,56 58,56 L30,56 C28.8954305,56 28,55.1045695 28,54 L28,38 L30,38 Z M32,38 L32,52 L56,52 L56,48 L57,48 L57,53 L31,53 L31,38 L32,38 Z M42,41 L42,44 L64,44 L64,46 L42,46 L42,49 L37,45 L42,41 Z M57,27 L57,42 L56,42 L56,28 L32,28 L32,32 L31,32 L31,27 L57,27 Z M58,24 C59.1045695,24 60,24.8954305 60,26 L60,42 L58,42 L58,26 L30,26 L30,32 L28,32 L28,26 C28,24.8954305 28.8954305,24 30,24 L58,24 Z M46,31 L51,35 L46,39 L46,36 L24,36 L24,34 L46,34 L46,31 Z" id="icn--dataplane"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

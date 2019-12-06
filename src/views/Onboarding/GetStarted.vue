@@ -49,9 +49,39 @@
       </div>
 
       <KTable
-        v-if="tableData"
+        v-if="tableData && tableDataIsEmpty === false"
         :options="tableData"
       />
+      <div
+        v-else
+        class="dataplane-fallback"
+      >
+        <div class="dataplane-fallback__inner  flex -mx-4">
+          <div class="dataplane-fallback__icon px-4">
+            <img
+              src="@/assets/images/icon-dataplane.svg?external"
+              alt="Dataplane Icon"
+            >
+          </div>
+          <div class="dataplane-fallback__content px-4">
+            <h3 class="dataplane-fallback__title mb-4 pb-4">
+              No Data Planes detected.
+            </h3>
+            <p class="mb-4">
+              Before adding services to Kuma, we need to add Sidecar Data Planes
+              (also called Sidecar Proxies) to each service.
+            </p>
+            <p>
+              <KButton
+                to="#"
+                appearance="primary"
+              >
+                Add Data Planes
+              </KButton>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- .app-source-check -->
 
@@ -59,9 +89,17 @@
       <h4 class="lg mb-4">
         Try with a Demo App instead
       </h4>
-      <p class="lg light-text">
+      <p class="lg light-text mb-4">
         If you don’t have an application ready for Kuma, you can deploy a Demo App.
         This can be removed later from the settings page.
+      </p>
+      <p>
+        <a
+          href="#"
+          class="arrow-link"
+        >
+          Deploy Demo App
+        </a>
       </p>
     </div>
     </ktable>
@@ -80,6 +118,7 @@ export default {
     return {
       appSource: false,
       appSourceError: false,
+      tableDataIsEmpty: true,
       tableData: {
         headers: [
           { label: 'Dataplane', key: 'name' },
@@ -102,11 +141,16 @@ export default {
     },
 
     async getDataplaneTableData () {
-      const dataplanes = this.$store.getters.getDataplanesList
+      const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
-      Object.values(dataplanes).map(val => {
-        this.tableData.data.push(val)
-      })
+      if (dataplanes.length > 0) {
+        dataplanes.map(val => {
+          this.tableData.data.push(val)
+        })
+        this.tableDataIsEmpty = false
+      } else {
+        this.tableDataIsEmpty = true
+      }
     },
 
     getAppType () {
@@ -134,7 +178,7 @@ export default {
   padding: var(--spacing-xl) 0;
   margin: var(--spacing-xl) 0;
   border-top: 1px solid var(--tblack-10);
-  // border-bottom: 1px solid var(--tblack-10);
+  border-bottom: 1px solid var(--tblack-10);
 }
 
 .app-source-check {
@@ -166,5 +210,25 @@ export default {
   .light-text {
     color: var(--tblack-45);
   }
+}
+
+.dataplane-fallback {
+  background-color: #F2F5F7;
+  padding: var(--spacing-lg);
+  border-radius: 4px;
+  margin-top: var(--spacing-md);
+}
+
+.dataplane-fallback__icon {
+  flex: 0 0 12%;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.dataplane-fallback__title {
+  border-bottom: 1px solid var(--tblack-10);
 }
 </style>
