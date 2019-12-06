@@ -104,9 +104,9 @@ export default {
     async getDataplaneTableData () {
       const dataplanes = this.$store.getters.getDataplanesList
 
-      console.log(dataplanes)
-
-      this.tableData.data.push(dataplanes)
+      Object.values(dataplanes).map(val => {
+        this.tableData.data.push(val)
+      })
     },
 
     getAppType () {
@@ -134,7 +134,7 @@ export default {
   padding: var(--spacing-xl) 0;
   margin: var(--spacing-xl) 0;
   border-top: 1px solid var(--tblack-10);
-  border-bottom: 1px solid var(--tblack-10);
+  // border-bottom: 1px solid var(--tblack-10);
 }
 
 .app-source-check {
