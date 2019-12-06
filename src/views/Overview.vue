@@ -1,7 +1,7 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <h2 class="title-3x">
+      <h2 class="xxl">
         {{ this.$route.meta.title }}
       </h2>
     </page-header>

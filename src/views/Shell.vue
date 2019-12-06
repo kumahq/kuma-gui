@@ -2,7 +2,7 @@
   <div class="overview">
     <page-header noflex>
       <breadcrumbs />
-      <h2 class="title-3x">
+      <h2 class="xxl">
         {{ pageTitle }}
       </h2>
     </page-header>

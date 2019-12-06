@@ -55,6 +55,8 @@ export default {
     // fetch the mesh list
     this.$store.dispatch('fetchMeshList')
 
+    this.$store.dispatch('getAllDataplanes')
+
     // fetch the version
     // this.$store.dispatch('getVersion')
 

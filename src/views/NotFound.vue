@@ -1,7 +1,7 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <h2 class="title-3x">
+      <h2 class="xxl">
         404
       </h2>
       <h3 class="title-2x">

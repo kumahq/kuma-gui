@@ -53,6 +53,30 @@ export default class Kuma {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
   }
 
+  // a makeshift way to get all dataplanes
+  // getAllDataplanes () {
+  //   const getDataplanes = async () => {
+  //     const meshes = await this.getAllMeshes()
+  //     const result = []
+
+  //     for (let i = 0; i < meshes.items.length; i++) {
+  //       const dataplanes = await this.getAllDataplanesFromMesh(meshes.items[i].name)
+  //       const items = await dataplanes.items
+
+  //       items.forEach(item => {
+  //         result.push({
+  //           name: item.name,
+  //           mesh: item.mesh
+  //         })
+  //       })
+  //     }
+
+  //     return result
+  //   }
+
+  //   getDataplanes()
+  // }
+
   /**
    * Traffic / Policies
    */

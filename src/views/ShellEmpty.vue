@@ -4,7 +4,7 @@
     :class="{ 'overview--simple': $route.meta.simpleContent }"
   >
     <page-header noflex>
-      <h2 class="title-3x">
+      <h2 class="xxl">
         {{ pageTitle }}
       </h2>
     </page-header>

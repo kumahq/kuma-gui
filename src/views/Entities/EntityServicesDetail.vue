@@ -2,7 +2,7 @@
   <div class="services">
     <page-header>
       <div>
-        <h2 class="title-3x">
+        <h2 class="xxl">
           Service Details
         </h2>
       </div>

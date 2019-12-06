@@ -20,6 +20,7 @@ export default (api) => {
       selectedMesh: 'default',
       totalMeshCount: 0,
       totalDataplaneCount: 0,
+      totalDataplaneList: [],
       totalDataplaneCountFromMesh: 0,
       totalTrafficRoutesCountFromMesh: 0,
       totalTrafficPermissionsCountFromMesh: 0,
@@ -43,6 +44,9 @@ export default (api) => {
       },
       getDataplanes (state) {
         return state.dataplanes
+      },
+      getDataplanesList (state) {
+        return state.totalDataplaneList
       },
       getTotalMeshCount (state) {
         return state.totalMeshCount
@@ -93,6 +97,9 @@ export default (api) => {
       },
       SET_TOTAL_DP_COUNT (state, count) {
         state.totalDataplaneCount = count
+      },
+      SET_TOTAL_DP_LIST (state, dataplanes) {
+        state.totalDataplaneList = dataplanes
       },
       SET_TOTAL_DP_COUNT_FROM_MESH (state, count) {
         state.totalDataplaneCountFromMesh = count
@@ -178,6 +185,30 @@ export default (api) => {
           const reduced = result.reduce((a, b) => a + b, 0)
 
           commit('SET_TOTAL_DP_COUNT', reduced)
+        }
+
+        getDataplanes()
+      },
+
+      // a makeshift way to get the list of all present dataplanes across all meshes
+      getAllDataplanes ({ commit }) {
+        const getDataplanes = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
+            const items = await dataplanes.items
+
+            items.forEach(item => {
+              result.push({
+                name: item.name,
+                mesh: item.mesh
+              })
+            })
+          }
+
+          commit('SET_TOTAL_DP_LIST', result)
         }
 
         getDataplanes()

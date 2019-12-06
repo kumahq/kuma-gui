@@ -15,18 +15,22 @@
         :is-last="i === lastMenuList"
       />
       <div class="sidebar-message">
-        <p>
-          Looking for Analytics Segmentation, Longer Timeframes,
-          business reports, and more?
-        </p>
-        <p>
-          <a
-            href="https://konghq.com/products/kong-enterprise"
-            target="_blank"
+        <h4 class="mb-4 md sidebar-message__title">
+          Resources
+        </h4>
+        <ul>
+          <li
+            v-for="(item, index) in resourceLinks"
+            :key="index"
           >
-            Try Kong Enterprise
-          </a>
-        </p>
+            <a
+              :href="item.link"
+              target="_blank"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        </ul>
       </div>
       <CollapseToggle
         :handle-toggle-collapse="handleToggleCollapse"
@@ -57,7 +61,21 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      hovering: false
+      hovering: false,
+      resourceLinks: [
+        {
+          link: 'https://kuma.io/docs/',
+          label: 'Kuma Documentation'
+        },
+        {
+          link: 'https://kuma-mesh.slack.com/',
+          label: 'Kuma Community Chat'
+        },
+        {
+          link: 'https://github.com/Kong/kuma',
+          label: 'Kuma GitHub Repository'
+        }
+      ]
     }
   },
 
@@ -269,5 +287,18 @@ nav {
   a {
     color: #1782CF;
   }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+}
+
+.sidebar-message__title {
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0,0,0,0.10);
+  padding-bottom: 6px;
+  margin-top: 0;
 }
 </style>
