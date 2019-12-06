@@ -48,38 +48,94 @@
         </div>
       </div>
 
-      <KTable
-        v-if="tableData && tableDataIsEmpty === false"
-        :options="tableData"
-      />
+      <div
+        v-if="tableDataLoadAttempted === false"
+        class="dataplane-loading-state flex -mx-2 mt-8"
+      >
+        <div class="px-2">
+          <KIcon
+            icon="spinner"
+            size="36"
+            color="black"
+          />
+        </div>
+        <div class="px-2">
+          <p>
+            Waiting for Data Planes to connect&hellip;
+          </p>
+        </div>
+      </div>
+      <div
+        v-else-if="tableData && tableDataIsEmpty === false"
+        class="mt-8"
+      >
+        <h2 class="xxl mb-4 pb-4">
+          {{ dataplaneCountForTitle }} Data Planes found, including:
+        </h2>
+        <div class="data-table-wrapper">
+          <KTable :options="tableData" />
+        </div>
+      </div>
       <div
         v-else
-        class="dataplane-fallback"
+        class="dataplane-fallback-wrapper"
       >
-        <div class="dataplane-fallback__inner  flex -mx-4">
-          <div class="dataplane-fallback__icon px-4">
-            <img
-              src="@/assets/images/icon-dataplane.svg?external"
-              alt="Dataplane Icon"
-            >
-          </div>
-          <div class="dataplane-fallback__content px-4">
-            <h3 class="dataplane-fallback__title mb-4 pb-4">
-              No Data Planes detected.
-            </h3>
-            <p class="mb-4">
-              Before adding services to Kuma, we need to add Sidecar Data Planes
-              (also called Sidecar Proxies) to each service.
-            </p>
-            <p>
-              <KButton
-                to="#"
-                appearance="primary"
+        <div class="dataplane-fallback">
+          <div class="dataplane-fallback__inner flex -mx-4">
+            <div class="dataplane-fallback__icon px-4">
+              <img
+                src="@/assets/images/icon-dataplane.svg?external"
+                alt="Dataplane Icon"
               >
-                Add Data Planes
-              </KButton>
-            </p>
+            </div>
+            <div class="dataplane-fallback__content px-4">
+              <h3 class="dataplane-fallback__title mb-4 pb-4">
+                No Data Planes detected.
+              </h3>
+              <p class="mb-4">
+                Before adding services to Kuma, we need to add Sidecar Data Planes
+                (also called Sidecar Proxies) to each service.
+              </p>
+              <!-- <p>
+                <KButton
+                  to="#"
+                  appearance="primary"
+                >
+                  Add Data Planes
+                </KButton>
+              </p> -->
+            </div>
           </div>
+        </div>
+        <!-- .dataplane-fallback -->
+        <div class="dataplane-walkthrough my-4">
+          <h3 class="xl mb-4">
+            Adding New Data Planes
+          </h3>
+          <p>
+            To add a new data plane, execute the following steps:
+          </p>
+          <p>
+            <code>
+              <pre>[placeholder] $ kumactl install control-plane | kubectl apply</pre>
+            </code>
+          </p>
+          <p>
+            Then do this:
+          </p>
+          <p>
+            <code>
+              <pre>[placeholder] $ kumactl something something ...</pre>
+            </code>
+          </p>
+          <p>
+            <KButton
+              appearance="primary"
+              @click="getDataplaneTableData()"
+            >
+              Re-Scan for Data Planes
+            </KButton>
+          </p>
         </div>
       </div>
     </div>
@@ -118,13 +174,26 @@ export default {
     return {
       appSource: false,
       appSourceError: false,
+      tableDataLoadDelay: 1500,
       tableDataIsEmpty: true,
+      tableDataLoadAttempted: false,
+      tableDataDataplaneCount: null,
       tableData: {
         headers: [
           { label: 'Dataplane', key: 'name' },
           { label: 'Mesh', key: 'mesh' }
         ],
         data: []
+      }
+    }
+  },
+  computed: {
+    dataplaneCountForTitle () {
+      const count = this.tableDataDataplaneCount
+      if (count && count > 10) {
+        return '10+'
+      } else {
+        return count
       }
     }
   },
@@ -140,15 +209,25 @@ export default {
       this.getDataplaneTableData()
     },
 
-    async getDataplaneTableData () {
+    getDataplaneTableData () {
       const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
       if (dataplanes.length > 0) {
-        dataplanes.map(val => {
+        this.tableDataDataplaneCount = dataplanes.length
+        this.tableData.data = []
+        this.tableDataLoadAttempted = false
+
+        dataplanes.slice(0, 10).map(val => {
           this.tableData.data.push(val)
         })
+
         this.tableDataIsEmpty = false
+
+        setTimeout(() => {
+          this.tableDataLoadAttempted = true
+        }, this.tableDataLoadDelay)
       } else {
+        this.tableDataLoadAttempted = true
         this.tableDataIsEmpty = true
       }
     },
@@ -174,6 +253,13 @@ export default {
 </script>
 
 <style lang="scss">
+@mixin styledPanel {
+  background-color: #F2F5F7;
+  padding: var(--spacing-lg);
+  border-radius: 4px;
+  margin-top: var(--spacing-md);
+}
+
 .app-setup {
   padding: var(--spacing-xl) 0;
   margin: var(--spacing-xl) 0;
@@ -212,11 +298,12 @@ export default {
   }
 }
 
+.dataplane-fallback-wrapper {
+
+}
+
 .dataplane-fallback {
-  background-color: #F2F5F7;
-  padding: var(--spacing-lg);
-  border-radius: 4px;
-  margin-top: var(--spacing-md);
+  @include styledPanel;
 }
 
 .dataplane-fallback__icon {
@@ -230,5 +317,35 @@ export default {
 
 .dataplane-fallback__title {
   border-bottom: 1px solid var(--tblack-10);
+}
+
+.data-table-wrapper {
+  overflow: hidden;
+  border: 1px solid var(--gray-4);
+  background: none;
+  border-radius: 4px;
+
+  .k-table thead {
+    background-color: var(--gray-5);
+    border-top: 0;
+  }
+}
+
+.dataplane-walkthrough {
+
+  p:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+
+  code {
+    @include styledPanel;
+
+    display: block;
+    font-family: var(--font-family-mono);
+  }
+}
+
+.dataplane-loading-state {
+
 }
 </style>
