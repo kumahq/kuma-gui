@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { setItemToStorage } from '@/Cache'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
