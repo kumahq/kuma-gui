@@ -44,19 +44,6 @@ export default (store) => {
           },
           component: () => import('@/views/Onboarding/GetStarted')
         },
-        // {
-        //   path: 'setup-dataplanes',
-        //   name: 'setup-dataplanes',
-        //   meta: {
-        //     title: 'Adding New Data Planes',
-        //     excludeAsBreadcrumb: true,
-        //     hideSidebar: true,
-        //     hideStatus: true,
-        //     simpleHeader: true,
-        //     simpleContent: true
-        //   },
-        //   component: () => import('@/views/Onboarding/SetupDataplanes')
-        // },
         {
           path: 'complete',
           name: 'setup-complete',

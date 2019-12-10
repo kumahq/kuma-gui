@@ -1,109 +1,113 @@
 <template>
   <div class="welcome welcome__step-1">
-    <p class="lg">
-      Kuma has been successfully installed, you’re one step away to build a
-      modern cloud-native architecture!
-    </p>
+    <div v-if="hasUserBeenOnboarded">
+      <setup-inquiry />
+    </div>
+    <div v-else>
+      <p class="lg">
+        Kuma has been successfully installed, you’re one step away to build a
+        modern cloud-native architecture!
+      </p>
 
-    <div class="app-setup">
-      <h3 class="xl">
-        Let's set up your app
-      </h3>
+      <div class="app-setup">
+        <h3 class="xl">
+          Let's set up your app
+        </h3>
 
-      <div
-        class="app-source-check"
-        :class="{ 'app-source-check--error': appSourceError }"
-      >
         <div
-          v-if="appSource
-            && appSource === 'universal'
-            || appSource === 'kubernetes'
-            || appSource === 'k8s'"
-          class="app-source-check__inner flex items-center -mx-4"
+          class="app-source-check"
+          :class="{ 'app-source-check--error': appSourceError }"
         >
-          <div class="app-source-check__icon px-4">
-            <img
-              v-if="appSource === 'universal'"
-              src="@/assets/images/icon-universal-alt.png?external"
-              alt="Kuma Universal Icon"
-            >
-            <img
-              v-else-if="appSource === 'kubernetes' || appSource === 'k8s'"
-              src="@/assets/images/icon-k8s.png?external"
-              alt="Kuma Kubernetes Icon"
-            >
-          </div>
-          <div class="app-source-check__content px-4">
-            <p>Kuma is running on {{ appSource }}</p>
-          </div>
-          <div class="px-4">
-            <img
-              src="@/assets/images/icon-checkmark.svg?external"
-              alt="Checkmark Icon"
-            >
-          </div>
-        </div>
-        <div v-else>
-          <p>The app was unable to determine Kuma's environment.</p>
-        </div>
-      </div>
-
-      <div
-        v-if="tableDataLoadAttempted === false"
-        class="dataplane-loading-state flex -mx-2 mt-8"
-      >
-        <div class="px-2">
-          <KIcon
-            icon="spinner"
-            size="36"
-            color="black"
-          />
-        </div>
-        <div class="px-2">
-          <p>
-            Waiting for Data Planes to connect&hellip;
-          </p>
-        </div>
-      </div>
-      <div
-        v-else-if="tableData && tableDataIsEmpty === false"
-        class="mt-8"
-      >
-        <h2 class="xl mb-4 pb-4">
-          {{ dataplaneCountForTitle }} Data Planes found, including:
-        </h2>
-        <div class="data-table-wrapper">
-          <KTable :options="tableData" />
-        </div>
-        <p class="mt-4">
-          <KButton
-            :to="{ name: 'setup-complete' }"
-            appearance="primary"
+          <div
+            v-if="appSource
+              && appSource === 'universal'
+              || appSource === 'kubernetes'
+              || appSource === 'k8s'"
+            class="app-source-check__inner flex items-center -mx-4"
           >
-            Next Step
-          </KButton>
-        </p>
-      </div>
-      <div
-        v-else
-        class="dataplane-fallback-wrapper"
-      >
-        <div class="dataplane-fallback">
-          <div class="dataplane-fallback__inner flex -mx-4">
-            <div class="dataplane-fallback__icon px-4">
+            <div class="app-source-check__icon px-4">
               <img
-                src="@/assets/images/icon-dataplane.svg?external"
-                alt="Dataplane Icon"
+                v-if="appSource === 'universal'"
+                src="@/assets/images/icon-universal-alt.png?external"
+                alt="Kuma Universal Icon"
+              >
+              <img
+                v-else-if="appSource === 'kubernetes' || appSource === 'k8s'"
+                src="@/assets/images/icon-k8s.png?external"
+                alt="Kuma Kubernetes Icon"
               >
             </div>
-            <div class="dataplane-fallback__content px-4">
-              <h3 class="dataplane-fallback__title mb-4 pb-4">
-                No Data Planes detected.
-              </h3>
-              <p class="mb-4">
-                Before adding services to Kuma, we need to add Sidecar Data Planes
-                (also called Sidecar Proxies) to each service.
-              </p>
+            <div class="app-source-check__content px-4">
+              <p>Kuma is running on {{ appSource }}</p>
+            </div>
+            <div class="px-4">
+              <img
+                src="@/assets/images/icon-checkmark.svg?external"
+                alt="Checkmark Icon"
+              >
+            </div>
+          </div>
+          <div v-else>
+            <p>The app was unable to determine Kuma's environment.</p>
+          </div>
+        </div>
+
+        <div
+          v-if="tableDataLoadAttempted === false"
+          class="dataplane-loading-state flex -mx-2 mt-8"
+        >
+          <div class="px-2">
+            <KIcon
+              icon="spinner"
+              size="36"
+              color="black"
+            />
+          </div>
+          <div class="px-2">
+            <p>
+              Waiting for Data Planes to connect&hellip;
+            </p>
+          </div>
+        </div>
+        <div
+          v-else-if="tableData && tableDataIsEmpty === false"
+          class="mt-8"
+        >
+          <h2 class="xl mb-4 pb-4">
+            {{ dataplaneCountForTitle }} Data Planes found, including:
+          </h2>
+          <div class="data-table-wrapper">
+            <KTable :options="tableData" />
+          </div>
+          <p class="mt-4">
+            <KButton
+              :to="{ name: 'setup-complete' }"
+              appearance="primary"
+            >
+              Next Step
+            </KButton>
+          </p>
+        </div>
+        <div
+          v-else
+          class="dataplane-fallback-wrapper"
+        >
+          <div class="dataplane-fallback">
+            <div class="dataplane-fallback__inner flex -mx-4">
+              <div class="dataplane-fallback__icon px-4">
+                <img
+                  src="@/assets/images/icon-dataplane.svg?external"
+                  alt="Dataplane Icon"
+                >
+              </div>
+              <div class="dataplane-fallback__content px-4">
+                <h3 class="dataplane-fallback__title mb-4 pb-4">
+                  No Data Planes detected.
+                </h3>
+                <p class="mb-4">
+                  Before adding services to Kuma, we need to add Sidecar Data Planes
+                  (also called Sidecar Proxies) to each service.
+                </p>
               <!-- <p>
                 <KButton
                   to="#"
@@ -112,70 +116,63 @@
                   Add Data Planes
                 </KButton>
               </p> -->
+              </div>
             </div>
           </div>
-        </div>
-        <!-- .dataplane-fallback -->
-        <div class="dataplane-walkthrough my-4">
-          <h3 class="xl mb-4">
-            Adding New Data Planes
-          </h3>
-          <p>
-            To add a new data plane, execute the following steps:
-          </p>
-          <p>
-            <code>
-              <pre>[placeholder] $ kumactl install control-plane | kubectl apply</pre>
-            </code>
-          </p>
-          <p>
-            Then do this:
-          </p>
-          <p>
-            <code>
-              <pre>[placeholder] $ kumactl something something ...</pre>
-            </code>
-          </p>
-          <p>
-            <KButton
-              appearance="primary"
-              @click="getDataplaneTableData()"
-            >
-              Re-Scan for Data Planes
-            </KButton>
-          </p>
+          <!-- .dataplane-fallback -->
+          <div class="dataplane-walkthrough my-4">
+            <h3 class="xl mb-4">
+              Adding New Data Planes
+            </h3>
+            <p>
+              To add a new data plane, execute the following steps:
+            </p>
+            <p>
+              <code>
+                <pre>[placeholder] $ kumactl install control-plane | kubectl apply</pre>
+              </code>
+            </p>
+            <p>
+              Then do this:
+            </p>
+            <p>
+              <code>
+                <pre>[placeholder] $ kumactl something something ...</pre>
+              </code>
+            </p>
+            <p>
+              <KButton
+                appearance="primary"
+                @click="getDataplaneTableData()"
+              >
+                Re-Scan for Data Planes
+              </KButton>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- .app-source-check -->
+      <!-- .app-source-check -->
 
-    <div class="app-setup-demo">
-      <h4 class="lg mb-4">
-        Try with a Demo App instead
-      </h4>
-      <p class="lg light-text mb-4">
-        If you don’t have an application ready for Kuma, you can deploy a Demo App.
-        This can be removed later from the settings page.
-      </p>
-      <p>
-        <a
-          href="#"
-          class="arrow-link"
-        >
-          Deploy Demo App
-        </a>
-      </p>
+      <demo-app />
+      <!-- demo app option -->
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { getItemFromStorage } from '@/Cache'
+import SetupInquiry from './components/SetupInquiry'
+import DemoApp from './components/DemoApp'
 
 export default {
   name: 'OnboardingStep1',
   metaInfo: {
     title: 'Welcome to Kuma!'
+  },
+  components: {
+    DemoApp,
+    SetupInquiry
   },
   data () {
     return {
@@ -202,6 +199,10 @@ export default {
       } else {
         return count
       }
+    },
+
+    hasUserBeenOnboarded () {
+      return getItemFromStorage('kumaOnboardingComplete')
     }
   },
   beforeMount () {
@@ -295,13 +296,6 @@ export default {
 
   > *:last-child {
     margin-left: auto;
-  }
-}
-
-.app-setup-demo {
-
-  .light-text {
-    color: var(--tblack-45);
   }
 }
 
