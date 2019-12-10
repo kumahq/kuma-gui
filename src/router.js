@@ -196,7 +196,10 @@ export default (store) => {
   })
 
   /**
-   * A route guard for handling the onboarding process
+   * A route guard for handling the onboarding process. If the user hasn't gone
+   * through the setup/onboarding process yet, this sends them through it. Once
+   * completed, a localStorage value is set to true so that they're not sent
+   * through it again.
    */
   router.beforeEach((to, from, next) => {
     const hasOnboarded = localStorage.getItem('kumaOnboardingComplete')
