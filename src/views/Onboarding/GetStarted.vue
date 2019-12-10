@@ -69,12 +69,20 @@
         v-else-if="tableData && tableDataIsEmpty === false"
         class="mt-8"
       >
-        <h2 class="xxl mb-4 pb-4">
+        <h2 class="xl mb-4 pb-4">
           {{ dataplaneCountForTitle }} Data Planes found, including:
         </h2>
         <div class="data-table-wrapper">
           <KTable :options="tableData" />
         </div>
+        <p class="mt-4">
+          <KButton
+            :to="{ name: 'setup-complete' }"
+            appearance="primary"
+          >
+            Next Step
+          </KButton>
+        </p>
       </div>
       <div
         v-else
@@ -158,7 +166,6 @@
         </a>
       </p>
     </div>
-    </ktable>
   </div>
 </template>
 

@@ -12,6 +12,10 @@ export default class RestClient {
 
     RestClient.setupMocks(opts.injectMocks)
 
+    /**
+     * We no longer need to run this because the setup is done
+     * at app launch before anything else happens.
+     */
     // RestClient.apiConfig()
 
     this.client = RestClient.axiosInit()

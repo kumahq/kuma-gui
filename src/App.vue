@@ -27,8 +27,7 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { setItemToStorage } from '@/Cache'
+import { setItemToStorage, getItemFromStorage } from '@/Cache'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -52,6 +51,19 @@ export default {
       loading: state => state.globalLoading
     })
   },
+  // watch: {
+  //   '$route' (to, from) {
+  //     const hasBeenOnboarded = getItemFromStorage('kumaOnboardingComplete') || this.$store.getters.getOnboardingStatus
+  //     const currentRoute = this.$route.name
+  //     const matchedRoute = this.$route.matched
+
+  //     if (!hasBeenOnboarded && currentRoute !== 'setup-welcome') {
+  //       this.$router.push({
+  //         name: 'setup-welcome'
+  //       })
+  //     }
+  //   }
+  // },
   beforeMount () {
     // fetch the mesh list
     this.$store.dispatch('fetchMeshList')

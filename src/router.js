@@ -44,21 +44,21 @@ export default (store) => {
           },
           component: () => import('@/views/Onboarding/GetStarted')
         },
+        // {
+        //   path: 'setup-dataplanes',
+        //   name: 'setup-dataplanes',
+        //   meta: {
+        //     title: 'Adding New Data Planes',
+        //     excludeAsBreadcrumb: true,
+        //     hideSidebar: true,
+        //     hideStatus: true,
+        //     simpleHeader: true,
+        //     simpleContent: true
+        //   },
+        //   component: () => import('@/views/Onboarding/SetupDataplanes')
+        // },
         {
-          path: 'setup-dataplanes',
-          name: 'setup-dataplanes',
-          meta: {
-            title: 'Adding New Data Planes',
-            excludeAsBreadcrumb: true,
-            hideSidebar: true,
-            hideStatus: true,
-            simpleHeader: true,
-            simpleContent: true
-          },
-          component: () => import('@/views/Onboarding/SetupDataplanes')
-        },
-        {
-          path: 'setup-complete',
+          path: 'complete',
           name: 'setup-complete',
           meta: {
             title: 'Congratulations!',
@@ -187,6 +187,28 @@ export default (store) => {
     // mode: 'history',
     base: process.env.BASE_URL,
     routes: routes
+  })
+
+  // Set $router.previous on each route
+  router.beforeResolve((to, from, next) => {
+    router.previous = from
+    next()
+  })
+
+  /**
+   * A route guard for handling the onboarding process
+   */
+  router.beforeEach((to, from, next) => {
+    const hasOnboarded = localStorage.getItem('kumaOnboardingComplete')
+    const currentRoute = to.name
+
+    if (!hasOnboarded && currentRoute !== 'setup-welcome' && currentRoute !== 'setup-complete') {
+      next({
+        name: 'setup-welcome'
+      })
+    } else {
+      next()
+    }
   })
 
   /**

@@ -77,8 +77,8 @@ export default (api) => {
       }
     },
     mutations: {
-      SET_ONBOARDING_STATUS (state, { onboardingComplete }) {
-        state.onboardingComplete = onboardingComplete
+      SET_ONBOARDING_STATUS (state, status) {
+        state.onboardingComplete = status
       },
       SET_GLOBAL_LOADING (state, { globalLoading }) {
         state.globalLoading = globalLoading
