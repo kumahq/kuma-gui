@@ -1,7 +1,9 @@
 <template>
-  <div class="overview">
+  <div
+    class="overview"
+    :class="{ 'overview--simple': $route.meta.simpleContent }"
+  >
     <page-header noflex>
-      <breadcrumbs />
       <h2 class="xxl">
         {{ pageTitle }}
       </h2>
@@ -15,14 +17,12 @@
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import PageContent from '@/components/Utils/PageContent.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Shell',
   components: {
     PageHeader,
-    PageContent,
-    Breadcrumbs
+    PageContent
   },
   computed: {
     pageTitle () {
@@ -45,3 +45,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.overview--simple {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

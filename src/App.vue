@@ -1,8 +1,13 @@
 <template>
   <div id="app">
-    <global-header />
+    <global-header
+      v-if="!loading && loading !== null"
+      :class="{ 'main-header--simple': $route.meta.simpleHeader }"
+    />
     <div class="main-content-container">
-      <sidebar />
+      <sidebar
+        v-if="!loading && loading !== null && !($route.meta.hideSidebar || $route.meta.fullScreen)"
+      />
       <div
         v-if="loading"
         class="full-screen"
@@ -22,7 +27,7 @@
 </template>
 
 <script>
-import { setItemToStorage } from '@/Cache'
+import { setItemToStorage, getItemFromStorage } from '@/Cache'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -46,9 +51,24 @@ export default {
       loading: state => state.globalLoading
     })
   },
+  // watch: {
+  //   '$route' (to, from) {
+  //     const hasBeenOnboarded = getItemFromStorage('kumaOnboardingComplete') || this.$store.getters.getOnboardingStatus
+  //     const currentRoute = this.$route.name
+  //     const matchedRoute = this.$route.matched
+
+  //     if (!hasBeenOnboarded && currentRoute !== 'setup-welcome') {
+  //       this.$router.push({
+  //         name: 'setup-welcome'
+  //       })
+  //     }
+  //   }
+  // },
   beforeMount () {
     // fetch the mesh list
     this.$store.dispatch('fetchMeshList')
+
+    this.$store.dispatch('getAllDataplanes')
 
     // fetch the version
     // this.$store.dispatch('getVersion')

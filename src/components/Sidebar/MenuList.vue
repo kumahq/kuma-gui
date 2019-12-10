@@ -48,7 +48,7 @@ export default {
     ...mapState(['selectedMesh'])
   },
   watch: {
-    $route (to, from) {
+    '$route' (to, from) {
       // set the menu links accordingly
       this.setMeshPath()
     }

@@ -12,7 +12,11 @@ export default class RestClient {
 
     RestClient.setupMocks(opts.injectMocks)
 
-    RestClient.apiConfig()
+    /**
+     * We no longer need to run this because the setup is done
+     * at app launch before anything else happens.
+     */
+    // RestClient.apiConfig()
 
     this.client = RestClient.axiosInit()
   }
@@ -26,25 +30,29 @@ export default class RestClient {
    * for use throughout the app as needed.
    */
 
-  static apiConfig () {
-    axios
-      .get(process.env.VUE_APP_KUMA_CONFIG)
-      .then(response => {
-        const apiUrl = response.data.apiUrl
-        const kumaEnv = response.data.environment
+  // static apiConfig () {
+  //   axios
+  //     .get(process.env.VUE_APP_KUMA_CONFIG)
+  //     .then(response => {
+  //       const apiUrl = response.data.apiUrl
+  //       const kumaEnv = response.data.environment
 
-        if (!localStorage.getItem('kumaApiUrl')) {
-          localStorage.setItem('kumaApiUrl', apiUrl)
-        }
+  //       if (!localStorage.getItem('kumaApiUrl')) {
+  //         localStorage.setItem('kumaApiUrl', apiUrl)
 
-        if (!localStorage.getItem('kumaEnv')) {
-          localStorage.setItem('kumaEnv', kumaEnv)
-        }
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  }
+  //         console.log('API URL set')
+  //       }
+
+  //       if (!localStorage.getItem('kumaEnv')) {
+  //         localStorage.setItem('kumaEnv', kumaEnv)
+
+  //         console.log('Kuma environment set')
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error(error)
+  //     })
+  // }
 
   /**
    * axiosInit

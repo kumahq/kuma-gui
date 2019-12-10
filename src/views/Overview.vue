@@ -1,8 +1,7 @@
 <template>
   <div class="overview">
     <page-header noflex>
-      <!-- <Breadcrumbs /> -->
-      <h2 class="title-3x">
+      <h2 class="xxl">
         {{ this.$route.meta.title }}
       </h2>
     </page-header>
@@ -30,16 +29,23 @@
         </router-link>
       </template>
     </KTable>
-    <div v-else>
-      <p>There are no meshes present!</p>
-    </div>
+    <KEmptyState
+      v-else
+      cta-is-hidden
+    >
+      <template slot="title">
+        <div class="card-icon mb-3">
+          <img src="~@/assets/images/icon-empty-table.svg?external">
+        </div>
+        No meshes found!
+      </template>
+    </KEmptyState>
   </div>
 </template>
 
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Overview',
@@ -50,8 +56,7 @@ export default {
   },
   components: {
     MetricGrid,
-    PageHeader,
-    Breadcrumbs
+    PageHeader
   },
   data () {
     return {
@@ -80,7 +85,7 @@ export default {
     }
   },
   watch: {
-    $route (to, from) {
+    '$route' (to, from) {
       this.bootstrap()
     }
   },
@@ -118,3 +123,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.empty-state-title {
+
+  .card-icon {
+    text-align: center;
+
+    img, svg {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+</style>
