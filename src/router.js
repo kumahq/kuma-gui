@@ -40,7 +40,8 @@ export default (store) => {
             hideSidebar: true,
             hideStatus: true,
             simpleHeader: true,
-            simpleContent: true
+            simpleContent: true,
+            onboardingProcess: true
           },
           component: () => import('@/views/Onboarding/GetStarted')
         },
@@ -53,10 +54,25 @@ export default (store) => {
             hideSidebar: true,
             hideStatus: true,
             simpleHeader: true,
-            simpleContent: true
+            simpleContent: true,
+            onboardingProcess: true
           },
           component: () => import('@/views/Onboarding/Complete')
         }
+        // {
+        //   path: 'restart',
+        //   name: 'setup-restart',
+        //   meta: {
+        //     title: 'Setup Already Complete!',
+        //     excludeAsBreadcrumb: true,
+        //     hideSidebar: true,
+        //     hideStatus: true,
+        //     simpleHeader: true,
+        //     simpleContent: true,
+        //     onboardingProcess: true
+        //   },
+        //   component: () => import('@/views/Onboarding/Restart')
+        // }
       ]
     },
     // App
@@ -190,12 +206,16 @@ export default (store) => {
    */
   router.beforeEach((to, from, next) => {
     const hasOnboarded = localStorage.getItem('kumaOnboardingComplete')
-    const currentRoute = to.name
+    const currentRoute = to.meta.onboardingProcess
 
-    if (!hasOnboarded && currentRoute !== 'setup-welcome' && currentRoute !== 'setup-complete') {
+    if (!hasOnboarded && !currentRoute) {
       next({
         name: 'setup-welcome'
       })
+    // } else if (hasOnboarded && currentRoute) {
+    //   next({
+    //     name: 'setup-restart'
+    //   })
     } else {
       next()
     }

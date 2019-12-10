@@ -1,5 +1,5 @@
 <template>
-  <div class="setup-inquiry">
+  <div class="setup-restart">
     <div class="xl">
       <p>
         It looks like you've already completed the setup process.
@@ -10,6 +10,7 @@
     </div>
     <p class="mt-4">
       <KButton
+        :to="{ name: 'setup-welcome' }"
         appearance="primary"
         @click="restartOnboarding()"
       >
@@ -23,6 +24,7 @@
 import { setItemToStorage } from '@/Cache'
 
 export default {
+  name: 'OnboardingRestart',
   metaInfo: {
     title: 'Setup Already Completed'
   },
@@ -32,16 +34,10 @@ export default {
 
       setItemToStorage('kumaOnboardingComplete', false)
 
-      this.$router.push({
-        name: 'setup-welcome'
-      })
+      // this.$router.push({
+      //   name: 'setup-welcome'
+      // })
     }
   }
 }
 </script>
-
-<style lang="scss">
-.setup-inquiry {
-
-}
-</style>
