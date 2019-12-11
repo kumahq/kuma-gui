@@ -2,7 +2,7 @@
   <KNav :is-collapsed="isCollapsed">
     <div
       slot="NavMenu"
-      :class="{'is-hovering': hovering}"
+      :class="{ 'is-hovering': hovering }"
       class="menu-container"
     >
       <MeshSelector :items="meshList" />
@@ -14,23 +14,28 @@
         :index="i"
         :is-last="i === lastMenuList"
       />
-      <div class="sidebar-message">
-        <h4 class="mb-4 md sidebar-message__title">
-          Resources
-        </h4>
-        <ul>
-          <li
-            v-for="(item, index) in resourceLinks"
-            :key="index"
-          >
-            <a
-              :href="item.link"
-              target="_blank"
+      <div class="sidebar-message-wrap">
+        <div class="sidebar-app-info">
+          {{ kumaInfo }}
+        </div>
+        <div class="sidebar-message">
+          <h4 class="mb-4 md sidebar-message__title">
+            Resources
+          </h4>
+          <ul>
+            <li
+              v-for="(item, index) in resourceLinks"
+              :key="index"
             >
-              {{ item.label }}
-            </a>
-          </li>
-        </ul>
+              <a
+                :href="item.link"
+                target="_blank"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       <CollapseToggle
         :handle-toggle-collapse="handleToggleCollapse"
@@ -132,6 +137,10 @@ export default {
 
     meshList () {
       return this.$store.state.meshes
+    },
+
+    kumaInfo () {
+      return `${this.$store.getters.getTagline} v${this.$store.getters.getVersion}`
     }
   },
 
@@ -145,6 +154,8 @@ export default {
     }
 
     window.addEventListener('resize', this.handleResize)
+
+    this.getKumaInfo()
   },
 
   beforeDestroy () {
@@ -179,6 +190,11 @@ export default {
       if (document.documentElement.clientWidth >= 900) {
         this.isCollapsed = sidebarState || false
       }
+    },
+
+    getKumaInfo () {
+      this.$store.dispatch('getVersion')
+      this.$store.dispatch('getTagline')
     }
 
     // openWorkspaces () {
@@ -265,20 +281,30 @@ nav {
   top: 10px
 }
 
-.sidebar-message {
+.sidebar-message-wrap {
   position: fixed;
   bottom: 36px;
   width: 240px;
+
+  nav.closed & {
+    display: none;
+  }
+}
+
+.sidebar-app-info {
+  padding: 32px;
+  font-size: 14px;
+  line-height: 25px;
+  color: var(--tblack-45);
+}
+
+.sidebar-message {
   background-color: #FFF5E0;
   box-shadow: inset 0 1px 0 0 rgba(0,0,0,0.10);
   padding: 32px;
   font-size: 14px;
   line-height: 25px;
   color: rgba(0, 0, 0, .75);
-
-  nav.closed & {
-    display: none;
-  }
 
   p:first-of-type {
     margin-bottom: 16px;
