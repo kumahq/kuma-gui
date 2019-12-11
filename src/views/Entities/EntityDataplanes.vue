@@ -7,9 +7,9 @@
       :table-data-is-empty="tableDataIsEmpty"
       table-actions-route-name="dataplane-details"
     >
-      <template slot="tableDataActionsLinkText">
+      <!-- <template slot="tableDataActionsLinkText">
         View Entity
-      </template>
+      </template> -->
     </DataOverview>
   </div>
 </template>
