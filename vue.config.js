@@ -1,3 +1,5 @@
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 module.exports = {
   runtimeCompiler: true,
   transpileDependencies: [
@@ -6,6 +8,9 @@ module.exports = {
   css: {
     sourceMap: false
   },
+  // configureWebpack: {
+  //   plugins: [new BundleAnalyzerPlugin()]
+  // },
   chainWebpack: config => {
     config.module
       .rule('ignore-some-things')
