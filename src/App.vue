@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { setItemToStorage, getItemFromStorage } from '@/Cache'
+import { setItemToStorage } from '@/Cache'
 import { mapState } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'

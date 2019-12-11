@@ -54,7 +54,7 @@ export default {
     }
   },
   beforeMount () {
-    // this.setMeshPath()
+    this.setMeshPath()
   },
   methods: {
     preparePath (path) {
