@@ -337,4 +337,16 @@ nav {
   padding-bottom: 6px;
   margin-top: 0;
 }
+
+// mobile fix
+@media only screen and (max-width: 900px) {
+  .sidebar-toggle {
+    display: block !important;
+    height: auto !important;
+
+    span {
+      display: none;
+    }
+  }
+}
 </style>

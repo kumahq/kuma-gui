@@ -79,8 +79,11 @@ export default {
                   let totalUpdates
 
                   if (response.dataplaneInsight.subscriptions) {
-                    lastConnected = `${now.diff(moment(response.dataplaneInsight.subscriptions[0].connectTime), 'minutes')}m`
-                    lastUpdated = `${now.diff(moment(response.dataplaneInsight.subscriptions[0].status.lastUpdateTime), 'minutes')}m`
+                    const rawLastConnected = moment(response.dataplaneInsight.subscriptions[0].connectTime)
+                    const rawLastUpdated = moment(response.dataplaneInsight.subscriptions[0].status.lastUpdateTime)
+
+                    lastConnected = `${now.diff(rawLastConnected, 'minutes')}m`
+                    lastUpdated = `${now.diff(rawLastUpdated, 'minutes')}m`
                     totalUpdates = response.dataplaneInsight.subscriptions[0].status.total.responsesSent
                   } else {
                     lastConnected = lastUpdated = totalUpdates = 'n/a'
