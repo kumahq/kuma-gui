@@ -149,8 +149,7 @@
     </div>
     <!-- .app-source-check -->
 
-    <demo-app />
-    <!-- demo app option -->
+    <!-- <demo-app /> -->
   </div>
 </template>
 
@@ -206,6 +205,8 @@ export default {
     },
 
     getDataplaneTableData () {
+      this.$store.dispatch('getAllDataplanes')
+
       const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
       if (dataplanes.length > 0) {
