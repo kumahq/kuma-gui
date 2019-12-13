@@ -61,7 +61,7 @@
         </div>
         <div class="px-2">
           <p>
-            Waiting for Data Planes to connect&hellip;
+            Waiting for Dataplanes to connect&hellip;
           </p>
         </div>
       </div>
@@ -70,7 +70,7 @@
         class="mt-8"
       >
         <h2 class="xl mb-2 pb-2">
-          {{ dataplaneCountForTitle }} Data Plane(s) found, including:
+          {{ dataplaneCountForTitle }} Dataplane(s) found, including:
         </h2>
         <div class="data-table-wrapper">
           <KTable :options="tableData" />
@@ -110,7 +110,7 @@
                   to="#"
                   appearance="primary"
                 >
-                  Add Data Planes
+                  Add Dataplanes
                 </KButton>
               </p> -->
             </div>
@@ -124,7 +124,7 @@
               || appSource === 'k8s'"
           >
             <h3 class="xl mb-2">
-              Adding New Data Planes on Kubernetes
+              Adding New Dataplanes on Kubernetes
             </h3>
             <p class="mb-2">
               On Kubernetes, Kuma can automatically deploy dataplanes
@@ -149,10 +149,10 @@
           </div>
           <div v-else>
             <h3 class="xl mb-2">
-              Adding New Data Planes on Universal
+              Adding New Dataplanes on Universal
             </h3>
             <p class="mb-2">
-              First, create a Dataplane resource to describe services provided by your app:
+              First, create a Dataplane resource to describe service(s) provided by your app:
             </p>
             <p>
               <code>
@@ -164,12 +164,11 @@ networking:
   inbound:
   - interface: 127.0.0.1:10000:9000
     tags:
-      service: echo" | kumactl apply -f -
-                </pre>
+      service: echo" | kumactl apply -f -</pre>
               </code>
             </p>
             <p>
-              Next, generate an identity token for a dataplane:
+              Next, generate an identity token for the dataplane:
             </p>
             <p>
               <code>
@@ -177,17 +176,16 @@ networking:
               </code>
             </p>
             <p>
-              Lastly, start a dataplane:
+              Lastly, start the dataplane:
             </p>
             <p>
               <code>
                 <pre>
-$ kuma-dp run
+$ kuma-dp run \
   --name=dp-echo-1 \
   --mesh=default \
   --cp-address=http://127.0.0.1:5681 \
-  --dataplane-token-file=/tmp/kuma-dp-echo-1
-                </pre>
+  --dataplane-token-file=/tmp/kuma-dp-echo-1</pre>
               </code>
             </p>
           </div>
@@ -197,7 +195,7 @@ $ kuma-dp run
             class="mt-4"
             @click="reScanForDataplanes()"
           >
-            Re-Scan for Data Planes
+            Re-Scan for Dataplanes
           </KButton>
           </p>
         </div>
