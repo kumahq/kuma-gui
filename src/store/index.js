@@ -66,12 +66,12 @@ export default (api) => {
       getTrafficLogsFromMeshTotalCount (state) {
         return state.totalTrafficLogsCountFromMesh
       },
-      getVersion (state) {
-        return state.version
-      },
-      getTagline (state) {
-        return state.tagline
-      },
+      // getVersion (state) {
+      //   return state.version
+      // },
+      // getTagline (state) {
+      //   return state.tagline
+      // },
       getStatus (state) {
         return state.status
       }
@@ -113,12 +113,12 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH (state, count) {
         state.totalTrafficLogsCountFromMesh = count
       },
-      SET_VERSION (state, version) {
-        state.version = version
-      },
-      SET_TAGLINE (state, tagline) {
-        state.tagline = tagline
-      },
+      // SET_VERSION (state, version) {
+      //   state.version = version
+      // },
+      // SET_TAGLINE (state, tagline) {
+      //   state.tagline = tagline
+      // },
       SET_STATUS (state, status) {
         state.status = status
       }
@@ -267,26 +267,26 @@ export default (api) => {
       },
 
       // get the current version
-      getVersion ({ commit }) {
-        return api.getInfo()
-          .then(response => {
-            commit('SET_VERSION', response.version)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
+      // getVersion ({ commit }) {
+      //   return api.getInfo()
+      //     .then(response => {
+      //       commit('SET_VERSION', response.version)
+      //     })
+      //     .catch(error => {
+      //       console.error(error)
+      //     })
+      // },
 
-      // get the current tagline
-      getTagline ({ commit }) {
-        return api.getInfo()
-          .then(response => {
-            commit('SET_TAGLINE', response.tagline)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
+      // // get the current tagline
+      // getTagline ({ commit }) {
+      //   return api.getInfo()
+      //     .then(response => {
+      //       commit('SET_TAGLINE', response.tagline)
+      //     })
+      //     .catch(error => {
+      //       console.error(error)
+      //     })
+      // },
 
       // get the status of the API
       getStatus ({ commit }) {

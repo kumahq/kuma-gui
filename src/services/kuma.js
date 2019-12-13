@@ -13,10 +13,10 @@ export default class Kuma {
   }
 
   /**
-   * Root
+   * Info
    */
 
-  getApiRoot () {
+  getInfo () {
     return this.client.get('/')
   }
 

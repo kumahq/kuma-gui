@@ -14,7 +14,9 @@
           >
         </div>
         <div class="app-source-check__content px-2">
-          <p>Secure your traffic</p>
+          <p>
+            <strong>Secure your traffic:</strong> by using the <a href="https://kuma.io/docs/latest/policies/#mutual-tls">mTLS policy</a>
+          </p>
         </div>
       </div>
       <div class="flex items-center">
@@ -25,7 +27,7 @@
           >
         </div>
         <div class="app-source-check__content px-2">
-          <p>Observe your traffic</p>
+          <strong>Route your requests:</strong> by using the <a href="https://kuma.io/docs/latest/policies/#traffic-route">Traffic Route</a> policy
         </div>
       </div>
       <div class="flex items-center">
@@ -36,7 +38,7 @@
           >
         </div>
         <div class="app-source-check__content px-2">
-          <p>Expose your traffic</p>
+          <p><strong>Log your traffic</strong>, by using the <a href="https://kuma.io/docs/latest/policies/#traffic-log">Traffic Log</a> policy</p>
         </div>
       </div>
     </div>
@@ -63,6 +65,10 @@ export default {
   computed: {
     hasUserBeenOnboarded () {
       return getItemFromStorage('kumaOnboardingComplete')
+    },
+
+    kumaVersion () {
+      return this.$store.getters.getInfo
     }
   },
   methods: {
@@ -72,7 +78,10 @@ export default {
       setItemToStorage('kumaOnboardingComplete', true)
 
       this.$router.push({
-        name: 'global-overview'
+        name: 'mesh-overview',
+        params: {
+          mesh: 'default'
+        }
       })
     }
   }
@@ -89,6 +98,14 @@ export default {
     border-radius: 4px;
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-md);
+  }
+}
+
+.app-source-check__content {
+
+  a {
+    text-decoration: underline;
+    color: var(--blue-link);
   }
 }
 </style>

@@ -733,18 +733,26 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+<<<<<<< HEAD
 "@kongponents/kalert@^0.1.4":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@kongponents/kalert/-/kalert-0.1.8.tgz#2a73d6fab7653f1c3c1228651023e04fced61d53"
   integrity sha512-Sq0/CHE26qkF7lEYID2nChGp13awROFN1KuQN5QNMcrcmg6B4xRHoXkUAHP14dInGHI1ddkjPnSPgMX9PHOnQQ==
   dependencies:
     "@kongponents/kicon" "^0.3.5"
+=======
+"@kongponents/kalert@0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@kongponents/kalert/-/kalert-0.1.3.tgz#c43e24cab26116c6c4af7b747f730f9fc268bf56"
+  integrity sha512-HUIPmBpCX6KwQMc49chGlGWB1e+whAH/4twNQxxZv7iEFe+jzhm1e/KI9sEdEI0gZUh2H+Vgi4SJH8EgrBqSVQ==
+>>>>>>> master
 
 "@kongponents/kbadge@^0.1.2":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@kongponents/kbadge/-/kbadge-0.1.6.tgz#c49950b291715081302cbce728c909329e8768cb"
   integrity sha512-I2N0gqWRIxr5j/7E3a3TvrYicrj+Bi5uau9ZGzEuiP+9bxzRoT6XFGghvJlst7mkaUtaxas1oX4A+FCh1mFPWQ==
 
+<<<<<<< HEAD
 "@kongponents/kbutton@^0.1.10-1", "@kongponents/kbutton@^0.1.10-6":
   version "0.1.10-6"
   resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-0.1.10-6.tgz#fbde1424bad53d51f6b4df5f338153506a7df567"
@@ -778,12 +786,58 @@
   integrity sha512-JxxCkKw4dOq0fUhXJAYJpg9MgZ7xxR9IPFecMBGTMvRm2h1V5UkkCN1CYlINi/4cEy4aBluzJzUO8KXhX1fJRA==
 
 "@kongponents/kmodal@^0.1.4-1":
+=======
+"@kongponents/kbutton@0.0.1-beta.6":
+  version "0.0.1-beta.6"
+  resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-0.0.1-beta.6.tgz#e9ea652a39a4bc3c65f00a481b0b7fa7cde8a6fd"
+  integrity sha512-oPgjhap+JqAh/NsyZeTqt9T1jB9oYK3pYIJZDi4MLqTDuLL1eVNnjcHNplokYcM97RoR4KQeBaT4xjynNS3c4A==
+
+"@kongponents/kbutton@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-0.1.10.tgz#b4859933a8a12de53bed8bc9cca5ba912e93fd5c"
+  integrity sha512-NyN3RIFbK86yl5zuOpbdtipi4KRJMOZ/AEz5UMC6WxQ3T+nmcIL/hqFk8LkRYLmEakr1G7K1PnsYHXDKwsbCog==
+
+"@kongponents/kbutton@^0.1.10-6":
+  version "0.1.10-6"
+  resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-0.1.10-6.tgz#fbde1424bad53d51f6b4df5f338153506a7df567"
+  integrity sha512-6TnnJybYI6orDHuWmqLGHjCSVuh0kjqJSlTFXtqEGyi3pE6pelor4NqT7RfCEhW+ZpXQsol4YwK9u5qzwjYWvA==
+
+"@kongponents/kcard@0.1.3-1":
+  version "0.1.3-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/kcard/-/kcard-0.1.3-1.tgz#8eca57b6a472298853217067b9e66e9c75d8d44d"
+  integrity sha512-mba/9L7HZJxFsQZRKxxqZ3ugqD5XSyI9tzBRTr3WDdBHWcZfqvmn3qZA5gIE67cc/djDv57Wv1Lq96bBjLvkKw==
+
+"@kongponents/kclipboardprovider@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/kclipboardprovider/-/kclipboardprovider-0.1.2.tgz#ec89183c9ef6c1485055aa4194560d38068b0234"
+  integrity sha512-OTKqzUqx1NQGc6PxHISVIdLlmqb0UD/FK6OcrkNawahpNSU9dgToBWo18GO8f6a7V8dikmk+ZZUmABPTfQ/L5A==
+
+"@kongponents/kemptystate@0.0.1-beta.4":
+  version "0.0.1-beta.4"
+  resolved "https://registry.yarnpkg.com/@kongponents/kemptystate/-/kemptystate-0.0.1-beta.4.tgz#eff4c93be4a1b80f1e331856d2896e43c3229217"
+  integrity sha512-/PgNklktiVcwGNzol+9nFP3jSF50hEfzM9xOTNxaN0iHC1vwj0B15PGK9wEWI8XNcyX1oXfi+YIqbaOKsbVQNw==
+  dependencies:
+    "@kongponents/kbutton" "0.0.1-beta.6"
+
+"@kongponents/kicon@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-0.3.0.tgz#d760c2c0459cc4c3a51c7c014a7d6995c84bca43"
+  integrity sha512-qU5Rb/M9lDsGJQoUR4z9jJWgwNaBRPJJ2V7qjk1+bAMyiCDOJ+I8FQhMhrmC/dJUrZidfnhU4WQ7w6z5JzGenw==
+
+"@kongponents/kinput@^0.2.0-0":
+  version "0.2.0-0"
+  resolved "https://registry.yarnpkg.com/@kongponents/kinput/-/kinput-0.2.0-0.tgz#cfeeb291e4080ea75064c84bba49abb74eec8d3a"
+  integrity sha512-96y0veNkzZBt1of4BC98S/1Yl2k3KRr06+G4ZFXL3ueb6JWkCNPvd36C+xnIICD8cL8NG2rOZEvXHU8wTEtMaQ==
+
+"@kongponents/kmodal@^0.1.4-8":
+>>>>>>> master
   version "0.1.4-8"
   resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-0.1.4-8.tgz#13645f8da1fa64480c88ded2ee92b63ba40280c6"
   integrity sha512-u7xyhFVvDnLs0UVuXlZSNVpEDrvrgmAest6JdnxfuixVdonTPLlNVT9sp2QQumgQTnLjai57+HQ4/1dioO4YXQ==
   dependencies:
     "@kongponents/kbutton" "^0.1.10-6"
 
+<<<<<<< HEAD
 "@kongponents/kooltip@^0.2.0":
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/@kongponents/kooltip/-/kooltip-0.2.5.tgz#a5a49de6d86eed9ab13161dcfdb4224894b5fd25"
@@ -810,13 +864,45 @@
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@kongponents/ktoaster/-/ktoaster-0.1.5.tgz#c0a94f176a62656ab693769c5c4f82c19d8b515d"
   integrity sha512-QxR8/45KiiJEh3pUyL2Uq5HCU0xFLxCGQDGGTJLWdfyEBMTdpxRTOCrRzOZaLa0ujPdZmRuCGWglEy+HPIECHw==
+=======
+"@kongponents/kooltip@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@kongponents/kooltip/-/kooltip-0.2.0.tgz#2ac560d3bcab5dfdd79045e8565bb59c608b97ea"
+  integrity sha512-d8PqU2+M30ZqK9Gj9oOWqt84aHsPkediB2WJTMl9ZiATUwww3luTBhdJ5v67NP5MwxK7meenRd0p6Ou0N70P1w==
+
+"@kongponents/kpop@0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@kongponents/kpop/-/kpop-0.2.10.tgz#2d236e366c4adaf0818dc32d240acadf41a41caf"
+  integrity sha512-aATzNt5VKPtXdjptVApabDhEt1P4Vz2OYizBAQVY6zJadLTwQCEsysZGyAOPUTQdXueUFq/5j4HTZXXh4oyz/A==
+  dependencies:
+    popper.js "^1.15.0"
+
+"@kongponents/krumbs@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@kongponents/krumbs/-/krumbs-0.0.1.tgz#a1823e54ae2159b03ee2123b26bb9ad865ef0b1c"
+  integrity sha512-3yMFlVR5i1oiIvEcTsVZCqx40kW49lGGouhufADMIQVS3JZYWIupqEt/sV+w5fWlgqds2Ig1JO3pylLBVScmmg==
+
+"@kongponents/ktable@0.1.4-1":
+  version "0.1.4-1"
+  resolved "https://registry.yarnpkg.com/@kongponents/ktable/-/ktable-0.1.4-1.tgz#f24ae162e819aa46c5626ba6ee6b14462c6ad875"
+  integrity sha512-iADp3NbwDqffCi/YGgar477uNtk/s4pB2NgIXfCjed8sF7DukepbZi+ehqrHKccGSMynch0vcqivXqgHwRydwQ==
+
+"@kongponents/ktoaster@0.0.1-beta.4":
+  version "0.0.1-beta.4"
+  resolved "https://registry.yarnpkg.com/@kongponents/ktoaster/-/ktoaster-0.0.1-beta.4.tgz#8f4bab11bbbef9b1a4ba2d133b9977c5fd158955"
+  integrity sha512-thB37Y9ABtT6/y0wDNQzq3H2BBI0UUhQrvoLB55kF71XeP/nS7PvcP0XB+YxViK3wb7QGggX9Pfx8N9Yzjyb+w==
+>>>>>>> master
 
 "@kongponents/ktoggle@^0.1.1":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@kongponents/ktoggle/-/ktoggle-0.1.5.tgz#6393249ba94f70c5c44039c1aaf8832c17e47eff"
   integrity sha512-qhurDae4Mqbe7dEdvHPhtdUIToDd24GcuKvPbknizh9e9OTwQX1u+NyGZ9Hrl+ys3S3iGcLNh7q3UMeFaNEing==
 
+<<<<<<< HEAD
 "@kongponents/styles@^0.0.4-1":
+=======
+"@kongponents/styles@0.0.4":
+>>>>>>> master
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@kongponents/styles/-/styles-0.0.4.tgz#67f37744796f8155c2f03f928ddbc015bc6fbbb1"
   integrity sha512-ozTY/OyTiJpdEpzdQ3Ku4RutJ3e7h1AxAlpYk9kZLCu0p0iN8WAij4DGFdPA+uR9HbuTYx+8OBgEpoJPMsPDew==

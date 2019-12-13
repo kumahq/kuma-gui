@@ -69,8 +69,8 @@
         v-else-if="tableData && tableDataIsEmpty === false"
         class="mt-8"
       >
-        <h2 class="xl mb-4 pb-4">
-          {{ dataplaneCountForTitle }} Data Planes found, including:
+        <h2 class="xl mb-2 pb-2">
+          {{ dataplaneCountForTitle }} Data Plane(s) found, including:
         </h2>
         <div class="data-table-wrapper">
           <KTable :options="tableData" />
@@ -97,12 +97,13 @@
               >
             </div>
             <div class="dataplane-fallback__content px-4">
-              <h3 class="dataplane-fallback__title mb-4 pb-4">
-                No Data Planes detected.
+              <h3 class="dataplane-fallback__title mb-2 pb-2">
+                No Dataplanes detected.
               </h3>
-              <p class="mb-4">
-                Before adding services to Kuma, we need to add Sidecar Data Planes
-                (also called Sidecar Proxies) to each service.
+              <p class="mb-2">
+                To bring your applications into Kuma Service Mesh,
+                you need to deploy dataplanes (also known as Sidecar Proxies)
+                next to them.
               </p>
               <!-- <p>
                 <KButton
@@ -117,40 +118,94 @@
         </div>
         <!-- .dataplane-fallback -->
         <div class="dataplane-walkthrough my-4">
-          <h3 class="xl mb-4">
-            Adding New Data Planes
-          </h3>
-          <p>
-            To add a new data plane, execute the following steps:
-          </p>
-          <p>
-            <code>
-              <pre>[placeholder] $ kumactl install control-plane | kubectl apply</pre>
-            </code>
-          </p>
-          <p>
-            Then do this:
-          </p>
-          <p>
-            <code>
-              <pre>[placeholder] $ kumactl something something ...</pre>
-            </code>
-          </p>
-          <p>
-            <KButton
-              appearance="primary"
-              @click="getDataplaneTableData()"
-            >
-              Re-Scan for Data Planes
-            </KButton>
+          <div
+            v-if="appSource
+              && appSource === 'kubernetes'
+              || appSource === 'k8s'"
+          >
+            <h3 class="xl mb-2">
+              Adding New Data Planes on Kubernetes
+            </h3>
+            <p class="mb-2">
+              On Kubernetes, Kuma can automatically deploy dataplanes
+              (also known as Sidecar Proxies) next to your applications.
+            </p>
+            <p>
+              First, you need to enable automatic sidecar injection at a Namespace level:
+            </p>
+            <p>
+              <code>
+                <pre>$ kubectl label namespace [YOUR_NAMESPACE] kuma.io/sidecar-injection=enabled</pre>
+              </code>
+            </p>
+            <p>
+              Then, you need to recreate application Pods:
+            </p>
+            <p>
+              <code>
+                <pre>$ kubectl -n [YOUR_NAMESPACE] delete pods --all</pre>
+              </code>
+            </p>
+          </div>
+          <div v-else>
+            <h3 class="xl mb-2">
+              Adding New Data Planes on Universal
+            </h3>
+            <p class="mb-2">
+              First, create a Dataplane resource to describe services provided by your app:
+            </p>
+            <p>
+              <code>
+                <pre>
+$ echo "type: Dataplane
+mesh: default
+name: dp-echo-1
+networking:
+  inbound:
+  - interface: 127.0.0.1:10000:9000
+    tags:
+      service: echo" | kumactl apply -f -
+                </pre>
+              </code>
+            </p>
+            <p>
+              Next, generate an identity token for a dataplane:
+            </p>
+            <p>
+              <code>
+                <pre>$ kumactl generate dataplane-token --dataplane=dp-echo-1 > /tmp/kuma-dp-echo-1</pre>
+              </code>
+            </p>
+            <p>
+              Lastly, start a dataplane:
+            </p>
+            <p>
+              <code>
+                <pre>
+$ kuma-dp run
+  --name=dp-echo-1 \
+  --mesh=default \
+  --cp-address=http://127.0.0.1:5681 \
+  --dataplane-token-file=/tmp/kuma-dp-echo-1
+                </pre>
+              </code>
+            </p>
+          </div>
+
+          <KButton
+            appearance="primary"
+            class="mt-4"
+            @click="reScanForDataplanes()"
+          >
+            Re-Scan for Data Planes
+          </KButton>
           </p>
         </div>
       </div>
     </div>
     <!-- .app-source-check -->
 
-    <demo-app />
-    <!-- demo app option -->
+    <!-- <demo-app /> -->
   </div>
 </template>
 
@@ -205,7 +260,19 @@ export default {
       this.getDataplaneTableData()
     },
 
+    reScanForDataplanes () {
+      this.tableDataIsEmpty = false
+      this.tableDataLoadAttempted = false
+
+      setTimeout(() => {
+        this.getDataplaneTableData()
+        this.tableDataLoadAttempted = true
+      }, this.tableDataLoadDelay)
+    },
+
     getDataplaneTableData () {
+      this.$store.dispatch('getAllDataplanes')
+
       const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
       if (dataplanes.length > 0) {
@@ -257,8 +324,8 @@ export default {
 }
 
 .app-setup {
-  padding: var(--spacing-xl) 0;
-  margin: var(--spacing-xl) 0;
+  padding: var(--spacing-md) 0;
+  margin: var(--spacing-md) 0;
   border-top: 1px solid var(--tblack-10);
   border-bottom: 1px solid var(--tblack-10);
 }
@@ -326,8 +393,14 @@ export default {
     margin-bottom: 16px;
   }
 
+  pre {
+    white-space: pre-wrap;
+  }
+
   code {
     @include styledPanel;
+
+    word-break: break-word !important;
 
     display: block;
     font-family: var(--font-family-mono);

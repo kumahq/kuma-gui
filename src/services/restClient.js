@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Mock from '@/services/mock'
+// import Mock from '@/services/mock'
 
 export default class RestClient {
   constructor (options) {
@@ -10,7 +10,7 @@ export default class RestClient {
     // leave this blank!
     this.headers = {}
 
-    RestClient.setupMocks(opts.injectMocks)
+    // RestClient.setupMocks(opts.injectMocks)
 
     /**
      * We no longer need to run this because the setup is done
@@ -76,20 +76,20 @@ export default class RestClient {
    * @param {Object} injectMocks - the mock endpoint functions defined by any
    * external plugins - if they exist. If not, then it passes the real (unmocked) response.
    */
-  static setupMocks (injectMocks) {
-    const mock = new Mock(axios)
-    if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
-      mock.setupMockEndpoints()
-    } else {
-      if (injectMocks && injectMocks.length) {
-        injectMocks.forEach(injectedMock => {
-          injectedMock(mock.mock)
-        })
-      }
+  // static setupMocks (injectMocks) {
+  //   const mock = new Mock(axios)
+  //   if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
+  //     mock.setupMockEndpoints()
+  //   } else {
+  //     if (injectMocks && injectMocks.length) {
+  //       injectMocks.forEach(injectedMock => {
+  //         injectedMock(mock.mock)
+  //       })
+  //     }
 
-      mock.setupPluginMocks()
-    }
-  }
+  //     mock.setupPluginMocks()
+  //   }
+  // }
 
   buildUrl (path) {
     return `${this.host}${path}`

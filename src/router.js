@@ -92,8 +92,8 @@ export default (store) => {
       name: 'mesh',
       meta: {
         title: 'Overview',
-        breadcrumb: 'Global Overview',
-        parent: 'global-overview'
+        breadcrumb: 'Overview',
+        parent: 'mesh-overview'
       },
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),
