@@ -271,28 +271,28 @@ export default {
     },
 
     getDataplaneTableData () {
-      this.$store.dispatch('getAllDataplanes')
+      this.$store.dispatch('getAllDataplanes').then(() => {
+        const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
-      const dataplanes = Object.values(this.$store.getters.getDataplanesList)
+        if (dataplanes.length > 0) {
+          this.tableDataDataplaneCount = dataplanes.length
+          this.tableData.data = []
+          this.tableDataLoadAttempted = false
 
-      if (dataplanes.length > 0) {
-        this.tableDataDataplaneCount = dataplanes.length
-        this.tableData.data = []
-        this.tableDataLoadAttempted = false
+          dataplanes.slice(0, 10).map(val => {
+            this.tableData.data.push(val)
+          })
 
-        dataplanes.slice(0, 10).map(val => {
-          this.tableData.data.push(val)
-        })
+          this.tableDataIsEmpty = false
 
-        this.tableDataIsEmpty = false
-
-        setTimeout(() => {
+          setTimeout(() => {
+            this.tableDataLoadAttempted = true
+          }, this.tableDataLoadDelay)
+        } else {
           this.tableDataLoadAttempted = true
-        }, this.tableDataLoadDelay)
-      } else {
-        this.tableDataLoadAttempted = true
-        this.tableDataIsEmpty = true
-      }
+          this.tableDataIsEmpty = true
+        }
+      })
     },
 
     getAppType () {
