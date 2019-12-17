@@ -193,25 +193,28 @@ export default (api) => {
       // a makeshift way to get the list of all present dataplanes across all meshes
       getAllDataplanes ({ commit }) {
         const getDataplanes = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          return new Promise(async (resolve, reject) => {
+            const meshes = await api.getAllMeshes()
+            const result = []
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
-            const items = await dataplanes.items
+            for (let i = 0; i < meshes.items.length; i++) {
+              const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
+              const items = await dataplanes.items
 
-            items.forEach(item => {
-              result.push({
-                name: item.name,
-                mesh: item.mesh
+              items.forEach(item => {
+                result.push({
+                  name: item.name,
+                  mesh: item.mesh
+                })
               })
-            })
-          }
+            }
 
-          commit('SET_TOTAL_DP_LIST', result)
+            commit('SET_TOTAL_DP_LIST', result)
+            resolve()
+          })
         }
 
-        getDataplanes()
+        return getDataplanes()
       },
 
       // get the total number of dataplanes from a mesh
