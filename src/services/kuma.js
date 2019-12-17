@@ -105,6 +105,18 @@ export default class Kuma {
   }
 
   /**
+   * Health Checks
+   */
+
+  getAllHealthChecks (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/health-checks`, { params })
+  }
+
+  getHealthCheck (mesh, name, params) {
+    return this.client.get(`/meshes/${mesh}/health-checks/${name}`, { params })
+  }
+
+  /**
    *
    * NOTE:
    * There are no endpoints yet for fetching service information.
