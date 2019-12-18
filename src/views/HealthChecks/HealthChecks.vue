@@ -4,7 +4,7 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-      table-actions-route-name="traffic-routes-details"
+      table-actions-route-name="health-checks-details"
     >
       <template slot="tableDataActionsLinkText">
         View Entity
@@ -17,9 +17,9 @@
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
-  name: 'TrafficRoutes',
+  name: 'HealthChecks',
   metaInfo: {
-    title: 'Traffic Routes'
+    title: 'Health Checks'
   },
   components: {
     DataOverview
@@ -51,10 +51,13 @@ export default {
   },
   methods: {
     bootstrap () {
+      this.isLoading = true
+      this.isEmpty = false
+
       const mesh = this.$route.params.mesh
 
-      const getTrafficRoutes = () => {
-        return this.$api.getTrafficRoutes(mesh)
+      const getTrafficLogs = () => {
+        return this.$api.getHealthChecks(mesh)
           .then(response => {
             const items = response.items
 
@@ -74,7 +77,7 @@ export default {
           })
       }
 
-      getTrafficRoutes()
+      getTrafficLogs()
     }
   }
 }

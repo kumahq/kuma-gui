@@ -5,10 +5,39 @@
       :metrics-data="metricsData"
       :empty-state="empty_state"
     />
+    <div class="flex">
+      <KCard
+        v-if="entity"
+        title="Entity Overview"
+        class="w-full md:w-1/2"
+      >
+        <template slot="body">
+          <code><pre>{{ entity }}</pre></code>
+        </template>
+        <template slot="actions">
+          <KClipboardProvider v-slot="{ copyToClipboard }">
+            <KPop
+              placement="bottom"
+              :popover-timeout="1000"
+            >
+              <KButton
+                @click="() => { copyToClipboard(entity) }"
+              >
+                Copy to Clipboard
+              </KButton>
+              <div slot="content">
+                <p>Entity copied to clipboard!</p>
+              </div>
+            </KPop>
+          </KClipboardProvider>
+        </template>
+      </KCard>
+    </div>
   </div>
 </template>
 
 <script>
+import prettyoutput from 'prettyoutput'
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
@@ -27,6 +56,7 @@ export default {
       isEmpty: false,
       hasError: false,
       tableDataIsEmpty: false,
+      entity: null,
       empty_state: {
         title: 'No Data',
         message: 'There are no meshes present.'
@@ -64,9 +94,30 @@ export default {
     this.bootstrap()
   },
   methods: {
+    alert (msg) {
+      window.alert(msg)
+    },
+    getEntity () {
+      const mesh = this.$route.params.mesh || this.$store.getters.getSelectedMesh
+
+      this.$api.getMesh(mesh)
+        .then(response => {
+          const options = {
+            noColor: true
+          }
+
+          this.entity = prettyoutput(response, options)
+        })
+        .catch(error => {
+          console.error(error)
+          this.entity = error
+        })
+    },
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false
+
+      this.getEntity()
 
       // get the total number of dataplanes from selected mesh
       this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)

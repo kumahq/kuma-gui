@@ -65,6 +65,12 @@ export default {
           title: true
         },
         {
+          name: 'Traffic Log',
+          link: '/traffic-log',
+          title: false,
+          parent: 'policies'
+        },
+        {
           name: 'Traffic Permissions',
           link: '/traffic-permissions',
           title: false,
@@ -75,12 +81,19 @@ export default {
           link: '/traffic-routes',
           title: false,
           parent: 'policies'
-        },
+        }
+      ]
+    },
+    {
+      name: 'Health Checks',
+      id: 'healthchecks',
+      skipRbac: true,
+      items: [
         {
-          name: 'Traffic Log',
-          link: '/traffic-log',
+          name: 'Health Checks',
+          link: '/health-checks',
           title: false,
-          parent: 'policies'
+          parent: 'healthchecks'
         }
       ]
     }

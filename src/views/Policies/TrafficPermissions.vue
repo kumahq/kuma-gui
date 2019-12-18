@@ -4,7 +4,12 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-    />
+      table-actions-route-name="traffic-permissions-details"
+    >
+      <template slot="tableDataActionsLinkText">
+        View Entity
+      </template>
+    </DataOverview>
   </div>
 </template>
 
@@ -29,7 +34,8 @@ export default {
         headers: [
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' }
+          { label: 'Type', key: 'type' },
+          { key: 'actions', hideLabel: true }
         ],
         data: []
       }
