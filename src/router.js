@@ -98,6 +98,7 @@ export default (store) => {
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),
       children: [
+        // meshes
         {
           path: 'overview',
           name: 'mesh-overview',
@@ -107,6 +108,7 @@ export default (store) => {
             parent: 'mesh-overview'
           }
         },
+        // dataplanes
         {
           path: 'dataplanes',
           name: 'dataplanes',
@@ -126,6 +128,7 @@ export default (store) => {
           params: { dataplane: ':dataplane' },
           component: () => import('@/views/Entities/EntityDataplanesDetail')
         },
+        // services
         {
           path: 'services',
           name: 'services',
@@ -144,6 +147,7 @@ export default (store) => {
           },
           component: () => import('@/views/Entities/EntityServicesDetail')
         },
+        // traffic permissions
         {
           path: 'traffic-permissions',
           name: 'traffic-permissions',
@@ -153,8 +157,21 @@ export default (store) => {
             parent: 'mesh-overview'
           },
           component: () => import('@/views/Policies/TrafficPermissions')
-          // child routes?
         },
+        {
+          path: 'traffic-permissions/:trafficpermission',
+          name: 'traffic-permissions-details',
+          params: {
+            trafficpermission: ':trafficpermission'
+          },
+          meta: {
+            title: 'Traffic Permission Details',
+            breadcrumb: 'Traffic Permissions',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/Policies/TrafficPermissionsDetail')
+        },
+        // traffic routes
         {
           path: 'traffic-routes',
           name: 'traffic-routes',
@@ -164,18 +181,67 @@ export default (store) => {
             parent: 'mesh-overview'
           },
           component: () => import('@/views/Policies/TrafficRoutes')
-          // child routes?
         },
+        {
+          path: 'traffic-routes/:trafficroute',
+          name: 'traffic-routes-details',
+          params: {
+            trafficroute: ':trafficroute'
+          },
+          meta: {
+            title: 'Traffic Route Details',
+            breadcrumb: 'Traffic Routes',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/Policies/TrafficRouteDetail')
+        },
+        // traffic logs
         {
           path: 'traffic-log',
           name: 'traffic-log',
           meta: {
             title: 'Traffic Logs',
             breadcrumb: 'Traffic Logs',
-            parent: '#'
+            parent: 'mesh-overview'
           },
           component: () => import('@/views/Policies/TrafficLog')
-          // child routes?
+        },
+        {
+          path: 'traffic-log/:trafficlog',
+          name: 'traffic-log-details',
+          params: {
+            trafficlog: ':trafficlog'
+          },
+          meta: {
+            title: 'Traffic Log Details',
+            breadcrumb: 'Traffic Logs',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/Policies/TrafficLogDetail')
+        },
+        // health checks
+        {
+          path: 'health-checks',
+          name: 'health-checks',
+          meta: {
+            title: 'Health Checks',
+            breadcrumb: 'Health Checks',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/HealthChecks/HealthChecks')
+        },
+        {
+          path: 'health-checks/:healthcheck',
+          name: 'health-checks-details',
+          params: {
+            healthcheck: ':healthcheck'
+          },
+          meta: {
+            title: 'Health Check Details',
+            breadcrumb: 'Health Checks',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/HealthChecks/HealthChecksDetail')
         }
       ]
     }

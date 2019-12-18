@@ -31,27 +31,42 @@
       </KEmptyState>
 
       <!-- data -->
-      <KTable
-        v-if="displayDataTable && tableDataIsEmpty === false && tableData"
-        :options="tableData"
-      >
-        <template
-          slot="actions"
-          slot-scope="{ row }"
+      <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
+        <KTable
+          :options="tableData"
         >
-          <router-link
-            :to="{
-              name: tableActionsRouteName,
-              params: {
-                mesh: row.type === 'Mesh' ? row.name : row.mesh,
-                dataplane: row.type === 'Dataplane' ? row.name : null
-              }
-            }"
+          <template
+            slot="actions"
+            slot-scope="{ row }"
           >
-            <slot name="tableDataActionsLinkText" />
-          </router-link>
-        </template>
-      </KTable>
+            <router-link
+              :to="{
+                name: tableActionsRouteName,
+                params: {
+                  mesh: row.type === 'Mesh' || row.type === 'mesh' ? row.name : row.mesh,
+                  dataplane: row.type === 'Dataplane' || row.type === 'dataplane' ? row.name : null,
+                  trafficpermission: row.type === 'TrafficPermission' || row.type === 'trafficpermission' ? row.name : null,
+                  trafficroute: row.type === 'TrafficRoute' || row.type === 'trafficroute' ? row.name : null,
+                  trafficlog: row.type === 'TrafficLog' || row.type === 'trafficlog' ? row.name : null,
+                  healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null
+                }
+              }"
+            >
+              <slot name="tableDataActionsLinkText" />
+            </router-link>
+          </template>
+        </KTable>
+
+        <!-- <Pagination
+          v-if="tableData && tableData.length > itemListPageSize"
+          :has-previous="itemsListOffset - itemListPageSize >= 0"
+          :has-next="tableData.length - itemsListOffset > itemListPageSize"
+          class="ml-2 mr-2 mb-2"
+          @next="goToNextPage"
+          @previous="goToPreviousPage"
+        /> -->
+      </div>
+
       <KEmptyState
         v-if="tableDataIsEmpty === true"
         cta-is-hidden
@@ -91,11 +106,13 @@
 
 <script>
 import MetricGrid from '@/components/Metrics/MetricGrid'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'DataOverview',
   components: {
-    MetricGrid
+    MetricGrid,
+    Pagination
   },
   props: {
     displayMetrics: {
@@ -149,11 +166,29 @@ export default {
     tableActionsRouteName: {
       type: String,
       default: null
+    },
+    entityType: {
+
+    }
+  },
+  data () {
+    return {
+      itemListPageSize: 12,
+      itemListOffset: 0
     }
   },
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
+    }
+  },
+  methods: {
+    goToNextPage () {
+
+    },
+
+    goToPreviousPage () {
+
     }
   }
 }

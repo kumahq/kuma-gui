@@ -33,9 +33,9 @@ import prettyoutput from 'prettyoutput'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
-  name: 'DataplanesDetails',
+  name: 'TrafficLogDetail',
   metaInfo: {
-    title: 'Dataplane Details'
+    title: 'Traffic Log Details'
   },
   components: {
     MetricGrid
@@ -59,7 +59,7 @@ export default {
       const mesh = this.$route.params.mesh
       const dataplane = this.$route.params.dataplane
 
-      return this.$api.getDataplaneOverviews(mesh, dataplane)
+      return this.$api.getTrafficLogs(mesh)
         .then(response => {
           // this.content = response
           const options = {

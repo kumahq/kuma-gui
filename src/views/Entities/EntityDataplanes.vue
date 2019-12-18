@@ -5,10 +5,11 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
+      table-actions-route-name="dataplane-details"
     >
-      <!-- <template slot="tableDataActionsLinkText">
+      <template slot="tableDataActionsLinkText">
         View Entity
-      </template> -->
+      </template>
     </DataOverview>
   </div>
 </template>
@@ -39,8 +40,8 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
-          { label: 'Total Updates', key: 'totalUpdates' }
-          // { key: 'actions', hideLabel: true }
+          { label: 'Total Updates', key: 'totalUpdates' },
+          { key: 'actions', hideLabel: true }
         ],
         data: []
       }
@@ -140,7 +141,8 @@ export default {
                     status: status,
                     lastConnected: lastConnected,
                     lastUpdated: lastUpdated,
-                    totalUpdates: totalUpdates
+                    totalUpdates: totalUpdates,
+                    type: 'dataplane'
                   })
                 })
                 .catch(error => {
