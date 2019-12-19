@@ -7,7 +7,7 @@
       table-actions-route-name="traffic-routes-details"
     >
       <template slot="tableDataActionsLinkText">
-        View Entity
+        View
       </template>
     </DataOverview>
   </div>

@@ -41,6 +41,17 @@
           <p><strong>Log your traffic</strong>, by using the <a href="https://kuma.io/docs/latest/policies/#traffic-log">Traffic Log</a> policy</p>
         </div>
       </div>
+      <div class="flex items-center">
+        <div class="px-2">
+          <img
+            src="@/assets/images/icon-checkmark.svg?external"
+            alt="Checkmark Icon"
+          >
+        </div>
+        <div class="app-source-check__content px-2">
+          <p><strong>And you can do <a href="https://kuma.io/docs/latest/policies/">much more</a>!</strong></p>
+        </div>
+      </div>
     </div>
 
     <div class="app-benefits">

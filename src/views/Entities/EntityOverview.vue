@@ -5,39 +5,15 @@
       :metrics-data="metricsData"
       :empty-state="empty_state"
     />
-    <div class="flex">
-      <KCard
-        v-if="entity"
-        title="Entity Overview"
-        class="w-full md:w-1/2"
-      >
-        <template slot="body">
-          <code><pre>{{ entity }}</pre></code>
-        </template>
-        <template slot="actions">
-          <KClipboardProvider v-slot="{ copyToClipboard }">
-            <KPop
-              placement="bottom"
-              :popover-timeout="1000"
-            >
-              <KButton
-                @click="() => { copyToClipboard(entity) }"
-              >
-                Copy to Clipboard
-              </KButton>
-              <div slot="content">
-                <p>Entity copied to clipboard!</p>
-              </div>
-            </KPop>
-          </KClipboardProvider>
-        </template>
-      </KCard>
-    </div>
+    <YamlView
+      title="Entity Overview"
+      :content="entity"
+    />
   </div>
 </template>
 
 <script>
-import prettyoutput from 'prettyoutput'
+import YamlView from '@/components/Skeletons/YamlView'
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
@@ -48,7 +24,8 @@ export default {
     }
   },
   components: {
-    DataOverview
+    DataOverview,
+    YamlView
   },
   data () {
     return {
@@ -94,19 +71,12 @@ export default {
     this.bootstrap()
   },
   methods: {
-    alert (msg) {
-      window.alert(msg)
-    },
     getEntity () {
       const mesh = this.$route.params.mesh || this.$store.getters.getSelectedMesh
 
       this.$api.getMesh(mesh)
         .then(response => {
-          const options = {
-            noColor: true
-          }
-
-          this.entity = prettyoutput(response, options)
+          this.entity = response
         })
         .catch(error => {
           console.error(error)

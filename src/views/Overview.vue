@@ -25,7 +25,7 @@
             }
           }"
         >
-          View Entity
+          View
         </router-link>
       </template>
     </KTable>

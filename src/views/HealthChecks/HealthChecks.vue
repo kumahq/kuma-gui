@@ -7,7 +7,7 @@
       table-actions-route-name="health-checks-details"
     >
       <template slot="tableDataActionsLinkText">
-        View Entity
+        View
       </template>
     </DataOverview>
   </div>

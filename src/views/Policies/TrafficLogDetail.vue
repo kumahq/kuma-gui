@@ -1,35 +1,14 @@
 <template>
   <div class="dataplanes-detail">
-    <KCard
+    <YamlView
       title="Entity Overview"
-      class="w-full md:w-1/2"
-    >
-      <template slot="body">
-        <code><pre>{{ content }}</pre></code>
-      </template>
-      <template slot="actions">
-        <KClipboardProvider v-slot="{ copyToClipboard }">
-          <KPop
-            placement="bottom"
-            :popover-timeout="1000"
-          >
-            <KButton
-              @click="() => { copyToClipboard(content) }"
-            >
-              Copy to Clipboard
-            </KButton>
-            <div slot="content">
-              <p>Entity copied to clipboard!</p>
-            </div>
-          </KPop>
-        </KClipboardProvider>
-      </template>
-    </KCard>
+      :content="entity"
+    />
   </div>
 </template>
 
 <script>
-import prettyoutput from 'prettyoutput'
+import YamlView from '@/components/Skeletons/YamlView'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
@@ -38,12 +17,12 @@ export default {
     title: 'Traffic Log Details'
   },
   components: {
-    MetricGrid
+    MetricGrid,
+    YamlView
   },
   data () {
     return {
-      content: null,
-      networkData: null
+      entity: null
     }
   },
   watch: {
@@ -61,16 +40,11 @@ export default {
 
       return this.$api.getTrafficLogs(mesh)
         .then(response => {
-          // this.content = response
-          const options = {
-            noColor: true,
-            maxDepth: 10
-          }
-
-          this.content = prettyoutput(response, options)
+          this.entity = response
         })
         .catch(error => {
           console.error(error)
+          this.entity = error
         })
     }
   }

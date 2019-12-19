@@ -231,6 +231,7 @@ export default {
         headers: [
           { label: 'Dataplane', key: 'name' },
           { label: 'Mesh', key: 'mesh' }
+          // { label: 'Status', key: 'status' }
         ],
         data: []
       }

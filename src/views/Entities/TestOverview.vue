@@ -11,7 +11,7 @@
       table-actions-route-name="mesh-overview"
     >
       <template slot="tableDataActionsLinkText">
-        View Entity
+        View
       </template>
       <template slot="content">
         <h2 class="title-2x">

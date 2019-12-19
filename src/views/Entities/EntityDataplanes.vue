@@ -8,7 +8,7 @@
       table-actions-route-name="dataplane-details"
     >
       <template slot="tableDataActionsLinkText">
-        View Entity
+        View
       </template>
     </DataOverview>
   </div>
