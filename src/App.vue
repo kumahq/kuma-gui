@@ -55,18 +55,16 @@ export default {
     // fetch the mesh list
     this.$store.dispatch('fetchMeshList')
 
+    // fetch all dataplanes
     this.$store.dispatch('getAllDataplanes')
 
     // fetch the version
-    // this.$store.dispatch('getVersion')
+    this.$store.dispatch('getVersion')
 
     // fetch the tagline
-    // this.$store.dispatch('getTagline')
+    this.$store.dispatch('getTagline')
 
-    // if (!localStorage.getItem('selectedMesh')) {
-    //   setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
-    // }
-
+    // set the selected mesh in localStorage
     setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
   }
 }

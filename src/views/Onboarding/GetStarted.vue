@@ -73,7 +73,19 @@
           {{ dataplaneCountForTitle }} Dataplane(s) found, including:
         </h2>
         <div class="data-table-wrapper">
-          <KTable :options="tableData" />
+          <KTable :options="tableData">
+            <template
+              v-slot:status="{rowValue}"
+            >
+              <div
+                class="entity-status"
+                :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline' || rowValue === false) }"
+              >
+                <span class="entity-status__dot" />
+                <span class="entity-status__label">{{ rowValue }}</span>
+              </div>
+            </template>
+          </KTable>
         </div>
         <p class="mt-4">
           <KButton
@@ -229,9 +241,9 @@ export default {
       tableDataDataplaneCount: null,
       tableData: {
         headers: [
+          { label: 'Status', key: 'status' },
           { label: 'Dataplane', key: 'name' },
           { label: 'Mesh', key: 'mesh' }
-          // { label: 'Status', key: 'status' }
         ],
         data: []
       }
@@ -270,28 +282,29 @@ export default {
     },
 
     getDataplaneTableData () {
-      this.$store.dispatch('getAllDataplanes').then(() => {
-        const dataplanes = Object.values(this.$store.getters.getDataplanesList)
+      this.$store.dispatch('getAllDataplanes')
+        .then(() => {
+          const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
-        if (dataplanes.length > 0) {
-          this.tableDataDataplaneCount = dataplanes.length
-          this.tableData.data = []
-          this.tableDataLoadAttempted = false
+          if (dataplanes.length > 0) {
+            this.tableDataDataplaneCount = dataplanes.length
+            this.tableData.data = []
+            this.tableDataLoadAttempted = false
 
-          dataplanes.slice(0, 10).map(val => {
-            this.tableData.data.push(val)
-          })
+            dataplanes.slice(0, 10).map(val => {
+              this.tableData.data.push(val)
+            })
 
-          this.tableDataIsEmpty = false
+            this.tableDataIsEmpty = false
 
-          setTimeout(() => {
+            setTimeout(() => {
+              this.tableDataLoadAttempted = true
+            }, this.tableDataLoadDelay)
+          } else {
             this.tableDataLoadAttempted = true
-          }, this.tableDataLoadDelay)
-        } else {
-          this.tableDataLoadAttempted = true
-          this.tableDataIsEmpty = true
-        }
-      })
+            this.tableDataIsEmpty = true
+          }
+        })
     },
 
     getAppType () {

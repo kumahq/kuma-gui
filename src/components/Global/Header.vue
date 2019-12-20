@@ -17,9 +17,10 @@
         v-if="!$route.meta.hideStatus"
         class="px-4"
       >
-        <status :active="appStatus">
-          {{ statusContent }}
-        </status>
+        <status
+          :active="appStatus"
+          :content="statusContent"
+        />
       </div>
     </div>
   </header>
@@ -45,12 +46,14 @@ export default {
     status () {
       const env = localStorage.getItem('kumaEnv')
       const apiUrl = localStorage.getItem('kumaApiUrl')
+      const tagline = this.$store.getters.getTagline
+      const version = this.$store.getters.getVersion
 
       if (env && apiUrl) {
-        this.statusContent = `Kuma is running on ${env}`
+        this.statusContent = `${tagline} v${version} running on ${env}`
         this.appStatus = true
       } else {
-        this.statusContent = 'Unable to determine Kuma\'s status'
+        this.statusContent = "Unable to determine Kuma's status"
         this.appStatus = false
       }
     }

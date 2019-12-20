@@ -198,15 +198,35 @@ export default (api) => {
             const result = []
 
             for (let i = 0; i < meshes.items.length; i++) {
-              const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
+              const mesh = meshes.items[i].name
+              const dataplanes = await api.getAllDataplanesFromMesh(mesh)
               const items = await dataplanes.items
 
-              items.forEach(item => {
+              for (let i = 0; i < items.length; i++) {
+                const itemName = items[i].name
+                const itemMesh = items[i].mesh
+                const itemStatus = await api.getDataplaneOverviews(mesh, itemName)
+                  .then(response => {
+                    const items = response.dataplaneInsight.subscriptions
+
+                    for (let i = 0; i < items.length; i++) {
+                      const connectTime = items[i].connectTime
+                      const disconnectTime = items[i].disconnectTime
+
+                      if (connectTime && connectTime.length && !disconnectTime) {
+                        return 'Online'
+                      } else {
+                        return 'Offline'
+                      }
+                    }
+                  })
+
                 result.push({
-                  name: item.name,
-                  mesh: item.mesh
+                  status: itemStatus,
+                  name: itemName,
+                  mesh: itemMesh
                 })
-              })
+              }
             }
 
             commit('SET_TOTAL_DP_LIST', result)

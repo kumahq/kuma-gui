@@ -1,0 +1,25 @@
+/* dataplane status */
+.entity-status {
+  display: flex;
+  align-items: center;
+  letter-spacing: 0;
+  line-height: 20px;
+  color: var(--green-1);
+}
+
+.entity-status.is-offline {
+  color: var(--red-base);
+}
+
+.entity-status.is-offline .entity-status__dot {
+  background-color: var(--red-base);
+}
+
+.entity-status__dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  margin-right: 6px;
+  background-color: var(--green-1);
+}

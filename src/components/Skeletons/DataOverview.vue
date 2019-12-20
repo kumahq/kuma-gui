@@ -36,6 +36,18 @@
           :options="tableData"
         >
           <template
+            v-if="displayTableDataStatus"
+            v-slot:status="{rowValue}"
+          >
+            <div
+              class="entity-status"
+              :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline' || rowValue === false) }"
+            >
+              <span class="entity-status__dot" />
+              <span class="entity-status__label">{{ rowValue }}</span>
+            </div>
+          </template>
+          <template
             slot="actions"
             slot-scope="{ row }"
           >
@@ -68,7 +80,7 @@
       </div>
 
       <KEmptyState
-        v-if="tableDataIsEmpty === true"
+        v-if="tableDataIsEmpty"
         cta-is-hidden
       >
         <template slot="title">
@@ -167,8 +179,9 @@ export default {
       type: String,
       default: null
     },
-    entityType: {
-
+    displayTableDataStatus: {
+      type: Boolean,
+      default: true
     }
   },
   data () {

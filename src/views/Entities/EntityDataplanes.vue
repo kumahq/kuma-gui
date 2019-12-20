@@ -34,10 +34,10 @@ export default {
       },
       tableData: {
         headers: [
+          { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
           { label: 'Tags', key: 'tags' },
-          { label: 'Status', key: 'status' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
           { label: 'Total Updates', key: 'totalUpdates' },
