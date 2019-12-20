@@ -10,16 +10,13 @@
         Let's set up your app
       </h3>
 
-      <div
-        class="app-source-check"
-        :class="{ 'app-source-check--error': appSourceError }"
-      >
+      <div class="app-source-check">
         <div
           v-if="appSource
             && appSource === 'universal'
             || appSource === 'kubernetes'
             || appSource === 'k8s'"
-          class="app-source-check__inner flex items-center -mx-4"
+          class="app-source-check__inner flex items-center"
         >
           <div class="app-source-check__icon px-4">
             <img
@@ -43,7 +40,10 @@
             >
           </div>
         </div>
-        <div v-else>
+        <div
+          v-else
+          class="app-source-check--error"
+        >
           <p>The app was unable to determine Kuma's environment.</p>
         </div>
       </div>
@@ -298,16 +298,17 @@ export default {
       axios
         .get(process.env.VUE_APP_KUMA_CONFIG)
         .then(response => {
-          if (response.status === 200) {
-            this.appSource = response.data.environment
+          const kumaEnv = response.data.environment
+
+          if (response.status === 200 && kumaEnv && kumaEnv.length) {
+            this.appSource = kumaEnv
           } else {
-            this.appSourceError = true
+            this.appSource = null
           }
         })
         .catch(error => {
-          this.appSource = false
-          this.appSourceError = false
-          console.log(error)
+          this.appSource = null
+          console.error(error)
         })
     }
   }
@@ -322,6 +323,13 @@ export default {
   margin-top: var(--spacing-md);
 }
 
+@mixin styledPanelSmall {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: 4px;
+}
+
 .app-setup {
   padding: var(--spacing-md) 0;
   margin: var(--spacing-md) 0;
@@ -330,19 +338,20 @@ export default {
 }
 
 .app-source-check {
-  background-color: var(--blue-lighter);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: 4px;
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+
 }
 
 .app-source-check--error {
+  @include styledPanelSmall;
+
   background-color: var(--red-lighter);
   color: var(--red-dark);
 }
 
 .app-source-check__inner {
+  @include styledPanelSmall;
+
+  background-color: var(--blue-lighter);
 
   > *:first-child {
     flex: 0 0 16%;

@@ -15,12 +15,12 @@
         :is-last="i === lastMenuList"
       />
       <div class="sidebar-message-wrap">
-        <!-- <div
+        <div
           v-if="kumaInfo"
           class="sidebar-app-info"
         >
           {{ kumaInfo }}
-        </div> -->
+        </div>
         <div class="sidebar-message">
           <h4 class="mb-4 md sidebar-message__title">
             Resources
@@ -140,18 +140,18 @@ export default {
 
     meshList () {
       return this.$store.state.meshes
+    },
+
+    kumaInfo () {
+      const tagline = this.$store.getters.getTagline
+      const version = this.$store.getters.getVersion
+
+      if (tagline && version) {
+        return `${tagline} v${version}`
+      } else {
+        return false
+      }
     }
-
-    // kumaInfo () {
-    //   const tagline = this.$store.getters.getTagline
-    //   const version = this.$store.getters.getVersion
-
-    //   if (tagline && version) {
-    //     return `${tagline} v${version}`
-    //   } else {
-    //     return false
-    //   }
-    // }
   },
 
   mounted () {

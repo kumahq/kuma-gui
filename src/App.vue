@@ -63,9 +63,11 @@ export default {
     // fetch the tagline
     // this.$store.dispatch('getTagline')
 
-    if (!localStorage.getItem('selectedMesh')) {
-      setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
-    }
+    // if (!localStorage.getItem('selectedMesh')) {
+    //   setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
+    // }
+
+    setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
   }
 }
 </script>

@@ -271,17 +271,11 @@ export default (store) => {
    * through it again.
    */
   router.beforeEach((to, from, next) => {
-    const hasOnboarded = localStorage.getItem('kumaOnboardingComplete')
+    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || null)
     const currentRoute = to.meta.onboardingProcess
 
-    if (!hasOnboarded && !currentRoute) {
-      next({
-        name: 'setup-welcome'
-      })
-    // } else if (hasOnboarded && currentRoute) {
-    //   next({
-    //     name: 'setup-restart'
-    //   })
+    if ((!hasOnboarded || hasOnboarded === false) && !currentRoute) {
+      next({ name: 'setup-welcome' })
     } else {
       next()
     }
