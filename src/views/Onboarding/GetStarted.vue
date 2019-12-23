@@ -106,6 +106,19 @@
             </KButton>
           </div>
         </div>
+        <div
+          v-if="overallDpStatus"
+          class="dataplane-global-status__helper-text mt-8"
+        >
+          <h3 class="xl mb-2 mt-4">
+            Offline Dataplanes
+          </h3>
+          <p>
+            This means your dataplane is not connected to the control plane
+            at the moment. This might be due to a scheduled downtime or a
+            network partitioning problem.
+          </p>
+        </div>
       </div>
       <div
         v-else
@@ -443,6 +456,10 @@ export default {
 .dataplane-global-status {
   color: var(--red-base);
   font-weight: 500;
+}
+
+.dataplane-global-status__helper-text {
+  border-top: 1px solid var(--tblack-10);
 }
 
 @media (min-width: 768px) {
