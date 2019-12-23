@@ -21,6 +21,7 @@ export default (api) => {
       totalMeshCount: 0,
       totalDataplaneCount: 0,
       totalDataplaneList: [],
+      anyDataplanesOffline: null,
       totalDataplaneCountFromMesh: 0,
       totalTrafficRoutesCountFromMesh: 0,
       totalTrafficPermissionsCountFromMesh: 0,
@@ -47,6 +48,9 @@ export default (api) => {
       },
       getDataplanesList (state) {
         return state.totalDataplaneList
+      },
+      getAnyDpOffline (state) {
+        return state.anyDataplanesOffline
       },
       getTotalMeshCount (state) {
         return state.totalMeshCount
@@ -100,6 +104,9 @@ export default (api) => {
       },
       SET_TOTAL_DP_LIST (state, dataplanes) {
         state.totalDataplaneList = dataplanes
+      },
+      SET_ANY_DP_OFFLINE (state, status) {
+        state.anyDataplanesOffline = status
       },
       SET_TOTAL_DP_COUNT_FROM_MESH (state, count) {
         state.totalDataplaneCountFromMesh = count
@@ -190,13 +197,17 @@ export default (api) => {
         getDataplanes()
       },
 
-      // a makeshift way to get the list of all present dataplanes across all meshes
+      // a makeshift way to get the list of all present dataplanes across all
+      // meshes this will also set a status for whether or not any of the
+      // dataplanes are offline
       getAllDataplanes ({ commit }) {
         const getDataplanes = async () => {
           return new Promise(async (resolve, reject) => {
             const meshes = await api.getAllMeshes()
             const result = []
+            const states = []
 
+            // create a status label column
             for (let i = 0; i < meshes.items.length; i++) {
               const mesh = meshes.items[i].name
               const dataplanes = await api.getAllDataplanesFromMesh(mesh)
@@ -205,6 +216,7 @@ export default (api) => {
               for (let i = 0; i < items.length; i++) {
                 const itemName = items[i].name
                 const itemMesh = items[i].mesh
+
                 const itemStatus = await api.getDataplaneOverviews(mesh, itemName)
                   .then(response => {
                     const items = response.dataplaneInsight.subscriptions
@@ -225,6 +237,7 @@ export default (api) => {
                     }
                   })
 
+                // create the full data array
                 result.push({
                   status: itemStatus,
                   name: itemName,
@@ -233,7 +246,25 @@ export default (api) => {
               }
             }
 
+            // create a simple flat status object with booleans for checking
+            // if any // dataplanes are offline
+            for (let i = 0; i < Object.values(result).length; i++) {
+              const statusVal = Object.values(result[i])[0]
+              const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
+
+              states.push(isOnline)
+            }
+
+            // if any of the dataplanes return false for being online
+            // commit this so we can check against it
+            const anyDpOffline = states.some(i => i === false)
+
+            commit('SET_ANY_DP_OFFLINE', anyDpOffline)
+
+            // commit the total list of dataplanes
             commit('SET_TOTAL_DP_LIST', result)
+
+            // resolve the promise
             resolve()
           })
         }
