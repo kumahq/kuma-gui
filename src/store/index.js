@@ -209,15 +209,19 @@ export default (api) => {
                   .then(response => {
                     const items = response.dataplaneInsight.subscriptions
 
-                    for (let i = 0; i < items.length; i++) {
-                      const connectTime = items[i].connectTime
-                      const disconnectTime = items[i].disconnectTime
+                    if (items && items.length > 0) {
+                      for (let i = 0; i < items.length; i++) {
+                        const connectTime = items[i].connectTime
+                        const disconnectTime = items[i].disconnectTime
 
-                      if (connectTime && connectTime.length && !disconnectTime) {
-                        return 'Online'
-                      } else {
-                        return 'Offline'
+                        if (connectTime && connectTime.length && !disconnectTime) {
+                          return 'Online'
+                        } else {
+                          return 'Offline'
+                        }
                       }
+                    } else {
+                      return 'Offline'
                     }
                   })
 

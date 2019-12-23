@@ -117,19 +117,12 @@
                 you need to deploy dataplanes (also known as Sidecar Proxies)
                 next to them.
               </p>
-              <!-- <p>
-                <KButton
-                  to="#"
-                  appearance="primary"
-                >
-                  Add Dataplanes
-                </KButton>
-              </p> -->
             </div>
           </div>
         </div>
         <!-- .dataplane-fallback -->
         <div class="dataplane-walkthrough my-4">
+          <!-- kubernetes instructions -->
           <div
             v-if="appSource
               && appSource === 'kubernetes'
@@ -159,6 +152,7 @@
               </code>
             </p>
           </div>
+          <!-- universal instructions -->
           <div v-else>
             <h3 class="xl mb-2">
               Adding New Dataplanes on Universal
@@ -286,7 +280,7 @@ export default {
         .then(() => {
           const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
-          if (dataplanes.length > 0) {
+          if (dataplanes && dataplanes.length > 0) {
             this.tableDataDataplaneCount = dataplanes.length
             this.tableData.data = []
             this.tableDataLoadAttempted = false

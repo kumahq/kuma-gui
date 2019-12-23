@@ -41,7 +41,7 @@
           >
             <div
               class="entity-status"
-              :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline' || rowValue === false) }"
+              :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline') }"
             >
               <span class="entity-status__dot" />
               <span class="entity-status__label">{{ rowValue }}</span>
