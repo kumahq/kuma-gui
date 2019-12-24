@@ -88,6 +88,16 @@
           </KTable>
         </div>
         <div class="md:flex items-center mt-4">
+          <div class="dataplane-global-status">
+            <KButton
+              appearance="primary"
+              class="mr-2"
+              @click="reScanForDataplanes()"
+            >
+              Refresh
+            </KButton>
+            <span v-if="overallDpStatus">Some dataplanes appear to be offline.</span>
+          </div>
           <KButton
             :to="{ name: 'setup-complete' }"
             appearance="primary"
@@ -95,16 +105,6 @@
           >
             Next Step
           </KButton>
-          <div class="dataplane-global-status">
-            <span v-if="overallDpStatus">Some dataplanes appear to be offline.</span>
-            <KButton
-              appearance="primary"
-              class="ml-2"
-              @click="reScanForDataplanes()"
-            >
-              Refresh
-            </KButton>
-          </div>
         </div>
         <div
           v-if="overallDpStatus"
@@ -465,17 +465,15 @@ export default {
 @media (min-width: 768px) {
   .dataplane-global-status {
     flex: 1;
-    text-align: right;
   }
 }
 
 @media (max-width: 767px) {
   .dataplane-global-status {
     display: block;
-    margin-top: var(--spacing-md);
-    padding-top: var(--spacing-md);
-    border-top: 1px solid #e2e8f0;
-    text-align: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid #e2e8f0;
   }
 }
 </style>

@@ -37,7 +37,7 @@
 <script>
 import Prism from 'vue-prismjs'
 import 'prismjs/themes/prism.css'
-import yaml from 'json2yaml'
+import json2yaml from '@appscode/json2yaml'
 
 export default {
   name: 'YamlView',
@@ -58,7 +58,7 @@ export default {
     yamlContent () {
       const content = this.content
 
-      return yaml.stringify(content)
+      return json2yaml(content)
     }
   }
 }
