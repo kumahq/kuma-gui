@@ -24,20 +24,7 @@
         >
           <router-view />
         </div>
-        <KEmptyState
-          v-else
-          cta-is-hidden
-        >
-          <template slot="title">
-            Unable to reach the Kuma API
-          </template>
-          <template slot="message">
-            <p>
-              There was a problem trying to reach the Kuma API. Please try
-              restarting Kuma.
-            </p>
-          </template>
-        </KEmptyState>
+        <ApiErrorMessage v-else />
       </main>
     </div>
   </div>
@@ -49,12 +36,14 @@ import { mapState, mapGetters } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import KLoader from '@/components/KLoader'
+import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage'
 
 export default {
   components: {
     GlobalHeader,
     Sidebar,
-    KLoader
+    KLoader,
+    ApiErrorMessage
   },
   metaInfo: {
     title: 'Home',
