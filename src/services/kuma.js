@@ -20,6 +20,10 @@ export default class Kuma {
     return this.client.get('/')
   }
 
+  getStatus () {
+    return this.client.status()
+  }
+
   /**
    * Meshes
    */

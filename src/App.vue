@@ -6,7 +6,7 @@
     />
     <div class="main-content-container">
       <sidebar
-        v-if="!loading && loading !== null && !($route.meta.hideSidebar || $route.meta.fullScreen)"
+        v-if="!loading && loading !== null && !($route.meta.hideSidebar || $route.meta.fullScreen) && status === 'OK'"
       />
       <div
         v-if="loading"
@@ -18,9 +18,26 @@
         v-if="!loading && loading !== null"
         class="main-content"
       >
-        <div class="page">
+        <div
+          v-if="status === 'OK'"
+          class="page"
+        >
           <router-view />
         </div>
+        <KEmptyState
+          v-else
+          cta-is-hidden
+        >
+          <template slot="title">
+            Unable to reach the Kuma API
+          </template>
+          <template slot="message">
+            <p>
+              There was a problem trying to reach the Kuma API. Please try
+              restarting Kuma.
+            </p>
+          </template>
+        </KEmptyState>
       </main>
     </div>
   </div>
@@ -28,7 +45,7 @@
 
 <script>
 import { setItemToStorage } from '@/Cache'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import KLoader from '@/components/KLoader'
@@ -49,23 +66,34 @@ export default {
   computed: {
     ...mapState({
       loading: state => state.globalLoading
+    }),
+
+    ...mapGetters({
+      status: 'getStatus'
     })
   },
   beforeMount () {
-    // fetch the mesh list
-    this.$store.dispatch('fetchMeshList')
+    // check the API status before we do anything else
+    this.$store.dispatch('getStatus')
+      .then(() => {
+        // only dispatch these actions if the API is online
+        if (this.$store.getters.getStatus === 'OK') {
+          // fetch the mesh list
+          this.$store.dispatch('fetchMeshList')
 
-    // fetch all dataplanes
-    this.$store.dispatch('getAllDataplanes')
+          // fetch all dataplanes
+          this.$store.dispatch('getAllDataplanes')
 
-    // fetch the version
-    this.$store.dispatch('getVersion')
+          // fetch the version
+          this.$store.dispatch('getVersion')
 
-    // fetch the tagline
-    this.$store.dispatch('getTagline')
+          // fetch the tagline
+          this.$store.dispatch('getTagline')
 
-    // set the selected mesh in localStorage
-    setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
+          // set the selected mesh in localStorage
+          setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
+        }
+      })
   }
 }
 </script>

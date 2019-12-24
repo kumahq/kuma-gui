@@ -14,11 +14,11 @@
         </router-link>
       </div>
       <div
-        v-if="!$route.meta.hideStatus"
+        v-if="!$route.meta.hideStatus && status === 'OK'"
         class="px-4"
       >
         <status
-          :active="appStatus"
+          :active="guiStatus"
           :content="statusContent"
         />
       </div>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Status from '@/components/Utils/Status'
 
 export default {
@@ -35,15 +36,21 @@ export default {
   },
   data () {
     return {
-      appStatus: false,
+      guiStatus: false,
       statusContent: null
     }
   },
+  computed: {
+    ...mapGetters({
+      // this checks the status of the API itself
+      status: 'getStatus'
+    })
+  },
   beforeMount () {
-    this.status()
+    this.getGuiStatus()
   },
   methods: {
-    status () {
+    getGuiStatus () {
       const env = localStorage.getItem('kumaEnv')
       const apiUrl = localStorage.getItem('kumaApiUrl')
       const tagline = this.$store.getters.getTagline
@@ -51,10 +58,10 @@ export default {
 
       if (env && apiUrl) {
         this.statusContent = `${tagline} v${version} running on ${env}`
-        this.appStatus = true
+        this.guiStatus = true
       } else {
         this.statusContent = "Unable to determine Kuma's status"
-        this.appStatus = false
+        this.guiStatus = false
       }
     }
   }

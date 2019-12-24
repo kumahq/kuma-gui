@@ -95,6 +95,21 @@ export default class RestClient {
     return `${this.host}${path}`
   }
 
+  async status (path, options) {
+    const url = await path
+    const client = await this.client
+
+    return client.get(url)
+      .then(response => {
+        return response.statusText
+      })
+      .catch(error => {
+        console.error(error)
+
+        return error
+      })
+  }
+
   async get (path, options) {
     const opts = await options || {}
     // const url = this.buildUrl(path)
