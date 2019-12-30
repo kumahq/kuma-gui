@@ -745,7 +745,7 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kalert/-/kalert-0.1.3.tgz#c43e24cab26116c6c4af7b747f730f9fc268bf56"
   integrity sha512-HUIPmBpCX6KwQMc49chGlGWB1e+whAH/4twNQxxZv7iEFe+jzhm1e/KI9sEdEI0gZUh2H+Vgi4SJH8EgrBqSVQ==
 
-"@kongponents/kbadge@^0.1.2":
+"@kongponents/kbadge@^0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@kongponents/kbadge/-/kbadge-0.1.6.tgz#c49950b291715081302cbce728c909329e8768cb"
   integrity sha512-I2N0gqWRIxr5j/7E3a3TvrYicrj+Bi5uau9ZGzEuiP+9bxzRoT6XFGghvJlst7mkaUtaxas1oX4A+FCh1mFPWQ==

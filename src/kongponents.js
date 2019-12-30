@@ -19,7 +19,7 @@ import KToggle from '@kongponents/ktoggle'
 // import KInput from '@kongponents/kinput'
 
 Vue.component('KAlert', KAlert)
-Vue.component('KBadge', KBadge)
+// Vue.component('KBadge', KBadge)
 Vue.component('KButton', KButton)
 Vue.component('KCard', KCard)
 Vue.component('KEmptyState', KEmptyState)
@@ -30,7 +30,7 @@ Vue.component('KoolTip', KoolTip)
 Vue.component('KClipboardProvider', KClipboardProvider)
 Vue.component('Krumbs', Krumbs)
 Vue.component('KPop', KPop)
-Vue.component('KToggle', KToggle)
+// Vue.component('KToggle', KToggle)
 
 // disabled until fixed
 // Vue.component('KInput', KInput)

@@ -1,9 +1,35 @@
 <template>
   <div class="dataplanes-detail">
     <YamlView
+      v-if="isDataplaneOnline"
       title="Entity Overview"
       :content="content"
     />
+    <KEmptyState
+      v-else
+      cta-is-hidden
+    >
+      <template slot="title">
+        <KIcon
+          class="kong-icon--centered"
+          color="var(--yellow-base)"
+          icon="warning"
+          size="64"
+        />
+        <span v-if="dataplaneTitle !== null">
+          {{ dataplaneTitle }} is currently offline.
+        </span>
+        <span v-else>
+          This dataplane is currently offline.
+        </span>
+      </template>
+      <!-- <template slot="message">
+        <p>
+          There was a problem trying to reach the Kuma API. Please try
+          restarting Kuma.
+        </p>
+      </template> -->
+    </KEmptyState>
   </div>
 </template>
 
@@ -22,7 +48,13 @@ export default {
   },
   data () {
     return {
-      content: null
+      content: null,
+      isDataplaneOnline: true
+    }
+  },
+  computed: {
+    dataplaneTitle () {
+      return this.$route.params.dataplane || null
     }
   },
   watch: {
@@ -41,6 +73,21 @@ export default {
       return this.$api.getDataplaneOverviews(mesh, dataplane)
         .then(response => {
           this.content = response
+
+          // get the dataplane's current subscriptions so that we can determine
+          // whether or not the dataplane is online
+          const subscriptions = response.dataplaneInsight.subscriptions
+
+          if (subscriptions && subscriptions.length > 0) {
+            for (let i = 0; i < subscriptions.length; i++) {
+              const connectTime = subscriptions[i].connectTime
+              const disconnectTime = subscriptions[i].disconnectTime
+
+              if (connectTime && connectTime.length && !disconnectTime) {
+                this.isDataplaneOnline = false
+              }
+            }
+          }
         })
         .catch(error => {
           console.error(error)

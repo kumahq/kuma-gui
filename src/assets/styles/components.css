@@ -1,4 +1,5 @@
 /* dataplane status */
+
 .entity-status {
   display: flex;
   align-items: center;
@@ -22,4 +23,12 @@
   border-radius: 100%;
   margin-right: 6px;
   background-color: var(--green-1);
+}
+
+/* Kongponents icon utilities */
+
+.kong-icon--centered {
+  display: block;
+  margin: 0 auto 10px auto;
+  text-align: center;
 }

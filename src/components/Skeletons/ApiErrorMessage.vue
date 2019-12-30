@@ -5,7 +5,8 @@
   >
     <template slot="title">
       <KIcon
-        color="var(--yellow-base"
+        class="kong-icon--centered"
+        color="var(--yellow-base)"
         icon="warning"
         size="64"
       />
@@ -28,11 +29,5 @@ export default {
 
 <style lang="scss">
 .global-api-status {
-
-  .kong-icon {
-    display: block;
-    margin: 0 auto 10px auto;
-    text-align: center;
-  }
 }
 </style>
