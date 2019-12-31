@@ -350,7 +350,7 @@ export default (api) => {
       getStatus ({ commit }) {
         return api.getStatus()
           .then(response => {
-            commit('SET_STATUS', response)
+            commit('SET_STATUS', `${response}`)
           })
       }
     }

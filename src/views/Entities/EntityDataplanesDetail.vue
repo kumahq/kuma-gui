@@ -72,21 +72,25 @@ export default {
 
       return this.$api.getDataplaneOverviews(mesh, dataplane)
         .then(response => {
-          this.content = response
+          if (response) {
+            this.content = response
 
-          // get the dataplane's current subscriptions so that we can determine
-          // whether or not the dataplane is online
-          const subscriptions = response.dataplaneInsight.subscriptions
+            // get the dataplane's current subscriptions so that we can determine
+            // whether or not the dataplane is online
+            const subscriptions = response.dataplaneInsight.subscriptions
 
-          if (subscriptions && subscriptions.length > 0) {
-            for (let i = 0; i < subscriptions.length; i++) {
-              const connectTime = subscriptions[i].connectTime
-              const disconnectTime = subscriptions[i].disconnectTime
+            if (subscriptions && subscriptions.length > 0) {
+              for (let i = 0; i < subscriptions.length; i++) {
+                const connectTime = subscriptions[i].connectTime
+                const disconnectTime = subscriptions[i].disconnectTime
 
-              if (connectTime && connectTime.length && !disconnectTime) {
-                this.isDataplaneOnline = false
+                if (connectTime && connectTime.length && !disconnectTime) {
+                  this.isDataplaneOnline = false
+                }
               }
             }
+          } else {
+            this.$router.push('/404')
           }
         })
         .catch(error => {

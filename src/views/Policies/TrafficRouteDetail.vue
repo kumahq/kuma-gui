@@ -40,7 +40,11 @@ export default {
 
       return this.$api.getTrafficRoute(mesh, trafficroute)
         .then(response => {
-          this.entity = response
+          if (response) {
+            this.entity = response
+          } else {
+            this.$router.push('/404')
+          }
         })
         .catch(error => {
           console.error(error)

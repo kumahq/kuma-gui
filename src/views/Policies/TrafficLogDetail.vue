@@ -36,15 +36,18 @@ export default {
   methods: {
     bootstrap () {
       const mesh = this.$route.params.mesh
-      const dataplane = this.$route.params.dataplane
+      const trafficlog = this.$route.params.trafficlog
 
-      return this.$api.getTrafficLogs(mesh)
+      return this.$api.getTrafficLog(mesh, trafficlog)
         .then(response => {
-          this.entity = response
+          if (response) {
+            this.entity = response
+          } else {
+            this.$router.push('/404')
+          }
         })
         .catch(error => {
           console.error(error)
-          this.entity = error
         })
     }
   }

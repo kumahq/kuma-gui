@@ -36,10 +36,15 @@ export default {
   methods: {
     bootstrap () {
       const mesh = this.$route.params.mesh
+      const proxytemplate = this.$route.params.proxytemplate
 
-      return this.$api.getProxyTemplates(mesh)
+      return this.$api.getProxyTemplate(mesh, proxytemplate)
         .then(response => {
-          this.entity = response
+          if (response) {
+            this.entity = response
+          } else {
+            this.$router.push('/404')
+          }
         })
         .catch(error => {
           console.error(error)

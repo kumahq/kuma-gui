@@ -80,6 +80,7 @@
         /> -->
       </div>
 
+      <!-- empty state if no items are found -->
       <KEmptyState
         v-if="tableDataIsEmpty"
         cta-is-hidden
@@ -91,6 +92,7 @@
           No Items Found
         </template>
       </KEmptyState>
+
       <!-- additional page content -->
       <div
         v-if="$slots.content"

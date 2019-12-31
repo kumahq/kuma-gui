@@ -89,6 +89,16 @@ function SETUP_VUE_APP () {
       VUE_APP()
     })
     .catch(error => {
+      /** in the rare instance that we can't even load the /config endpoint. */
+      VUE_APP()
+
+      /** clear out any localStorage values */
+      localStorage.removeItem('kumaApiUrl')
+      localStorage.removeItem('kumaOnboardingComplete')
+      localStorage.removeItem('kumaEnv')
+      localStorage.removeItem('selectedMesh')
+
+      console.error('There was a problem loading the config. Please try restarting Kuma.')
       console.error(error)
     })
 }

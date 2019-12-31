@@ -40,11 +40,14 @@ export default {
 
       return this.$api.getHealthCheckFromMesh(mesh, healthcheck)
         .then(response => {
-          this.entity = response
+          if (response) {
+            this.entity = response
+          } else {
+            this.$router.push('/404')
+          }
         })
         .catch(error => {
           console.error(error)
-          this.entity = error
         })
     }
   }

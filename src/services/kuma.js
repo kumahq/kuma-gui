@@ -87,12 +87,22 @@ export default class Kuma {
 
   // get traffic logs
   getTrafficLogs (mesh, params) {
-    return this.client.get(`/meshes/${mesh}/traffic-logs/`, { params })
+    return this.client.get(`/meshes/${mesh}/traffic-logs`, { params })
+  }
+
+  // get traffic log details
+  getTrafficLog (mesh, trafficlog, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-logs/${trafficlog}`, { params })
   }
 
   // get traffic permissions
   getTrafficPermissions (mesh, params) {
     return this.client.get(`/meshes/${mesh}/traffic-permissions`, { params })
+  }
+
+  // get traffic permission details
+  getTrafficPermission (mesh, trafficpermission, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-permissions/${trafficpermission}`, { params })
   }
 
   // get traffic routes
@@ -109,8 +119,14 @@ export default class Kuma {
    * Proxies
    */
 
+  // get proxy templates
   getProxyTemplates (mesh, params) {
     return this.client.get(`/meshes/${mesh}/proxytemplates`, { params })
+  }
+
+  // get proxy template details
+  getProxyTemplate (mesh, proxytemplate, params) {
+    return this.client.get(`/meshes/${mesh}/proxytemplates/${proxytemplate}`, { params })
   }
 
   /**

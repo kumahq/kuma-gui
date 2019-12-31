@@ -14,8 +14,8 @@
     </template>
     <template slot="message">
       <p>
-        There was a problem trying to reach the Kuma API. Please try
-        restarting Kuma.
+        Please make sure Kuma is up and running, and it is reachable at
+        <code>{{ url }}</code>
       </p>
     </template>
   </KEmptyState>
@@ -23,7 +23,11 @@
 
 <script>
 export default {
-
+  computed: {
+    url () {
+      return process.env.VUE_APP_KUMA_CONFIG
+    }
+  }
 }
 </script>
 
