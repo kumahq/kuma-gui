@@ -242,6 +242,30 @@ export default (store) => {
             parent: 'mesh-overview'
           },
           component: () => import('@/views/HealthChecks/HealthChecksDetail')
+        },
+        // proxy templates
+        {
+          path: 'proxy-templates',
+          name: 'proxy-templates',
+          meta: {
+            title: 'Proxy Templates',
+            breadcrumb: 'Proxy Templates',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/Policies/ProxyTemplates')
+        },
+        {
+          path: 'proxy-templates/:proxytemplate',
+          name: 'proxy-templates-details',
+          params: {
+            proxytemplate: ':proxytemplate'
+          },
+          meta: {
+            title: 'Proxy Template Details',
+            breadcrumb: 'Proxy Templates',
+            parent: 'mesh-overview'
+          },
+          component: () => import('@/views/Policies/ProxyTemplatesDetail')
         }
       ]
     }

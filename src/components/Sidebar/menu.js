@@ -71,6 +71,12 @@ export default {
           parent: 'healthchecks'
         },
         {
+          name: 'Proxy Templates',
+          link: '/proxy-templates',
+          title: false,
+          parent: 'policies'
+        },
+        {
           name: 'Traffic Log',
           link: '/traffic-log',
           title: false,

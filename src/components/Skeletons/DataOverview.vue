@@ -60,7 +60,8 @@
                   trafficpermission: row.type === 'TrafficPermission' || row.type === 'trafficpermission' ? row.name : null,
                   trafficroute: row.type === 'TrafficRoute' || row.type === 'trafficroute' ? row.name : null,
                   trafficlog: row.type === 'TrafficLog' || row.type === 'trafficlog' ? row.name : null,
-                  healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null
+                  healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null,
+                  proxytemplate: row.type === 'ProxyTemplate' || row.type === 'proxytemplate' ? row.name : null
                 }
               }"
             >
