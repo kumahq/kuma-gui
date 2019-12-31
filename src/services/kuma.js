@@ -57,30 +57,6 @@ export default class Kuma {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
   }
 
-  // a makeshift way to get all dataplanes
-  // getAllDataplanes () {
-  //   const getDataplanes = async () => {
-  //     const meshes = await this.getAllMeshes()
-  //     const result = []
-
-  //     for (let i = 0; i < meshes.items.length; i++) {
-  //       const dataplanes = await this.getAllDataplanesFromMesh(meshes.items[i].name)
-  //       const items = await dataplanes.items
-
-  //       items.forEach(item => {
-  //         result.push({
-  //           name: item.name,
-  //           mesh: item.mesh
-  //         })
-  //       })
-  //     }
-
-  //     return result
-  //   }
-
-  //   getDataplanes()
-  // }
-
   /**
    * Traffic / Policies
    */
@@ -133,10 +109,12 @@ export default class Kuma {
    * Health Checks
    */
 
+  // get health checks
   getHealthChecks (mesh, params) {
     return this.client.get(`/meshes/${mesh}/health-checks`, { params })
   }
 
+  // get health check details
   getHealthCheckFromMesh (mesh, name, params) {
     return this.client.get(`/meshes/${mesh}/health-checks/${name}`, { params })
   }
@@ -149,12 +127,12 @@ export default class Kuma {
    *
    */
 
-  // get a list of all services
+  // get all services
   getAllServices (name, params) {
     return this.client.get(`/meshes/${name}/services`, { params })
   }
 
-  // get a single service
+  // get service details
   getService (name, service, params) {
     return this.client.get(`/meshes/${name}/services/${service}`, { params })
   }

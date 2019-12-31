@@ -14,8 +14,8 @@
     </template>
     <template slot="message">
       <p>
-        Please make sure Kuma is up and running, and it is reachable at
-        <code>{{ url }}</code>
+        Please make sure Kuma is up and running
+        <span v-if="url">, and it is reachable at <code>{{ url }}</code></span>
       </p>
     </template>
   </KEmptyState>
@@ -25,7 +25,7 @@
 export default {
   computed: {
     url () {
-      return process.env.VUE_APP_KUMA_CONFIG
+      return localStorage.getItem('kumaApiUrl') || null
     }
   }
 }
