@@ -76,11 +76,14 @@ export default {
 
       this.$api.getMesh(mesh)
         .then(response => {
-          this.entity = response
+          if (response) {
+            this.entity = response
+          } else {
+            this.$router.push('/404')
+          }
         })
         .catch(error => {
           console.error(error)
-          this.entity = error
         })
     },
     bootstrap () {

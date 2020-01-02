@@ -3,7 +3,12 @@
     <div class="main-header__content flex justify-between items-center -mx-4">
       <div class="px-4">
         <router-link
-          to="/"
+          :to="{
+            name: 'mesh-overview',
+            params: {
+              mesh: currentMesh
+            }
+          }"
           exact
           class="logo"
         >
@@ -43,7 +48,9 @@ export default {
   computed: {
     ...mapGetters({
       // this checks the status of the API itself
-      status: 'getStatus'
+      status: 'getStatus',
+      // the currently selected mesh
+      currentMesh: 'getSelectedMesh'
     })
   },
   beforeMount () {
