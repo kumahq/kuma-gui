@@ -61,7 +61,8 @@
                   trafficroute: row.type === 'TrafficRoute' || row.type === 'trafficroute' ? row.name : null,
                   trafficlog: row.type === 'TrafficLog' || row.type === 'trafficlog' ? row.name : null,
                   healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null,
-                  proxytemplate: row.type === 'ProxyTemplate' || row.type === 'proxytemplate' ? row.name : null
+                  proxytemplate: row.type === 'ProxyTemplate' || row.type === 'proxytemplate' ? row.name : null,
+                  //service: row.type === 'Service' || row.type === 'service' ? row.name : null
                 }
               }"
             >

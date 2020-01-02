@@ -105,7 +105,7 @@ export default (store) => {
           component: () => import('@/views/Entities/EntityOverview'),
           meta: {
             title: 'Mesh Overview',
-            parent: 'mesh-overview'
+            excludeAsBreadcrumb: true
           }
         },
         // dataplanes
@@ -122,10 +122,12 @@ export default (store) => {
           path: 'dataplanes/:dataplane',
           name: 'dataplane-details',
           meta: {
-            title: 'Dataplane Details',
+            title: 'Dataplanes',
             parent: 'dataplanes'
           },
-          params: { dataplane: ':dataplane' },
+          params: {
+            dataplane: ':dataplane'
+          },
           component: () => import('@/views/Entities/EntityDataplanesDetail')
         },
         // services
@@ -140,10 +142,12 @@ export default (store) => {
         {
           path: 'services/:service',
           name: 'service-details',
-          params: {
-            service: ':service',
+          meta: {
             breadcrumb: 'Services',
             parent: 'mesh-overview'
+          },
+          params: {
+            service: ':service'
           },
           component: () => import('@/views/Entities/EntityServicesDetail')
         },
@@ -161,13 +165,13 @@ export default (store) => {
         {
           path: 'traffic-permissions/:trafficpermission',
           name: 'traffic-permissions-details',
-          params: {
-            trafficpermission: ':trafficpermission'
-          },
           meta: {
             title: 'Traffic Permission Details',
             breadcrumb: 'Traffic Permissions',
             parent: 'mesh-overview'
+          },
+          params: {
+            trafficpermission: ':trafficpermission'
           },
           component: () => import('@/views/Policies/TrafficPermissionsDetail')
         },
