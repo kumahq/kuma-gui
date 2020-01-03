@@ -223,9 +223,7 @@ export default (store) => {
           path: 'health-checks',
           name: 'health-checks',
           meta: {
-            title: 'Health Checks',
-            breadcrumb: 'Health Checks',
-            parent: 'mesh-overview'
+            title: 'Health Checks'
           },
           component: () => import('@/views/HealthChecks/HealthChecks')
         },
@@ -238,7 +236,7 @@ export default (store) => {
           meta: {
             title: 'Health Check Details',
             breadcrumb: 'Health Checks',
-            parent: 'mesh-overview'
+            parent: 'health-checks'
           },
           component: () => import('@/views/HealthChecks/HealthChecksDetail')
         },
