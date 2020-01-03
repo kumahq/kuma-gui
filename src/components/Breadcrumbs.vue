@@ -22,7 +22,14 @@ export default {
         const title = this.calculateRouteTitle(r)
         const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
 
-        if (this.isCurrentRoute(r) && !r.meta.excludeAsBreadcrumb) {
+        if (this.isCurrentRoute(r) && r.meta.parent && r.meta.parent !== 'undefined') {
+          items.push({
+            key: r.meta.parent,
+            to: { name: r.meta.parent },
+            title: r.meta.title,
+            text: r.meta.breadcrumb || r.meta.title
+          })
+        } else if (this.isCurrentRoute(r) && !r.meta.excludeAsBreadcrumb) {
           items.push({
             key: key,
             to: { name: key },

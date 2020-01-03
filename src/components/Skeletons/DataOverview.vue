@@ -55,6 +55,7 @@
               :to="{
                 name: tableActionsRouteName,
                 params: {
+                  // TODO: find a better, more efficient way to handle this
                   mesh: row.type === 'Mesh' || row.type === 'mesh' ? row.name : row.mesh,
                   dataplane: row.type === 'Dataplane' || row.type === 'dataplane' ? row.name : null,
                   trafficpermission: row.type === 'TrafficPermission' || row.type === 'trafficpermission' ? row.name : null,

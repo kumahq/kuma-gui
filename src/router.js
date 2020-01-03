@@ -143,8 +143,9 @@ export default (store) => {
           path: 'services/:service',
           name: 'service-details',
           meta: {
-            breadcrumb: 'Services',
-            parent: 'mesh-overview'
+            title: 'Service Details',
+            breadcrumb: 'Service Details',
+            parent: 'services'
           },
           params: {
             service: ':service'
@@ -156,9 +157,7 @@ export default (store) => {
           path: 'traffic-permissions',
           name: 'traffic-permissions',
           meta: {
-            title: 'Traffic Permissions',
-            breadcrumb: 'Traffic Permissions',
-            parent: 'mesh-overview'
+            title: 'Traffic Permissions'
           },
           component: () => import('@/views/Policies/TrafficPermissions')
         },
@@ -167,8 +166,8 @@ export default (store) => {
           name: 'traffic-permissions-details',
           meta: {
             title: 'Traffic Permission Details',
-            breadcrumb: 'Traffic Permissions',
-            parent: 'mesh-overview'
+            breadcrumb: 'Traffic Permission Details',
+            parent: 'traffic-permissions'
           },
           params: {
             trafficpermission: ':trafficpermission'
@@ -180,9 +179,7 @@ export default (store) => {
           path: 'traffic-routes',
           name: 'traffic-routes',
           meta: {
-            title: 'Traffic Routes',
-            breadcrumb: 'Traffic Routes',
-            parent: 'mesh-overview'
+            title: 'Traffic Routes'
           },
           component: () => import('@/views/Policies/TrafficRoutes')
         },
@@ -194,8 +191,8 @@ export default (store) => {
           },
           meta: {
             title: 'Traffic Route Details',
-            breadcrumb: 'Traffic Routes',
-            parent: 'mesh-overview'
+            breadcrumb: 'Traffic Details',
+            parent: 'traffic-routes'
           },
           component: () => import('@/views/Policies/TrafficRouteDetail')
         },
@@ -204,9 +201,7 @@ export default (store) => {
           path: 'traffic-log',
           name: 'traffic-log',
           meta: {
-            title: 'Traffic Logs',
-            breadcrumb: 'Traffic Logs',
-            parent: 'mesh-overview'
+            title: 'Traffic Logs'
           },
           component: () => import('@/views/Policies/TrafficLog')
         },
@@ -219,7 +214,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Log Details',
             breadcrumb: 'Traffic Logs',
-            parent: 'mesh-overview'
+            parent: 'traffic-logs'
           },
           component: () => import('@/views/Policies/TrafficLogDetail')
         },
@@ -252,9 +247,7 @@ export default (store) => {
           path: 'proxy-templates',
           name: 'proxy-templates',
           meta: {
-            title: 'Proxy Templates',
-            breadcrumb: 'Proxy Templates',
-            parent: 'mesh-overview'
+            title: 'Proxy Templates'
           },
           component: () => import('@/views/Policies/ProxyTemplates')
         },
@@ -265,9 +258,9 @@ export default (store) => {
             proxytemplate: ':proxytemplate'
           },
           meta: {
-            title: 'Proxy Template Details',
+            title: 'Proxy Templates',
             breadcrumb: 'Proxy Templates',
-            parent: 'mesh-overview'
+            parent: 'proxy-templates'
           },
           component: () => import('@/views/Policies/ProxyTemplatesDetail')
         }
