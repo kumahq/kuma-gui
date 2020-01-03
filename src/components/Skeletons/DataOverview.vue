@@ -33,7 +33,8 @@
       <!-- data -->
       <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
         <KTable
-          :options="tableData"
+          :options="tableDataFiltered"
+          has-hover
         >
           <template
             v-if="displayTableDataStatus"
@@ -72,14 +73,14 @@
           </template>
         </KTable>
 
-        <!-- <Pagination
-          v-if="tableData && tableData.length > itemListPageSize"
-          :has-previous="itemsListOffset - itemListPageSize >= 0"
-          :has-next="tableData.length - itemsListOffset > itemListPageSize"
+        <Pagination
+          v-if="tableData && tableRowCount > pageSize"
+          :has-previous="pageOffset - pageSize >= 0"
+          :has-next="tableRowCount - pageOffset > pageSize"
           class="ml-2 mr-2 mb-2"
           @next="goToNextPage"
           @previous="goToPreviousPage"
-        /> -->
+        />
       </div>
 
       <!-- empty state if no items are found -->
@@ -191,22 +192,32 @@ export default {
   },
   data () {
     return {
-      itemListPageSize: 12,
-      itemListOffset: 0
+      pageSize: 12,
+      pageOffset: 0
     }
   },
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
+    },
+    tableRowCount () {
+      return Object.entries(this.tableData.data).length
+    },
+    tableDataFiltered () {
+      const data = this.tableData.data
+      const headers = this.tableData.headers
+      const filtered = data.slice(this.pageOffset, this.pageOffset + this.pageSize)
+      const newData = { headers, data: [...filtered] }
+
+      return newData
     }
   },
   methods: {
-    goToNextPage () {
-
-    },
-
     goToPreviousPage () {
-
+      this.pageOffset--
+    },
+    goToNextPage () {
+      this.pageOffset++
     }
   }
 }
