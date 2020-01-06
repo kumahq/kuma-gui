@@ -296,10 +296,7 @@ export default {
       this.tableDataIsEmpty = false
       this.tableDataLoadAttempted = false
 
-      setTimeout(() => {
-        this.getDataplaneTableData()
-        this.tableDataLoadAttempted = true
-      }, this.tableDataLoadDelay)
+      this.getDataplaneTableData()
     },
 
     getDataplaneTableData () {
