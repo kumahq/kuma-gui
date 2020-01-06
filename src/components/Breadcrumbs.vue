@@ -26,9 +26,10 @@ export default {
         const title = this.calculateRouteTitle(r)
         const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
 
+        /** this adds the mesh name and url to the breadcrumb chain */
         if (this.isCurrentRoute(r) && this.pageMesh && this.$route.name !== 'mesh-overview') {
           items.push({
-            key: 'test',
+            key: this.pageMesh,
             to: { name: 'mesh-overview' },
             title: `Mesh Overview for ${this.pageMesh}`,
             text: this.pageMesh

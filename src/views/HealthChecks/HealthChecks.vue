@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-permissions">
+  <div class="health-checks">
     <DataOverview
       :display-data-table="true"
       :table-data="tableData"
@@ -46,7 +46,7 @@ export default {
       this.bootstrap()
     }
   },
-  beforeMount () {
+  created () {
     this.bootstrap()
   },
   methods: {

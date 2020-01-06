@@ -1,124 +1,131 @@
 <template>
   <div class="data-overview">
-    <div
-      v-if="isReady"
-      class="data-overview-content"
+    <transition
+      appear
+      mode="out-in"
+      name="page-fade"
     >
-      <!-- metrics -->
-      <MetricGrid
-        v-if="!isLoading && displayMetrics && metricsData"
-        :metrics="metricsData"
-      />
-      <KEmptyState
-        v-else-if="isLoading && displayMetrics"
-        cta-is-hidden
+      <div
+        v-if="isReady"
+        class="data-overview-content"
       >
-        <template slot="title">
-          {{ emptyState.title }}
-        </template>
-        <template
-          v-if="showCta"
-          slot="message"
+        <!-- metrics -->
+        <MetricGrid
+          v-if="!isLoading && displayMetrics && metricsData"
+          :metrics="metricsData"
+        />
+        <KEmptyState
+          v-else-if="isLoading && displayMetrics"
+          cta-is-hidden
         >
-          <router-link
-            v-if="ctaAction && ctaAction.length"
-            :to="ctaAction"
-          >
-            {{ emptyState.ctaText }}
-          </router-link>
-          {{ emptyState.message }}
-        </template>
-      </KEmptyState>
-
-      <!-- data -->
-      <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
-        <KTable
-          :options="tableDataFiltered"
-          has-hover
-        >
-          <template
-            v-if="displayTableDataStatus"
-            v-slot:status="{rowValue}"
-          >
-            <div
-              class="entity-status"
-              :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline') }"
-            >
-              <span class="entity-status__dot" />
-              <span class="entity-status__label">{{ rowValue }}</span>
-            </div>
+          <template slot="title">
+            {{ emptyState.title }}
           </template>
           <template
-            slot="actions"
-            slot-scope="{ row }"
+            v-if="showCta"
+            slot="message"
           >
             <router-link
-              :to="{
-                name: tableActionsRouteName,
-                params: {
-                  // TODO: find a better, more efficient way to handle this
-                  mesh: row.type === 'Mesh' || row.type === 'mesh' ? row.name : row.mesh,
-                  dataplane: row.type === 'Dataplane' || row.type === 'dataplane' ? row.name : null,
-                  trafficpermission: row.type === 'TrafficPermission' || row.type === 'trafficpermission' ? row.name : null,
-                  trafficroute: row.type === 'TrafficRoute' || row.type === 'trafficroute' ? row.name : null,
-                  trafficlog: row.type === 'TrafficLog' || row.type === 'trafficlog' ? row.name : null,
-                  healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null,
-                  proxytemplate: row.type === 'ProxyTemplate' || row.type === 'proxytemplate' ? row.name : null,
-                  //service: row.type === 'Service' || row.type === 'service' ? row.name : null
-                }
-              }"
+              v-if="ctaAction && ctaAction.length"
+              :to="ctaAction"
             >
-              <slot name="tableDataActionsLinkText" />
+              {{ emptyState.ctaText }}
             </router-link>
+            {{ emptyState.message }}
           </template>
-        </KTable>
+        </KEmptyState>
 
-        <Pagination
-          v-if="tableData && tableRowCount > pageSize"
-          :has-previous="pageNumber > 0"
-          :has-next="pageNumber < pageCount -1"
-          class="ml-2 mr-2 mb-2"
-          @next="goToNextPage"
-          @previous="goToPreviousPage"
-        />
+        <!-- data -->
+        <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
+          <KTable
+            class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+            :options="tableDataFiltered"
+            has-hover
+          >
+            <template
+              v-if="displayTableDataStatus"
+              v-slot:status="{rowValue}"
+            >
+              <div
+                class="entity-status"
+                :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline') }"
+              >
+                <span class="entity-status__dot" />
+                <span class="entity-status__label">{{ rowValue }}</span>
+              </div>
+            </template>
+            <template
+              slot="actions"
+              slot-scope="{ row }"
+            >
+              <router-link
+                :to="{
+                  name: tableActionsRouteName,
+                  params: {
+                    // TODO: find a better, more efficient way to handle this
+                    mesh: row.type === 'Mesh' || row.type === 'mesh' ? row.name : row.mesh,
+                    dataplane: row.type === 'Dataplane' || row.type === 'dataplane' ? row.name : null,
+                    trafficpermission: row.type === 'TrafficPermission' || row.type === 'trafficpermission' ? row.name : null,
+                    trafficroute: row.type === 'TrafficRoute' || row.type === 'trafficroute' ? row.name : null,
+                    trafficlog: row.type === 'TrafficLog' || row.type === 'trafficlog' ? row.name : null,
+                    healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null,
+                    proxytemplate: row.type === 'ProxyTemplate' || row.type === 'proxytemplate' ? row.name : null,
+                  //service: row.type === 'Service' || row.type === 'service' ? row.name : null
+                  }
+                }"
+              >
+                <slot name="tableDataActionsLinkText" />
+              </router-link>
+            </template>
+          </KTable>
+
+          <Pagination
+            v-if="tableData && tableRowCount > pageSize"
+            :has-previous="pageNumber > 0"
+            :has-next="pageNumber < pageCount -1"
+            class="ml-2 mr-2 mb-2"
+            @next="goToNextPage"
+            @previous="goToPreviousPage"
+          />
+        </div>
+
+        <!-- empty state if no items are found -->
+        <KEmptyState
+          v-if="displayDataTable && tableDataIsEmpty && tableData"
+          cta-is-hidden
+        >
+          <template slot="title">
+            <div class="card-icon mb-3">
+              <img src="~@/assets/images/icon-empty-table.svg?external">
+            </div>
+            No Items Found
+          </template>
+        </KEmptyState>
+
+        <!-- additional page content -->
+        <div
+          v-if="$slots.content"
+          class="data-overview-content mt-6"
+        >
+          <slot name="content" />
+        </div>
       </div>
-
-      <!-- empty state if no items are found -->
       <KEmptyState
-        v-if="tableDataIsEmpty"
+        v-else
         cta-is-hidden
       >
         <template slot="title">
           <div class="card-icon mb-3">
-            <img src="~@/assets/images/icon-empty-table.svg?external">
+            <KIcon
+              icon="spinner"
+              color="rgba(0, 0, 0, 0.1)"
+              size="48"
+            />
           </div>
-          No Items Found
+          Data Loading...
         </template>
       </KEmptyState>
-
-      <!-- additional page content -->
-      <div
-        v-if="$slots.content"
-        class="data-overview-content mt-6"
-      >
-        <slot name="content" />
-      </div>
-    </div>
-    <KEmptyState
-      v-else
-      cta-is-hidden
-    >
-      <template slot="title">
-        <div class="card-icon mb-3">
-          <KIcon
-            icon="spinner"
-            color="rgba(0, 0, 0, 0.1)"
-            size="48"
-          />
-        </div>
-        Data Loading...
-      </template>
-    </KEmptyState>
+    </transition>
   </div>
 </template>
 
@@ -243,5 +250,20 @@ export default {
       margin-right: auto;
     }
   }
+}
+
+.data-table-is-hidden {
+  display: none !important;
+}
+
+// page transition
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity .5s;
+}
+
+.page-fade-enter,
+.page-fade-leave-to {
+  opacity: 0;
 }
 </style>
