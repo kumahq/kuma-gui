@@ -198,15 +198,15 @@ export default (store) => {
         },
         // traffic logs
         {
-          path: 'traffic-log',
-          name: 'traffic-log',
+          path: 'traffic-logs',
+          name: 'traffic-logs',
           meta: {
             title: 'Traffic Logs'
           },
           component: () => import('@/views/Policies/TrafficLog')
         },
         {
-          path: 'traffic-log/:trafficlog',
+          path: 'traffic-logs/:trafficlog',
           name: 'traffic-log-details',
           params: {
             trafficlog: ':trafficlog'
