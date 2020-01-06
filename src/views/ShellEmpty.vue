@@ -9,7 +9,12 @@
       </h2>
     </page-header>
     <page-content>
-      <router-view />
+      <transition
+        mode="out-in"
+        name="fade"
+      >
+        <router-view />
+      </transition>
     </page-content>
   </div>
 </template>
@@ -51,5 +56,15 @@ export default {
   max-width: 640px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .05s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
