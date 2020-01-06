@@ -12,6 +12,10 @@ import { isValidUuid } from '@/helpers'
 
 export default {
   computed: {
+    pageMesh () {
+      return this.$route.params.mesh
+    },
+
     routes () {
       // const { query } = this.$router.currentRoute
 
@@ -21,6 +25,15 @@ export default {
         const text = this.calculateRouteText(r)
         const title = this.calculateRouteTitle(r)
         const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
+
+        if (this.isCurrentRoute(r) && this.pageMesh && this.$route.name !== 'mesh-overview') {
+          items.push({
+            key: 'test',
+            to: { name: 'mesh-overview' },
+            title: `Mesh Overview for ${this.pageMesh}`,
+            text: this.pageMesh
+          })
+        }
 
         if (this.isCurrentRoute(r) && r.meta.parent && r.meta.parent !== 'undefined') {
           items.push({

@@ -91,8 +91,8 @@ export default (store) => {
       redirect: { name: 'mesh-overview' },
       name: 'mesh',
       meta: {
-        title: 'Overview',
-        breadcrumb: 'Overview',
+        title: 'Meshes',
+        breadcrumb: 'Meshes',
         parent: 'mesh-overview'
       },
       params: { mesh: ':mesh' },

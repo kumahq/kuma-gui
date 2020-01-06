@@ -217,8 +217,6 @@ export default {
       const filtered = data.slice(start, end)
       const newData = { headers, data: [...filtered] }
 
-      console.log(this.pageCount)
-
       return newData
     }
   },
