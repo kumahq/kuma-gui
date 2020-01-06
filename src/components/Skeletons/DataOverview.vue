@@ -75,8 +75,8 @@
 
         <Pagination
           v-if="tableData && tableRowCount > pageSize"
-          :has-previous="pageOffset - pageSize >= 0"
-          :has-next="tableRowCount - pageOffset > pageSize"
+          :has-previous="pageNumber > 0"
+          :has-next="pageNumber < pageCount -1"
           class="ml-2 mr-2 mb-2"
           @next="goToNextPage"
           @previous="goToPreviousPage"
@@ -193,7 +193,7 @@ export default {
   data () {
     return {
       pageSize: 12,
-      pageOffset: 0
+      pageNumber: 0
     }
   },
   computed: {
@@ -203,21 +203,31 @@ export default {
     tableRowCount () {
       return Object.entries(this.tableData.data).length
     },
+    pageCount () {
+      const itemCount = Object.entries(this.tableData.data).length
+      const pageSize = this.pageSize
+
+      return Math.ceil(itemCount / pageSize)
+    },
     tableDataFiltered () {
       const data = this.tableData.data
       const headers = this.tableData.headers
-      const filtered = data.slice(this.pageOffset, this.pageOffset + this.pageSize)
+      const start = this.pageNumber * this.pageSize
+      const end = start + this.pageSize
+      const filtered = data.slice(start, end)
       const newData = { headers, data: [...filtered] }
+
+      console.log(this.pageCount)
 
       return newData
     }
   },
   methods: {
     goToPreviousPage () {
-      this.pageOffset--
+      this.pageNumber--
     },
     goToNextPage () {
-      this.pageOffset++
+      this.pageNumber++
     }
   }
 }
