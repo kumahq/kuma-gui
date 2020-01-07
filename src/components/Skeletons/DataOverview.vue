@@ -4,6 +4,17 @@
       v-if="isReady"
       class="data-overview-content"
     >
+      <!-- controls -->
+      <div class="data-table-controls mb-2">
+        <KButton
+          appearance="secondary"
+          size="small"
+          @click="$emit('reloadData', 'test')"
+        >
+          Refresh
+        </KButton>
+      </div>
+
       <!-- metrics -->
       <MetricGrid
         v-if="!isLoading && displayMetrics && metricsData"
@@ -43,7 +54,7 @@
           >
             <div
               class="entity-status"
-              :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline') }"
+              :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline') }"
             >
               <span class="entity-status__dot" />
               <span class="entity-status__label">{{ rowValue }}</span>
@@ -58,14 +69,14 @@
                 name: tableActionsRouteName,
                 params: {
                   // TODO: find a better, more efficient way to handle this
-                  mesh: row.type === 'Mesh' || row.type === 'mesh' ? row.name : row.mesh,
-                  dataplane: row.type === 'Dataplane' || row.type === 'dataplane' ? row.name : null,
-                  trafficpermission: row.type === 'TrafficPermission' || row.type === 'trafficpermission' ? row.name : null,
-                  trafficroute: row.type === 'TrafficRoute' || row.type === 'trafficroute' ? row.name : null,
-                  trafficlog: row.type === 'TrafficLog' || row.type === 'trafficlog' ? row.name : null,
-                  healthcheck: row.type === 'HealthCheck' || row.type === 'healthcheck' ? row.name : null,
-                  proxytemplate: row.type === 'ProxyTemplate' || row.type === 'proxytemplate' ? row.name : null,
-                  //service: row.type === 'Service' || row.type === 'service' ? row.name : null
+                  mesh: row.type.toLowerCase() === 'mesh' ? row.name : row.mesh,
+                  dataplane: row.type.toLowerCase() === 'dataplane' ? row.name : null,
+                  trafficpermission: row.type.toLowerCase() === 'trafficpermission' ? row.name : null,
+                  trafficroute: row.type.toLowerCase() === 'trafficroute' ? row.name : null,
+                  trafficlog: row.type.toLowerCase() === 'trafficlog' ? row.name : null,
+                  healthcheck: row.type.toLowerCase() === 'healthcheck' ? row.name : null,
+                  proxytemplate: row.type.toLowerCase() === 'proxytemplate' ? row.name : null,
+                  service: row.type.toLowerCase() === 'service' ? row.name : null
                 }
               }"
             >
@@ -246,7 +257,11 @@ export default {
   }
 }
 
-.data-table-is-hidden {
-  display: none !important;
+.data-table-controls {
+  text-align: right;
+
+  button:after {
+    display: none;
+  }
 }
 </style>

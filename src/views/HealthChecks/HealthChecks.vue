@@ -5,6 +5,7 @@
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
       table-actions-route-name="health-checks-details"
+      @reloadData="bootstrap"
     >
       <template slot="tableDataActionsLinkText">
         View
@@ -46,7 +47,7 @@ export default {
       this.bootstrap()
     }
   },
-  created () {
+  beforeMount () {
     this.bootstrap()
   },
   methods: {

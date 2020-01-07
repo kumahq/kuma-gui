@@ -5,6 +5,7 @@
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
       table-actions-route-name="proxy-templates-details"
+      @reloadData="bootstrap"
     >
       <template slot="tableDataActionsLinkText">
         View

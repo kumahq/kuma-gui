@@ -6,6 +6,7 @@
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
       table-actions-route-name="dataplane-details"
+      @reloadData="bootstrap"
     >
       <template slot="tableDataActionsLinkText">
         View
@@ -74,17 +75,20 @@ export default {
               this.$api.getDataplaneOverviews(mesh, item.name)
                 .then(response => {
                   const now = new Date()
+                  const placeholder = 'n/a'
 
-                  let lastConnected
-                  let lastUpdated
+                  let lastConnected = placeholder
+                  let lastUpdated = placeholder
                   let tags
                   let totalUpdates = []
                   let status = 'Offline'
                   const connectTimes = []
                   const updateTimes = []
 
+                  /**
+                   * Iterate through the networking inbound data
+                   */
                   if (response.dataplane.networking.inbound && response.dataplane.networking.inbound.length) {
-                    // iterate through the networking inbound data
                     for (let i = 0; i < response.dataplane.networking.inbound.length; i++) {
                       const items = response.dataplane.networking.inbound[i].tags
 
@@ -92,26 +96,35 @@ export default {
                         .replace(/[{}]/g, '')
                         .replace(/"/g, '')
                         .replace(/,/g, ', ')
-                        // .replace(/:/g, ': ')
+                        .replace(/:/g, ': ')
                     }
                   }
 
+                  /**
+                   * Iterate through the subscriptions
+                   */
                   if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
-                    // iterate through the subscriptions
                     response.dataplaneInsight.subscriptions.forEach(item => {
-                      totalUpdates.push(item.status.total.responsesSent)
-                      connectTimes.push(item.connectTime)
-                      updateTimes.push(item.status.lastUpdateTime)
+                      const responsesSent = item.status.total.responsesSent || placeholder
+                      const connectTime = item.connectTime || placeholder
+                      const lastUpdateTime = item.status.lastUpdateTime || placeholder
+                      const disconnectTime = item.disconnectTime || null
 
-                      if (item.connectTime && item.connectTime.length && !item.disconnectTime) {
+                      totalUpdates.push(responsesSent)
+                      connectTimes.push(connectTime)
+                      updateTimes.push(lastUpdateTime)
+
+                      if (connectTime && connectTime.length && !disconnectTime) {
                         status = 'Online'
                       } else {
                         status = 'Offline'
                       }
                     })
 
-                    // get the sum of total updates
-                    totalUpdates = totalUpdates.reduce((a, b) => a + b)
+                    // get the sum of total updates (if there is a numerical value set)
+                    if (totalUpdates !== placeholder) {
+                      totalUpdates = totalUpdates.reduce((a, b) => a + b)
+                    }
 
                     // select the most recent LAST CONNECTED timestamp
                     const selectedTime = new Date(connectTimes.reduce((a, b) => (a.MeasureDate > b.MeasureDate ? a : b)))
@@ -123,11 +136,15 @@ export default {
                      * @todo refactor this to use a function instead
                      */
 
-                    // formatted time for LAST CONNECTED
-                    lastConnected = `${Math.abs(now.getHours() - selectedTime.getHours())}h ${Math.abs(now.getMinutes() - selectedTime.getMinutes())}m ${Math.abs(now.getSeconds() - selectedTime.getSeconds())}s`
+                    // formatted time for LAST CONNECTED (if there is a value present)
+                    if (!isNaN(selectedTime)) {
+                      lastConnected = `${Math.abs(now.getHours() - selectedTime.getHours())}h ${Math.abs(now.getMinutes() - selectedTime.getMinutes())}m ${Math.abs(now.getSeconds() - selectedTime.getSeconds())}s`
+                    }
 
-                    // formatted time for LAST UPDATED
-                    lastUpdated = `${Math.abs(now.getHours() - selectedUpdateTime.getHours())}h ${Math.abs(now.getMinutes() - selectedUpdateTime.getMinutes())}m ${Math.abs(now.getSeconds() - selectedUpdateTime.getSeconds())}s`
+                    // formatted time for LAST UPDATED (if there is a value present)
+                    if (!isNaN(selectedUpdateTime)) {
+                      lastUpdated = `${Math.abs(now.getHours() - selectedUpdateTime.getHours())}h ${Math.abs(now.getMinutes() - selectedUpdateTime.getMinutes())}m ${Math.abs(now.getSeconds() - selectedUpdateTime.getSeconds())}s`
+                    }
                   } else {
                     // if there are no subscriptions, set them all to a fallback
                     lastConnected = lastUpdated = totalUpdates = 'n/a'
