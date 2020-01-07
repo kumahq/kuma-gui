@@ -127,23 +127,39 @@ export default {
                     }
 
                     // select the most recent LAST CONNECTED timestamp
-                    const selectedTime = new Date(connectTimes.reduce((a, b) => (a.MeasureDate > b.MeasureDate ? a : b)))
+                    const selectedTime = connectTimes.reduce((a, b) => {
+                      if (a && b) {
+                        return a.MeasureDate > b.MeasureDate ? a : b
+                      }
+
+                      return null
+                    })
 
                     // select the most recent LAST UPDATED timestamnp
-                    const selectedUpdateTime = new Date(updateTimes.reduce((a, b) => (a.MeasureDate > b.MeasureDate ? a : b)))
+                    const selectedUpdateTime = updateTimes.reduce((a, b) => {
+                      if (a && b) {
+                        return a.MeasureDate > b.MeasureDate ? a : b
+                      }
+
+                      return null
+                    })
+
+                    // format each reduced value as a date to compare against
+                    const selectedTimeAsDate = new Date(selectedTime)
+                    const selectedUpdateTimeAsDate = new Date(selectedUpdateTime)
 
                     /**
                      * @todo refactor this to use a function instead
                      */
 
                     // formatted time for LAST CONNECTED (if there is a value present)
-                    if (!isNaN(selectedTime)) {
-                      lastConnected = `${Math.abs(now.getHours() - selectedTime.getHours())}h ${Math.abs(now.getMinutes() - selectedTime.getMinutes())}m ${Math.abs(now.getSeconds() - selectedTime.getSeconds())}s`
+                    if (selectedTime && !isNaN(selectedTimeAsDate)) {
+                      lastConnected = `${Math.abs(now.getHours() - selectedTimeAsDate.getHours())}h ${Math.abs(now.getMinutes() - selectedTimeAsDate.getMinutes())}m ${Math.abs(now.getSeconds() - selectedTimeAsDate.getSeconds())}s`
                     }
 
                     // formatted time for LAST UPDATED (if there is a value present)
-                    if (!isNaN(selectedUpdateTime)) {
-                      lastUpdated = `${Math.abs(now.getHours() - selectedUpdateTime.getHours())}h ${Math.abs(now.getMinutes() - selectedUpdateTime.getMinutes())}m ${Math.abs(now.getSeconds() - selectedUpdateTime.getSeconds())}s`
+                    if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
+                      lastUpdated = `${Math.abs(now.getHours() - selectedUpdateTimeAsDate.getHours())}h ${Math.abs(now.getMinutes() - selectedUpdateTimeAsDate.getMinutes())}m ${Math.abs(now.getSeconds() - selectedUpdateTimeAsDate.getSeconds())}s`
                     }
                   } else {
                     // if there are no subscriptions, set them all to a fallback
