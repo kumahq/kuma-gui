@@ -22,7 +22,7 @@
               appearance="primary"
               @click="() => { copyToClipboard(yamlContent) }"
             >
-              Copy to Clipboard
+              Copy YAML to Clipboard
             </KButton>
             <div slot="content">
               <p>Entity copied to clipboard!</p>

@@ -5,7 +5,10 @@
       class="data-overview-content"
     >
       <!-- controls -->
-      <div class="data-table-controls mb-2">
+      <div
+        v-if="displayRefreshControl"
+        class="data-table-controls mb-2"
+      >
         <KButton
           appearance="secondary"
           size="small"
@@ -200,6 +203,10 @@ export default {
     displayTableDataStatus: {
       type: Boolean,
       default: true
+    },
+    displayRefreshControl: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -262,6 +269,23 @@ export default {
 
   button:after {
     display: none;
+  }
+}
+
+.info-grid {
+  flex-wrap: wrap;
+
+  .metric {
+    margin-bottom: 16px;
+  }
+}
+
+@media only screen and (min-width: 841px) {
+  .info-grid {
+
+    .metric {
+      flex: 1 1 25%;
+    }
   }
 }
 </style>

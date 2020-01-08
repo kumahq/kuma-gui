@@ -65,7 +65,7 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      const getTrafficLogs = () => {
+      const getHealthChecks = () => {
         return this.$api.getHealthChecks(mesh)
           .then(response => {
             if (response.items.length > 0) {
@@ -92,7 +92,7 @@ export default {
           })
       }
 
-      getTrafficLogs()
+      getHealthChecks()
     }
   }
 }

@@ -59,6 +59,9 @@ export default {
   },
   methods: {
     bootstrap () {
+      this.isLoading = true
+      this.isEmpty = false
+
       const mesh = this.$route.params.mesh
 
       const getTrafficRoutes = () => {

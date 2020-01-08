@@ -1,9 +1,13 @@
 <template>
   <div class="overview">
     <DataOverview
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
       :display-metrics="true"
       :metrics-data="metricsData"
       :empty-state="empty_state"
+      :display-refresh-control="false"
     />
     <YamlView
       title="Entity Overview"
@@ -33,11 +37,11 @@ export default {
       isEmpty: false,
       hasError: false,
       tableDataIsEmpty: false,
-      entity: null,
       empty_state: {
         title: 'No Data',
         message: 'There are no meshes present.'
-      }
+      },
+      entity: null
     }
   },
   computed: {
@@ -48,16 +52,24 @@ export default {
           value: this.$store.state.totalDataplaneCountFromMesh
         },
         {
-          metric: 'Traffic Routes',
-          value: this.$store.state.totalTrafficRoutesCountFromMesh
+          metric: 'Health Checks',
+          value: this.$store.state.totalHealthChecksCountFromMesh
+        },
+        {
+          metric: 'Proxy Templates',
+          value: this.$store.state.totalProxyTemplatesCountFromMesh
+        },
+        {
+          metric: 'Traffic Logs',
+          value: this.$store.state.totalTrafficLogsCountFromMesh
         },
         {
           metric: 'Traffic Permissions',
           value: this.$store.state.totalTrafficPermissionsCountFromMesh
         },
         {
-          metric: 'Traffic Logs',
-          value: this.$store.state.totalTrafficLogsCountFromMesh
+          metric: 'Traffic Routes',
+          value: this.$store.state.totalTrafficRoutesCountFromMesh
         }
       ]
     }
@@ -83,26 +95,40 @@ export default {
           }
         })
         .catch(error => {
+          this.hasError = true
+
           console.error(error)
+        })
+        .finally(() => {
+          this.isLoading = false
         })
     },
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false
 
+      const mesh = this.$route.params.mesh
+
+      // fetch the entity for YAML formatting
       this.getEntity()
 
       // get the total number of dataplanes from selected mesh
-      this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
+      this.$store.dispatch('getDataplaneFromMeshTotalCount', mesh)
 
       // get the total number of traffic routes from selected mesh
-      this.$store.dispatch('getTrafficRoutesFromMeshTotalCount', this.$route.params.mesh)
+      this.$store.dispatch('getTrafficRoutesFromMeshTotalCount', mesh)
 
       // get the total number of traffic permissions from selected mesh
-      this.$store.dispatch('getTrafficPermissionsFromMeshTotalCount', this.$route.params.mesh)
+      this.$store.dispatch('getTrafficPermissionsFromMeshTotalCount', mesh)
 
       // get the total number of traffic logs from selected mesh
-      this.$store.dispatch('getTrafficLogsFromMeshTotalCount', this.$route.params.mesh)
+      this.$store.dispatch('getTrafficLogsFromMeshTotalCount', mesh)
+
+      // get the total number of health checks from selected mesh
+      this.$store.dispatch('getHealthChecksFromMeshTotalCount', mesh)
+
+      // get the total number of proxy templates from selected mesh
+      this.$store.dispatch('getProxyTemplatesTotalCount', mesh)
     }
   }
 }

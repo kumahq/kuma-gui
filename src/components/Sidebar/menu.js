@@ -77,7 +77,7 @@ export default {
           parent: 'policies'
         },
         {
-          name: 'Traffic Log',
+          name: 'Traffic Logs',
           link: '/traffic-logs',
           title: false,
           parent: 'policies'

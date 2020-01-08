@@ -26,6 +26,8 @@ export default (api) => {
       totalTrafficRoutesCountFromMesh: 0,
       totalTrafficPermissionsCountFromMesh: 0,
       totalTrafficLogsCountFromMesh: 0,
+      totalHealthChecksCountFromMesh: 0,
+      totalProxyTemplatesCountFromMesh: 0,
       tagline: null,
       version: null,
       status: null
@@ -66,6 +68,12 @@ export default (api) => {
       },
       getTotalTrafficPermissionsCountFromMesh (state) {
         return state.totalTrafficPermissionsCountFromMesh
+      },
+      getTotalHealthChecksFromMesh (state) {
+        return state.totalHealthChecksCountFromMesh
+      },
+      getTotalProxyTemplatesCountFromMesh (state) {
+        return state.totalProxyTemplatesCountFromMesh
       },
       getTrafficLogsFromMeshTotalCount (state) {
         return state.totalTrafficLogsCountFromMesh
@@ -119,6 +127,12 @@ export default (api) => {
       },
       SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH (state, count) {
         state.totalTrafficLogsCountFromMesh = count
+      },
+      SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH (state, count) {
+        state.totalHealthChecksCountFromMesh = count
+      },
+      SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH (state, count) {
+        state.totalProxyTemplatesCountFromMesh = count
       },
       SET_VERSION (state, version) {
         state.version = version
@@ -318,6 +332,32 @@ export default (api) => {
             const total = response.items.length
 
             commit('SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of health checks from a mesh
+      getHealthChecksFromMeshTotalCount ({ commit }, mesh) {
+        return api.getHealthChecks(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total proxy templates from a mesh
+      getProxyTemplatesTotalCount ({ commit }, mesh) {
+        return api.getProxyTemplates(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)
