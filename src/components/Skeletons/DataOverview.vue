@@ -9,7 +9,7 @@
         <KButton
           appearance="secondary"
           size="small"
-          @click="$emit('reloadData', 'test')"
+          @click="$emit('reloadData')"
         >
           Refresh
         </KButton>

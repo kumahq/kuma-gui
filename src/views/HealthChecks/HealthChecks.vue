@@ -1,6 +1,10 @@
 <template>
   <div class="health-checks">
     <DataOverview
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
+      :empty-state="empty_state"
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
@@ -31,6 +35,10 @@ export default {
       isEmpty: false,
       hasError: false,
       tableDataIsEmpty: false,
+      empty_state: {
+        title: 'No Data',
+        message: 'There are no Health Checks present.'
+      },
       tableData: {
         headers: [
           { label: 'Name', key: 'name' },
@@ -60,9 +68,13 @@ export default {
       const getTrafficLogs = () => {
         return this.$api.getHealthChecks(mesh)
           .then(response => {
-            const items = response.items
+            if (response.items.length > 0) {
+              const items = response.items
 
-            if (items && items.length) {
+              // sort the table data by name and the mesh it's associated with
+              items
+                .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
+
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
             } else {
@@ -71,10 +83,12 @@ export default {
             }
           })
           .catch(error => {
-            this.tableDataIsEmpty = true
-            this.isEmpty = true
+            this.hasError = true
 
             console.error(error)
+          })
+          .finally(() => {
+            this.isLoading = false
           })
       }
 
