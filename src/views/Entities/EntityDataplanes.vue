@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { humanReadableDate } from '@/helpers'
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
@@ -158,12 +159,12 @@ export default {
 
                       // formatted time for LAST CONNECTED (if there is a value present)
                       if (selectedTime && !isNaN(selectedTimeAsDate)) {
-                        lastConnected = `${Math.abs(now.getHours() - selectedTimeAsDate.getHours())}h ${Math.abs(now.getMinutes() - selectedTimeAsDate.getMinutes())}m ${Math.abs(now.getSeconds() - selectedTimeAsDate.getSeconds())}s`
+                        lastConnected = humanReadableDate(selectedTimeAsDate)
                       }
 
                       // formatted time for LAST UPDATED (if there is a value present)
                       if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
-                        lastUpdated = `${Math.abs(now.getHours() - selectedUpdateTimeAsDate.getHours())}h ${Math.abs(now.getMinutes() - selectedUpdateTimeAsDate.getMinutes())}m ${Math.abs(now.getSeconds() - selectedUpdateTimeAsDate.getSeconds())}s`
+                        lastUpdated = humanReadableDate(selectedUpdateTimeAsDate)
                       }
                     } else {
                     // if there are no subscriptions, set them all to a fallback
