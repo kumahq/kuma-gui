@@ -122,7 +122,8 @@ export default (store) => {
           path: 'dataplanes/:dataplane',
           name: 'dataplane-details',
           meta: {
-            title: 'Dataplanes',
+            title: 'Dataplane Details',
+            breadcrumb: 'Dataplanes',
             parent: 'dataplanes'
           },
           params: {

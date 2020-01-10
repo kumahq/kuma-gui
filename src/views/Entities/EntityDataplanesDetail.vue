@@ -84,10 +84,12 @@ export default {
                 const connectTime = subscriptions[i].connectTime
                 const disconnectTime = subscriptions[i].disconnectTime
 
-                if (connectTime && connectTime.length && !disconnectTime) {
+                if (!!connectTime && connectTime.length && !!disconnectTime) {
                   this.isDataplaneOnline = false
                 }
               }
+            } else {
+              this.isDataplaneOnline = false
             }
           } else {
             this.$router.push('/404')
