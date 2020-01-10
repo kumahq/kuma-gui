@@ -22,6 +22,7 @@ import '@/assets/styles/fonts.css'
 import '@/assets/styles/main.css'
 import '@/assets/styles/typography.css'
 import '@/assets/styles/inputs.css'
+import '@/assets/styles/components.css'
 
 // Kong Design System styles
 import '@kongponents/styles/styles.css'
@@ -56,32 +57,50 @@ function VUE_APP () {
 /** bootstrapping to run our Vue app */
 function SETUP_VUE_APP () {
   /**
-   * If the API URL and environment are not set in localStorage,
-   * set them and mount the app.
+   * Always check the Kuma environment and api URL in storage
+   * and update it upon GUI launch.
    */
-  if (!localStorage.getItem('kumaApiUrl') && !localStorage.getItem('kumaEnv')) {
-    axios
-      .get(process.env.VUE_APP_KUMA_CONFIG)
-      .then(response => {
-        const apiUrl = response.data.apiUrl
-        const kumaEnv = response.data.environment
+  axios
+    .get(process.env.VUE_APP_KUMA_CONFIG)
+    .then(response => {
+      const apiUrl = response.data.apiUrl
+      const kumaEnv = response.data.environment
+      const storedKumaEnv = localStorage.getItem('kumaEnv') !== null ? localStorage.getItem('kumaEnv').toString() : null
 
-        localStorage.setItem('kumaApiUrl', apiUrl)
+      /**
+       * Always check the API URL and set it accordingly for the app to access.
+       */
+      localStorage.setItem('kumaApiUrl', apiUrl)
+
+      /**
+       * If there is a mismatch between the Kuma environment value
+       * in the config endpoint and localStorage, send the user
+       * back through the onboarding process.
+       */
+      if (!storedKumaEnv || storedKumaEnv !== kumaEnv) {
+        localStorage.setItem('kumaOnboardingComplete', false)
         localStorage.setItem('kumaEnv', kumaEnv)
-      })
-      .then(() => {
-        VUE_APP()
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  } else {
-    /**
-     * If they are already present, skip needlessly querying the config
-     * endpoint and move forward with mounting the app.
-     */
-    VUE_APP()
-  }
+      }
+    })
+    .then(() => {
+      /**
+       * Now that the foundation is set, move forward and launch the app.
+       */
+      VUE_APP()
+    })
+    .catch(error => {
+      /** in the rare instance that we can't even load the /config endpoint. */
+      VUE_APP()
+
+      /** clear out any localStorage values */
+      localStorage.removeItem('kumaApiUrl')
+      localStorage.removeItem('kumaOnboardingComplete')
+      localStorage.removeItem('kumaEnv')
+      localStorage.removeItem('selectedMesh')
+
+      console.error('There was a problem loading the config. Please try restarting Kuma.')
+      console.error(error)
+    })
 }
 
 /**

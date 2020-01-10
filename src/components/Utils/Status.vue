@@ -4,9 +4,10 @@
       class="status__dot"
       :class="{ 'is-active': active }"
     />
-    <span class="status__label">
-      <slot />
-    </span>
+    <span
+      class="status__label"
+      v-html="content"
+    />
   </div>
 </template>
 
@@ -17,6 +18,10 @@ export default {
     active: {
       type: Boolean,
       default: false
+    },
+    content: {
+      type: String,
+      default: null
     }
   }
 }

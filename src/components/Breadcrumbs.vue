@@ -9,8 +9,13 @@
 
 <script>
 import { isValidUuid } from '@/helpers'
+
 export default {
   computed: {
+    pageMesh () {
+      return this.$route.params.mesh
+    },
+
     routes () {
       // const { query } = this.$router.currentRoute
 
@@ -21,7 +26,24 @@ export default {
         const title = this.calculateRouteTitle(r)
         const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
 
-        if (this.isCurrentRoute(r) && !r.meta.excludeAsBreadcrumb) {
+        /** this adds the mesh name and url to the breadcrumb chain */
+        if (this.isCurrentRoute(r) && this.pageMesh && this.$route.name !== 'mesh-overview') {
+          items.push({
+            key: this.pageMesh,
+            to: { name: 'mesh-overview' },
+            title: `Mesh Overview for ${this.pageMesh}`,
+            text: this.pageMesh
+          })
+        }
+
+        if (this.isCurrentRoute(r) && r.meta.parent && r.meta.parent !== 'undefined') {
+          items.push({
+            key: r.meta.parent,
+            to: { name: r.meta.parent },
+            title: r.meta.title,
+            text: r.meta.breadcrumb || r.meta.title
+          })
+        } else if (this.isCurrentRoute(r) && !r.meta.excludeAsBreadcrumb) {
           items.push({
             key: key,
             to: { name: key },
@@ -38,44 +60,17 @@ export default {
         }
       })
 
+      // the current page the user is on
+      const currentRouteText = this.calculateRouteTextAdvanced(this.$route)
+
+      if (currentRouteText) {
+        items.push({
+          title: currentRouteText,
+          text: currentRouteText
+        })
+      }
+
       return items
-
-      // return this.calculateRouteFromQuery(query) ||
-      //   this.$route.matched.map(r => {
-      //     const text = this.calculateRouteText(r)
-      //     const title = this.calculateRouteTitle(r)
-
-      //     if (this.isCurrentRoute(r) || (!text && !title) || r.meta.excludeAsBreadcrumb) {
-      //       return
-      //     }
-
-      //     // return this.getBreadcrumbItem(r.name,
-      //     //   { name: r.redirect || r.name, params: r.params },
-      //     //   this.calculateRouteTitle(r),
-      //     //   this.calculateRouteText(r))
-
-      //     /**
-      //      * This "fix" addresses an issue where the entire
-      //      * route `name` object was being pulled in and not
-      //      * simply the name value itself. The end result was
-      //      * that the `name` was being doubled up and throwing
-      //      * an `[Object object]` warning
-      //      */
-
-      //     const item = this.getBreadcrumbItem(
-      //       r.name,
-      //       {
-      //         // name: r.redirect.name || r.name,
-      //         name: r.meta.parent || r.name,
-      //         params: r.params
-      //       },
-      //       r.meta.title,
-      //       r.meta.title
-      //     )
-
-      //     return item
-      //   })
-      //     .filter(Boolean)
     },
 
     hideBreadcrumbs () {
@@ -159,6 +154,18 @@ export default {
           this.$router.currentRoute.params &&
           this.$router.currentRoute.params.mesh)
       )
+    },
+
+    calculateRouteTextAdvanced (route) {
+      const params = route.params
+      const isMesh = (route.name === 'mesh-overview')
+      const newParams = Object.assign({}, params, { mesh: null })
+
+      if (isMesh) {
+        return params.mesh
+      } else {
+        return Object.values(newParams).filter(x => x)[0]
+      }
     }
   }
 }

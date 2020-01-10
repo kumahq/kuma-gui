@@ -21,10 +21,13 @@ export default (api) => {
       totalMeshCount: 0,
       totalDataplaneCount: 0,
       totalDataplaneList: [],
+      anyDataplanesOffline: null,
       totalDataplaneCountFromMesh: 0,
       totalTrafficRoutesCountFromMesh: 0,
       totalTrafficPermissionsCountFromMesh: 0,
       totalTrafficLogsCountFromMesh: 0,
+      totalHealthChecksCountFromMesh: 0,
+      totalProxyTemplatesCountFromMesh: 0,
       tagline: null,
       version: null,
       status: null
@@ -48,6 +51,9 @@ export default (api) => {
       getDataplanesList (state) {
         return state.totalDataplaneList
       },
+      getAnyDpOffline (state) {
+        return state.anyDataplanesOffline
+      },
       getTotalMeshCount (state) {
         return state.totalMeshCount
       },
@@ -63,15 +69,21 @@ export default (api) => {
       getTotalTrafficPermissionsCountFromMesh (state) {
         return state.totalTrafficPermissionsCountFromMesh
       },
+      getTotalHealthChecksFromMesh (state) {
+        return state.totalHealthChecksCountFromMesh
+      },
+      getTotalProxyTemplatesCountFromMesh (state) {
+        return state.totalProxyTemplatesCountFromMesh
+      },
       getTrafficLogsFromMeshTotalCount (state) {
         return state.totalTrafficLogsCountFromMesh
       },
-      // getVersion (state) {
-      //   return state.version
-      // },
-      // getTagline (state) {
-      //   return state.tagline
-      // },
+      getVersion (state) {
+        return state.version
+      },
+      getTagline (state) {
+        return state.tagline
+      },
       getStatus (state) {
         return state.status
       }
@@ -101,6 +113,9 @@ export default (api) => {
       SET_TOTAL_DP_LIST (state, dataplanes) {
         state.totalDataplaneList = dataplanes
       },
+      SET_ANY_DP_OFFLINE (state, status) {
+        state.anyDataplanesOffline = status
+      },
       SET_TOTAL_DP_COUNT_FROM_MESH (state, count) {
         state.totalDataplaneCountFromMesh = count
       },
@@ -113,12 +128,18 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH (state, count) {
         state.totalTrafficLogsCountFromMesh = count
       },
-      // SET_VERSION (state, version) {
-      //   state.version = version
-      // },
-      // SET_TAGLINE (state, tagline) {
-      //   state.tagline = tagline
-      // },
+      SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH (state, count) {
+        state.totalHealthChecksCountFromMesh = count
+      },
+      SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH (state, count) {
+        state.totalProxyTemplatesCountFromMesh = count
+      },
+      SET_VERSION (state, version) {
+        state.version = version
+      },
+      SET_TAGLINE (state, tagline) {
+        state.tagline = tagline
+      },
       SET_STATUS (state, status) {
         state.status = status
       }
@@ -190,26 +211,74 @@ export default (api) => {
         getDataplanes()
       },
 
-      // a makeshift way to get the list of all present dataplanes across all meshes
+      // a makeshift way to get the list of all present dataplanes across all
+      // meshes this will also set a status for whether or not any of the
+      // dataplanes are offline
       getAllDataplanes ({ commit }) {
         const getDataplanes = async () => {
           return new Promise(async (resolve, reject) => {
             const meshes = await api.getAllMeshes()
             const result = []
+            const states = []
 
+            // create a status label column
             for (let i = 0; i < meshes.items.length; i++) {
-              const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
+              const mesh = meshes.items[i].name
+              const dataplanes = await api.getAllDataplanesFromMesh(mesh)
               const items = await dataplanes.items
 
-              items.forEach(item => {
+              for (let i = 0; i < items.length; i++) {
+                const itemName = items[i].name
+                const itemMesh = items[i].mesh
+
+                const itemStatus = await api.getDataplaneOverviews(mesh, itemName)
+                  .then(response => {
+                    const items = response.dataplaneInsight.subscriptions
+
+                    if (items && items.length > 0) {
+                      for (let i = 0; i < items.length; i++) {
+                        const connectTime = items[i].connectTime
+                        const disconnectTime = items[i].disconnectTime
+
+                        if (connectTime && connectTime.length && !disconnectTime) {
+                          return 'Online'
+                        } else {
+                          return 'Offline'
+                        }
+                      }
+                    } else {
+                      return 'Offline'
+                    }
+                  })
+
+                // create the full data array
                 result.push({
-                  name: item.name,
-                  mesh: item.mesh
+                  status: itemStatus,
+                  name: itemName,
+                  mesh: itemMesh
                 })
-              })
+              }
             }
 
+            // create a simple flat status object with booleans for checking
+            // if any // dataplanes are offline
+            for (let i = 0; i < Object.values(result).length; i++) {
+              const statusVal = Object.values(result[i])[0]
+              const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
+
+              states.push(isOnline)
+            }
+
+            // if any of the dataplanes return false for being online
+            // commit this so we can check against it
+            const anyDpOffline = states.some(i => i === false)
+
+            commit('SET_ANY_DP_OFFLINE', anyDpOffline)
+
+            // commit the total list of dataplanes
             commit('SET_TOTAL_DP_LIST', result)
+
+            // resolve the promise
             resolve()
           })
         }
@@ -269,33 +338,59 @@ export default (api) => {
           })
       },
 
-      // get the current version
-      // getVersion ({ commit }) {
-      //   return api.getInfo()
-      //     .then(response => {
-      //       commit('SET_VERSION', response.version)
-      //     })
-      //     .catch(error => {
-      //       console.error(error)
-      //     })
-      // },
+      // get the total number of health checks from a mesh
+      getHealthChecksFromMeshTotalCount ({ commit }, mesh) {
+        return api.getHealthChecks(mesh)
+          .then(response => {
+            const total = response.items.length
 
-      // // get the current tagline
-      // getTagline ({ commit }) {
-      //   return api.getInfo()
-      //     .then(response => {
-      //       commit('SET_TAGLINE', response.tagline)
-      //     })
-      //     .catch(error => {
-      //       console.error(error)
-      //     })
-      // },
+            commit('SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total proxy templates from a mesh
+      getProxyTemplatesTotalCount ({ commit }, mesh) {
+        return api.getProxyTemplates(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the current version
+      getVersion ({ commit }) {
+        return api.getInfo()
+          .then(response => {
+            commit('SET_VERSION', response.version)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the current tagline
+      getTagline ({ commit }) {
+        return api.getInfo()
+          .then(response => {
+            commit('SET_TAGLINE', response.tagline)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
 
       // get the status of the API
       getStatus ({ commit }) {
         return api.getStatus()
           .then(response => {
-            commit('SET_STATUS', response.statusText)
+            commit('SET_STATUS', `${response}`)
           })
       }
     }

@@ -69,21 +69,7 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      hovering: false,
-      resourceLinks: [
-        {
-          link: 'https://kuma.io/docs/',
-          label: 'Kuma Documentation'
-        },
-        {
-          link: 'https://kuma-mesh.slack.com/',
-          label: 'Kuma Community Chat'
-        },
-        {
-          link: 'https://github.com/Kong/kuma',
-          label: 'Kuma GitHub Repository'
-        }
-      ]
+      hovering: false
     }
   },
 
@@ -96,6 +82,26 @@ export default {
     //   workspace: state => state.workspace,
     //   workspaces: state => state.workspaces
     // }),
+
+    resourceLinks () {
+      const storedVersion = this.$store.getters.getVersion
+      const ver = (storedVersion !== null) ? storedVersion : 'latest'
+
+      return [
+        {
+          link: `https://kuma.io/docs/${ver}/`,
+          label: 'Kuma Documentation'
+        },
+        {
+          link: 'https://kuma-mesh.slack.com/',
+          label: 'Kuma Community Chat'
+        },
+        {
+          link: 'https://github.com/Kong/kuma',
+          label: 'Kuma GitHub Repository'
+        }
+      ]
+    },
 
     ...mapState('sidebar', {
       menu: state => state.menu

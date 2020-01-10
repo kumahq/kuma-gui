@@ -10,16 +10,13 @@
         Let's set up your app
       </h3>
 
-      <div
-        class="app-source-check"
-        :class="{ 'app-source-check--error': appSourceError }"
-      >
+      <div class="app-source-check">
         <div
           v-if="appSource
             && appSource === 'universal'
             || appSource === 'kubernetes'
             || appSource === 'k8s'"
-          class="app-source-check__inner flex items-center -mx-4"
+          class="app-source-check__inner flex items-center"
         >
           <div class="app-source-check__icon px-4">
             <img
@@ -43,7 +40,10 @@
             >
           </div>
         </div>
-        <div v-else>
+        <div
+          v-else
+          class="app-source-check--error"
+        >
           <p>The app was unable to determine Kuma's environment.</p>
         </div>
       </div>
@@ -73,16 +73,52 @@
           {{ dataplaneCountForTitle }} Dataplane(s) found, including:
         </h2>
         <div class="data-table-wrapper">
-          <KTable :options="tableData" />
+          <KTable :options="tableData">
+            <template
+              v-slot:status="{rowValue}"
+            >
+              <div
+                class="entity-status"
+                :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline' || rowValue === false) }"
+              >
+                <span class="entity-status__dot" />
+                <span class="entity-status__label">{{ rowValue }}</span>
+              </div>
+            </template>
+          </KTable>
         </div>
-        <p class="mt-4">
+        <div class="md:flex items-center mt-4">
+          <div class="dataplane-global-status">
+            <KButton
+              appearance="primary"
+              class="mr-2"
+              @click="reScanForDataplanes()"
+            >
+              Refresh
+            </KButton>
+            <span v-if="overallDpStatus">Some dataplanes appear to be offline.</span>
+          </div>
           <KButton
             :to="{ name: 'setup-complete' }"
             appearance="primary"
+            class="mr-4"
           >
             Next Step
           </KButton>
-        </p>
+        </div>
+        <div
+          v-if="overallDpStatus"
+          class="dataplane-global-status__helper-text mt-8"
+        >
+          <h3 class="xl mb-2 mt-4">
+            Offline Dataplanes
+          </h3>
+          <p>
+            This means your dataplane is not connected to the control plane
+            at the moment. This might be due to a scheduled downtime or a
+            network partitioning problem.
+          </p>
+        </div>
       </div>
       <div
         v-else
@@ -105,19 +141,12 @@
                 you need to deploy dataplanes (also known as Sidecar Proxies)
                 next to them.
               </p>
-              <!-- <p>
-                <KButton
-                  to="#"
-                  appearance="primary"
-                >
-                  Add Dataplanes
-                </KButton>
-              </p> -->
             </div>
           </div>
         </div>
         <!-- .dataplane-fallback -->
         <div class="dataplane-walkthrough my-4">
+          <!-- kubernetes instructions -->
           <div
             v-if="appSource
               && appSource === 'kubernetes'
@@ -147,6 +176,7 @@
               </code>
             </p>
           </div>
+          <!-- universal instructions -->
           <div v-else>
             <h3 class="xl mb-2">
               Adding New Dataplanes on Universal
@@ -197,7 +227,6 @@ $ kuma-dp run \
           >
             Re-Scan for Dataplanes
           </KButton>
-          </p>
         </div>
       </div>
     </div>
@@ -229,6 +258,7 @@ export default {
       tableDataDataplaneCount: null,
       tableData: {
         headers: [
+          { label: 'Status', key: 'status' },
           { label: 'Dataplane', key: 'name' },
           { label: 'Mesh', key: 'mesh' }
         ],
@@ -244,6 +274,10 @@ export default {
       } else {
         return count
       }
+    },
+
+    overallDpStatus () {
+      return this.$store.getters.getAnyDpOffline
     }
   },
   beforeMount () {
@@ -262,51 +296,50 @@ export default {
       this.tableDataIsEmpty = false
       this.tableDataLoadAttempted = false
 
-      setTimeout(() => {
-        this.getDataplaneTableData()
-        this.tableDataLoadAttempted = true
-      }, this.tableDataLoadDelay)
+      this.getDataplaneTableData()
     },
 
     getDataplaneTableData () {
-      this.$store.dispatch('getAllDataplanes').then(() => {
-        const dataplanes = Object.values(this.$store.getters.getDataplanesList)
+      this.$store.dispatch('getAllDataplanes')
+        .then(() => {
+          const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
-        if (dataplanes.length > 0) {
-          this.tableDataDataplaneCount = dataplanes.length
-          this.tableData.data = []
-          this.tableDataLoadAttempted = false
+          if (dataplanes && dataplanes.length > 0) {
+            this.tableDataDataplaneCount = dataplanes.length
+            this.tableData.data = []
+            this.tableDataLoadAttempted = false
 
-          dataplanes.slice(0, 10).map(val => {
-            this.tableData.data.push(val)
-          })
+            dataplanes.slice(0, 10).map(val => {
+              this.tableData.data.push(val)
+            })
 
-          this.tableDataIsEmpty = false
+            this.tableDataIsEmpty = false
 
-          setTimeout(() => {
+            setTimeout(() => {
+              this.tableDataLoadAttempted = true
+            }, this.tableDataLoadDelay)
+          } else {
             this.tableDataLoadAttempted = true
-          }, this.tableDataLoadDelay)
-        } else {
-          this.tableDataLoadAttempted = true
-          this.tableDataIsEmpty = true
-        }
-      })
+            this.tableDataIsEmpty = true
+          }
+        })
     },
 
     getAppType () {
       axios
         .get(process.env.VUE_APP_KUMA_CONFIG)
         .then(response => {
-          if (response.status === 200) {
-            this.appSource = response.data.environment
+          const kumaEnv = response.data.environment
+
+          if (response.status === 200 && kumaEnv && kumaEnv.length) {
+            this.appSource = kumaEnv
           } else {
-            this.appSourceError = true
+            this.appSource = null
           }
         })
         .catch(error => {
-          this.appSource = false
-          this.appSourceError = false
-          console.log(error)
+          this.appSource = null
+          console.error(error)
         })
     }
   }
@@ -321,6 +354,13 @@ export default {
   margin-top: var(--spacing-md);
 }
 
+@mixin styledPanelSmall {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: 4px;
+}
+
 .app-setup {
   padding: var(--spacing-md) 0;
   margin: var(--spacing-md) 0;
@@ -329,19 +369,20 @@ export default {
 }
 
 .app-source-check {
-  background-color: var(--blue-lighter);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: 4px;
-  margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+
 }
 
 .app-source-check--error {
+  @include styledPanelSmall;
+
   background-color: var(--red-lighter);
   color: var(--red-dark);
 }
 
 .app-source-check__inner {
+  @include styledPanelSmall;
+
+  background-color: var(--blue-lighter);
 
   > *:first-child {
     flex: 0 0 16%;
@@ -407,5 +448,29 @@ export default {
 
 .dataplane-loading-state {
 
+}
+
+.dataplane-global-status {
+  color: var(--red-base);
+  font-weight: 500;
+}
+
+.dataplane-global-status__helper-text {
+  border-top: 1px solid var(--tblack-10);
+}
+
+@media (min-width: 768px) {
+  .dataplane-global-status {
+    flex: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .dataplane-global-status {
+    display: block;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid #e2e8f0;
+  }
 }
 </style>

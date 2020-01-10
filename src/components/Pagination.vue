@@ -2,16 +2,16 @@
   <div class="pagination">
     <KButton
       :disabled="!hasPrevious"
-      appearance="secondary"
+      appearance="primary"
       data-testid="previous"
       @click="$emit('previous')"
     >
-      Previous
+      &lsaquo; Previous
     </KButton>
 
     <KButton
       :disabled="!hasNext"
-      appearance="secondary"
+      appearance="primary"
       data-testid="next"
       @click="$emit('next')"
     >
@@ -45,8 +45,13 @@ export default {
   button {
     font-size: 14px;
     padding: 4px 8px;
+
     &:nth-child(2) {
       margin-left: auto;
+    }
+
+    &:after {
+      display: none;
     }
   }
 }

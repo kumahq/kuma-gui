@@ -3,7 +3,12 @@
     <div class="main-header__content flex justify-between items-center -mx-4">
       <div class="px-4">
         <router-link
-          to="/"
+          :to="{
+            name: 'mesh-overview',
+            params: {
+              mesh: currentMesh
+            }
+          }"
           exact
           class="logo"
         >
@@ -14,18 +19,20 @@
         </router-link>
       </div>
       <div
-        v-if="!$route.meta.hideStatus"
+        v-if="!$route.meta.hideStatus && status === 'OK'"
         class="px-4"
       >
-        <status :active="appStatus">
-          {{ statusContent }}
-        </status>
+        <status
+          :active="guiStatus"
+          :content="statusContent"
+        />
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Status from '@/components/Utils/Status'
 
 export default {
@@ -34,24 +41,34 @@ export default {
   },
   data () {
     return {
-      appStatus: false,
+      guiStatus: false,
       statusContent: null
     }
   },
+  computed: {
+    ...mapGetters({
+      // this checks the status of the API itself
+      status: 'getStatus',
+      // the currently selected mesh
+      currentMesh: 'getSelectedMesh'
+    })
+  },
   beforeMount () {
-    this.status()
+    this.getGuiStatus()
   },
   methods: {
-    status () {
+    getGuiStatus () {
       const env = localStorage.getItem('kumaEnv')
       const apiUrl = localStorage.getItem('kumaApiUrl')
+      const tagline = this.$store.getters.getTagline
+      const version = this.$store.getters.getVersion
 
       if (env && apiUrl) {
-        this.statusContent = `Kuma is running on ${env}`
-        this.appStatus = true
+        this.statusContent = `${tagline} v${version} running on ${env}`
+        this.guiStatus = true
       } else {
-        this.statusContent = 'Unable to determine Kuma\'s status'
-        this.appStatus = false
+        this.statusContent = "Unable to determine Kuma's status"
+        this.guiStatus = false
       }
     }
   }

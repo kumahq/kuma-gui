@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-permissions">
+  <div class="health-checks">
     <DataOverview
       :has-error="hasError"
       :is-loading="isLoading"
@@ -8,7 +8,8 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-      table-actions-route-name="traffic-log-details"
+      table-actions-route-name="health-checks-details"
+      @reloadData="bootstrap"
     >
       <template slot="tableDataActionsLinkText">
         View
@@ -21,9 +22,9 @@
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
-  name: 'TrafficLogs',
+  name: 'HealthChecks',
   metaInfo: {
-    title: 'Traffic Logs'
+    title: 'Health Checks'
   },
   components: {
     DataOverview
@@ -36,7 +37,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Traffic Logs present.'
+        message: 'There are no Health Checks present.'
       },
       tableData: {
         headers: [
@@ -64,8 +65,8 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      const getTrafficLogs = () => {
-        return this.$api.getTrafficLogs(mesh)
+      const getHealthChecks = () => {
+        return this.$api.getHealthChecks(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items
@@ -91,7 +92,7 @@ export default {
           })
       }
 
-      getTrafficLogs()
+      getHealthChecks()
     }
   }
 }

@@ -14,3 +14,11 @@ select {
   background-position: 90% 50%;
   background-repeat: no-repeat;
 }
+
+.k-button, button, [type="button"] {
+  transition: none !important;
+}
+
+.k-button.primary {
+
+}

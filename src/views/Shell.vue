@@ -7,7 +7,12 @@
       </h2>
     </page-header>
     <page-content>
-      <router-view />
+      <transition
+        mode="out-in"
+        name="fade"
+      >
+        <router-view />
+      </transition>
     </page-content>
   </div>
 </template>
@@ -29,11 +34,23 @@ export default {
       const title = this.$route.meta.title
       const mesh = this.$route.params.mesh
       const dataplane = this.$route.params.dataplane
+      const trafficPermission = this.$route.params.trafficpermission
+      const trafficLog = this.$route.params.trafficlog
+      const trafficRoute = this.$route.params.trafficroute
+      const healthCheck = this.$route.params.healthcheck
 
       let assembled
 
       if (dataplane) {
         assembled = `${title} for ${dataplane}`
+      } else if (trafficLog) {
+        assembled = `${title} for ${trafficLog}`
+      } else if (trafficRoute) {
+        assembled = `${title} for ${trafficRoute}`
+      } else if (trafficPermission) {
+        assembled = `${title} for ${trafficPermission}`
+      } else if (healthCheck) {
+        assembled = `${title} for ${healthCheck}`
       } else if (mesh) {
         assembled = `${title} for ${mesh}`
       } else {
@@ -45,3 +62,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .12s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

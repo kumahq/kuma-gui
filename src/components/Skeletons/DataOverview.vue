@@ -4,6 +4,20 @@
       v-if="isReady"
       class="data-overview-content"
     >
+      <!-- controls -->
+      <div
+        v-if="displayRefreshControl"
+        class="data-table-controls mb-2"
+      >
+        <KButton
+          appearance="secondary"
+          size="small"
+          @click="$emit('reloadData')"
+        >
+          Refresh
+        </KButton>
+      </div>
+
       <!-- metrics -->
       <MetricGrid
         v-if="!isLoading && displayMetrics && metricsData"
@@ -31,29 +45,62 @@
       </KEmptyState>
 
       <!-- data -->
-      <KTable
-        v-if="displayDataTable && tableDataIsEmpty === false && tableData"
-        :options="tableData"
-      >
-        <template
-          slot="actions"
-          slot-scope="{ row }"
+      <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
+        <KTable
+          class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+          :options="tableDataFiltered"
+          has-hover
         >
-          <router-link
-            :to="{
-              name: tableActionsRouteName,
-              params: {
-                mesh: row.type === 'Mesh' ? row.name : row.mesh,
-                dataplane: row.type === 'Dataplane' ? row.name : null
-              }
-            }"
+          <template
+            v-if="displayTableDataStatus"
+            v-slot:status="{rowValue}"
           >
-            <slot name="tableDataActionsLinkText" />
-          </router-link>
-        </template>
-      </KTable>
+            <div
+              class="entity-status"
+              :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline') }"
+            >
+              <span class="entity-status__dot" />
+              <span class="entity-status__label">{{ rowValue }}</span>
+            </div>
+          </template>
+          <template
+            slot="actions"
+            slot-scope="{ row }"
+          >
+            <router-link
+              :to="{
+                name: tableActionsRouteName,
+                params: {
+                  // TODO: find a better, more efficient way to handle this
+                  mesh: row.type.toLowerCase() === 'mesh' ? row.name : row.mesh,
+                  dataplane: row.type.toLowerCase() === 'dataplane' ? row.name : null,
+                  trafficpermission: row.type.toLowerCase() === 'trafficpermission' ? row.name : null,
+                  trafficroute: row.type.toLowerCase() === 'trafficroute' ? row.name : null,
+                  trafficlog: row.type.toLowerCase() === 'trafficlog' ? row.name : null,
+                  healthcheck: row.type.toLowerCase() === 'healthcheck' ? row.name : null,
+                  proxytemplate: row.type.toLowerCase() === 'proxytemplate' ? row.name : null,
+                  service: row.type.toLowerCase() === 'service' ? row.name : null
+                }
+              }"
+            >
+              <slot name="tableDataActionsLinkText" />
+            </router-link>
+          </template>
+        </KTable>
+
+        <Pagination
+          v-if="tableData && tableRowCount > pageSize"
+          :has-previous="pageNumber > 0"
+          :has-next="pageNumber < pageCount -1"
+          class="ml-2 mr-2 mb-2"
+          @next="goToNextPage"
+          @previous="goToPreviousPage"
+        />
+      </div>
+
+      <!-- empty state if no items are found -->
       <KEmptyState
-        v-if="tableDataIsEmpty === true"
+        v-if="displayDataTable && tableDataIsEmpty && tableData"
         cta-is-hidden
       >
         <template slot="title">
@@ -63,6 +110,7 @@
           No Items Found
         </template>
       </KEmptyState>
+
       <!-- additional page content -->
       <div
         v-if="$slots.content"
@@ -91,11 +139,13 @@
 
 <script>
 import MetricGrid from '@/components/Metrics/MetricGrid'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'DataOverview',
   components: {
-    MetricGrid
+    MetricGrid,
+    Pagination
   },
   props: {
     displayMetrics: {
@@ -149,11 +199,52 @@ export default {
     tableActionsRouteName: {
       type: String,
       default: null
+    },
+    displayTableDataStatus: {
+      type: Boolean,
+      default: true
+    },
+    displayRefreshControl: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data () {
+    return {
+      pageSize: 12,
+      pageNumber: 0
     }
   },
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
+    },
+    tableRowCount () {
+      return Object.entries(this.tableData.data).length
+    },
+    pageCount () {
+      const itemCount = Object.entries(this.tableData.data).length
+      const pageSize = this.pageSize
+
+      return Math.ceil(itemCount / pageSize)
+    },
+    tableDataFiltered () {
+      const data = this.tableData.data
+      const headers = this.tableData.headers
+      const start = this.pageNumber * this.pageSize
+      const end = start + this.pageSize
+      const filtered = data.slice(start, end)
+      const newData = { headers, data: [...filtered] }
+
+      return newData
+    }
+  },
+  methods: {
+    goToPreviousPage () {
+      this.pageNumber--
+    },
+    goToNextPage () {
+      this.pageNumber++
     }
   }
 }
@@ -169,6 +260,31 @@ export default {
       display: block;
       margin-left: auto;
       margin-right: auto;
+    }
+  }
+}
+
+.data-table-controls {
+  text-align: right;
+
+  button:after {
+    display: none;
+  }
+}
+
+.info-grid {
+  flex-wrap: wrap;
+
+  .metric {
+    margin-bottom: 16px;
+  }
+}
+
+@media only screen and (min-width: 841px) {
+  .info-grid {
+
+    .metric {
+      flex: 1 1 25%;
     }
   }
 }

@@ -15,7 +15,7 @@
         </div>
         <div class="app-source-check__content px-2">
           <p>
-            <strong>Secure your traffic:</strong> by using the <a href="https://kuma.io/docs/latest/policies/#mutual-tls">mTLS policy</a>
+            <strong>Secure your traffic:</strong> by using the <a :href="`https://kuma.io/docs/${runningVersion}/policies/#mutual-tls`">mTLS policy</a>
           </p>
         </div>
       </div>
@@ -27,7 +27,7 @@
           >
         </div>
         <div class="app-source-check__content px-2">
-          <strong>Route your requests:</strong> by using the <a href="https://kuma.io/docs/latest/policies/#traffic-route">Traffic Route</a> policy
+          <strong>Route your requests:</strong> by using the <a :href="`https://kuma.io/docs/${runningVersion}/policies/#traffic-route`">Traffic Route</a> policy
         </div>
       </div>
       <div class="flex items-center">
@@ -38,7 +38,18 @@
           >
         </div>
         <div class="app-source-check__content px-2">
-          <p><strong>Log your traffic</strong>, by using the <a href="https://kuma.io/docs/latest/policies/#traffic-log">Traffic Log</a> policy</p>
+          <p><strong>Log your traffic</strong>, by using the <a :href="`https://kuma.io/docs/${runningVersion}/policies/#traffic-log`">Traffic Log</a> policy</p>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="px-2">
+          <img
+            src="@/assets/images/icon-checkmark.svg?external"
+            alt="Checkmark Icon"
+          >
+        </div>
+        <div class="app-source-check__content px-2">
+          <p><strong>And you can do <a :href="`https://kuma.io/docs/${runningVersion}/policies/`">much more</a>!</strong></p>
         </div>
       </div>
     </div>
@@ -67,8 +78,11 @@ export default {
       return getItemFromStorage('kumaOnboardingComplete')
     },
 
-    kumaVersion () {
-      return this.$store.getters.getInfo
+    runningVersion () {
+      const storedVersion = this.$store.getters.getVersion
+      const ver = (storedVersion !== null) ? storedVersion : 'latest'
+
+      return ver
     }
   },
   methods: {

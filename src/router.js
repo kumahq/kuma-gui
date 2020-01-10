@@ -91,22 +91,24 @@ export default (store) => {
       redirect: { name: 'mesh-overview' },
       name: 'mesh',
       meta: {
-        title: 'Overview',
-        breadcrumb: 'Overview',
+        title: 'Meshes',
+        breadcrumb: 'Meshes',
         parent: 'mesh-overview'
       },
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),
       children: [
+        // meshes
         {
           path: 'overview',
           name: 'mesh-overview',
           component: () => import('@/views/Entities/EntityOverview'),
           meta: {
             title: 'Mesh Overview',
-            parent: 'mesh-overview'
+            excludeAsBreadcrumb: true
           }
         },
+        // dataplanes
         {
           path: 'dataplanes',
           name: 'dataplanes',
@@ -121,11 +123,15 @@ export default (store) => {
           name: 'dataplane-details',
           meta: {
             title: 'Dataplane Details',
+            breadcrumb: 'Dataplanes',
             parent: 'dataplanes'
           },
-          params: { dataplane: ':dataplane' },
+          params: {
+            dataplane: ':dataplane'
+          },
           component: () => import('@/views/Entities/EntityDataplanesDetail')
         },
+        // services
         {
           path: 'services',
           name: 'services',
@@ -137,45 +143,125 @@ export default (store) => {
         {
           path: 'services/:service',
           name: 'service-details',
+          meta: {
+            title: 'Service Details',
+            breadcrumb: 'Service Details',
+            parent: 'services'
+          },
           params: {
-            service: ':service',
-            breadcrumb: 'Services',
-            parent: 'mesh-overview'
+            service: ':service'
           },
           component: () => import('@/views/Entities/EntityServicesDetail')
         },
+        // traffic permissions
         {
           path: 'traffic-permissions',
           name: 'traffic-permissions',
           meta: {
-            title: 'Traffic Permissions',
-            breadcrumb: 'Traffic Permissions',
-            parent: 'mesh-overview'
+            title: 'Traffic Permissions'
           },
           component: () => import('@/views/Policies/TrafficPermissions')
-          // child routes?
         },
+        {
+          path: 'traffic-permissions/:trafficpermission',
+          name: 'traffic-permissions-details',
+          meta: {
+            title: 'Traffic Permission Details',
+            breadcrumb: 'Traffic Permission Details',
+            parent: 'traffic-permissions'
+          },
+          params: {
+            trafficpermission: ':trafficpermission'
+          },
+          component: () => import('@/views/Policies/TrafficPermissionsDetail')
+        },
+        // traffic routes
         {
           path: 'traffic-routes',
           name: 'traffic-routes',
           meta: {
-            title: 'Traffic Routes',
-            breadcrumb: 'Traffic Routes',
-            parent: 'mesh-overview'
+            title: 'Traffic Routes'
           },
           component: () => import('@/views/Policies/TrafficRoutes')
-          // child routes?
         },
         {
-          path: 'traffic-log',
-          name: 'traffic-log',
+          path: 'traffic-routes/:trafficroute',
+          name: 'traffic-routes-details',
+          params: {
+            trafficroute: ':trafficroute'
+          },
           meta: {
-            title: 'Traffic Logs',
-            breadcrumb: 'Traffic Logs',
-            parent: '#'
+            title: 'Traffic Route Details',
+            breadcrumb: 'Traffic Details',
+            parent: 'traffic-routes'
+          },
+          component: () => import('@/views/Policies/TrafficRouteDetail')
+        },
+        // traffic logs
+        {
+          path: 'traffic-logs',
+          name: 'traffic-logs',
+          meta: {
+            title: 'Traffic Logs'
           },
           component: () => import('@/views/Policies/TrafficLog')
-          // child routes?
+        },
+        {
+          path: 'traffic-logs/:trafficlog',
+          name: 'traffic-log-details',
+          params: {
+            trafficlog: ':trafficlog'
+          },
+          meta: {
+            title: 'Traffic Log Details',
+            breadcrumb: 'Traffic Logs',
+            parent: 'traffic-logs'
+          },
+          component: () => import('@/views/Policies/TrafficLogDetail')
+        },
+        // health checks
+        {
+          path: 'health-checks',
+          name: 'health-checks',
+          meta: {
+            title: 'Health Checks'
+          },
+          component: () => import('@/views/HealthChecks/HealthChecks')
+        },
+        {
+          path: 'health-checks/:healthcheck',
+          name: 'health-checks-details',
+          params: {
+            healthcheck: ':healthcheck'
+          },
+          meta: {
+            title: 'Health Check Details',
+            breadcrumb: 'Health Checks',
+            parent: 'health-checks'
+          },
+          component: () => import('@/views/HealthChecks/HealthChecksDetail')
+        },
+        // proxy templates
+        {
+          path: 'proxy-templates',
+          name: 'proxy-templates',
+          meta: {
+            title: 'Proxy Templates'
+          },
+          component: () => import('@/views/Policies/ProxyTemplates')
+        },
+        {
+          path: 'proxy-templates/:proxytemplate',
+          name: 'proxy-templates-details',
+          params: {
+            proxytemplate: ':proxytemplate'
+          },
+          meta: {
+            title: 'Proxy Templates',
+            breadcrumb: 'Proxy Templates',
+            parent: 'proxy-templates'
+          },
+          component: () => import('@/views/Policies/ProxyTemplatesDetail')
         }
       ]
     }
@@ -205,17 +291,11 @@ export default (store) => {
    * through it again.
    */
   router.beforeEach((to, from, next) => {
-    const hasOnboarded = localStorage.getItem('kumaOnboardingComplete')
+    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || null)
     const currentRoute = to.meta.onboardingProcess
 
-    if (!hasOnboarded && !currentRoute) {
-      next({
-        name: 'setup-welcome'
-      })
-    // } else if (hasOnboarded && currentRoute) {
-    //   next({
-    //     name: 'setup-restart'
-    //   })
+    if ((!hasOnboarded || hasOnboarded === false) && !currentRoute) {
+      next({ name: 'setup-welcome' })
     } else {
       next()
     }

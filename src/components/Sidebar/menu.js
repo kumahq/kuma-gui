@@ -65,6 +65,24 @@ export default {
           title: true
         },
         {
+          name: 'Health Checks',
+          link: '/health-checks',
+          title: false,
+          parent: 'healthchecks'
+        },
+        {
+          name: 'Proxy Templates',
+          link: '/proxy-templates',
+          title: false,
+          parent: 'policies'
+        },
+        {
+          name: 'Traffic Logs',
+          link: '/traffic-logs',
+          title: false,
+          parent: 'policies'
+        },
+        {
           name: 'Traffic Permissions',
           link: '/traffic-permissions',
           title: false,
@@ -73,12 +91,6 @@ export default {
         {
           name: 'Traffic Routes',
           link: '/traffic-routes',
-          title: false,
-          parent: 'policies'
-        },
-        {
-          name: 'Traffic Log',
-          link: '/traffic-log',
           title: false,
           parent: 'policies'
         }
