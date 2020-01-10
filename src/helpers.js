@@ -222,6 +222,10 @@ export function deepIncludes (src, target) {
   return src.includes(target)
 }
 
+/**
+ * Outputs a friendly human-readable timeframe between now and the date string entered
+ * @param {String} tdate
+ */
 export function humanReadableDate (tdate) {
   let systemDate = new Date(Date.parse(tdate))
   const userDate = new Date()
@@ -287,6 +291,19 @@ export function humanReadableDate (tdate) {
   return 'on ' + systemDate
 }
 
+/**
+ * This is a hacky way of taking the tags data from a dataplane and cleaning it
+ * up to be output as a single comma-separated list of things within a table
+ * @param {String} items
+ */
+export function dpTagCleaner (items) {
+  return JSON.stringify(items)
+    .replace(/[{}]/g, '')
+    .replace(/"/g, '')
+    .replace(/,/g, ', ')
+    .replace(/:/g, ': ')
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -302,5 +319,6 @@ export default {
   getPluginIcon,
   formatDate,
   deepIncludes,
-  humanReadableDate
+  humanReadableDate,
+  dpTagCleaner
 }

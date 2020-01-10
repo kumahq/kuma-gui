@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { humanReadableDate } from '@/helpers'
+import { humanReadableDate, dpTagCleaner } from '@/helpers'
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
@@ -79,35 +79,38 @@ export default {
               items.forEach(item => {
                 this.$api.getDataplaneOverviews(mesh, item.name)
                   .then(response => {
-                    const now = new Date()
                     const placeholder = 'n/a'
 
-                    let lastConnected = placeholder
-                    let lastUpdated = placeholder
-                    let tags
+                    let lastConnected
+                    let lastUpdated
+                    let tags = placeholder
                     let totalUpdates = []
                     let status = 'Offline'
                     const connectTimes = []
                     const updateTimes = []
 
                     /**
-                   * Iterate through the networking inbound data
-                   */
-                    if (response.dataplane.networking.inbound && response.dataplane.networking.inbound.length) {
-                      for (let i = 0; i < response.dataplane.networking.inbound.length; i++) {
-                        const items = response.dataplane.networking.inbound[i].tags
+                     * Iterate through the networking inbound or gateway data
+                     */
+                    const inbound = response.dataplane.networking.inbound
+                    const gateway = response.dataplane.networking.gateway
 
-                        tags = JSON.stringify(items)
-                          .replace(/[{}]/g, '')
-                          .replace(/"/g, '')
-                          .replace(/,/g, ', ')
-                          .replace(/:/g, ': ')
+                    if (inbound || gateway) {
+                      /** inbound */
+                      if (inbound) {
+                        for (let i = 0; i < inbound.length; i++) {
+                          tags = dpTagCleaner(inbound[i].tags)
+                        }
+                      }
+                      /** gateway */
+                      else if (gateway) {
+                        tags = dpTagCleaner(gateway.tags)
                       }
                     }
 
                     /**
-                   * Iterate through the subscriptions
-                   */
+                     * Iterate through the subscriptions
+                     */
                     if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
                       response.dataplaneInsight.subscriptions.forEach(item => {
                         const responsesSent = item.status.total.responsesSent || placeholder
@@ -168,7 +171,9 @@ export default {
                       }
                     } else {
                     // if there are no subscriptions, set them all to a fallback
-                      lastConnected = lastUpdated = totalUpdates = 'n/a'
+                      lastConnected = 'never'
+                      lastUpdated = 'never'
+                      totalUpdates = 0
                     }
 
                     // assemble the table data
