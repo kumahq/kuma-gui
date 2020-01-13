@@ -2,6 +2,7 @@
 
 module.exports = {
   runtimeCompiler: true,
+  productionSourceMap: false,
   transpileDependencies: [
     /@kongponents\/.*/
   ],
