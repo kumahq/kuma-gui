@@ -78,6 +78,7 @@ export default {
             // get the dataplane's current subscriptions so that we can determine
             // whether or not the dataplane is online
             const subscriptions = response.dataplaneInsight.subscriptions
+            const statusCheck = []
 
             if (subscriptions && subscriptions.length > 0) {
               for (let i = 0; i < subscriptions.length; i++) {
@@ -85,13 +86,20 @@ export default {
                 const disconnectTime = subscriptions[i].disconnectTime
 
                 if (!!connectTime && connectTime.length && !!disconnectTime) {
-                  this.isDataplaneOnline = false
+                  statusCheck.push(false)
+                } else {
+                  statusCheck.push(true)
                 }
               }
+
+              // determine dataplane status if some subscriptions show as being offline
+              this.isDataplaneOnline = statusCheck.some(i => i === true)
             } else {
+              // if the dataplane returns no subscriptions, flag it as offline
               this.isDataplaneOnline = false
             }
           } else {
+            // if the dataplane doesn't exist, send the user to the 404
             this.$router.push('/404')
           }
         })
