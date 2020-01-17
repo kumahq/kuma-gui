@@ -113,7 +113,7 @@ export default {
                      */
                     if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
                       response.dataplaneInsight.subscriptions.forEach(item => {
-                        const responsesSent = item.status.total.responsesSent || placeholder
+                        const responsesSent = item.status.total.responsesSent || 0
                         const connectTime = item.connectTime || placeholder
                         const lastUpdateTime = item.status.lastUpdateTime || placeholder
                         const disconnectTime = item.disconnectTime || null
@@ -131,17 +131,7 @@ export default {
 
                       // get the sum of total updates (with some precautions)
                       if (totalUpdates.length > 0) {
-                        totalUpdates = totalUpdates.reduce((a, b) => {
-                          if (a === placeholder) {
-                            return b
-                          } else if (b === placeholder) {
-                            return a
-                          } else if (a === placeholder && b === placeholder) {
-                            return placeholder
-                          }
-
-                          return a + b
-                        })
+                        totalUpdates = totalUpdates.reduce((a, b) => a + b)
                       } else {
                         // fallback to a general placeholder if there are no items
                         totalUpdates = placeholder
