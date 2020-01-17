@@ -130,12 +130,7 @@ export default {
                       })
 
                       // get the sum of total updates (with some precautions)
-                      if (totalUpdates.length > 0) {
-                        totalUpdates = totalUpdates.reduce((a, b) => a + b)
-                      } else {
-                        // fallback to a general placeholder if there are no items
-                        totalUpdates = placeholder
-                      }
+                      totalUpdates = totalUpdates.reduce((a, b) => a + b)
 
                       // select the most recent LAST CONNECTED timestamp
                       const selectedTime = connectTimes.reduce((a, b) => {
