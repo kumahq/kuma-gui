@@ -129,9 +129,22 @@ export default {
                         }
                       })
 
-                      // get the sum of total updates (if there is a numerical value set)
-                      if (totalUpdates !== placeholder) {
-                        totalUpdates = totalUpdates.reduce((a, b) => a + b)
+                      // get the sum of total updates (with some precautions)
+                      if (totalUpdates.length > 0) {
+                        totalUpdates = totalUpdates.reduce((a, b) => {
+                          if (a === placeholder) {
+                            return b
+                          } else if (b === placeholder) {
+                            return a
+                          } else if (a === placeholder && b === placeholder) {
+                            return placeholder
+                          }
+
+                          return a + b
+                        })
+                      } else {
+                        // fallback to a general placeholder if there are no items
+                        totalUpdates = placeholder
                       }
 
                       // select the most recent LAST CONNECTED timestamp
@@ -163,11 +176,15 @@ export default {
                       // formatted time for LAST CONNECTED (if there is a value present)
                       if (selectedTime && !isNaN(selectedTimeAsDate)) {
                         lastConnected = humanReadableDate(selectedTimeAsDate)
+                      } else {
+                        lastConnected = 'never'
                       }
 
                       // formatted time for LAST UPDATED (if there is a value present)
                       if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
                         lastUpdated = humanReadableDate(selectedUpdateTimeAsDate)
+                      } else {
+                        lastUpdated = 'never'
                       }
                     } else {
                     // if there are no subscriptions, set them all to a fallback
