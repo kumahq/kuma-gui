@@ -23,26 +23,6 @@
         v-if="!isLoading && displayMetrics && metricsData"
         :metrics="metricsData"
       />
-      <KEmptyState
-        v-else-if="isLoading && displayMetrics"
-        cta-is-hidden
-      >
-        <template slot="title">
-          {{ emptyState.title }}
-        </template>
-        <template
-          v-if="showCta"
-          slot="message"
-        >
-          <router-link
-            v-if="ctaAction && ctaAction.length"
-            :to="ctaAction"
-          >
-            {{ emptyState.ctaText }}
-          </router-link>
-          {{ emptyState.message }}
-        </template>
-      </KEmptyState>
 
       <!-- data -->
       <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
@@ -119,8 +99,10 @@
         <slot name="content" />
       </div>
     </div>
+
+    <!-- loading state -->
     <KEmptyState
-      v-else
+      v-if="isLoading"
       cta-is-hidden
     >
       <template slot="title">
@@ -132,6 +114,28 @@
           />
         </div>
         Data Loading...
+      </template>
+    </KEmptyState>
+
+    <!-- empty state -->
+    <KEmptyState
+      v-if="isEmpty"
+      cta-is-hidden
+    >
+      <template slot="title">
+        {{ emptyState.title }}
+      </template>
+      <template
+        v-if="showCta"
+        slot="message"
+      >
+        <router-link
+          v-if="ctaAction && ctaAction.length"
+          :to="ctaAction"
+        >
+          {{ emptyState.ctaText }}
+        </router-link>
+        {{ emptyState.message }}
       </template>
     </KEmptyState>
   </div>

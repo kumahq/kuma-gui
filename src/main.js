@@ -23,6 +23,7 @@ import '@/assets/styles/main.css'
 import '@/assets/styles/typography.css'
 import '@/assets/styles/inputs.css'
 import '@/assets/styles/components.css'
+import '@/assets/styles/transitions.css'
 
 // Kong Design System styles
 import '@kongponents/styles/styles.css'
