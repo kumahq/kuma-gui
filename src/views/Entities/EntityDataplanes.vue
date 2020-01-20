@@ -96,14 +96,13 @@ export default {
                     const gateway = response.dataplane.networking.gateway
 
                     if (inbound || gateway) {
-                      /** inbound */
                       if (inbound) {
+                        /** inbound */
                         for (let i = 0; i < inbound.length; i++) {
                           tags = dpTagCleaner(inbound[i].tags)
                         }
-                      }
-                      /** gateway */
-                      else if (gateway) {
+                      } else if (gateway) {
+                        /** gateway */
                         tags = dpTagCleaner(gateway.tags)
                       }
                     }
