@@ -88,7 +88,9 @@ export default {
             console.error(error)
           })
           .finally(() => {
-            this.isLoading = false
+            setTimeout(() => {
+              this.isLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
           })
       }
 

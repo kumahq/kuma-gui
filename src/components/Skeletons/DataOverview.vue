@@ -1,23 +1,30 @@
 <template>
   <div class="data-overview">
+    <!-- controls -->
+    <div
+      v-if="displayRefreshControl"
+      class="data-table-controls mb-2"
+    >
+      <KButton
+        appearance="secondary"
+        size="small"
+        :disabled="isReady === false"
+        @click="$emit('reloadData')"
+      >
+        <KIcon
+          v-if="isReady === false"
+          icon="spinner"
+          color="rgba(0, 0, 0, 5)"
+          size="48"
+        />
+        <span>Refresh</span>
+      </KButton>
+    </div>
+
     <div
       v-if="isReady"
       class="data-overview-content"
     >
-      <!-- controls -->
-      <div
-        v-if="displayRefreshControl"
-        class="data-table-controls mb-2"
-      >
-        <KButton
-          appearance="secondary"
-          size="small"
-          @click="$emit('reloadData')"
-        >
-          Refresh
-        </KButton>
-      </div>
-
       <!-- metrics -->
       <MetricGrid
         v-if="!isLoading && displayMetrics && metricsData"
@@ -110,7 +117,7 @@
           <KIcon
             icon="spinner"
             color="rgba(0, 0, 0, 0.1)"
-            size="48"
+            size="42"
           />
         </div>
         Data Loading...
@@ -282,6 +289,10 @@ export default {
   .metric {
     margin-bottom: 16px;
   }
+}
+
+.empty-state-wrapper {
+  margin-bottom: 2em;
 }
 
 @media only screen and (min-width: 841px) {
