@@ -9,7 +9,6 @@
 
 <script>
 import YamlView from '@/components/Skeletons/YamlView'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
   name: 'ProxyTemplatesDetail',
@@ -17,7 +16,6 @@ export default {
     title: 'Proxy Template Details'
   },
   components: {
-    MetricGrid,
     YamlView
   },
   data () {
@@ -48,7 +46,6 @@ export default {
         })
         .catch(error => {
           console.error(error)
-          this.entity = error
         })
     }
   }

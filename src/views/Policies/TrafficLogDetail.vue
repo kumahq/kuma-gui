@@ -9,7 +9,6 @@
 
 <script>
 import YamlView from '@/components/Skeletons/YamlView'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
   name: 'TrafficLogDetail',
@@ -17,7 +16,6 @@ export default {
     title: 'Traffic Log Details'
   },
   components: {
-    MetricGrid,
     YamlView
   },
   data () {

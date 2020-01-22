@@ -1,41 +1,14 @@
 <template>
   <div class="dataplanes-detail">
     <YamlView
-      v-if="isDataplaneOnline"
       title="Entity Overview"
       :content="content"
     />
-    <KEmptyState
-      v-else
-      cta-is-hidden
-    >
-      <template slot="title">
-        <KIcon
-          class="kong-icon--centered"
-          color="var(--yellow-base)"
-          icon="warning"
-          size="64"
-        />
-        <span v-if="dataplaneTitle !== null">
-          {{ dataplaneTitle }} is currently offline.
-        </span>
-        <span v-else>
-          This dataplane is currently offline.
-        </span>
-      </template>
-      <!-- <template slot="message">
-        <p>
-          There was a problem trying to reach the Kuma API. Please try
-          restarting Kuma.
-        </p>
-      </template> -->
-    </KEmptyState>
   </div>
 </template>
 
 <script>
 import YamlView from '@/components/Skeletons/YamlView'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
   name: 'DataplanesDetails',
@@ -43,7 +16,6 @@ export default {
     title: 'Dataplane Details'
   },
   components: {
-    MetricGrid,
     YamlView
   },
   data () {
@@ -74,30 +46,6 @@ export default {
         .then(response => {
           if (response) {
             this.content = response
-
-            // get the dataplane's current subscriptions so that we can determine
-            // whether or not the dataplane is online
-            const subscriptions = response.dataplaneInsight.subscriptions
-            const statusCheck = []
-
-            if (subscriptions && subscriptions.length > 0) {
-              for (let i = 0; i < subscriptions.length; i++) {
-                const connectTime = subscriptions[i].connectTime
-                const disconnectTime = subscriptions[i].disconnectTime
-
-                if (!!connectTime && connectTime.length && !!disconnectTime) {
-                  statusCheck.push(false)
-                } else {
-                  statusCheck.push(true)
-                }
-              }
-
-              // determine dataplane status if some subscriptions show as being offline
-              this.isDataplaneOnline = statusCheck.some(i => i === true)
-            } else {
-              // if the dataplane returns no subscriptions, flag it as offline
-              this.isDataplaneOnline = false
-            }
           } else {
             // if the dataplane doesn't exist, send the user to the 404
             this.$router.push('/404')
