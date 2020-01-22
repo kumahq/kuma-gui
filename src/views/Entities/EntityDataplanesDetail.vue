@@ -2,6 +2,9 @@
   <div class="dataplanes-detail">
     <YamlView
       title="Entity Overview"
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
       :content="content"
     />
   </div>
@@ -21,7 +24,9 @@ export default {
   data () {
     return {
       content: null,
-      isDataplaneOnline: true
+      hasError: false,
+      isLoading: true,
+      isEmpty: false
     }
   },
   computed: {
@@ -52,7 +57,13 @@ export default {
           }
         })
         .catch(error => {
+          this.hasError = true
           console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
         })
     }
   }

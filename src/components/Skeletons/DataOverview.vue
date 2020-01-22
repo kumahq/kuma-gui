@@ -8,11 +8,11 @@
       <KButton
         appearance="secondary"
         size="small"
-        :disabled="isReady === false"
+        :disabled="isLoading"
         @click="$emit('reloadData')"
       >
         <KIcon
-          v-if="isReady === false"
+          v-if="isLoading"
           icon="spinner"
           color="rgba(0, 0, 0, 5)"
           size="48"
@@ -143,6 +143,24 @@
           {{ emptyState.ctaText }}
         </router-link>
         {{ emptyState.message }}
+      </template>
+    </KEmptyState>
+
+    <!-- error has occurred -->
+    <KEmptyState
+      v-if="hasError"
+      cta-is-hidden
+    >
+      <template slot="title">
+        <div class="card-icon mb-3">
+          <KIcon
+            class="kong-icon--centered"
+            color="var(--yellow-base)"
+            icon="warning"
+            size="42"
+          />
+        </div>
+        An error has occurred while trying to load this data.
       </template>
     </KEmptyState>
   </div>

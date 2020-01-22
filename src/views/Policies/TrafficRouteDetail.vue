@@ -2,7 +2,10 @@
   <div class="dataplanes-detail">
     <YamlView
       title="Entity Overview"
-      :content="entity"
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
+      :content="content"
     />
   </div>
 </template>
@@ -20,7 +23,10 @@ export default {
   },
   data () {
     return {
-      entity: null
+      content: null,
+      hasError: false,
+      isLoading: true,
+      isEmpty: false
     }
   },
   watch: {
@@ -39,13 +45,19 @@ export default {
       return this.$api.getTrafficRoute(mesh, trafficroute)
         .then(response => {
           if (response) {
-            this.entity = response
+            this.content = response
           } else {
             this.$router.push('/404')
           }
         })
         .catch(error => {
+          this.hasError = true
           console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
         })
     }
   }

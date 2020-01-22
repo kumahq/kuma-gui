@@ -64,6 +64,7 @@ export default {
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false
+      this.hasError = false
 
       // get the mesh from our route params
       const mesh = this.$route.params.mesh
