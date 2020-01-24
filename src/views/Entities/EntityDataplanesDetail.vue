@@ -30,12 +30,16 @@
         </p>
       </template> -->
     </KEmptyState>
+    <SnippetGenerator
+      :snippets="snippets"
+    />
   </div>
 </template>
 
 <script>
 import YamlView from '@/components/Skeletons/YamlView'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
+import SnippetGenerator from '@/components/Utils/SnippetGenerator'
 
 export default {
   name: 'DataplanesDetails',
@@ -44,12 +48,35 @@ export default {
   },
   components: {
     MetricGrid,
-    YamlView
+    YamlView,
+    SnippetGenerator
   },
   data () {
     return {
       content: null,
-      isDataplaneOnline: true
+      isDataplaneOnline: true,
+      snippets: [
+        {
+          label: 'Snippet One',
+          code: 'kumactl install control-plane | kubectl apply -f -'
+        },
+        {
+          label: 'Snippet Two',
+          code: 'kubectl apply -f https://raw.githubusercontent.com/Kong/kuma/master/examples/kubernetes/sample-service.yaml'
+        },
+        {
+          label: 'Snippet Three',
+          code: `echo "apiVersion: kuma.io/v1alpha1
+kind: Mesh
+metadata:
+  name: default
+spec:
+  mtls:
+    enabled: true
+    ca:
+      builtin: {}" | kubectl apply -f -`
+        }
+      ]
     }
   },
   computed: {
