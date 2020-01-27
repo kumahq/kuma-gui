@@ -112,7 +112,7 @@ export default {
     },
     content: {
       type: Object,
-      default: null
+      default: () => []
     },
     isLoading: {
       type: Boolean,
