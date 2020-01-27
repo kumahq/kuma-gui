@@ -8,8 +8,11 @@
       >
         <KCard>
           <template slot="body">
-            <!-- TODO add a prop for selecting the language for the code block -->
-            <pre><code>{{ item.code }}</code></pre>
+            <prism
+              class="code-block"
+              :language="item.lang"
+              :code="item.code"
+            />
           </template>
           <template slot="actions">
             <select
@@ -17,12 +20,12 @@
               class="snippet-generator__selector"
             >
               <option
-                v-for="(item, index) in snippets"
-                :key="index"
-                :value="index"
+                v-for="(snippet, key) in snippets"
+                :key="key"
+                :value="key"
                 :selected="selectedCodeSnippet"
               >
-                {{ item.label }}
+                {{ snippet.label }}
               </option>
             </select>
             <KClipboardProvider
@@ -56,8 +59,14 @@
 </template>
 
 <script>
+import Prism from 'vue-prismjs'
+import 'prismjs/themes/prism.css'
+
 export default {
   name: 'SnippetGenerator',
+  components: {
+    Prism
+  },
   props: {
     snippets: {
       type: Array,

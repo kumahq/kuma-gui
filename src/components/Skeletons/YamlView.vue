@@ -25,7 +25,11 @@
                 appearance="primary"
                 @click="() => { copyToClipboard(yamlContent) }"
               >
-                Copy YAML to Clipboard
+                <span>Copy Entity</span>
+                <img
+                  src="@/assets/images/icon-copy-light.svg?external"
+                  alt="Icon for copying to the clipboard"
+                >
               </KButton>
               <div slot="content">
                 <p>Entity copied to clipboard!</p>
@@ -99,7 +103,7 @@ import json2yaml from '@appscode/json2yaml'
 export default {
   name: 'YamlView',
   components: {
-    prism: Prism
+    Prism
   },
   props: {
     title: {
@@ -151,6 +155,20 @@ export default {
       display: block;
       margin-left: auto;
       margin-right: auto;
+    }
+  }
+}
+
+.yaml-view-content {
+
+  .k-button {
+
+    img {
+      margin-left: 0.5em;
+    }
+
+    &:after {
+      display: none;
     }
   }
 }

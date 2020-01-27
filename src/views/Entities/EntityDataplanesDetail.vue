@@ -32,17 +32,21 @@ export default {
       isLoading: true,
       isEmpty: false,
       content: null,
+      // the snippet content here is simply for testing the SnippetGenerator component
       snippets: [
         {
           label: 'Snippet One',
+          lang: 'bash',
           code: 'kumactl install control-plane | kubectl apply -f -'
         },
         {
           label: 'Snippet Two',
+          lang: 'bash',
           code: 'kubectl apply -f https://raw.githubusercontent.com/Kong/kuma/master/examples/kubernetes/sample-service.yaml'
         },
         {
           label: 'Snippet Three',
+          lang: 'bash',
           code: `echo "apiVersion: kuma.io/v1alpha1
 kind: Mesh
 metadata:
@@ -52,6 +56,26 @@ spec:
     enabled: true
     ca:
       builtin: {}" | kubectl apply -f -`
+        },
+        {
+          label: 'Test CSS Snippet',
+          lang: 'css',
+          code: `#test {
+  border: 2px solid rebeccapurple;
+  font-size: 2rem;
+}
+
+.parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parent > * {
+  flex-basis: auto;
+  padding: 2em;
+  background-color: #eee;
+}`
         }
       ]
     }
