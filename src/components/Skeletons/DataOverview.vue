@@ -1,48 +1,35 @@
 <template>
   <div class="data-overview">
+    <!-- controls -->
+    <div
+      v-if="displayRefreshControl"
+      class="data-table-controls mb-2"
+    >
+      <KButton
+        appearance="secondary"
+        size="small"
+        :disabled="isLoading"
+        @click="$emit('reloadData')"
+      >
+        <KIcon
+          v-if="isLoading"
+          icon="spinner"
+          color="rgba(0, 0, 0, 5)"
+          size="48"
+        />
+        <span>Refresh</span>
+      </KButton>
+    </div>
+
     <div
       v-if="isReady"
       class="data-overview-content"
     >
-      <!-- controls -->
-      <div
-        v-if="displayRefreshControl"
-        class="data-table-controls mb-2"
-      >
-        <KButton
-          appearance="secondary"
-          size="small"
-          @click="$emit('reloadData')"
-        >
-          Refresh
-        </KButton>
-      </div>
-
       <!-- metrics -->
       <MetricGrid
         v-if="!isLoading && displayMetrics && metricsData"
         :metrics="metricsData"
       />
-      <KEmptyState
-        v-else-if="isLoading && displayMetrics"
-        cta-is-hidden
-      >
-        <template slot="title">
-          {{ emptyState.title }}
-        </template>
-        <template
-          v-if="showCta"
-          slot="message"
-        >
-          <router-link
-            v-if="ctaAction && ctaAction.length"
-            :to="ctaAction"
-          >
-            {{ emptyState.ctaText }}
-          </router-link>
-          {{ emptyState.message }}
-        </template>
-      </KEmptyState>
 
       <!-- data -->
       <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
@@ -119,8 +106,10 @@
         <slot name="content" />
       </div>
     </div>
+
+    <!-- loading state -->
     <KEmptyState
-      v-else
+      v-if="isLoading"
       cta-is-hidden
     >
       <template slot="title">
@@ -128,10 +117,50 @@
           <KIcon
             icon="spinner"
             color="rgba(0, 0, 0, 0.1)"
-            size="48"
+            size="42"
           />
         </div>
         Data Loading...
+      </template>
+    </KEmptyState>
+
+    <!-- empty state -->
+    <KEmptyState
+      v-if="isEmpty"
+      cta-is-hidden
+    >
+      <template slot="title">
+        {{ emptyState.title }}
+      </template>
+      <template
+        v-if="showCta"
+        slot="message"
+      >
+        <router-link
+          v-if="ctaAction && ctaAction.length"
+          :to="ctaAction"
+        >
+          {{ emptyState.ctaText }}
+        </router-link>
+        {{ emptyState.message }}
+      </template>
+    </KEmptyState>
+
+    <!-- error has occurred -->
+    <KEmptyState
+      v-if="hasError"
+      cta-is-hidden
+    >
+      <template slot="title">
+        <div class="card-icon mb-3">
+          <KIcon
+            class="kong-icon--centered"
+            color="var(--yellow-base)"
+            icon="warning"
+            size="42"
+          />
+        </div>
+        An error has occurred while trying to load this data.
       </template>
     </KEmptyState>
   </div>
@@ -278,6 +307,10 @@ export default {
   .metric {
     margin-bottom: 16px;
   }
+}
+
+.empty-state-wrapper {
+  margin-bottom: 2em;
 }
 
 @media only screen and (min-width: 841px) {
