@@ -57,14 +57,4 @@ export default {
   margin-left: auto;
   margin-right: auto;
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .12s linear;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>

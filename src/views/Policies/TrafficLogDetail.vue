@@ -2,14 +2,16 @@
   <div class="dataplanes-detail">
     <YamlView
       title="Entity Overview"
-      :content="entity"
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
+      :content="content"
     />
   </div>
 </template>
 
 <script>
 import YamlView from '@/components/Skeletons/YamlView'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
   name: 'TrafficLogDetail',
@@ -17,12 +19,14 @@ export default {
     title: 'Traffic Log Details'
   },
   components: {
-    MetricGrid,
     YamlView
   },
   data () {
     return {
-      entity: null
+      content: null,
+      hasError: false,
+      isLoading: true,
+      isEmpty: false
     }
   },
   watch: {
@@ -41,13 +45,19 @@ export default {
       return this.$api.getTrafficLog(mesh, trafficlog)
         .then(response => {
           if (response) {
-            this.entity = response
+            this.content = response
           } else {
             this.$router.push('/404')
           }
         })
         .catch(error => {
+          this.hasError = true
           console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
         })
     }
   }
