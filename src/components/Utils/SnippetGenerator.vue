@@ -8,6 +8,7 @@
       >
         <KCard>
           <template slot="body">
+            <!-- TODO add a prop for selecting the language for the code block -->
             <pre><code>{{ item.code }}</code></pre>
           </template>
           <template slot="actions">
@@ -27,15 +28,23 @@
             <KClipboardProvider
               v-slot="{ copyToClipboard }"
             >
-              <KPop placement="right">
+              <KPop
+                placement="right"
+                width="auto"
+              >
                 <KButton
                   appearance="primary"
+                  :title="`Click to copy ${item.label} to clipboard`"
                   @click="() => { copyToClipboard(item.code) }"
                 >
-                  Copy {{ item.label }}
+                  <span class="sr-only">Copy</span>
+                  <img
+                    src="@/assets/images/icon-copy-light.svg?external"
+                    alt="Icon for copying to the clipboard"
+                  >
                 </KButton>
                 <div slot="content">
-                  <p>Snippet copied!</p>
+                  <p>Copied!</p>
                 </div>
               </KPop>
             </KClipboardProvider>
@@ -89,7 +98,15 @@ export default {
 
     > * {
       flex: 0 0 1;
-      margin-right: 1em;
+      margin-right: 0.5em;
+    }
+
+    .k-button {
+      min-height: 42px;
+
+      &:after {
+        display: none;
+      }
     }
   }
 
