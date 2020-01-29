@@ -29,6 +29,6 @@
   --sidebar-width: 240px;
 
   /* Kongponents color remappings */
-  --KButtonPrimaryBase: #1155CB;
+  --KButtonPrimaryBase: var(--blue-4);
   --KButtonPrimaryHover: #226ced;
 }

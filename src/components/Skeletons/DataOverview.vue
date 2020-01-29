@@ -38,6 +38,7 @@
           :options="tableDataFiltered"
           has-hover
         >
+          <!-- status -->
           <template
             v-if="displayTableDataStatus"
             v-slot:status="{rowValue}"
@@ -49,6 +50,23 @@
               <span class="entity-status__dot" />
               <span class="entity-status__label">{{ rowValue }}</span>
             </div>
+          </template>
+          <!-- tags -->
+          <template
+            v-slot:tags="{rowValue}"
+          >
+            <span
+              v-for="(item, key) in rowValue"
+              :key="key"
+              class="entity-tags"
+            >
+              <span class="entity-tags__label">
+                {{ item.label }}:
+              </span>
+              <span class="entity-tags__value">
+                {{ item.value }}
+              </span>
+            </span>
           </template>
           <template
             slot="actions"
@@ -311,6 +329,44 @@ export default {
 
 .empty-state-wrapper {
   margin-bottom: 2em;
+}
+
+.entity-tags {
+  display: inline-flex;
+  align-items: stretch;
+  font-size: 13px;
+  // font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+
+  &:not(:last-of-type) {
+    margin-right: 0.5rem;
+  }
+}
+
+.entity-tags__label {
+  position: relative;
+  background-color: var(--blue-1);
+  color: #fff;
+  border-radius: 5px 0 0 5px;
+  padding: 0.15rem 0.5rem;
+
+  // &:after {
+  //   position: absolute;
+  //   top: 50%;
+  //   right: 0;
+  //   content: "";
+  //   display: block;
+  //   background-color: var(--blue-1);
+  //   width: 7px;
+  //   height: 7px;
+  //   transform: rotate(45deg) translateY(-50%);
+  // }
+}
+
+.entity-tags__value {
+  background-color: var(--blue-3);
+  border-radius: 0 5px 5px 0;
+  padding: 0.15rem 0.5rem 0.15rem 0.75rem;
 }
 
 @media only screen and (min-width: 841px) {
