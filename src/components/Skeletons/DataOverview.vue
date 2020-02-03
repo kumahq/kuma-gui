@@ -66,7 +66,7 @@
                 :class="`entity-tags__label--${item.label.toLowerCase()}`"
                 :style="`color: var(${tagColors[key].text}) background-color: var(${tagColors[key].fill})`"
               >
-                {{ item.label }}:
+                {{ item.label }}
               </span>
               <span
                 class="entity-tags__value"
@@ -375,38 +375,32 @@ export default {
   display: inline-flex;
   align-items: stretch;
   font-size: 12px;
-  // font-weight: var(--font-weight-bold);
   text-transform: uppercase;
+  background-color: #fff;
 
   &:not(:last-of-type) {
     margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 }
 
 .entity-tags__label {
+  --color: var(--blue-1);
+
   position: relative;
-  background-color: var(--blue-1);
+  background-color: var(--color);
   color: #fff;
   border-radius: 5px 0 0 5px;
   padding: 0.15rem 0.5rem;
-
-  // &:after {
-  //   position: absolute;
-  //   top: 50%;
-  //   right: 0;
-  //   content: "";
-  //   display: block;
-  //   background-color: var(--blue-1);
-  //   width: 7px;
-  //   height: 7px;
-  //   transform: rotate(45deg) translateY(-50%);
-  // }
+  box-shadow: inset 0 0 0 1px var(--color);
 }
 
 .entity-tags__value {
-  background-color: var(--blue-3);
+  background-color: #fff;
   border-radius: 0 5px 5px 0;
   padding: 0.15rem 0.5rem 0.15rem 0.75rem;
+  color: currentColor;
+  box-shadow: inset 0 0 0 1px currentColor;
 }
 
 @media only screen and (min-width: 841px) {
