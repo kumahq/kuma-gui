@@ -22,6 +22,13 @@
   --black-1: rgba(0, 0, 0, 0.75);
   --green-1: #1b9844;
 
+  /* logo colors */
+  --logo-coral: #EE485D;
+  --logo-teal: #00CDDE;
+  --logo-mint: #00E8C2;
+  --logo-navy: #172350;
+  --logo-green: #3db664;
+
   /* Topbar */
   --topbar-height: 4rem;
 

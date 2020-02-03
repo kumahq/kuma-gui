@@ -34,7 +34,7 @@
       <!-- data -->
       <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
         <KTable
-          class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+          :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
           :options="tableDataFiltered"
           has-hover
         >
@@ -59,11 +59,19 @@
               v-for="(item, key) in rowValue"
               :key="key"
               class="entity-tags"
+              :class="`entity-tags--${key}`"
             >
-              <span class="entity-tags__label">
+              <span
+                class="entity-tags__label"
+                :class="`entity-tags__label--${item.label.toLowerCase()}`"
+                :style="`color: var(${tagColors[key].text}) background-color: var(${tagColors[key].fill})`"
+              >
                 {{ item.label }}:
               </span>
-              <span class="entity-tags__value">
+              <span
+                class="entity-tags__value"
+                :class="`entity-tags__value--${item.value}`"
+              >
                 {{ item.value }}
               </span>
             </span>
@@ -259,7 +267,39 @@ export default {
   data () {
     return {
       pageSize: 12,
-      pageNumber: 0
+      pageNumber: 0,
+      lightText: '#fff',
+      darkText: '#000',
+      tagColors: [
+        {
+          fill: '--green-1',
+          text: this.darkText
+        },
+        {
+          fill: '--blue-2',
+          text: this.lightText
+        },
+        {
+          fill: '--blue-4',
+          text: this.lightText
+        },
+        {
+          fill: '--logo-coral',
+          text: this.darkText
+        },
+        {
+          fill: '--logo-mint',
+          text: this.darkText
+        },
+        {
+          fill: '--logo-navy',
+          text: this.lightText
+        },
+        {
+          fill: '--logo-green',
+          text: this.darkText
+        }
+      ]
     }
   },
   computed: {
@@ -334,7 +374,7 @@ export default {
 .entity-tags {
   display: inline-flex;
   align-items: stretch;
-  font-size: 13px;
+  font-size: 12px;
   // font-weight: var(--font-weight-bold);
   text-transform: uppercase;
 
