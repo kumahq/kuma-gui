@@ -100,12 +100,42 @@ export default {
                       if (inbound) {
                         /** inbound */
                         for (let i = 0; i < inbound.length; i++) {
-                          tags = dpTagCleaner(inbound[i].tags)
+                          const rawTags = inbound[i].tags
+
+                          const final = []
+                          const tagKeys = Object.keys(rawTags)
+                          const tagVals = Object.values(rawTags)
+
+                          for (let x = 0; x < tagKeys.length; x++) {
+                            final.push({
+                              label: tagKeys[x],
+                              value: tagVals[x]
+                            })
+                          }
+
+                          tags = final
                         }
                       } else if (gateway) {
                         /** gateway */
-                        tags = dpTagCleaner(gateway.tags)
+                        const items = gateway.tags
+
+                        for (let i = 0; i < Object.keys(items).length; i++) {
+                          const final = []
+                          const tagKeys = Object.keys(items)
+                          const tagVals = Object.values(items)
+
+                          for (let x = 0; x < tagKeys.length; x++) {
+                            final.push({
+                              label: tagKeys[x],
+                              value: tagVals[x]
+                            })
+                          }
+
+                          tags = final
+                        }
                       }
+                    } else {
+                      tags = 'none'
                     }
 
                     /**

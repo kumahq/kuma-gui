@@ -34,10 +34,11 @@
       <!-- data -->
       <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
         <KTable
-          class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+          :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
           :options="tableDataFiltered"
           has-hover
         >
+          <!-- status -->
           <template
             v-if="displayTableDataStatus"
             v-slot:status="{rowValue}"
@@ -49,6 +50,31 @@
               <span class="entity-status__dot" />
               <span class="entity-status__label">{{ rowValue }}</span>
             </div>
+          </template>
+          <!-- tags -->
+          <template
+            v-slot:tags="{rowValue}"
+          >
+            <span
+              v-for="(item, key) in rowValue"
+              :key="key"
+              class="entity-tags"
+              :class="`entity-tags--${key}`"
+            >
+              <span
+                class="entity-tags__label"
+                :class="`entity-tags__label--${item.label.toLowerCase()}`"
+                :style="`color: var(${tagColors[key].text}) background-color: var(${tagColors[key].fill})`"
+              >
+                {{ item.label }}
+              </span>
+              <span
+                class="entity-tags__value"
+                :class="`entity-tags__value--${item.value}`"
+              >
+                {{ item.value }}
+              </span>
+            </span>
           </template>
           <template
             slot="actions"
@@ -241,7 +267,39 @@ export default {
   data () {
     return {
       pageSize: 12,
-      pageNumber: 0
+      pageNumber: 0,
+      lightText: '#fff',
+      darkText: '#000',
+      tagColors: [
+        {
+          fill: '--green-1',
+          text: this.darkText
+        },
+        {
+          fill: '--blue-2',
+          text: this.lightText
+        },
+        {
+          fill: '--blue-4',
+          text: this.lightText
+        },
+        {
+          fill: '--logo-coral',
+          text: this.darkText
+        },
+        {
+          fill: '--logo-mint',
+          text: this.darkText
+        },
+        {
+          fill: '--logo-navy',
+          text: this.lightText
+        },
+        {
+          fill: '--logo-green',
+          text: this.darkText
+        }
+      ]
     }
   },
   computed: {
@@ -311,6 +369,38 @@ export default {
 
 .empty-state-wrapper {
   margin-bottom: 2em;
+}
+
+.entity-tags {
+  display: inline-flex;
+  align-items: stretch;
+  font-size: 12px;
+  text-transform: uppercase;
+  background-color: #fff;
+
+  &:not(:last-of-type) {
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+.entity-tags__label {
+  --color: var(--blue-1);
+
+  position: relative;
+  background-color: var(--color);
+  color: #fff;
+  border-radius: 5px 0 0 5px;
+  padding: 0.15rem 0.5rem;
+  box-shadow: inset 0 0 0 1px var(--color);
+}
+
+.entity-tags__value {
+  background-color: #fff;
+  border-radius: 0 5px 5px 0;
+  padding: 0.15rem 0.5rem 0.15rem 0.75rem;
+  color: currentColor;
+  box-shadow: inset 0 0 0 1px currentColor;
 }
 
 @media only screen and (min-width: 841px) {

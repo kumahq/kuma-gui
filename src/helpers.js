@@ -288,7 +288,8 @@ export function humanReadableDate (tdate) {
     return '1 week ago'
   }
 
-  return 'on ' + systemDate
+  // return 'on ' + systemDate
+  return `on ${systemDate.toLocaleDateString()}`
 }
 
 /**
