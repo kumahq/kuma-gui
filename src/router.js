@@ -219,6 +219,28 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficLogDetail')
         },
+        // traffic traces
+        {
+          path: 'traffic-traces',
+          name: 'traffic-traces',
+          meta: {
+            title: 'Traffic Traces'
+          },
+          component: () => import('@/views/Policies/TrafficTrace')
+        },
+        {
+          path: 'traffic-traces/:traffictrace',
+          name: 'traffic-traces-details',
+          params: {
+            traffictrace: ':traffictrace'
+          },
+          meta: {
+            title: 'Traffic Trace Details',
+            breadcrumb: 'Traffic Traces',
+            parent: 'traffic-traces'
+          },
+          component: () => import('@/views/Policies/TrafficTraceDetail')
+        },
         // health checks
         {
           path: 'health-checks',

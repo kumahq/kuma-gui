@@ -26,6 +26,7 @@ export default (api) => {
       totalTrafficRoutesCountFromMesh: 0,
       totalTrafficPermissionsCountFromMesh: 0,
       totalTrafficLogsCountFromMesh: 0,
+      totalTrafficTracesCountFromMesh: 0,
       totalHealthChecksCountFromMesh: 0,
       totalProxyTemplatesCountFromMesh: 0,
       tagline: null,
@@ -78,6 +79,9 @@ export default (api) => {
       getTrafficLogsFromMeshTotalCount (state) {
         return state.totalTrafficLogsCountFromMesh
       },
+      getTrafficTracesFromMeshTotalCount (state) {
+        return state.totalTrafficTracesCountFromMesh
+      },
       getVersion (state) {
         return state.version
       },
@@ -127,6 +131,9 @@ export default (api) => {
       },
       SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH (state, count) {
         state.totalTrafficLogsCountFromMesh = count
+      },
+      SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH (state, count) {
+        state.totalTrafficTracesCountFromMesh = count
       },
       SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH (state, count) {
         state.totalHealthChecksCountFromMesh = count
@@ -332,6 +339,19 @@ export default (api) => {
             const total = response.items.length
 
             commit('SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic traces from a mesh
+      getTrafficTracesFromMeshTotalCount ({ commit }, mesh) {
+        return api.getTrafficTraces(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

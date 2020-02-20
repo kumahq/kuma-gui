@@ -93,6 +93,12 @@ export default {
           link: '/traffic-routes',
           title: false,
           parent: 'policies'
+        },
+        {
+          name: 'Traffic Traces',
+          link: '/traffic-traces',
+          title: false,
+          parent: 'policies'
         }
       ]
     }

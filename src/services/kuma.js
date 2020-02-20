@@ -91,6 +91,16 @@ export default class Kuma {
     return this.client.get(`/meshes/${mesh}/traffic-routes/${trafficroute}`, { params })
   }
 
+  // get traffic traces
+  getTrafficTraces (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-traces`, { params })
+  }
+
+  // get traffic trace details
+  getTrafficTrace (mesh, traffictrace, params) {
+    return this.client.get(`/meshes/${mesh}/traffic-traces/${traffictrace}`, { params })
+  }
+
   /**
    * Proxies
    */

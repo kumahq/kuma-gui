@@ -78,6 +78,10 @@ export default {
         {
           metric: 'Traffic Logs',
           value: this.$store.state.totalTrafficLogsCountFromMesh
+        },
+        {
+          metric: 'Traffic Traces',
+          value: this.$store.state.totalTrafficTracesCountFromMesh
         }
       ]
     }
@@ -106,6 +110,9 @@ export default {
 
       // get the total number of traffic logs from selected mesh
       this.$store.dispatch('getTrafficLogsFromMeshTotalCount', this.$route.params.mesh)
+
+      // get the total number of traffic traces from selected mesh
+      this.$store.dispatch('getTrafficTracesFromMeshTotalCount', this.$route.params.mesh)
 
       // get the mesh from our route params
       const mesh = 'default'
