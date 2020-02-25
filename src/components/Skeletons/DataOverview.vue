@@ -361,7 +361,6 @@ export default {
 }
 
 .info-grid {
-  flex-wrap: wrap;
 
   .metric {
     margin-bottom: 16px;
@@ -406,9 +405,10 @@ export default {
 
 @media only screen and (min-width: 841px) {
   .info-grid {
+    flex-wrap: wrap;
 
     .metric {
-      flex: 1 1 25%;
+      flex: 0 0 calc(33.33% - 32px); // gutter = 16px
     }
   }
 }
