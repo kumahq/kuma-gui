@@ -1,4 +1,5 @@
-![][kuma-logo]][kuma-url]
+[![][kuma-logo]][kuma-url]
+
 ![Twitter](https://img.shields.io/twitter/follow/thekonginc.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=thekonginc)
 
 # Kuma GUI
@@ -60,4 +61,5 @@ yarn run test:e2e
 yarn run test:unit
 ```
 
+[kuma-url]: https://kuma.io/
 [kuma-logo]: https://kuma-public-assets.s3.amazonaws.com/kuma-logo.png
