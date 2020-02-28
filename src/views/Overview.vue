@@ -5,47 +5,34 @@
         {{ this.$route.meta.title }}
       </h2>
     </page-header>
+
+    <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
     />
-    <KTable
-      v-if="tableData.data.length"
-      has-hover
-      :options="tableData"
+
+    <DataOverview
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
+      :empty-state="empty_state"
+      :display-data-table="true"
+      :table-data="tableData"
+      :table-data-is-empty="tableDataIsEmpty"
+      table-actions-route-name="mesh"
+      @reloadData="bootstrap"
     >
-      <template
-        slot="actions"
-        slot-scope="{row}"
-      >
-        <router-link
-          :to="{
-            name: 'mesh-overview',
-            params: {
-              mesh: row.name
-            }
-          }"
-        >
-          View
-        </router-link>
+      <template slot="tableDataActionsLinkText">
+        View
       </template>
-    </KTable>
-    <KEmptyState
-      v-else
-      cta-is-hidden
-    >
-      <template slot="title">
-        <div class="card-icon mb-3">
-          <img src="~@/assets/images/icon-empty-table.svg?external">
-        </div>
-        No meshes found!
-      </template>
-    </KEmptyState>
+    </DataOverview>
   </div>
 </template>
 
 <script>
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
+import DataOverview from '@/components/Skeletons/DataOverview.vue'
 
 export default {
   name: 'Overview',
@@ -56,10 +43,19 @@ export default {
   },
   components: {
     MetricGrid,
-    PageHeader
+    PageHeader,
+    DataOverview
   },
   data () {
     return {
+      isLoading: true,
+      isEmpty: false,
+      hasError: false,
+      tableDataIsEmpty: false,
+      empty_state: {
+        title: 'No Data',
+        message: 'There are no Meshes present.'
+      },
       tableData: {
         headers: [
           { label: 'Name', key: 'name' },
@@ -94,6 +90,9 @@ export default {
   },
   methods: {
     bootstrap () {
+      this.isLoading = true
+      this.isEmpty = false
+
       // get the total mesh count
       this.$store.dispatch('getMeshTotalCount')
 
@@ -111,10 +110,21 @@ export default {
 
             if (items && items.length) {
               this.tableData.data = [...items]
+              this.tableDataIsEmpty = false
+            } else {
+              this.tableData.data = []
+              this.tableDataIsEmpty = true
             }
           })
           .catch(error => {
+            this.hasError = true
+
             console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.isLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
           })
       }
 

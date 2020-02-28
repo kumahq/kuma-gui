@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { humanReadableDate, dpTagCleaner } from '@/helpers'
+import { humanReadableDate } from '@/helpers'
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
@@ -64,7 +64,6 @@ export default {
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false
-      this.hasError = false
 
       // get the mesh from our route params
       const mesh = this.$route.params.mesh
@@ -232,7 +231,8 @@ export default {
               this.tableData.data = final
               this.tableDataIsEmpty = false
             } else {
-              this.isEmpty = true
+              this.tableData.data = []
+              this.tableDataIsEmpty = true
             }
           })
           .catch(error => {

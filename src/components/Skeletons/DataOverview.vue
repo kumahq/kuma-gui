@@ -121,7 +121,18 @@
           <div class="card-icon mb-3">
             <img src="~@/assets/images/icon-empty-table.svg?external">
           </div>
-          No Items Found
+          <span v-if="emptyState.title">
+            {{ emptyState.title }}
+          </span>
+          <span v-else>
+            No Items Found
+          </span>
+        </template>
+        <template
+          v-if="emptyState.message"
+          slot="message"
+        >
+          {{ emptyState.message }}
         </template>
       </KEmptyState>
 
@@ -152,7 +163,7 @@
     </KEmptyState>
 
     <!-- empty state -->
-    <KEmptyState
+    <!-- <KEmptyState
       v-if="isEmpty"
       cta-is-hidden
     >
@@ -171,7 +182,7 @@
         </router-link>
         {{ emptyState.message }}
       </template>
-    </KEmptyState>
+    </KEmptyState> -->
 
     <!-- error has occurred -->
     <KEmptyState

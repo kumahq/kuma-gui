@@ -33,6 +33,82 @@ export default class Mock {
       'background: gray; color: white; display: block; padding: 0.25rem;')
 
     this.mock
+      .onGet('/meshes').reply(200, {
+        items: [
+          {
+            mtls: {
+              ca: {
+                builtin: {}
+              }
+            },
+            name: 'default',
+            type: 'Mesh'
+          },
+          {
+            mtls: {
+              ca: {
+                builtin: {}
+              }
+            },
+            name: 'mesh-01',
+            type: 'Mesh'
+          },
+          {
+            mtls: {
+              ca: {
+                builtin: {}
+              }
+            },
+            name: 'kong-mania-12',
+            type: 'Mesh'
+          },
+          {
+            mtls: {
+              ca: {
+                builtin: {}
+              }
+            },
+            name: 'hello-world',
+            type: 'Mesh'
+          }
+        ]
+      })
+      .onGet('/meshes/default').reply(200, {
+        mtls: {
+          ca: {
+            builtin: {}
+          }
+        },
+        name: 'default',
+        type: 'Mesh'
+      })
+      .onGet('/meshes/mesh-01').reply(200, {
+        mtls: {
+          ca: {
+            builtin: {}
+          }
+        },
+        name: 'mesh-01',
+        type: 'Mesh'
+      })
+      .onGet('/meshes/kong-mania-12').reply(200, {
+        mtls: {
+          ca: {
+            builtin: {}
+          }
+        },
+        name: 'kong-mania-12',
+        type: 'Mesh'
+      })
+      .onGet('/meshes/hello-world').reply(200, {
+        mtls: {
+          ca: {
+            builtin: {}
+          }
+        },
+        name: 'hello-world',
+        type: 'Mesh'
+      })
       .onGet('/meshes/default/dataplanes').reply(200, {
         items: [
           {
