@@ -1,5 +1,5 @@
-[![][kuma-logo]][kuma-url]
-[![Twitter](https://img.shields.io/twitter/follow/thekonginc.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=thekonginc)
+![][kuma-logo]][kuma-url]
+![Twitter](https://img.shields.io/twitter/follow/thekonginc.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=thekonginc)
 
 # Kuma GUI
 
