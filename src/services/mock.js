@@ -2,7 +2,9 @@ export default class Mock {
   constructor (axios) {
     var MockAdapter = require('axios-mock-adapter')
 
-    this.mock = new MockAdapter(axios, { delayResponse: 1000 })
+    const mockDelay = 1000
+
+    this.mock = new MockAdapter(axios, { delayResponse: mockDelay })
     this.mock.injectMocks = () => { return this.mock }
   }
 
@@ -119,7 +121,14 @@ export default class Mock {
                 {
                   interface: '172.21.0.4:8000:8000',
                   tags: {
-                    service: 'kuma-example-app'
+                    service: 'kuma-example-app',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04',
+                    tag05: 'value05',
+                    tag06: 'value06',
+                    tag07: 'value07',
+                    tag08: 'value08'
                   }
                 }
               ]
@@ -134,7 +143,11 @@ export default class Mock {
                 {
                   interface: '172.21.0.7:3000:3000',
                   tags: {
-                    service: 'kuma-example-client'
+                    service: 'kuma-example-client',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04',
+                    tag05: 'value05'
                   }
                 }
               ],
@@ -157,7 +170,10 @@ export default class Mock {
                   tags: {
                     env: 'prod',
                     service: 'kuma-example-web',
-                    version: 'v8'
+                    version: 'v8',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04'
                   }
                 }
               ],
@@ -205,6 +221,140 @@ export default class Mock {
             type: 'Dataplane'
           }
         ]
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-app').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-app',
+        dataplane: {
+          networking: {
+            address: '172.21.0.8',
+            inbound: [
+              {
+                port: 8000,
+                servicePort: 8000,
+                tags: {
+                  protocol: 'http',
+                  service: 'kuma-example-app'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {}
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-app').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-app',
+        dataplane: {
+          networking: {
+            address: '172.21.0.8',
+            inbound: [
+              {
+                port: 8000,
+                servicePort: 8000,
+                tags: {
+                  protocol: 'http',
+                  service: 'kuma-example-app'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {}
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-backend-v1').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-backend-v1',
+        dataplane: {
+          networking: {
+            address: '172.21.0.5',
+            inbound: [
+              {
+                port: 7070,
+                servicePort: 7070,
+                tags: {
+                  env: 'prod',
+                  service: 'kuma-example-backend',
+                  version: 'v1'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {}
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-backend-v2').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-backend-v2',
+        dataplane: {
+          networking: {
+            address: '172.21.0.5',
+            inbound: [
+              {
+                port: 7070,
+                servicePort: 7070,
+                tags: {
+                  env: 'prod',
+                  service: 'kuma-example-backend',
+                  version: 'v1',
+                  tag00: 'value-00',
+                  tag01: 'value-01',
+                  tag02: 'value-02',
+                  tag03: 'value-03'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {}
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-client').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-client',
+        dataplane: {
+          networking: {
+            address: '172.21.0.5',
+            inbound: [
+              {
+                port: 7070,
+                servicePort: 7070,
+                tags: {
+                  env: 'something',
+                  service: 'kuma-example-backend'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {}
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-web').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-web',
+        dataplane: {
+          networking: {
+            address: '172.21.0.5',
+            inbound: [
+              {
+                port: 7070,
+                servicePort: 7070,
+                tags: {
+                  env: 'dev',
+                  service: 'kuma-example-backend',
+                  tag01: 'value01',
+                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {}
       })
       .onAny().passThrough()
   }
