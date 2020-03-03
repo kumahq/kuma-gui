@@ -1,28 +1,21 @@
 <template>
   <div class="skeleton-card-wrapper">
-    <KCard>
-      <template
-        v-if="$props.cardTitle"
-        slot="title"
-      >
-        <slot name="cardTitle" />
-      </template>
+    <KCard :title="cardTitle">
       <template slot="body">
         <slot
           name="cardContent"
           class="skeleton-card__content"
         />
         <div
-          v-if="$props.cardActionContent && $props.cardActionRoute"
-          class="skeleton-card__action"
+          v-if="cardActionButtonText && cardActionRoute"
+          class="skeleton-card__action mt-4"
         >
           <slot name="cardAction">
-            <!-- $props.cardActionRoute should be a route array -->
             <KButton
-              :to="$props.cardActionRoute"
+              :to="cardActionRoute"
               appearance="primary"
             >
-              {{ $props.cardActionContent }}
+              {{ cardActionButtonText }}
             </KButton>
           </slot>
         </div>
@@ -46,12 +39,17 @@ export default {
       type: String,
       required: true
     },
-    cardActionContent: {
+    cardContent: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     },
     cardActionRoute: {
-      type: Array,
+      type: Object,
+      required: true
+    },
+    cardActionButtonText: {
+      type: String,
       required: true
     }
   }
@@ -66,6 +64,10 @@ export default {
 .skeleton-card__action,
 .skeleton-card__content {
   text-align: center;
+}
+
+.skeleton-card__title {
+
 }
 
 .skeleton-card__content {
