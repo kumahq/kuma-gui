@@ -64,7 +64,6 @@
               <span
                 class="entity-tags__label"
                 :class="`entity-tags__label--${item.label.toLowerCase()}`"
-                :style="`color: var(${tagColors[key].text}) background-color: var(${tagColors[key].fill})`"
               >
                 {{ item.label }}
               </span>
@@ -268,39 +267,7 @@ export default {
   data () {
     return {
       pageSize: 12,
-      pageNumber: 0,
-      lightText: '#fff',
-      darkText: '#000',
-      tagColors: [
-        {
-          fill: '--green-1',
-          text: this.darkText
-        },
-        {
-          fill: '--blue-2',
-          text: this.lightText
-        },
-        {
-          fill: '--blue-4',
-          text: this.lightText
-        },
-        {
-          fill: '--logo-coral',
-          text: this.darkText
-        },
-        {
-          fill: '--logo-mint',
-          text: this.darkText
-        },
-        {
-          fill: '--logo-navy',
-          text: this.lightText
-        },
-        {
-          fill: '--logo-green',
-          text: this.darkText
-        }
-      ]
+      pageNumber: 0
     }
   },
   computed: {
