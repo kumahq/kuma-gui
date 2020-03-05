@@ -6,7 +6,7 @@
       class="data-table-controls mb-2"
     >
       <KButton
-        appearance="secondary"
+        appearance="primary"
         size="small"
         :disabled="isLoading"
         @click="$emit('reloadData')"
@@ -14,7 +14,7 @@
         <KIcon
           v-if="isLoading"
           icon="spinner"
-          color="rgba(0, 0, 0, 5)"
+          color="#fff"
           size="48"
         />
         <span>Refresh</span>

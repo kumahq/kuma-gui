@@ -1,6 +1,9 @@
 <template>
   <div class="skeleton-card-wrapper">
-    <KCard :title="cardTitle">
+    <KCard
+      :title="cardTitle"
+      no-border
+    >
       <template slot="body">
         <slot
           name="cardContent"
