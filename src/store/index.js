@@ -20,6 +20,10 @@ export default (api) => {
       selectedMesh: 'default',
       totalMeshCount: 0,
       totalDataplaneCount: 0,
+      totalHealthCheckCount: 0,
+      totalProxyTemplateCount: 0,
+      totalTrafficLogCount: 0,
+      totalTrafficPermissionCount: 0,
       totalDataplaneList: [],
       anyDataplanesOffline: null,
       totalDataplaneCountFromMesh: 0,
@@ -34,122 +38,54 @@ export default (api) => {
       status: null
     },
     getters: {
-      getOnboardingStatus (state) {
-        return state.onboardingComplete
-      },
-      globalLoading (state) {
-        return state.globalLoading
-      },
-      getSelectedMesh (state) {
-        return state.selectedMesh
-      },
-      getMeshList (state) {
-        return state.meshes
-      },
-      getDataplanes (state) {
-        return state.dataplanes
-      },
-      getDataplanesList (state) {
-        return state.totalDataplaneList
-      },
-      getAnyDpOffline (state) {
-        return state.anyDataplanesOffline
-      },
-      getTotalMeshCount (state) {
-        return state.totalMeshCount
-      },
-      getTotalDataplaneCount (state) {
-        return state.totalDataplaneCount
-      },
-      getTotalDataplaneCountFromMesh (state) {
-        return state.totalDataplaneCountFromMesh
-      },
-      getTotalTrafficRoutesCountFromMesh (state) {
-        return state.totalTrafficRoutesCountFromMesh
-      },
-      getTotalTrafficPermissionsCountFromMesh (state) {
-        return state.totalTrafficPermissionsCountFromMesh
-      },
-      getTotalHealthChecksFromMesh (state) {
-        return state.totalHealthChecksCountFromMesh
-      },
-      getTotalProxyTemplatesCountFromMesh (state) {
-        return state.totalProxyTemplatesCountFromMesh
-      },
-      getTrafficLogsFromMeshTotalCount (state) {
-        return state.totalTrafficLogsCountFromMesh
-      },
-      getTrafficTracesFromMeshTotalCount (state) {
-        return state.totalTrafficTracesCountFromMesh
-      },
-      getVersion (state) {
-        return state.version
-      },
-      getTagline (state) {
-        return state.tagline
-      },
-      getStatus (state) {
-        return state.status
-      }
+      getOnboardingStatus: (state) => state.onboardingComplete,
+      globalLoading: (state) => state.globalLoading,
+      getSelectedMesh: (state) => state.selectedMesh,
+      getMeshList: (state) => state.meshes,
+      getDataplanes: (state) => state.dataplanes,
+      getDataplanesList: (state) => state.totalDataplaneList,
+      getAnyDpOffline: (state) => state.anyDataplanesOffline,
+      getTotalMeshCount: (state) => state.totalMeshCount,
+      getTotalDataplaneCount: (state) => state.totalDataplaneCount,
+      getTotalHealthCheckCount: (state) => state.totalHealthCheckCount,
+      getTotalProxyTemplateCount: (state) => state.totalProxyTemplateCount,
+      getTotalTrafficLogCount: (state) => state.totalTrafficLogCount,
+      getTotalTrafficPermissionCount: (state) => state.totalTrafficPermissionCount,
+      getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
+      getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRoutesCountFromMesh,
+      getTotalTrafficPermissionsCountFromMesh: (state) => state.totalTrafficPermissionsCountFromMesh,
+      getTotalHealthChecksFromMesh: (state) => state.totalHealthChecksCountFromMesh,
+      getTotalProxyTemplatesCountFromMesh: (state) => state.totalProxyTemplatesCountFromMesh,
+      getTrafficLogsFromMeshTotalCount: (state) => state.totalTrafficLogsCountFromMesh,
+      getTrafficTracesFromMeshTotalCount: (state) => state.totalTrafficTracesCountFromMesh,
+      getVersion: (state) => state.version,
+      getTagline: (state) => state.tagline,
+      getStatus: (state) => state.status
     },
     mutations: {
-      SET_ONBOARDING_STATUS (state, status) {
-        state.onboardingComplete = status
-      },
-      SET_GLOBAL_LOADING (state, { globalLoading }) {
-        state.globalLoading = globalLoading
-      },
-      FETCH_ALL_MESHES (state, meshes) {
-        state.meshes = meshes
-      },
-      FETCH_DATAPLANES_FROM_MESH (state, dataplanes) {
-        state.dataplanes = dataplanes
-      },
-      SET_SELECTED_MESH (state, mesh) {
-        state.selectedMesh = mesh
-      },
-      SET_TOTAL_MESH_COUNT (state, count) {
-        state.totalMeshCount = count
-      },
-      SET_TOTAL_DP_COUNT (state, count) {
-        state.totalDataplaneCount = count
-      },
-      SET_TOTAL_DP_LIST (state, dataplanes) {
-        state.totalDataplaneList = dataplanes
-      },
-      SET_ANY_DP_OFFLINE (state, status) {
-        state.anyDataplanesOffline = status
-      },
-      SET_TOTAL_DP_COUNT_FROM_MESH (state, count) {
-        state.totalDataplaneCountFromMesh = count
-      },
-      SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH (state, count) {
-        state.totalTrafficRoutesCountFromMesh = count
-      },
-      SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH (state, count) {
-        state.totalTrafficPermissionsCountFromMesh = count
-      },
-      SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH (state, count) {
-        state.totalTrafficLogsCountFromMesh = count
-      },
-      SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH (state, count) {
-        state.totalTrafficTracesCountFromMesh = count
-      },
-      SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH (state, count) {
-        state.totalHealthChecksCountFromMesh = count
-      },
-      SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH (state, count) {
-        state.totalProxyTemplatesCountFromMesh = count
-      },
-      SET_VERSION (state, version) {
-        state.version = version
-      },
-      SET_TAGLINE (state, tagline) {
-        state.tagline = tagline
-      },
-      SET_STATUS (state, status) {
-        state.status = status
-      }
+      SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
+      SET_GLOBAL_LOADING: (state, { globalLoading }) => (state.globalLoading = globalLoading),
+      FETCH_ALL_MESHES: (state, meshes) => (state.meshes = meshes),
+      FETCH_DATAPLANES_FROM_MESH: (state, dataplanes) => (state.dataplanes = dataplanes),
+      SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
+      SET_TOTAL_MESH_COUNT: (state, count) => (state.totalMeshCount = count),
+      SET_TOTAL_DP_COUNT: (state, count) => (state.totalDataplaneCount = count),
+      SET_TOTAL_HC_COUNT: (state, count) => (state.totalHealthCheckCount = count),
+      SET_TOTAL_PT_COUNT: (state, count) => (state.totalProxyTemplateCount = count),
+      SET_TOTAL_TL_COUNT: (state, count) => (state.totalTrafficLogCount = count),
+      SET_TOTAL_TP_COUNT: (state, count) => (state.totalTrafficPermissionCount = count),
+      SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
+      SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
+      SET_TOTAL_DP_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficRoutesCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficPermissionsCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficLogsCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficTracesCountFromMesh = count),
+      SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH: (state, count) => (state.totalHealthChecksCountFromMesh = count),
+      SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalProxyTemplatesCountFromMesh = count),
+      SET_VERSION: (state, version) => (state.version = version),
+      SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
+      SET_STATUS: (state, status) => (state.status = status)
     },
     actions: {
       // update the onboarding state
@@ -197,17 +133,17 @@ export default (api) => {
           })
       },
 
-      // a makeshift way to get the total amount of dataplanes present
+      // get the total number of dataplanes present
       getDataplaneTotalCount ({ commit }) {
-        const getDataplanes = async () => {
+        const getItems = async () => {
           const meshes = await api.getAllMeshes()
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const dataplanes = await api.getAllDataplanesFromMesh(meshes.items[i].name)
-            const dpCount = await dataplanes.items.length
+            const items = await api.getAllDataplanesFromMesh(meshes.items[i].name)
+            const count = await items.items.length
 
-            result.push(dpCount)
+            result.push(count)
           }
 
           const reduced = result.reduce((a, b) => a + b, 0)
@@ -215,7 +151,91 @@ export default (api) => {
           commit('SET_TOTAL_DP_COUNT', reduced)
         }
 
-        getDataplanes()
+        getItems()
+      },
+
+      // get the total number of health checks present
+      getHealthCheckTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getHealthChecks(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_HC_COUNT', reduced)
+        }
+
+        getItems()
+      },
+
+      // get the total number of proxy templates present
+      getProxyTemplateTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getProxyTemplates(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_PT_COUNT', reduced)
+        }
+
+        getItems()
+      },
+
+      // get the total number of proxy templates present
+      getTrafficLogTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getTrafficLogs(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_TL_COUNT', reduced)
+        }
+
+        getItems()
+      },
+
+      // get the total number of proxy templates present
+      getTrafficPermissionTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getTrafficPermissions(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_TP_COUNT', reduced)
+        }
+
+        getItems()
       },
 
       // a makeshift way to get the list of all present dataplanes across all
@@ -268,7 +288,7 @@ export default (api) => {
             }
 
             // create a simple flat status object with booleans for checking
-            // if any // dataplanes are offline
+            // if any dataplanes are offline
             for (let i = 0; i < Object.values(result).length; i++) {
               const statusVal = Object.values(result[i])[0]
               const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')

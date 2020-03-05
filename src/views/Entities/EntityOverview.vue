@@ -10,39 +10,6 @@
       :display-refresh-control="false"
     />
 
-    <div class="md:flex items-stretch -mx-4">
-      <CardSkeleton
-        class="md:flex-1 mx-4"
-        :card-action-route="{ path: '/default/dataplanes/' }"
-        card-title="Create A Mesh"
-        card-action-button-text="Start Now"
-      >
-        <template slot="cardContent">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem alias quaerat, ad dolores, quod tenetur corrupti quis, dolore odio est iste vitae sint adipisci dolorum!</p>
-        </template>
-      </CardSkeleton>
-      <CardSkeleton
-        class="md:flex-1 mx-4"
-        :card-action-route="{ path: '/default/dataplanes/' }"
-        card-title="Add A Service / Dataplane"
-        card-action-button-text="Start Now"
-      >
-        <template slot="cardContent">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse non facere autem unde modi iusto!</p>
-        </template>
-      </CardSkeleton>
-      <CardSkeleton
-        class="md:flex-1 mx-4"
-        :card-action-route="{ path: '/default/dataplanes/' }"
-        card-title="Some Title"
-        card-action-button-text="Start Now"
-      >
-        <template slot="cardContent">
-          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt, consequatur veniam?</p>
-        </template>
-      </CardSkeleton>
-    </div>
-
     <YamlView
       title="Entity Overview"
       :content="entity"
@@ -53,7 +20,6 @@
 <script>
 import YamlView from '@/components/Skeletons/YamlView'
 import DataOverview from '@/components/Skeletons/DataOverview'
-import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 
 export default {
   name: 'Overview',
@@ -64,8 +30,7 @@ export default {
   },
   components: {
     DataOverview,
-    YamlView,
-    CardSkeleton
+    YamlView
   },
   data () {
     return {

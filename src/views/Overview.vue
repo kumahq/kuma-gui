@@ -11,6 +11,48 @@
       :metrics="overviewMetrics"
     />
 
+    <div class="md:flex items-stretch -mx-4">
+      <CardSkeleton
+        shadow
+        class="md:flex-1 mx-4"
+        :card-action-route="{ path: '/default/dataplanes/' }"
+        card-title="Create A Mesh"
+        card-action-button-text="Start Now"
+      >
+        <template slot="cardContent">
+          <p class="lg">
+            You can create a new isolated Mesh for a team, a product, or a line of business.
+          </p>
+        </template>
+      </CardSkeleton>
+      <CardSkeleton
+        shadow
+        class="md:flex-1 mx-4"
+        :card-action-route="{ path: '/default/dataplanes/' }"
+        card-title="Add A Service / Dataplane"
+        card-action-button-text="Start Now"
+      >
+        <template slot="cardContent">
+          <p class="lg">
+            You can add a new service into a Mesh by adding Dataplanes to it.
+          </p>
+        </template>
+      </CardSkeleton>
+      <CardSkeleton
+        shadow
+        class="md:flex-1 mx-4"
+        :card-action-route="{ path: '/default/dataplanes/' }"
+        card-title="Some Title"
+        card-action-button-text="Start Now"
+      >
+        <template slot="cardContent">
+          <p class="lg">
+            Find Services among your {{ title }} Meshes
+          </p>
+        </template>
+      </CardSkeleton>
+    </div>
+
     <DataOverview
       :has-error="hasError"
       :is-loading="isLoading"
@@ -30,9 +72,11 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
+import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 
 export default {
   name: 'Overview',
@@ -44,7 +88,8 @@ export default {
   components: {
     MetricGrid,
     PageHeader,
-    DataOverview
+    DataOverview,
+    CardSkeleton
   },
   data () {
     return {
@@ -67,15 +112,42 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      title: 'getTagline'
+    }),
     overviewMetrics () {
       return [
         {
-          metric: 'Total Number of Meshes',
+          metric: 'Meshes',
           value: this.$store.state.totalMeshCount
         },
         {
-          metric: 'Total Number of Dataplanes',
+          metric: 'Dataplanes',
           value: this.$store.state.totalDataplaneCount
+        },
+        {
+          metric: 'Health Checks',
+          value: this.$store.state.totalHealthCheckCount
+        },
+        {
+          metric: 'Proxy Templates',
+          value: this.$store.state.totalProxyTemplateCount
+        },
+        {
+          metric: 'Traffic Logs',
+          value: this.$store.state.totalTrafficLogCount
+        },
+        {
+          metric: 'Traffic Permissions',
+          value: this.$store.state.totalTrafficPermissionCount
+        },
+        {
+          metric: 'Traffic Routes',
+          value: this.$store.state.totalTrafficRouteCount
+        },
+        {
+          metric: 'Traffic Traces',
+          value: this.$store.state.totalTrafficTraceCount
         }
       ]
     }
@@ -97,10 +169,22 @@ export default {
       this.$store.dispatch('getMeshTotalCount')
 
       // get the total dataplane count within this mesh
-      this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
+      // this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
 
       // get the total dataplane count
       this.$store.dispatch('getDataplaneTotalCount')
+
+      // get the total health check count
+      this.$store.dispatch('getHealthCheckTotalCount')
+
+      // get the total proxy template count
+      this.$store.dispatch('getProxyTemplateTotalCount')
+
+      // get the total traffic log count
+      this.$store.dispatch('getTrafficLogTotalCount')
+
+      // get the total traffic log count
+      this.$store.dispatch('getTrafficPermissionTotalCount')
 
       // prepare and populate the table data
       const getMeshData = () => {

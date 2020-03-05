@@ -2,7 +2,8 @@
   <div class="skeleton-card-wrapper">
     <KCard
       :title="cardTitle"
-      no-border
+      :class="{ 'is-centered': centerText }"
+      border-variant="noBorder"
     >
       <template slot="body">
         <slot
@@ -42,11 +43,6 @@ export default {
       type: String,
       required: true
     },
-    cardContent: {
-      type: String,
-      required: false,
-      default: ''
-    },
     cardActionRoute: {
       type: Object,
       required: true
@@ -54,6 +50,10 @@ export default {
     cardActionButtonText: {
       type: String,
       required: true
+    },
+    centerText: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -79,5 +79,12 @@ export default {
 
 .skeleton-card__action {
 
+}
+
+.is-centered {
+
+  &, * {
+    text-align: center;
+  }
 }
 </style>

@@ -2,7 +2,7 @@ export default class Mock {
   constructor (axios) {
     var MockAdapter = require('axios-mock-adapter')
 
-    const mockDelay = 1000
+    const mockDelay = 0
 
     this.mock = new MockAdapter(axios, { delayResponse: mockDelay })
     this.mock.injectMocks = () => { return this.mock }
