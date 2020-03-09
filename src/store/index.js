@@ -24,6 +24,8 @@ export default (api) => {
       totalProxyTemplateCount: 0,
       totalTrafficLogCount: 0,
       totalTrafficPermissionCount: 0,
+      totalTrafficRouteCount: 0,
+      totalTrafficTraceCount: 0,
       totalDataplaneList: [],
       anyDataplanesOffline: null,
       totalDataplaneCountFromMesh: 0,
@@ -51,6 +53,8 @@ export default (api) => {
       getTotalProxyTemplateCount: (state) => state.totalProxyTemplateCount,
       getTotalTrafficLogCount: (state) => state.totalTrafficLogCount,
       getTotalTrafficPermissionCount: (state) => state.totalTrafficPermissionCount,
+      getTotalTrafficRouteCount: (state) => state.totalTrafficRouteCount,
+      getTotalTrafficTraceCount: (state) => state.totalTrafficTraceCount,
       getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
       getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRoutesCountFromMesh,
       getTotalTrafficPermissionsCountFromMesh: (state) => state.totalTrafficPermissionsCountFromMesh,
@@ -69,14 +73,16 @@ export default (api) => {
       FETCH_DATAPLANES_FROM_MESH: (state, dataplanes) => (state.dataplanes = dataplanes),
       SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
       SET_TOTAL_MESH_COUNT: (state, count) => (state.totalMeshCount = count),
-      SET_TOTAL_DP_COUNT: (state, count) => (state.totalDataplaneCount = count),
-      SET_TOTAL_HC_COUNT: (state, count) => (state.totalHealthCheckCount = count),
-      SET_TOTAL_PT_COUNT: (state, count) => (state.totalProxyTemplateCount = count),
-      SET_TOTAL_TL_COUNT: (state, count) => (state.totalTrafficLogCount = count),
-      SET_TOTAL_TP_COUNT: (state, count) => (state.totalTrafficPermissionCount = count),
+      SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
+      SET_TOTAL_HEALTH_CHECK_COUNT: (state, count) => (state.totalHealthCheckCount = count),
+      SET_TOTAL_PROXY_TEMPLATE_COUNT: (state, count) => (state.totalProxyTemplateCount = count),
+      SET_TOTAL_TRAFFIC_LOG_COUNT: (state, count) => (state.totalTrafficLogCount = count),
+      SET_TOTAL_TRAFFIC_PERMISSION_COUNT: (state, count) => (state.totalTrafficPermissionCount = count),
+      SET_TOTAL_TRAFFIC_ROUTE_COUNT: (state, count) => (state.totalTrafficRouteCount = count),
+      SET_TOTAL_TRAFFIC_TRACE_COUNT: (state, count) => (state.totalTrafficTraceCount = count),
       SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
       SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
-      SET_TOTAL_DP_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
+      SET_TOTAL_DATAPLANE_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
       SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficRoutesCountFromMesh = count),
       SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficPermissionsCountFromMesh = count),
       SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficLogsCountFromMesh = count),
@@ -148,7 +154,7 @@ export default (api) => {
 
           const reduced = result.reduce((a, b) => a + b, 0)
 
-          commit('SET_TOTAL_DP_COUNT', reduced)
+          commit('SET_TOTAL_DATAPLANE_COUNT', reduced)
         }
 
         getItems()
@@ -169,7 +175,7 @@ export default (api) => {
 
           const reduced = result.reduce((a, b) => a + b, 0)
 
-          commit('SET_TOTAL_HC_COUNT', reduced)
+          commit('SET_TOTAL_HEALTH_CHECK_COUNT', reduced)
         }
 
         getItems()
@@ -190,13 +196,13 @@ export default (api) => {
 
           const reduced = result.reduce((a, b) => a + b, 0)
 
-          commit('SET_TOTAL_PT_COUNT', reduced)
+          commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', reduced)
         }
 
         getItems()
       },
 
-      // get the total number of proxy templates present
+      // get the total number of traffic logs present
       getTrafficLogTotalCount ({ commit }) {
         const getItems = async () => {
           const meshes = await api.getAllMeshes()
@@ -211,13 +217,13 @@ export default (api) => {
 
           const reduced = result.reduce((a, b) => a + b, 0)
 
-          commit('SET_TOTAL_TL_COUNT', reduced)
+          commit('SET_TOTAL_TRAFFIC_LOG_COUNT', reduced)
         }
 
         getItems()
       },
 
-      // get the total number of proxy templates present
+      // get the total number of traffic permissions present
       getTrafficPermissionTotalCount ({ commit }) {
         const getItems = async () => {
           const meshes = await api.getAllMeshes()
@@ -232,7 +238,49 @@ export default (api) => {
 
           const reduced = result.reduce((a, b) => a + b, 0)
 
-          commit('SET_TOTAL_TP_COUNT', reduced)
+          commit('SET_TOTAL_TRAFFIC_PERMISSION_COUNT', reduced)
+        }
+
+        getItems()
+      },
+
+      // get the total number of traffic routes present
+      getTrafficRouteTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getTrafficRoutes(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_TRAFFIC_ROUTE_COUNT', reduced)
+        }
+
+        getItems()
+      },
+
+      // get the total number of traffic traces present
+      getTrafficTraceTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getTrafficTraces(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_TRAFFIC_TRACE_COUNT', reduced)
         }
 
         getItems()
@@ -319,7 +367,7 @@ export default (api) => {
           .then(response => {
             const total = response.items.length
 
-            commit('SET_TOTAL_DP_COUNT_FROM_MESH', total)
+            commit('SET_TOTAL_DATAPLANE_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

@@ -13,7 +13,6 @@
 
     <div class="md:flex items-stretch -mx-4">
       <CardSkeleton
-        shadow
         class="md:flex-1 mx-4"
         :card-action-route="{ path: '/default/dataplanes/' }"
         card-title="Create A Mesh"
@@ -26,7 +25,6 @@
         </template>
       </CardSkeleton>
       <CardSkeleton
-        shadow
         class="md:flex-1 mx-4"
         :card-action-route="{ path: '/default/dataplanes/' }"
         card-title="Add A Service / Dataplane"
@@ -39,7 +37,6 @@
         </template>
       </CardSkeleton>
       <CardSkeleton
-        shadow
         class="md:flex-1 mx-4"
         :card-action-route="{ path: '/default/dataplanes/' }"
         card-title="Some Title"
@@ -183,8 +180,14 @@ export default {
       // get the total traffic log count
       this.$store.dispatch('getTrafficLogTotalCount')
 
-      // get the total traffic log count
+      // get the total traffic permission count
       this.$store.dispatch('getTrafficPermissionTotalCount')
+
+      // get the total traffic route count
+      this.$store.dispatch('getTrafficRouteTotalCount')
+
+      // get the total traffic trace count
+      this.$store.dispatch('getTrafficTraceTotalCount')
 
       // prepare and populate the table data
       const getMeshData = () => {

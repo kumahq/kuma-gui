@@ -739,6 +739,55 @@ export default class Mock {
         },
         dataplaneInsight: {}
       })
+      .onGet('/meshes/default/traffic-traces').reply(200, {
+        items: [
+          {
+            type: 'TrafficTrace',
+            mesh: 'default',
+            name: 'tt-1',
+            selectors: [
+              {
+                match: {
+                  service: '*'
+                }
+              }
+            ],
+            conf: {
+              backend: 'my-zipkin'
+            }
+          },
+          {
+            type: 'TrafficTrace',
+            mesh: 'default',
+            name: 'traffic-trace-02',
+            selectors: [
+              {
+                match: {
+                  service: '*'
+                }
+              }
+            ],
+            conf: {
+              backend: 'my-zipkin'
+            }
+          },
+          {
+            type: 'TrafficTrace',
+            mesh: 'default',
+            name: 'tt-3',
+            selectors: [
+              {
+                match: {
+                  service: '*'
+                }
+              }
+            ],
+            conf: {
+              backend: 'my-zipkin'
+            }
+          }
+        ]
+      })
       .onAny().passThrough()
   }
 }
