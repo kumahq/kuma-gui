@@ -111,6 +111,83 @@ export default class Mock {
         name: 'hello-world',
         type: 'Mesh'
       })
+      .onGet('/meshes/mesh-01/dataplanes').reply(200, {
+        items: [
+          {
+            mesh: 'mesh-01',
+            name: 'hello-world-foobar-002',
+            networking: {
+              inbound: [
+                {
+                  interface: '172.21.0.4:8000:8000',
+                  tags: {
+                    service: 'hello-world-foobar-002',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04',
+                    tag05: 'value05',
+                    tag06: 'value06',
+                    tag07: 'value07',
+                    tag08: 'value08'
+                  }
+                }
+              ]
+            },
+            type: 'Dataplane'
+          },
+          {
+            mesh: 'mesh-01',
+            name: 'kuma-test-run-001',
+            networking: {
+              inbound: [
+                {
+                  interface: '172.21.0.7:3000:3000',
+                  tags: {
+                    service: 'kuma-test-run-001',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04',
+                    tag05: 'value05'
+                  }
+                }
+              ],
+              outbound: [
+                {
+                  interface: ':4000',
+                  service: 'kuma-example-app'
+                }
+              ]
+            },
+            type: 'Dataplane'
+          },
+          {
+            mesh: 'mesh-01',
+            name: 'some-really-cool-dp',
+            networking: {
+              inbound: [
+                {
+                  interface: '172.21.0.6:6060:6060',
+                  tags: {
+                    env: 'prod',
+                    service: 'some-really-cool-dp',
+                    version: 'v8',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04'
+                  }
+                }
+              ],
+              outbound: [
+                {
+                  interface: ':5000',
+                  service: 'kuma-example-backend'
+                }
+              ]
+            },
+            type: 'Dataplane'
+          }
+        ]
+      })
       .onGet('/meshes/default/dataplanes').reply(200, {
         items: [
           {
@@ -355,18 +432,27 @@ export default class Mock {
               ]
             },
             type: 'Dataplane'
-          },
+          }
+        ]
+      })
+      .onGet('/meshes/kong-mania-12/dataplanes').reply(200, {
+        items: [
           {
-            mesh: 'default',
-            name: 'testing-the-gui-dp-2',
+            mesh: 'kong-mania-12',
+            name: 'hello-world-bazfoo-123',
             networking: {
               inbound: [
                 {
-                  interface: '172.21.0.5:7070:7070',
+                  interface: '172.21.0.4:8000:8000',
                   tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
+                    service: 'hello-world-bazfoo-123',
+                    tag02: 'value02',
+                    tag03: 'value03',
+                    tag04: 'value04',
+                    tag05: 'value05',
+                    tag06: 'value06',
+                    tag07: 'value07',
+                    tag08: 'value08'
                   }
                 }
               ]
@@ -375,9 +461,9 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/dataplanes+insights/kuma-example-app').reply(200, {
+      .onGet('/meshes/mesh-01/dataplanes+insights/hello-world-foobar-002').reply(200, {
         type: 'DataplaneOverview',
-        mesh: 'default',
+        mesh: 'mesh-01',
         name: 'kuma-example-app',
         dataplane: {
           networking: {
@@ -394,7 +480,135 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              disconnectTime: '2019-12-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/mesh-01/dataplanes+insights/kuma-test-run-001').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'mesh-01',
+        name: 'kuma-test-run-001',
+        dataplane: {
+          networking: {
+            address: '172.21.0.8',
+            inbound: [
+              {
+                port: 8000,
+                servicePort: 8000,
+                tags: {
+                  protocol: 'http',
+                  service: 'kuma-test-run-001'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/mesh-01/dataplanes+insights/some-really-cool-dp').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'mesh-01',
+        name: 'some-really-cool-dp',
+        dataplane: {
+          networking: {
+            address: '172.21.0.8',
+            inbound: [
+              {
+                port: 8000,
+                servicePort: 8000,
+                tags: {
+                  protocol: 'http',
+                  service: 'some-really-cool-dp'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              disconnectTime: '2019-12-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/kuma-example-app').reply(200, {
         type: 'DataplaneOverview',
@@ -415,7 +629,84 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes+insights/kuma-example-app').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'kuma-example-app',
+        dataplane: {
+          networking: {
+            address: '172.21.0.8',
+            inbound: [
+              {
+                port: 8000,
+                servicePort: 8000,
+                tags: {
+                  protocol: 'http',
+                  service: 'kuma-example-app'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/kuma-example-backend-v1').reply(200, {
         type: 'DataplaneOverview',
@@ -437,7 +728,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/kuma-example-backend-v2').reply(200, {
         type: 'DataplaneOverview',
@@ -463,7 +782,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/kuma-example-client').reply(200, {
         type: 'DataplaneOverview',
@@ -484,7 +831,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/kuma-example-web').reply(200, {
         type: 'DataplaneOverview',
@@ -507,7 +882,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/another-example-dataplane').reply(200, {
         type: 'DataplaneOverview',
@@ -530,7 +933,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/another-example-dataplane').reply(200, {
         type: 'DataplaneOverview',
@@ -553,7 +984,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/example-dp-22').reply(200, {
         type: 'DataplaneOverview',
@@ -576,7 +1035,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/dataplanes-are-neat').reply(200, {
         type: 'DataplaneOverview',
@@ -599,7 +1086,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/foobar-baz-2000').reply(200, {
         type: 'DataplaneOverview',
@@ -622,7 +1137,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/dp-testing-1234').reply(200, {
         type: 'DataplaneOverview',
@@ -645,7 +1188,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/hello-world-1234').reply(200, {
         type: 'DataplaneOverview',
@@ -668,7 +1239,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/testing-the-gui-dp').reply(200, {
         type: 'DataplaneOverview',
@@ -691,7 +1290,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes+insights/testing-the-gui-dp-1').reply(200, {
         type: 'DataplaneOverview',
@@ -714,12 +1341,41 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              disconnectTime: '2019-12-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
-      .onGet('/meshes/default/dataplanes+insights/testing-the-gui-dp-2').reply(200, {
+      .onGet('/meshes/kong-mania-12/dataplanes+insights/hello-world-bazfoo-123').reply(200, {
         type: 'DataplaneOverview',
-        mesh: 'default',
-        name: 'testing-the-gui-dp',
+        mesh: 'kong-mania-12',
+        name: 'hello-world-bazfoo-123',
         dataplane: {
           networking: {
             address: '172.21.0.5',
@@ -737,7 +1393,35 @@ export default class Mock {
             ]
           }
         },
-        dataplaneInsight: {}
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/traffic-traces').reply(200, {
         items: [

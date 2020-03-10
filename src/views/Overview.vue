@@ -1,6 +1,7 @@
 <template>
   <div class="overview">
     <page-header noflex>
+      <breadcrumbs />
       <h2 class="xxl">
         {{ this.$route.meta.title }}
       </h2>
@@ -58,19 +59,15 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-      table-actions-route-name="mesh"
       @reloadData="bootstrap"
-    >
-      <template slot="tableDataActionsLinkText">
-        View
-      </template>
-    </DataOverview>
+    />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import PageHeader from '@/components/Utils/PageHeader.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
@@ -83,8 +80,9 @@ export default {
     }
   },
   components: {
-    MetricGrid,
     PageHeader,
+    Breadcrumbs,
+    MetricGrid,
     DataOverview,
     CardSkeleton
   },
@@ -100,9 +98,8 @@ export default {
       },
       tableData: {
         headers: [
-          { label: 'Name', key: 'name' },
-          { label: 'Type', key: 'type' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Mesh', key: 'name' },
+          { label: 'Offline Dataplanes', key: 'offlineDpCount' }
         ],
         data: []
       }
@@ -165,8 +162,8 @@ export default {
       // get the total mesh count
       this.$store.dispatch('getMeshTotalCount')
 
-      // get the total dataplane count within this mesh
-      // this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
+      // get (or refresh) the full dataplane list
+      this.$store.dispatch('getAllDataplanes')
 
       // get the total dataplane count
       this.$store.dispatch('getDataplaneTotalCount')
@@ -190,13 +187,37 @@ export default {
       this.$store.dispatch('getTrafficTraceTotalCount')
 
       // prepare and populate the table data
+
       const getMeshData = () => {
+        const dpList = this.$store.state.totalDataplaneList
+
         return this.$api.getAllMeshes()
           .then(response => {
             const items = response.items
+            const itemStatus = []
+
+            for (let i = 0; i < items.length; i++) {
+              const mesh = items[i].name
+
+              const dpStatus = () => {
+                const totalDpInMesh = dpList.filter(x => x.mesh === mesh).length
+                const offlineDpCount = dpList.filter(x => x.status === 'Offline' && x.mesh === mesh).length
+
+                if (totalDpInMesh === 0) {
+                  return 'No Dataplanes'
+                } else {
+                  return `${offlineDpCount} of ${totalDpInMesh}`
+                }
+              }
+
+              itemStatus.push({
+                name: mesh,
+                offlineDpCount: dpStatus()
+              })
+            }
 
             if (items && items.length) {
-              this.tableData.data = [...items]
+              this.tableData.data = [...itemStatus]
               this.tableDataIsEmpty = false
             } else {
               this.tableData.data = []

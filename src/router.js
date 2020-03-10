@@ -82,7 +82,7 @@ export default (store) => {
       name: 'global-overview',
       meta: {
         title: 'Global Overview',
-        excludeAsBreadcrumb: true
+        breadcrumb: 'Overview'
       },
       component: () => import('@/views/Overview')
     },
