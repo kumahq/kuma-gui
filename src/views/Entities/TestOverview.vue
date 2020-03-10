@@ -22,40 +22,36 @@
       :initial-tab="initialTab"
       :tabs="tabs"
     >
-      <template slot="tab-link-tab-1">
-        Go to Tab 1
+      <template slot="tab-link-overview">
+        Overview
       </template>
-      <template slot="tab-content-tab-1">
-        <h3>Tab Content 1</h3>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, veniam
-          fugiat, officiis perferendis esse excepturi saepe cupiditate eligendi hic
-          tempore nobis, necessitatibus molestias officia dolore iste laboriosam deleniti. Facilis, iusto.
-        </p>
-      </template>
-
-      <template slot="tab-link-tab-2">
-        Go to Tab 2
-      </template>
-      <template slot="tab-content-tab-2">
-        <h3>Tab Content 2</h3>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, veniam
-          fugiat, officiis perferendis esse excepturi saepe cupiditate eligendi hic
-          tempore nobis, necessitatibus molestias officia dolore iste laboriosam deleniti. Facilis, iusto.
-        </p>
+      <template slot="tab-content-overview">
+        <KCard title="Tab 1 Is Here">
+          <template slot="body">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
+              error iusto beatae fugit nemo, aliquid modi itaque aliquam, perferendis
+              nostrum praesentium optio. Quia esse voluptas corporis ipsa porro!
+              Recusandae, tempora.
+            </p>
+          </template>
+        </KCard>
       </template>
 
-      <template slot="tab-link-tab-3">
-        Go to Tab 3
+      <template slot="tab-link-yaml-view">
+        YAML
       </template>
-      <template slot="tab-content-tab-3">
-        <h3>Tab Content 3</h3>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, veniam
-          fugiat, officiis perferendis esse excepturi saepe cupiditate eligendi hic
-          tempore nobis, necessitatibus molestias officia dolore iste laboriosam deleniti. Facilis, iusto.
-        </p>
+      <template slot="tab-content-yaml-view">
+        <KCard title="Say Hello to Tab Content 2!">
+          <template slot="body">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat velit
+              repudiandae quo voluptatem incidunt exercitationem quisquam, veniam
+              corrupti maxime! Modi iusto veniam suscipit, a qui ad doloribus quas
+              pariatur ratione.
+            </p>
+          </template>
+        </KCard>
       </template>
     </Tabs>
   </div>
@@ -66,6 +62,9 @@ import { mapGetters } from 'vuex'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
+
+// test items
+import KCard from '@kongponents/kcard'
 import Tabs from '@/components/Utils/Tabs'
 
 export default {
@@ -79,6 +78,7 @@ export default {
     PageHeader,
     Breadcrumbs,
     DataOverview,
+    KCard,
     Tabs
   },
   data () {
@@ -98,11 +98,10 @@ export default {
         ],
         data: []
       },
-      initialTab: 'tab-1',
+      initialTab: 'overview',
       tabs: [
-        'tab-1',
-        'tab-2',
-        'tab-3'
+        'overview',
+        'yaml-view'
       ]
     }
   },
