@@ -162,28 +162,6 @@
       </template>
     </KEmptyState>
 
-    <!-- empty state -->
-    <!-- <KEmptyState
-      v-if="isEmpty"
-      cta-is-hidden
-    >
-      <template slot="title">
-        {{ emptyState.title }}
-      </template>
-      <template
-        v-if="showCta"
-        slot="message"
-      >
-        <router-link
-          v-if="ctaAction && ctaAction.length"
-          :to="ctaAction"
-        >
-          {{ emptyState.ctaText }}
-        </router-link>
-        {{ emptyState.message }}
-      </template>
-    </KEmptyState> -->
-
     <!-- error has occurred -->
     <KEmptyState
       v-if="hasError"

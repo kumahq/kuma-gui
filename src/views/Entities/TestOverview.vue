@@ -1,40 +1,85 @@
 <template>
-  <div class="test-overview">
+  <div class="overview">
+    <page-header noflex>
+      <breadcrumbs />
+      <h2 class="xxl">
+        {{ this.$route.meta.title }}
+      </h2>
+    </page-header>
+
     <DataOverview
-      :display-metrics="true"
-      :metrics-data="tableData"
-      :cta-action="ctaAction"
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
       :empty-state="empty_state"
       :display-data-table="true"
-      :table-data="tableRowData"
+      :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-      table-actions-route-name="mesh-overview"
+      @reloadData="bootstrap"
+    />
+
+    <Tabs
+      :initial-tab="initialTab"
+      :tabs="tabs"
     >
-      <template slot="tableDataActionsLinkText">
-        View
+      <template slot="tab-link-tab-1">
+        Go to Tab 1
       </template>
-      <template slot="content">
-        <h2 class="title-2x">
-          Optional Extra Content Here
-        </h2>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <template slot="tab-content-tab-1">
+        <h3>Tab Content 1</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, veniam
+          fugiat, officiis perferendis esse excepturi saepe cupiditate eligendi hic
+          tempore nobis, necessitatibus molestias officia dolore iste laboriosam deleniti. Facilis, iusto.
+        </p>
       </template>
-    </DataOverview>
+
+      <template slot="tab-link-tab-2">
+        Go to Tab 2
+      </template>
+      <template slot="tab-content-tab-2">
+        <h3>Tab Content 2</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, veniam
+          fugiat, officiis perferendis esse excepturi saepe cupiditate eligendi hic
+          tempore nobis, necessitatibus molestias officia dolore iste laboriosam deleniti. Facilis, iusto.
+        </p>
+      </template>
+
+      <template slot="tab-link-tab-3">
+        Go to Tab 3
+      </template>
+      <template slot="tab-content-tab-3">
+        <h3>Tab Content 3</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta, veniam
+          fugiat, officiis perferendis esse excepturi saepe cupiditate eligendi hic
+          tempore nobis, necessitatibus molestias officia dolore iste laboriosam deleniti. Facilis, iusto.
+        </p>
+      </template>
+    </Tabs>
   </div>
 </template>
 
 <script>
-import DataOverview from '@/components/Skeletons/DataOverview'
+import { mapGetters } from 'vuex'
+import PageHeader from '@/components/Utils/PageHeader.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import DataOverview from '@/components/Skeletons/DataOverview.vue'
+import Tabs from '@/components/Utils/Tabs'
 
 export default {
-  name: 'TestOverview',
+  name: 'Overview',
   metaInfo () {
     return {
-      title: `${this.$route.meta.title} for ${this.$route.params.mesh}`
+      title: this.$route.meta.title
     }
   },
   components: {
-    DataOverview
+    PageHeader,
+    Breadcrumbs,
+    DataOverview,
+    Tabs
   },
   data () {
     return {
@@ -44,47 +89,27 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no items present.',
-        ctaText: 'Hello World'
+        message: 'There are no Meshes present.'
       },
-      tableRowData: {
+      tableData: {
         headers: [
-          { label: 'Name', key: 'name' },
-          { label: 'Type', key: 'type' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Mesh', key: 'name' },
+          { label: 'Online Dataplanes', key: 'onlineDpCount' }
         ],
         data: []
-      }
+      },
+      initialTab: 'tab-1',
+      tabs: [
+        'tab-1',
+        'tab-2',
+        'tab-3'
+      ]
     }
   },
   computed: {
-    ctaAction () {
-      return { name: 'global-overview' }
-    },
-    tableData () {
-      return [
-        {
-          metric: 'Dataplanes',
-          value: this.$store.state.totalDataplaneCountFromMesh
-        },
-        {
-          metric: 'Traffic Routes',
-          value: this.$store.state.totalTrafficRoutesCountFromMesh
-        },
-        {
-          metric: 'Traffic Permissions',
-          value: this.$store.state.totalTrafficPermissionsCountFromMesh
-        },
-        {
-          metric: 'Traffic Logs',
-          value: this.$store.state.totalTrafficLogsCountFromMesh
-        },
-        {
-          metric: 'Traffic Traces',
-          value: this.$store.state.totalTrafficTracesCountFromMesh
-        }
-      ]
-    }
+    ...mapGetters({
+      title: 'getTagline'
+    })
   },
   watch: {
     '$route' (to, from) {
@@ -99,43 +124,55 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      // get the total number of dataplanes from selected mesh
-      this.$store.dispatch('getDataplaneFromMeshTotalCount', this.$route.params.mesh)
-
-      // get the total number of traffic routes from selected mesh
-      this.$store.dispatch('getTrafficRoutesFromMeshTotalCount', this.$route.params.mesh)
-
-      // get the total number of traffic permissions from selected mesh
-      this.$store.dispatch('getTrafficPermissionsFromMeshTotalCount', this.$route.params.mesh)
-
-      // get the total number of traffic logs from selected mesh
-      this.$store.dispatch('getTrafficLogsFromMeshTotalCount', this.$route.params.mesh)
-
-      // get the total number of traffic traces from selected mesh
-      this.$store.dispatch('getTrafficTracesFromMeshTotalCount', this.$route.params.mesh)
-
-      // get the mesh from our route params
-      const mesh = 'default'
+      // get (or refresh) the full dataplane list
+      this.$store.dispatch('getAllDataplanes')
 
       // prepare and populate the table data
       const getMeshData = () => {
-        return this.$api.getAllDataplanesFromMesh(mesh)
+        const dpList = this.$store.state.totalDataplaneList
+
+        return this.$api.getAllMeshes()
           .then(response => {
             const items = response.items
+            const itemStatus = []
+
+            for (let i = 0; i < items.length; i++) {
+              const mesh = items[i].name
+
+              const dpStatus = () => {
+                const totalDpInMesh = dpList.filter(x => x.mesh === mesh).length
+                const onlineDpCount = dpList.filter(x => x.status === 'Online' && x.mesh === mesh).length
+
+                if (totalDpInMesh === 0) {
+                  return 'No Dataplanes'
+                } else {
+                  return `${onlineDpCount} of ${totalDpInMesh}`
+                }
+              }
+
+              itemStatus.push({
+                name: mesh,
+                onlineDpCount: dpStatus()
+              })
+            }
 
             if (items && items.length) {
-              this.tableRowData.data = [...items]
+              this.tableData.data = [...itemStatus]
               this.tableDataIsEmpty = false
             } else {
-              this.tableRowData.data = []
+              this.tableData.data = []
               this.tableDataIsEmpty = true
             }
           })
           .catch(error => {
-            this.tableDataIsEmpty = true
-            this.isEmpty = true
+            this.hasError = true
 
             console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.isLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
           })
       }
 
@@ -144,3 +181,18 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.empty-state-title {
+
+  .card-icon {
+    text-align: center;
+
+    img, svg {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+</style>

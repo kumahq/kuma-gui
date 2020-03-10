@@ -1,19 +1,19 @@
 export default {
 
   sections: [
-    // {
-    //   name: 'Global',
-    //   id: 'global',
-    //   skipRbac: true,
-    //   items: [
-    //     {
-    //       name: 'Global Overview',
-    //       link: '/overview',
-    //       title: false,
-    //       root: true
-    //     }
-    //   ]
-    // },
+    {
+      name: 'Global',
+      id: 'global',
+      skipRbac: true,
+      items: [
+        {
+          name: 'Global Overview',
+          link: '/overview',
+          title: false,
+          root: true
+        }
+      ]
+    },
     {
       name: 'General',
       id: 'general',
@@ -25,7 +25,7 @@ export default {
           parent: 'general'
         },
         {
-          name: 'Overview',
+          name: 'Mesh Overview',
           link: '/overview',
           title: false,
           parent: 'general'

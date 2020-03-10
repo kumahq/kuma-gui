@@ -99,7 +99,7 @@ export default {
       tableData: {
         headers: [
           { label: 'Mesh', key: 'name' },
-          { label: 'Offline Dataplanes', key: 'offlineDpCount' }
+          { label: 'Online Dataplanes', key: 'onlineDpCount' }
         ],
         data: []
       }
@@ -187,7 +187,6 @@ export default {
       this.$store.dispatch('getTrafficTraceTotalCount')
 
       // prepare and populate the table data
-
       const getMeshData = () => {
         const dpList = this.$store.state.totalDataplaneList
 
@@ -201,18 +200,18 @@ export default {
 
               const dpStatus = () => {
                 const totalDpInMesh = dpList.filter(x => x.mesh === mesh).length
-                const offlineDpCount = dpList.filter(x => x.status === 'Offline' && x.mesh === mesh).length
+                const onlineDpCount = dpList.filter(x => x.status === 'Online' && x.mesh === mesh).length
 
                 if (totalDpInMesh === 0) {
                   return 'No Dataplanes'
                 } else {
-                  return `${offlineDpCount} of ${totalDpInMesh}`
+                  return `${onlineDpCount} of ${totalDpInMesh}`
                 }
               }
 
               itemStatus.push({
                 name: mesh,
-                offlineDpCount: dpStatus()
+                onlineDpCount: dpStatus()
               })
             }
 
