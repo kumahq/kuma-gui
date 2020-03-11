@@ -42,7 +42,7 @@
           <!-- status -->
           <template
             v-if="displayTableDataStatus"
-            v-slot:status="{rowValue}"
+            v-slot:status="{ rowValue }"
           >
             <div
               class="entity-status"
@@ -54,7 +54,7 @@
           </template>
           <!-- tags -->
           <template
-            v-slot:tags="{rowValue}"
+            v-slot:tags="{ rowValue }"
           >
             <span
               v-for="(item, key) in rowValue"
@@ -65,7 +65,6 @@
               <span
                 class="entity-tags__label"
                 :class="`entity-tags__label--${item.label.toLowerCase()}`"
-                :style="`color: var(${tagColors[key].text}) background-color: var(${tagColors[key].fill})`"
               >
                 {{ item.label }}
               </span>
@@ -77,11 +76,13 @@
               </span>
             </span>
           </template>
+
           <template
             slot="actions"
             slot-scope="{ row }"
           >
             <router-link
+              v-if="row.type"
               :to="{
                 name: tableActionsRouteName,
                 params: {
@@ -100,6 +101,13 @@
             >
               <slot name="tableDataActionsLinkText" />
             </router-link>
+
+            <a
+              v-if="tableDataFunctionText"
+              @click.prevent="$emit('tableAction', row[tableDataRow])"
+            >
+              {{ tableDataFunctionText }}
+            </a>
           </template>
         </KTable>
 
@@ -194,6 +202,10 @@ export default {
     Pagination
   },
   props: {
+    pageSize: {
+      type: Number,
+      default: 12
+    },
     displayMetrics: {
       type: Boolean,
       default: false
@@ -253,44 +265,21 @@ export default {
     displayRefreshControl: {
       type: Boolean,
       default: true
+    },
+    tableDataRow: {
+      type: String,
+      required: false,
+      default: 'name'
+    },
+    tableDataFunctionText: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   data () {
     return {
-      pageSize: 12,
-      pageNumber: 0,
-      lightText: '#fff',
-      darkText: '#000',
-      tagColors: [
-        {
-          fill: '--green-1',
-          text: this.darkText
-        },
-        {
-          fill: '--blue-2',
-          text: this.lightText
-        },
-        {
-          fill: '--blue-4',
-          text: this.lightText
-        },
-        {
-          fill: '--logo-coral',
-          text: this.darkText
-        },
-        {
-          fill: '--logo-mint',
-          text: this.darkText
-        },
-        {
-          fill: '--logo-navy',
-          text: this.lightText
-        },
-        {
-          fill: '--logo-green',
-          text: this.darkText
-        }
-      ]
+      pageNumber: 0
     }
   },
   computed: {

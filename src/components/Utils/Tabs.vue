@@ -1,5 +1,13 @@
 <template>
   <div class="tab-container">
+    <header
+      v-if="tabGroupTitle"
+      class="tab__header"
+    >
+      <h3 class="xl">
+        {{ tabGroupTitle }}
+      </h3>
+    </header>
     <ul class="tab__nav">
       <li
         v-for="tab in tabs"
@@ -19,7 +27,9 @@
       </li>
     </ul>
     <div class="tab__content-container">
-      <slot :name="tabContentSlotName" />
+      <div class="tab__content-panel">
+        <slot :name="tabContentSlotName" />
+      </div>
     </div>
   </div>
 </template>
@@ -35,6 +45,11 @@ export default {
     tabs: {
       type: Array,
       required: true
+    },
+    tabGroupTitle: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   data () {
@@ -60,7 +75,9 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
-  --tab-nav-border-bottom: 1px solid #eee;
+  --tab-container-margin: var(--spacing-md) 0;
+  --tab-header-margin: 0 0 var(--spacing-md) 0;
+  --tab-nav-border-bottom: 1px solid var(--gray-4);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
   --tab-link-gap: 0;
@@ -69,8 +86,13 @@ export default {
   --tab-link-active-border-color: var(--gray-2);
   --tab-link-border: 1px solid var(--gray-4);
   --tab-active-border-color: var(--gray-2);
+  --tab-panel-padding: var(--spacing-md) 0;
 
-  margin: 2rem 0;
+  margin: var(--tab-container-margin);
+}
+
+.tab__header {
+  margin: var(--tab-header-margin);
 }
 
 .tab__nav {
@@ -80,6 +102,7 @@ export default {
   align-items: stretch;
   text-align: center;
   margin-bottom: -1px;
+  border-bottom: var(--tab-nav-border-bottom);
 }
 
 .tab__nav-item {
@@ -123,5 +146,9 @@ export default {
 .tab__content-container {
   position: relative;
   z-index: 1;
+}
+
+.tab__content-panel {
+  padding: var(--tab-panel-padding);
 }
 </style>

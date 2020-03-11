@@ -8,6 +8,7 @@
     </page-header>
 
     <DataOverview
+      :page-size="6"
       :has-error="hasError"
       :is-loading="isLoading"
       :is-empty="isEmpty"
@@ -15,49 +16,45 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
+      table-data-function-text="View"
+      table-data-row="name"
+      @tableAction="tableAction"
       @reloadData="bootstrap"
     />
 
     <Tabs
       :initial-tab="initialTab"
       :tabs="tabs"
+      :tab-group-title="tabGroupTitle"
     >
       <template slot="tab-link-overview">
         Overview
       </template>
       <template slot="tab-content-overview">
-        <KCard
-          title="Tab 1 Is Here"
-          border-variant="borderTop"
-        >
-          <template slot="body">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-              error iusto beatae fugit nemo, aliquid modi itaque aliquam, perferendis
-              nostrum praesentium optio. Quia esse voluptas corporis ipsa porro!
-              Recusandae, tempora.
-            </p>
-          </template>
-        </KCard>
+        <h3 class="xl">
+          Overview Content
+        </h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
+          error iusto beatae fugit nemo, aliquid modi itaque aliquam, perferendis
+          nostrum praesentium optio. Quia esse voluptas corporis ipsa porro!
+          Recusandae, tempora.
+        </p>
       </template>
 
       <template slot="tab-link-yaml-view">
         YAML
       </template>
       <template slot="tab-content-yaml-view">
-        <KCard
-          title="Say Hello to Tab Content 2!"
-          border-variant="borderTop"
-        >
-          <template slot="body">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat velit
-              repudiandae quo voluptatem incidunt exercitationem quisquam, veniam
-              corrupti maxime! Modi iusto veniam suscipit, a qui ad doloribus quas
-              pariatur ratione.
-            </p>
-          </template>
-        </KCard>
+        <h3 class="xl">
+          YAML Content
+        </h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat velit
+          repudiandae quo voluptatem incidunt exercitationem quisquam, veniam
+          corrupti maxime! Modi iusto veniam suscipit, a qui ad doloribus quas
+          pariatur ratione.
+        </p>
       </template>
     </Tabs>
   </div>
@@ -70,7 +67,6 @@ import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
 
 // test items
-import KCard from '@kongponents/kcard'
 import Tabs from '@/components/Utils/Tabs'
 
 export default {
@@ -84,7 +80,6 @@ export default {
     PageHeader,
     Breadcrumbs,
     DataOverview,
-    KCard,
     Tabs
   },
   data () {
@@ -100,7 +95,8 @@ export default {
       tableData: {
         headers: [
           { label: 'Mesh', key: 'name' },
-          { label: 'Online Dataplanes', key: 'onlineDpCount' }
+          { label: 'Online Dataplanes', key: 'onlineDpCount' },
+          { key: 'actions', hideLabel: true }
         ],
         data: []
       },
@@ -113,8 +109,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline'
-    })
+      title: 'getTagline',
+      mesh: 'getSelectedMesh'
+    }),
+    tabGroupTitle () {
+      return `Mesh: ${this.mesh}`
+    }
   },
   watch: {
     '$route' (to, from) {
@@ -125,6 +125,13 @@ export default {
     this.bootstrap()
   },
   methods: {
+    tableAction (ev) {
+      const dataSource = ev
+
+      this.tabGroupTitle = ev
+
+      console.log(dataSource)
+    },
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false
