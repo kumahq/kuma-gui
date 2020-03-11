@@ -26,7 +26,10 @@
         Overview
       </template>
       <template slot="tab-content-overview">
-        <KCard title="Tab 1 Is Here">
+        <KCard
+          title="Tab 1 Is Here"
+          border-variant="borderTop"
+        >
           <template slot="body">
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
@@ -42,7 +45,10 @@
         YAML
       </template>
       <template slot="tab-content-yaml-view">
-        <KCard title="Say Hello to Tab Content 2!">
+        <KCard
+          title="Say Hello to Tab Content 2!"
+          border-variant="borderTop"
+        >
           <template slot="body">
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat velit

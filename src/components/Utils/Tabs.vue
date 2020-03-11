@@ -8,8 +8,8 @@
         class="tab__nav-item"
       >
         <a
-          href="#"
           class="tab__nav-link"
+          :aria-selected="(activeTab === tab).toString()"
           @click.prevent="switchTab(tab)"
         >
           <slot :name="tabNavItemSlotName(tab)">
@@ -63,18 +63,23 @@ export default {
   --tab-nav-border-bottom: 1px solid #eee;
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
-  --tab-link-gap: var(--spacing-sm);
-  --tab-active-background-color: var(--gray-4);
+  --tab-link-gap: 0;
+  --tab-link-active-text-color: var(--blue-4);
+  --tab-link-background-color: #fff;
+  --tab-link-active-border-color: var(--gray-2);
+  --tab-link-border: 1px solid var(--gray-4);
+  --tab-active-border-color: var(--gray-2);
 
   margin: 2rem 0;
 }
 
 .tab__nav {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: stretch;
   text-align: center;
   margin-bottom: -1px;
-  // border-bottom: var(--tab-nav-border-bottom);
 }
 
 .tab__nav-item {
@@ -84,20 +89,39 @@ export default {
   }
 }
 
+@mixin active-link-border {
+  border-top-color: var(--tab-active-border-color);
+  border-right-color: var(--tab-active-border-color);
+  border-left-color: var(--tab-active-border-color);
+}
+
 .tab__nav-link {
   display: block;
+  background-color: var(--tab-link-background-color);
   padding: var(--tab-link-padding);
   border-radius: var(--tab-link-radius);
+  border: var(--tab-link-border);
+  border-bottom-color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    @include active-link-border;
+
+    color: var(--tab-link-active-text-color);
+  }
 }
 
 .tab__nav-item--active {
 
   .tab__nav-link {
-    background-color: var(--tab-active-background-color);
+    @include active-link-border;
+
+    color: var(--tab-link-active-text-color);
   }
 }
 
 .tab__content-container {
-
+  position: relative;
+  z-index: 1;
 }
 </style>

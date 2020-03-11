@@ -37,6 +37,7 @@
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
           :options="tableDataFiltered"
           has-hover
+          is-small
         >
           <!-- status -->
           <template
