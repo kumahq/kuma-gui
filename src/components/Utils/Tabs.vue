@@ -75,7 +75,7 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
-  --tab-container-margin: var(--spacing-md) 0;
+  --tab-container-margin: var(--spacing-xl) 0;
   --tab-header-margin: 0 0 var(--spacing-md) 0;
   --tab-nav-border-bottom: 1px solid var(--gray-4);
   --tab-link-radius: 3px 3px 0 0;

@@ -1,6 +1,7 @@
 <template>
   <div class="health-checks">
     <DataOverview
+      :page-size="6"
       :has-error="hasError"
       :is-loading="isLoading"
       :is-empty="isEmpty"
@@ -8,18 +9,59 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-      table-actions-route-name="health-checks-details"
+      table-data-function-text="View"
+      table-data-row="name"
+      @tableAction="tableAction"
       @reloadData="bootstrap"
+    />
+
+    <Tabs
+      :initial-tab="initialTab"
+      :tabs="tabs"
+      :tab-group-title="tabGroupTitle"
     >
-      <template slot="tableDataActionsLinkText">
-        View
+      <!--
+        The tabbed content should look for the first entity present
+        based on the mesh that is selected. When the user clicks the link
+        on a table row, the data for that item is then loaded into the
+        tab content panels.
+      -->
+      <template slot="tab-link-overview">
+        Overview
       </template>
-    </DataOverview>
+      <template slot="tab-content-overview">
+        <h3 class="xl">
+          Overview Content
+        </h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
+          error iusto beatae fugit nemo, aliquid modi itaque aliquam, perferendis
+          nostrum praesentium optio. Quia esse voluptas corporis ipsa porro!
+          Recusandae, tempora.
+        </p>
+      </template>
+
+      <template slot="tab-link-yaml-view">
+        YAML
+      </template>
+      <template slot="tab-content-yaml-view">
+        <h3 class="xl">
+          YAML Content
+        </h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat velit
+          repudiandae quo voluptatem incidunt exercitationem quisquam, veniam
+          corrupti maxime! Modi iusto veniam suscipit, a qui ad doloribus quas
+          pariatur ratione.
+        </p>
+      </template>
+    </Tabs>
   </div>
 </template>
 
 <script>
 import DataOverview from '@/components/Skeletons/DataOverview'
+import Tabs from '@/components/Utils/Tabs'
 
 export default {
   name: 'HealthChecks',
@@ -27,7 +69,8 @@ export default {
     title: 'Health Checks'
   },
   components: {
-    DataOverview
+    DataOverview,
+    Tabs
   },
   data () {
     return {
@@ -47,7 +90,18 @@ export default {
           { key: 'actions', hideLabel: true }
         ],
         data: []
-      }
+      },
+      initialTab: 'overview',
+      tabs: [
+        'overview',
+        'yaml-view'
+      ]
+    }
+  },
+  computed: {
+    tabGroupTitle () {
+      return 'Health Check: name here'
+      // return `Health Check: ${}`
     }
   },
   watch: {
@@ -59,6 +113,13 @@ export default {
     this.bootstrap()
   },
   methods: {
+    tableAction (ev) {
+      const dataSource = ev
+
+      this.tabGroupTitle = ev
+
+      console.log(dataSource)
+    },
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false

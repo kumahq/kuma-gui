@@ -104,6 +104,7 @@
 
             <a
               v-if="tableDataFunctionText"
+              class="data-table-action-link"
               @click.prevent="$emit('tableAction', row[tableDataRow])"
             >
               {{ tableDataFunctionText }}
@@ -380,6 +381,11 @@ export default {
   padding: 0.15rem 0.5rem 0.15rem 0.75rem;
   color: currentColor;
   box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.data-table-action-link {
+  display: block;
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 841px) {
