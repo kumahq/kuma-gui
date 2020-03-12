@@ -45,15 +45,16 @@
         YAML
       </template>
       <template slot="tab-content-yaml-view">
-        <h3 class="xl">
-          YAML Content
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat velit
-          repudiandae quo voluptatem incidunt exercitationem quisquam, veniam
-          corrupti maxime! Modi iusto veniam suscipit, a qui ad doloribus quas
-          pariatur ratione.
-        </p>
+        <!-- <h3 class="xl">
+          Entity
+        </h3> -->
+        <YamlView
+          :title="entityOverviewTitle"
+          :has-error="yamlHasError"
+          :is-loading="yamlIsLoading"
+          :is-empty="yamlIsEmpty"
+          :content="entity"
+        />
       </template>
     </Tabs>
   </div>
@@ -62,6 +63,7 @@
 <script>
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
+import YamlView from '@/components/Skeletons/YamlView'
 
 export default {
   name: 'HealthChecks',
@@ -70,13 +72,17 @@ export default {
   },
   components: {
     DataOverview,
-    Tabs
+    Tabs,
+    YamlView
   },
   data () {
     return {
       isLoading: true,
       isEmpty: false,
       hasError: false,
+      yamlIsLoading: true,
+      yamlIsEmpty: false,
+      yamlHasError: false,
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
@@ -91,17 +97,33 @@ export default {
         ],
         data: []
       },
-      initialTab: 'overview',
+      initialTab: 'yaml-view',
       tabs: [
         'overview',
         'yaml-view'
-      ]
+      ],
+      entity: null,
+      firstEntity: null
     }
   },
   computed: {
     tabGroupTitle () {
-      return 'Health Check: name here'
-      // return `Health Check: ${}`
+      const mesh = this.$route.params.mesh || null
+
+      if (mesh) {
+        return `Mesh: ${mesh}`
+      } else {
+        return null
+      }
+    },
+    entityOverviewTitle () {
+      const entity = this.entity
+
+      if (entity) {
+        return `Entity Overview for ${entity.name}`
+      } else {
+        return null
+      }
     }
   },
   watch: {
@@ -116,9 +138,7 @@ export default {
     tableAction (ev) {
       const dataSource = ev
 
-      this.tabGroupTitle = ev
-
-      console.log(dataSource)
+      this.getEntity(dataSource)
     },
     bootstrap () {
       this.isLoading = true
@@ -135,6 +155,12 @@ export default {
               // sort the table data by name and the mesh it's associated with
               items
                 .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
+
+              // set the first item as the default for initial load
+              this.firstEntity = items[0].name
+
+              // load the YAML entity for the first item on page load
+              this.getEntity(this.firstEntity)
 
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
@@ -156,6 +182,31 @@ export default {
       }
 
       getHealthChecks()
+    },
+    getEntity (entity) {
+      this.yamlIsLoading = true
+      this.yamlIsEmpty = false
+
+      const mesh = this.$route.params.mesh
+
+      return this.$api.getHealthCheckFromMesh(mesh, entity)
+        .then(response => {
+          if (response) {
+            this.entity = response
+          } else {
+            this.entity = null
+            this.yamlIsEmpty = true
+          }
+        })
+        .catch(error => {
+          this.yamlHasError = true
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.yamlIsLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
+        })
     }
   }
 }
