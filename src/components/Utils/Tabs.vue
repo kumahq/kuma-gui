@@ -27,17 +27,72 @@
       </li>
     </ul>
     <div class="tab__content-container">
-      <div class="tab__content-panel">
+      <div
+        v-if="isReady"
+        class="tab__content-panel"
+      >
         <slot :name="tabContentSlotName" />
       </div>
+
+      <!-- loading state -->
+      <KEmptyState
+        v-if="isLoading"
+        cta-is-hidden
+      >
+        <template slot="title">
+          <div class="card-icon mb-3">
+            <KIcon
+              icon="spinner"
+              color="rgba(0, 0, 0, 0.1)"
+              size="42"
+            />
+          </div>
+          Data Loading...
+        </template>
+      </KEmptyState>
+
+      <!-- error has occurred -->
+      <KEmptyState
+        v-if="hasError"
+        cta-is-hidden
+      >
+        <template slot="title">
+          <div class="card-icon mb-3">
+            <KIcon
+              class="kong-icon--centered"
+              color="var(--yellow-base)"
+              icon="warning"
+              size="42"
+            />
+          </div>
+          An error has occurred while trying to load this data.
+        </template>
+      </KEmptyState>
     </div>
   </div>
 </template>
 
 <script>
+import KEmptyState from '@kongponents/kemptystate'
+
 export default {
   name: 'Tabs',
+  components: {
+    KEmptyState
+  },
   props: {
+    isLoading: {
+      type: Boolean,
+      default: false
+    },
+    isEmpty: {
+      type: Boolean,
+      default: false
+    },
+    hasError: {
+      type: Boolean,
+      default: false
+    },
     initialTab: {
       type: String,
       required: true
@@ -58,6 +113,9 @@ export default {
     }
   },
   computed: {
+    isReady () {
+      return !this.isEmpty && !this.hasError && !this.isLoading
+    },
     tabContentSlotName () {
       return `tab-content-${this.activeTab}`
     }

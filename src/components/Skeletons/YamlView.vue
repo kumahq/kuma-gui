@@ -7,6 +7,7 @@
       <KCard
         v-if="!isLoading && !isEmpty"
         :title="title"
+        border-variant="noBorder"
       >
         <template slot="body">
           <prism
@@ -55,7 +56,7 @@
 
     <!-- no data to load -->
     <KEmptyState
-      v-if="isEmpty"
+      v-if="isEmpty && !isLoading"
       cta-is-hidden
     >
       <template slot="title">

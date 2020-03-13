@@ -14,7 +14,7 @@
           v-for="item in items.items"
           :key="item.name"
           :value="item.name"
-          :selected="item.name === (meshFromLocalStorage || $route.params.mesh)"
+          :selected="item.name === ($route.params.mesh || meshFromLocalStorage)"
         >
           {{ item.name }}
         </option>

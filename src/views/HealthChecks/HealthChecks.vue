@@ -16,6 +16,9 @@
     />
 
     <Tabs
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
       :initial-tab="initialTab"
       :tabs="tabs"
       :tab-group-title="tabGroupTitle"
@@ -30,24 +33,25 @@
         Overview
       </template>
       <template slot="tab-content-overview">
-        <h3 class="xl">
-          Overview Content
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit
-          error iusto beatae fugit nemo, aliquid modi itaque aliquam, perferendis
-          nostrum praesentium optio. Quia esse voluptas corporis ipsa porro!
-          Recusandae, tempora.
-        </p>
+        <ul class="overview-entity-list">
+          <li
+            v-for="(value, key) in entity"
+            :key="key"
+          >
+            <h4 class="lg font-bold">
+              {{ key }}:
+            </h4>
+            <p>
+              <code>{{ value }}</code>
+            </p>
+          </li>
+        </ul>
       </template>
 
       <template slot="tab-link-yaml-view">
         YAML
       </template>
       <template slot="tab-content-yaml-view">
-        <!-- <h3 class="xl">
-          Entity
-        </h3> -->
         <YamlView
           :title="entityOverviewTitle"
           :has-error="yamlHasError"
@@ -97,7 +101,7 @@ export default {
         ],
         data: []
       },
-      initialTab: 'yaml-view',
+      initialTab: 'overview',
       tabs: [
         'overview',
         'yaml-view'
@@ -108,7 +112,7 @@ export default {
   },
   computed: {
     tabGroupTitle () {
-      const mesh = this.$route.params.mesh || null
+      const mesh = this.$route.params.mesh
 
       if (mesh) {
         return `Mesh: ${mesh}`
@@ -136,9 +140,9 @@ export default {
   },
   methods: {
     tableAction (ev) {
-      const dataSource = ev
+      const data = ev
 
-      this.getEntity(dataSource)
+      this.getEntity(data)
     },
     bootstrap () {
       this.isLoading = true
@@ -167,6 +171,8 @@ export default {
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+
+              this.getEntity(null)
             }
           })
           .catch(error => {
@@ -189,28 +195,32 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      return this.$api.getHealthCheckFromMesh(mesh, entity)
-        .then(response => {
-          if (response) {
-            this.entity = response
-          } else {
-            this.entity = null
-            this.yamlIsEmpty = true
-          }
-        })
-        .catch(error => {
-          this.yamlHasError = true
-          console.error(error)
-        })
-        .finally(() => {
-          setTimeout(() => {
-            this.yamlIsLoading = false
-          }, process.env.VUE_APP_DATA_TIMEOUT)
-        })
+      if (entity) {
+        return this.$api.getHealthCheckFromMesh(mesh, entity)
+          .then(response => {
+            if (response) {
+              this.entity = response
+            } else {
+              this.entity = null
+              this.yamlIsEmpty = true
+            }
+          })
+          .catch(error => {
+            this.yamlHasError = true
+            console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.yamlIsLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
+          })
+      } else {
+        setTimeout(() => {
+          this.yamlIsEmpty = true
+          this.yamlIsLoading = false
+        }, process.env.VUE_APP_DATA_TIMEOUT)
+      }
     }
   }
 }
 </script>
-
-<style>
-</style>

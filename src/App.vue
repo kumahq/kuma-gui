@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { setItemToStorage } from '@/Cache'
 import { mapState, mapGetters } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -80,7 +79,9 @@ export default {
           this.$store.dispatch('getTagline')
 
           // set the selected mesh in localStorage
-          setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
+          const mesh = this.$route.params.mesh || this.$store.getters.getSelectedMesh
+
+          localStorage.setItem('selectedMesh', mesh)
         }
       })
   }

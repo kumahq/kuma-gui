@@ -82,7 +82,7 @@
             slot-scope="{ row }"
           >
             <router-link
-              v-if="row.type"
+              v-if="row.type && $slots.tableDataActionsLinkText"
               :to="{
                 name: tableActionsRouteName,
                 params: {
@@ -105,7 +105,7 @@
             <a
               v-if="tableDataFunctionText"
               class="data-table-action-link"
-              @click.prevent="$emit('tableAction', row[tableDataRow])"
+              @click="$emit('tableAction', row[tableDataRow])"
             >
               {{ tableDataFunctionText }}
             </a>
@@ -386,6 +386,10 @@ export default {
 .data-table-action-link {
   display: block;
   cursor: pointer;
+
+  &.is-active {
+
+  }
 }
 
 @media only screen and (min-width: 841px) {

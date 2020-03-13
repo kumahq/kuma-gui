@@ -1472,6 +1472,172 @@ export default class Mock {
           }
         ]
       })
+      .onGet('/meshes/default/health-checks').reply(200, {
+        items: [
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'web-to-backend',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
+          },
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'web-to-banana',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
+          },
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'hello-health-check',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
+          }
+        ]
+      })
+      .onGet('/meshes/default/health-checks/web-to-backend').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'web-to-backend',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 3,
+            healthyThreshold: 1
+          }
+        }
+      })
+      .onGet('/meshes/default/health-checks/web-to-banana').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'web-to-banana',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 123,
+            healthyThreshold: 12
+          }
+        }
+      })
+      .onGet('/meshes/default/health-checks/hello-health-check').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'hello-health-check',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 3,
+            healthyThreshold: 4
+          }
+        }
+      })
       .onAny().passThrough()
   }
 }

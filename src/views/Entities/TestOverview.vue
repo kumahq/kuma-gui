@@ -27,6 +27,12 @@
       :tabs="tabs"
       :tab-group-title="tabGroupTitle"
     >
+      <!--
+        The tabbed content should look for the first entity present
+        based on the mesh that is selected. When the user clicks the link
+        on a table row, the data for that item is then loaded into the
+        tab content panels.
+      -->
       <template slot="tab-link-overview">
         Overview
       </template>
