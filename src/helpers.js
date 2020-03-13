@@ -293,16 +293,15 @@ export function humanReadableDate (tdate) {
 }
 
 /**
- * This is a hacky way of taking the tags data from a dataplane and cleaning it
- * up to be output as a single comma-separated list of things within a table
- * @param {String} items
+ * Takes an object and only returns the keys and
+ * values you want based on the items value.
+ * @param {Object} original
+ * @param {Object} desired
  */
-export function dpTagCleaner (items) {
-  return JSON.stringify(items)
-    .replace(/[{}]/g, '')
-    .replace(/"/g, '')
-    .replace(/,/g, ', ')
-    .replace(/:/g, ': ')
+export function getSome (original, desired) {
+  return desired.reduce((obj, key) =>
+    ({ ...obj, [key]: original[key] }), {}
+  )
 }
 
 export default {
@@ -321,5 +320,5 @@ export default {
   formatDate,
   deepIncludes,
   humanReadableDate,
-  dpTagCleaner
+  getSome
 }

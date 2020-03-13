@@ -33,19 +33,13 @@
         Overview
       </template>
       <template slot="tab-content-overview">
-        <ul class="overview-entity-list">
-          <li
-            v-for="(value, key) in entity"
-            :key="key"
-          >
-            <h4 class="lg font-bold">
-              {{ key }}:
-            </h4>
-            <p>
-              <code>{{ value }}</code>
-            </p>
-          </li>
-        </ul>
+        <LabelList
+          :title="generalOverviewTitle"
+          :has-error="entityHasError"
+          :is-loading="entityIsLoading"
+          :is-empty="entityIsEmpty"
+          :items="entity"
+        />
       </template>
 
       <template slot="tab-link-yaml-view">
@@ -54,10 +48,10 @@
       <template slot="tab-content-yaml-view">
         <YamlView
           :title="entityOverviewTitle"
-          :has-error="yamlHasError"
-          :is-loading="yamlIsLoading"
-          :is-empty="yamlIsEmpty"
-          :content="entity"
+          :has-error="entityHasError"
+          :is-loading="entityIsLoading"
+          :is-empty="entityIsEmpty"
+          :content="rawEntity"
         />
       </template>
     </Tabs>
@@ -65,9 +59,11 @@
 </template>
 
 <script>
+import { getSome } from '@/helpers'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
+import LabelList from '@/components/Utils/LabelList'
 
 export default {
   name: 'HealthChecks',
@@ -77,16 +73,17 @@ export default {
   components: {
     DataOverview,
     Tabs,
-    YamlView
+    YamlView,
+    LabelList
   },
   data () {
     return {
       isLoading: true,
       isEmpty: false,
       hasError: false,
-      yamlIsLoading: true,
-      yamlIsEmpty: false,
-      yamlHasError: false,
+      entityIsLoading: true,
+      entityIsEmpty: false,
+      entityHasError: false,
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
@@ -107,6 +104,7 @@ export default {
         'yaml-view'
       ],
       entity: null,
+      rawEntity: null,
       firstEntity: null
     }
   },
@@ -125,6 +123,15 @@ export default {
 
       if (entity) {
         return `Entity Overview for ${entity.name}`
+      } else {
+        return null
+      }
+    },
+    generalOverviewTitle () {
+      const entity = this.entity
+
+      if (entity) {
+        return `Overview for ${entity.name}`
       } else {
         return null
       }
@@ -190,34 +197,37 @@ export default {
       getHealthChecks()
     },
     getEntity (entity) {
-      this.yamlIsLoading = true
-      this.yamlIsEmpty = false
+      this.entityIsLoading = true
+      this.entityIsEmpty = false
 
       const mesh = this.$route.params.mesh
 
-      if (entity) {
+      if (entity && entity !== null) {
         return this.$api.getHealthCheckFromMesh(mesh, entity)
           .then(response => {
             if (response) {
-              this.entity = response
+              const selected = ['type', 'name', 'mesh']
+
+              this.entity = getSome(response, selected)
+              this.rawEntity = response
             } else {
               this.entity = null
-              this.yamlIsEmpty = true
+              this.entityIsEmpty = true
             }
           })
           .catch(error => {
-            this.yamlHasError = true
+            this.entityHasError = true
             console.error(error)
           })
           .finally(() => {
             setTimeout(() => {
-              this.yamlIsLoading = false
+              this.entityIsLoading = false
             }, process.env.VUE_APP_DATA_TIMEOUT)
           })
       } else {
         setTimeout(() => {
-          this.yamlIsEmpty = true
-          this.yamlIsLoading = false
+          this.entityIsEmpty = true
+          this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
     }

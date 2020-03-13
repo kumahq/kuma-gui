@@ -144,7 +144,9 @@ export default {
   --tab-link-active-border-color: var(--gray-2);
   --tab-link-border: 1px solid var(--gray-4);
   --tab-active-border-color: var(--gray-2);
-  --tab-panel-padding: var(--spacing-md) 0;
+  --tab-panel-padding: var(--spacing-sm);
+  --tab-panel-border: 1px solid var(--gray-4);
+  --tab-panel-radius: 0 0 3px 3px;
 
   margin: var(--tab-container-margin);
 }
@@ -208,5 +210,8 @@ export default {
 
 .tab__content-panel {
   padding: var(--tab-panel-padding);
+  border: var(--tab-panel-border);
+  border-top: 0;
+  border-radius: var(--tab-panel-radius);
 }
 </style>

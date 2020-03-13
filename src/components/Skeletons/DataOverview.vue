@@ -32,7 +32,10 @@
       />
 
       <!-- data -->
-      <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
+      <div
+        v-if="displayDataTable && !tableDataIsEmpty && tableData"
+        class="data-overview-table"
+      >
         <KTable
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
           :options="tableDataFiltered"
@@ -280,7 +283,8 @@ export default {
   },
   data () {
     return {
-      pageNumber: 0
+      pageNumber: 0,
+      selectedRow: 1
     }
   },
   computed: {
@@ -307,7 +311,25 @@ export default {
       return newData
     }
   },
+  mounted () {
+    // this.makeTrClickable()
+  },
   methods: {
+    /**
+     * This is insanely hacky. The KTable component does not support
+     * this functionality out-of-box, and implementing it conflicts
+     * with work being done on another Kong product.
+     */
+    // makeTrClickable () {
+    //   const tr = this.$el.querySelectorAll('.k-table tr')
+
+    //   tr.forEach((r, i) => {
+    //     r.addEventListener('click', (e) => {
+    //       this.selectedRow = i
+    //       console.log(i)
+    //     })
+    //   })
+    // },
     goToPreviousPage () {
       this.pageNumber--
     },
@@ -389,6 +411,22 @@ export default {
 
   &.is-active {
 
+  }
+}
+
+.data-overview-table {
+  border: 1px solid var(--gray-4);
+  border-bottom: 0;
+}
+
+.k-table {
+
+  .active-row {
+    background-color: var(--blue-lightest);
+  }
+
+  th {
+    background-color: var(--gray-1);
   }
 }
 
