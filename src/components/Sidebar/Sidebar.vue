@@ -222,6 +222,7 @@ export default {
 
 <style lang='scss'>
 $top-nav-height: 75px;
+
 .workspace-tile {
   padding: 24px 0;
   border-bottom: 1px solid #e0e1e2;
@@ -231,6 +232,7 @@ $top-nav-height: 75px;
     text-decoration: none;
   }
 }
+
 .gry-bounding {
   display: flex;
   position: relative;
@@ -265,12 +267,14 @@ $top-nav-height: 75px;
 }
 
 nav {
+
   .menu-container {
     width: 240px;
     height: calc(100vh - 145px); // 100vh - (Header + ws picker + collapse btn)
     overflow-y: auto;
     overflow-x: hidden;
   }
+
   &.closed {
     .workspace-tile {
       border-top: 1px solid #e0e1e2;
@@ -293,7 +297,7 @@ nav {
 }
 
 /* Fix for IE */
-.workspace-toggle>span{
+.workspace-toggle > span{
   top: 10px
 }
 

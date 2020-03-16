@@ -792,6 +792,11 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kinput/-/kinput-0.2.0-0.tgz#cfeeb291e4080ea75064c84bba49abb74eec8d3a"
   integrity sha512-96y0veNkzZBt1of4BC98S/1Yl2k3KRr06+G4ZFXL3ueb6JWkCNPvd36C+xnIICD8cL8NG2rOZEvXHU8wTEtMaQ==
 
+"@kongponents/kinputswitch@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/kinputswitch/-/kinputswitch-0.2.2.tgz#f67d3cb78189b90bb09c9cb0740d3aaf951fe10f"
+  integrity sha512-e+dkC/mlLiPIns4Q4np8wuCQRK82pOGXUAKD56VTtru1zZTiVpWZnWy/UU7RwWNCYADAzol5tONgMQ2VvdcvkQ==
+
 "@kongponents/kmodal@^0.1.4-8":
   version "0.1.4-8"
   resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-0.1.4-8.tgz#13645f8da1fa64480c88ded2ee92b63ba40280c6"

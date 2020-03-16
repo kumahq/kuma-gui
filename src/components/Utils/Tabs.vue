@@ -209,7 +209,7 @@ export default {
 }
 
 .tab__content-panel {
-  padding: var(--tab-panel-padding);
+  // padding: var(--tab-panel-padding);
   border: var(--tab-panel-border);
   border-top: 0;
   border-radius: var(--tab-panel-radius);

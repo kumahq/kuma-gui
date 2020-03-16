@@ -294,7 +294,7 @@ export function humanReadableDate (tdate) {
 
 /**
  * Takes an object and only returns the keys and
- * values you want based on the items value.
+ * values you want based on the `items` value.
  * @param {Object} original
  * @param {Object} desired
  */

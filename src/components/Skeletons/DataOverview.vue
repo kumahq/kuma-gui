@@ -421,12 +421,17 @@ export default {
 
 .k-table {
 
+  thead {
+    border-top: 0 !important;
+    border-bottom-width: 1px !important;
+  }
+
   .active-row {
     background-color: var(--blue-lightest);
   }
 
   th {
-    background-color: var(--gray-1);
+    background-color: #f3f5f7;
   }
 }
 

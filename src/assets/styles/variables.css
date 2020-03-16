@@ -15,6 +15,8 @@
   --gray-3: rgba(0, 0, 0, 0.45);
   --gray-4: #ebebeb;
   --gray-5: #f7f9fa;
+  --gray-6: #fdfdfd;
+
   --blue-1: #2d64b3;
   --blue-2: #3d88f2;
   --blue-3: rgba(61,136,242,0.07);
@@ -34,6 +36,8 @@
 
   /* Sidebar */
   --sidebar-width: 240px;
+  --sidebar-width-closed: 63px;
+  --sidebar-bg-color: var(--gray-6);
 
   /* Kongponents color remappings */
   --KButtonPrimaryBase: var(--blue-4);
