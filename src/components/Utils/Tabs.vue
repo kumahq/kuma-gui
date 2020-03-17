@@ -12,12 +12,12 @@
       <li
         v-for="tab in tabs"
         :key="tab"
-        :class="{ 'tab__nav-item--active': activeTab === tab }"
+        :class="{ 'tab__nav-item--active': selectedTab === tab }"
         class="tab__nav-item"
       >
         <a
           class="tab__nav-link"
-          :aria-selected="(activeTab === tab).toString()"
+          :aria-selected="(selectedTab === tab).toString()"
           @click.prevent="switchTab(tab)"
         >
           <slot :name="tabNavItemSlotName(tab)">
@@ -113,6 +113,9 @@ export default {
     }
   },
   computed: {
+    selectedTab () {
+      return this.activeTab
+    },
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
@@ -138,12 +141,12 @@ export default {
   --tab-nav-border-bottom: 1px solid var(--gray-4);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
-  --tab-link-gap: 0;
+  --tab-link-gap: var(--spacing-sm);
   --tab-link-active-text-color: var(--blue-4);
+  --tab-active-background-color: var(--gray-7);
   --tab-link-background-color: #fff;
-  --tab-link-active-border-color: var(--gray-2);
   --tab-link-border: 1px solid var(--gray-4);
-  --tab-active-border-color: var(--gray-2);
+  --tab-active-border-color: var(--gray-4);
   --tab-panel-padding: var(--spacing-sm);
   --tab-panel-border: 1px solid var(--gray-4);
   --tab-panel-radius: 0 0 3px 3px;
@@ -172,6 +175,10 @@ export default {
   }
 }
 
+@mixin active-link-background {
+  background-color: var(--tab-active-background-color);
+}
+
 @mixin active-link-border {
   border-top-color: var(--tab-active-border-color);
   border-right-color: var(--tab-active-border-color);
@@ -189,6 +196,7 @@ export default {
 
   &:hover {
     @include active-link-border;
+    @include active-link-background;
 
     color: var(--tab-link-active-text-color);
   }
@@ -198,6 +206,7 @@ export default {
 
   .tab__nav-link {
     @include active-link-border;
+    @include active-link-background;
 
     color: var(--tab-link-active-text-color);
   }

@@ -415,11 +415,12 @@ export default {
 }
 
 .data-overview-table {
-  border: 1px solid var(--gray-4);
-  border-bottom: 0;
+
 }
 
 .k-table {
+  border: 1px solid var(--gray-4);
+  border-bottom: 0;
 
   thead {
     border-top: 0 !important;
@@ -431,7 +432,7 @@ export default {
   }
 
   th {
-    background-color: #f3f5f7;
+    background-color: var(--gray-7);
   }
 }
 

@@ -1554,6 +1554,114 @@ export default class Mock {
                 healthyThreshold: 1
               }
             }
+          },
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'testing-health-checks',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
+          },
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'health-check-0023',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
+          },
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'health-check-12345',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
+          },
+          {
+            type: 'HealthCheck',
+            mesh: 'default',
+            name: 'foo-bar-baz-123',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              activeChecks: {
+                interval: '10s',
+                timeout: '2s',
+                unhealthyThreshold: 3,
+                healthyThreshold: 1
+              }
+            }
           }
         ]
       })
@@ -1615,6 +1723,114 @@ export default class Mock {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'hello-health-check',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 3,
+            healthyThreshold: 4
+          }
+        }
+      })
+      .onGet('/meshes/default/health-checks/testing-health-checks').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'testing-health-checks',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 3,
+            healthyThreshold: 4
+          }
+        }
+      })
+      .onGet('/meshes/default/health-checks/health-check-0023').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'health-check-0023',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 3,
+            healthyThreshold: 4
+          }
+        }
+      })
+      .onGet('/meshes/default/health-checks/health-check-12345').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'health-check-12345',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          activeChecks: {
+            interval: '10s',
+            timeout: '2s',
+            unhealthyThreshold: 3,
+            healthyThreshold: 4
+          }
+        }
+      })
+      .onGet('/meshes/default/health-checks/foo-bar-baz-123').reply(200, {
+        type: 'HealthCheck',
+        mesh: 'default',
+        name: 'foo-bar-baz-123',
         sources: [
           {
             match: {

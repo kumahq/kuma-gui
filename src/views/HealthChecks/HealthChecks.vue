@@ -149,6 +149,8 @@ export default {
     tableAction (ev) {
       const data = ev
 
+      this.initialTab = 'overview'
+
       this.getEntity(data)
     },
     bootstrap () {
