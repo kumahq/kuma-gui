@@ -112,7 +112,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Proxy Template for ${entity.name}`
+        return `Entity Overview for ${entity.name}`
       } else {
         return null
       }
