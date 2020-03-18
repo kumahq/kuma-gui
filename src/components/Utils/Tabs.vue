@@ -12,12 +12,12 @@
       <li
         v-for="tab in tabs"
         :key="tab"
-        :class="{ 'tab__nav-item--active': selectedTab === tab }"
+        :class="{ 'tab__nav-item--active': activeTab === tab }"
         class="tab__nav-item"
       >
         <a
           class="tab__nav-link"
-          :aria-selected="(selectedTab === tab).toString()"
+          :aria-selected="(activeTab === tab).toString()"
           @click.prevent="switchTab(tab)"
         >
           <slot :name="tabNavItemSlotName(tab)">
@@ -107,14 +107,14 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      activeTab: this.initialTab
-    }
-  },
   computed: {
-    selectedTab () {
-      return this.activeTab
+    activeTab: {
+      get () {
+        return this.$store.state.selectedTab
+      },
+      set (newTab) {
+        return newTab
+      }
     },
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
@@ -123,12 +123,24 @@ export default {
       return `tab-content-${this.activeTab}`
     }
   },
+  watch: {
+    // watch for the active tab to be changed outside of this component
+    // e.g. maybe we want to change the active tab from within a sibling component
+    activeTab (newTab) {
+      this.$store.dispatch('updateSelectedTab', newTab)
+    }
+  },
+  beforeMount () {
+    // display the first tab on load
+    this.$store.dispatch('updateSelectedTab', this.tabs[0])
+  },
   methods: {
     tabNavItemSlotName (tabItem) {
       return `tab-link-${tabItem}`
     },
-    switchTab (tabItem) {
-      this.activeTab = tabItem
+    switchTab (newTab) {
+      this.activeTab = newTab
+      this.$store.dispatch('updateSelectedTab', newTab)
     }
   }
 }

@@ -16,14 +16,14 @@ export default (store) => {
       component: () => import('@/views/NotFound')
     },
     // for testing the data overview skeleton component
-    {
-      path: '/test',
-      name: 'test-overview',
-      meta: {
-        title: 'Test Overview'
-      },
-      component: () => import('@/views/Entities/TestOverview')
-    },
+    // {
+    //   path: '/test',
+    //   name: 'test-overview',
+    //   meta: {
+    //     title: 'Test Overview'
+    //   },
+    //   component: () => import('@/views/Entities/TestOverview')
+    // },
     {
       path: '/',
       redirect: { name: 'global-overview' }

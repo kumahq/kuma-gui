@@ -19,7 +19,7 @@
       :has-error="hasError"
       :is-loading="isLoading"
       :is-empty="isEmpty"
-      :initial-tab="initialTab"
+      :initial-tab="activeTab"
       :tabs="tabs"
       :tab-group-title="tabGroupTitle"
     >
@@ -98,7 +98,7 @@ export default {
         ],
         data: []
       },
-      initialTab: 'overview',
+      activeTab: 'overview',
       tabs: [
         'overview',
         'yaml-view'
@@ -149,8 +149,10 @@ export default {
     tableAction (ev) {
       const data = ev
 
-      this.initialTab = 'overview'
+      // reset back to the first tab
+      this.$store.dispatch('updateSelectedTab', this.tabs[0])
 
+      // load the data into the tabs
       this.getEntity(data)
     },
     bootstrap () {
@@ -180,6 +182,7 @@ export default {
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+              this.isEmpty = true
 
               this.getEntity(null)
             }

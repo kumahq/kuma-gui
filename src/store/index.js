@@ -37,7 +37,8 @@ export default (api) => {
       totalProxyTemplatesCountFromMesh: 0,
       tagline: null,
       version: null,
-      status: null
+      status: null,
+      selectedTab: 'tab-1'
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -64,7 +65,8 @@ export default (api) => {
       getTrafficTracesFromMeshTotalCount: (state) => state.totalTrafficTracesCountFromMesh,
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
-      getStatus: (state) => state.status
+      getStatus: (state) => state.status,
+      getSelectedTab: (state) => state.selectedTab
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -91,7 +93,8 @@ export default (api) => {
       SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalProxyTemplatesCountFromMesh = count),
       SET_VERSION: (state, version) => (state.version = version),
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
-      SET_STATUS: (state, status) => (state.status = status)
+      SET_STATUS: (state, status) => (state.status = status),
+      SET_NEW_TAB: (state, tab) => (state.selectedTab = tab)
     },
     actions: {
       // update the onboarding state
@@ -480,6 +483,11 @@ export default (api) => {
           .then(response => {
             commit('SET_STATUS', `${response}`)
           })
+      },
+
+      // allows us to set the selected tab outside of the Tabs component
+      updateSelectedTab ({ commit }, tab) {
+        commit('SET_NEW_TAB', tab)
       }
     }
   })
