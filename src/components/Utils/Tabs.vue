@@ -93,10 +93,6 @@ export default {
       type: Boolean,
       default: false
     },
-    initialTab: {
-      type: String,
-      required: true
-    },
     tabs: {
       type: Array,
       required: true

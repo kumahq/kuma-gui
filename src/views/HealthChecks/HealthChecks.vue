@@ -14,21 +14,13 @@
       @tableAction="tableAction"
       @reloadData="bootstrap"
     />
-
     <Tabs
       :has-error="hasError"
       :is-loading="isLoading"
       :is-empty="isEmpty"
-      :initial-tab="activeTab"
       :tabs="tabs"
       :tab-group-title="tabGroupTitle"
     >
-      <!--
-        The tabbed content should look for the first entity present
-        based on the mesh that is selected. When the user clicks the link
-        on a table row, the data for that item is then loaded into the
-        tab content panels.
-      -->
       <template slot="tab-link-overview">
         Overview
       </template>
@@ -41,7 +33,6 @@
           :items="entity"
         />
       </template>
-
       <template slot="tab-link-yaml-view">
         YAML
       </template>
@@ -98,7 +89,6 @@ export default {
         ],
         data: []
       },
-      activeTab: 'overview',
       tabs: [
         'overview',
         'yaml-view'
