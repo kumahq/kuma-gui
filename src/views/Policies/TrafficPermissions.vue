@@ -8,18 +8,52 @@
       :display-data-table="true"
       :table-data="tableData"
       :table-data-is-empty="tableDataIsEmpty"
-      table-actions-route-name="traffic-permissions-details"
+      table-data-function-text="View"
+      table-data-row="name"
+      @tableAction="tableAction"
       @reloadData="bootstrap"
+    />
+    <Tabs
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :is-empty="isEmpty"
+      :tabs="tabs"
+      :tab-group-title="tabGroupTitle"
     >
-      <template slot="tableDataActionsLinkText">
-        View
+      <template slot="tab-link-overview">
+        Overview
       </template>
-    </DataOverview>
+      <template slot="tab-content-overview">
+        <LabelList
+          :title="generalOverviewTitle"
+          :has-error="entityHasError"
+          :is-loading="entityIsLoading"
+          :is-empty="entityIsEmpty"
+          :items="entity"
+        />
+      </template>
+      <template slot="tab-link-yaml-view">
+        YAML
+      </template>
+      <template slot="tab-content-yaml-view">
+        <YamlView
+          :title="entityOverviewTitle"
+          :has-error="entityHasError"
+          :is-loading="entityIsLoading"
+          :is-empty="entityIsEmpty"
+          :content="rawEntity"
+        />
+      </template>
+    </Tabs>
   </div>
 </template>
 
 <script>
+import { getSome } from '@/helpers'
 import DataOverview from '@/components/Skeletons/DataOverview'
+import Tabs from '@/components/Utils/Tabs'
+import YamlView from '@/components/Skeletons/YamlView'
+import LabelList from '@/components/Utils/LabelList'
 
 export default {
   name: 'TrafficPermissions',
@@ -27,13 +61,19 @@ export default {
     title: 'Traffic Permissions'
   },
   components: {
-    DataOverview
+    DataOverview,
+    Tabs,
+    YamlView,
+    LabelList
   },
   data () {
     return {
       isLoading: true,
       isEmpty: false,
       hasError: false,
+      entityIsLoading: true,
+      entityIsEmpty: false,
+      entityHasError: false,
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
@@ -47,6 +87,42 @@ export default {
           { key: 'actions', hideLabel: true }
         ],
         data: []
+      },
+      tabs: [
+        'overview',
+        'yaml-view'
+      ],
+      entity: null,
+      rawEntity: null,
+      firstEntity: null
+    }
+  },
+  computed: {
+    tabGroupTitle () {
+      const mesh = this.$route.params.mesh
+
+      if (mesh) {
+        return `Mesh: ${mesh}`
+      } else {
+        return null
+      }
+    },
+    entityOverviewTitle () {
+      const entity = this.entity
+
+      if (entity) {
+        return `Entity Overview for ${entity.name}`
+      } else {
+        return null
+      }
+    },
+    generalOverviewTitle () {
+      const entity = this.entity
+
+      if (entity) {
+        return `Overview for ${entity.name}`
+      } else {
+        return null
       }
     }
   },
@@ -59,6 +135,15 @@ export default {
     this.bootstrap()
   },
   methods: {
+    tableAction (ev) {
+      const data = ev
+
+      // reset back to the first tab
+      this.$store.dispatch('updateSelectedTab', this.tabs[0])
+
+      // load the data into the tabs
+      this.getEntity(data)
+    },
     bootstrap () {
       this.isLoading = true
       this.isEmpty = false
@@ -75,11 +160,20 @@ export default {
               items
                 .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
 
+              // set the first item as the default for initial load
+              this.firstEntity = items[0].name
+
+              // load the YAML entity for the first item on page load
+              this.getEntity(this.firstEntity)
+
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+              this.isEmpty = true
+
+              this.getEntity(null)
             }
           })
           .catch(error => {
@@ -95,6 +189,41 @@ export default {
       }
 
       getTrafficPermissions()
+    },
+    getEntity (entity) {
+      this.entityIsLoading = true
+      this.entityIsEmpty = false
+
+      const mesh = this.$route.params.mesh
+
+      if (entity && entity !== null) {
+        return this.$api.getTrafficPermission(mesh, entity)
+          .then(response => {
+            if (response) {
+              const selected = ['type', 'name', 'mesh']
+
+              this.entity = getSome(response, selected)
+              this.rawEntity = response
+            } else {
+              this.entity = null
+              this.entityIsEmpty = true
+            }
+          })
+          .catch(error => {
+            this.entityHasError = true
+            console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.entityIsLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
+          })
+      } else {
+        setTimeout(() => {
+          this.entityIsEmpty = true
+          this.entityIsLoading = false
+        }, process.env.VUE_APP_DATA_TIMEOUT)
+      }
     }
   }
 }
