@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { humanReadableDate, dpTagCleaner } from '@/helpers'
+import { humanReadableDate } from '@/helpers'
 import DataOverview from '@/components/Skeletons/DataOverview'
 
 export default {
