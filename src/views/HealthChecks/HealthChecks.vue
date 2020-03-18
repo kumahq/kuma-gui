@@ -1,56 +1,58 @@
 <template>
   <div class="health-checks">
-    <DataOverview
-      :page-size="6"
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :is-empty="isEmpty"
-      :empty-state="empty_state"
-      :display-data-table="true"
-      :table-data="tableData"
-      :table-data-is-empty="tableDataIsEmpty"
-      table-data-function-text="View"
-      table-data-row="name"
-      @tableAction="tableAction"
-      @reloadData="bootstrap"
-    />
-    <Tabs
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :is-empty="isEmpty"
-      :tabs="tabs"
-      :tab-group-title="tabGroupTitle"
-    >
-      <template slot="tab-link-overview">
-        Overview
-      </template>
-      <template slot="tab-content-overview">
-        <LabelList
-          :title="generalOverviewTitle"
-          :has-error="entityHasError"
-          :is-loading="entityIsLoading"
-          :is-empty="entityIsEmpty"
-          :items="entity"
-        />
-      </template>
-      <template slot="tab-link-yaml-view">
-        YAML
-      </template>
-      <template slot="tab-content-yaml-view">
-        <YamlView
-          :title="entityOverviewTitle"
-          :has-error="entityHasError"
-          :is-loading="entityIsLoading"
-          :is-empty="entityIsEmpty"
-          :content="rawEntity"
-        />
-      </template>
-    </Tabs>
+    <FrameSkeleton>
+      <DataOverview
+        :page-size="6"
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+        :empty-state="empty_state"
+        :display-data-table="true"
+        :table-data="tableData"
+        :table-data-is-empty="tableDataIsEmpty"
+        table-data-function-text="View"
+        table-data-row="name"
+        @tableAction="tableAction"
+        @reloadData="bootstrap"
+      />
+      <Tabs
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+        :tabs="tabs"
+        :tab-group-title="tabGroupTitle"
+      >
+        <template slot="tab-link-overview">
+          Overview
+        </template>
+        <template slot="tab-content-overview">
+          <LabelList
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :items="entity"
+          />
+        </template>
+        <template slot="tab-link-yaml-view">
+          YAML
+        </template>
+        <template slot="tab-content-yaml-view">
+          <YamlView
+            :title="entityOverviewTitle"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :content="rawEntity"
+          />
+        </template>
+      </Tabs>
+    </FrameSkeleton>
   </div>
 </template>
 
 <script>
 import { getSome } from '@/helpers'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -62,6 +64,7 @@ export default {
     title: 'Health Checks'
   },
   components: {
+    FrameSkeleton,
     DataOverview,
     Tabs,
     YamlView,
@@ -100,10 +103,10 @@ export default {
   },
   computed: {
     tabGroupTitle () {
-      const mesh = this.$route.params.mesh
+      const entity = this.entity
 
-      if (mesh) {
-        return `Mesh: ${mesh}`
+      if (entity) {
+        return `Health Check: ${entity.name}`
       } else {
         return null
       }
@@ -172,7 +175,6 @@ export default {
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
-              this.isEmpty = true
 
               this.getEntity(null)
             }

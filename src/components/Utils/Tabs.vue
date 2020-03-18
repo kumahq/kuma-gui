@@ -30,6 +30,7 @@
       <div
         v-if="isReady"
         class="tab__content-panel"
+        :class="{ 'has-border': hasBorder }"
       >
         <slot :name="tabContentSlotName" />
       </div>
@@ -101,6 +102,11 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    hasBorder: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   computed: {
@@ -144,8 +150,9 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
-  --tab-container-margin: var(--spacing-xl) 0;
+  --tab-container-margin: var(--spacing-sm) 0 0 0;
   --tab-header-margin: 0 0 var(--spacing-md) 0;
+  --tab-header-padding: 0 var(--spacing-md);
   --tab-nav-border-bottom: 1px solid var(--gray-4);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
@@ -164,6 +171,7 @@ export default {
 
 .tab__header {
   margin: var(--tab-header-margin);
+  padding: var(--tab-header-padding);
 }
 
 .tab__nav {
@@ -177,10 +185,7 @@ export default {
 }
 
 .tab__nav-item {
-
-  &:not(:last-of-type) {
-    margin-right: var(--tab-link-gap);
-  }
+  margin-left: var(--tab-link-gap);
 }
 
 @mixin active-link-background {
@@ -227,8 +232,11 @@ export default {
 
 .tab__content-panel {
   // padding: var(--tab-panel-padding);
-  border: var(--tab-panel-border);
-  border-top: 0;
-  border-radius: var(--tab-panel-radius);
+
+  &.has-border {
+    border: var(--tab-panel-border);
+    border-top: 0;
+    border-radius: var(--tab-panel-radius);
+  }
 }
 </style>

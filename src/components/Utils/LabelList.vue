@@ -117,6 +117,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.label-list-content {
+
+  .kong-card {
+    margin-bottom: 0 !important;
+  }
+}
+
 .label-list {
 
 }

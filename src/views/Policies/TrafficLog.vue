@@ -172,7 +172,6 @@ export default {
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
-              this.isEmpty = true
 
               this.getEntity(null)
             }

@@ -37,7 +37,7 @@
         class="data-overview-table"
       >
         <KTable
-          :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+          :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
           has-hover
           is-small
@@ -119,7 +119,6 @@
           v-if="tableData && tableRowCount > pageSize"
           :has-previous="pageNumber > 0"
           :has-next="pageNumber < pageCount -1"
-          class="ml-2 mr-2 mb-2"
           @next="goToNextPage"
           @previous="goToPreviousPage"
         />
@@ -250,6 +249,11 @@ export default {
       type: Object,
       default: null
     },
+    tableHasBorder: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     tableDataIsEmpty: {
       type: Boolean,
       default: false
@@ -356,6 +360,7 @@ export default {
 
 .data-table-controls {
   text-align: right;
+  padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 
   button:after {
     display: none;
@@ -419,8 +424,11 @@ export default {
 }
 
 .k-table {
-  border: 1px solid var(--gray-4);
-  border-bottom: 0;
+
+  &.has-border {
+    border: 1px solid var(--gray-4);
+    border-bottom: 0;
+  }
 
   thead {
     border-top: 0 !important;
