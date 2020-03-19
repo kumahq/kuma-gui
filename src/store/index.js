@@ -38,7 +38,8 @@ export default (api) => {
       tagline: null,
       version: null,
       status: null,
-      selectedTab: 'tab-1'
+      selectedTab: 'tab-1',
+      selectedTableRow: null
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -66,7 +67,8 @@ export default (api) => {
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
-      getSelectedTab: (state) => state.selectedTab
+      getSelectedTab: (state) => state.selectedTab,
+      getSelectedTableRow: (state) => state.selectedTableRow
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -94,7 +96,8 @@ export default (api) => {
       SET_VERSION: (state, version) => (state.version = version),
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
-      SET_NEW_TAB: (state, tab) => (state.selectedTab = tab)
+      SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
+      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row)
     },
     actions: {
       // update the onboarding state
@@ -488,6 +491,10 @@ export default (api) => {
       // allows us to set the selected tab outside of the Tabs component
       updateSelectedTab ({ commit }, tab) {
         commit('SET_NEW_TAB', tab)
+      },
+
+      updateSelectedTableRow ({ commit }, row) {
+        commit('SET_NEW_TABLE_ROW', row)
       }
     }
   })

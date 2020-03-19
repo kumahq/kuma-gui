@@ -1,18 +1,18 @@
 <template>
   <div class="pagination">
     <KButton
+      ref="paginatePrev"
       :disabled="!hasPrevious"
       appearance="primary"
-      data-testid="previous"
       @click="$emit('previous')"
     >
       &lsaquo; Previous
     </KButton>
 
     <KButton
+      ref="paginateNext"
       :disabled="!hasNext"
       appearance="primary"
-      data-testid="next"
       @click="$emit('next')"
     >
       Next &rsaquo;

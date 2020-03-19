@@ -107,10 +107,26 @@
 
             <a
               v-if="tableDataFunctionText"
+              :data-id="row.name.replace(' ', '-').toLowerCase()"
               class="data-table-action-link"
+              :class="{ 'is-active': ($store.state.selectedTableRow === row.name) }"
               @click="$emit('tableAction', row[tableDataRow])"
             >
-              {{ tableDataFunctionText }}
+              <span
+                v-if="$store.state.selectedTableRow === row.name"
+                class="action-link__active-state"
+              >
+                &#x2713;
+                <span class="sr-only">
+                  Selected
+                </span>
+              </span>
+              <span
+                v-else
+                class="action-link__normal-state"
+              >
+                {{ tableDataFunctionText }}
+              </span>
             </a>
           </template>
         </KTable>
@@ -287,8 +303,7 @@ export default {
   },
   data () {
     return {
-      pageNumber: 0,
-      selectedRow: 1
+      pageNumber: 0
     }
   },
   computed: {
@@ -313,27 +328,52 @@ export default {
       const newData = { headers, data: [...filtered] }
 
       return newData
+    },
+    selectedRow: {
+      get () {
+        return null
+      },
+      set (newRow) {
+        return newRow
+      }
     }
   },
   mounted () {
-    // this.makeTrClickable()
+    // this.highlightActiveRow()
+    // this.highlightRow()
   },
   methods: {
-    /**
-     * This is insanely hacky. The KTable component does not support
-     * this functionality out-of-box, and implementing it conflicts
-     * with work being done on another Kong product.
-     */
-    // makeTrClickable () {
-    //   const tr = this.$el.querySelectorAll('.k-table tr')
+    highlightRow (test) {
+      const links = this.$el.querySelectorAll('.k-table tbody tr a.is-active')
 
-    //   tr.forEach((r, i) => {
-    //     r.addEventListener('click', (e) => {
-    //       this.selectedRow = i
-    //       console.log(i)
-    //     })
-    //   })
-    // },
+      console.log(test)
+    },
+    highlightActiveRow () {
+      // select only the table rows inside of the table body
+      const tr = this.$el.querySelectorAll('.k-table tbody tr')
+      const activeClass = 'is-active'
+
+      // sets only the clicked item as active, and removes the
+      // active class from the siblings
+      const setActive = (el) => {
+        [...el.parentElement.children].forEach(sib => {
+          sib.classList.remove(activeClass)
+        })
+        el.classList.add(activeClass)
+      }
+
+      tr.forEach(el => {
+        // find the row action link
+        const link = el.querySelector('a.data-table-action-link')
+        const id = link.dataset.id
+
+        // trigger the row class on link click
+        link.addEventListener('click', (e) => {
+          setActive(el)
+          this.$store.dispatch('updateSelectedTableRow', id)
+        })
+      })
+    },
     goToPreviousPage () {
       this.pageNumber--
     },
@@ -425,6 +465,11 @@ export default {
 
 .k-table {
 
+  tr {
+    position: relative;
+    overflow: hidden;
+  }
+
   &.has-border {
     border: 1px solid var(--gray-4);
     border-bottom: 0;
@@ -435,8 +480,51 @@ export default {
     border-bottom-width: 1px !important;
   }
 
-  .active-row {
-    background-color: var(--blue-lightest);
+  // .is-active {
+  //   background-color: var(--blue-lightest);
+  //   cursor: no-drop;
+
+  //   td {
+  //     color: var(--blue-1) !important;
+
+  //     .data-table-action-link {
+  //       opacity: 0.5;
+  //       cursor: no-drop;
+  //     }
+  //   }
+  // }
+
+  .data-table-action-link {
+    text-align: center;
+
+    &.is-active {
+
+      &:before {
+        position: absolute;
+        top: 0; left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        content: "";
+        background-color: var(--blue-lightest);
+      }
+    }
+  }
+
+  .action-link__active-state {
+    --size: 22px;
+
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    border-radius: 50%;
+    background-color: var(--logo-green);
+    margin: 0 auto;
+    color: #fff;
+    font-size: 13px;
+    // font-weight: 700;
   }
 
   th {
