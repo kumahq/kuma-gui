@@ -1,55 +1,58 @@
 <template>
   <div class="traffic-permissions">
-    <DataOverview
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :is-empty="isEmpty"
-      :empty-state="empty_state"
-      :display-data-table="true"
-      :table-data="tableData"
-      :table-data-is-empty="tableDataIsEmpty"
-      table-data-function-text="View"
-      table-data-row="name"
-      @tableAction="tableAction"
-      @reloadData="bootstrap"
-    />
-    <Tabs
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :is-empty="isEmpty"
-      :tabs="tabs"
-      :tab-group-title="tabGroupTitle"
-    >
-      <template slot="tab-link-overview">
-        Overview
-      </template>
-      <template slot="tab-content-overview">
-        <LabelList
-          :title="generalOverviewTitle"
-          :has-error="entityHasError"
-          :is-loading="entityIsLoading"
-          :is-empty="entityIsEmpty"
-          :items="entity"
-        />
-      </template>
-      <template slot="tab-link-yaml-view">
-        YAML
-      </template>
-      <template slot="tab-content-yaml-view">
-        <YamlView
-          :title="entityOverviewTitle"
-          :has-error="entityHasError"
-          :is-loading="entityIsLoading"
-          :is-empty="entityIsEmpty"
-          :content="rawEntity"
-        />
-      </template>
-    </Tabs>
+    <FrameSkeleton>
+      <DataOverview
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+        :empty-state="empty_state"
+        :display-data-table="true"
+        :table-data="tableData"
+        :table-data-is-empty="tableDataIsEmpty"
+        table-data-function-text="View"
+        table-data-row="name"
+        @tableAction="tableAction"
+        @reloadData="bootstrap"
+      />
+      <Tabs
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+        :tabs="tabs"
+        :tab-group-title="tabGroupTitle"
+      >
+        <template slot="tab-link-overview">
+          Overview
+        </template>
+        <template slot="tab-content-overview">
+          <LabelList
+            :title="generalOverviewTitle"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :items="entity"
+          />
+        </template>
+        <template slot="tab-link-yaml-view">
+          YAML
+        </template>
+        <template slot="tab-content-yaml-view">
+          <YamlView
+            :title="entityOverviewTitle"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :content="rawEntity"
+          />
+        </template>
+      </Tabs>
+    </FrameSkeleton>
   </div>
 </template>
 
 <script>
 import { getSome } from '@/helpers'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -61,6 +64,7 @@ export default {
     title: 'Traffic Permissions'
   },
   components: {
+    FrameSkeleton,
     DataOverview,
     Tabs,
     YamlView,
@@ -141,6 +145,9 @@ export default {
       // reset back to the first tab
       this.$store.dispatch('updateSelectedTab', this.tabs[0])
 
+      // set the active table row
+      this.$store.dispatch('updateSelectedTableRow', ev)
+
       // load the data into the tabs
       this.getEntity(data)
     },
@@ -165,6 +172,9 @@ export default {
 
               // load the YAML entity for the first item on page load
               this.getEntity(this.firstEntity)
+
+              // set the selected table row for the first item on page load
+              this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
 
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
