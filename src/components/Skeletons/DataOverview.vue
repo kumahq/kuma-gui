@@ -480,20 +480,6 @@ export default {
     border-bottom-width: 1px !important;
   }
 
-  // .is-active {
-  //   background-color: var(--blue-lightest);
-  //   cursor: no-drop;
-
-  //   td {
-  //     color: var(--blue-1) !important;
-
-  //     .data-table-action-link {
-  //       opacity: 0.5;
-  //       cursor: no-drop;
-  //     }
-  //   }
-  // }
-
   .data-table-action-link {
     text-align: center;
 
