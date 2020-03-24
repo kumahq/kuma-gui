@@ -213,6 +213,7 @@
 <script>
 import MetricGrid from '@/components/Metrics/MetricGrid'
 import Pagination from '@/components/Pagination'
+// import test from '@/mixins/ClickableTableRows'
 
 export default {
   name: 'DataOverview',
@@ -328,48 +329,19 @@ export default {
       const newData = { headers, data: [...filtered] }
 
       return newData
-    },
-    selectedRow: {
-      get () {
-        return null
-      },
-      set (newRow) {
-        return newRow
-      }
     }
   },
   mounted () {
-    // this.highlightActiveRow()
-    // this.highlightRow()
+    // this.activateClickableRow()
   },
   methods: {
-    highlightRow (test) {
-      const links = this.$el.querySelectorAll('.k-table tbody tr a.is-active')
-
-      console.log(test)
-    },
-    highlightActiveRow () {
-      // select only the table rows inside of the table body
+    activateClickableRow () {
       const tr = this.$el.querySelectorAll('.k-table tbody tr')
-      const activeClass = 'is-active'
-
-      // sets only the clicked item as active, and removes the
-      // active class from the siblings
-      const setActive = (el) => {
-        [...el.parentElement.children].forEach(sib => {
-          sib.classList.remove(activeClass)
-        })
-        el.classList.add(activeClass)
-      }
 
       tr.forEach(el => {
-        // find the row action link
-        const link = el.querySelector('a.data-table-action-link')
-        const id = link.dataset.id
+        const id = el.querySelector('a.data-table-action-link').dataset.id
 
-        // trigger the row class on link click
-        link.addEventListener('click', (e) => {
-          setActive(el)
+        el.addEventListener('click', (e) => {
           this.$store.dispatch('updateSelectedTableRow', id)
         })
       })
@@ -450,15 +422,6 @@ export default {
   box-shadow: inset 0 0 0 1px currentColor;
 }
 
-.data-table-action-link {
-  display: block;
-  cursor: pointer;
-
-  &.is-active {
-
-  }
-}
-
 .data-overview-table {
 
 }
@@ -481,9 +444,21 @@ export default {
   }
 
   .data-table-action-link {
-    text-align: center;
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    display: block;
+    text-align: right;
+    padding: var(--spacing-sm);
+    cursor: pointer;
 
     &.is-active {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
 
       &:before {
         position: absolute;
@@ -494,6 +469,7 @@ export default {
         display: block;
         content: "";
         background-color: var(--blue-lightest);
+        text-align: center;
       }
     }
   }
@@ -501,6 +477,8 @@ export default {
   .action-link__active-state {
     --size: 22px;
 
+    position: absolute;
+    text-align: right;
     display: block;
     width: var(--size);
     height: var(--size);
@@ -510,7 +488,11 @@ export default {
     margin: 0 auto;
     color: #fff;
     font-size: 13px;
-    // font-weight: 700;
+    text-align: center;
+
+    &:before {
+      display: block;
+    }
   }
 
   th {
