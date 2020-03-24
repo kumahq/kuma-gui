@@ -241,6 +241,28 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficTraceDetail')
         },
+        // fault injections
+        {
+          path: 'fault-injections',
+          name: 'fault-injections',
+          meta: {
+            title: 'Fault Injections'
+          },
+          component: () => import('@/views/Policies/FaultInjection')
+        },
+        {
+          path: 'fault-injections/:faultinjection',
+          name: 'fault-injections-details',
+          params: {
+            faultinjection: ':faultinjection'
+          },
+          meta: {
+            title: 'Fault Injection Details',
+            breadcrumb: 'Fault Injections',
+            parent: 'fault-injections'
+          },
+          component: () => import('@/views/Policies/FaultInjectionDetail')
+        },
         // health checks
         {
           path: 'health-checks',

@@ -60,6 +60,17 @@
           >
         </div>
         <div class="app-source-check__content px-2">
+          <p><strong>Inject Fault</strong>, by using the <a :href="`https://kuma.io/docs/${runningVersion}/policies/#fault-injections`">Fault Injection</a> policy</p>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="px-2">
+          <img
+            src="@/assets/images/icon-checkmark.svg?external"
+            alt="Checkmark Icon"
+          >
+        </div>
+        <div class="app-source-check__content px-2">
           <p><strong>And you can do <a :href="`https://kuma.io/docs/${runningVersion}/policies/`">much more</a>!</strong></p>
         </div>
       </div>
