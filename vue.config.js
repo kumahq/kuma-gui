@@ -1,6 +1,7 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
+  publicPath: './',
   runtimeCompiler: true,
   productionSourceMap: false,
   transpileDependencies: [
