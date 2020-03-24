@@ -331,21 +331,7 @@ export default {
       return newData
     }
   },
-  mounted () {
-    // this.activateClickableRow()
-  },
   methods: {
-    activateClickableRow () {
-      const tr = this.$el.querySelectorAll('.k-table tbody tr')
-
-      tr.forEach(el => {
-        const id = el.querySelector('a.data-table-action-link').dataset.id
-
-        el.addEventListener('click', (e) => {
-          this.$store.dispatch('updateSelectedTableRow', id)
-        })
-      })
-    },
     goToPreviousPage () {
       this.pageNumber--
     },
