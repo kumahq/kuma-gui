@@ -1,5 +1,5 @@
 <template>
-  <div class="dataplanes-detail">
+  <div class="fault-injections-detail">
     <YamlView
       title="Entity Overview"
       :has-error="hasError"

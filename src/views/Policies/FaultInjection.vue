@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-permissions">
+  <div class="fault-injections">
     <DataOverview
       :has-error="hasError"
       :is-loading="isLoading"
