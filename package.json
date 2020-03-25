@@ -27,6 +27,7 @@
     "@kongponents/kpop": "0.2.10",
     "@kongponents/krumbs": "0.0.1",
     "@kongponents/ktable": "0.1.4-1",
+    "@kongponents/ktabs": "^0.1.2",
     "@kongponents/ktoaster": "0.0.1-beta.4",
     "@kongponents/ktoggle": "^0.1.1",
     "@kongponents/styles": "0.0.4",

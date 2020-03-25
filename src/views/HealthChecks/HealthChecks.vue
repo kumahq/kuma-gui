@@ -22,6 +22,31 @@
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
       >
+        <template v-slot:overview>
+          <LabelList
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :items="entity"
+          />
+        </template>
+        <template v-slot:yaml>
+          <YamlView
+            :title="entityOverviewTitle"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :content="rawEntity"
+          />
+        </template>
+      </Tabs>
+      <!-- <Tabs
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+        :tabs="tabs"
+        :tab-group-title="tabGroupTitle"
+      >
         <template slot="tab-link-overview">
           Overview
         </template>
@@ -45,7 +70,7 @@
             :content="rawEntity"
           />
         </template>
-      </Tabs>
+      </Tabs> -->
     </FrameSkeleton>
   </div>
 </template>
@@ -93,8 +118,14 @@ export default {
         data: []
       },
       tabs: [
-        'overview',
-        'yaml-view'
+        {
+          hash: '#overview',
+          title: 'Overview'
+        },
+        {
+          hash: '#yaml',
+          title: 'YAML'
+        }
       ],
       entity: null,
       rawEntity: null,
@@ -143,7 +174,9 @@ export default {
       const data = ev
 
       // reset back to the first tab
-      this.$store.dispatch('updateSelectedTab', this.tabs[0])
+      this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
+
+      console.log(`table action tab: ${this.tabs[0].hash}`)
 
       // set the active table row
       this.$store.dispatch('updateSelectedTableRow', ev)

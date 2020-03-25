@@ -826,6 +826,11 @@
   resolved "https://registry.yarnpkg.com/@kongponents/ktable/-/ktable-0.1.4-1.tgz#f24ae162e819aa46c5626ba6ee6b14462c6ad875"
   integrity sha512-iADp3NbwDqffCi/YGgar477uNtk/s4pB2NgIXfCjed8sF7DukepbZi+ehqrHKccGSMynch0vcqivXqgHwRydwQ==
 
+"@kongponents/ktabs@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/ktabs/-/ktabs-0.1.2.tgz#9d4a0b58b5964c9d8057336354619b38ab8eb230"
+  integrity sha512-q7A43cz64CmV8ladty82ZP+HrkeTb5tB0TwcX1/qLDueaH/vicFvH07OVIvo8+1R1yX8TRf1ks/f2Slw7DKo0w==
+
 "@kongponents/ktoaster@0.0.1-beta.4":
   version "0.0.1-beta.4"
   resolved "https://registry.yarnpkg.com/@kongponents/ktoaster/-/ktoaster-0.0.1-beta.4.tgz#8f4bab11bbbef9b1a4ba2d133b9977c5fd158955"

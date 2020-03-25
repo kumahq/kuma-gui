@@ -38,7 +38,7 @@ export default (api) => {
       tagline: null,
       version: null,
       status: null,
-      selectedTab: 'tab-1',
+      selectedTab: '#overview',
       selectedTableRow: null
     },
     getters: {

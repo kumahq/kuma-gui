@@ -8,32 +8,22 @@
         {{ tabGroupTitle }}
       </h3>
     </header>
-    <ul class="tab__nav">
-      <li
-        v-for="tab in tabs"
-        :key="tab"
-        :class="{ 'tab__nav-item--active': activeTab === tab }"
-        class="tab__nav-item"
-      >
-        <a
-          class="tab__nav-link"
-          :aria-selected="(activeTab === tab).toString()"
-          @click.prevent="switchTab(tab)"
-        >
-          <slot :name="tabNavItemSlotName(tab)">
-            {{ tab }}
-          </slot>
-        </a>
-      </li>
-    </ul>
+
     <div class="tab__content-container">
-      <div
+      <KTabs
         v-if="isReady"
-        class="tab__content-panel"
-        :class="{ 'has-border': hasBorder }"
+        :key="activeTab"
+        v-model="activeTab"
+        :tabs="tabs"
+        @changed="hash => switchTab(hash)"
       >
-        <slot :name="tabContentSlotName" />
-      </div>
+        <template
+          v-for="(tab, i) in tabs"
+          :slot="tab.hash.replace('#','')"
+        >
+          <slot :name="tab.hash.replace('#','')" />
+        </template>
+      </KTabs>
 
       <!-- loading state -->
       <KEmptyState
@@ -115,31 +105,20 @@ export default {
         return this.$store.state.selectedTab
       },
       set (newTab) {
+        console.log(newTab)
+
         return newTab
       }
     },
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
-    },
-    tabContentSlotName () {
-      return `tab-content-${this.activeTab}`
-    }
-  },
-  watch: {
-    // watch for the active tab to be changed outside of this component
-    // e.g. maybe we want to change the active tab from within a sibling component
-    activeTab (newTab) {
-      this.$store.dispatch('updateSelectedTab', newTab)
     }
   },
   beforeMount () {
     // display the first tab on load
-    this.$store.dispatch('updateSelectedTab', this.tabs[0])
+    this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
   },
   methods: {
-    tabNavItemSlotName (tabItem) {
-      return `tab-link-${tabItem}`
-    },
     switchTab (newTab) {
       this.activeTab = newTab
       this.$store.dispatch('updateSelectedTab', newTab)

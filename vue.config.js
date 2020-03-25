@@ -3,9 +3,9 @@
 module.exports = {
   runtimeCompiler: true,
   productionSourceMap: false,
-  transpileDependencies: [
-    /@kongponents\/.*/
-  ],
+  // transpileDependencies: [
+  //   /@kongponents\/.*/
+  // ],
   css: {
     sourceMap: false
   },
