@@ -16,6 +16,7 @@ import KToggle from '@kongponents/ktoggle'
 import KTabs from '@kongponents/ktabs'
 import KModal from '@kongponents/kmodal'
 import KInput from '@kongponents/kinput'
+import KInputSwitch from '@kongponents/kinputswitch'
 
 Vue.component('KAlert', KAlert)
 Vue.component('KBadge', KBadge)
@@ -32,4 +33,5 @@ Vue.component('KPop', KPop)
 Vue.component('KTabs', KTabs)
 Vue.component('KToggle', KToggle)
 Vue.component('KInput', KInput)
+Vue.component('KInputSwitch', KInputSwitch)
 Vue.component('KModal', KModal)

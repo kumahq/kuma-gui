@@ -62,21 +62,16 @@ export default (store) => {
           },
           component: () => import('@/views/Onboarding/Complete')
         }
-        // {
-        //   path: 'restart',
-        //   name: 'setup-restart',
-        //   meta: {
-        //     title: 'Setup Already Complete!',
-        //     excludeAsBreadcrumb: true,
-        //     hideSidebar: true,
-        //     hideStatus: true,
-        //     simpleHeader: true,
-        //     simpleContent: true,
-        //     onboardingProcess: true
-        //   },
-        //   component: () => import('@/views/Onboarding/Restart')
-        // }
       ]
+    },
+    {
+      // Entity Wizard
+      path: '/wizard',
+      component: () => import('@/views/Wizard/CreateNew'),
+      meta: {
+        title: 'Wizard',
+        excludeAsBreadcrumb: true
+      }
     },
     // App
     {
