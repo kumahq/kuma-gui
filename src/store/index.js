@@ -27,6 +27,7 @@ export default (api) => {
       totalTrafficPermissionsCountFromMesh: 0,
       totalTrafficLogsCountFromMesh: 0,
       totalTrafficTracesCountFromMesh: 0,
+      totalFaultInjectionsCountFromMesh: 0,
       totalHealthChecksCountFromMesh: 0,
       totalProxyTemplatesCountFromMesh: 0,
       tagline: null,
@@ -82,6 +83,9 @@ export default (api) => {
       getTrafficTracesFromMeshTotalCount (state) {
         return state.totalTrafficTracesCountFromMesh
       },
+      getFaultInjectionsFromMeshTotalCount (state) {
+        return state.totalFaultInjectionsCountFromMesh
+      },
       getVersion (state) {
         return state.version
       },
@@ -134,6 +138,9 @@ export default (api) => {
       },
       SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH (state, count) {
         state.totalTrafficTracesCountFromMesh = count
+      },
+      SET_TOTAL_FAULT_INJECTIONS_COUNT_FROM_MESH (state, count) {
+        state.totalFaultInjectionsCountFromMesh = count
       },
       SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH (state, count) {
         state.totalHealthChecksCountFromMesh = count
@@ -352,6 +359,19 @@ export default (api) => {
             const total = response.items.length
 
             commit('SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of fault injections from a mesh
+      getFaultInjectionsFromMeshTotalCount ({ commit }, mesh) {
+        return api.getFaultInjections(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_FAULT_INJECTIONS_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

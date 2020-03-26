@@ -90,6 +90,7 @@
                   trafficroute: row.type.toLowerCase() === 'trafficroute' ? row.name : null,
                   trafficlog: row.type.toLowerCase() === 'trafficlog' ? row.name : null,
                   traffictrace: row.type.toLowerCase() === 'traffictrace' ? row.name : null,
+                  faultinjection: row.type.toLowerCase() === 'faultinjection' ? row.name : null,
                   healthcheck: row.type.toLowerCase() === 'healthcheck' ? row.name : null,
                   proxytemplate: row.type.toLowerCase() === 'proxytemplate' ? row.name : null,
                   service: row.type.toLowerCase() === 'service' ? row.name : null

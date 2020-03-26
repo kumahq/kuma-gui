@@ -130,6 +130,20 @@ export default class Kuma {
   }
 
   /**
+   * Fault Injections
+   */
+
+  // get fault injections
+  getFaultInjections (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/fault-injections`, { params })
+  }
+
+  // get fault injection details
+  getFaultInjection (mesh, faultinjection, params) {
+    return this.client.get(`/meshes/${mesh}/fault-injections/${faultinjection}`, { params })
+  }
+
+  /**
    *
    * NOTE:
    * There are no endpoints yet for fetching service information.

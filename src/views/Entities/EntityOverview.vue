@@ -74,6 +74,10 @@ export default {
         {
           metric: 'Traffic Traces',
           value: this.$store.state.totalTrafficTracesCountFromMesh
+        },
+        {
+          metric: 'Fault Injections',
+          value: this.$store.state.totalFaultInjectionsCountFromMesh
         }
       ]
     }
@@ -132,6 +136,9 @@ export default {
 
       // get the total number of traffic traces from selected mesh
       this.$store.dispatch('getTrafficTracesFromMeshTotalCount', mesh)
+
+      // get the total number of fault injections from selected mesh
+      this.$store.dispatch('getFaultInjectionsFromMeshTotalCount', mesh)
 
       // get the total number of health checks from selected mesh
       this.$store.dispatch('getHealthChecksFromMeshTotalCount', mesh)

@@ -82,6 +82,10 @@ export default {
         {
           metric: 'Traffic Traces',
           value: this.$store.state.totalTrafficTracesCountFromMesh
+        },
+        {
+          metric: 'Fault Injections',
+          value: this.$store.state.totalFaultInjectionsCountFromMesh
         }
       ]
     }
@@ -114,6 +118,9 @@ export default {
       // get the total number of traffic traces from selected mesh
       this.$store.dispatch('getTrafficTracesFromMeshTotalCount', this.$route.params.mesh)
 
+      // get the total number of fault injections from selected mesh
+      this.$store.dispatch('getFaultInjectionsFromMeshTotalCount', this.$route.params.mesh)
+      
       // get the mesh from our route params
       const mesh = 'default'
 
