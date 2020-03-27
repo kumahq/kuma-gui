@@ -1,5 +1,6 @@
 <template>
   <div class="topology-selector">
+    <slot name="title" />
     <form id="topology-selector-form">
       <div
         v-for="(type, index) in types"
@@ -20,7 +21,7 @@
                     :value="type.value"
                     name="topology-type"
                     type="radio"
-                    class="topology__input"
+                    class="k-input topology__input"
                     @change="$emit('topologySelected', type.value)"
                   >
                 </div>
@@ -71,7 +72,11 @@ export default {
 
 <style lang="scss" scoped>
 .topology-selector {
-  margin: 2rem 0;
+  margin: var(--spacing-xl) 0;
+}
+
+#topology-selector-form {
+  margin: var(--spacing-lg) 0;
 }
 
 .topology__card {
@@ -104,37 +109,6 @@ export default {
 
 .topology__input {
   margin: 0 auto;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  height: 20px;
-  width: 20px;
-  color: var(--blue-base);
-  border-radius: 100%;
-  vertical-align: middle;
-  padding: 0;
-  border: 1px solid var(--grey-88);
-  background-color: #fff;
-  box-sizing: border-box;
-  appearance: none;
-  user-select: none;
-
-  &:checked {
-    border-color: currentColor;
-    background-color: #fff;
-    background-size: 100% 100%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-
-    &:after {
-      content: "";
-      display: flex;
-      height: 10px;
-      width: 10px;
-      background-color: currentColor;
-      border-radius: 100%;
-    }
-  }
 }
 
 .topology__card__image {

@@ -64,10 +64,11 @@ export default class RestClient {
   }
 
   async status (path, options) {
+    const opts = await options || {}
     const url = await path
     const client = await this.client
 
-    return client.get(url)
+    return client.get(url, opts)
       .then(response => {
         return response.statusText
       })

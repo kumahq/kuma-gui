@@ -67,6 +67,7 @@ export default (store) => {
     {
       // Entity Wizard
       path: '/wizard',
+      name: 'wizard',
       component: () => import('@/views/Wizard/CreateNew'),
       meta: {
         title: 'Wizard',

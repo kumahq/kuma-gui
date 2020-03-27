@@ -21,7 +21,7 @@ export default class Kuma {
   }
 
   getStatus () {
-    return this.client.status()
+    return this.client.status('/')
   }
 
   /**

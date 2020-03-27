@@ -30,7 +30,7 @@
     "@kongponents/ktabs": "^0.1.2",
     "@kongponents/ktoaster": "0.0.1-beta.4",
     "@kongponents/ktoggle": "^0.1.1",
-    "@kongponents/styles": "0.0.4",
+    "@kongponents/styles": "^0.1.2",
     "axios": "^0.19.0",
     "axios-mock-adapter": "^1.17.0",
     "core-js": "^2.6.5",
