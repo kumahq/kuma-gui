@@ -1,46 +1,140 @@
 <template>
   <div class="wizard">
     <div class="wizard__content">
-      <StepSkeleton :steps="steps">
+      <StepSkeleton
+        :steps="steps"
+        :advance-check="canAdvance"
+      >
         <template slot="general">
           <page-header noflex>
             <h2 class="xxl">
               Create a new Mesh
             </h2>
           </page-header>
-          <p class="my-2">
+          <p class="my-4">
             Welcome to the wizard for creating a new Mesh entity in Kuma.
             We will be providing you with a few steps that will get you started.
           </p>
-          <p class="my-2">
+          <p class="my-4">
             As you know, the Kuma GUI is read-only, so at the end of this wizard
             we will be generating the configuration that you can apply with either
-            <pre>kubectl</pre> (if you are running in Kubernetes mode) or
+            <code>kubectl</code> (if you are running in Kubernetes mode) or
             kumactl / API (if you are running in Universal mode).
           </p>
+
           <h3 class="xl">
             To get started, please fill-in the following information:
           </h3>
-          <form id="entity-name-selection">
-            <div class="form-line">
-              <div>
-                <label
-                  for="mesh-name"
-                  class="k-input-label"
+
+          <KCard
+            class="my-6 k-card--small"
+            title="Mesh Information"
+            has-shadow
+          >
+            <template slot="body">
+              <form id="entity-name-selection">
+                <div class="form-line">
+                  <div>
+                    <label
+                      for="mesh-name"
+                      class="k-input-label"
+                    >
+                      Mesh name:
+                    </label>
+                  </div>
+                  <div>
+                    <input
+                      id="mesh-name"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="your-mesh-name"
+                      :value="$route.query.name ? $route.query.name : ''"
+                      @change="pushQuery('name', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                    >
+                  </div>
+                </div>
+                <div class="form-line">
+                  <div>
+                    <label class="k-input-label">
+                      Mutual TLS:
+                    </label>
+                  </div>
+                  <div>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="mtls-enabled"
+                        value="enabled"
+                        name="mtls"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="($route.query.mtls && $route.query.mtls === 'enabled') ? true : false"
+                        @change="pushQuery('mtls', 'enabled')"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="mtls-disabled"
+                        value="disabled"
+                        name="mtls"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="($route.query.mtls && $route.query.mtls === 'disabled') ? true : false"
+                        @change="pushQuery('mtls', 'disabled')"
+                      >
+                      <span>Disabled</span>
+                    </label>
+                  </div>
+                </div>
+                <div
+                  v-if="$route.query.mtls === 'enabled'"
+                  class="form-line"
                 >
-                  Mesh name:
-                </label>
-              </div>
-              <div>
-                <input
-                  id="mesh-name"
-                  type="text"
-                  class="k-input"
-                  placeholder="Enter a Mesh name"
-                >
-              </div>
-            </div>
-          </form>
+                  <div>
+                    <label
+                      for="certificate-authority"
+                      class="k-input-label"
+                    >
+                      Certificate Authority:
+                    </label>
+                  </div>
+                  <div>
+                    <select
+                      id="certificate-authority"
+                      class="k-input w-100"
+                      name="certificate-authority"
+                      @change="pushQuery('ca', $event.target.value)"
+                    >
+                      <option
+                        selected
+                        disabled
+                      >
+                        Select One&hellip;
+                      </option>
+                      <option
+                        value="built-in"
+                        :selected="($route.query.ca && $route.query.ca === 'built-in') ? true : false"
+                      >
+                        built-in
+                      </option>
+                      <option
+                        value="provided"
+                        :selected="($route.query.ca && $route.query.ca === 'provided') ? true : false"
+                      >
+                        provided
+                      </option>
+                      <option
+                        value="vault"
+                        :selected="($route.query.ca && $route.query.ca === 'vault') ? true : false"
+                      >
+                        vault
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+            </template>
+          </KCard>
         </template>
         <template slot="logging">
           <p>Some content for LOGGING</p>
@@ -106,15 +200,51 @@ export default {
       } else {
         return 'Create a new entity'
       }
+    },
+    canAdvance () {
+      const query = this.$route.query
+      const name = query.name
+      const mtls = query.mtls
+      const ca = query.ca
+
+      if (undefined !== name && name.length > 0) {
+        if (undefined !== mtls && mtls === 'enabled') {
+          if (undefined !== ca && ca.length > 0) {
+            return true
+          } else {
+            return false
+          }
+        } else {
+          return false
+        }
+      } else {
+        return false
+      }
     }
   },
   methods: {
     goToNextStep (ev) {
-      this.$router.push({
-        query: Object.assign({}, this.$route.query, {
-          topology: ev
+
+    },
+    pushQuery (query, value) {
+      const router = this.$router
+      const route = this.$route
+
+      if (!route.query) {
+        // if the URL contains no current queries, simply add the query and value
+        router.push({
+          query: {
+            [query]: value
+          }
         })
-      })
+      } else {
+        // otherwise append it to the existing queries
+        router.push({
+          query: Object.assign({}, route.query, {
+            [query]: value
+          })
+        })
+      }
     }
   }
 }

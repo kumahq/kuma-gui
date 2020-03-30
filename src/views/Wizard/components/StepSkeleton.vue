@@ -38,7 +38,7 @@
     <footer class="wizard-steps__footer">
       <p>
         <KButton
-          :disabled="!canProgress"
+          :disabled="advanceCheck === false"
           appearance="primary"
           @click="goToNextStep(selected)"
         >
@@ -55,12 +55,25 @@ export default {
     steps: {
       type: Array,
       default: () => {}
+    },
+    advanceCheck: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      step: this.steps[0].slug,
-      canProgress: false
+      step: this.steps[0].slug
+    }
+  },
+  computed: {
+    selected: {
+      get () {
+        return this.step
+      },
+      set (newStep) {
+        return newStep
+      }
     }
   },
   methods: {
@@ -79,13 +92,13 @@ export default {
 }
 
 .wizard-steps__indicator__controls {
-  display: flex;
-  align-items: stretch;
-  justify-content: stretch;
+  --wizard-tab-bg: var(--blue-4);
+  --wizard-tab-text-selected-color: #fff;
 
-  li {
-    flex: 1;
-  }
+  border: 1px solid var(--gray-4);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-radius: 6px;
 
   a {
     display: block;
@@ -93,21 +106,52 @@ export default {
     text-decoration: underline;
     padding: var(--spacing-md);
     background-color: var(--gray-med);
-  }
-}
-
-.form-line {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  margin: 16px -16px;
-
-  label {
-    text-align: right;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
   }
 
-  > * {
-    padding: 0 16px;
+  li[aria-selected="true"] a {
+    position: relative;
+    color: var(--wizard-tab-text-selected-color);
+    background-color: var(--wizard-tab-bg);
+
+    &:before, &:after {
+      position: absolute;
+      content: "";
+      display: block;
+    }
+
+    // underline
+    // &:before {
+    //   bottom: -2px;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 2px;
+    //   background-color: var(--blue-4);
+    // }
+
+    // arrow
+    &:after {
+      --i: 20px;
+      top: 0;
+      right: calc(var(--i) * -1);
+      width: var(--i);
+      height: 100%;
+      background-color: var(--wizard-tab-bg);
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    text-align: center;
+
+    li {
+      flex: 1;
+    }
   }
 }
 
