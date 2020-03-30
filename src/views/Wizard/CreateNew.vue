@@ -207,16 +207,11 @@ export default {
       const mtls = query.mtls
       const ca = query.ca
 
-      if (undefined !== name && name.length > 0) {
-        if (undefined !== mtls && mtls === 'enabled') {
-          if (undefined !== ca && ca.length > 0) {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false
-        }
+      if (
+        (undefined !== name && name.length > 0) &&
+        (undefined !== mtls && mtls.length > 0)
+      ) {
+        return true
       } else {
         return false
       }
