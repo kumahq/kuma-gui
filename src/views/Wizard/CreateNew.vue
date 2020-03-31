@@ -4,7 +4,9 @@
       <StepSkeleton
         :steps="steps"
         :advance-check="canAdvance"
+        :sidebar-content="sidebarContent"
       >
+        <!-- step content -->
         <template slot="general">
           <page-header noflex>
             <h2 class="xxl">
@@ -148,12 +150,40 @@
         <template slot="complete">
           <p>You're done!</p>
         </template>
+
+        <!-- sidebar content -->
+        <template slot="mesh">
+          <h3>Mesh</h3>
+          <p>
+            In {{ title }}, a Mesh entity allows you to define an isolated environment
+            for your data-planes and policies. It's isolated because the mTLS CA
+            you choose can be different from the one configured for our Meshes.
+            Ideally, you will have either a large Mesh with all the workloads, or
+            one Mesh per application for better isolation.
+          </p>
+          <p>
+            <a
+              :href="`https://kuma.io/docs/${version}/policies/mesh/`"
+              target="_blank"
+            >
+              Learn More
+            </a>
+          </p>
+        </template>
+        <template slot="did-you-know">
+          <h3>Did You Know?</h3>
+          <p>
+            As you know, the GUI is read-only, but it will be providing instructions
+            to create a new Mesh and verify everything worked well.
+          </p>
+        </template>
       </StepSkeleton>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import StepSkeleton from './components/StepSkeleton'
 
@@ -188,6 +218,14 @@ export default {
           label: 'Done!',
           slug: 'complete'
         }
+      ],
+      sidebarContent: [
+        {
+          name: 'mesh'
+        },
+        {
+          name: 'did-you-know'
+        }
       ]
     }
   },
@@ -214,7 +252,11 @@ export default {
       } else {
         return false
       }
-    }
+    },
+    ...mapGetters({
+      title: 'getTagline',
+      version: 'getVersion'
+    })
   },
   methods: {
     goToNextStep (ev) {
