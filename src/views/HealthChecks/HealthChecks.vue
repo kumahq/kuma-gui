@@ -40,37 +40,6 @@
           />
         </template>
       </Tabs>
-      <!-- <Tabs
-        :has-error="hasError"
-        :is-loading="isLoading"
-        :is-empty="isEmpty"
-        :tabs="tabs"
-        :tab-group-title="tabGroupTitle"
-      >
-        <template slot="tab-link-overview">
-          Overview
-        </template>
-        <template slot="tab-content-overview">
-          <LabelList
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :items="entity"
-          />
-        </template>
-        <template slot="tab-link-yaml-view">
-          YAML
-        </template>
-        <template slot="tab-content-yaml-view">
-          <YamlView
-            :title="entityOverviewTitle"
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="rawEntity"
-          />
-        </template>
-      </Tabs> -->
     </FrameSkeleton>
   </div>
 </template>
@@ -176,7 +145,7 @@ export default {
       // reset back to the first tab
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
-      console.log(`table action tab: ${this.tabs[0].hash}`)
+      // console.log(`table action tab: ${this.tabs[0].hash}`)
 
       // set the active table row
       this.$store.dispatch('updateSelectedTableRow', ev)

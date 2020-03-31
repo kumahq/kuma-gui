@@ -105,8 +105,6 @@ export default {
         return this.$store.state.selectedTab
       },
       set (newTab) {
-        console.log(newTab)
-
         return newTab
       }
     },

@@ -205,7 +205,6 @@ export default {
       const query = this.$route.query
       const name = query.name
       const mtls = query.mtls
-      const ca = query.ca
 
       if (
         (undefined !== name && name.length > 0) &&

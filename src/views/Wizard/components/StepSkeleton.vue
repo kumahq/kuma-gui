@@ -13,7 +13,7 @@
           :aria-controls="`wizard-steps__content__item--${index}`"
           class="wizard-steps__indicator__item"
         >
-          <a @click.prevent="goToNextStep(item.slug)">
+          <a @click.prevent="goToStep(index)">
             {{ item.label }}
           </a>
         </li>
@@ -38,9 +38,9 @@
     <footer class="wizard-steps__footer">
       <p>
         <KButton
-          :disabled="advanceCheck === false"
+          :disabled="advanceCheck === false || start >= steps.length - 1"
           appearance="primary"
-          @click="goToNextStep(selected)"
+          @click="goToNextStep"
         >
           Next
         </KButton>
@@ -63,10 +63,18 @@ export default {
   },
   data () {
     return {
-      step: this.steps[0].slug
+      start: 0
     }
   },
   computed: {
+    step: {
+      get () {
+        return this.steps[this.start].slug
+      },
+      set (index) {
+        return this.steps[index].slug
+      }
+    },
     selected: {
       get () {
         return this.step
@@ -77,9 +85,13 @@ export default {
     }
   },
   methods: {
-    goToNextStep (slug) {
-      this.step = slug
-      this.$emit('nextStep', slug)
+    goToStep (index) {
+      this.start = index
+      this.$emit('goToStep', this.step)
+    },
+    goToNextStep () {
+      this.start++
+      this.$emit('goToNextStep', this.step)
     }
   }
 }
