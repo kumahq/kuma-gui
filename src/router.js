@@ -68,11 +68,18 @@ export default (store) => {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import('@/views/Wizard/CreateNew'),
-      meta: {
-        title: 'Wizard',
-        excludeAsBreadcrumb: true
-      }
+      component: () => import('@/views/ShellEmpty'),
+      children: [
+        {
+          path: 'mesh',
+          name: 'create-mesh',
+          meta: {
+            title: 'Create a new Mesh',
+            excludeAsBreadcrumb: true
+          },
+          component: () => import('@/views/Wizard/views/Mesh')
+        }
+      ]
     },
     // App
     {

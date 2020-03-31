@@ -39,7 +39,8 @@ export default (api) => {
       version: null,
       status: null,
       selectedTab: '#overview',
-      selectedTableRow: null
+      selectedTableRow: null,
+      wizardLoggingFormat: null
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -68,7 +69,8 @@ export default (api) => {
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
       getSelectedTab: (state) => state.selectedTab,
-      getSelectedTableRow: (state) => state.selectedTableRow
+      getSelectedTableRow: (state) => state.selectedTableRow,
+      getWizardLoggingFormat: (state) => state.wizardLoggingFormat
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -97,7 +99,8 @@ export default (api) => {
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
-      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row)
+      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
+      SET_WIZARD_LOGGING_FORMAT: (state, format) => (state.wizardLoggingFormat = format)
     },
     actions: {
       // update the onboarding state
@@ -495,6 +498,11 @@ export default (api) => {
 
       updateSelectedTableRow ({ commit }, row) {
         commit('SET_NEW_TABLE_ROW', row)
+      },
+
+      // Wizard actions
+      updateWizardLoggingFormat ({ commit }, format) {
+        commit('SET_WIZARD_LOGGING_FORMAT', format)
       }
     }
   })

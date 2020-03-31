@@ -8,23 +8,18 @@
       >
         <!-- step content -->
         <template slot="general">
-          <page-header noflex>
-            <h2 class="xxl">
-              Create a new Mesh
-            </h2>
-          </page-header>
-          <p class="my-4">
+          <p>
             Welcome to the wizard for creating a new Mesh entity in Kuma.
             We will be providing you with a few steps that will get you started.
           </p>
-          <p class="my-4">
+          <p>
             As you know, the Kuma GUI is read-only, so at the end of this wizard
             we will be generating the configuration that you can apply with either
             <code>kubectl</code> (if you are running in Kubernetes mode) or
             kumactl / API (if you are running in Universal mode).
           </p>
 
-          <h3 class="xl">
+          <h3>
             To get started, please fill-in the following information:
           </h3>
 
@@ -51,7 +46,7 @@
                       class="k-input w-100"
                       placeholder="your-mesh-name"
                       :value="$route.query.name ? $route.query.name : ''"
-                      @change="pushQuery('name', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                      @change="updateQuery('name', $event.target.value.replace(/ /g, '-').toLowerCase())"
                     >
                   </div>
                 </div>
@@ -70,7 +65,7 @@
                         type="radio"
                         class="k-input mr-2"
                         :checked="($route.query.mtls && $route.query.mtls === 'enabled') ? true : false"
-                        @change="pushQuery('mtls', 'enabled')"
+                        @change="updateQuery('mtls', 'enabled')"
                       >
                       <span>Enabled</span>
                     </label>
@@ -82,7 +77,7 @@
                         type="radio"
                         class="k-input mr-2"
                         :checked="($route.query.mtls && $route.query.mtls === 'disabled') ? true : false"
-                        @change="pushQuery('mtls', 'disabled')"
+                        @change="updateQuery('mtls', 'disabled', 'ca')"
                       >
                       <span>Disabled</span>
                     </label>
@@ -105,13 +100,13 @@
                       id="certificate-authority"
                       class="k-input w-100"
                       name="certificate-authority"
-                      @change="pushQuery('ca', $event.target.value)"
+                      @change="updateQuery('ca', $event.target.value)"
                     >
                       <option
                         selected
                         disabled
                       >
-                        Select One&hellip;
+                        Select a CA&hellip;
                       </option>
                       <option
                         value="built-in"
@@ -132,6 +127,9 @@
                         vault
                       </option>
                     </select>
+                    <p class="help">
+                      If you've enabled mTLS, you must select a CA.
+                    </p>
                   </div>
                 </div>
               </form>
@@ -139,7 +137,58 @@
           </KCard>
         </template>
         <template slot="logging">
-          <p>Some content for LOGGING</p>
+          <h3>
+            Setup Logging
+          </h3>
+          <p>
+            You can setup as many logging backends as you need that you can later
+            use to log traffic via the &quot;TrafficLog&quot; policy. In this wizard,
+            we allow you to configure one backend, but you can add more manually
+            if you wish.
+          </p>
+          <KCard
+            class="my-6 k-card--small"
+            title="Logging Configuration"
+            has-shadow
+          >
+            <template slot="body">
+              <form>
+                <div class="form-line">
+                  <div>
+                    <label class="k-input-label">
+                      Logging
+                    </label>
+                  </div>
+                  <div>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="logging-enabled"
+                        value="enabled"
+                        name="logging"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="($route.query.logging && $route.query.logging === 'enabled') ? true : false"
+                        @change="updateQuery('logging', 'enabled')"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="logging-disabled"
+                        value="disabled"
+                        name="logging"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="($route.query.logging && $route.query.logging === 'disabled') ? true : false"
+                        @change="updateQuery('logging', 'disabled')"
+                      >
+                      <span>Disabled</span>
+                    </label>
+                  </div>
+                </div>
+              </form>
+            </template>
+          </KCard>
         </template>
         <template slot="tracing">
           <p>Some content for TRACING</p>
@@ -184,17 +233,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import StepSkeleton from './components/StepSkeleton'
+import updateQuery from '@/views/Wizard/mixins/updateQuery'
+import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 
 export default {
   metaInfo: {
-    title: 'Wizard'
+    title: 'Create a new Mesh'
   },
   components: {
-    PageHeader,
     StepSkeleton
   },
+  mixins: [
+    updateQuery
+  ],
   data () {
     return {
       steps: [
@@ -257,31 +308,6 @@ export default {
       title: 'getTagline',
       version: 'getVersion'
     })
-  },
-  methods: {
-    goToNextStep (ev) {
-
-    },
-    pushQuery (query, value) {
-      const router = this.$router
-      const route = this.$route
-
-      if (!route.query) {
-        // if the URL contains no current queries, simply add the query and value
-        router.push({
-          query: {
-            [query]: value
-          }
-        })
-      } else {
-        // otherwise append it to the existing queries
-        router.push({
-          query: Object.assign({}, route.query, {
-            [query]: value
-          })
-        })
-      }
-    }
   }
 }
 </script>

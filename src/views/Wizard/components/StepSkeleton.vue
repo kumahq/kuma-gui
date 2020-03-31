@@ -62,7 +62,12 @@
 </template>
 
 <script>
+import updateQuery from '@/views/Wizard/mixins/updateQuery'
+
 export default {
+  mixins: [
+    updateQuery
+  ],
   props: {
     steps: {
       type: Array,
@@ -78,12 +83,17 @@ export default {
       default: () => {}
     }
   },
-  data () {
-    return {
-      start: 0
-    }
-  },
   computed: {
+    start: {
+      get () {
+        const step = this.$route.query.step
+
+        return (!isNaN(step) && step) ? step : 0
+      },
+      set (value) {
+        return value
+      }
+    },
     indexCanAdvance () {
       return this.start >= this.steps.length - 1
     },
@@ -104,13 +114,22 @@ export default {
       }
     }
   },
+  mounted () {
+    const query = this.$route.query.step
+
+    if (!query || isNaN(query)) {
+      this.updateQuery('step', this.start)
+    }
+  },
   methods: {
     goToStep (index) {
       this.start = index
+      this.updateQuery('step', index)
       this.$emit('goToStep', this.step)
     },
     goToNextStep () {
       this.start++
+      this.updateQuery('step', this.start)
       this.$emit('goToNextStep', this.step)
     }
   }
@@ -240,6 +259,25 @@ export default {
     li {
       flex: 1;
     }
+  }
+}
+
+.wizard-steps__content {
+
+  p, h2, h3, h4 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  h2 {
+    font-size: var(--type-xxl);
+  }
+
+  h3 {
+    font-size: var(--type-xl);
+  }
+
+  h4 {
+    font-size: var(--type-lg);
   }
 }
 
