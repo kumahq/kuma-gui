@@ -40,7 +40,7 @@ export default (api) => {
       status: null,
       selectedTab: '#overview',
       selectedTableRow: null,
-      wizardLoggingFormat: null
+      wizardInstance: []
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -70,7 +70,7 @@ export default (api) => {
       getStatus: (state) => state.status,
       getSelectedTab: (state) => state.selectedTab,
       getSelectedTableRow: (state) => state.selectedTableRow,
-      getWizardLoggingFormat: (state) => state.wizardLoggingFormat
+      getWizardInstance: (state) => state.wizardInstance
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -100,7 +100,11 @@ export default (api) => {
       SET_STATUS: (state, status) => (state.status = status),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
       SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
-      SET_WIZARD_LOGGING_FORMAT: (state, format) => (state.wizardLoggingFormat = format)
+      SET_NEW_WIZARD_INSTANCE: (state, data) => {
+        const index = state.wizardInstance.indexOf(data)
+
+        Vue.set(state.wizardInstance, index, data)
+      }
     },
     actions: {
       // update the onboarding state
@@ -501,8 +505,8 @@ export default (api) => {
       },
 
       // Wizard actions
-      updateWizardLoggingFormat ({ commit }, format) {
-        commit('SET_WIZARD_LOGGING_FORMAT', format)
+      addWizardInstance ({ commit }, data) {
+        commit('SET_NEW_WIZARD_INSTANCE', data)
       }
     }
   })

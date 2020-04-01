@@ -6,7 +6,7 @@
  */
 export default {
   methods: {
-    updateQuery (query, value, remove = undefined) {
+    updateQuery (query, value, remove) {
       const router = this.$router
       const route = this.$route
 

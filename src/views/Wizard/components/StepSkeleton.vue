@@ -279,6 +279,10 @@ export default {
   h4 {
     font-size: var(--type-lg);
   }
+
+  textarea {
+    resize: none !important;
+  }
 }
 
 .wizard-steps__footer {

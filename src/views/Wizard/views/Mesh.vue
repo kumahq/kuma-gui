@@ -186,6 +186,119 @@
                     </label>
                   </div>
                 </div>
+                <div
+                  v-if="$route.query.logging === 'enabled'"
+                  class="form-group"
+                >
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="backend-name"
+                        class="k-input-label"
+                      >
+                        Backend name:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="backend-name"
+                        type="text"
+                        class="k-input w-100"
+                        placeholder="your-backend-name"
+                        :value="$route.query.logging_backend ? $route.query.logging_backend : ''"
+                        @change="updateQuery('logging_backend', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                      >
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="logging-type"
+                        class="k-input-label"
+                      >
+                        Type:
+                      </label>
+                    </div>
+                    <div>
+                      <select
+                        id="logging-type"
+                        class="k-input w-100"
+                        name="logging-type"
+                        @change="updateQuery('logging_type', $event.target.value)"
+                      >
+                        <option
+                          selected
+                          disabled
+                        >
+                          Select a CA&hellip;
+                        </option>
+                        <option
+                          value="tcp"
+                          :selected="($route.query.logging_type && $route.query.logging_type === 'tcp') ? true : false"
+                        >
+                          TCP
+                        </option>
+                        <option
+                          value="file"
+                          :selected="($route.query.logging_type && $route.query.logging_type === 'file') ? true : false"
+                        >
+                          File
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="backend-address"
+                        class="k-input-label"
+                      >
+                        Address:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="backend-address"
+                        type="text"
+                        class="k-input w-100"
+                        placeholder="127.0.0.1"
+                        :value="$route.query.logging_address ? $route.query.logging_address : ''"
+                        @change="updateQuery('logging_address', $event.target.value)"
+                      >
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="backend-format"
+                        class="k-input-label"
+                      >
+                        Format:
+                      </label>
+                    </div>
+                    <div>
+                      <textarea
+                        id="backend-format"
+                        class="k-input w-100"
+                        @change="$store.dispatch('addWizardInstance', {
+                          logging: {
+                            backend_format: $event.target.value
+                          }
+                        })"
+                      />
+                      <textarea
+                        id="backend-format"
+                        class="k-input w-100"
+                        @change="$store.dispatch('addWizardInstance', {
+                          logging: {
+                            some_item: $event.target.value
+                          }
+                        })"
+                      />
+                      {{ Object.entries(formData) }}
+                    </div>
+                  </div>
+                </div>
               </form>
             </template>
           </KCard>
@@ -306,7 +419,8 @@ export default {
     },
     ...mapGetters({
       title: 'getTagline',
-      version: 'getVersion'
+      version: 'getVersion',
+      formData: 'getWizardInstance'
     })
   }
 }
