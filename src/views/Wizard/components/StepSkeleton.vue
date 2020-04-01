@@ -126,9 +126,9 @@ export default {
       this.start = index
       this.updateQuery('step', index)
       this.$emit('goToStep', this.step)
-      console.log(this.start)
     },
     goToNextStep () {
+      // @TODO fix this (Object error)
       this.start++
       this.$router.replace({
         query: { step: this.start }

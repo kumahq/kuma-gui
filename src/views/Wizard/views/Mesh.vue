@@ -156,7 +156,7 @@
                 <div class="form-line">
                   <div>
                     <label class="k-input-label">
-                      Logging
+                      Logging:
                     </label>
                   </div>
                   <div>
@@ -376,7 +376,7 @@
                       <select
                         id="tracing-type"
                         class="k-input w-100"
-                        name="logging-type"
+                        name="tracing-type"
                         @change="updateStorage('meshLoggingType', $event.target.value)"
                       >
                         <option
@@ -414,7 +414,7 @@
                         for="tracing-zipkin-url"
                         class="k-input-label"
                       >
-                        Zipkin URL:
+                        URL:
                       </label>
                     </div>
                     <div>
@@ -433,7 +433,125 @@
           </KCard>
         </template>
         <template slot="metrics">
-          <p>Some content for METRICS</p>
+          <h3>
+            Setup Metrics
+          </h3>
+          <p>
+            You can expose metrics from every data-plane on a configurable path
+            and port that a metrics service, like Prometheus, can use to fetch them.
+          </p>
+          <KCard
+            class="my-6 k-card--small"
+            title="Metrics Configuration"
+            has-shadow
+          >
+            <template slot="body">
+              <form>
+                <div class="form-line">
+                  <div>
+                    <label class="k-input-label">
+                      Metrics
+                    </label>
+                  </div>
+                  <div>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="metrics-enabled"
+                        value="enabled"
+                        name="metrics"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="formConditions.metricsEnabled === true"
+                        @change="updateStorage('meshMetricsStatus', 'enabled'); formConditions.metricsEnabled = true"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="metrics-disabled"
+                        value="disabled"
+                        name="metrics"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="formConditions.metricsEnabled === false"
+                        @change="updateStorage('meshMetricsStatus', 'disabled'); formConditions.metricsEnabled = false"
+                      >
+                      <span>Disabled</span>
+                    </label>
+                  </div>
+                </div>
+                <div
+                  v-if="formConditions.metricsEnabled === true"
+                  class="form-group"
+                >
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="metrics-type"
+                        class="k-input-label"
+                      >
+                        Type:
+                      </label>
+                    </div>
+                    <div>
+                      <select
+                        id="metrics-type"
+                        class="k-input w-100"
+                        name="metrics-type"
+                        @change="updateStorage('meshMetricsType', $event.target.value)"
+                      >
+                        <option
+                          value="prometheus"
+                          :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
+                        >
+                          Prometheus
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="metrics-dataplane-port"
+                        class="k-input-label"
+                      >
+                        Dataplane port:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="metrics-dataplane-port"
+                        type="number"
+                        class="k-input w-100"
+                        :value="getStorageItem('meshMetricsDataplanePort') || 5670"
+                        step="0.1"
+                        @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
+                      >
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="metrics-dataplane-path"
+                        class="k-input-label"
+                      >
+                        Dataplane path:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="metrics-dataplane-path"
+                        type="text"
+                        class="k-input w-100"
+                        :value="getStorageItem('meshMetricsDataplanePath') || '/metrics'"
+                        @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </template>
+          </KCard>
         </template>
         <template slot="complete">
           <p>You're done!</p>
@@ -505,7 +623,7 @@ export default {
           slug: 'metrics'
         },
         {
-          label: 'Done!',
+          label: 'Install',
           slug: 'complete'
         }
       ],
@@ -520,7 +638,8 @@ export default {
       formConditions: {
         mtlsEnabled: false,
         loggingEnabled: false,
-        tracingEnabled: false
+        tracingEnabled: false,
+        metricsEnabled: false
       }
     }
   },
