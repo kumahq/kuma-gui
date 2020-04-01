@@ -45,8 +45,8 @@
                       type="text"
                       class="k-input w-100"
                       placeholder="your-mesh-name"
-                      :value="$route.query.name ? $route.query.name : ''"
-                      @change="updateQuery('name', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                      :value="getStorageItem('meshName')"
+                      @change="updateStorage('meshName', $event.target.value.replace(/ /g, '-').toLowerCase())"
                     >
                   </div>
                 </div>
@@ -64,27 +64,27 @@
                         name="mtls"
                         type="radio"
                         class="k-input mr-2"
-                        :checked="($route.query.mtls && $route.query.mtls === 'enabled') ? true : false"
-                        @change="updateQuery('mtls', 'enabled')"
+                        :checked="formConditions.mtlsEnabled === true"
+                        @change="updateStorage('meshMtls', 'enabled'); formConditions.mtlsEnabled = true"
                       >
                       <span>Enabled</span>
                     </label>
                     <label class="k-input-label mx-2">
                       <input
-                        id="mtls-disabled"
+                        ref="mtlsDisabled"
                         value="disabled"
                         name="mtls"
                         type="radio"
                         class="k-input mr-2"
-                        :checked="($route.query.mtls && $route.query.mtls === 'disabled') ? true : false"
-                        @change="updateQuery('mtls', 'disabled', 'ca')"
+                        :checked="formConditions.mtlsEnabled === false"
+                        @change="updateStorage('meshMtls', 'disabled', 'ca'); formConditions.mtlsEnabled = false"
                       >
                       <span>Disabled</span>
                     </label>
                   </div>
                 </div>
                 <div
-                  v-if="$route.query.mtls === 'enabled'"
+                  v-if="formConditions.mtlsEnabled === true"
                   class="form-line"
                 >
                   <div>
@@ -100,7 +100,7 @@
                       id="certificate-authority"
                       class="k-input w-100"
                       name="certificate-authority"
-                      @change="updateQuery('ca', $event.target.value)"
+                      @change="updateStorage('meshCA', $event.target.value)"
                     >
                       <option
                         selected
@@ -110,19 +110,19 @@
                       </option>
                       <option
                         value="built-in"
-                        :selected="($route.query.ca && $route.query.ca === 'built-in') ? true : false"
+                        :selected="(getStorageItem('meshCA') === 'built-in') ? true : false"
                       >
                         built-in
                       </option>
                       <option
                         value="provided"
-                        :selected="($route.query.ca && $route.query.ca === 'provided') ? true : false"
+                        :selected="(getStorageItem('meshCA') === 'provided') ? true : false"
                       >
                         provided
                       </option>
                       <option
                         value="vault"
-                        :selected="($route.query.ca && $route.query.ca === 'vault') ? true : false"
+                        :selected="(getStorageItem('meshCA') === 'vault') ? true : false"
                       >
                         vault
                       </option>
@@ -167,8 +167,8 @@
                         name="logging"
                         type="radio"
                         class="k-input mr-2"
-                        :checked="($route.query.logging && $route.query.logging === 'enabled') ? true : false"
-                        @change="updateQuery('logging', 'enabled')"
+                        :checked="formConditions.loggingEnabled === true"
+                        @change="updateStorage('meshLoggingStatus', 'enabled'); formConditions.loggingEnabled = true"
                       >
                       <span>Enabled</span>
                     </label>
@@ -179,15 +179,15 @@
                         name="logging"
                         type="radio"
                         class="k-input mr-2"
-                        :checked="($route.query.logging && $route.query.logging === 'disabled') ? true : false"
-                        @change="updateQuery('logging', 'disabled')"
+                        :checked="formConditions.loggingEnabled === false"
+                        @change="updateStorage('meshLoggingStatus', 'disabled'); formConditions.loggingEnabled = false"
                       >
                       <span>Disabled</span>
                     </label>
                   </div>
                 </div>
                 <div
-                  v-if="$route.query.logging === 'enabled'"
+                  v-if="formConditions.loggingEnabled === true"
                   class="form-group"
                 >
                   <div class="form-line">
@@ -205,8 +205,8 @@
                         type="text"
                         class="k-input w-100"
                         placeholder="your-backend-name"
-                        :value="$route.query.logging_backend ? $route.query.logging_backend : ''"
-                        @change="updateQuery('logging_backend', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                        :value="getStorageItem('meshLoggingBackend')"
+                        @change="updateStorage('meshLoggingBackend', $event.target.value.replace(/ /g, '-').toLowerCase())"
                       >
                     </div>
                   </div>
@@ -224,7 +224,7 @@
                         id="logging-type"
                         class="k-input w-100"
                         name="logging-type"
-                        @change="updateQuery('logging_type', $event.target.value)"
+                        @change="updateStorage('meshLoggingType', $event.target.value)"
                       >
                         <option
                           selected
@@ -234,13 +234,13 @@
                         </option>
                         <option
                           value="tcp"
-                          :selected="($route.query.logging_type && $route.query.logging_type === 'tcp') ? true : false"
+                          :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
                         >
                           TCP
                         </option>
                         <option
                           value="file"
-                          :selected="($route.query.logging_type && $route.query.logging_type === 'file') ? true : false"
+                          :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
                         >
                           File
                         </option>
@@ -262,8 +262,8 @@
                         type="text"
                         class="k-input w-100"
                         placeholder="127.0.0.1"
-                        :value="$route.query.logging_address ? $route.query.logging_address : ''"
-                        @change="updateQuery('logging_address', $event.target.value)"
+                        :value="getStorageItem('meshLoggingAddress')"
+                        @change="updateStorage('meshLoggingAddress', $event.target.value)"
                       >
                     </div>
                   </div>
@@ -280,22 +280,8 @@
                       <textarea
                         id="backend-format"
                         class="k-input w-100"
-                        @change="$store.dispatch('addWizardInstance', {
-                          logging: {
-                            backend_format: $event.target.value
-                          }
-                        })"
+                        @change="updateStorage('meshLoggingBackendFormat', $event.target.value)"
                       />
-                      <textarea
-                        id="backend-format"
-                        class="k-input w-100"
-                        @change="$store.dispatch('addWizardInstance', {
-                          logging: {
-                            some_item: $event.target.value
-                          }
-                        })"
-                      />
-                      {{ Object.entries(formData) }}
                     </div>
                   </div>
                 </div>
@@ -304,7 +290,147 @@
           </KCard>
         </template>
         <template slot="tracing">
-          <p>Some content for TRACING</p>
+          <h3>
+            Setup Tracing
+          </h3>
+          <p>
+            You can setup as many tracing backends as you need that you can later
+            use to log traffic via the &quot;TrafficTrace&quot; policy. In this
+            wizard we allow you to configure one backend, but you can add more
+            manually as you wish.
+          </p>
+          <KCard
+            class="my-6 k-card--small"
+            title="Tracing Configuration"
+            has-shadow
+          >
+            <template slot="body">
+              <form>
+                <div class="form-line">
+                  <div>
+                    <label class="k-input-label">
+                      Tracing
+                    </label>
+                  </div>
+                  <div>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="tracing-enabled"
+                        value="enabled"
+                        name="tracing"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="formConditions.tracingEnabled === true"
+                        @change="updateStorage('meshTracingStatus', 'enabled'); formConditions.tracingEnabled = true"
+                      >
+                      <span>Enabled</span>
+                    </label>
+                    <label class="k-input-label mx-2">
+                      <input
+                        id="tracing-disabled"
+                        value="disabled"
+                        name="tracing"
+                        type="radio"
+                        class="k-input mr-2"
+                        :checked="formConditions.tracingEnabled === false"
+                        @change="updateStorage('meshTracingStatus', 'disabled'); formConditions.tracingEnabled = false"
+                      >
+                      <span>Disabled</span>
+                    </label>
+                  </div>
+                </div>
+                <div
+                  v-if="formConditions.tracingEnabled === true"
+                  class="form-group"
+                >
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="tracing-backend-name"
+                        class="k-input-label"
+                      >
+                        Backend name:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="tracing-backend-name"
+                        type="text"
+                        class="k-input w-100"
+                        placeholder="your-tracing-backend-name"
+                        :value="getStorageItem('meshTracingBackend')"
+                        @change="updateStorage('meshTracingBackend', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                      >
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="tracing-type"
+                        class="k-input-label"
+                      >
+                        Type:
+                      </label>
+                    </div>
+                    <div>
+                      <select
+                        id="tracing-type"
+                        class="k-input w-100"
+                        name="logging-type"
+                        @change="updateStorage('meshLoggingType', $event.target.value)"
+                      >
+                        <option
+                          value="zipkin"
+                          :selected="(getStorageItem('meshLoggingType') === 'zipkin') ? true : false"
+                        >
+                          Zipkin
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="tracing-sampling"
+                        class="k-input-label"
+                      >
+                        Sampling:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="tracing-sampling"
+                        type="number"
+                        class="k-input w-100"
+                        :value="getStorageItem('meshTracingSampling') || 99.9"
+                        step="0.1"
+                        @change="updateStorage('meshTracingSampling', $event.target.value)"
+                      >
+                    </div>
+                  </div>
+                  <div class="form-line">
+                    <div>
+                      <label
+                        for="tracing-zipkin-url"
+                        class="k-input-label"
+                      >
+                        Zipkin URL:
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        id="tracing-zipkin-url"
+                        type="text"
+                        class="k-input w-100"
+                        :value="getStorageItem('meshTracingZipkinURL')"
+                        @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
+                      >
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </template>
+          </KCard>
         </template>
         <template slot="metrics">
           <p>Some content for METRICS</p>
@@ -346,7 +472,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import updateQuery from '@/views/Wizard/mixins/updateQuery'
+import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 
 export default {
@@ -357,7 +483,7 @@ export default {
     StepSkeleton
   },
   mixins: [
-    updateQuery
+    updateStorage
   ],
   data () {
     return {
@@ -390,37 +516,36 @@ export default {
         {
           name: 'did-you-know'
         }
-      ]
+      ],
+      formConditions: {
+        mtlsEnabled: false,
+        loggingEnabled: false,
+        tracingEnabled: false
+      }
     }
   },
   computed: {
-    pageTitle () {
-      const query = this.$route.query
-
-      if (query.type) {
-        return `Create a new ${query.type}`
-      } else {
-        return 'Create a new entity'
-      }
-    },
     canAdvance () {
-      const query = this.$route.query
-      const name = query.name
-      const mtls = query.mtls
+      // const query = this.$route.query
+      // const name = query.name
+      // const mtls = query.mtls
 
-      if (
-        (undefined !== name && name.length > 0) &&
-        (undefined !== mtls && mtls.length > 0)
-      ) {
-        return true
-      } else {
-        return false
-      }
+      // if (
+      //   (undefined !== name && name.length > 0) &&
+      //   (undefined !== mtls && mtls.length > 0)
+      // ) {
+      //   return true
+      // } else {
+      //   return false
+      // }
+
+      // conditions disabled for now because
+      // this is a huge rabbit hole.
+      return true
     },
     ...mapGetters({
       title: 'getTagline',
-      version: 'getVersion',
-      formData: 'getWizardInstance'
+      version: 'getVersion'
     })
   }
 }

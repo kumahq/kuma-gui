@@ -39,8 +39,7 @@ export default (api) => {
       version: null,
       status: null,
       selectedTab: '#overview',
-      selectedTableRow: null,
-      wizardInstance: []
+      selectedTableRow: null
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -69,8 +68,7 @@ export default (api) => {
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
       getSelectedTab: (state) => state.selectedTab,
-      getSelectedTableRow: (state) => state.selectedTableRow,
-      getWizardInstance: (state) => state.wizardInstance
+      getSelectedTableRow: (state) => state.selectedTableRow
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -99,12 +97,7 @@ export default (api) => {
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
-      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
-      SET_NEW_WIZARD_INSTANCE: (state, data) => {
-        const index = state.wizardInstance.indexOf(data)
-
-        Vue.set(state.wizardInstance, index, data)
-      }
+      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row)
     },
     actions: {
       // update the onboarding state
@@ -502,11 +495,6 @@ export default (api) => {
 
       updateSelectedTableRow ({ commit }, row) {
         commit('SET_NEW_TABLE_ROW', row)
-      },
-
-      // Wizard actions
-      addWizardInstance ({ commit }, data) {
-        commit('SET_NEW_WIZARD_INSTANCE', data)
       }
     }
   })

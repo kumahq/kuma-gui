@@ -23,7 +23,6 @@ export default {
           }
         })
       } else {
-        // otherwise append it to the existing queries
         router.push({
           query: Object.assign({}, route.query, {
             [query]: value

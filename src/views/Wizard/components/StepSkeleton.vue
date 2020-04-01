@@ -126,10 +126,13 @@ export default {
       this.start = index
       this.updateQuery('step', index)
       this.$emit('goToStep', this.step)
+      console.log(this.start)
     },
     goToNextStep () {
       this.start++
-      this.updateQuery('step', this.start)
+      this.$router.replace({
+        query: { step: this.start }
+      })
       this.$emit('goToNextStep', this.step)
     }
   }
@@ -231,6 +234,7 @@ export default {
     position: relative;
     color: var(--wizard-tab-text-selected-color);
     background-color: var(--wizard-tab-bg);
+    border-radius: 6px 0 0 6px;
 
     &:before, &:after {
       position: absolute;
