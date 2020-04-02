@@ -12,11 +12,12 @@
             :key="item.slug"
             :aria-selected="step === item.slug ? 'true' : 'false'"
             :aria-controls="`wizard-steps__content__item--${index}`"
+            :class="{ 'is-complete': (index < start) }"
             class="wizard-steps__indicator__item"
           >
-            <a @click.prevent="goToStep(index)">
+            <span>
               {{ item.label }}
-            </a>
+            </span>
           </li>
         </ul>
       </header>
@@ -37,15 +38,20 @@
         </div>
       </div>
       <footer class="wizard-steps__footer">
-        <p>
-          <KButton
-            :disabled="advanceCheck === false || indexCanAdvance"
-            appearance="primary"
-            @click="goToNextStep"
-          >
-            Next
-          </KButton>
-        </p>
+        <KButton
+          :disabled="indexCanReverse"
+          appearance="primary"
+          @click="goToPrevStep"
+        >
+          &lsaquo; Previous
+        </KButton>
+        <KButton
+          :disabled="advanceCheck === false || indexCanAdvance"
+          appearance="primary"
+          @click="goToNextStep"
+        >
+          Next &rsaquo;
+        </KButton>
       </footer>
     </div>
     <aside class="wizard-steps__sidebar">
@@ -83,20 +89,12 @@ export default {
       default: () => {}
     }
   },
+  data () {
+    return {
+      start: 0
+    }
+  },
   computed: {
-    start: {
-      get () {
-        const step = this.$route.query.step
-
-        return (!isNaN(step) && step) ? step : 0
-      },
-      set (value) {
-        return value
-      }
-    },
-    indexCanAdvance () {
-      return this.start >= this.steps.length - 1
-    },
     step: {
       get () {
         return this.steps[this.start].slug
@@ -105,21 +103,18 @@ export default {
         return this.steps[index].slug
       }
     },
-    selected: {
-      get () {
-        return this.step
-      },
-      set (newStep) {
-        return newStep
-      }
+    indexCanAdvance () {
+      return this.start >= this.steps.length - 1
+    },
+    indexCanReverse () {
+      return this.start <= 0
     }
   },
   mounted () {
     const query = this.$route.query.step
 
-    if (!query || isNaN(query)) {
-      this.updateQuery('step', this.start)
-    }
+    this.start = query || 0
+    this.updateQuery('step', this.start)
   },
   methods: {
     goToStep (index) {
@@ -128,12 +123,14 @@ export default {
       this.$emit('goToStep', this.step)
     },
     goToNextStep () {
-      // @TODO fix this (Object error)
       this.start++
-      this.$router.replace({
-        query: { step: this.start }
-      })
+      this.updateQuery('step', this.start)
       this.$emit('goToNextStep', this.step)
+    },
+    goToPrevStep () {
+      this.start--
+      this.updateQuery('step', this.start)
+      this.$emit('goToPrevStep', this.step)
     }
   }
 }
@@ -219,22 +216,27 @@ export default {
   overflow: hidden;
   border-radius: 6px;
 
-  a {
+  li {
     display: block;
     color: var(--blue-base);
-    text-decoration: underline;
     padding: var(--spacing-md);
     background-color: var(--gray-med);
-    text-decoration: none;
-    cursor: pointer;
     user-select: none;
   }
 
-  li[aria-selected="true"] a {
-    position: relative;
+  @mixin highlighted-step {
     color: var(--wizard-tab-text-selected-color);
     background-color: var(--wizard-tab-bg);
-    border-radius: 6px 0 0 6px;
+  }
+
+  li.is-complete {
+    @include highlighted-step;
+  }
+
+  li[aria-selected="true"] {
+    @include highlighted-step;
+
+    position: relative;
 
     &:before, &:after {
       position: absolute;
@@ -266,6 +268,10 @@ export default {
   }
 }
 
+.wizard-steps__content__item {
+  outline: 0 !important;
+}
+
 .wizard-steps__content {
 
   p, h2, h3, h4 {
@@ -283,16 +289,26 @@ export default {
   h4 {
     font-size: var(--type-lg);
   }
-
-  textarea {
-    resize: none !important;
-  }
 }
 
 .wizard-steps__footer {
-  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--spacing-md) 0;
   margin: var(--spacing-xl) 0;
   border-top: 1px solid var(--grey-88);
+
+  > *:first-of-type {
+    margin-right: auto;
+  }
+
+  > *:last-of-type {
+    margin-left: auto;
+  }
+
+  .k-button:after {
+    display: none;
+  }
 }
 </style>

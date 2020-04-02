@@ -22,28 +22,3 @@ select {
 .k-button.primary {
 
 }
-
-.form-line {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  margin: 16px -16px;
-}
-
-.form-line > * {
-  padding: 0 16px;
-}
-
-.form-line > *:first-of-type {
-  min-width: 25%;
-  text-align: right;
-}
-
-.form-line > *:last-of-type {
-  flex: 1 0 0;
-}
-
-.form-line input {
-  /* width: 100%;
-  display: block; */
-}
