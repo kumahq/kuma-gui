@@ -380,8 +380,8 @@ export default {
   display: inline-flex;
   align-items: stretch;
   font-size: 12px;
-  text-transform: uppercase;
   background-color: #fff;
+  font-family: var(--font-family-mono);
 
   &:not(:last-of-type) {
     margin-right: 0.5rem;
@@ -395,8 +395,17 @@ export default {
   position: relative;
   background-color: var(--color);
   color: #fff;
+  text-transform: uppercase;
   border-radius: 5px 0 0 5px;
   padding: 0.15rem 0.5rem;
+  box-shadow: inset 0 0 0 1px var(--color);
+}
+
+.entity-tags__label--service,
+.entity-tags__label--protocol {
+  --color: var(--brand-color-6);
+
+  background-color: var(--color);
   box-shadow: inset 0 0 0 1px var(--color);
 }
 

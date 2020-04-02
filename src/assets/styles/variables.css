@@ -32,6 +32,14 @@
   --logo-mint: #00E8C2;
   --logo-navy: #172350;
   --logo-green: #3db664;
+  --logo-purple: #290b53;
+
+  --brand-color-1: var(--logo-coral);
+  --brand-color-2: var(--logo-teal);
+  --brand-color-3: var(--logo-mint);
+  --brand-color-4: var(--logo-navy);
+  --brand-color-5: var(--logo-green);
+  --brand-color-6: var(--logo-purple);
 
   /* Topbar */
   --topbar-height: 4rem;

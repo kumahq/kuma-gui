@@ -12,7 +12,7 @@
             :key="item.slug"
             :aria-selected="step === item.slug ? 'true' : 'false'"
             :aria-controls="`wizard-steps__content__item--${index}`"
-            :class="{ 'is-complete': (index < start) }"
+            :class="{ 'is-complete': (index <= start) }"
             class="wizard-steps__indicator__item"
           >
             <span>

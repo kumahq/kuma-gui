@@ -36,11 +36,12 @@
                 >
                   <input
                     id="mesh-name"
+                    v-serialize-input
                     type="text"
                     class="k-input w-100"
                     placeholder="your-mesh-name"
                     :value="getStorageItem('meshName')"
-                    @change="updateStorage('meshName', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                    @change="updateStorage('meshName', $event.target.value)"
                   >
                 </FormFragment>
 
@@ -164,11 +165,12 @@
                 >
                   <input
                     id="backend-name"
+                    v-serialize-input
                     type="text"
                     class="k-input w-100"
                     placeholder="your-backend-name"
                     :value="getStorageItem('meshLoggingBackend')"
-                    @change="updateStorage('meshLoggingBackend', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                    @change="updateStorage('meshLoggingBackend', $event.target.value)"
                   >
                 </FormFragment>
                 <FormFragment
@@ -283,11 +285,12 @@
                 >
                   <input
                     id="tracing-backend-name"
+                    v-serialize-input
                     type="text"
                     class="k-input w-100"
                     placeholder="your-tracing-backend-name"
                     :value="getStorageItem('meshTracingBackend')"
-                    @change="updateStorage('meshTracingBackend', $event.target.value.replace(/ /g, '-').toLowerCase())"
+                    @change="updateStorage('meshTracingBackend', $event.target.value)"
                   >
                 </FormFragment>
 
@@ -322,6 +325,8 @@
                     class="k-input w-100"
                     :value="getStorageItem('meshTracingSampling') || 99.9"
                     step="0.1"
+                    min="0"
+                    max="100"
                     @change="updateStorage('meshTracingSampling', $event.target.value)"
                   >
                 </FormFragment>
@@ -358,114 +363,93 @@
           >
             <template slot="body">
               <form>
-                <div class="form-line">
-                  <div>
-                    <label class="k-input-label">
-                      Metrics
-                    </label>
-                  </div>
-                  <div>
-                    <label class="k-input-label mx-2">
-                      <input
-                        id="metrics-enabled"
-                        value="enabled"
-                        name="metrics"
-                        type="radio"
-                        class="k-input mr-2"
-                        :checked="formConditions.metricsEnabled === true"
-                        @change="updateStorage('meshMetricsStatus', 'enabled'); formConditions.metricsEnabled = true"
-                      >
-                      <span>Enabled</span>
-                    </label>
-                    <label class="k-input-label mx-2">
-                      <input
-                        id="metrics-disabled"
-                        value="disabled"
-                        name="metrics"
-                        type="radio"
-                        class="k-input mr-2"
-                        :checked="formConditions.metricsEnabled === false"
-                        @change="updateStorage('meshMetricsStatus', 'disabled'); formConditions.metricsEnabled = false"
-                      >
-                      <span>Disabled</span>
-                    </label>
-                  </div>
-                </div>
-                <div
-                  v-if="formConditions.metricsEnabled === true"
-                  class="form-group"
+                <FormFragment
+                  title="Metrics"
                 >
-                  <div class="form-line">
-                    <div>
-                      <label
-                        for="metrics-type"
-                        class="k-input-label"
-                      >
-                        Type:
-                      </label>
-                    </div>
-                    <div>
-                      <select
-                        id="metrics-type"
-                        class="k-input w-100"
-                        name="metrics-type"
-                        @change="updateStorage('meshMetricsType', $event.target.value)"
-                      >
-                        <option
-                          value="prometheus"
-                          :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
-                        >
-                          Prometheus
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-line">
-                    <div>
-                      <label
-                        for="metrics-dataplane-port"
-                        class="k-input-label"
-                      >
-                        Dataplane port:
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        id="metrics-dataplane-port"
-                        type="number"
-                        class="k-input w-100"
-                        :value="getStorageItem('meshMetricsDataplanePort') || 5670"
-                        step="0.1"
-                        @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
-                      >
-                    </div>
-                  </div>
-                  <div class="form-line">
-                    <div>
-                      <label
-                        for="metrics-dataplane-path"
-                        class="k-input-label"
-                      >
-                        Dataplane path:
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        id="metrics-dataplane-path"
-                        type="text"
-                        class="k-input w-100"
-                        :value="getStorageItem('meshMetricsDataplanePath') || '/metrics'"
-                        @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
-                      >
-                    </div>
-                  </div>
-                </div>
+                  <label class="k-input-label mx-2">
+                    <input
+                      id="metrics-enabled"
+                      value="enabled"
+                      name="metrics"
+                      type="radio"
+                      class="k-input mr-2"
+                      :checked="formConditions.metricsEnabled === true"
+                      @change="updateStorage('meshMetricsStatus', 'enabled'); formConditions.metricsEnabled = true"
+                    >
+                    <span>Enabled</span>
+                  </label>
+                  <label class="k-input-label mx-2">
+                    <input
+                      id="metrics-disabled"
+                      value="disabled"
+                      name="metrics"
+                      type="radio"
+                      class="k-input mr-2"
+                      :checked="formConditions.metricsEnabled === false"
+                      @change="updateStorage('meshMetricsStatus', 'disabled'); formConditions.metricsEnabled = false"
+                    >
+                    <span>Disabled</span>
+                  </label>
+                </FormFragment>
+                <FormFragment
+                  v-if="formConditions.metricsEnabled === true"
+                  title="Type"
+                  for-attr="metrics-type"
+                >
+                  <select
+                    id="metrics-type"
+                    class="k-input w-100"
+                    name="metrics-type"
+                    @change="updateStorage('meshMetricsType', $event.target.value)"
+                  >
+                    <option
+                      value="prometheus"
+                      :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
+                    >
+                      Prometheus
+                    </option>
+                  </select>
+                </FormFragment>
+                <FormFragment
+                  v-if="formConditions.metricsEnabled === true"
+                  title="Dataplane port"
+                  for-attr="metrics-dataplane-port"
+                >
+                  <input
+                    id="metrics-dataplane-port"
+                    type="number"
+                    class="k-input w-100"
+                    :value="getStorageItem('meshMetricsDataplanePort') || 5670"
+                    step="1"
+                    min="0"
+                    max="65535"
+                    @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
+                  >
+                </FormFragment>
+                <FormFragment
+                  v-if="formConditions.metricsEnabled === true"
+                  title="Dataplane path"
+                  for-attr="metrics-dataplane-path"
+                >
+                  <input
+                    id="metrics-dataplane-path"
+                    type="text"
+                    class="k-input w-100"
+                    :value="getStorageItem('meshMetricsDataplanePath') || '/metrics'"
+                    @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
+                  >
+                </FormFragment>
               </form>
             </template>
           </KCard>
         </template>
         <template slot="complete">
-          <p>You're done!</p>
+          <h3>
+            Create a new Mesh
+          </h3>
+          <p>
+            You can now execute the following commands to create the mesh.
+          </p>
         </template>
 
         <!-- sidebar content -->
@@ -502,6 +486,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
+import SerializeInput from '@/views/Wizard/directives/SerializeInput'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 
@@ -512,6 +497,9 @@ export default {
   components: {
     FormFragment,
     StepSkeleton
+  },
+  directives: {
+    SerializeInput
   },
   mixins: [
     updateStorage
@@ -579,6 +567,11 @@ export default {
       title: 'getTagline',
       version: 'getVersion'
     })
+  },
+  methods: {
+    serialize (val) {
+      return val.replace(/ /g, '-').toLowerCase()
+    }
   }
 }
 </script>
