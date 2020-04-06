@@ -15,7 +15,7 @@
     <div class="md:flex items-stretch -mx-4">
       <CardSkeleton
         class="md:flex-1 mx-4"
-        :card-action-route="{ path: '/default/dataplanes/' }"
+        :card-action-route="{ path: '/wizard/mesh' }"
         card-title="Create A Mesh"
         card-action-button-text="Start Now"
       >

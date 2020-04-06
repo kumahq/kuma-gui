@@ -293,15 +293,16 @@ export function humanReadableDate (tdate) {
 }
 
 /**
- * Takes an object and only returns the keys and
+ * Takes an object or array and only returns the keys and
  * values you want based on the `items` value.
- * @param {Object} original
+ * @param {Object, Array} original
  * @param {Object} desired
  */
 export function getSome (original, desired) {
-  return desired.reduce((obj, key) =>
-    ({ ...obj, [key]: original[key] }), {}
-  )
+  // we have to determine if we're dealing with an array or an object
+  const cleaned = (original && typeof original === 'object' && original.constructor === Array) ? Object.assign({}, ...original) : original
+
+  return desired.reduce((obj, key) => ({ ...obj, [key]: cleaned[key] }), {})
 }
 
 export default {
