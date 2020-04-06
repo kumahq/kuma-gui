@@ -46,7 +46,7 @@
           &lsaquo; Previous
         </KButton>
         <KButton
-          :disabled="advanceCheck === false || indexCanAdvance"
+          :disabled="indexCanAdvance"
           appearance="primary"
           @click="goToNextStep"
         >
@@ -55,13 +55,15 @@
       </footer>
     </div>
     <aside class="wizard-steps__sidebar">
-      <div
-        v-for="(item, index) in sidebarContent"
-        :key="item.name"
-        class="wizard-steps__sidebar__item"
-        :class="`wizard-steps__sidebar__item--${index}`"
-      >
-        <slot :name="item.name" />
+      <div class="wizard-steps__sidebar__content">
+        <div
+          v-for="(item, index) in sidebarContent"
+          :key="item.name"
+          class="wizard-steps__sidebar__item"
+          :class="`wizard-steps__sidebar__item--${index}`"
+        >
+          <slot :name="item.name" />
+        </div>
       </div>
     </aside>
   </div>
@@ -111,10 +113,7 @@ export default {
     }
   },
   mounted () {
-    const query = this.$route.query.step
-
-    this.start = query || 0
-    this.updateQuery('step', this.start)
+    this.setStartingStep()
   },
   methods: {
     goToStep (index) {
@@ -131,6 +130,12 @@ export default {
       this.start--
       this.updateQuery('step', this.start)
       this.$emit('goToPrevStep', this.step)
+    },
+    setStartingStep () {
+      const query = this.$route.query.step
+
+      this.start = query || 0
+      this.updateQuery('step', this.start)
     }
   }
 }
@@ -145,16 +150,27 @@ export default {
     justify-content: stretch;
     margin: 0 -16px;
 
-    > * {
-      margin: 0 16px;
-    }
+    // > * {
+    //   margin: 0 16px;
+    // }
 
     .wizard-steps__content-wrapper {
-      width: 75%;
+      width: calc(100% - 240px);
+      padding: 0 16px;
     }
 
     .wizard-steps__sidebar {
-      flex: 1;
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding-top: 80px;
+    }
+
+    .wizard-steps__sidebar__content {
+      width: 240px;
+      height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
   }
 
@@ -162,14 +178,20 @@ export default {
     > * {
       margin-bottom: 16px;
     }
+
+    .wizard-steps__sidebar {
+      border-radius: 6px;
+    }
   }
 }
 
 .wizard-steps__sidebar {
   background-color: var(--sidebar-bg-color);
-  padding: 32px;
-  border-radius: 6px;
   border: 1px solid #e6e7e8;
+}
+
+.wizard-steps__sidebar__content {
+  padding: 32px;
 }
 
 .wizard-steps__sidebar__item {

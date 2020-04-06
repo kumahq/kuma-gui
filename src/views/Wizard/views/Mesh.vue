@@ -3,7 +3,7 @@
     <div class="wizard__content">
       <StepSkeleton
         :steps="steps"
-        :advance-check="canAdvance"
+        :advance-check="true"
         :sidebar-content="sidebarContent"
       >
         <!-- step content -->
@@ -48,18 +48,6 @@
                 <FormFragment title="Mutual TLS">
                   <label class="k-input-label mx-2">
                     <input
-                      id="mtls-enabled"
-                      value="enabled"
-                      name="mtls"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.mtlsEnabled === true"
-                      @change="updateStorage('meshMtls', 'enabled'); formConditions.mtlsEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
                       ref="mtlsDisabled"
                       value="disabled"
                       name="mtls"
@@ -69,6 +57,18 @@
                       @change="updateStorage('meshMtls', 'disabled', 'ca'); formConditions.mtlsEnabled = false"
                     >
                     <span>Disabled</span>
+                  </label>
+                  <label class="k-input-label mx-2">
+                    <input
+                      id="mtls-enabled"
+                      value="enabled"
+                      name="mtls"
+                      type="radio"
+                      class="k-input mr-2"
+                      :checked="formConditions.mtlsEnabled === true"
+                      @change="updateStorage('meshMtls', 'enabled'); formConditions.mtlsEnabled = true"
+                    >
+                    <span>Enabled</span>
                   </label>
                 </FormFragment>
 
@@ -136,18 +136,6 @@
                 <FormFragment title="Logging">
                   <label class="k-input-label mx-2">
                     <input
-                      id="logging-enabled"
-                      value="enabled"
-                      name="logging"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.loggingEnabled === true"
-                      @change="updateStorage('meshLoggingStatus', 'enabled'); formConditions.loggingEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
                       id="logging-disabled"
                       value="disabled"
                       name="logging"
@@ -157,6 +145,18 @@
                       @change="updateStorage('meshLoggingStatus', 'disabled'); formConditions.loggingEnabled = false"
                     >
                     <span>Disabled</span>
+                  </label>
+                  <label class="k-input-label mx-2">
+                    <input
+                      id="logging-enabled"
+                      value="enabled"
+                      name="logging"
+                      type="radio"
+                      class="k-input mr-2"
+                      :checked="formConditions.loggingEnabled === true"
+                      @change="updateStorage('meshLoggingStatus', 'enabled'); formConditions.loggingEnabled = true"
+                    >
+                    <span>Enabled</span>
                   </label>
                 </FormFragment>
                 <FormFragment
@@ -173,61 +173,72 @@
                     @change="updateStorage('meshLoggingBackend', $event.target.value)"
                   >
                 </FormFragment>
-                <FormFragment
-                  v-if="formConditions.loggingEnabled === true"
-                  title="Type"
-                >
-                  <select
-                    id="logging-type"
-                    class="k-input w-100"
-                    name="logging-type"
-                    @change="updateStorage('meshLoggingType', $event.target.value)"
+                <div v-if="formConditions.loggingEnabled === true">
+                  <FormFragment title="Type">
+                    <select
+                      id="logging-type"
+                      ref="loggingTypeSelect"
+                      class="k-input w-100"
+                      name="logging-type"
+                      @change="updateStorage('meshLoggingType', $event.target.value); formConditions.loggingType = $event.target.value"
+                    >
+                      <!-- <option
+                        value="tcp"
+                        :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
+                      > -->
+                      <option value="tcp">
+                        TCP
+                      </option>
+                      <!-- <option
+                        value="file"
+                        :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
+                      > -->
+                      <option value="file">
+                        File
+                      </option>
+                    </select>
+                  </FormFragment>
+                  <!-- if the format type is TCP -->
+                  <FormFragment
+                    v-if="formConditions.loggingType === 'tcp'"
+                    title="Address"
+                    for-attr="backend-address"
                   >
-                    <option
-                      selected
-                      disabled
+                    <input
+                      id="backend-address"
+                      type="text"
+                      class="k-input w-100"
+                      placeholder="127.0.0.1"
+                      :value="getStorageItem('meshLoggingAddress')"
+                      @change="updateStorage('meshLoggingAddress', $event.target.value)"
                     >
-                      Select a CA&hellip;
-                    </option>
-                    <option
-                      value="tcp"
-                      :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
-                    >
-                      TCP
-                    </option>
-                    <option
-                      value="file"
-                      :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
-                    >
-                      File
-                    </option>
-                  </select>
-                </FormFragment>
-                <FormFragment
-                  v-if="formConditions.loggingEnabled === true"
-                  title="Address"
-                  for-attr="backend-address"
-                >
-                  <input
-                    id="backend-address"
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="127.0.0.1"
-                    :value="getStorageItem('meshLoggingAddress')"
-                    @change="updateStorage('meshLoggingAddress', $event.target.value)"
+                  </FormFragment>
+                  <!-- if the format type is File -->
+                  <FormFragment
+                    v-else
+                    title="Path"
+                    for-attr="backend-address"
                   >
-                </FormFragment>
-                <FormFragment
-                  v-if="formConditions.loggingEnabled === true"
-                  title="Format"
-                  for-attr="backend-format"
-                >
-                  <textarea
-                    id="backend-format"
-                    class="k-input w-100"
-                    @change="updateStorage('meshLoggingBackendFormat', $event.target.value)"
-                  />
-                </FormFragment>
+                    <input
+                      id="backend-address"
+                      type="text"
+                      class="k-input w-100"
+                      :value="getStorageItem('meshLoggingPath')"
+                      @change="updateStorage('meshLoggingPath', $event.target.value)"
+                    >
+                  </FormFragment>
+                  <FormFragment
+                    title="Format"
+                    for-attr="backend-format"
+                  >
+                    <textarea
+                      id="backend-format"
+                      class="k-input w-100 code-sample"
+                      rows="12"
+                      @change="updateStorage('meshLoggingBackendFormat', $event.target.value)"
+                    >{"start_time": "%START_TIME%", "source": "%KUMA_SOURCE_SERVICE%", "destination": "%KUMA_DESTINATION_SERVICE%", "source_address": "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", "destination_address": "%UPSTREAM_HOST%", "duration_millis": "%DURATION%", "bytes_received": "%BYTES_RECEIVED%", "bytes_sent": "%BYTES_SENT%"}</textarea>
+                  </FormFragment>
+                </div>
               </form>
             </template>
           </KCard>
@@ -254,18 +265,6 @@
                 >
                   <label class="k-input-label mx-2">
                     <input
-                      id="tracing-enabled"
-                      value="enabled"
-                      name="tracing"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.tracingEnabled === true"
-                      @change="updateStorage('meshTracingStatus', 'enabled'); formConditions.tracingEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
                       id="tracing-disabled"
                       value="disabled"
                       name="tracing"
@@ -275,6 +274,18 @@
                       @change="updateStorage('meshTracingStatus', 'disabled'); formConditions.tracingEnabled = false"
                     >
                     <span>Disabled</span>
+                  </label>
+                  <label class="k-input-label mx-2">
+                    <input
+                      id="tracing-enabled"
+                      value="enabled"
+                      name="tracing"
+                      type="radio"
+                      class="k-input mr-2"
+                      :checked="formConditions.tracingEnabled === true"
+                      @change="updateStorage('meshTracingStatus', 'enabled'); formConditions.tracingEnabled = true"
+                    >
+                    <span>Enabled</span>
                   </label>
                 </FormFragment>
 
@@ -368,18 +379,6 @@
                 >
                   <label class="k-input-label mx-2">
                     <input
-                      id="metrics-enabled"
-                      value="enabled"
-                      name="metrics"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.metricsEnabled === true"
-                      @change="updateStorage('meshMetricsStatus', 'enabled'); formConditions.metricsEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
                       id="metrics-disabled"
                       value="disabled"
                       name="metrics"
@@ -389,6 +388,18 @@
                       @change="updateStorage('meshMetricsStatus', 'disabled'); formConditions.metricsEnabled = false"
                     >
                     <span>Disabled</span>
+                  </label>
+                  <label class="k-input-label mx-2">
+                    <input
+                      id="metrics-enabled"
+                      value="enabled"
+                      name="metrics"
+                      type="radio"
+                      class="k-input mr-2"
+                      :checked="formConditions.metricsEnabled === true"
+                      @change="updateStorage('meshMetricsStatus', 'enabled'); formConditions.metricsEnabled = true"
+                    >
+                    <span>Enabled</span>
                   </label>
                 </FormFragment>
                 <FormFragment
@@ -450,6 +461,19 @@
           <p>
             You can now execute the following commands to create the mesh.
           </p>
+          <Tabs
+            :loaders="false"
+            :tabs="tabs"
+            :has-border="true"
+            tab-state="environment"
+          >
+            <template slot="universal">
+              <p>Instructions for <strong>Universal</strong>.</p>
+            </template>
+            <template slot="kubernetes">
+              <p>Instructions for <strong>Kubernetes</strong>.</p>
+            </template>
+          </Tabs>
         </template>
 
         <!-- sidebar content -->
@@ -488,7 +512,11 @@ import { mapGetters } from 'vuex'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import SerializeInput from '@/views/Wizard/directives/SerializeInput'
 import FormFragment from '@/views/Wizard/components/FormFragment'
+import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
+
+// schema for building code output
+import Mesh from '@/views/Wizard/schemas/Mesh'
 
 export default {
   metaInfo: {
@@ -496,6 +524,7 @@ export default {
   },
   components: {
     FormFragment,
+    Tabs,
     StepSkeleton
   },
   directives: {
@@ -528,6 +557,16 @@ export default {
           slug: 'complete'
         }
       ],
+      tabs: [
+        {
+          hash: '#universal',
+          title: 'Universal'
+        },
+        {
+          hash: '#kubernetes',
+          title: 'Kubernetes'
+        }
+      ],
       sidebarContent: [
         {
           name: 'mesh'
@@ -540,38 +579,17 @@ export default {
         mtlsEnabled: false,
         loggingEnabled: false,
         tracingEnabled: false,
-        metricsEnabled: false
+        metricsEnabled: false,
+        loggingType: 'tcp'
       }
     }
   },
   computed: {
-    canAdvance () {
-      // const query = this.$route.query
-      // const name = query.name
-      // const mtls = query.mtls
-
-      // if (
-      //   (undefined !== name && name.length > 0) &&
-      //   (undefined !== mtls && mtls.length > 0)
-      // ) {
-      //   return true
-      // } else {
-      //   return false
-      // }
-
-      // conditions disabled for now because
-      // this is a huge rabbit hole.
-      return true
-    },
     ...mapGetters({
       title: 'getTagline',
-      version: 'getVersion'
+      version: 'getVersion',
+      environment: 'getEnvironment'
     })
-  },
-  methods: {
-    serialize (val) {
-      return val.replace(/ /g, '-').toLowerCase()
-    }
   }
 }
 </script>

@@ -66,6 +66,9 @@ export default {
       .then(() => {
         // only dispatch these actions if the API is online
         if (this.$store.getters.getStatus === 'OK') {
+          // set the current environment
+          this.$store.dispatch('updateEnvironment', localStorage.getItem('kumaEnv'))
+
           // fetch the mesh list
           this.$store.dispatch('fetchMeshList')
 

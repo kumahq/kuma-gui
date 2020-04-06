@@ -68,7 +68,7 @@ export default (store) => {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import('@/views/ShellEmpty'),
+      component: () => import('@/views/Shell'),
       children: [
         {
           path: 'mesh',

@@ -9,7 +9,10 @@
       </h3>
     </header>
 
-    <div class="tab__content-container">
+    <div
+      class="tab__content-container"
+      :class="{ 'has-border': hasBorder }"
+    >
       <KTabs
         v-if="isReady"
         :key="activeTab"
@@ -25,40 +28,42 @@
         </template>
       </KTabs>
 
-      <!-- loading state -->
-      <KEmptyState
-        v-if="isLoading"
-        cta-is-hidden
-      >
-        <template slot="title">
-          <div class="card-icon mb-3">
-            <KIcon
-              icon="spinner"
-              color="rgba(0, 0, 0, 0.1)"
-              size="42"
-            />
-          </div>
-          Data Loading...
-        </template>
-      </KEmptyState>
+      <div v-if="loaders === true">
+        <!-- loading state -->
+        <KEmptyState
+          v-if="isLoading"
+          cta-is-hidden
+        >
+          <template slot="title">
+            <div class="card-icon mb-3">
+              <KIcon
+                icon="spinner"
+                color="rgba(0, 0, 0, 0.1)"
+                size="42"
+              />
+            </div>
+            Data Loading...
+          </template>
+        </KEmptyState>
 
-      <!-- error has occurred -->
-      <KEmptyState
-        v-if="hasError"
-        cta-is-hidden
-      >
-        <template slot="title">
-          <div class="card-icon mb-3">
-            <KIcon
-              class="kong-icon--centered"
-              color="var(--yellow-base)"
-              icon="warning"
-              size="42"
-            />
-          </div>
-          An error has occurred while trying to load this data.
-        </template>
-      </KEmptyState>
+        <!-- error has occurred -->
+        <KEmptyState
+          v-if="hasError"
+          cta-is-hidden
+        >
+          <template slot="title">
+            <div class="card-icon mb-3">
+              <KIcon
+                class="kong-icon--centered"
+                color="var(--yellow-base)"
+                icon="warning"
+                size="42"
+              />
+            </div>
+            An error has occurred while trying to load this data.
+          </template>
+        </KEmptyState>
+      </div>
     </div>
   </div>
 </template>
@@ -72,6 +77,14 @@ export default {
     KEmptyState
   },
   props: {
+    loaders: {
+      type: Boolean,
+      default: true
+    },
+    vuexState: {
+      type: String,
+      default: 'updateSelectedTab'
+    },
     isLoading: {
       type: Boolean,
       default: false
@@ -90,36 +103,46 @@ export default {
     },
     tabGroupTitle: {
       type: String,
-      required: false,
       default: null
     },
     hasBorder: {
       type: Boolean,
-      required: false,
       default: false
+    },
+    tabState: {
+      type: String,
+      default: null
     }
   },
   computed: {
     activeTab: {
       get () {
-        return this.$store.state.selectedTab
+        if (!this.tabState) {
+          return this.$store.state.selectedTab
+        } else {
+          return `#${this.$store.state[this.tabState]}`
+        }
       },
       set (newTab) {
         return newTab
       }
     },
     isReady () {
-      return !this.isEmpty && !this.hasError && !this.isLoading
+      if (this.loaders !== false) {
+        return !this.isEmpty && !this.hasError && !this.isLoading
+      } else {
+        return true
+      }
     }
   },
   beforeMount () {
     // display the first tab on load
-    this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
+    this.$store.dispatch(this.vuexState, this.tabs[0].hash)
   },
   methods: {
     switchTab (newTab) {
       this.activeTab = newTab
-      this.$store.dispatch('updateSelectedTab', newTab)
+      this.$store.dispatch(this.vuexState, newTab)
     }
   }
 }

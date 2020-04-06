@@ -3,7 +3,10 @@
     class="overview"
     :class="{ 'overview--simple': $route.meta.simpleContent }"
   >
-    <page-header noflex>
+    <page-header
+      v-if="$route.meta.hideHeader === true"
+      noflex
+    >
       <h2 class="xxl">
         {{ pageTitle }}
       </h2>

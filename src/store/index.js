@@ -13,6 +13,7 @@ export default (api) => {
       // workspaces
     },
     state: {
+      environment: null,
       onboardingComplete: false,
       globalLoading: null,
       meshes: [],
@@ -68,7 +69,8 @@ export default (api) => {
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
       getSelectedTab: (state) => state.selectedTab,
-      getSelectedTableRow: (state) => state.selectedTableRow
+      getSelectedTableRow: (state) => state.selectedTableRow,
+      getEnvironment: (state) => state.environment
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -97,7 +99,8 @@ export default (api) => {
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
-      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row)
+      SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
+      SET_ENVIRONMENT: (state, value) => (state.environment = value)
     },
     actions: {
       // update the onboarding state
@@ -495,6 +498,11 @@ export default (api) => {
 
       updateSelectedTableRow ({ commit }, row) {
         commit('SET_NEW_TABLE_ROW', row)
+      },
+
+      // set the user's environment (this is discovered upon app launch)
+      updateEnvironment ({ commit }, value) {
+        commit('SET_ENVIRONMENT', value)
       }
     }
   })

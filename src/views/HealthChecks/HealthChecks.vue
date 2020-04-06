@@ -22,7 +22,7 @@
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
       >
-        <template v-slot:overview>
+        <template slot="overview">
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -30,7 +30,7 @@
             :items="entity"
           />
         </template>
-        <template v-slot:yaml>
+        <template slot="yaml">
           <YamlView
             :title="entityOverviewTitle"
             :has-error="entityHasError"

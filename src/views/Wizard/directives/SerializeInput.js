@@ -12,6 +12,8 @@ export default {
       const regex1 = new RegExp(/[^a-zA-Z0-9 -]/g)
       const regex2 = new RegExp(/ /g)
 
+      // this will clean up the input value
+      // immediately as the user types
       e.target.value = e.target.value
         .replace(regex1, '')
         .replace(regex2, '-')

@@ -64,6 +64,9 @@ $last-col-flex: 1 0 0;
   }
 
   @media screen and (max-width: 1023px) {
+    margin-left: 0;
+    margin-right: 0;
+
     .form-line__col {
       margin: 0 0 $padding 0;
     }

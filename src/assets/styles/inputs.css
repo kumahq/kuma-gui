@@ -22,3 +22,7 @@ select {
 .k-button.primary {
 
 }
+
+.code-sample {
+  font-family: var(--font-family-mono);
+}

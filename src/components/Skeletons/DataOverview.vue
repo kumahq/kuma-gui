@@ -213,7 +213,6 @@
 <script>
 import MetricGrid from '@/components/Metrics/MetricGrid'
 import Pagination from '@/components/Pagination'
-// import test from '@/mixins/ClickableTableRows'
 
 export default {
   name: 'DataOverview',
