@@ -21,22 +21,15 @@
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
       >
-        <template slot="tab-link-overview">
-          Overview
-        </template>
-        <template slot="tab-content-overview">
+        <template slot="overview">
           <LabelList
-            :title="generalOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
             :items="entity"
           />
         </template>
-        <template slot="tab-link-yaml-view">
-          YAML
-        </template>
-        <template slot="tab-content-yaml-view">
+        <template slot="yaml">
           <YamlView
             :title="entityOverviewTitle"
             :has-error="entityHasError"
@@ -93,8 +86,14 @@ export default {
         data: []
       },
       tabs: [
-        'overview',
-        'yaml-view'
+        {
+          hash: '#overview',
+          title: 'Overview'
+        },
+        {
+          hash: '#yaml',
+          title: 'YAML'
+        }
       ],
       entity: null,
       rawEntity: null,
@@ -103,10 +102,10 @@ export default {
   },
   computed: {
     tabGroupTitle () {
-      const mesh = this.$route.params.mesh
+      const entity = this.entity
 
-      if (mesh) {
-        return `Mesh: ${mesh}`
+      if (entity) {
+        return `Health Check: ${entity.name}`
       } else {
         return null
       }
@@ -116,15 +115,6 @@ export default {
 
       if (entity) {
         return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    generalOverviewTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Overview for ${entity.name}`
       } else {
         return null
       }
@@ -143,7 +133,7 @@ export default {
       const data = ev
 
       // reset back to the first tab
-      this.$store.dispatch('updateSelectedTab', this.tabs[0])
+      this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
       // set the active table row
       this.$store.dispatch('updateSelectedTableRow', ev)

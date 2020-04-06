@@ -119,15 +119,6 @@ export default {
       } else {
         return null
       }
-    },
-    generalOverviewTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Overview for ${entity.name}`
-      } else {
-        return null
-      }
     }
   },
   watch: {
@@ -144,8 +135,6 @@ export default {
 
       // reset back to the first tab
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
-
-      // console.log(`table action tab: ${this.tabs[0].hash}`)
 
       // set the active table row
       this.$store.dispatch('updateSelectedTableRow', ev)
