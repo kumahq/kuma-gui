@@ -149,7 +149,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       const getTrafficRoutes = () => {
-        return this.$api.getTrafficRoutes(mesh)
+        return this.$api.getAllTrafficRoutesFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items

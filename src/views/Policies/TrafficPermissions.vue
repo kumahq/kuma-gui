@@ -148,7 +148,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       const getTrafficPermissions = () => {
-        return this.$api.getTrafficPermissions(mesh)
+        return this.$api.getAllTrafficPermissionsFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items

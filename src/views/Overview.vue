@@ -195,7 +195,7 @@ export default {
       this.$store.dispatch('getTrafficTraceTotalCount')
 
       // total Fault Injection count
-      this.$store.dispatch('getTotalFaultInjectionCount')
+      this.$store.dispatch('getFaultInjectionTotalCount')
 
       // prepare and populate the table data
       const getMeshData = () => {

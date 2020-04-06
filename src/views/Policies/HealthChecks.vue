@@ -149,7 +149,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       const getHealthChecks = () => {
-        return this.$api.getHealthChecks(mesh)
+        return this.$api.getAllHealthChecksFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items

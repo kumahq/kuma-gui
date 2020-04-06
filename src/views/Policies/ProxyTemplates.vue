@@ -149,7 +149,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       const getProxyTemplates = () => {
-        return this.$api.getProxyTemplates(mesh)
+        return this.$api.getAllProxyTemplatesFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items

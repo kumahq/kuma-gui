@@ -40,7 +40,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no meshes present.'
+        message: 'There are no Meshes present.'
       },
       entity: null
     }

@@ -149,7 +149,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       const getFaultInjections = () => {
-        return this.$api.getFaultInjections(mesh)
+        return this.$api.getAllFaultInjectionsFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items

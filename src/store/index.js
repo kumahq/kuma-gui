@@ -182,7 +182,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getHealthChecks(meshes.items[i].name)
+            const items = await api.getAllHealthChecksFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -203,7 +203,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getProxyTemplates(meshes.items[i].name)
+            const items = await api.getAllProxyTemplatesFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -224,7 +224,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getTrafficLogs(meshes.items[i].name)
+            const items = await api.getAllTrafficLogsFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -245,7 +245,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getTrafficPermissions(meshes.items[i].name)
+            const items = await api.getAllTrafficPermissionsFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -266,7 +266,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getTrafficRoutes(meshes.items[i].name)
+            const items = await api.getAllTrafficRoutesFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -287,7 +287,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getTrafficTraces(meshes.items[i].name)
+            const items = await api.getAllTrafficTracesFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -308,7 +308,7 @@ export default (api) => {
           const result = []
 
           for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getFaultInjections(meshes.items[i].name)
+            const items = await api.getAllFaultInjectionsFromMesh(meshes.items[i].name)
             const count = await items.items.length
 
             result.push(count)
@@ -412,7 +412,7 @@ export default (api) => {
 
       // get the total number of traffic routes from a mesh
       getTrafficRoutesFromMeshTotalCount ({ commit }, mesh) {
-        return api.getTrafficRoutes(mesh)
+        return api.getAllTrafficRoutesFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
@@ -425,7 +425,7 @@ export default (api) => {
 
       // get the total number of traffic permissions from a mesh
       getTrafficPermissionsFromMeshTotalCount ({ commit }, mesh) {
-        return api.getTrafficPermissions(mesh)
+        return api.getAllTrafficPermissionsFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
@@ -438,7 +438,7 @@ export default (api) => {
 
       // get the total number of traffic logs from a mesh
       getTrafficLogsFromMeshTotalCount ({ commit }, mesh) {
-        return api.getTrafficLogs(mesh)
+        return api.getAllTrafficLogsFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
@@ -451,7 +451,7 @@ export default (api) => {
 
       // get the total number of traffic traces from a mesh
       getTrafficTracesFromMeshTotalCount ({ commit }, mesh) {
-        return api.getTrafficTraces(mesh)
+        return api.getAllTrafficTracesFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
@@ -464,7 +464,7 @@ export default (api) => {
 
       // get the total number of fault injections from a mesh
       getFaultInjectionsFromMeshTotalCount ({ commit }, mesh) {
-        return api.getFaultInjections(mesh)
+        return api.getAllFaultInjectionsFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
@@ -477,7 +477,7 @@ export default (api) => {
 
       // get the total number of health checks from a mesh
       getHealthChecksFromMeshTotalCount ({ commit }, mesh) {
-        return api.getHealthChecks(mesh)
+        return api.getAllHealthChecksFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
@@ -490,7 +490,7 @@ export default (api) => {
 
       // get the total proxy templates from a mesh
       getProxyTemplatesFromMeshTotalCount ({ commit }, mesh) {
-        return api.getProxyTemplates(mesh)
+        return api.getAllProxyTemplatesFromMesh(mesh)
           .then(response => {
             const total = response.items.length
 
