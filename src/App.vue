@@ -55,50 +55,63 @@ export default {
     ...mapState({
       loading: state => state.globalLoading
     }),
-
     ...mapGetters({
       status: 'getStatus'
     })
   },
+  watch: {
+    '$route' (to, from) {
+      this.bootstrap()
+    }
+  },
   beforeMount () {
-    // check the API status before we do anything else
-    this.$store.dispatch('getStatus')
-      .then(() => {
+    this.bootstrap()
+  },
+  methods: {
+    bootstrap () {
+      // check the API status before we do anything else
+      this.$store.dispatch('getStatus')
+        .then(() => {
         // only dispatch these actions if the API is online
-        if (this.$store.getters.getStatus === 'OK') {
+          if (this.$store.getters.getStatus === 'OK') {
           // set the current environment
-          this.$store.dispatch('updateEnvironment', localStorage.getItem('kumaEnv'))
+            this.$store.dispatch('updateEnvironment', localStorage.getItem('kumaEnv'))
 
-          // fetch the mesh list
-          this.$store.dispatch('fetchMeshList')
+            // fetch the mesh list
+            this.$store.dispatch('fetchMeshList')
 
-          // fetch all dataplanes
-          this.$store.dispatch('getAllDataplanes')
+            // fetch all dataplanes
+            this.$store.dispatch('getAllDataplanes')
 
-          // fetch the version
-          this.$store.dispatch('getVersion')
+            // fetch the version
+            this.$store.dispatch('getVersion')
 
-          // fetch the tagline
-          this.$store.dispatch('getTagline')
+            // fetch the tagline
+            this.$store.dispatch('getTagline')
 
-          // set the selected mesh in localStorage
-          const mesh = () => {
-            const stored = localStorage.getItem('selectedMesh')
-            const mesh = this.$route.params.mesh || null
+            // set the selected mesh in localStorage
+            const mesh = () => {
+              const lsMesh = localStorage.getItem('selectedMesh')
+              const routeMesh = this.$route.params.mesh || null
 
-            // if the `mesh` param is present, use that
-            if (mesh) {
-              return mesh
+              // if the `mesh` param is present, use that
+              if (routeMesh) {
+                return routeMesh
+              }
+              // or use what's available in localStorage
+              else if (lsMesh && lsMesh !== 'undefined' && lsMesh.length > 0) {
+                return lsMesh
+              }
+              // otherwise, fall back to the default value from our VueX store
+              else {
+                return this.$store.getters.getSelectedMesh
+              }
             }
-            // otherwise, use what's available in localStorage
-            else if (stored && stored.length > 0) {
-              return stored
-            }
+
+            localStorage.setItem('selectedMesh', mesh())
           }
-
-          localStorage.setItem('selectedMesh', mesh())
-        }
-      })
+        })
+    }
   }
 }
 </script>
