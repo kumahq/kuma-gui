@@ -82,9 +82,21 @@ export default {
           this.$store.dispatch('getTagline')
 
           // set the selected mesh in localStorage
-          const mesh = this.$route.params.mesh || this.$store.getters.getSelectedMesh
+          const mesh = () => {
+            const stored = localStorage.getItem('selectedMesh')
+            const mesh = this.$route.params.mesh || null
 
-          localStorage.setItem('selectedMesh', mesh)
+            // if the `mesh` param is present, use that
+            if (mesh) {
+              return mesh
+            }
+            // otherwise, use what's available in localStorage
+            else if (stored && stored.length > 0) {
+              return stored
+            }
+          }
+
+          localStorage.setItem('selectedMesh', mesh())
         }
       })
   }
