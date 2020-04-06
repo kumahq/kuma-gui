@@ -34,6 +34,7 @@ export default (api) => {
       totalTrafficPermissionsCountFromMesh: 0,
       totalTrafficLogsCountFromMesh: 0,
       totalTrafficTracesCountFromMesh: 0,
+      totalFaultInjectionsCountFromMesh: 0,
       totalHealthChecksCountFromMesh: 0,
       totalProxyTemplatesCountFromMesh: 0,
       tagline: null,
@@ -65,6 +66,7 @@ export default (api) => {
       getTotalProxyTemplatesCountFromMesh: (state) => state.totalProxyTemplatesCountFromMesh,
       getTrafficLogsFromMeshTotalCount: (state) => state.totalTrafficLogsCountFromMesh,
       getTrafficTracesFromMeshTotalCount: (state) => state.totalTrafficTracesCountFromMesh,
+      getFaultInjectionsFromMeshTotalCount: (state) => state.totalFaultInjectionsCountFromMesh,
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
@@ -93,6 +95,7 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficPermissionsCountFromMesh = count),
       SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficLogsCountFromMesh = count),
       SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficTracesCountFromMesh = count),
+      SET_TOTAL_FAULT_INJECTIONS_COUNT_FROM_MESH: (state, count) => (state.totalFaultInjectionsCountFromMesh = count),
       SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH: (state, count) => (state.totalHealthChecksCountFromMesh = count),
       SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalProxyTemplatesCountFromMesh = count),
       SET_VERSION: (state, version) => (state.version = version),
@@ -429,6 +432,19 @@ export default (api) => {
             const total = response.items.length
 
             commit('SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of fault injections from a mesh
+      getFaultInjectionsFromMeshTotalCount ({ commit }, mesh) {
+        return api.getFaultInjections(mesh)
+          .then(response => {
+            const total = response.items.length
+
+            commit('SET_TOTAL_FAULT_INJECTIONS_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

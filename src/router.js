@@ -124,19 +124,6 @@ export default (store) => {
           },
           component: () => import('@/views/Entities/EntityDataplanes')
         },
-        {
-          path: 'dataplanes/:dataplane',
-          name: 'dataplane-details',
-          meta: {
-            title: 'Dataplane Details',
-            breadcrumb: 'Dataplanes',
-            parent: 'dataplanes'
-          },
-          params: {
-            dataplane: ':dataplane'
-          },
-          component: () => import('@/views/Entities/EntityDataplanesDetail')
-        },
         // services
         {
           path: 'services',
@@ -145,19 +132,6 @@ export default (store) => {
             title: 'Services'
           },
           component: () => import('@/views/Entities/EntityServices')
-        },
-        {
-          path: 'services/:service',
-          name: 'service-details',
-          meta: {
-            title: 'Service Details',
-            breadcrumb: 'Service Details',
-            parent: 'services'
-          },
-          params: {
-            service: ':service'
-          },
-          component: () => import('@/views/Entities/EntityServicesDetail')
         },
         // traffic permissions
         {
@@ -168,19 +142,6 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficPermissions')
         },
-        {
-          path: 'traffic-permissions/:trafficpermission',
-          name: 'traffic-permissions-details',
-          meta: {
-            title: 'Traffic Permission Details',
-            breadcrumb: 'Traffic Permission Details',
-            parent: 'traffic-permissions'
-          },
-          params: {
-            trafficpermission: ':trafficpermission'
-          },
-          component: () => import('@/views/Policies/TrafficPermissionsDetail')
-        },
         // traffic routes
         {
           path: 'traffic-routes',
@@ -189,19 +150,6 @@ export default (store) => {
             title: 'Traffic Routes'
           },
           component: () => import('@/views/Policies/TrafficRoutes')
-        },
-        {
-          path: 'traffic-routes/:trafficroute',
-          name: 'traffic-routes-details',
-          params: {
-            trafficroute: ':trafficroute'
-          },
-          meta: {
-            title: 'Traffic Route Details',
-            breadcrumb: 'Traffic Details',
-            parent: 'traffic-routes'
-          },
-          component: () => import('@/views/Policies/TrafficRouteDetail')
         },
         // traffic logs
         {
@@ -212,19 +160,6 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficLog')
         },
-        {
-          path: 'traffic-logs/:trafficlog',
-          name: 'traffic-log-details',
-          params: {
-            trafficlog: ':trafficlog'
-          },
-          meta: {
-            title: 'Traffic Log Details',
-            breadcrumb: 'Traffic Logs',
-            parent: 'traffic-logs'
-          },
-          component: () => import('@/views/Policies/TrafficLogDetail')
-        },
         // traffic traces
         {
           path: 'traffic-traces',
@@ -234,18 +169,14 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficTrace')
         },
+        // fault injections
         {
-          path: 'traffic-traces/:traffictrace',
-          name: 'traffic-traces-details',
-          params: {
-            traffictrace: ':traffictrace'
-          },
+          path: 'fault-injections',
+          name: 'fault-injections',
           meta: {
-            title: 'Traffic Trace Details',
-            breadcrumb: 'Traffic Traces',
-            parent: 'traffic-traces'
+            title: 'Fault Injections'
           },
-          component: () => import('@/views/Policies/TrafficTraceDetail')
+          component: () => import('@/views/Policies/FaultInjection')
         },
         // health checks
         {
@@ -254,20 +185,7 @@ export default (store) => {
           meta: {
             title: 'Health Checks'
           },
-          component: () => import('@/views/HealthChecks/HealthChecks')
-        },
-        {
-          path: 'health-checks/:healthcheck',
-          name: 'health-checks-details',
-          params: {
-            healthcheck: ':healthcheck'
-          },
-          meta: {
-            title: 'Health Check Details',
-            breadcrumb: 'Health Checks',
-            parent: 'health-checks'
-          },
-          component: () => import('@/views/HealthChecks/HealthChecksDetail')
+          component: () => import('@/views/Policies/HealthChecks')
         },
         // proxy templates
         {
@@ -277,19 +195,6 @@ export default (store) => {
             title: 'Proxy Templates'
           },
           component: () => import('@/views/Policies/ProxyTemplates')
-        },
-        {
-          path: 'proxy-templates/:proxytemplate',
-          name: 'proxy-templates-details',
-          params: {
-            proxytemplate: ':proxytemplate'
-          },
-          meta: {
-            title: 'Proxy Templates',
-            breadcrumb: 'Proxy Templates',
-            parent: 'proxy-templates'
-          },
-          component: () => import('@/views/Policies/ProxyTemplatesDetail')
         }
       ]
     }

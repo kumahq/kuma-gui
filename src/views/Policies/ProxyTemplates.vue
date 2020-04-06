@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-permissions">
+  <div class="proxy-templates">
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
