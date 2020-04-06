@@ -142,6 +142,10 @@ export default {
         {
           metric: 'Traffic Traces',
           value: this.$store.state.totalTrafficTraceCount
+        },
+        {
+          metric: 'Fault Injections',
+          value: this.$store.state.totalTrafficTraceCount
         }
       ]
     }
@@ -159,32 +163,39 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      // get the total mesh count
+      //
+      // overall totals for all entities and policies
+      //
+
+      // total Mesh count
       this.$store.dispatch('getMeshTotalCount')
 
       // get (or refresh) the full dataplane list
       this.$store.dispatch('getAllDataplanes')
 
-      // get the total dataplane count
+      // total Dataplane count
       this.$store.dispatch('getDataplaneTotalCount')
 
-      // get the total health check count
+      // total Health Check count
       this.$store.dispatch('getHealthCheckTotalCount')
 
-      // get the total proxy template count
+      // total Proxy Template count
       this.$store.dispatch('getProxyTemplateTotalCount')
 
-      // get the total traffic log count
+      // total Traffic Log count
       this.$store.dispatch('getTrafficLogTotalCount')
 
-      // get the total traffic permission count
+      // total Traffic Permission count
       this.$store.dispatch('getTrafficPermissionTotalCount')
 
-      // get the total traffic route count
+      // total Traffic Route count
       this.$store.dispatch('getTrafficRouteTotalCount')
 
-      // get the total traffic trace count
+      // total Traffic Trace count
       this.$store.dispatch('getTrafficTraceTotalCount')
+
+      // total Fault Injection count
+      this.$store.dispatch('getTotalFaultInjectionCount')
 
       // prepare and populate the table data
       const getMeshData = () => {

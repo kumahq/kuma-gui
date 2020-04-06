@@ -27,6 +27,7 @@ export default (api) => {
       totalTrafficPermissionCount: 0,
       totalTrafficRouteCount: 0,
       totalTrafficTraceCount: 0,
+      totalFaultInjectionCount: 0,
       totalDataplaneList: [],
       anyDataplanesOffline: null,
       totalDataplaneCountFromMesh: 0,
@@ -59,6 +60,7 @@ export default (api) => {
       getTotalTrafficPermissionCount: (state) => state.totalTrafficPermissionCount,
       getTotalTrafficRouteCount: (state) => state.totalTrafficRouteCount,
       getTotalTrafficTraceCount: (state) => state.totalTrafficTraceCount,
+      getTotalFaultInjectionCount: (state) => state.totalFaultInjectionCount,
       getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
       getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRoutesCountFromMesh,
       getTotalTrafficPermissionsCountFromMesh: (state) => state.totalTrafficPermissionsCountFromMesh,
@@ -89,6 +91,7 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_ROUTE_COUNT: (state, count) => (state.totalTrafficRouteCount = count),
       SET_TOTAL_TRAFFIC_TRACE_COUNT: (state, count) => (state.totalTrafficTraceCount = count),
       SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
+      SET_TOTAL_FAULT_INJECTION_COUNT: (state, count) => (state.totalFaultInjectionCount = count),
       SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
       SET_TOTAL_DATAPLANE_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
       SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficRoutesCountFromMesh = count),
@@ -298,6 +301,27 @@ export default (api) => {
         getItems()
       },
 
+      // get the total number of fault injections present
+      getFaultInjectionTotalCount ({ commit }) {
+        const getItems = async () => {
+          const meshes = await api.getAllMeshes()
+          const result = []
+
+          for (let i = 0; i < meshes.items.length; i++) {
+            const items = await api.getFaultInjections(meshes.items[i].name)
+            const count = await items.items.length
+
+            result.push(count)
+          }
+
+          const reduced = result.reduce((a, b) => a + b, 0)
+
+          commit('SET_TOTAL_FAULT_INJECTION_COUNT', reduced)
+        }
+
+        getItems()
+      },
+
       // a makeshift way to get the list of all present dataplanes across all
       // meshes this will also set a status for whether or not any of the
       // dataplanes are offline
@@ -465,7 +489,7 @@ export default (api) => {
       },
 
       // get the total proxy templates from a mesh
-      getProxyTemplatesTotalCount ({ commit }, mesh) {
+      getProxyTemplatesFromMeshTotalCount ({ commit }, mesh) {
         return api.getProxyTemplates(mesh)
           .then(response => {
             const total = response.items.length
