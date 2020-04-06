@@ -65,10 +65,16 @@ export default {
           title: true
         },
         {
+          name: 'Fault Injections',
+          link: '/fault-injections',
+          title: false,
+          parent: 'policies'
+        },
+        {
           name: 'Health Checks',
           link: '/health-checks',
           title: false,
-          parent: 'healthchecks'
+          parent: 'policies'
         },
         {
           name: 'Proxy Templates',
@@ -97,12 +103,6 @@ export default {
         {
           name: 'Traffic Traces',
           link: '/traffic-traces',
-          title: false,
-          parent: 'policies'
-        },
-        {
-          name: 'Fault Injections',
-          link: '/fault-injections',
           title: false,
           parent: 'policies'
         }
