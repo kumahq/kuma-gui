@@ -75,6 +75,10 @@ export default {
         {
           metric: 'Traffic Traces',
           value: this.$store.state.totalTrafficTracesCountFromMesh
+        },
+        {
+          metric: 'Fault Injections',
+          value: this.$store.state.totalFaultInjectionsCountFromMesh
         }
       ]
     }

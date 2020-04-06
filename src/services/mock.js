@@ -1854,6 +1854,142 @@ export default class Mock {
           }
         }
       })
+      .onGet('/meshes/default/fault-injections').reply(200, {
+        items: [
+          {
+            type: 'FaultInjection',
+            mesh: 'default',
+            name: 'web-to-backend.kuma-system',
+            sources: [
+              {
+                match: {
+                  service: 'web'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              delay: {
+                percentage: 50,
+                value: '0.010s'
+              },
+              abort: {
+                percentage: 40,
+                httpStatus: 500
+              },
+              responseBandwidth: {
+                percentage: 40,
+                limit: '50kbps'
+              }
+            }
+          },
+          {
+            type: 'FaultInjection',
+            mesh: 'default',
+            name: 'fi1.kuma-system',
+            sources: [
+              {
+                match: {
+                  service: '*'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: '*'
+                }
+              }
+            ],
+            conf: {
+              delay: {
+                percentage: 50,
+                value: '0.010s'
+              },
+              abort: {
+                percentage: 40,
+                httpStatus: 500
+              },
+              responseBandwidth: {
+                percentage: 40,
+                limit: '50kbps'
+              }
+            }
+          }
+        ]
+      })
+      .onGet('/meshes/default/fault-injections/web-to-backend.kuma-system').reply(200, {
+        type: 'FaultInjection',
+        mesh: 'default',
+        name: 'web-to-backend.kuma-system',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          delay: {
+            percentage: 50,
+            value: '0.010s'
+          },
+          abort: {
+            percentage: 40,
+            httpStatus: 500
+          },
+          responseBandwidth: {
+            percentage: 40,
+            limit: '50kbps'
+          }
+        }
+      })
+      .onGet('/meshes/default/fault-injections/fi1.kuma-system').reply(200, {
+        type: 'FaultInjection',
+        mesh: 'default',
+        name: 'fi1.kuma-system',
+        sources: [
+          {
+            match: {
+              service: 'web'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          delay: {
+            percentage: 50,
+            value: '0.010s'
+          },
+          abort: {
+            percentage: 40,
+            httpStatus: 500
+          },
+          responseBandwidth: {
+            percentage: 40,
+            limit: '50kbps'
+          }
+        }
+      })
       .onAny().passThrough()
   }
 }
