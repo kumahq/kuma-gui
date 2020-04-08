@@ -5,25 +5,46 @@
  * for use with Wizard flow.
  *
  */
-export default {
-  methods: {
-    updateStorage (key, value, remove = null) {
-      // remove from storage
-      if (remove) {
-        localStorage.removeItem(remove)
-        this.$emit('storageItemRemoved', remove)
-      }
 
+import { mapGetters } from 'vuex'
+
+export default {
+  data () {
+    return {
+      storedData: [],
+      storedVal: null,
+      storedKey: null
+    }
+  },
+  methods: {
+    updateStorage (key, value) {
       // add (or update) item in/to localStorage
-      if (key && value) {
-        localStorage.setItem(key, value)
-        this.$emit('storageItemModified', value)
-      }
+      this.storedVal = value || null
+      this.storedKey = key || null
+
+      this.storedData = { ...this.storedData, ...{ [key]: value } }
+
+      this.$store.dispatch('updateWizardData', this.storedData)
+
+      this.$emit('storageItemModified', value)
     },
     getStorageItem (value) {
+      const data = localStorage.storedFormData
+
       this.$emit('storageItemRetrieved', value)
 
-      return localStorage.getItem(value)
+      if (data && data.length > 0) {
+        return JSON.parse(localStorage.storedFormData)[value]
+      } else {
+        return null
+      }
+    }
+  },
+  watch: {
+    storedVal () {
+      const data = JSON.stringify(this.storedData)
+
+      localStorage.storedFormData = data
     }
   }
 }

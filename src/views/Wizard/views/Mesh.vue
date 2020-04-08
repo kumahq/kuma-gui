@@ -54,7 +54,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.mtlsEnabled === false"
-                      @change="updateStorage('meshMtls', 'disabled', 'ca'); formConditions.mtlsEnabled = false"
+                      @change="updateStorage('meshMtls', 'disabled'); formConditions.mtlsEnabled = false"
                     >
                     <span>Disabled</span>
                   </label>
@@ -90,10 +90,10 @@
                       Select a CA&hellip;
                     </option>
                     <option
-                      value="built-in"
-                      :selected="(getStorageItem('meshCA') === 'built-in') ? true : false"
+                      value="builtin"
+                      :selected="(getStorageItem('meshCA') === 'builtin') ? true : false"
                     >
-                      built-in
+                      builtin
                     </option>
                     <option
                       value="provided"
@@ -182,18 +182,22 @@
                       name="logging-type"
                       @change="updateStorage('meshLoggingType', $event.target.value); formConditions.loggingType = $event.target.value"
                     >
-                      <!-- <option
+                      <option
+                        selected
+                        disabled
+                      >
+                        Select a Logging Type&hellip;
+                      </option>
+                      <option
                         value="tcp"
                         :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
-                      > -->
-                      <option value="tcp">
+                      >
                         TCP
                       </option>
-                      <!-- <option
+                      <option
                         value="file"
                         :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
-                      > -->
-                      <option value="file">
+                      >
                         File
                       </option>
                     </select>
@@ -235,8 +239,10 @@
                       id="backend-format"
                       class="k-input w-100 code-sample"
                       rows="12"
-                      @change="updateStorage('meshLoggingBackendFormat', $event.target.value)"
-                    >{"start_time": "%START_TIME%", "source": "%KUMA_SOURCE_SERVICE%", "destination": "%KUMA_DESTINATION_SERVICE%", "source_address": "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", "destination_address": "%UPSTREAM_HOST%", "duration_millis": "%DURATION%", "bytes_received": "%BYTES_RECEIVED%", "bytes_sent": "%BYTES_SENT%"}</textarea>
+                      @change="updateStorage('meshLoggingBackendFormat', ($event.target.value).trim())"
+                    >
+                    { "start_time": "%START_TIME%", "source": "%KUMA_SOURCE_SERVICE%", "destination": "%KUMA_DESTINATION_SERVICE%", "source_address": "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", "destination_address": "%UPSTREAM_HOST%", "duration_millis": "%DURATION%", "bytes_received": "%BYTES_RECEIVED%", "bytes_sent": "%BYTES_SENT%" }
+                    </textarea>
                   </FormFragment>
                 </div>
               </form>
@@ -314,11 +320,17 @@
                     id="tracing-type"
                     class="k-input w-100"
                     name="tracing-type"
-                    @change="updateStorage('meshLoggingType', $event.target.value)"
+                    @change="updateStorage('meshTracingType', $event.target.value)"
                   >
                     <option
+                      selected
+                      disabled
+                    >
+                      Select a Tracing type&hellip;
+                    </option>
+                    <option
                       value="zipkin"
-                      :selected="(getStorageItem('meshLoggingType') === 'zipkin') ? true : false"
+                      :selected="(getStorageItem('meshTracingType') === 'zipkin') ? true : false"
                     >
                       Zipkin
                     </option>
@@ -414,6 +426,12 @@
                     @change="updateStorage('meshMetricsType', $event.target.value)"
                   >
                     <option
+                      selected
+                      disabled
+                    >
+                      Select a Metrics type&hellip;
+                    </option>
+                    <option
                       value="prometheus"
                       :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
                     >
@@ -430,10 +448,11 @@
                     id="metrics-dataplane-port"
                     type="number"
                     class="k-input w-100"
-                    :value="getStorageItem('meshMetricsDataplanePort') || 5670"
                     step="1"
                     min="0"
                     max="65535"
+                    placeholder="1234"
+                    :value="getStorageItem('meshMetricsDataplanePort')"
                     @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
                   >
                 </FormFragment>
@@ -446,7 +465,8 @@
                     id="metrics-dataplane-path"
                     type="text"
                     class="k-input w-100"
-                    :value="getStorageItem('meshMetricsDataplanePath') || '/metrics'"
+                    placeholder="/metrics"
+                    :value="getStorageItem('meshMetricsDataplanePath')"
                     @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
                   >
                 </FormFragment>
@@ -468,10 +488,13 @@
             tab-state="environment"
           >
             <template slot="universal">
-              <p>Instructions for <strong>Universal</strong>.</p>
+              {{ codeOutput }}
             </template>
             <template slot="kubernetes">
-              <p>Instructions for <strong>Kubernetes</strong>.</p>
+              <YamlView
+                title="Kubernetes"
+                :content="codeOutput"
+              />
             </template>
           </Tabs>
         </template>
@@ -514,9 +537,10 @@ import SerializeInput from '@/views/Wizard/directives/SerializeInput'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
+import YamlView from '@/components/Skeletons/YamlView'
 
 // schema for building code output
-import Mesh from '@/views/Wizard/schemas/Mesh'
+import meshSchema from '@/views/Wizard/schemas/Mesh'
 
 export default {
   metaInfo: {
@@ -525,7 +549,8 @@ export default {
   components: {
     FormFragment,
     Tabs,
-    StepSkeleton
+    StepSkeleton,
+    YamlView
   },
   directives: {
     SerializeInput
@@ -535,6 +560,7 @@ export default {
   ],
   data () {
     return {
+      schema: meshSchema,
       steps: [
         {
           label: 'General & Security',
@@ -588,8 +614,72 @@ export default {
     ...mapGetters({
       title: 'getTagline',
       version: 'getVersion',
-      environment: 'getEnvironment'
-    })
+      environment: 'getEnvironment',
+      formData: 'getStoredWizardData',
+      selectedTab: 'getSelectedTab'
+    }),
+
+    // Our generated code output
+    codeOutput () {
+      const schema = this.schema
+      const newData = this.formData
+
+      // if there is no data set yet, do nothing
+      if (!newData) return
+
+      const type = (this.selectedTab === '#universal') ? 'type' : 'kind'
+
+      /**
+       * Assign new values to our schema
+       */
+
+      // set a name
+      schema.metadata.name = newData.meshName
+
+      // mTLS
+      if (newData.meshMtls === 'enabled') {
+        schema.spec.mtls.ca = {
+          [newData.meshCA || 'builtin']: {}
+        }
+      }
+
+      // Logging
+      if (newData.meshLoggingStatus === 'enabled') {
+        const loggingObj = schema.spec.logging.backends[0]
+        const fallbackFormat = loggingObj.format
+
+        loggingObj.name = newData.meshLoggingBackend
+        loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
+
+        if (newData.meshLoggingType === 'tcp') {
+          loggingObj.tcp.address = newData.meshLoggingAddress
+        } else {
+          // TODO condition for when `file` is picked
+        }
+      }
+
+      // Tracing
+      if (newData.meshTracingStatus === 'enabled') {
+        const tracingObj = schema.spec.tracing
+
+        tracingObj.defaultBackend = newData.meshTracingBackend
+        tracingObj.backends[0].name = newData.meshTracingBackend
+        tracingObj.backends[0].sampling = newData.meshTracingSampling || 100
+        tracingObj.backends[0].zipkin.url = newData.meshTracingZipkinURL
+      }
+
+      // Metrics
+      if (newData.meshMetricsStatus === 'enabled') {
+        const metricsObj = schema.spec.metrics
+
+        // Prometheus is currently the only metrics option offered
+        // but this will change in the future
+        metricsObj.prometheus.port = newData.meshMetricsDataplanePort
+        metricsObj.prometheus.path = newData.meshMetricsDataplanePath
+      }
+
+      return schema
+    }
   }
 }
 </script>

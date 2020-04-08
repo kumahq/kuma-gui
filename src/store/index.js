@@ -42,7 +42,8 @@ export default (api) => {
       version: null,
       status: null,
       selectedTab: '#overview',
-      selectedTableRow: null
+      selectedTableRow: null,
+      storedWizardData: null
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -74,7 +75,8 @@ export default (api) => {
       getStatus: (state) => state.status,
       getSelectedTab: (state) => state.selectedTab,
       getSelectedTableRow: (state) => state.selectedTableRow,
-      getEnvironment: (state) => state.environment
+      getEnvironment: (state) => state.environment,
+      getStoredWizardData: (state) => state.storedWizardData
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -106,7 +108,8 @@ export default (api) => {
       SET_STATUS: (state, status) => (state.status = status),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
       SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
-      SET_ENVIRONMENT: (state, value) => (state.environment = value)
+      SET_ENVIRONMENT: (state, value) => (state.environment = value),
+      SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value)
     },
     actions: {
       // update the onboarding state
@@ -543,6 +546,11 @@ export default (api) => {
       // set the user's environment (this is discovered upon app launch)
       updateEnvironment ({ commit }, value) {
         commit('SET_ENVIRONMENT', value)
+      },
+
+      // update the stored Wizard data for use in generating code output
+      updateWizardData ({ commit }, value) {
+        commit('SET_WIZARD_DATA', value)
       }
     }
   })

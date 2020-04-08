@@ -150,7 +150,7 @@ export default {
 
 <style lang="scss" scoped>
 .tab-container {
-  --tab-container-margin: var(--spacing-sm) 0 0 0;
+  --tab-container-margin: var(--spacing-lg) 0 0 0;
   --tab-header-margin: 0 0 var(--spacing-md) 0;
   --tab-header-padding: 0 var(--spacing-md);
   --tab-nav-border-bottom: 1px solid var(--gray-4);

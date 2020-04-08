@@ -45,6 +45,11 @@ $last-col-flex: 1 0 0;
 .form-line {
   margin: #{$padding / 2} -#{$padding};
 
+  .code-sample {
+    font-family: var(--font-family-mono);
+    white-space: pre-line !important;
+  }
+
   @media screen and (min-width: 1024px) {
     display: flex;
     align-items: center;

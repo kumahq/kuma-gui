@@ -113,6 +113,7 @@ export default {
     }
   },
   mounted () {
+    // this.resetProcess()
     this.setStartingStep()
   },
   methods: {
@@ -136,6 +137,11 @@ export default {
 
       this.start = query || 0
       this.updateQuery('step', this.start)
+    },
+    resetProcess () {
+      // this is used for resetting anything we need to
+      // before the user goes through the wizard.
+      localStorage.removeItem('storedFormData')
     }
   }
 }
