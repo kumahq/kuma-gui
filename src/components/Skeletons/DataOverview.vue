@@ -439,32 +439,34 @@ export default {
   }
 
   .data-table-action-link {
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
+    // position: absolute;
+    // top: 0; right: 0; bottom: 0; left: 0;
     display: block;
     text-align: right;
     padding: var(--spacing-sm);
     cursor: pointer;
+    overflow: hidden;
+    padding: 0;
 
     &.is-active {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      position: absolute;
-      top: 0; left: 0;
+      // position: absolute;
+      // top: 0; left: 0;
       width: 100%;
       height: 100%;
 
       &:before {
-        position: absolute;
-        top: 0; left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        display: block;
-        content: "";
-        background-color: var(--blue-lightest);
-        text-align: center;
+        // position: absolute;
+        // top: 0; left: 0;
+        // z-index: -1;
+        // width: 100%;
+        // height: 100%;
+        // display: block;
+        // content: "";
+        // background-color: var(--blue-lightest);
+        // text-align: center;
       }
     }
   }

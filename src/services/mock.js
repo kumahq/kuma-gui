@@ -313,125 +313,6 @@ export default class Mock {
               ]
             },
             type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'example-dp-22',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'dataplanes-are-neat',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'foobar-baz-2000',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'dp-testing-1234',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'hello-world-1234',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'testing-the-gui-dp',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'testing-the-gui-dp-1',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
           }
         ]
       })
@@ -461,7 +342,7 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/dataplanes+insights/hello-world-foobar-002').reply(200, {
+      .onGet('/meshes/mesh-01/dataplanes+insights/kuma-example-app').reply(200, {
         type: 'DataplaneOverview',
         mesh: 'mesh-01',
         name: 'kuma-example-app',

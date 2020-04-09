@@ -21,7 +21,7 @@
         :is-empty="isEmpty"
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
-initial-tab-override="overview"
+        initial-tab-override="overview"
       >
         <template slot="overview">
           <LabelList
@@ -280,8 +280,8 @@ export default {
                       const selectedUpdateTimeAsDate = new Date(selectedUpdateTime)
 
                       /**
-                     * @todo refactor this to use a function instead
-                     */
+                       * @todo refactor this to use a function instead
+                       */
 
                       // formatted time for LAST CONNECTED (if there is a value present)
                       if (selectedTime && !isNaN(selectedTimeAsDate)) {
@@ -354,12 +354,12 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity && entity !== null) {
-        return this.$api.getAllDataplanesFromMesh(mesh, entity)
+        return this.$api.getDataplane(mesh, entity)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
-              this.entity = getSome(response.items, selected)
+              this.entity = getSome(response, selected)
               this.rawEntity = response
             } else {
               this.entity = null
