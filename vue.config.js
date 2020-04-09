@@ -1,17 +1,12 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
+  publicPath: './',
   runtimeCompiler: true,
   productionSourceMap: false,
-  // transpileDependencies: [
-  //   /@kongponents\/.*/
-  // ],
   css: {
     sourceMap: false
   },
-  // configureWebpack: {
-  //   plugins: [new BundleAnalyzerPlugin()]
-  // },
   chainWebpack: config => {
     config.module
       .rule('ignore-some-things')
