@@ -24,9 +24,7 @@ export default {
         })
       } else {
         router.push({
-          query: Object.assign({}, route.query, {
-            [query]: value
-          })
+          query: Object.assign({}, route.query, { [query]: value })
         })
       }
     }

@@ -482,6 +482,7 @@
             You can now execute the following commands to create the mesh.
           </p>
           <Tabs
+            v-if="codeOutput"
             :loaders="false"
             :tabs="tabs"
             :has-border="true"
@@ -500,6 +501,17 @@
               />
             </template>
           </Tabs>
+          <KAlert
+            v-else
+            appearance="danger"
+          >
+            <template slot="alertMessage">
+              <p>
+                You haven't filled any data out yet! Please return to the first
+                step and fill out your information.
+              </p>
+            </template>
+          </KAlert>
         </template>
 
         <!-- sidebar content -->
@@ -677,6 +689,7 @@ export default {
       /**
        * Logging
        */
+
       if (hasLogging) {
         const loggingObj = schemaNew.spec.logging.backends[0]
         const fallbackFormat = loggingObj.format
@@ -685,15 +698,22 @@ export default {
         loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
 
         if (newData.meshLoggingType === 'tcp') {
-          // loggingObj.file = loggingObj.tcp
-          loggingObj.tcp.address = newData.meshLoggingAddress
+          if (loggingObj.file) {
+            delete loggingObj.file
+          }
+
+          loggingObj.tcp = {
+            address: newData.meshLoggingAddress
+          }
+        } else if (newData.meshLoggingType === 'file') {
+          if (loggingObj.tcp) {
+            delete loggingObj.tcp
+          }
+
+          loggingObj.file = {
+            path: newData.meshLoggingPath
+          }
         }
-        // else {
-        //   loggingObj.tcp = loggingObj.file
-        //   loggingObj.file = {
-        //     path: newData.meshLoggingPath
-        //   }
-        // }
       }
 
       /**
@@ -753,7 +773,8 @@ export default {
     }
   },
   mounted () {
-    console.log(this.environment)
+    // this ensures the Wizard tab is actively set based on
+    // the user's Kuma environment (Universal or Kubernetes)
     this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
   }
 }

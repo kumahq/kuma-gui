@@ -99,7 +99,7 @@ export default {
   computed: {
     step: {
       get () {
-        return this.steps[this.start].slug
+        return this.steps[this.start].slug || 0
       },
       set (index) {
         return this.steps[index].slug
@@ -113,7 +113,9 @@ export default {
     }
   },
   mounted () {
-    // this.resetProcess()
+    // this clears out any old stored data upon starting the wizard
+    this.resetProcess()
+    // this sets the starting step upon load
     this.setStartingStep()
   },
   methods: {
@@ -129,7 +131,7 @@ export default {
     },
     goToPrevStep () {
       this.start--
-      this.updateQuery('step', this.start)
+      // this.updateQuery('step', this.start)
       this.$emit('goToPrevStep', this.step)
     },
     setStartingStep () {
