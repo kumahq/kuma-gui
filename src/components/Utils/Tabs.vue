@@ -112,6 +112,11 @@ export default {
     tabState: {
       type: String,
       default: null
+    },
+    initialTabOverride: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   computed: {
@@ -137,7 +142,7 @@ export default {
   },
   beforeMount () {
     // display the first tab on load
-    this.$store.dispatch(this.vuexState, this.tabs[0].hash)
+    this.$store.dispatch(this.vuexState, `#${this.initialTabOverride}` || this.tabs[0].hash)
   },
   methods: {
     switchTab (newTab) {

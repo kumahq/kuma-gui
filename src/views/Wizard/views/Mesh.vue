@@ -54,7 +54,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.mtlsEnabled === false"
-                      @change="updateStorage('meshMtls', 'disabled'); formConditions.mtlsEnabled = false"
+                      @change="updateStorage('meshMtls', false); formConditions.mtlsEnabled = false"
                     >
                     <span>Disabled</span>
                   </label>
@@ -66,7 +66,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.mtlsEnabled === true"
-                      @change="updateStorage('meshMtls', 'enabled'); formConditions.mtlsEnabled = true"
+                      @change="updateStorage('meshMtls', true); formConditions.mtlsEnabled = true"
                     >
                     <span>Enabled</span>
                   </label>
@@ -142,7 +142,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.loggingEnabled === false"
-                      @change="updateStorage('meshLoggingStatus', 'disabled'); formConditions.loggingEnabled = false"
+                      @change="updateStorage('meshLoggingStatus', false); formConditions.loggingEnabled = false"
                     >
                     <span>Disabled</span>
                   </label>
@@ -154,7 +154,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.loggingEnabled === true"
-                      @change="updateStorage('meshLoggingStatus', 'enabled'); formConditions.loggingEnabled = true"
+                      @change="updateStorage('meshLoggingStatus', true); formConditions.loggingEnabled = true"
                     >
                     <span>Enabled</span>
                   </label>
@@ -219,7 +219,7 @@
                   </FormFragment>
                   <!-- if the format type is File -->
                   <FormFragment
-                    v-else
+                    v-else-if="formConditions.loggingType === 'file'"
                     title="Path"
                     for-attr="backend-address"
                   >
@@ -277,7 +277,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.tracingEnabled === false"
-                      @change="updateStorage('meshTracingStatus', 'disabled'); formConditions.tracingEnabled = false"
+                      @change="updateStorage('meshTracingStatus', false); formConditions.tracingEnabled = false"
                     >
                     <span>Disabled</span>
                   </label>
@@ -289,7 +289,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.tracingEnabled === true"
-                      @change="updateStorage('meshTracingStatus', 'enabled'); formConditions.tracingEnabled = true"
+                      @change="updateStorage('meshTracingStatus', true); formConditions.tracingEnabled = true"
                     >
                     <span>Enabled</span>
                   </label>
@@ -397,7 +397,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.metricsEnabled === false"
-                      @change="updateStorage('meshMetricsStatus', 'disabled'); formConditions.metricsEnabled = false"
+                      @change="updateStorage('meshMetricsStatus', false); formConditions.metricsEnabled = false"
                     >
                     <span>Disabled</span>
                   </label>
@@ -409,7 +409,7 @@
                       type="radio"
                       class="k-input mr-2"
                       :checked="formConditions.metricsEnabled === true"
-                      @change="updateStorage('meshMetricsStatus', 'enabled'); formConditions.metricsEnabled = true"
+                      @change="updateStorage('meshMetricsStatus', true); formConditions.metricsEnabled = true"
                     >
                     <span>Enabled</span>
                   </label>
@@ -485,10 +485,13 @@
             :loaders="false"
             :tabs="tabs"
             :has-border="true"
-            tab-state="environment"
+            :initial-tab-override="environment"
           >
             <template slot="universal">
-              {{ codeOutput }}
+              <YamlView
+                title="Universal"
+                :content="codeOutput"
+              />
             </template>
             <template slot="kubernetes">
               <YamlView
@@ -532,6 +535,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { rejectKeys } from '@/views/Wizard/helpers'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import SerializeInput from '@/views/Wizard/directives/SerializeInput'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -606,7 +610,7 @@ export default {
         loggingEnabled: false,
         tracingEnabled: false,
         metricsEnabled: false,
-        loggingType: 'tcp'
+        loggingType: null
       }
     }
   },
@@ -622,45 +626,81 @@ export default {
     // Our generated code output
     codeOutput () {
       const schema = this.schema
+      const schemaNew = Object.assign({}, schema)
       const newData = this.formData
 
       // if there is no data set yet, do nothing
       if (!newData) return
 
-      const type = (this.selectedTab === '#universal') ? 'type' : 'kind'
-
       /**
        * Assign new values to our schema
        */
 
-      // set a name
-      schema.metadata.name = newData.meshName
+      // conditionals
+      const hasMtls = newData.meshMtls || false
+      const hasLogging = newData.meshLoggingStatus || false
+      const hasTracing = newData.meshTracingStatus || false
+      const hasMetrics = newData.meshMetricsStatus || false
 
-      // mTLS
-      if (newData.meshMtls === 'enabled') {
-        schema.spec.mtls.ca = {
+      // filter options
+      const featureStatus = {
+        mtls: hasMtls,
+        logging: hasLogging,
+        tracing: hasTracing,
+        metrics: hasMetrics
+      }
+
+      // define the features we are going to omit from our object
+      const filteredFeatures = []
+
+      Object.entries(featureStatus).forEach(r => {
+        const condition = r[1]
+        const value = r[0]
+
+        if (condition) {
+          filteredFeatures.filter(i => i !== value)
+        } else {
+          filteredFeatures.push(value)
+        }
+      })
+
+      /**
+       * mTLS
+       */
+      if (hasMtls) {
+        schemaNew.spec.mtls.enabled = true
+        schemaNew.spec.mtls.ca = {
           [newData.meshCA || 'builtin']: {}
         }
       }
 
-      // Logging
-      if (newData.meshLoggingStatus === 'enabled') {
-        const loggingObj = schema.spec.logging.backends[0]
+      /**
+       * Logging
+       */
+      if (hasLogging) {
+        const loggingObj = schemaNew.spec.logging.backends[0]
         const fallbackFormat = loggingObj.format
 
         loggingObj.name = newData.meshLoggingBackend
         loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
 
         if (newData.meshLoggingType === 'tcp') {
+          // loggingObj.file = loggingObj.tcp
           loggingObj.tcp.address = newData.meshLoggingAddress
-        } else {
-          // TODO condition for when `file` is picked
         }
+        // else {
+        //   loggingObj.tcp = loggingObj.file
+        //   loggingObj.file = {
+        //     path: newData.meshLoggingPath
+        //   }
+        // }
       }
 
-      // Tracing
-      if (newData.meshTracingStatus === 'enabled') {
-        const tracingObj = schema.spec.tracing
+      /**
+       * Tracing
+       */
+      if (hasTracing) {
+        const tracingObj = schemaNew.spec.tracing
 
         tracingObj.defaultBackend = newData.meshTracingBackend
         tracingObj.backends[0].name = newData.meshTracingBackend
@@ -668,18 +708,53 @@ export default {
         tracingObj.backends[0].zipkin.url = newData.meshTracingZipkinURL
       }
 
-      // Metrics
-      if (newData.meshMetricsStatus === 'enabled') {
-        const metricsObj = schema.spec.metrics
+      /**
+       * Metrics
+       */
+      if (hasMetrics) {
+        const metricsObj = schemaNew.spec.metrics
 
-        // Prometheus is currently the only metrics option offered
-        // but this will change in the future
-        metricsObj.prometheus.port = newData.meshMetricsDataplanePort
-        metricsObj.prometheus.path = newData.meshMetricsDataplanePath
+        metricsObj.prometheus.port = newData.meshMetricsDataplanePort || 5670
+        metricsObj.prometheus.path = newData.meshMetricsDataplanePath || '/metrics'
       }
 
-      return schema
+      // now we clean up our output based on the above conditions
+      const schemaClean = rejectKeys(schemaNew.spec, filteredFeatures)
+
+      // Type and Name
+      let meshType
+
+      if (this.selectedTab === '#kubernetes') {
+        // Kubernetes
+        meshType = {
+          apiVersion: 'kuma.io/v1alpha1',
+          kind: 'Mesh',
+          metadata: {
+            name: newData.meshName
+          }
+        }
+      } else {
+        // Universal
+        meshType = {
+          type: 'Mesh',
+          name: newData.meshName
+        }
+      }
+
+      /**
+       * Finalized output
+       */
+
+      if (this.selectedTab === '#kubernetes') {
+        return { ...meshType, spec: { ...schemaClean } }
+      } else {
+        return { ...meshType, ...schemaClean }
+      }
     }
+  },
+  mounted () {
+    console.log(this.environment)
+    this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
   }
 }
 </script>

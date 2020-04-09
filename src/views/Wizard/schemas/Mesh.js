@@ -3,6 +3,7 @@ module.exports = {
   metadata: {
     name: null
   },
+  // `spec` is only present in Kubernetes
   spec: {
     mtls: {
       enabled: true,

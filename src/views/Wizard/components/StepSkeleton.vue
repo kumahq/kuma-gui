@@ -148,6 +148,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$sidebar-width: 320px; // was 240px
+
 .wizard-steps {
 
   @media screen and (min-width: 1220px) {
@@ -161,7 +163,7 @@ export default {
     // }
 
     .wizard-steps__content-wrapper {
-      width: calc(100% - 240px);
+      width: calc(100% - #{$sidebar-width});
       padding: 0 16px;
     }
 
@@ -173,7 +175,7 @@ export default {
     }
 
     .wizard-steps__sidebar__content {
-      width: 240px;
+      width: $sidebar-width;
       height: 100vh;
       overflow-y: auto;
       overflow-x: hidden;

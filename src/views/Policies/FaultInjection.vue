@@ -21,6 +21,7 @@
         :is-empty="isEmpty"
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
+        initial-tab-override="overview"
       >
         <template slot="overview">
           <LabelList
