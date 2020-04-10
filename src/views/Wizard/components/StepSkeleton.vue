@@ -149,20 +149,29 @@ export default {
 }
 </script>
 
+<style lang="scss">
+// this is a fix to accommodate for containers
+// that come after the wizard container
+.wizard-steps + * {
+
+  @media screen and (min-width: 1220px) {
+    width: calc(100% - 320px);
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 $sidebar-width: 320px; // was 240px
+$bp-min-width: 1220px;
+$bp-max-width: 1219px;
 
 .wizard-steps {
 
-  @media screen and (min-width: 1220px) {
+  @media screen and (min-width: $bp-min-width) {
     display: flex;
     align-items: stretch;
     justify-content: stretch;
     margin: 0 -16px;
-
-    // > * {
-    //   margin: 0 16px;
-    // }
 
     .wizard-steps__content-wrapper {
       width: calc(100% - #{$sidebar-width});
@@ -184,7 +193,7 @@ $sidebar-width: 320px; // was 240px
     }
   }
 
-  @media screen and (max-width: 1219px) {
+  @media screen and (max-width: $bp-max-width) {
     > * {
       margin-bottom: 16px;
     }

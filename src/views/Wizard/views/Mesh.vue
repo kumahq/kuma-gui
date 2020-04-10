@@ -212,7 +212,7 @@
                       id="backend-address"
                       type="text"
                       class="k-input w-100"
-                      placeholder="127.0.0.1"
+                      placeholder="5000:5000"
                       :value="getStorageItem('meshLoggingAddress')"
                       @change="updateStorage('meshLoggingAddress', $event.target.value)"
                     >
@@ -541,6 +541,36 @@
           </p>
         </template>
       </StepSkeleton>
+
+      <!-- <Scanner
+        :loader-function="testLoader"
+        :should-start="true"
+      >
+        <template slot="loading-title">
+          <h3>Searching for your mesh&hellip;</h3>
+        </template>
+        <template slot="loading-content">
+          <p>Hello there. I am running.</p>
+        </template>
+        <template slot="error-title">
+          <h3>An error occurred!</h3>
+        </template>
+        <template slot="error-content">
+          <p>Please try again later.</p>
+        </template>
+        <template slot="error-title">
+          <h3>Scanning finished!</h3>
+        </template>
+        <template slot="error-content">
+          <p>Please try again later.</p>
+        </template>
+        <template slot="timeout-title">
+          <h3>Scanner timed out</h3>
+        </template>
+        <template slot="timeout-content">
+          <p>We tried to scan for your mesh but did not find it.</p>
+        </template>
+      </Scanner> -->
     </div>
   </div>
 </template>
@@ -554,6 +584,7 @@ import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 import YamlView from '@/components/Skeletons/YamlView'
+import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
 import meshSchema from '@/views/Wizard/schemas/Mesh'
@@ -566,7 +597,8 @@ export default {
     FormFragment,
     Tabs,
     StepSkeleton,
-    YamlView
+    YamlView,
+    Scanner
   },
   directives: {
     SerializeInput
@@ -776,6 +808,11 @@ export default {
     // this ensures the Wizard tab is actively set based on
     // the user's Kuma environment (Universal or Kubernetes)
     this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
+  },
+  methods: {
+    testLoader () {
+      console.log('Hello from test loader!')
+    }
   }
 }
 </script>
