@@ -41,6 +41,7 @@
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
           has-hover
+          @row:click="tableRowHandler"
         >
           <!-- status -->
           <template
@@ -84,34 +85,10 @@
             slot="actions"
             slot-scope="{ row }"
           >
-            <router-link
-              v-if="row.type && $slots.tableDataActionsLinkText"
-              :to="{
-                name: tableActionsRouteName,
-                params: {
-                  // TODO: find a better, more efficient way to handle this
-                  mesh: row.type.toLowerCase() === 'mesh' ? row.name : row.mesh,
-                  dataplane: row.type.toLowerCase() === 'dataplane' ? row.name : null,
-                  trafficpermission: row.type.toLowerCase() === 'trafficpermission' ? row.name : null,
-                  trafficroute: row.type.toLowerCase() === 'trafficroute' ? row.name : null,
-                  trafficlog: row.type.toLowerCase() === 'trafficlog' ? row.name : null,
-                  traffictrace: row.type.toLowerCase() === 'traffictrace' ? row.name : null,
-                  healthcheck: row.type.toLowerCase() === 'healthcheck' ? row.name : null,
-                  proxytemplate: row.type.toLowerCase() === 'proxytemplate' ? row.name : null,
-                  service: row.type.toLowerCase() === 'service' ? row.name : null,
-                  faultinjection: row.type.toLowerCase() === 'faultinjection' ? row.name : null
-                }
-              }"
-            >
-              <slot name="tableDataActionsLinkText" />
-            </router-link>
-
             <a
               v-if="tableDataFunctionText"
-              :data-id="row.name.replace(' ', '-').toLowerCase()"
               class="data-table-action-link"
               :class="{ 'is-active': ($store.state.selectedTableRow === row.name) }"
-              @click="$emit('tableAction', row[tableDataRow])"
             >
               <span
                 v-if="$store.state.selectedTableRow === row.name"
@@ -337,6 +314,9 @@ export default {
     },
     goToNextPage () {
       this.pageNumber++
+    },
+    tableRowHandler (e, row, type) {
+      this.$emit('tableAction', row.name)
     }
   }
 }
@@ -436,6 +416,7 @@ export default {
   tr {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
   }
 
   th {
