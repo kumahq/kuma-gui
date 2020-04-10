@@ -80,9 +80,9 @@ export default {
       },
       tableData: {
         headers: [
+          { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
-          { label: 'Type', key: 'type' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Type', key: 'type' }
         ],
         data: []
       },

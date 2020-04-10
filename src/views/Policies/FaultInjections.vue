@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-logs">
+  <div class="fault-injections">
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -54,9 +54,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'TrafficLogs',
+  name: 'FaultInjections',
   metaInfo: {
-    title: 'Traffic Logs'
+    title: 'Fault Injections'
   },
   components: {
     FrameSkeleton,
@@ -76,14 +76,14 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Traffic Logs present.'
+        message: 'There are no Fault Injections present.'
       },
       tableData: {
         headers: [
+          { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Type', key: 'type' }
         ],
         data: []
       },
@@ -107,7 +107,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Traffic Log: ${entity.name}`
+        return `Fault Injection: ${entity.name}`
       } else {
         return null
       }
@@ -149,8 +149,8 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      const getTrafficLogs = () => {
-        return this.$api.getAllTrafficLogsFromMesh(mesh)
+      const getFaultInjections = () => {
+        return this.$api.getAllFaultInjectionsFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items
@@ -189,7 +189,7 @@ export default {
           })
       }
 
-      getTrafficLogs()
+      getFaultInjections()
     },
     getEntity (entity) {
       this.entityIsLoading = true
@@ -198,7 +198,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity && entity !== null) {
-        return this.$api.getTrafficLog(mesh, entity)
+        return this.$api.getFaultInjection(mesh, entity)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
@@ -229,3 +229,6 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>

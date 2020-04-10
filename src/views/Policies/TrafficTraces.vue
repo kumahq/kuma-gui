@@ -1,5 +1,5 @@
 <template>
-  <div class="fault-injections">
+  <div class="traffic-traces">
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -54,9 +54,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'FaultInjections',
+  name: 'TrafficTraces',
   metaInfo: {
-    title: 'Fault Injections'
+    title: 'Traffic Traces'
   },
   components: {
     FrameSkeleton,
@@ -76,14 +76,14 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Fault Injections present.'
+        message: 'There are no Traffic Traces present.'
       },
       tableData: {
         headers: [
+          { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Type', key: 'type' }
         ],
         data: []
       },
@@ -107,7 +107,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Fault Injection: ${entity.name}`
+        return `Traffic Trace: ${entity.name}`
       } else {
         return null
       }
@@ -149,8 +149,8 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      const getFaultInjections = () => {
-        return this.$api.getAllFaultInjectionsFromMesh(mesh)
+      const getTrafficTraces = () => {
+        return this.$api.getAllTrafficTracesFromMesh(mesh)
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items
@@ -189,7 +189,7 @@ export default {
           })
       }
 
-      getFaultInjections()
+      getTrafficTraces()
     },
     getEntity (entity) {
       this.entityIsLoading = true
@@ -198,7 +198,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity && entity !== null) {
-        return this.$api.getFaultInjection(mesh, entity)
+        return this.$api.getTrafficTrace(mesh, entity)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

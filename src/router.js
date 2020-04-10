@@ -169,7 +169,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Logs'
           },
-          component: () => import('@/views/Policies/TrafficLog')
+          component: () => import('@/views/Policies/TrafficLogs')
         },
         // traffic traces
         {
@@ -178,7 +178,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Traces'
           },
-          component: () => import('@/views/Policies/TrafficTrace')
+          component: () => import('@/views/Policies/TrafficTraces')
         },
         // fault injections
         {
@@ -187,7 +187,7 @@ export default (store) => {
           meta: {
             title: 'Fault Injections'
           },
-          component: () => import('@/views/Policies/FaultInjection')
+          component: () => import('@/views/Policies/FaultInjections')
         },
         // health checks
         {

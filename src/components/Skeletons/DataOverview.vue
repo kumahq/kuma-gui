@@ -41,7 +41,10 @@
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
           has-hover
+          :sort-order="sortOrder"
+          :sort-key="sortKey"
           @row:click="tableRowHandler"
+          @sort="sortFieldHelper"
         >
           <!-- status -->
           <template
@@ -414,9 +417,12 @@ export default {
   font-size: var(--dp-table-font-size);
 
   tr {
-    position: relative;
-    overflow: hidden;
     cursor: pointer;
+
+    td:first-of-type {
+      width: 5%;
+      text-align: center;
+    }
   }
 
   th {
@@ -434,50 +440,27 @@ export default {
   }
 
   .data-table-action-link {
-    // position: absolute;
-    // top: 0; right: 0; bottom: 0; left: 0;
     display: block;
-    text-align: right;
     padding: var(--spacing-sm);
     cursor: pointer;
     overflow: hidden;
     padding: 0;
 
     &.is-active {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      // position: absolute;
-      // top: 0; left: 0;
-      width: 100%;
-      height: 100%;
 
-      &:before {
-        // position: absolute;
-        // top: 0; left: 0;
-        // z-index: -1;
-        // width: 100%;
-        // height: 100%;
-        // display: block;
-        // content: "";
-        // background-color: var(--blue-lightest);
-        // text-align: center;
-      }
     }
   }
 
   .action-link__active-state {
     --size: 18px;
 
-    // position: absolute;
-    text-align: right;
     display: block;
     width: var(--size);
     height: var(--size);
     line-height: var(--size);
     border-radius: 50%;
     background-color: var(--logo-green);
-    margin: 0 5px 0 auto;
+    margin: 0 auto;
     color: #fff;
     font-size: 13px;
     text-align: center;

@@ -77,14 +77,14 @@ export default {
       },
       tableData: {
         headers: [
+          { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
           { label: 'Tags', key: 'tags' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
-          { label: 'Total Updates', key: 'totalUpdates' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Total Updates', key: 'totalUpdates' }
         ],
         data: []
       },

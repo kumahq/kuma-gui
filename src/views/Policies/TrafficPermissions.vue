@@ -79,10 +79,10 @@ export default {
       },
       tableData: {
         headers: [
+          { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' },
-          { key: 'actions', hideLabel: true }
+          { label: 'Type', key: 'type' }
         ],
         data: []
       },
