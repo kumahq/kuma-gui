@@ -147,6 +147,7 @@ export default {
 .code-block {
   border-radius: 3px;
   background-color: rgba(150, 58, 133, 0.05);
+  font-size: var(--type-sm);
 }
 
 .empty-state-title {

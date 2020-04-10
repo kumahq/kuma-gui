@@ -76,40 +76,40 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/default').reply(200, {
+        type: 'Mesh',
+        name: 'default',
         mtls: {
           ca: {
             builtin: {}
           }
-        },
-        name: 'default',
-        type: 'Mesh'
+        }
       })
       .onGet('/meshes/mesh-01').reply(200, {
+        type: 'Mesh',
+        name: 'mesh-01',
         mtls: {
           ca: {
             builtin: {}
           }
-        },
-        name: 'mesh-01',
-        type: 'Mesh'
+        }
       })
       .onGet('/meshes/kong-mania-12').reply(200, {
+        type: 'Mesh',
+        name: 'kong-mania-12',
         mtls: {
           ca: {
             builtin: {}
           }
-        },
-        name: 'kong-mania-12',
-        type: 'Mesh'
+        }
       })
       .onGet('/meshes/hello-world').reply(200, {
+        type: 'Mesh',
+        name: 'hello-world',
         mtls: {
           ca: {
             builtin: {}
           }
-        },
-        name: 'hello-world',
-        type: 'Mesh'
+        }
       })
       .onGet('/meshes/mesh-01/dataplanes').reply(200, {
         items: [

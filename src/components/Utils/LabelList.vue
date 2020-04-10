@@ -10,7 +10,10 @@
         border-variant="noBorder"
       >
         <template slot="body">
-          <ul class="label-list__items">
+          <ul
+            class="label-list__items"
+            :class="colClass"
+          >
             <li
               v-for="(value, key) in items"
               :key="key"
@@ -111,6 +114,17 @@ export default {
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
+    },
+    colClass () {
+      const len = Object.entries(this.items).length
+
+      if (len > 6) {
+        return 'has-columns cols-2'
+      } else if (len >= 9) {
+        return 'has-columns cols-3'
+      } else {
+        return null
+      }
     }
   }
 }
@@ -132,26 +146,37 @@ export default {
 
   li {
     display: block;
+    overflow: hidden;
 
     &:not(:last-of-type) {
       margin-bottom: var(--spacing-md);
     }
   }
 
-  &.has-columns {
+  @media screen and (min-width: 1024px) {
+    &.has-columns {
+      column-gap: 10px;
+    }
 
+    &.cols-2 {
+      column-count: 2;
+    }
+
+    &.cols-3 {
+      column-count: 3;
+    }
   }
 }
 
 .label-list__items__title {
   font-size: var(--type-sm);
-  font-weight: 700;
+  font-weight: 500;
   text-transform: uppercase;
   color: var(--gray-3);
 }
 
 .label-list__items__value {
-  font-size: var(--type-lg);
+  font-size: var(--type-sm);
   font-family: var(--font-family-mono);
 }
 </style>

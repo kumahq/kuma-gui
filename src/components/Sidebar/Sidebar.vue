@@ -78,11 +78,6 @@ export default {
     //   perms: state => state.permissions
     // }),
 
-    // ...mapState('workspaces', {
-    //   workspace: state => state.workspace,
-    //   workspaces: state => state.workspaces
-    // }),
-
     resourceLinks () {
       const storedVersion = this.$store.getters.getVersion
       const ver = (storedVersion !== null) ? storedVersion : 'latest'
@@ -106,22 +101,6 @@ export default {
     ...mapState('sidebar', {
       menu: state => state.menu
     }),
-
-    // workspaceList () {
-    //   return this.workspaces
-    // },
-
-    // currentWorkspace () {
-    //   return this.workspaceList.filter(w => w.name === this.workspace)[0]
-    // },
-
-    // portalIsLegacy () {
-    //   return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal_is_legacy')
-    // },
-
-    // portalIsEnabled () {
-    //   return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal')
-    // },
 
     /**
      * Main property for items in the sidebar menu. Filters out menu.js items by
@@ -147,17 +126,6 @@ export default {
     meshList () {
       return this.$store.state.meshes
     }
-
-    // kumaInfo () {
-    //   const tagline = this.$store.getters.getTagline
-    //   const version = this.$store.getters.getVersion
-
-    //   if (tagline && version) {
-    //     return `${tagline} v${version}`
-    //   } else {
-    //     return false
-    //   }
-    // }
   },
 
   mounted () {
@@ -170,8 +138,6 @@ export default {
     }
 
     window.addEventListener('resize', this.handleResize)
-
-    // this.getKumaInfo()
   },
 
   beforeDestroy () {
@@ -206,16 +172,7 @@ export default {
       if (document.documentElement.clientWidth >= 900) {
         this.isCollapsed = sidebarState || false
       }
-    },
-
-    getKumaInfo () {
-      this.$store.dispatch('getVersion')
-      this.$store.dispatch('getTagline')
     }
-
-    // openWorkspaces () {
-    //   this.toggleWorkspaces = !this.toggleWorkspaces
-    // },
   }
 }
 </script>

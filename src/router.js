@@ -92,6 +92,17 @@ export default (store) => {
       },
       component: () => import('@/views/Overview')
     },
+    // all Meshes
+    {
+      path: '/meshes',
+      alias: '/',
+      name: 'all-meshes',
+      meta: {
+        title: 'Meshes',
+        breadcrumb: 'Meshes'
+      },
+      component: () => import('@/views/Entities/Meshes')
+    },
     {
       path: '/:mesh',
       redirect: { name: 'mesh-overview' },

@@ -4,7 +4,7 @@
       v-if="tabGroupTitle"
       class="tab__header"
     >
-      <h3 class="xl">
+      <h3 class="tab__header__title">
         {{ tabGroupTitle }}
       </h3>
     </header>
@@ -158,6 +158,8 @@ export default {
   --tab-container-margin: var(--spacing-lg) 0 0 0;
   --tab-header-margin: 0 0 var(--spacing-md) 0;
   --tab-header-padding: 0 var(--spacing-md);
+  --tab-header-title-font-size: var(--type-md);
+  --tab-header-title-font-weight: 500;
   --tab-nav-border-bottom: 1px solid var(--gray-4);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
@@ -177,6 +179,11 @@ export default {
 .tab__header {
   margin: var(--tab-header-margin);
   padding: var(--tab-header-padding);
+}
+
+.tab__header__title {
+  font-size: var(--tab-header-title-font-size);
+  font-weight: var(--tab-header-title-font-weight);
 }
 
 .tab__nav {

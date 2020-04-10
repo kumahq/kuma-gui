@@ -11,47 +11,23 @@ export default {
           link: '/overview',
           title: false,
           root: true
-        }
-      ]
-    },
-    {
-      name: 'General',
-      id: 'general',
-      skipRbac: true,
-      items: [
-        {
-          name: 'General',
-          title: true,
-          parent: 'general'
         },
         {
           name: 'Mesh Overview',
           link: '/overview',
-          title: false,
-          parent: 'general'
-        }
-      ]
-    },
-    {
-      name: 'Entities',
-      id: 'entities',
-      skipRbac: true,
-      items: [
-        {
-          name: 'Entities',
-          title: true
+          title: false
         },
-        // {
-        //   name: 'Services',
-        //   link: '/services',
-        //   title: false,
-        //   parent: entities
-        // },
+        {
+          name: 'Meshes',
+          link: '/meshes',
+          title: false,
+          root: true
+        },
         {
           name: 'Dataplanes',
           link: '/dataplanes',
-          title: false,
-          parent: 'entities'
+          title: false
+          // root: true
         }
       ]
     },

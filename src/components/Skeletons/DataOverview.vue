@@ -37,10 +37,10 @@
         class="data-overview-table"
       >
         <KTable
+          class="micro-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
           has-hover
-          is-small
         >
           <!-- status -->
           <template
@@ -421,21 +421,35 @@ export default {
 
 }
 
+.micro-table.micro-table {
+  --dp-table-font-size: 14px;
+  --dp-table-padding: 10px;
+
+  th, td {
+    padding: var(--dp-table-padding);
+  }
+}
+
 .k-table {
+  font-size: var(--dp-table-font-size);
 
   tr {
     position: relative;
     overflow: hidden;
   }
 
-  &.has-border {
-    border: 1px solid var(--gray-4);
-    border-bottom: 0;
+  th {
+    background-color: var(--gray-7);
   }
 
   thead {
     border-top: 0 !important;
     border-bottom-width: 1px !important;
+  }
+
+  &.has-border {
+    border: 1px solid var(--gray-4);
+    border-bottom: 0;
   }
 
   .data-table-action-link {
@@ -472,9 +486,9 @@ export default {
   }
 
   .action-link__active-state {
-    --size: 22px;
+    --size: 18px;
 
-    position: absolute;
+    // position: absolute;
     text-align: right;
     display: block;
     width: var(--size);
@@ -482,7 +496,7 @@ export default {
     line-height: var(--size);
     border-radius: 50%;
     background-color: var(--logo-green);
-    margin: 0 auto;
+    margin: 0 5px 0 auto;
     color: #fff;
     font-size: 13px;
     text-align: center;
@@ -492,9 +506,6 @@ export default {
     }
   }
 
-  th {
-    background-color: var(--gray-7);
-  }
 }
 
 @media only screen and (min-width: 841px) {
