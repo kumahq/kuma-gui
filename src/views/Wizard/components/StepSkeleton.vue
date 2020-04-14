@@ -22,20 +22,25 @@
         </ul>
       </header>
       <div class="wizard-steps__content">
-        <div
-          v-for="(item, index) in steps"
-          :id="`wizard-steps__content__item--${index}`"
-          :key="item.slug"
-          :aria-labelledby="`wizard-steps__content__item--${index}`"
-          role="tabpanel"
-          tabindex="0"
-          class="wizard-steps__content__item"
+        <form
+          ref="wizardForm"
+          autocomplete="off"
         >
-          <slot
-            v-if="step === item.slug"
-            :name="item.slug"
-          />
-        </div>
+          <div
+            v-for="(item, index) in steps"
+            :id="`wizard-steps__content__item--${index}`"
+            :key="item.slug"
+            :aria-labelledby="`wizard-steps__content__item--${index}`"
+            role="tabpanel"
+            tabindex="0"
+            class="wizard-steps__content__item"
+          >
+            <slot
+              v-if="step === item.slug"
+              :name="item.slug"
+            />
+          </div>
+        </form>
       </div>
       <footer class="wizard-steps__footer">
         <KButton
@@ -113,10 +118,12 @@ export default {
     }
   },
   mounted () {
-    // this clears out any old stored data upon starting the wizard
-    this.resetProcess()
-    // this sets the starting step upon load
-    this.setStartingStep()
+    this.$nextTick(() => {
+      // this clears out any old stored data upon starting the wizard
+      this.resetProcess()
+      // this sets the starting step upon load
+      this.setStartingStep()
+    })
   },
   methods: {
     goToStep (index) {
@@ -141,9 +148,18 @@ export default {
       this.updateQuery('step', this.start)
     },
     resetProcess () {
-      // this is used for resetting anything we need to
-      // before the user goes through the wizard.
+      // revert back to the first step
+      this.start = 0
+      // go to first step in the UI
+      this.goToStep(0)
+      // clear the form data from localStorage
       localStorage.removeItem('storedFormData')
+      // reset all input values so the browser can't pre-fill them
+      const fields = this.$refs.wizardForm.querySelectorAll('input[type="text"]')
+
+      fields.forEach(r => {
+        r.setAttribute('value', '')
+      })
     }
   }
 }

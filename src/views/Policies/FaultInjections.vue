@@ -32,12 +32,13 @@
           />
         </template>
         <template slot="yaml">
-          <YamlView
+          <CodeView
+            lang="bash"
             :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :content="rawEntity"
+            :content="formattedRawEntity"
           />
         </template>
       </Tabs>
@@ -47,10 +48,11 @@
 
 <script>
 import { getSome } from '@/helpers'
+import FormatForCLI from '@/mixins/FormatForCLI'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
-import YamlView from '@/components/Skeletons/YamlView'
+import CodeView from '@/components/Skeletons/CodeView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
@@ -62,9 +64,12 @@ export default {
     FrameSkeleton,
     DataOverview,
     Tabs,
-    YamlView,
+    CodeView,
     LabelList
   },
+  mixins: [
+    FormatForCLI
+  ],
   data () {
     return {
       isLoading: true,
@@ -120,6 +125,11 @@ export default {
       } else {
         return null
       }
+    },
+    formattedRawEntity () {
+      const entity = this.formatForCLI(this.rawEntity)
+
+      return entity
     }
   },
   watch: {

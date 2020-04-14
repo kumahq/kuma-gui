@@ -1304,6 +1304,57 @@ export default class Mock {
           ]
         }
       })
+      .onGet('/meshes/mesh-01/dataplanes+insights/hello-world-foobar-002').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'mesh-01',
+        name: 'hello-world-foobar-002',
+        dataplane: {
+          networking: {
+            address: '172.21.0.5',
+            inbound: [
+              {
+                port: 7070,
+                servicePort: 7070,
+                tags: {
+                  env: 'dev',
+                  service: 'kuma-example-backend',
+                  tag01: 'value01',
+                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
+      })
       .onGet('/meshes/default/traffic-traces').reply(200, {
         items: [
           {

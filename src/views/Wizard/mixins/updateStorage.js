@@ -16,6 +16,9 @@ export default {
       storedKey: null
     }
   },
+  mounted () {
+    this.clearStorage()
+  },
   methods: {
     updateStorage (key, value) {
       // add (or update) item in/to localStorage
@@ -38,6 +41,10 @@ export default {
       } else {
         return null
       }
+    },
+    clearStorage () {
+      localStorage.removeItem('storedFormData')
+      this.$store.dispatch('updateWizardData', null)
     }
   },
   watch: {

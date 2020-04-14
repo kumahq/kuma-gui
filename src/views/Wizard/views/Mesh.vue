@@ -29,90 +29,89 @@
             has-shadow
           >
             <template slot="body">
-              <form id="entity-name-selection">
-                <FormFragment
-                  title="Mesh name"
-                  for-attr="mesh-name"
+              <FormFragment
+                title="Mesh name"
+                for-attr="mesh-name"
+              >
+                <input
+                  id="mesh-name"
+                  v-serialize-input
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-mesh-name"
+                  required
+                  :value="getCleanMeshName"
+                  @change="updateStorage('meshName', $event.target.value)"
                 >
+              </FormFragment>
+
+              <FormFragment title="Mutual TLS">
+                <label class="k-input-label mx-2">
                   <input
-                    id="mesh-name"
-                    v-serialize-input
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="your-mesh-name"
-                    :value="getStorageItem('meshName')"
-                    @change="updateStorage('meshName', $event.target.value)"
+                    ref="mtlsDisabled"
+                    value="disabled"
+                    name="mtls"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.mtlsEnabled === false"
+                    @change="updateStorage('meshMtls', false); formConditions.mtlsEnabled = false"
                   >
-                </FormFragment>
+                  <span>Disabled</span>
+                </label>
+                <label class="k-input-label mx-2">
+                  <input
+                    id="mtls-enabled"
+                    value="enabled"
+                    name="mtls"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.mtlsEnabled === true"
+                    @change="updateStorage('meshMtls', true); formConditions.mtlsEnabled = true"
+                  >
+                  <span>Enabled</span>
+                </label>
+              </FormFragment>
 
-                <FormFragment title="Mutual TLS">
-                  <label class="k-input-label mx-2">
-                    <input
-                      ref="mtlsDisabled"
-                      value="disabled"
-                      name="mtls"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.mtlsEnabled === false"
-                      @change="updateStorage('meshMtls', false); formConditions.mtlsEnabled = false"
-                    >
-                    <span>Disabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="mtls-enabled"
-                      value="enabled"
-                      name="mtls"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.mtlsEnabled === true"
-                      @change="updateStorage('meshMtls', true); formConditions.mtlsEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                </FormFragment>
-
-                <FormFragment
-                  v-if="formConditions.mtlsEnabled === true"
-                  title="Certificate Authority"
-                  for-attr="certificate-authority"
+              <FormFragment
+                v-if="formConditions.mtlsEnabled === true"
+                title="Certificate Authority"
+                for-attr="certificate-authority"
+              >
+                <select
+                  id="certificate-authority"
+                  class="k-input w-100"
+                  name="certificate-authority"
+                  @change="updateStorage('meshCA', $event.target.value)"
                 >
-                  <select
-                    id="certificate-authority"
-                    class="k-input w-100"
-                    name="certificate-authority"
-                    @change="updateStorage('meshCA', $event.target.value)"
+                  <option
+                    selected
+                    disabled
                   >
-                    <option
-                      selected
-                      disabled
-                    >
-                      Select a CA&hellip;
-                    </option>
-                    <option
-                      value="builtin"
-                      :selected="(getStorageItem('meshCA') === 'builtin') ? true : false"
-                    >
-                      builtin
-                    </option>
-                    <option
-                      value="provided"
-                      :selected="(getStorageItem('meshCA') === 'provided') ? true : false"
-                    >
-                      provided
-                    </option>
-                    <option
-                      value="vault"
-                      :selected="(getStorageItem('meshCA') === 'vault') ? true : false"
-                    >
-                      vault
-                    </option>
-                  </select>
-                  <p class="help">
-                    If you've enabled mTLS, you must select a CA.
-                  </p>
-                </FormFragment>
-              </form>
+                    Select a CA&hellip;
+                  </option>
+                  <option
+                    value="builtin"
+                    :selected="(getStorageItem('meshCA') === 'builtin') ? true : false"
+                  >
+                    builtin
+                  </option>
+                  <option
+                    value="provided"
+                    :selected="(getStorageItem('meshCA') === 'provided') ? true : false"
+                  >
+                    provided
+                  </option>
+                  <option
+                    value="vault"
+                    :selected="(getStorageItem('meshCA') === 'vault') ? true : false"
+                  >
+                    vault
+                  </option>
+                </select>
+                <p class="help">
+                  If you've enabled mTLS, you must select a CA.
+                </p>
+              </FormFragment>
             </template>
           </KCard>
         </template>
@@ -132,120 +131,118 @@
             has-shadow
           >
             <template slot="body">
-              <form>
-                <FormFragment title="Logging">
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="logging-disabled"
-                      value="disabled"
-                      name="logging"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.loggingEnabled === false"
-                      @change="updateStorage('meshLoggingStatus', false); formConditions.loggingEnabled = false"
+              <FormFragment title="Logging">
+                <label class="k-input-label mx-2">
+                  <input
+                    id="logging-disabled"
+                    value="disabled"
+                    name="logging"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.loggingEnabled === false"
+                    @change="updateStorage('meshLoggingStatus', false); formConditions.loggingEnabled = false"
+                  >
+                  <span>Disabled</span>
+                </label>
+                <label class="k-input-label mx-2">
+                  <input
+                    id="logging-enabled"
+                    value="enabled"
+                    name="logging"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.loggingEnabled === true"
+                    @change="updateStorage('meshLoggingStatus', true); formConditions.loggingEnabled = true"
+                  >
+                  <span>Enabled</span>
+                </label>
+              </FormFragment>
+              <FormFragment
+                v-if="formConditions.loggingEnabled === true"
+                title="Backend name"
+              >
+                <input
+                  id="backend-name"
+                  v-serialize-input
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-backend-name"
+                  :value="getStorageItem('meshLoggingBackend')"
+                  @change="updateStorage('meshLoggingBackend', $event.target.value)"
+                >
+              </FormFragment>
+              <div v-if="formConditions.loggingEnabled === true">
+                <FormFragment title="Type">
+                  <select
+                    id="logging-type"
+                    ref="loggingTypeSelect"
+                    class="k-input w-100"
+                    name="logging-type"
+                    @change="updateStorage('meshLoggingType', $event.target.value); formConditions.loggingType = $event.target.value"
+                  >
+                    <option
+                      selected
+                      disabled
                     >
-                    <span>Disabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="logging-enabled"
-                      value="enabled"
-                      name="logging"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.loggingEnabled === true"
-                      @change="updateStorage('meshLoggingStatus', true); formConditions.loggingEnabled = true"
+                      Select a Logging Type&hellip;
+                    </option>
+                    <option
+                      value="tcp"
+                      :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
                     >
-                    <span>Enabled</span>
-                  </label>
+                      TCP
+                    </option>
+                    <option
+                      value="file"
+                      :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
+                    >
+                      File
+                    </option>
+                  </select>
                 </FormFragment>
+                <!-- if the format type is TCP -->
                 <FormFragment
-                  v-if="formConditions.loggingEnabled === true"
-                  title="Backend name"
+                  v-if="formConditions.loggingType === 'tcp'"
+                  title="Address"
+                  for-attr="backend-address"
                 >
                   <input
-                    id="backend-name"
-                    v-serialize-input
+                    id="backend-address"
                     type="text"
                     class="k-input w-100"
-                    placeholder="your-backend-name"
-                    :value="getStorageItem('meshLoggingBackend')"
-                    @change="updateStorage('meshLoggingBackend', $event.target.value)"
+                    placeholder="5000:5000"
+                    :value="getStorageItem('meshLoggingAddress')"
+                    @change="updateStorage('meshLoggingAddress', $event.target.value)"
                   >
                 </FormFragment>
-                <div v-if="formConditions.loggingEnabled === true">
-                  <FormFragment title="Type">
-                    <select
-                      id="logging-type"
-                      ref="loggingTypeSelect"
-                      class="k-input w-100"
-                      name="logging-type"
-                      @change="updateStorage('meshLoggingType', $event.target.value); formConditions.loggingType = $event.target.value"
-                    >
-                      <option
-                        selected
-                        disabled
-                      >
-                        Select a Logging Type&hellip;
-                      </option>
-                      <option
-                        value="tcp"
-                        :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
-                      >
-                        TCP
-                      </option>
-                      <option
-                        value="file"
-                        :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
-                      >
-                        File
-                      </option>
-                    </select>
-                  </FormFragment>
-                  <!-- if the format type is TCP -->
-                  <FormFragment
-                    v-if="formConditions.loggingType === 'tcp'"
-                    title="Address"
-                    for-attr="backend-address"
+                <!-- if the format type is File -->
+                <FormFragment
+                  v-else-if="formConditions.loggingType === 'file'"
+                  title="Path"
+                  for-attr="backend-address"
+                >
+                  <input
+                    id="backend-address"
+                    type="text"
+                    class="k-input w-100"
+                    :value="getStorageItem('meshLoggingPath')"
+                    @change="updateStorage('meshLoggingPath', $event.target.value)"
                   >
-                    <input
-                      id="backend-address"
-                      type="text"
-                      class="k-input w-100"
-                      placeholder="5000:5000"
-                      :value="getStorageItem('meshLoggingAddress')"
-                      @change="updateStorage('meshLoggingAddress', $event.target.value)"
-                    >
-                  </FormFragment>
-                  <!-- if the format type is File -->
-                  <FormFragment
-                    v-else-if="formConditions.loggingType === 'file'"
-                    title="Path"
-                    for-attr="backend-address"
+                </FormFragment>
+                <FormFragment
+                  title="Format"
+                  for-attr="backend-format"
+                >
+                  <textarea
+                    id="backend-format"
+                    class="k-input w-100 code-sample"
+                    rows="12"
+                    @change="updateStorage('meshLoggingBackendFormat', ($event.target.value).trim())"
                   >
-                    <input
-                      id="backend-address"
-                      type="text"
-                      class="k-input w-100"
-                      :value="getStorageItem('meshLoggingPath')"
-                      @change="updateStorage('meshLoggingPath', $event.target.value)"
-                    >
-                  </FormFragment>
-                  <FormFragment
-                    title="Format"
-                    for-attr="backend-format"
-                  >
-                    <textarea
-                      id="backend-format"
-                      class="k-input w-100 code-sample"
-                      rows="12"
-                      @change="updateStorage('meshLoggingBackendFormat', ($event.target.value).trim())"
-                    >
                     { "start_time": "%START_TIME%", "source": "%KUMA_SOURCE_SERVICE%", "destination": "%KUMA_DESTINATION_SERVICE%", "source_address": "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", "destination_address": "%UPSTREAM_HOST%", "duration_millis": "%DURATION%", "bytes_received": "%BYTES_RECEIVED%", "bytes_sent": "%BYTES_SENT%" }
                     </textarea>
-                  </FormFragment>
-                </div>
-              </form>
+                </FormFragment>
+              </div>
             </template>
           </KCard>
         </template>
@@ -265,109 +262,107 @@
             has-shadow
           >
             <template slot="body">
-              <form>
-                <FormFragment
-                  title="Tracing"
-                >
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="tracing-disabled"
-                      value="disabled"
-                      name="tracing"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.tracingEnabled === false"
-                      @change="updateStorage('meshTracingStatus', false); formConditions.tracingEnabled = false"
-                    >
-                    <span>Disabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="tracing-enabled"
-                      value="enabled"
-                      name="tracing"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.tracingEnabled === true"
-                      @change="updateStorage('meshTracingStatus', true); formConditions.tracingEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                </FormFragment>
-
-                <FormFragment
-                  v-if="formConditions.tracingEnabled === true"
-                  title="Backend name"
-                  for-attr="tracing-backend-name"
-                >
+              <FormFragment
+                title="Tracing"
+              >
+                <label class="k-input-label mx-2">
                   <input
-                    id="tracing-backend-name"
-                    v-serialize-input
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="your-tracing-backend-name"
-                    :value="getStorageItem('meshTracingBackend')"
-                    @change="updateStorage('meshTracingBackend', $event.target.value)"
+                    id="tracing-disabled"
+                    value="disabled"
+                    name="tracing"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.tracingEnabled === false"
+                    @change="updateStorage('meshTracingStatus', false); formConditions.tracingEnabled = false"
                   >
-                </FormFragment>
-
-                <FormFragment
-                  v-if="formConditions.tracingEnabled === true"
-                  title="Type"
-                  for-attr="tracing-type"
-                >
-                  <select
-                    id="tracing-type"
-                    class="k-input w-100"
-                    name="tracing-type"
-                    @change="updateStorage('meshTracingType', $event.target.value)"
-                  >
-                    <option
-                      selected
-                      disabled
-                    >
-                      Select a Tracing type&hellip;
-                    </option>
-                    <option
-                      value="zipkin"
-                      :selected="(getStorageItem('meshTracingType') === 'zipkin') ? true : false"
-                    >
-                      Zipkin
-                    </option>
-                  </select>
-                </FormFragment>
-
-                <FormFragment
-                  v-if="formConditions.tracingEnabled === true"
-                  title="Sampling"
-                  for-attr="tracing-sampling"
-                >
+                  <span>Disabled</span>
+                </label>
+                <label class="k-input-label mx-2">
                   <input
-                    id="tracing-sampling"
-                    type="number"
-                    class="k-input w-100"
-                    :value="getStorageItem('meshTracingSampling') || 99.9"
-                    step="0.1"
-                    min="0"
-                    max="100"
-                    @change="updateStorage('meshTracingSampling', $event.target.value)"
+                    id="tracing-enabled"
+                    value="enabled"
+                    name="tracing"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.tracingEnabled === true"
+                    @change="updateStorage('meshTracingStatus', true); formConditions.tracingEnabled = true"
                   >
-                </FormFragment>
+                  <span>Enabled</span>
+                </label>
+              </FormFragment>
 
-                <FormFragment
-                  v-if="formConditions.tracingEnabled === true"
-                  title="URL"
-                  for-attr="tracing-zipkin-url"
+              <FormFragment
+                v-if="formConditions.tracingEnabled === true"
+                title="Backend name"
+                for-attr="tracing-backend-name"
+              >
+                <input
+                  id="tracing-backend-name"
+                  v-serialize-input
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-tracing-backend-name"
+                  :value="getStorageItem('meshTracingBackend')"
+                  @change="updateStorage('meshTracingBackend', $event.target.value)"
                 >
-                  <input
-                    id="tracing-zipkin-url"
-                    type="text"
-                    class="k-input w-100"
-                    :value="getStorageItem('meshTracingZipkinURL')"
-                    @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
+              </FormFragment>
+
+              <FormFragment
+                v-if="formConditions.tracingEnabled === true"
+                title="Type"
+                for-attr="tracing-type"
+              >
+                <select
+                  id="tracing-type"
+                  class="k-input w-100"
+                  name="tracing-type"
+                  @change="updateStorage('meshTracingType', $event.target.value)"
+                >
+                  <option
+                    selected
+                    disabled
                   >
-                </FormFragment>
-              </form>
+                    Select a Tracing type&hellip;
+                  </option>
+                  <option
+                    value="zipkin"
+                    :selected="(getStorageItem('meshTracingType') === 'zipkin') ? true : false"
+                  >
+                    Zipkin
+                  </option>
+                </select>
+              </FormFragment>
+
+              <FormFragment
+                v-if="formConditions.tracingEnabled === true"
+                title="Sampling"
+                for-attr="tracing-sampling"
+              >
+                <input
+                  id="tracing-sampling"
+                  type="number"
+                  class="k-input w-100"
+                  :value="getStorageItem('meshTracingSampling') || 99.9"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  @change="updateStorage('meshTracingSampling', $event.target.value)"
+                >
+              </FormFragment>
+
+              <FormFragment
+                v-if="formConditions.tracingEnabled === true"
+                title="URL"
+                for-attr="tracing-zipkin-url"
+              >
+                <input
+                  id="tracing-zipkin-url"
+                  type="text"
+                  class="k-input w-100"
+                  :value="getStorageItem('meshTracingZipkinURL')"
+                  @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
+                >
+              </FormFragment>
             </template>
           </KCard>
         </template>
@@ -385,122 +380,162 @@
             has-shadow
           >
             <template slot="body">
-              <form>
-                <FormFragment
-                  title="Metrics"
-                >
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="metrics-disabled"
-                      value="disabled"
-                      name="metrics"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.metricsEnabled === false"
-                      @change="updateStorage('meshMetricsStatus', false); formConditions.metricsEnabled = false"
-                    >
-                    <span>Disabled</span>
-                  </label>
-                  <label class="k-input-label mx-2">
-                    <input
-                      id="metrics-enabled"
-                      value="enabled"
-                      name="metrics"
-                      type="radio"
-                      class="k-input mr-2"
-                      :checked="formConditions.metricsEnabled === true"
-                      @change="updateStorage('meshMetricsStatus', true); formConditions.metricsEnabled = true"
-                    >
-                    <span>Enabled</span>
-                  </label>
-                </FormFragment>
-                <FormFragment
-                  v-if="formConditions.metricsEnabled === true"
-                  title="Type"
-                  for-attr="metrics-type"
-                >
-                  <select
-                    id="metrics-type"
-                    class="k-input w-100"
-                    name="metrics-type"
-                    @change="updateStorage('meshMetricsType', $event.target.value)"
-                  >
-                    <option
-                      selected
-                      disabled
-                    >
-                      Select a Metrics type&hellip;
-                    </option>
-                    <option
-                      value="prometheus"
-                      :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
-                    >
-                      Prometheus
-                    </option>
-                  </select>
-                </FormFragment>
-                <FormFragment
-                  v-if="formConditions.metricsEnabled === true"
-                  title="Dataplane port"
-                  for-attr="metrics-dataplane-port"
-                >
+              <FormFragment
+                title="Metrics"
+              >
+                <label class="k-input-label mx-2">
                   <input
-                    id="metrics-dataplane-port"
-                    type="number"
-                    class="k-input w-100"
-                    step="1"
-                    min="0"
-                    max="65535"
-                    placeholder="1234"
-                    :value="getStorageItem('meshMetricsDataplanePort')"
-                    @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
+                    id="metrics-disabled"
+                    value="disabled"
+                    name="metrics"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.metricsEnabled === false"
+                    @change="updateStorage('meshMetricsStatus', false); formConditions.metricsEnabled = false"
                   >
-                </FormFragment>
-                <FormFragment
-                  v-if="formConditions.metricsEnabled === true"
-                  title="Dataplane path"
-                  for-attr="metrics-dataplane-path"
-                >
+                  <span>Disabled</span>
+                </label>
+                <label class="k-input-label mx-2">
                   <input
-                    id="metrics-dataplane-path"
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="/metrics"
-                    :value="getStorageItem('meshMetricsDataplanePath')"
-                    @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
+                    id="metrics-enabled"
+                    value="enabled"
+                    name="metrics"
+                    type="radio"
+                    class="k-input mr-2"
+                    :checked="formConditions.metricsEnabled === true"
+                    @change="updateStorage('meshMetricsStatus', true); formConditions.metricsEnabled = true"
                   >
-                </FormFragment>
-              </form>
+                  <span>Enabled</span>
+                </label>
+              </FormFragment>
+              <FormFragment
+                v-if="formConditions.metricsEnabled === true"
+                title="Type"
+                for-attr="metrics-type"
+              >
+                <select
+                  id="metrics-type"
+                  class="k-input w-100"
+                  name="metrics-type"
+                  @change="updateStorage('meshMetricsType', $event.target.value)"
+                >
+                  <option
+                    selected
+                    disabled
+                  >
+                    Select a Metrics type&hellip;
+                  </option>
+                  <option
+                    value="prometheus"
+                    :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
+                  >
+                    Prometheus
+                  </option>
+                </select>
+              </FormFragment>
+              <FormFragment
+                v-if="formConditions.metricsEnabled === true"
+                title="Dataplane port"
+                for-attr="metrics-dataplane-port"
+              >
+                <input
+                  id="metrics-dataplane-port"
+                  type="number"
+                  class="k-input w-100"
+                  step="1"
+                  min="0"
+                  max="65535"
+                  placeholder="1234"
+                  :value="getStorageItem('meshMetricsDataplanePort')"
+                  @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
+                >
+              </FormFragment>
+              <FormFragment
+                v-if="formConditions.metricsEnabled === true"
+                title="Dataplane path"
+                for-attr="metrics-dataplane-path"
+              >
+                <input
+                  id="metrics-dataplane-path"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="/metrics"
+                  :value="getStorageItem('meshMetricsDataplanePath')"
+                  @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
+                >
+              </FormFragment>
             </template>
           </KCard>
         </template>
         <template slot="complete">
-          <h3>
-            Create a new Mesh
-          </h3>
-          <p>
-            You can now execute the following commands to create the mesh.
-          </p>
-          <Tabs
-            v-if="codeOutput"
-            :loaders="false"
-            :tabs="tabs"
-            :has-border="true"
-            :initial-tab-override="environment"
-          >
-            <template slot="universal">
-              <YamlView
-                title="Universal"
-                :content="codeOutput"
-              />
-            </template>
-            <template slot="kubernetes">
-              <YamlView
-                title="Kubernetes"
-                :content="codeOutput"
-              />
-            </template>
-          </Tabs>
+          <div v-if="codeOutput">
+            <h3>
+              Install a new Mesh
+            </h3>
+            <p>
+              Since the Kuma GUI is read-only mode to follow Ops best practices,
+              please execute the following command in your shell to create the entity.
+              Kuma will automatically detect when the new entity has been created.
+            </p>
+            <Tabs
+              :loaders="false"
+              :tabs="tabs"
+              :has-border="true"
+              :initial-tab-override="environment"
+            >
+              <template slot="kubernetes">
+                <CodeView
+                  title="Kubernetes"
+                  copy-button-text="Copy Command to Clipboard"
+                  lang="bash"
+                  :content="codeOutput"
+                />
+              </template>
+              <template slot="universal">
+                <CodeView
+                  title="Universal"
+                  copy-button-text="Copy Command to Clipboard"
+                  lang="bash"
+                  :content="codeOutput"
+                />
+              </template>
+            </Tabs>
+            <Scanner
+              :loader-function="scanForEntity"
+              :should-start="true"
+              :has-error="scanError"
+            >
+              <!-- loading -->
+              <template slot="loading-title">
+                <h3>Scanning&hellip;</h3>
+              </template>
+              <template slot="loading-content">
+                <p>We are looking for your mesh.</p>
+              </template>
+              <!-- complete -->
+              <template slot="complete-title">
+                <h3>Scanning finished!</h3>
+              </template>
+              <template slot="complete-content">
+                <p>Your mesh was found!</p>
+                <p>
+                  <KButton
+                    appearance="primary"
+                    :to="{ name: 'all-meshes' }"
+                  >
+                    See Meshes
+                  </KButton>
+                </p>
+              </template>
+              <!-- error -->
+              <template slot="error-title">
+                <h3>Mesh not found</h3>
+              </template>
+              <template slot="error-content">
+                <p>We were unable to find your mesh.</p>
+              </template>
+            </Scanner>
+          </div>
           <KAlert
             v-else
             appearance="danger"
@@ -541,36 +576,6 @@
           </p>
         </template>
       </StepSkeleton>
-
-      <!-- <Scanner
-        :loader-function="testLoader"
-        :should-start="true"
-      >
-        <template slot="loading-title">
-          <h3>Searching for your mesh&hellip;</h3>
-        </template>
-        <template slot="loading-content">
-          <p>Hello there. I am running.</p>
-        </template>
-        <template slot="error-title">
-          <h3>An error occurred!</h3>
-        </template>
-        <template slot="error-content">
-          <p>Please try again later.</p>
-        </template>
-        <template slot="error-title">
-          <h3>Scanning finished!</h3>
-        </template>
-        <template slot="error-content">
-          <p>Please try again later.</p>
-        </template>
-        <template slot="timeout-title">
-          <h3>Scanner timed out</h3>
-        </template>
-        <template slot="timeout-content">
-          <p>We tried to scan for your mesh but did not find it.</p>
-        </template>
-      </Scanner> -->
     </div>
   </div>
 </template>
@@ -579,11 +584,12 @@
 import { mapGetters } from 'vuex'
 import { rejectKeys } from '@/views/Wizard/helpers'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
+import FormatForCLI from '@/mixins/FormatForCLI'
 import SerializeInput from '@/views/Wizard/directives/SerializeInput'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
-import YamlView from '@/components/Skeletons/YamlView'
+import CodeView from '@/components/Skeletons/CodeView'
 import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
@@ -597,13 +603,14 @@ export default {
     FormFragment,
     Tabs,
     StepSkeleton,
-    YamlView,
+    CodeView,
     Scanner
   },
   directives: {
     SerializeInput
   },
   mixins: [
+    FormatForCLI,
     updateStorage
   ],
   data () {
@@ -633,12 +640,12 @@ export default {
       ],
       tabs: [
         {
-          hash: '#universal',
-          title: 'Universal'
-        },
-        {
           hash: '#kubernetes',
           title: 'Kubernetes'
+        },
+        {
+          hash: '#universal',
+          title: 'Universal'
         }
       ],
       sidebarContent: [
@@ -655,7 +662,11 @@ export default {
         tracingEnabled: false,
         metricsEnabled: false,
         loggingType: null
-      }
+      },
+      startScanner: false,
+      scanFound: false,
+      scanError: false,
+      isComplete: false
     }
   },
   computed: {
@@ -666,6 +677,18 @@ export default {
       formData: 'getStoredWizardData',
       selectedTab: 'getSelectedTab'
     }),
+
+    // this exists because the browser is stubborn and holds onto this
+    // data even if it's not present in localStorage
+    getCleanMeshName () {
+      const data = this.$store.getters.getStoredWizardData
+
+      if (data) {
+        return data.meshName
+      } else {
+        return null
+      }
+    },
 
     // Our generated code output
     codeOutput () {
@@ -797,11 +820,17 @@ export default {
        * Finalized output
        */
 
+      let codeBlock
+
       if (this.selectedTab === '#kubernetes') {
-        return { ...meshType, spec: { ...schemaClean } }
+        codeBlock = { ...meshType, spec: { ...schemaClean } }
       } else {
-        return { ...meshType, ...schemaClean }
+        codeBlock = { ...meshType, ...schemaClean }
       }
+
+      const assembledBlock = this.formatForCLI(codeBlock)
+
+      return assembledBlock
     }
   },
   mounted () {
@@ -810,8 +839,35 @@ export default {
     this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
   },
   methods: {
-    testLoader () {
-      console.log('Hello from test loader!')
+    scanForEntity () {
+      // get our entity from the VueX store
+      const entity = this.$store.getters.getStoredWizardData.meshName
+
+      // reset things if the user is starting over
+      this.scanComplete = false
+      this.scanError = false
+
+      // do nothing if there's nothing found
+      if (!entity) return
+
+      // this.$api.getMesh(entity)
+      this.$api.getMesh(entity)
+        .then(response => {
+          if (response && response.name.length > 0) {
+            this.isRunning = true
+            this.scanFound = true
+          } else {
+            this.scanError = true
+          }
+        })
+        .catch(error => {
+          this.scanError = true
+
+          console.error(error)
+        })
+        .finally(() => {
+          this.scanComplete = true
+        })
     }
   }
 }

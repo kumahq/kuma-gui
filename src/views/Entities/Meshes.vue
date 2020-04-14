@@ -1,5 +1,11 @@
 <template>
-  <div class="health-checks">
+  <div class="all-meshes">
+    <page-header noflex>
+      <breadcrumbs />
+      <h2 class="xxl">
+        {{ this.$route.meta.title }}
+      </h2>
+    </page-header>
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -47,6 +53,8 @@
 
 <script>
 import { getSome } from '@/helpers'
+import PageHeader from '@/components/Utils/PageHeader.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -59,6 +67,8 @@ export default {
     title: 'Meshes'
   },
   components: {
+    PageHeader,
+    Breadcrumbs,
     FrameSkeleton,
     DataOverview,
     Tabs,

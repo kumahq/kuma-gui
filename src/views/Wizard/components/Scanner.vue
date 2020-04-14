@@ -17,40 +17,42 @@
               size="42"
             />
           </div>
+          <div
+            v-if="isComplete && hasError === false && isRunning === false"
+            class="card-icon mb-3"
+          >
+            <IconSuccess />
+          </div>
           <slot
             v-if="isRunning"
             name="loading-title"
           />
-          <slot
-            v-if="hasError"
-            name="error-title"
-          />
-          <slot
-            v-if="isComplete"
-            name="complete-title"
-          />
-          <slot
-            v-if="hasTimedOut"
-            name="timeout-title"
-          />
+          <div v-if="isRunning === false">
+            <slot
+              v-if="hasError"
+              name="error-title"
+            />
+            <slot
+              v-if="isComplete && hasError === false"
+              name="complete-title"
+            />
+          </div>
         </template>
         <template slot="message">
           <slot
             v-if="isRunning"
             name="loading-content"
           />
-          <slot
-            v-if="hasError"
-            name="error-content"
-          />
-          <slot
-            v-if="isComplete"
-            name="complete-content"
-          />
-          <slot
-            v-if="hasTimedOut"
-            name="timeout-content"
-          />
+          <div v-if="isRunning === false">
+            <slot
+              v-if="hasError"
+              name="error-content"
+            />
+            <slot
+              v-if="isComplete && hasError === false"
+              name="complete-content"
+            />
+          </div>
         </template>
       </KEmptyState>
     </div>
@@ -58,7 +60,13 @@
 </template>
 
 <script>
+import IconSuccess from '../../../components/Utils/IconSuccess'
+
 export default {
+  name: 'Scanner',
+  components: {
+    IconSuccess
+  },
   props: {
     interval: {
       type: Number,
@@ -87,8 +95,14 @@ export default {
     return {
       i: 0,
       isRunning: false,
-      isComplete: false,
-      hasTimedOut: false
+      isComplete: false
+    }
+  },
+  watch: {
+    shouldStart (val, oldVal) {
+      if (val !== oldVal && val === true) {
+        this.runScanner()
+      }
     }
   },
   mounted () {
@@ -102,32 +116,23 @@ export default {
       // setup the interval function
       const intervalFunction = setInterval(() => {
         this.i++
-        this.isRunning = true
+        this.canRun = true
 
         // run our function
         this.loaderFunction()
-
-        // emitter for when the scanner is running
-        this.$emit('entityScannerRunning')
+        this.$emit('scannerRunning', true)
 
         if (this.i === this.retries) {
           clearInterval(intervalFunction)
           this.isRunning = false
+          this.isComplete = true
 
-          if (this.isComplete === false) {
-            this.hasTimedOut = true
-            this.$emit('entityScannerTimedOut')
-          } else {
-            this.isComplete = true
-            this.$emit('entityScannerComplete')
-          }
-        }
+          this.$emit('scannerComplete', true)
+        } else {
+          this.isRunning = true
+          this.isComplete = false
 
-        if (this.hasError === true) {
-          clearInterval(intervalFunction)
-
-          // emitter for when an error occurs
-          this.$emit('entityScannerError')
+          this.$emit('scannerComplete', false)
         }
       }, this.interval)
     }
@@ -138,5 +143,23 @@ export default {
 <style lang="scss" scoped>
 .scanner {
 
+}
+
+.scanner-content {
+
+  p {
+    border: 1px solid red;
+    margin: 0;
+  }
+
+  .card-icon {
+    text-align: center;
+
+    img, svg {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
 }
 </style>

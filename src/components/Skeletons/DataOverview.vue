@@ -420,8 +420,8 @@ export default {
     cursor: pointer;
 
     td:first-of-type {
-      width: 5%;
-      text-align: center;
+      // width: 5%;
+      // text-align: center;
     }
   }
 
@@ -460,7 +460,8 @@ export default {
     line-height: var(--size);
     border-radius: 50%;
     background-color: var(--logo-green);
-    margin: 0 auto;
+    // margin: 0 auto;
+    margin: 0 0 0 5px;
     color: #fff;
     font-size: 13px;
     text-align: center;

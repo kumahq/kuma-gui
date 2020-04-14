@@ -99,7 +99,8 @@ export default (store) => {
       name: 'all-meshes',
       meta: {
         title: 'Meshes',
-        breadcrumb: 'Meshes'
+        breadcrumb: 'Meshes',
+        parent: 'global-overview'
       },
       component: () => import('@/views/Entities/Meshes')
     },
