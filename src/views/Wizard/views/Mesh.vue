@@ -223,8 +223,7 @@
                     id="backend-address"
                     type="text"
                     class="k-input w-100"
-                    placeholder="127.0.0.1:5000"
-                    :value="getStorageItem('meshLoggingAddress')"
+                    :value="getStorageItem('meshLoggingAddress') || '127.0.0.1:5000'"
                     @change="updateStorage('meshLoggingAddress', $event.target.value)"
                   >
                 </FormFragment>
@@ -440,7 +439,7 @@
                   min="0"
                   max="65535"
                   placeholder="1234"
-                  :value="getStorageItem('meshMetricsDataplanePort')"
+                  :value="getStorageItem('meshMetricsDataplanePort') || '5670'"
                   @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
                 >
               </FormFragment>
@@ -453,8 +452,7 @@
                   id="metrics-dataplane-path"
                   type="text"
                   class="k-input w-100"
-                  placeholder="/metrics"
-                  :value="getStorageItem('meshMetricsDataplanePath')"
+                  :value="getStorageItem('meshMetricsDataplanePath') || '/metrics'"
                   @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
                 >
               </FormFragment>

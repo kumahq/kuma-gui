@@ -23,6 +23,7 @@
       >
         <template slot="additionalControls">
           <KButton
+            class="add-mesh-button"
             appearance="primary"
             size="small"
             :to="{ path: '/wizard/mesh' }"
@@ -246,3 +247,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.add-mesh-button {
+  background-color: var(--logo-green) !important;
+}
+</style>

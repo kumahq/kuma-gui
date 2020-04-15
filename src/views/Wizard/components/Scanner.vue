@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import IconSuccess from '../../../components/Utils/IconSuccess'
+import IconSuccess from '@/components/Utils/IconSuccess'
 
 export default {
   name: 'Scanner',
@@ -117,26 +117,22 @@ export default {
   },
   methods: {
     runScanner () {
+      this.isRunning = true
+      this.isComplete = false
+
       // setup the interval function
       const intervalFunction = setInterval(() => {
         this.i++
-        this.canRun = true
 
         // run our function
         this.loaderFunction()
-        this.$emit('scannerRunning', true)
 
+        // complete the cycle if the scanner has reached the max
+        // amount of retries, or if the process has been marked complete
         if (this.i === this.retries || this.canComplete === true) {
           clearInterval(intervalFunction)
           this.isRunning = false
           this.isComplete = true
-
-          this.$emit('scannerComplete', true)
-        } else {
-          this.isRunning = true
-          this.isComplete = false
-
-          this.$emit('scannerComplete', false)
         }
       }, this.interval)
     }
@@ -145,6 +141,7 @@ export default {
 </script>
 
 <style lang="scss">
+// style override for the KEmptyState content
 .scanner-content {
 
   .empty-state-wrapper p {
