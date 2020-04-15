@@ -144,6 +144,15 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.scanner-content {
+
+  .empty-state-wrapper p {
+    max-width: 100% !important;
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 .scanner {
 
@@ -164,6 +173,10 @@ export default {
       margin-left: auto;
       margin-right: auto;
     }
+  }
+
+  .empty-state-wrapper.empty-state-wrapper p {
+    max-width: 100% !important;
   }
 }
 </style>

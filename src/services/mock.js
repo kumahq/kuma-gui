@@ -35,82 +35,82 @@ export default class Mock {
       'background: gray; color: white; display: block; padding: 0.25rem;')
 
     this.mock
-      .onGet('/meshes').reply(200, {
-        items: [
-          {
-            mtls: {
-              ca: {
-                builtin: {}
-              }
-            },
-            name: 'default',
-            type: 'Mesh'
-          },
-          {
-            mtls: {
-              ca: {
-                builtin: {}
-              }
-            },
-            name: 'mesh-01',
-            type: 'Mesh'
-          },
-          {
-            mtls: {
-              ca: {
-                builtin: {}
-              }
-            },
-            name: 'kong-mania-12',
-            type: 'Mesh'
-          },
-          {
-            mtls: {
-              ca: {
-                builtin: {}
-              }
-            },
-            name: 'hello-world',
-            type: 'Mesh'
-          }
-        ]
-      })
-      .onGet('/meshes/default').reply(200, {
-        type: 'Mesh',
-        name: 'default',
-        mtls: {
-          ca: {
-            builtin: {}
-          }
-        }
-      })
-      .onGet('/meshes/mesh-01').reply(200, {
-        type: 'Mesh',
-        name: 'mesh-01',
-        mtls: {
-          ca: {
-            builtin: {}
-          }
-        }
-      })
-      .onGet('/meshes/kong-mania-12').reply(200, {
-        type: 'Mesh',
-        name: 'kong-mania-12',
-        mtls: {
-          ca: {
-            builtin: {}
-          }
-        }
-      })
-      .onGet('/meshes/hello-world').reply(200, {
-        type: 'Mesh',
-        name: 'hello-world',
-        mtls: {
-          ca: {
-            builtin: {}
-          }
-        }
-      })
+      // .onGet('/meshes').reply(200, {
+      //   items: [
+      //     {
+      //       mtls: {
+      //         ca: {
+      //           builtin: {}
+      //         }
+      //       },
+      //       name: 'default',
+      //       type: 'Mesh'
+      //     },
+      //     {
+      //       mtls: {
+      //         ca: {
+      //           builtin: {}
+      //         }
+      //       },
+      //       name: 'mesh-01',
+      //       type: 'Mesh'
+      //     },
+      //     {
+      //       mtls: {
+      //         ca: {
+      //           builtin: {}
+      //         }
+      //       },
+      //       name: 'kong-mania-12',
+      //       type: 'Mesh'
+      //     },
+      //     {
+      //       mtls: {
+      //         ca: {
+      //           builtin: {}
+      //         }
+      //       },
+      //       name: 'hello-world',
+      //       type: 'Mesh'
+      //     }
+      //   ]
+      // })
+      // .onGet('/meshes/default').reply(200, {
+      //   type: 'Mesh',
+      //   name: 'default',
+      //   mtls: {
+      //     ca: {
+      //       builtin: {}
+      //     }
+      //   }
+      // })
+      // .onGet('/meshes/mesh-01').reply(200, {
+      //   type: 'Mesh',
+      //   name: 'mesh-01',
+      //   mtls: {
+      //     ca: {
+      //       builtin: {}
+      //     }
+      //   }
+      // })
+      // .onGet('/meshes/kong-mania-12').reply(200, {
+      //   type: 'Mesh',
+      //   name: 'kong-mania-12',
+      //   mtls: {
+      //     ca: {
+      //       builtin: {}
+      //     }
+      //   }
+      // })
+      // .onGet('/meshes/hello-world').reply(200, {
+      //   type: 'Mesh',
+      //   name: 'hello-world',
+      //   mtls: {
+      //     ca: {
+      //       builtin: {}
+      //     }
+      //   }
+      // })
       .onGet('/meshes/mesh-01/dataplanes').reply(200, {
         items: [
           {
@@ -280,23 +280,6 @@ export default class Mock {
           {
             mesh: 'default',
             name: 'kuma-example-backend-v2',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'another-example-dataplane',
             networking: {
               inbound: [
                 {
@@ -754,57 +737,6 @@ export default class Mock {
                   env: 'prod',
                   service: 'kuma-example-web',
                   version: 'v8'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/default/dataplanes+insights/another-example-dataplane').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'default',
-        name: 'another-example-dataplane',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
                 }
               }
             ]

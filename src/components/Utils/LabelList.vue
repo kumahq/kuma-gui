@@ -29,18 +29,12 @@
                 <span
                   v-for="(k, v) in value"
                   :key="k"
-                  class="entity-tags my-2"
+                  class="tag-cols my-2"
                 >
-                  <span
-                    :class="`entity-tags__label--${v}`"
-                    class="entity-tags__label"
-                  >
-                    {{ v }}
+                  <span class="tag-cols__label">
+                    {{ v }}:
                   </span>
-                  <span
-                    :class="`entity-tags__value--${k}`"
-                    class="entity-tags__value"
-                  >
+                  <span class="tag-cols__value">
                     {{ k }}
                   </span>
                 </span>
@@ -203,5 +197,26 @@ export default {
 .label-list__items__value {
   font-size: var(--type-sm);
   font-family: var(--font-family-mono);
+}
+
+.tag-cols {
+  display: grid;
+  grid-auto-flow: column dense;
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, 1fr 4fr);
+
+  span {
+    // flex: 1 0 0;
+  }
+}
+
+.tag-cols__label {
+  min-width: 80px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.tag-cols__value {
+
 }
 </style>

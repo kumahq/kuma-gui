@@ -463,13 +463,10 @@
         </template>
         <template slot="complete">
           <div v-if="codeOutput">
-            <h3 v-if="scanFound === false">
-              Install a new Mesh
-            </h3>
-            <h3 v-else>
-              Done!
-            </h3>
             <div v-if="scanFound === false">
+              <h3>
+                Install a new Mesh
+              </h3>
               <p>
                 Since the Kuma GUI is read-only mode to follow Ops best practices,
                 please execute the following command in your shell to create the entity.
@@ -514,7 +511,7 @@
               </template>
               <!-- complete -->
               <template slot="complete-title">
-                <h3>Search finished!</h3>
+                <h3>Done!</h3>
               </template>
               <template slot="complete-content">
                 <p>
