@@ -32,13 +32,13 @@
           />
         </template>
         <template slot="yaml">
-          <CodeView
-            lang="bash"
+          <YamlView
+            lang="yaml"
             :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :content="formattedRawEntity"
+            :content="rawEntity"
           />
         </template>
       </Tabs>
@@ -52,7 +52,7 @@ import FormatForCLI from '@/mixins/FormatForCLI'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
-import CodeView from '@/components/Skeletons/CodeView'
+import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
@@ -64,7 +64,7 @@ export default {
     FrameSkeleton,
     DataOverview,
     Tabs,
-    CodeView,
+    YamlView,
     LabelList
   },
   mixins: [
@@ -239,6 +239,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

@@ -21,7 +21,32 @@
               <h4 class="label-list__items__title">
                 {{ key }}
               </h4>
-              <p class="label-list__items__value">
+              <!-- tags array -->
+              <p
+                v-if="key === 'tags'"
+                class="label-list__items__value"
+              >
+                <span
+                  v-for="(k, v) in value"
+                  :key="k"
+                  class="entity-tags my-2"
+                >
+                  <span
+                    :class="`entity-tags__label--${v}`"
+                    class="entity-tags__label"
+                  >
+                    {{ v }}
+                  </span>
+                  <span
+                    :class="`entity-tags__value--${k}`"
+                    class="entity-tags__value"
+                  >
+                    {{ k }}
+                  </span>
+                </span>
+              </p>
+              <!-- basic string value -->
+              <p v-else>
                 {{ value }}
               </p>
             </li>

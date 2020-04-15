@@ -51,21 +51,24 @@
       </CardSkeleton>
     </div>
 
-    <DataOverview
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :is-empty="isEmpty"
-      :empty-state="empty_state"
-      :display-data-table="true"
-      :table-data="tableData"
-      :table-data-is-empty="tableDataIsEmpty"
-      @reloadData="bootstrap"
-    />
+    <FrameSkeleton>
+      <DataOverview
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+        :empty-state="empty_state"
+        :display-data-table="true"
+        :table-data="tableData"
+        :table-data-is-empty="tableDataIsEmpty"
+        @reloadData="bootstrap"
+      />
+    </FrameSkeleton>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
@@ -80,6 +83,7 @@ export default {
     }
   },
   components: {
+    FrameSkeleton,
     PageHeader,
     Breadcrumbs,
     MetricGrid,

@@ -5,6 +5,7 @@
         :steps="steps"
         :advance-check="true"
         :sidebar-content="sidebarContent"
+        :footer-enabled="scanFound === false"
       >
         <!-- step content -->
         <template slot="general">
@@ -54,7 +55,10 @@
                     type="radio"
                     class="k-input mr-2"
                     :checked="formConditions.mtlsEnabled === false"
-                    @change="updateStorage('meshMtls', false); formConditions.mtlsEnabled = false"
+                    @change="
+                      updateStorage('meshMtls', false);
+                      formConditions.mtlsEnabled = false
+                    "
                   >
                   <span>Disabled</span>
                 </label>
@@ -66,7 +70,10 @@
                     type="radio"
                     class="k-input mr-2"
                     :checked="formConditions.mtlsEnabled === true"
-                    @change="updateStorage('meshMtls', true); formConditions.mtlsEnabled = true"
+                    @change="
+                      updateStorage('meshMtls', true);
+                      updateStorage('meshCA', 'builtin');
+                      formConditions.mtlsEnabled = true"
                   >
                   <span>Enabled</span>
                 </label>
@@ -83,12 +90,6 @@
                   name="certificate-authority"
                   @change="updateStorage('meshCA', $event.target.value)"
                 >
-                  <option
-                    selected
-                    disabled
-                  >
-                    Select a CA&hellip;
-                  </option>
                   <option
                     value="builtin"
                     :selected="(getStorageItem('meshCA') === 'builtin') ? true : false"
@@ -152,7 +153,11 @@
                     type="radio"
                     class="k-input mr-2"
                     :checked="formConditions.loggingEnabled === true"
-                    @change="updateStorage('meshLoggingStatus', true); formConditions.loggingEnabled = true"
+                    @change="
+                      updateStorage('meshLoggingStatus', true);
+                      updateStorage('meshLoggingType', 'tcp');
+                      formConditions.loggingEnabled = true
+                      formConditions.loggingType = 'tcp'"
                   >
                   <span>Enabled</span>
                 </label>
@@ -181,12 +186,6 @@
                     @change="updateStorage('meshLoggingType', $event.target.value); formConditions.loggingType = $event.target.value"
                   >
                     <option
-                      selected
-                      disabled
-                    >
-                      Select a Logging Type&hellip;
-                    </option>
-                    <option
                       value="tcp"
                       :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
                     >
@@ -200,6 +199,20 @@
                     </option>
                   </select>
                 </FormFragment>
+                <!-- if the format type is File -->
+                <FormFragment
+                  v-if="formConditions.loggingType === 'file'"
+                  title="Path"
+                  for-attr="backend-address"
+                >
+                  <input
+                    id="backend-address"
+                    type="text"
+                    class="k-input w-100"
+                    :value="getStorageItem('meshLoggingPath')"
+                    @change="updateStorage('meshLoggingPath', $event.target.value)"
+                  >
+                </FormFragment>
                 <!-- if the format type is TCP -->
                 <FormFragment
                   v-if="formConditions.loggingType === 'tcp'"
@@ -210,23 +223,9 @@
                     id="backend-address"
                     type="text"
                     class="k-input w-100"
-                    placeholder="5000:5000"
+                    placeholder="127.0.0.1:5000"
                     :value="getStorageItem('meshLoggingAddress')"
                     @change="updateStorage('meshLoggingAddress', $event.target.value)"
-                  >
-                </FormFragment>
-                <!-- if the format type is File -->
-                <FormFragment
-                  v-else-if="formConditions.loggingType === 'file'"
-                  title="Path"
-                  for-attr="backend-address"
-                >
-                  <input
-                    id="backend-address"
-                    type="text"
-                    class="k-input w-100"
-                    :value="getStorageItem('meshLoggingPath')"
-                    @change="updateStorage('meshLoggingPath', $event.target.value)"
                   >
                 </FormFragment>
                 <FormFragment
@@ -285,7 +284,10 @@
                     type="radio"
                     class="k-input mr-2"
                     :checked="formConditions.tracingEnabled === true"
-                    @change="updateStorage('meshTracingStatus', true); formConditions.tracingEnabled = true"
+                    @change="
+                      updateStorage('meshTracingStatus', true);
+                      updateStorage('meshTracingType', 'zipkin')
+                      formConditions.tracingEnabled = true"
                   >
                   <span>Enabled</span>
                 </label>
@@ -318,12 +320,6 @@
                   name="tracing-type"
                   @change="updateStorage('meshTracingType', $event.target.value)"
                 >
-                  <option
-                    selected
-                    disabled
-                  >
-                    Select a Tracing type&hellip;
-                  </option>
                   <option
                     value="zipkin"
                     :selected="(getStorageItem('meshTracingType') === 'zipkin') ? true : false"
@@ -359,6 +355,7 @@
                   id="tracing-zipkin-url"
                   type="text"
                   class="k-input w-100"
+                  placeholder="your Zipkin URL"
                   :value="getStorageItem('meshTracingZipkinURL')"
                   @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
                 >
@@ -403,7 +400,10 @@
                     type="radio"
                     class="k-input mr-2"
                     :checked="formConditions.metricsEnabled === true"
-                    @change="updateStorage('meshMetricsStatus', true); formConditions.metricsEnabled = true"
+                    @change="
+                      updateStorage('meshMetricsStatus', true);
+                      updateStorage('meshMetricsType', 'prometheus')
+                      formConditions.metricsEnabled = true"
                   >
                   <span>Enabled</span>
                 </label>
@@ -419,12 +419,6 @@
                   name="metrics-type"
                   @change="updateStorage('meshMetricsType', $event.target.value)"
                 >
-                  <option
-                    selected
-                    disabled
-                  >
-                    Select a Metrics type&hellip;
-                  </option>
                   <option
                     value="prometheus"
                     :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
@@ -469,55 +463,63 @@
         </template>
         <template slot="complete">
           <div v-if="codeOutput">
-            <h3>
+            <h3 v-if="scanFound === false">
               Install a new Mesh
             </h3>
-            <p>
-              Since the Kuma GUI is read-only mode to follow Ops best practices,
-              please execute the following command in your shell to create the entity.
-              Kuma will automatically detect when the new entity has been created.
-            </p>
-            <Tabs
-              :loaders="false"
-              :tabs="tabs"
-              :has-border="true"
-              :initial-tab-override="environment"
-            >
-              <template slot="kubernetes">
-                <CodeView
-                  title="Kubernetes"
-                  copy-button-text="Copy Command to Clipboard"
-                  lang="bash"
-                  :content="codeOutput"
-                />
-              </template>
-              <template slot="universal">
-                <CodeView
-                  title="Universal"
-                  copy-button-text="Copy Command to Clipboard"
-                  lang="bash"
-                  :content="codeOutput"
-                />
-              </template>
-            </Tabs>
+            <h3 v-else>
+              Done!
+            </h3>
+            <div v-if="scanFound === false">
+              <p>
+                Since the Kuma GUI is read-only mode to follow Ops best practices,
+                please execute the following command in your shell to create the entity.
+                Kuma will automatically detect when the new entity has been created.
+              </p>
+              <Tabs
+                :loaders="false"
+                :tabs="tabs"
+                :has-border="true"
+                :initial-tab-override="environment"
+              >
+                <template slot="kubernetes">
+                  <CodeView
+                    title="Kubernetes"
+                    copy-button-text="Copy Command to Clipboard"
+                    lang="bash"
+                    :content="codeOutput"
+                  />
+                </template>
+                <template slot="universal">
+                  <CodeView
+                    title="Universal"
+                    copy-button-text="Copy Command to Clipboard"
+                    lang="bash"
+                    :content="codeOutput"
+                  />
+                </template>
+              </Tabs>
+            </div>
             <Scanner
               :loader-function="scanForEntity"
               :should-start="true"
               :has-error="scanError"
+              :can-complete="scanFound"
             >
               <!-- loading -->
               <template slot="loading-title">
-                <h3>Scanning&hellip;</h3>
+                <h3>Searching&hellip;</h3>
               </template>
               <template slot="loading-content">
                 <p>We are looking for your mesh.</p>
               </template>
               <!-- complete -->
               <template slot="complete-title">
-                <h3>Scanning finished!</h3>
+                <h3>Search finished!</h3>
               </template>
               <template slot="complete-content">
-                <p>Your mesh was found!</p>
+                <p>
+                  Your Mesh <strong v-if="formData.meshName">{{ formData.meshName }}</strong> was found!
+                </p>
                 <p>
                   <KButton
                     appearance="primary"
@@ -758,7 +760,7 @@ export default {
           }
 
           loggingObj.tcp = {
-            address: newData.meshLoggingAddress
+            address: newData.meshLoggingAddress || '127.0.0.1:5000'
           }
         } else if (newData.meshLoggingType === 'file') {
           if (loggingObj.tcp) {

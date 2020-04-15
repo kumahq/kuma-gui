@@ -247,10 +247,7 @@ export default class Mock {
                   tags: {
                     env: 'prod',
                     service: 'kuma-example-web',
-                    version: 'v8',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04'
+                    version: 'v8'
                   }
                 }
               ],
@@ -754,10 +751,9 @@ export default class Mock {
                 port: 7070,
                 servicePort: 7070,
                 tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+                  env: 'prod',
+                  service: 'kuma-example-web',
+                  version: 'v8'
                 }
               }
             ]

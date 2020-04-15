@@ -20,7 +20,17 @@
         table-data-row="name"
         @tableAction="tableAction"
         @reloadData="bootstrap"
-      />
+      >
+        <template slot="additionalControls">
+          <KButton
+            appearance="primary"
+            size="small"
+            :to="{ path: '/wizard/mesh' }"
+          >
+            Create Mesh
+          </KButton>
+        </template>
+      </DataOverview>
       <Tabs
         :has-error="hasError"
         :is-loading="isLoading"

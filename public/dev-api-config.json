@@ -1,4 +1,4 @@
 {
   "apiUrl": "http://localhost:5681",
-  "environment": "kubernetes"
+  "environment": "universal"
 }

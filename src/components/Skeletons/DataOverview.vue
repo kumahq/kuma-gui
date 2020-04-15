@@ -1,11 +1,11 @@
 <template>
   <div class="data-overview">
     <!-- controls -->
-    <div
-      v-if="displayRefreshControl"
-      class="data-table-controls mb-2"
-    >
+    <div class="data-table-controls mb-2">
+      <slot name="additionalControls" />
       <KButton
+        v-if="displayRefreshControl"
+        class="ml-2"
         appearance="primary"
         size="small"
         :disabled="isLoading"
@@ -41,10 +41,7 @@
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
           has-hover
-          :sort-order="sortOrder"
-          :sort-key="sortKey"
           @row:click="tableRowHandler"
-          @sort="sortFieldHelper"
         >
           <!-- status -->
           <template
@@ -343,8 +340,9 @@ export default {
   text-align: right;
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 
-  button:after {
-    display: none;
+  // no arrows on buttons
+  .k-button:after, button:after {
+    display: none !important;
   }
 }
 
@@ -381,6 +379,7 @@ export default {
   text-transform: uppercase;
   border-radius: 5px 0 0 5px;
   padding: 0.15rem 0.5rem;
+  // box-shadow: inset 0 0 0 1px var(--color);
   box-shadow: inset 0 0 0 1px var(--color);
 }
 
@@ -396,8 +395,10 @@ export default {
   background-color: #fff;
   border-radius: 0 5px 5px 0;
   padding: 0.15rem 0.5rem 0.15rem 0.75rem;
-  color: currentColor;
-  box-shadow: inset 0 0 0 1px currentColor;
+  color: #000;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px #ccc;
+  // box-shadow: inset 0 0 0 1px currentColor;
 }
 
 .data-overview-table {

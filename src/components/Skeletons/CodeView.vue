@@ -117,7 +117,7 @@ export default {
       default: null
     },
     content: {
-      type: Object,
+      type: String,
       default: null
     },
     loaders: {

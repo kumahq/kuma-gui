@@ -71,12 +71,12 @@ export default {
     interval: {
       type: Number,
       required: false,
-      default: 1000 // milliseconds
+      default: 1000 // 1000ms = 1s
     },
     retries: {
       type: Number,
       required: false,
-      default: 10
+      default: 3600 // 3600s = 1h
     },
     shouldStart: {
       type: Boolean,
@@ -89,6 +89,10 @@ export default {
     loaderFunction: {
       type: Function,
       required: true
+    },
+    canComplete: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -122,7 +126,7 @@ export default {
         this.loaderFunction()
         this.$emit('scannerRunning', true)
 
-        if (this.i === this.retries) {
+        if (this.i === this.retries || this.canComplete === true) {
           clearInterval(intervalFunction)
           this.isRunning = false
           this.isComplete = true

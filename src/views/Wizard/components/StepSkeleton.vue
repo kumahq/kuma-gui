@@ -42,7 +42,10 @@
           </div>
         </form>
       </div>
-      <footer class="wizard-steps__footer">
+      <footer
+        v-if="footerEnabled"
+        class="wizard-steps__footer"
+      >
         <KButton
           :disabled="indexCanReverse"
           appearance="primary"
@@ -94,6 +97,10 @@ export default {
       type: Array,
       required: true,
       default: () => {}
+    },
+    footerEnabled: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
@@ -118,12 +125,10 @@ export default {
     }
   },
   mounted () {
-    this.$nextTick(() => {
-      // this clears out any old stored data upon starting the wizard
-      this.resetProcess()
-      // this sets the starting step upon load
-      this.setStartingStep()
-    })
+    // this clears out any old stored data upon starting the wizard
+    this.resetProcess()
+    // this sets the starting step upon load
+    this.setStartingStep()
   },
   methods: {
     goToStep (index) {
