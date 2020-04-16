@@ -15,11 +15,6 @@ export default {
           title: false,
           root: true
         },
-        // {
-        //   name: 'Mesh Overview',
-        //   link: '/overview',
-        //   title: false
-        // },
         {
           name: 'Meshes',
           link: '/meshes',

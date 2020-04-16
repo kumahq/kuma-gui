@@ -48,9 +48,12 @@ export default {
     ...mapState(['selectedMesh'])
   },
   watch: {
-    '$route' (to, from) {
-      // set the menu links accordingly
-      this.setMeshPath()
+    $route: {
+      deep: true,
+      handler () {
+        // set the menu links accordingly
+        this.setMeshPath()
+      }
     }
   },
   beforeMount () {
@@ -72,10 +75,10 @@ export default {
       } else if (meshFromLocalStorage && meshFromLocalStorage.length > 0) {
         // otherwise fall back to what's present in localStorage
         this.meshPath = meshFromLocalStorage
-      } else {
-        // otherwise fallback to what's in the store (it has a default value)
-        this.meshPath = this.$store.getters.getSelectedMesh
       }
+
+      // otherwise fallback to what's in the store (it has a default value)
+      this.meshPath = this.$store.getters.getSelectedMesh
     }
   }
 }

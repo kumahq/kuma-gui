@@ -3,7 +3,6 @@
     <KCard
       :title="cardTitle"
       :class="{ 'is-centered': centerText }"
-      border-variant="noBorder"
     >
       <template slot="body">
         <slot

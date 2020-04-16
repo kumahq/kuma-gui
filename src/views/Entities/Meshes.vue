@@ -162,7 +162,7 @@ export default {
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
       // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', ev)
+      this.$store.dispatch('updateSelectedTableRow', data.name)
 
       // load the data into the tabs
       this.getEntity(data)
@@ -171,14 +171,34 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const getHealthChecks = () => {
-        return this.$api.getAllMeshes()
-          .then(response => {
-            if (response.items.length > 0) {
-              const items = response.items
+      const mesh = this.$route.query.mesh
 
+      const endpoint = (mesh === 'all' || !mesh)
+        ? this.$api.getAllMeshes()
+        : this.$api.getMesh(mesh)
+
+      const getMeshes = () => {
+        return endpoint
+          .then(response => {
+            const cleanRes = () => {
+              if (mesh === 'all') {
+                return response.items
+              }
+
+              const newItems = { items: [] }
+
+              newItems.items.push(response)
+
+              return newItems.items
+            }
+
+            const items = cleanRes()
+
+            if (items.length > 0) {
               // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
+              if (mesh === 'all') {
+                this.sortEntities(items)
+              }
 
               // set the first item as the default for initial load
               this.firstEntity = items[0].name
@@ -210,14 +230,14 @@ export default {
           })
       }
 
-      getHealthChecks()
+      getMeshes()
     },
     getEntity (entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
 
       if (entity && entity !== null) {
-        return this.$api.getMesh(entity)
+        return this.$api.getMesh(entity.name)
           .then(response => {
             if (response) {
               const selected = ['type', 'name']

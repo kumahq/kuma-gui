@@ -15,15 +15,6 @@ export default (store) => {
       },
       component: () => import('@/views/NotFound')
     },
-    // for testing the data overview skeleton component
-    // {
-    //   path: '/test',
-    //   name: 'test-overview',
-    //   meta: {
-    //     title: 'Test Overview'
-    //   },
-    //   component: () => import('@/views/Entities/TestOverview')
-    // },
     {
       path: '/',
       redirect: { name: 'global-overview' }
@@ -82,28 +73,31 @@ export default (store) => {
       ]
     },
     // App
+
+    // meshes
     {
       path: '/overview',
       alias: '/',
       name: 'global-overview',
+      component: () => import('@/views/Overview'),
       meta: {
         title: 'Global Overview',
         breadcrumb: 'Overview'
-      },
-      component: () => import('@/views/Overview')
+      }
     },
     // all Meshes
     {
       path: '/meshes',
-      alias: '/',
       name: 'all-meshes',
       meta: {
         title: 'Meshes',
         breadcrumb: 'Meshes',
         parent: 'global-overview'
       },
+      params: { mesh: ':mesh' },
       component: () => import('@/views/Entities/Meshes')
     },
+
     {
       path: '/:mesh',
       redirect: { name: 'mesh-overview' },
@@ -116,16 +110,6 @@ export default (store) => {
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),
       children: [
-        // meshes
-        {
-          path: 'overview',
-          name: 'mesh-overview',
-          component: () => import('@/views/Entities/EntityOverview'),
-          meta: {
-            title: 'Mesh Overview',
-            excludeAsBreadcrumb: true
-          }
-        },
         // dataplanes
         {
           path: 'dataplanes',

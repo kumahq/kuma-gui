@@ -12,9 +12,9 @@
       :metrics="overviewMetrics"
     />
 
-    <div class="md:flex items-stretch -mx-4">
+    <div class="md:flex -mx-4">
       <CardSkeleton
-        class="md:flex-1 mx-4"
+        class="md:flex-2 mx-4"
         :card-action-route="{ path: '/wizard/mesh' }"
         card-title="Create A Mesh"
         card-action-button-text="Start Now"
@@ -25,7 +25,7 @@
           </p>
         </template>
       </CardSkeleton>
-      <CardSkeleton
+      <!-- <CardSkeleton
         class="md:flex-1 mx-4"
         :card-action-route="{ path: '/default/dataplanes/' }"
         card-title="Add A Service / Dataplane"
@@ -36,8 +36,8 @@
             You can add a new service into a Mesh by adding Dataplanes to it.
           </p>
         </template>
-      </CardSkeleton>
-      <CardSkeleton
+      </CardSkeleton> -->
+      <!-- <CardSkeleton
         class="md:flex-1 mx-4"
         :card-action-route="{ path: '/default/dataplanes/' }"
         card-title="Some Title"
@@ -48,7 +48,7 @@
             Find Services among your {{ title }} Meshes
           </p>
         </template>
-      </CardSkeleton>
+      </CardSkeleton> -->
     </div>
 
     <FrameSkeleton>
