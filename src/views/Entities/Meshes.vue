@@ -65,8 +65,8 @@
 <script>
 import { getSome } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
+// import PageHeader from '@/components/Utils/PageHeader.vue'
+// import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -79,8 +79,8 @@ export default {
     title: 'Meshes'
   },
   components: {
-    PageHeader,
-    Breadcrumbs,
+    // PageHeader,
+    // Breadcrumbs,
     FrameSkeleton,
     DataOverview,
     Tabs,
