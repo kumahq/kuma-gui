@@ -6,6 +6,7 @@
         :advance-check="true"
         :sidebar-content="sidebarContent"
         :footer-enabled="scanFound === false"
+        :next-disabled="nextDisabled"
       >
         <!-- step content -->
         <template slot="general">
@@ -36,14 +37,19 @@
               >
                 <input
                   id="mesh-name"
-                  v-serialize-input
+                  v-model="validate.meshName"
                   type="text"
                   class="k-input w-100"
                   placeholder="your-mesh-name"
                   required
-                  :value="getCleanMeshName"
                   @change="updateStorage('meshName', $event.target.value)"
                 >
+                <KAlert
+                  v-if="vmsg.meshName"
+                  appearance="danger"
+                  size="small"
+                  :alert-message="vmsg.meshName"
+                />
               </FormFragment>
 
               <FormFragment title="Mutual TLS">
@@ -168,7 +174,6 @@
               >
                 <input
                   id="backend-name"
-                  v-serialize-input
                   type="text"
                   class="k-input w-100"
                   placeholder="your-backend-name"
@@ -299,7 +304,6 @@
               >
                 <input
                   id="tracing-backend-name"
-                  v-serialize-input
                   type="text"
                   class="k-input w-100"
                   placeholder="your-tracing-backend-name"
@@ -582,7 +586,6 @@ import { mapGetters } from 'vuex'
 import { rejectKeys } from '@/views/Wizard/helpers'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormatForCLI from '@/mixins/FormatForCLI'
-import SerializeInput from '@/views/Wizard/directives/SerializeInput'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
@@ -602,9 +605,6 @@ export default {
     StepSkeleton,
     CodeView,
     Scanner
-  },
-  directives: {
-    SerializeInput
   },
   mixins: [
     FormatForCLI,
@@ -663,7 +663,13 @@ export default {
       startScanner: false,
       scanFound: false,
       scanError: false,
-      isComplete: false
+      isComplete: false,
+      nextDisabled: true,
+      validate: {
+        meshName: '',
+        meshLoggingBackend: ''
+      },
+      vmsg: []
     }
   },
   computed: {
@@ -830,12 +836,27 @@ export default {
       return assembledBlock
     }
   },
+  watch: {
+    'validate.meshName' (value) {
+      this.validate.meshName = value
+      this.validateMeshName(value)
+    }
+  },
   mounted () {
     // this ensures the Wizard tab is actively set based on
     // the user's Kuma environment (Universal or Kubernetes)
     this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
   },
   methods: {
+    validateMeshName (value) {
+      if (!value || value === '') {
+        this.vmsg.meshName = 'A Mesh name is required to proceed'
+        this.nextDisabled = true
+      } else {
+        this.vmsg.meshName = ''
+        this.nextDisabled = false
+      }
+    },
     scanForEntity () {
       // get our entity from the VueX store
       const entity = this.$store.getters.getStoredWizardData.meshName

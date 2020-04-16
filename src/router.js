@@ -95,12 +95,22 @@ export default (store) => {
         parent: 'global-overview'
       },
       params: { mesh: ':mesh' },
-      component: () => import('@/views/Entities/Meshes')
+      component: () => import('@/views/Shell'),
+      children: [
+        {
+          path: ':mesh',
+          name: 'mesh-child',
+          meta: {
+            title: 'Mesh Overview',
+            parent: 'all-meshes'
+          },
+          params: { mesh: ':mesh' },
+          component: () => import('@/views/Entities/Meshes')
+        }
+      ]
     },
-
     {
       path: '/:mesh',
-      redirect: { name: 'mesh-overview' },
       name: 'mesh',
       meta: {
         title: 'Meshes',
@@ -120,15 +130,6 @@ export default (store) => {
           },
           component: () => import('@/views/Entities/Dataplanes')
         },
-        // services
-        // {
-        //   path: 'services',
-        //   name: 'services',
-        //   meta: {
-        //     title: 'Services'
-        //   },
-        //   component: () => import('@/views/Entities/EntityServices')
-        // },
         // traffic permissions
         {
           path: 'traffic-permissions',
@@ -212,6 +213,24 @@ export default (store) => {
     router.previous = from
     next()
   })
+
+  /**
+   * This will make sure that the Meshes page displays all meshes
+   * if the user happens to go to the bare `/meshes` url with no
+   * query on the end of it for drilling down by Mesh.
+   */
+  // router.beforeEach((to, from, next) => {
+  //   console.log(to.query)
+
+  //   if (to.name === 'all-meshes' && !to.query.mesh) {
+  //     next({
+  //       name: 'all-meshes',
+  //       query: { mesh: 'all' }
+  //     })
+  //   } else {
+  //     next()
+  //   }
+  // })
 
   /**
    * A route guard for handling the onboarding process. If the user hasn't gone

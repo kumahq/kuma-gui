@@ -54,7 +54,7 @@
           &lsaquo; Previous
         </KButton>
         <KButton
-          :disabled="indexCanAdvance"
+          :disabled="indexCanAdvance || nextDisabled"
           appearance="primary"
           @click="goToNextStep"
         >
@@ -99,6 +99,10 @@ export default {
       default: () => {}
     },
     footerEnabled: {
+      type: Boolean,
+      default: true
+    },
+    nextDisabled: {
       type: Boolean,
       default: true
     }
@@ -178,6 +182,10 @@ export default {
   @media screen and (min-width: 1220px) {
     width: calc(100% - 320px);
   }
+}
+
+.input-error {
+
 }
 </style>
 

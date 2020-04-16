@@ -1,11 +1,11 @@
 <template>
   <div class="all-meshes">
-    <page-header noflex>
+    <!-- <page-header noflex>
       <breadcrumbs />
       <h2 class="xxl">
         {{ this.$route.meta.title }}
       </h2>
-    </page-header>
+    </page-header> -->
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -171,7 +171,7 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const mesh = this.$route.query.mesh
+      const mesh = this.$route.params.mesh
 
       const endpoint = (mesh === 'all' || !mesh)
         ? this.$api.getAllMeshes()

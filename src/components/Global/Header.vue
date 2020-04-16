@@ -3,12 +3,7 @@
     <div class="main-header__content flex justify-between items-center -mx-4">
       <div class="px-4">
         <router-link
-          :to="{
-            name: 'mesh-overview',
-            params: {
-              mesh: currentMesh
-            }
-          }"
+          :to="{ name: 'global-overview' }"
           exact
           class="logo"
         >

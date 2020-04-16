@@ -7,9 +7,6 @@ export default {
       skipRbac: true,
       items: [
         {
-          // this overview will be for both all meshes
-          // and used on a per-mesh basis. it needs to
-          // change to encompass both uses.
           name: 'Overview',
           link: '/overview',
           title: false,
@@ -19,7 +16,8 @@ export default {
           name: 'Meshes',
           link: '/meshes',
           title: false,
-          root: true
+          pathFlip: true
+          // root: true
         },
         {
           name: 'Dataplanes',

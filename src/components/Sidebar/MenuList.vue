@@ -7,20 +7,20 @@
         :class="{'menu-title' : item.title, 'hasBadge': item.badge}"
       >
         <router-link
-          v-if="item.link"
+          v-if="item.link && item.pathFlip"
+          :to="{
+            path: item.root ? preparePath(item.link) : preparePath(item.link) + '/' + meshPath
+          }"
+        >
+          {{ item.name }}
+        </router-link>
+        <router-link
+          v-else-if="item.link && !item.pathFlip"
           :to="{
             path: item.root ? preparePath(item.link) : '/' + meshPath + preparePath(item.link)
           }"
         >
           {{ item.name }}
-          <!-- <span
-            v-if="item.badge"
-            class="badge"
-          >{{ item.badge }}</span> -->
-          <!-- <span
-            v-if="item.badgeSecondary"
-            class="badge secondary"
-          >{{ item.badgeSecondary }}</span> -->
         </router-link>
         <span v-else-if="!item.hidden">{{ item.name }}</span>
       </li>
