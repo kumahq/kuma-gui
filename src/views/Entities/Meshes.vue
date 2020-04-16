@@ -64,6 +64,7 @@
 
 <script>
 import { getSome } from '@/helpers'
+import sortEntities from '@/mixins/EntitySorter'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -86,6 +87,9 @@ export default {
     YamlView,
     LabelList
   },
+  mixins: [
+    sortEntities
+  ],
   data () {
     return {
       isLoading: true,
@@ -174,14 +178,13 @@ export default {
               const items = response.items
 
               // sort the table data by name and the mesh it's associated with
-              items
-                .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
+              this.sortEntities(items)
 
               // set the first item as the default for initial load
               this.firstEntity = items[0].name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(this.firstEntity)
+              this.getEntity(items[0])
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
@@ -218,8 +221,6 @@ export default {
           .then(response => {
             if (response) {
               const selected = ['type', 'name']
-
-              console.log(response)
 
               this.entity = getSome(response, selected)
               this.rawEntity = response

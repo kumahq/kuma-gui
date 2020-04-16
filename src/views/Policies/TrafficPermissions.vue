@@ -46,6 +46,7 @@
 
 <script>
 import { getSome } from '@/helpers'
+import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -64,6 +65,9 @@ export default {
     YamlView,
     LabelList
   },
+  mixins: [
+    sortEntities
+  ],
   data () {
     return {
       isLoading: true,
@@ -106,7 +110,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Health Check: ${entity.name}`
+        return `Traffic Permission: ${entity.name}`
       } else {
         return null
       }
@@ -137,7 +141,7 @@ export default {
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
       // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', ev)
+      this.$store.dispatch('updateSelectedTableRow', ev.name)
 
       // load the data into the tabs
       this.getEntity(data)
@@ -148,21 +152,24 @@ export default {
 
       const mesh = this.$route.params.mesh
 
+      const endpoint = (mesh === 'all')
+        ? this.$api.getAllTrafficPermissions()
+        : this.$api.getAllTrafficPermissionsFromMesh(mesh)
+
       const getTrafficPermissions = () => {
-        return this.$api.getAllTrafficPermissionsFromMesh(mesh)
+        return endpoint
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items
 
               // sort the table data by name and the mesh it's associated with
-              items
-                .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
+              this.sortEntities(items)
 
               // set the first item as the default for initial load
               this.firstEntity = items[0].name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(this.firstEntity)
+              this.getEntity(items[0])
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
@@ -197,7 +204,11 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity && entity !== null) {
-        return this.$api.getTrafficPermission(mesh, entity)
+        const entityMesh = (mesh === 'all')
+          ? entity.mesh
+          : mesh
+
+        return this.$api.getTrafficPermission(entityMesh, entity.name)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

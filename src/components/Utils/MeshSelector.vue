@@ -10,12 +10,12 @@
         name="mesh-selector"
         @change="changeMesh"
       >
-        <!-- <option
+        <option
           value="all"
           :selected="'all' === selectedMesh"
         >
           All Meshes
-        </option> -->
+        </option>
         <option
           v-for="item in items.items"
           :key="item.name"

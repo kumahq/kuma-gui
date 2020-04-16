@@ -111,7 +111,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline'
+      title: 'getTagline',
+      dpList: 'getDataplanesList'
     }),
     overviewMetrics () {
       return [
@@ -175,7 +176,7 @@ export default {
       this.$store.dispatch('getMeshTotalCount')
 
       // get (or refresh) the full dataplane list
-      this.$store.dispatch('getAllDataplanes')
+      // this.$store.dispatch('getAllDataplanes')
 
       // total Dataplane count
       this.$store.dispatch('getDataplaneTotalCount')
@@ -203,7 +204,8 @@ export default {
 
       // prepare and populate the table data
       const getMeshData = () => {
-        const dpList = this.$store.state.totalDataplaneList
+        this.$store.dispatch('getAllDataplanes')
+        const dpList = this.dpList
 
         return this.$api.getAllMeshes()
           .then(response => {
@@ -219,9 +221,9 @@ export default {
 
                 if (totalDpInMesh === 0) {
                   return 'No Dataplanes'
-                } else {
-                  return `${onlineDpCount} of ${totalDpInMesh}`
                 }
+
+                return `${onlineDpCount} of ${totalDpInMesh}`
               }
 
               itemStatus.push({

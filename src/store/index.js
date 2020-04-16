@@ -160,19 +160,10 @@ export default (api) => {
       // get the total number of dataplanes present
       getDataplaneTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllDataplanes()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllDataplanesFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_DATAPLANE_COUNT', reduced)
+          commit('SET_TOTAL_DATAPLANE_COUNT', count)
         }
 
         getItems()
@@ -181,19 +172,10 @@ export default (api) => {
       // get the total number of health checks present
       getHealthCheckTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllHealthChecks()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllHealthChecksFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_HEALTH_CHECK_COUNT', reduced)
+          commit('SET_TOTAL_HEALTH_CHECK_COUNT', count)
         }
 
         getItems()
@@ -202,19 +184,10 @@ export default (api) => {
       // get the total number of proxy templates present
       getProxyTemplateTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllProxyTemplates()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllProxyTemplatesFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', reduced)
+          commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', count)
         }
 
         getItems()
@@ -223,19 +196,10 @@ export default (api) => {
       // get the total number of traffic logs present
       getTrafficLogTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllTrafficLogs()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllTrafficLogsFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_TRAFFIC_LOG_COUNT', reduced)
+          commit('SET_TOTAL_TRAFFIC_LOG_COUNT', count)
         }
 
         getItems()
@@ -244,19 +208,10 @@ export default (api) => {
       // get the total number of traffic permissions present
       getTrafficPermissionTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllTrafficPermissions()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllTrafficPermissionsFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_TRAFFIC_PERMISSION_COUNT', reduced)
+          commit('SET_TOTAL_TRAFFIC_PERMISSION_COUNT', count)
         }
 
         getItems()
@@ -265,19 +220,10 @@ export default (api) => {
       // get the total number of traffic routes present
       getTrafficRouteTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllTrafficRoutes()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllTrafficRoutesFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_TRAFFIC_ROUTE_COUNT', reduced)
+          commit('SET_TOTAL_TRAFFIC_ROUTE_COUNT', count)
         }
 
         getItems()
@@ -286,19 +232,10 @@ export default (api) => {
       // get the total number of traffic traces present
       getTrafficTraceTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllTrafficTraces()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllTrafficTracesFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_TRAFFIC_TRACE_COUNT', reduced)
+          commit('SET_TOTAL_TRAFFIC_TRACE_COUNT', count)
         }
 
         getItems()
@@ -307,71 +244,53 @@ export default (api) => {
       // get the total number of fault injections present
       getFaultInjectionTotalCount ({ commit }) {
         const getItems = async () => {
-          const meshes = await api.getAllMeshes()
-          const result = []
+          const entities = await api.getAllFaultInjections()
+          const count = entities.items.length
 
-          for (let i = 0; i < meshes.items.length; i++) {
-            const items = await api.getAllFaultInjectionsFromMesh(meshes.items[i].name)
-            const count = await items.items.length
-
-            result.push(count)
-          }
-
-          const reduced = result.reduce((a, b) => a + b, 0)
-
-          commit('SET_TOTAL_FAULT_INJECTION_COUNT', reduced)
+          commit('SET_TOTAL_FAULT_INJECTION_COUNT', count)
         }
 
         getItems()
       },
 
-      // a makeshift way to get the list of all present dataplanes across all
-      // meshes this will also set a status for whether or not any of the
-      // dataplanes are offline
+      // this will get the current status of all dataplanes
       getAllDataplanes ({ commit }) {
         const getDataplanes = async () => {
           return new Promise(async (resolve, reject) => {
-            const meshes = await api.getAllMeshes()
             const result = []
             const states = []
 
-            // create a status label column
-            for (let i = 0; i < meshes.items.length; i++) {
-              const mesh = meshes.items[i].name
-              const dataplanes = await api.getAllDataplanesFromMesh(mesh)
-              const items = await dataplanes.items
+            const dataplanes = await api.getAllDataplanes()
+            const items = await dataplanes.items
 
-              for (let i = 0; i < items.length; i++) {
-                const itemName = items[i].name
-                const itemMesh = items[i].mesh
+            for (let i = 0; i < items.length; i++) {
+              const itemName = items[i].name
+              const itemMesh = items[i].mesh
 
-                const itemStatus = await api.getDataplaneOverviews(mesh, itemName)
-                  .then(response => {
-                    const items = response.dataplaneInsight.subscriptions
+              const itemStatus = await api.getDataplaneOverviewsFromMesh(itemMesh, itemName)
+                .then(response => {
+                  const items = response.dataplaneInsight.subscriptions
 
-                    if (items && items.length > 0) {
-                      for (let i = 0; i < items.length; i++) {
-                        const connectTime = items[i].connectTime
-                        const disconnectTime = items[i].disconnectTime
+                  if (items && items.length > 0) {
+                    for (let i = 0; i < items.length; i++) {
+                      const connectTime = items[i].connectTime
+                      const disconnectTime = items[i].disconnectTime
 
-                        if (connectTime && connectTime.length && !disconnectTime) {
-                          return 'Online'
-                        } else {
-                          return 'Offline'
-                        }
+                      if (connectTime && connectTime.length && !disconnectTime) {
+                        return 'Online'
                       }
-                    } else {
-                      return 'Offline'
                     }
-                  })
+                  }
 
-                // create the full data array
-                result.push({
-                  status: itemStatus,
-                  name: itemName,
-                  mesh: itemMesh
+                  return 'Offline'
                 })
-              }
+
+              // create the full data array
+              result.push({
+                status: itemStatus,
+                name: itemName,
+                mesh: itemMesh
+              })
             }
 
             // create a simple flat status object with booleans for checking

@@ -316,7 +316,10 @@ export default {
       this.pageNumber++
     },
     tableRowHandler (e, row, type) {
-      this.$emit('tableAction', row.name)
+      this.$emit('tableAction', {
+        name: row.name,
+        mesh: row.mesh
+      })
     }
   }
 }

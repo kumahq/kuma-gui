@@ -134,17 +134,17 @@ export default (store) => {
             title: 'Dataplanes',
             parent: 'dataplanes'
           },
-          component: () => import('@/views/Entities/EntityDataplanes')
+          component: () => import('@/views/Entities/Dataplanes')
         },
         // services
-        {
-          path: 'services',
-          name: 'services',
-          meta: {
-            title: 'Services'
-          },
-          component: () => import('@/views/Entities/EntityServices')
-        },
+        // {
+        //   path: 'services',
+        //   name: 'services',
+        //   meta: {
+        //     title: 'Services'
+        //   },
+        //   component: () => import('@/views/Entities/EntityServices')
+        // },
         // traffic permissions
         {
           path: 'traffic-permissions',

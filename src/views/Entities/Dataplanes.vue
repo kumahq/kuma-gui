@@ -47,6 +47,7 @@
 
 <script>
 import { getSome, humanReadableDate } from '@/helpers'
+import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -55,6 +56,9 @@ import LabelList from '@/components/Utils/LabelList'
 
 export default {
   name: 'Dataplanes',
+  metaInfo: {
+    title: 'Dataplanes'
+  },
   components: {
     FrameSkeleton,
     DataOverview,
@@ -62,6 +66,9 @@ export default {
     YamlView,
     LabelList
   },
+  mixins: [
+    sortEntities
+  ],
   data () {
     return {
       isLoading: true,
@@ -139,7 +146,7 @@ export default {
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
       // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', ev)
+      this.$store.dispatch('updateSelectedTableRow', data.name)
 
       // load the data into the tabs
       this.getEntity(data)
@@ -148,32 +155,30 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      // get the mesh from our route params
       const mesh = this.$route.params.mesh
 
-      // prepare and populate the table data
-      const getMeshData = () => {
-        return this.$api.getAllDataplanesFromMesh(mesh)
+      const endpoint = (mesh === 'all')
+        ? this.$api.getAllDataplanes()
+        : this.$api.getAllDataplanesFromMesh(mesh)
+
+      const getDataplanes = () => {
+        return endpoint
           .then(response => {
             if (response.items.length > 0) {
               const items = response.items
               const final = []
 
-              // sort the table data by name and the mesh it's associated with
-              items
-                .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
-
               // set the first item as the default for initial load
               this.firstEntity = items[0].name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(this.firstEntity)
+              this.getEntity(items[0])
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
 
               items.forEach(item => {
-                this.$api.getDataplaneOverviews(mesh, item.name)
+                this.$api.getDataplaneOverviewsFromMesh(item.mesh, item.name)
                   .then(response => {
                     const placeholder = 'n/a'
 
@@ -297,7 +302,7 @@ export default {
                         lastUpdated = 'never'
                       }
                     } else {
-                    // if there are no subscriptions, set them all to a fallback
+                      // if there are no subscriptions, set them all to a fallback
                       lastConnected = 'never'
                       lastUpdated = 'never'
                       totalUpdates = 0
@@ -315,9 +320,7 @@ export default {
                       type: 'dataplane'
                     })
 
-                    // sort the table data by name and the mesh it's associated with
-                    final
-                      .sort((a, b) => (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1)
+                    this.sortEntities(final)
                   })
                   .catch(error => {
                     console.error(error)
@@ -345,7 +348,7 @@ export default {
           })
       }
 
-      getMeshData()
+      getDataplanes()
     },
     getEntity (entity) {
       this.entityIsLoading = true
@@ -354,17 +357,16 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity && entity !== null) {
-        return this.$api.getDataplane(mesh, entity)
+        const entityMesh = (mesh === 'all')
+          ? entity.mesh
+          : mesh
+
+        return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name', 'mesh', 'tags']
+              const selected = ['type', 'name', 'mesh']
 
-              // determine between inbound and gateway modes
-              const tagSrc = response.networking.inbound || response.networking.gateway
-              const newEntity = { ...getSome(response, selected), ...{ tags: tagSrc[0].tags } }
-
-              this.entity = newEntity
-
+              this.entity = getSome(response, selected)
               this.rawEntity = response
             } else {
               this.entity = null

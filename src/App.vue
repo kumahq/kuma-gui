@@ -72,16 +72,16 @@ export default {
       // check the API status before we do anything else
       this.$store.dispatch('getStatus')
         .then(() => {
-        // only dispatch these actions if the API is online
+          // only dispatch these actions if the API is online
           if (this.$store.getters.getStatus === 'OK') {
-          // set the current environment
+            // set the current environment
             this.$store.dispatch('updateEnvironment', localStorage.getItem('kumaEnv'))
 
             // fetch the mesh list
             this.$store.dispatch('fetchMeshList')
 
             // fetch all dataplanes
-            this.$store.dispatch('getAllDataplanes')
+            // this.$store.dispatch('getAllDataplanes')
 
             // fetch the version
             this.$store.dispatch('getVersion')
