@@ -173,6 +173,8 @@ export default {
 
       const mesh = this.$route.params.mesh
 
+      console.log(mesh)
+
       const endpoint = (mesh === 'all' || !mesh)
         ? this.$api.getAllMeshes()
         : this.$api.getMesh(mesh)

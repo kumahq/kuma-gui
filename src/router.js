@@ -217,20 +217,18 @@ export default (store) => {
   /**
    * This will make sure that the Meshes page displays all meshes
    * if the user happens to go to the bare `/meshes` url with no
-   * query on the end of it for drilling down by Mesh.
+   * query on the end of it.
    */
-  // router.beforeEach((to, from, next) => {
-  //   console.log(to.query)
-
-  //   if (to.name === 'all-meshes' && !to.query.mesh) {
-  //     next({
-  //       name: 'all-meshes',
-  //       query: { mesh: 'all' }
-  //     })
-  //   } else {
-  //     next()
-  //   }
-  // })
+  router.beforeEach((to, from, next) => {
+    if (to.name === 'all-meshes') {
+      next({
+        name: 'mesh-child',
+        params: { mesh: 'all' }
+      })
+    } else {
+      next()
+    }
+  })
 
   /**
    * A route guard for handling the onboarding process. If the user hasn't gone
