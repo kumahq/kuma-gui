@@ -364,9 +364,14 @@ export default {
         return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name', 'mesh']
+              const selected = ['type', 'name', 'mesh', 'tags']
 
-              this.entity = getSome(response, selected)
+              // determine between inbound and gateway modes
+              const tagSrc = response.networking.inbound || response.networking.gateway
+              const newEntity = { ...getSome(response, selected), ...{ tags: tagSrc[0].tags } }
+
+              this.entity = newEntity
+
               this.rawEntity = response
             } else {
               this.entity = null
