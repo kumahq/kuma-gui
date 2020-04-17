@@ -64,8 +64,8 @@ export default {
       // update the route accordingly
       if (this.$route.name === 'global-overview') {
         this.$router.push({
-          name: 'all-meshes',
-          query: { mesh: val }
+          name: 'mesh-child',
+          params: { mesh: val }
         })
       } else {
         this.$router.push({

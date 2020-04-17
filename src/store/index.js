@@ -18,7 +18,7 @@ export default (api) => {
       globalLoading: null,
       meshes: [],
       dataplanes: [],
-      selectedMesh: 'default',
+      selectedMesh: 'all', // shows all meshes on initial load
       totalMeshCount: 0,
       totalDataplaneCount: 0,
       totalHealthCheckCount: 0,
