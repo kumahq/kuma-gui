@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { setItemToStorage } from '@/Cache'
 import { mapState, mapGetters } from 'vuex'
 import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
@@ -56,33 +55,63 @@ export default {
     ...mapState({
       loading: state => state.globalLoading
     }),
-
     ...mapGetters({
       status: 'getStatus'
     })
   },
+  watch: {
+    '$route' (to, from) {
+      this.bootstrap()
+    }
+  },
   beforeMount () {
-    // check the API status before we do anything else
-    this.$store.dispatch('getStatus')
-      .then(() => {
-        // only dispatch these actions if the API is online
-        if (this.$store.getters.getStatus === 'OK') {
-          // fetch the mesh list
-          this.$store.dispatch('fetchMeshList')
+    this.bootstrap()
+  },
+  methods: {
+    bootstrap () {
+      // check the API status before we do anything else
+      this.$store.dispatch('getStatus')
+        .then(() => {
+          // only dispatch these actions if the API is online
+          if (this.$store.getters.getStatus === 'OK') {
+            // set the current environment
+            this.$store.dispatch('updateEnvironment', localStorage.getItem('kumaEnv'))
 
-          // fetch all dataplanes
-          this.$store.dispatch('getAllDataplanes')
+            // fetch the mesh list
+            this.$store.dispatch('fetchMeshList')
 
-          // fetch the version
-          this.$store.dispatch('getVersion')
+            // fetch all dataplanes
+            // this.$store.dispatch('getAllDataplanes')
 
-          // fetch the tagline
-          this.$store.dispatch('getTagline')
+            // fetch the version
+            this.$store.dispatch('getVersion')
 
-          // set the selected mesh in localStorage
-          setItemToStorage('selectedMesh', this.$store.getters.getSelectedMesh)
-        }
-      })
+            // fetch the tagline
+            this.$store.dispatch('getTagline')
+
+            // set the selected mesh in localStorage
+            const mesh = () => {
+              const lsMesh = localStorage.getItem('selectedMesh')
+              const routeMesh = this.$route.params.mesh || null
+
+              // if the `mesh` param is present, use that
+              if (routeMesh) {
+                return routeMesh
+              }
+              // or use what's available in localStorage
+              else if (lsMesh && lsMesh !== 'undefined' && lsMesh.length > 0) {
+                return lsMesh
+              }
+              // otherwise, fall back to the default value from our VueX store
+              else {
+                return this.$store.getters.getSelectedMesh
+              }
+            }
+
+            localStorage.setItem('selectedMesh', mesh())
+          }
+        })
+    }
   }
 }
 </script>

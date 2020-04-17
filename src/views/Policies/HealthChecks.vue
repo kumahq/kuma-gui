@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-routes">
+  <div class="health-checks">
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -55,9 +55,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'TrafficRoutes',
+  name: 'HealthChecks',
   metaInfo: {
-    title: 'Traffic Routes'
+    title: 'Health Checks'
   },
   components: {
     FrameSkeleton,
@@ -80,7 +80,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Traffic Routes present.'
+        message: 'There are no Health Checks present.'
       },
       tableData: {
         headers: [
@@ -111,7 +111,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Traffic Route: ${entity.name}`
+        return `Health Check: ${entity.name}`
       } else {
         return null
       }
@@ -154,10 +154,10 @@ export default {
       const mesh = this.$route.params.mesh
 
       const endpoint = (mesh === 'all')
-        ? this.$api.getAllTrafficRoutes()
-        : this.$api.getAllTrafficRoutesFromMesh(mesh)
+        ? this.$api.getAllHealthChecks()
+        : this.$api.getAllHealthChecksFromMesh(mesh)
 
-      const getTrafficRoutes = () => {
+      const getHealthChecks = () => {
         return endpoint
           .then(response => {
             if (response.items.length > 0) {
@@ -196,7 +196,7 @@ export default {
           })
       }
 
-      getTrafficRoutes()
+      getHealthChecks()
     },
     getEntity (entity) {
       this.entityIsLoading = true
@@ -209,7 +209,7 @@ export default {
           ? entity.mesh
           : mesh
 
-        return this.$api.getTrafficRoute(entityMesh, entity.name)
+        return this.$api.getHealthCheckFromMesh(entityMesh, entity.name)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
@@ -240,6 +240,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

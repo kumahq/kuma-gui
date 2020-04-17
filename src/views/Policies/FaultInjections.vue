@@ -1,5 +1,5 @@
 <template>
-  <div class="traffic-routes">
+  <div class="fault-injections">
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -33,6 +33,7 @@
         </template>
         <template slot="yaml">
           <YamlView
+            lang="yaml"
             :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -48,6 +49,7 @@
 <script>
 import { getSome } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
+import FormatForCLI from '@/mixins/FormatForCLI'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -55,9 +57,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'TrafficRoutes',
+  name: 'FaultInjections',
   metaInfo: {
-    title: 'Traffic Routes'
+    title: 'Fault Injections'
   },
   components: {
     FrameSkeleton,
@@ -67,6 +69,7 @@ export default {
     LabelList
   },
   mixins: [
+    FormatForCLI,
     sortEntities
   ],
   data () {
@@ -80,7 +83,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Traffic Routes present.'
+        message: 'There are no Fault Injections present.'
       },
       tableData: {
         headers: [
@@ -111,7 +114,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Traffic Route: ${entity.name}`
+        return `Fault Injection: ${entity.name}`
       } else {
         return null
       }
@@ -124,6 +127,11 @@ export default {
       } else {
         return null
       }
+    },
+    formattedRawEntity () {
+      const entity = this.formatForCLI(this.rawEntity)
+
+      return entity
     }
   },
   watch: {
@@ -142,7 +150,7 @@ export default {
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
       // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', ev.name)
+      this.$store.dispatch('updateSelectedTableRow', data.name)
 
       // load the data into the tabs
       this.getEntity(data)
@@ -154,10 +162,10 @@ export default {
       const mesh = this.$route.params.mesh
 
       const endpoint = (mesh === 'all')
-        ? this.$api.getAllTrafficRoutes()
-        : this.$api.getAllTrafficRoutesFromMesh(mesh)
+        ? this.$api.getAllFaultInjections()
+        : this.$api.getAllFaultInjectionsFromMesh(mesh)
 
-      const getTrafficRoutes = () => {
+      const getFaultInjections = () => {
         return endpoint
           .then(response => {
             if (response.items.length > 0) {
@@ -196,7 +204,7 @@ export default {
           })
       }
 
-      getTrafficRoutes()
+      getFaultInjections()
     },
     getEntity (entity) {
       this.entityIsLoading = true
@@ -209,7 +217,7 @@ export default {
           ? entity.mesh
           : mesh
 
-        return this.$api.getTrafficRoute(entityMesh, entity.name)
+        return this.$api.getFaultInjection(entityMesh, entity.name)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
@@ -240,6 +248,3 @@ export default {
   }
 }
 </script>
-
-<style>
-</style>

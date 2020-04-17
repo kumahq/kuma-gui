@@ -1,12 +1,12 @@
 <template>
   <div class="data-overview">
     <!-- controls -->
-    <div
-      v-if="displayRefreshControl"
-      class="data-table-controls mb-2"
-    >
+    <div class="data-table-controls mb-2">
+      <slot name="additionalControls" />
       <KButton
-        appearance="secondary"
+        v-if="displayRefreshControl"
+        class="ml-2"
+        appearance="primary"
         size="small"
         :disabled="isLoading"
         @click="$emit('reloadData')"
@@ -14,7 +14,7 @@
         <KIcon
           v-if="isLoading"
           icon="spinner"
-          color="rgba(0, 0, 0, 5)"
+          color="#fff"
           size="48"
         />
         <span>Refresh</span>
@@ -32,16 +32,21 @@
       />
 
       <!-- data -->
-      <div v-if="displayDataTable && !tableDataIsEmpty && tableData">
+      <div
+        v-if="displayDataTable && !tableDataIsEmpty && tableData"
+        class="data-overview-table"
+      >
         <KTable
-          :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+          class="micro-table"
+          :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
           has-hover
+          @row:click="tableRowHandler"
         >
           <!-- status -->
           <template
             v-if="displayTableDataStatus"
-            v-slot:status="{rowValue}"
+            v-slot:status="{ rowValue }"
           >
             <div
               class="entity-status"
@@ -53,7 +58,7 @@
           </template>
           <!-- tags -->
           <template
-            v-slot:tags="{rowValue}"
+            v-slot:tags="{ rowValue }"
           >
             <span
               v-for="(item, key) in rowValue"
@@ -75,30 +80,32 @@
               </span>
             </span>
           </template>
+
           <template
             slot="actions"
             slot-scope="{ row }"
           >
-            <router-link
-              :to="{
-                name: tableActionsRouteName,
-                params: {
-                  // TODO: find a better, more efficient way to handle this
-                  mesh: row.type.toLowerCase() === 'mesh' ? row.name : row.mesh,
-                  dataplane: row.type.toLowerCase() === 'dataplane' ? row.name : null,
-                  trafficpermission: row.type.toLowerCase() === 'trafficpermission' ? row.name : null,
-                  trafficroute: row.type.toLowerCase() === 'trafficroute' ? row.name : null,
-                  trafficlog: row.type.toLowerCase() === 'trafficlog' ? row.name : null,
-                  traffictrace: row.type.toLowerCase() === 'traffictrace' ? row.name : null,
-                  faultinjection: row.type.toLowerCase() === 'faultinjection' ? row.name : null,
-                  healthcheck: row.type.toLowerCase() === 'healthcheck' ? row.name : null,
-                  proxytemplate: row.type.toLowerCase() === 'proxytemplate' ? row.name : null,
-                  service: row.type.toLowerCase() === 'service' ? row.name : null
-                }
-              }"
+            <a
+              v-if="tableDataFunctionText"
+              class="data-table-action-link"
+              :class="{ 'is-active': ($store.state.selectedTableRow === row.name) }"
             >
-              <slot name="tableDataActionsLinkText" />
-            </router-link>
+              <span
+                v-if="$store.state.selectedTableRow === row.name"
+                class="action-link__active-state"
+              >
+                &#x2713;
+                <span class="sr-only">
+                  Selected
+                </span>
+              </span>
+              <span
+                v-else
+                class="action-link__normal-state"
+              >
+                {{ tableDataFunctionText }}
+              </span>
+            </a>
           </template>
         </KTable>
 
@@ -106,7 +113,6 @@
           v-if="tableData && tableRowCount > pageSize"
           :has-previous="pageNumber > 0"
           :has-next="pageNumber < pageCount -1"
-          class="ml-2 mr-2 mb-2"
           @next="goToNextPage"
           @previous="goToPreviousPage"
         />
@@ -121,7 +127,18 @@
           <div class="card-icon mb-3">
             <img src="~@/assets/images/icon-empty-table.svg?external">
           </div>
-          No Items Found
+          <span v-if="emptyState.title">
+            {{ emptyState.title }}
+          </span>
+          <span v-else>
+            No Items Found
+          </span>
+        </template>
+        <template
+          v-if="emptyState.message"
+          slot="message"
+        >
+          {{ emptyState.message }}
         </template>
       </KEmptyState>
 
@@ -148,28 +165,6 @@
           />
         </div>
         Data Loading...
-      </template>
-    </KEmptyState>
-
-    <!-- empty state -->
-    <KEmptyState
-      v-if="isEmpty"
-      cta-is-hidden
-    >
-      <template slot="title">
-        {{ emptyState.title }}
-      </template>
-      <template
-        v-if="showCta"
-        slot="message"
-      >
-        <router-link
-          v-if="ctaAction && ctaAction.length"
-          :to="ctaAction"
-        >
-          {{ emptyState.ctaText }}
-        </router-link>
-        {{ emptyState.message }}
       </template>
     </KEmptyState>
 
@@ -204,6 +199,10 @@ export default {
     Pagination
   },
   props: {
+    pageSize: {
+      type: Number,
+      default: 12
+    },
     displayMetrics: {
       type: Boolean,
       default: false
@@ -244,6 +243,11 @@ export default {
       type: Object,
       default: null
     },
+    tableHasBorder: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     tableDataIsEmpty: {
       type: Boolean,
       default: false
@@ -263,11 +267,20 @@ export default {
     displayRefreshControl: {
       type: Boolean,
       default: true
+    },
+    tableDataRow: {
+      type: String,
+      required: false,
+      default: 'name'
+    },
+    tableDataFunctionText: {
+      type: String,
+      required: false,
+      default: null
     }
   },
   data () {
     return {
-      pageSize: 12,
       pageNumber: 0
     }
   },
@@ -301,6 +314,12 @@ export default {
     },
     goToNextPage () {
       this.pageNumber++
+    },
+    tableRowHandler (e, row, type) {
+      this.$emit('tableAction', {
+        name: row.name,
+        mesh: row.mesh
+      })
     }
   }
 }
@@ -322,9 +341,11 @@ export default {
 
 .data-table-controls {
   text-align: right;
+  padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 
-  button:after {
-    display: none;
+  // no arrows on buttons
+  .k-button:after, button:after {
+    display: none !important;
   }
 }
 
@@ -343,8 +364,8 @@ export default {
   display: inline-flex;
   align-items: stretch;
   font-size: 12px;
-  text-transform: uppercase;
   background-color: #fff;
+  font-family: var(--font-family-mono);
 
   &:not(:last-of-type) {
     margin-right: 0.5rem;
@@ -358,8 +379,18 @@ export default {
   position: relative;
   background-color: var(--color);
   color: #fff;
+  text-transform: uppercase;
   border-radius: 5px 0 0 5px;
   padding: 0.15rem 0.5rem;
+  // box-shadow: inset 0 0 0 1px var(--color);
+  box-shadow: inset 0 0 0 1px var(--color);
+}
+
+.entity-tags__label--service,
+.entity-tags__label--protocol {
+  --color: var(--brand-color-6);
+
+  background-color: var(--color);
   box-shadow: inset 0 0 0 1px var(--color);
 }
 
@@ -367,8 +398,83 @@ export default {
   background-color: #fff;
   border-radius: 0 5px 5px 0;
   padding: 0.15rem 0.5rem 0.15rem 0.75rem;
-  color: currentColor;
-  box-shadow: inset 0 0 0 1px currentColor;
+  color: #000;
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px #ccc;
+  // box-shadow: inset 0 0 0 1px currentColor;
+}
+
+.data-overview-table {
+
+}
+
+.micro-table.micro-table {
+  --dp-table-font-size: 14px;
+  --dp-table-padding: 10px;
+
+  th, td {
+    padding: var(--dp-table-padding);
+  }
+}
+
+.k-table {
+  font-size: var(--dp-table-font-size);
+
+  tr {
+    cursor: pointer;
+
+    td:first-of-type {
+      // width: 5%;
+      // text-align: center;
+    }
+  }
+
+  th {
+    background-color: var(--gray-7);
+  }
+
+  thead {
+    border-top: 0 !important;
+    border-bottom-width: 1px !important;
+  }
+
+  &.has-border {
+    border: 1px solid var(--gray-4);
+    border-bottom: 0;
+  }
+
+  .data-table-action-link {
+    display: block;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0;
+
+    &.is-active {
+
+    }
+  }
+
+  .action-link__active-state {
+    --size: 18px;
+
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    border-radius: 50%;
+    background-color: var(--logo-green);
+    // margin: 0 auto;
+    margin: 0 0 0 5px;
+    color: #fff;
+    font-size: 13px;
+    text-align: center;
+
+    &:before {
+      display: block;
+    }
+  }
+
 }
 
 @media only screen and (min-width: 841px) {

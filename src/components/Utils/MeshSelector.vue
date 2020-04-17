@@ -2,7 +2,7 @@
   <div class="mesh-selector-container">
     <div v-if="items">
       <h3 class="menu-title">
-        Meshes
+        Filter by Mesh:
       </h3>
       <select
         id="mesh-selector"
@@ -11,10 +11,16 @@
         @change="changeMesh"
       >
         <option
+          value="all"
+          :selected="'all' === selectedMesh"
+        >
+          All Meshes
+        </option>
+        <option
           v-for="item in items.items"
           :key="item.name"
           :value="item.name"
-          :selected="item.name === (meshFromLocalStorage || $route.params.mesh)"
+          :selected="item.name === selectedMesh"
         >
           {{ item.name }}
         </option>
@@ -38,8 +44,11 @@ export default {
     }
   },
   computed: {
-    meshFromLocalStorage () {
-      return localStorage.getItem('selectedMesh')
+    selectedMesh () {
+      const stored = localStorage.getItem('selectedMesh')
+      const query = this.$route.params.mesh
+
+      return stored || query
     }
   },
   methods: {
@@ -55,7 +64,7 @@ export default {
       // update the route accordingly
       if (this.$route.name === 'global-overview') {
         this.$router.push({
-          name: 'mesh-overview',
+          name: 'mesh-child',
           params: { mesh: val }
         })
       } else {
@@ -79,11 +88,12 @@ export default {
 }
 
 .menu-title {
-  font-size: 12px;
-  font-weight: normal;
-  color: #000;
-  text-transform: uppercase;
-  padding: 0 0 12px 0;
+  display: block;
+  font-size: var(--type-sm);
+  font-weight: 500;
+  color: var(--gray-3);
+  // text-transform: uppercase;
+  margin: 0 0 5px 0;
 }
 
 .closed .mesh-selector-container {

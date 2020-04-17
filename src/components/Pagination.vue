@@ -1,18 +1,18 @@
 <template>
   <div class="pagination">
     <KButton
+      ref="paginatePrev"
       :disabled="!hasPrevious"
       appearance="primary"
-      data-testid="previous"
       @click="$emit('previous')"
     >
       &lsaquo; Previous
     </KButton>
 
     <KButton
+      ref="paginateNext"
       :disabled="!hasNext"
       appearance="primary"
-      data-testid="next"
       @click="$emit('next')"
     >
       Next &rsaquo;
@@ -38,16 +38,17 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-  display: flex;
-  margin-top: 16px;
-  justify-content: space-between;
+  // display: flex;
+  // justify-content: space-between;
+  padding: var(--spacing-sm);
+  text-align: right;
 
   button {
     font-size: 14px;
     padding: 4px 8px;
 
-    &:nth-child(2) {
-      margin-left: auto;
+    &:not(:first-of-type) {
+      margin-left: var(--spacing-sm);
     }
 
     &:after {

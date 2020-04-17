@@ -15,12 +15,6 @@ export default (store) => {
       },
       component: () => import('@/views/NotFound')
     },
-    // for testing the data overview skeleton component
-    // {
-    //   path: '/test',
-    //   name: 'test-overview',
-    //   component: () => import('@/views/Entities/TestOverview')
-    // },
     {
       path: '/',
       redirect: { name: 'global-overview' }
@@ -59,36 +53,64 @@ export default (store) => {
           },
           component: () => import('@/views/Onboarding/Complete')
         }
-        // {
-        //   path: 'restart',
-        //   name: 'setup-restart',
-        //   meta: {
-        //     title: 'Setup Already Complete!',
-        //     excludeAsBreadcrumb: true,
-        //     hideSidebar: true,
-        //     hideStatus: true,
-        //     simpleHeader: true,
-        //     simpleContent: true,
-        //     onboardingProcess: true
-        //   },
-        //   component: () => import('@/views/Onboarding/Restart')
-        // }
+      ]
+    },
+    {
+      // Entity Wizard
+      path: '/wizard',
+      name: 'wizard',
+      component: () => import('@/views/Shell'),
+      children: [
+        {
+          path: 'mesh',
+          name: 'create-mesh',
+          meta: {
+            title: 'Create a new Mesh',
+            excludeAsBreadcrumb: true
+          },
+          component: () => import('@/views/Wizard/views/Mesh')
+        }
       ]
     },
     // App
+
+    // meshes
     {
       path: '/overview',
       alias: '/',
       name: 'global-overview',
+      component: () => import('@/views/Overview'),
       meta: {
         title: 'Global Overview',
-        excludeAsBreadcrumb: true
+        breadcrumb: 'Overview'
+      }
+    },
+    // all Meshes
+    {
+      path: '/meshes',
+      name: 'all-meshes',
+      meta: {
+        title: 'Meshes',
+        breadcrumb: 'Meshes',
+        parent: 'global-overview'
       },
-      component: () => import('@/views/Overview')
+      params: { mesh: ':mesh' },
+      component: () => import('@/views/Shell'),
+      children: [
+        {
+          path: ':mesh',
+          name: 'mesh-child',
+          meta: {
+            title: 'Mesh Overview',
+            parent: 'all-meshes'
+          },
+          params: { mesh: ':mesh' },
+          component: () => import('@/views/Entities/Meshes')
+        }
+      ]
     },
     {
       path: '/:mesh',
-      redirect: { name: 'mesh-overview' },
       name: 'mesh',
       meta: {
         title: 'Meshes',
@@ -98,16 +120,6 @@ export default (store) => {
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),
       children: [
-        // meshes
-        {
-          path: 'overview',
-          name: 'mesh-overview',
-          component: () => import('@/views/Entities/EntityOverview'),
-          meta: {
-            title: 'Mesh Overview',
-            excludeAsBreadcrumb: true
-          }
-        },
         // dataplanes
         {
           path: 'dataplanes',
@@ -116,42 +128,7 @@ export default (store) => {
             title: 'Dataplanes',
             parent: 'dataplanes'
           },
-          component: () => import('@/views/Entities/EntityDataplanes')
-        },
-        {
-          path: 'dataplanes/:dataplane',
-          name: 'dataplane-details',
-          meta: {
-            title: 'Dataplane Details',
-            breadcrumb: 'Dataplanes',
-            parent: 'dataplanes'
-          },
-          params: {
-            dataplane: ':dataplane'
-          },
-          component: () => import('@/views/Entities/EntityDataplanesDetail')
-        },
-        // services
-        {
-          path: 'services',
-          name: 'services',
-          meta: {
-            title: 'Services'
-          },
-          component: () => import('@/views/Entities/EntityServices')
-        },
-        {
-          path: 'services/:service',
-          name: 'service-details',
-          meta: {
-            title: 'Service Details',
-            breadcrumb: 'Service Details',
-            parent: 'services'
-          },
-          params: {
-            service: ':service'
-          },
-          component: () => import('@/views/Entities/EntityServicesDetail')
+          component: () => import('@/views/Entities/Dataplanes')
         },
         // traffic permissions
         {
@@ -162,19 +139,6 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficPermissions')
         },
-        {
-          path: 'traffic-permissions/:trafficpermission',
-          name: 'traffic-permissions-details',
-          meta: {
-            title: 'Traffic Permission Details',
-            breadcrumb: 'Traffic Permission Details',
-            parent: 'traffic-permissions'
-          },
-          params: {
-            trafficpermission: ':trafficpermission'
-          },
-          component: () => import('@/views/Policies/TrafficPermissionsDetail')
-        },
         // traffic routes
         {
           path: 'traffic-routes',
@@ -184,19 +148,6 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/TrafficRoutes')
         },
-        {
-          path: 'traffic-routes/:trafficroute',
-          name: 'traffic-routes-details',
-          params: {
-            trafficroute: ':trafficroute'
-          },
-          meta: {
-            title: 'Traffic Route Details',
-            breadcrumb: 'Traffic Details',
-            parent: 'traffic-routes'
-          },
-          component: () => import('@/views/Policies/TrafficRouteDetail')
-        },
         // traffic logs
         {
           path: 'traffic-logs',
@@ -204,20 +155,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Logs'
           },
-          component: () => import('@/views/Policies/TrafficLog')
-        },
-        {
-          path: 'traffic-logs/:trafficlog',
-          name: 'traffic-log-details',
-          params: {
-            trafficlog: ':trafficlog'
-          },
-          meta: {
-            title: 'Traffic Log Details',
-            breadcrumb: 'Traffic Logs',
-            parent: 'traffic-logs'
-          },
-          component: () => import('@/views/Policies/TrafficLogDetail')
+          component: () => import('@/views/Policies/TrafficLogs')
         },
         // traffic traces
         {
@@ -226,20 +164,16 @@ export default (store) => {
           meta: {
             title: 'Traffic Traces'
           },
-          component: () => import('@/views/Policies/TrafficTrace')
+          component: () => import('@/views/Policies/TrafficTraces')
         },
+        // fault injections
         {
-          path: 'traffic-traces/:traffictrace',
-          name: 'traffic-traces-details',
-          params: {
-            traffictrace: ':traffictrace'
-          },
+          path: 'fault-injections',
+          name: 'fault-injections',
           meta: {
-            title: 'Traffic Trace Details',
-            breadcrumb: 'Traffic Traces',
-            parent: 'traffic-traces'
+            title: 'Fault Injections'
           },
-          component: () => import('@/views/Policies/TrafficTraceDetail')
+          component: () => import('@/views/Policies/FaultInjections')
         },
         // fault injections
         {
@@ -270,20 +204,7 @@ export default (store) => {
           meta: {
             title: 'Health Checks'
           },
-          component: () => import('@/views/HealthChecks/HealthChecks')
-        },
-        {
-          path: 'health-checks/:healthcheck',
-          name: 'health-checks-details',
-          params: {
-            healthcheck: ':healthcheck'
-          },
-          meta: {
-            title: 'Health Check Details',
-            breadcrumb: 'Health Checks',
-            parent: 'health-checks'
-          },
-          component: () => import('@/views/HealthChecks/HealthChecksDetail')
+          component: () => import('@/views/Policies/HealthChecks')
         },
         // proxy templates
         {
@@ -293,19 +214,6 @@ export default (store) => {
             title: 'Proxy Templates'
           },
           component: () => import('@/views/Policies/ProxyTemplates')
-        },
-        {
-          path: 'proxy-templates/:proxytemplate',
-          name: 'proxy-templates-details',
-          params: {
-            proxytemplate: ':proxytemplate'
-          },
-          meta: {
-            title: 'Proxy Templates',
-            breadcrumb: 'Proxy Templates',
-            parent: 'proxy-templates'
-          },
-          component: () => import('@/views/Policies/ProxyTemplatesDetail')
         }
       ]
     }
@@ -326,6 +234,22 @@ export default (store) => {
   router.beforeResolve((to, from, next) => {
     router.previous = from
     next()
+  })
+
+  /**
+   * This will make sure that the Meshes page displays all meshes
+   * if the user happens to go to the bare `/meshes` url with no
+   * query on the end of it.
+   */
+  router.beforeEach((to, from, next) => {
+    if (to.name === 'all-meshes') {
+      next({
+        name: 'mesh-child',
+        params: { mesh: 'all' }
+      })
+    } else {
+      next()
+    }
   })
 
   /**

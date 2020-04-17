@@ -32,30 +32,30 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 nav {
   position: fixed;
   display: flex;
   flex-direction: column;
-  width: 240px;
+  width: var(--sidebar-width);
   height: auto;
   min-height: 100%;
   border-right: 1px solid #e6e7e8;
-  background: #fff;
+  background: var(--sidebar-bg-color);
   z-index: 1000;
 
   &.closed {
-    width: 63px;
+    width: var(--sidebar-width-closed);
   }
 }
 </style>
 
 <style lang="scss">
 nav#the-sidebar + .main-content {
-  margin-left: 240px;
+  margin-left: var(--sidebar-width);
 }
 
 nav#the-sidebar.closed + .main-content {
-  margin-left: 63px;
+  margin-left: var(--sidebar-width-closed);
 }
 </style>

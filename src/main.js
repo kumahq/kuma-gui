@@ -7,7 +7,7 @@ import axios from 'axios'
 import Kuma from '@/services/kuma'
 
 // Globally import all Kongponents
-import '@/kongponents'
+import './kongponents'
 
 // Third party styles
 import '@/assets/styles/third-party/tailwind.css'
@@ -24,9 +24,6 @@ import '@/assets/styles/typography.css'
 import '@/assets/styles/inputs.css'
 import '@/assets/styles/components.css'
 import '@/assets/styles/transitions.css'
-
-// Kong Design System styles
-import '@kongponents/styles/styles.css'
 
 // const kuma = new Kuma({
 //   url: process.env.VUE_APP_KUMA_API || false

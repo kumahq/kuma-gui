@@ -1,8 +1,8 @@
 <template>
-  <div class="yaml-view">
+  <div class="code-view">
     <div
       v-if="isReady"
-      class="yaml-view-content"
+      class="code-view-content"
     >
       <KCard
         v-if="!isLoading && !isEmpty"
@@ -12,8 +12,8 @@
         <template slot="body">
           <prism
             class="code-block"
-            language="yaml"
-            :code="yamlContent"
+            :language="lang"
+            :code="codeContent"
           />
         </template>
         <template slot="actions">
@@ -24,9 +24,9 @@
             <KPop placement="bottom">
               <KButton
                 appearance="primary"
-                @click="() => { copyToClipboard(yamlContent) }"
+                @click="() => { copyToClipboard(codeContent) }"
               >
-                Copy YAML to Clipboard
+                {{ copyButtonText }}
               </KButton>
               <div slot="content">
                 <p>Entity copied to clipboard!</p>
@@ -97,20 +97,27 @@
 <script>
 import Prism from 'vue-prismjs'
 import 'prismjs/themes/prism.css'
-import json2yaml from '@appscode/json2yaml'
 
 export default {
-  name: 'YamlView',
+  name: 'CodeView',
   components: {
     prism: Prism
   },
   props: {
+    lang: {
+      type: String,
+      required: true
+    },
+    copyButtonText: {
+      type: String,
+      default: 'Copy to Clipboard'
+    },
     title: {
       type: String,
       default: null
     },
     content: {
-      type: Object,
+      type: String,
       default: null
     },
     loaders: {
@@ -134,10 +141,10 @@ export default {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
-    yamlContent () {
+    codeContent () {
       const content = this.content
 
-      return json2yaml(content)
+      return content
     }
   }
 }

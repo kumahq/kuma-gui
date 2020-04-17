@@ -1,5 +1,11 @@
 <template>
-  <div class="traffic-routes">
+  <div class="all-meshes">
+    <!-- <page-header noflex>
+      <breadcrumbs />
+      <h2 class="xxl">
+        {{ this.$route.meta.title }}
+      </h2>
+    </page-header> -->
     <FrameSkeleton>
       <DataOverview
         :page-size="6"
@@ -14,7 +20,18 @@
         table-data-row="name"
         @tableAction="tableAction"
         @reloadData="bootstrap"
-      />
+      >
+        <template slot="additionalControls">
+          <KButton
+            class="add-mesh-button"
+            appearance="primary"
+            size="small"
+            :to="{ path: '/wizard/mesh' }"
+          >
+            Create Mesh
+          </KButton>
+        </template>
+      </DataOverview>
       <Tabs
         :has-error="hasError"
         :is-loading="isLoading"
@@ -48,6 +65,8 @@
 <script>
 import { getSome } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
+// import PageHeader from '@/components/Utils/PageHeader.vue'
+// import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -55,11 +74,13 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'TrafficRoutes',
+  name: 'Meshes',
   metaInfo: {
-    title: 'Traffic Routes'
+    title: 'Meshes'
   },
   components: {
+    // PageHeader,
+    // Breadcrumbs,
     FrameSkeleton,
     DataOverview,
     Tabs,
@@ -80,13 +101,12 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Traffic Routes present.'
+        message: 'There are no Meshes present.'
       },
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
-          { label: 'Mesh', key: 'mesh' },
           { label: 'Type', key: 'type' }
         ],
         data: []
@@ -111,7 +131,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `Traffic Route: ${entity.name}`
+        return `Meshes: ${entity.name}`
       } else {
         return null
       }
@@ -142,7 +162,7 @@ export default {
       this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
 
       // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', ev.name)
+      this.$store.dispatch('updateSelectedTableRow', data.name)
 
       // load the data into the tabs
       this.getEntity(data)
@@ -153,18 +173,32 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      const endpoint = (mesh === 'all')
-        ? this.$api.getAllTrafficRoutes()
-        : this.$api.getAllTrafficRoutesFromMesh(mesh)
+      const endpoint = (mesh === 'all' || !mesh)
+        ? this.$api.getAllMeshes()
+        : this.$api.getMesh(mesh)
 
-      const getTrafficRoutes = () => {
+      const getMeshes = () => {
         return endpoint
           .then(response => {
-            if (response.items.length > 0) {
-              const items = response.items
+            const cleanRes = () => {
+              if (mesh === 'all') {
+                return response.items
+              }
 
+              const newItems = { items: [] }
+
+              newItems.items.push(response)
+
+              return newItems.items
+            }
+
+            const items = cleanRes()
+
+            if (items.length > 0) {
               // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
+              if (mesh === 'all') {
+                this.sortEntities(items)
+              }
 
               // set the first item as the default for initial load
               this.firstEntity = items[0].name
@@ -196,23 +230,17 @@ export default {
           })
       }
 
-      getTrafficRoutes()
+      getMeshes()
     },
     getEntity (entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
 
-      const mesh = this.$route.params.mesh
-
       if (entity && entity !== null) {
-        const entityMesh = (mesh === 'all')
-          ? entity.mesh
-          : mesh
-
-        return this.$api.getTrafficRoute(entityMesh, entity.name)
+        return this.$api.getMesh(entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name', 'mesh']
+              const selected = ['type', 'name']
 
               this.entity = getSome(response, selected)
               this.rawEntity = response
@@ -241,5 +269,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.add-mesh-button {
+  background-color: var(--logo-green) !important;
+}
 </style>

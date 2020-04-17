@@ -1,57 +1,29 @@
 export default {
 
   sections: [
-    // {
-    //   name: 'Global',
-    //   id: 'global',
-    //   skipRbac: true,
-    //   items: [
-    //     {
-    //       name: 'Global Overview',
-    //       link: '/overview',
-    //       title: false,
-    //       root: true
-    //     }
-    //   ]
-    // },
     {
-      name: 'General',
-      id: 'general',
+      name: 'Global',
+      id: 'global',
       skipRbac: true,
       items: [
-        {
-          name: 'General',
-          title: true,
-          parent: 'general'
-        },
         {
           name: 'Overview',
           link: '/overview',
           title: false,
-          parent: 'general'
-        }
-      ]
-    },
-    {
-      name: 'Entities',
-      id: 'entities',
-      skipRbac: true,
-      items: [
-        {
-          name: 'Entities',
-          title: true
+          root: true
         },
-        // {
-        //   name: 'Services',
-        //   link: '/services',
-        //   title: false,
-        //   parent: entities
-        // },
+        {
+          name: 'Meshes',
+          link: '/meshes',
+          title: false,
+          pathFlip: true
+          // root: true
+        },
         {
           name: 'Dataplanes',
           link: '/dataplanes',
-          title: false,
-          parent: 'entities'
+          title: false
+          // root: true
         }
       ]
     },
@@ -65,10 +37,16 @@ export default {
           title: true
         },
         {
+          name: 'Fault Injections',
+          link: '/fault-injections',
+          title: false,
+          parent: 'policies'
+        },
+        {
           name: 'Health Checks',
           link: '/health-checks',
           title: false,
-          parent: 'healthchecks'
+          parent: 'policies'
         },
         {
           name: 'Proxy Templates',

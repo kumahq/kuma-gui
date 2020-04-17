@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import '@kongponents/styles/styles.css'
 import KAlert from '@kongponents/kalert'
 import KBadge from '@kongponents/kbadge'
 import KButton from '@kongponents/kbutton'
@@ -13,13 +13,13 @@ import KClipboardProvider from '@kongponents/kclipboardprovider'
 import Krumbs from '@kongponents/krumbs'
 import KPop from '@kongponents/kpop'
 import KToggle from '@kongponents/ktoggle'
-
-// these 2 modules throw an error, hidden for now since they're not in use
-// import KModal from '@kongponents/kmodal'
-// import KInput from '@kongponents/kinput'
+import KTabs from '@kongponents/ktabs'
+import KModal from '@kongponents/kmodal'
+import KInput from '@kongponents/kinput'
+import KInputSwitch from '@kongponents/kinputswitch'
 
 Vue.component('KAlert', KAlert)
-// Vue.component('KBadge', KBadge)
+Vue.component('KBadge', KBadge)
 Vue.component('KButton', KButton)
 Vue.component('KCard', KCard)
 Vue.component('KEmptyState', KEmptyState)
@@ -30,8 +30,8 @@ Vue.component('KoolTip', KoolTip)
 Vue.component('KClipboardProvider', KClipboardProvider)
 Vue.component('Krumbs', Krumbs)
 Vue.component('KPop', KPop)
-// Vue.component('KToggle', KToggle)
-
-// disabled until fixed
-// Vue.component('KInput', KInput)
-// Vue.component('KModal', KModal)
+Vue.component('KTabs', KTabs)
+Vue.component('KToggle', KToggle)
+Vue.component('KInput', KInput)
+Vue.component('KInputSwitch', KInputSwitch)
+Vue.component('KModal', KModal)

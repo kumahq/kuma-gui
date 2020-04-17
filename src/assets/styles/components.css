@@ -32,3 +32,11 @@
   margin: 0 auto 10px auto;
   text-align: center;
 }
+
+/* KCard variants */
+
+@media screen and (min-width: 1024px) {
+  .k-card--small {
+    max-width: 65%;
+  }
+}

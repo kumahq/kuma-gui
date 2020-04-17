@@ -78,11 +78,6 @@ export default {
     //   perms: state => state.permissions
     // }),
 
-    // ...mapState('workspaces', {
-    //   workspace: state => state.workspace,
-    //   workspaces: state => state.workspaces
-    // }),
-
     resourceLinks () {
       const storedVersion = this.$store.getters.getVersion
       const ver = (storedVersion !== null) ? storedVersion : 'latest'
@@ -106,22 +101,6 @@ export default {
     ...mapState('sidebar', {
       menu: state => state.menu
     }),
-
-    // workspaceList () {
-    //   return this.workspaces
-    // },
-
-    // currentWorkspace () {
-    //   return this.workspaceList.filter(w => w.name === this.workspace)[0]
-    // },
-
-    // portalIsLegacy () {
-    //   return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal_is_legacy')
-    // },
-
-    // portalIsEnabled () {
-    //   return this.$store.getters['workspaces/getWorkspaceConfigValue']('portal')
-    // },
 
     /**
      * Main property for items in the sidebar menu. Filters out menu.js items by
@@ -147,17 +126,6 @@ export default {
     meshList () {
       return this.$store.state.meshes
     }
-
-    // kumaInfo () {
-    //   const tagline = this.$store.getters.getTagline
-    //   const version = this.$store.getters.getVersion
-
-    //   if (tagline && version) {
-    //     return `${tagline} v${version}`
-    //   } else {
-    //     return false
-    //   }
-    // }
   },
 
   mounted () {
@@ -170,8 +138,6 @@ export default {
     }
 
     window.addEventListener('resize', this.handleResize)
-
-    // this.getKumaInfo()
   },
 
   beforeDestroy () {
@@ -206,22 +172,14 @@ export default {
       if (document.documentElement.clientWidth >= 900) {
         this.isCollapsed = sidebarState || false
       }
-    },
-
-    getKumaInfo () {
-      this.$store.dispatch('getVersion')
-      this.$store.dispatch('getTagline')
     }
-
-    // openWorkspaces () {
-    //   this.toggleWorkspaces = !this.toggleWorkspaces
-    // },
   }
 }
 </script>
 
 <style lang='scss'>
 $top-nav-height: 75px;
+
 .workspace-tile {
   padding: 24px 0;
   border-bottom: 1px solid #e0e1e2;
@@ -231,6 +189,7 @@ $top-nav-height: 75px;
     text-decoration: none;
   }
 }
+
 .gry-bounding {
   display: flex;
   position: relative;
@@ -265,12 +224,14 @@ $top-nav-height: 75px;
 }
 
 nav {
+
   .menu-container {
     width: 240px;
     height: calc(100vh - 145px); // 100vh - (Header + ws picker + collapse btn)
     overflow-y: auto;
     overflow-x: hidden;
   }
+
   &.closed {
     .workspace-tile {
       border-top: 1px solid #e0e1e2;
@@ -293,7 +254,7 @@ nav {
 }
 
 /* Fix for IE */
-.workspace-toggle>span{
+.workspace-toggle > span{
   top: 10px
 }
 

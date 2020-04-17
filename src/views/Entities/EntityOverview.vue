@@ -9,6 +9,7 @@
       :empty-state="empty_state"
       :display-refresh-control="false"
     />
+
     <YamlView
       title="Entity Overview"
       :content="entity"
@@ -39,7 +40,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no meshes present.'
+        message: 'There are no Meshes present.'
       },
       entity: null
     }
@@ -122,29 +123,33 @@ export default {
       // fetch the entity for YAML formatting
       this.getEntity()
 
-      // get the total number of dataplanes from selected mesh
+      //
+      // VueX actions for handling totals
+      //
+
+      // Dataplanes
       this.$store.dispatch('getDataplaneFromMeshTotalCount', mesh)
 
-      // get the total number of traffic routes from selected mesh
+      // Traffic Routes
       this.$store.dispatch('getTrafficRoutesFromMeshTotalCount', mesh)
 
-      // get the total number of traffic permissions from selected mesh
+      // Traffic Permissions
       this.$store.dispatch('getTrafficPermissionsFromMeshTotalCount', mesh)
 
-      // get the total number of traffic logs from selected mesh
+      // Traffic Logs
       this.$store.dispatch('getTrafficLogsFromMeshTotalCount', mesh)
 
-      // get the total number of traffic traces from selected mesh
+      // Traffice Traces
       this.$store.dispatch('getTrafficTracesFromMeshTotalCount', mesh)
 
-      // get the total number of fault injections from selected mesh
-      this.$store.dispatch('getFaultInjectionsFromMeshTotalCount', mesh)
-
-      // get the total number of health checks from selected mesh
+      // Health Checks
       this.$store.dispatch('getHealthChecksFromMeshTotalCount', mesh)
 
-      // get the total number of proxy templates from selected mesh
-      this.$store.dispatch('getProxyTemplatesTotalCount', mesh)
+      // Proxy Templates
+      this.$store.dispatch('getProxyTemplatesFromMeshTotalCount', mesh)
+
+      // Fault Injections
+      this.$store.dispatch('getFaultInjectionsFromMeshTotalCount', mesh)
     }
   }
 }

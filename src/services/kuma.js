@@ -42,27 +42,41 @@ export default class Kuma {
    * Dataplanes
    */
 
+  getAllDataplanes (params) {
+    return this.client.get('/dataplanes', { params })
+  }
+
   // get a list of all dataplanes
   getAllDataplanesFromMesh (name, params) {
     return this.client.get(`/meshes/${name}/dataplanes`, { params })
   }
 
   // get a single dataplane
-  getDataplane (name, dataplane, params) {
+  getDataplaneFromMesh (name, dataplane, params) {
     return this.client.get(`/meshes/${name}/dataplanes/${dataplane}`, { params })
   }
 
-  // get dataplane overviews
-  getDataplaneOverviews (mesh, dataplane, params) {
+  // get dataplane overviews by mesh
+  getDataplaneOverviewsFromMesh (mesh, dataplane, params) {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
   }
 
+  // get all dataplane overviews
+  getAllDataplaneOverviews (params) {
+    return this.client.get('/dataplanes+insights', { params })
+  }
+
   /**
-   * Traffic / Policies
+   * Traffic Logs
    */
 
-  // get traffic logs
-  getTrafficLogs (mesh, params) {
+  // get all traffic logs
+  getAllTrafficLogs (params) {
+    return this.client.get('/traffic-logs', { params })
+  }
+
+  // get all traffic logs from mesh
+  getAllTrafficLogsFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/traffic-logs`, { params })
   }
 
@@ -71,8 +85,17 @@ export default class Kuma {
     return this.client.get(`/meshes/${mesh}/traffic-logs/${trafficlog}`, { params })
   }
 
+  /**
+   * Traffic Permissions
+   */
+
   // get traffic permissions
-  getTrafficPermissions (mesh, params) {
+  getAllTrafficPermissions (params) {
+    return this.client.get('/traffic-permissions', { params })
+  }
+
+  // get traffic permissions from mesh
+  getAllTrafficPermissionsFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/traffic-permissions`, { params })
   }
 
@@ -81,8 +104,17 @@ export default class Kuma {
     return this.client.get(`/meshes/${mesh}/traffic-permissions/${trafficpermission}`, { params })
   }
 
-  // get traffic routes
-  getTrafficRoutes (mesh, params) {
+  /**
+   * Traffic Routes
+   */
+
+  // get all traffic routes
+  getAllTrafficRoutes (params) {
+    return this.client.get('/traffic-routes', { params })
+  }
+
+  // get traffic routes from mesh
+  getAllTrafficRoutesFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/traffic-routes`, { params })
   }
 
@@ -91,8 +123,17 @@ export default class Kuma {
     return this.client.get(`/meshes/${mesh}/traffic-routes/${trafficroute}`, { params })
   }
 
-  // get traffic traces
-  getTrafficTraces (mesh, params) {
+  /**
+   * Traffic Traces
+   */
+
+  // get all traffic traces
+  getAllTrafficTraces (params) {
+    return this.client.get('/traffic-traces', { params })
+  }
+
+  // get traffic traces from mesh
+  getAllTrafficTracesFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/traffic-traces`, { params })
   }
 
@@ -102,11 +143,19 @@ export default class Kuma {
   }
 
   /**
-   * Proxies
+   * Proxy Templates
    */
 
-  // get proxy templates
-  getProxyTemplates (mesh, params) {
+  // get all proxy templates
+  getAllProxyTemplates (params) {
+    return this.client.get('/proxytemplates', { params })
+
+    // this may change to this:
+    // return this.client.get('/proxy-templates', { params })
+  }
+
+  // get all proxy templates from mesh
+  getAllProxyTemplatesFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/proxytemplates`, { params })
   }
 
@@ -119,8 +168,13 @@ export default class Kuma {
    * Health Checks
    */
 
-  // get health checks
-  getHealthChecks (mesh, params) {
+  // get all health checks
+  getAllHealthChecks (params) {
+    return this.client.get('/health-checks', { params })
+  }
+
+  // get all health checks from mesh
+  getAllHealthChecksFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/health-checks`, { params })
   }
 
@@ -133,8 +187,13 @@ export default class Kuma {
    * Fault Injections
    */
 
-  // get fault injections
-  getFaultInjections (mesh, params) {
+  // get all fault injections
+  getAllFaultInjections (params) {
+    return this.client.get('/fault-injections', { params })
+  }
+
+  // get all fault injections from mesh
+  getAllFaultInjectionsFromMesh (mesh, params) {
     return this.client.get(`/meshes/${mesh}/fault-injections`, { params })
   }
 
@@ -147,22 +206,22 @@ export default class Kuma {
    *
    * NOTE:
    * There are no endpoints yet for fetching service information.
-   * The below calls are placeholders.
+   * The below calls are placeholders for when those endpoints are added.
    *
    */
 
   // get all services
-  getAllServices (name, params) {
-    return this.client.get(`/meshes/${name}/services`, { params })
+  getAllServices (params) {
+    return this.client.get('/services', { params })
+  }
+
+  // get all services from mesh
+  getAllServicesFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/services`, { params })
   }
 
   // get service details
   getService (name, service, params) {
     return this.client.get(`/meshes/${name}/services/${service}`, { params })
-  }
-
-  // get service overviews
-  getServiceOverviews (mesh, service, params) {
-    return this.client.get(`/meshes/${mesh}/services+insights/${service}`, { params })
   }
 }

@@ -38,6 +38,7 @@ export default {
       const trafficLog = this.$route.params.trafficlog
       const trafficRoute = this.$route.params.trafficroute
       const healthCheck = this.$route.params.healthcheck
+      const trafficTrace = this.$route.params.traffictrace
 
       let assembled
 
@@ -51,6 +52,8 @@ export default {
         assembled = `${title} for ${trafficPermission}`
       } else if (healthCheck) {
         assembled = `${title} for ${healthCheck}`
+      } else if (trafficTrace) {
+        assembled = `${title} for ${trafficTrace}`
       } else if (mesh) {
         assembled = `${title} for ${mesh}`
       } else {

@@ -114,7 +114,7 @@ export default {
       setItemToStorage('kumaOnboardingComplete', true)
 
       this.$router.push({
-        name: 'mesh-overview',
+        name: 'global-overview',
         params: {
           mesh: 'default'
         }
