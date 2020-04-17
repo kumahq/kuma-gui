@@ -77,12 +77,6 @@ export default {
           link: '/traffic-traces',
           title: false,
           parent: 'policies'
-        },
-        {
-          name: 'Fault Injections',
-          link: '/fault-injections',
-          title: false,
-          parent: 'policies'
         }
       ]
     }
