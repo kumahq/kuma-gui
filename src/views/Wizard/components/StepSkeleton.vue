@@ -307,22 +307,21 @@ $bp-max-width: 1219px;
     @include highlighted-step;
 
     position: relative;
-
-    &:before, &:after {
-      position: absolute;
-      content: "";
-      display: block;
-    }
+    border-right: 1px solid var(--wizard-tab-bg);
 
     // arrow
     &:after {
       --i: 20px;
+
+      position: absolute;
+      content: "";
+      display: block;
       top: 0;
       right: calc(var(--i) * -1);
       width: var(--i);
       height: 100%;
       background-color: var(--wizard-tab-bg);
-      clip-path: polygon(0 0, 100% 50%, 0 100%);
+      clip-path: polygon(100% 50%, 9% 0, 0 0, 0 100%, 10% 100%);
     }
   }
 
