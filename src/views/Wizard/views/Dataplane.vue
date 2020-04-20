@@ -11,78 +11,91 @@
         <!-- step content -->
         <template slot="general">
           <p>
-            Welcome to the wizard for creating a new Mesh entity in Kuma.
+            Welcome to the wizard to create a new Dataplane entity in {{ title }}.
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
-            As you know, the Kuma GUI is read-only, so at the end of this wizard
-            we will be generating the configuration that you can apply with either
-            <code>kubectl</code> (if you are running in Kubernetes mode) or
-            kumactl / API (if you are running in Universal mode).
+            As you know, the Kuma GUI is read-only.
           </p>
 
+          <KEmptyState
+            :is-error="!environment"
+            class="my-6 empty-state--wide-content"
+          >
+            <template
+              v-if="environment === 'kubernetes' || environment === 'universal'"
+              slot="title"
+            >
+              Running on {{ environment }}
+            </template>
+            <template slot="message">
+              <p v-if="environment === 'kubernetes'">
+                We have detected you are running on a <strong>Kubernetes environment</strong>, and we
+                are going to be showing you instructions for Kubernetes unless you
+                decide to visualize the instructions for Universal.
+              </p>
+              <p v-else-if="environment === 'universal'">
+                We have detected you are running on a <strong>Universal environment</strong>, and we
+                are going to be showing you instructions for Universal, unless you
+                decide to visualize the instructions for Kubernetes.
+              </p>
+              <p v-else>
+                We were unable to determine your environment.
+              </p>
+            </template>
+            <template slot="cta">
+              <KButton
+                v-if="environment"
+                appearance="primary"
+              >
+                {{ instructionsCtaText }}
+              </KButton>
+            </template>
+          </KEmptyState>
+
           <h3>
-            To get started, please fill-in the following information:
+            To get started, please select on what Mesh you would like to add the Dataplane:
           </h3>
 
           <KCard
-            class="my-6 k-card--small"
-            title="Mesh Information"
+            class="my-6"
             has-shadow
           >
             <template slot="body">
               <FormFragment
-                title="Mesh name"
-                for-attr="mesh-name"
+                title="Mesh"
+                for-attr="dp-mesh"
+                all-inline
               >
-                <input
-                  id="mesh-name"
-                  v-model="validate.meshName"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-mesh-name"
-                  required
-                  @change="updateStorage('meshName', $event.target.value)"
-                >
-                <KAlert
+                <div>
+                  <select
+                    id="dp-mesh"
+                    class="k-input w-100"
+                    @change="updateStorage('dpMesh', $event.target.value)"
+                  >
+                    <option
+                      v-for="item in meshes.items"
+                      :key="item.name"
+                      :value="item.name"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <KButton
+                    :to="{ path: '/wizard/mesh' }"
+                    appearance="primary"
+                  >
+                    Create a new Mesh
+                  </KButton>
+                </div>
+                <!-- <KAlert
                   v-if="vmsg.meshName"
                   appearance="danger"
                   size="small"
                   :alert-message="vmsg.meshName"
-                />
-              </FormFragment>
-
-              <FormFragment title="Mutual TLS">
-                <label class="k-input-label mx-2">
-                  <input
-                    ref="mtlsDisabled"
-                    value="disabled"
-                    name="mtls"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.mtlsEnabled === false"
-                    @change="
-                      updateStorage('meshMtls', false);
-                      formConditions.mtlsEnabled = false
-                    "
-                  >
-                  <span>Disabled</span>
-                </label>
-                <label class="k-input-label mx-2">
-                  <input
-                    id="mtls-enabled"
-                    value="enabled"
-                    name="mtls"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.mtlsEnabled === true"
-                    @change="
-                      updateStorage('meshMtls', true);
-                      updateStorage('meshCA', 'builtin');
-                      formConditions.mtlsEnabled = true"
-                  >
-                  <span>Enabled</span>
-                </label>
+                /> -->
               </FormFragment>
 
               <FormFragment
@@ -122,7 +135,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="logging">
+        <template slot="scope-settings">
           <h3>
             Setup Logging
           </h3>
@@ -249,220 +262,6 @@
             </template>
           </KCard>
         </template>
-        <template slot="tracing">
-          <h3>
-            Setup Tracing
-          </h3>
-          <p>
-            You can setup as many tracing backends as you need that you can later
-            use to log traffic via the &quot;TrafficTrace&quot; policy. In this
-            wizard we allow you to configure one backend, but you can add more
-            manually as you wish.
-          </p>
-          <KCard
-            class="my-6 k-card--small"
-            title="Tracing Configuration"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                title="Tracing"
-              >
-                <label class="k-input-label mx-2">
-                  <input
-                    id="tracing-disabled"
-                    value="disabled"
-                    name="tracing"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.tracingEnabled === false"
-                    @change="updateStorage('meshTracingStatus', false); formConditions.tracingEnabled = false"
-                  >
-                  <span>Disabled</span>
-                </label>
-                <label class="k-input-label mx-2">
-                  <input
-                    id="tracing-enabled"
-                    value="enabled"
-                    name="tracing"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.tracingEnabled === true"
-                    @change="
-                      updateStorage('meshTracingStatus', true);
-                      updateStorage('meshTracingType', 'zipkin')
-                      formConditions.tracingEnabled = true"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
-
-              <FormFragment
-                v-if="formConditions.tracingEnabled === true"
-                title="Backend name"
-                for-attr="tracing-backend-name"
-              >
-                <input
-                  id="tracing-backend-name"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-tracing-backend-name"
-                  :value="getStorageItem('meshTracingBackend')"
-                  @change="updateStorage('meshTracingBackend', $event.target.value)"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="formConditions.tracingEnabled === true"
-                title="Type"
-                for-attr="tracing-type"
-              >
-                <select
-                  id="tracing-type"
-                  class="k-input w-100"
-                  name="tracing-type"
-                  @change="updateStorage('meshTracingType', $event.target.value)"
-                >
-                  <option
-                    value="zipkin"
-                    :selected="(getStorageItem('meshTracingType') === 'zipkin') ? true : false"
-                  >
-                    Zipkin
-                  </option>
-                </select>
-              </FormFragment>
-
-              <FormFragment
-                v-if="formConditions.tracingEnabled === true"
-                title="Sampling"
-                for-attr="tracing-sampling"
-              >
-                <input
-                  id="tracing-sampling"
-                  type="number"
-                  class="k-input w-100"
-                  :value="getStorageItem('meshTracingSampling') || 99.9"
-                  step="0.1"
-                  min="0"
-                  max="100"
-                  @change="updateStorage('meshTracingSampling', $event.target.value)"
-                >
-              </FormFragment>
-
-              <FormFragment
-                v-if="formConditions.tracingEnabled === true"
-                title="URL"
-                for-attr="tracing-zipkin-url"
-              >
-                <input
-                  id="tracing-zipkin-url"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your Zipkin URL"
-                  :value="getStorageItem('meshTracingZipkinURL')"
-                  @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
-                >
-              </FormFragment>
-            </template>
-          </KCard>
-        </template>
-        <template slot="metrics">
-          <h3>
-            Setup Metrics
-          </h3>
-          <p>
-            You can expose metrics from every data-plane on a configurable path
-            and port that a metrics service, like Prometheus, can use to fetch them.
-          </p>
-          <KCard
-            class="my-6 k-card--small"
-            title="Metrics Configuration"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                title="Metrics"
-              >
-                <label class="k-input-label mx-2">
-                  <input
-                    id="metrics-disabled"
-                    value="disabled"
-                    name="metrics"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.metricsEnabled === false"
-                    @change="updateStorage('meshMetricsStatus', false); formConditions.metricsEnabled = false"
-                  >
-                  <span>Disabled</span>
-                </label>
-                <label class="k-input-label mx-2">
-                  <input
-                    id="metrics-enabled"
-                    value="enabled"
-                    name="metrics"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.metricsEnabled === true"
-                    @change="
-                      updateStorage('meshMetricsStatus', true);
-                      updateStorage('meshMetricsType', 'prometheus')
-                      formConditions.metricsEnabled = true"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
-              <FormFragment
-                v-if="formConditions.metricsEnabled === true"
-                title="Type"
-                for-attr="metrics-type"
-              >
-                <select
-                  id="metrics-type"
-                  class="k-input w-100"
-                  name="metrics-type"
-                  @change="updateStorage('meshMetricsType', $event.target.value)"
-                >
-                  <option
-                    value="prometheus"
-                    :selected="(getStorageItem('meshMetricsType') === 'prometheus') ? true : false"
-                  >
-                    Prometheus
-                  </option>
-                </select>
-              </FormFragment>
-              <FormFragment
-                v-if="formConditions.metricsEnabled === true"
-                title="Dataplane port"
-                for-attr="metrics-dataplane-port"
-              >
-                <input
-                  id="metrics-dataplane-port"
-                  type="number"
-                  class="k-input w-100"
-                  step="1"
-                  min="0"
-                  max="65535"
-                  placeholder="1234"
-                  :value="getStorageItem('meshMetricsDataplanePort') || '5670'"
-                  @change="updateStorage('meshMetricsDataplanePort', $event.target.value)"
-                >
-              </FormFragment>
-              <FormFragment
-                v-if="formConditions.metricsEnabled === true"
-                title="Dataplane path"
-                for-attr="metrics-dataplane-path"
-              >
-                <input
-                  id="metrics-dataplane-path"
-                  type="text"
-                  class="k-input w-100"
-                  :value="getStorageItem('meshMetricsDataplanePath') || '/metrics'"
-                  @change="updateStorage('meshMetricsDataplanePath', $event.target.value)"
-                >
-              </FormFragment>
-            </template>
-          </KCard>
-        </template>
         <template slot="complete">
           <div v-if="codeOutput">
             <div v-if="scanFound === false">
@@ -551,29 +350,13 @@
         </template>
 
         <!-- sidebar content -->
-        <template slot="mesh">
-          <h3>Mesh</h3>
+        <template slot="dataplane">
+          <h3>Dataplane</h3>
           <p>
-            In {{ title }}, a Mesh entity allows you to define an isolated environment
-            for your data-planes and policies. It's isolated because the mTLS CA
-            you choose can be different from the one configured for our Meshes.
-            Ideally, you will have either a large Mesh with all the workloads, or
-            one Mesh per application for better isolation.
-          </p>
-          <p>
-            <a
-              :href="`https://kuma.io/docs/${version}/policies/mesh/`"
-              target="_blank"
-            >
-              Learn More
-            </a>
-          </p>
-        </template>
-        <template slot="did-you-know">
-          <h3>Did You Know?</h3>
-          <p>
-            As you know, the GUI is read-only, but it will be providing instructions
-            to create a new Mesh and verify everything worked well.
+            In {{ title }}, a Dataplane entity represents a sidebar proxy running
+            alongside one of your services. Dataplanes can be added in any Mesh
+            that you may have created, and in Kubernetes, they will be auto-injected
+            by {{ title }}.
           </p>
         </template>
       </StepSkeleton>
@@ -616,20 +399,12 @@ export default {
       schema: meshSchema,
       steps: [
         {
-          label: 'General & Security',
+          label: 'General',
           slug: 'general'
         },
         {
-          label: 'Logging',
-          slug: 'logging'
-        },
-        {
-          label: 'Tracing',
-          slug: 'tracing'
-        },
-        {
-          label: 'Metrics',
-          slug: 'metrics'
+          label: 'Scope Settings',
+          slug: 'scope-settings'
         },
         {
           label: 'Install',
@@ -648,10 +423,7 @@ export default {
       ],
       sidebarContent: [
         {
-          name: 'mesh'
-        },
-        {
-          name: 'did-you-know'
+          name: 'dataplane'
         }
       ],
       formConditions: {
@@ -665,7 +437,7 @@ export default {
       scanFound: false,
       scanError: false,
       isComplete: false,
-      nextDisabled: true,
+      nextDisabled: false,
       validate: {
         meshName: '',
         meshLoggingBackend: ''
@@ -679,8 +451,15 @@ export default {
       version: 'getVersion',
       environment: 'getEnvironment',
       formData: 'getStoredWizardData',
-      selectedTab: 'getSelectedTab'
+      selectedTab: 'getSelectedTab',
+      meshes: 'getMeshList'
     }),
+
+    instructionsCtaText () {
+      return (this.environment === 'universal')
+        ? 'Switch to Kubernetes instructions'
+        : 'Switch to Universal instructions'
+    },
 
     // this exists because the browser is stubborn and holds onto this
     // data even if it's not present in localStorage
@@ -869,7 +648,12 @@ export default {
       // do nothing if there's nothing found
       if (!entity) return
 
-      // this.$api.getMesh(entity)
+      /**
+       * TODO
+       * this will eventually change to `this.$api.getDataplaneFromMesh()`
+       * we will need to get the Mesh namespace the user selects, or the one
+       * they create, as well as the Dataplane namespace.
+       */
       this.$api.getMesh(entity)
         .then(response => {
           if (response && response.name.length > 0) {

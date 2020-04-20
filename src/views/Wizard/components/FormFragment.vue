@@ -9,7 +9,10 @@
           {{ title }}:
         </label>
       </div>
-      <div class="form-line__col">
+      <div
+        class="form-line__col"
+        :class="{ 'is-inline': allInline }"
+      >
         <slot />
       </div>
     </div>
@@ -28,6 +31,10 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    allInline: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -65,6 +72,17 @@ $last-col-flex: 1 0 0;
 
     .form-line__col:last-of-type {
       flex: 1 0 0;
+    }
+
+    .is-inline {
+      display: flex;
+      align-items: center;
+      margin: 0 -16px;
+
+      > * {
+        flex: 1 0 0;
+        margin: 0 8px;
+      }
     }
   }
 

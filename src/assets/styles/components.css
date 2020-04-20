@@ -40,3 +40,8 @@
     max-width: 65%;
   }
 }
+
+/* KEmptyState variants */
+.empty-state--wide-content p {
+  max-width: 85% !important;
+}
