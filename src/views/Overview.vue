@@ -126,7 +126,7 @@ export default {
         },
         {
           metric: 'Fault Injections',
-          value: this.$store.state.totalTrafficTraceCount
+          value: this.$store.state.totalFaultInjectionCount
         }
       ]
     }
