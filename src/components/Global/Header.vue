@@ -95,7 +95,7 @@ export default {
 
   img {
     display: block;
-    width: 100%;
+    width: auto;
     height: auto;
     max-height: 46px;
   }
