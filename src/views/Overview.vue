@@ -25,6 +25,18 @@
           </p>
         </template>
       </CardSkeleton>
+      <CardSkeleton
+        class="mx-4"
+        :card-action-route="{ path: '/wizard/dataplane' }"
+        card-title="Create A Dataplane"
+        card-action-button-text="Start Now"
+      >
+        <template slot="cardContent">
+          <p class="lg">
+            Create a new Dataplane here.
+          </p>
+        </template>
+      </CardSkeleton>
     </div>
 
     <FrameSkeleton>

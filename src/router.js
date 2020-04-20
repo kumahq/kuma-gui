@@ -69,6 +69,15 @@ export default (store) => {
             excludeAsBreadcrumb: true
           },
           component: () => import('@/views/Wizard/views/Mesh')
+        },
+        {
+          path: 'dataplane',
+          name: 'create-dataplane',
+          meta: {
+            title: 'Create a new Dataplane',
+            excludeAsBreadcrumb: true
+          },
+          component: () => import('@/views/Wizard/views/Dataplane')
         }
       ]
     },
