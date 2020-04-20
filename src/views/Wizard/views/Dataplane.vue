@@ -596,7 +596,7 @@ import Scanner from '@/views/Wizard/components/Scanner'
 import meshSchema from '@/views/Wizard/schemas/Mesh'
 
 export default {
-  name: 'MeshWizard',
+  name: 'DataplaneWizard',
   metaInfo: {
     title: 'Create a new Mesh'
   },
