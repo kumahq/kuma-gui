@@ -1,6 +1,9 @@
 <template>
   <div class="form-line-wrapper">
-    <div class="form-line">
+    <div
+      class="form-line"
+      :class="{ 'has-equal-cols': equalCols }"
+    >
       <div
         v-if="!hideLabelCol"
         class="form-line__col"
@@ -28,7 +31,8 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      required: false,
+      default: null
     },
     forAttr: {
       type: String,
@@ -40,6 +44,10 @@ export default {
       default: false
     },
     hideLabelCol: {
+      type: Boolean,
+      default: false
+    },
+    equalCols: {
       type: Boolean,
       default: false
     }
@@ -89,6 +97,22 @@ $last-col-flex: 1 0 0;
       > * {
         flex: 1 0 0;
         margin: 0 8px;
+      }
+    }
+
+    &.has-equal-cols {
+
+      > * {
+        flex: 1 0 0;
+        margin: 0 8px;
+      }
+
+      .form-line__col {
+        text-align: left;
+      }
+
+      input + span {
+        margin-left: 8px;
       }
     }
   }

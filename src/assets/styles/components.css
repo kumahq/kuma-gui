@@ -42,6 +42,10 @@
 }
 
 /* KEmptyState variants */
-.empty-state--wide-content p {
-  max-width: 85% !important;
+.empty-state-wrapper.empty-state--wide-content p {
+  max-width: 85%;
+}
+
+.empty-state-wrapper.empty-state--compact {
+  padding: 2rem 0;
 }

@@ -160,7 +160,10 @@ export default {
       // revert back to the first step
       this.start = 0
       // go to first step in the UI
-      this.goToStep(0)
+      if (process.env.NODE_ENV === 'production') {
+        this.goToStep(0)
+      }
+
       // clear the form data from localStorage
       localStorage.removeItem('storedFormData')
       // reset all input values so the browser can't pre-fill them

@@ -20,7 +20,7 @@
 
           <KEmptyState
             :is-error="!environment"
-            class="my-6 empty-state--wide-content"
+            class="my-6 empty-state--wide-content empty-state--compact"
           >
             <template
               v-if="environment === 'kubernetes' || environment === 'universal'"
@@ -46,6 +46,7 @@
             <template slot="cta">
               <KButton
                 v-if="environment"
+                :to="instructionsCtaRoute"
                 appearance="primary"
               >
                 <!--
@@ -69,13 +70,14 @@
             </router-link>.
           </p>
 
+          <!-- mesh selection -->
           <KCard
             class="my-6"
             has-shadow
           >
             <template slot="body">
               <FormFragment
-                title="Mesh"
+                title="Choose a Mesh"
                 for-attr="dp-mesh"
                 all-inline
               >
@@ -95,8 +97,11 @@
                   </select>
                 </div>
                 <div>
+                  <label class="k-input-label mr-4">
+                    or
+                  </label>
                   <KButton
-                    :to="{ path: '/wizard/mesh' }"
+                    :to="{ name: 'create-mesh' }"
                     appearance="primary"
                   >
                     Create a new Mesh
@@ -109,7 +114,6 @@
                   :alert-message="vmsg.meshName"
                 /> -->
               </FormFragment>
-              </FormFragment>
             </template>
           </KCard>
         </template>
@@ -120,14 +124,16 @@
           <p>
             You can create a data plane for a service or a data plane for an Ingress gateway.
           </p>
+
+          <!-- dataplane mode -->
           <KCard
             class="my-6"
             has-shadow
           >
             <template slot="body">
               <FormFragment
-                title="Dataplane Mode"
                 all-inline
+                equal-cols
                 hide-label-col
               >
                 <label for="service-dataplane">
@@ -137,6 +143,7 @@
                     type="radio"
                     name="dataplane-type"
                     value="service"
+                    checked
                   >
                   <span>
                     Service Dataplane
@@ -162,6 +169,212 @@
             Should the data plane be added for an entire Namespace and all of its services,
             or for specific individual services in any namespace?
           </p>
+
+          <!-- service selection -->
+          <KCard
+            class="my-6"
+            has-shadow
+          >
+            <template slot="body">
+              <FormFragment
+                all-inline
+                equal-cols
+                hide-label-col
+              >
+                <label for="k8s-services-all">
+                  <input
+                    id="k8s-services-all"
+                    v-model="validate.k8sServices"
+                    class="k-input"
+                    type="radio"
+                    name="k8s-services"
+                    value="all-services"
+                    checked
+                  >
+                  <span>
+                    All Services in Namespace
+                  </span>
+                </label>
+                <label for="k8s-services-individual">
+                  <input
+                    id="k8s-services-individual"
+                    v-model="validate.k8sServices"
+                    class="k-input"
+                    type="radio"
+                    name="k8s-services"
+                    value="individual-services"
+                  >
+                  <span>
+                    Individual Services
+                  </span>
+                </label>
+              </FormFragment>
+            </template>
+          </KCard>
+
+          <KCard
+            v-if="validate.k8sServices === 'individual-services'"
+            class="my-6"
+            has-shadow
+          >
+            <template slot="body">
+              <FormFragment
+                all-inline
+                equal-cols
+                hide-label-col
+              >
+                <label for="k8s-deployment-existing">
+                  <input
+                    id="k8s-deployment-existing"
+                    v-model="validate.k8sDeployment"
+                    class="k-input"
+                    type="radio"
+                    name="k8s-deployment"
+                    value="existing-deployment"
+                    checked
+                  >
+                  <span>
+                    Existing Deployment
+                  </span>
+                </label>
+                <label for="k8s-deployment-new">
+                  <input
+                    id="k8s-deployment-new"
+                    v-model="validate.k8sDeployment"
+                    class="k-input"
+                    type="radio"
+                    name="k8s-deployment"
+                    value="new-deployment"
+                  >
+                  <span>
+                    New Deployment
+                  </span>
+                </label>
+              </FormFragment>
+            </template>
+          </KCard>
+
+          <!-- namespace selection options -->
+          <KCard
+            class="my-6"
+            has-shadow
+          >
+            <template slot="body">
+              <FormFragment
+                all-inline
+                equal-cols
+                hide-label-col
+              >
+                <label for="k8s-namespace-existing">
+                  <input
+                    id="k8s-namespace-existing"
+                    v-model="validate.k8sNamespace"
+                    class="k-input"
+                    type="radio"
+                    name="k8s-namespace"
+                    value="existing-namespace"
+                    checked
+                  >
+                  <span>
+                    Existing Namespace
+                  </span>
+                </label>
+                <label for="k8s-namespace-new">
+                  <input
+                    id="k8s-namespace-new"
+                    v-model="validate.k8sNamespace"
+                    class="k-input"
+                    type="radio"
+                    name="k8s-namespace"
+                    value="new-namespace"
+                  >
+                  <span>
+                    New Namespace
+                  </span>
+                </label>
+              </FormFragment>
+            </template>
+          </KCard>
+
+          <!-- namespace selection -->
+          <KCard
+            class="my-6"
+            has-shadow
+          >
+            <template slot="body">
+              <FormFragment
+                title="Namespace"
+                for-attr="k8s-namespace-selection"
+              >
+                <select
+                  v-if="validate.k8sNamespace === 'existing-namespace'"
+                  id="k8s-namespace-selection"
+                  class="k-input w-100"
+                  name="k8s-namespace-selection"
+                  @change="updateStorage('k8sNamespace', $event.target.value)"
+                >
+                  <option value="namespace-1">
+                    Namespace-1
+                  </option>
+                  <option value="namespace-2">
+                    Namespace-2
+                  </option>
+                  <option value="namespace-3">
+                    Namespace-3
+                  </option>
+                </select>
+                <input
+                  v-if="validate.k8sNamespace === 'new-namespace'"
+                  id="k8s-namespace-new"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-new-namespace"
+                  required
+                  @change="updateStorage('k8sNamespace', $event.target.value)"
+                >
+              </FormFragment>
+            </template>
+          </KCard>
+
+          <KCard
+            v-if="validate.k8sServices === 'individual-services'"
+            class="my-6"
+            has-shadow
+          >
+            <template slot="body">
+              <FormFragment
+                title="Deployments"
+                for-attr="k8s-deployment-selection"
+              >
+                <select
+                  v-if="validate.k8sDeployment === 'existing-deployment'"
+                  id="k8s-deployment-selection"
+                  class="k-input w-100"
+                  name="k8s-deployment-selection"
+                  @change="updateStorage('k8sDeployment', $event.target.value)"
+                >
+                  <option value="deployment-1">
+                    Deployment-1
+                  </option>
+                  <option value="deployment-2">
+                    Deployment-2
+                  </option>
+                  <option value="deployment-3">
+                    Deployment-3
+                  </option>
+                </select>
+                <input
+                  v-if="validate.k8sDeployment === 'new-deployment'"
+                  id="k8s-deployment-new"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-new-deployment"
+                  required
+                  @change="updateStorage('k8sDeployment', $event.target.value)"
+                >
+              </FormFragment>
+            </template>
+          </KCard>
         </template>
         <template slot="complete">
           <div v-if="codeOutput">
@@ -340,7 +553,10 @@ export default {
       nextDisabled: false,
       validate: {
         meshName: '',
-        meshLoggingBackend: ''
+        meshLoggingBackend: '',
+        k8sServices: 'all-services',
+        k8sNamespace: 'existing-namespace',
+        k8sDeployment: 'existing-deployment'
       },
       vmsg: []
     }
@@ -359,6 +575,14 @@ export default {
       return (this.environment === 'universal')
         ? 'Switch to Kubernetes instructions'
         : 'Switch to Universal instructions'
+    },
+
+    instructionsCtaRoute () {
+      if (this.environment === 'kubernetes') {
+        return { name: 'universal-dataplane' }
+      } else {
+        return { name: 'kubernetes-dataplane' }
+      }
     },
 
     // this exists because the browser is stubborn and holds onto this
