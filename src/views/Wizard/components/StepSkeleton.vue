@@ -187,8 +187,37 @@ export default {
   }
 }
 
-.input-error {
+.wizard-steps .debugger {
+  padding: 10px;
+  margin: 30px auto;
+  font-size: 12px;
+  font-family: monospace;
+  background: #eee;
 
+  h4 {
+    font-size: inherit !important;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 0 5px 0 !important;
+  }
+
+  p {
+    font-style: italic;
+    margin: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: block;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+  }
 }
 </style>
 

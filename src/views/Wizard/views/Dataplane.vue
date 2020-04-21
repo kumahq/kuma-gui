@@ -84,9 +84,16 @@
                 <div>
                   <select
                     id="dp-mesh"
+                    v-model="validate.meshName"
                     class="k-input w-100"
                     @change="updateStorage('dpMesh', $event.target.value)"
                   >
+                    <option
+                      disabled
+                      value=""
+                    >
+                      Select an existing Mesh&hellip;
+                    </option>
                     <option
                       v-for="item in meshes.items"
                       :key="item.name"
@@ -139,10 +146,11 @@
                 <label for="service-dataplane">
                   <input
                     id="service-dataplane"
+                    v-model="validate.k8sDataplaneType"
                     class="k-input"
                     type="radio"
                     name="dataplane-type"
-                    value="service"
+                    value="dataplane-type-service"
                     checked
                   >
                   <span>
@@ -152,10 +160,11 @@
                 <label for="ingress-dataplane">
                   <input
                     id="ingress-dataplane"
+                    v-model="validate.k8sDataplaneType"
                     class="k-input"
                     type="radio"
                     name="dataplane-type"
-                    value="ingress"
+                    value="dataplane-type-ingress"
                   >
                   <span>
                     Ingress Dataplane
@@ -165,216 +174,430 @@
             </template>
           </KCard>
 
-          <p>
-            Should the data plane be added for an entire Namespace and all of its services,
-            or for specific individual services in any namespace?
-          </p>
+          <div v-if="validate.k8sDataplaneType === 'dataplane-type-service'">
+            <p>
+              Should the data plane be added for an entire Namespace and all of its services,
+              or for specific individual services in any namespace?
+            </p>
 
-          <!-- service selection -->
-          <KCard
-            class="my-6"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                all-inline
-                equal-cols
-                hide-label-col
-              >
-                <label for="k8s-services-all">
-                  <input
-                    id="k8s-services-all"
-                    v-model="validate.k8sServices"
-                    class="k-input"
-                    type="radio"
-                    name="k8s-services"
-                    value="all-services"
-                    checked
-                  >
-                  <span>
-                    All Services in Namespace
-                  </span>
-                </label>
-                <label for="k8s-services-individual">
-                  <input
-                    id="k8s-services-individual"
-                    v-model="validate.k8sServices"
-                    class="k-input"
-                    type="radio"
-                    name="k8s-services"
-                    value="individual-services"
-                  >
-                  <span>
-                    Individual Services
-                  </span>
-                </label>
-              </FormFragment>
-            </template>
-          </KCard>
+            <!-- service selection -->
+            <KCard
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  all-inline
+                  equal-cols
+                  hide-label-col
+                >
+                  <label for="k8s-services-all">
+                    <input
+                      id="k8s-services-all"
+                      v-model="validate.k8sServices"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-services"
+                      value="all-services"
+                      checked
+                    >
+                    <span>
+                      All Services in Namespace
+                    </span>
+                  </label>
+                  <label for="k8s-services-individual">
+                    <input
+                      id="k8s-services-individual"
+                      v-model="validate.k8sServices"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-services"
+                      value="individual-services"
+                    >
+                    <span>
+                      Individual Services
+                    </span>
+                  </label>
+                </FormFragment>
+              </template>
+            </KCard>
 
-          <KCard
-            v-if="validate.k8sServices === 'individual-services'"
-            class="my-6"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                all-inline
-                equal-cols
-                hide-label-col
-              >
-                <label for="k8s-deployment-existing">
-                  <input
-                    id="k8s-deployment-existing"
-                    v-model="validate.k8sDeployment"
-                    class="k-input"
-                    type="radio"
-                    name="k8s-deployment"
-                    value="existing-deployment"
-                    checked
-                  >
-                  <span>
-                    Existing Deployment
-                  </span>
-                </label>
-                <label for="k8s-deployment-new">
-                  <input
-                    id="k8s-deployment-new"
-                    v-model="validate.k8sDeployment"
-                    class="k-input"
-                    type="radio"
-                    name="k8s-deployment"
-                    value="new-deployment"
-                  >
-                  <span>
-                    New Deployment
-                  </span>
-                </label>
-              </FormFragment>
-            </template>
-          </KCard>
+            <KCard
+              v-if="validate.k8sServices === 'individual-services'"
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  all-inline
+                  equal-cols
+                  hide-label-col
+                >
+                  <label for="k8s-deployment-existing">
+                    <input
+                      id="k8s-deployment-existing"
+                      v-model="validate.k8sDeployment"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-deployment"
+                      value="existing-deployment"
+                      checked
+                    >
+                    <span>
+                      Existing Deployment
+                    </span>
+                  </label>
+                  <label for="k8s-deployment-new">
+                    <input
+                      id="k8s-deployment-new"
+                      v-model="validate.k8sDeployment"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-deployment"
+                      value="new-deployment"
+                    >
+                    <span>
+                      New Deployment
+                    </span>
+                  </label>
+                </FormFragment>
+              </template>
+            </KCard>
 
-          <!-- namespace selection options -->
-          <KCard
-            class="my-6"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                all-inline
-                equal-cols
-                hide-label-col
-              >
-                <label for="k8s-namespace-existing">
-                  <input
-                    id="k8s-namespace-existing"
-                    v-model="validate.k8sNamespace"
-                    class="k-input"
-                    type="radio"
-                    name="k8s-namespace"
-                    value="existing-namespace"
-                    checked
+            <!-- namespace selection options -->
+            <KCard
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  all-inline
+                  equal-cols
+                  hide-label-col
+                >
+                  <label for="k8s-namespace-existing">
+                    <input
+                      id="k8s-namespace-existing"
+                      v-model="validate.k8sNamespace"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-namespace"
+                      value="existing-namespace"
+                      checked
+                    >
+                    <span>
+                      Existing Namespace
+                    </span>
+                  </label>
+                  <label for="k8s-namespace-new">
+                    <input
+                      id="k8s-namespace-new"
+                      v-model="validate.k8sNamespace"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-namespace"
+                      value="new-namespace"
+                    >
+                    <span>
+                      New Namespace
+                    </span>
+                  </label>
+                </FormFragment>
+              </template>
+            </KCard>
+
+            <!-- namespace selection -->
+            <KCard
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  title="Namespace"
+                  for-attr="k8s-namespace-selection"
+                >
+                  <select
+                    v-if="validate.k8sNamespace === 'existing-namespace'"
+                    id="k8s-namespace-selection"
+                    v-model="validate.k8sNamespaceSelection"
+                    class="k-input w-100"
+                    name="k8s-namespace-selection"
+                    @change="updateStorage('k8sNamespaceSelection', $event.target.value)"
                   >
-                  <span>
-                    Existing Namespace
-                  </span>
-                </label>
-                <label for="k8s-namespace-new">
+                    <option
+                      disabled
+                      value=""
+                    >
+                      Select a Namespace&hellip;
+                    </option>
+                    <option value="namespace-1">
+                      Namespace-1
+                    </option>
+                    <option value="namespace-2">
+                      Namespace-2
+                    </option>
+                    <option value="namespace-3">
+                      Namespace-3
+                    </option>
+                  </select>
                   <input
+                    v-if="validate.k8sNamespace === 'new-namespace'"
                     id="k8s-namespace-new"
-                    v-model="validate.k8sNamespace"
-                    class="k-input"
-                    type="radio"
-                    name="k8s-namespace"
-                    value="new-namespace"
+                    v-model="validate.k8sNamespaceSelection"
+                    type="text"
+                    class="k-input w-100"
+                    placeholder="your-new-namespace"
+                    required
+                    @change="updateStorage('k8sNamespaceSelection', $event.target.value)"
                   >
-                  <span>
-                    New Namespace
-                  </span>
-                </label>
-              </FormFragment>
-            </template>
-          </KCard>
+                </FormFragment>
+              </template>
+            </KCard>
 
-          <!-- namespace selection -->
-          <KCard
-            class="my-6"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                title="Namespace"
-                for-attr="k8s-namespace-selection"
-              >
-                <select
-                  v-if="validate.k8sNamespace === 'existing-namespace'"
-                  id="k8s-namespace-selection"
-                  class="k-input w-100"
-                  name="k8s-namespace-selection"
-                  @change="updateStorage('k8sNamespace', $event.target.value)"
+            <KCard
+              v-if="validate.k8sServices === 'individual-services'"
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  title="Deployments"
+                  for-attr="k8s-deployment-selection"
                 >
-                  <option value="namespace-1">
-                    Namespace-1
-                  </option>
-                  <option value="namespace-2">
-                    Namespace-2
-                  </option>
-                  <option value="namespace-3">
-                    Namespace-3
-                  </option>
-                </select>
-                <input
-                  v-if="validate.k8sNamespace === 'new-namespace'"
-                  id="k8s-namespace-new"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-new-namespace"
-                  required
-                  @change="updateStorage('k8sNamespace', $event.target.value)"
-                >
-              </FormFragment>
-            </template>
-          </KCard>
+                  <select
+                    v-if="validate.k8sDeployment === 'existing-deployment'"
+                    id="k8s-deployment-selection"
+                    v-model="validate.k8sDeploymentSelection"
+                    class="k-input w-100"
+                    name="k8s-deployment-selection"
+                    @change="updateStorage('k8sDeployment', $event.target.value)"
+                  >
+                    <option
+                      disabled
+                      value=""
+                    >
+                      Select a Deployment&hellip;
+                    </option>
+                    <option value="deployment-1">
+                      Deployment-1
+                    </option>
+                    <option value="deployment-2">
+                      Deployment-2
+                    </option>
+                    <option value="deployment-3">
+                      Deployment-3
+                    </option>
+                  </select>
+                  <input
+                    v-if="validate.k8sDeployment === 'new-deployment'"
+                    id="k8s-deployment-new"
+                    v-model="validate.k8sDeploymentSelection"
+                    type="text"
+                    class="k-input w-100"
+                    placeholder="your-new-deployment"
+                    required
+                    @change="updateStorage('k8sDeployment', $event.target.value)"
+                  >
+                </FormFragment>
+              </template>
+            </KCard>
+          </div>
 
-          <KCard
-            v-if="validate.k8sServices === 'individual-services'"
-            class="my-6"
-            has-shadow
-          >
-            <template slot="body">
-              <FormFragment
-                title="Deployments"
-                for-attr="k8s-deployment-selection"
-              >
-                <select
-                  v-if="validate.k8sDeployment === 'existing-deployment'"
-                  id="k8s-deployment-selection"
-                  class="k-input w-100"
-                  name="k8s-deployment-selection"
-                  @change="updateStorage('k8sDeployment', $event.target.value)"
+          <div v-if="validate.k8sDataplaneType === 'dataplane-type-ingress'">
+            <p>
+              Is this a new Ingress that you want to deploy, or an existing one?
+            </p>
+
+            <!-- ingress selection -->
+            <KCard
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  all-inline
+                  equal-cols
+                  hide-label-col
                 >
-                  <option value="deployment-1">
-                    Deployment-1
-                  </option>
-                  <option value="deployment-2">
-                    Deployment-2
-                  </option>
-                  <option value="deployment-3">
-                    Deployment-3
-                  </option>
-                </select>
-                <input
-                  v-if="validate.k8sDeployment === 'new-deployment'"
-                  id="k8s-deployment-new"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-new-deployment"
-                  required
-                  @change="updateStorage('k8sDeployment', $event.target.value)"
+                  <label for="k8s-ingress-existing">
+                    <input
+                      id="k8s-ingress-existing"
+                      v-model="validate.k8sIngressType"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-ingress-type"
+                      value="existing-ingress"
+                      checked
+                    >
+                    <span>
+                      Existing Ingress
+                    </span>
+                  </label>
+                  <label for="k8s-ingress-new">
+                    <input
+                      id="k8s-ingress-new"
+                      v-model="validate.k8sIngressType"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-ingress-type"
+                      value="new-ingress"
+                    >
+                    <span>
+                      New Ingress
+                    </span>
+                  </label>
+                </FormFragment>
+              </template>
+            </KCard>
+
+            <p>
+              {{ title }} natively supports the Kong Ingress. Do you want to deploy
+              Kong or another Ingress?
+            </p>
+
+            <KCard
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  all-inline
+                  equal-cols
+                  hide-label-col
                 >
-              </FormFragment>
-            </template>
-          </KCard>
+                  <label for="k8s-ingress-kong">
+                    <input
+                      id="k8s-ingress-kong"
+                      v-model="validate.k8sIngressBrand"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-ingress-brand"
+                      value="kong-ingress"
+                      checked
+                    >
+                    <span>
+                      Kong Ingress
+                    </span>
+                  </label>
+                  <label for="k8s-ingress-other">
+                    <input
+                      id="k8s-ingress-other"
+                      v-model="validate.k8sIngressBrand"
+                      class="k-input"
+                      type="radio"
+                      name="k8s-ingress-brand"
+                      value="other-ingress"
+                    >
+                    <span>
+                      Other Ingress
+                    </span>
+                  </label>
+                </FormFragment>
+              </template>
+            </KCard>
+
+            <!-- namespace selection -->
+            <KCard
+              v-if="validate.k8sIngressBrand === 'kong-ingress'"
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  title="Ingress"
+                  for-attr="k8s-ingress-type-selection"
+                >
+                  <select
+                    v-if="validate.k8sIngressType === 'existing-ingress'"
+                    id="k8s-ingress-type-selection"
+                    v-model="validate.k8sIngressSelection"
+                    class="k-input w-100"
+                    name="k8s-ingress-type-selection"
+                    @change="updateStorage('k8sIngressSelection', $event.target.value)"
+                  >
+                    <option
+                      disabled
+                      value=""
+                    >
+                      Select an Ingress&hellip;
+                    </option>
+                    <option value="ingress-1">
+                      Ingress-1
+                    </option>
+                    <option value="ingress-2">
+                      Ingress-2
+                    </option>
+                    <option value="ingress-3">
+                      Ingress-3
+                    </option>
+                  </select>
+                  <input
+                    v-if="validate.k8sIngressType === 'new-ingress'"
+                    id="k8s-ingress-type-selection"
+                    v-model="validate.k8sIngressSelection"
+                    type="text"
+                    class="k-input w-100"
+                    name="k8s-ingress-type-selection"
+                    placeholder="your-new-ingress"
+                    required
+                    @change="updateStorage('k8sIngressSelection', $event.target.value)"
+                  >
+                </FormFragment>
+              </template>
+            </KCard>
+
+            <KAlert
+              v-if="validate.k8sIngressBrand === 'other-ingress'"
+              appearance="info"
+            >
+              <template slot="alertMessage">
+                <p>
+                  Please go ahead and deploy the Ingress first, then restart this
+                  wizard and select &quot;Existing Ingress&quot;.
+                </p>
+              </template>
+            </KAlert>
+
+            <KCard
+              v-if="validate.k8sServices === 'individual-services'"
+              class="my-6"
+              has-shadow
+            >
+              <template slot="body">
+                <FormFragment
+                  title="Deployments"
+                  for-attr="k8s-deployment-selection"
+                >
+                  <select
+                    v-if="validate.k8sDeployment === 'existing-deployment'"
+                    id="k8s-deployment-selection"
+                    class="k-input w-100"
+                    name="k8s-deployment-selection"
+                    @change="updateStorage('k8sDeployment', $event.target.value)"
+                  >
+                    <option value="deployment-1">
+                      Deployment-1
+                    </option>
+                    <option value="deployment-2">
+                      Deployment-2
+                    </option>
+                    <option value="deployment-3">
+                      Deployment-3
+                    </option>
+                  </select>
+                  <input
+                    v-if="validate.k8sDeployment === 'new-deployment'"
+                    id="k8s-deployment-new"
+                    type="text"
+                    class="k-input w-100"
+                    placeholder="your-new-deployment"
+                    required
+                    @change="updateStorage('k8sDeployment', $event.target.value)"
+                  >
+                </FormFragment>
+              </template>
+            </KCard>
+          </div>
         </template>
         <template slot="complete">
           <div v-if="codeOutput">
@@ -471,6 +694,25 @@
             that you may have created, and in Kubernetes, they will be auto-injected
             by {{ title }}.
           </p>
+
+          <div
+            v-if="showDebugging"
+            class="debugger"
+          >
+            <h4>
+              Debugging info:
+            </h4>
+            <p>(does not appear in production)</p>
+            <ul>
+              <li
+                v-for="(v, k) in validate"
+                :key="k"
+              >
+                <strong>{{ k }}</strong>:<br>
+                {{ v || 'not set yet' }}
+              </li>
+            </ul>
+          </div>
         </template>
       </StepSkeleton>
     </div>
@@ -553,10 +795,15 @@ export default {
       nextDisabled: false,
       validate: {
         meshName: '',
-        meshLoggingBackend: '',
+        k8sDataplaneType: 'dataplane-type-service',
         k8sServices: 'all-services',
         k8sNamespace: 'existing-namespace',
-        k8sDeployment: 'existing-deployment'
+        k8sNamespaceSelection: '',
+        k8sDeployment: 'existing-deployment',
+        k8sDeploymentSelection: '',
+        k8sIngressType: 'existing-ingress',
+        k8sIngressBrand: 'kong-ingress',
+        k8sIngressSelection: ''
       },
       vmsg: []
     }
@@ -570,6 +817,10 @@ export default {
       selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'
     }),
+
+    showDebugging () {
+      return process.env.NODE_ENV === 'development'
+    },
 
     instructionsCtaText () {
       return (this.environment === 'universal')
@@ -778,7 +1029,7 @@ export default {
        * we will need to get the Mesh namespace the user selects, or the one
        * they create, as well as the Dataplane namespace.
        */
-      this.$api.getMesh(entity)
+      this.$api.getDataplaneFromMesh(entity)
         .then(response => {
           if (response && response.name.length > 0) {
             this.isRunning = true
