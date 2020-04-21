@@ -71,10 +71,19 @@ export default (store) => {
           component: () => import('@/views/Wizard/views/Mesh')
         },
         {
-          path: 'dataplane',
-          name: 'create-dataplane',
+          path: 'kubernetes-dataplane',
+          name: 'kubernetes-dataplane',
           meta: {
-            title: 'Create a new Dataplane',
+            title: 'Create a new Kubernetes Dataplane',
+            excludeAsBreadcrumb: true
+          },
+          component: () => import('@/views/Wizard/views/Dataplane')
+        },
+        {
+          path: 'universal-dataplane',
+          name: 'universal-dataplane',
+          meta: {
+            title: 'Create a new Universal Dataplane',
             excludeAsBreadcrumb: true
           },
           component: () => import('@/views/Wizard/views/Dataplane')

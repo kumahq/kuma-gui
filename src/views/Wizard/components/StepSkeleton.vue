@@ -147,7 +147,7 @@ export default {
     },
     goToPrevStep () {
       this.start--
-      // this.updateQuery('step', this.start)
+      this.updateQuery('step', this.start)
       this.$emit('goToPrevStep', this.step)
     },
     setStartingStep () {

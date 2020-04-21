@@ -1,7 +1,10 @@
 <template>
   <div class="form-line-wrapper">
     <div class="form-line">
-      <div class="form-line__col">
+      <div
+        v-if="!hideLabelCol"
+        class="form-line__col"
+      >
         <label
           :for="forAttr"
           class="k-input-label"
@@ -33,6 +36,10 @@ export default {
       default: null
     },
     allInline: {
+      type: Boolean,
+      default: false
+    },
+    hideLabelCol: {
       type: Boolean,
       default: false
     }

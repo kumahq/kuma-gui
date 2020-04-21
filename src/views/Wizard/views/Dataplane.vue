@@ -30,13 +30,13 @@
             </template>
             <template slot="message">
               <p v-if="environment === 'kubernetes'">
-                We have detected you are running on a <strong>Kubernetes environment</strong>, and we
-                are going to be showing you instructions for Kubernetes unless you
+                We have detected that you are running on a <strong>Kubernetes environment</strong>,
+                and we are going to be showing you instructions for Kubernetes unless you
                 decide to visualize the instructions for Universal.
               </p>
               <p v-else-if="environment === 'universal'">
-                We have detected you are running on a <strong>Universal environment</strong>, and we
-                are going to be showing you instructions for Universal, unless you
+                We have detected that you are running on a <strong>Universal environment</strong>,
+                and we are going to be showing you instructions for Universal, unless you
                 decide to visualize the instructions for Kubernetes.
               </p>
               <p v-else>
@@ -48,6 +48,10 @@
                 v-if="environment"
                 appearance="primary"
               >
+                <!--
+                  this should send the user to an entirely separate wizard for
+                  the platform opposite of the one the user is on
+                -->
                 {{ instructionsCtaText }}
               </KButton>
             </template>
@@ -56,6 +60,14 @@
           <h3>
             To get started, please select on what Mesh you would like to add the Dataplane:
           </h3>
+
+          <p>
+            If you've got an existing Mesh that you would like to associate with your
+            Dataplane, you can select it below, or create a new one using our
+            <router-link :to="{ path: '/wizard/mesh' }">
+              Mesh Wizard
+            </router-link>.
+          </p>
 
           <KCard
             class="my-6"
@@ -97,181 +109,69 @@
                   :alert-message="vmsg.meshName"
                 /> -->
               </FormFragment>
-
-              <FormFragment
-                v-if="formConditions.mtlsEnabled === true"
-                title="Certificate Authority"
-                for-attr="certificate-authority"
-              >
-                <select
-                  id="certificate-authority"
-                  class="k-input w-100"
-                  name="certificate-authority"
-                  @change="updateStorage('meshCA', $event.target.value)"
-                >
-                  <option
-                    value="builtin"
-                    :selected="(getStorageItem('meshCA') === 'builtin') ? true : false"
-                  >
-                    builtin
-                  </option>
-                  <option
-                    value="provided"
-                    :selected="(getStorageItem('meshCA') === 'provided') ? true : false"
-                  >
-                    provided
-                  </option>
-                  <option
-                    value="vault"
-                    :selected="(getStorageItem('meshCA') === 'vault') ? true : false"
-                  >
-                    vault
-                  </option>
-                </select>
-                <p class="help">
-                  If you've enabled mTLS, you must select a CA.
-                </p>
               </FormFragment>
             </template>
           </KCard>
         </template>
         <template slot="scope-settings">
           <h3>
-            Setup Logging
+            Setup Dataplane Mode
           </h3>
           <p>
-            You can setup as many logging backends as you need that you can later
-            use to log traffic via the &quot;TrafficLog&quot; policy. In this wizard,
-            we allow you to configure one backend, but you can add more manually
-            if you wish.
+            You can create a data plane for a service or a data plane for an Ingress gateway.
           </p>
           <KCard
-            class="my-6 k-card--small"
-            title="Logging Configuration"
+            class="my-6"
             has-shadow
           >
             <template slot="body">
-              <FormFragment title="Logging">
-                <label class="k-input-label mx-2">
-                  <input
-                    id="logging-disabled"
-                    value="disabled"
-                    name="logging"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.loggingEnabled === false"
-                    @change="updateStorage('meshLoggingStatus', false); formConditions.loggingEnabled = false"
-                  >
-                  <span>Disabled</span>
-                </label>
-                <label class="k-input-label mx-2">
-                  <input
-                    id="logging-enabled"
-                    value="enabled"
-                    name="logging"
-                    type="radio"
-                    class="k-input mr-2"
-                    :checked="formConditions.loggingEnabled === true"
-                    @change="
-                      updateStorage('meshLoggingStatus', true);
-                      updateStorage('meshLoggingType', 'tcp');
-                      formConditions.loggingEnabled = true
-                      formConditions.loggingType = 'tcp'"
-                  >
-                  <span>Enabled</span>
-                </label>
-              </FormFragment>
               <FormFragment
-                v-if="formConditions.loggingEnabled === true"
-                title="Backend name"
+                title="Dataplane Mode"
+                all-inline
+                hide-label-col
               >
-                <input
-                  id="backend-name"
-                  type="text"
-                  class="k-input w-100"
-                  placeholder="your-backend-name"
-                  :value="getStorageItem('meshLoggingBackend')"
-                  @change="updateStorage('meshLoggingBackend', $event.target.value)"
-                >
+                <label for="service-dataplane">
+                  <input
+                    id="service-dataplane"
+                    class="k-input"
+                    type="radio"
+                    name="dataplane-type"
+                    value="service"
+                  >
+                  <span>
+                    Service Dataplane
+                  </span>
+                </label>
+                <label for="ingress-dataplane">
+                  <input
+                    id="ingress-dataplane"
+                    class="k-input"
+                    type="radio"
+                    name="dataplane-type"
+                    value="ingress"
+                  >
+                  <span>
+                    Ingress Dataplane
+                  </span>
+                </label>
               </FormFragment>
-              <div v-if="formConditions.loggingEnabled === true">
-                <FormFragment title="Type">
-                  <select
-                    id="logging-type"
-                    ref="loggingTypeSelect"
-                    class="k-input w-100"
-                    name="logging-type"
-                    @change="updateStorage('meshLoggingType', $event.target.value); formConditions.loggingType = $event.target.value"
-                  >
-                    <option
-                      value="tcp"
-                      :selected="(getStorageItem('meshLoggingType') === 'tcp') ? true : false"
-                    >
-                      TCP
-                    </option>
-                    <option
-                      value="file"
-                      :selected="(getStorageItem('meshLoggingType') === 'file') ? true : false"
-                    >
-                      File
-                    </option>
-                  </select>
-                </FormFragment>
-                <!-- if the format type is File -->
-                <FormFragment
-                  v-if="formConditions.loggingType === 'file'"
-                  title="Path"
-                  for-attr="backend-address"
-                >
-                  <input
-                    id="backend-address"
-                    type="text"
-                    class="k-input w-100"
-                    :value="getStorageItem('meshLoggingPath')"
-                    @change="updateStorage('meshLoggingPath', $event.target.value)"
-                  >
-                </FormFragment>
-                <!-- if the format type is TCP -->
-                <FormFragment
-                  v-if="formConditions.loggingType === 'tcp'"
-                  title="Address"
-                  for-attr="backend-address"
-                >
-                  <input
-                    id="backend-address"
-                    type="text"
-                    class="k-input w-100"
-                    :value="getStorageItem('meshLoggingAddress') || '127.0.0.1:5000'"
-                    @change="updateStorage('meshLoggingAddress', $event.target.value)"
-                  >
-                </FormFragment>
-                <FormFragment
-                  title="Format"
-                  for-attr="backend-format"
-                >
-                  <textarea
-                    id="backend-format"
-                    class="k-input w-100 code-sample"
-                    rows="12"
-                    @change="updateStorage('meshLoggingBackendFormat', ($event.target.value).trim())"
-                  >
-                    { "start_time": "%START_TIME%", "source": "%KUMA_SOURCE_SERVICE%", "destination": "%KUMA_DESTINATION_SERVICE%", "source_address": "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", "destination_address": "%UPSTREAM_HOST%", "duration_millis": "%DURATION%", "bytes_received": "%BYTES_RECEIVED%", "bytes_sent": "%BYTES_SENT%" }
-                    </textarea>
-                </FormFragment>
-              </div>
             </template>
           </KCard>
+
+          <p>
+            Should the data plane be added for an entire Namespace and all of its services,
+            or for specific individual services in any namespace?
+          </p>
         </template>
         <template slot="complete">
           <div v-if="codeOutput">
             <div v-if="scanFound === false">
               <h3>
-                Install a new Mesh
+                Install a new Dataplane
               </h3>
               <p>
-                Since the Kuma GUI is read-only mode to follow Ops best practices,
-                please execute the following command in your shell to create the entity.
-                Kuma will automatically detect when the new entity has been created.
+                You can now execute the following commands to automatically inject
+                the sidebar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
               <Tabs
                 :loaders="false"
