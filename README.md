@@ -1,6 +1,7 @@
 [![][kuma-logo]][kuma-url]
 
 [![Twitter](https://img.shields.io/twitter/follow/thekonginc.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=thekonginc)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKong%2Fkuma-gui.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKong%2Fkuma-gui?ref=badge_shield)
 
 # Kuma GUI
 
@@ -63,3 +64,7 @@ yarn run test:unit
 
 [kuma-url]: https://kuma.io/
 [kuma-logo]: https://kuma-public-assets.s3.amazonaws.com/kuma-logo.png
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKong%2Fkuma-gui.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKong%2Fkuma-gui?ref=badge_large)
