@@ -218,6 +218,12 @@ export default {
     padding: 5px 0;
     border-bottom: 1px solid #ccc;
   }
+
+  .not-set {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+  }
 }
 </style>
 

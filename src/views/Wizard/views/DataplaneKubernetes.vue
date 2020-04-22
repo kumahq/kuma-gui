@@ -600,7 +600,7 @@
           </div>
         </template>
         <template slot="complete">
-          <div v-if="codeOutput">
+          <div v-if="validate.meshName">
             <div v-if="scanFound === false">
               <h3>
                 Install a new Dataplane
@@ -679,7 +679,7 @@
             <template slot="alertMessage">
               <p>
                 You haven't filled any data out yet! Please return to the first
-                step and fill out your information.
+                step and make sure to select an existing Mesh, or create a new one.
               </p>
             </template>
           </KAlert>
@@ -709,7 +709,13 @@
                 :key="k"
               >
                 <strong>{{ k }}</strong>:<br>
-                {{ v || 'not set yet' }}
+                <span
+                  v-if="!v"
+                  class="not-set"
+                >
+                  null
+                </span>
+                <span v-else>{{ v }}</span>
               </li>
             </ul>
           </div>
@@ -733,8 +739,11 @@ import Scanner from '@/views/Wizard/components/Scanner'
 // schema for building code output
 import meshSchema from '@/views/Wizard/schemas/Mesh'
 
+// schema for building code output (TBD)
+// import dataplaneSchema from '@/views/Wizard/schemas/Dataplane'
+
 export default {
-  name: 'DataplaneWizard',
+  name: 'DataplaneWizardKubernetes',
   metaInfo: {
     title: 'Create a new Dataplane on Kubernetes'
   },
@@ -792,7 +801,7 @@ export default {
       scanFound: false,
       scanError: false,
       isComplete: false,
-      nextDisabled: false,
+      nextDisabled: true,
       validate: {
         meshName: '',
         k8sDataplaneType: 'dataplane-type-service',
@@ -1005,7 +1014,7 @@ export default {
   methods: {
     validateMeshName (value) {
       if (!value || value === '') {
-        this.vmsg.meshName = 'A Mesh name is required to proceed'
+        this.vmsg.meshName = 'You must select or create a Mesh to proceed'
         this.nextDisabled = true
       } else {
         this.vmsg.meshName = ''

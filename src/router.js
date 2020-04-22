@@ -77,17 +77,17 @@ export default (store) => {
             title: 'Create a new Kubernetes Dataplane',
             excludeAsBreadcrumb: true
           },
-          component: () => import('@/views/Wizard/views/Dataplane')
-        },
-        {
-          path: 'universal-dataplane',
-          name: 'universal-dataplane',
-          meta: {
-            title: 'Create a new Universal Dataplane',
-            excludeAsBreadcrumb: true
-          },
-          component: () => import('@/views/Wizard/views/Dataplane')
+          component: () => import('@/views/Wizard/views/DataplaneKubernetes')
         }
+        // {
+        //   path: 'universal-dataplane',
+        //   name: 'universal-dataplane',
+        //   meta: {
+        //     title: 'Create a new Universal Dataplane',
+        //     excludeAsBreadcrumb: true
+        //   },
+        //   component: () => import('@/views/Wizard/views/DataplaneUniversal') // to come
+        // }
       ]
     },
     // App
