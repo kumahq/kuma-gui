@@ -18,45 +18,8 @@
             As you know, the Kuma GUI is read-only.
           </p>
 
-          <KEmptyState
-            :is-error="!environment"
-            class="my-6 empty-state--wide-content empty-state--compact"
-          >
-            <template
-              v-if="environment === 'kubernetes' || environment === 'universal'"
-              slot="title"
-            >
-              Running on {{ environment }}
-            </template>
-            <template slot="message">
-              <p v-if="environment === 'kubernetes'">
-                We have detected that you are running on a <strong>Kubernetes environment</strong>,
-                and we are going to be showing you instructions for Kubernetes unless you
-                decide to visualize the instructions for Universal.
-              </p>
-              <p v-else-if="environment === 'universal'">
-                We have detected that you are running on a <strong>Universal environment</strong>,
-                and we are going to be showing you instructions for Universal, unless you
-                decide to visualize the instructions for Kubernetes.
-              </p>
-              <p v-else>
-                We were unable to determine your environment.
-              </p>
-            </template>
-            <template slot="cta">
-              <KButton
-                v-if="environment"
-                :to="instructionsCtaRoute"
-                appearance="primary"
-              >
-                <!--
-                  this should send the user to an entirely separate wizard for
-                  the platform opposite of the one the user is on
-                -->
-                {{ instructionsCtaText }}
-              </KButton>
-            </template>
-          </KEmptyState>
+          <!-- wizard switcher -- based on environment -->
+          <Switcher />
 
           <h3>
             To get started, please select on what Mesh you would like to add the Dataplane:
@@ -86,7 +49,6 @@
                     id="dp-mesh"
                     v-model="validate.meshName"
                     class="k-input w-100"
-                    @change="updateStorage('dpMesh', $event.target.value)"
                   >
                     <option
                       disabled
@@ -322,7 +284,6 @@
                     v-model="validate.k8sNamespaceSelection"
                     class="k-input w-100"
                     name="k8s-namespace-selection"
-                    @change="updateStorage('k8sNamespaceSelection', $event.target.value)"
                   >
                     <option
                       disabled
@@ -348,7 +309,6 @@
                     class="k-input w-100"
                     placeholder="your-new-namespace"
                     required
-                    @change="updateStorage('k8sNamespaceSelection', $event.target.value)"
                   >
                 </FormFragment>
               </template>
@@ -370,7 +330,6 @@
                     v-model="validate.k8sDeploymentSelection"
                     class="k-input w-100"
                     name="k8s-deployment-selection"
-                    @change="updateStorage('k8sDeployment', $event.target.value)"
                   >
                     <option
                       disabled
@@ -396,7 +355,6 @@
                     class="k-input w-100"
                     placeholder="your-new-deployment"
                     required
-                    @change="updateStorage('k8sDeployment', $event.target.value)"
                   >
                 </FormFragment>
               </template>
@@ -513,7 +471,6 @@
                     v-model="validate.k8sIngressSelection"
                     class="k-input w-100"
                     name="k8s-ingress-type-selection"
-                    @change="updateStorage('k8sIngressSelection', $event.target.value)"
                   >
                     <option
                       disabled
@@ -540,7 +497,6 @@
                     name="k8s-ingress-type-selection"
                     placeholder="your-new-ingress"
                     required
-                    @change="updateStorage('k8sIngressSelection', $event.target.value)"
                   >
                 </FormFragment>
               </template>
@@ -573,7 +529,6 @@
                     id="k8s-deployment-selection"
                     class="k-input w-100"
                     name="k8s-deployment-selection"
-                    @change="updateStorage('k8sDeployment', $event.target.value)"
                   >
                     <option value="deployment-1">
                       Deployment-1
@@ -592,7 +547,6 @@
                     class="k-input w-100"
                     placeholder="your-new-deployment"
                     required
-                    @change="updateStorage('k8sDeployment', $event.target.value)"
                   >
                 </FormFragment>
               </template>
@@ -652,7 +606,7 @@
               </template>
               <template slot="complete-content">
                 <p>
-                  Your Mesh <strong v-if="formData.meshName">{{ formData.meshName }}</strong> was found!
+                  Your Mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
                 </p>
                 <p>
                   <KButton
@@ -678,8 +632,8 @@
           >
             <template slot="alertMessage">
               <p>
-                You haven't filled any data out yet! Please return to the first
-                step and make sure to select an existing Mesh, or create a new one.
+                Please return to the first step and make sure to select an
+                existing Mesh, or create a new one.
               </p>
             </template>
           </KAlert>
@@ -694,31 +648,6 @@
             that you may have created, and in Kubernetes, they will be auto-injected
             by {{ title }}.
           </p>
-
-          <div
-            v-if="showDebugging"
-            class="debugger"
-          >
-            <h4>
-              Debugging info:
-            </h4>
-            <p>(does not appear in production)</p>
-            <ul>
-              <li
-                v-for="(v, k) in validate"
-                :key="k"
-              >
-                <strong>{{ k }}</strong>:<br>
-                <span
-                  v-if="!v"
-                  class="not-set"
-                >
-                  null
-                </span>
-                <span v-else>{{ v }}</span>
-              </li>
-            </ul>
-          </div>
         </template>
       </StepSkeleton>
     </div>
@@ -733,14 +662,15 @@ import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
+import Switcher from '@/views/Wizard/components/Switcher'
 import CodeView from '@/components/Skeletons/CodeView'
 import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
-import meshSchema from '@/views/Wizard/schemas/Mesh'
+// import meshSchema from '@/views/Wizard/schemas/Mesh'
 
 // schema for building code output (TBD)
-// import dataplaneSchema from '@/views/Wizard/schemas/Dataplane'
+import dataplaneSchema from '@/views/Wizard/schemas/DataplaneKubernetes'
 
 export default {
   name: 'DataplaneWizardKubernetes',
@@ -751,6 +681,7 @@ export default {
     FormFragment,
     Tabs,
     StepSkeleton,
+    Switcher,
     CodeView,
     Scanner
   },
@@ -760,7 +691,7 @@ export default {
   ],
   data () {
     return {
-      schema: meshSchema,
+      schema: dataplaneSchema,
       steps: [
         {
           label: 'General',
@@ -790,13 +721,6 @@ export default {
           name: 'dataplane'
         }
       ],
-      formConditions: {
-        mtlsEnabled: false,
-        loggingEnabled: false,
-        tracingEnabled: false,
-        metricsEnabled: false,
-        loggingType: null
-      },
       startScanner: false,
       scanFound: false,
       scanError: false,
@@ -827,159 +751,21 @@ export default {
       meshes: 'getMeshList'
     }),
 
-    showDebugging () {
-      return process.env.NODE_ENV === 'development'
-    },
-
-    instructionsCtaText () {
-      return (this.environment === 'universal')
-        ? 'Switch to Kubernetes instructions'
-        : 'Switch to Universal instructions'
-    },
-
-    instructionsCtaRoute () {
-      if (this.environment === 'kubernetes') {
-        return { name: 'universal-dataplane' }
-      } else {
-        return { name: 'kubernetes-dataplane' }
-      }
-    },
-
-    // this exists because the browser is stubborn and holds onto this
-    // data even if it's not present in localStorage
-    getCleanMeshName () {
-      const data = this.$store.getters.getStoredWizardData
-
-      if (data) {
-        return data.meshName
-      } else {
-        return null
-      }
-    },
-
     // Our generated code output
     codeOutput () {
-      const schema = this.schema
-      const schemaNew = Object.assign({}, schema)
-      const newData = this.formData
+      const schema = Object.assign({}, this.schema)
+      const data = this.validate
+      const mesh = data.meshName
 
-      // if there is no data set yet, do nothing
-      if (!newData) return
-
-      /**
-       * Assign new values to our schema
-       */
-
-      // conditionals
-      const hasMtls = newData.meshMtls || false
-      const hasLogging = newData.meshLoggingStatus || false
-      const hasTracing = newData.meshTracingStatus || false
-      const hasMetrics = newData.meshMetricsStatus || false
-
-      // filter options
-      const featureStatus = {
-        mtls: hasMtls,
-        logging: hasLogging,
-        tracing: hasTracing,
-        metrics: hasMetrics
-      }
-
-      // define the features we are going to omit from our object
-      const filteredFeatures = []
-
-      Object.entries(featureStatus).forEach(r => {
-        const condition = r[1]
-        const value = r[0]
-
-        if (condition) {
-          filteredFeatures.filter(i => i !== value)
-        } else {
-          filteredFeatures.push(value)
-        }
-      })
-
-      /**
-       * mTLS
-       */
-      if (hasMtls) {
-        schemaNew.spec.mtls.enabled = true
-        schemaNew.spec.mtls.ca = {
-          [newData.meshCA || 'builtin']: {}
-        }
-      }
-
-      /**
-       * Logging
-       */
-
-      if (hasLogging) {
-        const loggingObj = schemaNew.spec.logging.backends[0]
-        const fallbackFormat = loggingObj.format
-
-        loggingObj.name = newData.meshLoggingBackend
-        loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
-
-        if (newData.meshLoggingType === 'tcp') {
-          if (loggingObj.file) {
-            delete loggingObj.file
-          }
-
-          loggingObj.tcp = {
-            address: newData.meshLoggingAddress || '127.0.0.1:5000'
-          }
-        } else if (newData.meshLoggingType === 'file') {
-          if (loggingObj.tcp) {
-            delete loggingObj.tcp
-          }
-
-          loggingObj.file = {
-            path: newData.meshLoggingPath
-          }
-        }
-      }
-
-      /**
-       * Tracing
-       */
-      if (hasTracing) {
-        const tracingObj = schemaNew.spec.tracing
-
-        tracingObj.defaultBackend = newData.meshTracingBackend
-        tracingObj.backends[0].name = newData.meshTracingBackend
-        tracingObj.backends[0].sampling = newData.meshTracingSampling || 100
-        tracingObj.backends[0].zipkin.url = newData.meshTracingZipkinURL
-      }
-
-      /**
-       * Metrics
-       */
-      if (hasMetrics) {
-        const metricsObj = schemaNew.spec.metrics
-
-        metricsObj.prometheus.port = newData.meshMetricsDataplanePort || 5670
-        metricsObj.prometheus.path = newData.meshMetricsDataplanePath || '/metrics'
-      }
-
-      // now we clean up our output based on the above conditions
-      const schemaClean = rejectKeys(schemaNew.spec, filteredFeatures)
+      // if no Mesh is selected, do nothing
+      if (!mesh) return
 
       // Type and Name
-      let meshType
-
-      if (this.selectedTab === '#kubernetes') {
-        // Kubernetes
-        meshType = {
-          apiVersion: 'kuma.io/v1alpha1',
-          kind: 'Mesh',
-          metadata: {
-            name: newData.meshName
-          }
-        }
-      } else {
-        // Universal
-        meshType = {
-          type: 'Mesh',
-          name: newData.meshName
+      const meshType = {
+        apiVersion: 'kuma.io/v1alpha1',
+        kind: 'Mesh',
+        metadata: {
+          name: mesh
         }
       }
 
@@ -987,58 +773,55 @@ export default {
        * Finalized output
        */
 
-      let codeBlock
-
-      if (this.selectedTab === '#kubernetes') {
-        codeBlock = { ...meshType, spec: { ...schemaClean } }
-      } else {
-        codeBlock = { ...meshType, ...schemaClean }
-      }
-
-      const assembledBlock = this.formatForCLI(codeBlock)
+      const codeBlock = { ...meshType, spec: { ...schema } }
+      const codeClosing = '" | kubectl apply -f && kubectl delete pod --all -n [VALUE]'
+      const assembledBlock = this.formatForCLI(codeBlock, codeClosing)
 
       return assembledBlock
     }
   },
   watch: {
-    'validate.meshName' (value) {
-      this.validate.meshName = value
-      this.validateMeshName(value)
+    validate: {
+      handler () {
+        const data = JSON.stringify(this.validate)
+        const mesh = this.validate.meshName
+
+        // write the v-model data to localStorage whenever it changes
+        localStorage.setItem('storedFormData', data)
+
+        // allow the user to proceed if they've selected a Mesh
+        mesh.length
+          ? this.nextDisabled = false
+          : this.nextDisabled = true
+      },
+      deep: true
     }
   },
-  mounted () {
-    // this ensures the Wizard tab is actively set based on
-    // the user's Kuma environment (Universal or Kubernetes)
-    this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
-  },
   methods: {
-    validateMeshName (value) {
-      if (!value || value === '') {
-        this.vmsg.meshName = 'You must select or create a Mesh to proceed'
-        this.nextDisabled = true
-      } else {
-        this.vmsg.meshName = ''
-        this.nextDisabled = false
-      }
-    },
     scanForEntity () {
       // get our entity from the VueX store
-      const entity = this.$store.getters.getStoredWizardData.meshName
+      const entity = this.validate
+      const mesh = entity.meshName
+      const dataplane = 'test' // this is a placeholder
 
       // reset things if the user is starting over
       this.scanComplete = false
       this.scanError = false
 
-      // do nothing if there's nothing found
-      if (!entity) return
+      // do nothing if there is no Mesh nor Dataplane found
+      if (!mesh || !dataplane) return
 
       /**
        * TODO
        * this will eventually change to `this.$api.getDataplaneFromMesh()`
        * we will need to get the Mesh namespace the user selects, or the one
        * they create, as well as the Dataplane namespace.
+       *
+       * This is also dependent upon multiple Kubernetes endpoints that don't
+       * yet exist in Kuma and need to be created.
+       *
        */
-      this.$api.getDataplaneFromMesh(entity)
+      this.$api.getDataplaneFromMesh(mesh, dataplane)
         .then(response => {
           if (response && response.name.length > 0) {
             this.isRunning = true
