@@ -613,7 +613,7 @@
                 :loaders="false"
                 :tabs="tabs"
                 :has-border="true"
-                :initial-tab-override="environment"
+                initial-tab-override="kubernetes"
               >
                 <template slot="kubernetes">
                   <CodeView
@@ -623,14 +623,14 @@
                     :content="codeOutput"
                   />
                 </template>
-                <template slot="universal">
+                <!-- <template slot="universal">
                   <CodeView
                     title="Universal"
                     copy-button-text="Copy Command to Clipboard"
                     lang="bash"
                     :content="codeOutput"
                   />
-                </template>
+                </template> -->
               </Tabs>
             </div>
             <Scanner
@@ -779,11 +779,11 @@ export default {
         {
           hash: '#kubernetes',
           title: 'Kubernetes'
-        },
-        {
-          hash: '#universal',
-          title: 'Universal'
         }
+        // {
+        //   hash: '#universal',
+        //   title: 'Universal'
+        // }
       ],
       sidebarContent: [
         {
