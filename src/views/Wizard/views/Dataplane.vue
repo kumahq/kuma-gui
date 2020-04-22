@@ -736,7 +736,7 @@ import meshSchema from '@/views/Wizard/schemas/Mesh'
 export default {
   name: 'DataplaneWizard',
   metaInfo: {
-    title: 'Create a new Mesh'
+    title: 'Create a new Dataplane on Kubernetes'
   },
   components: {
     FormFragment,
