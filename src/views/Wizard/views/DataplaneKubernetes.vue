@@ -598,7 +598,7 @@
                 <h3>Searching&hellip;</h3>
               </template>
               <template slot="loading-content">
-                <p>We are looking for your mesh.</p>
+                <p>We are looking for your dataplane.</p>
               </template>
               <!-- complete -->
               <template slot="complete-title">
@@ -754,28 +754,22 @@ export default {
     // Our generated code output
     codeOutput () {
       const schema = Object.assign({}, this.schema)
-      const data = this.validate
-      const mesh = data.meshName
+      const namespace = this.validate.k8sNamespaceSelection
 
       // if no Mesh is selected, do nothing
-      if (!mesh) return
+      if (!namespace) return
 
-      // Type and Name
-      const meshType = {
-        apiVersion: 'v1',
-        kind: 'Mesh',
-        metadata: {
-          name: mesh
-        }
-      }
+      // name and namespace
+      schema.metadata.name = namespace
+      schema.metadata.namespace = namespace
 
       /**
        * Finalized output
        */
 
-      const codeBlock = { ...meshType, spec: { ...schema } }
-      const codeClosing = '" | kubectl apply -f && kubectl delete pod --all -n [VALUE]'
-      const assembledBlock = this.formatForCLI(codeBlock, codeClosing)
+      // const codeBlock = { ...meshType, spec: { ...schema } }
+      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${namespace}`
+      const assembledBlock = this.formatForCLI(schema, codeClosing)
 
       return assembledBlock
     }

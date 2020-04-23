@@ -3,6 +3,7 @@ module.exports = {
   kind: 'Namespace',
   metadata: {
     name: null,
+    namespace: null,
     labels: {
       'kuma.io/sidecar-injection': 'enabled'
     }
