@@ -762,7 +762,7 @@ export default {
 
       // Type and Name
       const meshType = {
-        apiVersion: 'kuma.io/v1alpha1',
+        apiVersion: 'v1',
         kind: 'Mesh',
         metadata: {
           name: mesh
