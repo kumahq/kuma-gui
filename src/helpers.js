@@ -327,6 +327,24 @@ export function stripUrl (url) {
   return match
 }
 
+/**
+ * getOffset
+ *
+ * Returns the offset from an API query so that it can be used
+ * for things like next and prev controls in pagination.
+ *
+ * @param {String} url The URL you want to find `offset` in and
+ * simply return the value for.
+ */
+export function getOffset (url) {
+  const regex = new RegExp(/offset=(\d+)/)
+  const match = parseInt(url.match(regex)[0].replace('offset=', ''))
+
+  if (isNaN(match)) return
+
+  return match
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -344,5 +362,6 @@ export default {
   deepIncludes,
   humanReadableDate,
   getSome,
-  stripUrl
+  stripUrl,
+  getOffset
 }

@@ -2,7 +2,7 @@
   <div class="dataplanes">
     <FrameSkeleton>
       <DataOverview
-        :page-size="6"
+        :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
         :is-empty="isEmpty"
@@ -14,7 +14,16 @@
         table-data-row="name"
         @tableAction="tableAction"
         @reloadData="bootstrap"
-      />
+      >
+        <template slot="pagination">
+          <Pagination
+            :has-previous="pageOffset - pageSize >= 0"
+            :has-next="hasNext"
+            @next="goToNextPage"
+            @previous="goToPreviousPage"
+          />
+        </template>
+      </DataOverview>
       <Tabs
         :has-error="hasError"
         :is-loading="isLoading"
@@ -46,9 +55,10 @@
 </template>
 
 <script>
-import { getSome, humanReadableDate } from '@/helpers'
+import { getSome, humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -61,6 +71,7 @@ export default {
   },
   components: {
     FrameSkeleton,
+    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -107,7 +118,12 @@ export default {
       ],
       entity: null,
       rawEntity: null,
-      firstEntity: null
+      firstEntity: null,
+      pageSize: 6,
+      pageOffset: 0,
+      next: null,
+      hasNext: false,
+      previous: []
     }
   },
   computed: {
@@ -132,13 +148,29 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.bootstrap()
+      this.loadData()
     }
   },
   beforeMount () {
-    this.bootstrap()
+    this.loadData()
   },
   methods: {
+    init () {
+      this.loadData()
+    },
+    goToPreviousPage () {
+      this.pageOffset = this.previous.pop()
+      this.next = null
+
+      this.loadData()
+    },
+    goToNextPage () {
+      this.previous.push(this.pageOffset)
+      this.pageOffset = this.next
+      this.next = null
+
+      this.loadData()
+    },
     tableAction (ev) {
       const data = ev
 
@@ -151,20 +183,33 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    bootstrap () {
+    loadData () {
       this.isLoading = true
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
 
+      const params = {
+        size: this.pageSize,
+        offset: this.pageOffset
+      }
+
       const endpoint = (mesh === 'all')
-        ? this.$api.getAllDataplanes()
+        ? this.$api.getAllDataplanes(params)
         : this.$api.getAllDataplanesFromMesh(mesh)
 
       const getDataplanes = () => {
         return endpoint
           .then(response => {
             if (response.items.length > 0) {
+              // check to see if the `next` url is present
+              if (response.next) {
+                this.next = getOffset(response.next)
+                this.hasNext = true
+              } else {
+                this.hasNext = false
+              }
+
               const items = response.items
               const final = []
 

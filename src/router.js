@@ -115,7 +115,7 @@ export default (store) => {
       meta: {
         title: 'Meshes',
         breadcrumb: 'Meshes',
-        parent: 'mesh-overview'
+        parent: 'global-overview'
       },
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),
@@ -174,28 +174,6 @@ export default (store) => {
             title: 'Fault Injections'
           },
           component: () => import('@/views/Policies/FaultInjections')
-        },
-        // fault injections
-        {
-          path: 'fault-injections',
-          name: 'fault-injections',
-          meta: {
-            title: 'Fault Injections'
-          },
-          component: () => import('@/views/Policies/FaultInjection')
-        },
-        {
-          path: 'fault-injections/:faultinjection',
-          name: 'fault-injections-details',
-          params: {
-            faultinjection: ':faultinjection'
-          },
-          meta: {
-            title: 'Fault Injection Details',
-            breadcrumb: 'Fault Injections',
-            parent: 'fault-injections'
-          },
-          component: () => import('@/views/Policies/FaultInjectionDetail')
         },
         // health checks
         {

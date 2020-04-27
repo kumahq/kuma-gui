@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { getSome, stripUrl } from '@/helpers'
+import { getSome, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -222,7 +222,7 @@ export default {
 
             // check to see if the `next` url is present
             if (response.next) {
-              this.next = response.next.match(/offset=(\d+)/g)[0].replace('offset=', '')
+              this.next = getOffset(response.next)
               this.hasNext = true
             } else {
               this.hasNext = false

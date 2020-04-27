@@ -17,9 +17,9 @@
         <KButton
           appearance="primary"
           :to="{
-            name: 'mesh-overview',
+            name: 'global-overview',
             params: {
-              mesh: homepage
+              mesh: currentMesh
             }
           }"
         >
@@ -31,20 +31,13 @@
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import PageContent from '@/components/Utils/PageContent.vue'
-
 export default {
   name: 'NotFound',
   metaInfo: {
-    title: 'Not Found'
-  },
-  components: {
-    PageHeader,
-    PageContent
+    title: 'Item Not Found'
   },
   computed: {
-    homepage () {
+    currentMesh () {
       const meshFromLS = localStorage.getItem('selectedMesh')
       const meshFromState = this.$store.getters.getSelectedMesh
 
