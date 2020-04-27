@@ -1,14 +1,8 @@
 <template>
   <div class="all-meshes">
-    <!-- <page-header noflex>
-      <breadcrumbs />
-      <h2 class="xxl">
-        {{ this.$route.meta.title }}
-      </h2>
-    </page-header> -->
     <FrameSkeleton>
       <DataOverview
-        :page-size="6"
+        :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
         :is-empty="isEmpty"
@@ -18,8 +12,10 @@
         :table-data-is-empty="tableDataIsEmpty"
         table-data-function-text="View"
         table-data-row="name"
+        :has-next="hasNext"
+        :next="next"
         @tableAction="tableAction"
-        @reloadData="bootstrap"
+        @reloadData="loadData"
       >
         <template slot="additionalControls">
           <KButton
@@ -30,6 +26,14 @@
           >
             Create Mesh
           </KButton>
+        </template>
+        <template slot="pagination">
+          <Pagination
+            :has-previous="pageOffset - pageSize >= 0"
+            :has-next="hasNext"
+            @next="goToNextPage"
+            @previous="goToPreviousPage"
+          />
         </template>
       </DataOverview>
       <Tabs
@@ -63,11 +67,10 @@
 </template>
 
 <script>
-import { getSome } from '@/helpers'
+import { getSome, stripUrl } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
-// import PageHeader from '@/components/Utils/PageHeader.vue'
-// import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -79,9 +82,8 @@ export default {
     title: 'Meshes'
   },
   components: {
-    // PageHeader,
-    // Breadcrumbs,
     FrameSkeleton,
+    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -123,7 +125,12 @@ export default {
       ],
       entity: null,
       rawEntity: null,
-      firstEntity: null
+      firstEntity: null,
+      pageSize: 6,
+      pageOffset: 0,
+      next: null,
+      hasNext: false,
+      previous: []
     }
   },
   computed: {
@@ -148,13 +155,29 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.bootstrap()
+      this.init()
     }
   },
   beforeMount () {
-    this.bootstrap()
+    this.init()
   },
   methods: {
+    init () {
+      this.loadData()
+    },
+    goToPreviousPage () {
+      this.pageOffset = this.previous.pop()
+      this.next = null
+
+      this.loadData()
+    },
+    goToNextPage () {
+      this.previous.push(this.pageOffset)
+      this.pageOffset = this.next
+      this.next = null
+
+      this.loadData()
+    },
     tableAction (ev) {
       const data = ev
 
@@ -167,14 +190,19 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    bootstrap () {
+    loadData () {
       this.isLoading = true
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
 
+      const params = {
+        size: this.pageSize,
+        offset: this.pageOffset
+      }
+
       const endpoint = (mesh === 'all' || !mesh)
-        ? this.$api.getAllMeshes()
+        ? this.$api.getAllMeshes(params)
         : this.$api.getMesh(mesh)
 
       const getMeshes = () => {
@@ -190,6 +218,14 @@ export default {
               newItems.items.push(response)
 
               return newItems.items
+            }
+
+            // check to see if the `next` url is present
+            if (response.next) {
+              this.next = response.next.match(/offset=(\d+)/g)[0].replace('offset=', '')
+              this.hasNext = true
+            } else {
+              this.hasNext = false
             }
 
             const items = cleanRes()
