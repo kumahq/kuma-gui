@@ -271,19 +271,6 @@ export default {
       type: String,
       required: false,
       default: null
-    },
-    hasNext: {
-      type: Boolean,
-      default: false
-    },
-    next: {
-      type: String,
-      required: true
-    }
-  },
-  data () {
-    return {
-      pageOffset: 0
     }
   },
   computed: {
@@ -302,23 +289,12 @@ export default {
     tableDataFiltered () {
       const data = this.tableData.data
       const headers = this.tableData.headers
-      // const start = this.pageOffset * this.pageSize
-      // const end = start + this.pageSize
-      // const filtered = data.slice(start, end)
       const newData = { headers, data: [...data] }
 
       return newData
     }
   },
   methods: {
-    goToPreviousPage () {
-      // this.pageOffset--
-      this.pageOffset -= this.pageSize
-    },
-    goToNextPage () {
-      // this.pageOffset++
-      this.pageOffset += this.pageSize
-    },
     tableRowHandler (e, row, type) {
       this.$emit('tableAction', {
         name: row.name,

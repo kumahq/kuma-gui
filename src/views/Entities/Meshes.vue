@@ -12,8 +12,6 @@
         :table-data-is-empty="tableDataIsEmpty"
         table-data-function-text="View"
         table-data-row="name"
-        :has-next="hasNext"
-        :next="next"
         @tableAction="tableAction"
         @reloadData="loadData"
       >
