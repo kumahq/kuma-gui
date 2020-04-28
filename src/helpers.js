@@ -337,10 +337,8 @@ export function stripUrl (url) {
  * simply return the value for.
  */
 export function getOffset (url) {
-  const regex = new RegExp(/offset=(\d+)/)
-  const match = parseInt(url.match(regex)[0].replace('offset=', ''))
-
-  if (isNaN(match)) return
+  const regex = new RegExp(/offset=(\w+)/)
+  const match = url.match(regex)[0].replace('offset=', '')
 
   return match
 }

@@ -27,7 +27,7 @@
         </template>
         <template slot="pagination">
           <Pagination
-            :has-previous="pageOffset - pageSize >= 0"
+            :has-previous="previous.length > 0"
             :has-next="hasNext"
             @next="goToNextPage"
             @previous="goToPreviousPage"
@@ -125,7 +125,7 @@ export default {
       rawEntity: null,
       firstEntity: null,
       pageSize: 6,
-      pageOffset: 0,
+      pageOffset: null,
       next: null,
       hasNext: false,
       previous: []

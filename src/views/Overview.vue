@@ -36,11 +36,11 @@
         :display-data-table="true"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
-        @reloadData="bootstrap"
+        @reloadData="loadData"
       >
         <template slot="pagination">
           <Pagination
-            :has-previous="pageOffset - pageSize >= 0"
+            :has-previous="previous.length > 0"
             :has-next="hasNext"
             @next="goToNextPage"
             @previous="goToPreviousPage"
@@ -96,7 +96,7 @@ export default {
         data: []
       },
       pageSize: 10,
-      pageOffset: 0,
+      pageOffset: null,
       next: null,
       hasNext: false,
       previous: []
