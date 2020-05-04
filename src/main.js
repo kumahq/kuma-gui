@@ -40,7 +40,12 @@ Vue.config.productionTip = false
 function VUE_APP () {
   const kuma = new Kuma()
 
+  // setup the HTTP API namespace
   Vue.prototype.$api = kuma
+
+  // define the page size globally for fetching
+  // API item count on table views
+  Vue.prototype.$pageSize = 12
 
   const store = Store(kuma)
   const router = Router(store)

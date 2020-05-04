@@ -124,7 +124,7 @@ export default {
       entity: null,
       rawEntity: null,
       firstEntity: null,
-      pageSize: 6,
+      pageSize: this.$pageSize,
       pageOffset: null,
       next: null,
       hasNext: false,
