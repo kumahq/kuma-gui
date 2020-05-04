@@ -109,13 +109,7 @@
           </template>
         </KTable>
 
-        <Pagination
-          v-if="tableData && tableRowCount > pageSize"
-          :has-previous="pageNumber > 0"
-          :has-next="pageNumber < pageCount -1"
-          @next="goToNextPage"
-          @previous="goToPreviousPage"
-        />
+        <slot name="pagination" />
       </div>
 
       <!-- empty state if no items are found -->
@@ -279,11 +273,6 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      pageNumber: 0
-    }
-  },
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
@@ -300,21 +289,12 @@ export default {
     tableDataFiltered () {
       const data = this.tableData.data
       const headers = this.tableData.headers
-      const start = this.pageNumber * this.pageSize
-      const end = start + this.pageSize
-      const filtered = data.slice(start, end)
-      const newData = { headers, data: [...filtered] }
+      const newData = { headers, data: [...data] }
 
       return newData
     }
   },
   methods: {
-    goToPreviousPage () {
-      this.pageNumber--
-    },
-    goToNextPage () {
-      this.pageNumber++
-    },
     tableRowHandler (e, row, type) {
       this.$emit('tableAction', {
         name: row.name,

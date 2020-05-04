@@ -36,15 +36,26 @@
         :display-data-table="true"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
-        @reloadData="bootstrap"
-      />
+        @reloadData="loadData"
+      >
+        <template slot="pagination">
+          <Pagination
+            :has-previous="previous.length > 0"
+            :has-next="hasNext"
+            @next="goToNextPage"
+            @previous="goToPreviousPage"
+          />
+        </template>
+      </DataOverview>
     </FrameSkeleton>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { getOffset } from '@/helpers'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import Pagination from '@/components/Pagination'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
@@ -60,6 +71,7 @@ export default {
   },
   components: {
     FrameSkeleton,
+    Pagination,
     PageHeader,
     Breadcrumbs,
     MetricGrid,
@@ -82,7 +94,12 @@ export default {
           { label: 'Online Dataplanes', key: 'onlineDpCount' }
         ],
         data: []
-      }
+      },
+      pageSize: 10,
+      pageOffset: null,
+      next: null,
+      hasNext: false,
+      previous: []
     }
   },
   computed: {
@@ -133,26 +150,33 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.bootstrap()
+      this.init()
     }
   },
   beforeMount () {
-    this.bootstrap()
+    this.init()
   },
   methods: {
-    bootstrap () {
-      this.isLoading = true
-      this.isEmpty = false
+    init () {
+      this.getCounts()
+      this.loadData()
+    },
+    goToPreviousPage () {
+      this.pageOffset = this.previous.pop()
+      this.next = null
 
-      //
-      // overall totals for all entities and policies
-      //
+      this.loadData()
+    },
+    goToNextPage () {
+      this.previous.push(this.pageOffset)
+      this.pageOffset = this.next
+      this.next = null
 
+      this.loadData()
+    },
+    getCounts () {
       // total Mesh count
       this.$store.dispatch('getMeshTotalCount')
-
-      // get (or refresh) the full dataplane list
-      // this.$store.dispatch('getAllDataplanes')
 
       // total Dataplane count
       this.$store.dispatch('getDataplaneTotalCount')
@@ -177,16 +201,33 @@ export default {
 
       // total Fault Injection count
       this.$store.dispatch('getFaultInjectionTotalCount')
+    },
+    loadData () {
+      this.isLoading = true
+      this.isEmpty = false
 
       // prepare and populate the table data
       const getMeshData = () => {
         this.$store.dispatch('getAllDataplanes')
         const dpList = this.dpList
 
-        return this.$api.getAllMeshes()
+        const params = {
+          size: this.pageSize,
+          offset: this.pageOffset
+        }
+
+        return this.$api.getAllMeshes(params)
           .then(response => {
             const items = response.items
             const itemStatus = []
+
+            // check to see if the `next` url is present
+            if (response.next) {
+              this.next = getOffset(response.next)
+              this.hasNext = true
+            } else {
+              this.hasNext = false
+            }
 
             for (let i = 0; i < items.length; i++) {
               const mesh = items[i].name

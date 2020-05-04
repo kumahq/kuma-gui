@@ -25,12 +25,19 @@ export default class Kuma {
   }
 
   /**
+   * Custom query
+   */
+  query (model, params) {
+    return this.client.get(`/${model}`, { params })
+  }
+
+  /**
    * Meshes
    */
 
   // get a list of all meshes
-  getAllMeshes () {
-    return this.client.get('/meshes')
+  getAllMeshes (params) {
+    return this.client.get('/meshes', { params })
   }
 
   // get a single mesh

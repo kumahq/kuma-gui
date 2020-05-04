@@ -2,6 +2,7 @@
   <div class="traffic-permissions">
     <FrameSkeleton>
       <DataOverview
+        :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
         :is-empty="isEmpty"
@@ -12,8 +13,17 @@
         table-data-function-text="View"
         table-data-row="name"
         @tableAction="tableAction"
-        @reloadData="bootstrap"
-      />
+        @reloadData="loadData"
+      >
+        <template slot="pagination">
+          <Pagination
+            :has-previous="previous.length > 0"
+            :has-next="hasNext"
+            @next="goToNextPage"
+            @previous="goToPreviousPage"
+          />
+        </template>
+      </DataOverview>
       <Tabs
         :has-error="hasError"
         :is-loading="isLoading"
@@ -48,6 +58,7 @@
 import { getSome } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -60,6 +71,7 @@ export default {
   },
   components: {
     FrameSkeleton,
+    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -102,7 +114,12 @@ export default {
       ],
       entity: null,
       rawEntity: null,
-      firstEntity: null
+      firstEntity: null,
+      pageSize: this.$pageSize,
+      pageOffset: null,
+      next: null,
+      hasNext: false,
+      previous: []
     }
   },
   computed: {
@@ -127,13 +144,29 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.bootstrap()
+      this.init()
     }
   },
   beforeMount () {
-    this.bootstrap()
+    this.init()
   },
   methods: {
+    init () {
+      this.loadData()
+    },
+    goToPreviousPage () {
+      this.pageOffset = this.previous.pop()
+      this.next = null
+
+      this.loadData()
+    },
+    goToNextPage () {
+      this.previous.push(this.pageOffset)
+      this.pageOffset = this.next
+      this.next = null
+
+      this.loadData()
+    },
     tableAction (ev) {
       const data = ev
 
@@ -146,14 +179,19 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    bootstrap () {
+    loadData () {
       this.isLoading = true
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
 
+      const params = {
+        size: this.pageSize,
+        offset: this.pageOffset
+      }
+
       const endpoint = (mesh === 'all')
-        ? this.$api.getAllTrafficPermissions()
+        ? this.$api.getAllTrafficPermissions(params)
         : this.$api.getAllTrafficPermissionsFromMesh(mesh)
 
       const getTrafficPermissions = () => {

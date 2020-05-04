@@ -254,13 +254,13 @@ export default (api) => {
       },
 
       // this will get the current status of all dataplanes
-      getAllDataplanes ({ commit }) {
+      getAllDataplanes ({ commit }, params) {
         const getDataplanes = async () => {
           return new Promise(async (resolve, reject) => {
             const result = []
             const states = []
 
-            const dataplanes = await api.getAllDataplanes()
+            const dataplanes = await api.getAllDataplanes(params)
             const items = await dataplanes.items
 
             for (let i = 0; i < items.length; i++) {
