@@ -426,6 +426,19 @@
               </FormFragment>
               <FormFragment
                 v-if="formConditions.metricsEnabled === true"
+                title="Backend name"
+              >
+                <input
+                  id="metrics-name"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-metrics-backend-name"
+                  :value="getStorageItem('meshMetricsName')"
+                  @change="updateStorage('meshMetricsName', $event.target.value)"
+                >
+              </FormFragment>
+              <FormFragment
+                v-if="formConditions.metricsEnabled === true"
                 title="Type"
                 for-attr="metrics-type"
               >
@@ -758,7 +771,7 @@ export default {
 
         mtlsObject.backends = []
 
-        mtlsObject.enabledBackend = certAuth
+        mtlsObject.enabledBackend = certName
 
         if (certAuth === 'provided') {
           mtlsObject.backends = [
@@ -793,25 +806,16 @@ export default {
         const loggingObj = schemaNew.logging.backends[0]
         const fallbackFormat = loggingObj.format
 
+        loggingObj.config = {}
+
         loggingObj.name = newData.meshLoggingBackend
+        loggingObj.type = newData.meshLoggingType
         loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
 
         if (newData.meshLoggingType === 'tcp') {
-          if (loggingObj.file) {
-            delete loggingObj.file
-          }
-
-          loggingObj.tcp = {
-            address: newData.meshLoggingAddress || '127.0.0.1:5000'
-          }
+          loggingObj.config.address = newData.meshLoggingAddress || '127.0.0.1:5000'
         } else if (newData.meshLoggingType === 'file') {
-          if (loggingObj.tcp) {
-            delete loggingObj.tcp
-          }
-
-          loggingObj.file = {
-            path: newData.meshLoggingPath
-          }
+          loggingObj.config.path = newData.meshLoggingPath
         }
       }
 
@@ -821,9 +825,12 @@ export default {
       if (hasTracing) {
         const tracingObj = schemaNew.tracing
 
+        tracingObj.backends[0].config = {}
+
         tracingObj.defaultBackend = newData.meshTracingBackend
+        tracingObj.backends[0].type = newData.meshTracingType || 'zipkin'
         tracingObj.backends[0].name = newData.meshTracingBackend
-        tracingObj.backends[0].sampling = newData.meshTracingSampling || 100
+        tracingObj.backends[0].config.sampling = newData.meshTracingSampling || 100
         tracingObj.backends[0].config.url = newData.meshTracingZipkinURL
       }
 
@@ -833,7 +840,11 @@ export default {
       if (hasMetrics) {
         const metricsObj = schemaNew.metrics
 
+        metricsObj.backends[0].config = {}
+
+        metricsObj.enabledBackend = newData.meshMetricsName
         metricsObj.backends[0].type = newData.meshMetricsType || 'prometheus'
+        metricsObj.backends[0].name = newData.meshMetricsName
         metricsObj.backends[0].config.port = newData.meshMetricsDataplanePort || 5670
         metricsObj.backends[0].config.path = newData.meshMetricsDataplanePath || '/metrics'
       }
@@ -860,8 +871,6 @@ export default {
           name: newData.meshName
         }
       }
-
-      console.log(meshType)
 
       /**
        * Finalized output
