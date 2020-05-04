@@ -223,6 +223,12 @@ export function deepIncludes (src, target) {
 }
 
 /**
+ * =============================================================================
+ * Kuma Helpers
+ * =============================================================================
+ */
+
+/**
  * Outputs a friendly human-readable timeframe between now and the date string entered
  * @param {String} tdate
  */
@@ -305,6 +311,38 @@ export function getSome (original, desired) {
   return desired.reduce((obj, key) => ({ ...obj, [key]: cleaned[key] }), {})
 }
 
+/**
+ * stripUrl
+ *
+ * Returns all of a URL after the last slash so that it does not
+ * include the root of the URL that we don't need (e.g. when fetching from
+ * an API).
+ *
+ * @param {String} url
+ */
+export function stripUrl (url) {
+  const regex = new RegExp(/([^\/]+$)/g)
+  const match = url.match(regex)[0]
+
+  return match
+}
+
+/**
+ * getOffset
+ *
+ * Returns the offset from an API query so that it can be used
+ * for things like next and prev controls in pagination.
+ *
+ * @param {String} url The URL you want to find `offset` in and
+ * simply return the value for.
+ */
+export function getOffset (url) {
+  const regex = new RegExp(/offset=(\w+)/)
+  const match = url.match(regex)[0].replace('offset=', '')
+
+  return match
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -321,5 +359,7 @@ export default {
   formatDate,
   deepIncludes,
   humanReadableDate,
-  getSome
+  getSome,
+  stripUrl,
+  getOffset
 }

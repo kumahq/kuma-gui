@@ -75,7 +75,7 @@
         <div class="data-table-wrapper">
           <KTable :options="tableData">
             <template
-              v-slot:status="{rowValue}"
+              v-slot:status="{ rowValue }"
             >
               <div
                 class="entity-status"
@@ -92,7 +92,7 @@
             <KButton
               appearance="primary"
               class="mr-2"
-              @click="reScanForDataplanes()"
+              @click="reScanForDataplanes"
             >
               Refresh
             </KButton>
@@ -238,15 +238,11 @@ $ kuma-dp run \
 
 <script>
 import axios from 'axios'
-import DemoApp from './components/DemoApp'
 
 export default {
   name: 'OnboardingStep1',
   metaInfo: {
     title: 'Welcome to Kuma!'
-  },
-  components: {
-    DemoApp
   },
   data () {
     return {
@@ -263,7 +259,8 @@ export default {
           { label: 'Mesh', key: 'mesh' }
         ],
         data: []
-      }
+      },
+      pageSize: 10
     }
   },
   computed: {
@@ -300,19 +297,18 @@ export default {
     },
 
     getDataplaneTableData () {
-      this.$store.dispatch('getAllDataplanes')
+      const params = {
+        size: this.pageSize
+      }
+
+      this.$store.dispatch('getAllDataplanes', params)
         .then(() => {
           const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
           if (dataplanes && dataplanes.length > 0) {
             this.tableDataDataplaneCount = dataplanes.length
-            this.tableData.data = []
+            this.tableData.data = dataplanes
             this.tableDataLoadAttempted = false
-
-            dataplanes.slice(0, 10).map(val => {
-              this.tableData.data.push(val)
-            })
-
             this.tableDataIsEmpty = false
 
             setTimeout(() => {
