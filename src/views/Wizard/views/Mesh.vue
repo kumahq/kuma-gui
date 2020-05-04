@@ -63,8 +63,7 @@
                     :checked="formConditions.mtlsEnabled === false"
                     @change="
                       updateStorage('meshMtls', false);
-                      formConditions.mtlsEnabled = false
-                    "
+                      formConditions.mtlsEnabled = false"
                   >
                   <span>Disabled</span>
                 </label>
@@ -83,6 +82,20 @@
                   >
                   <span>Enabled</span>
                 </label>
+              </FormFragment>
+
+              <FormFragment
+                v-if="formConditions.mtlsEnabled === true"
+                title="Certificate name"
+              >
+                <input
+                  id="certificate-name"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-certificate-name"
+                  :value="getStorageItem('meshCAName')"
+                  @change="updateStorage('meshCAName', $event.target.value)"
+                >
               </FormFragment>
 
               <FormFragment
@@ -738,9 +751,37 @@ export default {
        * mTLS
        */
       if (hasMtls) {
-        schemaNew.spec.mtls.enabled = true
-        schemaNew.spec.mtls.ca = {
-          [newData.meshCA || 'builtin']: {}
+        schemaNew.mtls.enabled = true
+        const mtlsObject = schemaNew.mtls
+        const certAuth = this.formData.meshCA
+        const certName = this.formData.meshCAName
+
+        mtlsObject.backends = []
+
+        mtlsObject.enabledBackend = certAuth
+
+        if (certAuth === 'provided') {
+          mtlsObject.backends = [
+            {
+              name: certName,
+              type: certAuth,
+              config: {
+                cert: {
+                  secret: ''
+                },
+                key: {
+                  secret: ''
+                }
+              }
+            }
+          ]
+        } else {
+          mtlsObject.backends = [
+            {
+              name: certName,
+              type: certAuth
+            }
+          ]
         }
       }
 
@@ -749,7 +790,7 @@ export default {
        */
 
       if (hasLogging) {
-        const loggingObj = schemaNew.spec.logging.backends[0]
+        const loggingObj = schemaNew.logging.backends[0]
         const fallbackFormat = loggingObj.format
 
         loggingObj.name = newData.meshLoggingBackend
@@ -778,26 +819,27 @@ export default {
        * Tracing
        */
       if (hasTracing) {
-        const tracingObj = schemaNew.spec.tracing
+        const tracingObj = schemaNew.tracing
 
         tracingObj.defaultBackend = newData.meshTracingBackend
         tracingObj.backends[0].name = newData.meshTracingBackend
         tracingObj.backends[0].sampling = newData.meshTracingSampling || 100
-        tracingObj.backends[0].zipkin.url = newData.meshTracingZipkinURL
+        tracingObj.backends[0].config.url = newData.meshTracingZipkinURL
       }
 
       /**
        * Metrics
        */
       if (hasMetrics) {
-        const metricsObj = schemaNew.spec.metrics
+        const metricsObj = schemaNew.metrics
 
-        metricsObj.prometheus.port = newData.meshMetricsDataplanePort || 5670
-        metricsObj.prometheus.path = newData.meshMetricsDataplanePath || '/metrics'
+        metricsObj.backends[0].type = newData.meshMetricsType || 'prometheus'
+        metricsObj.backends[0].config.port = newData.meshMetricsDataplanePort || 5670
+        metricsObj.backends[0].config.path = newData.meshMetricsDataplanePath || '/metrics'
       }
 
       // now we clean up our output based on the above conditions
-      const schemaClean = rejectKeys(schemaNew.spec, filteredFeatures)
+      const schemaClean = rejectKeys(schemaNew, filteredFeatures)
 
       // Type and Name
       let meshType
@@ -819,17 +861,19 @@ export default {
         }
       }
 
+      console.log(meshType)
+
       /**
        * Finalized output
        */
 
-      let codeBlock
+      const codeBlock = { ...meshType, ...schemaClean }
 
-      if (this.selectedTab === '#kubernetes') {
-        codeBlock = { ...meshType, spec: { ...schemaClean } }
-      } else {
-        codeBlock = { ...meshType, ...schemaClean }
-      }
+      // if (this.selectedTab === '#kubernetes') {
+      //   codeBlock = { ...meshType, spec: { ...schemaClean } }
+      // } else {
+      //   codeBlock = { ...meshType, ...schemaClean }
+      // }
 
       const assembledBlock = this.formatForCLI(codeBlock)
 

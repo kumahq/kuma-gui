@@ -115,6 +115,9 @@ export default {
       this.runScanner()
     }
   },
+  beforeDestroy () {
+    clearInterval(this.intervalFunction)
+  },
   methods: {
     runScanner () {
       this.isRunning = true
