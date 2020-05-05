@@ -308,6 +308,16 @@ $bp-max-width: 1219px;
       color: #000;
     }
   }
+
+  code {
+    display: block;
+    margin: var(--spacing-md) 0;
+    background-color: var(--gray-1);
+    border: 1px solid var(--gray-4);
+    border-radius: 6px;
+    padding: var(--spacing-md);
+    font-size: var(--base-font-size);
+  }
 }
 
 .wizard-steps__indicator {

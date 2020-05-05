@@ -86,7 +86,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="scope-settings">
+        <template slot="topology">
           <h3>
             Setup Dataplane Mode
           </h3>
@@ -108,7 +108,7 @@
                 <label for="service-dataplane">
                   <input
                     id="service-dataplane"
-                    v-model="validate.k8sDataplaneType"
+                    v-model="validate.univDataplaneType"
                     class="k-input"
                     type="radio"
                     name="dataplane-type"
@@ -119,398 +119,152 @@
                     Service Dataplane
                   </span>
                 </label>
-                <label for="ingress-dataplane">
+                <label for="gateway-dataplane">
                   <input
-                    id="ingress-dataplane"
-                    v-model="validate.k8sDataplaneType"
+                    id="gateway-dataplane"
+                    v-model="validate.univDataplaneType"
                     class="k-input"
                     type="radio"
                     name="dataplane-type"
-                    value="dataplane-type-ingress"
+                    value="dataplane-type-gateway"
                   >
                   <span>
-                    Ingress Dataplane
+                    Gateway Dataplane
                   </span>
                 </label>
               </FormFragment>
             </template>
           </KCard>
 
-          <div v-if="validate.k8sDataplaneType === 'dataplane-type-service'">
-            <p>
-              Should the data plane be added for an entire Namespace and all of its services,
-              or for specific individual services in any namespace?
-            </p>
-
-            <!-- service selection -->
-            <KCard
-              class="my-6"
-              has-shadow
+          <FormFragment
+            all-inline
+            title="Service name"
+          >
+            <input
+              id="service-name"
+              v-model="validate.univDataplaneServiceName"
+              type="text"
+              class="k-input w-100 mr-4"
             >
-              <template slot="body">
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
+          </FormFragment>
+          <FormFragment
+            all-inline
+            title="Dataplane ID"
+            for-attr="dataplane-id"
+          >
+            <div>
+              <KPop trigger="hover">
+                <input
+                  id="dataplane-id"
+                  :value="randDataplaneId"
+                  type="text"
+                  class="k-input w-100"
+                  :disabled="validate.univDataplaneCustomIdDisabled"
                 >
-                  <label for="k8s-services-all">
-                    <input
-                      id="k8s-services-all"
-                      v-model="validate.k8sServices"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-services"
-                      value="all-services"
-                      checked
-                    >
-                    <span>
-                      All Services in Namespace
-                    </span>
-                  </label>
-                  <label for="k8s-services-individual">
-                    <input
-                      id="k8s-services-individual"
-                      v-model="validate.k8sServices"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-services"
-                      value="individual-services"
-                    >
-                    <span>
-                      Individual Services
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <KCard
-              v-if="validate.k8sServices === 'individual-services'"
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
+                <div slot="content">
+                  This is a unique ID for the Dataplane instance.
+                </div>
+              </KPop>
+            </div>
+            <div>
+              <KButton
+                appearance="primary"
+                @click="validate.univDataplaneCustomIdDisabled = false"
+              >
+                Edit
+              </KButton>
+            </div>
+          </FormFragment>
+        </template>
+        <template slot="networking">
+          <h3>
+            Networking
+          </h3>
+          <p>
+            It's time to now configure the networking settings so that the Dataplane
+            can connect to the local service, and other data planes can consume
+            your service.
+          </p>
+          <FormFragment
+            title="Address"
+            for-attr="network-address"
+          >
+            <KPop trigger="hover">
+              <input
+                id="network-address"
+                v-model="validate.univDataplaneNetworkAddress"
+                placeholder="127.0.0.1"
+                type="text"
+                class="k-input w-100"
+              >
+              <div slot="content">
+                The IP address that other services will use to consume this data plane.
+              </div>
+            </KPop>
+          </FormFragment>
+          <FormFragment
+            title="Service Port"
+            for-attr="network-service-port"
+          >
+            <KPop trigger="hover">
+              <input
+                id="network-service-port"
+                v-model="validate.univDataplaneNetworkServicePort"
+                placeholder="5000"
+                type="text"
+                class="k-input w-100"
+              >
+              <div slot="content">
+                The port where your service is listening on the machine.
+              </div>
+            </KPop>
+          </FormFragment>
+          <FormFragment
+            title="Data plane port"
+            for-attr="network-dataplane-port"
+          >
+            <KPop trigger="hover">
+              <input
+                id="network-dataplane-port"
+                v-model="validate.univDataplaneNetworkDPPort"
+                placeholder="5000"
+                type="text"
+                class="k-input w-100"
+              >
+              <div slot="content">
+                The data plane port (that other services will use to consume this service).
+              </div>
+            </KPop>
+          </FormFragment>
+          <FormFragment
+            title="Data plane port"
+            for-attr="network-dataplane-protocol"
+          >
+            <KPop trigger="hover">
+              <select
+                id="network-dataplane-protocol"
+                v-model="validate.univDataplaneNetworkProtocol"
+                class="k-input w-100"
+                name="network-dataplane-protocol"
+              >
+                <option
+                  value="tcp"
+                  :selected="validate.univDataplaneNetworkProtocol === 'tcp'"
                 >
-                  <label for="k8s-deployment-existing">
-                    <input
-                      id="k8s-deployment-existing"
-                      v-model="validate.k8sServiceDeployment"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-deployment"
-                      value="existing-deployment"
-                      checked
-                    >
-                    <span>
-                      Existing Deployment
-                    </span>
-                  </label>
-                  <label for="k8s-deployment-new">
-                    <input
-                      id="k8s-deployment-new"
-                      v-model="validate.k8sServiceDeployment"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-deployment"
-                      value="new-deployment"
-                    >
-                    <span>
-                      New Deployment
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <KCard
-              v-if="validate.k8sServices === 'individual-services'"
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  title="Deployments"
-                  for-attr="k8s-deployment-selection"
+                  TCP
+                </option>
+                <option
+                  value="http"
+                  :selected="validate.univDataplaneNetworkProtocol === 'http'"
                 >
-                  <select
-                    v-if="validate.k8sServiceDeployment === 'existing-deployment'"
-                    id="k8s-service-deployment-selection"
-                    v-model="validate.k8sServiceDeploymentSelection"
-                    class="k-input w-100"
-                    name="k8s-deployment-selection"
-                  >
-                    <option
-                      disabled
-                      value=""
-                    >
-                      Select a Deployment&hellip;
-                    </option>
-                    <option value="deployment-1">
-                      Deployment-1
-                    </option>
-                    <option value="deployment-2">
-                      Deployment-2
-                    </option>
-                    <option value="deployment-3">
-                      Deployment-3
-                    </option>
-                  </select>
-                  <input
-                    v-if="validate.k8sServiceDeployment === 'new-deployment'"
-                    id="k8s-service-deployment-new"
-                    v-model="validate.k8sServiceDeploymentSelection"
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="your-new-deployment"
-                    required
-                  >
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <!-- namespace selection options -->
-            <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
-                >
-                  <label for="k8s-namespace-existing">
-                    <input
-                      id="k8s-namespace-existing"
-                      v-model="validate.k8sNamespace"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-namespace"
-                      value="existing-namespace"
-                      checked
-                    >
-                    <span>
-                      Existing Namespace
-                    </span>
-                  </label>
-                  <label for="k8s-namespace-new">
-                    <input
-                      id="k8s-namespace-new"
-                      v-model="validate.k8sNamespace"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-namespace"
-                      value="new-namespace"
-                    >
-                    <span>
-                      New Namespace
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <!-- namespace selection -->
-            <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  title="Namespace"
-                  for-attr="k8s-namespace-selection"
-                >
-                  <select
-                    v-if="validate.k8sNamespace === 'existing-namespace'"
-                    id="k8s-namespace-selection"
-                    v-model="validate.k8sNamespaceSelection"
-                    class="k-input w-100"
-                    name="k8s-namespace-selection"
-                  >
-                    <option
-                      disabled
-                      value=""
-                    >
-                      Select a Namespace&hellip;
-                    </option>
-                    <option value="namespace-1">
-                      Namespace-1
-                    </option>
-                    <option value="namespace-2">
-                      Namespace-2
-                    </option>
-                    <option value="namespace-3">
-                      Namespace-3
-                    </option>
-                  </select>
-                  <input
-                    v-if="validate.k8sNamespace === 'new-namespace'"
-                    id="k8s-namespace-new"
-                    v-model="validate.k8sNamespaceSelection"
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="your-new-namespace"
-                    required
-                  >
-                </FormFragment>
-              </template>
-            </KCard>
-          </div>
-
-          <div v-if="validate.k8sDataplaneType === 'dataplane-type-ingress'">
-            <p>
-              Is this a new Ingress that you want to deploy, or an existing one?
-            </p>
-
-            <!-- ingress type selection -->
-            <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
-                >
-                  <label for="k8s-ingress-existing">
-                    <input
-                      id="k8s-ingress-existing"
-                      v-model="validate.k8sIngressType"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-ingress-type"
-                      value="existing-ingress"
-                      checked
-                    >
-                    <span>
-                      Existing Ingress
-                    </span>
-                  </label>
-                  <label for="k8s-ingress-new">
-                    <input
-                      id="k8s-ingress-new"
-                      v-model="validate.k8sIngressType"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-ingress-type"
-                      value="new-ingress"
-                    >
-                    <span>
-                      New Ingress
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <p>
-              {{ title }} natively supports the Kong Ingress. Do you want to deploy
-              Kong or another Ingress?
-            </p>
-
-            <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
-                >
-                  <label for="k8s-ingress-kong">
-                    <input
-                      id="k8s-ingress-kong"
-                      v-model="validate.k8sIngressBrand"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-ingress-brand"
-                      value="kong-ingress"
-                      checked
-                    >
-                    <span>
-                      Kong Ingress
-                    </span>
-                  </label>
-                  <label for="k8s-ingress-other">
-                    <input
-                      id="k8s-ingress-other"
-                      v-model="validate.k8sIngressBrand"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-ingress-brand"
-                      value="other-ingress"
-                    >
-                    <span>
-                      Other Ingress
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template slot="body">
-                <FormFragment
-                  title="Deployments"
-                  for-attr="k8s-deployment-selection"
-                >
-                  <select
-                    v-if="validate.k8sIngressType === 'existing-ingress'"
-                    id="k8s-ingress-deployment-selection"
-                    v-model="validate.k8sIngressDeploymentSelection"
-                    class="k-input w-100"
-                    name="k8s-ingress-selection"
-                  >
-                    <option
-                      disabled
-                      value=""
-                    >
-                      Select an Ingress&hellip;
-                    </option>
-                    <option value="ingress-1">
-                      Ingress-1
-                    </option>
-                    <option value="ingress-2">
-                      Ingress-2
-                    </option>
-                    <option value="ingress-3">
-                      Ingress-3
-                    </option>
-                  </select>
-                  <input
-                    v-if="validate.k8sIngressType === 'new-ingress'"
-                    id="k8s-ingress-deployment-new"
-                    v-model="validate.k8sIngressDeployment"
-                    type="text"
-                    class="k-input w-100"
-                    placeholder="your-new-deployment"
-                    required
-                  >
-                </FormFragment>
-              </template>
-            </KCard>
-
-            <KAlert
-              v-if="validate.k8sIngressBrand === 'other-ingress'"
-              appearance="info"
-            >
-              <template slot="alertMessage">
-                <p>
-                  Please go ahead and deploy the Ingress first, then restart this
-                  wizard and select &quot;Existing Ingress&quot;.
-                </p>
-              </template>
-            </KAlert>
-          </div>
+                  HTTP
+                </option>
+              </select>
+              <div slot="content">
+                The protocol of the service.
+              </div>
+            </KPop>
+          </FormFragment>
         </template>
         <template slot="complete">
           <div v-if="validate.meshName">
@@ -526,24 +280,24 @@
                 :loaders="false"
                 :tabs="tabs"
                 :has-border="true"
-                initial-tab-override="kubernetes"
+                initial-tab-override="universal"
               >
-                <template slot="kubernetes">
+                <!-- <template slot="kubernetes">
                   <CodeView
                     title="Kubernetes"
                     copy-button-text="Copy Command to Clipboard"
                     lang="bash"
                     :content="codeOutput"
                   />
-                </template>
-                <!-- <template slot="universal">
+                </template> -->
+                <template slot="universal">
                   <CodeView
                     title="Universal"
                     copy-button-text="Copy Command to Clipboard"
                     lang="bash"
                     :content="codeOutput"
                   />
-                </template> -->
+                </template>
               </Tabs>
             </div>
             <Scanner
@@ -601,6 +355,34 @@
             </template>
           </KAlert>
         </template>
+        <template slot="start">
+          <h3>
+            Start your new Dataplane
+          </h3>
+          <Tabs
+            :loaders="false"
+            :tabs="tabs"
+            :has-border="true"
+            initial-tab-override="universal"
+          >
+            <!-- <template slot="kubernetes">
+                  <CodeView
+                    title="Kubernetes"
+                    copy-button-text="Copy Command to Clipboard"
+                    lang="bash"
+                    :content="codeOutput"
+                  />
+                </template> -->
+            <template slot="universal">
+              <CodeView
+                title="Universal"
+                copy-button-text="Copy Command to Clipboard"
+                lang="bash"
+                :content="codeOutput"
+              />
+            </template>
+          </Tabs>
+        </template>
 
         <!-- sidebar content -->
         <template slot="dataplane">
@@ -611,6 +393,25 @@
             that you may have created, and in Kubernetes, they will be auto-injected
             by {{ title }}.
           </p>
+        </template>
+
+        <template slot="example">
+          <h3>Example</h3>
+          <p>
+            Below is an example of a Dataplane resource output:
+          </p>
+          <code>
+            <pre>type: Dataplane
+mesh: default
+name: dp-echo-1
+networking:
+  address: 127.0.0.1
+  inbound:
+  - port: 10000
+    servicePort: 9000
+    tags:
+      service: echo</pre>
+          </code>
         </template>
       </StepSkeleton>
     </div>
@@ -661,12 +462,20 @@ export default {
           slug: 'general'
         },
         {
-          label: 'Scope Settings',
-          slug: 'scope-settings'
+          label: 'Topology',
+          slug: 'topology'
+        },
+        {
+          label: 'Networking',
+          slug: 'networking'
         },
         {
           label: 'Install',
           slug: 'complete'
+        },
+        {
+          label: 'Start',
+          slug: 'start'
         }
       ],
       tabs: [
@@ -682,6 +491,9 @@ export default {
       sidebarContent: [
         {
           name: 'dataplane'
+        },
+        {
+          name: 'example'
         }
       ],
       startScanner: false,
@@ -691,17 +503,14 @@ export default {
       nextDisabled: true,
       validate: {
         meshName: '',
-        k8sDataplaneType: 'dataplane-type-service',
-        k8sServices: 'all-services',
-        k8sNamespace: 'existing-namespace',
-        k8sNamespaceSelection: '',
-        k8sServiceDeployment: 'existing-deployment',
-        k8sServiceDeploymentSelection: '',
-        k8sIngressDeployment: 'existing-ingress',
-        k8sIngressDeploymentSelection: '',
-        k8sIngressType: 'existing-ingress',
-        k8sIngressBrand: 'kong-ingress',
-        k8sIngressSelection: ''
+        univDataplaneType: 'dataplane-type-service',
+        univDataplaneServiceName: '',
+        univDataplaneId: '', // TODO this has to bind with a random ID
+        univDataplaneCustomIdDisabled: true,
+        univDataplaneNetworkAddress: '',
+        univDataplaneNetworkServicePort: '',
+        univDataplaneNetworkDPPort: '',
+        univDataplaneNetworkProtocol: 'tcp'
       },
       vmsg: []
     }
@@ -715,6 +524,13 @@ export default {
       selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'
     }),
+
+    randDataplaneId () {
+      const randId = Math.random().toString(36).substring(2, 8)
+      const nameName = `backend-${randId}`
+
+      return nameName
+    },
 
     // Our generated code output
     codeOutput () {
