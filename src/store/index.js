@@ -16,6 +16,7 @@ export default (api) => {
       environment: null,
       onboardingComplete: false,
       globalLoading: null,
+      meshPageSize: 500,
       meshes: [],
       dataplanes: [],
       selectedMesh: 'all', // shows all meshes on initial load
@@ -118,8 +119,12 @@ export default (api) => {
       },
 
       // fetch all of the meshes from the API
-      fetchMeshList ({ commit }) {
-        return api.getAllMeshes()
+      fetchMeshList ({ commit, state }) {
+        const params = {
+          size: state.meshPageSize
+        }
+
+        return api.getAllMeshes(params)
           .then(response => {
             commit('FETCH_ALL_MESHES', response)
           })
@@ -145,8 +150,12 @@ export default (api) => {
       },
 
       // get the total number of meshes
-      getMeshTotalCount ({ commit }) {
-        return api.getAllMeshes()
+      getMeshTotalCount ({ commit, state }) {
+        const params = {
+          size: state.meshPageSize
+        }
+
+        return api.getAllMeshes(params)
           .then(response => {
             const total = response.items.length
 
