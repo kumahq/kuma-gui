@@ -156,7 +156,7 @@
               <KPop trigger="hover">
                 <input
                   id="dataplane-id"
-                  :value="randDataplaneId"
+                  v-model="validate.univDataplaneId"
                   type="text"
                   class="k-input w-100"
                   :disabled="validate.univDataplaneCustomIdDisabled"
@@ -210,7 +210,7 @@
               <input
                 id="network-service-port"
                 v-model="validate.univDataplaneNetworkServicePort"
-                placeholder="5000"
+                placeholder="9000"
                 type="text"
                 class="k-input w-100"
               >
@@ -227,7 +227,7 @@
               <input
                 id="network-dataplane-port"
                 v-model="validate.univDataplaneNetworkDPPort"
-                placeholder="5000"
+                placeholder="10000"
                 type="text"
                 class="k-input w-100"
               >
@@ -237,7 +237,7 @@
             </KPop>
           </FormFragment>
           <FormFragment
-            title="Data plane port"
+            title="Protocol"
             for-attr="network-dataplane-protocol"
           >
             <KPop trigger="hover">
@@ -420,7 +420,6 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
-import { rejectKeys } from '@/views/Wizard/helpers'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -434,7 +433,7 @@ import Scanner from '@/views/Wizard/components/Scanner'
 // import meshSchema from '@/views/Wizard/schemas/Mesh'
 
 // schema for building code output (TBD)
-import dataplaneSchema from '@/views/Wizard/schemas/DataplaneKubernetes'
+import dataplaneSchema from '@/views/Wizard/schemas/DataplaneUniversal'
 
 export default {
   name: 'DataplaneWizardUniversal',
@@ -525,32 +524,48 @@ export default {
       meshes: 'getMeshList'
     }),
 
-    randDataplaneId () {
-      const randId = Math.random().toString(36).substring(2, 8)
-      const nameName = `backend-${randId}`
-
-      return nameName
+    randString () {
+      return Math.random().toString(36).substring(2, 8)
     },
 
     // Our generated code output
     codeOutput () {
       const schema = Object.assign({}, this.schema)
-      const namespace = this.validate.k8sNamespaceSelection
+      const namespace = this.validate.univDataplaneServiceName
+      const mesh = this.validate.meshName
+      const dpId = this.randDataplaneId
 
       // if no namespace is set, do nothing
-      if (!namespace) return
+      if (!mesh) return
 
-      // name and namespace
-      schema.metadata.name = namespace
-      schema.metadata.namespace = namespace
+      // namespace and mesh association
+      schema.name = dpId
+      schema.mesh = mesh
+
+      // networking
+      schema.networking.address = this.validate.univDataplaneNetworkAddress
+      schema.networking.inbound[0].port = this.validate.univDataplaneNetworkDPPort
+      schema.networking.inbound[0].servicePort = this.validate.univDataplaneNetworkServicePort
+
+      /**
+       * @TODO:
+       * - Where in the Dataplane YAML object is PROTOCOL used?
+       * - Where in the Dataplane YAML object is DATAPLANE ID used?
+       * - Find out what changes in the YAML object when selecting "Service"
+       *   or "Gateway" Dataplane
+       * - The command that gets run needs to change to match Universal
+       * - There is an additional command that will come into play for starting
+       *   the Dataplane (TBD)
+       */
 
       /**
        * Finalized output
        */
 
       // const codeBlock = { ...meshType, spec: { ...schema } }
-      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${namespace}`
-      const assembledBlock = this.formatForCLI(schema, codeClosing)
+      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${dpId}`
+      // const assembledBlock = this.formatForCLI(schema, codeClosing)
+      const assembledBlock = schema
 
       return assembledBlock
     }
@@ -570,14 +585,44 @@ export default {
           : this.nextDisabled = true
       },
       deep: true
+    },
+
+    'validate.univDataplaneId' (value) {
+      const newId = (value)
+        .replace(/[^a-zA-Z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim()
+
+      this.validate.univDataplaneId = newId
+    },
+
+    'validate.univDataplaneServiceName' (value) {
+      const newName = (value)
+        .replace(/[^a-zA-Z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim()
+
+      const newStr = (`${value}-${this.randString}`)
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim()
+
+      this.validate.univDataplaneServiceName = newName
+
+      if (this.validate.univDataplaneServiceName === '') {
+        this.validate.univDataplaneId = ''
+      } else {
+        this.validate.univDataplaneId = newStr
+      }
     }
   },
   methods: {
     scanForEntity () {
-      // get our entity from the VueX store
       const entity = this.validate
       const mesh = entity.meshName
-      const dataplane = 'test' // this is a placeholder
+      const dataplane = entity.univDataplaneServiceName
 
       // reset things if the user is starting over
       this.scanComplete = false
@@ -586,16 +631,6 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!mesh || !dataplane) return
 
-      /**
-       * TODO
-       * this will eventually change to `this.$api.getDataplaneFromMesh()`
-       * we will need to get the Mesh namespace the user selects, or the one
-       * they create, as well as the Dataplane namespace.
-       *
-       * This is also dependent upon multiple Kubernetes endpoints that don't
-       * yet exist in Kuma and need to be created.
-       *
-       */
       this.$api.getDataplaneFromMesh(mesh, dataplane)
         .then(response => {
           if (response && response.name.length > 0) {
