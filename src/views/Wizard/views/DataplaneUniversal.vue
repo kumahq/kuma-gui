@@ -531,41 +531,68 @@ export default {
     // Our generated code output
     codeOutput () {
       const schema = Object.assign({}, this.schema)
-      const namespace = this.validate.univDataplaneServiceName
-      const mesh = this.validate.meshName
-      const dpId = this.randDataplaneId
+
+      const {
+        meshName,
+        univDataplaneType,
+        univDataplaneServiceName,
+        univDataplaneId,
+        univDataplaneNetworkAddress,
+        univDataplaneNetworkServicePort,
+        univDataplaneNetworkDPPort,
+        univDataplaneNetworkProtocol
+      } = this.validate
 
       // if no namespace is set, do nothing
-      if (!mesh) return
+      if (!meshName) return
 
       // namespace and mesh association
-      schema.name = dpId
-      schema.mesh = mesh
+      schema.name = univDataplaneId
+      schema.mesh = meshName
 
       // networking
-      schema.networking.address = this.validate.univDataplaneNetworkAddress
-      schema.networking.inbound[0].port = this.validate.univDataplaneNetworkDPPort
-      schema.networking.inbound[0].servicePort = this.validate.univDataplaneNetworkServicePort
+      if (univDataplaneType === 'dataplane-type-service') {
+        if (schema.networking.gateway) {
+          delete schema.networking.gateway
+        }
 
-      /**
-       * @TODO:
-       * - Where in the Dataplane YAML object is PROTOCOL used?
-       * - Where in the Dataplane YAML object is DATAPLANE ID used?
-       * - Find out what changes in the YAML object when selecting "Service"
-       *   or "Gateway" Dataplane
-       * - The command that gets run needs to change to match Universal
-       * - There is an additional command that will come into play for starting
-       *   the Dataplane (TBD)
-       */
+        schema.networking = {
+          address: univDataplaneNetworkAddress,
+          inbound: [
+            {
+              port: univDataplaneNetworkDPPort,
+              servicePort: univDataplaneNetworkServicePort,
+              tags: {
+                service: univDataplaneServiceName,
+                protocol: univDataplaneNetworkProtocol
+              }
+            }
+          ]
+        }
+      } else if (univDataplaneType === 'dataplane-type-gateway') {
+        if (schema.networking.inbound) {
+          delete schema.networking.inbound
+        }
+
+        schema.networking = {
+          address: univDataplaneNetworkAddress,
+          gateway: [
+            {
+              tags: {
+                service: univDataplaneServiceName
+              }
+            }
+          ]
+        }
+      }
 
       /**
        * Finalized output
        */
 
       // const codeBlock = { ...meshType, spec: { ...schema } }
-      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${dpId}`
-      // const assembledBlock = this.formatForCLI(schema, codeClosing)
-      const assembledBlock = schema
+      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${univDataplaneId}`
+      const assembledBlock = this.formatForCLI(schema, codeClosing)
 
       return assembledBlock
     }
