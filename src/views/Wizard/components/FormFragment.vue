@@ -17,7 +17,7 @@
       </div>
       <div
         class="form-line__col"
-        :class="{ 'is-inline': allInline }"
+        :class="{ 'is-inline': allInline, 'is-shifted-right': shiftRight }"
       >
         <slot />
       </div>
@@ -48,6 +48,10 @@ export default {
       default: false
     },
     equalCols: {
+      type: Boolean,
+      default: false
+    },
+    shiftRight: {
       type: Boolean,
       default: false
     }
@@ -87,6 +91,21 @@ $last-col-flex: 1 0 0;
 
     .form-line__col:last-of-type {
       flex: 1 0 0;
+    }
+
+    .is-shifted-right {
+      display: block;
+
+      > * {
+        display: flex;
+        width: 70%;
+        flex: none !important;
+        margin-left: auto !important;
+
+        > * {
+          flex: 1 0 0;
+        }
+      }
     }
 
     .is-inline {

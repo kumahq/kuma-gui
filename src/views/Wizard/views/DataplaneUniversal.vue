@@ -95,46 +95,42 @@
           </p>
 
           <!-- dataplane mode -->
-          <KCard
-            class="my-6"
-            has-shadow
+          <FormFragment
+            all-inline
+            equal-cols
+            hide-label-col
+            shift-right
           >
-            <template slot="body">
-              <FormFragment
-                all-inline
-                equal-cols
-                hide-label-col
-              >
-                <label for="service-dataplane">
-                  <input
-                    id="service-dataplane"
-                    v-model="validate.univDataplaneType"
-                    class="k-input"
-                    type="radio"
-                    name="dataplane-type"
-                    value="dataplane-type-service"
-                    checked
-                  >
-                  <span>
-                    Service Dataplane
-                  </span>
-                </label>
-                <label for="gateway-dataplane">
-                  <input
-                    id="gateway-dataplane"
-                    v-model="validate.univDataplaneType"
-                    class="k-input"
-                    type="radio"
-                    name="dataplane-type"
-                    value="dataplane-type-gateway"
-                  >
-                  <span>
-                    Gateway Dataplane
-                  </span>
-                </label>
-              </FormFragment>
-            </template>
-          </KCard>
+            <div>
+              <label for="service-dataplane">
+                <input
+                  id="service-dataplane"
+                  v-model="validate.univDataplaneType"
+                  class="k-input"
+                  type="radio"
+                  name="dataplane-type"
+                  value="dataplane-type-service"
+                  checked
+                >
+                <span>
+                  Service Dataplane
+                </span>
+              </label>
+              <label for="gateway-dataplane">
+                <input
+                  id="gateway-dataplane"
+                  v-model="validate.univDataplaneType"
+                  class="k-input"
+                  type="radio"
+                  name="dataplane-type"
+                  value="dataplane-type-gateway"
+                >
+                <span>
+                  Gateway Dataplane
+                </span>
+              </label>
+            </div>
+          </FormFragment>
 
           <FormFragment
             all-inline
