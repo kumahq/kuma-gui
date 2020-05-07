@@ -14,12 +14,10 @@ module.exports = {
     //     }
     //   }
     // ],
-    // gateway: [
-    //   {
-    //     tags: {
-    //       service: null
-    //     }
+    // gateway: {
+    //   tags: {
+    //     service: null
     //   }
-    // ]
+    // }
   }
 }

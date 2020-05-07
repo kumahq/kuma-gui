@@ -2,10 +2,10 @@
   <div class="wizard">
     <div class="wizard__content">
       <StepSkeleton
+        ref="stepSystem"
         :steps="steps"
         :advance-check="true"
         :sidebar-content="sidebarContent"
-        :footer-enabled="scanFound === false"
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
@@ -207,7 +207,10 @@
                 id="network-service-port"
                 v-model="validate.univDataplaneNetworkServicePort"
                 placeholder="9000"
-                type="text"
+                type="number"
+                step="1"
+                min="1"
+                max="65535"
                 class="k-input w-100"
               >
               <div slot="content">
@@ -224,7 +227,10 @@
                 id="network-dataplane-port"
                 v-model="validate.univDataplaneNetworkDPPort"
                 placeholder="10000"
-                type="text"
+                type="number"
+                step="1"
+                min="1"
+                max="65535"
                 class="k-input w-100"
               >
               <div slot="content">
@@ -316,17 +322,21 @@
               <template slot="complete-content">
                 <p>
                   Your Dataplane
-                  <strong v-if="validate.k8sNamespaceSelection">
-                    {{ validate.k8sNamespaceSelection }}
+                  <strong v-if="validate.univDataplaneId">
+                    {{ validate.univDataplaneId }}
                   </strong>
                   was found!
                 </p>
                 <p>
+                  Proceed to the next step where we will explain how to start
+                  your new Dataplane.
+                </p>
+                <p>
                   <KButton
                     appearance="primary"
-                    :to="{ name: 'all-meshes' }"
+                    @click="$refs.stepSystem.goToNextStep()"
                   >
-                    See Meshes
+                    Start Your Dataplane
                   </KButton>
                 </p>
               </template>
@@ -352,16 +362,17 @@
           </KAlert>
         </template>
         <template slot="start">
-          <h3>
-            Start your new Dataplane
-          </h3>
-          <Tabs
-            :loaders="false"
-            :tabs="tabs"
-            :has-border="true"
-            initial-tab-override="universal"
-          >
-            <!-- <template slot="kubernetes">
+          <div v-if="validate.meshName">
+            <h3>
+              Start your new Dataplane
+            </h3>
+            <Tabs
+              :loaders="false"
+              :tabs="tabs"
+              :has-border="true"
+              initial-tab-override="universal"
+            >
+              <!-- <template slot="kubernetes">
                   <CodeView
                     title="Kubernetes"
                     copy-button-text="Copy Command to Clipboard"
@@ -369,15 +380,27 @@
                     :content="codeOutput"
                   />
                 </template> -->
-            <template slot="universal">
-              <CodeView
-                title="Universal"
-                copy-button-text="Copy Command to Clipboard"
-                lang="bash"
-                :content="codeOutput"
-              />
+              <template slot="universal">
+                <CodeView
+                  title="Universal"
+                  copy-button-text="Copy Command to Clipboard"
+                  lang="bash"
+                  :content="startCodeOutput"
+                />
+              </template>
+            </Tabs>
+          </div>
+          <KAlert
+            v-else
+            appearance="danger"
+          >
+            <template slot="alertMessage">
+              <p>
+                Please return to the first step and make sure to select an
+                existing Mesh, or create a new one.
+              </p>
             </template>
-          </Tabs>
+          </KAlert>
         </template>
 
         <!-- sidebar content -->
@@ -572,13 +595,11 @@ export default {
 
         schema.networking = {
           address: univDataplaneNetworkAddress,
-          gateway: [
-            {
-              tags: {
-                service: univDataplaneServiceName
-              }
+          gateway: {
+            tags: {
+              service: univDataplaneServiceName
             }
-          ]
+          }
         }
       }
 
@@ -586,19 +607,20 @@ export default {
        * Finalized output
        */
 
-      const codeClosing = ' | kumactl apply -f -'
+      const codeClosing = '" | kumactl apply -f -'
       const assembledBlock = this.formatForCLI(schema, codeClosing)
 
       return assembledBlock
     },
 
     startCodeOutput () {
+      const apiUrl = localStorage.getItem('kumaApiUrl')
       const { meshName, univDataplaneId } = this.validate
 
-      const cmdStructure = `kuma-dp run \
-        --name=${univDataplaneId} \
-        --mesh=${meshName} \
-        --cp-address=http://127.0.0.1:5681`
+      const cmdStructure = `kuma-dp run \\
+      --name=${univDataplaneId} \\
+      --mesh=${meshName} \\
+      --cp-address=${apiUrl}`
 
       return cmdStructure
     }
@@ -653,18 +675,16 @@ export default {
   },
   methods: {
     scanForEntity () {
-      const entity = this.validate
-      const mesh = entity.meshName
-      const dataplane = entity.univDataplaneServiceName
+      const { meshName, univDataplaneId } = this.validate
 
       // reset things if the user is starting over
       this.scanComplete = false
       this.scanError = false
 
       // do nothing if there is no Mesh nor Dataplane found
-      if (!mesh || !dataplane) return
+      if (!meshName || !univDataplaneId) return
 
-      this.$api.getDataplaneFromMesh(mesh, dataplane)
+      this.$api.getDataplaneFromMesh(meshName, univDataplaneId)
         .then(response => {
           if (response && response.name.length > 0) {
             this.isRunning = true
