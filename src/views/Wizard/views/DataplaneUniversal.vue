@@ -586,11 +586,21 @@ export default {
        * Finalized output
        */
 
-      // const codeBlock = { ...meshType, spec: { ...schema } }
-      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${univDataplaneId}`
+      const codeClosing = ' | kumactl apply -f -'
       const assembledBlock = this.formatForCLI(schema, codeClosing)
 
       return assembledBlock
+    },
+
+    startCodeOutput () {
+      const { meshName, univDataplaneId } = this.validate
+
+      const cmdStructure = `kuma-dp run \
+        --name=${univDataplaneId} \
+        --mesh=${meshName} \
+        --cp-address=http://127.0.0.1:5681`
+
+      return cmdStructure
     }
   },
   watch: {
