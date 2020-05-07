@@ -144,11 +144,20 @@ export default (api) => {
         commit('SET_SELECTED_MESH', mesh)
       },
 
+      /**
+       * Total Counts
+       *
+       * Setting the `size` to 1 on these requests prevents
+       * the unneeded listing of max 100 items.
+       */
+
       // get the total number of meshes
       getMeshTotalCount ({ commit }) {
-        return api.getAllMeshes()
+        const params = { size: 1 }
+
+        return api.getAllMeshes(params)
           .then(response => {
-            const total = response.items.length
+            const total = response.total
 
             commit('SET_TOTAL_MESH_COUNT', total)
           })
@@ -159,98 +168,122 @@ export default (api) => {
 
       // get the total number of dataplanes present
       getDataplaneTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllDataplanes()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_DATAPLANE_COUNT', count)
-        }
+        return api.getAllDataplanes(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_DATAPLANE_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of health checks present
       getHealthCheckTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllHealthChecks()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_HEALTH_CHECK_COUNT', count)
-        }
+        return api.getAllHealthChecks(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_HEALTH_CHECK_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of proxy templates present
       getProxyTemplateTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllProxyTemplates()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', count)
-        }
+        return api.getAllProxyTemplates(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of traffic logs present
       getTrafficLogTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllTrafficLogs()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_TRAFFIC_LOG_COUNT', count)
-        }
+        return api.getAllTrafficLogs(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_TRAFFIC_LOG_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of traffic permissions present
       getTrafficPermissionTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllTrafficPermissions()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_TRAFFIC_PERMISSION_COUNT', count)
-        }
+        return api.getAllTrafficPermissions(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_TRAFFIC_PERMISSION_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of traffic routes present
       getTrafficRouteTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllTrafficRoutes()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_TRAFFIC_ROUTE_COUNT', count)
-        }
+        return api.getAllTrafficRoutes(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_TRAFFIC_ROUTE_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of traffic traces present
       getTrafficTraceTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllTrafficTraces()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_TRAFFIC_TRACE_COUNT', count)
-        }
+        return api.getAllTrafficTraces(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_TRAFFIC_TRACE_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // get the total number of fault injections present
       getFaultInjectionTotalCount ({ commit }) {
-        const getItems = async () => {
-          const entities = await api.getAllFaultInjections()
-          const count = entities.items.length
+        const params = { size: 1 }
 
-          commit('SET_TOTAL_FAULT_INJECTION_COUNT', count)
-        }
+        return api.getAllFaultInjections(params)
+          .then(response => {
+            const total = response.total
 
-        getItems()
+            commit('SET_TOTAL_FAULT_INJECTION_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
       },
 
       // this will get the current status of all dataplanes
