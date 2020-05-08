@@ -234,7 +234,7 @@ export default {
               }
 
               // const items = response.items
-              const items = this.sortEntities(response.items)
+              const items = response.items
               const final = []
 
               // set the first item as the default for initial load
@@ -396,7 +396,7 @@ export default {
                   })
               })
 
-              this.tableData.data = final
+              this.tableData.data = this.sortEntities(final)
               this.tableDataIsEmpty = false
             } else {
               this.tableData.data = []
@@ -436,8 +436,17 @@ export default {
               const selected = ['type', 'name', 'mesh', 'tags']
 
               // determine between inbound and gateway modes
-              const tagSrc = response.networking.inbound || response.networking.gateway
-              const newEntity = { ...getSome(response, selected), ...{ tags: tagSrc[0].tags } }
+              // and then get the tags from which condition applies.
+              const tagSrc = (response.networking.inbound && response.networking.inbound.length > 0)
+                ? response.networking.inbound[0].tags
+                : response.networking.gateway.tags
+
+              const newEntity = {
+                ...getSome(response, selected),
+                ...{
+                  tags: tagSrc
+                }
+              }
 
               this.entity = newEntity
 
