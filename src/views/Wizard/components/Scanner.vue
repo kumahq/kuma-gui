@@ -99,7 +99,8 @@ export default {
     return {
       i: 0,
       isRunning: false,
-      isComplete: false
+      isComplete: false,
+      intervalId: null
     }
   },
   watch: {
@@ -115,13 +116,16 @@ export default {
       this.runScanner()
     }
   },
+  beforeDestroy () {
+    clearInterval(this.intervalId)
+  },
   methods: {
     runScanner () {
       this.isRunning = true
       this.isComplete = false
 
       // setup the interval function
-      const intervalFunction = setInterval(() => {
+      this.intervalId = setInterval(() => {
         this.i++
 
         // run our function
@@ -130,7 +134,7 @@ export default {
         // complete the cycle if the scanner has reached the max
         // amount of retries, or if the process has been marked complete
         if (this.i === this.retries || this.canComplete === true) {
-          clearInterval(intervalFunction)
+          clearInterval(this.intervalId)
           this.isRunning = false
           this.isComplete = true
         }
