@@ -233,8 +233,7 @@ export default {
                 this.hasNext = false
               }
 
-              // const items = response.items
-              const items = response.items
+              const items = this.sortEntities(response.items)
               const final = []
 
               // set the first item as the default for initial load
@@ -389,14 +388,14 @@ export default {
                       type: 'dataplane'
                     })
 
-                    // this.sortEntities(final)
+                    this.sortEntities(final)
                   })
                   .catch(error => {
                     console.error(error)
                   })
               })
 
-              this.tableData.data = this.sortEntities(final)
+              this.tableData.data = final
               this.tableDataIsEmpty = false
             } else {
               this.tableData.data = []
