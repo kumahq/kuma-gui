@@ -20,6 +20,7 @@ export default class RestClient {
 
     RestClient.setupMocks(opts.injectMocks)
     this.client = RestClient.axiosInit()
+    this.clientConfig = RestClient.kumaClientConfig()
   }
 
   /**
@@ -35,6 +36,23 @@ export default class RestClient {
     return axios.create({
       baseURL: apiUrlFromLS,
       headers: this.headers,
+      ...this.axiosConfig
+    })
+  }
+
+  /**
+   * kumaClientConfig
+   *
+   * This function creates the Axios endpoint for
+   * fetching data from the Kuma config. It contains
+   * information that goes beyond simply providing
+   * our app with the API URL endpoint and simple info.
+   */
+  static kumaClientConfig () {
+    const configUrl = process.env.VUE_APP_GENERAL_CONFIG
+
+    return axios.create({
+      baseURL: configUrl,
       ...this.axiosConfig
     })
   }
@@ -63,6 +81,7 @@ export default class RestClient {
     return `${this.host}${path}`
   }
 
+  /** fetch the status information of Kuma */
   async status (path, options) {
     const opts = await options || {}
     const url = await path
@@ -79,6 +98,7 @@ export default class RestClient {
       })
   }
 
+  /** fetch all Kuma API endpoints */
   async get (path, options) {
     const opts = await options || {}
     // const url = this.buildUrl(path)
@@ -86,6 +106,21 @@ export default class RestClient {
     const client = await this.client
 
     return client.get(url, opts)
+      .then(response => {
+        const data = response.data
+
+        return data
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
+  /** fetch all Kuma API endpoints */
+  async getConfig () {
+    const client = await this.clientConfig
+
+    return client.get('/')
       .then(response => {
         const data = response.data
 

@@ -24,6 +24,10 @@ export default class Kuma {
     return this.client.status('/')
   }
 
+  getConfig () {
+    return this.client.getConfig('/')
+  }
+
   /**
    * Custom query
    */

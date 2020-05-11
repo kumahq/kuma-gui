@@ -13,6 +13,7 @@ export default (api) => {
       // workspaces
     },
     state: {
+      config: null,
       environment: null,
       onboardingComplete: false,
       globalLoading: null,
@@ -74,6 +75,7 @@ export default (api) => {
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
+      getConfig: (state) => state.config,
       getSelectedTab: (state) => state.selectedTab,
       getSelectedTableRow: (state) => state.selectedTableRow,
       getEnvironment: (state) => state.environment,
@@ -107,6 +109,7 @@ export default (api) => {
       SET_VERSION: (state, version) => (state.version = version),
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
+      SET_CONFIG_DATA: (state, config) => (state.config = config),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
       SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
       SET_ENVIRONMENT: (state, value) => (state.environment = value),
@@ -458,7 +461,15 @@ export default (api) => {
       getStatus ({ commit }) {
         return api.getStatus()
           .then(response => {
-            commit('SET_STATUS', `${response}`)
+            commit('SET_STATUS', response)
+          })
+      },
+
+      // get the general Kuma config (this differs from the API config endpoint)
+      getConfig ({ commit }) {
+        return api.getConfig()
+          .then(response => {
+            commit('SET_CONFIG_DATA', response)
           })
       },
 

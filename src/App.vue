@@ -89,6 +89,9 @@ export default {
             // fetch the tagline
             this.$store.dispatch('getTagline')
 
+            // fetch the config
+            this.$store.dispatch('getConfig')
+
             // set the selected mesh in localStorage
             const mesh = () => {
               const lsMesh = localStorage.getItem('selectedMesh')
