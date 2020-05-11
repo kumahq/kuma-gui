@@ -13,7 +13,7 @@ export default class Kuma {
   }
 
   /**
-   * Info
+   * Info / Config
    */
 
   getInfo () {
@@ -25,7 +25,7 @@ export default class Kuma {
   }
 
   getConfig () {
-    return this.client.getConfig('/')
+    return this.client.getConfig()
   }
 
   /**

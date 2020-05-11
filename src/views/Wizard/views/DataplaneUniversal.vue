@@ -364,28 +364,32 @@
         <template slot="start">
           <div v-if="validate.meshName">
             <h3>
-              Start your new Dataplane
+              Start your Dataplane
             </h3>
+            <p>
+              Now that {{ title }} knows that the configured Dataplane will eventually
+              connect to it, it's time to first generate the credentials that will allow
+              the Dataplane to successfully authenticate itself with the control plane,
+              and then finally start the Dataplane process (powered by Envoy).
+            </p>
             <Tabs
               :loaders="false"
               :tabs="tabs"
               :has-border="true"
               initial-tab-override="universal"
             >
-              <!-- <template slot="kubernetes">
-                  <CodeView
-                    title="Kubernetes"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
-                  />
-                </template> -->
               <template slot="universal">
                 <CodeView
-                  title="Universal"
+                  title="Generate Dataplane Token"
                   copy-button-text="Copy Command to Clipboard"
                   lang="bash"
-                  :content="startCodeOutput"
+                  :content="generateDpTokenCodeOutput"
+                />
+                <CodeView
+                  title="Start Dataplane Process"
+                  copy-button-text="Copy Command to Clipboard"
+                  lang="bash"
+                  :content="startDpCodeOutput"
                 />
               </template>
             </Tabs>
@@ -613,14 +617,28 @@ export default {
       return assembledBlock
     },
 
-    startCodeOutput () {
-      const apiUrl = localStorage.getItem('kumaApiUrl')
+    /**
+     * Part 1 of the last step: Generate the Dataplane Token
+     */
+    generateDpTokenCodeOutput () {
+      const { meshName, univDataplaneId } = this.validate
+
+      const cmdStructure = `kumactl generate dataplane-token --dataplane=${univDataplaneId} > kuma-token-${univDataplaneId}`
+
+      return cmdStructure
+    },
+
+    /**
+     * Part 2 of the last step: Start the Dataplane
+     */
+    startDpCodeOutput () {
+      const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
       const { meshName, univDataplaneId } = this.validate
 
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
-      --cp-address=${apiUrl}`
+      --cp-address=${cpAddress}`
 
       return cmdStructure
     }
