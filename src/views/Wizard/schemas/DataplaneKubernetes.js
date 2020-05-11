@@ -5,7 +5,8 @@ module.exports = {
     name: null,
     namespace: null,
     labels: {
-      'kuma.io/sidecar-injection': 'enabled'
+      'kuma.io/sidecar-injection': 'enabled',
+      'kuma.io/mesh': null
     }
   }
 }

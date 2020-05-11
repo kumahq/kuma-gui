@@ -181,7 +181,7 @@
               </template>
             </KCard>
 
-            <KCard
+            <!-- <KCard
               v-if="validate.k8sServices === 'individual-services'"
               class="my-6"
               has-shadow
@@ -221,7 +221,7 @@
                   </label>
                 </FormFragment>
               </template>
-            </KCard>
+            </KCard> -->
 
             <KCard
               v-if="validate.k8sServices === 'individual-services'"
@@ -233,7 +233,7 @@
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
                 >
-                  <select
+                  <!-- <select
                     v-if="validate.k8sServiceDeployment === 'existing-deployment'"
                     id="k8s-service-deployment-selection"
                     v-model="validate.k8sServiceDeploymentSelection"
@@ -255,9 +255,8 @@
                     <option value="deployment-3">
                       Deployment-3
                     </option>
-                  </select>
+                  </select> -->
                   <input
-                    v-if="validate.k8sServiceDeployment === 'new-deployment'"
                     id="k8s-service-deployment-new"
                     v-model="validate.k8sServiceDeploymentSelection"
                     type="text"
@@ -270,7 +269,7 @@
             </KCard>
 
             <!-- namespace selection options -->
-            <KCard
+            <!-- <KCard
               class="my-6"
               has-shadow
             >
@@ -309,7 +308,7 @@
                   </label>
                 </FormFragment>
               </template>
-            </KCard>
+            </KCard> -->
 
             <!-- namespace selection -->
             <KCard
@@ -321,7 +320,7 @@
                   title="Namespace"
                   for-attr="k8s-namespace-selection"
                 >
-                  <select
+                  <!-- <select
                     v-if="validate.k8sNamespace === 'existing-namespace'"
                     id="k8s-namespace-selection"
                     v-model="validate.k8sNamespaceSelection"
@@ -343,14 +342,13 @@
                     <option value="namespace-3">
                       Namespace-3
                     </option>
-                  </select>
+                  </select> -->
                   <input
-                    v-if="validate.k8sNamespace === 'new-namespace'"
                     id="k8s-namespace-new"
                     v-model="validate.k8sNamespaceSelection"
                     type="text"
                     class="k-input w-100"
-                    placeholder="your-new-namespace"
+                    placeholder="your-namespace"
                     required
                   >
                 </FormFragment>
@@ -359,12 +357,12 @@
           </div>
 
           <div v-if="validate.k8sDataplaneType === 'dataplane-type-ingress'">
-            <p>
+            <!-- <p>
               Is this a new Ingress that you want to deploy, or an existing one?
-            </p>
+            </p> -->
 
             <!-- ingress type selection -->
-            <KCard
+            <!-- <KCard
               class="my-6"
               has-shadow
             >
@@ -403,7 +401,7 @@
                   </label>
                 </FormFragment>
               </template>
-            </KCard>
+            </KCard> -->
 
             <p>
               {{ title }} natively supports the Kong Ingress. Do you want to deploy
@@ -460,7 +458,7 @@
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
                 >
-                  <select
+                  <!-- <select
                     v-if="validate.k8sIngressType === 'existing-ingress'"
                     id="k8s-ingress-deployment-selection"
                     v-model="validate.k8sIngressDeploymentSelection"
@@ -482,14 +480,13 @@
                     <option value="ingress-3">
                       Ingress-3
                     </option>
-                  </select>
+                  </select> -->
                   <input
-                    v-if="validate.k8sIngressType === 'new-ingress'"
                     id="k8s-ingress-deployment-new"
                     v-model="validate.k8sIngressDeployment"
                     type="text"
                     class="k-input w-100"
-                    placeholder="your-new-deployment"
+                    placeholder="your-deployment"
                     required
                   >
                 </FormFragment>
@@ -543,20 +540,18 @@
                 </template> -->
               </Tabs>
             </div>
-            <Scanner
+            <!-- <Scanner
               :loader-function="scanForEntity"
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
             >
-              <!-- loading -->
               <template slot="loading-title">
                 <h3>Searching&hellip;</h3>
               </template>
               <template slot="loading-content">
                 <p>We are looking for your dataplane.</p>
               </template>
-              <!-- complete -->
               <template slot="complete-title">
                 <h3>Done!</h3>
               </template>
@@ -577,14 +572,13 @@
                   </KButton>
                 </p>
               </template>
-              <!-- error -->
               <template slot="error-title">
                 <h3>Mesh not found</h3>
               </template>
               <template slot="error-content">
                 <p>We were unable to find your mesh.</p>
               </template>
-            </Scanner>
+            </Scanner> -->
           </div>
           <KAlert
             v-else
@@ -725,12 +719,15 @@ export default {
       schema.metadata.name = namespace
       schema.metadata.namespace = namespace
 
+      // selected mesh
+      schema.metadata.labels['kuma.io/mesh'] = this.validate.meshName
+
       /**
        * Finalized output
        */
 
       // const codeBlock = { ...meshType, spec: { ...schema } }
-      const codeClosing = `" | kubectl apply -f && kubectl delete pod --all -n ${namespace}`
+      const codeClosing = `" | kubectl apply -f - && kubectl delete pod --all -n ${namespace}`
       const assembledBlock = this.formatForCLI(schema, codeClosing)
 
       return assembledBlock
