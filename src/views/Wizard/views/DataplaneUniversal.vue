@@ -638,7 +638,8 @@ export default {
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
-      --cp-address=${cpAddress}`
+      --cp-address=${cpAddress} \\
+      --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure
     }

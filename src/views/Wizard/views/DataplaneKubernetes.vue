@@ -27,10 +27,7 @@
 
           <p>
             If you've got an existing Mesh that you would like to associate with your
-            Dataplane, you can select it below, or create a new one using our
-            <router-link :to="{ path: '/wizard/mesh' }">
-              Mesh Wizard
-            </router-link>.
+            Dataplane, you can select it below, or create a new one using our Mesh Wizard.
           </p>
 
           <!-- mesh selection -->
