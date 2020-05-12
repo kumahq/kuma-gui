@@ -116,7 +116,7 @@ export default {
       this.$router.push({
         name: 'global-overview',
         params: {
-          mesh: 'default'
+          mesh: 'all'
         }
       })
     }

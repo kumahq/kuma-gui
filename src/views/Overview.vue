@@ -25,6 +25,18 @@
           </p>
         </template>
       </CardSkeleton>
+      <CardSkeleton
+        class="mx-4"
+        :card-action-route="dataplaneWizardRoute"
+        card-title="Create A Dataplane"
+        card-action-button-text="Start Now"
+      >
+        <template slot="cardContent">
+          <p class="lg">
+            Create a new Dataplane here.
+          </p>
+        </template>
+      </CardSkeleton>
     </div>
 
     <FrameSkeleton>
@@ -105,7 +117,8 @@ export default {
   computed: {
     ...mapGetters({
       title: 'getTagline',
-      dpList: 'getDataplanesList'
+      dpList: 'getDataplanesList',
+      environment: 'getEnvironment'
     }),
     overviewMetrics () {
       return [
@@ -146,6 +159,15 @@ export default {
           value: this.$store.state.totalFaultInjectionCount
         }
       ]
+    },
+    dataplaneWizardRoute () {
+      // we change the route to the Dataplane
+      // wizard based on environment.
+      if (this.environment === 'universal') {
+        return { name: 'universal-dataplane' }
+      } else {
+        return { name: 'kubernetes-dataplane' }
+      }
     }
   },
   watch: {

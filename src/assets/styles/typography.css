@@ -11,3 +11,12 @@
 .title-1x {
   font-size: var(--type-xl);
 }
+
+a {
+  color: var(--blue-4);
+  text-decoration: underline;
+}
+
+a:hover, a:active, a:focus {
+  color: var(--blue-2);
+}

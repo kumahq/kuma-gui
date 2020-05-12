@@ -13,9 +13,11 @@ export default (api) => {
       // workspaces
     },
     state: {
+      config: null,
       environment: null,
       onboardingComplete: false,
       globalLoading: null,
+      meshPageSize: 500,
       meshes: [],
       dataplanes: [],
       selectedMesh: 'all', // shows all meshes on initial load
@@ -73,6 +75,7 @@ export default (api) => {
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
+      getConfig: (state) => state.config,
       getSelectedTab: (state) => state.selectedTab,
       getSelectedTableRow: (state) => state.selectedTableRow,
       getEnvironment: (state) => state.environment,
@@ -106,6 +109,7 @@ export default (api) => {
       SET_VERSION: (state, version) => (state.version = version),
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
+      SET_CONFIG_DATA: (state, config) => (state.config = config),
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
       SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
       SET_ENVIRONMENT: (state, value) => (state.environment = value),
@@ -118,8 +122,12 @@ export default (api) => {
       },
 
       // fetch all of the meshes from the API
-      fetchMeshList ({ commit }) {
-        return api.getAllMeshes()
+      fetchMeshList ({ commit, state }) {
+        const params = {
+          size: state.meshPageSize
+        }
+
+        return api.getAllMeshes(params)
           .then(response => {
             commit('FETCH_ALL_MESHES', response)
           })
@@ -152,8 +160,10 @@ export default (api) => {
        */
 
       // get the total number of meshes
-      getMeshTotalCount ({ commit }) {
-        const params = { size: 1 }
+      getMeshTotalCount ({ commit, state }) {
+        const params = {
+          size: state.meshPageSize
+        }
 
         return api.getAllMeshes(params)
           .then(response => {
@@ -482,7 +492,15 @@ export default (api) => {
       getStatus ({ commit }) {
         return api.getStatus()
           .then(response => {
-            commit('SET_STATUS', `${response}`)
+            commit('SET_STATUS', response)
+          })
+      },
+
+      // get the general Kuma config (this differs from the API config endpoint)
+      getConfig ({ commit }) {
+        return api.getConfig()
+          .then(response => {
+            commit('SET_CONFIG_DATA', response)
           })
       },
 

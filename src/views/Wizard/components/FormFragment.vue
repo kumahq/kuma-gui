@@ -1,7 +1,13 @@
 <template>
   <div class="form-line-wrapper">
-    <div class="form-line">
-      <div class="form-line__col">
+    <div
+      class="form-line"
+      :class="{ 'has-equal-cols': equalCols }"
+    >
+      <div
+        v-if="!hideLabelCol"
+        class="form-line__col"
+      >
         <label
           :for="forAttr"
           class="k-input-label"
@@ -9,7 +15,10 @@
           {{ title }}:
         </label>
       </div>
-      <div class="form-line__col">
+      <div
+        class="form-line__col"
+        :class="{ 'is-inline': allInline, 'is-shifted-right': shiftRight }"
+      >
         <slot />
       </div>
     </div>
@@ -22,12 +31,29 @@ export default {
   props: {
     title: {
       type: String,
-      required: true
+      required: false,
+      default: null
     },
     forAttr: {
       type: String,
       required: false,
       default: null
+    },
+    allInline: {
+      type: Boolean,
+      default: false
+    },
+    hideLabelCol: {
+      type: Boolean,
+      default: false
+    },
+    equalCols: {
+      type: Boolean,
+      default: false
+    },
+    shiftRight: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -65,6 +91,48 @@ $last-col-flex: 1 0 0;
 
     .form-line__col:last-of-type {
       flex: 1 0 0;
+    }
+
+    .is-shifted-right {
+      display: block;
+
+      > * {
+        display: flex;
+        width: 70%;
+        flex: none !important;
+        margin-left: auto !important;
+
+        > * {
+          flex: 1 0 0;
+        }
+      }
+    }
+
+    .is-inline {
+      display: flex;
+      align-items: center;
+      margin: 0 -16px;
+
+      > * {
+        flex: 1 0 0;
+        margin: 0 8px;
+      }
+    }
+
+    &.has-equal-cols {
+
+      > * {
+        flex: 1 0 0;
+        margin: 0 8px;
+      }
+
+      .form-line__col {
+        text-align: left;
+      }
+
+      input + span {
+        margin-left: 8px;
+      }
     }
   }
 

@@ -1,8 +1,9 @@
 <template>
   <div class="welcome welcome__step-1">
-    <p class="lg">
-      Kuma has been successfully installed, you’re one step away to build a
-      modern cloud-native architecture!
+    <p>
+      Kuma has been successfully installed but the cluster is currently empty.
+      You are only a few steps away from deploying a modern Service Mesh for your
+      applications!
     </p>
 
     <div class="app-setup">
@@ -156,25 +157,28 @@
               Adding New Dataplanes on Kubernetes
             </h3>
             <p class="mb-2">
-              On Kubernetes, Kuma can automatically deploy dataplanes
-              (also known as Sidecar Proxies) next to your applications.
+              The Dataplane Wizard will walk you through the creation of new
+              Dataplanes.
             </p>
-            <p>
-              First, you need to enable automatic sidecar injection at a Namespace level:
-            </p>
-            <p>
-              <code>
-                <pre>$ kubectl label namespace [YOUR_NAMESPACE] kuma.io/sidecar-injection=enabled</pre>
-              </code>
-            </p>
-            <p>
-              Then, you need to recreate application Pods:
-            </p>
-            <p>
-              <code>
-                <pre>$ kubectl -n [YOUR_NAMESPACE] delete pods --all</pre>
-              </code>
-            </p>
+            <div class="cols">
+              <div>
+                <KButton
+                  :to="{ name: 'kubernetes-dataplane' }"
+                  appearance="primary"
+                  @click.native="completeOnboarding()"
+                >
+                  Kubernetes Dataplane Wizard
+                </KButton>
+              </div>
+              <div>
+                <router-link
+                  :to="{ name: 'global-overview' }"
+                  @click.native="completeOnboarding()"
+                >
+                  Skip to Dashboard
+                </router-link>
+              </div>
+            </div>
           </div>
           <!-- universal instructions -->
           <div v-else>
@@ -182,51 +186,33 @@
               Adding New Dataplanes on Universal
             </h3>
             <p class="mb-2">
-              First, create a Dataplane resource to describe service(s) provided by your app:
+              The Dataplane Wizard will walk you through the creation of new
+              Dataplanes.
             </p>
-            <p>
-              <code>
-                <pre>
-$ echo "type: Dataplane
-mesh: default
-name: dp-echo-1
-networking:
-  inbound:
-  - interface: 127.0.0.1:10000:9000
-    tags:
-      service: echo" | kumactl apply -f -</pre>
-              </code>
-            </p>
-            <p>
-              Next, generate an identity token for the dataplane:
-            </p>
-            <p>
-              <code>
-                <pre>$ kumactl generate dataplane-token --dataplane=dp-echo-1 > /tmp/kuma-dp-echo-1</pre>
-              </code>
-            </p>
-            <p>
-              Lastly, start the dataplane:
-            </p>
-            <p>
-              <code>
-                <pre>
-$ kuma-dp run \
-  --name=dp-echo-1 \
-  --mesh=default \
-  --cp-address=http://127.0.0.1:5681 \
-  --dataplane-token-file=/tmp/kuma-dp-echo-1</pre>
-              </code>
-            </p>
+            <div class="cols">
+              <div>
+                <KButton
+                  :to="{ name: 'universal-dataplane' }"
+                  appearance="primary"
+                >
+                  Universal Dataplane Wizard
+                </KButton>
+              </div>
+              <div>
+                <router-link :to="{ name: 'global-overview' }">
+                  Skip to Dashboard
+                </router-link>
+              </div>
+            </div>
           </div>
 
-          <KButton
+          <!-- <KButton
             appearance="primary"
             class="mt-4"
             @click="reScanForDataplanes()"
           >
             Re-Scan for Dataplanes
-          </KButton>
+          </KButton> -->
         </div>
       </div>
     </div>
@@ -238,6 +224,7 @@ $ kuma-dp run \
 
 <script>
 import axios from 'axios'
+import { setItemToStorage, getItemFromStorage } from '@/Cache'
 
 export default {
   name: 'OnboardingStep1',
@@ -287,6 +274,7 @@ export default {
 
       this.getAppType()
       this.getDataplaneTableData()
+      this.completeOnboarding()
     },
 
     reScanForDataplanes () {
@@ -337,6 +325,12 @@ export default {
           this.appSource = null
           console.error(error)
         })
+    },
+
+    completeOnboarding (route) {
+      this.$store.dispatch('updateOnboardingStatus', true)
+
+      setItemToStorage('kumaOnboardingComplete', true)
     }
   }
 }
@@ -453,6 +447,16 @@ export default {
 
 .dataplane-global-status__helper-text {
   border-top: 1px solid var(--tblack-10);
+}
+
+.cols {
+  display: flex;
+  align-items: center;
+  margin: 20px -8px;
+
+  > * {
+    margin: 0 8px;
+  }
 }
 
 @media (min-width: 768px) {

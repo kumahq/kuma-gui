@@ -63,8 +63,7 @@
                     :checked="formConditions.mtlsEnabled === false"
                     @change="
                       updateStorage('meshMtls', false);
-                      formConditions.mtlsEnabled = false
-                    "
+                      formConditions.mtlsEnabled = false"
                   >
                   <span>Disabled</span>
                 </label>
@@ -83,6 +82,20 @@
                   >
                   <span>Enabled</span>
                 </label>
+              </FormFragment>
+
+              <FormFragment
+                v-if="formConditions.mtlsEnabled === true"
+                title="Certificate name"
+              >
+                <input
+                  id="certificate-name"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-certificate-name"
+                  :value="getStorageItem('meshCAName')"
+                  @change="updateStorage('meshCAName', $event.target.value)"
+                >
               </FormFragment>
 
               <FormFragment
@@ -413,6 +426,19 @@
               </FormFragment>
               <FormFragment
                 v-if="formConditions.metricsEnabled === true"
+                title="Backend name"
+              >
+                <input
+                  id="metrics-name"
+                  type="text"
+                  class="k-input w-100"
+                  placeholder="your-metrics-backend-name"
+                  :value="getStorageItem('meshMetricsName')"
+                  @change="updateStorage('meshMetricsName', $event.target.value)"
+                >
+              </FormFragment>
+              <FormFragment
+                v-if="formConditions.metricsEnabled === true"
                 title="Type"
                 for-attr="metrics-type"
               >
@@ -596,6 +622,7 @@ import Scanner from '@/views/Wizard/components/Scanner'
 import meshSchema from '@/views/Wizard/schemas/Mesh'
 
 export default {
+  name: 'MeshWizard',
   metaInfo: {
     title: 'Create a new Mesh'
   },
@@ -738,9 +765,37 @@ export default {
        * mTLS
        */
       if (hasMtls) {
-        schemaNew.spec.mtls.enabled = true
-        schemaNew.spec.mtls.ca = {
-          [newData.meshCA || 'builtin']: {}
+        schemaNew.mtls.enabled = true
+        const mtlsObject = schemaNew.mtls
+        const certAuth = this.formData.meshCA
+        const certName = this.formData.meshCAName
+
+        mtlsObject.backends = []
+
+        mtlsObject.enabledBackend = certName
+
+        if (certAuth === 'provided') {
+          mtlsObject.backends = [
+            {
+              name: certName,
+              type: certAuth,
+              conf: {
+                cert: {
+                  secret: ''
+                },
+                key: {
+                  secret: ''
+                }
+              }
+            }
+          ]
+        } else {
+          mtlsObject.backends = [
+            {
+              name: certName,
+              type: certAuth
+            }
+          ]
         }
       }
 
@@ -749,28 +804,19 @@ export default {
        */
 
       if (hasLogging) {
-        const loggingObj = schemaNew.spec.logging.backends[0]
+        const loggingObj = schemaNew.logging.backends[0]
         const fallbackFormat = loggingObj.format
 
+        loggingObj.conf = {}
+
         loggingObj.name = newData.meshLoggingBackend
+        loggingObj.type = newData.meshLoggingType
         loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
 
         if (newData.meshLoggingType === 'tcp') {
-          if (loggingObj.file) {
-            delete loggingObj.file
-          }
-
-          loggingObj.tcp = {
-            address: newData.meshLoggingAddress || '127.0.0.1:5000'
-          }
+          loggingObj.conf.address = newData.meshLoggingAddress || '127.0.0.1:5000'
         } else if (newData.meshLoggingType === 'file') {
-          if (loggingObj.tcp) {
-            delete loggingObj.tcp
-          }
-
-          loggingObj.file = {
-            path: newData.meshLoggingPath
-          }
+          loggingObj.conf.path = newData.meshLoggingPath
         }
       }
 
@@ -778,26 +824,34 @@ export default {
        * Tracing
        */
       if (hasTracing) {
-        const tracingObj = schemaNew.spec.tracing
+        const tracingObj = schemaNew.tracing
+
+        tracingObj.backends[0].conf = {}
 
         tracingObj.defaultBackend = newData.meshTracingBackend
+        tracingObj.backends[0].type = newData.meshTracingType || 'zipkin'
         tracingObj.backends[0].name = newData.meshTracingBackend
-        tracingObj.backends[0].sampling = newData.meshTracingSampling || 100
-        tracingObj.backends[0].zipkin.url = newData.meshTracingZipkinURL
+        tracingObj.backends[0].conf.sampling = newData.meshTracingSampling || 100
+        tracingObj.backends[0].conf.url = newData.meshTracingZipkinURL
       }
 
       /**
        * Metrics
        */
       if (hasMetrics) {
-        const metricsObj = schemaNew.spec.metrics
+        const metricsObj = schemaNew.metrics
 
-        metricsObj.prometheus.port = newData.meshMetricsDataplanePort || 5670
-        metricsObj.prometheus.path = newData.meshMetricsDataplanePath || '/metrics'
+        metricsObj.backends[0].conf = {}
+
+        metricsObj.enabledBackend = newData.meshMetricsName
+        metricsObj.backends[0].type = newData.meshMetricsType || 'prometheus'
+        metricsObj.backends[0].name = newData.meshMetricsName
+        metricsObj.backends[0].conf.port = newData.meshMetricsDataplanePort || 5670
+        metricsObj.backends[0].conf.path = newData.meshMetricsDataplanePath || '/metrics'
       }
 
       // now we clean up our output based on the above conditions
-      const schemaClean = rejectKeys(schemaNew.spec, filteredFeatures)
+      const schemaClean = rejectKeys(schemaNew, filteredFeatures)
 
       // Type and Name
       let meshType
@@ -823,13 +877,13 @@ export default {
        * Finalized output
        */
 
-      let codeBlock
+      const codeBlock = { ...meshType, ...schemaClean }
 
-      if (this.selectedTab === '#kubernetes') {
-        codeBlock = { ...meshType, spec: { ...schemaClean } }
-      } else {
-        codeBlock = { ...meshType, ...schemaClean }
-      }
+      // if (this.selectedTab === '#kubernetes') {
+      //   codeBlock = { ...meshType, spec: { ...schemaClean } }
+      // } else {
+      //   codeBlock = { ...meshType, ...schemaClean }
+      // }
 
       const assembledBlock = this.formatForCLI(codeBlock)
 

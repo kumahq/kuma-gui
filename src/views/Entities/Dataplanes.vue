@@ -15,6 +15,16 @@
         @tableAction="tableAction"
         @reloadData="loadData"
       >
+        <template slot="additionalControls">
+          <KButton
+            class="add-dp-button"
+            appearance="primary"
+            size="small"
+            :to="dataplaneWizardRoute"
+          >
+            Create Dataplane
+          </KButton>
+        </template>
         <template slot="pagination">
           <Pagination
             :has-previous="previous.length > 0"
@@ -55,6 +65,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { getSome, humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -127,6 +138,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      environment: 'getEnvironment'
+    }),
     tabGroupTitle () {
       const entity = this.entity
 
@@ -143,6 +157,15 @@ export default {
         return `Entity Overview for ${entity.name}`
       } else {
         return null
+      }
+    },
+    dataplaneWizardRoute () {
+      // we change the route to the Dataplane
+      // wizard based on environment.
+      if (this.environment === 'universal') {
+        return { name: 'universal-dataplane' }
+      } else {
+        return { name: 'kubernetes-dataplane' }
       }
     }
   },
@@ -210,7 +233,7 @@ export default {
                 this.hasNext = false
               }
 
-              const items = response.items
+              const items = this.sortEntities(response.items)
               const final = []
 
               // set the first item as the default for initial load
@@ -412,8 +435,17 @@ export default {
               const selected = ['type', 'name', 'mesh', 'tags']
 
               // determine between inbound and gateway modes
-              const tagSrc = response.networking.inbound || response.networking.gateway
-              const newEntity = { ...getSome(response, selected), ...{ tags: tagSrc[0].tags } }
+              // and then get the tags from which condition applies.
+              const tagSrc = (response.networking.inbound && response.networking.inbound.length > 0)
+                ? response.networking.inbound[0].tags
+                : response.networking.gateway.tags
+
+              const newEntity = {
+                ...getSome(response, selected),
+                ...{
+                  tags: tagSrc
+                }
+              }
 
               this.entity = newEntity
 
@@ -442,3 +474,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.add-dp-button {
+  background-color: var(--logo-green) !important;
+}
+</style>

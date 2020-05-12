@@ -147,7 +147,7 @@ export default {
     },
     goToPrevStep () {
       this.start--
-      // this.updateQuery('step', this.start)
+      this.updateQuery('step', this.start)
       this.$emit('goToPrevStep', this.step)
     },
     setStartingStep () {
@@ -160,7 +160,10 @@ export default {
       // revert back to the first step
       this.start = 0
       // go to first step in the UI
-      this.goToStep(0)
+      if (process.env.NODE_ENV === 'production') {
+        this.goToStep(0)
+      }
+
       // clear the form data from localStorage
       localStorage.removeItem('storedFormData')
       // reset all input values so the browser can't pre-fill them
@@ -184,8 +187,43 @@ export default {
   }
 }
 
-.input-error {
+.wizard-steps .debugger {
+  padding: 10px;
+  margin: 30px auto;
+  font-size: 12px;
+  font-family: monospace;
+  background: #eee;
 
+  h4 {
+    font-size: inherit !important;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 0 5px 0 !important;
+  }
+
+  p {
+    font-style: italic;
+    margin: 0;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: block;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .not-set {
+    color: red;
+    font-weight: bold;
+    font-style: italic;
+  }
 }
 </style>
 
@@ -269,6 +307,16 @@ $bp-max-width: 1219px;
     &:hover, &:active {
       color: #000;
     }
+  }
+
+  code {
+    display: block;
+    margin: var(--spacing-md) 0;
+    background-color: var(--gray-1);
+    border: 1px solid var(--gray-4);
+    border-radius: 6px;
+    padding: var(--spacing-md);
+    font-size: var(--base-font-size);
   }
 }
 

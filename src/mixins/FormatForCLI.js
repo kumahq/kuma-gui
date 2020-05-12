@@ -9,15 +9,17 @@
  *
  * @param {Object} content The content that gets
  * converted to YAML.
+ * @param {String} codeClosing If you want to override
+ * the command that is run after echoing out your code,
+ * you can do so with this.
  */
 
 import json2yaml from '@appscode/json2yaml'
 
 export default {
   methods: {
-    formatForCLI (content) {
+    formatForCLI (content, codeClosing = '" | kumactl apply -f -') {
       const codeOpening = 'echo "'
-      const codeClosing = '" | kumactl apply -f -'
       const entity = json2yaml(content)
 
       return `${codeOpening}${entity}${codeClosing}`
