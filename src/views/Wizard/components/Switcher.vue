@@ -1,6 +1,7 @@
 <template>
   <div class="wizard-switcher">
     <KEmptyState
+      cta-is-hidden
       :is-error="!environment"
       class="my-6 empty-state--wide-content empty-state--compact"
     >
@@ -11,28 +12,68 @@
         Running on {{ environment }}
       </template>
       <template slot="message">
-        <p v-if="environment === 'kubernetes'">
-          We have detected that you are running on a <strong>Kubernetes environment</strong>,
-          and we are going to be showing you instructions for Kubernetes unless you
-          decide to visualize the instructions for Universal.
-        </p>
-        <p v-else-if="environment === 'universal'">
-          We have detected that you are running on a <strong>Universal environment</strong>,
-          and we are going to be showing you instructions for Universal, unless you
-          decide to visualize the instructions for Kubernetes.
-        </p>
-        <p v-else>
-          We were unable to determine your environment.
-        </p>
-      </template>
-      <template slot="cta">
-        <KButton
-          v-if="environment"
-          :to="instructionsCtaRoute"
-          appearance="primary"
-        >
-          {{ instructionsCtaText }}
-        </KButton>
+        <div v-if="environment === 'kubernetes'">
+          <div v-if="this.$route.name === wizardRoutes.kubernetes">
+            <p>
+              We have detected that you are running on a <strong>Kubernetes environment</strong>,
+              and we are going to be showing you instructions for Kubernetes unless you
+              decide to visualize the instructions for Universal.
+            </p>
+            <p>
+              <KButton
+                :to="{ name: wizardRoutes.universal }"
+                appearance="primary"
+              >
+                Switch to Universal instructions
+              </KButton>
+            </p>
+          </div>
+          <div v-else-if="this.$route.name === wizardRoutes.universal">
+            <p>
+              We have detected that you are running on a <strong>Kubernetes environment</strong>,
+              but you are viewing instructions for Universal.
+            </p>
+            <p>
+              <KButton
+                :to="{ name: wizardRoutes.kubernetes }"
+                appearance="primary"
+              >
+                Switch back to Kubernetes instructions
+              </KButton>
+            </p>
+          </div>
+        </div>
+        <div v-else-if="environment === 'universal'">
+          <div v-if="this.$route.name === wizardRoutes.kubernetes">
+            <p>
+              We have detected that you are running on a <strong>Universal environment</strong>,
+              but you are viewing instructions for Kubernetes.
+            </p>
+            <p>
+              <KButton
+                :to="{ name: wizardRoutes.universal }"
+                appearance="primary"
+              >
+                Switch back to Universal instructions
+              </KButton>
+            </p>
+          </div>
+          <div v-else-if="this.$route.name === wizardRoutes.universal">
+            <p>
+              We have detected that you are running on a <strong>Universal environment</strong>,
+              and we are going to be showing you instructions for Universal unless you
+              decide to visualize the instructions for Universal.
+            </p>
+            <p>
+              <KButton
+                :to="{ name: wizardRoutes.kubernetes }"
+                appearance="primary"
+              >
+                Switch to Kubernetes instructions
+              </KButton>
+            </p>
+          </div>
+        </div>
       </template>
     </KEmptyState>
   </div>

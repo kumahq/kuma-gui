@@ -686,9 +686,9 @@ export default {
         meshName: '',
         k8sDataplaneType: 'dataplane-type-service',
         k8sServices: 'all-services',
-        k8sNamespace: 'existing-namespace',
+        k8sNamespace: '',
         k8sNamespaceSelection: '',
-        k8sServiceDeployment: 'existing-deployment',
+        k8sServiceDeployment: '',
         k8sServiceDeploymentSelection: '',
         k8sIngressDeployment: '',
         k8sIngressDeploymentSelection: '',
@@ -748,8 +748,39 @@ export default {
         mesh.length
           ? this.nextDisabled = false
           : this.nextDisabled = true
+
+        // namespace validation
+        if (this.$route.query.step === 1) {
+          if (this.validate.k8sNamespaceSelection) {
+            this.nextDisabled = false
+          } else {
+            this.nextDisabled = true
+          }
+        }
       },
       deep: true
+    },
+
+    'validate.k8sNamespaceSelection' (value) {
+      const newId = (value)
+        .replace(/[^a-zA-Z0-9 -]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim()
+
+      this.validate.k8sNamespaceSelection = newId
+    },
+
+    '$route' () {
+      const step = this.$route.query.step
+
+      if (step === 1) {
+        if (this.validate.k8sNamespaceSelection) {
+          this.nextDisabled = false
+        } else {
+          this.nextDisabled = true
+        }
+      }
     }
   },
   methods: {
