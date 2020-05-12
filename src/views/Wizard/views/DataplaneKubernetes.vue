@@ -124,6 +124,7 @@
                     type="radio"
                     name="dataplane-type"
                     value="dataplane-type-ingress"
+                    disabled
                   >
                   <span>
                     Ingress Dataplane
@@ -172,6 +173,7 @@
                       type="radio"
                       name="k8s-services"
                       value="individual-services"
+                      disabled="disabled"
                     >
                     <span>
                       Individual Services
@@ -688,9 +690,9 @@ export default {
         k8sNamespaceSelection: '',
         k8sServiceDeployment: 'existing-deployment',
         k8sServiceDeploymentSelection: '',
-        k8sIngressDeployment: 'existing-ingress',
+        k8sIngressDeployment: '',
         k8sIngressDeploymentSelection: '',
-        k8sIngressType: 'existing-ingress',
+        k8sIngressType: '',
         k8sIngressBrand: 'kong-ingress',
         k8sIngressSelection: ''
       },
@@ -795,3 +797,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+input:disabled + span {
+  color: #999;
+  // font-style: italic;
+}
+</style>

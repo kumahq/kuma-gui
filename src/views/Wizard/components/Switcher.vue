@@ -31,9 +31,6 @@
           :to="instructionsCtaRoute"
           appearance="primary"
         >
-          <!--
-            this should send the user to an entirely separate wizard for the platform opposite of the one the user is on
-          -->
           {{ instructionsCtaText }}
         </KButton>
       </template>
@@ -46,6 +43,14 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Switcher',
+  data () {
+    return {
+      wizardRoutes: {
+        kubernetes: 'kubernetes-dataplane',
+        universal: 'universal-dataplane'
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       environment: 'getEnvironment'

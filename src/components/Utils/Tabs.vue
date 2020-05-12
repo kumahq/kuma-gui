@@ -153,6 +153,12 @@ export default {
 }
 </script>
 
+<style>
+.k-tabs ul .tab-link {
+  text-decoration: none !important;
+}
+</style>
+
 <style lang="scss" scoped>
 .tab-container {
   --tab-container-margin: var(--spacing-lg) 0 0 0;

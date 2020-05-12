@@ -27,10 +27,7 @@
 
           <p>
             If you've got an existing Mesh that you would like to associate with your
-            Dataplane, you can select it below, or create a new one using our
-            <router-link :to="{ path: '/wizard/mesh' }">
-              Mesh Wizard
-            </router-link>.
+            Dataplane, you can select it below, or create a new one using our Mesh Wizard.
           </p>
 
           <!-- mesh selection -->
@@ -181,6 +178,9 @@
             can connect to the local service, and other data planes can consume
             your service.
           </p>
+          <p>
+            <strong>All fields below are required to proceed.</strong>
+          </p>
           <FormFragment
             title="Address"
             for-attr="network-address"
@@ -189,7 +189,7 @@
               <input
                 id="network-address"
                 v-model="validate.univDataplaneNetworkAddress"
-                placeholder="127.0.0.1"
+                placeholder="10.0.0.1"
                 type="text"
                 class="k-input w-100"
               >
@@ -206,11 +206,8 @@
               <input
                 id="network-service-port"
                 v-model="validate.univDataplaneNetworkServicePort"
-                placeholder="9000"
-                type="number"
-                step="1"
-                min="1"
-                max="65535"
+                placeholder="0 - 65535"
+                type="text"
                 class="k-input w-100"
               >
               <div slot="content">
@@ -226,11 +223,8 @@
               <input
                 id="network-dataplane-port"
                 v-model="validate.univDataplaneNetworkDPPort"
-                placeholder="10000"
-                type="number"
-                step="1"
-                min="1"
-                max="65535"
+                placeholder="0 - 65535"
+                type="text"
                 class="k-input w-100"
               >
               <div slot="content">
@@ -527,11 +521,11 @@ export default {
         meshName: '',
         univDataplaneType: 'dataplane-type-service',
         univDataplaneServiceName: '',
-        univDataplaneId: '', // TODO this has to bind with a random ID
+        univDataplaneId: '',
         univDataplaneCustomIdDisabled: true,
-        univDataplaneNetworkAddress: '',
-        univDataplaneNetworkServicePort: '',
-        univDataplaneNetworkDPPort: '',
+        univDataplaneNetworkAddress: null,
+        univDataplaneNetworkServicePort: null,
+        univDataplaneNetworkDPPort: null,
         univDataplaneNetworkProtocol: 'tcp'
       },
       vmsg: []
@@ -650,6 +644,15 @@ export default {
         const data = JSON.stringify(this.validate)
         const mesh = this.validate.meshName
 
+        const {
+          univDataplaneServiceName,
+          univDataplaneId,
+          univDataplaneNetworkAddress,
+          univDataplaneNetworkServicePort,
+          univDataplaneNetworkDPPort,
+          univDataplaneNetworkProtocol
+        } = this.validate
+
         // write the v-model data to localStorage whenever it changes
         localStorage.setItem('storedFormData', data)
 
@@ -657,8 +660,70 @@ export default {
         mesh.length
           ? this.nextDisabled = false
           : this.nextDisabled = true
+
+        // networking field validation
+        if (this.$route.query.step === 2) {
+          if (
+            univDataplaneNetworkAddress &&
+            univDataplaneNetworkServicePort &&
+            univDataplaneNetworkDPPort &&
+            univDataplaneNetworkProtocol
+          ) {
+            this.nextDisabled = false
+          } else {
+            this.nextDisabled = true
+          }
+        }
+
+        // topology field validation
+        if (this.$route.query.step === 1) {
+          if (univDataplaneServiceName && univDataplaneId) {
+            this.nextDisabled = false
+          } else {
+            this.nextDisabled = true
+          }
+        }
       },
       deep: true
+    },
+
+    '$route' () {
+      const step = this.$route.query.step
+
+      const {
+        univDataplaneServiceName,
+        univDataplaneId,
+        univDataplaneNetworkAddress,
+        univDataplaneNetworkServicePort,
+        univDataplaneNetworkDPPort,
+        univDataplaneNetworkProtocol
+      } = this.validate
+
+      // topology step field validation
+      if (step === 1) {
+        if (
+          univDataplaneServiceName &&
+            univDataplaneId
+        ) {
+          this.nextDisabled = false
+        } else {
+          this.nextDisabled = true
+        }
+      }
+
+      // network step field validation
+      if (step === 2) {
+        if (
+          univDataplaneNetworkAddress &&
+            univDataplaneNetworkServicePort &&
+            univDataplaneNetworkDPPort &&
+            univDataplaneNetworkProtocol
+        ) {
+          this.nextDisabled = false
+        } else {
+          this.nextDisabled = true
+        }
+      }
     },
 
     'validate.univDataplaneId' (value) {
@@ -690,6 +755,22 @@ export default {
       } else {
         this.validate.univDataplaneId = newStr
       }
+    },
+
+    'validate.univDataplaneNetworkServicePort' (value) {
+      const newId = (value)
+        .replace(/[a-zA-Z]*$/g, '')
+        .trim()
+
+      this.validate.univDataplaneNetworkServicePort = newId
+    },
+
+    'validate.univDataplaneNetworkDPPort' (value) {
+      const newId = (value)
+        .replace(/[a-zA-Z]*$/g, '')
+        .trim()
+
+      this.validate.univDataplaneNetworkDPPort = newId
     }
   },
   methods: {
