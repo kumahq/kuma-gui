@@ -779,7 +779,7 @@ export default {
             {
               name: certName,
               type: certAuth,
-              config: {
+              conf: {
                 cert: {
                   secret: ''
                 },
@@ -807,16 +807,16 @@ export default {
         const loggingObj = schemaNew.logging.backends[0]
         const fallbackFormat = loggingObj.format
 
-        loggingObj.config = {}
+        loggingObj.conf = {}
 
         loggingObj.name = newData.meshLoggingBackend
         loggingObj.type = newData.meshLoggingType
         loggingObj.format = newData.meshLoggingBackendFormat || fallbackFormat
 
         if (newData.meshLoggingType === 'tcp') {
-          loggingObj.config.address = newData.meshLoggingAddress || '127.0.0.1:5000'
+          loggingObj.conf.address = newData.meshLoggingAddress || '127.0.0.1:5000'
         } else if (newData.meshLoggingType === 'file') {
-          loggingObj.config.path = newData.meshLoggingPath
+          loggingObj.conf.path = newData.meshLoggingPath
         }
       }
 
@@ -826,13 +826,13 @@ export default {
       if (hasTracing) {
         const tracingObj = schemaNew.tracing
 
-        tracingObj.backends[0].config = {}
+        tracingObj.backends[0].conf = {}
 
         tracingObj.defaultBackend = newData.meshTracingBackend
         tracingObj.backends[0].type = newData.meshTracingType || 'zipkin'
         tracingObj.backends[0].name = newData.meshTracingBackend
-        tracingObj.backends[0].config.sampling = newData.meshTracingSampling || 100
-        tracingObj.backends[0].config.url = newData.meshTracingZipkinURL
+        tracingObj.backends[0].conf.sampling = newData.meshTracingSampling || 100
+        tracingObj.backends[0].conf.url = newData.meshTracingZipkinURL
       }
 
       /**
@@ -841,13 +841,13 @@ export default {
       if (hasMetrics) {
         const metricsObj = schemaNew.metrics
 
-        metricsObj.backends[0].config = {}
+        metricsObj.backends[0].conf = {}
 
         metricsObj.enabledBackend = newData.meshMetricsName
         metricsObj.backends[0].type = newData.meshMetricsType || 'prometheus'
         metricsObj.backends[0].name = newData.meshMetricsName
-        metricsObj.backends[0].config.port = newData.meshMetricsDataplanePort || 5670
-        metricsObj.backends[0].config.path = newData.meshMetricsDataplanePath || '/metrics'
+        metricsObj.backends[0].conf.port = newData.meshMetricsDataplanePort || 5670
+        metricsObj.backends[0].conf.path = newData.meshMetricsDataplanePath || '/metrics'
       }
 
       // now we clean up our output based on the above conditions
