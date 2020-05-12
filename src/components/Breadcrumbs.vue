@@ -179,6 +179,7 @@ export default {
 
     &:after, a {
       color: #8c8c8c !important;
+      text-decoration: none;
     }
   }
 }

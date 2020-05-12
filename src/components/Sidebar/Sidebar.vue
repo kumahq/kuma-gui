@@ -289,6 +289,7 @@ nav {
 
   a {
     color: #1782CF;
+    text-decoration: none;
   }
 
   ul {
