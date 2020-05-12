@@ -181,13 +181,12 @@
           </p>
           <FormFragment
             all-inline
-            title="Address"
+            title="IP Address"
             for-attr="network-address"
           >
             <input
               id="network-address"
               v-model="validate.univDataplaneNetworkAddress"
-              placeholder="10.0.0.1"
               type="text"
               class="k-input w-100"
             >
@@ -203,7 +202,6 @@
             <input
               id="network-service-port"
               v-model="validate.univDataplaneNetworkServicePort"
-              placeholder="0 - 65535"
               type="text"
               class="k-input w-100"
             >
@@ -220,7 +218,6 @@
             <input
               id="network-dataplane-port"
               v-model="validate.univDataplaneNetworkDPPort"
-              placeholder="0 - 65535"
               type="text"
               class="k-input w-100"
             >
