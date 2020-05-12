@@ -146,18 +146,13 @@
             for-attr="dataplane-id"
           >
             <div>
-              <KPop trigger="hover">
-                <input
-                  id="dataplane-id"
-                  v-model="validate.univDataplaneId"
-                  type="text"
-                  class="k-input w-100"
-                  :disabled="validate.univDataplaneCustomIdDisabled"
-                >
-                <div slot="content">
-                  This is a unique ID for the Dataplane instance.
-                </div>
-              </KPop>
+              <input
+                id="dataplane-id"
+                v-model="validate.univDataplaneId"
+                type="text"
+                class="k-input w-100"
+                :disabled="validate.univDataplaneCustomIdDisabled"
+              >
             </div>
             <div>
               <KButton
@@ -166,6 +161,9 @@
               >
                 Edit
               </KButton>
+              <HelperTooltip>
+                This is a unique ID for the Dataplane instance.
+              </HelperTooltip>
             </div>
           </FormFragment>
         </template>
@@ -182,84 +180,81 @@
             <strong>All fields below are required to proceed.</strong>
           </p>
           <FormFragment
+            all-inline
             title="Address"
             for-attr="network-address"
           >
-            <KPop trigger="hover">
-              <input
-                id="network-address"
-                v-model="validate.univDataplaneNetworkAddress"
-                placeholder="10.0.0.1"
-                type="text"
-                class="k-input w-100"
-              >
-              <div slot="content">
-                The IP address that other services will use to consume this data plane.
-              </div>
-            </KPop>
+            <input
+              id="network-address"
+              v-model="validate.univDataplaneNetworkAddress"
+              placeholder="10.0.0.1"
+              type="text"
+              class="k-input w-100"
+            >
+            <HelperTooltip>
+              The IP address that other services will use to consume this data plane.
+            </HelperTooltip>
           </FormFragment>
           <FormFragment
+            all-inline
             title="Service Port"
             for-attr="network-service-port"
           >
-            <KPop trigger="hover">
-              <input
-                id="network-service-port"
-                v-model="validate.univDataplaneNetworkServicePort"
-                placeholder="0 - 65535"
-                type="text"
-                class="k-input w-100"
-              >
-              <div slot="content">
-                The port where your service is listening on the machine.
-              </div>
-            </KPop>
+            <input
+              id="network-service-port"
+              v-model="validate.univDataplaneNetworkServicePort"
+              placeholder="0 - 65535"
+              type="text"
+              class="k-input w-100"
+            >
+            <HelperTooltip>
+              The port where your service is listening on the machine.
+            </HelperTooltip>
           </FormFragment>
           <FormFragment
+            all-inline
+            fill-first
             title="Data plane port"
             for-attr="network-dataplane-port"
           >
-            <KPop trigger="hover">
-              <input
-                id="network-dataplane-port"
-                v-model="validate.univDataplaneNetworkDPPort"
-                placeholder="0 - 65535"
-                type="text"
-                class="k-input w-100"
-              >
-              <div slot="content">
-                The data plane port (that other services will use to consume this service).
-              </div>
-            </KPop>
+            <input
+              id="network-dataplane-port"
+              v-model="validate.univDataplaneNetworkDPPort"
+              placeholder="0 - 65535"
+              type="text"
+              class="k-input w-100"
+            >
+            <HelperTooltip>
+              The data plane port (that other services will use to consume this service).
+            </HelperTooltip>
           </FormFragment>
           <FormFragment
+            all-inline
             title="Protocol"
             for-attr="network-dataplane-protocol"
           >
-            <KPop trigger="hover">
-              <select
-                id="network-dataplane-protocol"
-                v-model="validate.univDataplaneNetworkProtocol"
-                class="k-input w-100"
-                name="network-dataplane-protocol"
+            <select
+              id="network-dataplane-protocol"
+              v-model="validate.univDataplaneNetworkProtocol"
+              class="k-input w-100"
+              name="network-dataplane-protocol"
+            >
+              <option
+                value="tcp"
+                :selected="validate.univDataplaneNetworkProtocol === 'tcp'"
               >
-                <option
-                  value="tcp"
-                  :selected="validate.univDataplaneNetworkProtocol === 'tcp'"
-                >
-                  TCP
-                </option>
-                <option
-                  value="http"
-                  :selected="validate.univDataplaneNetworkProtocol === 'http'"
-                >
-                  HTTP
-                </option>
-              </select>
-              <div slot="content">
-                The protocol of the service.
-              </div>
-            </KPop>
+                TCP
+              </option>
+              <option
+                value="http"
+                :selected="validate.univDataplaneNetworkProtocol === 'http'"
+              >
+                HTTP
+              </option>
+            </select>
+            <HelperTooltip>
+              The protocol of the service.
+            </HelperTooltip>
           </FormFragment>
         </template>
         <template slot="complete">
@@ -422,7 +417,7 @@
 mesh: default
 name: dp-echo-1
 networking:
-  address: 127.0.0.1
+  address: 10.0.0.1
   inbound:
   - port: 10000
     servicePort: 9000
@@ -443,6 +438,7 @@ import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 import Switcher from '@/views/Wizard/components/Switcher'
+import HelperTooltip from '@/views/Wizard/components/HelperTooltip'
 import CodeView from '@/components/Skeletons/CodeView'
 import Scanner from '@/views/Wizard/components/Scanner'
 
@@ -462,6 +458,7 @@ export default {
     Tabs,
     StepSkeleton,
     Switcher,
+    HelperTooltip,
     CodeView,
     Scanner
   },

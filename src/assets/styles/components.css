@@ -42,10 +42,35 @@
 }
 
 /* KEmptyState variants */
+
 .empty-state-wrapper.empty-state--wide-content p {
   max-width: 85%;
 }
 
 .empty-state-wrapper.empty-state--compact {
   padding: 2rem 0;
+}
+
+/* misc utils */
+
+.help-icon {
+  --i: 22px;
+
+  display: inline-block;
+  margin: 0 8px;
+  width: var(--i);
+}
+
+.help-icon a {
+  display: inline-block;
+  width: var(--i);
+  height: var(--i);
+  line-height: var(--i);
+  border-radius: 100%;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+  font-size: 12px;
+  background-color: var(--gray-2);
+  cursor: pointer;
 }
