@@ -1,8 +1,8 @@
 <template>
   <div class="pagination">
     <KButton
+      v-if="hasPrevious"
       ref="paginatePrev"
-      :disabled="!hasPrevious"
       appearance="primary"
       @click="$emit('previous')"
     >
@@ -10,8 +10,8 @@
     </KButton>
 
     <KButton
+      v-if="hasNext"
       ref="paginateNext"
-      :disabled="!hasNext"
       appearance="primary"
       @click="$emit('next')"
     >
