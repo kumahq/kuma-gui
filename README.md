@@ -63,7 +63,7 @@ yarn run test:unit
 ```
 
 [kuma-url]: https://kuma.io/
-[kuma-logo]: https://kuma-public-assets.s3.amazonaws.com/kuma-logo.png
+[kuma-logo]: https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png
 
 
 ## License
