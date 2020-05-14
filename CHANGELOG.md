@@ -9,10 +9,10 @@
 
 ### Updates / changes
 
-* feat: Greatly improved pagination (depends on [#690 in Kuma](https://github.com/Kong/kuma/pull/690)) [[23](https://github.com/Kong/kuma-gui/pull/23)]
-* feat: Entity total counts on the Global Overview page are now derived from the HTTP API (depends on [[#723 in Kuma](https://github.com/Kong/kuma/pull/723)]) [25](https://github.com/Kong/kuma-gui/pull/25)
-* chore: Update the Mesh object to match the changes made to it in Kuma (depends on [704](https://github.com/Kong/kuma/pull/704)) [[24](https://github.com/Kong/kuma-gui/pull/24)]
-* feat: Dataplane wizards for both Kubernetes and Universal [20](https://github.com/Kong/kuma-gui/pull/20)
+* feat: Greatly improved pagination (depends on [#690 in Kuma](https://github.com/Kong/kuma/pull/690)) [[#23](https://github.com/Kong/kuma-gui/pull/23)]
+* feat: Entity total counts on the Global Overview page are now derived from the HTTP API (depends on [[#723 in Kuma](https://github.com/Kong/kuma/pull/723)]) [[#25](https://github.com/Kong/kuma-gui/pull/25)]
+* chore: Update the Mesh object to match the changes made to it in Kuma (depends on [704](https://github.com/Kong/kuma/pull/704)) [[#24](https://github.com/Kong/kuma-gui/pull/24)]
+* feat: Dataplane wizards for both Kubernetes and Universal [[#20](https://github.com/Kong/kuma-gui/pull/20)]
 * feat: A brand new Wizard tool and framework that will allow the user to create a new Mesh on the fly and allow them to choose the options that suit their needs (Tracing, Logging, Metrics, etc). This is the first of many Wizards to come [[#17](https://github.com/Kong/kuma-gui/pull/17)]
 * feat: A tabbed and table view for all pages that simplifies and speeds up navigation, as well as viewing data relating to your entities. It eliminates all detail views, in favor of a tabbed view that loads when the user clicks table rows for the item they want to see information about. This means no more clicking a link in a table view, going to a new page, and then having to go back. Everything has been encompassed in one compact, fast overview [[#17](https://github.com/Kong/kuma-gui/pull/17)]
 * feat: Fault Injections view added, and modified to use the brand new tabbed view [[#15](https://github.com/Kong/kuma-gui/pull/15)]
