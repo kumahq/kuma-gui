@@ -11,13 +11,35 @@
       :class="metric.status"
       class="metric"
     >
-      <a href="">
-        <span class="metric-title">{{ metric.metric }}</span>
+      <router-link
+        v-if="metric.url"
+        :to="metric.url"
+        class="metric-card"
+      >
+        <span class="metric-title">
+          {{ metric.metric }}
+        </span>
         <span
-          :class="{'has-error': index === hasError[index]}"
+          :class="{ 'has-error': index === hasError[index] }"
           class="metric-value"
-        >{{ metric.value | formatValue | formatError }}</span>
-      </a>
+        >
+          {{ metric.value | formatValue | formatError }}
+        </span>
+      </router-link>
+      <div
+        v-else
+        class="metric-card"
+      >
+        <span class="metric-title">
+          {{ metric.metric }}
+        </span>
+        <span
+          :class="{ 'has-error': index === hasError[index] }"
+          class="metric-value"
+        >
+          {{ metric.value | formatValue | formatError }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -80,15 +102,27 @@ export default {
     flex-direction: column;
     justify-content: space-between;
 
-    a {
+    .metric-card {
       display: block;
       text-decoration: none;
       text-align: left;
       border-left: 3px solid;
-      border-color: rgba(0,0,0,.1);
+      border-left-color: rgba(0,0,0,.1);
       background-color: rgba(150,58,133,0.05);
       padding: 16px 26px;
       margin: 0.5rem;
+    }
+
+    a.metric-card:hover,
+    a.metric-card:active,
+    a.metric-card:focus {
+      // border-left-color: var(--brand-color-6);
+      background-color: var(--blue-3);
+
+      .metric-title {
+        color: #000;
+        text-decoration: underline;
+      }
     }
 
     span {
@@ -132,7 +166,7 @@ export default {
       flex: none;
       margin-bottom: 0;
 
-      a {
+      .metric-card {
         margin-bottom: 0.25rem;
       }
     }
