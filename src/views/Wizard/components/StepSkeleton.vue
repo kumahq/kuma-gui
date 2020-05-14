@@ -47,14 +47,15 @@
         class="wizard-steps__footer"
       >
         <KButton
-          :disabled="indexCanReverse"
+          v-show="!indexCanReverse"
           appearance="primary"
           @click="goToPrevStep"
         >
           &lsaquo; Previous
         </KButton>
         <KButton
-          :disabled="indexCanAdvance || nextDisabled"
+          v-show="!indexCanAdvance"
+          :disabled="nextDisabled"
           appearance="primary"
           @click="goToNextStep"
         >
