@@ -7,8 +7,6 @@
 
 > Released on 2020/05/12
 
-### Updates / changes
-
 * feat: Greatly improved pagination (depends on [#690 in Kuma](https://github.com/Kong/kuma/pull/690)) [[#23](https://github.com/Kong/kuma-gui/pull/23)]
 * feat: Entity total counts on the Global Overview page are now derived from the HTTP API (depends on [[#723 in Kuma](https://github.com/Kong/kuma/pull/723)]) [[#25](https://github.com/Kong/kuma-gui/pull/25)]
 * chore: Update the Mesh object to match the changes made to it in Kuma (depends on [704](https://github.com/Kong/kuma/pull/704)) [[#24](https://github.com/Kong/kuma-gui/pull/24)]
