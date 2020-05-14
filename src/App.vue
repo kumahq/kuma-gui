@@ -124,6 +124,11 @@ export default {
   padding: 44px;
 }
 
+.page {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+
 .full-screen {
   background: #fff;
   position: fixed;
