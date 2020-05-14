@@ -16,57 +16,49 @@
       <CardSkeleton
         class="mx-4"
         :card-action-route="{ path: '/wizard/mesh' }"
-        card-title="Create A Mesh"
-        card-action-button-text="Start Now"
+        card-title="Create a new Mesh resource"
+        card-action-button-text="Create Mesh"
       >
         <template slot="cardContent">
-          <p class="lg">
-            You can create a new isolated Mesh for a team, a product, or a line of business.
+          <p>
+            You can create multiple Mesh resources (i.e. per application, or per team)
+            on the same {{ title }} cluster.
           </p>
         </template>
       </CardSkeleton>
       <CardSkeleton
         class="mx-4"
         :card-action-route="dataplaneWizardRoute"
-        card-title="Create A Dataplane"
-        card-action-button-text="Start Now"
+        :card-title="`Connect a Dataplane to ${title}`"
+        card-action-button-text="Connect Dataplanes"
       >
         <template slot="cardContent">
-          <p class="lg">
-            Create a new Dataplane here.
+          <p>
+            Every service must have its own Dataplane resource in order to start
+            the data plane proxy and associate it with a Mesh.
+          </p>
+        </template>
+      </CardSkeleton>
+      <CardSkeleton
+        class="mx-4"
+        :card-action-route="{ path: `fault-injections` }"
+        :card-title="`Apply ${title} Policies`"
+        card-action-button-text="Explore Policies"
+      >
+        <template slot="cardContent">
+          <p>
+            Once we have created your Mesh and started the data planes, we can now
+            use {{ title }} Policies to manage the Mesh.
           </p>
         </template>
       </CardSkeleton>
     </div>
-
-    <FrameSkeleton>
-      <DataOverview
-        :has-error="hasError"
-        :is-loading="isLoading"
-        :is-empty="isEmpty"
-        :empty-state="empty_state"
-        :display-data-table="true"
-        :table-data="tableData"
-        :table-data-is-empty="tableDataIsEmpty"
-        @reloadData="loadData"
-      >
-        <template slot="pagination">
-          <Pagination
-            :has-previous="previous.length > 0"
-            :has-next="hasNext"
-            @next="goToNextPage"
-            @previous="goToPreviousPage"
-          />
-        </template>
-      </DataOverview>
-    </FrameSkeleton>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import { getOffset } from '@/helpers'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
@@ -82,12 +74,12 @@ export default {
     }
   },
   components: {
-    FrameSkeleton,
-    Pagination,
+    // FrameSkeleton,
+    // Pagination,
     PageHeader,
     Breadcrumbs,
     MetricGrid,
-    DataOverview,
+    // DataOverview,
     CardSkeleton
   },
   data () {
