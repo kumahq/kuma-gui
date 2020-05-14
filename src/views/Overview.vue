@@ -12,46 +12,52 @@
       :metrics="overviewMetrics"
     />
 
-    <div class="md:grid md:grid-cols-3 md:gap-4 -mx-4">
-      <CardSkeleton
-        class="mx-4"
-        :card-action-route="{ path: '/wizard/mesh' }"
-        card-title="Create a new Mesh resource"
-        card-action-button-text="Create Mesh"
-      >
-        <template slot="cardContent">
-          <p>
-            You can create multiple Mesh resources (i.e. per application, or per team)
-            on the same {{ title }} cluster.
-          </p>
-        </template>
-      </CardSkeleton>
-      <CardSkeleton
-        class="mx-4"
-        :card-action-route="dataplaneWizardRoute"
-        :card-title="`Connect a Dataplane to ${title}`"
-        card-action-button-text="Connect Dataplanes"
-      >
-        <template slot="cardContent">
-          <p>
-            Every service must have its own Dataplane resource in order to start
-            the data plane proxy and associate it with a Mesh.
-          </p>
-        </template>
-      </CardSkeleton>
-      <CardSkeleton
-        class="mx-4"
-        :card-action-route="{ path: `fault-injections` }"
-        :card-title="`Apply ${title} Policies`"
-        card-action-button-text="Explore Policies"
-      >
-        <template slot="cardContent">
-          <p>
-            Once we have created your Mesh and started the data planes, we can now
-            use {{ title }} Policies to manage the Mesh.
-          </p>
-        </template>
-      </CardSkeleton>
+    <div class="card-wrapper">
+      <div>
+        <CardSkeleton
+          class="card-item"
+          :card-action-route="{ path: '/wizard/mesh' }"
+          card-title="Create a new Mesh resource"
+          card-action-button-text="Create Mesh"
+        >
+          <template slot="cardContent">
+            <p>
+              You can create multiple Mesh resources (i.e. per application, or per team)
+              on the same {{ title }} cluster.
+            </p>
+          </template>
+        </CardSkeleton>
+      </div>
+      <div>
+        <CardSkeleton
+          class="card-item"
+          :card-action-route="dataplaneWizardRoute"
+          :card-title="`Connect a Dataplane to ${title}`"
+          card-action-button-text="Connect Dataplanes"
+        >
+          <template slot="cardContent">
+            <p>
+              Every service must have its own Dataplane resource in order to start
+              the data plane proxy and associate it with a Mesh.
+            </p>
+          </template>
+        </CardSkeleton>
+      </div>
+      <div>
+        <CardSkeleton
+          class="card-item"
+          :card-action-route="{ path: `fault-injections` }"
+          :card-title="`Apply ${title} Policies`"
+          card-action-button-text="Explore Policies"
+        >
+          <template slot="cardContent">
+            <p>
+              Once we have created your Mesh and started the data planes, we can now
+              use {{ title }} Policies to manage the Mesh.
+            </p>
+          </template>
+        </CardSkeleton>
+      </div>
     </div>
   </div>
 </template>
@@ -59,11 +65,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getOffset } from '@/helpers'
-import Pagination from '@/components/Pagination'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
-import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 
 export default {
@@ -74,37 +78,10 @@ export default {
     }
   },
   components: {
-    // FrameSkeleton,
-    // Pagination,
     PageHeader,
     Breadcrumbs,
     MetricGrid,
-    // DataOverview,
     CardSkeleton
-  },
-  data () {
-    return {
-      isLoading: true,
-      isEmpty: false,
-      hasError: false,
-      tableDataIsEmpty: false,
-      empty_state: {
-        title: 'No Data',
-        message: 'There are no Meshes present.'
-      },
-      tableData: {
-        headers: [
-          { label: 'Mesh', key: 'name' },
-          { label: 'Online Dataplanes', key: 'onlineDpCount' }
-        ],
-        data: []
-      },
-      pageSize: 10,
-      pageOffset: null,
-      next: null,
-      hasNext: false,
-      previous: []
-    }
   },
   computed: {
     ...mapGetters({
@@ -289,7 +266,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .empty-state-title {
 
   .card-icon {
@@ -299,6 +276,32 @@ export default {
       display: block;
       margin-left: auto;
       margin-right: auto;
+    }
+  }
+}
+
+.card-wrapper {
+
+  @media only screen and (max-width: 840px) {
+    .card-item {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  @media only screen and (min-width: 841px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem 0;
+
+    > * {
+      --i: 33.333333%;
+
+      flex: 0 0 var(--i);
+      max-width: var(--i);
+    }
+
+    .card-item {
+      margin: 0 0.5rem 0.5rem 0.5rem;
     }
   }
 }
