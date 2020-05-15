@@ -330,7 +330,7 @@ export default {
 }
 
 .empty-state-wrapper {
-  margin-bottom: 2em;
+  // margin-bottom: 2em;
 }
 
 .entity-tags {

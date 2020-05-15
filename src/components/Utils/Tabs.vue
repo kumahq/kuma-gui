@@ -1,7 +1,7 @@
 <template>
   <div class="tab-container">
     <header
-      v-if="tabGroupTitle"
+      v-if="tabGroupTitle && isReady"
       class="tab__header"
     >
       <h3 class="tab__header__title">
