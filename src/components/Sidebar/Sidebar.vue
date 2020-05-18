@@ -277,11 +277,12 @@ nav {
 
 .sidebar-message {
   background-color: #FFF5E0;
-  box-shadow: inset 0 1px 0 0 rgba(0,0,0,0.10);
+  // box-shadow: inset 0 1px 0 0 rgba(0,0,0,0.10);
   padding: 32px;
   font-size: 14px;
   line-height: 25px;
   color: rgba(0, 0, 0, .75);
+  border-radius: 6px 0 0 0;
 
   p:first-of-type {
     margin-bottom: 16px;

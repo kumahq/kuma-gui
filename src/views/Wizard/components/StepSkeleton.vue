@@ -247,7 +247,8 @@ $bp-max-width: 1219px;
     }
 
     .wizard-steps__sidebar {
-      position: fixed;
+      // position: fixed;
+      position: absolute;
       top: 0;
       right: 0;
       padding-top: 80px;

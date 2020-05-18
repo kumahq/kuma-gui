@@ -129,6 +129,12 @@ export default {
   margin: 0 auto;
 }
 
+.main-content-container {
+  max-width: var(--global-content-max-width);
+  position: relative;
+  margin: 0 auto;
+}
+
 .full-screen {
   background: #fff;
   position: fixed;

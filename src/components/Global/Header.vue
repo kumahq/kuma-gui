@@ -83,6 +83,7 @@ export default {
 }
 
 .main-header__content {
+  max-width: var(--global-content-max-width);
   margin: 0 auto;
 }
 

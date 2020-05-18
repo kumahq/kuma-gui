@@ -10,41 +10,56 @@
         border-variant="noBorder"
       >
         <template slot="body">
-          <ul
-            class="label-list__items"
-            :class="colClass"
+          <div
+            class="label-list__col-wrapper"
+            :class="{ 'multi-col': (items.tags && Object.entries(items.tags).length) }"
           >
-            <li
-              v-for="(value, key) in items"
-              :key="key"
-            >
-              <h4 class="label-list__items__title">
-                {{ key }}
-              </h4>
-              <!-- tags array -->
-              <p
-                v-if="key === 'tags'"
-                class="label-list__items__value"
+            <div class="label-list__col">
+              <ul
+                class="label-list__items"
+                :class="colClass"
               >
-                <span
-                  v-for="(k, v) in value"
-                  :key="k"
-                  class="tag-cols my-2"
+                <li
+                  v-for="(value, key) in itemsNoTags"
+                  :key="key"
                 >
-                  <span class="tag-cols__label">
-                    {{ v }}:
-                  </span>
-                  <span class="tag-cols__value">
-                    {{ k }}
-                  </span>
-                </span>
-              </p>
-              <!-- basic string value -->
-              <p v-else>
-                {{ value }}
-              </p>
-            </li>
-          </ul>
+                  <h4 class="label-list__items__title">
+                    {{ key }}
+                  </h4>
+                  <p>
+                    {{ value }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div
+              v-if="items.tags"
+              class="label-list__col"
+            >
+              <div>
+                <h4 class="label-list__items__title">
+                  Tags
+                </h4>
+                <!-- tags array -->
+                <ul>
+                  <li class="label-list__items__value">
+                    <span
+                      v-for="(k, v) in items.tags"
+                      :key="k"
+                      class="tag-cols my-2"
+                    >
+                      <span class="tag-cols__label">
+                        {{ v }}:
+                      </span>
+                      <span class="tag-cols__value">
+                        {{ k }}
+                      </span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </template>
       </KCard>
     </div>
@@ -106,6 +121,8 @@
 </template>
 
 <script>
+import { rejectKeys } from '@/views/Wizard/helpers'
+
 export default {
   name: 'LabelList',
   props: {
@@ -144,6 +161,9 @@ export default {
       } else {
         return null
       }
+    },
+    itemsNoTags () {
+      return rejectKeys(this.items, 'tags')
     }
   }
 }
@@ -161,6 +181,23 @@ export default {
 
 }
 
+.label-list__col-wrapper {
+
+  @media screen and (min-width: 1024px) {
+    &.multi-col {
+      display: flex;
+
+      > * {
+        flex: 1 0 0;
+
+        &:not(:last-of-type) {
+          margin-right: var(--spacing-md);
+        }
+      }
+    }
+  }
+}
+
 .label-list__items {
 
   li {
@@ -169,20 +206,6 @@ export default {
 
     &:not(:last-of-type) {
       margin-bottom: var(--spacing-md);
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    &.has-columns {
-      column-gap: 10px;
-    }
-
-    &.cols-2 {
-      column-count: 2;
-    }
-
-    &.cols-3 {
-      column-count: 3;
     }
   }
 }
@@ -195,15 +218,15 @@ export default {
 }
 
 .label-list__items__value {
-  font-size: var(--type-sm);
-  font-family: var(--font-family-mono);
+  // font-size: var(--type-sm);
+  // font-family: var(--font-family-mono);
 }
 
 .tag-cols {
   display: grid;
   grid-auto-flow: column dense;
   grid-gap: 10px;
-  grid-template-columns: repeat(3, 1fr 4fr);
+  grid-template-columns: repeat(2, 1fr 4fr);
 
   span {
     // flex: 1 0 0;
