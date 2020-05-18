@@ -137,6 +137,8 @@ export default {
           clearInterval(this.intervalId)
           this.isRunning = false
           this.isComplete = true
+
+          this.$emit('hideSiblings', true)
         }
       }, this.interval)
     }
