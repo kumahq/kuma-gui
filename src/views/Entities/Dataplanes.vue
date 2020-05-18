@@ -5,7 +5,6 @@
         :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :empty-state="empty_state"
         :display-data-table="true"
         :table-data="tableData"
@@ -35,9 +34,9 @@
         </template>
       </DataOverview>
       <Tabs
+        v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
@@ -208,7 +207,6 @@ export default {
     },
     loadData () {
       this.isLoading = true
-      this.isEmpty = false
 
       const mesh = this.$route.params.mesh
 
@@ -397,15 +395,18 @@ export default {
 
               this.tableData.data = final
               this.tableDataIsEmpty = false
+              this.isEmpty = false
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+              this.isEmpty = true
 
               this.getEntity(null)
             }
           })
           .catch(error => {
             this.hasError = true
+            this.isEmpty = true
 
             console.error(error)
           })
