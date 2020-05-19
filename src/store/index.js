@@ -30,6 +30,13 @@ export default (api) => {
       totalTrafficRouteCount: 0,
       totalTrafficTraceCount: 0,
       totalFaultInjectionCount: 0,
+      totalHealthCheckCountFromMesh: 0,
+      totalTotalProxyTemplateCountFromMesh: 0,
+      totalTrafficLogCountFromMesh: 0,
+      totalTrafficPermissionCountFromMesh: 0,
+      totalTrafficRouteCountFromMesh: 0,
+      totalTrafficTraceCountFromMesh: 0,
+      totalFaultInjectionCountFromMesh: 0,
       totalDataplaneList: [],
       anyDataplanesOffline: null,
       totalDataplaneCountFromMesh: 0,
@@ -55,6 +62,7 @@ export default (api) => {
       getDataplanes: (state) => state.dataplanes,
       getDataplanesList: (state) => state.totalDataplaneList,
       getAnyDpOffline: (state) => state.anyDataplanesOffline,
+      // total counts for all meshes
       getTotalMeshCount: (state) => state.totalMeshCount,
       getTotalDataplaneCount: (state) => state.totalDataplaneCount,
       getTotalHealthCheckCount: (state) => state.totalHealthCheckCount,
@@ -64,13 +72,14 @@ export default (api) => {
       getTotalTrafficRouteCount: (state) => state.totalTrafficRouteCount,
       getTotalTrafficTraceCount: (state) => state.totalTrafficTraceCount,
       getTotalFaultInjectionCount: (state) => state.totalFaultInjectionCount,
+      // total counts per single mesh
       getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
       getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRoutesCountFromMesh,
       getTotalTrafficPermissionsCountFromMesh: (state) => state.totalTrafficPermissionsCountFromMesh,
-      getTotalHealthChecksFromMesh: (state) => state.totalHealthChecksCountFromMesh,
+      getTotalHealthChecksCountFromMesh: (state) => state.totalHealthChecksCountFromMesh,
       getTotalProxyTemplatesCountFromMesh: (state) => state.totalProxyTemplatesCountFromMesh,
-      getTrafficLogsFromMeshTotalCount: (state) => state.totalTrafficLogsCountFromMesh,
-      getTrafficTracesFromMeshTotalCount: (state) => state.totalTrafficTracesCountFromMesh,
+      getTotalTrafficLogsFromMesh: (state) => state.totalTrafficLogsCountFromMesh,
+      getTotalTrafficTracesFromMesh: (state) => state.totalTrafficTracesCountFromMesh,
       getFaultInjectionsFromMeshTotalCount: (state) => state.totalFaultInjectionsCountFromMesh,
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
@@ -97,15 +106,15 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_TRACE_COUNT: (state, count) => (state.totalTrafficTraceCount = count),
       SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
       SET_TOTAL_FAULT_INJECTION_COUNT: (state, count) => (state.totalFaultInjectionCount = count),
-      SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
       SET_TOTAL_DATAPLANE_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
-      SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficRoutesCountFromMesh = count),
-      SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficPermissionsCountFromMesh = count),
-      SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH: (state, count) => (state.totalTrafficLogsCountFromMesh = count),
-      SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH: (state, count) => (state.totalTrafficTracesCountFromMesh = count),
-      SET_TOTAL_FAULT_INJECTIONS_COUNT_FROM_MESH: (state, count) => (state.totalFaultInjectionsCountFromMesh = count),
-      SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH: (state, count) => (state.totalHealthChecksCountFromMesh = count),
-      SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalProxyTemplatesCountFromMesh = count),
+      SET_TOTAL_HEALTH_CHECK_COUNT_FROM_MESH: (state, count) => (state.totalHealthCheckCountFromMesh = count),
+      SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalTotalProxyTemplateCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_LOG_COUNT_FROM_MESH: (state, count) => (state.totalTrafficLogCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_PERMISSION_COUNT_FROM_MESH: (state, count) => (state.totalTrafficPermissionCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_ROUTE_COUNT_FROM_MESH: (state, count) => (state.totalTrafficRouteCountFromMesh = count),
+      SET_TOTAL_TRAFFIC_TRACE_COUNT_FROM_MESH: (state, count) => (state.totalTrafficTraceCountFromMesh = count),
+      SET_TOTAL_FAULT_INJECTION_COUNT_FROM_MESH: (state, count) => (state.totalFaultInjectionCountFromMesh = count),
+      SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
       SET_VERSION: (state, version) => (state.version = version),
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
       SET_STATUS: (state, status) => (state.status = status),
@@ -153,14 +162,14 @@ export default (api) => {
       },
 
       /**
-       * Total Counts
+       * Total Counts (for all items)
        *
        * Setting the `size` to 1 on these requests prevents
        * the unneeded listing of max 100 items.
        */
 
       // get the total number of meshes
-      getMeshTotalCount ({ commit, state }) {
+      fetchMeshTotalCount ({ commit, state }) {
         const params = {
           size: state.meshPageSize
         }
@@ -177,7 +186,7 @@ export default (api) => {
       },
 
       // get the total number of dataplanes present
-      getDataplaneTotalCount ({ commit }) {
+      fetchDataplaneTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllDataplanes(params)
@@ -192,7 +201,7 @@ export default (api) => {
       },
 
       // get the total number of health checks present
-      getHealthCheckTotalCount ({ commit }) {
+      fetchHealthCheckTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllHealthChecks(params)
@@ -207,7 +216,7 @@ export default (api) => {
       },
 
       // get the total number of proxy templates present
-      getProxyTemplateTotalCount ({ commit }) {
+      fetchProxyTemplateTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllProxyTemplates(params)
@@ -222,7 +231,7 @@ export default (api) => {
       },
 
       // get the total number of traffic logs present
-      getTrafficLogTotalCount ({ commit }) {
+      fetchTrafficLogTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllTrafficLogs(params)
@@ -237,7 +246,7 @@ export default (api) => {
       },
 
       // get the total number of traffic permissions present
-      getTrafficPermissionTotalCount ({ commit }) {
+      fetchTrafficPermissionTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllTrafficPermissions(params)
@@ -252,7 +261,7 @@ export default (api) => {
       },
 
       // get the total number of traffic routes present
-      getTrafficRouteTotalCount ({ commit }) {
+      fetchTrafficRouteTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllTrafficRoutes(params)
@@ -267,7 +276,7 @@ export default (api) => {
       },
 
       // get the total number of traffic traces present
-      getTrafficTraceTotalCount ({ commit }) {
+      fetchTrafficTraceTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllTrafficTraces(params)
@@ -282,7 +291,7 @@ export default (api) => {
       },
 
       // get the total number of fault injections present
-      getFaultInjectionTotalCount ({ commit }) {
+      fetchFaultInjectionTotalCount ({ commit }) {
         const params = { size: 1 }
 
         return api.getAllFaultInjections(params)
@@ -295,6 +304,134 @@ export default (api) => {
             console.error(error)
           })
       },
+
+      /**
+       * Total counts (per mesh)
+       */
+
+      // get the total number of dataplanes from a specific mesh
+      fetchDataplaneTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllDataplanesFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_DATAPLANE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of health checks from a specific mesh
+      fetchHealthCheckTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllHealthChecksFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_HEALTH_CHECK_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of proxy templates from a specific mesh
+      fetchProxyTemplateTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllProxyTemplatesFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic logs from a specific mesh
+      fetchTrafficLogTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllTrafficLogsFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_TRAFFIC_LOG_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic permissions from a specific mesh
+      fetchTrafficPermissionTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllTrafficPermissionsFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_TRAFFIC_PERMISSION_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic routes from a specific mesh
+      fetchTrafficRouteTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllTrafficRoutesFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_TRAFFIC_ROUTE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of traffic traces from a specific mesh
+      fetchTrafficTraceTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllTrafficTracesFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_TRAFFIC_TRACE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of fault injections from a specific mesh
+      fetchFaultInjectionTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllFaultInjectionsFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_FAULT_INJECTION_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      /**
+       * Dataplane statuses
+       */
 
       // this will get the current status of all dataplanes
       getAllDataplanes ({ commit }, params) {
@@ -360,110 +497,6 @@ export default (api) => {
         }
 
         return getDataplanes()
-      },
-
-      // get the total number of dataplanes from a mesh
-      getDataplaneFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllDataplanesFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_DATAPLANE_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total number of traffic routes from a mesh
-      getTrafficRoutesFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllTrafficRoutesFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_TRAFFIC_ROUTES_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total number of traffic permissions from a mesh
-      getTrafficPermissionsFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllTrafficPermissionsFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_TRAFFIC_PERMISSIONS_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total number of traffic logs from a mesh
-      getTrafficLogsFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllTrafficLogsFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_TRAFFIC_LOGS_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total number of traffic traces from a mesh
-      getTrafficTracesFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllTrafficTracesFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_TRAFFIC_TRACES_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total number of fault injections from a mesh
-      getFaultInjectionsFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllFaultInjectionsFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_FAULT_INJECTIONS_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total number of health checks from a mesh
-      getHealthChecksFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllHealthChecksFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_HEALTH_CHECKS_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
-      },
-
-      // get the total proxy templates from a mesh
-      getProxyTemplatesFromMeshTotalCount ({ commit }, mesh) {
-        return api.getAllProxyTemplatesFromMesh(mesh)
-          .then(response => {
-            const total = response.items.length
-
-            commit('SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH', total)
-          })
-          .catch(error => {
-            console.error(error)
-          })
       },
 
       // get the current version

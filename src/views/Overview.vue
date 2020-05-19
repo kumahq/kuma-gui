@@ -3,7 +3,7 @@
     <page-header noflex>
       <breadcrumbs />
       <h2 class="xxl">
-        {{ this.$route.meta.title }}
+        {{ pageTitle }}
       </h2>
     </page-header>
 
@@ -88,54 +88,101 @@ export default {
       environment: 'getEnvironment',
       selectedMesh: 'getSelectedMesh'
     }),
+    pageTitle () {
+      const metaTitle = this.$route.meta.title
+      const mesh = this.selectedMesh
+
+      if (mesh === 'all') {
+        return `${metaTitle} for all Meshes`
+      } else {
+        return `${metaTitle} for ${mesh}`
+      }
+    },
     overviewMetrics () {
-      return [
+      let storeVals
+      const mesh = this.selectedMesh
+      const state = this.$store.state
+
+      if (mesh === 'all') {
+        storeVals = {
+          meshCount: state.totalMeshCount,
+          dataplaneCount: state.totalDataplaneCount,
+          faultInjectionCount: state.totalFaultInjectionCount,
+          healthCheckCount: state.totalHealthCheckCount,
+          proxyTemplateCount: state.proxyTemplateCount,
+          trafficLogCount: state.trafficLogCount,
+          trafficPermissionCount: state.trafficPermissionCount,
+          trafficRouteCount: state.trafficRouteCount,
+          trafficTraceCount: state.trafficTraceCount
+        }
+      } else {
+        storeVals = {
+          dataplaneCount: state.totalDataplaneCountFromMesh,
+          faultInjectionCount: state.totalFaultInjectionCountFromMesh,
+          healthCheckCount: state.totalHealthCheckCountFromMesh,
+          proxyTemplateCount: state.proxyTemplateCountFromMesh,
+          trafficLogCount: state.trafficLogCountFromMesh,
+          trafficPermissionCount: state.trafficPermissionCountFromMesh,
+          trafficRouteCount: state.trafficRouteCountFromMesh,
+          trafficTraceCount: state.trafficTraceCountFromMesh
+        }
+      }
+
+      const tableData = [
         {
           metric: 'Meshes',
-          value: this.$store.state.totalMeshCount,
+          value: storeVals.meshCount,
           url: `/meshes/${this.selectedMesh}`
         },
         {
           metric: 'Dataplanes',
-          value: this.$store.state.totalDataplaneCount,
+          value: storeVals.dataplaneCount,
           url: `/${this.selectedMesh}/dataplanes`
         },
         {
           metric: 'Fault Injections',
-          value: this.$store.state.totalFaultInjectionCount,
+          value: storeVals.faultInjectionCount,
           url: `/${this.selectedMesh}/fault-injections`
         },
         {
           metric: 'Health Checks',
-          value: this.$store.state.totalHealthCheckCount,
+          value: storeVals.healthCheckCount,
           url: `/${this.selectedMesh}/health-checks`
         },
         {
           metric: 'Proxy Templates',
-          value: this.$store.state.totalProxyTemplateCount,
+          value: storeVals.proxyTemplateCount,
           url: `/${this.selectedMesh}/proxy-templates`
         },
         {
           metric: 'Traffic Logs',
-          value: this.$store.state.totalTrafficLogCount,
+          value: storeVals.trafficLogCount,
           url: `/${this.selectedMesh}/traffic-logs`
         },
         {
           metric: 'Traffic Permissions',
-          value: this.$store.state.totalTrafficPermissionCount,
+          value: storeVals.trafficPermissionCount,
           url: `/${this.selectedMesh}/traffic-permissions`
         },
         {
           metric: 'Traffic Routes',
-          value: this.$store.state.totalTrafficRouteCount,
+          value: storeVals.trafficRouteCount,
           url: `/${this.selectedMesh}/traffic-routes`
         },
         {
           metric: 'Traffic Traces',
-          value: this.$store.state.totalTrafficTraceCount,
+          value: storeVals.trafficTraceCount,
           url: `/${this.selectedMesh}/traffic-traces`
         }
       ]
+
+      if (mesh !== 'all') {
+        // if the user is viewing the overview with a mesh selected,
+        // we hide the mesh count from the metrics grid
+        tableData.shift()
+      }
+
+      return tableData
     },
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
@@ -148,7 +195,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    selectedMesh () {
       this.init()
     }
   },
@@ -160,21 +207,47 @@ export default {
       this.getCounts()
     },
     getCounts () {
-      const actions = [
-        'getMeshTotalCount',
-        'getDataplaneTotalCount',
-        'getHealthCheckTotalCount',
-        'getProxyTemplateTotalCount',
-        'getTrafficLogTotalCount',
-        'getTrafficPermissionTotalCount',
-        'getTrafficRouteTotalCount',
-        'getTrafficTraceTotalCount',
-        'getFaultInjectionTotalCount'
-      ]
+      let actions
+      const mesh = this.selectedMesh
 
-      actions.forEach(i => {
-        this.$store.dispatch(i)
-      })
+      if (mesh === 'all') {
+        // if we are viewing data for all meshes,
+        // load the total counts for everything
+        actions = [
+          'fetchMeshTotalCount',
+          'fetchDataplaneTotalCount',
+          'fetchHealthCheckTotalCount',
+          'fetchProxyTemplateTotalCount',
+          'fetchTrafficLogTotalCount',
+          'fetchTrafficPermissionTotalCount',
+          'fetchTrafficRouteTotalCount',
+          'fetchTrafficTraceTotalCount',
+          'fetchFaultInjectionTotalCount'
+        ]
+
+        // run each action
+        actions.forEach(i => {
+          this.$store.dispatch(i)
+        })
+      } else {
+        // if we are viewing data for a single selected mesh,
+        // load the total counts just for that selected mesh
+        actions = [
+          'fetchDataplaneTotalCountFromMesh',
+          'fetchHealthCheckTotalCountFromMesh',
+          'fetchProxyTemplateTotalCountFromMesh',
+          'fetchTrafficLogTotalCountFromMesh',
+          'fetchTrafficPermissionTotalCountFromMesh',
+          'fetchTrafficRouteTotalCountFromMesh',
+          'fetchTrafficTraceTotalCountFromMesh',
+          'fetchFaultInjectionTotalCountFromMesh'
+        ]
+
+        // run each action
+        actions.forEach(i => {
+          this.$store.dispatch(i, mesh)
+        })
+      }
     }
   }
 }

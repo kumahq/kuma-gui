@@ -111,6 +111,10 @@ export default {
               }
             }
 
+            // set the selected mesh in our VueX store
+            this.$store.dispatch('updateSelectedMesh', mesh())
+
+            // update the selected mesh in localStorage
             localStorage.setItem('selectedMesh', mesh())
           }
         })

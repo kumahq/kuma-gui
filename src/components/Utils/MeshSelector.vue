@@ -62,16 +62,20 @@ export default {
       localStorage.setItem('selectedMesh', val)
 
       // update the route accordingly
-      if (this.$route.name === 'global-overview') {
-        this.$router.push({
-          name: 'mesh-child',
-          params: { mesh: val }
-        })
-      } else {
-        this.$router.push({
-          params: { mesh: val }
-        })
-      }
+      // if (this.$route.name === 'global-overview') {
+      //   this.$router.push({
+      //     name: 'mesh-child',
+      //     params: { mesh: val }
+      //   })
+      // } else {
+      //   this.$router.push({
+      //     params: { mesh: val }
+      //   })
+      // }
+
+      this.$root.$router.push({
+        params: { mesh: val }
+      })
     }
   }
 }
