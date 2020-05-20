@@ -880,14 +880,15 @@ export default {
        */
 
       const codeBlock = { ...meshType, ...schemaClean }
+      const cliConditionCode = () => {
+        if (this.selectedTab === '#kubernetes') {
+          return this.formatForCLI(codeBlock, '" | kubectl apply -f -')
+        } else {
+          return this.formatForCLI(codeBlock, '" | kumactl apply -f -')
+        }
+      }
 
-      // if (this.selectedTab === '#kubernetes') {
-      //   codeBlock = { ...meshType, spec: { ...schemaClean } }
-      // } else {
-      //   codeBlock = { ...meshType, ...schemaClean }
-      // }
-
-      const assembledBlock = this.formatForCLI(codeBlock)
+      const assembledBlock = cliConditionCode()
 
       return assembledBlock
     }
