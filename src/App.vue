@@ -22,6 +22,7 @@
           v-if="status === 'OK'"
           class="page"
         >
+          <OnboardingCheck v-if="showOnboardingCheck" />
           <router-view />
         </div>
         <ApiErrorMessage v-else />
@@ -36,13 +37,15 @@ import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import KLoader from '@/components/KLoader'
 import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage'
+import OnboardingCheck from '@/components/Utils/OnboardingCheck'
 
 export default {
   components: {
     GlobalHeader,
     Sidebar,
     KLoader,
-    ApiErrorMessage
+    ApiErrorMessage,
+    OnboardingCheck
   },
   metaInfo: {
     title: 'Home',
@@ -57,7 +60,14 @@ export default {
     }),
     ...mapGetters({
       status: 'getStatus'
-    })
+    }),
+    showOnboardingCheck () {
+      const route = this.$route.name
+
+      // only show the onboarding check when the user is not
+      // currently on any of the onboarding process routes
+      return route !== 'setup-welcome' && route !== 'setup-complete'
+    }
   },
   watch: {
     '$route' (to, from) {
@@ -142,9 +152,11 @@ export default {
 .full-screen {
   background: #fff;
   position: fixed;
-  top: 4rem;
-  bottom: 0;
-  width: 100%;
+  top: 0;
+  left: 0;
+  // bottom: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 50000;
   display: flex;
   align-items: center;

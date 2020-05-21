@@ -46,9 +46,10 @@
       <div>
         <CardSkeleton
           class="card-item"
-          :card-action-route="{ path: `/${selectedMesh}/fault-injections` }"
+          card-action-route="https://kuma.io/policies/"
           :card-title="`Apply ${title} Policies`"
           card-action-button-text="Explore Policies"
+          external-link
         >
           <template slot="cardContent">
             <p>

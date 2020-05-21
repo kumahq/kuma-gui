@@ -542,6 +542,7 @@ export default (api) => {
         commit('SET_NEW_TAB', tab)
       },
 
+      // set the selected table row in the state
       updateSelectedTableRow ({ commit }, row) {
         commit('SET_NEW_TABLE_ROW', row)
       },

@@ -888,9 +888,7 @@ export default {
         }
       }
 
-      const assembledBlock = cliConditionCode()
-
-      return assembledBlock
+      return cliConditionCode()
     }
   },
   watch: {
