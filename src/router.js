@@ -133,7 +133,7 @@ export default (store) => {
       meta: {
         title: 'Meshes',
         breadcrumb: 'Meshes',
-        parent: 'global-overview'
+        parent: 'all-meshes'
       },
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),

@@ -2,9 +2,9 @@
   <div class="overview">
     <page-header noflex>
       <breadcrumbs />
-      <h2 class="xxl">
+      <!-- <h2 class="xxl">
         {{ pageTitle }}
-      </h2>
+      </h2> -->
     </page-header>
 
     <!-- metrics boxes -->

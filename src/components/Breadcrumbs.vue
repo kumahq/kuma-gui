@@ -30,8 +30,8 @@ export default {
         if (this.isCurrentRoute(r) && this.pageMesh && this.$route.name !== 'global-overview') {
           items.push({
             key: this.pageMesh,
-            to: { name: 'global-overview' },
-            title: 'Global Overview',
+            to: { path: `/meshes/${this.pageMesh}` },
+            title: `Mesh Overview for ${this.pageMesh}`,
             text: this.pageMesh
           })
         }
@@ -173,12 +173,16 @@ export default {
 
 <style lang="scss">
 .krumbs {
-  font-size: 14px;
+  font-size: var(--type-xl);
 
   .krumb-item {
 
-    &:after, a {
-      color: #8c8c8c !important;
+    &:after {
+
+    }
+
+    a {
+      color: #000 !important;
       text-decoration: none;
     }
   }
