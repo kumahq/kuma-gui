@@ -47,8 +47,38 @@
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :items="entity"
-          />
+          >
+            <div>
+              <ul>
+                <li
+                  v-for="(value, key) in entity.basicData"
+                  :key="key"
+                >
+                  <h4>{{ key }}</h4>
+                  <p>{{ value }}</p>
+                </li>
+              </ul>
+            </div>
+            <div v-if="entity.extendedData && entity.extendedData.length">
+              <ul>
+                <li
+                  v-for="(value, key) in entity.extendedData"
+                  :key="key"
+                >
+                  <h4>{{ value[0] }}</h4>
+                  <p v-if="value[1] && value[1].backends && value[1].backends[0]">
+                    {{ value[1].backends[0].type }}/{{ value[1].backends[0].name }}
+                  </p>
+                  <KBadge
+                    v-else
+                    appearance="danger"
+                  >
+                    Disabled
+                  </KBadge>
+                </li>
+              </ul>
+            </div>
+          </LabelList>
         </template>
         <template slot="yaml">
           <YamlView
@@ -121,34 +151,16 @@ export default {
           title: 'YAML'
         }
       ],
-      entity: null,
+      entity: [],
       rawEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
       pageOffset: null,
       next: null,
       hasNext: false,
-      previous: []
-    }
-  },
-  computed: {
-    tabGroupTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Meshes: ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    entityOverviewTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
+      previous: [],
+      tabGroupTitle: null,
+      entityOverviewTitle: null
     }
   },
   watch: {
@@ -274,9 +286,16 @@ export default {
         return this.$api.getMesh(entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name']
+              const col1 = getSome(response, ['type', 'name'])
+              const col2 = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))
 
-              this.entity = getSome(response, selected)
+              this.tabGroupTitle = `Mesh: ${col1.name}`
+              this.entityOverviewTitle = `Entity Overview for ${col1.name}`
+
+              this.entity = {
+                basicData: col1,
+                extendedData: col2
+              }
               this.rawEntity = response
             } else {
               this.entity = null

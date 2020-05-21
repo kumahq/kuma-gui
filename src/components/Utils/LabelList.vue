@@ -6,59 +6,11 @@
     >
       <KCard
         v-if="!isLoading && !isEmpty"
-        :title="title"
         border-variant="noBorder"
       >
         <template slot="body">
-          <div
-            class="label-list__col-wrapper"
-            :class="{ 'multi-col': (items.tags && Object.entries(items.tags).length) }"
-          >
-            <div class="label-list__col">
-              <ul
-                class="label-list__items"
-                :class="colClass"
-              >
-                <li
-                  v-for="(value, key) in itemsNoTags"
-                  :key="key"
-                >
-                  <h4 class="label-list__items__title">
-                    {{ key }}
-                  </h4>
-                  <p>
-                    {{ value }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-            <div
-              v-if="items.tags"
-              class="label-list__col"
-            >
-              <div>
-                <h4 class="label-list__items__title">
-                  Tags
-                </h4>
-                <!-- tags array -->
-                <ul>
-                  <li class="label-list__items__value">
-                    <span
-                      v-for="(k, v) in items.tags"
-                      :key="k"
-                      class="tag-cols my-2"
-                    >
-                      <span class="tag-cols__label">
-                        {{ v }}:
-                      </span>
-                      <span class="tag-cols__value">
-                        {{ k }}
-                      </span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div class="label-list__col-wrapper multi-col">
+            <slot />
           </div>
         </template>
       </KCard>
@@ -151,17 +103,6 @@ export default {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
-    colClass () {
-      const len = Object.entries(this.items).length
-
-      if (len > 6) {
-        return 'has-columns cols-2'
-      } else if (len >= 9) {
-        return 'has-columns cols-3'
-      } else {
-        return null
-      }
-    },
     itemsNoTags () {
       return rejectKeys(this.items, 'tags')
     }
@@ -169,7 +110,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .label-list-content {
 
   .kong-card {
@@ -183,12 +124,34 @@ export default {
 
 .label-list__col-wrapper {
 
+  ul {
+
+    h1, h2, h3, h4, h5, h6 {
+      font-size: var(--type-sm);
+      font-weight: 500;
+      text-transform: uppercase;
+      color: var(--gray-3);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    li {
+      display: block;
+      overflow: hidden;
+
+      &:not(:last-of-type) {
+        margin-bottom: var(--spacing-md);
+      }
+    }
+  }
+
   @media screen and (min-width: 1024px) {
     &.multi-col {
       display: flex;
 
       > * {
-        flex: 1 0 0;
+        // flex: 1 0 0;
+        flex-grow: 1;
+        flex-basis: 33.333333%;
 
         &:not(:last-of-type) {
           margin-right: var(--spacing-md);
@@ -196,25 +159,6 @@ export default {
       }
     }
   }
-}
-
-.label-list__items {
-
-  li {
-    display: block;
-    overflow: hidden;
-
-    &:not(:last-of-type) {
-      margin-bottom: var(--spacing-md);
-    }
-  }
-}
-
-.label-list__items__title {
-  font-size: var(--type-sm);
-  font-weight: 500;
-  text-transform: uppercase;
-  color: var(--gray-3);
 }
 
 .label-list__items__value {
