@@ -46,8 +46,38 @@
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :items="entity"
-          />
+          >
+            <div>
+              <ul>
+                <li
+                  v-for="(val, key) in entity.basicData"
+                  :key="key"
+                >
+                  <h4>{{ key }}</h4>
+                  <p>
+                    {{ val }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4>Tags</h4>
+              <p>
+                <span
+                  v-for="(val, key) in entity.tags"
+                  :key="key"
+                  class="tag-cols"
+                >
+                  <span>
+                    {{ key }}:
+                  </span>
+                  <span>
+                    {{ val }}
+                  </span>
+                </span>
+              </p>
+            </div>
+          </LabelList>
         </template>
         <template slot="yaml">
           <YamlView
@@ -126,7 +156,7 @@ export default {
           title: 'YAML'
         }
       ],
-      entity: null,
+      entity: [],
       rawEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
@@ -433,7 +463,7 @@ export default {
         return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name', 'mesh', 'tags']
+              const selected = ['type', 'name', 'mesh']
 
               // determine between inbound and gateway modes
               // and then get the tags from which condition applies.
@@ -442,10 +472,8 @@ export default {
                 : response.networking.gateway.tags
 
               const newEntity = {
-                ...getSome(response, selected),
-                ...{
-                  tags: tagSrc
-                }
+                basicData: { ...getSome(response, selected) },
+                tags: { ...tagSrc }
               }
 
               this.entity = newEntity

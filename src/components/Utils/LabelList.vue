@@ -124,15 +124,15 @@ export default {
 
 .label-list__col-wrapper {
 
-  ul {
+  h1, h2, h3, h4, h5, h6 {
+    font-size: var(--type-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    margin-bottom: var(--spacing-xs);
+  }
 
-    h1, h2, h3, h4, h5, h6 {
-      font-size: var(--type-sm);
-      font-weight: 500;
-      text-transform: uppercase;
-      color: var(--gray-3);
-      margin-bottom: var(--spacing-xs);
-    }
+  ul {
 
     li {
       display: block;
@@ -172,8 +172,14 @@ export default {
   grid-gap: 10px;
   grid-template-columns: repeat(2, 1fr 4fr);
 
-  span {
-    // flex: 1 0 0;
+  span:first-of-type {
+    min-width: 80px;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  span:last-of-type {
+
   }
 }
 

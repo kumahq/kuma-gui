@@ -36,8 +36,21 @@
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :items="entity"
-          />
+          >
+            <div>
+              <ul>
+                <li
+                  v-for="(val, key) in entity"
+                  :key="key"
+                >
+                  <h4>{{ key }}</h4>
+                  <p>
+                    {{ val }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </LabelList>
         </template>
         <template slot="yaml">
           <YamlView
@@ -111,7 +124,7 @@ export default {
           title: 'YAML'
         }
       ],
-      entity: null,
+      entity: [],
       rawEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
