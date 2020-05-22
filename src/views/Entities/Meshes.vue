@@ -62,12 +62,17 @@
             <div v-if="entity.extendedData && entity.extendedData.length">
               <ul>
                 <li
-                  v-for="(value, key) in entity.extendedData"
+                  v-for="(item, key) in entity.extendedData"
                   :key="key"
                 >
-                  <h4>{{ value[0] }}</h4>
-                  <p v-if="value[1] && value[1].backends && value[1].backends[0]">
-                    {{ value[1].backends[0].type }}/{{ value[1].backends[0].name }}
+                  <h4>{{ item.label }}</h4>
+                  <p v-if="item.value">
+                    <span>
+                      {{ item.value.type }}
+                    </span>
+                    <span>
+                      {{ item.value.name }}
+                    </span>
                   </p>
                   <KBadge
                     v-else
@@ -287,14 +292,72 @@ export default {
           .then(response => {
             if (response) {
               const col1 = getSome(response, ['type', 'name'])
-              const col2 = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))
+
+              const formatted = () => {
+                const data = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))
+                const newData = []
+
+                data.forEach((i) => {
+                  const label = i[0]
+                  const subData = i[1] || null
+
+                  /**
+                   * If `enabledBackend` is present, this will match it against
+                   * the name found in `backends`, get the `type` from there, and
+                   * output the defaultBackend name alongside its matched `type`.
+                   *
+                   * For Tracing, `defaultBackend` is used instead of `enabledBackend`.
+                   */
+
+                  if (subData && subData.enabledBackend) {
+                    const enabled = subData.enabledBackend
+                    const matched = subData.backends.find(obj => obj.name === enabled)
+
+                    newData.push({
+                      label: label,
+                      value: {
+                        type: matched.type,
+                        name: matched.name
+                      }
+                    })
+                  } else if (subData && subData.defaultBackend) {
+                    const enabled = subData.defaultBackend
+                    const matched = subData.backends.find(obj => obj.name === enabled)
+
+                    newData.push({
+                      label: label,
+                      value: {
+                        type: matched.type,
+                        name: matched.name
+                      }
+                    })
+                  } else if (subData && subData.backends) {
+                    const backends = subData.backends[0]
+
+                    newData.push({
+                      label: label,
+                      value: {
+                        type: backends.type,
+                        name: backends.name
+                      }
+                    })
+                  } else {
+                    newData.push({
+                      label: label,
+                      value: null
+                    })
+                  }
+                })
+
+                return newData
+              }
 
               this.tabGroupTitle = `Mesh: ${col1.name}`
               this.entityOverviewTitle = `Entity Overview for ${col1.name}`
 
               this.entity = {
                 basicData: col1,
-                extendedData: col2
+                extendedData: formatted()
               }
               this.rawEntity = response
             } else {
