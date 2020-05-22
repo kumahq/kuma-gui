@@ -47,6 +47,7 @@
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
           >
+            <!-- basic information -->
             <div>
               <ul>
                 <li
@@ -60,6 +61,7 @@
                 </li>
               </ul>
             </div>
+            <!-- tag information -->
             <div>
               <h4>Tags</h4>
               <p>

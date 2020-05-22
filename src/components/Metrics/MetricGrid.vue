@@ -2,6 +2,7 @@
   <div
     v-if="metrics"
     class="info-grid"
+    :class="{ 'is-compact': isCompact }"
   >
     <div
       v-for="(metric, index) in metrics"
@@ -68,6 +69,10 @@ export default {
       type: Array,
       required: true,
       default: () => {}
+    },
+    isCompact: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -91,13 +96,13 @@ export default {
 .info-grid {
   display: flex;
   flex-wrap: wrap;
-  flex-grow: 1;
   flex-direction: row;
   margin: 2rem -0.5rem;
   padding: 0;
 
   .metric {
     display: flex;
+    flex-grow: 1;
     flex-shrink: 0;
     flex-direction: column;
     justify-content: space-between;
@@ -159,6 +164,27 @@ export default {
     }
   }
 
+  // Compact
+
+  &.is-compact {
+
+    .metric {
+
+      .metric-card {
+        margin: 0.25rem;
+        padding: 10px 14px;
+      }
+
+      .metric-title {
+        font-size: var(--type-sm);
+      }
+
+      .metric-value {
+        font-size: var(--type-lg);
+      }
+    }
+  }
+
   @media only screen and (max-width: 840px) {
     flex-direction: column;
 
@@ -179,7 +205,7 @@ export default {
       --i: 33.333333%;
 
       flex: 0 0 var(--i);
-      max-width: var(--i);
+      min-width: var(--i);
     }
   }
 }

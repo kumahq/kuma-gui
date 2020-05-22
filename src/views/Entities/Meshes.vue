@@ -1,5 +1,10 @@
 <template>
   <div class="all-meshes">
+    <MetricGrid
+      v-if="isSingleMeshView"
+      :metrics="overviewMetrics"
+      is-compact
+    />
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -66,7 +71,10 @@
                   :key="key"
                 >
                   <h4>{{ item.label }}</h4>
-                  <p v-if="item.value">
+                  <p
+                    v-if="item.value"
+                    class="label-cols"
+                  >
                     <span>
                       {{ item.value.type }}
                     </span>
@@ -76,6 +84,7 @@
                   </p>
                   <KBadge
                     v-else
+                    size="small"
                     appearance="danger"
                   >
                     Disabled
@@ -100,8 +109,10 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { getSome, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
+import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -115,6 +126,7 @@ export default {
     title: 'Meshes'
   },
   components: {
+    MetricGrid,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -168,6 +180,74 @@ export default {
       entityOverviewTitle: null
     }
   },
+  computed: {
+    ...mapState({
+      mesh: 'selectedMesh'
+    }),
+    isSingleMeshView () {
+      return this.mesh !== 'all'
+    },
+    overviewMetrics () {
+      const mesh = this.$route.params.mesh
+      const state = this.$store.state
+
+      const storeVals = {
+        dataplaneCount: state.totalDataplaneCountFromMesh,
+        faultInjectionCount: state.totalFaultInjectionCountFromMesh,
+        healthCheckCount: state.totalHealthCheckCountFromMesh,
+        proxyTemplateCount: state.proxyTemplateCountFromMesh,
+        trafficLogCount: state.trafficLogCountFromMesh,
+        trafficPermissionCount: state.trafficPermissionCountFromMesh,
+        trafficRouteCount: state.trafficRouteCountFromMesh,
+        trafficTraceCount: state.trafficTraceCountFromMesh
+      }
+
+      const tableData = [
+        {
+          metric: 'Dataplanes',
+          value: storeVals.dataplaneCount,
+          url: `/${mesh}/dataplanes`
+        },
+        {
+          metric: 'Fault Injections',
+          value: storeVals.faultInjectionCount,
+          url: `/${mesh}/fault-injections`
+        },
+        {
+          metric: 'Health Checks',
+          value: storeVals.healthCheckCount,
+          url: `/${mesh}/health-checks`
+        },
+        {
+          metric: 'Proxy Templates',
+          value: storeVals.proxyTemplateCount,
+          url: `/${mesh}/proxy-templates`
+        },
+        {
+          metric: 'Traffic Logs',
+          value: storeVals.trafficLogCount,
+          url: `/${mesh}/traffic-logs`
+        },
+        {
+          metric: 'Traffic Permissions',
+          value: storeVals.trafficPermissionCount,
+          url: `/${mesh}/traffic-permissions`
+        },
+        {
+          metric: 'Traffic Routes',
+          value: storeVals.trafficRouteCount,
+          url: `/${mesh}/traffic-routes`
+        },
+        {
+          metric: 'Traffic Traces',
+          value: storeVals.trafficTraceCount,
+          url: `/${mesh}/traffic-traces`
+        }
+      ]
+
+      return tableData
+    }
+  },
   watch: {
     '$route' (to, from) {
       this.init()
@@ -210,6 +290,23 @@ export default {
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
+
+      // get the counts for this mesh
+      const actions = [
+        'fetchDataplaneTotalCountFromMesh',
+        'fetchHealthCheckTotalCountFromMesh',
+        'fetchProxyTemplateTotalCountFromMesh',
+        'fetchTrafficLogTotalCountFromMesh',
+        'fetchTrafficPermissionTotalCountFromMesh',
+        'fetchTrafficRouteTotalCountFromMesh',
+        'fetchTrafficTraceTotalCountFromMesh',
+        'fetchFaultInjectionTotalCountFromMesh'
+      ]
+
+      // run each action
+      actions.forEach(i => {
+        this.$store.dispatch(i, mesh)
+      })
 
       const params = {
         size: this.pageSize,

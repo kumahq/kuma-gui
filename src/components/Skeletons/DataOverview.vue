@@ -378,7 +378,7 @@ export default {
 .entity-tags {
   display: inline-flex;
   align-items: stretch;
-  font-size: 12px;
+  font-size: var(--type-xs);
   background-color: #fff;
   font-family: var(--font-family-mono);
 
