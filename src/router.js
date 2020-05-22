@@ -119,7 +119,7 @@ export default (store) => {
           path: ':mesh',
           name: 'mesh-child',
           meta: {
-            title: 'Mesh Overview',
+            title: 'Overview',
             parent: 'all-meshes'
           },
           params: { mesh: ':mesh' },
