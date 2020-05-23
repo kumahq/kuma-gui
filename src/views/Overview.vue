@@ -110,22 +110,22 @@ export default {
           dataplaneCount: state.totalDataplaneCount,
           faultInjectionCount: state.totalFaultInjectionCount,
           healthCheckCount: state.totalHealthCheckCount,
-          proxyTemplateCount: state.proxyTemplateCount,
-          trafficLogCount: state.trafficLogCount,
-          trafficPermissionCount: state.trafficPermissionCount,
-          trafficRouteCount: state.trafficRouteCount,
-          trafficTraceCount: state.trafficTraceCount
+          proxyTemplateCount: state.totalProxyTemplateCount,
+          trafficLogCount: state.totalTrafficLogCount,
+          trafficPermissionCount: state.totalTrafficPermissionCount,
+          trafficRouteCount: state.totalTrafficRouteCount,
+          trafficTraceCount: state.totalTrafficTraceCount
         }
       } else {
         storeVals = {
           dataplaneCount: state.totalDataplaneCountFromMesh,
           faultInjectionCount: state.totalFaultInjectionCountFromMesh,
           healthCheckCount: state.totalHealthCheckCountFromMesh,
-          proxyTemplateCount: state.proxyTemplateCountFromMesh,
-          trafficLogCount: state.trafficLogCountFromMesh,
-          trafficPermissionCount: state.trafficPermissionCountFromMesh,
-          trafficRouteCount: state.trafficRouteCountFromMesh,
-          trafficTraceCount: state.trafficTraceCountFromMesh
+          proxyTemplateCount: state.totalProxyTemplateCountFromMesh,
+          trafficLogCount: state.totalTrafficLogCountFromMesh,
+          trafficPermissionCount: state.totalTrafficPermissionCountFromMesh,
+          trafficRouteCount: state.totalTrafficRouteCountFromMesh,
+          trafficTraceCount: state.totalTrafficTraceCountFromMesh
         }
       }
 

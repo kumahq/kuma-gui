@@ -1,10 +1,5 @@
 <template>
   <div class="all-meshes">
-    <MetricGrid
-      v-if="isSingleMeshView"
-      :metrics="overviewMetrics"
-      is-compact
-    />
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -103,6 +98,25 @@
             :content="rawEntity"
           />
         </template>
+        <template slot="resources">
+          <LabelList
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+          >
+            <div v-for="i in Math.ceil(counts.length / 4)">
+              <ul>
+                <li
+                  v-for="(item, key) in counts.slice((i - 1) * 4, i * 4)"
+                  :key="key"
+                >
+                  <h4>{{ item.title }}</h4>
+                  <p>{{ item.value | formatValue }}</p>
+                </li>
+              </ul>
+            </div>
+          </LabelList>
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
@@ -126,13 +140,17 @@ export default {
     title: 'Meshes'
   },
   components: {
-    MetricGrid,
     FrameSkeleton,
     Pagination,
     DataOverview,
     Tabs,
     YamlView,
     LabelList
+  },
+  filters: {
+    formatValue (value) {
+      return value ? value.toLocaleString('en').toString() : 0
+    }
   },
   mixins: [
     sortEntities
@@ -166,6 +184,10 @@ export default {
         {
           hash: '#yaml',
           title: 'YAML'
+        },
+        {
+          hash: '#resources',
+          title: 'Resources'
         }
       ],
       entity: [],
@@ -184,68 +206,43 @@ export default {
     ...mapState({
       mesh: 'selectedMesh'
     }),
-    isSingleMeshView () {
-      return this.mesh !== 'all'
-    },
-    overviewMetrics () {
-      const mesh = this.$route.params.mesh
+    counts () {
       const state = this.$store.state
 
-      const storeVals = {
-        dataplaneCount: state.totalDataplaneCountFromMesh,
-        faultInjectionCount: state.totalFaultInjectionCountFromMesh,
-        healthCheckCount: state.totalHealthCheckCountFromMesh,
-        proxyTemplateCount: state.proxyTemplateCountFromMesh,
-        trafficLogCount: state.trafficLogCountFromMesh,
-        trafficPermissionCount: state.trafficPermissionCountFromMesh,
-        trafficRouteCount: state.trafficRouteCountFromMesh,
-        trafficTraceCount: state.trafficTraceCountFromMesh
-      }
-
-      const tableData = [
+      return [
         {
-          metric: 'Dataplanes',
-          value: storeVals.dataplaneCount,
-          url: `/${mesh}/dataplanes`
+          title: 'Dataplanes',
+          value: state.totalDataplaneCountFromMesh
         },
         {
-          metric: 'Fault Injections',
-          value: storeVals.faultInjectionCount,
-          url: `/${mesh}/fault-injections`
+          title: 'Fault Injections',
+          value: state.totalFaultInjectionCountFromMesh
         },
         {
-          metric: 'Health Checks',
-          value: storeVals.healthCheckCount,
-          url: `/${mesh}/health-checks`
+          title: 'Health Checks',
+          value: state.totalHealthCheckCountFromMesh
         },
         {
-          metric: 'Proxy Templates',
-          value: storeVals.proxyTemplateCount,
-          url: `/${mesh}/proxy-templates`
+          title: 'Proxy Templates',
+          value: state.totalProxyTemplateCountFromMesh
         },
         {
-          metric: 'Traffic Logs',
-          value: storeVals.trafficLogCount,
-          url: `/${mesh}/traffic-logs`
+          title: 'Traffic Logs',
+          value: state.totalTrafficLogCountFromMesh
         },
         {
-          metric: 'Traffic Permissions',
-          value: storeVals.trafficPermissionCount,
-          url: `/${mesh}/traffic-permissions`
+          title: 'Traffic Permissions',
+          value: state.totalTrafficPermissionCountFromMesh
         },
         {
-          metric: 'Traffic Routes',
-          value: storeVals.trafficRouteCount,
-          url: `/${mesh}/traffic-routes`
+          title: 'Traffic Routes',
+          value: state.totalTrafficRouteCountFromMesh
         },
         {
-          metric: 'Traffic Traces',
-          value: storeVals.trafficTraceCount,
-          url: `/${mesh}/traffic-traces`
+          title: 'Traffic Traces',
+          value: state.totalTrafficTraceCountFromMesh
         }
       ]
-
-      return tableData
     }
   },
   watch: {
@@ -290,23 +287,6 @@ export default {
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
-
-      // get the counts for this mesh
-      const actions = [
-        'fetchDataplaneTotalCountFromMesh',
-        'fetchHealthCheckTotalCountFromMesh',
-        'fetchProxyTemplateTotalCountFromMesh',
-        'fetchTrafficLogTotalCountFromMesh',
-        'fetchTrafficPermissionTotalCountFromMesh',
-        'fetchTrafficRouteTotalCountFromMesh',
-        'fetchTrafficTraceTotalCountFromMesh',
-        'fetchFaultInjectionTotalCountFromMesh'
-      ]
-
-      // run each action
-      actions.forEach(i => {
-        this.$store.dispatch(i, mesh)
-      })
 
       const params = {
         size: this.pageSize,
@@ -388,6 +368,23 @@ export default {
         return this.$api.getMesh(entity.name)
           .then(response => {
             if (response) {
+              // get the counts for this mesh
+              const actions = [
+                'fetchDataplaneTotalCountFromMesh',
+                'fetchHealthCheckTotalCountFromMesh',
+                'fetchProxyTemplateTotalCountFromMesh',
+                'fetchTrafficLogTotalCountFromMesh',
+                'fetchTrafficPermissionTotalCountFromMesh',
+                'fetchTrafficRouteTotalCountFromMesh',
+                'fetchTrafficTraceTotalCountFromMesh',
+                'fetchFaultInjectionTotalCountFromMesh'
+              ]
+
+              // run each action
+              actions.forEach(i => {
+                this.$store.dispatch(i, entity.name)
+              })
+
               const col1 = getSome(response, ['type', 'name'])
 
               const formatted = () => {
