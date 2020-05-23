@@ -54,8 +54,21 @@
                   v-for="(value, key) in entity.basicData"
                   :key="key"
                 >
-                  <h4>{{ key }}</h4>
-                  <p>{{ value }}</p>
+                  <h4 v-if="key === 'creationTime'">
+                    Created
+                  </h4>
+                  <h4 v-else-if="key === 'modificationTime'">
+                    Last Modified
+                  </h4>
+                  <h4 v-else>
+                    {{ key }}
+                  </h4>
+                  <p v-if="key === 'creationTime' || key === 'modificationTime'">
+                    {{ value | readableDate }}
+                  </p>
+                  <p v-else>
+                    {{ value }}
+                  </p>
                 </li>
               </ul>
             </div>
@@ -104,7 +117,10 @@
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
           >
-            <div v-for="i in Math.ceil(counts.length / 4)">
+            <div
+              v-for="i in Math.ceil(counts.length / 4)"
+              :key="i"
+            >
               <ul>
                 <li
                   v-for="(item, key) in counts.slice((i - 1) * 4, i * 4)"
@@ -124,7 +140,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getSome, getOffset } from '@/helpers'
+import { getSome, humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -150,6 +166,9 @@ export default {
   filters: {
     formatValue (value) {
       return value ? value.toLocaleString('en').toString() : 0
+    },
+    readableDate (value) {
+      return humanReadableDate(value)
     }
   },
   mixins: [
@@ -385,7 +404,7 @@ export default {
                 this.$store.dispatch(i, entity.name)
               })
 
-              const col1 = getSome(response, ['type', 'name'])
+              const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
 
               const formatted = () => {
                 const data = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))
