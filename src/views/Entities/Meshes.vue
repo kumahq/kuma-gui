@@ -22,6 +22,9 @@
             size="small"
             :to="{ path: '/wizard/mesh' }"
           >
+            <span class="custom-control-icon">
+              +
+            </span>
             Create Mesh
           </KButton>
         </template>
@@ -47,8 +50,60 @@
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :items="entity"
-          />
+          >
+            <div>
+              <ul>
+                <li
+                  v-for="(value, key) in entity.basicData"
+                  :key="key"
+                >
+                  <h4 v-if="key === 'creationTime'">
+                    Created
+                  </h4>
+                  <h4 v-else-if="key === 'modificationTime'">
+                    Last Modified
+                  </h4>
+                  <h4 v-else>
+                    {{ key }}
+                  </h4>
+                  <p v-if="key === 'creationTime' || key === 'modificationTime'">
+                    {{ value | readableDate }}
+                  </p>
+                  <p v-else>
+                    {{ value }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div v-if="entity.extendedData && entity.extendedData.length">
+              <ul>
+                <li
+                  v-for="(item, key) in entity.extendedData"
+                  :key="key"
+                >
+                  <h4>{{ item.label }}</h4>
+                  <p
+                    v-if="item.value"
+                    class="label-cols"
+                  >
+                    <span>
+                      {{ item.value.type }}
+                    </span>
+                    <span>
+                      {{ item.value.name }}
+                    </span>
+                  </p>
+                  <KBadge
+                    v-else
+                    size="small"
+                    appearance="danger"
+                  >
+                    Disabled
+                  </KBadge>
+                </li>
+              </ul>
+            </div>
+          </LabelList>
         </template>
         <template slot="yaml">
           <YamlView
@@ -59,14 +114,38 @@
             :content="rawEntity"
           />
         </template>
+        <template slot="resources">
+          <LabelList
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+          >
+            <div
+              v-for="i in Math.ceil(counts.length / 4)"
+              :key="i"
+            >
+              <ul>
+                <li
+                  v-for="(item, key) in counts.slice((i - 1) * 4, i * 4)"
+                  :key="key"
+                >
+                  <h4>{{ item.title }}</h4>
+                  <p>{{ item.value | formatValue }}</p>
+                </li>
+              </ul>
+            </div>
+          </LabelList>
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
 </template>
 
 <script>
-import { getSome, getOffset } from '@/helpers'
+import { mapState } from 'vuex'
+import { getSome, humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
+import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -86,6 +165,14 @@ export default {
     Tabs,
     YamlView,
     LabelList
+  },
+  filters: {
+    formatValue (value) {
+      return value ? value.toLocaleString('en').toString() : 0
+    },
+    readableDate (value) {
+      return humanReadableDate(value)
+    }
   },
   mixins: [
     sortEntities
@@ -119,36 +206,65 @@ export default {
         {
           hash: '#yaml',
           title: 'YAML'
+        },
+        {
+          hash: '#resources',
+          title: 'Resources'
         }
       ],
-      entity: null,
+      entity: [],
       rawEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
       pageOffset: null,
       next: null,
       hasNext: false,
-      previous: []
+      previous: [],
+      tabGroupTitle: null,
+      entityOverviewTitle: null
     }
   },
   computed: {
-    tabGroupTitle () {
-      const entity = this.entity
+    ...mapState({
+      mesh: 'selectedMesh'
+    }),
+    counts () {
+      const state = this.$store.state
 
-      if (entity) {
-        return `Meshes: ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    entityOverviewTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
+      return [
+        {
+          title: 'Dataplanes',
+          value: state.totalDataplaneCountFromMesh
+        },
+        {
+          title: 'Fault Injections',
+          value: state.totalFaultInjectionCountFromMesh
+        },
+        {
+          title: 'Health Checks',
+          value: state.totalHealthCheckCountFromMesh
+        },
+        {
+          title: 'Proxy Templates',
+          value: state.totalProxyTemplateCountFromMesh
+        },
+        {
+          title: 'Traffic Logs',
+          value: state.totalTrafficLogCountFromMesh
+        },
+        {
+          title: 'Traffic Permissions',
+          value: state.totalTrafficPermissionCountFromMesh
+        },
+        {
+          title: 'Traffic Routes',
+          value: state.totalTrafficRouteCountFromMesh
+        },
+        {
+          title: 'Traffic Traces',
+          value: state.totalTrafficTraceCountFromMesh
+        }
+      ]
     }
   },
   watch: {
@@ -274,9 +390,91 @@ export default {
         return this.$api.getMesh(entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name']
+              // get the counts for this mesh
+              const actions = [
+                'fetchDataplaneTotalCountFromMesh',
+                'fetchHealthCheckTotalCountFromMesh',
+                'fetchProxyTemplateTotalCountFromMesh',
+                'fetchTrafficLogTotalCountFromMesh',
+                'fetchTrafficPermissionTotalCountFromMesh',
+                'fetchTrafficRouteTotalCountFromMesh',
+                'fetchTrafficTraceTotalCountFromMesh',
+                'fetchFaultInjectionTotalCountFromMesh'
+              ]
 
-              this.entity = getSome(response, selected)
+              // run each action
+              actions.forEach(i => {
+                this.$store.dispatch(i, entity.name)
+              })
+
+              const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
+
+              const formatted = () => {
+                const data = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))
+                const newData = []
+
+                data.forEach((i) => {
+                  const label = i[0]
+                  const subData = i[1] || null
+
+                  /**
+                   * If `enabledBackend` is present, this will match it against
+                   * the name found in `backends`, get the `type` from there, and
+                   * output the defaultBackend name alongside its matched `type`.
+                   *
+                   * For Tracing, `defaultBackend` is used instead of `enabledBackend`.
+                   */
+
+                  if (subData && subData.enabledBackend) {
+                    const enabled = subData.enabledBackend
+                    const matched = subData.backends.find(obj => obj.name === enabled)
+
+                    newData.push({
+                      label: label,
+                      value: {
+                        type: matched.type,
+                        name: matched.name
+                      }
+                    })
+                  } else if (subData && subData.defaultBackend) {
+                    const enabled = subData.defaultBackend
+                    const matched = subData.backends.find(obj => obj.name === enabled)
+
+                    newData.push({
+                      label: label,
+                      value: {
+                        type: matched.type,
+                        name: matched.name
+                      }
+                    })
+                  } else if (subData && subData.backends) {
+                    const backends = subData.backends[0]
+
+                    newData.push({
+                      label: label,
+                      value: {
+                        type: backends.type,
+                        name: backends.name
+                      }
+                    })
+                  } else {
+                    newData.push({
+                      label: label,
+                      value: null
+                    })
+                  }
+                })
+
+                return newData
+              }
+
+              this.tabGroupTitle = `Mesh: ${col1.name}`
+              this.entityOverviewTitle = `Entity Overview for ${col1.name}`
+
+              this.entity = {
+                basicData: col1,
+                extendedData: formatted()
+              }
               this.rawEntity = response
             } else {
               this.entity = null

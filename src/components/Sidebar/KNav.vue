@@ -3,15 +3,17 @@
     id="the-sidebar"
     :class="{ closed: isCollapsed }"
   >
-    <slot />
-    <slot name="topNavAction" />
-    <slot name="topNavTitle" />
-    <slot
-      :isClosed="isCollapsed"
-      :isHovering="triggerHovering"
-      name="NavMenu"
-    />
-    <slot name="NavToggle" />
+    <div class="sidebar-inner">
+      <slot />
+      <slot name="topNavAction" />
+      <slot name="topNavTitle" />
+      <slot
+        :isClosed="isCollapsed"
+        :isHovering="triggerHovering"
+        name="NavMenu"
+      />
+      <slot name="NavToggle" />
+    </div>
   </nav>
 </template>
 
@@ -35,17 +37,40 @@ export default {
 <style lang="scss" scoped>
 nav {
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  width: var(--sidebar-width);
-  height: auto;
-  min-height: 100%;
-  border-right: 1px solid #e6e7e8;
-  background: var(--sidebar-bg-color);
-  z-index: 1000;
+
+  .sidebar-inner {
+    position: relative;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebar-width);
+    height: auto;
+    // min-height: 100%;
+    min-height: 100vh;
+    border-right: 1px solid #e6e7e8;
+    // background: var(--sidebar-bg-color);
+  }
+
+  // this is modeled after the Kuma website's sidebar
+  &:after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    display: block;
+    height: 100%;
+    width: 100vw;
+    content: "";
+    background-color: #fdfdfd;
+  }
 
   &.closed {
     width: var(--sidebar-width-closed);
+
+    .sidebar-inner {
+      width: var(--sidebar-width-closed);
+    }
   }
 }
 </style>

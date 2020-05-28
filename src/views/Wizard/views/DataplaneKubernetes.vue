@@ -5,7 +5,7 @@
         :steps="steps"
         :advance-check="true"
         :sidebar-content="sidebarContent"
-        :footer-enabled="scanFound === false"
+        :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
@@ -510,7 +510,7 @@
         </template>
         <template slot="complete">
           <div v-if="validate.meshName">
-            <div v-if="scanFound === false">
+            <div v-if="hideScannerSiblings === false">
               <h3>
                 Install a new Dataplane
               </h3>
@@ -547,6 +547,7 @@
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
+              @hideSiblings="hideSiblings"
             >
               <template slot="loading-title">
                 <h3>Searching&hellip;</h3>
@@ -679,6 +680,7 @@ export default {
       ],
       startScanner: false,
       scanFound: false,
+      // hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
       nextDisabled: true,
@@ -784,6 +786,11 @@ export default {
     }
   },
   methods: {
+    // hideSiblings () {
+    //   // this triggers when to hide the siblings related to the Scanner
+    //   // component that need to be hidden once the scan succeeds.
+    //   this.hideScannerSiblings = true
+    // },
     scanForEntity () {
       // get our entity from the VueX store
       const entity = this.validate

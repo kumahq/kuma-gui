@@ -74,3 +74,11 @@
   background-color: var(--gray-2);
   cursor: pointer;
 }
+
+.custom-control-icon {
+  display: inline-block;
+  margin-right: 5px;
+  font-size: var(--type-lg);
+  line-height: 0;
+  max-height: 18px;
+}

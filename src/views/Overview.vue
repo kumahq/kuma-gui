@@ -2,9 +2,9 @@
   <div class="overview">
     <page-header noflex>
       <breadcrumbs />
-      <h2 class="xxl">
-        {{ this.$route.meta.title }}
-      </h2>
+      <!-- <h2 class="xxl">
+        {{ pageTitle }}
+      </h2> -->
     </page-header>
 
     <!-- metrics boxes -->
@@ -12,66 +12,62 @@
       :metrics="overviewMetrics"
     />
 
-    <div class="md:grid md:grid-cols-3 md:gap-4 -mx-4">
-      <CardSkeleton
-        class="mx-4"
-        :card-action-route="{ path: '/wizard/mesh' }"
-        card-title="Create A Mesh"
-        card-action-button-text="Start Now"
-      >
-        <template slot="cardContent">
-          <p class="lg">
-            You can create a new isolated Mesh for a team, a product, or a line of business.
-          </p>
-        </template>
-      </CardSkeleton>
-      <CardSkeleton
-        class="mx-4"
-        :card-action-route="dataplaneWizardRoute"
-        card-title="Create A Dataplane"
-        card-action-button-text="Start Now"
-      >
-        <template slot="cardContent">
-          <p class="lg">
-            Create a new Dataplane here.
-          </p>
-        </template>
-      </CardSkeleton>
+    <div class="card-wrapper">
+      <div>
+        <CardSkeleton
+          class="card-item"
+          :card-action-route="{ name: 'create-mesh' }"
+          card-title="Create a new Mesh resource"
+          card-action-button-text="Create Mesh"
+        >
+          <template slot="cardContent">
+            <p>
+              You can create multiple Mesh resources (i.e. per application, or per team)
+              on the same {{ title }} cluster.
+            </p>
+          </template>
+        </CardSkeleton>
+      </div>
+      <div>
+        <CardSkeleton
+          class="card-item"
+          :card-action-route="dataplaneWizardRoute"
+          :card-title="`Connect a Dataplane to ${title}`"
+          card-action-button-text="Connect Dataplanes"
+        >
+          <template slot="cardContent">
+            <p>
+              Every service must have its own Dataplane resource in order to start
+              the data plane proxy and associate it with a Mesh.
+            </p>
+          </template>
+        </CardSkeleton>
+      </div>
+      <div>
+        <CardSkeleton
+          class="card-item"
+          card-action-route="https://kuma.io/policies/"
+          :card-title="`Apply ${title} Policies`"
+          card-action-button-text="Explore Policies"
+          external-link
+        >
+          <template slot="cardContent">
+            <p>
+              Once we have created your Mesh and started the data planes, we can now
+              use {{ title }} Policies to manage the Mesh.
+            </p>
+          </template>
+        </CardSkeleton>
+      </div>
     </div>
-
-    <FrameSkeleton>
-      <DataOverview
-        :has-error="hasError"
-        :is-loading="isLoading"
-        :is-empty="isEmpty"
-        :empty-state="empty_state"
-        :display-data-table="true"
-        :table-data="tableData"
-        :table-data-is-empty="tableDataIsEmpty"
-        @reloadData="loadData"
-      >
-        <template slot="pagination">
-          <Pagination
-            :has-previous="previous.length > 0"
-            :has-next="hasNext"
-            @next="goToNextPage"
-            @previous="goToPreviousPage"
-          />
-        </template>
-      </DataOverview>
-    </FrameSkeleton>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { getOffset } from '@/helpers'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import Pagination from '@/components/Pagination'
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
-import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 
 export default {
@@ -82,83 +78,112 @@ export default {
     }
   },
   components: {
-    FrameSkeleton,
-    Pagination,
     PageHeader,
     Breadcrumbs,
     MetricGrid,
-    DataOverview,
     CardSkeleton
-  },
-  data () {
-    return {
-      isLoading: true,
-      isEmpty: false,
-      hasError: false,
-      tableDataIsEmpty: false,
-      empty_state: {
-        title: 'No Data',
-        message: 'There are no Meshes present.'
-      },
-      tableData: {
-        headers: [
-          { label: 'Mesh', key: 'name' },
-          { label: 'Online Dataplanes', key: 'onlineDpCount' }
-        ],
-        data: []
-      },
-      pageSize: 10,
-      pageOffset: null,
-      next: null,
-      hasNext: false,
-      previous: []
-    }
   },
   computed: {
     ...mapGetters({
       title: 'getTagline',
-      dpList: 'getDataplanesList',
-      environment: 'getEnvironment'
+      environment: 'getEnvironment',
+      selectedMesh: 'getSelectedMesh'
     }),
+    pageTitle () {
+      const metaTitle = this.$route.meta.title
+      const mesh = this.selectedMesh
+
+      if (mesh === 'all') {
+        return `${metaTitle} for all Meshes`
+      } else {
+        return `${metaTitle} for ${mesh}`
+      }
+    },
     overviewMetrics () {
-      return [
+      let storeVals
+      const mesh = this.selectedMesh
+      const state = this.$store.state
+
+      if (mesh === 'all') {
+        storeVals = {
+          meshCount: state.totalMeshCount,
+          dataplaneCount: state.totalDataplaneCount,
+          faultInjectionCount: state.totalFaultInjectionCount,
+          healthCheckCount: state.totalHealthCheckCount,
+          proxyTemplateCount: state.totalProxyTemplateCount,
+          trafficLogCount: state.totalTrafficLogCount,
+          trafficPermissionCount: state.totalTrafficPermissionCount,
+          trafficRouteCount: state.totalTrafficRouteCount,
+          trafficTraceCount: state.totalTrafficTraceCount
+        }
+      } else {
+        storeVals = {
+          dataplaneCount: state.totalDataplaneCountFromMesh,
+          faultInjectionCount: state.totalFaultInjectionCountFromMesh,
+          healthCheckCount: state.totalHealthCheckCountFromMesh,
+          proxyTemplateCount: state.totalProxyTemplateCountFromMesh,
+          trafficLogCount: state.totalTrafficLogCountFromMesh,
+          trafficPermissionCount: state.totalTrafficPermissionCountFromMesh,
+          trafficRouteCount: state.totalTrafficRouteCountFromMesh,
+          trafficTraceCount: state.totalTrafficTraceCountFromMesh
+        }
+      }
+
+      const tableData = [
         {
           metric: 'Meshes',
-          value: this.$store.state.totalMeshCount
+          value: storeVals.meshCount,
+          url: `/meshes/${this.selectedMesh}`
         },
         {
           metric: 'Dataplanes',
-          value: this.$store.state.totalDataplaneCount
-        },
-        {
-          metric: 'Health Checks',
-          value: this.$store.state.totalHealthCheckCount
-        },
-        {
-          metric: 'Proxy Templates',
-          value: this.$store.state.totalProxyTemplateCount
-        },
-        {
-          metric: 'Traffic Logs',
-          value: this.$store.state.totalTrafficLogCount
-        },
-        {
-          metric: 'Traffic Permissions',
-          value: this.$store.state.totalTrafficPermissionCount
-        },
-        {
-          metric: 'Traffic Routes',
-          value: this.$store.state.totalTrafficRouteCount
-        },
-        {
-          metric: 'Traffic Traces',
-          value: this.$store.state.totalTrafficTraceCount
+          value: storeVals.dataplaneCount,
+          url: `/${this.selectedMesh}/dataplanes`
         },
         {
           metric: 'Fault Injections',
-          value: this.$store.state.totalFaultInjectionCount
+          value: storeVals.faultInjectionCount,
+          url: `/${this.selectedMesh}/fault-injections`
+        },
+        {
+          metric: 'Health Checks',
+          value: storeVals.healthCheckCount,
+          url: `/${this.selectedMesh}/health-checks`
+        },
+        {
+          metric: 'Proxy Templates',
+          value: storeVals.proxyTemplateCount,
+          url: `/${this.selectedMesh}/proxy-templates`
+        },
+        {
+          metric: 'Traffic Logs',
+          value: storeVals.trafficLogCount,
+          url: `/${this.selectedMesh}/traffic-logs`
+        },
+        {
+          metric: 'Traffic Permissions',
+          value: storeVals.trafficPermissionCount,
+          url: `/${this.selectedMesh}/traffic-permissions`
+        },
+        {
+          metric: 'Traffic Routes',
+          value: storeVals.trafficRouteCount,
+          url: `/${this.selectedMesh}/traffic-routes`
+        },
+        {
+          metric: 'Traffic Traces',
+          value: storeVals.trafficTraceCount,
+          url: `/${this.selectedMesh}/traffic-traces`
         }
       ]
+
+      if (mesh !== 'all') {
+        // if the user is viewing the overview with a mesh selected,
+        // we hide the mesh count from the metrics grid
+        tableData.shift()
+      }
+
+      return tableData
     },
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
@@ -171,7 +196,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    selectedMesh () {
       this.init()
     }
   },
@@ -181,123 +206,55 @@ export default {
   methods: {
     init () {
       this.getCounts()
-      this.loadData()
-    },
-    goToPreviousPage () {
-      this.pageOffset = this.previous.pop()
-      this.next = null
-
-      this.loadData()
-    },
-    goToNextPage () {
-      this.previous.push(this.pageOffset)
-      this.pageOffset = this.next
-      this.next = null
-
-      this.loadData()
     },
     getCounts () {
-      // total Mesh count
-      this.$store.dispatch('getMeshTotalCount')
+      let actions
+      const mesh = this.selectedMesh
 
-      // total Dataplane count
-      this.$store.dispatch('getDataplaneTotalCount')
+      if (mesh === 'all') {
+        // if we are viewing data for all meshes,
+        // load the total counts for everything
+        actions = [
+          'fetchMeshTotalCount',
+          'fetchDataplaneTotalCount',
+          'fetchHealthCheckTotalCount',
+          'fetchProxyTemplateTotalCount',
+          'fetchTrafficLogTotalCount',
+          'fetchTrafficPermissionTotalCount',
+          'fetchTrafficRouteTotalCount',
+          'fetchTrafficTraceTotalCount',
+          'fetchFaultInjectionTotalCount'
+        ]
 
-      // total Health Check count
-      this.$store.dispatch('getHealthCheckTotalCount')
+        // run each action
+        actions.forEach(i => {
+          this.$store.dispatch(i)
+        })
+      } else {
+        // if we are viewing data for a single selected mesh,
+        // load the total counts just for that selected mesh
+        actions = [
+          'fetchDataplaneTotalCountFromMesh',
+          'fetchHealthCheckTotalCountFromMesh',
+          'fetchProxyTemplateTotalCountFromMesh',
+          'fetchTrafficLogTotalCountFromMesh',
+          'fetchTrafficPermissionTotalCountFromMesh',
+          'fetchTrafficRouteTotalCountFromMesh',
+          'fetchTrafficTraceTotalCountFromMesh',
+          'fetchFaultInjectionTotalCountFromMesh'
+        ]
 
-      // total Proxy Template count
-      this.$store.dispatch('getProxyTemplateTotalCount')
-
-      // total Traffic Log count
-      this.$store.dispatch('getTrafficLogTotalCount')
-
-      // total Traffic Permission count
-      this.$store.dispatch('getTrafficPermissionTotalCount')
-
-      // total Traffic Route count
-      this.$store.dispatch('getTrafficRouteTotalCount')
-
-      // total Traffic Trace count
-      this.$store.dispatch('getTrafficTraceTotalCount')
-
-      // total Fault Injection count
-      this.$store.dispatch('getFaultInjectionTotalCount')
-    },
-    loadData () {
-      this.isLoading = true
-      this.isEmpty = false
-
-      // prepare and populate the table data
-      const getMeshData = () => {
-        this.$store.dispatch('getAllDataplanes')
-        const dpList = this.dpList
-
-        const params = {
-          size: this.pageSize,
-          offset: this.pageOffset
-        }
-
-        return this.$api.getAllMeshes(params)
-          .then(response => {
-            const items = response.items
-            const itemStatus = []
-
-            // check to see if the `next` url is present
-            if (response.next) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
-            } else {
-              this.hasNext = false
-            }
-
-            for (let i = 0; i < items.length; i++) {
-              const mesh = items[i].name
-
-              const dpStatus = () => {
-                const totalDpInMesh = dpList.filter(x => x.mesh === mesh).length
-                const onlineDpCount = dpList.filter(x => x.status === 'Online' && x.mesh === mesh).length
-
-                if (totalDpInMesh === 0) {
-                  return 'No Dataplanes'
-                }
-
-                return `${onlineDpCount} of ${totalDpInMesh}`
-              }
-
-              itemStatus.push({
-                name: mesh,
-                onlineDpCount: dpStatus()
-              })
-            }
-
-            if (items && items.length) {
-              this.tableData.data = [...itemStatus]
-              this.tableDataIsEmpty = false
-            } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-            }
-          })
-          .catch(error => {
-            this.hasError = true
-
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
+        // run each action
+        actions.forEach(i => {
+          this.$store.dispatch(i, mesh)
+        })
       }
-
-      getMeshData()
     }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .empty-state-title {
 
   .card-icon {
@@ -307,6 +264,32 @@ export default {
       display: block;
       margin-left: auto;
       margin-right: auto;
+    }
+  }
+}
+
+.card-wrapper {
+
+  @media only screen and (max-width: 840px) {
+    .card-item {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  @media only screen and (min-width: 841px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -0.5rem 0;
+
+    > * {
+      --i: 33.333333%;
+
+      flex: 0 0 var(--i);
+      max-width: var(--i);
+    }
+
+    .card-item {
+      margin: 0 0.5rem 0.5rem 0.5rem;
     }
   }
 }

@@ -11,7 +11,8 @@ export default {
 </script>
 
 <style lang="scss">
-.page-content {
-
-}
+// .page-content {
+//   max-width: 76rem;
+//   margin: 0 auto;
+// }
 </style>
