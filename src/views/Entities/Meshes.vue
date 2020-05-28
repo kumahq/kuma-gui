@@ -22,6 +22,9 @@
             size="small"
             :to="{ path: '/wizard/mesh' }"
           >
+            <span class="custom-control-icon">
+              +
+            </span>
             Create Mesh
           </KButton>
         </template>

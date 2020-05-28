@@ -21,6 +21,9 @@
             size="small"
             :to="dataplaneWizardRoute"
           >
+            <span class="custom-control-icon">
+              +
+            </span>
             Create Dataplane
           </KButton>
         </template>
