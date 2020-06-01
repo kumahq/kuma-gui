@@ -95,740 +95,740 @@ export default class Mock {
       //     }
       //   }
       // })
-      .onGet('/dataplanes').reply(200, {
-        items: [
-          {
-            mesh: 'mesh-01',
-            name: 'hello-world-foobar-002',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-00',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-10',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-20',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-30',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-40',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-50',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-60',
-            networking: {},
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'helloworld',
-            name: 'kuma-example-app-70',
-            networking: {},
-            type: 'Dataplane'
-          }
-        ]
-      })
-      .onGet('/meshes/mesh-01/dataplanes').reply(200, {
-        items: [
-          {
-            mesh: 'mesh-01',
-            name: 'hello-world-foobar-002',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.4:8000:8000',
-                  tags: {
-                    service: 'hello-world-foobar-002',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04',
-                    tag05: 'value05',
-                    tag06: 'value06',
-                    tag07: 'value07',
-                    tag08: 'value08'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'mesh-01',
-            name: 'kuma-test-run-001',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.7:3000:3000',
-                  tags: {
-                    service: 'kuma-test-run-001',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04',
-                    tag05: 'value05'
-                  }
-                }
-              ],
-              outbound: [
-                {
-                  interface: ':4000',
-                  service: 'kuma-example-app'
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'mesh-01',
-            name: 'some-really-cool-dp',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.6:6060:6060',
-                  tags: {
-                    env: 'prod',
-                    service: 'some-really-cool-dp',
-                    version: 'v8',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04'
-                  }
-                }
-              ],
-              outbound: [
-                {
-                  interface: ':5000',
-                  service: 'kuma-example-backend'
-                }
-              ]
-            },
-            type: 'Dataplane'
-          }
-        ]
-      })
-      .onGet('/meshes/default/dataplanes').reply(200, {
-        items: [
-          {
-            mesh: 'default',
-            name: 'kuma-example-app',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.4:8000:8000',
-                  tags: {
-                    service: 'kuma-example-app',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04',
-                    tag05: 'value05',
-                    tag06: 'value06',
-                    tag07: 'value07',
-                    tag08: 'value08'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'kuma-example-client',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.7:3000:3000',
-                  tags: {
-                    service: 'kuma-example-client',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04',
-                    tag05: 'value05'
-                  }
-                }
-              ],
-              outbound: [
-                {
-                  interface: ':4000',
-                  service: 'kuma-example-app'
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'kuma-example-web',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.6:6060:6060',
-                  tags: {
-                    env: 'prod',
-                    service: 'kuma-example-web',
-                    version: 'v8'
-                  }
-                }
-              ],
-              outbound: [
-                {
-                  interface: ':5000',
-                  service: 'kuma-example-backend'
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'kuma-example-backend-v1',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.3:7070:7070',
-                  tags: {
-                    env: 'prod',
-                    service: 'kuma-example-backend',
-                    version: 'v1'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          },
-          {
-            mesh: 'default',
-            name: 'kuma-example-backend-v2',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.5:7070:7070',
-                  tags: {
-                    env: 'intg',
-                    service: 'kuma-example-backend',
-                    version: 'v2'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          }
-        ]
-      })
-      .onGet('/meshes/kong-mania-12/dataplanes').reply(200, {
-        items: [
-          {
-            mesh: 'kong-mania-12',
-            name: 'hello-world-bazfoo-123',
-            networking: {
-              inbound: [
-                {
-                  interface: '172.21.0.4:8000:8000',
-                  tags: {
-                    service: 'hello-world-bazfoo-123',
-                    tag02: 'value02',
-                    tag03: 'value03',
-                    tag04: 'value04',
-                    tag05: 'value05',
-                    tag06: 'value06',
-                    tag07: 'value07',
-                    tag08: 'value08'
-                  }
-                }
-              ]
-            },
-            type: 'Dataplane'
-          }
-        ]
-      })
-      .onGet('/meshes/mesh-01/dataplanes+insights/hello-world-foobar-002').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'mesh-01',
-        name: 'hello-world-foobar-002',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-00').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-00',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-10').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-10',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-20').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-20',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-30').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-30',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-40').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-40',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-50').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-50',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-60').reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'helloworld',
-        name: 'kuma-example-app-60',
-        dataplane: {
-          networking: {
-            address: '172.21.0.5',
-            inbound: [
-              {
-                port: 7070,
-                servicePort: 7070,
-                tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
+      // .onGet('/dataplanes').reply(200, {
+      //   items: [
+      //     {
+      //       mesh: 'mesh-01',
+      //       name: 'hello-world-foobar-002',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-00',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-10',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-20',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-30',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-40',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-50',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-60',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'helloworld',
+      //       name: 'kuma-example-app-70',
+      //       networking: {},
+      //       type: 'Dataplane'
+      //     }
+      //   ]
+      // })
+      // .onGet('/meshes/mesh-01/dataplanes').reply(200, {
+      //   items: [
+      //     {
+      //       mesh: 'mesh-01',
+      //       name: 'hello-world-foobar-002',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.4:8000:8000',
+      //             tags: {
+      //               service: 'hello-world-foobar-002',
+      //               tag02: 'value02',
+      //               tag03: 'value03',
+      //               tag04: 'value04',
+      //               tag05: 'value05',
+      //               tag06: 'value06',
+      //               tag07: 'value07',
+      //               tag08: 'value08'
+      //             }
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'mesh-01',
+      //       name: 'kuma-test-run-001',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.7:3000:3000',
+      //             tags: {
+      //               service: 'kuma-test-run-001',
+      //               tag02: 'value02',
+      //               tag03: 'value03',
+      //               tag04: 'value04',
+      //               tag05: 'value05'
+      //             }
+      //           }
+      //         ],
+      //         outbound: [
+      //           {
+      //             interface: ':4000',
+      //             service: 'kuma-example-app'
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'mesh-01',
+      //       name: 'some-really-cool-dp',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.6:6060:6060',
+      //             tags: {
+      //               env: 'prod',
+      //               service: 'some-really-cool-dp',
+      //               version: 'v8',
+      //               tag02: 'value02',
+      //               tag03: 'value03',
+      //               tag04: 'value04'
+      //             }
+      //           }
+      //         ],
+      //         outbound: [
+      //           {
+      //             interface: ':5000',
+      //             service: 'kuma-example-backend'
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     }
+      //   ]
+      // })
+      // .onGet('/meshes/default/dataplanes').reply(200, {
+      //   items: [
+      //     {
+      //       mesh: 'default',
+      //       name: 'kuma-example-app',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.4:8000:8000',
+      //             tags: {
+      //               service: 'kuma-example-app',
+      //               tag02: 'value02',
+      //               tag03: 'value03',
+      //               tag04: 'value04',
+      //               tag05: 'value05',
+      //               tag06: 'value06',
+      //               tag07: 'value07',
+      //               tag08: 'value08'
+      //             }
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'default',
+      //       name: 'kuma-example-client',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.7:3000:3000',
+      //             tags: {
+      //               service: 'kuma-example-client',
+      //               tag02: 'value02',
+      //               tag03: 'value03',
+      //               tag04: 'value04',
+      //               tag05: 'value05'
+      //             }
+      //           }
+      //         ],
+      //         outbound: [
+      //           {
+      //             interface: ':4000',
+      //             service: 'kuma-example-app'
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'default',
+      //       name: 'kuma-example-web',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.6:6060:6060',
+      //             tags: {
+      //               env: 'prod',
+      //               service: 'kuma-example-web',
+      //               version: 'v8'
+      //             }
+      //           }
+      //         ],
+      //         outbound: [
+      //           {
+      //             interface: ':5000',
+      //             service: 'kuma-example-backend'
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'default',
+      //       name: 'kuma-example-backend-v1',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.3:7070:7070',
+      //             tags: {
+      //               env: 'prod',
+      //               service: 'kuma-example-backend',
+      //               version: 'v1'
+      //             }
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     },
+      //     {
+      //       mesh: 'default',
+      //       name: 'kuma-example-backend-v2',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.5:7070:7070',
+      //             tags: {
+      //               env: 'intg',
+      //               service: 'kuma-example-backend',
+      //               version: 'v2'
+      //             }
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     }
+      //   ]
+      // })
+      // .onGet('/meshes/kong-mania-12/dataplanes').reply(200, {
+      //   items: [
+      //     {
+      //       mesh: 'kong-mania-12',
+      //       name: 'hello-world-bazfoo-123',
+      //       networking: {
+      //         inbound: [
+      //           {
+      //             interface: '172.21.0.4:8000:8000',
+      //             tags: {
+      //               service: 'hello-world-bazfoo-123',
+      //               tag02: 'value02',
+      //               tag03: 'value03',
+      //               tag04: 'value04',
+      //               tag05: 'value05',
+      //               tag06: 'value06',
+      //               tag07: 'value07',
+      //               tag08: 'value08'
+      //             }
+      //           }
+      //         ]
+      //       },
+      //       type: 'Dataplane'
+      //     }
+      //   ]
+      // })
+      // .onGet('/meshes/mesh-01/dataplanes+insights/hello-world-foobar-002').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'mesh-01',
+      //   name: 'hello-world-foobar-002',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-00').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-00',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-10').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-10',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-20').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-20',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-30').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-30',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-40').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-40',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-50').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-50',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
+      // .onGet('/meshes/helloworld/dataplanes+insights/kuma-example-app-60').reply(200, {
+      //   type: 'DataplaneOverview',
+      //   mesh: 'helloworld',
+      //   name: 'kuma-example-app-60',
+      //   dataplane: {
+      //     networking: {
+      //       address: '172.21.0.5',
+      //       inbound: [
+      //         {
+      //           port: 7070,
+      //           servicePort: 7070,
+      //           tags: {
+      //             env: 'dev',
+      //             service: 'kuma-example-backend',
+      //             tag01: 'value01',
+      //             reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+      //           }
+      //         }
+      //       ]
+      //     }
+      //   },
+      //   dataplaneInsight: {
+      //     subscriptions: [
+      //       {
+      //         id: '426fe0d8-f667-11e9-b081-acde48001122',
+      //         controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+      //         connectTime: '2019-10-24T14:04:56.820350Z',
+      //         status: {
+      //           lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+      //           total: {
+      //             responsesSent: '3',
+      //             responsesAcknowledged: '3'
+      //           },
+      //           cds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           eds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           lds: {
+      //             responsesSent: '1',
+      //             responsesAcknowledged: '1'
+      //           },
+      //           rds: {}
+      //         }
+      //       }
+      //     ]
+      //   }
+      // })
       .onGet('/meshes/default/traffic-traces').reply(200, {
         items: [
           {
@@ -2130,6 +2130,209 @@ export default class Mock {
             ]
           }
         ]
+      })
+      .onGet('/meshes/default/circuit-breakers').reply(200, {
+        total: 2,
+        items: [
+          {
+            type: 'CircuitBreaker',
+            mesh: 'default',
+            name: 'cb1',
+            creationTime: '2020-06-02T00:24:05.038029+07:00',
+            modificationTime: '2020-06-02T00:24:05.038029+07:00',
+            sources: [
+              {
+                match: {
+                  region: 'us',
+                  service: 'frontend'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              interval: '1s',
+              baseEjectionTime: '30s',
+              maxEjectionPercent: 20,
+              detectors: {
+                totalErrors: {
+                  consecutive: 20
+                },
+                gatewayErrors: {
+                  consecutive: 10
+                },
+                localErrors: {
+                  consecutive: 7
+                },
+                standardDeviation: {
+                  requestVolume: 10,
+                  minimumHosts: 5,
+                  factor: 1.9
+                },
+                failure: {
+                  requestVolume: 10,
+                  minimumHosts: 5,
+                  threshold: 85
+                }
+              }
+            }
+          },
+          {
+            type: 'CircuitBreaker',
+            mesh: 'default',
+            name: 'cb2',
+            creationTime: '2020-06-02T00:24:48.48207+07:00',
+            modificationTime: '2020-06-02T00:24:48.48207+07:00',
+            sources: [
+              {
+                match: {
+                  region: 'eu',
+                  service: 'frontend'
+                }
+              }
+            ],
+            destinations: [
+              {
+                match: {
+                  service: 'backend'
+                }
+              }
+            ],
+            conf: {
+              interval: '30s',
+              baseEjectionTime: '130s',
+              maxEjectionPercent: 20,
+              detectors: {
+                totalErrors: {
+                  consecutive: 20
+                },
+                gatewayErrors: {
+                  consecutive: 10
+                },
+                localErrors: {
+                  consecutive: 7
+                },
+                standardDeviation: {
+                  requestVolume: 10,
+                  minimumHosts: 5,
+                  factor: 1.9
+                },
+                failure: {
+                  requestVolume: 10,
+                  minimumHosts: 5,
+                  threshold: 85
+                }
+              }
+            }
+          }
+        ],
+        next: null
+      })
+      .onGet('/meshes/alpha-tango-mesh/circuit-breakers').reply(200, {
+        total: 0,
+        items: [],
+        next: null
+      })
+      .onGet('/meshes/default/circuit-breakers/cb1').reply(200, {
+        type: 'CircuitBreaker',
+        mesh: 'default',
+        name: 'cb1',
+        creationTime: '2020-06-02T00:24:05.038029+07:00',
+        modificationTime: '2020-06-02T00:24:05.038029+07:00',
+        sources: [
+          {
+            match: {
+              region: 'us',
+              service: 'frontend'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          interval: '1s',
+          baseEjectionTime: '30s',
+          maxEjectionPercent: 20,
+          detectors: {
+            totalErrors: {
+              consecutive: 20
+            },
+            gatewayErrors: {
+              consecutive: 10
+            },
+            localErrors: {
+              consecutive: 7
+            },
+            standardDeviation: {
+              requestVolume: 10,
+              minimumHosts: 5,
+              factor: 1.9
+            },
+            failure: {
+              requestVolume: 10,
+              minimumHosts: 5,
+              threshold: 85
+            }
+          }
+        }
+      })
+      .onGet('/meshes/default/circuit-breakers/cb2').reply(200, {
+        type: 'CircuitBreaker',
+        mesh: 'default',
+        name: 'cb2',
+        creationTime: '2020-06-02T00:24:05.038029+07:00',
+        modificationTime: '2020-06-02T00:24:05.038029+07:00',
+        sources: [
+          {
+            match: {
+              region: 'us',
+              service: 'frontend'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          interval: '1s',
+          baseEjectionTime: '30s',
+          maxEjectionPercent: 20,
+          detectors: {
+            totalErrors: {
+              consecutive: 20
+            },
+            gatewayErrors: {
+              consecutive: 10
+            },
+            localErrors: {
+              consecutive: 7
+            },
+            standardDeviation: {
+              requestVolume: 10,
+              minimumHosts: 5,
+              factor: 1.9
+            },
+            failure: {
+              requestVolume: 10,
+              minimumHosts: 5,
+              threshold: 85
+            }
+          }
+        }
       })
       .onAny().passThrough()
   }
