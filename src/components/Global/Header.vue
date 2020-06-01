@@ -14,7 +14,7 @@
         </router-link>
       </div>
       <div
-        v-if="!$route.meta.hideStatus && status === 'OK'"
+        v-if="showStatus"
         class="px-4"
       >
         <status
@@ -46,7 +46,10 @@ export default {
       status: 'getStatus',
       // the currently selected mesh
       currentMesh: 'getSelectedMesh'
-    })
+    }),
+    showStatus () {
+      return !this.$route.meta.hideStatus && this.status === 'OK'
+    }
   },
   beforeMount () {
     this.getGuiStatus()
