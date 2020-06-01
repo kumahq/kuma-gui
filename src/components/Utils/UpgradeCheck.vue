@@ -101,13 +101,13 @@ export default {
                 new Date(lastVersionCheckDate).getMonth() + 3,
                 new Date(lastVersionCheckDate).getDate()
               )
+            }
 
-              // compare dates and handle the notice accordingly
-              if (today.getTime() >= later.getTime()) {
-                this.showNotice = true
-              } else {
-                this.showNotice = false
-              }
+            // compare dates and handle the notice accordingly
+            if (today.getTime() >= later.getTime()) {
+              this.showNotice = true
+            } else {
+              this.showNotice = false
             }
           }
         })
