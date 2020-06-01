@@ -55,7 +55,7 @@ export default {
       meshes: 'meshes'
     }),
     showNotice () {
-      return this.dpCount && this.dpCount === 0 && this.onlyDefaultMesh === true
+      return (this.dpCount !== undefined && this.dpCount === 0) && this.onlyDefaultMesh === true
     }
   },
   watch: {

@@ -173,7 +173,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      environment: 'getEnvironment'
+      environment: 'getEnvironment',
+      queryNamespace: 'getItemQueryNamespace'
     }),
     tabGroupTitle () {
       const entity = this.entity
@@ -244,20 +245,39 @@ export default {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh
+      const query = this.$route.query[this.queryNamespace]
 
       const params = {
         size: this.pageSize,
         offset: this.pageOffset
       }
 
-      const endpoint = (mesh === 'all')
-        ? this.$api.getAllDataplanes(params)
-        : this.$api.getAllDataplanesFromMesh(mesh)
+      const endpoint = () => {
+        if (mesh === 'all') {
+          console.log('fetching all dataplanes')
+
+          return this.$api.getAllDataplanes(params)
+        } else if ((query && query.length) && mesh !== 'all') {
+          return this.$api.getDataplaneOverviewsFromMesh(mesh, query)
+        }
+
+        console.log('fetching dataplane from mesh')
+
+        return this.$api.getAllDataplanesFromMesh(mesh)
+      }
 
       const getDataplanes = () => {
-        return endpoint
+        return endpoint()
           .then(response => {
-            if (response.items.length > 0) {
+            const items = () => {
+              if (response.items && response.items.length > 0) {
+                return this.sortEntities(response.items)
+              }
+
+              return response
+            }
+
+            if (items) {
               // check to see if the `next` url is present
               if (response.next) {
                 this.next = getOffset(response.next)
@@ -266,7 +286,6 @@ export default {
                 this.hasNext = false
               }
 
-              const items = this.sortEntities(response.items)
               const final = []
 
               // set the first item as the default for initial load
