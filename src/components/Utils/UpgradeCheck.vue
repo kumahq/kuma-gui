@@ -76,32 +76,14 @@ export default {
               this.showNotice = false
             }
           } else {
-            // if we can't fetch the latest version from the Kuma website,
-            // we will store today's date as a reference point.
-            const lastVersionCheckDate = localStorage.getItem('lastVersionCheckDate')
-            let later
-            const today = new Date(
-              new Date().getFullYear(),
-              new Date().getMonth(),
-              new Date().getDate()
+            const timespan = 3 // months
+            const today = new Date()
+            const refDate = new Date('2020-06-03 12:00:00')
+            const later = new Date(
+              refDate.getFullYear(),
+              refDate.getMonth() + timespan,
+              refDate.getDate()
             )
-
-            if (!lastVersionCheckDate) {
-              // store today's date in local storage if it's not already present
-              localStorage.setItem('lastVersionCheckDate', today)
-
-              later = new Date(
-                today.getFullYear(),
-                today.getMonth() + 3,
-                today.getDate()
-              )
-            } else {
-              later = new Date(
-                new Date(lastVersionCheckDate).getFullYear(),
-                new Date(lastVersionCheckDate).getMonth() + 3,
-                new Date(lastVersionCheckDate).getDate()
-              )
-            }
 
             // compare dates and handle the notice accordingly
             if (today.getTime() >= later.getTime()) {
