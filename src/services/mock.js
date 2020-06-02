@@ -20,6 +20,7 @@ export default class Mock {
 
     this.mock
       // .onGet('/meshes').reply(200, {
+      //   total: 3,
       //   items: [
       //     {
       //       mtls: {
@@ -57,7 +58,8 @@ export default class Mock {
       //       name: 'hello-world',
       //       type: 'Mesh'
       //     }
-      //   ]
+      //   ],
+      //   next: null
       // })
       // .onGet('/meshes/default').reply(200, {
       //   type: 'Mesh',
@@ -96,6 +98,7 @@ export default class Mock {
       //   }
       // })
       .onGet('/dataplanes').reply(200, {
+        total: 1,
         items: [
           {
             mesh: 'default',
@@ -103,7 +106,8 @@ export default class Mock {
             networking: {},
             type: 'Dataplane'
           }
-        ]
+        ],
+        next: null
       })
       .onGet('/meshes/default/dataplanes/hello-world-foobar-002').reply(200, {
         items: [
@@ -128,8 +132,10 @@ export default class Mock {
               port: 10000,
               servicePort: 9000,
               tags: {
-                protocol: 'tcp',
-                service: 'fancy-service-dataplane'
+                env: 'dev',
+                service: 'kuma-example-backend',
+                tag01: 'value01',
+                reallyLongTagLabelHere: 'a-really-long-tag-value-here'
               }
             }
           ]
