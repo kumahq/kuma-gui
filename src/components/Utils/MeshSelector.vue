@@ -61,17 +61,10 @@ export default {
       // update the localStorage item so that it persists
       localStorage.setItem('selectedMesh', val)
 
-      // update the route accordingly
-      if (this.$route.name === 'global-overview') {
-        this.$router.push({
-          name: 'mesh-child',
-          params: { mesh: val }
-        })
-      } else {
-        this.$router.push({
-          params: { mesh: val }
-        })
-      }
+      // push the update mesh param to the route
+      this.$root.$router.push({
+        params: { mesh: val }
+      })
     }
   }
 }

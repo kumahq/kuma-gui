@@ -47,14 +47,15 @@
         class="wizard-steps__footer"
       >
         <KButton
-          :disabled="indexCanReverse"
+          v-show="!indexCanReverse"
           appearance="primary"
           @click="goToPrevStep"
         >
           &lsaquo; Previous
         </KButton>
         <KButton
-          :disabled="indexCanAdvance || nextDisabled"
+          v-show="!indexCanAdvance"
+          :disabled="nextDisabled"
           appearance="primary"
           @click="goToNextStep"
         >
@@ -246,7 +247,8 @@ $bp-max-width: 1219px;
     }
 
     .wizard-steps__sidebar {
-      position: fixed;
+      // position: fixed;
+      position: absolute;
       top: 0;
       right: 0;
       padding-top: 80px;

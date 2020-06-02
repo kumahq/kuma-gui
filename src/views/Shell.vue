@@ -2,9 +2,9 @@
   <div class="overview">
     <page-header noflex>
       <breadcrumbs />
-      <h2 class="xxl">
+      <!-- <h2 class="xxl">
         {{ pageTitle }}
-      </h2>
+      </h2> -->
     </page-header>
     <page-content>
       <transition
@@ -39,6 +39,7 @@ export default {
       const trafficRoute = this.$route.params.trafficroute
       const healthCheck = this.$route.params.healthcheck
       const trafficTrace = this.$route.params.traffictrace
+      const faultInjection = this.$route.params.traffictrace
 
       let assembled
 

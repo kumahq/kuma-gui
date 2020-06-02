@@ -5,7 +5,7 @@
         :steps="steps"
         :advance-check="true"
         :sidebar-content="sidebarContent"
-        :footer-enabled="scanFound === false"
+        :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
@@ -491,7 +491,7 @@
         </template>
         <template slot="complete">
           <div v-if="codeOutput">
-            <div v-if="scanFound === false">
+            <div v-if="hideScannerSiblings === false">
               <h3>
                 Install a new Mesh
               </h3>
@@ -529,6 +529,7 @@
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
+              @hideSiblings="hideSiblings"
             >
               <!-- loading -->
               <template slot="loading-title">
@@ -689,6 +690,7 @@ export default {
       },
       startScanner: false,
       scanFound: false,
+      hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
       nextDisabled: true,
@@ -878,16 +880,15 @@ export default {
        */
 
       const codeBlock = { ...meshType, ...schemaClean }
+      const cliConditionCode = () => {
+        if (this.selectedTab === '#kubernetes') {
+          return this.formatForCLI(codeBlock, '" | kubectl apply -f -')
+        } else {
+          return this.formatForCLI(codeBlock, '" | kumactl apply -f -')
+        }
+      }
 
-      // if (this.selectedTab === '#kubernetes') {
-      //   codeBlock = { ...meshType, spec: { ...schemaClean } }
-      // } else {
-      //   codeBlock = { ...meshType, ...schemaClean }
-      // }
-
-      const assembledBlock = this.formatForCLI(codeBlock)
-
-      return assembledBlock
+      return cliConditionCode()
     }
   },
   watch: {
@@ -902,6 +903,11 @@ export default {
     this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
   },
   methods: {
+    hideSiblings () {
+      // this triggers when to hide the siblings related to the Scanner
+      // component that need to be hidden once the scan succeeds.
+      this.hideScannerSiblings = true
+    },
     validateMeshName (value) {
       if (!value || value === '') {
         this.vmsg.meshName = 'A Mesh name is required to proceed'

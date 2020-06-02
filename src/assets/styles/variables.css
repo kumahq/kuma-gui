@@ -44,6 +44,9 @@
   /* Topbar */
   --topbar-height: 4rem;
 
+  /* Content areas */
+  --global-content-max-width: 100rem;
+
   /* Sidebar */
   --sidebar-width: 240px;
   --sidebar-width-closed: 63px;

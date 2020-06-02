@@ -62,7 +62,7 @@
             <p>
               We have detected that you are running on a <strong>Universal environment</strong>,
               and we are going to be showing you instructions for Universal unless you
-              decide to visualize the instructions for Universal.
+              decide to visualize the instructions for Kubernetes.
             </p>
             <p>
               <KButton

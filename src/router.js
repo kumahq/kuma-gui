@@ -119,7 +119,7 @@ export default (store) => {
           path: ':mesh',
           name: 'mesh-child',
           meta: {
-            title: 'Mesh Overview',
+            title: 'Overview',
             parent: 'all-meshes'
           },
           params: { mesh: ':mesh' },
@@ -133,7 +133,7 @@ export default (store) => {
       meta: {
         title: 'Meshes',
         breadcrumb: 'Meshes',
-        parent: 'global-overview'
+        parent: 'all-meshes'
       },
       params: { mesh: ':mesh' },
       component: () => import('@/views/Shell'),

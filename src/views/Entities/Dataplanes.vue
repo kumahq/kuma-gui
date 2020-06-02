@@ -5,7 +5,6 @@
         :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :empty-state="empty_state"
         :display-data-table="true"
         :table-data="tableData"
@@ -22,6 +21,9 @@
             size="small"
             :to="dataplaneWizardRoute"
           >
+            <span class="custom-control-icon">
+              +
+            </span>
             Create Dataplane
           </KButton>
         </template>
@@ -35,9 +37,9 @@
         </template>
       </DataOverview>
       <Tabs
+        v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
@@ -47,8 +49,40 @@
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :items="entity"
-          />
+          >
+            <!-- basic information -->
+            <div>
+              <ul>
+                <li
+                  v-for="(val, key) in entity.basicData"
+                  :key="key"
+                >
+                  <h4>{{ key }}</h4>
+                  <p>
+                    {{ val }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <!-- tag information -->
+            <div>
+              <h4>Tags</h4>
+              <p>
+                <span
+                  v-for="(val, key) in entity.tags"
+                  :key="key"
+                  class="tag-cols"
+                >
+                  <span>
+                    {{ key }}:
+                  </span>
+                  <span>
+                    {{ val }}
+                  </span>
+                </span>
+              </p>
+            </div>
+          </LabelList>
         </template>
         <template slot="yaml">
           <YamlView
@@ -127,7 +161,7 @@ export default {
           title: 'YAML'
         }
       ],
-      entity: null,
+      entity: [],
       rawEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
@@ -208,7 +242,6 @@ export default {
     },
     loadData () {
       this.isLoading = true
-      this.isEmpty = false
 
       const mesh = this.$route.params.mesh
 
@@ -397,15 +430,18 @@ export default {
 
               this.tableData.data = final
               this.tableDataIsEmpty = false
+              this.isEmpty = false
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+              this.isEmpty = true
 
               this.getEntity(null)
             }
           })
           .catch(error => {
             this.hasError = true
+            this.isEmpty = true
 
             console.error(error)
           })
@@ -432,7 +468,7 @@ export default {
         return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
           .then(response => {
             if (response) {
-              const selected = ['type', 'name', 'mesh', 'tags']
+              const selected = ['type', 'name', 'mesh']
 
               // determine between inbound and gateway modes
               // and then get the tags from which condition applies.
@@ -441,10 +477,8 @@ export default {
                 : response.networking.gateway.tags
 
               const newEntity = {
-                ...getSome(response, selected),
-                ...{
-                  tags: tagSrc
-                }
+                basicData: { ...getSome(response, selected) },
+                tags: { ...tagSrc }
               }
 
               this.entity = newEntity
