@@ -30,6 +30,7 @@ export default (api) => {
       totalTrafficRouteCount: 0,
       totalTrafficTraceCount: 0,
       totalFaultInjectionCount: 0,
+      totalCircuitBreakerCount: 0,
       totalDataplaneList: [],
       anyDataplanesOffline: null,
       // from mesh
@@ -40,6 +41,7 @@ export default (api) => {
       totalTrafficRouteCountFromMesh: 0,
       totalTrafficTraceCountFromMesh: 0,
       totalFaultInjectionCountFromMesh: 0,
+      totalCircuitBreakerCountFromMesh: 0,
       totalDataplaneCountFromMesh: 0,
       tagline: null,
       version: null,
@@ -66,6 +68,7 @@ export default (api) => {
       getTotalTrafficRouteCount: (state) => state.totalTrafficRouteCount,
       getTotalTrafficTraceCount: (state) => state.totalTrafficTraceCount,
       getTotalFaultInjectionCount: (state) => state.totalFaultInjectionCount,
+      getTotalCircuitBreakerCount: (state) => state.totalCircuitBreakerCount,
       // total counts per single mesh
       getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
       getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRouteCountFromMesh,
@@ -73,8 +76,9 @@ export default (api) => {
       getTotalHealthChecksCountFromMesh: (state) => state.totalHealthCheckCountFromMesh,
       getTotalProxyTemplatesCountFromMesh: (state) => state.totalProxyTemplateCountFromMesh,
       getTotalTrafficLogsFromMesh: (state) => state.totalTrafficLogCountFromMesh,
-      getTotalTrafficTracesFromMesh: (state) => state.totalTrafficTraceCountFromMesh,
-      getFaultInjectionsFromMeshTotalCount: (state) => state.totalFaultInjectionCountFromMesh,
+      getTotalTrafficTracesCountFromMesh: (state) => state.totalTrafficTraceCountFromMesh,
+      getTotalFaultInjectionsCountFromMesh: (state) => state.totalFaultInjectionCountFromMesh,
+      getTotalCircuitBreakersCountFromMesh: (state) => state.totalCircuitBreakerCountFromMesh,
       getVersion: (state) => state.version,
       getTagline: (state) => state.tagline,
       getStatus: (state) => state.status,
@@ -100,6 +104,7 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_TRACE_COUNT: (state, count) => (state.totalTrafficTraceCount = count),
       SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
       SET_TOTAL_FAULT_INJECTION_COUNT: (state, count) => (state.totalFaultInjectionCount = count),
+      SET_TOTAL_CIRCUIT_BREAKER_COUNT: (state, count) => (state.totalCircuitBreakerCount = count),
       SET_TOTAL_DATAPLANE_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
       SET_TOTAL_HEALTH_CHECK_COUNT_FROM_MESH: (state, count) => (state.totalHealthCheckCountFromMesh = count),
       SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalProxyTemplateCountFromMesh = count),
@@ -108,6 +113,7 @@ export default (api) => {
       SET_TOTAL_TRAFFIC_ROUTE_COUNT_FROM_MESH: (state, count) => (state.totalTrafficRouteCountFromMesh = count),
       SET_TOTAL_TRAFFIC_TRACE_COUNT_FROM_MESH: (state, count) => (state.totalTrafficTraceCountFromMesh = count),
       SET_TOTAL_FAULT_INJECTION_COUNT_FROM_MESH: (state, count) => (state.totalFaultInjectionCountFromMesh = count),
+      SET_TOTAL_CIRCUIT_BREAKER_COUNT_FROM_MESH: (state, count) => (state.totalCircuitBreakerCountFromMesh = count),
       SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
       SET_VERSION: (state, version) => (state.version = version),
       SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
@@ -299,6 +305,21 @@ export default (api) => {
           })
       },
 
+      // get the total number of circuit breakers present
+      fetchCircuitBreakerTotalCount ({ commit }) {
+        const params = { size: 1 }
+
+        return api.getAllCircuitBreakers(params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_CIRCUIT_BREAKER_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
       /**
        * Total counts (per mesh)
        */
@@ -417,6 +438,21 @@ export default (api) => {
             const total = response.total
 
             commit('SET_TOTAL_FAULT_INJECTION_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of circuit breakers from a specific mesh
+      fetchCircuitBreakerTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllCircuitBreakersFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_CIRCUIT_BREAKER_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

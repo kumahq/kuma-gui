@@ -121,12 +121,12 @@
             :is-empty="entityIsEmpty"
           >
             <div
-              v-for="i in Math.ceil(counts.length / 4)"
+              v-for="i in countCols"
               :key="i"
             >
               <ul>
                 <li
-                  v-for="(item, key) in counts.slice((i - 1) * 4, i * 4)"
+                  v-for="(item, key) in counts.slice((i - 1) * itemsPerCol, i * itemsPerCol)"
                   :key="key"
                 >
                   <h4>{{ item.title }}</h4>
@@ -145,7 +145,6 @@
 import { mapState } from 'vuex'
 import { getSome, humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -221,7 +220,8 @@ export default {
       hasNext: false,
       previous: [],
       tabGroupTitle: null,
-      entityOverviewTitle: null
+      entityOverviewTitle: null,
+      itemsPerCol: 3
     }
   },
   computed: {
@@ -235,6 +235,10 @@ export default {
         {
           title: 'Dataplanes',
           value: state.totalDataplaneCountFromMesh
+        },
+        {
+          title: 'Circuit Breakers',
+          value: state.totalCircuitBreakerCountFromMesh
         },
         {
           title: 'Fault Injections',
@@ -265,6 +269,9 @@ export default {
           value: state.totalTrafficTraceCountFromMesh
         }
       ]
+    },
+    countCols () {
+      return Math.ceil(this.counts.length / this.itemsPerCol)
     }
   },
   watch: {
@@ -399,7 +406,8 @@ export default {
                 'fetchTrafficPermissionTotalCountFromMesh',
                 'fetchTrafficRouteTotalCountFromMesh',
                 'fetchTrafficTraceTotalCountFromMesh',
-                'fetchFaultInjectionTotalCountFromMesh'
+                'fetchFaultInjectionTotalCountFromMesh',
+                'fetchCircuitBreakerTotalCountFromMesh'
               ]
 
               // run each action
