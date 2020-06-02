@@ -168,31 +168,15 @@ export default {
       pageOffset: null,
       next: null,
       hasNext: false,
-      previous: []
+      previous: [],
+      tabGroupTitle: null,
+      entityOverviewTitle: null
     }
   },
   computed: {
     ...mapGetters({
       environment: 'getEnvironment'
     }),
-    tabGroupTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Dataplane: ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    entityOverviewTitle () {
-      const entity = this.entity
-
-      if (entity) {
-        return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
-    },
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
       // wizard based on environment.
@@ -482,8 +466,10 @@ export default {
               }
 
               this.entity = newEntity
-
               this.rawEntity = response
+
+              this.tabGroupTitle = `Mesh: ${newEntity.basicData.name}`
+              this.entityOverviewTitle = `Entity Overview for ${newEntity.basicData.name}`
             } else {
               this.entity = null
               this.entityIsEmpty = true
