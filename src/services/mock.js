@@ -98,16 +98,105 @@ export default class Mock {
       //   }
       // })
       .onGet('/dataplanes').reply(200, {
-        total: 1,
+        total: 2,
         items: [
           {
             mesh: 'default',
             name: 'hello-world-foobar-002',
             networking: {},
             type: 'Dataplane'
+          },
+          {
+            mesh: 'default',
+            name: 'test-dp-02',
+            networking: {},
+            type: 'Dataplane'
           }
         ],
         next: null
+      })
+      .onGet('/meshes/default/dataplanes/test-dp-02').reply(200, {
+        items: [
+          {
+            mesh: 'default',
+            name: 'test-dp-02',
+            networking: {},
+            type: 'Dataplane'
+          }
+        ]
+      })
+      .onGet('/meshes/default/dataplanes/test-dp-02').reply(200, {
+        type: 'Dataplane',
+        mesh: 'default',
+        name: 'test-dp-02',
+        creationTime: '2020-06-02T09:33:09.208372-04:00',
+        modificationTime: '2020-06-02T09:33:09.208372-04:00',
+        networking: {
+          address: '10.0.0.1',
+          inbound: [
+            {
+              port: 10000,
+              servicePort: 9000,
+              tags: {
+                env: 'dev',
+                service: 'kuma-example-backend',
+                tag01: 'value01',
+                reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes+insights/test-dp-02').reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'test-dp-02',
+        dataplane: {
+          networking: {
+            address: '172.21.0.5',
+            inbound: [
+              {
+                port: 7070,
+                servicePort: 7070,
+                tags: {
+                  env: 'dev',
+                  service: 'kuma-example-backend',
+                  tag01: 'value01',
+                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
       })
       .onGet('/meshes/default/dataplanes/hello-world-foobar-002').reply(200, {
         items: [
@@ -190,7 +279,7 @@ export default class Mock {
               }
             }
           ],
-          mTSL: {
+          mTLS: {
             certificateExpirationTime: '2020-05-11T16:53:55Z',
             lastCertificateRegeneration: '2020-05-11T16:53:40.862241Z',
             certificateRegenerations: 2

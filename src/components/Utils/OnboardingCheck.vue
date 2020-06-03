@@ -55,7 +55,7 @@ export default {
       meshes: 'meshes'
     }),
     showNotice () {
-      return !this.dataplanes.length && this.onlyDefaultMesh === true
+      return !this.dataplanes && this.onlyDefaultMesh === true
     }
   },
   watch: {
