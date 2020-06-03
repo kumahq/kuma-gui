@@ -119,8 +119,9 @@
                 <a
                   href="https://kuma.io/docs/latest/documentation/security/#certificates"
                   class="external-link"
+                  target="_blank"
                 >
-                  Security Documentation
+                  Learn About Certificates in Kuma
                 </a>
               </template>
             </KAlert>
