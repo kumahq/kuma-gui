@@ -1,7 +1,7 @@
 <template>
   <header class="main-header p-4">
     <div class="main-header__content flex justify-between items-center -mx-4">
-      <div class="px-4">
+      <div class="py-1 md:py-0 md:px-4">
         <router-link
           :to="{ name: 'global-overview' }"
           exact
@@ -13,14 +13,19 @@
           >
         </router-link>
       </div>
-      <div
-        v-if="!$route.meta.hideStatus && status === 'OK'"
-        class="px-4"
-      >
-        <status
-          :active="guiStatus"
-          :content="statusContent"
-        />
+      <div class="md:flex md:justify-between md:items-center">
+        <div class="py-1 md:py-0 md:px-4 upgrade-check-wrapper">
+          <UpgradeCheck />
+        </div>
+        <div
+          v-if="showStatus"
+          class="py-1 md:py-0 md:px-4"
+        >
+          <status
+            :active="guiStatus"
+            :content="statusContent"
+          />
+        </div>
       </div>
     </div>
   </header>
@@ -29,10 +34,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import Status from '@/components/Utils/Status'
+import UpgradeCheck from '@/components/Utils/UpgradeCheck'
 
 export default {
   components: {
-    Status
+    Status,
+    UpgradeCheck
   },
   data () {
     return {
@@ -46,7 +53,10 @@ export default {
       status: 'getStatus',
       // the currently selected mesh
       currentMesh: 'getSelectedMesh'
-    })
+    }),
+    showStatus () {
+      return !this.$route.meta.hideStatus && this.status === 'OK'
+    }
   },
   beforeMount () {
     this.getGuiStatus()
@@ -99,6 +109,16 @@ export default {
     width: auto;
     height: auto;
     max-height: 46px;
+  }
+}
+
+.upgrade-check-wrapper {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 599px) {
+  .upgrade-check-wrapper {
+    display: none;
   }
 }
 </style>
