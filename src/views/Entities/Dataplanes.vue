@@ -93,6 +93,40 @@
             :content="rawEntity"
           />
         </template>
+        <template slot="mtls">
+          <LabelList
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+          >
+            <ul v-if="entity.mtls">
+              <li
+                v-for="(val, key) in entity.mtls"
+                :key="key"
+              >
+                <h4>{{ val.label }}</h4>
+                <p>
+                  {{ val.value }}
+                </p>
+              </li>
+            </ul>
+            <KAlert
+              v-else
+              appearance="danger"
+            >
+              <template slot="alertMessage">
+                This Dataplane does not yet have mTLS configured &mdash;
+                <a
+                  :href="`https://kuma.io/docs/${version}/documentation/security/#certificates`"
+                  class="external-link"
+                  target="_blank"
+                >
+                  Learn About Certificates in Kuma
+                </a>
+              </template>
+            </KAlert>
+          </LabelList>
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
@@ -159,6 +193,10 @@ export default {
         {
           hash: '#yaml',
           title: 'YAML'
+        },
+        {
+          hash: '#mtls',
+          title: 'Certificate Insights'
         }
       ],
       entity: [],
@@ -170,7 +208,8 @@ export default {
       hasNext: false,
       previous: [],
       tabGroupTitle: null,
-      entityOverviewTitle: null
+      entityOverviewTitle: null,
+      showmTLSTab: false
     }
   },
   computed: {
@@ -185,6 +224,11 @@ export default {
       } else {
         return { name: 'kubernetes-dataplane' }
       }
+    },
+    version () {
+      const storedVersion = this.$store.getters.getVersion
+
+      return (storedVersion !== null) ? storedVersion : 'latest'
     }
   },
   watch: {
@@ -454,22 +498,59 @@ export default {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
+              // get mTLS data if it's present
+              const getMTLSData = async () => {
+                let data = null
+
+                try {
+                  const res = await this.$api.getDataplaneOverviewsFromMesh(entityMesh, entity.name)
+
+                  if (res.dataplaneInsight.mTLS) {
+                    const mtls = res.dataplaneInsight.mTLS
+
+                    data = {
+                      certificateExpirationTime: {
+                        label: 'Expiration Time',
+                        value: humanReadableDate(mtls.certificateExpirationTime)
+                      },
+                      lastCertificateRegeneration: {
+                        label: 'Last Generated',
+                        value: humanReadableDate(mtls.lastCertificateRegeneration)
+                      },
+                      certificateRegenerations: {
+                        label: 'Regenerations',
+                        value: mtls.certificateRegenerations
+                      }
+                    }
+                  }
+                } catch (error) {
+                  console.log(error)
+                }
+
+                return data
+              }
+
               // determine between inbound and gateway modes
               // and then get the tags from which condition applies.
               const tagSrc = (response.networking.inbound && response.networking.inbound.length > 0)
                 ? response.networking.inbound[0].tags
                 : response.networking.gateway.tags
 
-              const newEntity = {
-                basicData: { ...getSome(response, selected) },
-                tags: { ...tagSrc }
+              const newEntity = async () => {
+                return {
+                  basicData: { ...getSome(response, selected) },
+                  tags: { ...tagSrc },
+                  mtls: await getMTLSData()
+                }
               }
 
-              this.entity = newEntity
-              this.rawEntity = response
+              newEntity().then(i => {
+                this.entity = i
+                this.tabGroupTitle = `Mesh: ${i.basicData.name}`
+                this.entityOverviewTitle = `Entity Overview for ${i.basicData.name}`
+              })
 
-              this.tabGroupTitle = `Mesh: ${newEntity.basicData.name}`
-              this.entityOverviewTitle = `Entity Overview for ${newEntity.basicData.name}`
+              this.rawEntity = response
             } else {
               this.entity = null
               this.entityIsEmpty = true
