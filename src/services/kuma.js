@@ -214,6 +214,25 @@ export default class Kuma {
   }
 
   /**
+   * Circuit Breakers
+   */
+
+  // get all circuit breakers
+  getAllCircuitBreakers (params) {
+    return this.client.get('/circuit-breakers', { params })
+  }
+
+  // get all circuit breakers from mesh
+  getAllCircuitBreakersFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/circuit-breakers`, { params })
+  }
+
+  // get circuit breaker details
+  getCircuitBreaker (mesh, circuitbreaker, params) {
+    return this.client.get(`/meshes/${mesh}/circuit-breakers/${circuitbreaker}`, { params })
+  }
+
+  /**
    *
    * NOTE:
    * There are no endpoints yet for fetching service information.

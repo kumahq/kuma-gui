@@ -37,6 +37,12 @@ export default {
           title: true
         },
         {
+          name: 'Circuit Breakers',
+          link: '/circuit-breakers',
+          title: false,
+          parent: 'policies'
+        },
+        {
           name: 'Fault Injections',
           link: '/fault-injections',
           title: false,

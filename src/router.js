@@ -193,6 +193,15 @@ export default (store) => {
           },
           component: () => import('@/views/Policies/FaultInjections')
         },
+        // circuit breakers
+        {
+          path: 'circuit-breakers',
+          name: 'circuit-breakers',
+          meta: {
+            title: 'Circuit Breakers'
+          },
+          component: () => import('@/views/Policies/CircuitBreakers')
+        },
         // health checks
         {
           path: 'health-checks',

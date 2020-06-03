@@ -114,7 +114,8 @@ export default {
           trafficLogCount: state.totalTrafficLogCount,
           trafficPermissionCount: state.totalTrafficPermissionCount,
           trafficRouteCount: state.totalTrafficRouteCount,
-          trafficTraceCount: state.totalTrafficTraceCount
+          trafficTraceCount: state.totalTrafficTraceCount,
+          circuitBreakerCount: state.totalCircuitBreakerCount
         }
       } else {
         storeVals = {
@@ -125,7 +126,8 @@ export default {
           trafficLogCount: state.totalTrafficLogCountFromMesh,
           trafficPermissionCount: state.totalTrafficPermissionCountFromMesh,
           trafficRouteCount: state.totalTrafficRouteCountFromMesh,
-          trafficTraceCount: state.totalTrafficTraceCountFromMesh
+          trafficTraceCount: state.totalTrafficTraceCountFromMesh,
+          circuitBreakerCount: state.totalCircuitBreakerCountFromMesh
         }
       }
 
@@ -139,6 +141,11 @@ export default {
           metric: 'Dataplanes',
           value: storeVals.dataplaneCount,
           url: `/${this.selectedMesh}/dataplanes`
+        },
+        {
+          metric: 'Circuit Breakers',
+          value: storeVals.circuitBreakerCount,
+          url: `/${this.selectedMesh}/circuit-breakers`
         },
         {
           metric: 'Fault Injections',
@@ -223,7 +230,8 @@ export default {
           'fetchTrafficPermissionTotalCount',
           'fetchTrafficRouteTotalCount',
           'fetchTrafficTraceTotalCount',
-          'fetchFaultInjectionTotalCount'
+          'fetchFaultInjectionTotalCount',
+          'fetchCircuitBreakerTotalCount'
         ]
 
         // run each action
@@ -241,7 +249,8 @@ export default {
           'fetchTrafficPermissionTotalCountFromMesh',
           'fetchTrafficRouteTotalCountFromMesh',
           'fetchTrafficTraceTotalCountFromMesh',
-          'fetchFaultInjectionTotalCountFromMesh'
+          'fetchFaultInjectionTotalCountFromMesh',
+          'fetchCircuitBreakerTotalCountFromMesh'
         ]
 
         // run each action
