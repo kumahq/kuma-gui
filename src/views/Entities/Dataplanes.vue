@@ -117,7 +117,7 @@
               <template slot="alertMessage">
                 This Dataplane does not yet have mTLS configured &mdash;
                 <a
-                  href="https://kuma.io/docs/latest/documentation/security/#certificates"
+                  :href="`https://kuma.io/docs/${version}/documentation/security/#certificates`"
                   class="external-link"
                   target="_blank"
                 >
@@ -224,6 +224,11 @@ export default {
       } else {
         return { name: 'kubernetes-dataplane' }
       }
+    },
+    version () {
+      const storedVersion = this.$store.getters.getVersion
+
+      return (storedVersion !== null) ? storedVersion : 'latest'
     }
   },
   watch: {
