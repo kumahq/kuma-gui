@@ -9,7 +9,7 @@
         v-if="environment === 'kubernetes' || environment === 'universal'"
         slot="title"
       >
-        Running on {{ environment }}
+        Running on <span class="env-name">{{ environment }}</span>
       </template>
       <template slot="message">
         <div v-if="environment === 'kubernetes'">
@@ -110,6 +110,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.env-name {
+  text-transform: capitalize;
+}
 </style>

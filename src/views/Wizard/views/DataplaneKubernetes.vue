@@ -621,7 +621,7 @@ import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 import Switcher from '@/views/Wizard/components/Switcher'
 import CodeView from '@/components/Skeletons/CodeView'
-import Scanner from '@/views/Wizard/components/Scanner'
+// import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
 // import meshSchema from '@/views/Wizard/schemas/Mesh'
@@ -639,8 +639,8 @@ export default {
     Tabs,
     StepSkeleton,
     Switcher,
-    CodeView,
-    Scanner
+    CodeView
+    // Scanner
   },
   mixins: [
     FormatForCLI,
@@ -680,7 +680,7 @@ export default {
       ],
       startScanner: false,
       scanFound: false,
-      // hideScannerSiblings: false,
+      hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
       nextDisabled: true,
@@ -804,16 +804,6 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!mesh || !dataplane) return
 
-      /**
-       * TODO
-       * this will eventually change to `this.$api.getDataplaneFromMesh()`
-       * we will need to get the Mesh namespace the user selects, or the one
-       * they create, as well as the Dataplane namespace.
-       *
-       * This is also dependent upon multiple Kubernetes endpoints that don't
-       * yet exist in Kuma and need to be created.
-       *
-       */
       this.$api.getDataplaneFromMesh(mesh, dataplane)
         .then(response => {
           if (response && response.name.length > 0) {

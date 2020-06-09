@@ -21,11 +21,11 @@ export default {
           query: {
             [query]: value
           }
-        })
+        }).catch(err => {})
       } else {
         router.push({
           query: Object.assign({}, route.query, { [query]: value })
-        })
+        }).catch(err => {})
       }
     }
   }
