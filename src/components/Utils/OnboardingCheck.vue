@@ -95,11 +95,24 @@ export default {
 }
 
 .alert-content {
-  display: flex;
-  align-items: center;
 
-  > *:first-of-type {
-    margin-right: var(--spacing-md);
+  @media screen and (min-width: 700px) {
+    display: flex;
+    align-items: center;
+
+    > *:first-of-type {
+      margin-right: var(--spacing-md);
+    }
+
+    > *:last-of-type {
+      min-width: 150px;
+    }
+  }
+
+  @media screen and (max-width: 699px) {
+    > *:last-of-type {
+      margin-top: 10px;
+    }
   }
 }
 
