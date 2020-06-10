@@ -93,8 +93,11 @@ export default {
             // fetch all dataplanes
             // this.$store.dispatch('getAllDataplanes')
 
-            // fetch the version
+            // fetch the version and store it in localStorage
             this.$store.dispatch('getVersion')
+              .then(() => {
+                localStorage.setItem('kumaVersion', this.$store.getters.getVersion)
+              })
 
             // fetch the tagline
             this.$store.dispatch('getTagline')

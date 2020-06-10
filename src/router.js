@@ -13,7 +13,7 @@ export default (store) => {
         title: 'Page not found',
         excludeAsBreadcrumb: true
       },
-      component: () => import('@/views/NotFound')
+      component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound')
     },
     {
       path: '/',
@@ -37,7 +37,7 @@ export default (store) => {
             simpleContent: true,
             onboardingProcess: true
           },
-          component: () => import('@/views/Onboarding/GetStarted')
+          component: () => import(/* webpackChunkName: "onboarding-get-started" */ '@/views/Onboarding/GetStarted')
         },
         {
           path: 'complete',
@@ -51,7 +51,7 @@ export default (store) => {
             simpleContent: true,
             onboardingProcess: true
           },
-          component: () => import('@/views/Onboarding/Complete')
+          component: () => import(/* webpackChunkName: "onboarding-complete" */ '@/views/Onboarding/Complete')
         }
       ]
     },
@@ -59,7 +59,7 @@ export default (store) => {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import('@/views/Shell'),
+      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
       children: [
         {
           path: 'mesh',
@@ -68,7 +68,7 @@ export default (store) => {
             title: 'Create a new Mesh',
             excludeAsBreadcrumb: true
           },
-          component: () => import('@/views/Wizard/views/Mesh')
+          component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh')
         },
         {
           path: 'kubernetes-dataplane',
@@ -77,7 +77,7 @@ export default (store) => {
             title: 'Create a new Kubernetes Dataplane',
             excludeAsBreadcrumb: true
           },
-          component: () => import('@/views/Wizard/views/DataplaneKubernetes')
+          component: () => import(/* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes')
         },
         {
           path: 'universal-dataplane',
@@ -86,7 +86,7 @@ export default (store) => {
             title: 'Create a new Universal Dataplane',
             excludeAsBreadcrumb: true
           },
-          component: () => import('@/views/Wizard/views/DataplaneUniversal')
+          component: () => import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal')
         }
       ]
     },
@@ -97,7 +97,7 @@ export default (store) => {
       path: '/overview',
       alias: '/',
       name: 'global-overview',
-      component: () => import('@/views/Overview'),
+      component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview'),
       meta: {
         title: 'Global Overview',
         breadcrumb: 'Overview'
@@ -113,7 +113,7 @@ export default (store) => {
         parent: 'global-overview'
       },
       params: { mesh: ':mesh' },
-      component: () => import('@/views/Shell'),
+      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
       children: [
         {
           path: ':mesh',
@@ -123,7 +123,7 @@ export default (store) => {
             parent: 'all-meshes'
           },
           params: { mesh: ':mesh' },
-          component: () => import('@/views/Entities/Meshes')
+          component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/Meshes')
         }
       ]
     },
@@ -136,7 +136,7 @@ export default (store) => {
         parent: 'all-meshes'
       },
       params: { mesh: ':mesh' },
-      component: () => import('@/views/Shell'),
+      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
       children: [
         // dataplanes
         {
@@ -146,7 +146,7 @@ export default (store) => {
             title: 'Dataplanes',
             parent: 'dataplanes'
           },
-          component: () => import('@/views/Entities/Dataplanes')
+          component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/Dataplanes')
         },
         // traffic permissions
         {
@@ -155,7 +155,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Permissions'
           },
-          component: () => import('@/views/Policies/TrafficPermissions')
+          component: () => import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions')
         },
         // traffic routes
         {
@@ -164,7 +164,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Routes'
           },
-          component: () => import('@/views/Policies/TrafficRoutes')
+          component: () => import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes')
         },
         // traffic logs
         {
@@ -173,7 +173,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Logs'
           },
-          component: () => import('@/views/Policies/TrafficLogs')
+          component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs')
         },
         // traffic traces
         {
@@ -182,7 +182,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Traces'
           },
-          component: () => import('@/views/Policies/TrafficTraces')
+          component: () => import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces')
         },
         // fault injections
         {
@@ -191,7 +191,7 @@ export default (store) => {
           meta: {
             title: 'Fault Injections'
           },
-          component: () => import('@/views/Policies/FaultInjections')
+          component: () => import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections')
         },
         // circuit breakers
         {
@@ -200,7 +200,7 @@ export default (store) => {
           meta: {
             title: 'Circuit Breakers'
           },
-          component: () => import('@/views/Policies/CircuitBreakers')
+          component: () => import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers')
         },
         // health checks
         {
@@ -209,7 +209,7 @@ export default (store) => {
           meta: {
             title: 'Health Checks'
           },
-          component: () => import('@/views/Policies/HealthChecks')
+          component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks')
         },
         // proxy templates
         {
@@ -218,7 +218,7 @@ export default (store) => {
           meta: {
             title: 'Proxy Templates'
           },
-          component: () => import('@/views/Policies/ProxyTemplates')
+          component: () => import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates')
         }
       ]
     }
