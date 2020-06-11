@@ -64,7 +64,7 @@ export default {
       // push the update mesh param to the route
       this.$root.$router.push({
         params: { mesh: val }
-      })
+      }).catch(err => {})
     }
   }
 }

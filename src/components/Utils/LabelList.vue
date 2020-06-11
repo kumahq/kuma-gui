@@ -172,7 +172,7 @@ export default {
   display: grid;
   grid-auto-flow: column dense;
   grid-gap: 10px;
-  grid-template-columns: repeat(2, 1fr 4fr);
+  grid-template-columns: 1fr 2fr;
 
   span:first-of-type {
     min-width: 80px;
