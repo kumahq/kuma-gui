@@ -26,6 +26,23 @@
             </span>
             Create Dataplane
           </KButton>
+          <KButton
+            v-if="this.$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'dataplanes',
+              params: {
+                mesh: 'all'
+              }
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
         </template>
         <template slot="pagination">
           <Pagination
@@ -272,7 +289,7 @@ export default {
     loadData () {
       this.isLoading = true
 
-      const mesh = this.$route.params.mesh
+      const mesh = this.$route.params.mesh || null
       const query = this.$route.query.ns || null
 
       const params = {
@@ -280,6 +297,11 @@ export default {
         offset: this.pageOffset
       }
 
+      /**
+       * determine which endpoint to use based on the mesh.
+       * we are either fetching entities from one mesh, or fetching
+       * all of them from all meshes and collecting them into the view.
+       */
       const endpoint = () => {
         if (mesh === 'all') {
           return this.$api.getAllDataplanes(params)
@@ -290,6 +312,10 @@ export default {
         return this.$api.getAllDataplanesFromMesh(mesh)
       }
 
+      /**
+       * the function used for fetching dataplanes from a mesh
+       * and then collecting them into an array.
+       */
       const dpFetcher = (mesh, name, finalArr) => {
         this.$api.getDataplaneOverviewsFromMesh(mesh, name)
           .then(response => {
@@ -463,29 +489,24 @@ export default {
               }
 
               const final = []
+              const itemSelect = query
+                ? items()
+                : items()[0]
 
               // set the first item as the default for initial load
-              this.firstEntity = items()[0].name
+              this.firstEntity = itemSelect.name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(items()[0])
+              this.getEntity(itemSelect)
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
 
-              if (query && query.length) {
-                dpFetcher(
-                  items()[0].mesh,
-                  items()[0].name,
-                  final
-                )
+              if ((query && query.length) && (mesh && mesh.length)) {
+                dpFetcher(mesh, query, final)
               } else {
                 items().forEach(item => {
-                  dpFetcher(
-                    item.mesh,
-                    item.name,
-                    final
-                  )
+                  dpFetcher(item.mesh, item.name, final)
                 })
               }
 

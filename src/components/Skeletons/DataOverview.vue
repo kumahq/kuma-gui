@@ -369,6 +369,10 @@ export default {
   .k-button:after, button:after {
     display: none !important;
   }
+
+  .k-button {
+    margin-left: var(--spacing-xs);
+  }
 }
 
 .empty-state-wrapper {
