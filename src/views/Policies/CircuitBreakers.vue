@@ -79,9 +79,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'FaultInjections',
+  name: 'CircuitBreakers',
   metaInfo: {
-    title: 'Fault Injections'
+    title: 'Circuit Breakers'
   },
   components: {
     FrameSkeleton,
@@ -202,36 +202,55 @@ export default {
     loadData () {
       this.isLoading = true
 
-      const mesh = this.$route.params.mesh
+      const mesh = this.$route.params.mesh || null
+      const query = this.$route.query.ns || null
 
       const params = {
         size: this.pageSize,
         offset: this.pageOffset
       }
 
-      const endpoint = (mesh === 'all')
-        ? this.$api.getAllCircuitBreakers(params)
-        : this.$api.getAllCircuitBreakersFromMesh(mesh)
+      const endpoint = () => {
+        if (mesh === 'all') {
+          return this.$api.getAllCircuitBreakers(params)
+        } else if ((query && query.length) && mesh !== 'all') {
+          return this.$api.getCircuitBreaker(mesh, query, params)
+        }
+
+        return this.$api.getAllCircuitBreakersFromMesh(mesh)
+      }
 
       const getCircuitBreakers = () => {
-        return endpoint
+        return endpoint()
           .then(response => {
-            if (response.items.length > 0) {
-              const items = response.items
+            const items = () => {
+              if (response.items && response.items.length > 0) {
+                return this.sortEntities(response.items)
+              }
 
-              // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
+              return response
+            }
+
+            const itemSelect = items()
+
+            if (items()) {
+              const firstItem = query
+                ? itemSelect
+                : itemSelect[0]
 
               // set the first item as the default for initial load
-              this.firstEntity = items[0].name
+              this.firstEntity = firstItem.name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
+              this.getEntity(firstItem)
 
               // set the selected table row for the first item on page load
-              this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
+              this.$store.dispatch('updateSelectedTableRow', firstItem.name)
 
-              this.tableData.data = [...items]
+              this.tableData.data = query
+                ? [itemSelect]
+                : itemSelect
+
               this.tableDataIsEmpty = false
               this.isEmpty = false
             } else {
