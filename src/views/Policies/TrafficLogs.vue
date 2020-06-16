@@ -14,6 +14,22 @@
         @tableAction="tableAction"
         @reloadData="loadData"
       >
+        <template slot="additionalControls">
+          <KButton
+            v-if="this.$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'traffic-logs'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
+        </template>
         <template slot="pagination">
           <Pagination
             :has-previous="previous.length > 0"
@@ -28,9 +44,16 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :tabs="tabs"
-        :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
       >
+        <template slot="tabHeader">
+          <div>
+            <h3>{{ tabGroupTitle }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :url="shareUrl" />
+          </div>
+        </template>
         <template slot="overview">
           <LabelList
             :has-error="entityHasError"
@@ -68,6 +91,7 @@
 
 <script>
 import { getSome } from '@/helpers'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -82,6 +106,7 @@ export default {
     title: 'Traffic Logs'
   },
   components: {
+    EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -152,6 +177,20 @@ export default {
       } else {
         return null
       }
+    },
+    shareUrl () {
+      const urlRoot = `${window.location.origin}#`
+      const entity = this.entity
+
+      const shareUrl = () => {
+        if (this.$route.query.ns) {
+          return this.$route.fullPath
+        }
+
+        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
+      }
+
+      return shareUrl()
     }
   },
   watch: {
@@ -194,36 +233,55 @@ export default {
     loadData () {
       this.isLoading = true
 
-      const mesh = this.$route.params.mesh
+      const mesh = this.$route.params.mesh || null
+      const query = this.$route.query.ns || null
 
       const params = {
         size: this.pageSize,
         offset: this.pageOffset
       }
 
-      const endpoint = (mesh === 'all')
-        ? this.$api.getAllTrafficLogs(params)
-        : this.$api.getAllTrafficLogsFromMesh(mesh)
+      const endpoint = () => {
+        if (mesh === 'all') {
+          return this.$api.getAllTrafficLogs(params)
+        } else if ((query && query.length) && mesh !== 'all') {
+          return this.$api.getTrafficLog(mesh, query)
+        }
+
+        return this.$api.getAllTrafficLogsFromMesh(mesh)
+      }
 
       const getTrafficLogs = () => {
-        return endpoint
+        return endpoint()
           .then(response => {
-            if (response.items.length > 0) {
-              const items = response.items
+            const items = () => {
+              if (response.items && response.items.length > 0) {
+                return this.sortEntities(response.items)
+              }
 
-              // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
+              return response
+            }
+
+            const entityList = items()
+
+            if (items()) {
+              const firstItem = query
+                ? entityList
+                : entityList[0]
 
               // set the first item as the default for initial load
-              this.firstEntity = items[0].name
+              this.firstEntity = firstItem.name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
+              this.getEntity(firstItem)
 
               // set the selected table row for the first item on page load
-              this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
+              this.$store.dispatch('updateSelectedTableRow', firstItem.name)
 
-              this.tableData.data = [...items]
+              this.tableData.data = query
+                ? [entityList]
+                : entityList
+
               this.tableDataIsEmpty = false
               this.isEmpty = false
             } else {

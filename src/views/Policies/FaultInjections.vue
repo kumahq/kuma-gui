@@ -14,6 +14,22 @@
         @tableAction="tableAction"
         @reloadData="loadData"
       >
+        <template slot="additionalControls">
+          <KButton
+            v-if="this.$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'fault-injections'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
+        </template>
         <template slot="pagination">
           <Pagination
             :has-previous="previous.length > 0"

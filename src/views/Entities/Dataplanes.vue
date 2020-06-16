@@ -32,10 +32,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'dataplanes',
-              params: {
-                mesh: 'all'
-              }
+              name: 'dataplanes'
             }"
           >
             <span class="custom-control-icon">
@@ -260,14 +257,14 @@ export default {
     },
     shareUrl () {
       const urlRoot = `${window.location.origin}#`
+      const entity = this.entity
+
       const shareUrl = () => {
         if (this.$route.query.ns) {
           return this.$route.fullPath
-        } else if (this.entityNamespace) {
-          return `${urlRoot}${this.$route.fullPath}?ns=${this.entityNamespace}`
         }
 
-        return null
+        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
       }
 
       return shareUrl()
