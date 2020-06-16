@@ -58,9 +58,16 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :tabs="tabs"
-        :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
       >
+        <template slot="tabHeader">
+          <div>
+            <h3>{{ tabGroupTitle }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :url="shareUrl" />
+          </div>
+        </template>
         <template slot="overview">
           <LabelList
             :has-error="entityHasError"
@@ -152,6 +159,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getSome, humanReadableDate, getOffset } from '@/helpers'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -166,6 +174,7 @@ export default {
     title: 'Dataplanes'
   },
   components: {
+    EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -225,6 +234,7 @@ export default {
       hasNext: false,
       previous: [],
       tabGroupTitle: null,
+      entityNamespace: null,
       entityOverviewTitle: null,
       showmTLSTab: false
     }
@@ -247,6 +257,20 @@ export default {
       const storedVersion = this.$store.getters.getVersion
 
       return (storedVersion !== null) ? storedVersion : 'latest'
+    },
+    shareUrl () {
+      const urlRoot = `${window.location.origin}#`
+      const shareUrl = () => {
+        if (this.$route.query.ns) {
+          return this.$route.fullPath
+        } else if (this.entityNamespace) {
+          return `${urlRoot}${this.$route.fullPath}?ns=${this.entityNamespace}`
+        }
+
+        return null
+      }
+
+      return shareUrl()
     }
   },
   watch: {
@@ -600,6 +624,7 @@ export default {
 
               newEntity().then(i => {
                 this.entity = i
+                this.entityNamespace = i.basicData.name
                 this.tabGroupTitle = `Mesh: ${i.basicData.name}`
                 this.entityOverviewTitle = `Entity Overview for ${i.basicData.name}`
               })

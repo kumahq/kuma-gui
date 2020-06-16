@@ -1,12 +1,13 @@
 <template>
   <div class="tab-container">
     <header
-      v-if="tabGroupTitle && isReady"
+      v-if="$slots.tabHeader && isReady"
       class="tab__header"
     >
-      <h3 class="tab__header__title">
+      <slot name="tabHeader" />
+      <!-- <h3 class="tab__header__title">
         {{ tabGroupTitle }}
-      </h3>
+      </h3> -->
     </header>
 
     <div
@@ -157,12 +158,16 @@ export default {
 .k-tabs ul .tab-link {
   text-decoration: none !important;
 }
+
+.tab__header .k-button:after {
+  display: none !important;
+}
 </style>
 
 <style lang="scss" scoped>
 .tab-container {
   --tab-container-margin: var(--spacing-lg) 0 0 0;
-  --tab-header-margin: 0 0 var(--spacing-md) 0;
+  --tab-header-margin: 0 -10px var(--spacing-md) -10px;
   --tab-header-padding: 0 var(--spacing-md);
   --tab-header-title-font-size: var(--type-md);
   --tab-header-title-font-weight: 500;
@@ -183,13 +188,19 @@ export default {
 }
 
 .tab__header {
+  display: flex;
+  align-items: center;
   margin: var(--tab-header-margin);
   padding: var(--tab-header-padding);
-}
 
-.tab__header__title {
-  font-size: var(--tab-header-title-font-size);
-  font-weight: var(--tab-header-title-font-weight);
+  h1, h2, h3, h4, h5, h6 {
+    font-size: var(--tab-header-title-font-size);
+    font-weight: var(--tab-header-title-font-weight);
+  }
+
+  > div {
+    padding: 0 10px;
+  }
 }
 
 .tab__nav {

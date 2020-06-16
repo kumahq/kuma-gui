@@ -28,9 +28,16 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :tabs="tabs"
-        :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
       >
+        <template slot="tabHeader">
+          <div>
+            <h3>{{ tabGroupTitle }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :url="shareUrl" />
+          </div>
+        </template>
         <template slot="overview">
           <LabelList
             :has-error="entityHasError"
@@ -69,6 +76,7 @@
 
 <script>
 import { getSome } from '@/helpers'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -84,6 +92,7 @@ export default {
     title: 'Circuit Breakers'
   },
   components: {
+    EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -160,6 +169,20 @@ export default {
       const entity = this.formatForCLI(this.rawEntity)
 
       return entity
+    },
+    shareUrl () {
+      const urlRoot = `${window.location.origin}#`
+      const entity = this.entity
+
+      const shareUrl = () => {
+        if (this.$route.query.ns) {
+          return this.$route.fullPath
+        }
+
+        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
+      }
+
+      return shareUrl()
     }
   },
   watch: {
@@ -231,12 +254,12 @@ export default {
               return response
             }
 
-            const itemSelect = items()
+            const entityList = items()
 
             if (items()) {
               const firstItem = query
-                ? itemSelect
-                : itemSelect[0]
+                ? entityList
+                : entityList[0]
 
               // set the first item as the default for initial load
               this.firstEntity = firstItem.name
@@ -248,8 +271,8 @@ export default {
               this.$store.dispatch('updateSelectedTableRow', firstItem.name)
 
               this.tableData.data = query
-                ? [itemSelect]
-                : itemSelect
+                ? [entityList]
+                : entityList
 
               this.tableDataIsEmpty = false
               this.isEmpty = false
