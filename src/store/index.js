@@ -48,7 +48,8 @@ export default (api) => {
       status: null,
       selectedTab: '#overview',
       selectedTableRow: null,
-      storedWizardData: null
+      storedWizardData: null,
+      itemQueryNamespace: 'item'
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -86,7 +87,8 @@ export default (api) => {
       getSelectedTab: (state) => state.selectedTab,
       getSelectedTableRow: (state) => state.selectedTableRow,
       getEnvironment: (state) => state.environment,
-      getStoredWizardData: (state) => state.storedWizardData
+      getStoredWizardData: (state) => state.storedWizardData,
+      getItemQueryNamespace: (state) => state.itemQueryNamespace
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),

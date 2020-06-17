@@ -317,20 +317,39 @@ export default class Mock {
             conf: {
               backend: 'my-zipkin'
             }
-          },
+          }
+        ]
+      })
+      .onGet('/meshes/default/traffic-traces/tt-1').reply(200, {
+        type: 'TrafficTrace',
+        mesh: 'mesh-1',
+        name: 'tt-1',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        conf: {
+          backend: 'my-zipkin'
+        },
+        selectors: [
           {
-            type: 'TrafficTrace',
-            mesh: 'default',
-            name: 'tt-3',
-            selectors: [
-              {
-                match: {
-                  service: '*'
-                }
-              }
-            ],
-            conf: {
-              backend: 'my-zipkin'
+            match: {
+              service: '*'
+            }
+          }
+        ]
+      })
+      .onGet('/meshes/default/traffic-traces/traffic-trace-02').reply(200, {
+        type: 'TrafficTrace',
+        mesh: 'mesh-1',
+        name: 'traffic-trace-02',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        conf: {
+          backend: 'my-zipkin'
+        },
+        selectors: [
+          {
+            match: {
+              service: '*'
             }
           }
         ]
@@ -1351,7 +1370,7 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/traffic-logs').reply(200, {
+      .onGet('/meshes/default/traffic-logs').reply(200, {
         items: [
           {
             type: 'TrafficLog',
@@ -1398,54 +1417,58 @@ export default class Mock {
             conf: {
               backend: 'file'
             }
-          },
-          {
-            type: 'TrafficLog',
-            mesh: 'helloworld',
-            name: 'tl-alpha-tango',
-            sources: [
-              {
-                match: {
-                  service: 'web',
-                  version: '1.0'
-                }
-              }
-            ],
-            destinations: [
-              {
-                match: {
-                  service: 'backend'
-                }
-              }
-            ],
-            conf: {
-              backend: 'file'
-            }
-          },
-          {
-            type: 'TrafficLog',
-            mesh: 'my-silly-mesh-name',
-            name: 'tl-cat-dog-donut-12',
-            sources: [
-              {
-                match: {
-                  service: 'web',
-                  version: '1.0'
-                }
-              }
-            ],
-            destinations: [
-              {
-                match: {
-                  service: 'backend'
-                }
-              }
-            ],
-            conf: {
-              backend: 'file'
-            }
           }
         ]
+      })
+      .onGet('/meshes/default/traffic-logs/tl-1').reply(200, {
+        type: 'TrafficLog',
+        mesh: 'mesh-1',
+        name: 'tl-1',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        sources: [
+          {
+            match: {
+              service: 'web',
+              version: '1.0'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          backend: 'file'
+        }
+      })
+      .onGet('/meshes/default/traffic-logs/tl-123').reply(200, {
+        type: 'TrafficLog',
+        mesh: 'mesh-1',
+        name: 'tl-123',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        sources: [
+          {
+            match: {
+              service: 'web',
+              version: '1.0'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        conf: {
+          backend: 'file'
+        }
       })
       .onGet('/traffic-permissions').reply(200, {
         items: [
@@ -1585,6 +1608,69 @@ export default class Mock {
                 }
               }
             ]
+          }
+        ]
+      })
+      .onGet('/meshes/default/traffic-permissions/tp-1').reply(200, {
+        type: 'TrafficPermission',
+        mesh: 'mesh-1',
+        name: 'tp-1',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        sources: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'redis'
+            }
+          }
+        ]
+      })
+      .onGet('/meshes/default/traffic-permissions/tp-1234').reply(200, {
+        type: 'TrafficPermission',
+        mesh: 'mesh-1',
+        name: 'tp-1234',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        sources: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'redis'
+            }
+          }
+        ]
+      })
+      .onGet('/meshes/default/traffic-permissions/tp-alpha-tango-donut').reply(200, {
+        type: 'TrafficPermission',
+        mesh: 'mesh-1',
+        name: 'tp-alpha-tango-donut',
+        creationTime: '2020-05-12T12:31:45.606217+02:00',
+        modificationTime: '2020-05-12T12:31:45.606217+02:00',
+        sources: [
+          {
+            match: {
+              service: 'backend'
+            }
+          }
+        ],
+        destinations: [
+          {
+            match: {
+              service: 'redis'
+            }
           }
         ]
       })

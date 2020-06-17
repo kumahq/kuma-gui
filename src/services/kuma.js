@@ -190,7 +190,7 @@ export default class Kuma {
   }
 
   // get health check details
-  getHealthCheckFromMesh (mesh, name, params) {
+  getHealthCheck (mesh, name, params) {
     return this.client.get(`/meshes/${mesh}/health-checks/${name}`, { params })
   }
 

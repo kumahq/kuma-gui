@@ -51,11 +51,11 @@ export default {
   },
   computed: {
     ...mapState({
-      dataplanes: 'totalDataplaneCount',
+      dpCount: 'totalDataplaneCount',
       meshes: 'meshes'
     }),
     showNotice () {
-      return !this.dataplanes && this.onlyDefaultMesh === true
+      return (this.dpCount !== undefined && this.dpCount === 0) && this.onlyDefaultMesh === true
     }
   },
   watch: {

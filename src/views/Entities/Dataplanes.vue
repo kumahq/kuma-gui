@@ -26,6 +26,20 @@
             </span>
             Create Dataplane
           </KButton>
+          <KButton
+            v-if="this.$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'dataplanes'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
         </template>
         <template slot="pagination">
           <Pagination
@@ -41,9 +55,16 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :tabs="tabs"
-        :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
       >
+        <template slot="tabHeader">
+          <div>
+            <h3>{{ tabGroupTitle }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :url="shareUrl" />
+          </div>
+        </template>
         <template slot="overview">
           <LabelList
             :has-error="entityHasError"
@@ -135,6 +156,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getSome, humanReadableDate, getOffset } from '@/helpers'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -149,6 +171,7 @@ export default {
     title: 'Dataplanes'
   },
   components: {
+    EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -208,13 +231,15 @@ export default {
       hasNext: false,
       previous: [],
       tabGroupTitle: null,
+      entityNamespace: null,
       entityOverviewTitle: null,
       showmTLSTab: false
     }
   },
   computed: {
     ...mapGetters({
-      environment: 'getEnvironment'
+      environment: 'getEnvironment',
+      queryNamespace: 'getItemQueryNamespace'
     }),
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
@@ -229,6 +254,20 @@ export default {
       const storedVersion = this.$store.getters.getVersion
 
       return (storedVersion !== null) ? storedVersion : 'latest'
+    },
+    shareUrl () {
+      const urlRoot = `${window.location.origin}#`
+      const entity = this.entity
+
+      const shareUrl = () => {
+        if (this.$route.query.ns) {
+          return this.$route.fullPath
+        }
+
+        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
+      }
+
+      return shareUrl()
     }
   },
   watch: {
@@ -271,21 +310,197 @@ export default {
     loadData () {
       this.isLoading = true
 
-      const mesh = this.$route.params.mesh
+      const mesh = this.$route.params.mesh || null
+      const query = this.$route.query.ns || null
 
       const params = {
         size: this.pageSize,
         offset: this.pageOffset
       }
 
-      const endpoint = (mesh === 'all')
-        ? this.$api.getAllDataplanes(params)
-        : this.$api.getAllDataplanesFromMesh(mesh)
+      /**
+       * determine which endpoint to use based on the mesh.
+       * we are either fetching entities from one mesh, or fetching
+       * all of them from all meshes and collecting them into the view.
+       */
+      const endpoint = () => {
+        if (mesh === 'all') {
+          return this.$api.getAllDataplanes(params)
+        } else if ((query && query.length) && mesh !== 'all') {
+          return this.$api.getDataplaneOverviewsFromMesh(mesh, query)
+        }
+
+        return this.$api.getAllDataplanesFromMesh(mesh)
+      }
+
+      /**
+       * the function used for fetching dataplanes from a mesh
+       * and then collecting them into an array.
+       */
+      const dpFetcher = (mesh, name, finalArr) => {
+        this.$api.getDataplaneOverviewsFromMesh(mesh, name)
+          .then(response => {
+            const placeholder = 'n/a'
+
+            let lastConnected
+            let lastUpdated
+            let tags = placeholder
+            let totalUpdates = []
+            let status = 'Offline'
+            const connectTimes = []
+            const updateTimes = []
+
+            /**
+             * Iterate through the networking inbound or gateway data
+             */
+            const inbound = response.dataplane.networking.inbound
+            const gateway = response.dataplane.networking.gateway
+
+            if (inbound || gateway) {
+              if (inbound) {
+                /** inbound */
+                for (let i = 0; i < inbound.length; i++) {
+                  const rawTags = inbound[i].tags
+
+                  const final = []
+                  const tagKeys = Object.keys(rawTags)
+                  const tagVals = Object.values(rawTags)
+
+                  for (let x = 0; x < tagKeys.length; x++) {
+                    final.push({
+                      label: tagKeys[x],
+                      value: tagVals[x]
+                    })
+                  }
+
+                  tags = final
+                }
+              } else if (gateway) {
+                /** gateway */
+                const items = gateway.tags
+
+                for (let i = 0; i < Object.keys(items).length; i++) {
+                  const final = []
+                  const tagKeys = Object.keys(items)
+                  const tagVals = Object.values(items)
+
+                  for (let x = 0; x < tagKeys.length; x++) {
+                    final.push({
+                      label: tagKeys[x],
+                      value: tagVals[x]
+                    })
+                  }
+
+                  tags = final
+                }
+              }
+            } else {
+              tags = 'none'
+            }
+
+            /**
+             * Iterate through the subscriptions
+             */
+            if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
+              response.dataplaneInsight.subscriptions.forEach(item => {
+                const responsesSent = item.status.total.responsesSent || 0
+                const connectTime = item.connectTime || placeholder
+                const lastUpdateTime = item.status.lastUpdateTime || placeholder
+                const disconnectTime = item.disconnectTime || null
+
+                totalUpdates.push(responsesSent)
+                connectTimes.push(connectTime)
+                updateTimes.push(lastUpdateTime)
+
+                if (connectTime && connectTime.length && !disconnectTime) {
+                  status = 'Online'
+                } else {
+                  status = 'Offline'
+                }
+              })
+
+              // get the sum of total updates (with some precautions)
+              totalUpdates = totalUpdates.reduce((a, b) => a + b)
+
+              // select the most recent LAST CONNECTED timestamp
+              const selectedTime = connectTimes.reduce((a, b) => {
+                if (a && b) {
+                  return a.MeasureDate > b.MeasureDate ? a : b
+                }
+
+                return null
+              })
+
+              // select the most recent LAST UPDATED timestamnp
+              const selectedUpdateTime = updateTimes.reduce((a, b) => {
+                if (a && b) {
+                  return a.MeasureDate > b.MeasureDate ? a : b
+                }
+
+                return null
+              })
+
+              // format each reduced value as a date to compare against
+              const selectedTimeAsDate = new Date(selectedTime)
+              const selectedUpdateTimeAsDate = new Date(selectedUpdateTime)
+
+              /**
+               * @todo refactor this to use a function instead
+               */
+
+              // formatted time for LAST CONNECTED (if there is a value present)
+              if (selectedTime && !isNaN(selectedTimeAsDate)) {
+                lastConnected = humanReadableDate(selectedTimeAsDate)
+              } else {
+                lastConnected = 'never'
+              }
+
+              // formatted time for LAST UPDATED (if there is a value present)
+              if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
+                lastUpdated = humanReadableDate(selectedUpdateTimeAsDate)
+              } else {
+                lastUpdated = 'never'
+              }
+            } else {
+              // if there are no subscriptions, set them all to a fallback
+              lastConnected = 'never'
+              lastUpdated = 'never'
+              totalUpdates = 0
+            }
+
+            // assemble the table data
+            finalArr.push({
+              name: response.name,
+              mesh: response.mesh,
+              tags: tags,
+              status: status,
+              lastConnected: lastConnected,
+              lastUpdated: lastUpdated,
+              totalUpdates: totalUpdates,
+              type: 'dataplane'
+            })
+
+            this.sortEntities(finalArr)
+
+            return finalArr
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
 
       const getDataplanes = () => {
-        return endpoint
+        return endpoint()
           .then(response => {
-            if (response.items.length > 0) {
+            const items = () => {
+              if (response.items && response.items.length > 0) {
+                return this.sortEntities(response.items)
+              }
+
+              return response
+            }
+
+            if (items()) {
               // check to see if the `next` url is present
               if (response.next) {
                 this.next = getOffset(response.next)
@@ -294,167 +509,27 @@ export default {
                 this.hasNext = false
               }
 
-              const items = this.sortEntities(response.items)
               const final = []
+              const itemSelect = query
+                ? items()
+                : items()[0]
 
               // set the first item as the default for initial load
-              this.firstEntity = items[0].name
+              this.firstEntity = itemSelect.name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
+              this.getEntity(itemSelect)
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
 
-              items.forEach(item => {
-                this.$api.getDataplaneOverviewsFromMesh(item.mesh, item.name)
-                  .then(response => {
-                    const placeholder = 'n/a'
-
-                    let lastConnected
-                    let lastUpdated
-                    let tags = placeholder
-                    let totalUpdates = []
-                    let status = 'Offline'
-                    const connectTimes = []
-                    const updateTimes = []
-
-                    /**
-                     * Iterate through the networking inbound or gateway data
-                     */
-                    const inbound = response.dataplane.networking.inbound
-                    const gateway = response.dataplane.networking.gateway
-
-                    if (inbound || gateway) {
-                      if (inbound) {
-                        /** inbound */
-                        for (let i = 0; i < inbound.length; i++) {
-                          const rawTags = inbound[i].tags
-
-                          const final = []
-                          const tagKeys = Object.keys(rawTags)
-                          const tagVals = Object.values(rawTags)
-
-                          for (let x = 0; x < tagKeys.length; x++) {
-                            final.push({
-                              label: tagKeys[x],
-                              value: tagVals[x]
-                            })
-                          }
-
-                          tags = final
-                        }
-                      } else if (gateway) {
-                        /** gateway */
-                        const items = gateway.tags
-
-                        for (let i = 0; i < Object.keys(items).length; i++) {
-                          const final = []
-                          const tagKeys = Object.keys(items)
-                          const tagVals = Object.values(items)
-
-                          for (let x = 0; x < tagKeys.length; x++) {
-                            final.push({
-                              label: tagKeys[x],
-                              value: tagVals[x]
-                            })
-                          }
-
-                          tags = final
-                        }
-                      }
-                    } else {
-                      tags = 'none'
-                    }
-
-                    /**
-                     * Iterate through the subscriptions
-                     */
-                    if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
-                      response.dataplaneInsight.subscriptions.forEach(item => {
-                        const responsesSent = item.status.total.responsesSent || 0
-                        const connectTime = item.connectTime || placeholder
-                        const lastUpdateTime = item.status.lastUpdateTime || placeholder
-                        const disconnectTime = item.disconnectTime || null
-
-                        totalUpdates.push(responsesSent)
-                        connectTimes.push(connectTime)
-                        updateTimes.push(lastUpdateTime)
-
-                        if (connectTime && connectTime.length && !disconnectTime) {
-                          status = 'Online'
-                        } else {
-                          status = 'Offline'
-                        }
-                      })
-
-                      // get the sum of total updates (with some precautions)
-                      totalUpdates = totalUpdates.reduce((a, b) => a + b)
-
-                      // select the most recent LAST CONNECTED timestamp
-                      const selectedTime = connectTimes.reduce((a, b) => {
-                        if (a && b) {
-                          return a.MeasureDate > b.MeasureDate ? a : b
-                        }
-
-                        return null
-                      })
-
-                      // select the most recent LAST UPDATED timestamnp
-                      const selectedUpdateTime = updateTimes.reduce((a, b) => {
-                        if (a && b) {
-                          return a.MeasureDate > b.MeasureDate ? a : b
-                        }
-
-                        return null
-                      })
-
-                      // format each reduced value as a date to compare against
-                      const selectedTimeAsDate = new Date(selectedTime)
-                      const selectedUpdateTimeAsDate = new Date(selectedUpdateTime)
-
-                      /**
-                       * @todo refactor this to use a function instead
-                       */
-
-                      // formatted time for LAST CONNECTED (if there is a value present)
-                      if (selectedTime && !isNaN(selectedTimeAsDate)) {
-                        lastConnected = humanReadableDate(selectedTimeAsDate)
-                      } else {
-                        lastConnected = 'never'
-                      }
-
-                      // formatted time for LAST UPDATED (if there is a value present)
-                      if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
-                        lastUpdated = humanReadableDate(selectedUpdateTimeAsDate)
-                      } else {
-                        lastUpdated = 'never'
-                      }
-                    } else {
-                      // if there are no subscriptions, set them all to a fallback
-                      lastConnected = 'never'
-                      lastUpdated = 'never'
-                      totalUpdates = 0
-                    }
-
-                    // assemble the table data
-                    final.push({
-                      name: response.name,
-                      mesh: response.mesh,
-                      tags: tags,
-                      status: status,
-                      lastConnected: lastConnected,
-                      lastUpdated: lastUpdated,
-                      totalUpdates: totalUpdates,
-                      type: 'dataplane'
-                    })
-
-                    this.sortEntities(final)
-                  })
-                  .catch(error => {
-                    console.error(error)
-                  })
-              })
+              if ((query && query.length) && (mesh && mesh.length)) {
+                dpFetcher(mesh, query, final)
+              } else {
+                items().forEach(item => {
+                  dpFetcher(item.mesh, item.name, final)
+                })
+              }
 
               this.tableData.data = final
               this.tableDataIsEmpty = false
@@ -558,6 +633,7 @@ export default {
 
               newEntity().then(i => {
                 this.entity = i
+                this.entityNamespace = i.basicData.name
                 this.tabGroupTitle = `Mesh: ${i.basicData.name}`
                 this.entityOverviewTitle = `Entity Overview for ${i.basicData.name}`
               })
