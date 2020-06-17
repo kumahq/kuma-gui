@@ -10,11 +10,22 @@
         border-variant="noBorder"
       >
         <template slot="body">
-          <prism
-            class="code-block"
-            language="yaml"
-            :code="yamlContent"
-          />
+          <KTabs :tabs="tabs">
+            <template slot="universal">
+              <prism
+                class="code-block"
+                language="yaml"
+                :code="yamlContent"
+              />
+            </template>
+            <template slot="kubernetes">
+              <prism
+                class="code-block"
+                language="yaml"
+                :code="yamlContent"
+              />
+            </template>
+          </KTabs>
         </template>
         <template slot="actions">
           <KClipboardProvider
@@ -130,12 +141,29 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      tabs: [
+        {
+          hash: '#universal',
+          title: 'Universal'
+        },
+        {
+          hash: '#kubernetes',
+          title: 'Kubernetes'
+        }
+      ]
+    }
+  },
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
     yamlContent () {
       const content = this.content
+      const { name, type } = content
+
+      console.log(content)
 
       return json2yaml(content)
     }

@@ -287,6 +287,7 @@ export default class Mock {
         }
       })
       .onGet('/meshes/default/traffic-traces').reply(200, {
+        total: 2,
         items: [
           {
             type: 'TrafficTrace',
@@ -355,6 +356,7 @@ export default class Mock {
         ]
       })
       .onGet('/traffic-traces').reply(200, {
+        total: 5,
         items: [
           {
             type: 'TrafficTrace',
@@ -434,6 +436,7 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/default/health-checks').reply(200, {
+        total: 7,
         items: [
           {
             type: 'HealthCheck',
@@ -1009,6 +1012,7 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/default/fault-injections').reply(200, {
+        total: 2,
         items: [
           {
             type: 'FaultInjection',
@@ -1267,6 +1271,7 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/default/proxytemplates').reply(200, {
+        total: 1,
         items: [
           {
             type: 'ProxyTemplate',
@@ -1295,6 +1300,7 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/helloworld/proxytemplates').reply(200, {
+        total: 1,
         items: [
           {
             type: 'ProxyTemplate',
@@ -1323,6 +1329,7 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/default/proxytemplates/pt-1').reply(200, {
+        total: 1,
         type: 'ProxyTemplate',
         mesh: 'default',
         name: 'pt-1',
@@ -1371,6 +1378,7 @@ export default class Mock {
         }
       })
       .onGet('/meshes/default/traffic-logs').reply(200, {
+        total: 2,
         items: [
           {
             type: 'TrafficLog',
@@ -1471,6 +1479,7 @@ export default class Mock {
         }
       })
       .onGet('/traffic-permissions').reply(200, {
+        total: 3,
         items: [
           {
             type: 'TrafficPermission',
@@ -1551,6 +1560,7 @@ export default class Mock {
         ]
       })
       .onGet('/meshes/default/traffic-permissions').reply(200, {
+        total: 3,
         items: [
           {
             type: 'TrafficPermission',
