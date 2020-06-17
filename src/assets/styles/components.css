@@ -51,6 +51,12 @@
   padding: 2rem 0;
 }
 
+/* KTabs overrides */
+
+.k-tabs .tab-container {
+  outline: 0 !important;
+}
+
 /* misc utils */
 
 .help-icon {

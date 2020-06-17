@@ -97,7 +97,7 @@ export default class Mock {
       //     }
       //   }
       // })
-      .onGet('/dataplanes').reply(200, {
+      .onGet('/meshes/default/dataplanes').reply(200, {
         total: 2,
         items: [
           {

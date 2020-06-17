@@ -508,10 +508,22 @@ export default {
                   if (res.dataplaneInsight.mTLS) {
                     const mtls = res.dataplaneInsight.mTLS
 
+                    const rawExpDate = new Date(mtls.certificateExpirationTime)
+                    // this prevents any weird date shifting
+                    const fixedExpDate = new Date(
+                      rawExpDate.getTime() +
+                      rawExpDate.getTimezoneOffset() * 60000
+                    )
+                    // assembled to display date and time (in 24-hour format)
+                    const assembledExpDate = `
+                      ${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
+                    `
+
                     data = {
                       certificateExpirationTime: {
                         label: 'Expiration Time',
-                        value: humanReadableDate(mtls.certificateExpirationTime)
+                        // value: new Date(mtls.certificateExpirationTime).toLocaleDateString('en-US')
+                        value: assembledExpDate
                       },
                       lastCertificateRegeneration: {
                         label: 'Last Generated',

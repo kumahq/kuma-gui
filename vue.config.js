@@ -8,6 +8,9 @@ module.exports = {
     sourceMap: false
   },
   chainWebpack: config => {
+    config.output
+      .chunkFilename('[name].js?t=[chunkhash:8]')
+
     config.module
       .rule('ignore-some-things')
       .test(/\/(LICENSE|COPYRIGHT|CONTRIBUTORS|README)$|.*\.(txt|ijmap|md)|\/\..*/i)

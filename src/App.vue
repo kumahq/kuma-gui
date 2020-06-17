@@ -90,11 +90,23 @@ export default {
             // fetch the mesh list
             this.$store.dispatch('fetchMeshList')
 
-            // fetch all dataplanes
-            // this.$store.dispatch('getAllDataplanes')
-
-            // fetch the version
+            // fetch the version and store it in localStorage
             this.$store.dispatch('getVersion')
+              .then(() => {
+                const newVersion = this.$store.getters.getVersion
+                const lsVersion = localStorage.getItem('kumaVersion') || null
+
+                // if the version stored in the browser is different than the
+                // version running, update the version in localStorage, and
+                // reload the page
+                if (lsVersion !== newVersion) {
+                  // reload the app
+                  this.$router.go()
+
+                  // update the version in localStorage
+                  localStorage.setItem('kumaVersion', newVersion)
+                }
+              })
 
             // fetch the tagline
             this.$store.dispatch('getTagline')

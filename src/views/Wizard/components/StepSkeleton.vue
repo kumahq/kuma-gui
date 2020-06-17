@@ -134,6 +134,13 @@ export default {
     this.resetProcess()
     // this sets the starting step upon load
     this.setStartingStep()
+    // add a body class so we can target styling elements outside of the
+    // Wizard components accordingly so that they don't clash with the
+    // Wizard sidebar
+    document.body.classList.add('wizard-page')
+  },
+  destroyed () {
+    document.body.classList.remove('wizard-page')
   },
   methods: {
     goToStep (index) {
@@ -224,6 +231,14 @@ export default {
     color: red;
     font-weight: bold;
     font-style: italic;
+  }
+}
+
+// forces items outside of the wizard content container to adhere
+// to the width limitations so that they don't underlap the Wizard sidebar
+@media screen and (min-width: 1220px) {
+  body.wizard-page .main-content > .page > *:not(.overview) {
+    max-width: calc(100% - 320px);
   }
 }
 </style>

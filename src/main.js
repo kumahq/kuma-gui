@@ -68,7 +68,10 @@ function SETUP_VUE_APP () {
     .then(response => {
       const apiUrl = response.data.apiUrl
       const kumaEnv = response.data.environment
-      const storedKumaEnv = localStorage.getItem('kumaEnv') !== null ? localStorage.getItem('kumaEnv').toString() : null
+
+      const storedKumaEnv = localStorage.getItem('kumaEnv') !== null
+        ? localStorage.getItem('kumaEnv').toString()
+        : null
 
       /**
        * Always check the API URL and set it accordingly for the app to access.
