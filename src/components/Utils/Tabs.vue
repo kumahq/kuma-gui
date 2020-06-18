@@ -116,7 +116,6 @@ export default {
     },
     initialTabOverride: {
       type: String,
-      required: false,
       default: null
     }
   },

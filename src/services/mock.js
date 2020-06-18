@@ -1219,6 +1219,7 @@ export default class Mock {
         ]
       })
       .onGet('/proxytemplates').reply(200, {
+        total: 2,
         items: [
           {
             type: 'ProxyTemplate',
