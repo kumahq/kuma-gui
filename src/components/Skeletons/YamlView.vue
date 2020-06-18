@@ -10,29 +10,56 @@
         border-variant="noBorder"
       >
         <template slot="body">
-          <prism
-            class="code-block"
-            language="yaml"
-            :code="yamlContent"
-          />
-        </template>
-        <template slot="actions">
-          <KClipboardProvider
-            v-if="content"
-            v-slot="{ copyToClipboard }"
+          <KTabs
+            :key="environment"
+            v-model="activeTab.hash"
+            :tabs="tabs"
           >
-            <KPop placement="bottom">
-              <KButton
-                appearance="primary"
-                @click="() => { copyToClipboard(yamlContent) }"
-              >
-                Copy YAML to Clipboard
-              </KButton>
-              <div slot="content">
-                <p>Entity copied to clipboard!</p>
-              </div>
-            </KPop>
-          </KClipboardProvider>
+            <template slot="universal">
+              <KClipboardProvider v-slot="{ copyToClipboard }">
+                <KPop placement="bottom">
+                  <KButton
+                    class="copy-button"
+                    appearance="primary"
+                    size="small"
+                    @click="() => { copyToClipboard(yamlContent.universal) }"
+                  >
+                    Copy Universal YAML
+                  </KButton>
+                  <div slot="content">
+                    <p>Entity copied to clipboard!</p>
+                  </div>
+                </KPop>
+              </KClipboardProvider>
+              <prism
+                class="code-block"
+                language="yaml"
+                :code="yamlContent.universal"
+              />
+            </template>
+            <template slot="kubernetes">
+              <KClipboardProvider v-slot="{ copyToClipboard }">
+                <KPop placement="bottom">
+                  <KButton
+                    class="copy-button"
+                    appearance="primary"
+                    size="small"
+                    @click="() => { copyToClipboard(yamlContent.kubernetes) }"
+                  >
+                    Copy Kubernetes YAML
+                  </KButton>
+                  <div slot="content">
+                    <p>Entity copied to clipboard!</p>
+                  </div>
+                </KPop>
+              </KClipboardProvider>
+              <prism
+                class="code-block"
+                language="yaml"
+                :code="yamlContent.kubernetes"
+              />
+            </template>
+          </KTabs>
         </template>
       </KCard>
     </div>
@@ -95,6 +122,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Prism from 'vue-prismjs'
 import 'prismjs/themes/prism.css'
 import json2yaml from '@appscode/json2yaml'
@@ -130,18 +158,78 @@ export default {
       default: false
     }
   },
+  data () {
+    return {
+      tabs: [
+        {
+          hash: '#universal',
+          title: 'Universal'
+        },
+        {
+          hash: '#kubernetes',
+          title: 'Kubernetes'
+        }
+      ]
+    }
+  },
   computed: {
+    ...mapGetters({
+      environment: 'getEnvironment'
+    }),
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
+    },
+    activeTab: {
+      get (test) {
+        const env = this.environment
+
+        return {
+          hash: `#${env}`,
+          nohash: env
+        }
+      },
+      set (newTab) {
+        return {
+          hash: `#${newTab}`,
+          nohash: newTab
+        }
+      }
     },
     yamlContent () {
       const content = this.content
 
-      return json2yaml(content)
+      const kubernetes = () => {
+        const newObj = {}
+        const sourceObj = Object.assign({}, this.content)
+        const { name, type } = sourceObj
+
+        delete sourceObj.type
+        delete sourceObj.name
+
+        newObj.kind = type
+        newObj.metadata = {
+          name: name
+        }
+
+        return { ...newObj, ...sourceObj }
+      }
+
+      const items = {
+        universal: json2yaml(content),
+        kubernetes: json2yaml(kubernetes())
+      }
+
+      return items
     }
   }
 }
 </script>
+
+<style>
+.yaml-view-content .k-tabs .tab-container {
+  position: relative !important;
+}
+</style>
 
 <style lang="scss" scoped>
 .code-block {
@@ -161,5 +249,21 @@ export default {
       margin-right: auto;
     }
   }
+}
+
+.copy-button {
+  position: absolute;
+  top: var(--spacing-xs);
+  right: var(--spacing-xs);
+  display: block;
+  margin: 0 0 var(--spacing-md) auto;
+
+  &:after {
+    display: none;
+  }
+}
+
+.env-name {
+  text-transform: capitalize;
 }
 </style>

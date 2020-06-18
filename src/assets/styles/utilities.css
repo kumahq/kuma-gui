@@ -111,3 +111,8 @@
   content: "›";
   margin-left: 5px;
 }
+
+.capitalize {
+  display: inline-block;
+  text-transform: capitalize;
+}

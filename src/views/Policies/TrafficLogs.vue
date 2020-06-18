@@ -255,11 +255,17 @@ export default {
         return endpoint()
           .then(response => {
             const items = () => {
-              if (response.items && response.items.length > 0) {
-                return this.sortEntities(response.items)
+              const r = response
+
+              if ('total' in r) {
+                if (r.total !== 0 && r.items && r.items.length > 0) {
+                  return this.sortEntities(r.items)
+                }
+
+                return null
               }
 
-              return response
+              return r
             }
 
             const entityList = items()
