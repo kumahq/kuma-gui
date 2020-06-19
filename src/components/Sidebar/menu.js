@@ -24,6 +24,12 @@ export default {
           link: '/dataplanes',
           title: false
           // root: true
+        },
+        {
+          name: 'Local CPs',
+          link: '/local-cps',
+          title: false,
+          root: true
         }
       ]
     },

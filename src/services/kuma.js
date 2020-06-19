@@ -36,6 +36,14 @@ export default class Kuma {
   }
 
   /**
+   * Multicluster
+   */
+
+  getLocalCPs (params) {
+    return this.client.get('/status/clusters', { params })
+  }
+
+  /**
    * Meshes
    */
 

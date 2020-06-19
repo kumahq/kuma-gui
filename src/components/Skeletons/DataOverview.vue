@@ -65,7 +65,7 @@
           >
             <div
               class="entity-status"
-              :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline') }"
+              :class="{ 'is-offline': (rowValue.toString().toLowerCase() === 'offline' || rowValue === false) }"
             >
               <span class="entity-status__dot" />
               <span class="entity-status__label">{{ rowValue }}</span>
@@ -309,10 +309,7 @@ export default {
   },
   methods: {
     tableRowHandler (e, row, type) {
-      this.$emit('tableAction', {
-        name: row.name,
-        mesh: row.mesh
-      })
+      this.$emit('tableAction', row)
     }
   }
 }

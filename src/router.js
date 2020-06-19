@@ -92,7 +92,7 @@ export default (store) => {
     },
     // App
 
-    // meshes
+    // overview
     {
       path: '/overview',
       alias: '/',
@@ -101,6 +101,17 @@ export default (store) => {
       meta: {
         title: 'Global Overview',
         breadcrumb: 'Overview'
+      }
+    },
+    // local CPs
+    {
+      path: '/local-cps',
+      alias: '/',
+      name: 'local-cps',
+      component: () => import(/* webpackChunkName: "local-cps" */ '@/views/Entities/LocalCPs'),
+      meta: {
+        title: 'Local CPs',
+        breadcrumb: 'Local CPs'
       }
     },
     // all Meshes
