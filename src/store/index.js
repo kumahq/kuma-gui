@@ -88,7 +88,12 @@ export default (api) => {
       getSelectedTableRow: (state) => state.selectedTableRow,
       getEnvironment: (state) => state.environment,
       getStoredWizardData: (state) => state.storedWizardData,
-      getItemQueryNamespace: (state) => state.itemQueryNamespace
+      getItemQueryNamespace: (state) => state.itemQueryNamespace,
+      getMulticlusterStatus: (state) => {
+        const status = (state.config.mode === 'global')
+
+        return status
+      }
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),

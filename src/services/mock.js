@@ -868,6 +868,7 @@ export default class Mock {
       })
       .onGet('/health-checks')
       .reply(200, {
+        total: 7,
         items: [
           {
             type: 'HealthCheck',
@@ -1202,6 +1203,7 @@ export default class Mock {
       })
       .onGet('/fault-injections')
       .reply(200, {
+        total: 2,
         items: [
           {
             type: 'FaultInjection',

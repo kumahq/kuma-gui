@@ -1,5 +1,10 @@
 <template>
   <div class="local-cps">
+    <page-header noflex>
+      <h2 class="xxl">
+        {{ pageTitle }}
+      </h2>
+    </page-header>
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -71,13 +76,13 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getSome, humanReadableDate, getOffset } from '@/helpers'
+import { humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
+import PageHeader from '@/components/Utils/PageHeader.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
-import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
@@ -86,11 +91,11 @@ export default {
     title: 'Local CPs'
   },
   components: {
+    PageHeader,
     FrameSkeleton,
     Pagination,
     DataOverview,
     Tabs,
-    YamlView,
     LabelList
   },
   filters: {
@@ -147,8 +152,14 @@ export default {
   },
   computed: {
     ...mapState({
-      mesh: 'selectedMesh'
-    })
+      mesh: 'selectedMesh',
+      config: 'getConfig'
+    }),
+    pageTitle () {
+      const metaTitle = this.$route.meta.title
+
+      return metaTitle
+    }
   },
   watch: {
     '$route' (to, from) {

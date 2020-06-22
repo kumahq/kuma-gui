@@ -2,7 +2,7 @@
   <ul class="menu-list">
     <template v-for="item in menuItems">
       <li
-        v-if="!item.hidden && !item.multicluster"
+        v-if="!item.hidden"
         :key="item.name"
         :class="{'menu-title' : item.title, 'hasBadge': item.badge}"
       >
@@ -45,7 +45,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['selectedMesh'])
+    ...mapState(['selectedMesh']),
+    hasMulticluster () {
+      const mode = this.$store.state.config.mode === 'global'
+
+      console.log(mode)
+
+      return mode
+    }
   },
   watch: {
     selectedMesh () {

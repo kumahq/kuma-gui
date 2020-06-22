@@ -63,13 +63,14 @@ export default {
   },
   methods: {
     getGuiStatus () {
+      // these localStorage items are set on app launch
       const env = localStorage.getItem('kumaEnv')
       const apiUrl = localStorage.getItem('kumaApiUrl')
+
+      // get the other values from our state
       const tagline = this.$store.getters.getTagline
       const version = this.$store.getters.getVersion
       const config = this.$store.getters.getConfig
-
-      console.log(config.mode)
 
       if (env && apiUrl) {
         const mode = config.mode === 'global' ? ' - Multicluster' : ''
