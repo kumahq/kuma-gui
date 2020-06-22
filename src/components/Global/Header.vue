@@ -21,10 +21,18 @@
           v-if="showStatus"
           class="py-1 md:py-0 md:px-4"
         >
-          <status
-            :active="guiStatus"
-            :content="statusContent"
-          />
+          <status :active="guiStatus">
+            <template slot="content">
+              <span>{{ statusContent }}</span>
+              <KBadge
+                v-if="multicluster"
+                appearance="success"
+                class="status-badge"
+              >
+                Multicluster
+              </KBadge>
+            </template>
+          </status>
         </div>
       </div>
     </div>
@@ -52,7 +60,9 @@ export default {
       // this checks the status of the API itself
       status: 'getStatus',
       // the currently selected mesh
-      currentMesh: 'getSelectedMesh'
+      currentMesh: 'getSelectedMesh',
+      // the status of multicluster
+      multicluster: 'getMulticlusterStatus'
     }),
     showStatus () {
       return !this.$route.meta.hideStatus && this.status === 'OK'
@@ -70,12 +80,9 @@ export default {
       // get the other values from our state
       const tagline = this.$store.getters.getTagline
       const version = this.$store.getters.getVersion
-      const config = this.$store.getters.getConfig
 
       if (env && apiUrl) {
-        const mode = config.mode === 'global' ? ' - Multicluster' : ''
-
-        this.statusContent = `${tagline} v${version} running on ${env}${mode}`
+        this.statusContent = `${tagline} v${version} running on ${env}`
         this.guiStatus = true
       } else {
         this.statusContent = "Unable to determine Kuma's status"
@@ -120,6 +127,23 @@ export default {
 
 .upgrade-check-wrapper {
   margin-left: auto;
+}
+
+.status-badge {
+  --KBadgeWidth: auto;
+  --KBadgePaddingX: var(--spacing-sm);
+}
+
+@media screen and (min-width: 990px) {
+  .status-badge {
+    margin-left: var(--spacing-sm);
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .status-badge {
+    margin-top: var(--spacing-sm);
+  }
 }
 
 @media screen and (max-width: 599px) {
