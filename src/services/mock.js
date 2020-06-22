@@ -65,12 +65,29 @@ export default class Mock {
       })
       .onGet('/meshes/default').reply(200, {
         type: 'Mesh',
-        name: 'default',
-        mtls: {
-          ca: {
-            builtin: {}
-          }
-        }
+        name: 'default'
+        // mtls: {
+        //   enabledBackend: 'ca-1',
+        //   backends: [
+        //     {
+        //       name: 'ca-1',
+        //       type: 'provided',
+        //       dpCert: {
+        //         rotation: {
+        //           expiration: '1d'
+        //         }
+        //       },
+        //       conf: {
+        //         cert: {
+        //           secret: 'name-of-secret'
+        //         },
+        //         key: {
+        //           secret: 'name-of-secret'
+        //         }
+        //       }
+        //     }
+        //   ]
+        // }
       })
       .onGet('/meshes/mesh-01').reply(200, {
         type: 'Mesh',
