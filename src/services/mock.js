@@ -5,21 +5,27 @@ export default class Mock {
     const mockDelay = 0
 
     this.mock = new MockAdapter(axios, { delayResponse: mockDelay })
-    this.mock.injectMocks = () => { return this.mock }
+    this.mock.injectMocks = () => {
+      return this.mock
+    }
   }
 
   setupPluginMocks () {
     this.mock
       .injectMocks() // additional mocks added from RestClient
-      .onAny().passThrough()
+      .onAny()
+      .passThrough()
   }
 
   setupMockEndpoints () {
-    console.warn('%c ✨You are mocking api requests.',
-      'background: gray; color: white; display: block; padding: 0.25rem;')
+    console.warn(
+      '%c ✨You are mocking api requests.',
+      'background: gray; color: white; display: block; padding: 0.25rem;'
+    )
 
     this.mock
-      .onGet('/meshes').reply(200, {
+      .onGet('/meshes')
+      .reply(200, {
         total: 3,
         items: [
           {
@@ -63,7 +69,8 @@ export default class Mock {
         ],
         next: null
       })
-      .onGet('/meshes/default').reply(200, {
+      .onGet('/meshes/default')
+      .reply(200, {
         type: 'Mesh',
         name: 'default',
         mtls: {
@@ -72,7 +79,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/mesh-01').reply(200, {
+      .onGet('/meshes/mesh-01')
+      .reply(200, {
         type: 'Mesh',
         name: 'mesh-01',
         mtls: {
@@ -98,7 +106,8 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/meshes/kong-mania-12').reply(200, {
+      .onGet('/meshes/kong-mania-12')
+      .reply(200, {
         type: 'Mesh',
         name: 'kong-mania-12',
         mtls: {
@@ -107,7 +116,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/hello-world').reply(200, {
+      .onGet('/meshes/hello-world')
+      .reply(200, {
         type: 'Mesh',
         name: 'hello-world',
         mtls: {
@@ -116,7 +126,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/dataplanes').reply(200, {
+      .onGet('/meshes/default/dataplanes')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -134,7 +145,8 @@ export default class Mock {
         ],
         next: null
       })
-      .onGet('/meshes/default/dataplanes/test-dp-02').reply(200, {
+      .onGet('/meshes/default/dataplanes/test-dp-02')
+      .reply(200, {
         items: [
           {
             mesh: 'default',
@@ -144,7 +156,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/dataplanes/test-dp-02').reply(200, {
+      .onGet('/meshes/default/dataplanes/test-dp-02')
+      .reply(200, {
         type: 'Dataplane',
         mesh: 'default',
         name: 'test-dp-02',
@@ -166,7 +179,8 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/meshes/default/dataplanes+insights/test-dp-02').reply(200, {
+      .onGet('/meshes/default/dataplanes+insights/test-dp-02')
+      .reply(200, {
         type: 'DataplaneOverview',
         mesh: 'default',
         name: 'test-dp-02',
@@ -217,7 +231,8 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/meshes/default/dataplanes/hello-world-foobar-002').reply(200, {
+      .onGet('/meshes/default/dataplanes/hello-world-foobar-002')
+      .reply(200, {
         items: [
           {
             mesh: 'default',
@@ -227,7 +242,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/dataplanes/hello-world-foobar-002').reply(200, {
+      .onGet('/meshes/default/dataplanes/hello-world-foobar-002')
+      .reply(200, {
         type: 'Dataplane',
         mesh: 'default',
         name: 'hello-world-foobar-002',
@@ -249,7 +265,8 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/meshes/default/dataplanes+insights/hello-world-foobar-002').reply(200, {
+      .onGet('/meshes/default/dataplanes+insights/hello-world-foobar-002')
+      .reply(200, {
         type: 'DataplaneOverview',
         mesh: 'default',
         name: 'hello-world-foobar-002',
@@ -305,7 +322,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/traffic-traces').reply(200, {
+      .onGet('/meshes/default/traffic-traces')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -340,7 +358,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-traces/tt-1').reply(200, {
+      .onGet('/meshes/default/traffic-traces/tt-1')
+      .reply(200, {
         type: 'TrafficTrace',
         mesh: 'mesh-1',
         name: 'tt-1',
@@ -357,7 +376,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-traces/traffic-trace-02').reply(200, {
+      .onGet('/meshes/default/traffic-traces/traffic-trace-02')
+      .reply(200, {
         type: 'TrafficTrace',
         mesh: 'mesh-1',
         name: 'traffic-trace-02',
@@ -374,7 +394,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/traffic-traces').reply(200, {
+      .onGet('/traffic-traces')
+      .reply(200, {
         total: 5,
         items: [
           {
@@ -454,7 +475,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/health-checks').reply(200, {
+      .onGet('/meshes/default/health-checks')
+      .reply(200, {
         total: 7,
         items: [
           {
@@ -648,7 +670,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/health-checks/web-to-backend').reply(200, {
+      .onGet('/meshes/default/health-checks/web-to-backend')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'web-to-backend',
@@ -675,7 +698,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/health-checks/web-to-banana').reply(200, {
+      .onGet('/meshes/default/health-checks/web-to-banana')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'web-to-banana',
@@ -702,7 +726,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/health-checks/hello-health-check').reply(200, {
+      .onGet('/meshes/default/health-checks/hello-health-check')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'hello-health-check',
@@ -729,7 +754,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/health-checks/testing-health-checks').reply(200, {
+      .onGet('/meshes/default/health-checks/testing-health-checks')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'testing-health-checks',
@@ -756,7 +782,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/health-checks/health-check-0023').reply(200, {
+      .onGet('/meshes/default/health-checks/health-check-0023')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'health-check-0023',
@@ -783,7 +810,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/health-checks/health-check-12345').reply(200, {
+      .onGet('/meshes/default/health-checks/health-check-12345')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'health-check-12345',
@@ -810,7 +838,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/health-checks/foo-bar-baz-123').reply(200, {
+      .onGet('/meshes/default/health-checks/foo-bar-baz-123')
+      .reply(200, {
         type: 'HealthCheck',
         mesh: 'default',
         name: 'foo-bar-baz-123',
@@ -837,7 +866,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/health-checks').reply(200, {
+      .onGet('/health-checks')
+      .reply(200, {
         items: [
           {
             type: 'HealthCheck',
@@ -1030,7 +1060,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/fault-injections').reply(200, {
+      .onGet('/meshes/default/fault-injections')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -1101,7 +1132,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/fault-injections/web-to-backend.kuma-system').reply(200, {
+      .onGet('/meshes/default/fault-injections/web-to-backend.kuma-system')
+      .reply(200, {
         type: 'FaultInjection',
         mesh: 'default',
         name: 'web-to-backend.kuma-system',
@@ -1134,7 +1166,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/fault-injections/fi1.kuma-system').reply(200, {
+      .onGet('/meshes/default/fault-injections/fi1.kuma-system')
+      .reply(200, {
         type: 'FaultInjection',
         mesh: 'default',
         name: 'fi1.kuma-system',
@@ -1167,7 +1200,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/fault-injections').reply(200, {
+      .onGet('/fault-injections')
+      .reply(200, {
         items: [
           {
             type: 'FaultInjection',
@@ -1237,7 +1271,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/proxytemplates').reply(200, {
+      .onGet('/proxytemplates')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -1252,14 +1287,13 @@ export default class Mock {
               }
             ],
             conf: {
-              imports: [
-                'default-proxy'
-              ],
+              imports: ['default-proxy'],
               resources: [
                 {
                   name: 'raw-name',
                   version: 'raw-version',
-                  resource: "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
+                  resource:
+                    "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
                 }
               ]
             }
@@ -1276,21 +1310,21 @@ export default class Mock {
               }
             ],
             conf: {
-              imports: [
-                'default-proxy'
-              ],
+              imports: ['default-proxy'],
               resources: [
                 {
                   name: 'raw-name',
                   version: 'raw-version',
-                  resource: "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
+                  resource:
+                    "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
                 }
               ]
             }
           }
         ]
       })
-      .onGet('/meshes/default/proxytemplates').reply(200, {
+      .onGet('/meshes/default/proxytemplates')
+      .reply(200, {
         total: 1,
         items: [
           {
@@ -1305,21 +1339,21 @@ export default class Mock {
               }
             ],
             conf: {
-              imports: [
-                'default-proxy'
-              ],
+              imports: ['default-proxy'],
               resources: [
                 {
                   name: 'raw-name',
                   version: 'raw-version',
-                  resource: "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
+                  resource:
+                    "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
                 }
               ]
             }
           }
         ]
       })
-      .onGet('/meshes/helloworld/proxytemplates').reply(200, {
+      .onGet('/meshes/helloworld/proxytemplates')
+      .reply(200, {
         total: 1,
         items: [
           {
@@ -1334,21 +1368,21 @@ export default class Mock {
               }
             ],
             conf: {
-              imports: [
-                'default-proxy'
-              ],
+              imports: ['default-proxy'],
               resources: [
                 {
                   name: 'raw-name',
                   version: 'raw-version',
-                  resource: "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
+                  resource:
+                    "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
                 }
               ]
             }
           }
         ]
       })
-      .onGet('/meshes/default/proxytemplates/pt-1').reply(200, {
+      .onGet('/meshes/default/proxytemplates/pt-1')
+      .reply(200, {
         total: 1,
         type: 'ProxyTemplate',
         mesh: 'default',
@@ -1361,19 +1395,19 @@ export default class Mock {
           }
         ],
         conf: {
-          imports: [
-            'default-proxy'
-          ],
+          imports: ['default-proxy'],
           resources: [
             {
               name: 'raw-name',
               version: 'raw-version',
-              resource: "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
+              resource:
+                "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
             }
           ]
         }
       })
-      .onGet('/meshes/helloworld/proxytemplates/pt-123').reply(200, {
+      .onGet('/meshes/helloworld/proxytemplates/pt-123')
+      .reply(200, {
         type: 'ProxyTemplate',
         mesh: 'helloworld',
         name: 'pt-123',
@@ -1385,19 +1419,19 @@ export default class Mock {
           }
         ],
         conf: {
-          imports: [
-            'default-proxy'
-          ],
+          imports: ['default-proxy'],
           resources: [
             {
               name: 'raw-name',
               version: 'raw-version',
-              resource: "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
+              resource:
+                "'@type': type.googleapis.com/envoy.api.v2.Cluster\nconnectTimeout: 5s\nloadAssignment:\n  clusterName: localhost:8443\n  endpoints:\n    - lbEndpoints:\n        - endpoint:\n            address:\n              socketAddress:\n                address: 127.0.0.1\n                portValue: 8443\nname: localhost:8443\ntype: STATIC\n"
             }
           ]
         }
       })
-      .onGet('/meshes/default/traffic-logs').reply(200, {
+      .onGet('/meshes/default/traffic-logs')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -1448,7 +1482,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-logs/tl-1').reply(200, {
+      .onGet('/meshes/default/traffic-logs/tl-1')
+      .reply(200, {
         type: 'TrafficLog',
         mesh: 'mesh-1',
         name: 'tl-1',
@@ -1473,7 +1508,8 @@ export default class Mock {
           backend: 'file'
         }
       })
-      .onGet('/meshes/default/traffic-logs/tl-123').reply(200, {
+      .onGet('/meshes/default/traffic-logs/tl-123')
+      .reply(200, {
         type: 'TrafficLog',
         mesh: 'mesh-1',
         name: 'tl-123',
@@ -1498,7 +1534,8 @@ export default class Mock {
           backend: 'file'
         }
       })
-      .onGet('/traffic-permissions').reply(200, {
+      .onGet('/traffic-permissions')
+      .reply(200, {
         total: 3,
         items: [
           {
@@ -1579,7 +1616,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions')
+      .reply(200, {
         total: 3,
         items: [
           {
@@ -1641,7 +1679,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions/tp-1').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions/tp-1')
+      .reply(200, {
         type: 'TrafficPermission',
         mesh: 'mesh-1',
         name: 'tp-1',
@@ -1662,7 +1701,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions/tp-1234').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions/tp-1234')
+      .reply(200, {
         type: 'TrafficPermission',
         mesh: 'mesh-1',
         name: 'tp-1234',
@@ -1683,7 +1723,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions/tp-alpha-tango-donut').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions/tp-alpha-tango-donut')
+      .reply(200, {
         type: 'TrafficPermission',
         mesh: 'mesh-1',
         name: 'tp-alpha-tango-donut',
@@ -1704,7 +1745,8 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/circuit-breakers').reply(200, {
+      .onGet('/meshes/default/circuit-breakers')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -1806,7 +1848,8 @@ export default class Mock {
         ],
         next: null
       })
-      .onGet('/circuit-breakers').reply(200, {
+      .onGet('/circuit-breakers')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -1908,12 +1951,14 @@ export default class Mock {
         ],
         next: null
       })
-      .onGet('/meshes/alpha-tango-mesh/circuit-breakers').reply(200, {
+      .onGet('/meshes/alpha-tango-mesh/circuit-breakers')
+      .reply(200, {
         total: 0,
         items: [],
         next: null
       })
-      .onGet('/meshes/default/circuit-breakers/cb1').reply(200, {
+      .onGet('/meshes/default/circuit-breakers/cb1')
+      .reply(200, {
         type: 'CircuitBreaker',
         mesh: 'default',
         name: 'cb1',
@@ -1961,7 +2006,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/meshes/default/circuit-breakers/cb2').reply(200, {
+      .onGet('/meshes/default/circuit-breakers/cb2')
+      .reply(200, {
         type: 'CircuitBreaker',
         mesh: 'default',
         name: 'cb2',
@@ -2009,10 +2055,12 @@ export default class Mock {
           }
         }
       })
-      .onGet('/status/clusters').reply(200, [
+      // Local CPs
+      .onGet('/status/clusters')
+      .reply(200, [
         {
           active: false,
-          name: 'http://172.18.0.1:5681',
+          name: 'http://127.0.0.1:5681',
           url: 'http://172.18.0.1:5681'
         },
         {
@@ -2026,6 +2074,12 @@ export default class Mock {
           url: 'http://172.18.0.3:5681'
         }
       ])
-      .onAny().passThrough()
+      // config
+      .onGet('/config/')
+      .reply(200, {
+        mode: 'global'
+      })
+      .onAny()
+      .passThrough()
   }
 }

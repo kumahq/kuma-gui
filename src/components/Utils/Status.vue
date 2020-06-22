@@ -4,10 +4,9 @@
       class="status__dot"
       :class="{ 'is-active': active }"
     />
-    <span
-      class="status__label"
-      v-html="content"
-    />
+    <span class="status__label">
+      {{ content }}
+    </span>
   </div>
 </template>
 

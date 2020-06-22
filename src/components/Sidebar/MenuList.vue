@@ -2,7 +2,7 @@
   <ul class="menu-list">
     <template v-for="item in menuItems">
       <li
-        v-if="!item.hidden"
+        v-if="!item.hidden && !item.multicluster"
         :key="item.name"
         :class="{'menu-title' : item.title, 'hasBadge': item.badge}"
       >

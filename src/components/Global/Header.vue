@@ -67,9 +67,14 @@ export default {
       const apiUrl = localStorage.getItem('kumaApiUrl')
       const tagline = this.$store.getters.getTagline
       const version = this.$store.getters.getVersion
+      const config = this.$store.getters.getConfig
+
+      console.log(config.mode)
 
       if (env && apiUrl) {
-        this.statusContent = `${tagline} v${version} running on ${env}`
+        const mode = config.mode === 'global' ? ' - Multicluster' : ''
+
+        this.statusContent = `${tagline} v${version} running on ${env}${mode}`
         this.guiStatus = true
       } else {
         this.statusContent = "Unable to determine Kuma's status"

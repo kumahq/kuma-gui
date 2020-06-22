@@ -29,7 +29,8 @@ export default {
           name: 'Local CPs',
           link: '/local-cps',
           title: false,
-          root: true
+          root: true,
+          multicluster: true
         }
       ]
     },
