@@ -17,13 +17,11 @@ export default {
           link: '/meshes',
           title: false,
           pathFlip: true
-          // root: true
         },
         {
           name: 'Dataplanes',
           link: '/dataplanes',
           title: false
-          // root: true
         },
         {
           name: 'Local CPs',

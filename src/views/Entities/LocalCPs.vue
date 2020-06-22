@@ -5,7 +5,15 @@
         {{ pageTitle }}
       </h2>
     </page-header>
-    <FrameSkeleton>
+    <KAlert
+      v-if="!multicluster"
+      appearance="danger"
+    >
+      <template slot="alertMessage">
+        <p>This page is only available when Kuma is running in Multicluster mode.</p>
+      </template>
+    </KAlert>
+    <FrameSkeleton v-else>
       <DataOverview
         :page-size="pageSize"
         :has-error="hasError"
@@ -75,7 +83,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import PageHeader from '@/components/Utils/PageHeader.vue'
@@ -152,8 +160,10 @@ export default {
   },
   computed: {
     ...mapState({
-      mesh: 'selectedMesh',
-      config: 'getConfig'
+      mesh: 'selectedMesh'
+    }),
+    ...mapGetters({
+      multicluster: 'getMulticlusterStatus'
     }),
     pageTitle () {
       const metaTitle = this.$route.meta.title
