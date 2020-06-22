@@ -10,8 +10,6 @@
             <p>
               <strong>All traffic is allowed:</strong> All service traffic is
               enabled on this Mesh by default because Mutual TLS is not enabled.
-            </p>
-            <p>
               Traffic Permissions are currently being ignored by the
               <strong>{{ $route.params.mesh }}</strong> Mesh because Mutual TLS
               is not enabled. You can still create and edit Traffic Permissions,
