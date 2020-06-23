@@ -49,10 +49,11 @@ export default class RestClient {
    * our app with the API URL endpoint and simple info.
    */
   static kumaClientConfig () {
-    const configUrl = process.env.VUE_APP_GENERAL_CONFIG
+    const configUrl = `${localStorage.getItem('kumaApiUrl')}/config`
 
     return axios.create({
       baseURL: configUrl,
+      headers: this.headers,
       ...this.axiosConfig
     })
   }

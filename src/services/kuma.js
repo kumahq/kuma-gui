@@ -25,7 +25,7 @@ export default class Kuma {
   }
 
   getConfig () {
-    return this.client.getConfig()
+    return this.client.getConfig('/')
   }
 
   /**

@@ -2077,7 +2077,7 @@ export default class Mock {
         }
       ])
       // config
-      .onGet('/config/')
+      .onGet('/config')
       .reply(200, {
         mode: 'global'
       })
