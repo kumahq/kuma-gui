@@ -29,12 +29,16 @@ export default class Mock {
         total: 3,
         items: [
           {
+            type: 'Mesh',
             name: 'default',
-            type: 'Mesh'
+            creationTime: '2020-06-19T12:18:02.097986-04:00',
+            modificationTime: '2020-06-19T12:18:02.097986-04:00'
           },
           {
-            name: 'mesh-01',
             type: 'Mesh',
+            name: 'mesh-01',
+            creationTime: '2020-06-19T12:18:02.097986-04:00',
+            modificationTime: '2020-06-19T12:18:02.097986-04:00',
             mtls: {
               enabledBackend: 'ca-1',
               backends: [
@@ -59,20 +63,26 @@ export default class Mock {
             }
           },
           {
+            type: 'Mesh',
             name: 'kong-mania-12',
-            type: 'Mesh'
+            creationTime: '2020-06-19T12:18:02.097986-04:00',
+            modificationTime: '2020-06-19T12:18:02.097986-04:00'
           },
           {
+            type: 'Mesh',
             name: 'hello-world',
-            type: 'Mesh'
+            creationTime: '2020-06-19T12:18:02.097986-04:00',
+            modificationTime: '2020-06-19T12:18:02.097986-04:00'
           }
         ],
         next: null
       })
       .onGet('/meshes/default')
       .reply(200, {
-        type: 'Mesh',
         name: 'default',
+        type: 'Mesh',
+        creationTime: '2020-06-19T12:18:02.097986-04:00',
+        modificationTime: '2020-06-19T12:18:02.097986-04:00',
         mtls: {
           ca: {
             builtin: {}
@@ -83,6 +93,8 @@ export default class Mock {
       .reply(200, {
         type: 'Mesh',
         name: 'mesh-01',
+        creationTime: '2020-06-19T12:18:02.097986-04:00',
+        modificationTime: '2020-06-19T12:18:02.097986-04:00',
         mtls: {
           enabledBackend: 'ca-1',
           backends: [
@@ -110,6 +122,8 @@ export default class Mock {
       .reply(200, {
         type: 'Mesh',
         name: 'kong-mania-12',
+        creationTime: '2020-06-19T12:18:02.097986-04:00',
+        modificationTime: '2020-06-19T12:18:02.097986-04:00',
         mtls: {
           ca: {
             builtin: {}
@@ -120,11 +134,31 @@ export default class Mock {
       .reply(200, {
         type: 'Mesh',
         name: 'hello-world',
+        creationTime: '2020-06-19T12:18:02.097986-04:00',
+        modificationTime: '2020-06-19T12:18:02.097986-04:00',
         mtls: {
           ca: {
             builtin: {}
           }
         }
+      })
+      .onGet('/dataplanes').reply(200, {
+        total: 2,
+        items: [
+          {
+            mesh: 'default',
+            name: 'hello-world-foobar-002',
+            networking: {},
+            type: 'Dataplane'
+          },
+          {
+            mesh: 'default',
+            name: 'test-dp-02',
+            networking: {},
+            type: 'Dataplane'
+          }
+        ],
+        next: null
       })
       .onGet('/meshes/default/dataplanes')
       .reply(200, {
@@ -2057,7 +2091,7 @@ export default class Mock {
           }
         }
       })
-      // Local CPs
+      // Remote CPs
       .onGet('/status/clusters')
       .reply(200, [
         {

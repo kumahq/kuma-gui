@@ -24,8 +24,8 @@ export default {
           title: false
         },
         {
-          name: 'Local CPs',
-          link: '/local-cps',
+          name: 'Remote CPs',
+          link: '/remote-cp',
           title: false,
           root: true,
           multicluster: true

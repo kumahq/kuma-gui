@@ -105,13 +105,12 @@ export default (store) => {
     },
     // local CPs
     {
-      path: '/local-cps',
-      alias: '/',
-      name: 'local-cps',
-      component: () => import(/* webpackChunkName: "local-cps" */ '@/views/Entities/LocalCPs'),
+      path: '/remote-cp',
+      name: 'remote-cp',
+      component: () => import(/* webpackChunkName: "remote-cp" */ '@/views/Entities/RemoteCP'),
       meta: {
-        title: 'Local CPs',
-        breadcrumb: 'Local CPs'
+        title: 'Remote CPs',
+        breadcrumb: 'Remote CPs'
       }
     },
     // all Meshes

@@ -180,7 +180,7 @@ export default {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
     activeTab: {
-      get (test) {
+      get () {
         const env = this.environment
 
         return {
@@ -206,6 +206,7 @@ export default {
         delete sourceObj.type
         delete sourceObj.name
 
+        newObj.apiVersion = 'kuma.io/v1alpha1'
         newObj.kind = type
         newObj.metadata = {
           name: name

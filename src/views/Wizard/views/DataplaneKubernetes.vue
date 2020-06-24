@@ -606,6 +606,26 @@
             by {{ title }}.
           </p>
         </template>
+        <template slot="example">
+          <h3>Example</h3>
+          <p>
+            Below is an example of a Dataplane resource output:
+          </p>
+          <code>
+            <pre>apiVersion: 'kuma.io/v1alpha1'
+kind: Dataplane
+mesh: default
+metadata:
+  name: dp-echo-1
+networking:
+  address: 10.0.0.1
+  inbound:
+  - port: 10000
+    servicePort: 9000
+    tags:
+      service: echo</pre>
+          </code>
+        </template>
       </StepSkeleton>
     </div>
   </div>
@@ -676,6 +696,9 @@ export default {
       sidebarContent: [
         {
           name: 'dataplane'
+        },
+        {
+          name: 'example'
         }
       ],
       startScanner: false,

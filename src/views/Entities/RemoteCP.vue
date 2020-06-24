@@ -94,9 +94,9 @@ import Tabs from '@/components/Utils/Tabs'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'LocalCPs',
+  name: 'RemoteCP',
   metaInfo: {
-    title: 'Local CPs'
+    title: 'Remote CPs'
   },
   components: {
     PageHeader,
