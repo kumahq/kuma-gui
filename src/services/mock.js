@@ -1419,7 +1419,6 @@ export default class Mock {
       })
       .onGet('/meshes/default/proxytemplates/pt-1')
       .reply(200, {
-        total: 1,
         type: 'ProxyTemplate',
         mesh: 'default',
         name: 'pt-1',
