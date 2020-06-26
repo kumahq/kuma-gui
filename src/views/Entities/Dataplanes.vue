@@ -353,47 +353,80 @@ export default {
             /**
              * Iterate through the networking inbound or gateway data
              */
-            const inbound = response.dataplane.networking.inbound
-            const gateway = response.dataplane.networking.gateway
+            const inbound = response.dataplane.networking.inbound || null
+            const gateway = response.dataplane.networking.gateway || null
+            const ingress = response.dataplane.networking.ingress || null
 
-            if (inbound || gateway) {
+            if (inbound || gateway || ingress) {
+              const final = []
+
+              // inbound
               if (inbound) {
-                /** inbound */
                 for (let i = 0; i < inbound.length; i++) {
-                  const rawTags = inbound[i].tags
+                  const rawTags = inbound[i].tags || null
 
-                  const final = []
-                  const tagKeys = Object.keys(rawTags)
-                  const tagVals = Object.values(rawTags)
+                  if (rawTags) {
+                    const tagKeys = Object.keys(rawTags)
+                    const tagVals = Object.values(rawTags)
 
-                  for (let x = 0; x < tagKeys.length; x++) {
-                    final.push({
-                      label: tagKeys[x],
-                      value: tagVals[x]
-                    })
+                    for (let x = 0; x < tagKeys.length; x++) {
+                      final.push({
+                        label: tagKeys[x],
+                        value: tagVals[x]
+                      })
+                    }
                   }
-
-                  tags = final
-                }
-              } else if (gateway) {
-                /** gateway */
-                const items = gateway.tags
-
-                for (let i = 0; i < Object.keys(items).length; i++) {
-                  const final = []
-                  const tagKeys = Object.keys(items)
-                  const tagVals = Object.values(items)
-
-                  for (let x = 0; x < tagKeys.length; x++) {
-                    final.push({
-                      label: tagKeys[x],
-                      value: tagVals[x]
-                    })
-                  }
-
-                  tags = final
                 }
               }
+
+              // gateway
+              if (gateway) {
+                const gatewayItems = gateway.tags || null
+
+                if (gatewayItems) {
+                  for (let i = 0; i < Object.keys(gatewayItems).length; i++) {
+                    const tagKeys = Object.keys(gatewayItems)
+                    const tagVals = Object.values(gatewayItems)
+
+                    for (let x = 0; x < tagKeys.length; x++) {
+                      final.push({
+                        label: tagKeys[x],
+                        value: tagVals[x]
+                      })
+                    }
+                  }
+                }
+              }
+
+              // ingress
+              if (ingress) {
+                for (let i = 0; i < ingress.length; i++) {
+                  const ingressTags = ingress[i].tags || null
+                  const ingressService = ingress[i].service || null
+
+                  if (ingressService) {
+                    final.push({
+                      label: 'service',
+                      value: ingressService
+                    })
+                  }
+
+                  if (ingressTags) {
+                    const tagKeys = Object.keys(ingressTags)
+                    const tagVals = Object.values(ingressTags)
+
+                    for (let x = 0; x < tagKeys.length; x++) {
+                      final.push({
+                        label: tagKeys[x],
+                        value: tagVals[x]
+                      })
+                    }
+                  }
+                }
+              }
+
+              // define the new list
+              tags = final
             } else {
               tags = 'none'
             }
@@ -625,14 +658,50 @@ export default {
 
               // determine between inbound and gateway modes
               // and then get the tags from which condition applies.
-              const tagSrc = (response.networking.inbound && response.networking.inbound.length > 0)
-                ? response.networking.inbound[0].tags
-                : response.networking.gateway.tags
+              // const tagSrc = (response.networking.inbound && response.networking.inbound.length > 0)
+              //   ? response.networking.inbound[0].tags
+              //   : response.networking.gateway.tags
+
+              const fullTagSrc = () => {
+                const src = response.networking || null
+
+                // inbound
+                const inbound = (src.inbound && src.inbound.length > 0)
+                  ? src.inbound[0].tags
+                  : []
+
+                // gateway
+                const gateway = (src.gateway && src.gateway.length > 0)
+                  ? src.gateway.tags
+                  : []
+
+                // ingress
+                const ingress = () => {
+                  if (src.ingress) {
+                    let items = {}
+
+                    src.ingress.forEach(i => {
+                      const service = i.service
+                      const tags = i.tags
+
+                      items = Object.assign({}, { service, ...tags })
+                    })
+
+                    return items
+                  }
+
+                  return null
+                }
+
+                console.log(src.ingress)
+
+                return { ...inbound, ...gateway, ...ingress() }
+              }
 
               const newEntity = async () => {
                 return {
                   basicData: { ...getSome(response, selected) },
-                  tags: { ...tagSrc },
+                  tags: { ...fullTagSrc() },
                   mtls: await getMTLSData()
                 }
               }

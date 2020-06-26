@@ -102,7 +102,6 @@
           <KButton
             :to="{ name: 'setup-complete' }"
             appearance="primary"
-            class="mr-4"
           >
             Next Step
           </KButton>
@@ -161,23 +160,13 @@
               Dataplanes.
             </p>
             <div class="cols">
-              <div>
-                <KButton
-                  :to="{ name: 'kubernetes-dataplane' }"
-                  appearance="primary"
-                  @click.native="completeOnboarding()"
-                >
-                  Kubernetes Dataplane Wizard
-                </KButton>
-              </div>
-              <div>
-                <router-link
-                  :to="{ name: 'global-overview' }"
-                  @click.native="completeOnboarding()"
-                >
-                  Skip to Dashboard
-                </router-link>
-              </div>
+              <KButton
+                :to="{ name: 'kubernetes-dataplane' }"
+                appearance="primary"
+                @click.native="completeOnboarding()"
+              >
+                Kubernetes Dataplane Wizard
+              </KButton>
             </div>
           </div>
           <!-- universal instructions -->
@@ -190,19 +179,12 @@
               Dataplanes.
             </p>
             <div class="cols">
-              <div>
-                <KButton
-                  :to="{ name: 'universal-dataplane' }"
-                  appearance="primary"
-                >
-                  Universal Dataplane Wizard
-                </KButton>
-              </div>
-              <div>
-                <router-link :to="{ name: 'global-overview' }">
-                  Skip to Dashboard
-                </router-link>
-              </div>
+              <KButton
+                :to="{ name: 'universal-dataplane' }"
+                appearance="primary"
+              >
+                Universal Dataplane Wizard
+              </KButton>
             </div>
           </div>
 
@@ -215,6 +197,16 @@
           </KButton> -->
         </div>
       </div>
+      <footer class="extra-controls">
+        <KButton
+          :to="{ name: 'global-overview' }"
+          appearance="primary"
+          size="small"
+          @click.native="completeOnboarding()"
+        >
+          Skip to Dashboard
+        </KButton>
+      </footer>
     </div>
     <!-- .app-source-check -->
 
@@ -355,7 +347,7 @@ export default {
   padding: var(--spacing-md) 0;
   margin: var(--spacing-md) 0;
   border-top: 1px solid var(--tblack-10);
-  border-bottom: 1px solid var(--tblack-10);
+  // border-bottom: 1px solid var(--tblack-10);
 }
 
 .app-source-check {
@@ -457,6 +449,12 @@ export default {
   > * {
     margin: 0 8px;
   }
+}
+
+.extra-controls {
+  border-top: 1px solid var(--tblack-10);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-sm);
 }
 
 @media (min-width: 768px) {

@@ -257,8 +257,6 @@ export default {
             const items = () => {
               const r = response
 
-              console.log(r)
-
               if ('total' in r) {
                 if (r.total !== 0 && r.items && r.items.length > 0) {
                   return this.sortEntities(r.items)

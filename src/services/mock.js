@@ -167,50 +167,148 @@ export default class Mock {
           {
             mesh: 'default',
             name: 'hello-world-foobar-002',
-            networking: {},
-            type: 'Dataplane'
+            type: 'Dataplane',
+            networking: {
+              address: '10.0.0.1',
+              gateway: {
+                tags: {
+                  service: 'kong'
+                }
+              },
+              outbound: {
+                port: '33033',
+                service: 'backend'
+              }
+            }
           },
           {
             mesh: 'default',
             name: 'test-dp-02',
-            networking: {},
-            type: 'Dataplane'
+            type: 'Dataplane',
+            networking: {
+              address: '192.168.64.8',
+              inbound: [
+                {
+                  port: 10001
+                }
+              ],
+              ingress: [
+                {
+                  service: 'frontend.kuma-demo.svc:8080',
+                  tags: {
+                    app: 'kuma-demo-frontend',
+                    env: 'prod',
+                    'pod-template-hash': '69c9fd4bd',
+                    protocol: 'http',
+                    version: 'v8'
+                  }
+                },
+                {
+                  service: 'backend.kuma-demo.svc:3001',
+                  tags: {
+                    app: 'kuma-demo-backend',
+                    env: 'prod',
+                    'pod-template-hash': 'd7cb6b576',
+                    protocol: 'http',
+                    version: 'v0'
+                  }
+                },
+                {
+                  service: 'postgres.kuma-demo.svc:5432',
+                  tags: {
+                    app: 'postgres',
+                    'pod-template-hash': '65df766577',
+                    protocol: 'tcp'
+                  }
+                },
+                {
+                  service: 'redis.kuma-demo.svc:6379',
+                  tags: {
+                    app: 'redis',
+                    'pod-template-hash': '78ff699f7',
+                    protocol: 'tcp',
+                    role: 'master',
+                    tier: 'backend'
+                  }
+                }
+              ]
+            }
           }
         ],
         next: null
       })
       .onGet('/meshes/default/dataplanes/test-dp-02')
       .reply(200, {
-        items: [
-          {
-            mesh: 'default',
-            name: 'test-dp-02',
-            networking: {},
-            type: 'Dataplane'
-          }
-        ]
-      })
-      .onGet('/meshes/default/dataplanes/test-dp-02')
-      .reply(200, {
         type: 'Dataplane',
         mesh: 'default',
         name: 'test-dp-02',
+        networking: {
+          address: '192.168.64.8',
+          inbound: [
+            {
+              port: 10001
+            }
+          ],
+          ingress: [
+            {
+              service: 'frontend.kuma-demo.svc:8080',
+              tags: {
+                app: 'kuma-demo-frontend',
+                env: 'prod',
+                'pod-template-hash': '69c9fd4bd',
+                protocol: 'http',
+                version: 'v8'
+              }
+            },
+            {
+              service: 'backend.kuma-demo.svc:3001',
+              tags: {
+                app: 'kuma-demo-backend',
+                env: 'prod',
+                'pod-template-hash': 'd7cb6b576',
+                protocol: 'http',
+                version: 'v0'
+              }
+            },
+            {
+              service: 'postgres.kuma-demo.svc:5432',
+              tags: {
+                app: 'postgres',
+                'pod-template-hash': '65df766577',
+                protocol: 'tcp'
+              }
+            },
+            {
+              service: 'redis.kuma-demo.svc:6379',
+              tags: {
+                app: 'redis',
+                'pod-template-hash': '78ff699f7',
+                protocol: 'tcp',
+                role: 'master',
+                tier: 'backend'
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes/hello-world-foobar-02')
+      .reply(200, {
+        type: 'Dataplane',
+        mesh: 'default',
+        name: 'hello-world-foobar-02',
         creationTime: '2020-06-02T09:33:09.208372-04:00',
         modificationTime: '2020-06-02T09:33:09.208372-04:00',
         networking: {
           address: '10.0.0.1',
-          inbound: [
-            {
-              port: 10000,
-              servicePort: 9000,
-              tags: {
-                env: 'dev',
-                service: 'kuma-example-backend',
-                tag01: 'value01',
-                reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-              }
+          gateway: {
+            tags: {
+              service: 'kong'
             }
-          ]
+          },
+          outbound: {
+            port: '33033',
+            service: 'backend'
+          }
         }
       })
       .onGet('/meshes/default/dataplanes+insights/test-dp-02')
@@ -220,16 +318,49 @@ export default class Mock {
         name: 'test-dp-02',
         dataplane: {
           networking: {
-            address: '172.21.0.5',
+            address: '192.168.64.8',
             inbound: [
               {
-                port: 7070,
-                servicePort: 7070,
+                port: 10001
+              }
+            ],
+            ingress: [
+              {
+                service: 'frontend.kuma-demo.svc:8080',
                 tags: {
-                  env: 'dev',
-                  service: 'kuma-example-backend',
-                  tag01: 'value01',
-                  reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+                  app: 'kuma-demo-frontend',
+                  env: 'prod',
+                  'pod-template-hash': '69c9fd4bd',
+                  protocol: 'http',
+                  version: 'v8'
+                }
+              },
+              {
+                service: 'backend.kuma-demo.svc:3001',
+                tags: {
+                  app: 'kuma-demo-backend',
+                  env: 'prod',
+                  'pod-template-hash': 'd7cb6b576',
+                  protocol: 'http',
+                  version: 'v0'
+                }
+              },
+              {
+                service: 'postgres.kuma-demo.svc:5432',
+                tags: {
+                  app: 'postgres',
+                  'pod-template-hash': '65df766577',
+                  protocol: 'tcp'
+                }
+              },
+              {
+                service: 'redis.kuma-demo.svc:6379',
+                tags: {
+                  app: 'redis',
+                  'pod-template-hash': '78ff699f7',
+                  protocol: 'tcp',
+                  role: 'master',
+                  tier: 'backend'
                 }
               }
             ]
@@ -267,17 +398,6 @@ export default class Mock {
       })
       .onGet('/meshes/default/dataplanes/hello-world-foobar-002')
       .reply(200, {
-        items: [
-          {
-            mesh: 'default',
-            name: 'hello-world-foobar-002',
-            networking: {},
-            type: 'Dataplane'
-          }
-        ]
-      })
-      .onGet('/meshes/default/dataplanes/hello-world-foobar-002')
-      .reply(200, {
         type: 'Dataplane',
         mesh: 'default',
         name: 'hello-world-foobar-002',
@@ -306,11 +426,11 @@ export default class Mock {
         name: 'hello-world-foobar-002',
         dataplane: {
           networking: {
-            address: '172.21.0.5',
+            address: '10.0.0.1',
             inbound: [
               {
-                port: 7070,
-                servicePort: 7070,
+                port: 10000,
+                servicePort: 9000,
                 tags: {
                   env: 'dev',
                   service: 'kuma-example-backend',
