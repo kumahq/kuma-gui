@@ -201,7 +201,7 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' },
+          { label: 'DP Type', key: 'type' },
           { label: 'Tags', key: 'tags' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
