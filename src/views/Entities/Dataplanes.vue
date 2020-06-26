@@ -201,6 +201,7 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
+          { label: 'Type', key: 'type' },
           { label: 'Tags', key: 'tags' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
@@ -351,16 +352,35 @@ export default {
             const updateTimes = []
 
             /**
-             * Iterate through the networking inbound or gateway data
+             * Dataplane type conditions
              */
             const inbound = response.dataplane.networking.inbound || null
             const gateway = response.dataplane.networking.gateway || null
             const ingress = response.dataplane.networking.ingress || null
 
+            /**
+             * Determine the type of Dataplane it is
+             */
+            const dataplaneType = () => {
+              if (gateway) {
+                return 'Gateway'
+              } else if (ingress) {
+                return 'Ingress'
+              }
+
+              return 'Standard'
+            }
+
+            /**
+             * Handle our tag collections based on the dataplane type.
+             * Currently, this is collecting all tags found in case
+             * there is a condition where inbound, gateway, or ingress
+             * might all be present as opposed to one group.
+             */
             if (inbound || gateway || ingress) {
               const final = []
 
-              // inbound
+              // inbound tags
               if (inbound) {
                 for (let i = 0; i < inbound.length; i++) {
                   const rawTags = inbound[i].tags || null
@@ -379,7 +399,7 @@ export default {
                 }
               }
 
-              // gateway
+              // gateway tags
               if (gateway) {
                 const gatewayItems = gateway.tags || null
 
@@ -398,7 +418,7 @@ export default {
                 }
               }
 
-              // ingress
+              // ingress tags
               if (ingress) {
                 for (let i = 0; i < ingress.length; i++) {
                   const ingressTags = ingress[i].tags || null
@@ -510,7 +530,7 @@ export default {
               lastConnected: lastConnected,
               lastUpdated: lastUpdated,
               totalUpdates: totalUpdates,
-              type: 'dataplane'
+              type: dataplaneType()
             })
 
             this.sortEntities(finalArr)
