@@ -713,8 +713,6 @@ export default {
                   return null
                 }
 
-                console.log(src.ingress)
-
                 return { ...inbound, ...gateway, ...ingress() }
               }
 
