@@ -1,5 +1,24 @@
 <template>
   <div class="traffic-permissions">
+    <div
+      v-if="securityWarning"
+      class="alert-wrapper"
+    >
+      <KAlert appearance="warning">
+        <template slot="alertMessage">
+          <div class="alert-content">
+            <p>
+              <strong>All traffic is allowed:</strong> All service traffic is
+              enabled on this Mesh by default because Mutual TLS is not enabled.
+              Traffic Permissions are currently being ignored by the
+              <strong>{{ $route.params.mesh }}</strong> Mesh because Mutual TLS
+              is not enabled. You can still create and edit Traffic Permissions,
+              but they will go into effect only when Mutual TLS is enabled on the Mesh.
+            </p>
+          </div>
+        </template>
+      </KAlert>
+    </div>
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -157,7 +176,8 @@ export default {
       pageOffset: null,
       next: null,
       hasNext: false,
-      previous: []
+      previous: [],
+      securityWarning: false
     }
   },
   computed: {
@@ -205,6 +225,7 @@ export default {
   methods: {
     init () {
       this.loadData()
+      this.mtlsWarning()
     },
     goToPreviousPage () {
       this.pageOffset = this.previous.pop()
@@ -352,10 +373,32 @@ export default {
           this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
+    },
+    mtlsWarning () {
+      const mesh = this.$route.params.mesh
+      const entityMesh = (mesh !== 'all')
+        ? mesh
+        : null
+
+      if (entityMesh) {
+        return this.$api.getMesh(entityMesh)
+          .then(response => {
+            const { mtls } = response
+
+            if (mtls && mtls.enabledBackend && mtls.enabledBackend !== null) {
+              this.securityWarning = false
+            } else {
+              this.securityWarning = true
+            }
+          })
+      }
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.alert-wrapper {
+  margin-bottom: var(--spacing-md);
+}
 </style>

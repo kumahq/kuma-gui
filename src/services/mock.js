@@ -19,84 +19,120 @@ export default class Mock {
       'background: gray; color: white; display: block; padding: 0.25rem;')
 
     this.mock
-      // .onGet('/meshes').reply(200, {
-      //   total: 3,
-      //   items: [
-      //     {
-      //       mtls: {
-      //         ca: {
-      //           builtin: {}
-      //         }
-      //       },
-      //       name: 'default',
-      //       type: 'Mesh'
-      //     },
-      //     {
-      //       mtls: {
-      //         ca: {
-      //           builtin: {}
-      //         }
-      //       },
-      //       name: 'mesh-01',
-      //       type: 'Mesh'
-      //     },
-      //     {
-      //       mtls: {
-      //         ca: {
-      //           builtin: {}
-      //         }
-      //       },
-      //       name: 'kong-mania-12',
-      //       type: 'Mesh'
-      //     },
-      //     {
-      //       mtls: {
-      //         ca: {
-      //           builtin: {}
-      //         }
-      //       },
-      //       name: 'hello-world',
-      //       type: 'Mesh'
-      //     }
-      //   ],
-      //   next: null
-      // })
-      // .onGet('/meshes/default').reply(200, {
-      //   type: 'Mesh',
-      //   name: 'default',
-      //   mtls: {
-      //     ca: {
-      //       builtin: {}
-      //     }
-      //   }
-      // })
-      // .onGet('/meshes/mesh-01').reply(200, {
-      //   type: 'Mesh',
-      //   name: 'mesh-01',
-      //   mtls: {
-      //     ca: {
-      //       builtin: {}
-      //     }
-      //   }
-      // })
-      // .onGet('/meshes/kong-mania-12').reply(200, {
-      //   type: 'Mesh',
-      //   name: 'kong-mania-12',
-      //   mtls: {
-      //     ca: {
-      //       builtin: {}
-      //     }
-      //   }
-      // })
-      // .onGet('/meshes/hello-world').reply(200, {
-      //   type: 'Mesh',
-      //   name: 'hello-world',
-      //   mtls: {
-      //     ca: {
-      //       builtin: {}
-      //     }
-      //   }
-      // })
+      .onGet('/meshes').reply(200, {
+        total: 3,
+        items: [
+          {
+            name: 'default',
+            type: 'Mesh'
+          },
+          {
+            name: 'mesh-01',
+            type: 'Mesh',
+            mtls: {
+              enabledBackend: 'ca-1',
+              backends: [
+                {
+                  name: 'ca-1',
+                  type: 'provided',
+                  dpCert: {
+                    rotation: {
+                      expiration: '1d'
+                    }
+                  },
+                  conf: {
+                    cert: {
+                      secret: 'name-of-secret'
+                    },
+                    key: {
+                      secret: 'name-of-secret'
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            name: 'kong-mania-12',
+            type: 'Mesh'
+          },
+          {
+            name: 'hello-world',
+            type: 'Mesh'
+          }
+        ],
+        next: null
+      })
+      .onGet('/meshes/default').reply(200, {
+        type: 'Mesh',
+        name: 'default'
+        // mtls: {
+        //   enabledBackend: 'ca-1',
+        //   backends: [
+        //     {
+        //       name: 'ca-1',
+        //       type: 'provided',
+        //       dpCert: {
+        //         rotation: {
+        //           expiration: '1d'
+        //         }
+        //       },
+        //       conf: {
+        //         cert: {
+        //           secret: 'name-of-secret'
+        //         },
+        //         key: {
+        //           secret: 'name-of-secret'
+        //         }
+        //       }
+        //     }
+        //   ]
+        // }
+      })
+      .onGet('/meshes/mesh-01').reply(200, {
+        type: 'Mesh',
+        name: 'mesh-01',
+        mtls: {
+          enabledBackend: 'ca-1',
+          backends: [
+            {
+              name: 'ca-1',
+              type: 'provided',
+              dpCert: {
+                rotation: {
+                  expiration: '1d'
+                }
+              },
+              conf: {
+                cert: {
+                  secret: 'name-of-secret'
+                },
+                key: {
+                  secret: 'name-of-secret'
+                }
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/kong-mania-12').reply(200, {
+        type: 'Mesh',
+        name: 'kong-mania-12',
+        mtls: {
+          ca: {
+            builtin: {}
+          }
+        }
+      })
+      .onGet('/meshes/hello-world').reply(200, {
+        type: 'Mesh',
+        name: 'hello-world',
+        mtls: {
+          ca: {
+            builtin: {}
+          }
+        }
+      })
       .onGet('/meshes/default/dataplanes').reply(200, {
         total: 2,
         items: [
@@ -1560,12 +1596,12 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-permissions').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions').reply(200, {
         total: 3,
         items: [
           {
             type: 'TrafficPermission',
-            mesh: 'default',
+            mesh: 'mesh-01',
             name: 'tp-1',
             sources: [
               {
@@ -1584,7 +1620,7 @@ export default class Mock {
           },
           {
             type: 'TrafficPermission',
-            mesh: 'default',
+            mesh: 'mesh-01',
             name: 'tp-1234',
             sources: [
               {
@@ -1603,7 +1639,7 @@ export default class Mock {
           },
           {
             type: 'TrafficPermission',
-            mesh: 'default',
+            mesh: 'mesh-01',
             name: 'tp-alpha-tango-donut',
             sources: [
               {
@@ -1622,7 +1658,7 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-permissions/tp-1').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions/tp-1').reply(200, {
         type: 'TrafficPermission',
         mesh: 'mesh-1',
         name: 'tp-1',
@@ -1643,7 +1679,7 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-permissions/tp-1234').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions/tp-1234').reply(200, {
         type: 'TrafficPermission',
         mesh: 'mesh-1',
         name: 'tp-1234',
@@ -1664,7 +1700,7 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/default/traffic-permissions/tp-alpha-tango-donut').reply(200, {
+      .onGet('/meshes/mesh-01/traffic-permissions/tp-alpha-tango-donut').reply(200, {
         type: 'TrafficPermission',
         mesh: 'mesh-1',
         name: 'tp-alpha-tango-donut',
