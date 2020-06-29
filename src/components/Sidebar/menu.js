@@ -27,8 +27,8 @@ export default {
           name: 'Remote CPs',
           link: '/remote-cp',
           title: false,
-          root: true,
-          multicluster: true
+          root: true
+          // multicluster: true
         }
       ]
     },

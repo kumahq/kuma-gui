@@ -5,20 +5,30 @@
         {{ pageTitle }}
       </h2>
     </page-header>
-    <KAlert
+    <KEmptyState
       v-if="!multicluster"
-      appearance="danger"
+      class="global-api-status"
+      cta-is-hidden
     >
-      <template slot="alertMessage">
-        <p>This page is only available when Kuma is running in Multicluster mode.</p>
+      <template slot="title">
+        <KIcon
+          class="kong-icon--centered"
+          icon="dangerCircle"
+          size="64"
+        />
+        Kuma is running in Standalone mode.
       </template>
-    </KAlert>
+      <template slot="message">
+        <p>
+          To access this page, you must be running in <strong>Multicluster</strong> mode.
+        </p>
+      </template>
+    </KEmptyState>
     <FrameSkeleton v-else>
       <DataOverview
         :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :empty-state="empty_state"
         :display-data-table="true"
         :table-data="tableData"
@@ -38,9 +48,9 @@
         </template>
       </DataOverview>
       <Tabs
+        v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :tabs="tabs"
         initial-tab-override="overview"
       >
@@ -169,6 +179,20 @@ export default {
       const metaTitle = this.$route.meta.title
 
       return metaTitle
+    },
+    shareUrl () {
+      const urlRoot = `${window.location.origin}#`
+      const entity = this.entity
+
+      const shareUrl = () => {
+        if (this.$route.query.ns) {
+          return this.$route.fullPath
+        }
+
+        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
+      }
+
+      return shareUrl()
     }
   },
   watch: {
@@ -181,7 +205,9 @@ export default {
   },
   methods: {
     init () {
-      this.loadData()
+      if (this.multicluster) {
+        this.loadData()
+      }
     },
     goToPreviousPage () {
       this.pageOffset = this.previous.pop()
@@ -253,15 +279,18 @@ export default {
 
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
+              this.isEmpty = false
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+              this.isEmpty = true
 
               this.getEntity(null)
             }
           })
           .catch(error => {
             this.hasError = true
+            this.isEmpty = true
 
             console.error(error)
           })

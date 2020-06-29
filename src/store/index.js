@@ -91,7 +91,7 @@ export default (api) => {
       getStoredWizardData: (state) => state.storedWizardData,
       getItemQueryNamespace: (state) => state.itemQueryNamespace,
       getMulticlusterStatus: (state) => {
-        const status = (state.config.mode === 'global')
+        const status = (state.config.mode.mode === 'global')
 
         return status
       },
