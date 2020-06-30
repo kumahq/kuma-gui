@@ -114,12 +114,19 @@ export default {
             // fetch the config
             this.$store.dispatch('getConfig')
               .then(() => {
-                const config = this.$store.getters.getConfig
-                const mode = config.mode
+                const mode = this.$store.getters.getConfig.mode.mode
 
-                // set Kuma's current mode in localStorage.
-                // if the mode is `global`, this denotes that it's
-                // running in Multicluster mode.
+                /**
+                 * Set Kuma's current mode in localStorage.
+                 * if the mode is `global`, this denotes that it's
+                 * running in Multicluster mode.
+                 *
+                 * This is currently not used anywhere in the app
+                 * but we store it anyway for possible future use.
+                 * We recommend using VueX's mapGetters and getting
+                 * the multicluster status from `getMulticlusterStatus`
+                 * (it returns a boolean).
+                 */
                 localStorage.setItem('kumaMode', mode)
               })
 
