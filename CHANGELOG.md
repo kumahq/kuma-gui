@@ -24,10 +24,10 @@
 * fix: K8s DP wizard: the "Next" control is no longer appearing when selecting a Mesh -- this was caused by missing variable that was commented out but not reintroduced in this single view. [[#36](https://github.com/Kong/kuma-gui/pull/36)]
 * change: disable the "selected" effect when clicking on a row overview -- in the KTabs component, the tab content has an outline around it when clicked on. This change hides the outline. [[#36](https://github.com/Kong/kuma-gui/pull/36)]
 * fix: the Expiration Time on the Certificate Insights tab needs to be displayed as a regular date/time, not a human-readable relative one -- in all other instances of time and date being displayed, it's human-readable and relative. For this instance it simply needed to be the date/time itself with no additional modification. [[#36](https://github.com/Kong/kuma-gui/pull/36)]
-* fix / improvement: when there is a new version of Kuma, a force-refresh is required to make the GUI work, otherwise a blank screen is displayed. I was unable to reproduce this but have made multiple changes to try and address it:
+* fix / improvement: when there is a new version of Kuma, a force-refresh is required to make the GUI work, otherwise a blank screen is displayed. I was unable to reproduce this but have made multiple changes to try and address it [[#36](https://github.com/Kong/kuma-gui/pull/36)]
   * I've made it so that the version is now stored in localStorage and the app checks the version from Kuma itself against the localStorage one. If they are different, the app updates the localStorage version string, and forces a reload on the page itself.
   * Additionally, I've changed the JS file chunk naming for every route in webpack's configuration. This means that instead of the compiled JS files always being randomized string names that are always completely different after every compile, they are named according to route. e.g. `12345678.js` would be renamed to something like `traffic-routes.js`.
-  * In addition to the above, I have also added cache busting to the compiled JS files. So `traffic-routes.js` turns into `traffic-routes?t=1234abcd`. This helps ensure that each new version forces the browser to reload the JS files fresh. [[#36](https://github.com/Kong/kuma-gui/pull/36)]
+  * In addition to the above, I have also added cache busting to the compiled JS files. So `traffic-routes.js` turns into `traffic-routes?t=1234abcd`. This helps ensure that each new version forces the browser to reload the JS files fresh.
 
 NOTE:
 
