@@ -1,5 +1,5 @@
 <template>
-  <div class="dataplanes">
+  <div class="ingress-dataplanes">
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -32,7 +32,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'dataplanes'
+              name: 'ingress-dataplanes'
             }"
           >
             <span class="custom-control-icon">
@@ -166,9 +166,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'Dataplanes',
+  name: 'IngressDataplanes',
   metaInfo: {
-    title: 'Dataplanes'
+    title: 'Ingress Dataplanes'
   },
   components: {
     EntityURLControl,
@@ -193,7 +193,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Dataplanes present.'
+        message: 'There are no Ingress Dataplanes present.'
       },
       tableData: {
         headers: [
@@ -319,8 +319,9 @@ export default {
       const query = this.$route.query.ns || null
 
       const params = {
-        size: this.pageSize,
-        offset: this.pageOffset
+        // size: this.pageSize,
+        ingress: true
+        // offset: this.pageOffset
       }
 
       /**

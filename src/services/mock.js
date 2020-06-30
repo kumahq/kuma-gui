@@ -291,31 +291,130 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/meshes/default/dataplanes/hello-world-foobar-02')
+      .onGet('/meshes/default/dataplanes/ingress-dp-test-123')
       .reply(200, {
         type: 'Dataplane',
         mesh: 'default',
-        name: 'hello-world-foobar-02',
+        name: 'ingress-dp-test-123',
         creationTime: '2020-06-02T09:33:09.208372-04:00',
         modificationTime: '2020-06-02T09:33:09.208372-04:00',
         networking: {
-          address: '10.0.0.1',
-          gateway: {
-            tags: {
-              service: 'kong'
+          address: '192.168.64.8',
+          inbound: [
+            {
+              port: 10001
             }
-          },
-          outbound: {
-            port: '33033',
-            service: 'backend'
-          }
+          ],
+          ingress: [
+            {
+              service: 'frontend.kuma-demo.svc:8080',
+              tags: {
+                app: 'kuma-demo-frontend',
+                env: 'prod',
+                'pod-template-hash': '69c9fd4bd',
+                protocol: 'http',
+                version: 'v8'
+              }
+            },
+            {
+              service: 'backend.kuma-demo.svc:3001',
+              tags: {
+                app: 'kuma-demo-backend',
+                env: 'prod',
+                'pod-template-hash': 'd7cb6b576',
+                protocol: 'http',
+                version: 'v0'
+              }
+            },
+            {
+              service: 'postgres.kuma-demo.svc:5432',
+              tags: {
+                app: 'postgres',
+                'pod-template-hash': '65df766577',
+                protocol: 'tcp'
+              }
+            },
+            {
+              service: 'redis.kuma-demo.svc:6379',
+              tags: {
+                app: 'redis',
+                'pod-template-hash': '78ff699f7',
+                protocol: 'tcp',
+                role: 'master',
+                tier: 'backend'
+              }
+            }
+          ]
         }
       })
-      .onGet('/meshes/default/dataplanes+insights/test-dp-02')
+      .onGet('/dataplanes+insights', { params: { ingress: true } }).reply(200, {
+        total: 2,
+        items: [
+          {
+            type: 'DataplaneOverview',
+            mesh: 'default',
+            name: 'ingress-dp-test-123',
+            creationTime: '2020-06-29T09:27:46.05334-04:00',
+            modificationTime: '2020-06-29T09:27:46.05334-04:00',
+            dataplane: {
+              networking: {
+                address: '192.168.64.8',
+                inbound: [
+                  {
+                    port: 10001
+                  }
+                ],
+                ingress: [
+                  {
+                    service: 'frontend.kuma-demo.svc:8080',
+                    tags: {
+                      app: 'kuma-demo-frontend',
+                      env: 'prod',
+                      'pod-template-hash': '69c9fd4bd',
+                      protocol: 'http',
+                      version: 'v8'
+                    }
+                  },
+                  {
+                    service: 'backend.kuma-demo.svc:3001',
+                    tags: {
+                      app: 'kuma-demo-backend',
+                      env: 'prod',
+                      'pod-template-hash': 'd7cb6b576',
+                      protocol: 'http',
+                      version: 'v0'
+                    }
+                  },
+                  {
+                    service: 'postgres.kuma-demo.svc:5432',
+                    tags: {
+                      app: 'postgres',
+                      'pod-template-hash': '65df766577',
+                      protocol: 'tcp'
+                    }
+                  },
+                  {
+                    service: 'redis.kuma-demo.svc:6379',
+                    tags: {
+                      app: 'redis',
+                      'pod-template-hash': '78ff699f7',
+                      protocol: 'tcp',
+                      role: 'master',
+                      tier: 'backend'
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        next: null
+      })
+      .onGet('/meshes/default/dataplanes+insights/ingress-dp-test-123')
       .reply(200, {
         type: 'DataplaneOverview',
         mesh: 'default',
-        name: 'test-dp-02',
+        name: 'ingress-dp-test-123',
         dataplane: {
           networking: {
             address: '192.168.64.8',

@@ -76,9 +76,18 @@ export default class Kuma {
     return this.client.get(`/meshes/${name}/dataplanes/${dataplane}`, { params })
   }
 
-  // get dataplane overviews by mesh
-  getDataplaneOverviewsFromMesh (mesh, dataplane, params) {
+  /**
+   * Dataplane Overviews
+   */
+
+  // get a specific dataplane overview from its associated mesh
+  getDataplaneOverviewFromMesh (mesh, dataplane, params) {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
+  }
+
+  // get all dataplane overviews from a specific mesh
+  getAllDataplaneOverviewsFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/dataplanes+insights`, { params })
   }
 
   // get all dataplane overviews

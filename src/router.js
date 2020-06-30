@@ -103,7 +103,7 @@ export default (store) => {
         breadcrumb: 'Overview'
       }
     },
-    // local CPs
+    // remote CPs
     {
       path: '/remote-cp',
       name: 'remote-cp',
@@ -148,7 +148,7 @@ export default (store) => {
       params: { mesh: ':mesh' },
       component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
       children: [
-        // dataplanes
+        // all dataplanes
         {
           path: 'dataplanes',
           name: 'dataplanes',
@@ -157,6 +157,26 @@ export default (store) => {
             parent: 'dataplanes'
           },
           component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/Dataplanes')
+        },
+        // ingress dataplanes
+        {
+          path: 'ingress-dataplanes',
+          name: 'ingress-dataplanes',
+          component: () => import(/* webpackChunkName: "dataplanes-ingress" */ '@/views/Entities/IngressDataplanes'),
+          meta: {
+            title: 'Ingress Dataplanes',
+            breadcrumb: 'Ingress Dataplanes'
+          }
+        },
+        // gateway dataplanes
+        {
+          path: 'gateway-dataplanes',
+          name: 'gateway-dataplanes',
+          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes'),
+          meta: {
+            title: 'Gateway Dataplanes',
+            breadcrumb: 'Gateway Dataplanes'
+          }
         },
         // traffic permissions
         {

@@ -497,7 +497,7 @@ export default (api) => {
               const itemName = items[i].name
               const itemMesh = items[i].mesh
 
-              const itemStatus = await api.getDataplaneOverviewsFromMesh(itemMesh, itemName)
+              const itemStatus = await api.getDataplaneOverviewFromMesh(itemMesh, itemName)
                 .then(response => {
                   const items = response.dataplaneInsight.subscriptions
 
