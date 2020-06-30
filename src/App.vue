@@ -113,6 +113,15 @@ export default {
 
             // fetch the config
             this.$store.dispatch('getConfig')
+              .then(() => {
+                const config = this.$store.getters.getConfig
+                const mode = config.mode
+
+                // set Kuma's current mode in localStorage.
+                // if the mode is `global`, this denotes that it's
+                // running in Multicluster mode.
+                localStorage.setItem('kumaMode', mode)
+              })
 
             // set the selected mesh in localStorage
             const mesh = () => {

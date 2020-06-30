@@ -1,6 +1,6 @@
 <template>
   <ul class="menu-list">
-    <template v-for="item in menuItems">
+    <template v-for="item in filteredItems">
       <li
         v-if="!item.hidden"
         :key="item.name"
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'MenuList',
@@ -45,7 +45,22 @@ export default {
     }
   },
   computed: {
-    ...mapState(['selectedMesh'])
+    ...mapState(['selectedMesh']),
+    ...mapGetters({
+      multicluster: 'getMulticlusterStatus'
+    }),
+    filteredItems () {
+      const items = this.menuItems
+      const mode = this.multicluster
+
+      return items.filter(item => {
+        if (mode) {
+          return true
+        }
+
+        return (typeof item.multicluster === 'undefined' || item.multicluster === false)
+      })
+    }
   },
   watch: {
     selectedMesh () {

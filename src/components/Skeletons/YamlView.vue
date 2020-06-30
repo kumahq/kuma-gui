@@ -180,7 +180,7 @@ export default {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
     activeTab: {
-      get (test) {
+      get () {
         const env = this.environment
 
         return {

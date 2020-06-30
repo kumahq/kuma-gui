@@ -21,10 +21,18 @@
           v-if="showStatus"
           class="py-1 md:py-0 md:px-4"
         >
-          <status
-            :active="guiStatus"
-            :content="statusContent"
-          />
+          <status :active="guiStatus">
+            <template slot="content">
+              <span>{{ statusContent }}</span>
+              <KBadge
+                v-if="multicluster"
+                appearance="success"
+                class="status-badge"
+              >
+                Multicluster
+              </KBadge>
+            </template>
+          </status>
         </div>
       </div>
     </div>
@@ -52,7 +60,9 @@ export default {
       // this checks the status of the API itself
       status: 'getStatus',
       // the currently selected mesh
-      currentMesh: 'getSelectedMesh'
+      currentMesh: 'getSelectedMesh',
+      // the status of multicluster
+      multicluster: 'getMulticlusterStatus'
     }),
     showStatus () {
       return !this.$route.meta.hideStatus && this.status === 'OK'
@@ -63,8 +73,11 @@ export default {
   },
   methods: {
     getGuiStatus () {
+      // these localStorage items are set on app launch
       const env = localStorage.getItem('kumaEnv')
       const apiUrl = localStorage.getItem('kumaApiUrl')
+
+      // get the other values from our state
       const tagline = this.$store.getters.getTagline
       const version = this.$store.getters.getVersion
 
@@ -114,6 +127,23 @@ export default {
 
 .upgrade-check-wrapper {
   margin-left: auto;
+}
+
+.status-badge {
+  --KBadgeWidth: auto;
+  --KBadgePaddingX: var(--spacing-sm);
+}
+
+@media screen and (min-width: 990px) {
+  .status-badge {
+    margin-left: var(--spacing-sm);
+  }
+}
+
+@media screen and (max-width: 989px) {
+  .status-badge {
+    margin-top: var(--spacing-sm);
+  }
 }
 
 @media screen and (max-width: 599px) {

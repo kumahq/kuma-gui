@@ -5,7 +5,6 @@
         :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :empty-state="empty_state"
         :display-data-table="true"
         :table-data="tableData"
@@ -38,13 +37,21 @@
         </template>
       </DataOverview>
       <Tabs
+        v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
-        :is-empty="isEmpty"
         :tabs="tabs"
         :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
       >
+        <template slot="tabHeader">
+          <div>
+            <h3>{{ tabGroupTitle }}</h3>
+          </div>
+          <!-- <div>
+            <EntityURLControl :url="shareUrl" />
+          </div> -->
+        </template>
         <template slot="overview">
           <LabelList
             :has-error="entityHasError"
@@ -144,6 +151,7 @@
 <script>
 import { mapState } from 'vuex'
 import { getSome, humanReadableDate, getOffset } from '@/helpers'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -158,6 +166,7 @@ export default {
     title: 'Meshes'
   },
   components: {
+    EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -272,6 +281,19 @@ export default {
     },
     countCols () {
       return Math.ceil(this.counts.length / this.itemsPerCol)
+    },
+    shareUrl () {
+      const urlRoot = `${window.location.origin}/#`
+
+      const shareUrl = () => {
+        if (this.$route.query.ns) {
+          return this.$route.fullPath
+        }
+
+        return `${urlRoot}${this.$route.fullPath}`
+      }
+
+      return shareUrl()
     }
   },
   watch: {
@@ -368,15 +390,18 @@ export default {
 
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
+              this.isEmpty = false
             } else {
               this.tableData.data = []
               this.tableDataIsEmpty = true
+              this.isEmpty = true
 
               this.getEntity(null)
             }
           })
           .catch(error => {
             this.hasError = true
+            this.isEmpty = true
 
             console.error(error)
           })

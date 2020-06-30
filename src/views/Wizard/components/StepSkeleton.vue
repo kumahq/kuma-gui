@@ -334,6 +334,7 @@ $bp-max-width: 1219px;
     border-radius: 6px;
     padding: var(--spacing-md);
     font-size: var(--base-font-size);
+    overflow: auto;
   }
 }
 

@@ -87,7 +87,8 @@ export default {
     ...mapGetters({
       title: 'getTagline',
       environment: 'getEnvironment',
-      selectedMesh: 'getSelectedMesh'
+      selectedMesh: 'getSelectedMesh',
+      multicluster: 'getMulticlusterStatus'
     }),
     pageTitle () {
       const metaTitle = this.$route.meta.title
@@ -184,6 +185,18 @@ export default {
         }
       ]
 
+      // if Kuma is running in multicluster mode
+      if (this.multicluster) {
+        const clusters = {
+          metric: 'Remote CPs',
+          value: this.$store.state.totalClusters,
+          url: '/remote-cp'
+        }
+
+        tableData.push(clusters)
+      }
+
+      // if the user is viewing data for all meshes
       if (mesh !== 'all') {
         // if the user is viewing the overview with a mesh selected,
         // we hide the mesh count from the metrics grid
@@ -213,6 +226,10 @@ export default {
   methods: {
     init () {
       this.getCounts()
+
+      if (this.multicluster) {
+        this.$store.dispatch('fetchTotalClusterCount')
+      }
     },
     getCounts () {
       let actions

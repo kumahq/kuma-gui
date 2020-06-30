@@ -17,13 +17,41 @@ export default {
           link: '/meshes',
           title: false,
           pathFlip: true
-          // root: true
         },
         {
+          name: 'Remote CPs',
+          link: '/remote-cp',
+          title: false,
+          root: true
+          // multicluster: true
+        }
+      ]
+    },
+    {
+      name: 'Dataplane Types',
+      id: 'dataplanes',
+      skipRbac: true,
+      items: [
+        {
           name: 'Dataplanes',
+          title: true
+        },
+        {
+          name: 'All Dataplanes',
           link: '/dataplanes',
           title: false
-          // root: true
+        },
+        {
+          name: 'Ingress',
+          link: '/ingress-dataplanes',
+          title: false
+          // multicluster: true
+        },
+        {
+          name: 'Gateway',
+          link: '/gateway-dataplanes',
+          title: false
+          // multicluster: true
         }
       ]
     },

@@ -1,22 +1,27 @@
 <template>
-  <KClipboardProvider v-slot="{ copyToClipboard }">
-    <KPop placement="bottom">
-      <KButton
-        appearance="secondary"
-        size="small"
-        @click="() => { copyToClipboard(url) }"
-      >
-        <KIcon
-          slot="icon"
-          icon="externalLink"
-        />
-        {{ copyButtonText }}
-      </KButton>
-      <div slot="content">
-        <p>{{ confirmationText }}</p>
-      </div>
-    </KPop>
-  </KClipboardProvider>
+  <div class="entity-url-control">
+    <KClipboardProvider
+      v-if="shouldDisplay"
+      v-slot="{ copyToClipboard }"
+    >
+      <KPop placement="bottom">
+        <KButton
+          appearance="secondary"
+          size="small"
+          @click="() => { copyToClipboard(url) }"
+        >
+          <KIcon
+            slot="icon"
+            icon="externalLink"
+          />
+          {{ copyButtonText }}
+        </KButton>
+        <div slot="content">
+          <p>{{ confirmationText }}</p>
+        </div>
+      </KPop>
+    </KClipboardProvider>
+  </div>
 </template>
 
 <script>
@@ -34,6 +39,19 @@ export default {
     confirmationText: {
       type: String,
       default: 'URL copied to clipboard!'
+    }
+  },
+  computed: {
+    shouldDisplay () {
+      const mesh = this.$route.params.mesh || null
+
+      // we only want to display the copy button when the user has filtered
+      // the view by mesh and not all meshes
+      if (mesh && mesh !== 'all') {
+        return true
+      }
+
+      return false
     }
   }
 }

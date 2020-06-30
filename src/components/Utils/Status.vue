@@ -4,10 +4,9 @@
       class="status__dot"
       :class="{ 'is-active': active }"
     />
-    <span
-      class="status__label"
-      v-html="content"
-    />
+    <span class="status__label">
+      <slot name="content" />
+    </span>
   </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .status {
   display: flex;
   align-items: center;
@@ -46,9 +45,13 @@ export default {
   border-radius: 100%;
   margin-right: 6px;
   background-color: var(--status-color);
+
+  &.is-active {
+    --status-color: var(--green-1);
+  }
 }
 
-.status__dot.is-active {
-  --status-color: var(--green-1);
+.status__label {
+
 }
 </style>
