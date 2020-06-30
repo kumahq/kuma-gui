@@ -9,7 +9,7 @@ module.exports = {
   },
   chainWebpack: config => {
     config.output
-      .chunkFilename('[name].js?t=[chunkhash:8]')
+      .chunkFilename('js/[name].js?t=[chunkhash:8]')
 
     config.module
       .rule('ignore-some-things')
