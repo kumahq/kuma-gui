@@ -15,12 +15,6 @@
         :is-last="i === lastMenuList"
       />
       <div class="sidebar-message-wrap">
-        <!-- <div
-          v-if="kumaInfo"
-          class="sidebar-app-info"
-        >
-          {{ kumaInfo }}
-        </div> -->
         <div class="sidebar-message">
           <h4 class="mb-4 md sidebar-message__title">
             Resources

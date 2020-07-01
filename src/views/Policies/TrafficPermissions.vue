@@ -387,11 +387,13 @@ export default {
 
             if (mtls && mtls.enabledBackend && mtls.enabledBackend !== null) {
               this.securityWarning = false
-            } else {
-              this.securityWarning = true
             }
+
+            this.securityWarning = true
           })
       }
+
+      this.securityWarning = false
     }
   }
 }

@@ -50,7 +50,9 @@ export default (api) => {
       selectedTableRow: null,
       storedWizardData: null,
       itemQueryNamespace: 'item',
-      totalClusters: 0
+      totalClusters: 0,
+      newsletterPardotEndpoint: 'https://go.pardot.com/l/392112/2019-09-03/bjz6yv',
+      newsletterPardotEndpointDev: 'https://go.pardot.com/l/392112/2020-01-14/bkwzrx'
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -95,7 +97,9 @@ export default (api) => {
 
         return status
       },
-      getClusterCount: (state) => state.totalClusters
+      getClusterCount: (state) => state.totalClusters,
+      getNewsletterPardotEndpoint: (state) => state.newsletterPardotEndpoint,
+      getNewsletterPardotEndpointDev: (state) => state.newsletterPardotEndpointDev
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),

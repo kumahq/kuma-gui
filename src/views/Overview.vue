@@ -59,6 +59,9 @@
           </template>
         </CardSkeleton>
       </div>
+      <div>
+        <NewsletterForm class="card-item" />
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +72,7 @@ import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
+import NewsletterForm from '@/components/NewsletterForm'
 
 export default {
   name: 'Overview',
@@ -81,7 +85,8 @@ export default {
     PageHeader,
     Breadcrumbs,
     MetricGrid,
-    CardSkeleton
+    CardSkeleton,
+    NewsletterForm
   },
   computed: {
     ...mapGetters({
@@ -308,7 +313,7 @@ export default {
     margin: 0 -0.5rem 0;
 
     > * {
-      --i: 33.333333%;
+      --i: 50%;
 
       flex: 0 0 var(--i);
       max-width: var(--i);
