@@ -17,8 +17,8 @@
           <input
             v-for="(key, value) in utmFields"
             :key="key"
-            :name="key"
-            :value="value"
+            :name="value"
+            :value="key"
             type="hidden"
           >
           <input
