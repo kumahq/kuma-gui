@@ -6,22 +6,36 @@
       </h2>
     </page-header>
     <FrameSkeleton class="py-2 px-4">
-      <div v-if="isReady">
-        <p
-          v-if="isReady && configUrl"
-          class="my-2"
-        >
-          You can view this configuration at <a
-            :href="configUrl"
-            target="_blank"
-          >{{ configUrl }}</a>
-        </p>
-        <prism
-          class="code-block"
-          language="json"
-          :code="codeOutput"
-        />
-      </div>
+      <KCard
+        v-if="isReady"
+        border-variant="noBorder"
+      >
+        <template slot="body">
+          <prism
+            class="code-block"
+            language="json"
+            :code="codeOutput"
+          />
+        </template>
+        <template slot="actions">
+          <KClipboardProvider
+            v-if="codeOutput"
+            v-slot="{ copyToClipboard }"
+          >
+            <KPop placement="bottom">
+              <KButton
+                appearance="primary"
+                @click="() => { copyToClipboard(codeOutput) }"
+              >
+                Copy config to clipboard
+              </KButton>
+              <div slot="content">
+                <p>Config copied to clipboard!</p>
+              </div>
+            </KPop>
+          </KClipboardProvider>
+        </template>
+      </KCard>
 
       <!-- loading / error handling -->
       <KEmptyState
