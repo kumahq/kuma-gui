@@ -103,6 +103,16 @@ export default (store) => {
         breadcrumb: 'Overview'
       }
     },
+    // diagnostics
+    {
+      path: '/diagnostics',
+      name: 'diagnostics',
+      component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/Diagnostics'),
+      meta: {
+        title: 'Diagnostics',
+        breadcrumb: 'Diagnostics'
+      }
+    },
     // remote CPs
     {
       path: '/remote-cp',
