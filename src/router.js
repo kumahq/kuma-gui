@@ -66,7 +66,8 @@ export default (store) => {
           name: 'create-mesh',
           meta: {
             title: 'Create a new Mesh',
-            excludeAsBreadcrumb: true
+            excludeAsBreadcrumb: true,
+            wizardProcess: true
           },
           component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh')
         },
@@ -75,7 +76,8 @@ export default (store) => {
           name: 'kubernetes-dataplane',
           meta: {
             title: 'Create a new Kubernetes Dataplane',
-            excludeAsBreadcrumb: true
+            excludeAsBreadcrumb: true,
+            wizardProcess: true
           },
           component: () => import(/* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes')
         },
@@ -84,7 +86,8 @@ export default (store) => {
           name: 'universal-dataplane',
           meta: {
             title: 'Create a new Universal Dataplane',
-            excludeAsBreadcrumb: true
+            excludeAsBreadcrumb: true,
+            wizardProcess: true
           },
           component: () => import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal')
         }

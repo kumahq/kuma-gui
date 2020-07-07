@@ -8,12 +8,6 @@
         is-dismissible
         @closed="closeAlert"
       >
-        <!-- <template slot="alertIcon">
-        <KIcon
-          icon="warning"
-          size="24"
-        />
-      </template> -->
         <template slot="alertMessage">
           <div class="alert-content">
             <div>
@@ -55,7 +49,12 @@ export default {
       meshes: 'meshes'
     }),
     showNotice () {
-      return (this.dpCount !== undefined && this.dpCount === 0) && this.onlyDefaultMesh === true
+      return (
+        this.dpCount !== undefined &&
+        this.dpCount === 0
+      ) &&
+        this.onlyDefaultMesh === true &&
+        !this.$route.meta.wizardProcess
     }
   },
   watch: {
