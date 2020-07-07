@@ -27,7 +27,7 @@ export default {
         const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
 
         /** this adds the mesh name and url to the breadcrumb chain */
-        if (this.isCurrentRoute(r) && this.pageMesh && this.$route.name !== 'global-overview') {
+        if (this.isCurrentRoute(r) && this.pageMesh) {
           items.push({
             key: this.pageMesh,
             to: { path: `/meshes/${this.pageMesh}` },

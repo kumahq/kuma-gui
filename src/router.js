@@ -99,7 +99,7 @@ export default (store) => {
       meta: {
         title: 'Meshes',
         breadcrumb: 'Meshes',
-        parent: 'global-overview-child'
+        parent: 'global-overview'
       },
       params: { mesh: ':mesh' },
       component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
@@ -135,7 +135,6 @@ export default (store) => {
           meta: {
             title: 'Global Overview'
           },
-          params: { mesh: ':mesh' },
           component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
         },
         // remote CPs
@@ -145,7 +144,6 @@ export default (store) => {
           meta: {
             title: 'Remote CPs'
           },
-          params: { mesh: ':mesh' },
           component: () => import(/* webpackChunkName: "remote-cps" */ '@/views/Entities/RemoteCP')
         },
         // all dataplanes
@@ -153,8 +151,7 @@ export default (store) => {
           path: 'dataplanes',
           name: 'dataplanes',
           meta: {
-            title: 'Dataplanes',
-            parent: 'dataplanes'
+            title: 'Dataplanes'
           },
           component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/Dataplanes')
         },

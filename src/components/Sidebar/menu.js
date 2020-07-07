@@ -10,7 +10,6 @@ export default {
           name: 'Overview',
           link: '/overview',
           title: false
-          // root: true
         },
         {
           name: 'Meshes',
@@ -22,7 +21,10 @@ export default {
           name: 'Remote CPs',
           link: '/remote-cps',
           title: false
-          // root: true
+          /**
+           * the below setting will hide a nav item if it should only
+           * be shown when Multicluster (Distributed) mode is enabled.
+           */
           // multicluster: true
         }
       ]

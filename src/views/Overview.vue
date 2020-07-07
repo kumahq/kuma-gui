@@ -67,11 +67,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
-
 import NewsletterForm from '@/components/NewsletterForm'
 import Resources from '@/components/Resources'
 
@@ -83,8 +80,6 @@ export default {
     }
   },
   components: {
-    PageHeader,
-    Breadcrumbs,
     MetricGrid,
     CardSkeleton,
     NewsletterForm,
