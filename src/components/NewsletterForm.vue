@@ -12,7 +12,7 @@
           class="mt-4"
           tag="form"
           method="post"
-          :action="getNewsletterPardotEndpoint"
+          :action="formEndpoint"
         >
           <input
             v-for="(key, value) in utmFields"
@@ -72,8 +72,7 @@
                 <span v-if="invalid === false && formSending === true">
                   <KIcon
                     icon="spinner"
-                    color="rgba(0, 0, 0, 0.1)"
-                    size="42"
+                    color="#fff"
                   />
                 </span>
                 <span :class="{ 'is-hidden': (invalid === false && formSending === true) }">
@@ -93,7 +92,7 @@
           <p class="custom-block-title">
             Thank you!
           </p>
-          <p>You're now signed up for the {{ getSiteData.title }} newsletter.</p>
+          <p>You're now signed up for the Kuma newsletter.</p>
         </div>
 
         <div
@@ -111,7 +110,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 import { required, email } from 'vee-validate/dist/rules'
@@ -149,12 +147,12 @@ export default {
     ]),
     utmFields () {
       return {
-        utm_content: this.$route.query.utm_content || '',
-        utm_medium: this.$route.query.utm_medium || '',
-        utm_source: this.$route.query.utm_source || '',
-        utm_campaign: this.$route.query.utm_campaign || '',
-        utm_term: this.$route.query.utm_term || '',
-        utm_ad_group: this.$route.query.utm_ad_group || ''
+        utm_content: this.$route.query.utm_content,
+        utm_medium: this.$route.query.utm_medium,
+        utm_source: this.$route.query.utm_source,
+        utm_campaign: this.$route.query.utm_campaign,
+        utm_term: this.$route.query.utm_term,
+        utm_ad_group: this.$route.query.utm_ad_group
       }
     },
     formDistanceFromTop () {
@@ -169,6 +167,8 @@ export default {
       if (process.env.NODE_ENV === 'production') {
         return live
       } else {
+        console.log(`Newsletter form submitting to: ${dev}`)
+
         return dev
       }
     }

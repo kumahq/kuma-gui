@@ -9,8 +9,8 @@ export default {
         {
           name: 'Overview',
           link: '/overview',
-          title: false,
-          root: true
+          title: false
+          // root: true
         },
         {
           name: 'Meshes',
@@ -20,9 +20,9 @@ export default {
         },
         {
           name: 'Remote CPs',
-          link: '/remote-cp',
-          title: false,
-          root: true
+          link: '/remote-cps',
+          title: false
+          // root: true
           // multicluster: true
         }
       ]

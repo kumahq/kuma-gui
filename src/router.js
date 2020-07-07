@@ -92,27 +92,6 @@ export default (store) => {
     },
     // App
 
-    // overview
-    {
-      path: '/overview',
-      alias: '/',
-      name: 'global-overview',
-      component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview'),
-      meta: {
-        title: 'Global Overview',
-        breadcrumb: 'Overview'
-      }
-    },
-    // remote CPs
-    {
-      path: '/remote-cp',
-      name: 'remote-cp',
-      component: () => import(/* webpackChunkName: "remote-cp" */ '@/views/Entities/RemoteCP'),
-      meta: {
-        title: 'Remote CPs',
-        breadcrumb: 'Remote CPs'
-      }
-    },
     // all Meshes
     {
       path: '/meshes',
@@ -120,7 +99,7 @@ export default (store) => {
       meta: {
         title: 'Meshes',
         breadcrumb: 'Meshes',
-        parent: 'global-overview'
+        parent: 'global-overview-child'
       },
       params: { mesh: ':mesh' },
       component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
@@ -129,7 +108,7 @@ export default (store) => {
           path: ':mesh',
           name: 'mesh-child',
           meta: {
-            title: 'Overview',
+            title: 'Mesh Overview',
             parent: 'all-meshes'
           },
           params: { mesh: ':mesh' },
@@ -148,6 +127,27 @@ export default (store) => {
       params: { mesh: ':mesh' },
       component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
       children: [
+        // overview
+        {
+          path: 'overview',
+          name: 'global-overview',
+          alias: '/',
+          meta: {
+            title: 'Global Overview'
+          },
+          params: { mesh: ':mesh' },
+          component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
+        },
+        // remote CPs
+        {
+          path: 'remote-cps',
+          name: 'remote-cps',
+          meta: {
+            title: 'Remote CPs'
+          },
+          params: { mesh: ':mesh' },
+          component: () => import(/* webpackChunkName: "remote-cps" */ '@/views/Entities/RemoteCP')
+        },
         // all dataplanes
         {
           path: 'dataplanes',

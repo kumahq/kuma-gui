@@ -14,26 +14,6 @@
         :index="i"
         :is-last="i === lastMenuList"
       />
-      <div class="sidebar-message-wrap">
-        <div class="sidebar-message">
-          <h4 class="mb-4 md sidebar-message__title">
-            Resources
-          </h4>
-          <ul>
-            <li
-              v-for="(item, index) in resourceLinks"
-              :key="index"
-            >
-              <a
-                :href="item.link"
-                target="_blank"
-              >
-                {{ item.label }}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
       <CollapseToggle
         :handle-toggle-collapse="handleToggleCollapse"
       />
@@ -71,26 +51,6 @@ export default {
     // ...mapState('auth', {
     //   perms: state => state.permissions
     // }),
-
-    resourceLinks () {
-      const storedVersion = this.$store.getters.getVersion
-      const ver = (storedVersion !== null) ? storedVersion : 'latest'
-
-      return [
-        {
-          link: `https://kuma.io/docs/${ver}/`,
-          label: 'Kuma Documentation'
-        },
-        {
-          link: 'https://kuma-mesh.slack.com/',
-          label: 'Kuma Community Chat'
-        },
-        {
-          link: 'https://github.com/Kong/kuma',
-          label: 'Kuma GitHub Repository'
-        }
-      ]
-    },
 
     ...mapState('sidebar', {
       menu: state => state.menu
@@ -250,55 +210,6 @@ nav {
 /* Fix for IE */
 .workspace-toggle > span{
   top: 10px
-}
-
-.sidebar-message-wrap {
-  position: fixed;
-  bottom: 36px;
-  width: 240px;
-
-  nav.closed & {
-    display: none;
-  }
-}
-
-.sidebar-app-info {
-  padding: 32px;
-  font-size: 14px;
-  line-height: 25px;
-  color: var(--tblack-45);
-}
-
-.sidebar-message {
-  background-color: #FFF5E0;
-  // box-shadow: inset 0 1px 0 0 rgba(0,0,0,0.10);
-  padding: 32px;
-  font-size: 14px;
-  line-height: 25px;
-  color: rgba(0, 0, 0, .75);
-  border-radius: 6px 0 0 0;
-
-  p:first-of-type {
-    margin-bottom: 16px;
-  }
-
-  a {
-    color: #1782CF;
-    text-decoration: none;
-  }
-
-  ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-  }
-}
-
-.sidebar-message__title {
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(0,0,0,0.10);
-  padding-bottom: 6px;
-  margin-top: 0;
 }
 
 // mobile fix

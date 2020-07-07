@@ -3,8 +3,12 @@
     <div class="main-header__content flex justify-between items-center -mx-4">
       <div class="py-1 md:py-0 md:px-4">
         <router-link
-          :to="{ name: 'global-overview' }"
-          exact
+          :to="{
+            name: 'global-overview',
+            params: {
+              mesh: currentMesh
+            }
+          }"
           class="logo"
         >
           <img

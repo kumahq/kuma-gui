@@ -1,14 +1,9 @@
 <template>
   <div class="local-cps">
-    <page-header noflex>
-      <h2 class="xxl">
-        {{ pageTitle }}
-      </h2>
-    </page-header>
+    <!-- warning message for when Multicluster (Distributed) is not enabled -->
     <KEmptyState
       v-if="!multicluster"
       class="global-api-status"
-      cta-is-hidden
     >
       <template slot="title">
         <KIcon
@@ -20,10 +15,21 @@
       </template>
       <template slot="message">
         <p>
-          To access this page, you must be running in <strong>Multicluster</strong> mode.
+          To access this page, you must be running Kuma in <strong>Distributed</strong> mode.
         </p>
       </template>
+      <template slot="cta">
+        <KButton
+          to="https://kuma.io/docs/0.6.0/documentation/deployments/#distributed-mode"
+          target="_blank"
+          appearance="primary"
+        >
+          Learn More
+        </KButton>
+      </template>
     </KEmptyState>
+
+    <!-- Remote CPs information for when Multicluster is enabled -->
     <FrameSkeleton v-else>
       <DataOverview
         :page-size="pageSize"
@@ -96,7 +102,6 @@
 import { mapState, mapGetters } from 'vuex'
 import { humanReadableDate, getOffset } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
-import PageHeader from '@/components/Utils/PageHeader.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -109,7 +114,6 @@ export default {
     title: 'Remote CPs'
   },
   components: {
-    PageHeader,
     FrameSkeleton,
     Pagination,
     DataOverview,

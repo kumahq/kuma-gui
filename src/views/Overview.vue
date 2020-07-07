@@ -1,18 +1,11 @@
 <template>
   <div class="overview">
-    <page-header noflex>
-      <breadcrumbs />
-      <!-- <h2 class="xxl">
-        {{ pageTitle }}
-      </h2> -->
-    </page-header>
-
     <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
     />
 
-    <div class="card-wrapper">
+    <div class="card-wrapper card-wrapper--3-col">
       <div>
         <CardSkeleton
           class="card-item"
@@ -59,8 +52,14 @@
           </template>
         </CardSkeleton>
       </div>
+    </div>
+
+    <div class="card-wrapper card-wrapper--2-col">
       <div>
         <NewsletterForm class="card-item" />
+      </div>
+      <div>
+        <Resources class="card-item" />
       </div>
     </div>
   </div>
@@ -72,7 +71,9 @@ import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
+
 import NewsletterForm from '@/components/NewsletterForm'
+import Resources from '@/components/Resources'
 
 export default {
   name: 'Overview',
@@ -86,7 +87,8 @@ export default {
     Breadcrumbs,
     MetricGrid,
     CardSkeleton,
-    NewsletterForm
+    NewsletterForm,
+    Resources
   },
   computed: {
     ...mapGetters({
@@ -312,9 +314,22 @@ export default {
     flex-wrap: wrap;
     margin: 0 -0.5rem 0;
 
-    > * {
-      --i: 50%;
+    &.card-wrapper--3-col {
+      --i: 33.333333%;
+    }
 
+    &.card-wrapper--2-col {
+
+      > *:first-of-type {
+        --i: 66.66667%;
+      }
+
+      > *:last-of-type {
+        --i: 33.333333%;
+      }
+    }
+
+    > * {
       flex: 0 0 var(--i);
       max-width: var(--i);
     }
