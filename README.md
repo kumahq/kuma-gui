@@ -5,7 +5,7 @@
 
 # Kuma GUI
 
-This is the source code for the [Kuma](https://github.com/Kong/kuma/) GUI. It's proudly built on [Vue.js](https://vuejs.org/) and leverages the [Kongponents](https://kongponents.konghq.com/) component library.
+This is the source code for the [Kuma](https://github.com/kumahq/kuma/) GUI. It's proudly built on [Vue.js](https://vuejs.org/) and leverages the [Kongponents](https://kongponents.konghq.com/) component library.
 
 When running Kuma itself, the GUI is automatically served on port `:5683` and is accessible in your browser at `http://localhost:5683/`. If you would like to run the GUI isolated and in development mode, this repository allows you to do so. This allows you to inspect the Vue.js components with tools like [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/), which is available for both Firefox and Google Chrome.
 

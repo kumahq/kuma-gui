@@ -92,7 +92,7 @@ export default {
           label: 'Kuma Community Chat'
         },
         {
-          link: 'https://github.com/Kong/kuma',
+          link: 'https://github.com/kumahq/kuma',
           label: 'Kuma GitHub Repository'
         }
       ]
