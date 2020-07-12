@@ -61,7 +61,7 @@ NOTE:
 * feat: modified the next and previous controls of the StepSkeleton so that previous is hidden if on the first step, and next is disabled if conditions not met, but hidden if on the last step. [[#28](https://github.com/kumahq/kuma-gui/pull/28)]
 * chore(pagination) hid next and previous controls if they are not needed, vs having them set to disabled. [[#28](https://github.com/kumahq/kuma-gui/pull/28)]
 * feat: New Certificate Insights tab on the Dataplanes views [[#33](https://github.com/kumahq/kuma-gui/pull/33)]
-* feat: Upgrade warning - detects when the user is running an older version of Kuma and presents them with a notice and link to upgrade [[#31](https://github.]com/Kong/kuma-gui/pull/39)]
+* feat: Upgrade warning - detects when the user is running an older version of Kuma and presents them with a notice and link to upgrade [[#31](https://github.com/kumahq/kuma-gui/pull/39)]
 
 ### Issues resolved
 

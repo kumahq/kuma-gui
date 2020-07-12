@@ -1,7 +1,8 @@
 [![][kuma-logo]][kuma-url]
 
-[![Twitter](https://img.shields.io/twitter/follow/thekonginc.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=thekonginc)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKong%2Fkuma-gui.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FKong%2Fkuma-gui?ref=badge_shield)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kumahq/kuma/blob/master/LICENSE)
+[![Slack](https://chat.kuma.io/badge.svg)](https://chat.kuma.io/)
+[![Twitter](https://img.shields.io/twitter/follow/KumaMesh.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=KumaMesh)
 
 # Kuma GUI
 
@@ -62,9 +63,23 @@ yarn run test:e2e
 yarn run test:unit
 ```
 
+## License
+
+```
+Copyright 2020 the Kuma Authors.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
 [kuma-url]: https://kuma.io/
 [kuma-logo]: https://kuma-public-assets.s3.amazonaws.com/kuma-logo-v2.png
-
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FKong%2Fkuma-gui.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FKong%2Fkuma-gui?ref=badge_large)
