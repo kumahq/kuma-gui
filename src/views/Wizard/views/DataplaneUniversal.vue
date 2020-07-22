@@ -591,7 +591,7 @@ export default {
           address: univDataplaneNetworkAddress,
           gateway: {
             tags: {
-              service: univDataplaneServiceName
+              'kuma.io/service': univDataplaneServiceName
             }
           }
         }
