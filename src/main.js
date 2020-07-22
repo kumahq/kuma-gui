@@ -66,7 +66,7 @@ function SETUP_VUE_APP () {
   axios
     .get(process.env.VUE_APP_KUMA_CONFIG)
     .then(response => {
-      const apiUrl = response.data.apiUrl
+      const apiUrl = response.data.guiServer.apiServerUrl
       const kumaEnv = response.data.environment
 
       const storedKumaEnv = localStorage.getItem('kumaEnv') !== null
