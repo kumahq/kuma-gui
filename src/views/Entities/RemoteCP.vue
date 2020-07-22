@@ -172,9 +172,12 @@ export default {
     ...mapState({
       mesh: 'selectedMesh'
     }),
-    ...mapGetters({
-      multicluster: 'getMulticlusterStatus'
-    }),
+    // ...mapGetters({
+    //   multicluster: 'getMulticlusterStatus'
+    // }),
+    multicluster () {
+      return true
+    },
     pageTitle () {
       const metaTitle = this.$route.meta.title
 
@@ -238,9 +241,9 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const endpoint = this.$api.getLocalCPs()
+      const endpoint = this.$api.getZoneStatus()
 
-      const getLocalCPs = () => {
+      const getZoneStatus = () => {
         return endpoint
           .then(response => {
             // check to see if the `next` url is present
@@ -301,7 +304,7 @@ export default {
           })
       }
 
-      getLocalCPs()
+      getZoneStatus()
     },
     getEntity (entity) {
       this.entityIsLoading = true
