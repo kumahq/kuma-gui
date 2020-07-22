@@ -172,12 +172,9 @@ export default {
     ...mapState({
       mesh: 'selectedMesh'
     }),
-    // ...mapGetters({
-    //   multicluster: 'getMulticlusterStatus'
-    // }),
-    multicluster () {
-      return true
-    },
+    ...mapGetters({
+      multicluster: 'getMulticlusterStatus'
+    }),
     pageTitle () {
       const metaTitle = this.$route.meta.title
 
