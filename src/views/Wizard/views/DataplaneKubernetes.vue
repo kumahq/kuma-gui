@@ -623,7 +623,7 @@ networking:
   - port: 10000
     servicePort: 9000
     tags:
-      service: echo</pre>
+      kuma.io/service: echo</pre>
           </code>
         </template>
       </StepSkeleton>
@@ -633,7 +633,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
-import { rejectKeys } from '@/views/Wizard/helpers'
+// import { rejectKeys } from '@/views/Wizard/helpers'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -642,9 +642,6 @@ import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 import Switcher from '@/views/Wizard/components/Switcher'
 import CodeView from '@/components/Skeletons/CodeView'
 // import Scanner from '@/views/Wizard/components/Scanner'
-
-// schema for building code output
-// import meshSchema from '@/views/Wizard/schemas/Mesh'
 
 // schema for building code output (TBD)
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneKubernetes'

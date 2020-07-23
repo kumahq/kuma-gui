@@ -420,7 +420,7 @@ networking:
   - port: 10000
     servicePort: 9000
     tags:
-      service: echo</pre>
+      kuma.io/service: echo</pre>
           </code>
         </template>
       </StepSkeleton>
@@ -576,8 +576,8 @@ export default {
               port: univDataplaneNetworkDPPort,
               servicePort: univDataplaneNetworkServicePort,
               tags: {
-                service: univDataplaneServiceName,
-                protocol: univDataplaneNetworkProtocol
+                'kuma.io/service': univDataplaneServiceName,
+                'kuma.io/protocol': univDataplaneNetworkProtocol
               }
             }
           ]
@@ -591,7 +591,7 @@ export default {
           address: univDataplaneNetworkAddress,
           gateway: {
             tags: {
-              service: univDataplaneServiceName
+              'kuma.io/service': univDataplaneServiceName
             }
           }
         }
