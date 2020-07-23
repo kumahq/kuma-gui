@@ -1851,7 +1851,7 @@ export default class Mock {
           },
           {
             type: 'TrafficPermission',
-            mesh: 'helloworld',
+            mesh: 'default',
             name: 'tp-bravo-alpha-shiba',
             sources: [
               {
@@ -1870,13 +1870,13 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions')
+      .onGet('/meshes/default/traffic-permissions')
       .reply(200, {
         total: 3,
         items: [
           {
             type: 'TrafficPermission',
-            mesh: 'mesh-01',
+            mesh: 'default',
             name: 'tp-1',
             sources: [
               {
@@ -1895,7 +1895,7 @@ export default class Mock {
           },
           {
             type: 'TrafficPermission',
-            mesh: 'mesh-01',
+            mesh: 'default',
             name: 'tp-1234',
             sources: [
               {
@@ -1914,7 +1914,7 @@ export default class Mock {
           },
           {
             type: 'TrafficPermission',
-            mesh: 'mesh-01',
+            mesh: 'default',
             name: 'tp-alpha-tango-donut',
             sources: [
               {
@@ -1933,10 +1933,10 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions/tp-1')
+      .onGet('/meshes/default/traffic-permissions/tp-1')
       .reply(200, {
         type: 'TrafficPermission',
-        mesh: 'mesh-1',
+        mesh: 'default',
         name: 'tp-1',
         creationTime: '2020-05-12T12:31:45.606217+02:00',
         modificationTime: '2020-05-12T12:31:45.606217+02:00',
@@ -1955,10 +1955,10 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions/tp-1234')
+      .onGet('/meshes/default/traffic-permissions/tp-1234')
       .reply(200, {
         type: 'TrafficPermission',
-        mesh: 'mesh-1',
+        mesh: 'default',
         name: 'tp-1234',
         creationTime: '2020-05-12T12:31:45.606217+02:00',
         modificationTime: '2020-05-12T12:31:45.606217+02:00',
@@ -1977,10 +1977,10 @@ export default class Mock {
           }
         ]
       })
-      .onGet('/meshes/mesh-01/traffic-permissions/tp-alpha-tango-donut')
+      .onGet('/meshes/default/traffic-permissions/tp-alpha-tango-donut')
       .reply(200, {
         type: 'TrafficPermission',
-        mesh: 'mesh-1',
+        mesh: 'default',
         name: 'tp-alpha-tango-donut',
         creationTime: '2020-05-12T12:31:45.606217+02:00',
         modificationTime: '2020-05-12T12:31:45.606217+02:00',

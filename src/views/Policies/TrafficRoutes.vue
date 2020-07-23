@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { getSome } from '@/helpers'
+import { getSome, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -279,7 +279,7 @@ export default {
               this.firstEntity = firstItem.name
 
               // load the YAML entity for the first item on page load
-              this.getEntity(firstItem)
+              this.getEntity(stripTimes(firstItem))
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', firstItem.name)
@@ -330,7 +330,8 @@ export default {
               const selected = ['type', 'name', 'mesh']
 
               this.entity = getSome(response, selected)
-              this.rawEntity = response
+              // this.rawEntity = response
+              this.rawEntity = stripTimes(response)
             } else {
               this.entity = null
               this.entityIsEmpty = true
