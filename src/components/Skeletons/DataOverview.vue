@@ -83,7 +83,7 @@
             >
               <span
                 class="entity-tags__label"
-                :class="`entity-tags__label--${item.label.toLowerCase()}`"
+                :class="`entity-tags__label--${item.label.toLowerCase().replace('kuma.io/','')}`"
               >
                 {{ item.label }}
               </span>
