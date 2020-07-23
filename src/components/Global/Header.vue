@@ -25,11 +25,15 @@
             <template slot="content">
               <span>{{ statusContent }}</span>
               <KBadge
-                v-if="multicluster"
                 appearance="success"
                 class="status-badge"
               >
-                Multicluster
+                <span v-if="multicluster">
+                  Multi-Zone
+                </span>
+                <span v-else>
+                  Standalone
+                </span>
               </KBadge>
             </template>
           </status>

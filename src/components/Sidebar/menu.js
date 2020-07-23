@@ -13,17 +13,17 @@ export default {
           root: true
         },
         {
+          name: 'Zones',
+          link: '/zones',
+          title: false,
+          root: true
+          // multicluster: true
+        },
+        {
           name: 'Meshes',
           link: '/meshes',
           title: false,
           pathFlip: true
-        },
-        {
-          name: 'Remote CPs',
-          link: '/remote-cp',
-          title: false,
-          root: true
-          // multicluster: true
         }
       ]
     },
@@ -44,14 +44,14 @@ export default {
         {
           name: 'Ingress',
           link: '/ingress-dataplanes',
-          title: false
-          // multicluster: true
+          title: false,
+          nested: true
         },
         {
           name: 'Gateway',
           link: '/gateway-dataplanes',
-          title: false
-          // multicluster: true
+          title: false,
+          nested: true
         }
       ]
     },

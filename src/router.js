@@ -115,12 +115,12 @@ export default (store) => {
     },
     // remote CPs
     {
-      path: '/remote-cp',
-      name: 'remote-cp',
-      component: () => import(/* webpackChunkName: "remote-cp" */ '@/views/Entities/RemoteCP'),
+      path: '/zones',
+      name: 'zones',
+      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones'),
       meta: {
-        title: 'Remote CPs',
-        breadcrumb: 'Remote CPs'
+        title: 'Zones',
+        breadcrumb: 'Zones'
       }
     },
     // all Meshes

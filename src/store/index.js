@@ -178,9 +178,9 @@ export default (api) => {
        * the unneeded listing of max 100 items.
        */
 
-      // get total clusters (Remote CPs) when in multicluster
+      // get total clusters (Zones) when in multicluster (or "Multi-Zone") mode
       fetchTotalClusterCount ({ commit }) {
-        return api.getLocalCPs()
+        return api.getZones()
           .then(response => {
             const total = response.length
 

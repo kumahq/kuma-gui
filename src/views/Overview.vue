@@ -2,9 +2,6 @@
   <div class="overview">
     <page-header noflex>
       <breadcrumbs />
-      <!-- <h2 class="xxl">
-        {{ pageTitle }}
-      </h2> -->
     </page-header>
 
     <!-- metrics boxes -->
@@ -107,6 +104,7 @@ export default {
 
       if (mesh === 'all') {
         storeVals = {
+          zoneCount: state.totalClusters,
           meshCount: state.totalMeshCount,
           dataplaneCount: state.totalDataplaneCount,
           faultInjectionCount: state.totalFaultInjectionCount,
@@ -120,6 +118,7 @@ export default {
         }
       } else {
         storeVals = {
+          zoneCount: state.totalClusters,
           dataplaneCount: state.totalDataplaneCountFromMesh,
           faultInjectionCount: state.totalFaultInjectionCountFromMesh,
           healthCheckCount: state.totalHealthCheckCountFromMesh,
@@ -133,6 +132,11 @@ export default {
       }
 
       const tableData = [
+        {
+          metric: 'Zones',
+          value: storeVals.zoneCount,
+          url: `/zones/${this.selectedMesh}`
+        },
         {
           metric: 'Meshes',
           value: storeVals.meshCount,
@@ -188,9 +192,9 @@ export default {
       // if Kuma is running in multicluster mode
       if (this.multicluster) {
         const clusters = {
-          metric: 'Remote CPs',
+          metric: 'Zones',
           value: this.$store.state.totalClusters,
-          url: '/remote-cp'
+          url: '/zones'
         }
 
         tableData.push(clusters)

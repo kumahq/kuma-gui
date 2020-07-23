@@ -364,11 +364,32 @@ export function getOffset (url) {
  *
  * Strips the time values from the objects returned from
  * various endpoints, in a non-destructive manner.
+ *
+ * @param {Object} content The Object you want to remove the
+ * date/time strings from.
  */
 export function stripTimes (content) {
   const { creationTime, modificationTime, ...noTimes } = content
 
   return noTimes
+}
+
+/**
+ * cleanTag
+ *
+ * This function will take native Kuma tags and format
+ * them for things like CSS class usage.
+ */
+export function cleanTag (tag) {
+  /**
+   * this takes something like `kuma.io/service` and turns it into
+   * `kuma-io-service`.
+   */
+
+  return tag
+    .toLowerCase()
+    .replace('.', '-')
+    .replace('/', '-')
 }
 
 export default {
@@ -391,5 +412,6 @@ export default {
   getSome,
   stripUrl,
   getOffset,
-  stripTimes
+  stripTimes,
+  cleanTag
 }

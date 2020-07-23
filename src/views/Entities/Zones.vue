@@ -1,5 +1,5 @@
 <template>
-  <div class="local-cps">
+  <div class="zones">
     <page-header noflex>
       <h2 class="xxl">
         {{ pageTitle }}
@@ -20,7 +20,7 @@
       </template>
       <template slot="message">
         <p>
-          To access this page, you must be running in <strong>Multicluster</strong> mode.
+          To access this page, you must be running in <strong>Multi-Zone</strong> mode.
         </p>
       </template>
     </KEmptyState>
@@ -104,9 +104,9 @@ import Tabs from '@/components/Utils/Tabs'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'RemoteCP',
+  name: 'Zones',
   metaInfo: {
-    title: 'Remote CPs'
+    title: 'Zones'
   },
   components: {
     PageHeader,
