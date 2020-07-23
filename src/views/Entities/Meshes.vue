@@ -74,7 +74,7 @@
                     {{ key }}
                   </h4>
                   <p v-if="key === 'creationTime' || key === 'modificationTime'">
-                    {{ value | readableDate }}
+                    {{ value | readableDate }} <em>({{ value | rawDate }})</em>
                   </p>
                   <p v-else>
                     {{ value }}
@@ -150,7 +150,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import { getSome, humanReadableDate, getOffset } from '@/helpers'
+import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -180,6 +180,9 @@ export default {
     },
     readableDate (value) {
       return humanReadableDate(value)
+    },
+    rawDate (value) {
+      return rawReadableDate(value)
     }
   },
   mixins: [
@@ -508,7 +511,9 @@ export default {
                 basicData: col1,
                 extendedData: formatted()
               }
-              this.rawEntity = response
+
+              // this.rawEntity = response
+              this.rawEntity = stripTimes(response)
             } else {
               this.entity = null
               this.entityIsEmpty = true

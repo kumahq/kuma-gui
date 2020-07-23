@@ -299,6 +299,22 @@ export function humanReadableDate (tdate) {
 }
 
 /**
+ * rawReadableDate
+ */
+export function rawReadableDate (date) {
+  const rawDate = new Date(Date.parse(date))
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }
+  const formattedDate = rawDate.toLocaleDateString('en-US', options)
+  const formattedTime = `${rawDate.getHours()}:${rawDate.getMinutes()}:${rawDate.getSeconds()}`
+
+  return `${formattedDate} @ ${formattedTime}`
+}
+
+/**
  * Takes an object or array and only returns the keys and
  * values you want based on the `items` value.
  * @param {Object, Array} original
@@ -371,6 +387,7 @@ export default {
   formatDate,
   deepIncludes,
   humanReadableDate,
+  rawReadableDate,
   getSome,
   stripUrl,
   getOffset,
