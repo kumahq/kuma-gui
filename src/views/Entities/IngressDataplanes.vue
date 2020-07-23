@@ -155,7 +155,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getSome, humanReadableDate, getOffset } from '@/helpers'
+import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -777,7 +777,8 @@ export default {
                 this.entityOverviewTitle = `Entity Overview for ${i.basicData.name}`
               })
 
-              this.rawEntity = response
+              // this.rawEntity = response
+              this.rawEntity = stripTimes(response)
             } else {
               this.entity = null
               this.entityIsEmpty = true

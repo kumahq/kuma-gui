@@ -343,6 +343,18 @@ export function getOffset (url) {
   return match
 }
 
+/**
+ * stripTimes
+ *
+ * Strips the time values from the objects returned from
+ * various endpoints, in a non-destructive manner.
+ */
+export function stripTimes (content) {
+  const { creationTime, modificationTime, ...noTimes } = content
+
+  return noTimes
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -361,5 +373,6 @@ export default {
   humanReadableDate,
   getSome,
   stripUrl,
-  getOffset
+  getOffset,
+  stripTimes
 }
