@@ -2309,30 +2309,74 @@ export default class Mock {
           }
         }
       })
-      // Remote CPs
-      .onGet('/status/clusters')
+      // Zone status
+      .onGet('/status/zones')
       .reply(200, [
         {
-          active: false,
-          name: 'http://127.0.0.1:5681',
-          url: 'http://172.18.0.1:5681'
+          name: 'zone-1',
+          url: '192.168.0.1:1000',
+          active: false
         },
         {
-          active: true,
-          name: 'http://172.18.0.2:5681',
-          url: 'http://172.18.0.2:5681'
+          name: 'zone-2',
+          url: '192.168.0.1:1000',
+          active: true
         },
         {
-          active: false,
-          name: 'http://172.18.0.3:5681',
-          url: 'http://172.18.0.3:5681'
+          name: 'zone-3',
+          url: '192.168.0.1:1000',
+          active: false
         }
       ])
-      // config
-      .onGet('/config')
-      .reply(200, {
-        mode: 'global'
-      })
+      // Zones
+      .onGet('/zones')
+      .reply(200, [
+        {
+          total: 1,
+          items: [
+            {
+              type: 'Zone',
+              name: 'zone-1',
+              creationTime: '2020-07-22T19:37:28.442793+03:00',
+              modificationTime: '2020-07-22T19:37:28.442793+03:00',
+              ingress: {
+                address: '192.168.0.1:1000'
+              }
+            }
+          ],
+          next: null
+        }
+      ])
+      // .onGet('/zones/zone-1')
+      // .reply(200, {
+      //   type: 'Zone',
+      //   name: 'zone-1',
+      //   creationTime: '2020-07-22T19:37:28.442793+03:00',
+      //   modificationTime: '2020-07-22T19:37:28.442793+03:00',
+      //   ingress: {
+      //     address: '192.168.0.1:1000'
+      //   }
+      // })
+      // .onGet('/zones/zone-2')
+      // .reply(200, {
+      //   type: 'Zone',
+      //   name: 'zone-2',
+      //   creationTime: '2020-07-22T19:37:28.442793+03:00',
+      //   modificationTime: '2020-07-22T19:37:28.442793+03:00',
+      //   ingress: {
+      //     address: '192.168.0.1:1000'
+      //   }
+      // })
+      // .onGet('/zones/zone-3')
+      // .reply(200, {
+      //   type: 'Zone',
+      //   name: 'zone-3',
+      //   creationTime: '2020-07-22T19:37:28.442793+03:00',
+      //   modificationTime: '2020-07-22T19:37:28.442793+03:00',
+      //   ingress: {
+      //     address: '192.168.0.1:1000'
+      //   }
+      // })
       .onAny()
       .passThrough()
   }

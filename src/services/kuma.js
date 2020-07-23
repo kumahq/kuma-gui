@@ -39,9 +39,14 @@ export default class Kuma {
    * Multicluster
    */
 
-  // get local CPs
-  getLocalCPs (params) {
-    return this.client.get('/status/clusters', { params })
+  // Zone status
+  getZoneStatus (params) {
+    return this.client.get('/status/zones', { params })
+  }
+
+  // Zones
+  getZones (params) {
+    return this.client.get('/zones', { params })
   }
 
   /**
