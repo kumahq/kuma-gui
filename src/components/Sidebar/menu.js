@@ -14,8 +14,7 @@ export default {
         {
           name: 'Zones',
           link: '/zones',
-          title: false,
-          root: true
+          title: false
           // multicluster: true
         },
         {

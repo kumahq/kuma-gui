@@ -2330,41 +2330,40 @@ export default class Mock {
       ])
       // Zones
       .onGet('/zones')
-      .reply(200, [
-        {
-          total: 1,
-          items: [
-            {
-              type: 'Zone',
-              name: 'zone-1',
-              creationTime: '2020-07-22T19:37:28.442793+03:00',
-              modificationTime: '2020-07-22T19:37:28.442793+03:00',
-              ingress: {
-                address: '192.168.0.1:1000'
-              }
-            },
-            {
-              type: 'Zone',
-              name: 'zone-2',
-              creationTime: '2020-07-22T19:37:28.442793+03:00',
-              modificationTime: '2020-07-22T19:37:28.442793+03:00',
-              ingress: {
-                address: '192.168.0.1:1000'
-              }
-            },
-            {
-              type: 'Zone',
-              name: 'zone-3',
-              creationTime: '2020-07-22T19:37:28.442793+03:00',
-              modificationTime: '2020-07-22T19:37:28.442793+03:00',
-              ingress: {
-                address: '192.168.0.1:1000'
-              }
+      .reply(200, {
+        total: 1,
+        items: [
+          {
+            type: 'Zone',
+            name: 'zone-1',
+            creationTime: '2020-07-22T19:37:28.442793+03:00',
+            modificationTime: '2020-07-22T19:37:28.442793+03:00',
+            ingress: {
+              address: '192.168.0.1:1000'
             }
-          ],
-          next: null
-        }
-      ])
+          },
+          {
+            type: 'Zone',
+            name: 'zone-2',
+            creationTime: '2020-07-22T19:37:28.442793+03:00',
+            modificationTime: '2020-07-22T19:37:28.442793+03:00',
+            ingress: {
+              address: '192.168.0.1:1000'
+            }
+          },
+          {
+            type: 'Zone',
+            name: 'zone-3',
+            creationTime: '2020-07-22T19:37:28.442793+03:00',
+            modificationTime: '2020-07-22T19:37:28.442793+03:00',
+            ingress: {
+              address: '192.168.0.1:1000'
+            }
+          }
+        ],
+        next: null
+      }
+      )
       // .onGet('/zones/zone-1')
       // .reply(200, {
       //   type: 'Zone',

@@ -95,17 +95,6 @@ export default (store) => {
     },
     // App
 
-    // overview
-    {
-      path: '/overview',
-      alias: '/',
-      name: 'global-overview',
-      component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview'),
-      meta: {
-        title: 'Global Overview',
-        breadcrumb: 'Overview'
-      }
-    },
     // diagnostics
     {
       path: '/diagnostics',
@@ -114,16 +103,6 @@ export default (store) => {
       meta: {
         title: 'Diagnostics',
         breadcrumb: 'Diagnostics'
-      }
-    },
-    // remote CPs
-    {
-      path: '/zones',
-      name: 'zones',
-      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones'),
-      meta: {
-        title: 'Zones',
-        breadcrumb: 'Zones'
       }
     },
     // all Meshes
@@ -171,14 +150,14 @@ export default (store) => {
           },
           component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
         },
-        // remote CPs
+        // Zones
         {
-          path: 'remote-cps',
-          name: 'remote-cps',
+          path: 'zones',
+          name: 'zones',
           meta: {
-            title: 'Remote CPs'
+            title: 'Zones'
           },
-          component: () => import(/* webpackChunkName: "remote-cps" */ '@/views/Entities/RemoteCP')
+          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
         },
         // all dataplanes
         {

@@ -1,10 +1,5 @@
 <template>
   <div class="zones">
-    <page-header noflex>
-      <h2 class="xxl">
-        {{ pageTitle }}
-      </h2>
-    </page-header>
     <KEmptyState
       v-if="!multicluster"
       class="global-api-status"

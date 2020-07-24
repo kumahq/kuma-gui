@@ -1,9 +1,5 @@
 <template>
   <div class="overview">
-    <page-header noflex>
-      <breadcrumbs />
-    </page-header>
-
     <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
@@ -190,7 +186,7 @@ export default {
           ? this.$store.state.totalClusters
           : '1',
         extraLabel: !this.multicluster ? '(Standalone)' : false,
-        url: '/zones'
+        url: `/${this.selectedMesh}/zones`
       }
 
       // prepend our Zones to the beginning of the array
