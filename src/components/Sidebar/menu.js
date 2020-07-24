@@ -12,20 +12,17 @@ export default {
           title: false
         },
         {
+          name: 'Zones',
+          link: '/zones',
+          title: false,
+          root: true
+          // multicluster: true
+        },
+        {
           name: 'Meshes',
           link: '/meshes',
           title: false,
           pathFlip: true
-        },
-        {
-          name: 'Remote CPs',
-          link: '/remote-cps',
-          title: false
-          /**
-           * the below setting will hide a nav item if it should only
-           * be shown when Multicluster (Distributed) mode is enabled.
-           */
-          // multicluster: true
         }
       ]
     },
@@ -46,14 +43,14 @@ export default {
         {
           name: 'Ingress',
           link: '/ingress-dataplanes',
-          title: false
-          // multicluster: true
+          title: false,
+          nested: true
         },
         {
           name: 'Gateway',
           link: '/gateway-dataplanes',
-          title: false
-          // multicluster: true
+          title: false,
+          nested: true
         }
       ]
     },

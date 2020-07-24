@@ -4,7 +4,7 @@
       <li
         v-if="!item.hidden"
         :key="item.name"
-        :class="{'menu-title' : item.title, 'hasBadge': item.badge}"
+        :class="{'menu-title' : item.title, 'hasBadge': item.badge, 'is-nested': item.nested }"
       >
         <router-link
           v-if="item.link && item.pathFlip"
@@ -22,7 +22,9 @@
         >
           {{ item.name }}
         </router-link>
-        <span v-else-if="!item.hidden">{{ item.name }}</span>
+        <span v-else-if="!item.hidden">
+          {{ item.name }}
+        </span>
       </li>
     </template>
   </ul>
@@ -159,6 +161,15 @@ export default {
     &:hover a {
       color: #1270b2;
     }
+
+    &.is-nested {
+      line-height: 32px;
+
+      a {
+        font-size: 15px;
+        padding: 0 24px 0 45px;
+      }
+    }
   }
 
   nav.closed & {
@@ -179,5 +190,4 @@ export default {
     }
   }
 }
-
 </style>

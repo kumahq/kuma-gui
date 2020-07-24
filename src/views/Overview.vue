@@ -1,5 +1,9 @@
 <template>
   <div class="overview">
+    <page-header noflex>
+      <breadcrumbs />
+    </page-header>
+
     <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
@@ -179,22 +183,25 @@ export default {
         }
       ]
 
-      // if Kuma is running in multicluster mode
-      if (this.multicluster) {
-        const clusters = {
-          metric: 'Remote CPs',
-          value: this.$store.state.totalClusters,
-          url: '/remote-cp'
-        }
-
-        tableData.push(clusters)
+      // append Zones to the data
+      const clusters = {
+        metric: 'Zones',
+        value: this.multicluster
+          ? this.$store.state.totalClusters
+          : '1',
+        extraLabel: !this.multicluster ? '(Standalone)' : false,
+        url: '/zones'
       }
 
-      // if the user is viewing data for all meshes
+      // prepend our Zones to the beginning of the array
+      tableData.unshift(clusters)
+
       if (mesh !== 'all') {
         // if the user is viewing the overview with a mesh selected,
         // we hide the mesh count from the metrics grid
-        tableData.shift()
+        return tableData.filter((value, index, arr) => {
+          return value.metric !== 'Meshes'
+        })
       }
 
       return tableData
@@ -233,6 +240,7 @@ export default {
         // if we are viewing data for all meshes,
         // load the total counts for everything
         actions = [
+          'fetchTotalClusterCount',
           'fetchMeshTotalCount',
           'fetchDataplaneTotalCount',
           'fetchHealthCheckTotalCount',
@@ -253,6 +261,7 @@ export default {
         // if we are viewing data for a single selected mesh,
         // load the total counts just for that selected mesh
         actions = [
+          'fetchTotalClusterCount',
           'fetchDataplaneTotalCountFromMesh',
           'fetchHealthCheckTotalCountFromMesh',
           'fetchProxyTemplateTotalCountFromMesh',

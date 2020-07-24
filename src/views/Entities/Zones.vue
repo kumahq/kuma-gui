@@ -1,6 +1,10 @@
 <template>
-  <div class="local-cps">
-    <!-- warning message for when Multicluster (Distributed) is not enabled -->
+  <div class="zones">
+    <page-header noflex>
+      <h2 class="xxl">
+        {{ pageTitle }}
+      </h2>
+    </page-header>
     <KEmptyState
       v-if="!multicluster"
       class="global-api-status"
@@ -15,7 +19,7 @@
       </template>
       <template slot="message">
         <p>
-          To access this page, you must be running Kuma in <strong>Distributed</strong> mode.
+          To access this page, you must be running in <strong>Multi-Zone</strong> mode.
         </p>
       </template>
       <template slot="cta">
@@ -109,9 +113,9 @@ import Tabs from '@/components/Utils/Tabs'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'RemoteCP',
+  name: 'Zones',
   metaInfo: {
-    title: 'Remote CPs'
+    title: 'Zones'
   },
   components: {
     FrameSkeleton,

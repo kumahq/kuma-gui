@@ -299,6 +299,22 @@ export function humanReadableDate (tdate) {
 }
 
 /**
+ * rawReadableDate
+ */
+export function rawReadableDate (date) {
+  const rawDate = new Date(Date.parse(date))
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }
+  const formattedDate = rawDate.toLocaleDateString('en-US', options)
+  const formattedTime = `${rawDate.getHours()}:${rawDate.getMinutes()}:${rawDate.getSeconds()}`
+
+  return `${formattedDate} @ ${formattedTime}`
+}
+
+/**
  * Takes an object or array and only returns the keys and
  * values you want based on the `items` value.
  * @param {Object, Array} original
@@ -343,6 +359,39 @@ export function getOffset (url) {
   return match
 }
 
+/**
+ * stripTimes
+ *
+ * Strips the time values from the objects returned from
+ * various endpoints, in a non-destructive manner.
+ *
+ * @param {Object} content The Object you want to remove the
+ * date/time strings from.
+ */
+export function stripTimes (content) {
+  const { creationTime, modificationTime, ...noTimes } = content
+
+  return noTimes
+}
+
+/**
+ * cleanTag
+ *
+ * This function will take native Kuma tags and format
+ * them for things like CSS class usage.
+ */
+export function cleanTag (tag) {
+  /**
+   * this takes something like `kuma.io/service` and turns it into
+   * `kuma-io-service`.
+   */
+
+  return tag
+    .toLowerCase()
+    .replace('.', '-')
+    .replace('/', '-')
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -359,7 +408,10 @@ export default {
   formatDate,
   deepIncludes,
   humanReadableDate,
+  rawReadableDate,
   getSome,
   stripUrl,
-  getOffset
+  getOffset,
+  stripTimes,
+  cleanTag
 }

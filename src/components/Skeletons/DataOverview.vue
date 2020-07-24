@@ -83,7 +83,7 @@
             >
               <span
                 class="entity-tags__label"
-                :class="`entity-tags__label--${item.label.toLowerCase().replace('kuma.io/','')}`"
+                :class="`entity-tags__label--${item.label.toLowerCase().replace('.','-').replace('/','-')}`"
               >
                 {{ item.label }}
               </span>
@@ -402,8 +402,9 @@ export default {
   box-shadow: inset 0 0 0 1px var(--color);
 }
 
-.entity-tags__label--service,
-.entity-tags__label--protocol {
+// this gives kuma-specific native tags a different color
+// to differentiate them from user-created tags.
+span[class*="kuma-io-"] {
   --color: var(--brand-color-6);
 
   background-color: var(--color);
