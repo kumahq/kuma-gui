@@ -52,12 +52,6 @@
           </template>
         </CardSkeleton>
       </div>
-    </div>
-
-    <div class="card-wrapper card-wrapper--2-col">
-      <div>
-        <NewsletterForm class="card-item" />
-      </div>
       <div>
         <Resources class="card-item" />
       </div>
@@ -69,7 +63,7 @@
 import { mapGetters } from 'vuex'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
-import NewsletterForm from '@/components/NewsletterForm'
+// import NewsletterForm from '@/components/NewsletterForm'
 import Resources from '@/components/Resources'
 
 export default {
@@ -82,7 +76,7 @@ export default {
   components: {
     MetricGrid,
     CardSkeleton,
-    NewsletterForm,
+    // NewsletterForm,
     Resources
   },
   computed: {
@@ -310,7 +304,7 @@ export default {
     margin: 0 -0.5rem 0;
 
     &.card-wrapper--3-col {
-      --i: 33.333333%;
+      --i: 25%;
     }
 
     &.card-wrapper--2-col {

@@ -5,7 +5,14 @@
       title="Resources"
     >
       <template slot="body">
-        <ul>
+        <p>
+          Need help or find a bug? Join the Kuma community or
+          <a
+            href="https://github.com/kumahq/kuma/issues/new"
+            target="_blank"
+          >open an issue</a> on the GitHub repository.
+        </p>
+        <ul class="resource-list">
           <li
             v-for="(item, index) in resourceLinks"
             :key="index"
@@ -33,7 +40,9 @@ export default {
     }),
     resourceLinks () {
       const storedVersion = this.version
-      const versionOutput = (storedVersion !== null) ? storedVersion : 'latest'
+      const versionOutput = (storedVersion !== null)
+        ? storedVersion
+        : 'latest'
 
       if (storedVersion) {
         return [
@@ -46,7 +55,7 @@ export default {
             label: 'Kuma Community Chat'
           },
           {
-            link: 'https://github.com/Kong/kuma',
+            link: 'https://github.com/kumahq/kuma',
             label: 'Kuma GitHub Repository'
           }
         ]
@@ -60,6 +69,8 @@ export default {
 
 <style lang="scss" scoped>
 .resource-list {
-
+  list-style: disc;
+  margin-top: 6px;
+  margin-left: 20px;
 }
 </style>
