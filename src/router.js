@@ -66,7 +66,8 @@ export default (store) => {
           name: 'create-mesh',
           meta: {
             title: 'Create a new Mesh',
-            excludeAsBreadcrumb: true
+            excludeAsBreadcrumb: true,
+            wizardProcess: true
           },
           component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh')
         },
@@ -75,7 +76,8 @@ export default (store) => {
           name: 'kubernetes-dataplane',
           meta: {
             title: 'Create a new Kubernetes Dataplane',
-            excludeAsBreadcrumb: true
+            excludeAsBreadcrumb: true,
+            wizardProcess: true
           },
           component: () => import(/* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes')
         },
@@ -84,7 +86,8 @@ export default (store) => {
           name: 'universal-dataplane',
           meta: {
             title: 'Create a new Universal Dataplane',
-            excludeAsBreadcrumb: true
+            excludeAsBreadcrumb: true,
+            wizardProcess: true
           },
           component: () => import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal')
         }
@@ -139,7 +142,7 @@ export default (store) => {
           path: ':mesh',
           name: 'mesh-child',
           meta: {
-            title: 'Overview',
+            title: 'Mesh Overview',
             parent: 'all-meshes'
           },
           params: { mesh: ':mesh' },
@@ -158,13 +161,31 @@ export default (store) => {
       params: { mesh: ':mesh' },
       component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
       children: [
+        // overview
+        {
+          path: 'overview',
+          name: 'global-overview',
+          alias: '/',
+          meta: {
+            title: 'Global Overview'
+          },
+          component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
+        },
+        // remote CPs
+        {
+          path: 'remote-cps',
+          name: 'remote-cps',
+          meta: {
+            title: 'Remote CPs'
+          },
+          component: () => import(/* webpackChunkName: "remote-cps" */ '@/views/Entities/RemoteCP')
+        },
         // all dataplanes
         {
           path: 'dataplanes',
           name: 'dataplanes',
           meta: {
-            title: 'Dataplanes',
-            parent: 'dataplanes'
+            title: 'Dataplanes'
           },
           component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/Dataplanes')
         },

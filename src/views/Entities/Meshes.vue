@@ -212,12 +212,12 @@ export default {
           title: 'Overview'
         },
         {
-          hash: '#yaml',
-          title: 'YAML'
-        },
-        {
           hash: '#resources',
           title: 'Resources'
+        },
+        {
+          hash: '#yaml',
+          title: 'YAML'
         }
       ],
       entity: [],
