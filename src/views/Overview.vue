@@ -63,7 +63,6 @@
 import { mapGetters } from 'vuex'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
-// import NewsletterForm from '@/components/NewsletterForm'
 import Resources from '@/components/Resources'
 
 export default {
@@ -76,7 +75,6 @@ export default {
   components: {
     MetricGrid,
     CardSkeleton,
-    // NewsletterForm,
     Resources
   },
   computed: {
