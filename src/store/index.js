@@ -182,7 +182,7 @@ export default (api) => {
       fetchTotalClusterCount ({ commit }) {
         return api.getZones()
           .then(response => {
-            const total = response.length
+            const total = response[0].total
 
             commit('SET_TOTAL_CLUSTER_COUNT', total)
           })

@@ -21,10 +21,16 @@
           {{ metric.metric }}
         </span>
         <span
-          :class="{ 'has-error': index === hasError[index] }"
+          :class="{ 'has-error': index === hasError[index], 'has-extra-label': metric.extraLabel }"
           class="metric-value"
         >
           {{ metric.value | formatValue | formatError }}
+          <em
+            v-if="metric.extraLabel"
+            class="metric-extra-label"
+          >
+            {{ metric.extraLabel }}
+          </em>
         </span>
       </router-link>
       <div
@@ -153,6 +159,18 @@ export default {
         font-weight: 400;
         margin-top: auto;
       }
+
+      &.has-extra-label {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .metric-extra-label {
+      font-style: normal;
+      font-size: 18px;
+      color: var(--tblack-45);
+      margin-left: 8px;
     }
 
     &.danger {
