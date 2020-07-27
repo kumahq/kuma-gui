@@ -28,10 +28,12 @@ import '@/assets/styles/components.css'
 import '@/assets/styles/transitions.css'
 
 /** Initiate Sentry */
-let sentryDebugging = false
+let sentryDebugging = true
+let sentryEnv = 'staging'
 
-if (process.env.NODE_ENV === 'development') {
-  sentryDebugging = true
+if (process.env.NODE_ENV === 'production') {
+  sentryDebugging = false
+  sentryEnv = 'production'
 }
 
 /**
@@ -45,13 +47,14 @@ if (process.env.NODE_ENV === 'development') {
  */
 Sentry.init({
   dsn: process.env.VUE_APP_SENTRY_DSN,
+  debug: sentryDebugging,
+  environment: sentryEnv,
   integrations: integrations => [
     ...integrations,
     new Integrations.Vue({
       Vue,
       attachProps: true,
-      logErrors: true,
-      debug: sentryDebugging
+      logErrors: true
     })
   ]
 })
