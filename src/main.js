@@ -27,6 +27,9 @@ import '@/assets/styles/inputs.css'
 import '@/assets/styles/components.css'
 import '@/assets/styles/transitions.css'
 
+/** Sentry test error */
+Sentry.captureException(new Error('Sentry test error.'))
+
 /** Initiate Sentry */
 Sentry.init({
   dsn: process.env.VUE_SENTRY_DSN,

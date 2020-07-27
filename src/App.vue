@@ -135,16 +135,14 @@ export default {
               const lsMesh = localStorage.getItem('selectedMesh')
               const routeMesh = this.$route.params.mesh || null
 
-              // if the `mesh` param is present, use that
               if (routeMesh) {
+                // if the `mesh` param is present, use that
                 return routeMesh
-              }
-              // or use what's available in localStorage
-              else if (lsMesh && lsMesh !== 'undefined' && lsMesh.length > 0) {
+              } else if (lsMesh && lsMesh !== 'undefined' && lsMesh.length > 0) {
+                // or use what's available in localStorage
                 return lsMesh
-              }
-              // otherwise, fall back to the default value from our VueX store
-              else {
+              } else {
+                // otherwise, fall back to the default value from our VueX store
                 return this.$store.getters.getSelectedMesh
               }
             }

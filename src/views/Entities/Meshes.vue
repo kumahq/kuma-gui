@@ -151,7 +151,7 @@
 <script>
 import { mapState } from 'vuex'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
-import EntityURLControl from '@/components/Utils/EntityURLControl'
+// import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -166,7 +166,7 @@ export default {
     title: 'Meshes'
   },
   components: {
-    EntityURLControl,
+    // EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
