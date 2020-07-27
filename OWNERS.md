@@ -10,3 +10,4 @@ Please see [GOVERNANCE.md](GOVERNANCE.md) for governance guidelines and responsi
 
 * Daryn St. Pierre ([bloqhead](https://github.com/bloqhead)) (daryn.st.pierre@konghq.com)
 * Nikolay Nikolaev ([nickolaev](https://github.com/nickolaev)) (nikolay.nikolaev@konghq.com)
+* Marco Palladino ([subnetmarco](https://github.com/subnetmarco)) (marco@konghq.com)
