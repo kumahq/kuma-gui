@@ -160,6 +160,8 @@ import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
+import * as Sentry from '@sentry/browser'
+
 export default {
   name: 'Meshes',
   metaInfo: {
