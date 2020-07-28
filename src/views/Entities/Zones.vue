@@ -1,5 +1,8 @@
 <template>
   <div class="zones">
+    <page-header noflex>
+      <breadcrumbs />
+    </page-header>
     <KEmptyState
       v-if="!multicluster"
       class="global-api-status"
@@ -19,7 +22,7 @@
       </template>
       <template slot="cta">
         <KButton
-          to="https://kuma.io/docs/0.6.0/documentation/deployments/#distributed-mode"
+          to="https://kuma.io/docs/0.6.0/documentation/deployments/"
           target="_blank"
           appearance="primary"
         >
@@ -92,19 +95,31 @@
             </div>
           </LabelList>
         </template>
+        <template slot="yaml">
+          <YamlView
+            :title="entityOverviewTitle"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :content="rawEntity"
+          />
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
-import { humanReadableDate, getOffset } from '@/helpers'
+import { mapState } from 'vuex'
+import { humanReadableDate, getOffset, getSome, stripTimes } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import PageHeader from '@/components/Utils/PageHeader.vue'
+import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
+import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
@@ -114,9 +129,12 @@ export default {
   },
   components: {
     FrameSkeleton,
+    PageHeader,
+    Breadcrumbs,
     Pagination,
     DataOverview,
     Tabs,
+    YamlView,
     LabelList
   },
   filters: {
@@ -156,6 +174,10 @@ export default {
         {
           hash: '#overview',
           title: 'Overview'
+        },
+        {
+          hash: '#yaml',
+          title: 'YAML'
         }
       ],
       entity: [],
@@ -175,9 +197,12 @@ export default {
     ...mapState({
       mesh: 'selectedMesh'
     }),
-    ...mapGetters({
-      multicluster: 'getMulticlusterStatus'
-    }),
+    // ...mapGetters({
+    //   multicluster: 'getMulticlusterStatus'
+    // }),
+    multicluster () {
+      return true
+    },
     pageTitle () {
       const metaTitle = this.$route.meta.title
 
@@ -310,6 +335,8 @@ export default {
       this.entityIsLoading = true
       this.entityIsEmpty = false
 
+      const selected = ['type', 'name', 'mesh']
+
       const promise = new Promise((resolve, reject) => {
         if (entity && entity !== null) {
           resolve(entity)
@@ -324,11 +351,14 @@ export default {
         promise
           .then(response => {
             if (response) {
-              this.tabGroupTitle = `Local CP: ${response.name}`
-              this.entityOverviewTitle = `Entity Overview for ${response.name}`
+              this.$api.getZoneOverview(response.name)
+                .then((response) => {
+                  this.tabGroupTitle = `Zone: ${response.name}`
+                  this.entityOverviewTitle = `Zone Overview for ${response.name}`
 
-              this.entity = response
-              this.rawEntity = response
+                  this.entity = getSome(response, selected)
+                  this.rawEntity = stripTimes(response)
+                })
             } else {
               this.entity = null
               this.entityIsEmpty = true

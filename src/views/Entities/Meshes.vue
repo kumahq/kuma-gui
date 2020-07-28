@@ -445,7 +445,8 @@ export default {
                 this.$store.dispatch(i, entity.name)
               })
 
-              const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
+              // const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
+              const col1 = getSome(response, ['type', 'name'])
 
               const formatted = () => {
                 const data = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))

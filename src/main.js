@@ -7,8 +7,8 @@ import axios from 'axios'
 import Kuma from '@/services/kuma'
 
 /** Sentry */
-import * as Sentry from '@sentry/browser'
-import * as Integrations from '@sentry/integrations'
+// import * as Sentry from '@sentry/browser'
+// import * as Integrations from '@sentry/integrations'
 
 /** Kongponents */
 import './kongponents'
@@ -28,13 +28,13 @@ import '@/assets/styles/components.css'
 import '@/assets/styles/transitions.css'
 
 /** Initiate Sentry */
-let sentryDebugging = true
-let sentryEnv = 'staging'
+// let sentryDebugging = true
+// let sentryEnv = 'staging'
 
-if (process.env.NODE_ENV === 'production') {
-  sentryDebugging = false
-  sentryEnv = 'production'
-}
+// if (process.env.NODE_ENV === 'production') {
+//   sentryDebugging = false
+//   sentryEnv = 'production'
+// }
 
 /**
  * Sentry integration
@@ -45,22 +45,22 @@ if (process.env.NODE_ENV === 'production') {
  *
  * https://github.com/getsentry/sentry-javascript/issues/2160#issuecomment-509964166
  */
-Sentry.init({
-  dsn: process.env.VUE_APP_SENTRY_DSN,
-  debug: sentryDebugging,
-  environment: sentryEnv,
-  integrations: integrations => [
-    ...integrations,
-    new Integrations.Vue({
-      Vue,
-      attachProps: true,
-      logErrors: true
-    })
-  ]
-})
+// Sentry.init({
+//   dsn: process.env.VUE_APP_SENTRY_DSN,
+//   debug: sentryDebugging,
+//   environment: sentryEnv,
+//   integrations: integrations => [
+//     ...integrations,
+//     new Integrations.Vue({
+//       Vue,
+//       attachProps: true,
+//       logErrors: true
+//     })
+//   ]
+// })
 
-/** Send a test Sentry error */
-// Sentry.captureException(new Error('Sentry test error.'))
+/** Send a test Sentry error. Uncomment this and reload the app to trigger */
+// Sentry.captureException(new Error('This is a test error for Sentry.'))
 
 /** Initiate plugins */
 Vue.use(VueMeta)

@@ -36,7 +36,7 @@ export default class Kuma {
   }
 
   /**
-   * Multicluster
+   * Zones
    */
 
   // Zone status
@@ -47,6 +47,20 @@ export default class Kuma {
   // Zones
   getZones (params) {
     return this.client.get('/zones', { params })
+  }
+
+  /**
+   * Zone Insights
+   */
+
+  // Get all Zone Insights/Overviews
+  getAllZoneOverviews (params) {
+    return this.client.get('/zones+insights', { params })
+  }
+
+  // Get a single Zone Insight/Overview
+  getZoneOverview (name, params) {
+    return this.client.get(`/zones+insights/${name}`, { params })
   }
 
   /**

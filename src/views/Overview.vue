@@ -186,7 +186,7 @@ export default {
           ? this.$store.state.totalClusters
           : '1',
         extraLabel: !this.multicluster ? '(Standalone)' : false,
-        url: `/${this.selectedMesh}/zones`
+        url: '/zones'
       }
 
       // prepend our Zones to the beginning of the array
@@ -194,9 +194,11 @@ export default {
 
       if (mesh !== 'all') {
         // if the user is viewing the overview with a mesh selected,
-        // we hide the mesh count from the metrics grid
+        // we hide these items from the metrics grid.
         return tableData.filter((value, index, arr) => {
-          return value.metric !== 'Meshes'
+          const metric = value.metric
+
+          return metric !== 'Meshes' && metric !== 'Zones'
         })
       }
 

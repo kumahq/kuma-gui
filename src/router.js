@@ -107,6 +107,15 @@ export default (store) => {
         breadcrumb: 'Diagnostics'
       }
     },
+    // Zones
+    {
+      path: '/zones',
+      name: 'zones',
+      meta: {
+        title: 'Zones'
+      },
+      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
+    },
     // all Meshes
     {
       path: '/meshes',
@@ -153,14 +162,14 @@ export default (store) => {
           component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
         },
         // Zones
-        {
-          path: 'zones',
-          name: 'zones',
-          meta: {
-            title: 'Zones'
-          },
-          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
-        },
+        // {
+        //   path: 'zones',
+        //   name: 'zones',
+        //   meta: {
+        //     title: 'Zones'
+        //   },
+        //   component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
+        // },
         // all dataplanes
         {
           path: 'dataplanes',

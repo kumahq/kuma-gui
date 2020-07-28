@@ -2362,38 +2362,294 @@ export default class Mock {
           }
         ],
         next: null
-      }
-      )
-      // .onGet('/zones/zone-1')
-      // .reply(200, {
-      //   type: 'Zone',
-      //   name: 'zone-1',
-      //   creationTime: '2020-07-22T19:37:28.442793+03:00',
-      //   modificationTime: '2020-07-22T19:37:28.442793+03:00',
-      //   ingress: {
-      //     address: '192.168.0.1:1000'
-      //   }
-      // })
-      // .onGet('/zones/zone-2')
-      // .reply(200, {
-      //   type: 'Zone',
-      //   name: 'zone-2',
-      //   creationTime: '2020-07-22T19:37:28.442793+03:00',
-      //   modificationTime: '2020-07-22T19:37:28.442793+03:00',
-      //   ingress: {
-      //     address: '192.168.0.1:1000'
-      //   }
-      // })
-      // .onGet('/zones/zone-3')
-      // .reply(200, {
-      //   type: 'Zone',
-      //   name: 'zone-3',
-      //   creationTime: '2020-07-22T19:37:28.442793+03:00',
-      //   modificationTime: '2020-07-22T19:37:28.442793+03:00',
-      //   ingress: {
-      //     address: '192.168.0.1:1000'
-      //   }
-      // })
+      })
+      // Zone Insights
+      .onGet('/zones+insights')
+      .reply(200, {
+        total: 2,
+        items: [
+          {
+            type: 'ZoneOverview',
+            mesh: 'default',
+            name: 'zone-1',
+            creationTime: '2018-07-17T16:05:36.995Z',
+            modificationTime: '2019-07-17T18:08:41Z',
+            zone: {
+              ingress: {
+                address: '192.168.1.1:1000'
+              }
+            },
+            zoneInsight: {
+              subscriptions: [
+                {
+                  id: '1',
+                  globalInstanceId: 'node-001',
+                  connectTime: '2018-07-17T16:05:36.995Z',
+                  status: {
+                    total: {
+                      responsesSent: '10',
+                      responsesRejected: '1'
+                    },
+                    mesh: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    ingress: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    circuitBreaker: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    faultInjection: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    healthCheck: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    trafficLog: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    trafficPermission: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    trafficRoute: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    trafficTrace: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    proxyTemplate: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    },
+                    secret: {
+                      responsesSent: '2',
+                      responsesRejected: '1'
+                    }
+                  }
+                },
+                {
+                  id: '2',
+                  globalInstanceId: 'node-002',
+                  connectTime: '2019-07-17T16:05:36.995Z',
+                  status: {
+                    total: {
+                      responsesSent: '20',
+                      responsesRejected: '2'
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            type: 'ZoneOverview',
+            mesh: 'default',
+            name: 'zone-2',
+            creationTime: '2018-07-17T16:05:36.995Z',
+            modificationTime: '2019-07-17T18:08:41Z',
+            zone: {
+              ingress: {
+                address: '192.168.1.2:1000'
+              }
+            },
+            zoneInsight: {
+              subscriptions: [
+                {
+                  id: '1',
+                  globalInstanceId: 'node-001'
+                },
+                {
+                  id: '2',
+                  globalInstanceId: 'node-002'
+                },
+                {
+                  id: '3',
+                  globalInstanceId: 'node-003'
+                }
+              ]
+            }
+          },
+          {
+            type: 'ZoneOverview',
+            mesh: 'default',
+            name: 'zone-3',
+            creationTime: '2018-07-17T16:05:36.995Z',
+            modificationTime: '2019-07-17T18:08:41Z',
+            zone: {
+              ingress: {
+                address: '192.168.1.2:1000'
+              }
+            },
+            zoneInsight: {
+              subscriptions: [
+                {
+                  id: '1',
+                  globalInstanceId: 'node-001'
+                },
+                {
+                  id: '2',
+                  globalInstanceId: 'node-002'
+                },
+                {
+                  id: '3',
+                  globalInstanceId: 'node-003'
+                }
+              ]
+            }
+          }
+        ],
+        next: null
+      })
+      .onGet('/zones+insights/zone-1')
+      .reply(200, {
+        type: 'ZoneOverview',
+        mesh: 'default',
+        name: 'zone-1',
+        creationTime: '2018-07-17T16:05:36.995Z',
+        modificationTime: '2019-07-17T18:08:41Z',
+        zone: {
+          ingress: {
+            address: '192.168.1.1:1000'
+          }
+        },
+        zoneInsight: {
+          subscriptions: [
+            {
+              id: '1',
+              globalInstanceId: 'node-001',
+              connectTime: '2018-07-17T16:05:36.995Z',
+              status: {
+                total: {
+                  responsesSent: '10',
+                  responsesRejected: '1'
+                },
+                mesh: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                ingress: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                circuitBreaker: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                faultInjection: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                healthCheck: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                trafficLog: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                trafficPermission: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                trafficRoute: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                trafficTrace: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                proxyTemplate: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                },
+                secret: {
+                  responsesSent: '2',
+                  responsesRejected: '1'
+                }
+              }
+            },
+            {
+              id: '2',
+              globalInstanceId: 'node-002',
+              connectTime: '2019-07-17T16:05:36.995Z',
+              status: {
+                total: {
+                  responsesSent: '20',
+                  responsesRejected: '2'
+                }
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/zones+insights/zone-2')
+      .reply(200, {
+        type: 'ZoneOverview',
+        mesh: 'default',
+        name: 'zone-2',
+        creationTime: '2018-07-17T16:05:36.995Z',
+        modificationTime: '2019-07-17T18:08:41Z',
+        zone: {
+          ingress: {
+            address: '192.168.1.2:1000'
+          }
+        },
+        zoneInsight: {
+          subscriptions: [
+            {
+              id: '1',
+              globalInstanceId: 'node-001'
+            },
+            {
+              id: '2',
+              globalInstanceId: 'node-002'
+            },
+            {
+              id: '3',
+              globalInstanceId: 'node-003'
+            }
+          ]
+        }
+      })
+      .onGet('/zones+insights/zone-3')
+      .reply(200, {
+        type: 'ZoneOverview',
+        mesh: 'default',
+        name: 'zone-3',
+        creationTime: '2018-07-17T16:05:36.995Z',
+        modificationTime: '2019-07-17T18:08:41Z',
+        zone: {
+          ingress: {
+            address: '192.168.1.2:1000'
+          }
+        },
+        zoneInsight: {
+          subscriptions: [
+            {
+              id: '1',
+              globalInstanceId: 'node-001'
+            },
+            {
+              id: '2',
+              globalInstanceId: 'node-002'
+            },
+            {
+              id: '3',
+              globalInstanceId: 'node-003'
+            }
+          ]
+        }
+      })
       .onAny()
       .passThrough()
   }
