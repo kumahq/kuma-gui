@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { humanReadableDate, getOffset, getSome, stripTimes } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -197,12 +197,14 @@ export default {
     ...mapState({
       mesh: 'selectedMesh'
     }),
-    // ...mapGetters({
-    //   multicluster: 'getMulticlusterStatus'
-    // }),
-    multicluster () {
-      return true
-    },
+    ...mapGetters({
+      multicluster: 'getMulticlusterStatus'
+    }),
+    // If you need to test multicluster without actually having it enabled
+    // in Kuma, uncomment this and comment out the mapGetters above.
+    // multicluster () {
+    //   return true
+    // },
     pageTitle () {
       const metaTitle = this.$route.meta.title
 
@@ -351,6 +353,7 @@ export default {
         promise
           .then(response => {
             if (response) {
+              // get the Zone details from the Zone Insights endpoint
               this.$api.getZoneOverview(response.name)
                 .then((response) => {
                   this.tabGroupTitle = `Zone: ${response.name}`
