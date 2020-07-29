@@ -91,7 +91,8 @@ export default (api) => {
       getStoredWizardData: (state) => state.storedWizardData,
       getItemQueryNamespace: (state) => state.itemQueryNamespace,
       getMulticlusterStatus: (state) => {
-        const status = (state.config.mode.mode === 'global')
+        // is Kuma running in Multi-Zone mode?
+        const status = (state.config.mode === 'global')
 
         return status
       },

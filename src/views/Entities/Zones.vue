@@ -4,7 +4,7 @@
       <breadcrumbs />
     </page-header>
     <KEmptyState
-      v-if="!multicluster"
+      v-if="multicluster === false"
       class="global-api-status"
     >
       <template slot="title">
