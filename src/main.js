@@ -6,16 +6,18 @@ import Store from '@/store'
 import axios from 'axios'
 import Kuma from '@/services/kuma'
 
-// Globally import all Kongponents
+/** Sentry */
+// import * as Sentry from '@sentry/browser'
+// import * as Integrations from '@sentry/integrations'
+
+/** Kongponents */
 import './kongponents'
 
-// Third party styles
+/** Tailwind */
 import '@/assets/styles/third-party/tailwind.css'
 
-// Kong Manager styles
+/** Styles */
 import '@/assets/styles/kong-manager/inputs.css'
-
-// Kuma styles
 import '@/assets/styles/variables.css'
 import '@/assets/styles/utilities.css'
 import '@/assets/styles/fonts.css'
@@ -25,11 +27,44 @@ import '@/assets/styles/inputs.css'
 import '@/assets/styles/components.css'
 import '@/assets/styles/transitions.css'
 
-// const kuma = new Kuma({
-//   url: process.env.VUE_APP_KUMA_API || false
+/** Initiate Sentry */
+// let sentryDebugging = true
+// let sentryEnv = 'staging'
+
+// if (process.env.NODE_ENV === 'production') {
+//   sentryDebugging = false
+//   sentryEnv = 'production'
+// }
+
+/**
+ * Sentry integration
+ *
+ * Sentry's out-of-box documentation implements this in a way that
+ * does not work for everyone. To get error tracking working, the below
+ * integration follows these instructions:
+ *
+ * https://github.com/getsentry/sentry-javascript/issues/2160#issuecomment-509964166
+ */
+// Sentry.init({
+//   dsn: process.env.VUE_APP_SENTRY_DSN,
+//   debug: sentryDebugging,
+//   environment: sentryEnv,
+//   integrations: integrations => [
+//     ...integrations,
+//     new Integrations.Vue({
+//       Vue,
+//       attachProps: true,
+//       logErrors: true
+//     })
+//   ]
 // })
 
+/** Send a test Sentry error. Uncomment this and reload the app to trigger */
+// Sentry.captureException(new Error('This is a test error for Sentry.'))
+
+/** Initiate plugins */
 Vue.use(VueMeta)
+
 Vue.config.productionTip = false
 
 /**

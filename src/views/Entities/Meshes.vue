@@ -151,7 +151,7 @@
 <script>
 import { mapState } from 'vuex'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
-import EntityURLControl from '@/components/Utils/EntityURLControl'
+// import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -160,13 +160,15 @@ import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
+import * as Sentry from '@sentry/browser'
+
 export default {
   name: 'Meshes',
   metaInfo: {
     title: 'Meshes'
   },
   components: {
-    EntityURLControl,
+    // EntityURLControl,
     FrameSkeleton,
     Pagination,
     DataOverview,
@@ -443,7 +445,8 @@ export default {
                 this.$store.dispatch(i, entity.name)
               })
 
-              const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
+              // const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
+              const col1 = getSome(response, ['type', 'name'])
 
               const formatted = () => {
                 const data = Object.entries(getSome(response, ['mtls', 'logging', 'metrics', 'tracing']))

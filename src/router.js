@@ -17,7 +17,9 @@ export default (store) => {
     },
     {
       path: '/',
-      redirect: { name: 'global-overview' }
+      redirect: {
+        name: 'global-overview'
+      }
     },
     // Onboarding
     {
@@ -95,17 +97,6 @@ export default (store) => {
     },
     // App
 
-    // overview
-    {
-      path: '/overview',
-      alias: '/',
-      name: 'global-overview',
-      component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview'),
-      meta: {
-        title: 'Global Overview',
-        breadcrumb: 'Overview'
-      }
-    },
     // diagnostics
     {
       path: '/diagnostics',
@@ -116,15 +107,14 @@ export default (store) => {
         breadcrumb: 'Diagnostics'
       }
     },
-    // remote CPs
+    // Zones
     {
       path: '/zones',
       name: 'zones',
-      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones'),
       meta: {
-        title: 'Zones',
-        breadcrumb: 'Zones'
-      }
+        title: 'Zones'
+      },
+      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
     },
     // all Meshes
     {
@@ -171,15 +161,15 @@ export default (store) => {
           },
           component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
         },
-        // remote CPs
-        {
-          path: 'remote-cps',
-          name: 'remote-cps',
-          meta: {
-            title: 'Remote CPs'
-          },
-          component: () => import(/* webpackChunkName: "remote-cps" */ '@/views/Entities/RemoteCP')
-        },
+        // Zones
+        // {
+        //   path: 'zones',
+        //   name: 'zones',
+        //   meta: {
+        //     title: 'Zones'
+        //   },
+        //   component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
+        // },
         // all dataplanes
         {
           path: 'dataplanes',
@@ -303,6 +293,37 @@ export default (store) => {
   })
 
   /**
+   * If the user is sent to the homepage root url ("/")
+   * redirect them to the Global Overview and set the mesh to "all".
+   * This ensures they get to the desired starting page once finished
+   * with the onboarding process.
+   *
+   * When the user is sent to the Global Overview from the root, this will also
+   * changed the selected mesh in their localStorage if it's set to something
+   * other than "all".
+   */
+  router.beforeEach((to, from, next) => {
+    const isRoot = to.fullPath === '/'
+    const storedMesh = localStorage.getItem('selectedMesh') || null
+    const targetMesh = 'all'
+
+    if (isRoot) {
+      /** sync the mesh in localStorage with the route change */
+      if (storedMesh && storedMesh !== targetMesh) {
+        localStorage.setItem('selectedMesh', targetMesh)
+      }
+
+      /** send the user to the Global Overview from "/" */
+      next({
+        name: 'global-overview',
+        params: { mesh: targetMesh }
+      })
+    } else {
+      next()
+    }
+  })
+
+  /**
    * This will make sure that the Meshes page displays all meshes
    * if the user happens to go to the bare `/meshes` url with no
    * query on the end of it.
@@ -319,10 +340,9 @@ export default (store) => {
   })
 
   /**
-   * A route guard for handling the onboarding process. If the user hasn't gone
-   * through the setup/onboarding process yet, this sends them through it. Once
-   * completed, a localStorage value is set to true so that they're not sent
-   * through it again.
+   * If the user hasn't gone through the setup/onboarding process yet, this
+   * sends them through it. Once completed, a localStorage value is set to true
+   * so that they're not sent through it again.
    */
   router.beforeEach((to, from, next) => {
     const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || null)
