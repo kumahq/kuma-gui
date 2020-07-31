@@ -3,6 +3,23 @@
 
 ## master
 
+## [0.7.0]
+
+> Released on 2020/07/29
+
+* feat: Diagnostics page [[#41](https://github.com/kumahq/kuma-gui/pull/41)]
+* feat: Consolidated the GUI and HTTP API to run on the same port. Both now run on port `:5681`. This ties into [#915](https://github.com/kumahq/kuma/pull/915) on the [Kuma repository](https://github.com/kumahq/kuma/) [[#44](https://github.com/kumahq/kuma-gui/pull/44)]
+* chore: Remote CPs has now been renamed to simply "Zones". The endpoints for fetching Zones have been updated accordingly in the GUI to align with these changes in Kuma [[#45](https://github.com/kumahq/kuma-gui/pull/45)]
+* feat: All Kuma native tags have been prefixed with `kuma.io`. `service` is now `kuma.io/service`, `procotol` is now `kuma.io/protocol`, etc. These changes are made throughout, including the Dataplane Wizards [[#46](https://github.com/kumahq/kuma-gui/pull/46)]
+* feat: Various Dataplane view revisions [[#47](https://github.com/kumahq/kuma-gui/pull/47)]
+* feat: Various small fixes and improvements [[#48](https://github.com/kumahq/kuma-gui/pull/48/files)]
+* feat: OWNERS.md added [[#49](https://github.com/kumahq/kuma-gui/pull/49)]
+
+NOTE:
+
+⚠️ In previous releases of Kuma, the GUI was located at `:5683/` but because we've now consolidated the GUI and the HTTP API to on the same port,
+the GUI has moved to `:5681/gui/`.
+
 ## [0.6.0]
 
 > Released on 2020/06/30
@@ -31,7 +48,7 @@
 
 NOTE:
 
-⚠️ This release will require a force-refresh in your browser if you are coming from a previous version of Kuma. This is due optimization efforts to the JS and CSS files being namespaced instead of using auto-generated filenames.
+⚠️ This release will require a force-refresh in your browser if you are coming from a previous version of Kuma. This is due to optimization efforts to the JS and CSS files being namespaced instead of using auto-generated filenames.
 
 ## [0.5.1]
 
