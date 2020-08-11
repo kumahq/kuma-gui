@@ -101,7 +101,6 @@ function SETUP_VUE_APP () {
   axios
     .get(process.env.VUE_APP_KUMA_CONFIG)
     .then(response => {
-      const apiUrl = response.data.guiServer.apiServerUrl
       const kumaEnv = response.data.environment
 
       const storedKumaEnv = localStorage.getItem('kumaEnv') !== null
@@ -111,6 +110,13 @@ function SETUP_VUE_APP () {
       /**
        * Always check the API URL and set it accordingly for the app to access.
        */
+      var apiUrl = response.data.guiServer.apiServerUrl
+      if (apiUrl === '') {
+        const url = window.location.href
+
+        apiUrl = url.substring(0, url.indexOf('/gui')) + '/'
+      }
+
       localStorage.setItem('kumaApiUrl', apiUrl)
 
       /**
