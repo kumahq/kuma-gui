@@ -114,7 +114,7 @@ export default {
             // fetch the config
             this.$store.dispatch('getConfig')
               .then(() => {
-                const mode = this.$store.getters.getConfig.mode.mode
+                const mode = this.$store.getters.getConfig.mode
 
                 /**
                  * Set Kuma's current mode in localStorage.

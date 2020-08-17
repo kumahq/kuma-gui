@@ -274,7 +274,7 @@ export default {
         return endpoint
           .then(response => {
             // check to see if the `next` url is present
-            if (response.next) {
+            if (response.next && response.next !== null) {
               this.next = getOffset(response.next)
               this.hasNext = true
             } else {
