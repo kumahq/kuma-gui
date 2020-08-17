@@ -273,8 +273,13 @@ export default {
       const getZoneStatus = () => {
         return endpoint
           .then(response => {
+            const nextCheck = response.next &&
+              response.next !== undefined &&
+              response.next !== null &&
+              response.next.length > 0
+
             // check to see if the `next` url is present
-            if (response.next && response.next !== null) {
+            if (nextCheck) {
               this.next = getOffset(response.next)
               this.hasNext = true
             } else {
