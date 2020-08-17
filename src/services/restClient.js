@@ -49,7 +49,7 @@ export default class RestClient {
    * our app with the API URL endpoint and simple info.
    */
   static kumaClientConfig () {
-    const configUrl = `${localStorage.getItem('kumaApiUrl')}/config`
+    const configUrl = `${localStorage.getItem('kumaApiUrl')}config`
 
     return axios.create({
       baseURL: configUrl,
@@ -121,7 +121,7 @@ export default class RestClient {
   async getConfig () {
     const client = await this.clientConfig
 
-    return client.get('/')
+    return client.get('')
       .then(response => {
         const data = response.data
 

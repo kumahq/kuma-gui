@@ -110,11 +110,21 @@ function SETUP_VUE_APP () {
       /**
        * Always check the API URL and set it accordingly for the app to access.
        */
-      var apiUrl = response.data.guiServer.apiServerUrl
+      let apiUrl = response.data.guiServer.apiServerUrl
+
       if (apiUrl === '') {
         const url = window.location.href
 
-        apiUrl = url.substring(0, url.indexOf('/gui')) + '/'
+        /**
+         * If we're running in development mode, we have to ensure
+         * we fetch from the external Kuma API URL and not from the app
+         * root itself (since it runs from :8080).
+         */
+        if (process.env.NODE_ENV === 'development') {
+          apiUrl = process.env.VUE_APP_KUMA_CONFIG.replace('/config', '/')
+        } else {
+          apiUrl = url.substring(0, url.indexOf('/gui')) + '/'
+        }
       }
 
       localStorage.setItem('kumaApiUrl', apiUrl)
