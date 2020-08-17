@@ -617,6 +617,9 @@ kind: Dataplane
 mesh: default
 metadata:
   name: dp-echo-1
+  annotations:
+    kuma.io/sidecar-injection: enabled
+    kuma.io/mesh: default
 networking:
   address: 10.0.0.1
   inbound:
@@ -744,7 +747,7 @@ export default {
       schema.metadata.namespace = namespace
 
       // selected mesh
-      schema.metadata.labels['kuma.io/mesh'] = this.validate.meshName
+      schema.metadata.annotations['kuma.io/mesh'] = this.validate.meshName
 
       /**
        * Finalized output

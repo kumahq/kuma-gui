@@ -4,7 +4,7 @@ module.exports = {
   metadata: {
     name: null,
     namespace: null,
-    labels: {
+    annotations: {
       'kuma.io/sidecar-injection': 'enabled',
       'kuma.io/mesh': null
     }
