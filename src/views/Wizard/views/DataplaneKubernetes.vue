@@ -744,7 +744,7 @@ export default {
       schema.metadata.namespace = namespace
 
       // selected mesh
-      schema.metadata.labels['kuma.io/mesh'] = this.validate.meshName
+      schema.metadata.annotations['kuma.io/mesh'] = this.validate.meshName
 
       /**
        * Finalized output
