@@ -617,6 +617,9 @@ kind: Dataplane
 mesh: default
 metadata:
   name: dp-echo-1
+  annotations:
+    kuma.io/sidecar-injection: enabled
+    kuma.io/mesh: default
 networking:
   address: 10.0.0.1
   inbound:
