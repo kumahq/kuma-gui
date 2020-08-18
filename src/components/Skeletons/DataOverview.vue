@@ -377,8 +377,6 @@ export default {
 }
 
 .entity-tags {
-  display: inline-flex;
-  align-items: stretch;
   font-size: var(--type-xs);
   background-color: #fff;
   font-family: var(--font-family-mono);
@@ -386,6 +384,25 @@ export default {
   &:not(:last-of-type) {
     margin-right: 0.5rem;
     margin-bottom: 0.25rem;
+  }
+
+  @media (max-width: 1136px) {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+
+    .entity-tags__label {
+      border-radius: 5px 5px 0 0;
+    }
+
+    .entity-tags__value {
+      border-radius: 0 0 5px 5px;
+    }
+  }
+
+  @media (min-width: 1137px) {
+    display: inline-flex;
+    align-items: stretch;
   }
 }
 
@@ -423,6 +440,10 @@ span[class*="kuma-io-"] {
 
 .data-overview-table {
 
+  @media (max-width: 1110px) {
+    overflow-x: scroll;
+    touch-action: pan-x;
+  }
 }
 
 .micro-table.micro-table {
@@ -453,6 +474,13 @@ span[class*="kuma-io-"] {
   thead {
     border-top: 0 !important;
     border-bottom-width: 1px !important;
+  }
+
+  tbody {
+
+    td {
+      vertical-align: top;
+    }
   }
 
   &.has-border {

@@ -200,7 +200,8 @@ export default class Mock {
                     env: 'prod',
                     'pod-template-hash': '69c9fd4bd',
                     'kuma.io/protocol': 'http',
-                    version: 'v8'
+                    version: 'v8',
+                    'a-duplicate-tag': '12345678'
                   }
                 },
                 {
@@ -210,7 +211,8 @@ export default class Mock {
                     env: 'prod',
                     'pod-template-hash': 'd7cb6b576',
                     'kuma.io/protocol': 'http',
-                    version: 'v0'
+                    version: 'v0',
+                    'a-duplicate-tag': '12345678'
                   }
                 },
                 {
@@ -218,7 +220,8 @@ export default class Mock {
                   tags: {
                     app: 'postgres',
                     'pod-template-hash': '65df766577',
-                    'kuma.io/protocol': 'tcp'
+                    'kuma.io/protocol': 'tcp',
+                    'a-duplicate-tag': '12345678'
                   }
                 },
                 {
@@ -228,7 +231,8 @@ export default class Mock {
                     'pod-template-hash': '78ff699f7',
                     'kuma.io/protocol': 'tcp',
                     role: 'master',
-                    tier: 'backend'
+                    tier: 'backend',
+                    'a-duplicate-tag': '12345678'
                   }
                 }
               ]
@@ -313,7 +317,8 @@ export default class Mock {
                 env: 'prod',
                 'pod-template-hash': '69c9fd4bd',
                 'kuma.io/protocol': 'http',
-                version: 'v8'
+                version: 'v8',
+                'a-duplicate-tag': '12345678'
               }
             },
             {
@@ -323,7 +328,8 @@ export default class Mock {
                 env: 'prod',
                 'pod-template-hash': 'd7cb6b576',
                 'kuma.io/protocol': 'http',
-                version: 'v0'
+                version: 'v0',
+                'a-duplicate-tag': '12345678'
               }
             },
             {
@@ -331,7 +337,8 @@ export default class Mock {
               tags: {
                 app: 'postgres',
                 'pod-template-hash': '65df766577',
-                'kuma.io/protocol': 'tcp'
+                'kuma.io/protocol': 'tcp',
+                'a-duplicate-tag': '12345678'
               }
             },
             {
@@ -341,13 +348,14 @@ export default class Mock {
                 'pod-template-hash': '78ff699f7',
                 'kuma.io/protocol': 'tcp',
                 role: 'master',
-                tier: 'backend'
+                tier: 'backend',
+                'a-duplicate-tag': '12345678'
               }
             }
           ]
         }
       })
-      .onGet('/dataplanes+insights', { params: { ingress: true } }).reply(200, {
+      .onGet('/meshes/default/dataplanes+insights').reply(200, {
         total: 2,
         items: [
           {
@@ -372,7 +380,8 @@ export default class Mock {
                       env: 'prod',
                       'pod-template-hash': '69c9fd4bd',
                       'kuma.io/protocol': 'http',
-                      version: 'v8'
+                      version: 'v8',
+                      'a-duplicate-tag': '12345678'
                     }
                   },
                   {
@@ -382,7 +391,8 @@ export default class Mock {
                       env: 'prod',
                       'pod-template-hash': 'd7cb6b576',
                       'kuma.io/protocol': 'http',
-                      version: 'v0'
+                      version: 'v0',
+                      'a-duplicate-tag': '12345678'
                     }
                   },
                   {
@@ -390,7 +400,8 @@ export default class Mock {
                     tags: {
                       app: 'postgres',
                       'pod-template-hash': '65df766577',
-                      'kuma.io/protocol': 'tcp'
+                      'kuma.io/protocol': 'tcp',
+                      'a-duplicate-tag': '12345678'
                     }
                   },
                   {
@@ -400,7 +411,69 @@ export default class Mock {
                       'pod-template-hash': '78ff699f7',
                       'kuma.io/protocol': 'tcp',
                       role: 'master',
-                      tier: 'backend'
+                      tier: 'backend',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            type: 'DataplaneOverview',
+            mesh: 'default',
+            name: 'dataplane-test-456',
+            creationTime: '2020-06-29T09:27:46.05334-04:00',
+            modificationTime: '2020-06-29T09:27:46.05334-04:00',
+            dataplane: {
+              networking: {
+                address: '192.168.64.8',
+                inbound: [
+                  {
+                    port: 10001
+                  }
+                ],
+                ingress: [
+                  {
+                    'kuma.io/service': 'frontend.kuma-demo.svc:8080',
+                    tags: {
+                      app: 'kuma-demo-frontend',
+                      env: 'prod',
+                      'pod-template-hash': '69c9fd4bd',
+                      'kuma.io/protocol': 'http',
+                      version: 'v8',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  },
+                  {
+                    'kuma.io/service': 'backend.kuma-demo.svc:3001',
+                    tags: {
+                      app: 'kuma-demo-backend',
+                      env: 'prod',
+                      'pod-template-hash': 'd7cb6b576',
+                      'kuma.io/protocol': 'http',
+                      version: 'v0',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  },
+                  {
+                    'kuma.io/service': 'postgres.kuma-demo.svc:5432',
+                    tags: {
+                      app: 'postgres',
+                      'pod-template-hash': '65df766577',
+                      'kuma.io/protocol': 'tcp',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  },
+                  {
+                    'kuma.io/service': 'redis.kuma-demo.svc:6379',
+                    tags: {
+                      app: 'redis',
+                      'pod-template-hash': '78ff699f7',
+                      'kuma.io/protocol': 'tcp',
+                      role: 'master',
+                      tier: 'backend',
+                      'a-duplicate-tag': '12345678'
                     }
                   }
                 ]
@@ -429,9 +502,10 @@ export default class Mock {
                 tags: {
                   app: 'kuma-demo-frontend',
                   env: 'prod',
-                  'pod-template-hash': '69c9fd4bd',
+                  'pod-template-hash-super-long-title': '69c9fd4bd',
                   'kuma.io/protocol': 'http',
-                  version: 'v8'
+                  version: 'v8',
+                  'some-duplicate-tag': '1234567890'
                 }
               },
               {
@@ -441,7 +515,8 @@ export default class Mock {
                   env: 'prod',
                   'pod-template-hash': 'd7cb6b576',
                   'kuma.io/protocol': 'http',
-                  version: 'v0'
+                  version: 'v0',
+                  'some-duplicate-tag': '1234567890'
                 }
               },
               {
@@ -449,7 +524,8 @@ export default class Mock {
                 tags: {
                   app: 'postgres',
                   'pod-template-hash': '65df766577',
-                  'kuma.io/protocol': 'tcp'
+                  'kuma.io/protocol': 'tcp',
+                  'some-duplicate-tag': '1234567890'
                 }
               },
               {
@@ -459,7 +535,84 @@ export default class Mock {
                   'pod-template-hash': '78ff699f7',
                   'kuma.io/protocol': 'tcp',
                   role: 'master',
-                  tier: 'backend'
+                  tier: 'backend',
+                  'some-duplicate-tag': '1234567890'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes+insights/dataplane-test-456')
+      .reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'dataplane-test-456',
+        dataplane: {
+          networking: {
+            address: '192.168.64.8',
+            inbound: [
+              {
+                port: 10001
+              }
+            ],
+            ingress: [
+              {
+                'kuma.io/service': 'frontend.kuma-demo.svc:8080',
+                tags: {
+                  app: 'kuma-demo-frontend',
+                  env: 'prod'
+                }
+              },
+              {
+                'kuma.io/service': 'backend.kuma-demo.svc:3001',
+                tags: {
+                  app: 'kuma-demo-backend',
+                  env: 'prod',
+                  'pod-template-hash': 'd7cb6b576'
+                }
+              },
+              {
+                'kuma.io/service': 'postgres.kuma-demo.svc:5432',
+                tags: {
+                  app: 'postgres',
+                  'pod-template-hash': '65df766577'
+                }
+              },
+              {
+                'kuma.io/service': 'redis.kuma-demo.svc:6379',
+                tags: {
+                  app: 'redis',
+                  'pod-template-hash': '78ff699f7'
                 }
               }
             ]
@@ -513,6 +666,66 @@ export default class Mock {
                 'kuma.io/service': 'kuma-example-backend',
                 tag01: 'value01',
                 reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes/dataplane-test-456')
+      .reply(200, {
+        type: 'Dataplane',
+        mesh: 'default',
+        name: 'dataplane-test-456',
+        creationTime: '2020-06-02T09:33:09.208372-04:00',
+        modificationTime: '2020-06-02T09:33:09.208372-04:00',
+        networking: {
+          address: '192.168.64.8',
+          inbound: [
+            {
+              port: 10001
+            }
+          ],
+          ingress: [
+            {
+              'kuma.io/service': 'frontend.kuma-demo.svc:8080',
+              tags: {
+                app: 'kuma-demo-frontend',
+                env: 'prod',
+                'pod-template-hash-super-long-title': '69c9fd4bd',
+                'kuma.io/protocol': 'http',
+                version: 'v8',
+                'some-duplicate-tag': '1234567890'
+              }
+            },
+            {
+              'kuma.io/service': 'backend.kuma-demo.svc:3001',
+              tags: {
+                app: 'kuma-demo-backend',
+                env: 'prod',
+                'pod-template-hash': 'd7cb6b576',
+                'kuma.io/protocol': 'http',
+                version: 'v0',
+                'some-duplicate-tag': '1234567890'
+              }
+            },
+            {
+              'kuma.io/service': 'postgres.kuma-demo.svc:5432',
+              tags: {
+                app: 'postgres',
+                'pod-template-hash': '65df766577',
+                'kuma.io/protocol': 'tcp',
+                'some-duplicate-tag': '1234567890'
+              }
+            },
+            {
+              'kuma.io/service': 'redis.kuma-demo.svc:6379',
+              tags: {
+                app: 'redis',
+                'pod-template-hash': '78ff699f7',
+                'kuma.io/protocol': 'tcp',
+                role: 'master',
+                tier: 'backend',
+                'some-duplicate-tag': '1234567890'
               }
             }
           ]
