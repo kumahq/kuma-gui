@@ -155,7 +155,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
+import { getSome, humanReadableDate, getOffset, stripTimes, dedupeObjects } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -273,6 +273,9 @@ export default {
       }
 
       return shareUrl()
+    },
+    dedupedTags () {
+
     }
   },
   watch: {
@@ -382,7 +385,9 @@ export default {
              * might all be present as opposed to one group.
              */
             if (inbound || gateway || ingress) {
-              const final = []
+              const inboundFinalTags = []
+              const gatewayFinalTags = []
+              const ingressFinalTags = []
 
               // inbound tags
               if (inbound) {
@@ -394,7 +399,7 @@ export default {
                     const tagVals = Object.values(rawTags)
 
                     for (let x = 0; x < tagKeys.length; x++) {
-                      final.push({
+                      inboundFinalTags.push({
                         label: tagKeys[x],
                         value: tagVals[x]
                       })
@@ -413,7 +418,7 @@ export default {
                     const tagVals = Object.values(gatewayItems)
 
                     for (let x = 0; x < tagKeys.length; x++) {
-                      final.push({
+                      gatewayFinalTags.push({
                         label: tagKeys[x],
                         value: tagVals[x]
                       })
@@ -429,7 +434,7 @@ export default {
                   const ingressService = ingress[i].service || null
 
                   if (ingressService) {
-                    final.push({
+                    ingressFinalTags.push({
                       label: 'service',
                       value: ingressService
                     })
@@ -440,7 +445,7 @@ export default {
                     const tagVals = Object.values(ingressTags)
 
                     for (let x = 0; x < tagKeys.length; x++) {
-                      final.push({
+                      ingressFinalTags.push({
                         label: tagKeys[x],
                         value: tagVals[x]
                       })
@@ -450,7 +455,13 @@ export default {
               }
 
               // define the new list
-              tags = final
+              const final = [
+                ...inboundFinalTags,
+                ...gatewayFinalTags,
+                ...ingressFinalTags
+              ]
+
+              tags = dedupeObjects(final, 'value') // returned without dupes
             } else {
               tags = 'none'
             }
@@ -674,7 +685,7 @@ export default {
                     }
                   }
                 } catch (error) {
-                  console.log(error)
+                  console.error(error)
                 }
 
                 return data
@@ -688,7 +699,9 @@ export default {
                 const ingress = src.ingress || null
 
                 if (inbound || gateway || ingress) {
-                  const final = []
+                  const inboundFinalTags = []
+                  const gatewayFinalTags = []
+                  const ingressFinalTags = []
 
                   // inbound tags
                   if (inbound) {
@@ -700,7 +713,7 @@ export default {
                         const tagVals = Object.values(rawTags)
 
                         for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
+                          inboundFinalTags.push({
                             label: tagKeys[x],
                             value: tagVals[x]
                           })
@@ -719,7 +732,7 @@ export default {
                         const tagVals = Object.values(gatewayItems)
 
                         for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
+                          gatewayFinalTags.push({
                             label: tagKeys[x],
                             value: tagVals[x]
                           })
@@ -735,7 +748,7 @@ export default {
                       const ingressService = ingress[i].service || null
 
                       if (ingressService) {
-                        final.push({
+                        ingressFinalTags.push({
                           label: 'service',
                           value: ingressService
                         })
@@ -746,7 +759,7 @@ export default {
                         const tagVals = Object.values(ingressTags)
 
                         for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
+                          ingressFinalTags.push({
                             label: tagKeys[x],
                             value: tagVals[x]
                           })
@@ -755,7 +768,13 @@ export default {
                     }
                   }
 
-                  return final
+                  const final = [
+                    ...inboundFinalTags,
+                    ...gatewayFinalTags,
+                    ...ingressFinalTags
+                  ]
+
+                  return dedupeObjects(final, 'value')
                 }
 
                 return null

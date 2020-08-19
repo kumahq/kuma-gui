@@ -392,6 +392,22 @@ export function cleanTag (tag) {
     .replace('/', '-')
 }
 
+/**
+ * removeDuplicates
+ *
+ * This removes duplicate objects from an array
+ *
+ * @param {Array} array
+ * @param {String} key
+ */
+export function dedupeObjects (array, key) {
+  return array.filter((obj, index, self) =>
+    index === self.findIndex((el) => (
+      el[key] === obj[key]
+    ))
+  )
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -413,5 +429,6 @@ export default {
   stripUrl,
   getOffset,
   stripTimes,
-  cleanTag
+  cleanTag,
+  dedupeObjects
 }
