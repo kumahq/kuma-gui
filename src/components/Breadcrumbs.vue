@@ -173,18 +173,18 @@ export default {
 
 <style lang="scss">
 .krumbs {
-  font-size: var(--type-xl);
+  font-size: var(--type-lg);
 
   .krumb-item {
-
-    &:after {
-
-    }
 
     a {
       color: #000 !important;
       text-decoration: none;
     }
+  }
+
+  @media (min-width: 701px) {
+    font-size: var(--type-xl);
   }
 }
 

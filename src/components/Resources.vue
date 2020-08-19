@@ -71,6 +71,9 @@ export default {
 .resource-list {
   list-style: disc;
   margin-top: 6px;
-  margin-left: 20px;
+
+  li {
+    margin-left: 20px;
+  }
 }
 </style>
