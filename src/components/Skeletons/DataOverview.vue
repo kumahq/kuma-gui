@@ -521,4 +521,52 @@ span[class*="kuma-io-"] {
   }
 
 }
+
+// some reusable styles
+
+.overview-title {
+  font-size: var(--type-lg);
+  font-weight: 500;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--tblack-85);
+}
+
+.overview-sub-title {
+  font-size: var(--type-md);
+  font-weight: 500;
+  // text-transform: uppercase;
+  // color: var(--gray-3);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.overview-tertiary-title {
+  font-size: var(--type-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--gray-3);
+  margin: var(--spacing-xs) 0;
+}
+
+.overview-group-list {
+
+}
+
+.overview-stat-grid {
+  display: grid;
+  margin: var(--spacing-md) 0 0 0;
+
+  @media (min-width: 1140px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px 20px;
+  }
+}
+
+.overview-stack {
+
+  &:not(:last-of-type) {
+    padding: 0 0 var(--spacing-xl) 0;
+    margin: 0 0 var(--spacing-xl) 0;
+    border-bottom: 1px solid var(--gray-4);
+  }
+}
 </style>

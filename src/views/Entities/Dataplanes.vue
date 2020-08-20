@@ -105,15 +105,6 @@
             </div>
           </LabelList>
         </template>
-        <template slot="yaml">
-          <YamlView
-            :title="entityOverviewTitle"
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="rawEntity"
-          />
-        </template>
         <template slot="mtls">
           <LabelList
             :has-error="entityHasError"
@@ -147,6 +138,15 @@
               </template>
             </KAlert>
           </LabelList>
+        </template>
+        <template slot="yaml">
+          <YamlView
+            :title="entityOverviewTitle"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :content="rawEntity"
+          />
         </template>
       </Tabs>
     </FrameSkeleton>
@@ -273,9 +273,6 @@ export default {
       }
 
       return shareUrl()
-    },
-    dedupedTags () {
-
     }
   },
   watch: {
