@@ -5,6 +5,7 @@ import VueMeta from 'vue-meta'
 import Store from '@/store'
 import axios from 'axios'
 import Kuma from '@/services/kuma'
+import configUrl from '@/configUrl'
 
 /** Sentry */
 // import * as Sentry from '@sentry/browser'
@@ -98,8 +99,9 @@ function SETUP_VUE_APP () {
    * Always check the Kuma environment and api URL in storage
    * and update it upon GUI launch.
    */
+
   axios
-    .get(process.env.VUE_APP_KUMA_CONFIG)
+    .get(configUrl())
     .then(response => {
       const kumaEnv = response.data.environment
 
@@ -156,6 +158,7 @@ function SETUP_VUE_APP () {
       localStorage.removeItem('selectedMesh')
 
       console.error('There was a problem loading the config. Please try restarting Kuma.')
+
       console.error(error)
     })
 }
