@@ -273,9 +273,6 @@ export default {
       }
 
       return shareUrl()
-    },
-    dedupedTags () {
-
     }
   },
   watch: {
