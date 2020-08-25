@@ -273,9 +273,6 @@ export default {
       }
 
       return shareUrl()
-    },
-    dedupedTags () {
-
     }
   },
   watch: {
@@ -476,7 +473,7 @@ export default {
                 const lastUpdateTime = item.status.lastUpdateTime || placeholder
                 const disconnectTime = item.disconnectTime || null
 
-                totalUpdates.push(responsesSent)
+                totalUpdates.push(parseInt(responsesSent))
                 connectTimes.push(connectTime)
                 updateTimes.push(lastUpdateTime)
 
