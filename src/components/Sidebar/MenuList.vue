@@ -115,51 +115,54 @@ export default {
     &.menu-title {
       font-size: 12px;
       font-weight: normal;
-      color: #000;
+      // color: #000;
+      color: var(--steal-400);
       text-transform: uppercase;
-      padding: 0 32px;
+      padding: 0 20px;
     }
 
     a {
       display: block;
-      padding: 0 32px;
+      // padding: 0 32px;
+      padding: 4px 20px;
       font-size: 16px;
       text-decoration: none;
-      color: rgba(0, 0, 0, 0.7);
+      // color: rgba(0, 0, 0, 0.7);
+      color: var(--blue-700);
       transition: all 300ms ease;
     }
 
     &:not(.menu-title) {
 
       &:hover a {
-        color: #000;
-        text-decoration: underline;
+        // color: #000;
+        // text-decoration: underline;
       }
 
       .router-link-active {
         position: relative;
         z-index: 1;
-        color: #1270b2;
-        border-right: 1px solid var(--blue-2);
-        background: var(--blue-3);
+        // border-right: 1px solid var(--blue-2);
+        // background: var(--blue-3);
+        font-weight: 500;
+        background-color: var(--blue-100);
+        border-radius: 5px 0 0 5px;
 
-        // &:after {
+        // &:before {
         //   position: absolute;
         //   display: block;
-        //   content: '';
         //   top: 0;
-        //   left: -64px;
-        //   width: 100%;
-        //   height: 100%;
-        //   border-right: 1px solid var(--blue-2);
-        //   background: var(--blue-3);
-        //   z-index: -1;
+        //   bottom: 0;
+        //   left: 0;
+        //   width: 3px;
+        //   background-color: var(--blue-500);
+        //   content: '';
         // }
       }
     }
 
     &:hover a {
-      color: #1270b2;
+      // color: #1270b2;
     }
 
     &.is-nested {

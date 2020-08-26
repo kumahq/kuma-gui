@@ -37,6 +37,8 @@ module.exports = {
     curly: "error",
     // allow debugger during development
     "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-mixed-operators": "off",
+    "vue/no-use-v-if-with-v-for": "off"
   }
 };

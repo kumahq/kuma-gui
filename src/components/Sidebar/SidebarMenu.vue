@@ -5,12 +5,18 @@
     @mouseout="_isHovering(false)"
     @mouseover="_isHovering(true)"
   >
-    <!-- <div
+    <div
       :class="{'active' : isMenuActive}"
       class="icon"
     >
-      <KIcon :icon="menu.id" />
-    </div> -->
+      <KIcon
+        width="18"
+        height="18"
+        view-box="0 0 18 18"
+        :color="iconColor"
+        :icon="menu.id"
+      />
+    </div>
     <div class="item-wrapper">
       <MenuList :menu-items="menu.items" />
     </div>
@@ -55,6 +61,11 @@ export default {
   computed: {
     isMenuActive () {
       return this.menu.items.some(item => this.$route.path.indexOf(item.link) !== -1)
+    },
+    iconColor () {
+      return this.isMenuActive
+        ? 'var(--blue-500)'
+        : 'var(--steal-400)'
     }
   },
 
@@ -69,8 +80,8 @@ export default {
 
 <style lang='scss'>
 .menu-wrapper {
-  // display: flex;
-  // position: relative;
+  display: flex;
+  position: relative;
   margin-bottom: 18px;
 
   &.first {
@@ -82,37 +93,51 @@ export default {
   }
 
   .icon {
-    color: #dcddde;
-    padding: .5rem 1.2rem;
+    // color: #dcddde;
+    padding: 10px 0 0 0;
     cursor: pointer;
     z-index: 2;
+
     svg {
       margin-top: 0.5rem;
+
       path {
         transition: all 0.2s ease;
       }
     }
-    &.active {
-      svg > path {
-        fill: #1272B0;
-      }
+    // &.active {
+    //   svg > path {
+    //     fill: #1272B0;
+    //   }
+    // }
+
+    // active section title
+    &.active + .item-wrapper .menu-list li.menu-title {
+      color: var(--blue-500);
     }
   }
   .item-wrapper {
     width: 100%;
     margin-top: 0.5rem;
+
+    &.is-disabled {
+
+      .menu-list {
+        opacity: .5;
+      }
+    }
   }
 
   nav.closed & {
     margin-bottom: 0;
     .icon.active {
-      border-right: 2px solid #0D93F2;
-      background: #EBEFF2;
+      // border-right: 2px solid #0D93F2;
+      // background: #EBEFF2;
     }
     &:hover {
       .icon {
         svg > path {
-          fill: #1272B0;
+          // fill: #1272B0;
         }
       }
       .item-wrapper {

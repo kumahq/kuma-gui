@@ -3,7 +3,7 @@ export default {
   sections: [
     {
       name: 'Global',
-      id: 'global',
+      id: 'workspaces',
       skipRbac: true,
       items: [
         {
@@ -28,7 +28,7 @@ export default {
     },
     {
       name: 'Dataplane Types',
-      id: 'dataplanes',
+      id: 'connections',
       skipRbac: true,
       items: [
         {
@@ -56,7 +56,7 @@ export default {
     },
     {
       name: 'Policies',
-      id: 'policies',
+      id: 'services',
       skipRbac: true,
       items: [
         {
