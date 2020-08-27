@@ -516,7 +516,7 @@
               </h3>
               <p>
                 You can now execute the following commands to automatically inject
-                the sidebar proxy in every Pod, and by doing so creating the Dataplane.
+                the sidecar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
               <Tabs
                 :loaders="false"
