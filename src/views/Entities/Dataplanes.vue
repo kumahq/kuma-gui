@@ -257,7 +257,7 @@ export default {
       return (storedVersion !== null) ? storedVersion : 'latest'
     },
     shareUrl () {
-      const urlRoot = `${window.location.origin}#`
+      const urlRoot = `${window.location.origin}/#`
       const entity = this.entity
 
       const shareUrl = () => {
