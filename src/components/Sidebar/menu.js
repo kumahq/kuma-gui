@@ -7,6 +7,10 @@ export default {
       skipRbac: true,
       items: [
         {
+          name: 'Information',
+          title: true
+        },
+        {
           name: 'Overview',
           link: '/overview',
           title: false

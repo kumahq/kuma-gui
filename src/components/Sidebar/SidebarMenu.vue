@@ -94,7 +94,7 @@ export default {
 
   .icon {
     // color: #dcddde;
-    padding: 10px 0 0 0;
+    padding: 10px 0 0 10px;
     cursor: pointer;
     z-index: 2;
 
