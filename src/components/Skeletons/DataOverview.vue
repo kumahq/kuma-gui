@@ -50,6 +50,7 @@
           class="micro-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
+          :has-side-border="false"
           has-hover
           @row:click="tableRowHandler"
         >
@@ -164,11 +165,11 @@
         <div class="card-icon mb-3">
           <KIcon
             icon="spinner"
-            color="rgba(0, 0, 0, 0.1)"
+            color="rgba(0, 0, 0, 0.25)"
             size="42"
           />
         </div>
-        Data Loading...
+        Data Loading&hellip;
       </template>
     </KEmptyState>
 
@@ -181,7 +182,7 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-base)"
+            color="var(--yellow-200)"
             icon="warning"
             size="42"
           />
@@ -486,9 +487,10 @@ span[class*="kuma-io-"] {
   .data-table-action-link {
     display: block;
     padding: var(--spacing-sm);
-    cursor: pointer;
+    // cursor: pointer;
     overflow: hidden;
     padding: 0;
+    pointer-events: none;
 
     &.is-active {
       text-decoration: none !important;
