@@ -9,13 +9,8 @@
         appearance="primary"
         size="small"
         :disabled="isLoading"
-        @click="$emit('reloadData')"
+        @click="$emit('reload-data')"
       >
-        <!-- <KIcon
-          icon="spinner"
-          color="#000"
-          size="48"
-        /> -->
         <div
           class="refresh-icon"
           :class="{ 'is-spinning': isLoading }"

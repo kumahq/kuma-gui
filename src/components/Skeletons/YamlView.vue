@@ -201,18 +201,42 @@ export default {
       const kubernetes = () => {
         const newObj = {}
         const sourceObj = Object.assign({}, this.content)
-        const { name, type } = sourceObj
+        const { name, type, metadata } = sourceObj
 
+        // all other parts of the Kubernetes object have to be placed under `spec`
+        const spec = () => {
+          const src = Object.assign({}, this.content)
+
+          // remove the `type`, `mesh` and `name` because we don't need them here
+          delete src.type
+          delete src.mesh
+          delete src.name
+
+          // only return something if there are additional values
+          if (src && Object.entries(src).length > 0) {
+            return src
+          }
+
+          return false
+        }
+
+        // we remove the `name` and `type` because they need to be placed under `metadata`
         delete sourceObj.type
         delete sourceObj.name
 
+        // assemble the main part of our object
         newObj.apiVersion = 'kuma.io/v1alpha1'
         newObj.kind = type
         newObj.metadata = {
           name: name
         }
 
-        return { ...newObj, ...sourceObj }
+        // if there are additional values, place them under `spec` accordingly
+        if (spec()) {
+          newObj.spec = spec()
+        }
+
+        return newObj
       }
 
       const items = {
