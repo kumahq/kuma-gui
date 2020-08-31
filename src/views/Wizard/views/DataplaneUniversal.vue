@@ -603,6 +603,7 @@ export default {
             {
               port: univDataplaneNetworkDPPort,
               servicePort: univDataplaneNetworkServicePort,
+              serviceAddress: univDataplaneNetworkServiceAddress,
               tags: {
                 'kuma.io/service': univDataplaneServiceName,
                 'kuma.io/protocol': univDataplaneNetworkProtocol
