@@ -47,4 +47,4 @@ module.exports = {
     'no-mixed-operators': 'off',
     'no-console': 'off'
   }
-};
+}

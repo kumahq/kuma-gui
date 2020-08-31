@@ -5,15 +5,15 @@
   align-items: center;
   letter-spacing: 0;
   line-height: 20px;
-  color: var(--green-1);
+  color: var(--green-400);
 }
 
 .entity-status.is-offline {
-  color: var(--red-base);
+  color: var(--red-600);
 }
 
 .entity-status.is-offline .entity-status__dot {
-  background-color: var(--red-base);
+  background-color: var(--red-600);
 }
 
 .entity-status__dot {
@@ -22,7 +22,7 @@
   height: 8px;
   border-radius: 100%;
   margin-right: 6px;
-  background-color: var(--green-1);
+  background-color: var(--green-400);
 }
 
 /* Kongponents icon utilities */
