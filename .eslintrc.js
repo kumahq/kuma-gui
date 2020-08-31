@@ -45,6 +45,7 @@ module.exports = {
     // allow unused vars
     'no-unused-vars': 'off',
     'no-mixed-operators': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'no-useless-escape': 'off'
   }
 }
