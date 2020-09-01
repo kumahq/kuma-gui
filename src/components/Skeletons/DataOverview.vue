@@ -9,7 +9,7 @@
         appearance="primary"
         size="small"
         :disabled="isLoading"
-        @click="$emit('reload-data')"
+        @click="$emit('reloadData')"
       >
         <div
           class="refresh-icon"
