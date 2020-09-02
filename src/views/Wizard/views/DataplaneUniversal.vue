@@ -446,6 +446,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
+import configUrl from '@/configUrl'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -457,9 +458,6 @@ import CodeView from '@/components/Skeletons/CodeView'
 import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
-// import meshSchema from '@/views/Wizard/schemas/Mesh'
-
-// schema for building code output (TBD)
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneUniversal'
 
 export default {
@@ -568,6 +566,14 @@ export default {
         .substring(2, 8)
     },
 
+    getConfigUrl () {
+      const url = configUrl()
+        .replace('gui', '/')
+        .replace('config', '')
+
+      return url
+    },
+
     // Our generated code output
     codeOutput () {
       const schema = Object.assign({}, this.schema)
@@ -651,13 +657,13 @@ export default {
      * Part 2 of the last step: Start the Dataplane
      */
     startDpCodeOutput () {
-      const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
+      // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
       const { meshName, univDataplaneId } = this.validate
 
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
-      --cp-address=${cpAddress} \\
+      --cp-address=${this.getConfigUrl} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure

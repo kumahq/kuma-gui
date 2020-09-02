@@ -423,6 +423,25 @@ export function camelCaseToWords (str) {
   }).join(' ')
 }
 
+/**
+ * kebabCase
+ *
+ * @param {*} value
+ */
+export function kebabCase (value) {
+  const newValue = (value)
+    .replace(/[^a-zA-Z0-9 -]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+
+  if (!value) {
+    return ''
+  }
+
+  return newValue
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -446,5 +465,6 @@ export default {
   stripTimes,
   cleanTag,
   dedupeObjects,
-  camelCaseToWords
+  camelCaseToWords,
+  kebabCase
 }
