@@ -371,7 +371,7 @@
                   id="tracing-zipkin-url"
                   type="text"
                   class="k-input w-100"
-                  placeholder="your Zipkin URL"
+                  placeholder="http://zipkin.url:1234"
                   :value="getStorageItem('meshTracingZipkinURL')"
                   @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
                 >
