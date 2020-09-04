@@ -6,14 +6,13 @@
   >
     <div
       v-for="(metric, index) in metrics"
-      v-if="metric.value !== null"
       :key="index"
       :data-testid="metric.metric"
       :class="metric.status"
       class="metric"
     >
       <router-link
-        v-if="metric.url"
+        v-if="metric.url && metric.value !== null"
         :to="metric.url"
         class="metric-card"
       >

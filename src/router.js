@@ -161,15 +161,18 @@ export default (store) => {
           },
           component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
         },
-        // Zones
-        // {
-        //   path: 'zones',
-        //   name: 'zones',
-        //   meta: {
-        //     title: 'Zones'
-        //   },
-        //   component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
-        // },
+        // Service Map
+        {
+          path: 'service-map',
+          name: 'service-map',
+          meta: {
+            title: 'Service Map',
+            breadcrumb: 'Service Map',
+            parent: 'global-overview'
+          },
+          params: { mesh: ':mesh' },
+          component: () => import(/* webpackChunkName: "service-map" */ '@/views/ServiceMap/pages/ServiceMap')
+        },
         // all dataplanes
         {
           path: 'dataplanes',

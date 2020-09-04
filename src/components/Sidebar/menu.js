@@ -23,6 +23,11 @@ export default {
           link: '/meshes',
           title: false,
           pathFlip: true
+        },
+        {
+          name: 'Service Map',
+          link: '/service-map',
+          title: false
         }
       ]
     },

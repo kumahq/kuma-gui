@@ -102,7 +102,7 @@ export default {
     },
     iconColor () {
       if (this.hasError) {
-        return 'var(--yellow-base)'
+        return 'var(--yellow-200)'
       }
 
       return '#ccc'

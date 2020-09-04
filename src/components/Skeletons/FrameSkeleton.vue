@@ -1,12 +1,21 @@
 <template>
-  <div class="component-frame">
+  <div
+    class="component-frame"
+    :class="{ 'p-4': padded }"
+  >
     <slot />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FrameSkeleton'
+  name: 'FrameSkeleton',
+  props: {
+    padded: {
+      type: Boolean,
+      default: false
+    }
+  }
 }
 </script>
 

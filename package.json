@@ -33,16 +33,19 @@
     "@kongponents/styles": "^1.0.2",
     "@sentry/browser": "^5.21.4",
     "@sentry/integrations": "^5.21.4",
+    "@vue/composition-api": "^1.0.0-beta.11",
     "axios": "^0.20.0",
     "axios-mock-adapter": "^1.18.2",
     "core-js": "^3.6.5",
+    "d3": "^6.1.1",
     "semver-compare": "^1.0.0",
     "tailwindcss": "^1.7.3",
     "vue": "^2.6.12",
     "vue-meta": "^2.4.0",
     "vue-prismjs": "^1.2.0",
     "vue-router": "^3.4.3",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "xstate": "^4.13.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.4",
@@ -65,6 +68,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.14.1",
+    "postcss-custom-properties": "^9.1.1",
     "raw-loader": "^4.0.1",
     "sass-loader": "^10.0.1",
     "standard": "^14.3.4",
