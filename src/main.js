@@ -28,6 +28,11 @@ import '@/assets/styles/inputs.css'
 import '@/assets/styles/components.css'
 import '@/assets/styles/transitions.css'
 
+/** Composition API */
+import VueCompositionApi from '@vue/composition-api'
+
+Vue.use(VueCompositionApi)
+
 /** Initiate Sentry */
 // let sentryDebugging = true
 // let sentryEnv = 'staging'

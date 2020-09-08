@@ -42,7 +42,6 @@
     "ignore-loader": "^0.1.2",
     "semver-compare": "^1.0.0",
     "tailwindcss": "^1.7.3",
-    "vue": "^2.6.12",
     "vue-meta": "^2.4.0",
     "vue-prismjs": "^1.2.0",
     "vue-router": "^3.4.3",
@@ -75,6 +74,9 @@
     "standard": "^14.3.4",
     "vue-template-compiler": "^2.6.12",
     "webpack-bundle-analyzer": "^3.8.0"
+  },
+  "resolutions": {
+    "vue": "^2.6.12"
   },
   "jest": {
     "moduleFileExtensions": [
