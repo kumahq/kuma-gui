@@ -12,6 +12,7 @@
     "test:unit": "yarn vue-cli-service test:unit"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.2",
     "@appscode/json2yaml": "^0.1.2",
     "@kongponents/kalert": "1.0.7",
     "@kongponents/kbadge": "^1.0.0",
@@ -33,19 +34,19 @@
     "@kongponents/styles": "^1.0.2",
     "@sentry/browser": "^5.21.4",
     "@sentry/integrations": "^5.21.4",
+    "@types/core-js": "^2.5.3",
     "@vue/composition-api": "^1.0.0-beta.11",
     "axios": "^0.20.0",
     "axios-mock-adapter": "^1.18.2",
     "core-js": "^3.6.5",
-    "d3": "^6.1.1",
+    "ignore-loader": "^0.1.2",
     "semver-compare": "^1.0.0",
     "tailwindcss": "^1.7.3",
     "vue": "^2.6.12",
     "vue-meta": "^2.4.0",
     "vue-prismjs": "^1.2.0",
     "vue-router": "^3.4.3",
-    "vuex": "^3.5.1",
-    "xstate": "^4.13.0"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.4",

@@ -171,7 +171,7 @@ export default (store) => {
             parent: 'global-overview'
           },
           params: { mesh: ':mesh' },
-          component: () => import(/* webpackChunkName: "service-map" */ '@/views/ServiceMap/pages/ServiceMap')
+          component: () => import(/* webpackChunkName: "service-map" */ '@/views/ServiceMap/components/PageShell')
         },
         // all dataplanes
         {
