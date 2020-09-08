@@ -3,6 +3,7 @@
     <div
       ref="diagram"
       class="diagram"
+      :style="`--chart-height: ${diagramHeight}`"
     />
   </div>
 </template>
@@ -12,9 +13,7 @@ import * as am4core from '@amcharts/amcharts4/core'
 import * as am4charts from '@amcharts/amcharts4/charts'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
-// am4core.useTheme(am4themesAnimated)
-
-let chart = null
+am4core.useTheme(am4themesAnimated)
 
 export default {
   name: 'ServiceMap',
@@ -22,6 +21,10 @@ export default {
     data: {
       type: Array,
       required: true
+    },
+    diagramHeight: {
+      type: String,
+      default: '800px'
     },
     fromNamespace: {
       type: String,
@@ -48,13 +51,14 @@ export default {
     this.setupDiagram()
   },
   beforeDestroy () {
-
+    if (this.chart) {
+      this.chart.dispose()
+    }
   },
   methods: {
     setupDiagram () {
       const chartRef = this.$refs.diagram
-
-      chart = am4core.create(chartRef, am4charts.ChordDiagram)
+      const chart = am4core.create(chartRef, am4charts.ChordDiagram)
 
       // for external data from an api or json file, use this:
       // chart.dataSource.url = 'some_json.json'
@@ -70,11 +74,16 @@ export default {
         nodeTemplate.readerTitle = this.nodeTooltip
         nodeTemplate.showSystemTooltip = true
       }
+
+      this.chart = chart
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
+.diagram {
+  width: 100%;
+  height: var(--chart-height);
+}
 </style>
