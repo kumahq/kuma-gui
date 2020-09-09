@@ -5,6 +5,20 @@
       :metrics="overviewMetrics"
     />
 
+    <div class="pb-4">
+      <CardSkeleton
+        class="card-item"
+        card-title="Number of data-planes per mesh"
+      >
+        <template slot="cardContent">
+          <DonutChart
+            :data="mockChartData"
+            diagram-height="400px"
+          />
+        </template>
+      </CardSkeleton>
+    </div>
+
     <div class="card-wrapper card-wrapper--4-col">
       <div>
         <CardSkeleton
@@ -64,18 +78,52 @@ import { mapGetters } from 'vuex'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
+import DonutChart from '@/components/Charts/DonutChart'
 
 export default {
   name: 'Overview',
+  components: {
+    MetricGrid,
+    CardSkeleton,
+    Resources,
+    DonutChart
+  },
+  data () {
+    return {
+      mockChartData: [{
+        key: 'Lithuania',
+        value: 501.9
+      }, {
+        key: 'Czech Republic',
+        value: 301.9
+      }, {
+        key: 'Ireland',
+        value: 201.1
+      }, {
+        key: 'Germany',
+        value: 165.8
+      }, {
+        key: 'Australia',
+        value: 139.9
+      }, {
+        key: 'Austria',
+        value: 128.3
+      }, {
+        key: 'UK',
+        value: 99
+      }, {
+        key: 'Belgium',
+        value: 60
+      }, {
+        key: 'The Netherlands',
+        value: 50
+      }]
+    }
+  },
   metaInfo () {
     return {
       title: this.$route.meta.title
     }
-  },
-  components: {
-    MetricGrid,
-    CardSkeleton,
-    Resources
   },
   computed: {
     ...mapGetters({

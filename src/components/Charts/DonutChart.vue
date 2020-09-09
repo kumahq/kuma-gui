@@ -1,8 +1,8 @@
 <template>
   <div class="diagram-container">
     <div
-      ref="diagram"
-      class="diagram"
+      ref="donutDiagram"
+      class="donut-diagram"
       :style="`--chart-height: ${diagramHeight}`"
     />
   </div>
@@ -44,14 +44,16 @@ export default {
     }
   },
   mounted () {
-
+    this.setupDiagram()
   },
   beforeDestroy () {
-
+    if (this.chart) {
+      this.chart.dispose()
+    }
   },
   methods: {
     setupDiagram () {
-      const chartRef = this.$refs.diagram
+      const chartRef = this.$refs.donutDiagram
       const chart = create(chartRef, PieChart)
 
       // TODO we will have to transform the endpoint data accordingly
@@ -69,7 +71,6 @@ export default {
       pieSeries.dataFields.category = this.keyNamespace
 
       // pie slice styling
-      // we don't bother making some of this into props because it won't change
       const sliceTemplate = pieSeries.slices.template
 
       sliceTemplate.stroke = color(this.strokeColor)
@@ -84,13 +85,15 @@ export default {
         animationProps.endAngle = -90
         animationProps.startAngle = -90
       }
+
+      this.chart = chart
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.diagram {
+.donut-diagram {
   width: 100%;
   height: var(--chart-height);
 }
