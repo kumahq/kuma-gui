@@ -54,11 +54,13 @@ export default {
     cardActionRoute: {
       // this can be a router-link object or a URL string
       type: [Object, String],
-      required: true
+      required: false,
+      default: null
     },
     cardActionButtonText: {
       type: String,
-      required: true
+      required: false,
+      default: null
     },
     centerText: {
       type: Boolean,

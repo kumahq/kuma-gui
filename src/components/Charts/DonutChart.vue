@@ -1,5 +1,24 @@
 <template>
   <div class="diagram-container">
+    <div class="diagram-controls">
+      <!-- TODO move the button to the right of the card title -->
+      <KButton
+        appearance="primary"
+        size="small"
+        :disabled="isLoading"
+        @click="refreshDiagram"
+      >
+        <span>
+          <RefreshIcon
+            class="refresh-icon-component"
+            :class="{ 'is-spinning': isLoading }"
+          />
+        </span>
+        <span>
+          {{ refreshButtonText }}
+        </span>
+      </KButton>
+    </div>
     <div
       ref="donutDiagram"
       class="donut-diagram"
@@ -12,11 +31,15 @@
 import { create, useTheme, percent, color } from '@amcharts/amcharts4/core'
 import { PieChart, PieSeries } from '@amcharts/amcharts4/charts'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
+import RefreshIcon from '@/components/Utils/RefreshIcon'
 
 useTheme(am4themesAnimated)
 
 export default {
   name: 'DonutChart',
+  components: {
+    RefreshIcon
+  },
   props: {
     data: {
       type: Array,
@@ -41,6 +64,15 @@ export default {
     animate: {
       type: Boolean,
       default: true
+    },
+    refreshButtonText: {
+      type: String,
+      default: 'Refresh'
+    }
+  },
+  data () {
+    return {
+      isLoading: false
     }
   },
   mounted () {
@@ -52,6 +84,32 @@ export default {
     }
   },
   methods: {
+    refreshDiagram () {
+      const promise = new Promise((resolve, reject) => {
+        if (this.chart) {
+          // dispose of the old chart before reloading it
+          this.chart.dispose()
+          this.isLoading = true
+
+          resolve()
+        } else {
+          const error = new Error('There was no chart present to dispose of!')
+
+          reject(error)
+        }
+      })
+
+      // destroy the old chart and create anew!
+      promise
+        .then(() => {
+          this.setupDiagram()
+
+          // finish the loading animation once the data has been loaded and validated
+          this.chart.events.on('datavalidated', () => {
+            this.isLoading = false
+          })
+        })
+    },
     setupDiagram () {
       const chartRef = this.$refs.donutDiagram
       const chart = create(chartRef, PieChart)
@@ -96,5 +154,18 @@ export default {
 .donut-diagram {
   width: 100%;
   height: var(--chart-height);
+}
+
+.refresh-icon-component.is-spinning g {
+  animation: spin 1.2s infinite linear;
+}
+
+.diagram-controls {
+
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(1turn); }
 }
 </style>

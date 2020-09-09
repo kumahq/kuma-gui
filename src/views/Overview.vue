@@ -91,32 +91,26 @@ export default {
   data () {
     return {
       mockChartData: [{
-        key: 'Lithuania',
-        value: 501.9
+        key: 'default',
+        value: 502
       }, {
-        key: 'Czech Republic',
-        value: 301.9
+        key: 'marketplace-app',
+        value: 25
       }, {
-        key: 'Ireland',
-        value: 201.1
+        key: 'reviews-v1',
+        value: 201
       }, {
-        key: 'Germany',
-        value: 165.8
+        key: 'reviews-v2',
+        value: 165
       }, {
-        key: 'Australia',
-        value: 139.9
+        key: 'products',
+        value: 139
       }, {
-        key: 'Austria',
-        value: 128.3
+        key: 'fancy-mesh-v1',
+        value: 627
       }, {
-        key: 'UK',
-        value: 99
-      }, {
-        key: 'Belgium',
-        value: 60
-      }, {
-        key: 'The Netherlands',
-        value: 50
+        key: 'fancy-mesh-v2',
+        value: 55
       }]
     }
   },
