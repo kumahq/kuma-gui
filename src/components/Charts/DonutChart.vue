@@ -1,0 +1,97 @@
+<template>
+  <div class="diagram-container">
+    <div
+      ref="diagram"
+      class="diagram"
+      :style="`--chart-height: ${diagramHeight}`"
+    />
+  </div>
+</template>
+
+<script>
+import { create, useTheme, percent, color } from '@amcharts/amcharts4/core'
+import { PieChart, PieSeries } from '@amcharts/amcharts4/charts'
+import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
+
+useTheme(am4themesAnimated)
+
+export default {
+  name: 'DonutChart',
+  props: {
+    data: {
+      type: Array,
+      required: true
+    },
+    diagramHeight: {
+      type: String,
+      default: '800px'
+    },
+    valueNamespace: {
+      type: String,
+      default: 'value'
+    },
+    keyNamespace: {
+      type: String,
+      default: 'key'
+    },
+    strokeColor: {
+      type: String,
+      default: '#fff'
+    },
+    animate: {
+      type: Boolean,
+      default: true
+    }
+  },
+  mounted () {
+
+  },
+  beforeDestroy () {
+
+  },
+  methods: {
+    setupDiagram () {
+      const chartRef = this.$refs.diagram
+      const chart = create(chartRef, PieChart)
+
+      // TODO we will have to transform the endpoint data accordingly
+      // to match what amCharts expects.
+      chart.data = this.data
+
+      // set the inner radius
+      chart.innerRadius = percent(50)
+
+      // add and configure our Series
+      const pieSeries = chart.series.push(new PieSeries())
+
+      // data structure and key/value naming
+      pieSeries.dataFields.value = this.valueNamespace
+      pieSeries.dataFields.category = this.keyNamespace
+
+      // pie slice styling
+      // we don't bother making some of this into props because it won't change
+      const sliceTemplate = pieSeries.slices.template
+
+      sliceTemplate.stroke = color(this.strokeColor)
+      sliceTemplate.strokeWidth = 2
+      sliceTemplate.strokeOpacity = 1
+
+      // animation
+      if (this.animate) {
+        const animationProps = pieSeries.hiddenState.properties
+
+        animationProps.opacity = 1
+        animationProps.endAngle = -90
+        animationProps.startAngle = -90
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.diagram {
+  width: 100%;
+  height: var(--chart-height);
+}
+</style>
