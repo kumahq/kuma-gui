@@ -9,11 +9,11 @@
 </template>
 
 <script>
-import * as am4core from '@amcharts/amcharts4/core'
-import * as am4charts from '@amcharts/amcharts4/charts'
+import { create, useTheme } from '@amcharts/amcharts4/core'
+import { ChordDiagram } from '@amcharts/amcharts4/charts'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
-am4core.useTheme(am4themesAnimated)
+useTheme(am4themesAnimated)
 
 export default {
   name: 'ServiceMap',
@@ -58,7 +58,7 @@ export default {
   methods: {
     setupDiagram () {
       const chartRef = this.$refs.diagram
-      const chart = am4core.create(chartRef, am4charts.ChordDiagram)
+      const chart = create(chartRef, ChordDiagram)
 
       // for external data from an api or json file, use this:
       // chart.dataSource.url = 'some_json.json'
