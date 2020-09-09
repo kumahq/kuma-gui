@@ -162,17 +162,17 @@ export default (store) => {
           component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
         },
         // Service Map
-        {
-          path: 'service-map',
-          name: 'service-map',
-          meta: {
-            title: 'Service Map',
-            breadcrumb: 'Service Map',
-            parent: 'global-overview'
-          },
-          params: { mesh: ':mesh' },
-          component: () => import(/* webpackChunkName: "service-map" */ '@/views/ServiceMap/components/PageShell')
-        },
+        // {
+        //   path: 'service-map',
+        //   name: 'service-map',
+        //   meta: {
+        //     title: 'Service Map',
+        //     breadcrumb: 'Service Map',
+        //     parent: 'global-overview'
+        //   },
+        //   params: { mesh: ':mesh' },
+        //   component: () => import(/* webpackChunkName: "service-map" */ '@/views/ServiceMap/components/PageShell')
+        // },
         // all dataplanes
         {
           path: 'dataplanes',

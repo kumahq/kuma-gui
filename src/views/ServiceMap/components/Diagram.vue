@@ -10,7 +10,7 @@
 
 <script>
 import { create, useTheme } from '@amcharts/amcharts4/core'
-import { ChordDiagram } from '@amcharts/amcharts4/charts'
+import { ChordDiagram, SankeyDiagram } from '@amcharts/amcharts4/charts'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 useTheme(am4themesAnimated)
