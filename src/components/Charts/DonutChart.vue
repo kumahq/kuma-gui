@@ -34,8 +34,9 @@
 </template>
 
 <script>
-import { create, useTheme, percent, color } from '@amcharts/amcharts4/core'
+import { create, useTheme, percent, color, Label } from '@amcharts/amcharts4/core'
 import { PieChart, PieSeries } from '@amcharts/amcharts4/charts'
+import { SliceGrouper } from '@amcharts/amcharts4/plugins/sliceGrouper'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 import RefreshIcon from '@/components/Utils/RefreshIcon'
 
@@ -79,6 +80,26 @@ export default {
     refreshButtonText: {
       type: String,
       default: 'Refresh'
+    },
+    group: {
+      type: Boolean,
+      default: true
+    },
+    groupThreshold: {
+      type: Number,
+      default: 10
+    },
+    groupName: {
+      type: String,
+      default: 'Other'
+    },
+    showCenterLabel: {
+      type: Boolean,
+      default: false
+    },
+    centerLabelValue: {
+      type: [String, Number],
+      default: null
     }
   },
   data () {
@@ -124,7 +145,11 @@ export default {
     disposeDiagram () {
       if (this.chart) {
         this.chart.dispose()
-        this.$emit('destroyDiagram')
+        this.$emit('destroyDiagram', true)
+      } else {
+        this.$emit('destroyDiagram', false)
+
+        console.error('There was no chart present to dispose of.')
       }
     },
     setupDiagram () {
@@ -144,6 +169,7 @@ export default {
       // data structure and key/value naming
       pieSeries.dataFields.value = this.valueNamespace
       pieSeries.dataFields.category = this.keyNamespace
+      pieSeries.labels.template.text = '{category}: {value.value}'
 
       // pie slice styling
       const sliceTemplate = pieSeries.slices.template
@@ -159,6 +185,26 @@ export default {
         animationProps.opacity = 1
         animationProps.endAngle = -90
         animationProps.startAngle = -90
+      }
+
+      // pie slice grouping (for when there are too many items)
+      // https://www.amcharts.com/docs/v4/tutorials/plugin-slice-grouper/
+      if (this.group) {
+        const grouper = pieSeries.plugins.push(new SliceGrouper())
+
+        grouper.threshold = this.groupThreshold
+        grouper.groupName = this.groupName
+        grouper.clickBehavior = 'break'
+      }
+
+      // center label
+      if (this.showCenterLabel && this.centerLabelValue != null) {
+        const centerLabel = pieSeries.createChild(Label)
+
+        centerLabel.text = this.centerLabelValue
+        centerLabel.horizontalCenter = 'middle'
+        centerLabel.verticalCenter = 'middle'
+        centerLabel.fontSize = 40
       }
 
       this.chart = chart

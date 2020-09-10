@@ -8,6 +8,7 @@
     <div class="pb-4">
       <DonutChart
         :data="mockChartData"
+        :group="false"
         card-title="Number of data-planes per mesh"
         diagram-height="400px"
       />
@@ -84,28 +85,51 @@ export default {
   },
   data () {
     return {
-      mockChartData: [{
-        key: 'default',
-        value: 502
-      }, {
-        key: 'marketplace-app',
-        value: 25
-      }, {
-        key: 'reviews-v1',
-        value: 201
-      }, {
-        key: 'reviews-v2',
-        value: 165
-      }, {
-        key: 'products',
-        value: 139
-      }, {
-        key: 'fancy-mesh-v1',
-        value: 627
-      }, {
-        key: 'fancy-mesh-v2',
-        value: 55
-      }]
+      mockChartData: [
+        {
+          key: 'default',
+          value: 502
+        }, {
+          key: 'marketplace-app',
+          value: 25
+        }, {
+          key: 'reviews-v1',
+          value: 201
+        }, {
+          key: 'reviews-v2',
+          value: 165
+        }, {
+          key: 'products',
+          value: 139
+        }, {
+          key: 'fancy-mesh-v1',
+          value: 627
+        }, {
+          key: 'fancy-mesh-v2',
+          value: 55
+        }, {
+          key: 'another-mesh',
+          value: 502
+        }, {
+          key: 'kiosk-system-v1',
+          value: 25
+        }, {
+          key: 'kiosk-system-v2',
+          value: 201
+        }, {
+          key: 'ratings-system-v1',
+          value: 165
+        }, {
+          key: 'ratings-system-v1',
+          value: 139
+        }, {
+          key: 'mesh-123',
+          value: 627
+        }, {
+          key: 'mesh-345',
+          value: 55
+        }
+      ]
     }
   },
   metaInfo () {

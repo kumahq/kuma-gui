@@ -51,11 +51,19 @@ export default {
     this.setupDiagram()
   },
   beforeDestroy () {
-    if (this.chart) {
-      this.chart.dispose()
-    }
+    this.disposeDiagram()
   },
   methods: {
+    disposeDiagram () {
+      if (this.chart) {
+        this.chart.dispose()
+        this.$emit('destroyDiagram', true)
+      } else {
+        this.$emit('destroyDiagram', false)
+
+        console.log('There was no chart available to dispose of.')
+      }
+    },
     setupDiagram () {
       const chartRef = this.$refs.diagram
       const chart = create(chartRef, ChordDiagram)
@@ -76,6 +84,8 @@ export default {
       }
 
       this.chart = chart
+
+      this.$emit('setupDiagram')
     }
   }
 }
