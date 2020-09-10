@@ -6,17 +6,11 @@
     />
 
     <div class="pb-4">
-      <CardSkeleton
-        class="card-item"
+      <DonutChart
+        :data="mockChartData"
         card-title="Number of data-planes per mesh"
-      >
-        <template slot="cardContent">
-          <DonutChart
-            :data="mockChartData"
-            diagram-height="400px"
-          />
-        </template>
-      </CardSkeleton>
+        diagram-height="400px"
+      />
     </div>
 
     <div class="card-wrapper card-wrapper--4-col">

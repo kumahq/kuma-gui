@@ -1,30 +1,36 @@
 <template>
-  <div class="diagram-container">
-    <div class="diagram-controls">
-      <!-- TODO move the button to the right of the card title -->
-      <KButton
-        appearance="primary"
-        size="small"
-        :disabled="isLoading"
-        @click="refreshDiagram"
-      >
-        <span>
-          <RefreshIcon
-            class="refresh-icon-component"
-            :class="{ 'is-spinning': isLoading }"
-          />
-        </span>
-        <span>
-          {{ refreshButtonText }}
-        </span>
-      </KButton>
-    </div>
-    <div
-      ref="donutDiagram"
-      class="donut-diagram"
-      :style="`--chart-height: ${diagramHeight}`"
-    />
-  </div>
+  <KCard class="diagram-container">
+    <template slot="body">
+      <div class="diagram-controls mb-4">
+        <div>
+          <h4>{{ cardTitle }}</h4>
+        </div>
+        <div class="diagram-controls__controls">
+          <KButton
+            appearance="primary"
+            size="small"
+            :disabled="isLoading"
+            @click="refreshDiagram"
+          >
+            <span>
+              <RefreshIcon
+                class="refresh-icon-component"
+                :class="{ 'is-spinning': isLoading }"
+              />
+            </span>
+            <span>
+              {{ refreshButtonText }}
+            </span>
+          </KButton>
+        </div>
+      </div>
+      <div
+        ref="donutDiagram"
+        class="donut-diagram"
+        :style="`--chart-height: ${diagramHeight}`"
+      />
+    </template>
+  </KCard>
 </template>
 
 <script>
@@ -44,6 +50,11 @@ export default {
     data: {
       type: Array,
       required: true
+    },
+    cardTitle: {
+      type: String,
+      required: false,
+      default: null
     },
     diagramHeight: {
       type: String,
@@ -79,16 +90,14 @@ export default {
     this.setupDiagram()
   },
   beforeDestroy () {
-    if (this.chart) {
-      this.chart.dispose()
-    }
+    this.disposeDiagram()
   },
   methods: {
     refreshDiagram () {
       const promise = new Promise((resolve, reject) => {
         if (this.chart) {
           // dispose of the old chart before reloading it
-          this.chart.dispose()
+          this.disposeDiagram()
           this.isLoading = true
 
           resolve()
@@ -109,6 +118,14 @@ export default {
             this.isLoading = false
           })
         })
+
+      this.$emit('refreshDiagram')
+    },
+    disposeDiagram () {
+      if (this.chart) {
+        this.chart.dispose()
+        this.$emit('destroyDiagram')
+      }
     },
     setupDiagram () {
       const chartRef = this.$refs.donutDiagram
@@ -145,6 +162,8 @@ export default {
       }
 
       this.chart = chart
+
+      this.$emit('setupDiagram')
     }
   }
 }
@@ -161,7 +180,22 @@ export default {
 }
 
 .diagram-controls {
+  display: flex;
+  align-items: center;
 
+  h4 {
+    font-size: var(--type-lg);
+    font-weight: 500;
+    color: var(--black-85);
+  }
+}
+
+.diagram-controls__controls {
+  margin-left: auto;
+
+  button:after {
+    display: none !important;
+  }
 }
 
 @keyframes spin {
