@@ -160,6 +160,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#app {
+  --sidebarOpenWidth: 180px;
+  --sidebarCollapsedWidth: 55px;
+  --subnavWidth: 200px;
+  --subnavHorizontalMargin: 1rem;
+  --sidebarBackground: var(--white);
+  --headerHeight: 60px;
+  --transition: cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
 .main-content {
   padding: 44px;
 }

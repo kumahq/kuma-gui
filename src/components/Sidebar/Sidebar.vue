@@ -1,5 +1,28 @@
 <template>
-  <KNav :is-collapsed="isCollapsed">
+  <aside
+    id="the-sidebar"
+    :class="[{ 'has-subnav': hasSubnav }, { 'is-collapsed': isCollapsed }]"
+  >
+    <!-- <MeshSelector :items="meshList" /> -->
+    <div
+      class="main-nav"
+      :class="{ 'is-hovering': isHovering }"
+      @mouseover="isHovering = true"
+      @mouseout="isHovering = false"
+    >
+      <div class="top-nav">
+        <NavItem
+          v-for="(item, idx) in topNavItems"
+          :key="idx"
+          v-bind="item"
+          has-icon
+        />
+      </div>
+      <!-- <div class="bottom-nav"></div> -->
+    </div>
+  </aside>
+
+  <!-- <KNav :is-collapsed="isCollapsed">
     <div
       slot="NavMenu"
       :class="{ 'is-hovering': hovering }"
@@ -14,28 +37,27 @@
         :index="i"
         :is-last="i === lastMenuList"
       />
-      <CollapseToggle
-        :handle-toggle-collapse="handleToggleCollapse"
-      />
     </div>
-  </KNav>
+  </KNav> -->
 </template>
 
 <script>
 import KNav from '@/components/Sidebar/KNav'
 import SidebarMenu from '@/components/Sidebar/SidebarMenu'
-import CollapseToggle from '@/components/Sidebar/CollapseToggle'
-import MeshSelector from '@/components/Utils/MeshSelector'
+import NavItem from '@/components/Sidebar/NavItem'
+// import CollapseToggle from '@/components/Sidebar/CollapseToggle'
+// import MeshSelector from '@/components/Utils/MeshSelector'
 
 import { getItemFromStorage, setItemToStorage } from '@/Cache'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
-    KNav,
-    SidebarMenu,
-    CollapseToggle,
-    MeshSelector
+    // KNav,
+    // SidebarMenu,
+    // CollapseToggle,
+    // MeshSelector,
+    NavItem
   },
 
   data () {
@@ -55,22 +77,8 @@ export default {
     ...mapState('sidebar', {
       menu: state => state.menu
     }),
-
-    /**
-     * Main property for items in the sidebar menu. Filters out menu.js items by
-     * RBAC permissions and fetches Kong Admin Plugin routes
-     * @returns {{sections:Array<MenuItem>}}
-     */
-    menuList () {
-      // get routes allowed by rbac
-      // const routes = this.$rbac.filterRoutes(this.perms, this.$router.allRoutes,
-      //   this.currentWorkspace && this.currentWorkspace.name)
-
-      // const routes = this.$router.allRoutes
-
-      const filteredMenu = JSON.parse(JSON.stringify(this.menu))
-
-      return filteredMenu
+    topNavItems () {
+      return this.getNavItems(this.menu, 'top')
     },
 
     lastMenuList () {
@@ -103,6 +111,10 @@ export default {
       'setMenu'
     ]),
 
+    getNavItems (menu, position) {
+      return menu.find(i => i.position === position).items
+    },
+
     handleToggleCollapse () {
       this.isCollapsed = !this.isCollapsed
       this.setCollapsedState(this.isCollapsed)
@@ -131,95 +143,46 @@ export default {
 }
 </script>
 
-<style lang='scss'>
-$top-nav-height: 75px;
-
-.workspace-tile {
-  padding: 24px 0;
-  border-bottom: 1px solid #e0e1e2;
-  margin: 0 1rem;
-
-  a:hover, a:focus {
-    text-decoration: none;
-  }
-}
-
-.gry-bounding {
+<style lang="scss" scoped>
+#the-sidebar {
+  position: fixed;
   display: flex;
-  position: relative;
-  align-items: center;
-  padding: 20px;
-  height: 36px;
-  color: rgba(0, 0, 0, 0.45);
-  font-size: 14px;
-  border-bottom: 1px solid #e0e1e2;
-  background-color: #f9f9f9;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  span {
-    position: absolute;
-    left: 60px;
-    white-space: nowrap;
-  }
-  .workspace-toggle {
-    border-bottom: 1px solid;
-  }
-  &:hover {
-    background: darken(#f5f6f7, 2%);
-  }
-
-  nav.closed & {
-    box-shadow: none;
-    background: none;
-    span {
-      display: none;
+  top: var(--headerHeight);
+  left: 0;
+  height:  calc(100vh - 3rem);
+  color: var(--blue-700);
+  &.has-subnav {
+    width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+    .main-nav {
+      width: var(--sidebarCollapsedWidth);
+      z-index: 1100;
+      &.is-hovering {
+        max-width: max-content;
+        width: calc(var(--subnavWidth) + 1rem);
+        cursor: pointer;
+        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+      }
     }
   }
-}
 
-nav {
-
-  .menu-container {
-    width: 240px;
-    height: calc(100vh - 145px); // 100vh - (Header + ws picker + collapse btn)
-    overflow-y: auto;
-    overflow-x: hidden;
+  .main-nav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebarOpenWidth);
+    padding-bottom: 2rem;
+    background-color: var(--sidebarBackground);
+    transition: .2s width var(--transition);
+    .top-nav { margin-bottom: auto; }
   }
 
-  &.closed {
-    .workspace-tile {
-      border-top: 1px solid #e0e1e2;
+  // Move content over
+  @media only screen and (max-width: 1650px) {
+    &#the-sidebar + .content {
+      margin-left: var(--sidebarOpenWidth);
     }
-    .gry-bounding {
-      height: auto;
-      border: none;
-      padding: 20px;
-    }
-    .menu-container {
-      width: 63px;
-      overflow: hidden;
-    }
-  }
-}
-
-.workspace-toggle,
-.sidebar-toggle {
-  @extend .gry-bounding;
-}
-
-/* Fix for IE */
-.workspace-toggle > span{
-  top: 10px
-}
-
-// mobile fix
-@media only screen and (max-width: 900px) {
-  .sidebar-toggle {
-    display: block !important;
-    height: auto !important;
-
-    span {
-      display: none;
+    &#the-sidebar.has-subnav + .content {
+      margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
     }
   }
 }
