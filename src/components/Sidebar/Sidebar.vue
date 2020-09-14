@@ -1,7 +1,7 @@
 <template>
   <aside
     id="the-sidebar"
-    :class="[{ 'has-subnav': hasSubnav }, { 'is-collapsed': isCollapsed }]"
+    :class="[{ 'is-collapsed': isCollapsed }]"
   >
     <!-- <MeshSelector :items="meshList" /> -->
     <div

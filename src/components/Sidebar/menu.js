@@ -3,26 +3,26 @@ export default [
     position: 'top',
     items: [
       {
-        name: 'Information',
-        title: true
-      },
-      {
-        name: 'Overview',
-        link: '/overview',
-        title: false
-      },
-      {
-        name: 'Zones',
-        link: '/zones',
-        title: false,
-        root: true
-        // multicluster: true
-      },
-      {
-        name: 'Meshes',
-        link: '/meshes',
-        title: false,
-        pathFlip: true
+        name: 'Service Mesh',
+        icon: 'services',
+        link: '/',
+        subNav: [
+          {
+            name: 'Overview',
+            link: '/overview'
+          },
+          {
+            name: 'Zones',
+            link: '/zones',
+            root: true
+            // multicluster: true
+          },
+          {
+            name: 'Meshes',
+            link: '/meshes',
+            pathFlip: true
+          }
+        ]
       }
     ]
   },
