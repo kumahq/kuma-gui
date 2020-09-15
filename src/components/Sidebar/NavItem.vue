@@ -3,11 +3,14 @@
     :class="[
       { 'is-active': isActive },
       { 'is-menu-item': isMenuItem },
-      { 'is-disabled': isDisabled }
+      { 'is-disabled': isDisabled },
+      { 'is-title': title }
     ]"
     class="nav-item"
   >
-    <router-link :to="routerLink">
+    <router-link
+      :to="routerLink"
+    >
       <div
         v-if="hasIcon"
         class="nav-icon"
@@ -176,6 +179,7 @@ export default {
   margin-bottom: 12px;
   white-space: nowrap;
   overflow: hidden;
+
   a {
     display: flex;
     width: 100%;
@@ -184,13 +188,10 @@ export default {
     text-decoration: none;
     padding: 8px 20px;
   }
+
   .nav-icon {
     display: flex;
     padding-right: 20px;
-  }
-  &.is-disabled {
-    opacity: .5;
-    pointer-events: none;
   }
 
   .title-text {
@@ -201,6 +202,24 @@ export default {
     font-weight: 500;
     font-size: var(--type-sm);
     color: var(--steal-400);
+  }
+
+  &.is-disabled {
+    opacity: .5;
+    pointer-events: none;
+  }
+
+  &.is-title {
+
+    a {
+      padding-left: 0;
+      padding-right: 0;
+      pointer-events: none;
+    }
+
+    &:hover {
+      background: none;
+    }
   }
 }
 </style>
@@ -217,6 +236,7 @@ export default {
       fill: var(--blue-500);
     }
   }
+
   &.is-active:before {
     position: absolute;
     display: block;

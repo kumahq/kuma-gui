@@ -1,5 +1,5 @@
 <template>
-  <header class="main-header p-4">
+  <header class="main-header px-4 py-1">
     <div class="main-header__content flex justify-between items-center -mx-4">
       <div class="py-1 md:py-0 md:px-4">
         <router-link
@@ -13,7 +13,7 @@
         >
           <img
             src="@/assets/images/kuma-logo-new.svg?external"
-            alt="Kuma Logo"
+            :alt="`${tagline} Logo`"
           >
         </router-link>
       </div>
@@ -25,7 +25,10 @@
           v-if="showStatus"
           class="py-1 md:py-0 md:px-4"
         >
-          <status :active="guiStatus">
+          <status
+            :active="guiStatus"
+            :title="statusContent"
+          >
             <template slot="content">
               <span>{{ statusContent }}</span>
               <KBadge
@@ -60,7 +63,8 @@ export default {
   data () {
     return {
       guiStatus: false,
-      statusContent: null
+      statusContent: null,
+      statusVersion: null
     }
   },
   computed: {
@@ -70,7 +74,8 @@ export default {
       // the currently selected mesh
       currentMesh: 'getSelectedMesh',
       // the status of multicluster
-      multicluster: 'getMulticlusterStatus'
+      multicluster: 'getMulticlusterStatus',
+      tagline: 'getTagline'
     }),
     showStatus () {
       return !this.$route.meta.hideStatus && this.status === 'OK'
@@ -90,10 +95,11 @@ export default {
       const version = this.$store.getters.getVersion
 
       if (env && apiUrl) {
+        this.statusVersion = version
         this.statusContent = `${tagline} v${version} running on ${env}`
         this.guiStatus = true
       } else {
-        this.statusContent = "Unable to determine Kuma's status"
+        this.statusContent = `Unable to determine ${tagline}'s status`
         this.guiStatus = false
       }
     }
@@ -110,7 +116,7 @@ export default {
   width: 100%;
   // min-height: var(--topbar-height);
   height: var(--topbar-height);
-  border-bottom: 1px solid #eaecef;
+  // border-bottom: 1px solid #eaecef;
   background-color: #fff;
 }
 
@@ -130,7 +136,7 @@ export default {
     display: block;
     width: auto;
     height: auto;
-    max-height: 46px;
+    max-height: var(--logo-max-height);
   }
 }
 

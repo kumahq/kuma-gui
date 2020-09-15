@@ -4,7 +4,10 @@
       class="status__dot"
       :class="{ 'is-active': active }"
     />
-    <span class="status__label">
+    <span
+      class="status__label"
+      :title="content"
+    >
       <slot name="content" />
     </span>
   </div>

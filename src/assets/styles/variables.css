@@ -42,7 +42,9 @@
   --brand-color-6: var(--logo-purple);
 
   /* Topbar */
-  --topbar-height: 90px;
+  /* --topbar-height: 90px; */
+  --topbar-height: 60px;
+  --logo-max-height: 36px;
 
   /* Content areas */
   --global-content-max-width: 100rem;

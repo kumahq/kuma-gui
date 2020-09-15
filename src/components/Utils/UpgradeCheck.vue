@@ -2,13 +2,13 @@
   <div class="upgrade-check">
     <KAlert
       v-if="showNotice"
-      appearance="warning"
+      appearance="info"
       size="small"
     >
       <template slot="alertMessage">
         <div class="alert-content">
           <div>
-            You are running an outdated version of Kuma.
+            {{ tagline }} update available
           </div>
           <div>
             <a
@@ -16,7 +16,7 @@
               target="_blank"
               class="external-link-btn"
             >
-              Upgrade
+              Update
             </a>
           </div>
         </div>
@@ -42,7 +42,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentVer: 'getVersion'
+      currentVer: 'getVersion',
+      tagline: 'getTagline'
     })
   },
   beforeMount () {
@@ -102,7 +103,7 @@ export default {
 .upgrade-check {
 
   .k-alert.k-alert {
-    padding: var(--spacing-xs);
+    padding: var(--spacing-xxs) var(--spacing-xs);
   }
 }
 
@@ -112,7 +113,7 @@ export default {
   font-size: var(--type-sm);
 
   > *:first-of-type {
-    margin-right: var(--spacing-md);
+    margin-right: var(--spacing-sm);
   }
 
   .external-link-btn {

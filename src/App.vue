@@ -162,6 +162,9 @@ export default {
 <style lang="scss" scoped>
 .main-content {
   padding: 44px;
+
+  // this transition is for when the sidebar is expanded
+  transition: margin 150ms ease-in-out;
 }
 
 .page {

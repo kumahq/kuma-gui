@@ -3,6 +3,7 @@
     :class="{ 'is-collapsed': isCollapsed }"
     class="secondary-nav"
   >
+    <slot name="top" />
     <div
       class="arrow"
       @click="handleToggle"
@@ -16,7 +17,7 @@
         </slot>
       </span>
     </div>
-    <slot />
+    <slot name="bottom" />
     <NavItem
       v-for="(item, idx) in items"
       :key="idx"
@@ -89,17 +90,31 @@ export default {
 </style>
 
 <style lang="scss">
-.secondary-nav .nav-item {
-  height: auto;
-  padding: 0;
-  margin: 0 var(--subnavHorizontalMargin) var(--spacing-xxs);
-  border-radius: 5px;
-  a { padding: 10px; }
-  &.is-active {
-    font-weight: 500;
-    background-color: var(--blue-100);
-    &:before { display: none; }
+.secondary-nav {
+  overflow-x: auto;
+
+  .nav-item {
+    height: auto;
+    padding: 0;
+    margin: 0 var(--subnavHorizontalMargin) var(--spacing-xxs);
+    border-radius: 5px;
+
+    a {
+      padding: 10px;
+    }
+
+    &.is-active {
+      font-weight: 500;
+      background-color: var(--blue-100);
+
+      &:before {
+        display: none;
+      }
+    }
+
+    &:hover {
+      background: var(--blue-100);
+    }
   }
-  &:hover { background: var(--blue-100); }
 }
 </style>

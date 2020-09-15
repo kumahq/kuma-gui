@@ -494,10 +494,8 @@ span[class*="kuma-io-"] {
     cursor: pointer;
     overflow: hidden;
     padding: 0;
-
-    &.is-active {
-      text-decoration: none !important;
-    }
+    text-decoration: none !important;
+    pointer-events: none;
   }
 
   .action-link__active-state {

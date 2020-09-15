@@ -3,10 +3,10 @@
     id="the-sidebar"
     :class="[
       { 'has-subnav': hasSubnav },
-      { 'is-collapsed': isCollapsed }
+      { 'is-collapsed': isCollapsed },
+      { 'subnav-expanded': subnavIsExpanded }
     ]"
   >
-    <!-- <MeshSelector :items="meshList" /> -->
     <div
       class="main-nav"
       :class="{ 'is-hovering': !subnavIsExpanded }"
@@ -15,14 +15,22 @@
     >
       <div class="top-nav">
         <NavItem
-          v-for="(item, idx) in titleNavItem"
+          v-for="(item, idx) in titleNavItems"
           :key="idx"
           v-bind="item"
           has-icon
           @click.native="toggleSubnav()"
         />
       </div>
-      <!-- <div class="bottom-nav"></div> -->
+      <div class="bottom-nav">
+        <NavItem
+          v-for="(item, idx) in bottomNavItems"
+          :key="idx"
+          v-bind="item"
+          has-icon
+          @click.native="toggleSubnav()"
+        />
+      </div>
     </div>
     <Subnav
       v-if="subnavIsExpanded"
@@ -30,21 +38,25 @@
       :title-link="selectedMenuItem.link"
       :items="topNavItems"
       @toggled="(state) => isCollapsed = state"
-    />
+    >
+      <template slot="top">
+        <MeshSelector :items="meshList" />
+      </template>
+    </Subnav>
   </aside>
 </template>
 
 <script>
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
-// import MeshSelector from '@/components/Utils/MeshSelector'
+import MeshSelector from '@/components/Utils/MeshSelector'
 
 import { getItemFromStorage, setItemToStorage } from '@/Cache'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
-    // MeshSelector,
+    MeshSelector,
     NavItem,
     Subnav
   },
@@ -68,7 +80,7 @@ export default {
       menu: state => state.menu
     }),
 
-    titleNavItem () {
+    titleNavItems () {
       return this.menu.find(i => i.position === 'top').items
     },
 
@@ -77,7 +89,7 @@ export default {
     },
 
     bottomNavItems () {
-      return this.menu.find(i => i.position === 'bottom').items[0].subNav.items
+      return this.menu.find(i => i.position === 'bottom').items
     },
 
     hasSubnav () {
@@ -178,7 +190,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #the-sidebar {
   position: fixed;
   display: flex;
@@ -186,11 +198,14 @@ export default {
   left: 0;
   height:  calc(100vh - 3rem);
   color: var(--blue-700);
+
   &.has-subnav {
     width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+
     .main-nav {
       width: var(--sidebarCollapsedWidth);
       z-index: 1100;
+
       &.is-hovering {
         max-width: max-content;
         width: calc(var(--subnavWidth) + 1rem);
@@ -208,15 +223,20 @@ export default {
     padding-bottom: 2rem;
     background-color: var(--sidebarBackground);
     transition: .2s width var(--transition);
-    .top-nav { margin-bottom: auto; }
+
+    .top-nav {
+      margin-bottom: auto;
+    }
   }
 
   // Move content over
   @media only screen and (max-width: 1650px) {
-    &#the-sidebar + .main-content {
+    & + .main-content {
       margin-left: var(--sidebarOpenWidth);
     }
-    &#the-sidebar.has-subnav + .main-content {
+
+    // &.has-subnav + .main-content {
+    &.subnav-expanded + .main-content {
       margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
     }
   }
