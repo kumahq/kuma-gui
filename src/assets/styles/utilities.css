@@ -116,3 +116,92 @@
   display: inline-block;
   text-transform: capitalize;
 }
+
+/* position */
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-italic {
+  font-style: italic;
+}
+
+.font-normal {
+  font-weight: 400;
+}
+
+.font-light {
+  font-weight: 100;
+}
+
+.font-semibold {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+/* badges */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.4rem;
+  font-size: 75%;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+}
+
+.top-border {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--black-10);
+}
+
+.bottom-border {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--black-10);
+}
+
+.text-muted {
+  color: var(--black-45) !important;
+}
+.text-danger {
+  color: var(--red-500) !important;
+}
+
+.h-100 {
+  height: 100%;
+}
+.h-screen {
+  min-height: 100vh;
+}
+
+code {
+  padding: 0.2rem 0.4rem;
+  font-size: 90%;
+  color: #bd4147;
+  background-color: #f7f7f9;
+  border-radius: 0.25rem;
+}

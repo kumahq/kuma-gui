@@ -1,9 +1,11 @@
 <template>
   <aside
     id="the-sidebar"
-    :class="[{ 'is-collapsed': isCollapsed }]"
+    :class="[
+      { 'has-subnav': hasSubnav },
+      { 'is-collapsed': isCollapsed }
+    ]"
   >
-    <!-- <MeshSelector :items="meshList" /> -->
     <div
       class="main-nav"
       :class="{ 'is-hovering': isHovering }"
@@ -11,8 +13,9 @@
       @mouseout="isHovering = false"
     >
       <div class="top-nav">
+        <!-- <MeshSelector :items="meshList" /> -->
         <NavItem
-          v-for="(item, idx) in topNavItems"
+          v-for="(item, idx) in titleNavItem"
           :key="idx"
           v-bind="item"
           has-icon
@@ -20,6 +23,12 @@
       </div>
       <!-- <div class="bottom-nav"></div> -->
     </div>
+    <Subnav
+      :title="selectedMenuItem.name"
+      :title-link="selectedMenuItem.link"
+      :items="topNavItems"
+      @toggled="(state) => isCollapsed = state"
+    />
   </aside>
 
   <!-- <KNav :is-collapsed="isCollapsed">
@@ -45,6 +54,7 @@
 import KNav from '@/components/Sidebar/KNav'
 import SidebarMenu from '@/components/Sidebar/SidebarMenu'
 import NavItem from '@/components/Sidebar/NavItem'
+import Subnav from '@/components/Sidebar/Subnav'
 // import CollapseToggle from '@/components/Sidebar/CollapseToggle'
 // import MeshSelector from '@/components/Utils/MeshSelector'
 
@@ -57,7 +67,8 @@ export default {
     // SidebarMenu,
     // CollapseToggle,
     // MeshSelector,
-    NavItem
+    NavItem,
+    Subnav
   },
 
   data () {
@@ -65,7 +76,7 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      hovering: false
+      isHovering: false
     }
   },
 
@@ -77,8 +88,21 @@ export default {
     ...mapState('sidebar', {
       menu: state => state.menu
     }),
+
+    titleNavItem () {
+      return this.menu.find(i => i.position === 'top').items
+    },
+
     topNavItems () {
-      return this.getNavItems(this.menu, 'top')
+      return this.menu.find(i => i.position === 'top').items[0].subNav.items
+    },
+
+    bottomNavItems () {
+      return this.menu.find(i => i.position === 'bottom').items[0].subNav.items
+    },
+
+    hasSubnav () {
+      return Boolean(this.selectedMenuItem?.subNav?.items?.length)
     },
 
     lastMenuList () {
@@ -87,6 +111,37 @@ export default {
 
     meshList () {
       return this.$store.state.meshes
+    },
+
+    selectedMenuItem () {
+      const route = this.$route
+
+      for (const section of this.menu) {
+        for (const item of section.items) {
+          const urlPath = route.path.split('/')[2]
+          const isNotRootLevelMenuItem = route.name !== item.link
+          const matchesUrlPath = urlPath === item.link
+
+          // const conditions = matchesUrlPath
+          //   && isNotRootLevelMenuItem
+          //   && item.subNav
+          //   && !route.meta.hideSubnav
+
+          const conditions = isNotRootLevelMenuItem && !route.meta.hideSubnav
+
+          if (conditions) {
+            return item
+          }
+        }
+      }
+
+      return null
+    }
+  },
+
+  watch: {
+    '$route' () {
+      this.isHovering = false
     }
   },
 
@@ -111,17 +166,13 @@ export default {
       'setMenu'
     ]),
 
-    getNavItems (menu, position) {
+    getNavItems (menu, position, items) {
       return menu.find(i => i.position === position).items
     },
 
     handleToggleCollapse () {
       this.isCollapsed = !this.isCollapsed
       this.setCollapsedState(this.isCollapsed)
-    },
-
-    isHovering (a) {
-      this.hovering = a
     },
 
     setCollapsedState (collapsedState) {
@@ -178,10 +229,10 @@ export default {
 
   // Move content over
   @media only screen and (max-width: 1650px) {
-    &#the-sidebar + .content {
+    &#the-sidebar + .main-content {
       margin-left: var(--sidebarOpenWidth);
     }
-    &#the-sidebar.has-subnav + .content {
+    &#the-sidebar.has-subnav + .main-content {
       margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
     }
   }

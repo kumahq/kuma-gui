@@ -1,13 +1,14 @@
 <template>
   <div
     :class="[
+      { 'is-active': isActive },
       { 'is-menu-item': isMenuItem },
       { 'is-disabled': isDisabled }
     ]"
     class="nav-item"
   >
-    <router-link :to="{ path: link }">
-      <!-- <div
+    <router-link :to="routerLink">
+      <div
         v-if="hasIcon"
         class="nav-icon"
       >
@@ -20,7 +21,7 @@
             :icon="icon"
           />
         </slot>
-      </div> -->
+      </div>
       <div class="nav-link">
         <slot name="item-link">
           {{ name }}
@@ -40,6 +41,11 @@ export default {
     link: {
       type: String,
       default: '',
+      required: false
+    },
+    linkObj: {
+      type: Object,
+      default: () => null,
       required: false
     },
     name: {
@@ -85,6 +91,26 @@ export default {
       return link.root
         ? this.preparePath(link.url)
         : `/${this.meshPath}${this.preparePath(link.url)}`
+    },
+    routerLink () {
+      const params = !this.subNav && Object.keys(this.$route?.params || {}).length > 0
+        ? this.$route?.params
+        : undefined
+
+      return this.linkObj || { name: this.link, params }
+    },
+    isActive () {
+      const navItemRouteName = this.link
+      const currentRoute = this.$route
+      const currentRouteSubpath = this.$route.path.split('/')[2]
+
+      if (navItemRouteName === currentRoute.name) { return true }
+
+      if (currentRouteSubpath === this.routerLink.name) { return true }
+
+      return navItemRouteName && currentRoute.matched.some(r => {
+        return navItemRouteName === r.name || navItemRouteName === r.redirect
+      })
     },
     iconColor () {
       return 'var(--blue-500)'
@@ -156,9 +182,13 @@ export default {
 // Only add left border to main nav item
 .main-nav .nav-item {
   position: relative;
+
   &:hover:not(.is-active) {
     color: var(--blue-500);
-    svg path {fill: var(--blue-500);}
+
+    svg path {
+      fill: var(--blue-500);
+    }
   }
   &.is-active:before {
     position: absolute;
