@@ -6,56 +6,37 @@
       { 'is-collapsed': isCollapsed }
     ]"
   >
+    <!-- <MeshSelector :items="meshList" /> -->
     <div
       class="main-nav"
-      :class="{ 'is-hovering': isHovering }"
+      :class="{ 'is-hovering': !subnavIsExpanded }"
       @mouseover="isHovering = true"
       @mouseout="isHovering = false"
     >
       <div class="top-nav">
-        <!-- <MeshSelector :items="meshList" /> -->
         <NavItem
           v-for="(item, idx) in titleNavItem"
           :key="idx"
           v-bind="item"
           has-icon
+          @click.native="toggleSubnav()"
         />
       </div>
       <!-- <div class="bottom-nav"></div> -->
     </div>
     <Subnav
+      v-if="subnavIsExpanded"
       :title="selectedMenuItem.name"
       :title-link="selectedMenuItem.link"
       :items="topNavItems"
       @toggled="(state) => isCollapsed = state"
     />
   </aside>
-
-  <!-- <KNav :is-collapsed="isCollapsed">
-    <div
-      slot="NavMenu"
-      :class="{ 'is-hovering': hovering }"
-      class="menu-container"
-    >
-      <MeshSelector :items="meshList" />
-      <SidebarMenu
-        v-for="(menu, i) in menuList.sections"
-        :key="i"
-        :menu="menu"
-        :trigger-hovering="isHovering"
-        :index="i"
-        :is-last="i === lastMenuList"
-      />
-    </div>
-  </KNav> -->
 </template>
 
 <script>
-import KNav from '@/components/Sidebar/KNav'
-import SidebarMenu from '@/components/Sidebar/SidebarMenu'
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
-// import CollapseToggle from '@/components/Sidebar/CollapseToggle'
 // import MeshSelector from '@/components/Utils/MeshSelector'
 
 import { getItemFromStorage, setItemToStorage } from '@/Cache'
@@ -63,9 +44,6 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
-    // KNav,
-    // SidebarMenu,
-    // CollapseToggle,
     // MeshSelector,
     NavItem,
     Subnav
@@ -76,7 +54,8 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      isHovering: false
+      isHovering: false,
+      subnavIsExpanded: false
     }
   },
 
@@ -122,10 +101,10 @@ export default {
           const isNotRootLevelMenuItem = route.name !== item.link
           const matchesUrlPath = urlPath === item.link
 
-          // const conditions = matchesUrlPath
-          //   && isNotRootLevelMenuItem
-          //   && item.subNav
-          //   && !route.meta.hideSubnav
+          // const conditions = matchesUrlPath &&
+          //   isNotRootLevelMenuItem &&
+          //   item.subNav &&
+          //   !route.meta.hideSubnav
 
           const conditions = isNotRootLevelMenuItem && !route.meta.hideSubnav
 
@@ -142,6 +121,7 @@ export default {
   watch: {
     '$route' () {
       this.isHovering = false
+      this.subnavIsExpanded = false
     }
   },
 
@@ -189,6 +169,10 @@ export default {
       if (document.documentElement.clientWidth >= 900) {
         this.isCollapsed = sidebarState || false
       }
+    },
+
+    toggleSubnav () {
+      this.subnavIsExpanded = !this.subnavIsExpanded
     }
   }
 }

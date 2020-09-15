@@ -22,7 +22,20 @@
           />
         </slot>
       </div>
-      <div class="nav-link">
+      <!-- nav title separator -->
+      <div
+        v-if="title"
+        class="title-text"
+      >
+        <span class="text-uppercase">
+          {{ name }}
+        </span>
+      </div>
+      <!-- nav link -->
+      <div
+        v-else
+        class="nav-link"
+      >
         <slot name="item-link">
           {{ name }}
         </slot>
@@ -65,6 +78,10 @@ export default {
       default: true
     },
     isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    title: {
       type: Boolean,
       default: false
     }
@@ -174,6 +191,16 @@ export default {
   &.is-disabled {
     opacity: .5;
     pointer-events: none;
+  }
+
+  .title-text {
+    display: flex;
+    align-items: center;
+    // height: 40px;
+    // padding: 0 1rem;
+    font-weight: 500;
+    font-size: var(--type-sm);
+    color: var(--steal-400);
   }
 }
 </style>

@@ -108,7 +108,8 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: var(--topbar-height);
+  // min-height: var(--topbar-height);
+  height: var(--topbar-height);
   border-bottom: 1px solid #eaecef;
   background-color: #fff;
 }
