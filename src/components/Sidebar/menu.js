@@ -102,22 +102,6 @@ export default [
     ]
   },
   {
-    name: 'Dataplane Types',
-    id: 'connections',
-    skipRbac: true,
-    items: [
-
-    ]
-  },
-  {
-    name: 'Policies',
-    id: 'services',
-    skipRbac: true,
-    items: [
-
-    ]
-  },
-  {
     position: 'bottom',
     items: [
       {
