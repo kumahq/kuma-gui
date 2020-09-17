@@ -408,6 +408,40 @@ export function dedupeObjects (array, key) {
   )
 }
 
+/**
+ * camelCaseToWords
+ *
+ * Converts camelcase to human-readable words in titlecase format
+ *
+ * @param {String} str
+ */
+export function camelCaseToWords (str) {
+  const search = /^[a-z]+|[A-Z][a-z]*/g
+
+  return str.match(search).map((x) => {
+    return x[0].toUpperCase() + x.substr(1).toLowerCase()
+  }).join(' ')
+}
+
+/**
+ * kebabCase
+ *
+ * @param {*} value
+ */
+export function kebabCase (value) {
+  const newValue = (value)
+    .replace(/[^a-zA-Z0-9 -]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+
+  if (!value) {
+    return ''
+  }
+
+  return newValue
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -430,5 +464,7 @@ export default {
   getOffset,
   stripTimes,
   cleanTag,
-  dedupeObjects
+  dedupeObjects,
+  camelCaseToWords,
+  kebabCase
 }

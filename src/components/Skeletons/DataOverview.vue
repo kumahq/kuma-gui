@@ -11,11 +11,6 @@
         :disabled="isLoading"
         @click="$emit('reloadData')"
       >
-        <!-- <KIcon
-          icon="spinner"
-          color="#000"
-          size="48"
-        /> -->
         <div
           class="refresh-icon"
           :class="{ 'is-spinning': isLoading }"
@@ -55,6 +50,7 @@
           class="micro-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
+          :has-side-border="false"
           has-hover
           @row:click="tableRowHandler"
         >
@@ -169,11 +165,11 @@
         <div class="card-icon mb-3">
           <KIcon
             icon="spinner"
-            color="rgba(0, 0, 0, 0.1)"
+            color="rgba(0, 0, 0, 0.25)"
             size="42"
           />
         </div>
-        Data Loading...
+        Data Loading&hellip;
       </template>
     </KEmptyState>
 
@@ -186,7 +182,7 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-base)"
+            color="var(--yellow-200)"
             icon="warning"
             size="42"
           />
@@ -491,11 +487,15 @@ span[class*="kuma-io-"] {
   .data-table-action-link {
     display: block;
     padding: var(--spacing-sm);
-    cursor: pointer;
+    // cursor: pointer;
     overflow: hidden;
     padding: 0;
     text-decoration: none !important;
     pointer-events: none;
+
+    &.is-active {
+      text-decoration: none !important;
+    }
   }
 
   .action-link__active-state {
@@ -518,5 +518,53 @@ span[class*="kuma-io-"] {
     }
   }
 
+}
+
+// some reusable styles
+
+.overview-title {
+  font-size: var(--type-lg);
+  font-weight: 500;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--tblack-85);
+}
+
+.overview-sub-title {
+  font-size: var(--type-md);
+  font-weight: 500;
+  // text-transform: uppercase;
+  // color: var(--gray-3);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.overview-tertiary-title {
+  font-size: var(--type-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--gray-3);
+  margin: var(--spacing-xs) 0;
+}
+
+.overview-group-list {
+
+}
+
+.overview-stat-grid {
+  display: grid;
+  margin: var(--spacing-md) 0 0 0;
+
+  @media (min-width: 1140px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px 20px;
+  }
+}
+
+.overview-stack {
+
+  &:not(:last-of-type) {
+    padding: 0 0 var(--spacing-xl) 0;
+    margin: 0 0 var(--spacing-xl) 0;
+    border-bottom: 1px solid var(--gray-4);
+  }
 }
 </style>

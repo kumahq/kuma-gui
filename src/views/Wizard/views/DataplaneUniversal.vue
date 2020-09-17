@@ -88,7 +88,7 @@
             Setup Dataplane Mode
           </h3>
           <p>
-            You can create a data plane for a service or a data plane for an Ingress gateway.
+            You can create a data plane for a service or a data plane for a Gateway.
           </p>
 
           <!-- dataplane mode -->
@@ -179,9 +179,10 @@
           <p>
             <strong>All fields below are required to proceed.</strong>
           </p>
+          <!-- network address -->
           <FormFragment
             all-inline
-            title="IP Address"
+            title="Data Plane IP Address"
             for-attr="network-address"
           >
             <input
@@ -194,6 +195,40 @@
               The IP address that other services will use to consume this data plane.
             </HelperTooltip>
           </FormFragment>
+          <!-- data plane port -->
+          <FormFragment
+            all-inline
+            fill-first
+            title="Data Plane Port"
+            for-attr="network-dataplane-port"
+          >
+            <input
+              id="network-dataplane-port"
+              v-model="validate.univDataplaneNetworkDPPort"
+              type="text"
+              class="k-input w-100"
+            >
+            <HelperTooltip>
+              The data plane port (that other services will use to consume this service).
+            </HelperTooltip>
+          </FormFragment>
+          <!-- service address -->
+          <FormFragment
+            all-inline
+            title="Service IP Address"
+            for-attr="network-service-address"
+          >
+            <input
+              id="network-service-address"
+              v-model="validate.univDataplaneNetworkServiceAddress"
+              type="text"
+              class="k-input w-100"
+            >
+            <HelperTooltip>
+              The address where your service is listening on the machine.
+            </HelperTooltip>
+          </FormFragment>
+          <!-- service port -->
           <FormFragment
             all-inline
             title="Service Port"
@@ -209,22 +244,7 @@
               The port where your service is listening on the machine.
             </HelperTooltip>
           </FormFragment>
-          <FormFragment
-            all-inline
-            fill-first
-            title="Data plane port"
-            for-attr="network-dataplane-port"
-          >
-            <input
-              id="network-dataplane-port"
-              v-model="validate.univDataplaneNetworkDPPort"
-              type="text"
-              class="k-input w-100"
-            >
-            <HelperTooltip>
-              The data plane port (that other services will use to consume this service).
-            </HelperTooltip>
-          </FormFragment>
+          <!-- protocol -->
           <FormFragment
             all-inline
             title="Protocol"
@@ -237,16 +257,12 @@
               name="network-dataplane-protocol"
             >
               <option
-                value="tcp"
-                :selected="validate.univDataplaneNetworkProtocol === 'tcp'"
+                v-for="(option, idx) in formFields.protocols"
+                :key="idx"
+                :value="option"
+                :selected="validate.univDataplaneNetworkProtocol === option"
               >
-                TCP
-              </option>
-              <option
-                value="http"
-                :selected="validate.univDataplaneNetworkProtocol === 'http'"
-              >
-                HTTP
+                {{ option }}
               </option>
             </select>
             <HelperTooltip>
@@ -262,7 +278,7 @@
               </h3>
               <p>
                 You can now execute the following commands to automatically inject
-                the sidebar proxy in every Pod, and by doing so creating the Dataplane.
+                the sidecar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
               <Tabs
                 :loaders="false"
@@ -430,6 +446,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
+import configUrl from '@/configUrl'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -441,9 +458,6 @@ import CodeView from '@/components/Skeletons/CodeView'
 import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
-// import meshSchema from '@/views/Wizard/schemas/Mesh'
-
-// schema for building code output (TBD)
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneUniversal'
 
 export default {
@@ -521,10 +535,18 @@ export default {
         univDataplaneCustomIdDisabled: true,
         univDataplaneNetworkAddress: null,
         univDataplaneNetworkServicePort: null,
+        univDataplaneNetworkServiceAddress: '127.0.0.1',
         univDataplaneNetworkDPPort: null,
         univDataplaneNetworkProtocol: 'tcp'
       },
-      vmsg: []
+      vmsg: [],
+      formFields: {
+        protocols: [
+          'tcp',
+          'http',
+          'grpc'
+        ]
+      }
     }
   },
   computed: {
@@ -538,7 +560,18 @@ export default {
     }),
 
     randString () {
-      return Math.random().toString(36).substring(2, 8)
+      return Math
+        .random()
+        .toString(36)
+        .substring(2, 8)
+    },
+
+    getConfigUrl () {
+      const url = configUrl()
+        .replace('gui', '/')
+        .replace('config', '')
+
+      return url
     },
 
     // Our generated code output
@@ -552,6 +585,7 @@ export default {
         univDataplaneId,
         univDataplaneNetworkAddress,
         univDataplaneNetworkServicePort,
+        univDataplaneNetworkServiceAddress,
         univDataplaneNetworkDPPort,
         univDataplaneNetworkProtocol
       } = this.validate
@@ -575,6 +609,7 @@ export default {
             {
               port: univDataplaneNetworkDPPort,
               servicePort: univDataplaneNetworkServicePort,
+              serviceAddress: univDataplaneNetworkServiceAddress,
               tags: {
                 'kuma.io/service': univDataplaneServiceName,
                 'kuma.io/protocol': univDataplaneNetworkProtocol
@@ -622,13 +657,13 @@ export default {
      * Part 2 of the last step: Start the Dataplane
      */
     startDpCodeOutput () {
-      const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
+      // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
       const { meshName, univDataplaneId } = this.validate
 
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
-      --cp-address=${cpAddress} \\
+      --cp-address=${this.getConfigUrl} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure
