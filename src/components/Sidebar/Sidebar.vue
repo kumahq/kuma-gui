@@ -9,7 +9,7 @@
   >
     <div
       class="main-nav"
-      :class="{ 'is-hovering': !subnavIsExpanded }"
+      :class="{ 'is-hovering': isHovering }"
       @mouseover="isHovering = true"
       @mouseout="isHovering = false"
     >
@@ -28,7 +28,6 @@
           :key="idx"
           v-bind="item"
           has-icon
-          @click.native="toggleSubnav()"
         />
       </div>
     </div>
@@ -132,8 +131,8 @@ export default {
 
   watch: {
     '$route' () {
-      this.isHovering = false
-      this.subnavIsExpanded = false
+      // this.isHovering = false
+      // this.subnavIsExpanded = false
     }
   },
 
@@ -185,6 +184,7 @@ export default {
 
     toggleSubnav () {
       this.subnavIsExpanded = !this.subnavIsExpanded
+      this.isCollapsed = true
     }
   }
 }

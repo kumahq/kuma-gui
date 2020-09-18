@@ -3,7 +3,7 @@
 :root {
   /* Kuma */
   --base-font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont,
-    "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --base-font-size-root: 62.5%;
   --base-font-size: 15px;
   --font-weight-light: 400;

@@ -57,6 +57,8 @@ export default {
     handleToggle () {
       this.isCollapsed = !this.isCollapsed
       this.$emit('toggled', this.isCollapsed)
+
+      console.log(this.isCollapsed)
     }
   }
 }
@@ -71,6 +73,7 @@ export default {
   border-left: 1px solid var(--steal-300);
   background-color: var(--white);
   transition: width 200ms ease-out;
+
   .subnav-title {
     display: flex;
     align-items: center;
@@ -78,9 +81,11 @@ export default {
     padding: 0 1rem;
     font-weight: 500;
     font-size: var(--type-sm);
+
     a {
       color: var(--steal-400);
       text-decoration: none;
+
       &:hover {
         color: var(--blue-700);
       }
