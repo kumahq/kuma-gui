@@ -9,7 +9,7 @@
   >
     <div
       class="main-nav"
-      :class="{ 'is-hovering': isHovering }"
+      :class="{ 'is-hovering': isHovering || subnavIsExpanded === false }"
       @mouseover="isHovering = true"
       @mouseout="isHovering = false"
     >
@@ -32,11 +32,10 @@
       </div>
     </div>
     <Subnav
-      v-if="subnavIsExpanded"
+      v-if="subnavIsExpanded && hasSubnav"
       :title="selectedMenuItem.name"
       :title-link="selectedMenuItem.link"
       :items="topNavItems"
-      @toggled="(state) => isCollapsed = state"
     >
       <template slot="top">
         <MeshSelector :items="meshList" />
@@ -137,12 +136,14 @@ export default {
   },
 
   mounted () {
-    const sidebarState = getItemFromStorage('sidebarCollapsed')
+    // const sidebarState = getItemFromStorage('sidebarCollapsed')
 
-    if (document.documentElement.clientWidth <= 900) {
+    const app = this.$appWindow
+
+    if (app.innerWidth <= 900) {
       this.isCollapsed = true
     } else {
-      this.isCollapsed = sidebarState || false
+      this.isCollapsed = false
     }
 
     window.addEventListener('resize', this.handleResize)
@@ -171,14 +172,18 @@ export default {
     },
 
     handleResize () {
-      const sidebarState = getItemFromStorage('sidebarCollapsed')
+      // const sidebarState = getItemFromStorage('sidebarCollapsed')
+      const appWidth = this.$appWindow.innerWidth
 
-      if (document.documentElement.clientWidth <= 900) {
-        this.isCollapsed = sidebarState || true
+      if (appWidth <= 900) {
+        this.isCollapsed = true
+        this.subnavIsExpanded = false
+        this.isHovering = false
       }
 
-      if (document.documentElement.clientWidth >= 900) {
-        this.isCollapsed = sidebarState || false
+      if (appWidth >= 900) {
+        this.isCollapsed = false
+        this.isHovering = true
       }
     },
 

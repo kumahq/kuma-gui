@@ -119,12 +119,12 @@ export default {
                 /**
                  * Set Kuma's current mode in localStorage.
                  * if the mode is `global`, this denotes that it's
-                 * running in Multi-zone mode.
+                 * running in Multicluster mode.
                  *
                  * This is currently not used anywhere in the app
                  * but we store it anyway for possible future use.
                  * We recommend using VueX's mapGetters and getting
-                 * the Multi-zone status from `getMulticlusterStatus`
+                 * the multicluster status from `getMulticlusterStatus`
                  * (it returns a boolean).
                  */
                 localStorage.setItem('kumaMode', mode)
@@ -152,11 +152,6 @@ export default {
 
             // update the selected mesh in localStorage
             localStorage.setItem('selectedMesh', mesh())
-
-            // if there is no mesh set on the route, set it
-            if (!this.$route.params.mesh) {
-              this.$route.params.mesh = mesh()
-            }
           }
         })
     }
@@ -167,9 +162,6 @@ export default {
 <style lang="scss" scoped>
 .main-content {
   padding: 44px;
-
-  // this transition is for when the sidebar is expanded
-  transition: margin 150ms ease-in-out;
 }
 
 .page {

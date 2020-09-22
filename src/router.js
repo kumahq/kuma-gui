@@ -17,6 +17,7 @@ export default (store) => {
     },
     {
       path: '/',
+      name: 'home',
       redirect: {
         name: 'global-overview'
       }
@@ -104,7 +105,8 @@ export default (store) => {
       component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/Diagnostics'),
       meta: {
         title: 'Diagnostics',
-        breadcrumb: 'Diagnostics'
+        breadcrumb: 'Diagnostics',
+        hideSubnav: true
       }
     },
     // Zones

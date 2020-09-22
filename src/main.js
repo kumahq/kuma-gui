@@ -83,6 +83,8 @@ function VUE_APP () {
   // API item count on table views
   Vue.prototype.$pageSize = 12
 
+  Vue.prototype.$appWindow = window
+
   const store = Store(kuma)
   const router = Router(store)
 

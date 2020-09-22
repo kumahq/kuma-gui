@@ -5,7 +5,7 @@ export default [
       {
         name: 'Service Mesh',
         icon: 'services',
-        link: '',
+        link: 'home',
         subNav: {
           items: [
             {
