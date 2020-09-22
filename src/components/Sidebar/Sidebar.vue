@@ -8,10 +8,9 @@
     ]"
   >
     <div
+      ref="sidebarControl"
       class="main-nav"
       :class="{ 'is-hovering': isHovering || subnavIsExpanded === false }"
-      @mouseover="isHovering = true"
-      @mouseout="isHovering = false"
     >
       <div class="top-nav">
         <NavItem
@@ -32,7 +31,7 @@
       </div>
     </div>
     <Subnav
-      v-if="subnavIsExpanded && hasSubnav"
+      v-if="hasSubnav && subnavIsExpanded"
       :title="selectedMenuItem.name"
       :title-link="selectedMenuItem.link"
       :items="topNavItems"
@@ -147,6 +146,8 @@ export default {
     }
 
     window.addEventListener('resize', this.handleResize)
+
+    this.sidebarEvent()
   },
 
   beforeDestroy () {
@@ -190,6 +191,39 @@ export default {
     toggleSubnav () {
       this.subnavIsExpanded = !this.subnavIsExpanded
       this.isCollapsed = true
+    },
+
+    sidebarEvent () {
+      // determine if the user is on a touch or non-touch device
+      // and then use the proper events accordingly.
+      const eventResult = () => {
+        const hasTouch = !!('ontouchstart' in window || navigator.maxTouchPoints)
+        const el = this.$refs.sidebarControl
+
+        if (hasTouch) {
+          el.addEventListener('touchstart', () => {
+            this.isHovering = true
+          })
+
+          el.addEventListener('touchend', () => {
+            this.isHovering = false
+          })
+        } else {
+          el.addEventListener('mouseover', () => {
+            this.isHovering = true
+          })
+
+          el.addEventListener('mouseout', () => {
+            this.isHovering = false
+          })
+        }
+
+        if (process.env.NODE_ENV === 'development') {
+          console.info(`Touch: ${hasTouch}`)
+        }
+      }
+
+      return eventResult()
     }
   }
 }
