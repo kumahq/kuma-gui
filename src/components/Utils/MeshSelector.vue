@@ -66,9 +66,7 @@ export default {
         params: {
           mesh: val
         }
-      }).catch((error) => {
-        console.error(error)
-      })
+      }).catch(() => {})
     }
   }
 }
