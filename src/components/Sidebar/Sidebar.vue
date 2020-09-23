@@ -219,7 +219,7 @@ export default {
         }
 
         if (process.env.NODE_ENV === 'development') {
-          console.info(`Touch: ${hasTouch}`)
+          console.info(hasTouch ? 'Touch Available' : 'Touch Unavailable')
         }
       }
 
@@ -232,9 +232,10 @@ export default {
 <style lang="scss">
 #the-sidebar {
   position: fixed;
-  display: flex;
+  z-index: 10;
   top: var(--headerHeight);
   left: 0;
+  display: flex;
   height:  calc(100vh - 3rem);
   color: var(--blue-700);
 
@@ -268,8 +269,13 @@ export default {
     }
   }
 
+  & + .main-content {
+    margin-left: var(--sidebarCollapsedWidth);
+  }
+
   // Move content over
-  @media only screen and (max-width: 1650px) {
+  // @media only screen and (max-width: 1650px) {
+  @media only screen and (min-width: 800px) {
     & + .main-content {
       margin-left: var(--sidebarOpenWidth);
     }

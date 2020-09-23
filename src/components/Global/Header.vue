@@ -30,7 +30,9 @@
             :title="statusContent"
           >
             <template slot="content">
-              <span>{{ statusContent }}</span>
+              <span :title="`v${statusVersion}`">
+                {{ statusContent }} on <strong>{{ env }}</strong>
+              </span>
               <KBadge
                 appearance="success"
                 class="status-badge"
@@ -63,8 +65,10 @@ export default {
   data () {
     return {
       guiStatus: false,
-      statusContent: null,
-      statusVersion: null
+      statusContent: '',
+      statusVersion: '',
+      shortVersion: '',
+      env: ''
     }
   },
   computed: {
@@ -93,10 +97,12 @@ export default {
       // get the other values from our state
       const tagline = this.$store.getters.getTagline
       const version = this.$store.getters.getVersion
+      const truncVersion = `${version.substring(0, 12)} [...]`
 
       if (env && apiUrl) {
+        this.env = `${env.charAt(0).toUpperCase()}${env.slice(1)}`
         this.statusVersion = version
-        this.statusContent = `${tagline} v${version} running on ${env}`
+        this.statusContent = `${tagline} v${truncVersion}`
         this.guiStatus = true
       } else {
         this.statusContent = `Unable to determine ${tagline}'s status`
