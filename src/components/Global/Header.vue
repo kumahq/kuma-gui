@@ -25,27 +25,59 @@
           v-if="showStatus"
           class="py-1 md:py-0 md:px-4"
         >
-          <status
-            :active="guiStatus"
-            :title="statusContent"
-          >
-            <template slot="content">
-              <span :title="`v${statusVersion}`">
-                {{ statusContent }} on <strong>{{ env }}</strong>
-              </span>
-              <KBadge
-                appearance="success"
-                class="status-badge"
+          <div class="app-status app-status--mobile">
+            <KPop>
+              <KButton
+                class="kpop-control"
+                appearance="primary"
+                size="small"
               >
-                <span v-if="multicluster">
-                  Multi-Zone
+                <KIcon
+                  slot="icon"
+                  icon="info"
+                  color="#fff"
+                />
+              </KButton>
+              <div slot="content">
+                <p>
+                  {{ statusContent }} on <strong>{{ env }}</strong>
+                </p>
+                <p>
+                  <KBadge appearance="success">
+                    <span v-if="multicluster">
+                      Multi-Zone
+                    </span>
+                    <span v-else>
+                      Standalone
+                    </span>
+                  </KBadge>
+                </p>
+              </div>
+            </KPop>
+          </div>
+          <div class="app-status app-status--desktop">
+            <status
+              :active="guiStatus"
+              :title="statusContent"
+            >
+              <template slot="content">
+                <span :title="`v${statusVersion}`">
+                  {{ statusContent }} on <strong>{{ env }}</strong>
                 </span>
-                <span v-else>
-                  Standalone
-                </span>
-              </KBadge>
-            </template>
-          </status>
+                <KBadge
+                  appearance="success"
+                  class="status-badge"
+                >
+                  <span v-if="multicluster">
+                    Multi-Zone
+                  </span>
+                  <span v-else>
+                    Standalone
+                  </span>
+                </KBadge>
+              </template>
+            </status>
+          </div>
         </div>
       </div>
     </div>
@@ -102,7 +134,8 @@ export default {
       if (env && apiUrl) {
         this.env = `${env.charAt(0).toUpperCase()}${env.slice(1)}`
         this.statusVersion = version
-        this.statusContent = `${tagline} v${truncVersion}`
+        // this.statusContent = `${tagline} v${truncVersion}`
+        this.statusContent = `${tagline} v${version}`
         this.guiStatus = true
       } else {
         this.statusContent = `Unable to determine ${tagline}'s status`
@@ -153,6 +186,56 @@ export default {
 .status-badge {
   --KBadgeWidth: auto;
   --KBadgePaddingX: var(--spacing-sm);
+}
+
+.app-status {
+  display: flex;
+  align-items: center;
+
+  // button {
+  //   position: relative;
+  //   overflow: hidden;
+  //   display: inline-block;
+  //   background: var(--blue-500);
+  //   border-radius: 3px;
+  //   width: 32px;
+  //   height: 32px;
+  //   line-height: 32px;
+  //   text-align: center;
+
+  //   > * {
+  //     display: block;
+  //     margin: auto;
+  //   }
+  // }
+
+  .kpop-control {
+    max-height: 27px;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    &--desktop {
+      display: block;
+    }
+
+    &--mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    &--desktop {
+      display: none;
+    }
+
+    &--mobile {
+      display: block;
+    }
+  }
 }
 
 @media screen and (min-width: 990px) {
