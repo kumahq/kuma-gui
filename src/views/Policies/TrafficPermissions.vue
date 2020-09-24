@@ -386,11 +386,11 @@ export default {
           .then(response => {
             const { mtls } = response
 
-            if (mtls && mtls.enabledBackend && mtls.enabledBackend !== null) {
+            if (mtls && mtls.enabledBackend && mtls.enabledBackend.length > 0) {
               this.securityWarning = false
+            } else {
+              this.securityWarning = true
             }
-
-            this.securityWarning = true
           })
       }
 
