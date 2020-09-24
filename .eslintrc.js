@@ -44,6 +44,7 @@ module.exports = {
     'no-mixed-operators': 'off',
     'vue/no-use-v-if-with-v-for': 'off',
     'no-console': 'off',
-    'no-useless-escape': 'off'
+    'no-useless-escape': 'off',
+    'no-async-promise-executor': 'off'
   }
 }
