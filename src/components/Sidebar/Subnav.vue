@@ -4,10 +4,10 @@
     class="secondary-nav"
   >
     <slot name="top" />
-    <div
+    <!-- <div
       class="arrow"
       @click="handleToggle"
-    />
+    /> -->
     <div class="subnav-title">
       <span class="text-uppercase">
         <slot name="title">
@@ -22,6 +22,7 @@
       v-for="(item, idx) in items"
       :key="idx"
       v-bind="item"
+      @click.native="handleToggle"
     />
   </div>
 </template>
@@ -53,12 +54,17 @@ export default {
       isCollapsed: false
     }
   },
+  computed: {
+    touchDevice () {
+      return !!('ontouchstart' in window || navigator.maxTouchPoints)
+    }
+  },
   methods: {
     handleToggle () {
-      this.isCollapsed = !this.isCollapsed
-      this.$emit('toggled', this.isCollapsed)
-
-      console.log(this.isCollapsed)
+      if (this.touchDevice) {
+        this.isCollapsed = !this.isCollapsed
+        this.$emit('toggled', this.isCollapsed)
+      }
     }
   }
 }
@@ -73,6 +79,10 @@ export default {
   border-left: 1px solid var(--steal-300);
   background-color: var(--white);
   transition: width 200ms ease-out;
+
+  &.is-collapsed {
+    width: 0;
+  }
 
   .subnav-title {
     display: flex;
@@ -97,6 +107,7 @@ export default {
 <style lang="scss">
 .secondary-nav {
   overflow-x: auto;
+  touch-action: pan-y;
 
   .nav-item {
     height: auto;

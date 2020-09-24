@@ -34,8 +34,8 @@ export default {
   name: 'UpgradeCheck',
   data () {
     return {
-      url: 'https://kuma.io/install/latest/',
-      latestVerSrc: 'https://kuma.io/latest_version',
+      url: process.env.VUE_APP_INSTALL_URL,
+      latestVerSrc: process.env.VUE_APP_VERSION_URL,
       latestVer: null,
       showNotice: false
     }

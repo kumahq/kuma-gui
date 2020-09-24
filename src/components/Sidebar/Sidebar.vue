@@ -18,7 +18,7 @@
           :key="idx"
           v-bind="item"
           has-icon
-          @click.native="toggleSubnav()"
+          @click.native="toggleSubnav"
         />
       </div>
       <div class="bottom-nav">
@@ -124,6 +124,10 @@ export default {
       }
 
       return null
+    },
+
+    touchDevice () {
+      return !!('ontouchstart' in window || navigator.maxTouchPoints)
     }
   },
 
@@ -197,7 +201,7 @@ export default {
       // determine if the user is on a touch or non-touch device
       // and then use the proper events accordingly.
       const eventResult = () => {
-        const hasTouch = !!('ontouchstart' in window || navigator.maxTouchPoints)
+        const hasTouch = this.touchDevice
         const el = this.$refs.sidebarControl
 
         if (hasTouch) {
@@ -214,6 +218,10 @@ export default {
           })
 
           el.addEventListener('mouseout', () => {
+            this.isHovering = false
+          })
+
+          el.addEventListener('click', () => {
             this.isHovering = false
           })
         }
@@ -271,6 +279,10 @@ export default {
 
   & + .main-content {
     margin-left: var(--sidebarCollapsedWidth);
+  }
+
+  .no-pointer-events {
+    pointer-events: none;
   }
 
   // Move content over

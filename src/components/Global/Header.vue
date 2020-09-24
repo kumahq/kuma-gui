@@ -17,8 +17,8 @@
           >
         </router-link>
       </div>
-      <div class="md:flex md:justify-between md:items-center">
-        <div class="py-1 md:py-0 md:px-4 upgrade-check-wrapper">
+      <div class="flex justify-between items-center">
+        <div class="py-1 py-0 px-4 upgrade-check-wrapper">
           <UpgradeCheck />
         </div>
         <div
@@ -26,17 +26,19 @@
           class="py-1 md:py-0 md:px-4"
         >
           <div class="app-status app-status--mobile">
-            <KPop>
+            <KPop width="300">
               <KButton
                 class="kpop-control"
                 appearance="primary"
                 size="small"
               >
-                <KIcon
+                <!-- <KIcon
                   slot="icon"
                   icon="info"
                   color="#fff"
-                />
+                  class="kpop-control__icon"
+                /> -->
+                Info
               </KButton>
               <div slot="content">
                 <p>
