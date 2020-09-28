@@ -38,14 +38,13 @@ module.exports = {
       { blankLine: 'always', prev: 'directive', next: '*' },
       { blankLine: 'any', prev: 'directive', next: 'directive' }
     ],
-    // error on non-curly statements
     curly: 'error',
-    // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    // allow unused vars
     'no-unused-vars': 'off',
     'no-mixed-operators': 'off',
+    'vue/no-use-v-if-with-v-for': 'off',
     'no-console': 'off',
-    'no-useless-escape': 'off'
+    'no-useless-escape': 'off',
+    'no-async-promise-executor': 'off'
   }
 }

@@ -92,7 +92,19 @@ export default (api) => {
       getItemQueryNamespace: (state) => state.itemQueryNamespace,
       getMulticlusterStatus: (state) => {
         // is Kuma running in Multi-Zone mode?
-        const status = (state.config.mode === 'global')
+
+        let status
+
+        if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_FAKE_MULTIZONE === 'true') {
+          status = true
+
+          console.warn(
+            '%c ✨You are currently faking Multi-Zone mode.',
+            'background: black; color: white; display: block; padding: 0.25rem;'
+          )
+        } else {
+          status = (state.config.mode === 'global')
+        }
 
         return status
       },

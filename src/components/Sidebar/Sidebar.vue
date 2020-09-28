@@ -1,30 +1,51 @@
 <template>
-  <KNav :is-collapsed="isCollapsed">
+  <aside
+    id="the-sidebar"
+    :class="[
+      { 'has-subnav': hasSubnav },
+      { 'is-collapsed': isCollapsed },
+      { 'subnav-expanded': subnavIsExpanded }
+    ]"
+  >
     <div
-      slot="NavMenu"
-      :class="{ 'is-hovering': hovering }"
-      class="menu-container"
+      ref="sidebarControl"
+      class="main-nav"
+      :class="{ 'is-hovering': isHovering || subnavIsExpanded === false }"
     >
-      <MeshSelector :items="meshList" />
-      <SidebarMenu
-        v-for="(menu, i) in menuList.sections"
-        :key="i"
-        :menu="menu"
-        :trigger-hovering="isHovering"
-        :index="i"
-        :is-last="i === lastMenuList"
-      />
-      <CollapseToggle
-        :handle-toggle-collapse="handleToggleCollapse"
-      />
+      <div class="top-nav">
+        <NavItem
+          v-for="(item, idx) in titleNavItems"
+          :key="idx"
+          v-bind="item"
+          has-icon
+          @click.native="toggleSubnav"
+        />
+      </div>
+      <div class="bottom-nav">
+        <NavItem
+          v-for="(item, idx) in bottomNavItems"
+          :key="idx"
+          v-bind="item"
+          has-icon
+        />
+      </div>
     </div>
-  </KNav>
+    <Subnav
+      v-if="hasSubnav && subnavIsExpanded"
+      :title="selectedMenuItem.name"
+      :title-link="selectedMenuItem.link"
+      :items="topNavItems"
+    >
+      <template slot="top">
+        <MeshSelector :items="meshList" />
+      </template>
+    </Subnav>
+  </aside>
 </template>
 
 <script>
-import KNav from '@/components/Sidebar/KNav'
-import SidebarMenu from '@/components/Sidebar/SidebarMenu'
-import CollapseToggle from '@/components/Sidebar/CollapseToggle'
+import NavItem from '@/components/Sidebar/NavItem'
+import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
 
 import { getItemFromStorage, setItemToStorage } from '@/Cache'
@@ -32,10 +53,9 @@ import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: {
-    KNav,
-    SidebarMenu,
-    CollapseToggle,
-    MeshSelector
+    MeshSelector,
+    NavItem,
+    Subnav
   },
 
   data () {
@@ -43,7 +63,8 @@ export default {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
-      hovering: false
+      isHovering: false,
+      subnavIsExpanded: false
     }
   },
 
@@ -56,21 +77,20 @@ export default {
       menu: state => state.menu
     }),
 
-    /**
-     * Main property for items in the sidebar menu. Filters out menu.js items by
-     * RBAC permissions and fetches Kong Admin Plugin routes
-     * @returns {{sections:Array<MenuItem>}}
-     */
-    menuList () {
-      // get routes allowed by rbac
-      // const routes = this.$rbac.filterRoutes(this.perms, this.$router.allRoutes,
-      //   this.currentWorkspace && this.currentWorkspace.name)
+    titleNavItems () {
+      return this.menu.find(i => i.position === 'top').items
+    },
 
-      // const routes = this.$router.allRoutes
+    topNavItems () {
+      return this.menu.find(i => i.position === 'top').items[0].subNav.items
+    },
 
-      const filteredMenu = JSON.parse(JSON.stringify(this.menu))
+    bottomNavItems () {
+      return this.menu.find(i => i.position === 'bottom').items
+    },
 
-      return filteredMenu
+    hasSubnav () {
+      return Boolean(this.selectedMenuItem?.subNav?.items?.length)
     },
 
     lastMenuList () {
@@ -79,23 +99,63 @@ export default {
 
     meshList () {
       return this.$store.state.meshes
+    },
+
+    selectedMenuItem () {
+      const route = this.$route
+
+      for (const section of this.menu) {
+        for (const item of section.items) {
+          const urlPath = route.path.split('/')[2]
+          const isNotRootLevelMenuItem = route.name !== item.link
+          const matchesUrlPath = urlPath === item.link
+
+          // const conditions = matchesUrlPath &&
+          //   isNotRootLevelMenuItem &&
+          //   item.subNav &&
+          //   !route.meta.hideSubnav
+
+          const conditions = isNotRootLevelMenuItem && !route.meta.hideSubnav
+
+          if (conditions) {
+            return item
+          }
+        }
+      }
+
+      return null
+    },
+
+    touchDevice () {
+      return !!('ontouchstart' in window || navigator.maxTouchPoints)
+    }
+  },
+
+  watch: {
+    '$route' () {
+      // this.isHovering = false
+      // this.subnavIsExpanded = false
     }
   },
 
   mounted () {
-    const sidebarState = getItemFromStorage('sidebarCollapsed')
+    // const sidebarState = getItemFromStorage('sidebarCollapsed')
 
-    if (document.documentElement.clientWidth <= 900) {
-      this.isCollapsed = true
-    } else {
-      this.isCollapsed = sidebarState || false
-    }
+    const app = this.$appWindow
 
-    window.addEventListener('resize', this.handleResize)
+    // if (app.innerWidth <= 900) {
+    //   this.isCollapsed = true
+    // } else {
+    //   this.isCollapsed = false
+    // }
+
+    // window.addEventListener('resize', this.handleResize)
+
+    this.sidebarEvent()
   },
 
   beforeDestroy () {
-    window.removeEventListener('resize', this.handleResize)
+    // window.removeEventListener('resize', this.handleResize)
   },
 
   methods: {
@@ -103,13 +163,13 @@ export default {
       'setMenu'
     ]),
 
+    getNavItems (menu, position, items) {
+      return menu.find(i => i.position === position).items
+    },
+
     handleToggleCollapse () {
       this.isCollapsed = !this.isCollapsed
       this.setCollapsedState(this.isCollapsed)
-    },
-
-    isHovering (a) {
-      this.hovering = a
     },
 
     setCollapsedState (collapsedState) {
@@ -117,110 +177,123 @@ export default {
     },
 
     handleResize () {
-      const sidebarState = getItemFromStorage('sidebarCollapsed')
+      // const sidebarState = getItemFromStorage('sidebarCollapsed')
+      const appWidth = this.$appWindow.innerWidth
 
-      if (document.documentElement.clientWidth <= 900) {
-        this.isCollapsed = sidebarState || true
+      if (appWidth <= 900) {
+        this.isCollapsed = true
+        this.subnavIsExpanded = false
+        this.isHovering = false
       }
 
-      if (document.documentElement.clientWidth >= 900) {
-        this.isCollapsed = sidebarState || false
+      if (appWidth >= 900) {
+        this.isCollapsed = false
+        this.isHovering = true
       }
+    },
+
+    toggleSubnav () {
+      this.subnavIsExpanded = !this.subnavIsExpanded
+      this.isCollapsed = true
+    },
+
+    sidebarEvent () {
+      // determine if the user is on a touch or non-touch device
+      // and then use the proper events accordingly.
+      const eventResult = () => {
+        const hasTouch = this.touchDevice
+        const el = this.$refs.sidebarControl
+
+        if (hasTouch) {
+          el.addEventListener('touchstart', () => {
+            this.isHovering = true
+          })
+
+          el.addEventListener('touchend', () => {
+            this.isHovering = false
+          })
+        } else {
+          el.addEventListener('mouseover', () => {
+            this.isHovering = true
+          })
+
+          el.addEventListener('mouseout', () => {
+            this.isHovering = false
+          })
+
+          el.addEventListener('click', () => {
+            this.isHovering = false
+          })
+        }
+
+        if (process.env.NODE_ENV === 'development') {
+          console.info(hasTouch ? 'Touch Available' : 'Touch Unavailable')
+        }
+      }
+
+      return eventResult()
     }
   }
 }
 </script>
 
-<style lang='scss'>
-$top-nav-height: 75px;
-
-.workspace-tile {
-  padding: 24px 0;
-  border-bottom: 1px solid #e0e1e2;
-  margin: 0 1rem;
-
-  a:hover, a:focus {
-    text-decoration: none;
-  }
-}
-
-.gry-bounding {
+<style lang="scss">
+#the-sidebar {
+  position: fixed;
+  z-index: 10;
+  top: var(--headerHeight);
+  left: 0;
   display: flex;
-  position: relative;
-  align-items: center;
-  padding: 20px;
-  height: 36px;
-  color: rgba(0, 0, 0, 0.45);
-  font-size: 14px;
-  border-bottom: 1px solid #e0e1e2;
-  background-color: #f9f9f9;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  span {
-    position: absolute;
-    left: 60px;
-    white-space: nowrap;
-  }
-  .workspace-toggle {
-    border-bottom: 1px solid;
-  }
-  &:hover {
-    background: darken(#f5f6f7, 2%);
-  }
+  height:  calc(100vh - 3rem);
+  color: var(--blue-700);
 
-  nav.closed & {
-    box-shadow: none;
-    background: none;
-    span {
-      display: none;
+  &.has-subnav {
+    width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+
+    .main-nav {
+      width: var(--sidebarCollapsedWidth);
+      z-index: 1100;
+
+      &.is-hovering {
+        max-width: max-content;
+        width: calc(var(--subnavWidth) + 1rem);
+        cursor: pointer;
+        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+      }
     }
   }
-}
 
-nav {
+  .main-nav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: var(--sidebarOpenWidth);
+    padding-bottom: 2rem;
+    background-color: var(--sidebarBackground);
+    transition: .2s width var(--transition);
 
-  .menu-container {
-    width: 240px;
-    height: calc(100vh - 145px); // 100vh - (Header + ws picker + collapse btn)
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  &.closed {
-    .workspace-tile {
-      border-top: 1px solid #e0e1e2;
-    }
-    .gry-bounding {
-      height: auto;
-      border: none;
-      padding: 20px;
-    }
-    .menu-container {
-      width: 63px;
-      overflow: hidden;
+    .top-nav {
+      margin-bottom: auto;
     }
   }
-}
 
-.workspace-toggle,
-.sidebar-toggle {
-  @extend .gry-bounding;
-}
-
-/* Fix for IE */
-.workspace-toggle > span{
-  top: 10px
-}
-
-// mobile fix
-@media only screen and (max-width: 900px) {
-  .sidebar-toggle {
-    display: block !important;
-    height: auto !important;
-
-    span {
-      display: none;
-    }
+  & + .main-content {
+    margin-left: var(--sidebarCollapsedWidth);
   }
+
+  .no-pointer-events {
+    pointer-events: none;
+  }
+
+  // Move content over
+  // @media only screen and (max-width: 800px) {
+    & + .main-content {
+      margin-left: var(--sidebarOpenWidth);
+    }
+
+    &.subnav-expanded + .main-content {
+      margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+    }
+  // }
 }
 </style>

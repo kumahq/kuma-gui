@@ -18,11 +18,11 @@
             As you know, the Kuma GUI is read-only, so at the end of this wizard
             we will be generating the configuration that you can apply with either
             <code>kubectl</code> (if you are running in Kubernetes mode) or
-            kumactl / API (if you are running in Universal mode).
+            <code>kumactl</code> / API (if you are running in Universal mode).
           </p>
 
           <h3>
-            To get started, please fill-in the following information:
+            To get started, please fill in the following information:
           </h3>
 
           <KCard
