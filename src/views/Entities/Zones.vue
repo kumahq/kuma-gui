@@ -464,8 +464,6 @@ export default {
                     return src
                   }
 
-                  console.log(cleanRes())
-
                   this.entity = getSome(response, selected)
                   this.rawEntity = stripTimes(response)
                   this.yamlEntity = cleanRes()

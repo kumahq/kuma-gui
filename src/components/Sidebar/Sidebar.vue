@@ -64,7 +64,7 @@ export default {
       sidebarSavedState: null,
       toggleWorkspaces: false,
       isHovering: false,
-      subnavIsExpanded: false
+      subnavIsExpanded: null
     }
   },
 
@@ -131,17 +131,8 @@ export default {
     }
   },
 
-  watch: {
-    '$route' () {
-      // this.isHovering = false
-      // this.subnavIsExpanded = false
-    }
-  },
-
   mounted () {
-    // const sidebarState = getItemFromStorage('sidebarCollapsed')
-
-    const app = this.$appWindow
+    // const app = this.$appWindow
 
     // if (app.innerWidth <= 900) {
     //   this.isCollapsed = true
@@ -150,6 +141,8 @@ export default {
     // }
 
     // window.addEventListener('resize', this.handleResize)
+
+    this.subnavIsExpanded = (localStorage.sidebarCollapsed === 'true')
 
     this.sidebarEvent()
   },
@@ -165,15 +158,6 @@ export default {
 
     getNavItems (menu, position, items) {
       return menu.find(i => i.position === position).items
-    },
-
-    handleToggleCollapse () {
-      this.isCollapsed = !this.isCollapsed
-      this.setCollapsedState(this.isCollapsed)
-    },
-
-    setCollapsedState (collapsedState) {
-      setItemToStorage('sidebarCollapsed', collapsedState)
     },
 
     handleResize () {
@@ -195,6 +179,8 @@ export default {
     toggleSubnav () {
       this.subnavIsExpanded = !this.subnavIsExpanded
       this.isCollapsed = true
+
+      localStorage.setItem('sidebarCollapsed', this.subnavIsExpanded)
     },
 
     sidebarEvent () {
