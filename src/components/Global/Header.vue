@@ -1,5 +1,5 @@
 <template>
-  <header class="main-header p-4">
+  <header class="main-header px-4 py-1">
     <div class="main-header__content flex justify-between items-center -mx-4">
       <div class="py-1 md:py-0 md:px-4">
         <router-link
@@ -13,34 +13,73 @@
         >
           <img
             src="@/assets/images/kuma-logo-new.svg?external"
-            alt="Kuma Logo"
+            :alt="`${tagline} Logo`"
           >
         </router-link>
       </div>
-      <div class="md:flex md:justify-between md:items-center">
-        <div class="py-1 md:py-0 md:px-4 upgrade-check-wrapper">
+      <div class="flex justify-between items-center">
+        <div class="py-1 py-0 px-4 upgrade-check-wrapper">
           <UpgradeCheck />
         </div>
         <div
           v-if="showStatus"
           class="py-1 md:py-0 md:px-4"
         >
-          <status :active="guiStatus">
-            <template slot="content">
-              <span>{{ statusContent }}</span>
-              <KBadge
-                appearance="success"
-                class="status-badge"
+          <div class="app-status app-status--mobile">
+            <KPop width="300">
+              <KButton
+                class="kpop-control"
+                appearance="primary"
+                size="small"
               >
-                <span v-if="multicluster">
-                  Multi-Zone
+                <!-- <KIcon
+                  slot="icon"
+                  icon="info"
+                  color="#fff"
+                  class="kpop-control__icon"
+                /> -->
+                Info
+              </KButton>
+              <div slot="content">
+                <p>
+                  {{ statusContent }} on <strong>{{ env }}</strong>
+                </p>
+                <p>
+                  <KBadge appearance="success">
+                    <span v-if="multicluster">
+                      Multi-Zone
+                    </span>
+                    <span v-else>
+                      Standalone
+                    </span>
+                  </KBadge>
+                </p>
+              </div>
+            </KPop>
+          </div>
+          <div class="app-status app-status--desktop">
+            <status
+              :active="guiStatus"
+              :title="statusContent"
+            >
+              <template slot="content">
+                <span :title="`v${statusVersion}`">
+                  {{ statusContent }} on <strong>{{ env }}</strong>
                 </span>
-                <span v-else>
-                  Standalone
-                </span>
-              </KBadge>
-            </template>
-          </status>
+                <KBadge
+                  appearance="success"
+                  class="status-badge"
+                >
+                  <span v-if="multicluster">
+                    Multi-Zone
+                  </span>
+                  <span v-else>
+                    Standalone
+                  </span>
+                </KBadge>
+              </template>
+            </status>
+          </div>
         </div>
       </div>
     </div>
@@ -60,7 +99,10 @@ export default {
   data () {
     return {
       guiStatus: false,
-      statusContent: null
+      statusContent: '',
+      statusVersion: '',
+      shortVersion: '',
+      env: ''
     }
   },
   computed: {
@@ -70,7 +112,8 @@ export default {
       // the currently selected mesh
       currentMesh: 'getSelectedMesh',
       // the status of multicluster
-      multicluster: 'getMulticlusterStatus'
+      multicluster: 'getMulticlusterStatus',
+      tagline: 'getTagline'
     }),
     showStatus () {
       return !this.$route.meta.hideStatus && this.status === 'OK'
@@ -88,12 +131,16 @@ export default {
       // get the other values from our state
       const tagline = this.$store.getters.getTagline
       const version = this.$store.getters.getVersion
+      const truncVersion = `${version.substring(0, 12)} [...]`
 
       if (env && apiUrl) {
-        this.statusContent = `${tagline} v${version} running on ${env}`
+        this.env = `${env.charAt(0).toUpperCase()}${env.slice(1)}`
+        this.statusVersion = version
+        // this.statusContent = `${tagline} v${truncVersion}`
+        this.statusContent = `${tagline} v${version}`
         this.guiStatus = true
       } else {
-        this.statusContent = "Unable to determine Kuma's status"
+        this.statusContent = `Unable to determine ${tagline}'s status`
         this.guiStatus = false
       }
     }
@@ -108,8 +155,9 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  min-height: var(--topbar-height);
-  border-bottom: 1px solid #eaecef;
+  // min-height: var(--topbar-height);
+  height: var(--topbar-height);
+  // border-bottom: 1px solid #eaecef;
   background-color: #fff;
 }
 
@@ -129,7 +177,7 @@ export default {
     display: block;
     width: auto;
     height: auto;
-    max-height: 46px;
+    max-height: var(--logo-max-height);
   }
 }
 
@@ -140,6 +188,56 @@ export default {
 .status-badge {
   --KBadgeWidth: auto;
   --KBadgePaddingX: var(--spacing-sm);
+}
+
+.app-status {
+  display: flex;
+  align-items: center;
+
+  // button {
+  //   position: relative;
+  //   overflow: hidden;
+  //   display: inline-block;
+  //   background: var(--blue-500);
+  //   border-radius: 3px;
+  //   width: 32px;
+  //   height: 32px;
+  //   line-height: 32px;
+  //   text-align: center;
+
+  //   > * {
+  //     display: block;
+  //     margin: auto;
+  //   }
+  // }
+
+  .kpop-control {
+    max-height: 27px;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    &--desktop {
+      display: block;
+    }
+
+    &--mobile {
+      display: none;
+    }
+  }
+
+  @media screen and (max-width: 1023px) {
+    &--desktop {
+      display: none;
+    }
+
+    &--mobile {
+      display: block;
+    }
+  }
 }
 
 @media screen and (min-width: 990px) {

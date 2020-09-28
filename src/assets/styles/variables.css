@@ -2,8 +2,8 @@
 
 :root {
   /* Kuma */
-  --base-font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial,
-    sans-serif;
+  --base-font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont,
+    'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   --base-font-size-root: 62.5%;
   --base-font-size: 15px;
   --font-weight-light: 400;
@@ -20,16 +20,16 @@
 
   --blue-1: #2d64b3;
   --blue-2: #3d88f2;
-  --blue-3: rgba(61,136,242,0.07);
-  --blue-4: #1155CB;
+  --blue-3: rgba(61, 136, 242, 0.07);
+  --blue-4: #1155cb;
   --black-1: rgba(0, 0, 0, 0.75);
 
   --green-1: #1b9844;
 
   /* logo colors */
-  --logo-coral: #EE485D;
-  --logo-teal: #00CDDE;
-  --logo-mint: #00E8C2;
+  --logo-coral: #ee485d;
+  --logo-teal: #00cdde;
+  --logo-mint: #00e8c2;
   --logo-navy: #172350;
   --logo-green: #3db664;
   --logo-purple: #290b53;
@@ -42,7 +42,9 @@
   --brand-color-6: var(--logo-purple);
 
   /* Topbar */
-  --topbar-height: 92px;
+  /* --topbar-height: 90px; */
+  --topbar-height: 60px;
+  --logo-max-height: 36px;
 
   /* Content areas */
   --global-content-max-width: 100rem;
@@ -55,4 +57,14 @@
   /* Kongponents color remappings */
   --KButtonPrimaryBase: var(--blue-4);
   --KButtonPrimaryHover: #226ced;
+
+  /* New sidebar requirements */
+  --sidebarOpenWidth: 180px;
+  --sidebarCollapsedWidth: 55px;
+  --subnavWidth: 200px;
+  --subnavHorizontalMargin: 1rem;
+  --sidebarBackground: var(--white);
+  /* --headerHeight: 60px; */
+  --headerHeight: var(--topbar-height);
+  --transition: cubic-bezier(1, 0.5, 0.8, 1);
 }

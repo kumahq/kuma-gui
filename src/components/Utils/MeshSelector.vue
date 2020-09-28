@@ -1,7 +1,7 @@
 <template>
-  <div class="mesh-selector-container">
+  <div class="mesh-selector-container px-4 pb-4">
     <div v-if="items">
-      <h3 class="menu-title">
+      <h3 class="menu-title uppercase">
         Filter by Mesh:
       </h3>
       <select
@@ -63,8 +63,10 @@ export default {
 
       // push the update mesh param to the route
       this.$root.$router.push({
-        params: { mesh: val }
-      }).catch(err => {})
+        params: {
+          mesh: val
+        }
+      }).catch(() => {})
     }
   }
 }
@@ -72,7 +74,7 @@ export default {
 
 <style lang="scss" scoped>
 .mesh-selector-container {
-  padding: 32px 32px 0;
+
 }
 
 .mesh-selector {
@@ -84,12 +86,7 @@ export default {
   display: block;
   font-size: var(--type-sm);
   font-weight: 500;
-  color: var(--gray-3);
-  // text-transform: uppercase;
+  color: var(--steal-400);
   margin: 0 0 5px 0;
-}
-
-.closed .mesh-selector-container {
-  display: none;
 }
 </style>

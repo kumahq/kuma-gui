@@ -377,6 +377,7 @@ export default {
     },
     mtlsWarning () {
       const mesh = this.$route.params.mesh
+      // we only want to handle mTLS warnings when the user is viewing a single mesh
       const entityMesh = (mesh !== 'all')
         ? mesh
         : null
@@ -386,11 +387,14 @@ export default {
           .then(response => {
             const { mtls } = response
 
-            if (mtls && mtls.enabledBackend && mtls.enabledBackend !== null) {
+            if (mtls && mtls.enabledBackend && mtls.enabledBackend.length > 0) {
+              // if mTLS is found on the mesh and it's enabled, we don't need to show
+              // a warning to the user
               this.securityWarning = false
+            } else {
+              // otherwise we display it to let them know that it's not yet secured
+              this.securityWarning = true
             }
-
-            this.securityWarning = true
           })
       }
 

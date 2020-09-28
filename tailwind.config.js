@@ -7,5 +7,9 @@ module.exports = {
       center: true,
       padding: '2rem'
     }
+  },
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true
   }
 }

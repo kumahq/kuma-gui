@@ -131,28 +131,30 @@
                   </ul>
                 </div>
 
-                <ul
-                  v-if="value.status.stat"
-                  class="overview-stat-grid"
-                >
-                  <li
-                    v-for="(item, label) in value.status.stat"
-                    :key="label"
+                <div v-if="value.status">
+                  <ul
+                    v-if="value.status.stat"
+                    class="overview-stat-grid"
                   >
-                    <h6 class="overview-tertiary-title">
-                      {{ label | humanReadable }}:
-                    </h6>
-                    <ul>
-                      <li
-                        v-for="(k, v) in item"
-                        :key="v"
-                      >
-                        <strong>{{ v | humanReadable }}:</strong>&nbsp;
-                        <span class="mono">{{ k | formatValue | formatError }}</span>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+                    <li
+                      v-for="(item, label) in value.status.stat"
+                      :key="label"
+                    >
+                      <h6 class="overview-tertiary-title">
+                        {{ label | humanReadable }}:
+                      </h6>
+                      <ul>
+                        <li
+                          v-for="(k, v) in item"
+                          :key="v"
+                        >
+                          <strong>{{ v | humanReadable }}:</strong>&nbsp;
+                          <span class="mono">{{ k | formatValue | formatError }}</span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
                 <KAlert
                   v-else
                   appearance="info"
@@ -175,7 +177,7 @@
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :content="rawEntity"
+            :content="yamlEntity"
           />
         </template>
       </Tabs>
@@ -272,6 +274,7 @@ export default {
       ],
       entity: [],
       rawEntity: null,
+      yamlEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
       pageOffset: null,
@@ -451,8 +454,21 @@ export default {
                   this.tabGroupTitle = `Zone: ${response.name}`
                   this.entityOverviewTitle = `Zone Overview for ${response.name}`
 
+                  // remove `zoneInsight` from the response since we already
+                  // use it in the Zone Insights tab
+                  const cleanRes = () => {
+                    const src = Object.assign({}, response)
+
+                    delete src.zoneInsight
+
+                    return src
+                  }
+
+                  console.log(cleanRes())
+
                   this.entity = getSome(response, selected)
                   this.rawEntity = stripTimes(response)
+                  this.yamlEntity = cleanRes()
                 })
             } else {
               this.entity = null

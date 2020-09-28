@@ -1,7 +1,7 @@
 <template>
   <div class="local-cps">
     <page-header noflex>
-      <h2 class="xxl">
+      <h2 class="type-xxl">
         {{ pageTitle }}
       </h2>
     </page-header>
