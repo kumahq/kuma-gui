@@ -286,16 +286,14 @@ export default {
   }
 
   // Move content over
-  // @media only screen and (max-width: 1650px) {
-  @media only screen and (min-width: 800px) {
+  // @media only screen and (max-width: 800px) {
     & + .main-content {
       margin-left: var(--sidebarOpenWidth);
     }
 
-    // &.has-subnav + .main-content {
     &.subnav-expanded + .main-content {
       margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
     }
-  }
+  // }
 }
 </style>
