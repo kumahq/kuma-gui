@@ -52,6 +52,7 @@
           :options="tableDataFiltered"
           :has-side-border="false"
           has-hover
+          is-clickable
           @row:click="tableRowHandler"
         >
           <!-- status -->
@@ -448,6 +449,16 @@ span[class*="kuma-io-"] {
 
   th, td {
     padding: var(--dp-table-padding);
+  }
+
+  /**
+    This fixes an issue where clicking on something inside of a row doesn't trigger the row click event
+    This is hacky and not recommended if you have other items inside of your table cells that you
+    want to have their own click actions.
+   */
+  th > *,
+  td > * {
+    pointer-events: none;
   }
 }
 

@@ -15,11 +15,15 @@ export default (store) => {
       },
       component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound')
     },
+    // Home - a landing place that resets things
     {
       path: '/',
       name: 'home',
       redirect: {
-        name: 'global-overview'
+        name: 'global-overview',
+        params: {
+          mesh: 'all'
+        }
       }
     },
     // Onboarding

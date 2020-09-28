@@ -131,28 +131,30 @@
                   </ul>
                 </div>
 
-                <ul
-                  v-if="value.status.stat"
-                  class="overview-stat-grid"
-                >
-                  <li
-                    v-for="(item, label) in value.status.stat"
-                    :key="label"
+                <div v-if="value.status">
+                  <ul
+                    v-if="value.status.stat"
+                    class="overview-stat-grid"
                   >
-                    <h6 class="overview-tertiary-title">
-                      {{ label | humanReadable }}:
-                    </h6>
-                    <ul>
-                      <li
-                        v-for="(k, v) in item"
-                        :key="v"
-                      >
-                        <strong>{{ v | humanReadable }}:</strong>&nbsp;
-                        <span class="mono">{{ k | formatValue | formatError }}</span>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
+                    <li
+                      v-for="(item, label) in value.status.stat"
+                      :key="label"
+                    >
+                      <h6 class="overview-tertiary-title">
+                        {{ label | humanReadable }}:
+                      </h6>
+                      <ul>
+                        <li
+                          v-for="(k, v) in item"
+                          :key="v"
+                        >
+                          <strong>{{ v | humanReadable }}:</strong>&nbsp;
+                          <span class="mono">{{ k | formatValue | formatError }}</span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
                 <KAlert
                   v-else
                   appearance="info"

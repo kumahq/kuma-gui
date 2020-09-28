@@ -143,19 +143,19 @@ export default {
 
     const app = this.$appWindow
 
-    if (app.innerWidth <= 900) {
-      this.isCollapsed = true
-    } else {
-      this.isCollapsed = false
-    }
+    // if (app.innerWidth <= 900) {
+    //   this.isCollapsed = true
+    // } else {
+    //   this.isCollapsed = false
+    // }
 
-    window.addEventListener('resize', this.handleResize)
+    // window.addEventListener('resize', this.handleResize)
 
     this.sidebarEvent()
   },
 
   beforeDestroy () {
-    window.removeEventListener('resize', this.handleResize)
+    // window.removeEventListener('resize', this.handleResize)
   },
 
   methods: {
