@@ -22,7 +22,7 @@
         @changed="hash => switchTab(hash)"
       >
         <template
-          v-for="(tab, i) in tabs"
+          v-for="tab in tabs"
           :slot="tab.hash.replace('#','')"
         >
           <slot :name="tab.hash.replace('#','')" />
@@ -56,7 +56,7 @@
             <div class="card-icon mb-3">
               <KIcon
                 class="kong-icon--centered"
-                color="var(--yellow-base)"
+                color="var(--yellow-200)"
                 icon="warning"
                 size="42"
               />

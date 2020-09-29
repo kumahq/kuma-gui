@@ -4,7 +4,7 @@
       <template slot="title">
         <KIcon
           class="kong-icon--centered"
-          color="var(--yellow-base)"
+          color="var(--yellow-200)"
           icon="warning"
           size="64"
         />

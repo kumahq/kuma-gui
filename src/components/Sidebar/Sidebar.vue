@@ -239,12 +239,13 @@ export default {
     .main-nav {
       width: var(--sidebarCollapsedWidth);
       z-index: 1100;
+      box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
 
       &.is-hovering {
-        max-width: max-content;
-        width: calc(var(--subnavWidth) + 1rem);
+        // max-width: max-content;
+        width: calc(var(--subnavWidth) - 1rem);
         cursor: pointer;
-        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+        // box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
       }
     }
   }
@@ -264,7 +265,12 @@ export default {
   }
 
   & + .main-content {
-    margin-left: var(--sidebarCollapsedWidth);
+    // margin-left: var(--sidebarCollapsedWidth);
+    margin-left: var(--sidebarOpenWidth);
+  }
+
+  &.subnav-expanded + .main-content {
+    margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
   }
 
   .no-pointer-events {
@@ -273,13 +279,13 @@ export default {
 
   // Move content over
   // @media only screen and (max-width: 800px) {
-    & + .main-content {
-      margin-left: var(--sidebarOpenWidth);
-    }
+  //   & + .main-content {
+  //     margin-left: var(--sidebarOpenWidth);
+  //   }
 
-    &.subnav-expanded + .main-content {
-      margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
-    }
+  //   &.subnav-expanded + .main-content {
+  //     margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+  //   }
   // }
 }
 </style>

@@ -64,7 +64,7 @@
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"
-              color="var(--yellow-base)"
+              color="var(--yellow-200)"
               icon="warning"
               size="42"
             />
@@ -82,7 +82,7 @@
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"
-              color="var(--yellow-base)"
+              color="var(--yellow-200)"
               icon="warning"
               size="42"
             />
