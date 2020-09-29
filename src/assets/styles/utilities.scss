@@ -29,31 +29,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.kutil-button-base {
-  font-family: $base-font-family;
-  font-weight: $fw-medium;
-  color: #fff !important;
-  background-color: $green-base;
-  padding: 0.563rem 2.25rem;
-  border-radius: 3px;
-  box-shadow: $base-soft-shadow;
-  text-align: center;
-  text-shadow: 0 2px 0 $green-dark;
-  box-sizing: border-box;
-  cursor: pointer;
-}
-
-.kutil-button-base:hover,
-.kutil-button-base:active,
-.kutil-button-base:focus,
-.kutil-button-base:visited {
-  color: #fff !important;
-}
-
-.kutil-button-base:hover {
-  /* background-color: lighten($green-base, 3.5); */
-}
-
 .kutil-quotify {
   quotes: "“" "”" "‘" "’";
 }

@@ -70,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 .resource-list {
   list-style: disc;
-  margin-top: 6px;
+  // margin-top: 6px;
 
   li {
     margin-left: 20px;

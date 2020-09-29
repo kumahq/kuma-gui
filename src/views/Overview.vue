@@ -322,7 +322,9 @@ export default {
     }
 
     .card-item {
-      margin: 0 0.5rem 0.5rem 0.5rem;
+      --i: 16px;
+      --x: calc(var(--i) / 2);
+      margin: 0 var(--x) var(--i) var(--x);
     }
   }
 

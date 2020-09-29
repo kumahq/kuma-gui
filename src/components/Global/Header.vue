@@ -1,75 +1,44 @@
 <template>
-  <header class="main-header px-4 py-1">
-    <div class="main-header__content flex justify-between items-center -mx-4">
-      <div class="py-1 md:py-0 md:px-4">
-        <router-link
-          :to="{
-            name: 'global-overview',
-            params: {
-              mesh: currentMesh
-            }
-          }"
-          class="logo"
+  <header class="main-header px-4 py-1 flex justify-between items-center">
+    <div class="py-1 md:py-0 flex justify-between items-center">
+      <router-link
+        :to="{
+          name: 'global-overview',
+          params: {
+            mesh: currentMesh
+          }
+        }"
+        class="logo"
+      >
+        <img
+          src="@/assets/images/kuma-logo-new.svg?external"
+          :alt="`${tagline} Logo`"
         >
-          <img
-            src="@/assets/images/kuma-logo-new.svg?external"
-            :alt="`${tagline} Logo`"
-          >
-        </router-link>
+      </router-link>
+      <div class="my-0 mx-6 upgrade-check-wrapper">
+        <UpgradeCheck />
       </div>
-      <div class="flex justify-between items-center">
-        <div class="py-1 py-0 px-4 upgrade-check-wrapper">
-          <UpgradeCheck />
-        </div>
-        <div
-          v-if="showStatus"
-          class="py-1 md:py-0 md:px-4"
-        >
-          <div class="app-status app-status--mobile">
-            <KPop width="300">
-              <KButton
-                class="kpop-control"
-                appearance="primary"
-                size="small"
-              >
-                <!-- <KIcon
-                  slot="icon"
-                  icon="info"
-                  color="#fff"
-                  class="kpop-control__icon"
-                /> -->
-                Info
-              </KButton>
-              <div slot="content">
-                <p>
-                  {{ statusContent }} on <strong>{{ env }}</strong>
-                </p>
-                <p>
-                  <KBadge appearance="success">
-                    <span v-if="multicluster">
-                      Multi-Zone
-                    </span>
-                    <span v-else>
-                      Standalone
-                    </span>
-                  </KBadge>
-                </p>
-              </div>
-            </KPop>
-          </div>
-          <div class="app-status app-status--desktop">
-            <status
-              :active="guiStatus"
-              :title="statusContent"
+    </div>
+    <div class="flex justify-between items-center">
+      <div
+        v-if="showStatus"
+        class="py-1 md:py-0 md:px-4"
+      >
+        <div class="app-status app-status--mobile">
+          <KPop width="300">
+            <KButton
+              class="kpop-control"
+              appearance="primary"
+              size="small"
             >
-              <template slot="content">
-                <span :title="`v${statusVersion}`">
-                  {{ statusContent }} on <strong>{{ env }}</strong>
-                </span>
-                <KBadge
-                  appearance="success"
-                  class="status-badge"
-                >
+              Info
+            </KButton>
+            <div slot="content">
+              <p>
+                {{ statusContent }} on <strong>{{ env }}</strong>
+              </p>
+              <p>
+                <KBadge appearance="success">
                   <span v-if="multicluster">
                     Multi-Zone
                   </span>
@@ -77,9 +46,32 @@
                     Standalone
                   </span>
                 </KBadge>
-              </template>
-            </status>
-          </div>
+              </p>
+            </div>
+          </KPop>
+        </div>
+        <div class="app-status app-status--desktop">
+          <status
+            :active="guiStatus"
+            :title="statusContent"
+          >
+            <template slot="content">
+              <span :title="`v${statusVersion}`">
+                {{ statusContent }} on <strong>{{ env }}</strong>
+              </span>
+              <KBadge
+                appearance="success"
+                class="status-badge"
+              >
+                <span v-if="multicluster">
+                  Multi-Zone
+                </span>
+                <span v-else>
+                  Standalone
+                </span>
+              </KBadge>
+            </template>
+          </status>
         </div>
       </div>
     </div>
@@ -151,13 +143,12 @@ export default {
 <style lang="scss" scoped>
 .main-header {
   position: fixed;
-  z-index: 9999;
+  z-index: 1030;
   top: 0;
   left: 0;
   width: 100%;
-  // min-height: var(--topbar-height);
   height: var(--topbar-height);
-  // border-bottom: 1px solid #eaecef;
+  border-bottom: 1px solid var(--black-10);
   background-color: #fff;
 }
 

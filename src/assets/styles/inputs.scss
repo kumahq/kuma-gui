@@ -1,3 +1,32 @@
+/* Form inputs */
+
+select {
+  appearance: none;
+  border-radius: 3px;
+  border: 1px solid rgba(23,130,207,0.35);
+  font-size: 16px;
+  color: #1155CB;
+  line-height: 20px;
+  padding: 10px 16px 10px 13px;
+
+  background-color: #fff;
+  background-image: url("../images/chevron-down.svg?external");
+  background-position: calc(100% - 13px) 50%;
+  background-repeat: no-repeat;
+}
+
+.k-button, button, [type="button"] {
+  transition: none !important;
+}
+
+.k-button.primary {
+
+}
+
+.code-sample {
+  font-family: var(--font-family-mono);
+}
+
 /* Form Wrapper & Base Styles
 ========================================================================== */
 .form-container {
@@ -148,9 +177,9 @@
 }
 
 .vue-form-generator span.help .icon {
- background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+ICA8cGF0aCBmaWxsPSIjMDA4NkU2IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02IDExYy0yLjc2MSAwLTUtMi4yMzktNS01czIuMjM5LTUgNS01IDUgMi4yMzkgNSA1LTIuMjM5IDUtNSA1TTYgMEMyLjY4NiAwIDAgMi42ODYgMCA2czIuNjg2IDYgNiA2IDYtMi42ODYgNi02LTIuNjg2LTYtNi02bTAgM2MtMS4xMDUgMC0yIC44OTUtMiAyaDFjMC0uNTUyLjQ0OC0xIDEtMXMxIC40NDggMSAxLS40NDggMS0xIDEtMSAuNDQ4LTEgMWgxYzEuMTA1IDAgMi0uODk1IDItMnMtLjg5NS0yLTItMnpNNSA5aDJWOEg1djF6Ii8+PC9zdmc+);
- width: .75rem;
- height: .75rem;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiI+ICA8cGF0aCBmaWxsPSIjMDA4NkU2IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02IDExYy0yLjc2MSAwLTUtMi4yMzktNS01czIuMjM5LTUgNS01IDUgMi4yMzkgNSA1LTIuMjM5IDUtNSA1TTYgMEMyLjY4NiAwIDAgMi42ODYgMCA2czIuNjg2IDYgNiA2IDYtMi42ODYgNi02LTIuNjg2LTYtNi02bTAgM2MtMS4xMDUgMC0yIC44OTUtMiAyaDFjMC0uNTUyLjQ0OC0xIDEtMXMxIC40NDggMSAxLS40NDggMS0xIDEtMSAuNDQ4LTEgMWgxYzEuMTA1IDAgMi0uODk1IDItMnMtLjg5NS0yLTItMnpNNSA5aDJWOEg1djF6Ii8+PC9zdmc+);
+  width: .75rem;
+  height: .75rem;
 }
 
 .vue-form-generator span.help .helpText {
@@ -371,139 +400,4 @@
 .vue-form-generator .field-switch .handle:before {
   background: none;
   box-shadow: none;
-}
-
-
-/* Buttons
-========================================================================== */
-.btn {
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.btn-primary {
-  font-weight: 500;
-  color: white;
-  background-color: #0095ff;
-  border-color: transparent !important;
-}
-
-.btn-primary:hover {
-  background-color: #4db5ff;
-}
-
-.btn-danger {
-  font-weight: 500;
-  background-color: #f2110d;
-  color: white;
-  border-color: transparent !important;
-}
-
-.btn-danger:hover {
-  background-color: #f65855;
-}
-
-.btn-danger:active {
-  background-color: #aa0c09;
-}
-
-.btn-secondary {
-  background-color: #f5f5f5;
-  color: rgba(0, 0, 0, 0.7);
-  border-color: rgba(0, 0, 0, 0.12);
-}
-
-.btn-secondary:hover {
-  color: rgba(0, 0, 0, 0.85);
-  border-color: rgba(0, 0, 0, 0.25);
-}
-
-.btn-secondary:active {
-  color: rgba(0, 0, 0, 0.7);
-  background-color: gainsboro;
-}
-
-.btn-outline-primary {
-  background-color: transparent;
-  color: #0077cc;
-  border-color: #80caff;
-}
-
-.btn-outline-primary:hover {
-  background-color: #4db5ff;
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.btn-outline-primary:active {
-  background-color: #0068b3;
-}
-
-.btn-outline-primary:active {
-  background-color: #0068b3;
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.btn-outline-danger {
-  font-weight: 500;
-  background-color: transparent;
-  color: #f2110d;
-  border-color: #ff8280;
-}
-
-.btn-outline-danger:hover {
-  background-color: #f65855;
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.btn-outline-danger:active {
-  background-color: #aa0c09;
-  color: #ffffff;
-  border-color: transparent;
-}
-
-.btn-link {
-  background-color: transparent;
-  color: #0077cc;
-}
-
-.btn-link:hover {
-  color: #0077cc;
-}
-
-.btn-link:active {
-  color: #003c66;
-}
-
-.btn-link-danger {
-  background-color: transparent;
-  color: #f2110d;
-}
-
-.btn-link-danger:hover {
-  color: #f2110d;
-  text-decoration: underline;
-}
-
-.btn-link-danger:active {
-  color: #910a08;
-}
-
-.btn:disabled,
-.k-button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.k-button > svg.kong-icon {
-  width: 24px;
-}
-
-/*
-  Override Bootstrap & allow k-button to style hrefs
-*/
-.k-button[type=button] {
-  -webkit-appearance: unset;
 }

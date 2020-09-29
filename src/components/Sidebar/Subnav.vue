@@ -3,7 +3,9 @@
     :class="{ 'is-collapsed': isCollapsed }"
     class="secondary-nav"
   >
-    <slot name="top" />
+    <div class="mt-3">
+      <slot name="top" />
+    </div>
     <!-- <div
       class="arrow"
       @click="handleToggle"

@@ -236,14 +236,21 @@ export default {
   &.has-subnav {
     width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
 
+    &.subnav-expanded {
+
+      .main-nav.is-hovering {
+        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+      }
+    }
+
     .main-nav {
       width: var(--sidebarCollapsedWidth);
       z-index: 1100;
-      box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
 
       &.is-hovering {
         // max-width: max-content;
-        width: calc(var(--subnavWidth) - 1rem);
+        // width: calc(var(--subnavWidth) + 1rem);
+        width: var(--subnavWidth);
         cursor: pointer;
         // box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
       }
@@ -255,7 +262,7 @@ export default {
     display: flex;
     flex-direction: column;
     width: var(--sidebarOpenWidth);
-    padding-bottom: 2rem;
+    padding: 1.5rem 0 2rem;
     background-color: var(--sidebarBackground);
     transition: .2s width var(--transition);
 

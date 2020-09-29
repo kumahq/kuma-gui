@@ -54,7 +54,8 @@
   --sidebar-width-closed: 63px;
   --sidebar-bg-color: var(--gray-6);
 
-  /* Kongponents color remappings */
+  /* Kongponents color remappings and color theming */
+  --core-theme-color: var(--logo-color);
   --KButtonPrimaryBase: var(--blue-4);
   --KButtonPrimaryHover: #226ced;
 
@@ -65,7 +66,7 @@
   --subnavHorizontalMargin: 1rem;
   --sidebarBackground: var(--white);
   --headerHeight: var(--topbar-height);
-  --transition: cubic-bezier(1, 0.5, 0.8, 1);
+  --transition: cubic-bezier(1.0, 0.5, 0.8, 1.0);
 
   --sidebarWidthOffset: 50px;
 }
