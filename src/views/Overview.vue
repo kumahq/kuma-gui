@@ -5,7 +5,7 @@
       :metrics="overviewMetrics"
     />
 
-    <div class="card-wrapper card-wrapper--4-col">
+    <div class="card-wrapper card-wrapper--2-col">
       <div>
         <CardSkeleton
           class="card-item"
@@ -309,6 +309,10 @@ export default {
     margin: 0 -0.5rem 0;
 
     &.card-wrapper--4-col {
+      --i: 50%;
+    }
+
+    &.card-wrapper--2-col {
       --i: 50%;
     }
 
