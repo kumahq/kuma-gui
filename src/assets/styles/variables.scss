@@ -33,6 +33,16 @@
   --logo-navy: #172350;
   --logo-green: #3db664;
   --logo-purple: #290b53;
+  --logo-pink: #ff5d8c;
+
+  /* SCSS variables */
+  $logo-coral: #ee485d;
+  $logo-teal: #00cdde;
+  $logo-mint: #00e8c2;
+  $logo-navy: #172350;
+  $logo-green: #3db664;
+  $logo-purple: #290b53;
+  $logo-pink: #ff5d8c;
 
   --brand-color-1: var(--logo-coral);
   --brand-color-2: var(--logo-teal);
@@ -40,6 +50,7 @@
   --brand-color-4: var(--logo-navy);
   --brand-color-5: var(--logo-green);
   --brand-color-6: var(--logo-purple);
+  --brand-color-7: var(--logo-pink);
 
   /* Topbar */
   /* --topbar-height: 90px; */
@@ -54,11 +65,6 @@
   --sidebar-width-closed: 63px;
   --sidebar-bg-color: var(--gray-6);
 
-  /* Kongponents color remappings and color theming */
-  --core-theme-color: var(--logo-color);
-  --KButtonPrimaryBase: var(--blue-4);
-  --KButtonPrimaryHover: #226ced;
-
   /* New sidebar requirements */
   --sidebarOpenWidth: 180px;
   --sidebarCollapsedWidth: 55px;
@@ -69,4 +75,53 @@
   --transition: cubic-bezier(1.0, 0.5, 0.8, 1.0);
 
   --sidebarWidthOffset: 50px;
+
+  /* Kongponents color remappings and color theming */
+  $base-theme-color: $logo-coral;
+  // $base-theme-color: #1456cb; // default
+
+  /**
+    Adjust these percentages as you change theme colors so that you
+    can fine-tune different shades to fit best based on the base color
+    itself. This isn't going to be a one-sizt-fits-all, so you can
+    adjust accordingly here.
+  */
+  $adjuster-1: 8%;
+  $adjuster-2: 35%;
+  $adjuster-3: 20%;
+
+  --core-theme-color: #{$base-theme-color};
+  --core-theme-color-light: #{lighten($base-theme-color, $adjuster-1)};
+  --core-theme-color-lighter: #{lighten($base-theme-color, $adjuster-2)};
+  --core-theme-color-dark: #{darken($base-theme-color, $adjuster-3)};
+  --core-theme-color-darker: #{darken($base-theme-color, $adjuster-2)};
+
+  --KButtonPrimaryBase: var(--core-theme-color);
+  --KButtonPrimaryHover: var(--core-theme-color-light);
+  --KButtonPrimaryActive: var(--core-theme-color-light);
+
+  --SidebarIconColor: var(--core-theme-color);
+  --SidebarLinkColor: var(--core-theme-color-darker);
+  --SidebarLinkBGColor: var(--core-theme-color-lighter);
+  --SidebarTitleColor: var(--core-theme-color-light);
+
+  --LinkColorBase: var(--core-theme-color);
+  --LinkColorHover: var(--core-theme-color-light);
+
+  --MetricsCardBGColorHover: var(--core-theme-color-lighter);
+
+  --WizardTabBGColor: var(--core-theme-color);
+  --WizardTabTextColor: #fff;
+
+  --KRadioPrimary: var(--core-theme-color);
+  --KInputFocus: var(--core-theme-color);
+
+  --KTabsActiveColor: var(--core-theme-color);
+
+  --DataOverviewTableLinkColor: var(--core-theme-color);
+
+  --MeshSelectorTitleColor: var(--core-theme-color-light);
+  --MeshSelectorInputTextColor: var(--core-theme-color);
+  --MeshSelectorInputBorderColor: var(--core-theme-color-lighter);
+  --MeshSelectorInputBorderColorFocus: var(--core-theme-color-light);
 }

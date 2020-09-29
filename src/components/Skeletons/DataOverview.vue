@@ -503,6 +503,7 @@ span[class*="kuma-io-"] {
     padding: 0;
     text-decoration: none !important;
     pointer-events: none;
+    color: var(--DataOverviewTableLinkColor) !important;
 
     &.is-active {
       text-decoration: none !important;

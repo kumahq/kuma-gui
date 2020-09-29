@@ -80,13 +80,20 @@ export default {
 .mesh-selector {
   display: block;
   width: 100%;
+  color: var(--MeshSelectorInputTextColor);
+  border-color: var(--MeshSelectorInputBorderColor);
+  outline: none;
+
+  &:focus, &:active {
+    border-color: var(--MeshSelectorInputBorderColorFocus);
+  }
 }
 
 .menu-title {
   display: block;
   font-size: var(--type-sm);
   font-weight: 500;
-  color: var(--steal-400);
+  color: var(--MeshSelectorTitleColor);
   margin: 0 0 5px 0;
 }
 </style>

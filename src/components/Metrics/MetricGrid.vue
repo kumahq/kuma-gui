@@ -169,7 +169,7 @@ export default {
     a.metric-card:active,
     a.metric-card:focus {
       // border-left-color: var(--brand-color-6);
-      background-color: var(--blue-3);
+      background-color: var(--MetricsCardBGColorHover);
 
       .metric-title {
         color: #000;

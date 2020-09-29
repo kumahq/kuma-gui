@@ -20,7 +20,7 @@
             width="18"
             height="18"
             view-box="0 0 18 18"
-            :color="iconColor"
+            color="var(--SidebarIconColor)"
             :icon="icon"
           />
         </slot>
@@ -131,12 +131,6 @@ export default {
       return navItemRouteName && currentRoute.matched.some(r => {
         return navItemRouteName === r.name || navItemRouteName === r.redirect
       })
-    },
-    iconColor () {
-      return 'var(--blue-500)'
-      // return this.isActive
-      //   ? 'var(--blue-500)'
-      //   : 'var(--steal-400)'
     }
   },
   watch: {
@@ -184,7 +178,7 @@ export default {
     display: flex;
     width: 100%;
     align-items: center;
-    color: var(--blue-700);
+    color: var(--SidebarLinkColor);
     text-decoration: none;
     padding: 8px 20px;
   }
@@ -201,7 +195,7 @@ export default {
     // padding: 0 1rem;
     font-weight: 500;
     font-size: var(--type-sm);
-    color: var(--steal-400);
+    color: var(--SidebarTitleColor);
   }
 
   &.is-disabled {
@@ -230,10 +224,10 @@ export default {
   position: relative;
 
   &:hover:not(.is-active) {
-    color: var(--blue-500);
+    color: var(--SidebarIconColor);
 
     svg path {
-      fill: var(--blue-500);
+      fill: var(--SidebarIconColor);
     }
   }
 
@@ -243,7 +237,7 @@ export default {
     top: 0;
     bottom: 0;
     width: 3px;
-    background-color: var(--blue-500);
+    background-color: var(--SidebarIconColor);
     content: '';
   }
 }

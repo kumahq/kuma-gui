@@ -12,11 +12,11 @@
   font-size: var(--type-xl);
 }
 
-a {
-  color: var(--blue-4);
+a:link, a:visited {
+  color: var(--LinkColorBase);
   text-decoration: underline;
 }
 
 a:hover, a:active, a:focus {
-  color: var(--blue-2);
+  color: var(--LinkColorHover);
 }

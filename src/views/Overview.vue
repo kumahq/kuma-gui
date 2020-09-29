@@ -42,7 +42,6 @@
           card-action-route="https://kuma.io/policies/"
           :card-title="`Apply ${title} Policies`"
           card-action-button-text="Explore Policies"
-          external-link
         >
           <template slot="cardContent">
             <p>

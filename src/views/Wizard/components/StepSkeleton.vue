@@ -317,14 +317,14 @@ $bp-max-width: 1219px;
     }
   }
 
-  a {
-    color: var(--blue-base);
-    text-decoration: underline;
+  // a {
+  //   color: var(--blue-base);
+  //   text-decoration: underline;
 
-    &:hover, &:active {
-      color: #000;
-    }
-  }
+  //   &:hover, &:active {
+  //     color: #000;
+  //   }
+  // }
 
   code {
     display: block;
@@ -344,8 +344,8 @@ $bp-max-width: 1219px;
 }
 
 .wizard-steps__indicator__controls {
-  --wizard-tab-bg: var(--blue-4);
-  --wizard-tab-text-selected-color: #fff;
+  --wizard-tab-bg: var(--WizardTabBGColor);
+  --wizard-tab-text-selected-color: var(--WizardTabTextColor);
 
   border: 1px solid var(--gray-4);
   margin-bottom: 2rem;
