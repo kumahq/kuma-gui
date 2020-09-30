@@ -52,13 +52,15 @@ export default {
   max-width: 350px;
   align-items: center;
   flex-direction: column;
+
   .progress {
     margin-top: 1rem;
     width: 130%;
     background-color: #e6e6e6;
+
     .progress-bar {
       height: 5px;
-      background-color: #0d93f2;
+      background-color: var(--LoaderProgressBarBG);
     }
   }
 }
