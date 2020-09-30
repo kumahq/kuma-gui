@@ -77,7 +77,7 @@
   --sidebarWidthOffset: 50px;
 
   /* Kongponents color remappings and color theming */
-  $base-theme-color: $logo-coral;
+  $base-theme-color: $logo-purple;
   // $base-theme-color: #1456cb; // default
 
   /**
@@ -86,8 +86,8 @@
     itself. This isn't going to be a one-sizt-fits-all, so you can
     adjust accordingly here.
   */
-  $adjuster-1: 8%;
-  $adjuster-2: 35%;
+  $adjuster-1: 12%;
+  $adjuster-2: 75%;
   $adjuster-3: 20%;
 
   --core-theme-color: #{$base-theme-color};

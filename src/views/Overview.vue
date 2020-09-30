@@ -5,7 +5,7 @@
       :metrics="overviewMetrics"
     />
 
-    <div class="card-wrapper card-wrapper--2-col">
+    <div class="card-wrapper card-wrapper--4-col">
       <div>
         <CardSkeleton
           class="card-item"
