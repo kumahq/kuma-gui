@@ -12,11 +12,12 @@
       :to="routerLink"
     >
       <div
-        v-if="hasIcon"
+        v-if="hasIcon || hasCustomIcon"
         class="nav-icon"
       >
         <slot name="item-icon">
           <KIcon
+            v-if="hasIcon && icon"
             width="18"
             height="18"
             view-box="0 0 18 18"
@@ -73,6 +74,10 @@ export default {
       default: ''
     },
     hasIcon: {
+      type: Boolean,
+      default: false
+    },
+    hasCustomIcon: {
       type: Boolean,
       default: false
     },
@@ -226,7 +231,7 @@ export default {
   &:hover:not(.is-active) {
     color: var(--SidebarIconColor);
 
-    svg path {
+    svg[class] path {
       fill: var(--SidebarIconColor);
     }
   }

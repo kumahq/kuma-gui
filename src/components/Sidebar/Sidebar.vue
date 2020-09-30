@@ -17,9 +17,16 @@
           v-for="(item, idx) in titleNavItems"
           :key="idx"
           v-bind="item"
-          has-icon
+          has-custom-icon
           @click.native="toggleSubnav"
-        />
+        >
+          <template
+            v-if="item.iconCustom && !item.icon"
+            slot="item-icon"
+          >
+            <div v-html="item.iconCustom" />
+          </template>
+        </NavItem>
       </div>
       <div class="bottom-nav">
         <NavItem
@@ -232,6 +239,24 @@ export default {
   display: flex;
   height:  calc(100vh - 3rem);
   color: var(--blue-700);
+
+  .nav-icon {
+
+    svg:not([class]) {
+      display: block;
+      margin: 0;
+      width: 18px;
+      height: 18px;
+
+      circle {
+        fill: var(--SidebarIconColor);
+      }
+
+      path {
+        stroke: var(--SidebarIconColor);
+      }
+    }
+  }
 
   &.has-subnav {
     width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
