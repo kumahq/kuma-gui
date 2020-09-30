@@ -22,7 +22,9 @@
                     class="copy-button"
                     appearance="primary"
                     size="small"
-                    @click="() => { copyToClipboard(yamlContent.universal) }"
+                    @click="() => {
+                      copyToClipboard(yamlContent.universal)
+                    }"
                   >
                     Copy Universal YAML
                   </KButton>
@@ -44,7 +46,9 @@
                     class="copy-button"
                     appearance="primary"
                     size="small"
-                    @click="() => { copyToClipboard(yamlContent.kubernetes) }"
+                    @click="() => {
+                      copyToClipboard(yamlContent.kubernetes)
+                    }"
                   >
                     Copy Kubernetes YAML
                   </KButton>
