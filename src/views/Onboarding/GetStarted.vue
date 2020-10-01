@@ -217,6 +217,7 @@
 <script>
 import axios from 'axios'
 import { setItemToStorage, getItemFromStorage } from '@/Cache'
+import configUrl from '@/configUrl'
 
 export default {
   name: 'OnboardingStep1',
@@ -251,7 +252,6 @@ export default {
         return count
       }
     },
-
     overallDpStatus () {
       return this.$store.getters.getAnyDpOffline
     }
@@ -303,7 +303,7 @@ export default {
 
     getAppType () {
       axios
-        .get(process.env.VUE_APP_KUMA_CONFIG)
+        .get(configUrl())
         .then(response => {
           const kumaEnv = response.data.environment
 

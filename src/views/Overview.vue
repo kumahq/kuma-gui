@@ -5,7 +5,7 @@
       :metrics="overviewMetrics"
     />
 
-    <div class="card-wrapper card-wrapper--3-col">
+    <div class="card-wrapper card-wrapper--4-col">
       <div>
         <CardSkeleton
           class="card-item"
@@ -308,19 +308,8 @@ export default {
     flex-wrap: wrap;
     margin: 0 -0.5rem 0;
 
-    &.card-wrapper--3-col {
-      --i: 25%;
-    }
-
-    &.card-wrapper--2-col {
-
-      > *:first-of-type {
-        --i: 66.66667%;
-      }
-
-      > *:last-of-type {
-        --i: 33.333333%;
-      }
+    &.card-wrapper--4-col {
+      --i: 50%;
     }
 
     > * {
@@ -330,6 +319,12 @@ export default {
 
     .card-item {
       margin: 0 0.5rem 0.5rem 0.5rem;
+    }
+  }
+
+  @media only screen and (min-width: 1270px) {
+    &.card-wrapper--4-col {
+      --i: 25%;
     }
   }
 }

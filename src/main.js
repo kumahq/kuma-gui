@@ -5,6 +5,7 @@ import VueMeta from 'vue-meta'
 import Store from '@/store'
 import axios from 'axios'
 import Kuma from '@/services/kuma'
+import configUrl from '@/configUrl'
 
 /** Sentry */
 // import * as Sentry from '@sentry/browser'
@@ -82,6 +83,8 @@ function VUE_APP () {
   // API item count on table views
   Vue.prototype.$pageSize = 12
 
+  Vue.prototype.$appWindow = window
+
   const store = Store(kuma)
   const router = Router(store)
 
@@ -98,10 +101,10 @@ function SETUP_VUE_APP () {
    * Always check the Kuma environment and api URL in storage
    * and update it upon GUI launch.
    */
+
   axios
-    .get(process.env.VUE_APP_KUMA_CONFIG)
+    .get(configUrl())
     .then(response => {
-      const apiUrl = response.data.guiServer.apiServerUrl
       const kumaEnv = response.data.environment
 
       const storedKumaEnv = localStorage.getItem('kumaEnv') !== null
@@ -111,6 +114,23 @@ function SETUP_VUE_APP () {
       /**
        * Always check the API URL and set it accordingly for the app to access.
        */
+      let apiUrl = response.data.guiServer.apiServerUrl
+
+      if (apiUrl === '') {
+        const url = window.location.href
+
+        /**
+         * If we're running in development mode, we have to ensure
+         * we fetch from the external Kuma API URL and not from the app
+         * root itself (since it runs from :8080).
+         */
+        if (process.env.NODE_ENV === 'development') {
+          apiUrl = process.env.VUE_APP_KUMA_CONFIG.replace('/config', '/')
+        } else {
+          apiUrl = url.substring(0, url.indexOf('/gui')) + '/'
+        }
+      }
+
       localStorage.setItem('kumaApiUrl', apiUrl)
 
       /**
@@ -140,6 +160,7 @@ function SETUP_VUE_APP () {
       localStorage.removeItem('selectedMesh')
 
       console.error('There was a problem loading the config. Please try restarting Kuma.')
+
       console.error(error)
     })
 }

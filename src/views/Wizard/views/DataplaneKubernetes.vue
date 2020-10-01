@@ -88,7 +88,7 @@
             Setup Dataplane Mode
           </h3>
           <p>
-            You can create a data plane for a service or a data plane for an Ingress gateway.
+            You can create a data plane for a service or a data plane for a Gateway.
           </p>
 
           <!-- dataplane mode -->
@@ -516,7 +516,7 @@
               </h3>
               <p>
                 You can now execute the following commands to automatically inject
-                the sidebar proxy in every Pod, and by doing so creating the Dataplane.
+                the sidecar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
               <Tabs
                 :loaders="false"
@@ -532,15 +532,21 @@
                     :content="codeOutput"
                   />
                 </template>
-                <!-- <template slot="universal">
-                  <CodeView
-                    title="Universal"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
-                  />
-                </template> -->
               </Tabs>
+              <div v-if="dataplaneUrl">
+                <KAlert appearance="info">
+                  <template slot="alertIcon">
+                    <KIcon icon="portal" />
+                  </template>
+                  <template slot="alertMessage">
+                    Once you have completed the steps above, you can view <strong>{{ validate.k8sNamespaceSelection }}</strong>
+                    on the
+                    <router-link :to="dataplaneUrl">
+                      Dataplanes page
+                    </router-link>.
+                  </template>
+                </KAlert>
+              </div>
             </div>
             <!-- <Scanner
               :loader-function="scanForEntity"
@@ -617,6 +623,9 @@ kind: Dataplane
 mesh: default
 metadata:
   name: dp-echo-1
+  annotations:
+    kuma.io/sidecar-injection: enabled
+    kuma.io/mesh: default
 networking:
   address: 10.0.0.1
   inbound:
@@ -731,6 +740,25 @@ export default {
       meshes: 'getMeshList'
     }),
 
+    dataplaneUrl () {
+      const urlRoot = `${window.location.origin}/#`
+      const fields = this.validate
+
+      if (fields.meshName && fields.k8sNamespaceSelection) {
+        return {
+          name: 'dataplanes',
+          params: {
+            mesh: fields.meshName
+          },
+          query: {
+            ns: fields.k8sNamespaceSelection
+          }
+        }
+      }
+
+      return false
+    },
+
     // Our generated code output
     codeOutput () {
       const schema = Object.assign({}, this.schema)
@@ -744,7 +772,7 @@ export default {
       schema.metadata.namespace = namespace
 
       // selected mesh
-      schema.metadata.labels['kuma.io/mesh'] = this.validate.meshName
+      schema.metadata.annotations['kuma.io/mesh'] = this.validate.meshName
 
       /**
        * Finalized output

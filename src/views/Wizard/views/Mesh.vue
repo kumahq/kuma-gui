@@ -18,11 +18,11 @@
             As you know, the Kuma GUI is read-only, so at the end of this wizard
             we will be generating the configuration that you can apply with either
             <code>kubectl</code> (if you are running in Kubernetes mode) or
-            kumactl / API (if you are running in Universal mode).
+            <code>kumactl</code> / API (if you are running in Universal mode).
           </p>
 
           <h3>
-            To get started, please fill-in the following information:
+            To get started, please fill in the following information:
           </h3>
 
           <KCard
@@ -90,10 +90,10 @@
               >
                 <input
                   id="certificate-name"
+                  v-model="validate.meshCAName"
                   type="text"
                   class="k-input w-100"
                   placeholder="your-certificate-name"
-                  :value="getStorageItem('meshCAName')"
                   @change="updateStorage('meshCAName', $event.target.value)"
                 >
               </FormFragment>
@@ -187,10 +187,10 @@
               >
                 <input
                   id="backend-name"
+                  v-model="validate.meshLoggingBackend"
                   type="text"
                   class="k-input w-100"
                   placeholder="your-backend-name"
-                  :value="getStorageItem('meshLoggingBackend')"
                   @change="updateStorage('meshLoggingBackend', $event.target.value)"
                 >
               </FormFragment>
@@ -317,10 +317,10 @@
               >
                 <input
                   id="tracing-backend-name"
+                  v-model="validate.meshTracingBackend"
                   type="text"
                   class="k-input w-100"
                   placeholder="your-tracing-backend-name"
-                  :value="getStorageItem('meshTracingBackend')"
                   @change="updateStorage('meshTracingBackend', $event.target.value)"
                 >
               </FormFragment>
@@ -371,7 +371,7 @@
                   id="tracing-zipkin-url"
                   type="text"
                   class="k-input w-100"
-                  placeholder="your Zipkin URL"
+                  placeholder="http://zipkin.url:1234"
                   :value="getStorageItem('meshTracingZipkinURL')"
                   @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
                 >
@@ -430,10 +430,10 @@
               >
                 <input
                   id="metrics-name"
+                  v-model="validate.meshMetricsName"
                   type="text"
                   class="k-input w-100"
                   placeholder="your-metrics-backend-name"
-                  :value="getStorageItem('meshMetricsName')"
                   @change="updateStorage('meshMetricsName', $event.target.value)"
                 >
               </FormFragment>
@@ -611,8 +611,9 @@
 <script>
 import { mapGetters } from 'vuex'
 import { rejectKeys } from '@/views/Wizard/helpers'
-import updateStorage from '@/views/Wizard/mixins/updateStorage'
+import { kebabCase } from '@/helpers'
 import FormatForCLI from '@/mixins/FormatForCLI'
+import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
@@ -696,7 +697,10 @@ export default {
       nextDisabled: true,
       validate: {
         meshName: '',
-        meshLoggingBackend: ''
+        meshCAName: '',
+        meshLoggingBackend: '',
+        meshTracingBackend: '',
+        meshMetricsName: ''
       },
       vmsg: []
     }
@@ -892,9 +896,27 @@ export default {
     }
   },
   watch: {
+    // mesh name
     'validate.meshName' (value) {
-      this.validate.meshName = value
-      this.validateMeshName(value)
+      const newName = kebabCase(value)
+
+      this.validate.meshName = newName
+      this.validateMeshName(newName)
+    },
+    // mesh cert name
+    'validate.meshCAName' (value) {
+      this.validate.meshCAName = kebabCase(value)
+    },
+    // mesh logging backend name
+    'validate.meshLoggingBackend' (value) {
+      this.validate.meshLoggingBackend = kebabCase(value)
+    },
+    // mesh tracing backend name
+    'validate.meshTracingBackend' (value) {
+      this.validate.meshTracingBackend = kebabCase(value)
+    },
+    'validate.meshMetricsName' (value) {
+      this.validate.meshMetricsName = kebabCase(value)
     }
   },
   mounted () {

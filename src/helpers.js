@@ -392,6 +392,56 @@ export function cleanTag (tag) {
     .replace('/', '-')
 }
 
+/**
+ * removeDuplicates
+ *
+ * This removes duplicate objects from an array
+ *
+ * @param {Array} array
+ * @param {String} key
+ */
+export function dedupeObjects (array, key) {
+  return array.filter((obj, index, self) =>
+    index === self.findIndex((el) => (
+      el[key] === obj[key]
+    ))
+  )
+}
+
+/**
+ * camelCaseToWords
+ *
+ * Converts camelcase to human-readable words in titlecase format
+ *
+ * @param {String} str
+ */
+export function camelCaseToWords (str) {
+  const search = /^[a-z]+|[A-Z][a-z]*/g
+
+  return str.match(search).map((x) => {
+    return x[0].toUpperCase() + x.substr(1).toLowerCase()
+  }).join(' ')
+}
+
+/**
+ * kebabCase
+ *
+ * @param {*} value
+ */
+export function kebabCase (value) {
+  const newValue = (value)
+    .replace(/[^a-zA-Z0-9 -]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim()
+
+  if (!value) {
+    return ''
+  }
+
+  return newValue
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -413,5 +463,8 @@ export default {
   stripUrl,
   getOffset,
   stripTimes,
-  cleanTag
+  cleanTag,
+  dedupeObjects,
+  camelCaseToWords,
+  kebabCase
 }

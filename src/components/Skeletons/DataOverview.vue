@@ -11,11 +11,6 @@
         :disabled="isLoading"
         @click="$emit('reloadData')"
       >
-        <!-- <KIcon
-          icon="spinner"
-          color="#000"
-          size="48"
-        /> -->
         <div
           class="refresh-icon"
           :class="{ 'is-spinning': isLoading }"
@@ -55,7 +50,9 @@
           class="micro-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
+          :has-side-border="false"
           has-hover
+          is-clickable
           @row:click="tableRowHandler"
         >
           <!-- status -->
@@ -169,11 +166,11 @@
         <div class="card-icon mb-3">
           <KIcon
             icon="spinner"
-            color="rgba(0, 0, 0, 0.1)"
+            color="rgba(0, 0, 0, 0.25)"
             size="42"
           />
         </div>
-        Data Loading...
+        Data Loading&hellip;
       </template>
     </KEmptyState>
 
@@ -186,7 +183,7 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-base)"
+            color="var(--yellow-200)"
             icon="warning"
             size="42"
           />
@@ -377,8 +374,6 @@ export default {
 }
 
 .entity-tags {
-  display: inline-flex;
-  align-items: stretch;
   font-size: var(--type-xs);
   background-color: #fff;
   font-family: var(--font-family-mono);
@@ -386,6 +381,25 @@ export default {
   &:not(:last-of-type) {
     margin-right: 0.5rem;
     margin-bottom: 0.25rem;
+  }
+
+  @media (max-width: 1136px) {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+
+    .entity-tags__label {
+      border-radius: 5px 5px 0 0;
+    }
+
+    .entity-tags__value {
+      border-radius: 0 0 5px 5px;
+    }
+  }
+
+  @media (min-width: 1137px) {
+    display: inline-flex;
+    align-items: stretch;
   }
 }
 
@@ -423,6 +437,10 @@ span[class*="kuma-io-"] {
 
 .data-overview-table {
 
+  @media (max-width: 1110px) {
+    overflow-x: scroll;
+    touch-action: pan-x;
+  }
 }
 
 .micro-table.micro-table {
@@ -431,6 +449,16 @@ span[class*="kuma-io-"] {
 
   th, td {
     padding: var(--dp-table-padding);
+  }
+
+  /**
+    This fixes an issue where clicking on something inside of a row doesn't trigger the row click event
+    This is hacky and not recommended if you have other items inside of your table cells that you
+    want to have their own click actions.
+   */
+  th > *,
+  td > * {
+    pointer-events: none;
   }
 }
 
@@ -455,6 +483,13 @@ span[class*="kuma-io-"] {
     border-bottom-width: 1px !important;
   }
 
+  tbody {
+
+    td {
+      vertical-align: top;
+    }
+  }
+
   &.has-border {
     border: 1px solid var(--gray-4);
     border-bottom: 0;
@@ -463,9 +498,11 @@ span[class*="kuma-io-"] {
   .data-table-action-link {
     display: block;
     padding: var(--spacing-sm);
-    cursor: pointer;
+    // cursor: pointer;
     overflow: hidden;
     padding: 0;
+    text-decoration: none !important;
+    pointer-events: none;
 
     &.is-active {
       text-decoration: none !important;
@@ -492,5 +529,53 @@ span[class*="kuma-io-"] {
     }
   }
 
+}
+
+// some reusable styles
+
+.overview-title {
+  font-size: var(--type-lg);
+  font-weight: 500;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--tblack-85);
+}
+
+.overview-sub-title {
+  font-size: var(--type-md);
+  font-weight: 500;
+  // text-transform: uppercase;
+  // color: var(--gray-3);
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.overview-tertiary-title {
+  font-size: var(--type-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--gray-3);
+  margin: var(--spacing-xs) 0;
+}
+
+.overview-group-list {
+
+}
+
+.overview-stat-grid {
+  display: grid;
+  margin: var(--spacing-md) 0 0 0;
+
+  @media (min-width: 1140px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px 20px;
+  }
+}
+
+.overview-stack {
+
+  &:not(:last-of-type) {
+    padding: 0 0 var(--spacing-xl) 0;
+    margin: 0 0 var(--spacing-xl) 0;
+    border-bottom: 1px solid var(--gray-4);
+  }
 }
 </style>

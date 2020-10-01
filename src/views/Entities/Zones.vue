@@ -95,13 +95,89 @@
             </div>
           </LabelList>
         </template>
+        <template slot="insights">
+          <LoaderCard
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+          >
+            <div v-if="rawEntity">
+              <div
+                v-for="(value, key) in rawEntity.zoneInsight.subscriptions"
+                :key="key"
+                class="overview-stack"
+              >
+                <h4 class="overview-title">
+                  ID: <span class="mono">{{ value.id }}</span>
+                </h4>
+
+                <div v-if="value.globalInstanceId || value.connectTime || value.disconnectTime">
+                  <h5 class="overview-tertiary-title">
+                    General Information:
+                  </h5>
+                  <ul>
+                    <li v-if="value.globalInstanceId">
+                      <strong>Global Instance ID:</strong>&nbsp;
+                      <span class="mono">{{ value.globalInstanceId }}</span>
+                    </li>
+                    <li v-if="value.connectTime">
+                      <strong>Last Connected:</strong>&nbsp;
+                      {{ value.connectTime | readableDate }}
+                    </li>
+                    <li v-if="value.disconnectTime">
+                      <strong>Last Disconnected:</strong>&nbsp;
+                      {{ value.disconnectTime | readableDate }}
+                    </li>
+                  </ul>
+                </div>
+
+                <div v-if="value.status">
+                  <ul
+                    v-if="value.status.stat"
+                    class="overview-stat-grid"
+                  >
+                    <li
+                      v-for="(item, label) in value.status.stat"
+                      :key="label"
+                    >
+                      <h6 class="overview-tertiary-title">
+                        {{ label | humanReadable }}:
+                      </h6>
+                      <ul>
+                        <li
+                          v-for="(k, v) in item"
+                          :key="v"
+                        >
+                          <strong>{{ v | humanReadable }}:</strong>&nbsp;
+                          <span class="mono">{{ k | formatValue | formatError }}</span>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <KAlert
+                  v-else
+                  appearance="info"
+                  class="mt-4"
+                >
+                  <template slot="alertIcon">
+                    <KIcon icon="portal" />
+                  </template>
+                  <template slot="alertMessage">
+                    There are no Policy statistics for <strong>{{ value.id }}</strong>
+                  </template>
+                </KAlert>
+              </div>
+            </div>
+          </LoaderCard>
+        </template>
         <template slot="yaml">
           <YamlView
             :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
-            :content="rawEntity"
+            :content="yamlEntity"
           />
         </template>
       </Tabs>
@@ -111,7 +187,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { humanReadableDate, getOffset, getSome, stripTimes } from '@/helpers'
+import { humanReadableDate, getOffset, getSome, stripTimes, camelCaseToWords } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import PageHeader from '@/components/Utils/PageHeader.vue'
@@ -121,6 +197,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
+import LoaderCard from '@/components/Utils/LoaderCard'
 
 export default {
   name: 'Zones',
@@ -135,14 +212,25 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
+    LoaderCard
   },
   filters: {
     formatValue (value) {
-      return value ? value.toLocaleString('en').toString() : 0
+      return value ? parseInt(value).toLocaleString('en').toString() : 0
     },
     readableDate (value) {
       return humanReadableDate(value)
+    },
+    humanReadable (value) {
+      return camelCaseToWords(value)
+    },
+    formatError (value) {
+      if (value === '--') {
+        return 'error calculating'
+      }
+
+      return value
     }
   },
   mixins: [
@@ -159,7 +247,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Meshes present.'
+        message: 'There are no Zones present.'
       },
       tableData: {
         headers: [
@@ -176,12 +264,17 @@ export default {
           title: 'Overview'
         },
         {
+          hash: '#insights',
+          title: 'Zone Insights'
+        },
+        {
           hash: '#yaml',
           title: 'YAML'
         }
       ],
       entity: [],
       rawEntity: null,
+      yamlEntity: null,
       firstEntity: null,
       pageSize: this.$pageSize,
       pageOffset: null,
@@ -273,8 +366,10 @@ export default {
       const getZoneStatus = () => {
         return endpoint
           .then(response => {
+            const nextCheck = (response && response.next) ? response.next : false
+
             // check to see if the `next` url is present
-            if (response.next) {
+            if (nextCheck) {
               this.next = getOffset(response.next)
               this.hasNext = true
             } else {
@@ -283,7 +378,7 @@ export default {
 
             const items = response
 
-            if (items.length > 0) {
+            if (items && items.length > 0) {
               // rewrite the status column to be more human-readable
               items.forEach(i => {
                 const status = (i.active === false)
@@ -359,8 +454,21 @@ export default {
                   this.tabGroupTitle = `Zone: ${response.name}`
                   this.entityOverviewTitle = `Zone Overview for ${response.name}`
 
+                  // remove `zoneInsight` from the response since we already
+                  // use it in the Zone Insights tab
+                  const cleanRes = () => {
+                    const src = Object.assign({}, response)
+
+                    delete src.zoneInsight
+
+                    return src
+                  }
+
+                  console.log(cleanRes())
+
                   this.entity = getSome(response, selected)
                   this.rawEntity = stripTimes(response)
+                  this.yamlEntity = cleanRes()
                 })
             } else {
               this.entity = null

@@ -147,7 +147,7 @@ export default class Mock {
         items: [
           {
             mesh: 'default',
-            name: 'hello-world-foobar-002',
+            name: 'gateway-dp-87qntx',
             networking: {},
             type: 'Dataplane'
           },
@@ -166,7 +166,7 @@ export default class Mock {
         items: [
           {
             mesh: 'default',
-            name: 'hello-world-foobar-002',
+            name: 'gateway-dp-87qntx',
             type: 'Dataplane',
             networking: {
               address: '10.0.0.1',
@@ -200,7 +200,8 @@ export default class Mock {
                     env: 'prod',
                     'pod-template-hash': '69c9fd4bd',
                     'kuma.io/protocol': 'http',
-                    version: 'v8'
+                    version: 'v8',
+                    'a-duplicate-tag': '12345678'
                   }
                 },
                 {
@@ -210,7 +211,8 @@ export default class Mock {
                     env: 'prod',
                     'pod-template-hash': 'd7cb6b576',
                     'kuma.io/protocol': 'http',
-                    version: 'v0'
+                    version: 'v0',
+                    'a-duplicate-tag': '12345678'
                   }
                 },
                 {
@@ -218,7 +220,8 @@ export default class Mock {
                   tags: {
                     app: 'postgres',
                     'pod-template-hash': '65df766577',
-                    'kuma.io/protocol': 'tcp'
+                    'kuma.io/protocol': 'tcp',
+                    'a-duplicate-tag': '12345678'
                   }
                 },
                 {
@@ -228,7 +231,8 @@ export default class Mock {
                     'pod-template-hash': '78ff699f7',
                     'kuma.io/protocol': 'tcp',
                     role: 'master',
-                    tier: 'backend'
+                    tier: 'backend',
+                    'a-duplicate-tag': '12345678'
                   }
                 }
               ]
@@ -313,7 +317,8 @@ export default class Mock {
                 env: 'prod',
                 'pod-template-hash': '69c9fd4bd',
                 'kuma.io/protocol': 'http',
-                version: 'v8'
+                version: 'v8',
+                'a-duplicate-tag': '12345678'
               }
             },
             {
@@ -323,7 +328,8 @@ export default class Mock {
                 env: 'prod',
                 'pod-template-hash': 'd7cb6b576',
                 'kuma.io/protocol': 'http',
-                version: 'v0'
+                version: 'v0',
+                'a-duplicate-tag': '12345678'
               }
             },
             {
@@ -331,7 +337,8 @@ export default class Mock {
               tags: {
                 app: 'postgres',
                 'pod-template-hash': '65df766577',
-                'kuma.io/protocol': 'tcp'
+                'kuma.io/protocol': 'tcp',
+                'a-duplicate-tag': '12345678'
               }
             },
             {
@@ -341,13 +348,14 @@ export default class Mock {
                 'pod-template-hash': '78ff699f7',
                 'kuma.io/protocol': 'tcp',
                 role: 'master',
-                tier: 'backend'
+                tier: 'backend',
+                'a-duplicate-tag': '12345678'
               }
             }
           ]
         }
       })
-      .onGet('/dataplanes+insights', { params: { ingress: true } }).reply(200, {
+      .onGet('/meshes/default/dataplanes+insights').reply(200, {
         total: 2,
         items: [
           {
@@ -372,7 +380,8 @@ export default class Mock {
                       env: 'prod',
                       'pod-template-hash': '69c9fd4bd',
                       'kuma.io/protocol': 'http',
-                      version: 'v8'
+                      version: 'v8',
+                      'a-duplicate-tag': '12345678'
                     }
                   },
                   {
@@ -382,7 +391,8 @@ export default class Mock {
                       env: 'prod',
                       'pod-template-hash': 'd7cb6b576',
                       'kuma.io/protocol': 'http',
-                      version: 'v0'
+                      version: 'v0',
+                      'a-duplicate-tag': '12345678'
                     }
                   },
                   {
@@ -390,7 +400,8 @@ export default class Mock {
                     tags: {
                       app: 'postgres',
                       'pod-template-hash': '65df766577',
-                      'kuma.io/protocol': 'tcp'
+                      'kuma.io/protocol': 'tcp',
+                      'a-duplicate-tag': '12345678'
                     }
                   },
                   {
@@ -400,7 +411,69 @@ export default class Mock {
                       'pod-template-hash': '78ff699f7',
                       'kuma.io/protocol': 'tcp',
                       role: 'master',
-                      tier: 'backend'
+                      tier: 'backend',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          {
+            type: 'DataplaneOverview',
+            mesh: 'default',
+            name: 'dataplane-test-456',
+            creationTime: '2020-06-29T09:27:46.05334-04:00',
+            modificationTime: '2020-06-29T09:27:46.05334-04:00',
+            dataplane: {
+              networking: {
+                address: '192.168.64.8',
+                inbound: [
+                  {
+                    port: 10001
+                  }
+                ],
+                ingress: [
+                  {
+                    'kuma.io/service': 'frontend.kuma-demo.svc:8080',
+                    tags: {
+                      app: 'kuma-demo-frontend',
+                      env: 'prod',
+                      'pod-template-hash': '69c9fd4bd',
+                      'kuma.io/protocol': 'http',
+                      version: 'v8',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  },
+                  {
+                    'kuma.io/service': 'backend.kuma-demo.svc:3001',
+                    tags: {
+                      app: 'kuma-demo-backend',
+                      env: 'prod',
+                      'pod-template-hash': 'd7cb6b576',
+                      'kuma.io/protocol': 'http',
+                      version: 'v0',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  },
+                  {
+                    'kuma.io/service': 'postgres.kuma-demo.svc:5432',
+                    tags: {
+                      app: 'postgres',
+                      'pod-template-hash': '65df766577',
+                      'kuma.io/protocol': 'tcp',
+                      'a-duplicate-tag': '12345678'
+                    }
+                  },
+                  {
+                    'kuma.io/service': 'redis.kuma-demo.svc:6379',
+                    tags: {
+                      app: 'redis',
+                      'pod-template-hash': '78ff699f7',
+                      'kuma.io/protocol': 'tcp',
+                      role: 'master',
+                      tier: 'backend',
+                      'a-duplicate-tag': '12345678'
                     }
                   }
                 ]
@@ -415,114 +488,6 @@ export default class Mock {
         type: 'DataplaneOverview',
         mesh: 'default',
         name: 'ingress-dp-test-123',
-        dataplane: {
-          networking: {
-            address: '192.168.64.8',
-            inbound: [
-              {
-                port: 10001
-              }
-            ],
-            ingress: [
-              {
-                'kuma.io/service': 'frontend.kuma-demo.svc:8080',
-                tags: {
-                  app: 'kuma-demo-frontend',
-                  env: 'prod',
-                  'pod-template-hash': '69c9fd4bd',
-                  'kuma.io/protocol': 'http',
-                  version: 'v8'
-                }
-              },
-              {
-                'kuma.io/service': 'backend.kuma-demo.svc:3001',
-                tags: {
-                  app: 'kuma-demo-backend',
-                  env: 'prod',
-                  'pod-template-hash': 'd7cb6b576',
-                  'kuma.io/protocol': 'http',
-                  version: 'v0'
-                }
-              },
-              {
-                'kuma.io/service': 'postgres.kuma-demo.svc:5432',
-                tags: {
-                  app: 'postgres',
-                  'pod-template-hash': '65df766577',
-                  'kuma.io/protocol': 'tcp'
-                }
-              },
-              {
-                'kuma.io/service': 'redis.kuma-demo.svc:6379',
-                tags: {
-                  app: 'redis',
-                  'pod-template-hash': '78ff699f7',
-                  'kuma.io/protocol': 'tcp',
-                  role: 'master',
-                  tier: 'backend'
-                }
-              }
-            ]
-          }
-        },
-        dataplaneInsight: {
-          subscriptions: [
-            {
-              id: '426fe0d8-f667-11e9-b081-acde48001122',
-              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
-              connectTime: '2019-10-24T14:04:56.820350Z',
-              status: {
-                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
-                total: {
-                  responsesSent: '3',
-                  responsesAcknowledged: '3'
-                },
-                cds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                eds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                lds: {
-                  responsesSent: '1',
-                  responsesAcknowledged: '1'
-                },
-                rds: {}
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/default/dataplanes/hello-world-foobar-002')
-      .reply(200, {
-        type: 'Dataplane',
-        mesh: 'default',
-        name: 'hello-world-foobar-002',
-        creationTime: '2020-06-02T09:33:09.208372-04:00',
-        modificationTime: '2020-06-02T09:33:09.208372-04:00',
-        networking: {
-          address: '10.0.0.1',
-          inbound: [
-            {
-              port: 10000,
-              servicePort: 9000,
-              tags: {
-                env: 'dev',
-                'kuma.io/service': 'kuma-example-backend',
-                tag01: 'value01',
-                reallyLongTagLabelHere: 'a-really-long-tag-value-here'
-              }
-            }
-          ]
-        }
-      })
-      .onGet('/meshes/default/dataplanes+insights/hello-world-foobar-002')
-      .reply(200, {
-        type: 'DataplaneOverview',
-        mesh: 'default',
-        name: 'hello-world-foobar-002',
         dataplane: {
           networking: {
             address: '10.0.0.1',
@@ -573,6 +538,165 @@ export default class Mock {
             lastCertificateRegeneration: '2020-05-11T16:53:40.862241Z',
             certificateRegenerations: 2
           }
+        }
+      })
+      .onGet('/meshes/default/dataplanes+insights/dataplane-test-456')
+      .reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'dataplane-test-456',
+        dataplane: {
+          networking: {
+            address: '192.168.64.8',
+            inbound: [
+              {
+                port: 10001
+              }
+            ],
+            ingress: [
+              {
+                'kuma.io/service': 'frontend.kuma-demo.svc:8080',
+                tags: {
+                  app: 'kuma-demo-frontend',
+                  env: 'prod'
+                }
+              },
+              {
+                'kuma.io/service': 'backend.kuma-demo.svc:3001',
+                tags: {
+                  app: 'kuma-demo-backend',
+                  env: 'prod',
+                  'pod-template-hash': 'd7cb6b576'
+                }
+              },
+              {
+                'kuma.io/service': 'postgres.kuma-demo.svc:5432',
+                tags: {
+                  app: 'postgres',
+                  'pod-template-hash': '65df766577'
+                }
+              },
+              {
+                'kuma.io/service': 'redis.kuma-demo.svc:6379',
+                tags: {
+                  app: 'redis',
+                  'pod-template-hash': '78ff699f7'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '426fe0d8-f667-11e9-b081-acde48001122',
+              controlPlaneInstanceId: '06070748-f667-11e9-b081-acde48001122',
+              connectTime: '2019-10-24T14:04:56.820350Z',
+              status: {
+                lastUpdateTime: '2019-10-24T14:04:57.832482Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes/gateway-dp-87qntx')
+      .reply(200, {
+        type: 'Dataplane',
+        mesh: 'default',
+        name: 'gateway-dp-87qntx',
+        creationTime: '2020-06-02T09:33:09.208372-04:00',
+        modificationTime: '2020-06-02T09:33:09.208372-04:00',
+        networking: {
+          address: '10.0.0.1',
+          inbound: [
+            {
+              port: 10000,
+              servicePort: 9000,
+              tags: {
+                env: 'dev',
+                'kuma.io/service': 'kuma-example-backend',
+                tag01: 'value01',
+                reallyLongTagLabelHere: 'a-really-long-tag-value-here'
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes/dataplane-test-456')
+      .reply(200, {
+        type: 'Dataplane',
+        mesh: 'default',
+        name: 'dataplane-test-456',
+        creationTime: '2020-06-02T09:33:09.208372-04:00',
+        modificationTime: '2020-06-02T09:33:09.208372-04:00',
+        networking: {
+          address: '192.168.64.8',
+          inbound: [
+            {
+              port: 10001
+            }
+          ],
+          ingress: [
+            {
+              'kuma.io/service': 'frontend.kuma-demo.svc:8080',
+              tags: {
+                app: 'kuma-demo-frontend',
+                env: 'prod',
+                'pod-template-hash-super-long-title': '69c9fd4bd',
+                'kuma.io/protocol': 'http',
+                version: 'v8',
+                'some-duplicate-tag': '1234567890'
+              }
+            },
+            {
+              'kuma.io/service': 'backend.kuma-demo.svc:3001',
+              tags: {
+                app: 'kuma-demo-backend',
+                env: 'prod',
+                'pod-template-hash': 'd7cb6b576',
+                'kuma.io/protocol': 'http',
+                version: 'v0',
+                'some-duplicate-tag': '1234567890'
+              }
+            },
+            {
+              'kuma.io/service': 'postgres.kuma-demo.svc:5432',
+              tags: {
+                app: 'postgres',
+                'pod-template-hash': '65df766577',
+                'kuma.io/protocol': 'tcp',
+                'some-duplicate-tag': '1234567890'
+              }
+            },
+            {
+              'kuma.io/service': 'redis.kuma-demo.svc:6379',
+              tags: {
+                app: 'redis',
+                'pod-template-hash': '78ff699f7',
+                'kuma.io/protocol': 'tcp',
+                role: 'master',
+                tier: 'backend',
+                'some-duplicate-tag': '1234567890'
+              }
+            }
+          ]
         }
       })
       .onGet('/meshes/default/traffic-traces')
@@ -2372,80 +2496,79 @@ export default class Mock {
             type: 'ZoneOverview',
             mesh: 'default',
             name: 'zone-1',
-            creationTime: '2018-07-17T16:05:36.995Z',
-            modificationTime: '2019-07-17T18:08:41Z',
+            creationTime: '2020-07-28T23:08:22.317322+07:00',
+            modificationTime: '2020-07-28T23:08:22.317322+07:00',
             zone: {
               ingress: {
-                address: '192.168.1.1:1000'
+                address: '127.0.0.1:10000'
               }
             },
             zoneInsight: {
               subscriptions: [
                 {
-                  id: '1',
-                  globalInstanceId: 'node-001',
-                  connectTime: '2018-07-17T16:05:36.995Z',
+                  id: '466aa63b-70e8-4435-8bee-a7146e2cdf11',
+                  globalInstanceId: '66309679-ee95-4ea8-b17f-c715ca03bb38',
+                  connectTime: '2020-07-28T16:08:09.743141Z',
+                  disconnectTime: '2020-07-28T16:08:09.743194Z',
                   status: {
-                    total: {
-                      responsesSent: '22',
-                      responsesRejected: '11'
-                    },
-                    stat: {
-                      CircuitBreaker: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      FaultInjection: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      HealthCheck: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      Ingress: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      Mesh: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      ProxyTemplate: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      Secret: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      TrafficLog: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      TrafficPermission: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      TrafficRoute: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      },
-                      TrafficTrace: {
-                        responsesSent: '2',
-                        responsesRejected: '1'
-                      }
-                    }
+                    total: {}
                   }
                 },
                 {
-                  id: '2',
-                  globalInstanceId: 'node-002',
-                  connectTime: '2019-07-17T16:05:36.995Z',
+                  id: 'f586f89c-2c4e-4f93-9a56-f0ea2ff010b7',
+                  globalInstanceId: '66309679-ee95-4ea8-b17f-c715ca03bb38',
+                  connectTime: '2020-07-28T16:08:24.760801Z',
                   status: {
+                    lastUpdateTime: '2020-07-28T16:08:25.770774Z',
                     total: {
-                      responsesSent: '20',
-                      responsesRejected: '2'
+                      responsesSent: '11',
+                      responsesAcknowledged: '11'
+                    },
+                    stat: {
+                      CircuitBreaker: {
+                        responsesSent: '124',
+                        responsesAcknowledged: '4509369'
+                      },
+                      Dataplane: {
+                        responsesSent: '9018614',
+                        responsesAcknowledged: '13527859'
+                      },
+                      FaultInjection: {
+                        responsesSent: '18037104',
+                        responsesAcknowledged: '22546349'
+                      },
+                      HealthCheck: {
+                        responsesSent: '27055594',
+                        responsesAcknowledged: '31564839'
+                      },
+                      Mesh: {
+                        responsesSent: '36074084',
+                        responsesAcknowledged: '40583329'
+                      },
+                      ProxyTemplate: {
+                        responsesSent: '45092574',
+                        responsesAcknowledged: '49601819'
+                      },
+                      Secret: {
+                        responsesSent: '54111064',
+                        responsesAcknowledged: '58620309'
+                      },
+                      TrafficLog: {
+                        responsesSent: '63129554',
+                        responsesAcknowledged: '67638799'
+                      },
+                      TrafficPermission: {
+                        responsesSent: '72148044',
+                        responsesAcknowledged: '76657289'
+                      },
+                      TrafficRoute: {
+                        responsesSent: '81166534',
+                        responsesAcknowledged: '85675779'
+                      },
+                      TrafficTrace: {
+                        responsesSent: '90185024',
+                        responsesAcknowledged: '94694269'
+                      }
                     }
                   }
                 }
@@ -2516,80 +2639,79 @@ export default class Mock {
         type: 'ZoneOverview',
         mesh: 'default',
         name: 'zone-1',
-        creationTime: '2018-07-17T16:05:36.995Z',
-        modificationTime: '2019-07-17T18:08:41Z',
+        creationTime: '2020-07-28T23:08:22.317322+07:00',
+        modificationTime: '2020-07-28T23:08:22.317322+07:00',
         zone: {
           ingress: {
-            address: '192.168.1.1:1000'
+            address: '127.0.0.1:10000'
           }
         },
         zoneInsight: {
           subscriptions: [
             {
-              id: '1',
-              globalInstanceId: 'node-001',
-              connectTime: '2018-07-17T16:05:36.995Z',
+              id: '466aa63b-70e8-4435-8bee-a7146e2cdf11',
+              globalInstanceId: '66309679-ee95-4ea8-b17f-c715ca03bb38',
+              connectTime: '2020-07-28T16:08:09.743141Z',
+              disconnectTime: '2020-07-28T16:08:09.743194Z',
               status: {
-                total: {
-                  responsesSent: '22',
-                  responsesRejected: '11'
-                },
-                stat: {
-                  CircuitBreaker: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  FaultInjection: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  HealthCheck: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  Ingress: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  Mesh: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  ProxyTemplate: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  Secret: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  TrafficLog: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  TrafficPermission: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  TrafficRoute: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  },
-                  TrafficTrace: {
-                    responsesSent: '2',
-                    responsesRejected: '1'
-                  }
-                }
+                total: {}
               }
             },
             {
-              id: '2',
-              globalInstanceId: 'node-002',
-              connectTime: '2019-07-17T16:05:36.995Z',
+              id: 'f586f89c-2c4e-4f93-9a56-f0ea2ff010b7',
+              globalInstanceId: '66309679-ee95-4ea8-b17f-c715ca03bb38',
+              connectTime: '2020-07-28T16:08:24.760801Z',
               status: {
+                lastUpdateTime: '2020-07-28T16:08:25.770774Z',
                 total: {
-                  responsesSent: '20',
-                  responsesRejected: '2'
+                  responsesSent: '11',
+                  responsesAcknowledged: '11'
+                },
+                stat: {
+                  CircuitBreaker: {
+                    responsesSent: '124',
+                    responsesAcknowledged: '4509369'
+                  },
+                  Dataplane: {
+                    responsesSent: '9018614',
+                    responsesAcknowledged: '13527859'
+                  },
+                  FaultInjection: {
+                    responsesSent: '18037104',
+                    responsesAcknowledged: '22546349'
+                  },
+                  HealthCheck: {
+                    responsesSent: '27055594',
+                    responsesAcknowledged: '31564839'
+                  },
+                  Mesh: {
+                    responsesSent: '36074084',
+                    responsesAcknowledged: '40583329'
+                  },
+                  ProxyTemplate: {
+                    responsesSent: '45092574',
+                    responsesAcknowledged: '49601819'
+                  },
+                  Secret: {
+                    responsesSent: '54111064',
+                    responsesAcknowledged: '58620309'
+                  },
+                  TrafficLog: {
+                    responsesSent: '63129554',
+                    responsesAcknowledged: '67638799'
+                  },
+                  TrafficPermission: {
+                    responsesSent: '72148044',
+                    responsesAcknowledged: '76657289'
+                  },
+                  TrafficRoute: {
+                    responsesSent: '81166534',
+                    responsesAcknowledged: '85675779'
+                  },
+                  TrafficTrace: {
+                    responsesSent: '90185024',
+                    responsesAcknowledged: '94694269'
+                  }
                 }
               }
             }

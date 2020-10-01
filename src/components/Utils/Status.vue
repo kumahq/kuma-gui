@@ -4,7 +4,10 @@
       class="status__dot"
       :class="{ 'is-active': active }"
     />
-    <span class="status__label">
+    <span
+      class="status__label"
+      :title="content"
+    >
       <slot name="content" />
     </span>
   </div>
@@ -38,7 +41,7 @@ export default {
 }
 
 .status__dot {
-  --status-color: var(--red-base);
+  --status-color: var(--red-600);
   display: inline-block;
   width: 8px;
   height: 8px;
@@ -47,7 +50,7 @@ export default {
   background-color: var(--status-color);
 
   &.is-active {
-    --status-color: var(--green-1);
+    --status-color: var(--green-500);
   }
 }
 
