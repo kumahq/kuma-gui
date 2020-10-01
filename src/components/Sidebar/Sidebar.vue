@@ -193,38 +193,30 @@ export default {
     sidebarEvent () {
       // determine if the user is on a touch or non-touch device
       // and then use the proper events accordingly.
-      const eventResult = () => {
-        const hasTouch = this.touchDevice
-        const el = this.$refs.sidebarControl
+      const hasTouch = this.touchDevice
+      const el = this.$refs.sidebarControl
 
-        if (hasTouch) {
-          el.addEventListener('touchstart', () => {
-            this.isHovering = true
-          })
+      if (hasTouch) {
+        el.addEventListener('touchstart', () => {
+          this.isHovering = true
+        })
 
-          el.addEventListener('touchend', () => {
-            this.isHovering = false
-          })
-        } else {
-          el.addEventListener('mouseover', () => {
-            this.isHovering = true
-          })
+        el.addEventListener('touchend', () => {
+          this.isHovering = false
+        })
+      } else {
+        el.addEventListener('mouseover', () => {
+          this.isHovering = true
+        })
 
-          el.addEventListener('mouseout', () => {
-            this.isHovering = false
-          })
+        el.addEventListener('mouseout', () => {
+          this.isHovering = false
+        })
 
-          el.addEventListener('click', () => {
-            this.isHovering = false
-          })
-        }
-
-        if (process.env.NODE_ENV === 'development') {
-          console.info(hasTouch ? 'Touch Available' : 'Touch Unavailable')
-        }
+        el.addEventListener('click', () => {
+          this.isHovering = false
+        })
       }
-
-      return eventResult()
     }
   }
 }

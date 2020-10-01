@@ -25,7 +25,10 @@
         class="py-1 md:py-0 md:px-4"
       >
         <div class="app-status app-status--mobile">
-          <KPop width="300">
+          <KPop
+            width="300"
+            placement="bottomEnd"
+          >
             <KButton
               class="kpop-control"
               appearance="primary"

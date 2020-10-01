@@ -57,6 +57,16 @@
   outline: 0 !important;
 }
 
+/* KPopover overrides */
+
+.k-popover {
+  z-index: 1031 !important;
+
+  .k-badge {
+    display: inline;
+  }
+}
+
 /* misc utils */
 
 .help-icon {

@@ -24,7 +24,6 @@
       v-for="(item, idx) in items"
       :key="idx"
       v-bind="item"
-      @click.native="handleToggle"
     />
   </div>
 </template>
