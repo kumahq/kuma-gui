@@ -165,28 +165,23 @@ export default {
 .tag-cols {
   display: grid;
   grid-auto-flow: column dense;
-  grid-gap: 10px;
+  // grid-gap: 10px;
   grid-template-columns: 1fr 2fr;
 
+  span {
+    display: inline-block;
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--gray-4);
+  }
+
   span:first-of-type {
-    min-width: 80px;
+    // min-width: 80px;
     font-weight: 700;
-    text-align: right;
   }
 
   span:last-of-type {
 
   }
-}
-
-.tag-cols__label {
-  min-width: 80px;
-  font-weight: 700;
-  text-align: right;
-}
-
-.tag-cols__value {
-
 }
 
 // Label columns
