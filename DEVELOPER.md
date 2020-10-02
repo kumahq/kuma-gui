@@ -218,6 +218,80 @@ you can use the `pathFlip` boolean to enable this:
 
 **What does `pathFlip` do?**
 
-By default, the format for URLs is `/default/meshes`. `default` being the selected Mesh name, and `circuit-breakers`
+By default, the format for URLs is `/default/meshes` -- `default` being the selected Mesh name, and `meshes`
 being the path for our route. But say you wanted the Mesh to be at the end instead (like in the context of the Meshes
 view). Your route would instead be structured like so: `/meshes/default`
+
+### VueX store / State management
+
+All of our app state management functionality is located in `src/store/index.js`. In the future, we would like to split
+this file up to make it more manageable ([learn more](https://vueschool.io/lessons/split-vuex-store-in-multiple-files)).
+
+One of the main things you'll need when adding a view for a new Policy, is a way to count the number of items within that
+policy. By default, each endpoint served from Kuma includes a `total`. Here is an example:
+
+**Our action:**
+
+```js
+fetchProxyTemplateTotalCount ({ commit }) {
+  // we supply a size of 1 to keep the request lightweight.
+  // by default, each endpoint will return 100 items, but since we simply want to get the total,
+  // we can tell it to just give us 1 item.
+  const params = { size: 1 }
+
+  return api.getAllProxyTemplates(params)
+    .then(response => {
+      const total = response.total
+
+      commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', total)
+    })
+    .catch(error => {
+      console.error(error)
+    })
+},
+```
+
+The above will get the total number of Proxy Templates from the endpoint, and then triggers a mutation to update our state:
+
+**Our mutation:**
+
+```js
+SET_TOTAL_PROXY_TEMPLATE_COUNT: (state, count) => (state.totalProxyTemplateCount = count),
+```
+
+This simply updates the total number of Proxy Templates in the state. If you're already familiar with VueX or state
+management, this is straightforward.
+
+**Our getter:**
+
+We also have getters for grabbing this data with ease:
+
+```js
+getTotalProxyTemplateCount: (state) => state.totalProxyTemplateCount
+```
+
+In your component, you can then use [`mapGetters`](https://vuex.vuejs.org/guide/getters.html#the-mapgetters-helper)
+as a computed value for easily accessing this data:
+
+```js
+import { mapGetters } from 'vuex'
+
+export default {
+  // [...]
+  computed: {
+    ...mapGetters({
+      total: 'getTotalProxyTemplateCount'
+    }),
+  }
+}
+```
+
+```html
+<!-- your component -->
+<div>
+  <h1>Total: {{ total }}</h1>
+</div>
+```
+
+We recommend taking a look at the Overview (`src/views/Overview.vue`) component to get a better understanding of where and
+how these total counts are used.
