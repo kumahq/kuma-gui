@@ -24,6 +24,7 @@
       v-for="(item, idx) in items"
       :key="idx"
       v-bind="item"
+      :nested="item.nested"
     />
   </div>
 </template>

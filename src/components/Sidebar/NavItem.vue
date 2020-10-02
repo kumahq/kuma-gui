@@ -4,10 +4,12 @@
       { 'is-active': isActive },
       { 'is-menu-item': isMenuItem },
       { 'is-disabled': isDisabled },
-      { 'is-title': title }
+      { 'is-title': title },
+      { 'is-nested': nested }
     ]"
     class="nav-item"
   >
+    <slot />
     <router-link
       :to="routerLink"
     >
@@ -90,6 +92,10 @@ export default {
       default: false
     },
     title: {
+      type: Boolean,
+      default: false
+    },
+    nested: {
       type: Boolean,
       default: false
     }
@@ -242,6 +248,15 @@ export default {
 
     &:hover {
       background: none;
+    }
+  }
+
+  &.is-nested {
+    margin-left: var(--spacing-lg);
+    font-size: var(--type-sm);
+
+    a {
+      padding: 5px 15px;
     }
   }
 }
