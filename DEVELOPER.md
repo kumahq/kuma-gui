@@ -94,8 +94,130 @@ props for data handling and other functionality. You can see some examples in `s
 DRY and more flexible.
 
 The most prominent Skeleton in use is the `DataOverview`. It's used to serve each of the Policies, Meshes, Dataplanes,
-and other views that the app serves.
+and other views that the app serves. We will explain how to create new views.
 
-### Creating a new view
+### Creating a new page view
 
-There are a few steps involved when creating a new view
+There are a few steps involved when creating a new view. It will need a route, a component, new REST functions, and a new
+nav link in the sidebar.
+
+#### 1. Create your view component
+
+The easiest way to do this is to copy an existing view and rename it accordingly. For example, `CircuitBreakers.vue` would
+be a good starting point. Once you've cloned an existing view and named it appropriately, below are the additional changes
+to be made:
+
+Change the component name and meta info:
+
+```js
+export default {
+  name: 'MyNewView',
+  metaInfo: {
+    title: 'My New View'
+  }
+}
+```
+
+Update the endpoints in the `endpoint` const located in the `loadData()` method:
+
+```js
+const mesh = this.$route.params.mesh || null
+const query = this.$route.query.ns || null
+
+const params = {
+  size: this.pageSize,
+  offset: this.pageOffset
+}
+
+const endpoint = () => {
+  if (mesh === 'all') {
+    return this.$api.getAllCircuitBreakers(params)
+  } else if ((query && query.length) && mesh !== 'all') {
+    return this.$api.getCircuitBreaker(mesh, query, params)
+  }
+
+  return this.$api.getAllCircuitBreakersFromMesh(mesh)
+}
+```
+
+Here is a quick breakdown of what each of these requests does:
+
+* `getAllCircuitBreakers()` - Fetches all Circuit Breakers for all meshes
+* `getCircuitBreaker()` - Gets a specific Circuit Breaker from a mesh
+* `getAllCircuitBreakersFromMesh()` - Gets all Circuit Breakers for a specific mesh
+
+#### 2. Create your REST functions
+
+All REST functions used throughout the app are located in `src/services/kuma.js`. To make the API accessible globally,
+we've defined it as an instance property inside of our `main.js` file, which will import our Kuma service:
+
+```js
+const kuma = new Kuma()
+
+Vue.prototype.$api = kuma
+```
+
+We won't go into detail about how to create each API function, since this documentation makes the assumption that the reader
+has an understanding of Vue concepts. Each existing function is pretty self-explanatory and named in a way that helps describe
+what it's doing.
+
+#### 3. Create your route
+
+All Mesh-related view routes are located under the route named `mesh`. Inside of `children: []`
+within the `mesh` route, add something like this:
+
+```js
+{
+  path: 'my-new-view',
+  name: 'my-new-view',
+  meta: {
+    title: 'My New View',
+    breadcrumb: 'My New View'
+  },
+  component: () => import(/* webpackChunkName: "my-new-view" */ '@/views/Entities/MyNewView')
+},
+```
+Your route will look like this: `http://localhost:8080/#/:mesh/my-new-view`. `:mesh` is a route `param` that is
+replaced with the mesh that the user has selected in the app (this defaults to `all`, which shows data for all Meshes).
+
+#### 4. Create your sidebar menu link
+
+All of the sidebar menu items are located in `src/components/Sidebar/menu.js`. If you are creating a view for a new Service,
+place your link inside of `items` within `subNav`:
+
+```js
+subNav: {
+  items: [
+    {
+      name: 'My New View',
+      link: 'my-new-view' // this is the `name` of your route
+    }
+  ]
+}
+```
+
+If you are instead creating a new title to divide your nav items, you can do this:
+
+```js
+{
+  name: 'My Group Name',
+  title: true
+}
+```
+
+If you have a route that requires the `:mesh` to be inserted at the end of the URL instead of before your route's path,
+you can use the `pathFlip` boolean to enable this:
+
+```js
+{
+  name: 'Meshes',
+  link: 'mesh-child',
+  pathFlip: true
+}
+```
+
+**What does `pathFlip` do?**
+
+By default, the format for URLs is `/default/meshes`. `default` being the selected Mesh name, and `circuit-breakers`
+being the path for our route. But say you wanted the Mesh to be at the end instead (like in the context of the Meshes
+view). Your route would instead be structured like so: `/meshes/default`
