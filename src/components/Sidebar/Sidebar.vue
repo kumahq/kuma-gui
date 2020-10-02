@@ -1,8 +1,9 @@
 <template>
   <aside
     id="the-sidebar"
+    class="has-subnav"
     :class="[
-      { 'has-subnav': hasSubnav },
+      //{ 'has-subnav': hasSubnav },
       { 'is-collapsed': isCollapsed },
       { 'subnav-expanded': subnavIsExpanded }
     ]"
@@ -38,9 +39,8 @@
       </div>
     </div>
     <Subnav
-      v-if="hasSubnav && subnavIsExpanded"
-      :title="selectedMenuItem.name"
-      :title-link="selectedMenuItem.link"
+      v-if="subnavIsExpanded"
+      :title="titleNavItems[0].name"
       :items="topNavItems"
     >
       <template slot="top">
@@ -159,10 +159,6 @@ export default {
   },
 
   methods: {
-    ...mapMutations('sidebar', [
-      'setMenu'
-    ]),
-
     getNavItems (menu, position, items) {
       return menu.find(i => i.position === position).items
     },

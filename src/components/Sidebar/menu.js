@@ -8,7 +8,8 @@ export default [
         name: 'Service Mesh',
         // icon: 'services',
         iconCustom: meshIcon,
-        link: 'home',
+        // link: 'home',
+        link: null,
         subNav: {
           items: [
             {

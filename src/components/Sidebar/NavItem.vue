@@ -122,7 +122,31 @@ export default {
         ? this.$route?.params
         : undefined
 
-      return this.linkObj || { name: this.link, params }
+      const link = () => {
+        if (this.linkObj) {
+          return this.linkObj
+        }
+
+        if (this.link) {
+          return {
+            name: this.link,
+            params
+          }
+        }
+
+        if (this.title) {
+          return {
+            name: null
+          }
+        }
+
+        return {
+          name: this.$route.name,
+          params
+        }
+      }
+
+      return link()
     },
     isActive () {
       const navItemRouteName = this.link

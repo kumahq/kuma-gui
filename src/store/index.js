@@ -13,6 +13,7 @@ export default (api) => {
       // workspaces
     },
     state: {
+      menu: null,
       config: null,
       environment: null,
       onboardingComplete: false,
