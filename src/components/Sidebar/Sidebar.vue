@@ -277,7 +277,7 @@ export default {
     width: var(--sidebarOpenWidth);
     padding: 1.5rem 0 2rem;
     background-color: var(--sidebarBackground);
-    transition: .2s width var(--transition);
+    transition: var(--transitionTiming) width var(--transition);
 
     .top-nav {
       margin-bottom: auto;
