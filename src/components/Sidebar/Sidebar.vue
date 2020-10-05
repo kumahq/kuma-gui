@@ -41,6 +41,7 @@
     <Subnav
       v-if="subnavIsExpanded"
       :title="titleNavItems[0].name"
+      :title-link="titleNavItems[0].link"
       :items="topNavItems"
     >
       <template slot="top">
@@ -180,7 +181,14 @@ export default {
     },
 
     toggleSubnav () {
-      this.subnavIsExpanded = !this.subnavIsExpanded
+      /**
+       * we want to make sure that when the user clicks one of the
+       * parent items, the subnav is expanded and kept that way.
+       * this reduces the amount of clicks for the user and keeps the
+       * subnav items accessible.
+       */
+      // this.subnavIsExpanded = !this.subnavIsExpanded
+      this.subnavIsExpanded = true
       this.isCollapsed = true
 
       localStorage.setItem('sidebarCollapsed', this.subnavIsExpanded)

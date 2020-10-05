@@ -170,8 +170,8 @@ export default {
 
   span {
     display: inline-block;
-    padding: var(--spacing-sm);
-    border-bottom: 1px solid var(--gray-4);
+    padding: var(--spacing-xs);
+    // border-bottom: 1px solid var(--gray-4);
   }
 
   span:first-of-type {
