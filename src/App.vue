@@ -162,6 +162,7 @@ export default {
 <style lang="scss" scoped>
 .main-content {
   padding: 44px;
+  transition: var(--transitionTiming) margin var(--transition);
 }
 
 .page {

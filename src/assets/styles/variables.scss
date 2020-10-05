@@ -1,0 +1,150 @@
+//
+// Variables
+//
+
+:root {
+  // Fonts, font sizing, weight, etc.
+  --base-font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont,
+    'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --base-font-size-root: 62.5%;
+  --base-font-size: 15px;
+  --font-weight-light: 400;
+  --font-weight-bold: 700;
+
+  // Colors
+  --gray-1: #faf5f9;
+  --gray-2: #dbbbd5;
+  --gray-3: rgba(0, 0, 0, 0.45);
+  --gray-4: #ebebeb;
+  --gray-5: #f7f9fa;
+  --gray-6: #fdfdfd;
+  --gray-7: #f3f5f7;
+
+  --blue-1: #2d64b3;
+  --blue-2: #3d88f2;
+  --blue-3: rgba(61, 136, 242, 0.07);
+  --blue-4: #1155cb;
+  --black-1: rgba(0, 0, 0, 0.75);
+  --green-1: #1b9844;
+
+  // Logo colors
+  // These are not present on the current logo but are
+  // used throughout the website and serve well as a
+  // palette to pull from.
+  --logo-coral: #ee485d;
+  --logo-teal: #00cdde;
+  --logo-mint: #00e8c2;
+  --logo-navy: #172350;
+  --logo-green: #3db664;
+  --logo-purple: #290b53;
+  --logo-pink: #ff5d8c;
+
+  // Logo colors (as Sass vars)
+  // @TODO turn this into a Sass map to access colors easier
+  // as both CSS vars and SCSS vars.
+  $logo-coral: #ee485d;
+  $logo-teal: #00cdde;
+  $logo-mint: #00e8c2;
+  $logo-navy: #172350;
+  $logo-green: #3db664;
+  $logo-purple: #290b53;
+  $logo-pink: #ff5d8c;
+
+  // Colors assigned to generic names to avoid refactor/change woes
+  --brand-color-1: var(--logo-coral);
+  --brand-color-2: var(--logo-teal);
+  --brand-color-3: var(--logo-mint);
+  --brand-color-4: var(--logo-navy);
+  --brand-color-5: var(--logo-green);
+  --brand-color-6: var(--logo-purple);
+  --brand-color-7: var(--logo-pink);
+
+  // Top bar
+  --topbar-height: 60px;
+  --logo-max-height: 36px;
+
+  // Content areas
+  --global-content-max-width: 100rem;
+
+  // Sidebar
+  --sidebar-width: 240px;
+  --sidebar-width-closed: 63px;
+  --sidebar-bg-color: var(--gray-6);
+
+  // New sidebar requirements
+  --sidebarOpenWidth: 180px;
+  --sidebarCollapsedWidth: 55px;
+  --subnavWidth: 200px;
+  --subnavHorizontalMargin: 1rem;
+  --sidebarBackground: var(--white);
+  --headerHeight: var(--topbar-height);
+  --transition: cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  --transitionTiming: 0.1s; // 100ms
+
+  // ==================================================================
+  // Theming
+  // ==================================================================
+
+  // Base color
+  $base-theme-color: $logo-purple;
+  // $base-theme-color: #1456cb; // default
+
+  //
+  // Adjust these percentages as you change theme colors so that you
+  // can fine-tune different shades to fit best based on the base color
+  // itself. This isn't going to be a one-sizt-fits-all, so you can
+  // adjust accordingly here based on the base color selected.
+  //
+
+  $adjuster-1: 0.75;
+  $adjuster-2: 0.08;
+  $adjuster-3: 20%;
+  $adjuster-4: 75%;
+
+  // Base colors and shades
+  --core-theme-color: #{$base-theme-color};
+  --core-theme-color-light: #{rgba($base-theme-color, $adjuster-1)};
+  --core-theme-color-lighter: #{rgba($base-theme-color, $adjuster-2)};
+  --core-theme-color-dark: #{darken($base-theme-color, $adjuster-3)};
+  --core-theme-color-darker: #{darken($base-theme-color, $adjuster-4)};
+
+  // Buttons, Forms
+  // These are overrides of existing Kongponent variables.
+  --KButtonPrimaryBase: var(--core-theme-color);
+  --KButtonPrimaryHover: var(--core-theme-color-light);
+  --KButtonPrimaryActive: var(--core-theme-color-light);
+  --KRadioPrimary: var(--core-theme-color);
+  --KInputFocus: var(--core-theme-color);
+
+  // Sidebar
+  --SidebarIconColor: var(--core-theme-color);
+  --SidebarLinkColor: var(--core-theme-color-darker);
+  --SidebarLinkBGColor: var(--core-theme-color-lighter);
+  --SidebarTitleColor: var(--core-theme-color-light);
+
+  // Links
+  --LinkColorBase: var(--core-theme-color);
+  --LinkColorHover: var(--core-theme-color-light);
+
+  // Metrics Grid
+  --MetricsCardBGColorHover: var(--core-theme-color-lighter);
+
+  // Wizard
+  --WizardTabBGColor: var(--core-theme-color);
+  --WizardTabTextColor: #fff;
+
+  // KTabs
+  --KTabsActiveColor: var(--core-theme-color);
+
+  // Data Overview
+  --DataOverviewTableLinkColor: var(--core-theme-color);
+
+  // Mesh Selector
+  --MeshSelectorTitleColor: var(--core-theme-color-light);
+  --MeshSelectorInputTextColor: var(--core-theme-color);
+  --MeshSelectorInputBorderColor: var(--core-theme-color-lighter);
+  --MeshSelectorInputBorderColorFocus: var(--core-theme-color-light);
+
+  // Progress Loader
+  --LoaderProgressBarBG: var(--core-theme-color-light);
+}

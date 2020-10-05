@@ -42,7 +42,6 @@
           card-action-route="https://kuma.io/policies/"
           :card-title="`Apply ${title} Policies`"
           card-action-button-text="Explore Policies"
-          external-link
         >
           <template slot="cardContent">
             <p>
@@ -312,13 +311,19 @@ export default {
       --i: 50%;
     }
 
+    &.card-wrapper--2-col {
+      --i: 50%;
+    }
+
     > * {
       flex: 0 0 var(--i);
       max-width: var(--i);
     }
 
     .card-item {
-      margin: 0 0.5rem 0.5rem 0.5rem;
+      --i: 16px;
+      --x: calc(var(--i) / 2);
+      margin: 0 var(--x) var(--i) var(--x);
     }
   }
 

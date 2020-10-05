@@ -42,9 +42,11 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-unused-vars': 'off',
     'no-mixed-operators': 'off',
-    'vue/no-use-v-if-with-v-for': 'off',
     'no-console': 'off',
     'no-useless-escape': 'off',
-    'no-async-promise-executor': 'off'
+    'no-async-promise-executor': 'off',
+    // Vue-specific
+    'vue/no-use-v-if-with-v-for': 'off',
+    'vue/no-v-html': 'off'
   }
 }

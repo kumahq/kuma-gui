@@ -3,7 +3,9 @@
     :class="{ 'is-collapsed': isCollapsed }"
     class="secondary-nav"
   >
-    <slot name="top" />
+    <div class="mt-3">
+      <slot name="top" />
+    </div>
     <!-- <div
       class="arrow"
       @click="handleToggle"
@@ -22,7 +24,7 @@
       v-for="(item, idx) in items"
       :key="idx"
       v-bind="item"
-      @click.native="handleToggle"
+      :nested="item.nested"
     />
   </div>
 </template>
@@ -93,12 +95,12 @@ export default {
     font-size: var(--type-sm);
 
     a {
-      color: var(--steal-400);
+      color: var(--SidebarTitleColor);
       text-decoration: none;
 
-      &:hover {
-        color: var(--blue-700);
-      }
+      // &:hover {
+      //   color: var(--blue-700);
+      // }
     }
   }
 }
@@ -121,7 +123,7 @@ export default {
 
     &.is-active {
       font-weight: 500;
-      background-color: var(--blue-100);
+      background-color: var(--SidebarLinkBGColor);
 
       &:before {
         display: none;
@@ -129,7 +131,7 @@ export default {
     }
 
     &:hover {
-      background: var(--blue-100);
+      background: var(--SidebarLinkBGColor);
     }
   }
 }

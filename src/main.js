@@ -18,15 +18,14 @@ import './kongponents'
 import '@/assets/styles/third-party/tailwind.css'
 
 /** Styles */
-import '@/assets/styles/kong-manager/inputs.css'
-import '@/assets/styles/variables.css'
-import '@/assets/styles/utilities.css'
-import '@/assets/styles/fonts.css'
-import '@/assets/styles/main.css'
-import '@/assets/styles/typography.css'
-import '@/assets/styles/inputs.css'
-import '@/assets/styles/components.css'
-import '@/assets/styles/transitions.css'
+import '@/assets/styles/variables.scss'
+import '@/assets/styles/utilities.scss'
+import '@/assets/styles/fonts.scss'
+import '@/assets/styles/main.scss'
+import '@/assets/styles/typography.scss'
+import '@/assets/styles/inputs.scss'
+import '@/assets/styles/components.scss'
+import '@/assets/styles/transitions.scss'
 
 /** Initiate Sentry */
 // let sentryDebugging = true

@@ -42,7 +42,7 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-base)"
+            color="var(--yellow-200)"
             icon="warning"
             size="42"
           />
@@ -60,7 +60,7 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-base)"
+            color="var(--yellow-200)"
             icon="warning"
             size="42"
           />
@@ -68,7 +68,6 @@
         An error has occurred while trying to load this data.
       </template>
     </KEmptyState>
-  </div>
   </div>
 </template>
 
@@ -166,28 +165,23 @@ export default {
 .tag-cols {
   display: grid;
   grid-auto-flow: column dense;
-  grid-gap: 10px;
+  // grid-gap: 10px;
   grid-template-columns: 1fr 2fr;
 
+  span {
+    display: inline-block;
+    padding: var(--spacing-xs);
+    // border-bottom: 1px solid var(--gray-4);
+  }
+
   span:first-of-type {
-    min-width: 80px;
+    // min-width: 80px;
     font-weight: 700;
-    text-align: right;
   }
 
   span:last-of-type {
 
   }
-}
-
-.tag-cols__label {
-  min-width: 80px;
-  font-weight: 700;
-  text-align: right;
-}
-
-.tag-cols__value {
-
 }
 
 // Label columns

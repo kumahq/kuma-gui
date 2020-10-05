@@ -4,23 +4,26 @@
       { 'is-active': isActive },
       { 'is-menu-item': isMenuItem },
       { 'is-disabled': isDisabled },
-      { 'is-title': title }
+      { 'is-title': title },
+      { 'is-nested': nested }
     ]"
     class="nav-item"
   >
+    <slot />
     <router-link
       :to="routerLink"
     >
       <div
-        v-if="hasIcon"
+        v-if="hasIcon || hasCustomIcon"
         class="nav-icon"
       >
         <slot name="item-icon">
           <KIcon
+            v-if="hasIcon && icon"
             width="18"
             height="18"
             view-box="0 0 18 18"
-            :color="iconColor"
+            color="var(--SidebarIconColor)"
             :icon="icon"
           />
         </slot>
@@ -76,6 +79,10 @@ export default {
       type: Boolean,
       default: false
     },
+    hasCustomIcon: {
+      type: Boolean,
+      default: false
+    },
     isMenuItem: {
       type: Boolean,
       default: true
@@ -85,6 +92,10 @@ export default {
       default: false
     },
     title: {
+      type: Boolean,
+      default: false
+    },
+    nested: {
       type: Boolean,
       default: false
     }
@@ -117,7 +128,31 @@ export default {
         ? this.$route?.params
         : undefined
 
-      return this.linkObj || { name: this.link, params }
+      const link = () => {
+        if (this.linkObj) {
+          return this.linkObj
+        }
+
+        if (this.link) {
+          return {
+            name: this.link,
+            params
+          }
+        }
+
+        if (this.title) {
+          return {
+            name: null
+          }
+        }
+
+        return {
+          name: this.$route.name,
+          params
+        }
+      }
+
+      return link()
     },
     isActive () {
       const navItemRouteName = this.link
@@ -131,12 +166,6 @@ export default {
       return navItemRouteName && currentRoute.matched.some(r => {
         return navItemRouteName === r.name || navItemRouteName === r.redirect
       })
-    },
-    iconColor () {
-      return 'var(--blue-500)'
-      // return this.isActive
-      //   ? 'var(--blue-500)'
-      //   : 'var(--steal-400)'
     }
   },
   watch: {
@@ -184,7 +213,7 @@ export default {
     display: flex;
     width: 100%;
     align-items: center;
-    color: var(--blue-700);
+    color: var(--SidebarLinkColor);
     text-decoration: none;
     padding: 8px 20px;
   }
@@ -201,7 +230,7 @@ export default {
     // padding: 0 1rem;
     font-weight: 500;
     font-size: var(--type-sm);
-    color: var(--steal-400);
+    color: var(--SidebarTitleColor);
   }
 
   &.is-disabled {
@@ -221,6 +250,15 @@ export default {
       background: none;
     }
   }
+
+  &.is-nested {
+    margin-left: var(--spacing-lg);
+    font-size: var(--type-sm);
+
+    a {
+      padding: 5px 15px;
+    }
+  }
 }
 </style>
 
@@ -230,10 +268,10 @@ export default {
   position: relative;
 
   &:hover:not(.is-active) {
-    color: var(--blue-500);
+    color: var(--SidebarIconColor);
 
-    svg path {
-      fill: var(--blue-500);
+    svg[class] path {
+      fill: var(--SidebarIconColor);
     }
   }
 
@@ -243,7 +281,7 @@ export default {
     top: 0;
     bottom: 0;
     width: 3px;
-    background-color: var(--blue-500);
+    background-color: var(--SidebarIconColor);
     content: '';
   }
 }

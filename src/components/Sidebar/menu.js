@@ -1,10 +1,13 @@
+import meshIcon from './../../assets/images/icon-service-mesh.svg'
+
 export default [
   {
     position: 'top',
     items: [
       {
         name: 'Service Mesh',
-        icon: 'services',
+        // icon: 'services',
+        iconCustom: meshIcon,
         link: 'home',
         subNav: {
           items: [

@@ -1,8 +1,9 @@
 <template>
   <aside
     id="the-sidebar"
+    class="has-subnav"
     :class="[
-      { 'has-subnav': hasSubnav },
+      //{ 'has-subnav': hasSubnav },
       { 'is-collapsed': isCollapsed },
       { 'subnav-expanded': subnavIsExpanded }
     ]"
@@ -17,9 +18,16 @@
           v-for="(item, idx) in titleNavItems"
           :key="idx"
           v-bind="item"
-          has-icon
+          has-custom-icon
           @click.native="toggleSubnav"
-        />
+        >
+          <template
+            v-if="item.iconCustom && !item.icon"
+            slot="item-icon"
+          >
+            <div v-html="item.iconCustom" />
+          </template>
+        </NavItem>
       </div>
       <div class="bottom-nav">
         <NavItem
@@ -31,9 +39,9 @@
       </div>
     </div>
     <Subnav
-      v-if="hasSubnav && subnavIsExpanded"
-      :title="selectedMenuItem.name"
-      :title-link="selectedMenuItem.link"
+      v-if="subnavIsExpanded"
+      :title="titleNavItems[0].name"
+      :title-link="titleNavItems[0].link"
       :items="topNavItems"
     >
       <template slot="top">
@@ -64,7 +72,7 @@ export default {
       sidebarSavedState: null,
       toggleWorkspaces: false,
       isHovering: false,
-      subnavIsExpanded: false
+      subnavIsExpanded: null
     }
   },
 
@@ -131,17 +139,8 @@ export default {
     }
   },
 
-  watch: {
-    '$route' () {
-      // this.isHovering = false
-      // this.subnavIsExpanded = false
-    }
-  },
-
   mounted () {
-    // const sidebarState = getItemFromStorage('sidebarCollapsed')
-
-    const app = this.$appWindow
+    // const app = this.$appWindow
 
     // if (app.innerWidth <= 900) {
     //   this.isCollapsed = true
@@ -151,6 +150,8 @@ export default {
 
     // window.addEventListener('resize', this.handleResize)
 
+    this.subnavIsExpanded = (localStorage.sidebarCollapsed === 'true')
+
     this.sidebarEvent()
   },
 
@@ -159,21 +160,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations('sidebar', [
-      'setMenu'
-    ]),
-
     getNavItems (menu, position, items) {
       return menu.find(i => i.position === position).items
-    },
-
-    handleToggleCollapse () {
-      this.isCollapsed = !this.isCollapsed
-      this.setCollapsedState(this.isCollapsed)
-    },
-
-    setCollapsedState (collapsedState) {
-      setItemToStorage('sidebarCollapsed', collapsedState)
     },
 
     handleResize () {
@@ -193,45 +181,46 @@ export default {
     },
 
     toggleSubnav () {
-      this.subnavIsExpanded = !this.subnavIsExpanded
+      /**
+       * we want to make sure that when the user clicks one of the
+       * parent items, the subnav is expanded and kept that way.
+       * this reduces the amount of clicks for the user and keeps the
+       * subnav items accessible.
+       */
+      // this.subnavIsExpanded = !this.subnavIsExpanded
+      this.subnavIsExpanded = true
       this.isCollapsed = true
+
+      localStorage.setItem('sidebarCollapsed', this.subnavIsExpanded)
     },
 
     sidebarEvent () {
       // determine if the user is on a touch or non-touch device
       // and then use the proper events accordingly.
-      const eventResult = () => {
-        const hasTouch = this.touchDevice
-        const el = this.$refs.sidebarControl
+      const hasTouch = this.touchDevice
+      const el = this.$refs.sidebarControl
 
-        if (hasTouch) {
-          el.addEventListener('touchstart', () => {
-            this.isHovering = true
-          })
+      if (hasTouch) {
+        el.addEventListener('touchstart', () => {
+          this.isHovering = true
+        })
 
-          el.addEventListener('touchend', () => {
-            this.isHovering = false
-          })
-        } else {
-          el.addEventListener('mouseover', () => {
-            this.isHovering = true
-          })
+        el.addEventListener('touchend', () => {
+          this.isHovering = false
+        })
+      } else {
+        el.addEventListener('mouseover', () => {
+          this.isHovering = true
+        })
 
-          el.addEventListener('mouseout', () => {
-            this.isHovering = false
-          })
+        el.addEventListener('mouseout', () => {
+          this.isHovering = false
+        })
 
-          el.addEventListener('click', () => {
-            this.isHovering = false
-          })
-        }
-
-        if (process.env.NODE_ENV === 'development') {
-          console.info(hasTouch ? 'Touch Available' : 'Touch Unavailable')
-        }
+        el.addEventListener('click', () => {
+          this.isHovering = false
+        })
       }
-
-      return eventResult()
     }
   }
 }
@@ -247,18 +236,44 @@ export default {
   height:  calc(100vh - 3rem);
   color: var(--blue-700);
 
+  .nav-icon {
+
+    svg:not([class]) {
+      display: block;
+      margin: 0;
+      width: 18px;
+      height: 18px;
+
+      circle {
+        fill: var(--SidebarIconColor);
+      }
+
+      path {
+        stroke: var(--SidebarIconColor);
+      }
+    }
+  }
+
   &.has-subnav {
     width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+
+    &.subnav-expanded {
+
+      .main-nav.is-hovering {
+        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+      }
+    }
 
     .main-nav {
       width: var(--sidebarCollapsedWidth);
       z-index: 1100;
 
       &.is-hovering {
-        max-width: max-content;
-        width: calc(var(--subnavWidth) + 1rem);
+        // max-width: max-content;
+        // width: calc(var(--subnavWidth) + 1rem);
+        width: var(--subnavWidth);
         cursor: pointer;
-        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+        // box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
       }
     }
   }
@@ -268,9 +283,9 @@ export default {
     display: flex;
     flex-direction: column;
     width: var(--sidebarOpenWidth);
-    padding-bottom: 2rem;
+    padding: 1.5rem 0 2rem;
     background-color: var(--sidebarBackground);
-    transition: .2s width var(--transition);
+    transition: var(--transitionTiming) width var(--transition);
 
     .top-nav {
       margin-bottom: auto;
@@ -278,7 +293,12 @@ export default {
   }
 
   & + .main-content {
-    margin-left: var(--sidebarCollapsedWidth);
+    // margin-left: var(--sidebarCollapsedWidth);
+    margin-left: var(--sidebarOpenWidth);
+  }
+
+  &.subnav-expanded + .main-content {
+    margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
   }
 
   .no-pointer-events {
@@ -287,13 +307,13 @@ export default {
 
   // Move content over
   // @media only screen and (max-width: 800px) {
-    & + .main-content {
-      margin-left: var(--sidebarOpenWidth);
-    }
+  //   & + .main-content {
+  //     margin-left: var(--sidebarOpenWidth);
+  //   }
 
-    &.subnav-expanded + .main-content {
-      margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
-    }
+  //   &.subnav-expanded + .main-content {
+  //     margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+  //   }
   // }
 }
 </style>

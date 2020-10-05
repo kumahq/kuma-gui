@@ -2,7 +2,7 @@
   <div class="upgrade-check">
     <KAlert
       v-if="showNotice"
-      appearance="info"
+      appearance="warning"
       size="small"
     >
       <template slot="alertMessage">
@@ -11,13 +11,13 @@
             {{ tagline }} update available
           </div>
           <div>
-            <a
-              :href="url"
-              target="_blank"
-              class="external-link-btn"
+            <KButton
+              appearance="primary"
+              size="small"
+              :to="url"
             >
               Update
-            </a>
+            </KButton>
           </div>
         </div>
       </template>
@@ -116,17 +116,12 @@ export default {
     margin-right: var(--spacing-sm);
   }
 
-  .external-link-btn {
-    font-size: inherit;
-    padding: var(--spacing-xxs) var(--spacing-xs);
+  .k-button {
+    text-decoration: none;
 
     &:after {
       display: none;
     }
   }
-}
-
-.action-button.action-button {
-  text-decoration: none;
 }
 </style>
