@@ -9,7 +9,6 @@ Consult the Table of Contents below to navigate these docs.
 ## Table of Contents
 
 * [Developer documentation](#developer-documentation)
-  * [Table of Contents](#table-of-contents)
   * [Dependencies](#dependencies)
       * [The Vue CLI tool](#the-vue-cli-tool)
   * [Libraries and tools](#libraries-and-tools)
