@@ -8,6 +8,30 @@ Consult the Table of Contents below to navigate these docs.
 
 ## Table of Contents
 
+* [Developer documentation](#developer-documentation)
+  * [Table of Contents](#table-of-contents)
+  * [Dependencies](#dependencies)
+      * [The Vue CLI tool](#the-vue-cli-tool)
+  * [Libraries and tools](#libraries-and-tools)
+  * [Folder structure](#folder-structure)
+  * [Getting started](#getting-started)
+      * [Setting up Kuma](#setting-up-kuma)
+        * [Disable anonymous reports](#disable-anonymous-reports)
+      * [Running the GUI](#running-the-gui)
+      * [Building the GUI](#building-the-gui)
+  * [Development](#development)
+      * [Creating a new page view](#creating-a-new-page-view)
+        * [1. Create your view component](#1-create-your-view-component)
+        * [2. Create your REST functions](#2-create-your-rest-functions)
+        * [3. Create your route](#3-create-your-route)
+        * [4. Create your sidebar menu link](#4-create-your-sidebar-menu-link)
+      * [VueX store / State management](#vuex-store--state-management)
+      * [Styles](#styles)
+        * [Variables](#variables)
+        * [Scoped SCSS](#scoped-scss)
+        * [State](#state)
+        * [Tailwind](#tailwind)
+
 ## Dependencies
 
 * `git`
@@ -34,6 +58,28 @@ npx vue-cli-service serve
 
 All styles are written as scoped SCSS inside of each component. For all utility and broader use CSS, styles can be written
 in the appropriate place in `src/assets/styles`.
+
+## Folder structure
+
+The GUI is structured in standard Vue app format, with some unique differences.
+
+* public - Contains our Vue app's index file and all static assets
+* dist - This is where our build files output to
+* tests
+* src
+  * assets - fonts, images, and all of our SCSS files
+  * components - All of our Vue components and skeletons
+    * Global - globally-used components (e.g. header, footer, etc)
+    * Metrics - These are components for displaying metrics. These are primarily used on the Global Overview
+    * Sidebar - The sidebar is comprised of multiple components. They are all located here
+    * Skeletons - These views are comprised of multiple components and help keep things DRY when creating new views
+    * Utils - Have a small component that serves a generic purpose? This is the ideal place for it
+  * mixins
+  * pdk - Kong Manager Plugin Development Kit. A handful of components and tools for helping create dashboards quickly
+  * schemas
+  * services - This is where our REST client and Kuma endpoints reside
+  * store - Where all of our VueX modules and store are located
+  * views - This is where the majority of our app resides. All route views are located here
 
 ## Getting started
 
@@ -243,6 +289,7 @@ fetchProxyTemplateTotalCount ({ commit }) {
     .then(response => {
       const total = response.total
 
+      // once we have our total, we write it to our state with a mutation
       commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', total)
     })
     .catch(error => {
@@ -256,7 +303,7 @@ The above will get the total number of Proxy Templates from the endpoint, and th
 **Our mutation:**
 
 ```js
-SET_TOTAL_PROXY_TEMPLATE_COUNT: (state, count) => (state.totalProxyTemplateCount = count),
+SET_TOTAL_PROXY_TEMPLATE_COUNT: (state, count) => (state.totalProxyTemplateCount = count)
 ```
 
 This simply updates the total number of Proxy Templates in the state. If you're already familiar with VueX or state
@@ -295,3 +342,92 @@ export default {
 
 We recommend taking a look at the Overview (`src/views/Overview.vue`) component to get a better understanding of where and
 how these total counts are used.
+
+### Styles
+
+We try to primarily follow the [BEMCSS](http://getbem.com/introduction/) methodology when writing CSS, but since we are
+writing mostly scoped styles on all of our Vue components, our naming conventions can be more relaxed. Please make sure
+to name your elements in a clear manner.
+
+#### Variables
+
+When working with [Kongponents](https://kongponents.netlify.app/), you'll see that
+[CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) are used heavily. This
+allows styles in components to be overridden with ease.
+[Here is an example](https://kongponents.netlify.app/components/button.html#theming) of how button variables can be
+overridden without having to do hacky `!important` or `.class-name.class-name` hacks:
+
+```js
+<template>
+  <KButton
+    class="purple-button"
+    appearance="primary"
+    @click="someCoolEvent"
+  >
+    PURPLE!
+  </KButton>
+</template>
+
+<style>
+.purple-button {
+  --KButtonPrimaryBase: #494ca2;
+  --KButtonPrimaryHover: #6c6ebd;
+  --KButtonPrimaryActive: #3c3f86;
+}
+</style>
+```
+
+The same applies to our GUI app. All of our global and component-specific CSS variables are stored within
+`src/assets/styles/variables.css`. You'll notice that there are some SCSS variables present as well. This is so we can
+leverage some of the built-in color modification functions that Sass offers.
+
+#### Scoped SCSS
+
+When writing styles inside of a component, make sure to include `scoped` to prevent style collisions:
+
+```js
+<style lang="scss" scoped>
+.your-component {
+  color: rebeccapurple;
+
+  // try not to go more than 3 elements deep when nesting
+  .nested-item {
+    display: block;
+  }
+}
+</style>
+```
+
+If you are writing broader styles in a CSS/SCSS file, make sure to leverage BEM. This helps keep things clear and concise:
+
+```css
+.main-sidebar { }
+.main-sidebar__nav-link { }
+.main-sidebar__nav-link--is-active { }
+.main-sidebar__title { }
+```
+
+#### State
+
+When handling states in CSS, we like to use human-readable classes to make it obvious that a certain state is applied or
+active. This helps when scanning through the codebase, and helps with debugging as well. Here are some examples:
+
+```css
+.is-expanded { }
+.is-active { }
+.is-fixed { }
+```
+
+#### Tailwind
+
+In an effort to help with rapid development and avoid reinventing the wheel, we use some [Tailwind](https://tailwindcss.com/)
+utilities throughout the app. If you need to revise or view the configuration for Tailwind, this is handled in the
+`tailwind.config.js` file.
+
+All of our needed Tailwind components are included with the `src/assets/styles/third-party/tailwind.css` file:
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
