@@ -24,6 +24,8 @@ Consult the Table of Contents below to navigate these docs.
         * [2. Create your REST functions](#2-create-your-rest-functions)
         * [3. Create your route](#3-create-your-route)
         * [4. Create your sidebar menu link](#4-create-your-sidebar-menu-link)
+      * [Creating mock data](#creating-mock-data)
+        * [Creating and modifying mocks](#creating-and-modifying-mocks)
       * [VueX store / State management](#vuex-store--state-management)
       * [Styles](#styles)
         * [Variables](#variables)
@@ -267,6 +269,25 @@ By default, the format for URLs is `/default/meshes` -- `default` being the sele
 being the path for our route. But say you wanted the Mesh to be at the end instead (like in the context of the Meshes
 view). Your route would instead be structured like so: `/meshes/default`
 
+### Creating mock data
+
+For handling mock data, we use [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter).
+
+**NOTE: Mocking is enabled by default.** If you need to disable this in order to see only data coming from Kuma itself:
+
+1. Stop the app with `ctrl+c`
+2. change `VUE_APP_MOCK_API_ENABLED` to `false` in `.env.development`
+3. Restart the app
+
+#### Creating and modifying mocks
+
+All of our mock data is located in `src/services/mock.js`. We recommend reading the
+[documentation](https://github.com/ctimmerm/axios-mock-adapter#readme) for axios-mock-adapter to get an understanding
+on how it works and what it has to offer.
+
+Right now, our mock file is quite large. If you are so inclined and would like to help us organize it better, please feel
+free to [open a PR](https://github.com/kumahq/kuma-gui/pulls) to split it up into more manageable chunks.
+
 ### VueX store / State management
 
 All of our app state management functionality is located in `src/store/index.js`. In the future, we would like to split
@@ -377,7 +398,7 @@ overridden without having to do hacky `!important` or `.class-name.class-name` h
 ```
 
 The same applies to our GUI app. All of our global and component-specific CSS variables are stored within
-`src/assets/styles/variables.css`. You'll notice that there are some SCSS variables present as well. This is so we can
+`src/assets/styles/variables.scss`. You'll notice that there are some SCSS variables present as well. This is so we can
 leverage some of the built-in color modification functions that Sass offers.
 
 #### Scoped SCSS
