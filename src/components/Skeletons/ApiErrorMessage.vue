@@ -1,6 +1,6 @@
 <template>
   <KEmptyState
-    class="global-api-status"
+    class="global-api-status empty-state--wide-content empty-state--compact"
     cta-is-hidden
   >
     <template slot="title">
@@ -10,11 +10,11 @@
         icon="warning"
         size="64"
       />
-      Unable to reach the {{ tagline }} API
+      Unable to reach the API
     </template>
     <template slot="message">
       <p>
-        Please make sure {{ tagline }} is up and running
+        Please double check to make sure it is up and running
         <span v-if="url">, and it is reachable at <code>{{ url }}</code></span>
       </p>
     </template>

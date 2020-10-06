@@ -44,11 +44,11 @@
 /* KEmptyState variants */
 
 .empty-state-wrapper.empty-state--wide-content p {
-  max-width: 85%;
+  max-width: 85% !important;
 }
 
 .empty-state-wrapper.empty-state--compact {
-  padding: 2rem 0;
+  padding: 2rem 0 !important;
 }
 
 /* KTabs overrides */

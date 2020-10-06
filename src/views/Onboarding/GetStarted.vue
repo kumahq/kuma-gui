@@ -1,13 +1,16 @@
 <template>
   <div class="welcome welcome__step-1">
-    <p>
-      Kuma has been successfully installed but the cluster is currently empty.
+    <p
+      v-if="title"
+      class="type-lg"
+    >
+      {{ title }} has been successfully installed but the cluster is currently empty.
       You are only a few steps away from deploying a modern Service Mesh for your
       applications!
     </p>
 
     <div class="app-setup">
-      <h3 class="xl">
+      <h3 class="type-xl">
         Let's set up your app
       </h3>
 
@@ -19,20 +22,20 @@
             || appSource === 'k8s'"
           class="app-source-check__inner flex items-center"
         >
-          <div class="app-source-check__icon px-4">
+          <div class="app-source-check__icon mr-4">
             <img
               v-if="appSource === 'universal'"
               src="@/assets/images/icon-universal-alt.png?external"
-              alt="Kuma Universal Icon"
+              alt="Universal Icon"
             >
             <img
               v-else-if="appSource === 'kubernetes' || appSource === 'k8s'"
               src="@/assets/images/icon-k8s.png?external"
-              alt="Kuma Kubernetes Icon"
+              alt="Kubernetes Icon"
             >
           </div>
           <div class="app-source-check__content px-4">
-            <p>Kuma is running on {{ appSource }}</p>
+            <p>{{ title }} is running on {{ appSource }}</p>
           </div>
           <div class="px-4">
             <img
@@ -70,8 +73,16 @@
         v-else-if="tableData && tableDataIsEmpty === false"
         class="mt-8"
       >
-        <h2 class="xl mb-2 pb-2">
-          {{ dataplaneCountForTitle }} Dataplane(s) found, including:
+        <h2 class="type-xl mb-2 pb-2">
+          <span v-if="dataplaneCountForTitle === 1">
+            {{ dataplaneCountForTitle }} Dataplane found:
+          </span>
+          <span v-else-if="dataplaneCountForTitle <= 10">
+            {{ dataplaneCountForTitle }} Dataplane(s) found:
+          </span>
+          <span v-else>
+            {{ dataplaneCountForTitle }} Dataplane(s) found, including:
+          </span>
         </h2>
         <div class="data-table-wrapper">
           <KTable :options="tableData">
@@ -110,7 +121,7 @@
           v-if="overallDpStatus"
           class="dataplane-global-status__helper-text mt-8"
         >
-          <h3 class="xl mb-2 mt-4">
+          <h3 class="type-xl mb-2 mt-4">
             Offline Dataplanes
           </h3>
           <p>
@@ -133,7 +144,7 @@
               >
             </div>
             <div class="dataplane-fallback__content px-4">
-              <h3 class="dataplane-fallback__title mb-2 pb-2">
+              <h3 class="type-lg dataplane-fallback__title mb-2 pb-2">
                 No Dataplanes detected.
               </h3>
               <p class="mb-2">
@@ -152,7 +163,7 @@
               && appSource === 'kubernetes'
               || appSource === 'k8s'"
           >
-            <h3 class="xl mb-2">
+            <h3 class="type-xl mb-2">
               Adding New Dataplanes on Kubernetes
             </h3>
             <p class="mb-2">
@@ -171,7 +182,7 @@
           </div>
           <!-- universal instructions -->
           <div v-else>
-            <h3 class="xl mb-2">
+            <h3 class="type-xl mb-2">
               Adding New Dataplanes on Universal
             </h3>
             <p class="mb-2">
@@ -180,7 +191,12 @@
             </p>
             <div class="cols">
               <KButton
-                :to="{ name: 'universal-dataplane' }"
+                :to="{
+                  name: 'universal-dataplane',
+                  params: {
+                    mesh: 'all'
+                  }
+                }"
                 appearance="primary"
               >
                 Universal Dataplane Wizard
@@ -215,6 +231,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import axios from 'axios'
 import { setItemToStorage, getItemFromStorage } from '@/Cache'
 import configUrl from '@/configUrl'
@@ -244,6 +261,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      title: 'getTagline'
+    }),
     dataplaneCountForTitle () {
       const count = this.tableDataDataplaneCount
       if (count && count > 10) {
@@ -346,8 +366,8 @@ export default {
 .app-setup {
   padding: var(--spacing-md) 0;
   margin: var(--spacing-md) 0;
-  border-top: 1px solid var(--tblack-10);
-  // border-bottom: 1px solid var(--tblack-10);
+  border-top: 1px solid var(--grey-200);
+  // border-bottom: 1px solid var(--grey-200);
 }
 
 .app-source-check {
@@ -357,17 +377,17 @@ export default {
 .app-source-check--error {
   @include styledPanelSmall;
 
-  background-color: var(--red-lighter);
-  color: var(--red-dark);
+  background-color: var(--red-200);
+  color: var(--red-600);
 }
 
 .app-source-check__inner {
   @include styledPanelSmall;
 
-  background-color: var(--blue-lighter);
+  background-color: var(--blue-200);
 
   > *:first-child {
-    flex: 0 0 16%;
+    flex: 0 0 12%;
   }
 
   > *:last-child {
@@ -393,7 +413,7 @@ export default {
 }
 
 .dataplane-fallback__title {
-  border-bottom: 1px solid var(--tblack-10);
+  border-bottom: 1px solid var(--grey-200);
 }
 
 .data-table-wrapper {
@@ -438,7 +458,7 @@ export default {
 }
 
 .dataplane-global-status__helper-text {
-  border-top: 1px solid var(--tblack-10);
+  border-top: 1px solid var(--grey-200);
 }
 
 .cols {
@@ -452,7 +472,7 @@ export default {
 }
 
 .extra-controls {
-  border-top: 1px solid var(--tblack-10);
+  border-top: 1px solid var(--grey-200);
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-sm);
 }
@@ -468,7 +488,7 @@ export default {
     display: block;
     margin-bottom: var(--spacing-md);
     padding-bottom: var(--spacing-md);
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--grey-200);
   }
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
   <div class="welcome welcome__step-1">
-    <p class="lg">
-      You have successfully configured Kuma with the first Dataplanes,
+    <p
+      v-if="title"
+      class="type-lg"
+    >
+      You have successfully configured {{ title }} with the first Dataplanes,
       and therefore Services. You can now:
     </p>
 
@@ -88,6 +91,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { setItemToStorage, getItemFromStorage } from '@/Cache'
 
 export default {
@@ -96,6 +100,9 @@ export default {
     title: 'Congratulations!'
   },
   computed: {
+    ...mapGetters({
+      title: 'getTagline'
+    }),
     hasUserBeenOnboarded () {
       return getItemFromStorage('kumaOnboardingComplete')
     },
@@ -124,12 +131,12 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .app-checkmarks {
   margin: var(--spacing-xl) auto;
 
   > * {
-    background-color: var(--blue-lighter);
+    background-color: var(--blue-200);
     padding: 18px;
     border-radius: 4px;
     margin-top: var(--spacing-md);
