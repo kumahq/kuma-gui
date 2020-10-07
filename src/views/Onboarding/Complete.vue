@@ -4,7 +4,7 @@
       v-if="title"
       class="type-lg"
     >
-      You have successfully configured {{ title }} with the first Dataplanes,
+      You have successfully configured {{ title }} with the first data plane proxies,
       and therefore Services. You can now:
     </p>
 

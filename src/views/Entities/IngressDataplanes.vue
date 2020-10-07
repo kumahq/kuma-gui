@@ -168,7 +168,7 @@ import LabelList from '@/components/Utils/LabelList'
 export default {
   name: 'IngressDataplanes',
   metaInfo: {
-    title: 'Ingress Dataplanes'
+    title: 'Ingress data plane proxies'
   },
   components: {
     EntityURLControl,
@@ -193,7 +193,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Ingress Dataplanes present.'
+        message: 'There are no Ingress data plane proxies present.'
       },
       tableData: {
         headers: [

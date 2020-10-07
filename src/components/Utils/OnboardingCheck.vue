@@ -12,7 +12,7 @@
           <div class="alert-content">
             <div>
               <strong>Welcome to Kuma!</strong> We've detected that you don't have
-              any Dataplanes running yet. We've created an onboarding process to
+              any data plane proxies running yet. We've created an onboarding process to
               help you!
             </div>
             <div>

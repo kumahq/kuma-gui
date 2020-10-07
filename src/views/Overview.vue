@@ -26,7 +26,7 @@
           class="card-item"
           :card-action-route="dataplaneWizardRoute"
           :card-title="`Connect a Dataplane to ${title}`"
-          card-action-button-text="Connect Dataplanes"
+          card-action-button-text="Connect Data Plane Proxies"
         >
           <template slot="cardContent">
             <p>

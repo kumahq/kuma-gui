@@ -27,11 +27,11 @@ export default [
               pathFlip: true
             },
             {
-              name: 'Dataplanes',
+              name: 'Data plane proxies',
               title: true
             },
             {
-              name: 'All Dataplanes',
+              name: 'All Data plane proxies',
               link: 'dataplanes',
               title: false
             },

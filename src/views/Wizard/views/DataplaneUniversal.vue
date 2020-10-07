@@ -415,7 +415,7 @@
           <h3>Dataplane</h3>
           <p>
             In {{ title }}, a Dataplane entity represents a sidebar proxy running
-            alongside one of your services. Dataplanes can be added in any Mesh
+            alongside one of your services. Data plane proxies can be added in any Mesh
             that you may have created, and in Kubernetes, they will be auto-injected
             by {{ title }}.
           </p>

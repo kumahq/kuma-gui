@@ -247,7 +247,7 @@ export default {
 
       return [
         {
-          title: 'Dataplanes',
+          title: 'Data plane proxies',
           value: state.totalDataplaneCountFromMesh
         },
         {

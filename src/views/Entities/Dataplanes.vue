@@ -168,7 +168,7 @@ import LabelList from '@/components/Utils/LabelList'
 export default {
   name: 'Dataplanes',
   metaInfo: {
-    title: 'Dataplanes'
+    title: 'Data plane proxies'
   },
   components: {
     EntityURLControl,
@@ -193,7 +193,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Dataplanes present.'
+        message: 'There are no data plane proxies present.'
       },
       tableData: {
         headers: [

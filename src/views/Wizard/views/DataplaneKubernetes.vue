@@ -542,7 +542,7 @@
                     Once you have completed the steps above, you can view <strong>{{ validate.k8sNamespaceSelection }}</strong>
                     on the
                     <router-link :to="dataplaneUrl">
-                      Dataplanes page
+                      Data plane proxies page
                     </router-link>.
                   </template>
                 </KAlert>
@@ -607,7 +607,7 @@
           <h3>Dataplane</h3>
           <p>
             In {{ title }}, a Dataplane entity represents a sidebar proxy running
-            alongside one of your services. Dataplanes can be added in any Mesh
+            alongside one of your services. Data plane proxies can be added in any Mesh
             that you may have created, and in Kubernetes, they will be auto-injected
             by {{ title }}.
           </p>

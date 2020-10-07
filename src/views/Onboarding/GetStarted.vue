@@ -65,7 +65,7 @@
         </div>
         <div class="px-2">
           <p>
-            Waiting for Dataplanes to connect&hellip;
+            Waiting for data plane proxies to connect&hellip;
           </p>
         </div>
       </div>
@@ -108,7 +108,7 @@
             >
               Refresh
             </KButton>
-            <span v-if="overallDpStatus">Some dataplanes appear to be offline.</span>
+            <span v-if="overallDpStatus">Some data plane proxies appear to be offline.</span>
           </div>
           <KButton
             :to="{ name: 'setup-complete' }"
@@ -122,10 +122,10 @@
           class="dataplane-global-status__helper-text mt-8"
         >
           <h3 class="type-xl mb-2 mt-4">
-            Offline Dataplanes
+            Offline data plane proxies
           </h3>
           <p>
-            This means your dataplane is not connected to the control plane
+            This means your data plane proxy is not connected to the control plane
             at the moment. This might be due to a scheduled downtime or a
             network partitioning problem.
           </p>
@@ -145,11 +145,11 @@
             </div>
             <div class="dataplane-fallback__content px-4">
               <h3 class="type-lg dataplane-fallback__title mb-2 pb-2">
-                No Dataplanes detected.
+                No data plane proxies detected.
               </h3>
               <p class="mb-2">
                 To bring your applications into Kuma Service Mesh,
-                you need to deploy dataplanes (also known as Sidecar Proxies)
+                you need to deploy data plane proxies (also known as Sidecar Proxies)
                 next to them.
               </p>
             </div>
@@ -164,11 +164,11 @@
               || appSource === 'k8s'"
           >
             <h3 class="type-xl mb-2">
-              Adding New Dataplanes on Kubernetes
+              Adding New Data Plane Proxies on Kubernetes
             </h3>
             <p class="mb-2">
-              The Dataplane Wizard will walk you through the creation of new
-              Dataplanes.
+              The data plane proxy wizard will walk you through the creation of new
+              sidecar proxies.
             </p>
             <div class="cols">
               <KButton
@@ -176,18 +176,18 @@
                 appearance="primary"
                 @click.native="completeOnboarding()"
               >
-                Kubernetes Dataplane Wizard
+                Kubernetes data plane proxy wizard
               </KButton>
             </div>
           </div>
           <!-- universal instructions -->
           <div v-else>
             <h3 class="type-xl mb-2">
-              Adding New Dataplanes on Universal
+              Adding New Data Plane Proxies on Universal
             </h3>
             <p class="mb-2">
-              The Dataplane Wizard will walk you through the creation of new
-              Dataplanes.
+              The data plane proxy wizard will walk you through the creation of new
+              sidecar proxies.
             </p>
             <div class="cols">
               <KButton
@@ -199,7 +199,7 @@
                 }"
                 appearance="primary"
               >
-                Universal Dataplane Wizard
+                Universal Data Plane Proxy Wizard
               </KButton>
             </div>
           </div>
@@ -209,7 +209,7 @@
             class="mt-4"
             @click="reScanForDataplanes()"
           >
-            Re-Scan for Dataplanes
+            Re-scan for data plane proxies
           </KButton> -->
         </div>
       </div>
