@@ -132,7 +132,7 @@ export default {
           url: `/meshes/${this.selectedMesh}`
         },
         {
-          metric: 'Dataplanes',
+          metric: 'Data Plane Proxies',
           value: storeVals.dataplaneCount,
           url: `/${this.selectedMesh}/dataplanes`
         },
