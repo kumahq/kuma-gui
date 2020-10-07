@@ -24,7 +24,7 @@
             <span class="custom-control-icon">
               +
             </span>
-            Create Dataplane
+            Create Dataplane Proxy
           </KButton>
           <KButton
             v-if="this.$route.query.ns"
