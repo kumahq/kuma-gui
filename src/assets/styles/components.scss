@@ -41,13 +41,14 @@
   }
 }
 
-/* KEmptyState variants */
+/* KEmptyState */
 
-.empty-state-wrapper.empty-state--wide-content p {
-  max-width: 85% !important;
+.empty-state-content p {
+  width: 100%;
+  max-width: var(--KEmptyStateContentWidth) !important;
 }
 
-.empty-state-wrapper.empty-state--compact {
+.empty-state-wrapper {
   padding: 2rem 0 !important;
 }
 

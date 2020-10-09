@@ -1,9 +1,10 @@
 <template>
   <div class="wizard-switcher">
     <KEmptyState
+      ref="emptyState"
       cta-is-hidden
       :is-error="!environment"
-      class="my-6 empty-state--wide-content empty-state--compact"
+      class="my-6 wizard-empty-state"
     >
       <template
         v-if="environment === 'kubernetes' || environment === 'universal'"
@@ -109,6 +110,17 @@ export default {
   }
 }
 </script>
+
+<style>
+.empty-state-content p {
+  width: 100%;
+  max-width: var(--KEmptyStateContentWidth);
+}
+
+.empty-state-wrapper {
+  padding: 2rem 0;
+}
+</style>
 
 <style lang="scss" scoped>
 .env-name {
