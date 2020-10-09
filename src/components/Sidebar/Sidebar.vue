@@ -200,6 +200,12 @@ export default {
       const hasTouch = this.touchDevice
       const el = this.$refs.sidebarControl
 
+      // if the route instructs the sidebar to be expanded, handle it
+      if (this.$route.params.expandSidebar && this.$route.params.expandSidebar === true) {
+        this.subnavIsExpanded = true
+        localStorage.setItem('sidebarCollapsed', true)
+      }
+
       if (hasTouch) {
         el.addEventListener('touchstart', () => {
           this.isHovering = true
