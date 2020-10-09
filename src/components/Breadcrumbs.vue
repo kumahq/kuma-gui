@@ -158,8 +158,11 @@ export default {
 
     calculateRouteTextAdvanced (route) {
       const params = route.params
+
+      const { expandSidebar, ...cleanParams } = params
+
       const isMesh = (route.name === 'mesh-overview')
-      const newParams = Object.assign({}, params, { mesh: null })
+      const newParams = Object.assign({}, cleanParams, { mesh: null })
 
       if (isMesh) {
         return params.mesh

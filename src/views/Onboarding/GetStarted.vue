@@ -74,13 +74,13 @@
       >
         <h2 class="type-xl mb-2 pb-2">
           <span v-if="dataplaneCountForTitle === 1">
-            {{ dataplaneCountForTitle }} data plane proxies found:
+            {{ dataplaneCountForTitle }} data plane proxy found:
           </span>
           <span v-else-if="dataplaneCountForTitle <= 10">
-            {{ dataplaneCountForTitle }} data plane proxy(ies) found:
+            {{ dataplaneCountForTitle }} data plane proxies found:
           </span>
           <span v-else>
-            {{ dataplaneCountForTitle }} data plane proxy(ies) found, including:
+            {{ dataplaneCountForTitle }} data plane proxies found, including:
           </span>
         </h2>
         <div class="data-table-wrapper">
@@ -90,7 +90,7 @@
             >
               <div
                 class="entity-status"
-                :class="{ 'is-offline': (rowValue === 'Offline' || rowValue === 'offline' || rowValue === false) }"
+                :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline' || rowValue === false) }"
               >
                 <span class="entity-status__dot" />
                 <span class="entity-status__label">{{ rowValue }}</span>
@@ -99,22 +99,31 @@
           </KTable>
         </div>
         <div class="md:flex items-center mt-4">
-          <div class="dataplane-global-status">
-            <KButton
-              appearance="primary"
-              class="mr-2"
-              @click="reScanForDataplanes"
-            >
-              Refresh
-            </KButton>
-            <span v-if="overallDpStatus">Some data plane proxies appear to be offline.</span>
+          <div class="md:flex items-center md:mr-2 dataplane-global-status">
+            <div>
+              <KButton
+                appearance="primary"
+                class="mr-2"
+                @click="reScanForDataplanes"
+              >
+                Refresh
+              </KButton>
+            </div>
+            <KAlert
+              v-if="overallDpStatus"
+              class="dataplane-status-alert"
+              appearance="danger"
+              alert-message="Some data plane proxies appear to be offline."
+            />
           </div>
-          <KButton
-            :to="{ name: 'setup-complete' }"
-            appearance="primary"
-          >
-            Next Step
-          </KButton>
+          <div class="md:ml-auto">
+            <KButton
+              :to="{ name: 'setup-complete' }"
+              appearance="primary"
+            >
+              Next Step
+            </KButton>
+          </div>
         </div>
         <div
           v-if="overallDpStatus"
@@ -214,7 +223,13 @@
       </div>
       <footer class="extra-controls">
         <KButton
-          :to="{ name: 'global-overview' }"
+          :to="{
+            name: 'global-overview',
+            params: {
+              mesh: 'all',
+              expandSidebar: true
+            }
+          }"
           appearance="primary"
           size="small"
           @click.native="completeOnboarding()"
@@ -452,8 +467,8 @@ export default {
 }
 
 .dataplane-global-status {
-  color: var(--red-base);
-  font-weight: 500;
+  // color: var(--red-base);
+  // font-weight: 500;
 }
 
 .dataplane-global-status__helper-text {
@@ -476,18 +491,28 @@ export default {
   padding-top: var(--spacing-sm);
 }
 
+.dataplane-status-alert {
+  padding: var(--spacing-xs) !important;
+}
+
 @media (min-width: 768px) {
   .dataplane-global-status {
-    flex: 1;
+    // display: flex;
+    // align-items: center;
+    // justify-content: space-between;
   }
 }
 
 @media (max-width: 767px) {
   .dataplane-global-status {
     display: block;
-    margin-bottom: var(--spacing-md);
-    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
     border-bottom: 1px solid var(--grey-200);
+
+    > * {
+      margin-bottom: var(--spacing-sm);
+    }
   }
 }
 </style>

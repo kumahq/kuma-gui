@@ -123,7 +123,8 @@ export default {
       this.$router.push({
         name: 'global-overview',
         params: {
-          mesh: 'all'
+          mesh: 'all',
+          expandSidebar: true
         }
       })
     }
