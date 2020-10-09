@@ -24,7 +24,7 @@
         <CardSkeleton
           class="card-item"
           :card-action-route="dataplaneWizardRoute"
-          :card-title="`Connect data plane proxies`"
+          card-title="Connect data plane proxies"
           card-action-button-text="Get Started"
         >
           <template slot="cardContent">
