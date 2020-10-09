@@ -24,7 +24,7 @@
             <span class="custom-control-icon">
               +
             </span>
-            Create Dataplane Proxy
+            Create data plane proxy
           </KButton>
           <KButton
             v-if="this.$route.query.ns"
@@ -136,7 +136,7 @@
               appearance="danger"
             >
               <template slot="alertMessage">
-                This Dataplane does not yet have mTLS configured &mdash;
+                This data plane proxy does not yet have mTLS configured &mdash;
                 <a
                   :href="`https://kuma.io/docs/${version}/documentation/security/#certificates`"
                   class="external-link"

@@ -5,8 +5,7 @@
       class="type-lg"
     >
       {{ title }} has been successfully installed but the cluster is currently empty.
-      You are only a few steps away from deploying a modern Service Mesh for your
-      applications!
+      You are only a few steps away from deploying a modern distributed service mesh!
     </p>
 
     <div class="app-setup">
@@ -75,13 +74,13 @@
       >
         <h2 class="type-xl mb-2 pb-2">
           <span v-if="dataplaneCountForTitle === 1">
-            {{ dataplaneCountForTitle }} Dataplane found:
+            {{ dataplaneCountForTitle }} data plane proxies found:
           </span>
           <span v-else-if="dataplaneCountForTitle <= 10">
-            {{ dataplaneCountForTitle }} Dataplane(s) found:
+            {{ dataplaneCountForTitle }} data plane proxy(ies) found:
           </span>
           <span v-else>
-            {{ dataplaneCountForTitle }} Dataplane(s) found, including:
+            {{ dataplaneCountForTitle }} data plane proxy(ies) found, including:
           </span>
         </h2>
         <div class="data-table-wrapper">
@@ -252,7 +251,7 @@ export default {
       tableData: {
         headers: [
           { label: 'Status', key: 'status' },
-          { label: 'Dataplane', key: 'name' },
+          { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' }
         ],
         data: []

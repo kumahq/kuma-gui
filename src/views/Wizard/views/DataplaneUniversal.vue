@@ -11,7 +11,7 @@
         <!-- step content -->
         <template slot="general">
           <p>
-            Welcome to the wizard to create a new Dataplane entity in {{ title }}.
+            Welcome to the wizard to create a new Dataplane resource in {{ title }}.
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
@@ -414,7 +414,7 @@
         <template slot="dataplane">
           <h3>Dataplane</h3>
           <p>
-            In {{ title }}, a Dataplane entity represents a sidebar proxy running
+            In {{ title }}, a Dataplane resource represents a data plane proxy running
             alongside one of your services. Data plane proxies can be added in any Mesh
             that you may have created, and in Kubernetes, they will be auto-injected
             by {{ title }}.

@@ -6,11 +6,7 @@
     >
       <template slot="body">
         <p>
-          Need help or find a bug? Join the Kuma community or
-          <a
-            href="https://github.com/kumahq/kuma/issues/new"
-            target="_blank"
-          >open an issue</a> on the GitHub repository.
+          Join the Kuma community and ask questions:
         </p>
         <ul class="resource-list">
           <li

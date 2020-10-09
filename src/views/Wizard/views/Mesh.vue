@@ -11,7 +11,7 @@
         <!-- step content -->
         <template slot="general">
           <p>
-            Welcome to the wizard for creating a new Mesh entity in Kuma.
+            Welcome to the wizard for creating a new Mesh resource in Kuma.
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
@@ -581,7 +581,7 @@
         <template slot="mesh">
           <h3>Mesh</h3>
           <p>
-            In {{ title }}, a Mesh entity allows you to define an isolated environment
+            In {{ title }}, a Mesh resource allows you to define an isolated environment
             for your data-planes and policies. It's isolated because the mTLS CA
             you choose can be different from the one configured for our Meshes.
             Ideally, you will have either a large Mesh with all the workloads, or

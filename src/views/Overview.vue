@@ -10,13 +10,12 @@
         <CardSkeleton
           class="card-item"
           :card-action-route="{ name: 'create-mesh' }"
-          card-title="Create a new Mesh resource"
+          card-title="Create a virtual Mesh"
           card-action-button-text="Create Mesh"
         >
           <template slot="cardContent">
             <p>
-              You can create multiple Mesh resources (i.e. per application, or per team)
-              on the same {{ title }} cluster.
+              We can create multiple isolated Mesh resources (i.e. per application/team/business unit).
             </p>
           </template>
         </CardSkeleton>
@@ -25,13 +24,12 @@
         <CardSkeleton
           class="card-item"
           :card-action-route="dataplaneWizardRoute"
-          :card-title="`Connect a Dataplane to ${title}`"
-          card-action-button-text="Connect Data Plane Proxies"
+          :card-title="`Connect data plane proxies`"
+          card-action-button-text="Get Started"
         >
           <template slot="cardContent">
             <p>
-              Every service must have its own Dataplane resource in order to start
-              the data plane proxy and associate it with a Mesh.
+              We need a data plane proxy for each replicata of our services within a Mesh resource.
             </p>
           </template>
         </CardSkeleton>
@@ -40,13 +38,12 @@
         <CardSkeleton
           class="card-item"
           card-action-route="https://kuma.io/policies/"
-          :card-title="`Apply ${title} Policies`"
+          :card-title="`Apply ${title} policies`"
           card-action-button-text="Explore Policies"
         >
           <template slot="cardContent">
             <p>
-              Once we have created your Mesh and started the data planes, we can now
-              use {{ title }} Policies to manage the Mesh.
+              We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies.
             </p>
           </template>
         </CardSkeleton>
