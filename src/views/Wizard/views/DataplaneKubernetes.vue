@@ -541,7 +541,8 @@
                   <template slot="alertMessage">
                     Once you have completed the steps above, you can go to the
                     <router-link :to="dataplaneUrl">
-                      data plane proxies view</router-link>.
+                      data plane proxies view
+                    </router-link>.
                   </template>
                 </KAlert>
               </div>
