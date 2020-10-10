@@ -352,6 +352,7 @@ export default {
             let lastUpdated
             let tags = placeholder
             let totalUpdates = []
+            let totalRejectedUpdates = []
             let status = 'Offline'
             const connectTimes = []
             const updateTimes = []
@@ -462,11 +463,13 @@ export default {
             if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
               response.dataplaneInsight.subscriptions.forEach(item => {
                 const responsesSent = item.status.total.responsesSent || 0
+                const rejectedResponsesSent = item.status.total.responsesRejected || 0
                 const connectTime = item.connectTime || placeholder
                 const lastUpdateTime = item.status.lastUpdateTime || placeholder
                 const disconnectTime = item.disconnectTime || null
 
                 totalUpdates.push(parseInt(responsesSent))
+                totalRejectedUpdates.push(parseInt(rejectedResponsesSent))
                 connectTimes.push(connectTime)
                 updateTimes.push(lastUpdateTime)
 
@@ -479,7 +482,8 @@ export default {
 
               // get the sum of total updates (with some precautions)
               totalUpdates = totalUpdates.reduce((a, b) => a + b)
-
+              // get the sum of total rejection
+              totalRejectedUpdates = totalRejectedUpdates.reduce((a, b) => a + b)
               // select the most recent LAST CONNECTED timestamp
               const selectedTime = connectTimes.reduce((a, b) => {
                 if (a && b) {
@@ -524,6 +528,7 @@ export default {
               lastConnected = 'never'
               lastUpdated = 'never'
               totalUpdates = 0
+              totalRejectedUpdates = 0
             }
 
             // assemble the table data
@@ -535,6 +540,7 @@ export default {
               lastConnected: lastConnected,
               lastUpdated: lastUpdated,
               totalUpdates: totalUpdates,
+              totalRejectedUpdates: totalRejectedUpdates,
               type: dataplaneType()
             })
 
