@@ -111,17 +111,6 @@ export default {
 }
 </script>
 
-<style>
-.empty-state-content p {
-  width: 100%;
-  max-width: var(--KEmptyStateContentWidth);
-}
-
-.empty-state-wrapper {
-  padding: 2rem 0;
-}
-</style>
-
 <style lang="scss" scoped>
 .env-name {
   text-transform: capitalize;
