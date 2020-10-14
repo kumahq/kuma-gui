@@ -8,6 +8,13 @@
   color: var(--green-400);
 }
 
+.entity-total-updates {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  pointer-events: auto !important;
+}
+
 .entity-status.is-offline {
   color: var(--red-600);
 }
