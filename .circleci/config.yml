@@ -1,0 +1,49 @@
+version: 2.1
+
+reusable:
+
+  docker-images:
+    - &circleci_node_image "circleci/node:12"
+  
+  snippets:
+
+    # filters for the kuma-master workflow
+    master_workflow_filters: &master_workflow_filters
+      filters:
+        branches:
+          only: master
+
+    # filters for the kuma-commit workflow
+    commit_workflow_filters: &commit_workflow_filters
+      filters:
+        branches:
+          ignore: master
+
+jobs:
+  check:
+    docker:
+      - image: *circleci_node_image
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: "Install dependencies"
+          command: "yarn install --frozen-lockfile" 
+      - run:
+          name: "Run code checks"
+          command: "yarn run lint"
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+workflows:
+  version: 2
+  kuma-commit:
+    jobs:
+      - check: *commit_workflow_filters
+  
+  kuma-master:
+    jobs:
+      - check: *master_workflow_filters
