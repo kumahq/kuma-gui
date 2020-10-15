@@ -1,10 +1,13 @@
 <template>
-  <span class="pill" :style="{ backgroundColor: background, color: color }">{{ label }}</span>
+  <span
+    class="pill"
+    :style="{ backgroundColor: background, color: color }"
+  >{{ label }}</span>
 </template>
 
 <script>
 export default {
-  name: "Pill",
+  name: 'Pill',
   props: {
     label: {
       type: String,
@@ -19,7 +22,7 @@ export default {
       required: false
     }
   }
-};
+}
 </script>
 
 <style scoped>

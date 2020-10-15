@@ -52,7 +52,7 @@ export default {
     },
 
     async onFormSubmit (model, callback = this.redirectRoute) {
-      let record = this.transformRecord(model)
+      const record = this.transformRecord(model)
 
       return await this.isEditing
         ? this.updateRecord(record)

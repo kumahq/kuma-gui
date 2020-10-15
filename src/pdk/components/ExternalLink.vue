@@ -3,13 +3,15 @@
     v-if="href"
     :href="href"
     class="external-link"
-    target="_blank">
-    <slot/>
+    target="_blank"
+  >
+    <slot />
     <KIcon
       icon="externalLink"
       width="12"
       height="12"
-      view-box="0 0 12 12" />
+      view-box="0 0 12 12"
+    />
   </a>
 </template>
 
