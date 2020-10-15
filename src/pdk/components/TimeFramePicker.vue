@@ -1,26 +1,33 @@
 <template>
   <div
     :class="{ disabled:isDisabled }"
-    class="form-inline time-frame-picker d-flex justify-content-end pr-0 mb-2">
+    class="form-inline time-frame-picker d-flex justify-content-end pr-0 mb-2"
+  >
     <span class="hidden-md-down mr-2 timeframe-label">Timeframe:</span>
     <select
-      :disabled="isDisabled"
       v-model="timeFrame"
-      class="time-frame-select form-control">
+      :disabled="isDisabled"
+      class="time-frame-select form-control"
+    >
       <option
         v-for="(option, idx) in timeFrames"
         :key="idx"
-        :value="option.value">{{ option.text }}</option>
+        :value="option.value"
+      >
+        {{ option.text }}
+      </option>
     </select>
     <div
       v-if="showUtc"
-      class="ml-2 utc-picker">
+      class="ml-2 utc-picker"
+    >
       <label class="form-check-label">
         <input
           v-model="isUtc"
           class="form-check-input"
           type="checkbox"
-          @change="onUtcChange">
+          @change="onUtcChange"
+        >
         UTC
       </label>
     </div>
@@ -112,7 +119,9 @@ export default {
     onUtcChange () {
       try {
         localStorage.setItem(this.utcStorageKey, this.isUtc)
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
 
       this.updateControls('isUtc', this.isUtc)
     },
@@ -120,7 +129,9 @@ export default {
     onTimeFrameChange () {
       try {
         localStorage.setItem(this.timeFrameStorageKey, this.timeFrame.timeFrameLength)
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
 
       this.updateControls('timeFrame', this.timeFrame)
     }

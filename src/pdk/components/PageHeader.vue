@@ -3,15 +3,16 @@
     <div class="row">
       <component
         :is="tag"
-        class="">
+        class=""
+      >
         <span class="float-left title">{{ formattedTitle }}</span>
-        <slot name="title-logo"/>
+        <slot name="title-logo" />
       </component>
       <nav class="d-inline-flex justify-content-end ml-auto text-right">
-        <slot/>
+        <slot />
       </nav>
     </div>
-    <slot name="below-title"/>
+    <slot name="below-title" />
   </header>
 </template>
 

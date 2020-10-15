@@ -124,23 +124,23 @@ export default {
         inputSchema = schema || (this.schema.fields ? this.schema.fields : this.schema)
       }
 
-      let blacklist = this.getBlacklist().concat(this.schema ? this.schema.blacklist : [])
+      const blacklist = this.getBlacklist().concat(this.schema ? this.schema.blacklist : [])
 
-      let inputSchemaFields = Object.keys(inputSchema).filter(f => !blacklist.includes(f))
+      const inputSchemaFields = Object.keys(inputSchema).filter(f => !blacklist.includes(f))
 
       // Comparator function for comparing schema objects should not be added to fields
       const comparatorIdx = inputSchemaFields.indexOf('comparator')
 
       comparatorIdx > -1 && inputSchemaFields.splice(comparatorIdx, 1)
 
-      let formSchema = { fields: [] }
-      let formModel = {}
+      const formSchema = { fields: [] }
+      const formModel = {}
 
       // Iterate over each schema field to augment with display configuration.
       inputSchemaFields.forEach(fieldName => {
-        let fieldSchema = inputSchema[fieldName]
+        const fieldSchema = inputSchema[fieldName]
         // Check whether to update the form model with a default value for this field.
-        let fieldHasDefaultValue = setFieldDefaultValue(fieldSchema, fieldName)
+        const fieldHasDefaultValue = setFieldDefaultValue(fieldSchema, fieldName)
 
         // Set default value should one exist, or empty string. Existing data will replace this later.
         formModel[fieldName] = fieldHasDefaultValue ? fieldSchema.default : null
@@ -153,11 +153,11 @@ export default {
 
         // Get all sub-fields from custom field
         // Add each sub-field to model & Remove custom field key
-        let customFieldsSchema = buildCustomFields(customFields, inputSchema)
+        const customFieldsSchema = buildCustomFields(customFields, inputSchema)
 
         customFields.forEach(field => {
           Object.keys(customFieldsSchema).forEach(field => {
-            let fieldHasDefaultValue = setFieldDefaultValue(customFieldsSchema[field], field)
+            const fieldHasDefaultValue = setFieldDefaultValue(customFieldsSchema[field], field)
 
             formModel[field] = fieldHasDefaultValue ? customFieldsSchema[field].default : null
           })
