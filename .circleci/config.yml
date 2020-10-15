@@ -3,7 +3,7 @@ version: 2.1
 reusable:
 
   docker-images:
-    - &circleci_node_image "circleci/node"
+    - &circleci_node_image "circleci/node:12"
   
   snippets:
 
@@ -25,12 +25,18 @@ jobs:
       - image: *circleci_node_image
     steps:
       - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: "Install dependencies"
           command: "yarn install --frozen-lockfile" 
       - run:
           name: "Run code checks"
           command: "yarn run lint"
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
 
 workflows:
   version: 2
