@@ -30,7 +30,7 @@ export default {
     transition (action, state) {
       this.currentMachineState = this.machine.transition(this.currentMachineState, action)
 
-      for (let key in state) {
+      for (const key in state) {
         this.$data[key] = state[key]
       }
     },
