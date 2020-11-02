@@ -253,8 +253,7 @@ export default {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
-          { label: 'Name', key: 'name' },
-          { label: 'URL', key: 'url' }
+          { label: 'Name', key: 'name' }
         ],
         data: []
       },
