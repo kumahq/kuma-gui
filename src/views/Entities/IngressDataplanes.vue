@@ -200,9 +200,10 @@ export default {
           { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
-          { label: 'Mesh', key: 'mesh' },
           { label: 'Type', key: 'type' },
           { label: 'Tags', key: 'tags' },
+          { label: 'Public address', key: 'publicAddress' },
+          { label: 'Public port', key: 'publicPort' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
           { label: 'Total Updates', key: 'totalUpdates' }
@@ -541,6 +542,8 @@ export default {
               lastUpdated: lastUpdated,
               totalUpdates: totalUpdates,
               totalRejectedUpdates: totalRejectedUpdates,
+              publicAddress: (response.dataplane.networking.ingress.publicAddress || null),
+              publicPort: (response.dataplane.networking.ingress.publicPort || null),
               type: dataplaneType()
             })
 
