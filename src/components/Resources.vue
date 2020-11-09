@@ -6,7 +6,7 @@
     >
       <template slot="body">
         <p>
-          Join the {{ process.env.VUE_APP_NAMESPACE }} community and ask questions:
+          Join the {{ $productName }} community and ask questions:
         </p>
         <ul class="resource-list">
           <li

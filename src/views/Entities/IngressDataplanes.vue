@@ -142,7 +142,7 @@
                   class="external-link"
                   target="_blank"
                 >
-                  Learn About Certificates in {{ process.env.VUE_APP_NAMESPACE }}
+                  Learn About Certificates in {{ $productName }}
                 </a>
               </template>
             </KAlert>

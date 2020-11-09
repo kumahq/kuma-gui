@@ -15,7 +15,7 @@
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
-            As you know, the Kuma GUI is read-only.
+            As you know, the {{ $productName }} GUI is read-only.
           </p>
 
           <!-- wizard switcher -- based on environment -->

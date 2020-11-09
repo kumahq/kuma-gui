@@ -47,7 +47,7 @@
           v-else
           class="app-source-check--error"
         >
-          <p>The app was unable to determine {{ process.env.VUE_APP_NAMESPACE }}'s environment.</p>
+          <p>The app was unable to determine {{ $productName }}'s environment.</p>
         </div>
       </div>
 
@@ -156,7 +156,7 @@
                 No data plane proxies detected.
               </h3>
               <p class="mb-2">
-                To bring your applications into {{ process.env.VUE_APP_NAMESPACE }} Service Mesh,
+                To bring your applications into {{ $productName }} Service Mesh,
                 you need to deploy data plane proxies (also known as Sidecar Proxies)
                 next to them.
               </p>

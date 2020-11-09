@@ -36,7 +36,7 @@ export default (store) => {
           path: 'welcome',
           name: 'setup-welcome',
           meta: {
-            title: 'Welcome to Kuma!',
+            title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`,
             excludeAsBreadcrumb: true,
             hideSidebar: true,
             hideStatus: true,

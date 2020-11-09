@@ -11,7 +11,7 @@
         class="logo"
       >
         <img
-          src="@/assets/images/kuma-logo-new.svg?external"
+          src="@/assets/images/product-logo.png?external"
           :alt="`${tagline} Logo`"
         >
       </router-link>
