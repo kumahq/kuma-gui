@@ -252,8 +252,10 @@ import configUrl from '@/configUrl'
 
 export default {
   name: 'OnboardingStep1',
-  metaInfo: {
-    title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`
+  metaInfo () {
+    return {
+      title: `Welcome to ${this.$productName}!`
+    }
   },
   data () {
     return {
