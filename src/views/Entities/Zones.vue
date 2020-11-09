@@ -13,7 +13,7 @@
           icon="dangerCircle"
           size="64"
         />
-        Kuma is running in Standalone mode.
+        {{ process.env.VUE_APP_NAMESPACE }} is running in Standalone mode.
       </template>
       <template slot="message">
         <p>

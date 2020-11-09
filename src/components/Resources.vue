@@ -6,7 +6,7 @@
     >
       <template slot="body">
         <p>
-          Join the Kuma community and ask questions:
+          Join the {{ process.env.VUE_APP_NAMESPACE }} community and ask questions:
         </p>
         <ul class="resource-list">
           <li
@@ -44,15 +44,15 @@ export default {
         return [
           {
             link: `https://kuma.io/docs/${versionOutput}/`,
-            label: 'Kuma Documentation'
+            label: `${process.env.VUE_APP_NAMESPACE} Documentation`
           },
           {
             link: 'https://kuma-mesh.slack.com/',
-            label: 'Kuma Community Chat'
+            label: `${process.env.VUE_APP_NAMESPACE} Community Chat`
           },
           {
             link: 'https://github.com/kumahq/kuma',
-            label: 'Kuma GitHub Repository'
+            label: `${process.env.VUE_APP_NAMESPACE} GitHub Repository`
           }
         ]
       }
