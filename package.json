@@ -7,6 +7,7 @@
   "scripts": {
     "serve": "yarn vue-cli-service serve",
     "build": "yarn vue-cli-service build --mode production",
+    "build:dev": "yarn vue-cli-service build --mode development",
     "lint": "yarn vue-cli-service lint",
     "test:e2e": "yarn vue-cli-service test:e2e",
     "test:unit": "yarn vue-cli-service test:unit"

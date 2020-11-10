@@ -1,14 +1,19 @@
-FROM node:8-alpine
+# build stage
+FROM node:12-slim as build-stage
+WORKDIR /kuma-gui
 
-# install things we'll need
-RUN apk update \
-    && apk upgrade \
-    && apk add bash curl
+# install yarn dependencies
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
 
-# setup Kuma
-RUN mkdir kuma/ \
-    && cd kuma/ \
-    && wget https://kong.bintray.com/kuma/kuma-0.2.2-centos-amd64.tar.gz \
-    && tar -xvzf kuma-0.2.2-centos-amd64.tar.gz \
-    && chmod +x bin/* \
-    && cp bin/* /usr/bin/
+COPY . .
+
+# build frontend assets
+RUN yarn build:dev
+
+# production stage
+FROM nginx:alpine
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --from=build-stage /kuma-gui/dist /usr/share/nginx/html
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
