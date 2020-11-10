@@ -5,7 +5,7 @@
     :class="[
       //{ 'has-subnav': hasSubnav },
       { 'is-collapsed': isCollapsed },
-      { 'subnav-expanded': subnavIsExpanded }
+      { 'subnav-expanded': subnavIsExpanded },
     ]"
   >
     <div
@@ -63,16 +63,16 @@ export default {
   components: {
     MeshSelector,
     NavItem,
-    Subnav
+    Subnav,
   },
 
-  data () {
+  data() {
     return {
       isCollapsed: false,
       sidebarSavedState: null,
       toggleWorkspaces: false,
       isHovering: false,
-      subnavIsExpanded: null
+      subnavIsExpanded: true,
     }
   },
 
@@ -82,34 +82,34 @@ export default {
     // }),
 
     ...mapState('sidebar', {
-      menu: state => state.menu
+      menu: (state) => state.menu,
     }),
 
-    titleNavItems () {
-      return this.menu.find(i => i.position === 'top').items
+    titleNavItems() {
+      return this.menu.find((i) => i.position === 'top').items
     },
 
-    topNavItems () {
-      return this.menu.find(i => i.position === 'top').items[0].subNav.items
+    topNavItems() {
+      return this.menu.find((i) => i.position === 'top').items[0].subNav.items
     },
 
-    bottomNavItems () {
-      return this.menu.find(i => i.position === 'bottom').items
+    bottomNavItems() {
+      return this.menu.find((i) => i.position === 'bottom').items
     },
 
-    hasSubnav () {
+    hasSubnav() {
       return Boolean(this.selectedMenuItem?.subNav?.items?.length)
     },
 
-    lastMenuList () {
+    lastMenuList() {
       return Object.keys(this.menuList.sections).length - 1
     },
 
-    meshList () {
+    meshList() {
       return this.$store.state.meshes
     },
 
-    selectedMenuItem () {
+    selectedMenuItem() {
       const route = this.$route
 
       for (const section of this.menu) {
@@ -134,12 +134,12 @@ export default {
       return null
     },
 
-    touchDevice () {
+    touchDevice() {
       return !!('ontouchstart' in window || navigator.maxTouchPoints)
-    }
+    },
   },
 
-  mounted () {
+  mounted() {
     // const app = this.$appWindow
 
     // if (app.innerWidth <= 900) {
@@ -150,21 +150,21 @@ export default {
 
     // window.addEventListener('resize', this.handleResize)
 
-    this.subnavIsExpanded = (localStorage.sidebarCollapsed === 'true')
+    // this.subnavIsExpanded = localStorage.sidebarCollapsed === 'true'
 
     this.sidebarEvent()
   },
 
-  beforeDestroy () {
+  beforeDestroy() {
     // window.removeEventListener('resize', this.handleResize)
   },
 
   methods: {
-    getNavItems (menu, position, items) {
-      return menu.find(i => i.position === position).items
+    getNavItems(menu, position, items) {
+      return menu.find((i) => i.position === position).items
     },
 
-    handleResize () {
+    handleResize() {
       // const sidebarState = getItemFromStorage('sidebarCollapsed')
       const appWidth = this.$appWindow.innerWidth
 
@@ -180,7 +180,7 @@ export default {
       }
     },
 
-    toggleSubnav () {
+    toggleSubnav() {
       /**
        * we want to make sure that when the user clicks one of the
        * parent items, the subnav is expanded and kept that way.
@@ -194,14 +194,17 @@ export default {
       localStorage.setItem('sidebarCollapsed', this.subnavIsExpanded)
     },
 
-    sidebarEvent () {
+    sidebarEvent() {
       // determine if the user is on a touch or non-touch device
       // and then use the proper events accordingly.
       const hasTouch = this.touchDevice
       const el = this.$refs.sidebarControl
 
       // if the route instructs the sidebar to be expanded, handle it
-      if (this.$route.params.expandSidebar && this.$route.params.expandSidebar === true) {
+      if (
+        this.$route.params.expandSidebar &&
+        this.$route.params.expandSidebar === true
+      ) {
         this.subnavIsExpanded = true
         localStorage.setItem('sidebarCollapsed', true)
       }
@@ -227,8 +230,8 @@ export default {
           this.isHovering = false
         })
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -239,11 +242,10 @@ export default {
   top: var(--headerHeight);
   left: 0;
   display: flex;
-  height:  calc(100vh - 3rem);
+  height: calc(100vh - 3rem);
   color: var(--blue-700);
 
   .nav-icon {
-
     svg:not([class]) {
       display: block;
       margin: 0;
@@ -264,9 +266,9 @@ export default {
     width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
 
     &.subnav-expanded {
-
       .main-nav.is-hovering {
-        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
+        box-shadow: 0 20px 25px -5px var(--black-10),
+          0 10px 10px -5px var(--black-10);
       }
     }
 
