@@ -36,6 +36,12 @@ export default [
               title: false
             },
             {
+              name: 'Standard',
+              link: 'standard-dataplanes',
+              title: false,
+              nested: true
+            },
+            {
               name: 'Ingress',
               link: 'ingress-dataplanes',
               title: false,

@@ -185,13 +185,23 @@ export default (store) => {
           },
           component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/Dataplanes')
         },
+        // standard dataplanes
+        {
+          path: 'standard-dataplanes',
+          name: 'standard-dataplanes',
+          component: () => import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes'),
+          meta: {
+            title: 'Standard Data Plane Proxies',
+            breadcrumb: 'Standard Data Plane Proxies'
+          }
+        },
         // ingress dataplanes
         {
           path: 'ingress-dataplanes',
           name: 'ingress-dataplanes',
           component: () => import(/* webpackChunkName: "dataplanes-ingress" */ '@/views/Entities/IngressDataplanes'),
           meta: {
-            title: 'Ingress data plane proxies',
+            title: 'Ingress Data Plane Proxies',
             breadcrumb: 'Ingress Data Plane Proxies'
           }
         },
@@ -201,7 +211,7 @@ export default (store) => {
           name: 'gateway-dataplanes',
           component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes'),
           meta: {
-            title: 'Gateway data plane proxies',
+            title: 'Gateway Data Plane Proxies',
             breadcrumb: 'Gateway Data Plane Proxies'
           }
         },
