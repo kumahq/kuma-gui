@@ -352,7 +352,7 @@ export default {
 
             let lastConnected
             let lastUpdated
-            let tags = placeholder
+            let tags = []
             let totalUpdates = []
             let totalRejectedUpdates = []
             let status = 'Offline'
@@ -360,101 +360,31 @@ export default {
             const updateTimes = []
 
             /**
-             * Dataplane type conditions
+             * Determine the Dataplane type
              */
-            const inbound = response.dataplane.networking.inbound || null
-            const gateway = response.dataplane.networking.gateway || null
             const ingress = response.dataplane.networking.ingress || null
 
             /**
-             * Determine the type of Dataplane it is
+             * The Dataplane type label
              */
-            const dataplaneType = () => {
-              if (gateway) {
-                return 'Gateway'
-              } else if (ingress) {
-                return 'Ingress'
-              }
-
-              return 'Standard'
-            }
+            const dataplaneType = 'Ingress'
 
             /**
-             * Handle our tag collections based on the dataplane type.
-             * Currently, this is collecting all tags found in case
-             * there is a condition where inbound, gateway, or ingress
-             * might all be present as opposed to one group.
+             * Handle our tag collection
              */
-            if (inbound || gateway || ingress) {
-              const final = []
 
-              // inbound tags
-              if (inbound) {
-                for (let i = 0; i < inbound.length; i++) {
-                  const rawTags = inbound[i].tags || null
-
-                  if (rawTags) {
-                    const tagKeys = Object.keys(rawTags)
-                    const tagVals = Object.values(rawTags)
-
-                    for (let x = 0; x < tagKeys.length; x++) {
-                      final.push({
-                        label: tagKeys[x],
-                        value: tagVals[x]
-                      })
-                    }
-                  }
-                }
-              }
-
-              // gateway tags
-              if (gateway) {
-                const gatewayItems = gateway.tags || null
-
-                if (gatewayItems) {
-                  for (let i = 0; i < Object.keys(gatewayItems).length; i++) {
-                    const tagKeys = Object.keys(gatewayItems)
-                    const tagVals = Object.values(gatewayItems)
-
-                    for (let x = 0; x < tagKeys.length; x++) {
-                      final.push({
-                        label: tagKeys[x],
-                        value: tagVals[x]
-                      })
-                    }
-                  }
-                }
-              }
-
+            if (ingress) {
               // ingress tags
-              if (ingress) {
-                for (let i = 0; i < ingress.length; i++) {
-                  const ingressTags = ingress[i].tags || null
-                  const ingressService = ingress[i].service || null
+              const ingressItems = ingress.tags || null
 
-                  if (ingressService) {
-                    final.push({
-                      label: 'service',
-                      value: ingressService
-                    })
-                  }
-
-                  if (ingressTags) {
-                    const tagKeys = Object.keys(ingressTags)
-                    const tagVals = Object.values(ingressTags)
-
-                    for (let x = 0; x < tagKeys.length; x++) {
-                      final.push({
-                        label: tagKeys[x],
-                        value: tagVals[x]
-                      })
-                    }
-                  }
-                }
+              if (ingressItems) {
+                Object.keys(ingressItems).forEach(key => {
+                  tags.push({
+                    label: key,
+                    value: ingressItems[key]
+                  })
+                })
               }
-
-              // define the new list
-              tags = final
             } else {
               tags = 'none'
             }
@@ -543,9 +473,7 @@ export default {
               lastUpdated: lastUpdated,
               totalUpdates: totalUpdates,
               totalRejectedUpdates: totalRejectedUpdates,
-              publicAddress: (response.dataplane.networking.ingress.publicAddress || null),
-              publicPort: (response.dataplane.networking.ingress.publicPort || null),
-              type: dataplaneType()
+              type: dataplaneType
             })
 
             this.sortEntities(finalArr)

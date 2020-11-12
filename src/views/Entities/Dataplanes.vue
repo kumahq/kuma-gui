@@ -378,13 +378,7 @@ export default {
 
             /**
              * Handle our tag collections based on the dataplane type.
-             * Currently, this is collecting all tags found in case
-             * there is a condition where inbound, gateway, or ingress
-             * might all be present as opposed to one group.
              */
-            const inboundFinalTags = []
-            const gatewayFinalTags = []
-            const ingressFinalTags = []
 
             if (inbound) {
               // inbound tags
