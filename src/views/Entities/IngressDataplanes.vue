@@ -321,8 +321,8 @@ export default {
 
       // we only need the offset if there is a size added
       const params = {
-        // size: this.pageSize,
-        // offset: this.pageOffset,
+        size: this.pageSize,
+        offset: this.pageOffset,
         ingress: true
       }
 
