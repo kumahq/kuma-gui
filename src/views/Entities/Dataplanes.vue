@@ -349,7 +349,7 @@ export default {
 
             let lastConnected
             let lastUpdated
-            let tags = placeholder
+            let tags = []
             let totalUpdates = []
             let totalRejectedUpdates = []
             let status = 'Offline'
@@ -382,84 +382,64 @@ export default {
              * there is a condition where inbound, gateway, or ingress
              * might all be present as opposed to one group.
              */
-            if (inbound || gateway || ingress) {
-              const inboundFinalTags = []
-              const gatewayFinalTags = []
-              const ingressFinalTags = []
+            const inboundFinalTags = []
+            const gatewayFinalTags = []
+            const ingressFinalTags = []
 
+            if (inbound) {
               // inbound tags
-              if (inbound) {
-                for (let i = 0; i < inbound.length; i++) {
-                  const rawTags = inbound[i].tags || null
+              Object.keys(inbound).forEach(key => {
+                const rawTags = inbound[key].tags || null
 
-                  if (rawTags) {
-                    const tagKeys = Object.keys(rawTags)
-                    const tagVals = Object.values(rawTags)
+                if (rawTags) {
+                  const tagKeys = Object.keys(rawTags)
+                  const tagVals = Object.values(rawTags)
 
-                    for (let x = 0; x < tagKeys.length; x++) {
-                      inboundFinalTags.push({
-                        label: tagKeys[x],
-                        value: tagVals[x]
-                      })
-                    }
-                  }
+                  Object.keys(rawTags).forEach(key => {
+                    tags.push({
+                      label: key,
+                      value: rawTags[key]
+                    })
+                  })
                 }
-              }
-
+              })
+            } else if (gateway) {
               // gateway tags
-              if (gateway) {
-                const gatewayItems = gateway.tags || null
+              const gatewayItems = gateway.tags || null
 
-                if (gatewayItems) {
-                  for (let i = 0; i < Object.keys(gatewayItems).length; i++) {
-                    const tagKeys = Object.keys(gatewayItems)
-                    const tagVals = Object.values(gatewayItems)
-
-                    for (let x = 0; x < tagKeys.length; x++) {
-                      gatewayFinalTags.push({
-                        label: tagKeys[x],
-                        value: tagVals[x]
-                      })
-                    }
-                  }
-                }
+              if (gatewayItems) {
+                Object.keys(gatewayItems).forEach(key => {
+                  tags.push({
+                    label: key,
+                    value: gatewayItems[key]
+                  })
+                })
               }
-
+            } else if (ingress) {
               // ingress tags
-              if (ingress) {
-                for (let i = 0; i < ingress.length; i++) {
-                  const ingressTags = ingress[i].tags || null
-                  const ingressService = ingress[i].service || null
+              Object.keys(ingress).forEach(key => {
+                const ingressTags = ingress[key].tags || null
+                const ingressService = ingress[key].service || null
 
-                  if (ingressService) {
-                    ingressFinalTags.push({
-                      label: 'service',
-                      value: ingressService
+                if (ingressService) {
+                  tags.push({
+                    label: 'service',
+                    value: ingressService
+                  })
+                }
+
+                if (ingressTags) {
+                  const tagKeys = Object.keys(ingressTags)
+                  const tagVals = Object.values(ingressTags)
+
+                  for (let x = 0; x < tagKeys.length; x++) {
+                    tags.push({
+                      label: tagKeys[x],
+                      value: tagVals[x]
                     })
                   }
-
-                  if (ingressTags) {
-                    const tagKeys = Object.keys(ingressTags)
-                    const tagVals = Object.values(ingressTags)
-
-                    for (let x = 0; x < tagKeys.length; x++) {
-                      ingressFinalTags.push({
-                        label: tagKeys[x],
-                        value: tagVals[x]
-                      })
-                    }
-                  }
                 }
-              }
-
-              // define the new list
-              const final = [
-                ...inboundFinalTags,
-                ...gatewayFinalTags,
-                ...ingressFinalTags
-              ]
-
-              tags = dedupeObjects(final, 'value') // returned without dupes
+              })
             } else {
               tags = 'none'
             }
