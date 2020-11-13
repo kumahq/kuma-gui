@@ -1,9 +1,6 @@
 <template>
   <div class="traffic-permissions">
-    <div
-      v-if="securityWarning"
-      class="alert-wrapper"
-    >
+    <div v-if="securityWarning" class="alert-wrapper">
       <KAlert appearance="warning">
         <template slot="alertMessage">
           <div class="alert-content">
@@ -13,7 +10,8 @@
               Traffic Permissions are currently being ignored by the
               <strong>{{ $route.params.mesh }}</strong> Mesh because Mutual TLS
               is not enabled. You can still create and edit Traffic Permissions,
-              but they will go into effect only when Mutual TLS is enabled on the Mesh.
+              but they will go into effect only when Mutual TLS is enabled on
+              the Mesh.
             </p>
           </div>
         </template>
@@ -40,12 +38,10 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'traffic-permissions'
+              name: 'traffic-permissions',
             }"
           >
-            <span class="custom-control-icon">
-              &larr;
-            </span>
+            <span class="custom-control-icon"> &larr; </span>
             View All
           </KButton>
         </template>
@@ -82,10 +78,7 @@
           >
             <div>
               <ul>
-                <li
-                  v-for="(val, key) in entity"
-                  :key="key"
-                >
+                <li v-for="(val, key) in entity" :key="key">
                   <h4>{{ key }}</h4>
                   <p>
                     {{ val }}
@@ -110,20 +103,21 @@
 </template>
 
 <script>
-import { getSome, stripTimes } from '@/helpers'
-import EntityURLControl from '@/components/Utils/EntityURLControl'
-import sortEntities from '@/mixins/EntitySorter'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import Pagination from '@/components/Pagination'
-import DataOverview from '@/components/Skeletons/DataOverview'
-import Tabs from '@/components/Utils/Tabs'
-import YamlView from '@/components/Skeletons/YamlView'
-import LabelList from '@/components/Utils/LabelList'
+import { mapGetters } from 'vuex';
+import { getSome, stripTimes } from '@/helpers';
+import EntityURLControl from '@/components/Utils/EntityURLControl';
+import sortEntities from '@/mixins/EntitySorter';
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton';
+import Pagination from '@/components/Pagination';
+import DataOverview from '@/components/Skeletons/DataOverview';
+import Tabs from '@/components/Utils/Tabs';
+import YamlView from '@/components/Skeletons/YamlView';
+import LabelList from '@/components/Utils/LabelList';
 
 export default {
   name: 'TrafficPermissions',
   metaInfo: {
-    title: 'Traffic Permissions'
+    title: 'Traffic Permissions',
   },
   components: {
     EntityURLControl,
@@ -132,12 +126,10 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
   },
-  mixins: [
-    sortEntities
-  ],
-  data () {
+  mixins: [sortEntities],
+  data() {
     return {
       isLoading: true,
       isEmpty: false,
@@ -148,26 +140,26 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Traffic Permissions present.'
+        message: 'There are no Traffic Permissions present.',
       },
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' }
+          { label: 'Type', key: 'type' },
         ],
-        data: []
+        data: [],
       },
       tabs: [
         {
           hash: '#overview',
-          title: 'Overview'
+          title: 'Overview',
         },
         {
           hash: '#yaml',
-          title: 'YAML'
-        }
+          title: 'YAML',
+        },
       ],
       entity: [],
       rawEntity: null,
@@ -177,231 +169,252 @@ export default {
       next: null,
       hasNext: false,
       previous: [],
-      securityWarning: false
-    }
+      securityWarning: false,
+    };
   },
   computed: {
-    tabGroupTitle () {
-      const entity = this.entity
+    ...mapGetters({
+      environment: 'getEnvironment',
+    }),
+    tabGroupTitle() {
+      const entity = this.entity;
 
       if (entity) {
-        return `Traffic Permission: ${entity.name}`
+        return `Traffic Permission: ${entity.name}`;
       } else {
-        return null
+        return null;
       }
     },
-    entityOverviewTitle () {
-      const entity = this.entity
+    entityOverviewTitle() {
+      const entity = this.entity;
 
       if (entity) {
-        return `Entity Overview for ${entity.name}`
+        return `Entity Overview for ${entity.name}`;
       } else {
-        return null
+        return null;
       }
     },
-    shareUrl () {
-      const urlRoot = `${window.location.origin}#`
-      const entity = this.entity
+    shareUrl() {
+      const urlRoot = `${window.location.origin}#`;
+      const entity = this.entity;
 
       const shareUrl = () => {
         if (this.$route.query.ns) {
-          return this.$route.fullPath
+          return this.$route.fullPath;
         }
 
-        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
-      }
+        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`;
+      };
 
-      return shareUrl()
-    }
+      return shareUrl();
+    },
   },
   watch: {
-    '$route' (to, from) {
-      this.init()
-    }
+    $route(to, from) {
+      this.init();
+    },
   },
-  beforeMount () {
-    this.init()
+  beforeMount() {
+    this.init();
   },
   methods: {
-    init () {
-      this.loadData()
-      this.mtlsWarning()
+    init() {
+      this.loadData();
+      this.mtlsWarning();
     },
-    goToPreviousPage () {
-      this.pageOffset = this.previous.pop()
-      this.next = null
+    goToPreviousPage() {
+      this.pageOffset = this.previous.pop();
+      this.next = null;
 
-      this.loadData()
+      this.loadData();
     },
-    goToNextPage () {
-      this.previous.push(this.pageOffset)
-      this.pageOffset = this.next
-      this.next = null
+    goToNextPage() {
+      this.previous.push(this.pageOffset);
+      this.pageOffset = this.next;
+      this.next = null;
 
-      this.loadData()
+      this.loadData();
     },
-    tableAction (ev) {
-      const data = ev
+    tableAction(ev) {
+      const data = ev;
 
       // reset back to the first tab
-      this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
+      this.$store.dispatch('updateSelectedTab', this.tabs[0].hash);
 
       // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', ev.name)
+      this.$store.dispatch('updateSelectedTableRow', ev.name);
 
       // load the data into the tabs
-      this.getEntity(data)
+      this.getEntity(data);
     },
-    loadData () {
-      this.isLoading = true
+    loadData() {
+      this.isLoading = true;
 
-      const mesh = this.$route.params.mesh || null
-      const query = this.$route.query.ns || null
+      const mesh = this.$route.params.mesh || null;
+      const query = this.$route.query.ns || null;
 
       const params = {
         size: this.pageSize,
-        offset: this.pageOffset
-      }
+        offset: this.pageOffset,
+      };
 
       const endpoint = () => {
         if (mesh === 'all') {
-          return this.$api.getAllTrafficPermissions(params)
-        } else if ((query && query.length) && mesh !== 'all') {
-          return this.$api.getTrafficPermission(mesh, query)
+          return this.$api.getAllTrafficPermissions(params);
+        } else if (query && query.length && mesh !== 'all') {
+          return this.$api.getTrafficPermission(mesh, query);
         }
 
-        return this.$api.getAllTrafficPermissionsFromMesh(mesh)
-      }
+        return this.$api.getAllTrafficPermissionsFromMesh(mesh);
+      };
 
       const getTrafficPermissions = () => {
         return endpoint()
-          .then(response => {
+          .then((response) => {
             const items = () => {
-              const r = response
+              const r = response;
 
               if ('total' in r) {
                 if (r.total !== 0 && r.items && r.items.length > 0) {
-                  return this.sortEntities(r.items)
+                  return this.sortEntities(r.items);
                 }
 
-                return null
+                return null;
               }
 
-              return r
-            }
+              return r;
+            };
 
-            const entityList = items()
+            const entityList = items();
 
             if (items()) {
-              const firstItem = query
-                ? entityList
-                : entityList[0]
+              const firstItem = query ? entityList : entityList[0];
 
               // set the first item as the default for initial load
-              this.firstEntity = firstItem.name
+              this.firstEntity = firstItem.name;
 
               // load the YAML entity for the first item on page load
-              this.getEntity(stripTimes(firstItem))
+              this.getEntity(stripTimes(firstItem));
 
               // set the selected table row for the first item on page load
-              this.$store.dispatch('updateSelectedTableRow', firstItem.name)
+              this.$store.dispatch('updateSelectedTableRow', firstItem.name);
 
-              this.tableData.data = query
-                ? [entityList]
-                : entityList
+              this.tableData.data = query ? [entityList] : entityList;
 
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
+              this.tableDataIsEmpty = false;
+              this.isEmpty = false;
             } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
+              this.tableData.data = [];
+              this.tableDataIsEmpty = true;
+              this.isEmpty = true;
 
-              this.getEntity(null)
+              this.getEntity(null);
             }
           })
-          .catch(error => {
-            this.hasError = true
-            this.isEmpty = true
+          .catch((error) => {
+            this.hasError = true;
+            this.isEmpty = true;
 
-            console.error(error)
+            console.error(error);
           })
           .finally(() => {
             setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      }
+              this.isLoading = false;
+            }, process.env.VUE_APP_DATA_TIMEOUT);
+          });
+      };
 
-      getTrafficPermissions()
+      getTrafficPermissions();
     },
-    getEntity (entity) {
-      this.entityIsLoading = true
-      this.entityIsEmpty = false
+    getEntity(entity) {
+      this.entityIsLoading = true;
+      this.entityIsEmpty = false;
 
-      const mesh = this.$route.params.mesh
+      const mesh = this.$route.params.mesh;
 
       if (entity && entity !== null) {
-        const entityMesh = (mesh === 'all')
-          ? entity.mesh
-          : mesh
+        const entityMesh = mesh === 'all' ? entity.mesh : mesh;
 
-        return this.$api.getTrafficPermission(entityMesh, entity.name)
-          .then(response => {
+        return this.$api
+          .getTrafficPermission(entityMesh, entity.name)
+          .then((response) => {
             if (response) {
-              const selected = ['type', 'name', 'mesh']
+              const selected = ['type', 'name', 'mesh'];
 
-              this.entity = getSome(response, selected)
+              this.entity = getSome(response, selected);
               // this.rawEntity = response
-              this.rawEntity = stripTimes(response)
+              this.rawEntity = stripTimes(response);
             } else {
-              this.entity = null
-              this.entityIsEmpty = true
+              this.entity = null;
+              this.entityIsEmpty = true;
             }
           })
-          .catch(error => {
-            this.entityHasError = true
-            console.error(error)
+          .catch((error) => {
+            this.entityHasError = true;
+            console.error(error);
           })
           .finally(() => {
             setTimeout(() => {
-              this.entityIsLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
+              this.entityIsLoading = false;
+            }, process.env.VUE_APP_DATA_TIMEOUT);
+          });
       } else {
         setTimeout(() => {
-          this.entityIsEmpty = true
-          this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
+          this.entityIsEmpty = true;
+          this.entityIsLoading = false;
+        }, process.env.VUE_APP_DATA_TIMEOUT);
       }
     },
-    mtlsWarning () {
-      const mesh = this.$route.params.mesh
+    mtlsWarning() {
+      const mesh = this.$route.params.mesh;
+
       // we only want to handle mTLS warnings when the user is viewing a single mesh
-      const entityMesh = (mesh !== 'all')
-        ? mesh
-        : null
+      const entityMesh = mesh !== 'all' ? mesh : false;
 
       if (entityMesh) {
-        return this.$api.getMesh(entityMesh)
-          .then(response => {
-            const { mtls } = response
+        return this.$api.getMesh(entityMesh).then((response) => {
+          const isSecure = () => {
+            // we have to find the right mTLS reference in the object
+            // based on the environment (Universal or Kubernetes)
+            const env = this.environment.toLowerCase();
 
-            if (mtls && mtls.enabledBackend && mtls.enabledBackend.length > 0) {
-              // if mTLS is found on the mesh and it's enabled, we don't need to show
-              // a warning to the user
-              this.securityWarning = false
-            } else {
-              // otherwise we display it to let them know that it's not yet secured
-              this.securityWarning = true
+            // determine where to look for mTLS data
+            const mtls = () => {
+              if (env === 'universal') {
+                if (response.mtls) {
+                  return response.mtls
+                } else {
+                  return false
+                }
+              } else if (env === 'kubernetes') {
+                if (response.spec.mtls) {
+                  return response.spec.mtls
+                } else {
+                  return false
+                }
+              } else {
+                return false
+              }
             }
-          })
+
+            return mtls()?.enabledBackend?.length > 0
+          }
+
+          if (isSecure()) {
+            // if mTLS is found on the mesh and it's enabled, we don't need to show
+            // a warning to the user
+            this.securityWarning = false
+          } else {
+            // otherwise we display it to let them know that it's not yet secured
+            this.securityWarning = true
+          }
+        });
       }
 
-      this.securityWarning = false
-    }
-  }
-}
+      this.securityWarning = false;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

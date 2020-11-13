@@ -32,7 +32,29 @@ export default class Mock {
             type: 'Mesh',
             name: 'default',
             creationTime: '2020-06-19T12:18:02.097986-04:00',
-            modificationTime: '2020-06-19T12:18:02.097986-04:00'
+            modificationTime: '2020-06-19T12:18:02.097986-04:00',
+            mtls: {
+              enabledBackend: 'ca-1',
+              backends: [
+                {
+                  name: 'ca-1',
+                  type: 'provided',
+                  dpCert: {
+                    rotation: {
+                      expiration: '1d'
+                    }
+                  },
+                  conf: {
+                    cert: {
+                      secret: 'name-of-secret'
+                    },
+                    key: {
+                      secret: 'name-of-secret'
+                    }
+                  }
+                }
+              ]
+            }
           },
           {
             type: 'Mesh',
@@ -84,9 +106,26 @@ export default class Mock {
         creationTime: '2020-06-19T12:18:02.097986-04:00',
         modificationTime: '2020-06-19T12:18:02.097986-04:00',
         mtls: {
-          ca: {
-            builtin: {}
-          }
+          enabledBackend: 'ca-1',
+          backends: [
+            {
+              name: 'ca-1',
+              type: 'provided',
+              dpCert: {
+                rotation: {
+                  expiration: '1d'
+                }
+              },
+              conf: {
+                cert: {
+                  secret: 'name-of-secret'
+                },
+                key: {
+                  secret: 'name-of-secret'
+                }
+              }
+            }
+          ]
         }
       })
       .onGet('/meshes/mesh-01')
@@ -124,11 +163,28 @@ export default class Mock {
         name: 'kong-mania-12',
         creationTime: '2020-06-19T12:18:02.097986-04:00',
         modificationTime: '2020-06-19T12:18:02.097986-04:00',
-        mtls: {
-          ca: {
-            builtin: {}
-          }
-        }
+        // mtls: {
+        //   enabledBackend: 'ca-2',
+        //   backends: [
+        //     {
+        //       name: 'ca-2',
+        //       type: 'builtin',
+        //       dpCert: {
+        //         rotation: {
+        //           expiration: '1d'
+        //         }
+        //       },
+        //       conf: {
+        //         cert: {
+        //           secret: 'name-of-secret'
+        //         },
+        //         key: {
+        //           secret: 'name-of-secret'
+        //         }
+        //       }
+        //     }
+        //   ]
+        // }
       })
       .onGet('/meshes/hello-world')
       .reply(200, {
@@ -1958,25 +2014,6 @@ export default class Mock {
             type: 'TrafficPermission',
             mesh: 'default',
             name: 'tp-alpha-tango-donut',
-            sources: [
-              {
-                match: {
-                  service: 'backend'
-                }
-              }
-            ],
-            destinations: [
-              {
-                match: {
-                  service: 'redis'
-                }
-              }
-            ]
-          },
-          {
-            type: 'TrafficPermission',
-            mesh: 'default',
-            name: 'tp-bravo-alpha-shiba',
             sources: [
               {
                 match: {
