@@ -397,7 +397,7 @@ export default {
               }
             }
 
-            return mtls()?.enabledBackend?.length > 0
+            return Boolean(mtls()?.enabledBackend?.length > 0)
           }
 
           if (isSecure()) {
