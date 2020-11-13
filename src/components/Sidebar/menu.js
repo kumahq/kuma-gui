@@ -31,7 +31,7 @@ export default [
               title: true
             },
             {
-              name: 'All Data Plane Proxies',
+              name: 'All',
               link: 'dataplanes',
               title: false
             },
