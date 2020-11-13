@@ -204,6 +204,7 @@ export default {
       &.has-extra-label {
         display: flex;
         align-items: center;
+        justify-content: center;
       }
     }
 
