@@ -49,6 +49,7 @@ module.exports = {
     'vue/no-use-v-if-with-v-for': 'off',
     'vue/no-v-html': 'off',
     'comma-dangle': 'off',
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'semi': 'off'
   }
 }
