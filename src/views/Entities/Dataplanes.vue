@@ -133,7 +133,7 @@
                   class="external-link"
                   target="_blank"
                 >
-                  Learn About Certificates in Kuma
+                  Learn About Certificates in {{ $productName }}
                 </a>
               </template>
             </KAlert>

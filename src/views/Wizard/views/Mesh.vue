@@ -11,11 +11,11 @@
         <!-- step content -->
         <template slot="general">
           <p>
-            Welcome to the wizard for creating a new Mesh resource in Kuma.
+            Welcome to the wizard for creating a new Mesh resource in {{ $productName }}.
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
-            As you know, the Kuma GUI is read-only, so at the end of this wizard
+            As you know, the {{ $productName }} GUI is read-only, so at the end of this wizard
             we will be generating the configuration that you can apply with either
             <code>kubectl</code> (if you are running in Kubernetes mode) or
             <code>kumactl</code> / API (if you are running in Universal mode).
@@ -496,9 +496,9 @@
                 Install a new Mesh
               </h3>
               <p>
-                Since the Kuma GUI is read-only mode to follow Ops best practices,
+                Since the {{ $productName }} GUI is read-only mode to follow Ops best practices,
                 please execute the following command in your shell to create the entity.
-                Kuma will automatically detect when the new entity has been created.
+                {{ $productName }} will automatically detect when the new entity has been created.
               </p>
               <Tabs
                 :loaders="false"

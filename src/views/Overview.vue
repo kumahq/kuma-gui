@@ -43,7 +43,7 @@
         >
           <template slot="cardContent">
             <p>
-              We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies.
+              We can apply {{ $productName }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
             </p>
           </template>
         </CardSkeleton>

@@ -75,6 +75,9 @@ Vue.config.productionTip = false
 function VUE_APP () {
   const kuma = new Kuma()
 
+  // setup the product namespace
+  Vue.prototype.$productName = process.env.VUE_APP_NAMESPACE
+
   // setup the HTTP API namespace
   Vue.prototype.$api = kuma
 

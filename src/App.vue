@@ -49,7 +49,7 @@ export default {
   },
   metaInfo: {
     title: 'Home',
-    titleTemplate: '%s | Kuma',
+    titleTemplate: `%s | ${process.env.VUE_APP_NAMESPACE}`,
     htmlAttrs: {
       lang: 'en'
     }

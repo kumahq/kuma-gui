@@ -47,7 +47,7 @@
           v-else
           class="app-source-check--error"
         >
-          <p>The app was unable to determine Kuma's environment.</p>
+          <p>The app was unable to determine {{ $productName }}'s environment.</p>
         </div>
       </div>
 
@@ -156,7 +156,7 @@
                 No data plane proxies detected.
               </h3>
               <p class="mb-2">
-                To bring your applications into Kuma Service Mesh,
+                To bring your applications into {{ $productName }} Service Mesh,
                 you need to deploy data plane proxies (also known as Sidecar Proxies)
                 next to them.
               </p>
@@ -252,8 +252,10 @@ import configUrl from '@/configUrl'
 
 export default {
   name: 'OnboardingStep1',
-  metaInfo: {
-    title: 'Welcome to Kuma!'
+  metaInfo () {
+    return {
+      title: `Welcome to ${this.$productName}!`
+    }
   },
   data () {
     return {
