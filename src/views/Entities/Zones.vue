@@ -266,10 +266,10 @@ export default {
           hash: '#insights',
           title: 'Zone Insights'
         },
-        {
-          hash: '#yaml',
-          title: 'YAML'
-        }
+        // {
+        //   hash: '#yaml',
+        //   title: 'YAML'
+        // }
       ],
       entity: [],
       rawEntity: null,
