@@ -31,25 +31,25 @@ export function dpTags (dataplane) {
   const inbounds = dataplane.networking.inbound || null
   if (inbounds) {
     tags = inbounds.map(inbound => inbound.tags)
-      .flatMap(tags => Object.entries(tags))
-      .map(tagPair => tagPair[0] + '=' + tagPair[1])
+      .flatMap(Object.entries)
+      .map(([key, value]) => key + '=' + value)
   }
 
   // gateway data plane has no inbounds, but has tags embedded in gateway branch
   const gateway = dataplane.networking.gateway || null
   if (gateway) {
     tags = Object.entries(gateway.tags)
-      .map(tagPair => tagPair[0] + '=' + tagPair[1])
+      .map(([key, value]) => key + '=' + value)
   }
 
   tags = Array.from(new Set(tags)) // remove duplicates
 
   return tags.map(function (tagPair) {
-    const pairSplit = tagPair.split('=')
+    const [key, value] = tagPair.split('=')
 
     return {
-      label: pairSplit[0],
-      value: pairSplit[1]
+      label: key,
+      value: value
     }
   })
 }
