@@ -30,8 +30,7 @@ export function dpTags (dataplane) {
 
   const inbounds = dataplane.networking.inbound || null
   if (inbounds) {
-    tags = inbounds.map(inbound => inbound.tags)
-      .flatMap(Object.entries)
+    tags = inbounds.flatMap(inbound => Object.entries(inbound.tags))
       .map(([key, value]) => key + '=' + value)
   }
 
@@ -44,12 +43,6 @@ export function dpTags (dataplane) {
 
   tags = Array.from(new Set(tags)) // remove duplicates
 
-  return tags.map(function (tagPair) {
-    const [key, value] = tagPair.split('=')
-
-    return {
-      label: key,
-      value: value
-    }
-  })
+  return tags.map(tagPair => tagPair.split('='))
+    .map(([key, value]) => ({ label: key, value: value }))
 }
