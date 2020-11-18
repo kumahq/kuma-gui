@@ -446,7 +446,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
-import configUrl from '@/configUrl'
+import { kumaDpServerUrl } from '@/configUrl'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -566,10 +566,8 @@ export default {
         .substring(2, 8)
     },
 
-    getConfigUrl () {
-      const url = configUrl()
-        .replace('gui', '/')
-        .replace('config', '')
+    getDpServerUrl () {
+      const url = kumaDpServerUrl()
 
       return url
     },
@@ -663,7 +661,7 @@ export default {
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
-      --cp-address=${this.getConfigUrl} \\
+      --cp-address=${this.getDpServerUrl} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure

@@ -50,6 +50,6 @@ module.exports = {
     'vue/no-v-html': 'off',
     'comma-dangle': 'off',
     'space-before-function-paren': 'off',
-    'semi': 'off'
+    semi: 'off'
   }
 }
