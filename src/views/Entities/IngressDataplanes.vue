@@ -114,40 +114,6 @@
             :content="rawEntity"
           />
         </template>
-        <template slot="mtls">
-          <LabelList
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-          >
-            <ul v-if="entity.mtls">
-              <li
-                v-for="(val, key) in entity.mtls"
-                :key="key"
-              >
-                <h4>{{ val.label }}</h4>
-                <p>
-                  {{ val.value }}
-                </p>
-              </li>
-            </ul>
-            <KAlert
-              v-else
-              appearance="danger"
-            >
-              <template slot="alertMessage">
-                This Dataplane does not yet have mTLS configured &mdash;
-                <a
-                  :href="`https://kuma.io/docs/${version}/documentation/security/#certificates`"
-                  class="external-link"
-                  target="_blank"
-                >
-                  Learn About Certificates in {{ $productName }}
-                </a>
-              </template>
-            </KAlert>
-          </LabelList>
-        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
@@ -156,6 +122,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
+import { dpTags } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -214,10 +181,6 @@ export default {
         {
           hash: '#overview',
           title: 'Overview'
-        },
-        {
-          hash: '#mtls',
-          title: 'Certificate Insights'
         },
         {
           hash: '#yaml',
@@ -372,22 +335,7 @@ export default {
             /**
              * Handle our tag collection
              */
-
-            if (ingress) {
-              // ingress tags
-              const ingressItems = ingress.tags || null
-
-              if (ingressItems) {
-                Object.keys(ingressItems).forEach(key => {
-                  tags.push({
-                    label: key,
-                    value: ingressItems[key]
-                  })
-                })
-              }
-            } else {
-              tags = 'none'
-            }
+            tags = dpTags(response.dataplane)
 
             /**
              * Iterate through the subscriptions
@@ -473,6 +421,8 @@ export default {
               lastUpdated: lastUpdated,
               totalUpdates: totalUpdates,
               totalRejectedUpdates: totalRejectedUpdates,
+              publicAddress: (response.dataplane.networking.ingress.publicAddress || null),
+              publicPort: (response.dataplane.networking.ingress.publicPort || null),
               type: dataplaneType
             })
 
@@ -575,136 +525,10 @@ export default {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
-              // get mTLS data if it's present
-              const getMTLSData = async () => {
-                let data = null
-
-                try {
-                  const res = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
-
-                  if (res.dataplaneInsight.mTLS) {
-                    const mtls = res.dataplaneInsight.mTLS
-
-                    const rawExpDate = new Date(mtls.certificateExpirationTime)
-                    // this prevents any weird date shifting
-                    const fixedExpDate = new Date(
-                      rawExpDate.getTime() +
-                      rawExpDate.getTimezoneOffset() * 60000
-                    )
-                    // assembled to display date and time (in 24-hour format)
-                    const assembledExpDate = `
-                      ${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
-                    `
-
-                    data = {
-                      certificateExpirationTime: {
-                        label: 'Expiration Time',
-                        // value: new Date(mtls.certificateExpirationTime).toLocaleDateString('en-US')
-                        value: assembledExpDate
-                      },
-                      lastCertificateRegeneration: {
-                        label: 'Last Generated',
-                        value: humanReadableDate(mtls.lastCertificateRegeneration)
-                      },
-                      certificateRegenerations: {
-                        label: 'Regenerations',
-                        value: mtls.certificateRegenerations
-                      }
-                    }
-                  }
-                } catch (error) {
-                  console.log(error)
-                }
-
-                return data
-              }
-
-              // combine all tags into a single object
-              const fullTagSrc = () => {
-                const src = response.networking || null
-                const inbound = src.inbound || null
-                const gateway = src.gateway || null
-                const ingress = src.ingress || null
-
-                if (inbound || gateway || ingress) {
-                  const final = []
-
-                  // inbound tags
-                  if (inbound) {
-                    for (let i = 0; i < inbound.length; i++) {
-                      const rawTags = inbound[i].tags || null
-
-                      if (rawTags) {
-                        const tagKeys = Object.keys(rawTags)
-                        const tagVals = Object.values(rawTags)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  // gateway tags
-                  if (gateway) {
-                    const gatewayItems = gateway.tags || null
-
-                    if (gatewayItems) {
-                      for (let i = 0; i < Object.keys(gatewayItems).length; i++) {
-                        const tagKeys = Object.keys(gatewayItems)
-                        const tagVals = Object.values(gatewayItems)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  // ingress tags
-                  if (ingress) {
-                    for (let i = 0; i < ingress.length; i++) {
-                      const ingressTags = ingress[i].tags || null
-                      const ingressService = ingress[i].service || null
-
-                      if (ingressService) {
-                        final.push({
-                          label: 'service',
-                          value: ingressService
-                        })
-                      }
-
-                      if (ingressTags) {
-                        const tagKeys = Object.keys(ingressTags)
-                        const tagVals = Object.values(ingressTags)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  return final
-                }
-
-                return null
-              }
-
               const newEntity = async () => {
                 return {
                   basicData: { ...getSome(response, selected) },
-                  tags: { ...fullTagSrc() },
-                  mtls: await getMTLSData()
+                  tags: dpTags(response),
                 }
               }
 

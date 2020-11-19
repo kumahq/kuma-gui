@@ -164,6 +164,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
+import { dpTags } from '@/dataplane'
 
 export default {
   name: 'GatewayDataplanes',
@@ -371,22 +372,7 @@ export default {
             /**
              * Handle our tag collection
              */
-
-            if (gateway) {
-              // gateway tags
-              const gatewayItems = gateway.tags || null
-
-              if (gatewayItems) {
-                Object.keys(gatewayItems).forEach(key => {
-                  tags.push({
-                    label: key,
-                    value: gatewayItems[key]
-                  })
-                })
-              }
-            } else {
-              tags = 'none'
-            }
+            tags = dpTags(response.dataplane)
 
             /**
              * Iterate through the subscriptions
@@ -618,91 +604,10 @@ export default {
                 return data
               }
 
-              // combine all tags into a single object
-              const fullTagSrc = () => {
-                const src = response.networking || null
-                const inbound = src.inbound || null
-                const gateway = src.gateway || null
-                const ingress = src.ingress || null
-
-                if (inbound || gateway || ingress) {
-                  const final = []
-
-                  // inbound tags
-                  if (inbound) {
-                    for (let i = 0; i < inbound.length; i++) {
-                      const rawTags = inbound[i].tags || null
-
-                      if (rawTags) {
-                        const tagKeys = Object.keys(rawTags)
-                        const tagVals = Object.values(rawTags)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  // gateway tags
-                  if (gateway) {
-                    const gatewayItems = gateway.tags || null
-
-                    if (gatewayItems) {
-                      for (let i = 0; i < Object.keys(gatewayItems).length; i++) {
-                        const tagKeys = Object.keys(gatewayItems)
-                        const tagVals = Object.values(gatewayItems)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  // ingress tags
-                  if (ingress) {
-                    for (let i = 0; i < ingress.length; i++) {
-                      const ingressTags = ingress[i].tags || null
-                      const ingressService = ingress[i].service || null
-
-                      if (ingressService) {
-                        final.push({
-                          label: 'service',
-                          value: ingressService
-                        })
-                      }
-
-                      if (ingressTags) {
-                        const tagKeys = Object.keys(ingressTags)
-                        const tagVals = Object.values(ingressTags)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          final.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  return final
-                }
-
-                return null
-              }
-
               const newEntity = async () => {
                 return {
                   basicData: { ...getSome(response, selected) },
-                  tags: { ...fullTagSrc() },
+                  tags: dpTags(response),
                   mtls: await getMTLSData()
                 }
               }

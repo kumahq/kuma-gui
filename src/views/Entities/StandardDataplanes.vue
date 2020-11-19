@@ -155,7 +155,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getSome, humanReadableDate, getOffset, stripTimes, dedupeObjects } from '@/helpers'
+import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -164,6 +164,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
+import { dpTags } from '@/dataplane'
 
 export default {
   name: 'StandardDataplanes',
@@ -371,22 +372,7 @@ export default {
             /**
              * Handle our tag collection
              */
-
-            if (inbound) {
-              // inbound tags
-              const inboundItems = inbound[0].tags || null
-
-              if (inboundItems) {
-                Object.keys(inboundItems).forEach(key => {
-                  tags.push({
-                    label: key,
-                    value: inboundItems[key]
-                  })
-                })
-              }
-            } else {
-              tags = 'none'
-            }
+            tags = dpTags(response.dataplane)
 
             /**
              * Iterate through the subscriptions
@@ -618,99 +604,10 @@ export default {
                 return data
               }
 
-              // combine all tags into a single object
-              const fullTagSrc = () => {
-                const src = response.networking || null
-                const inbound = src.inbound || null
-                const gateway = src.gateway || null
-                const ingress = src.ingress || null
-
-                if (inbound || gateway || ingress) {
-                  const inboundFinalTags = []
-                  const gatewayFinalTags = []
-                  const ingressFinalTags = []
-
-                  // inbound tags
-                  if (inbound) {
-                    for (let i = 0; i < inbound.length; i++) {
-                      const rawTags = inbound[i].tags || null
-
-                      if (rawTags) {
-                        const tagKeys = Object.keys(rawTags)
-                        const tagVals = Object.values(rawTags)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          inboundFinalTags.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  // gateway tags
-                  if (gateway) {
-                    const gatewayItems = gateway.tags || null
-
-                    if (gatewayItems) {
-                      for (let i = 0; i < Object.keys(gatewayItems).length; i++) {
-                        const tagKeys = Object.keys(gatewayItems)
-                        const tagVals = Object.values(gatewayItems)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          gatewayFinalTags.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  // ingress tags
-                  if (ingress) {
-                    for (let i = 0; i < ingress.length; i++) {
-                      const ingressTags = ingress[i].tags || null
-                      const ingressService = ingress[i].service || null
-
-                      if (ingressService) {
-                        ingressFinalTags.push({
-                          label: 'service',
-                          value: ingressService
-                        })
-                      }
-
-                      if (ingressTags) {
-                        const tagKeys = Object.keys(ingressTags)
-                        const tagVals = Object.values(ingressTags)
-
-                        for (let x = 0; x < tagKeys.length; x++) {
-                          ingressFinalTags.push({
-                            label: tagKeys[x],
-                            value: tagVals[x]
-                          })
-                        }
-                      }
-                    }
-                  }
-
-                  const final = [
-                    ...inboundFinalTags,
-                    ...gatewayFinalTags,
-                    ...ingressFinalTags
-                  ]
-
-                  return dedupeObjects(final, 'value')
-                }
-
-                return null
-              }
-
               const newEntity = async () => {
                 return {
                   basicData: { ...getSome(response, selected) },
-                  tags: { ...fullTagSrc() },
+                  tags: dpTags(response),
                   mtls: await getMTLSData()
                 }
               }
