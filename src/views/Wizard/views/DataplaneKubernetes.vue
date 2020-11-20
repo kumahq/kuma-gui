@@ -748,9 +748,6 @@ export default {
           name: 'dataplanes',
           params: {
             mesh: fields.meshName
-          },
-          query: {
-            ns: fields.k8sNamespaceSelection
           }
         }
       }
