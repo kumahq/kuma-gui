@@ -318,10 +318,7 @@ export default {
       const mesh = this.$route.params.mesh || null
       const query = this.$route.query.ns || null
 
-      // we only need the offset if there is a size added
       const params = {
-        size: this.pageSize,
-        offset: this.pageOffset,
         gateway: true
       }
 

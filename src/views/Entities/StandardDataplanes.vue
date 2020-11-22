@@ -319,8 +319,6 @@ export default {
       const query = this.$route.query.ns || null
 
       const params = {
-        size: this.pageSize,
-        offset: this.pageOffset,
         gateway: false,
         ingress: false
       }
