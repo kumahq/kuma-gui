@@ -108,6 +108,26 @@
                     Disabled
                   </KBadge>
                 </li>
+                <li>
+                  <h4>Locality Aware Loadbalancing</h4>
+                  <p
+                    v-if="entity.localityEnabled"
+                  >
+                    <KBadge
+                      size="small"
+                      appearance="success"
+                    >
+                      Enabled
+                    </KBadge>
+                  </p>
+                  <KBadge
+                    v-else
+                    size="small"
+                    appearance="danger"
+                  >
+                    Disabled
+                  </KBadge>
+                </li>
               </ul>
             </div>
           </LabelList>
@@ -507,12 +527,19 @@ export default {
                 return newData
               }
 
+              const isRoutingEnabled = () => {
+                const { routing } = response
+
+                return routing && routing.localityAwareLoadBalancing
+              }
+
               this.tabGroupTitle = `Mesh: ${col1.name}`
               this.entityOverviewTitle = `Entity Overview for ${col1.name}`
 
               this.entity = {
                 basicData: col1,
-                extendedData: formatted()
+                extendedData: formatted(),
+                localityEnabled: isRoutingEnabled()
               }
 
               // this.rawEntity = response

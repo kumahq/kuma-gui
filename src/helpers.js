@@ -393,22 +393,6 @@ export function cleanTag (tag) {
 }
 
 /**
- * removeDuplicates
- *
- * This removes duplicate objects from an array
- *
- * @param {Array} array
- * @param {String} key
- */
-export function dedupeObjects (array, key) {
-  return array.filter((obj, index, self) =>
-    index === self.findIndex((el) => (
-      el[key] === obj[key]
-    ))
-  )
-}
-
-/**
  * camelCaseToWords
  *
  * Converts camelcase to human-readable words in titlecase format
@@ -464,7 +448,6 @@ export default {
   getOffset,
   stripTimes,
   cleanTag,
-  dedupeObjects,
   camelCaseToWords,
   kebabCase
 }

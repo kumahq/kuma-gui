@@ -270,40 +270,38 @@
             </HelperTooltip>
           </FormFragment>
         </template>
+
         <template slot="complete">
           <div v-if="validate.meshName">
-            <div v-if="hideScannerSiblings === false">
-              <h3>
-                Install a new Dataplane
-              </h3>
-              <p>
-                You can now execute the following commands to automatically inject
-                the sidecar proxy in every Pod, and by doing so creating the Dataplane.
-              </p>
-              <Tabs
-                :loaders="false"
-                :tabs="tabs"
-                :has-border="true"
-                initial-tab-override="universal"
-              >
-                <!-- <template slot="kubernetes">
-                  <CodeView
-                    title="Kubernetes"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
-                  />
-                </template> -->
-                <template slot="universal">
-                  <CodeView
-                    title="Universal"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
-                  />
-                </template>
-              </Tabs>
-            </div>
+            <h3>
+              Install your Dataplane
+            </h3>
+            <p>
+              It's time to first generate the credentials so that {{ title }} will allow
+              the Dataplane to successfully authenticate itself with the control plane,
+              and then finally install the Dataplane process (powered by Envoy).
+            </p>
+            <Tabs
+              :loaders="false"
+              :tabs="tabs"
+              :has-border="true"
+              initial-tab-override="universal"
+            >
+              <template slot="universal">
+                <CodeView
+                  title="Generate Dataplane Token"
+                  copy-button-text="Copy Command to Clipboard"
+                  lang="bash"
+                  :content="generateDpTokenCodeOutput"
+                />
+                <CodeView
+                  title="Start Dataplane Process"
+                  copy-button-text="Copy Command to Clipboard"
+                  lang="bash"
+                  :content="startDpCodeOutput"
+                />
+              </template>
+            </Tabs>
             <Scanner
               :loader-function="scanForEntity"
               :should-start="true"
@@ -331,71 +329,26 @@
                   was found!
                 </p>
                 <p>
-                  Proceed to the next step where we will explain how to start
+                  Proceed to the next step where we will show you
                   your new Dataplane.
                 </p>
                 <p>
                   <KButton
                     appearance="primary"
-                    @click="$refs.stepSystem.goToNextStep()"
+                    @click="compeleteDataPlaneSetup"
                   >
-                    Start Your Dataplane
+                    View Your Dataplane
                   </KButton>
                 </p>
               </template>
               <!-- error -->
               <template slot="error-title">
-                <h3>Mesh not found</h3>
+                <h3>Dataplane not found</h3>
               </template>
               <template slot="error-content">
-                <p>We were unable to find your mesh.</p>
+                <p>We were unable to find your dataplane.</p>
               </template>
             </Scanner>
-          </div>
-          <KAlert
-            v-else
-            appearance="danger"
-          >
-            <template slot="alertMessage">
-              <p>
-                Please return to the first step and make sure to select an
-                existing Mesh, or create a new one.
-              </p>
-            </template>
-          </KAlert>
-        </template>
-        <template slot="start">
-          <div v-if="validate.meshName">
-            <h3>
-              Start your Dataplane
-            </h3>
-            <p>
-              Now that {{ title }} knows that the configured Dataplane will eventually
-              connect to it, it's time to first generate the credentials that will allow
-              the Dataplane to successfully authenticate itself with the control plane,
-              and then finally start the Dataplane process (powered by Envoy).
-            </p>
-            <Tabs
-              :loaders="false"
-              :tabs="tabs"
-              :has-border="true"
-              initial-tab-override="universal"
-            >
-              <template slot="universal">
-                <CodeView
-                  title="Generate Dataplane Token"
-                  copy-button-text="Copy Command to Clipboard"
-                  lang="bash"
-                  :content="generateDpTokenCodeOutput"
-                />
-                <CodeView
-                  title="Start Dataplane Process"
-                  copy-button-text="Copy Command to Clipboard"
-                  lang="bash"
-                  :content="startDpCodeOutput"
-                />
-              </template>
-            </Tabs>
           </div>
           <KAlert
             v-else
@@ -448,7 +401,7 @@ networking:
 import { mapGetters } from 'vuex'
 import { kumaDpServerUrl } from '@/configUrl'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
-import FormatForCLI from '@/mixins/FormatForCLI'
+import json2yaml from '@appscode/json2yaml'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
@@ -475,7 +428,6 @@ export default {
     Scanner
   },
   mixins: [
-    FormatForCLI,
     updateStorage
   ],
   data () {
@@ -497,17 +449,9 @@ export default {
         {
           label: 'Install',
           slug: 'complete'
-        },
-        {
-          label: 'Start',
-          slug: 'start'
         }
       ],
       tabs: [
-        // {
-        //   hash: '#kubernetes',
-        //   title: 'Kubernetes'
-        // }
         {
           hash: '#universal',
           title: 'Universal'
@@ -572,8 +516,7 @@ export default {
       return url
     },
 
-    // Our generated code output
-    codeOutput () {
+    getDataplaneSchema() {
       const schema = Object.assign({}, this.schema)
 
       const {
@@ -630,14 +573,7 @@ export default {
         }
       }
 
-      /**
-       * Finalized output
-       */
-
-      const codeClosing = '" | kumactl apply -f -'
-      const assembledBlock = this.formatForCLI(schema, codeClosing)
-
-      return assembledBlock
+      return schema
     },
 
     /**
@@ -652,16 +588,16 @@ export default {
     },
 
     /**
-     * Part 2 of the last step: Start the Dataplane
+     * Part 2 of the last step: Install the Dataplane
      */
     startDpCodeOutput () {
       // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
       const { meshName, univDataplaneId } = this.validate
-
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
       --cp-address=${this.getDpServerUrl} \\
+      --dataplane=${`"${json2yaml(this.getDataplaneSchema)}"`} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure
@@ -835,6 +771,14 @@ export default {
         .finally(() => {
           this.scanComplete = true
         })
+    },
+    compeleteDataPlaneSetup() {
+      this.$router.push({
+        name: 'dataplanes',
+        params: {
+          mesh: this.validate.meshName,
+        }
+      })
     }
   }
 }
