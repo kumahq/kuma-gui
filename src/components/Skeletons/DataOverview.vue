@@ -100,6 +100,7 @@
               <span>
                 {{ row.totalUpdates }}
               </span>
+<!--              https://github.com/kumahq/kuma/issues/1200-->
 <!--              <span-->
 <!--                v-if="row.totalRejectedUpdates"-->
 <!--              >-->
