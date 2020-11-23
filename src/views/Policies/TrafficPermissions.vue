@@ -1,6 +1,9 @@
 <template>
   <div class="traffic-permissions">
-    <div v-if="securityWarning" class="alert-wrapper">
+    <div
+      v-if="securityWarning"
+      class="alert-wrapper"
+    >
       <KAlert appearance="warning">
         <template slot="alertMessage">
           <div class="alert-content">
@@ -78,7 +81,10 @@
           >
             <div>
               <ul>
-                <li v-for="(val, key) in entity" :key="key">
+                <li
+                  v-for="(val, key) in entity"
+                  :key="key"
+                >
                   <h4>{{ key }}</h4>
                   <p>
                     {{ val }}

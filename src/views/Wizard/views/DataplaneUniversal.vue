@@ -399,7 +399,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
-import configUrl from '@/configUrl'
+import { kumaDpServerUrl } from '@/configUrl'
 import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import json2yaml from '@appscode/json2yaml'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -510,10 +510,8 @@ export default {
         .substring(2, 8)
     },
 
-    getConfigUrl () {
-      const url = configUrl()
-        .replace('gui', '/')
-        .replace('config', '')
+    getDpServerUrl () {
+      const url = kumaDpServerUrl()
 
       return url
     },
@@ -598,7 +596,7 @@ export default {
       const cmdStructure = `kuma-dp run \\
       --name=${univDataplaneId} \\
       --mesh=${meshName} \\
-      --cp-address=${this.getConfigUrl} \\
+      --cp-address=${this.getDpServerUrl} \\
       --dataplane=${`"${json2yaml(this.getDataplaneSchema)}"`} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
