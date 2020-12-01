@@ -270,6 +270,25 @@ export default class Kuma {
   }
 
   /**
+   * External Services
+   */
+
+  // get all external services
+  getAllExternalServices (params) {
+    return this.client.get('/external-services', { params })
+  }
+
+  // get all external services from mesh
+  getAllExternalServicesFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/external-services`, { params })
+  }
+
+  // get external service details
+  getExternalService (mesh, externalservice, params) {
+    return this.client.get(`/meshes/${mesh}/external-services/${externalservice}`, { params })
+  }
+
+  /**
    *
    * NOTE:
    * There are no endpoints yet for fetching service information.
