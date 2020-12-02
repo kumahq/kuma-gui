@@ -1,5 +1,5 @@
 <template>
-  <div class="external-services">
+  <div class="internal-services">
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -21,7 +21,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'external-services'
+              name: 'internal-services'
             }"
           >
             <span class="custom-control-icon">
@@ -103,9 +103,9 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 
 export default {
-  name: 'ExternalServices',
+  name: 'InternalServices',
   metaInfo: {
-    title: 'External Services'
+    title: 'Internal Services'
   },
   components: {
     EntityURLControl,
@@ -131,15 +131,14 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no External Services present.'
+        message: 'There are no Internal Services present.'
       },
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Address', key: 'address' },
-          { label: 'TLS', key: 'tlsEnabled' }
+          { label: 'Data plane proxies: Online / Total', key: 'totalOnline' },
         ],
         data: []
       },
@@ -168,7 +167,7 @@ export default {
       const entity = this.entity
 
       if (entity) {
-        return `External Service: ${entity.name}`
+        return `Internal Services: ${entity.name}`
       } else {
         return null
       }
@@ -252,15 +251,15 @@ export default {
 
       const endpoint = () => {
         if (mesh === 'all') {
-          return this.$api.getAllExternalServices(params)
+          return this.$api.getAllServiceInsights(params)
         } else if ((query && query.length) && mesh !== 'all') {
-          return this.$api.getExternalService(mesh, query, params)
+          return this.$api.getServiceInsight(mesh, query, params)
         }
 
-        return this.$api.getAllExternalServicesFromMesh(mesh)
+        return this.$api.getAllServiceInsightsFromMesh(mesh)
       }
 
-      const getExternalServices = () => {
+      const getInternalServices = () => {
         return endpoint()
           .then(response => {
             const items = () => {
@@ -305,8 +304,11 @@ export default {
               }
 
               this.tableData.data = this.tableData.data.map(entity => {
-                entity.address = entity.networking.address
-                entity.tlsEnabled = entity.networking.tls.enabled ? 'Enabled' : 'Disabled'
+                // API can skip the field if there is no stat
+                entity.offline = entity.offline || 0
+                entity.online = entity.online || 0
+                entity.total = entity.total || 0
+                entity.totalOnline = `${entity.online} / ${entity.total}`
 
                 return entity
               })
@@ -334,7 +336,7 @@ export default {
           })
       }
 
-      getExternalServices()
+      getInternalServices()
     },
     getEntity (entity) {
       this.entityIsLoading = true
@@ -347,7 +349,7 @@ export default {
           ? entity.mesh
           : mesh
 
-        return this.$api.getExternalService(entityMesh, entity.name)
+        return this.$api.getServiceInsight(entityMesh, entity.name)
           .then(response => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

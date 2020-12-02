@@ -58,6 +58,12 @@ export default [
               title: true
             },
             {
+              name: 'Internal',
+              link: 'internal-services',
+              title: false,
+              nested: true
+            },
+            {
               name: 'External',
               link: 'external-services',
               title: false,

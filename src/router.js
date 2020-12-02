@@ -215,6 +215,16 @@ export default (store) => {
             breadcrumb: 'Gateway Data Plane Proxies'
           }
         },
+        // internal services
+        {
+          path: 'internal-services',
+          name: 'internal-services',
+          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices'),
+          meta: {
+            title: 'Internal Services',
+            breadcrumb: 'Internal Services'
+          }
+        },
         // external services
         {
           path: 'external-services',
