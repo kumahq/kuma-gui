@@ -79,7 +79,7 @@
                   v-for="(value, key) in entity"
                   :key="key"
                 >
-                  <h4>
+                  <h4 v-if="value">
                     {{ key }}
                   </h4>
                   <p v-if="key === 'status'">
