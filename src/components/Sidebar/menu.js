@@ -54,6 +54,22 @@ export default [
               nested: true
             },
             {
+              name: 'Services',
+              title: true
+            },
+            {
+              name: 'Internal',
+              link: 'internal-services',
+              title: false,
+              nested: true
+            },
+            {
+              name: 'External',
+              link: 'external-services',
+              title: false,
+              nested: true
+            },
+            {
               name: 'Policies',
               title: true
             },

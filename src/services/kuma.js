@@ -270,25 +270,40 @@ export default class Kuma {
   }
 
   /**
-   *
-   * NOTE:
-   * There are no endpoints yet for fetching service information.
-   * The below calls are placeholders for when those endpoints are added.
-   *
+   * External Services
+   */
+
+  // get all external services
+  getAllExternalServices (params) {
+    return this.client.get('/external-services', { params })
+  }
+
+  // get all external services from mesh
+  getAllExternalServicesFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/external-services`, { params })
+  }
+
+  // get external service details
+  getExternalService (mesh, externalservice, params) {
+    return this.client.get(`/meshes/${mesh}/external-services/${externalservice}`, { params })
+  }
+
+  /**
+   * Service Insights
    */
 
   // get all services
-  getAllServices (params) {
-    return this.client.get('/services', { params })
+  getAllServiceInsights (params) {
+    return this.client.get('/service-insights', { params })
   }
 
   // get all services from mesh
-  getAllServicesFromMesh (mesh, params) {
-    return this.client.get(`/meshes/${mesh}/services`, { params })
+  getAllServiceInsightsFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/service-insights`, { params })
   }
 
   // get service details
-  getService (name, service, params) {
-    return this.client.get(`/meshes/${name}/services/${service}`, { params })
+  getServiceInsight (name, service, params) {
+    return this.client.get(`/meshes/${name}/service-insights/${service}`, { params })
   }
 }
