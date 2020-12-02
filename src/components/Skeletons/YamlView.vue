@@ -227,12 +227,14 @@ export default {
         // assemble the main part of our object
         newObj.apiVersion = 'kuma.io/v1alpha1'
         newObj.kind = type
-        if (mesh !== undefined) { // mesh can be empty on global scoped objects
+        if (mesh !== undefined) { // mesh is not defined on global scoped objects
           newObj.mesh = sourceObj.mesh
         }
 
         if (name.includes('.')) { // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
-          const [k8sName, namespace] = name.split('.')
+          const parts = name.split('.')
+          const namespace = parts.pop()
+          const k8sName = parts.join('.') // on multi-zone when dataplanes from remote are synced to global the format is 'name.<remote-ns>.<global-ns>' so the name is `name.<remote-ns>`
 
           newObj.metadata = {
             name: k8sName,
