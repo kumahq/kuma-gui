@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { getSome, stripTimes } from '@/helpers'
+import { getOffset, getSome, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -283,6 +283,13 @@ export default {
 
               // set the selected table row for the first item on page load
               this.$store.dispatch('updateSelectedTableRow', firstItem.name)
+
+              if (response.next) {
+                this.next = getOffset(response.next)
+                this.hasNext = true
+              } else {
+                this.hasNext = false
+              }
 
               this.tableData.data = query
                 ? [entityList]
