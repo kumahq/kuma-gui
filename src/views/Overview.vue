@@ -99,6 +99,8 @@ export default {
         storeVals = {
           meshCount: state.totalMeshCount,
           dataplaneCount: state.totalDataplaneCount,
+          internalServiceCount: state.totalInternalServiceCount,
+          externalServiceCount: state.totalExternalServiceCount,
           faultInjectionCount: state.totalFaultInjectionCount,
           healthCheckCount: state.totalHealthCheckCount,
           proxyTemplateCount: state.totalProxyTemplateCount,
@@ -111,6 +113,8 @@ export default {
       } else {
         storeVals = {
           dataplaneCount: state.totalDataplaneCountFromMesh,
+          internalServiceCount: state.totalInternalServiceCountFromMesh,
+          externalServiceCount: state.totalExternalServiceCountFromMesh,
           faultInjectionCount: state.totalFaultInjectionCountFromMesh,
           healthCheckCount: state.totalHealthCheckCountFromMesh,
           proxyTemplateCount: state.totalProxyTemplateCountFromMesh,
@@ -127,6 +131,16 @@ export default {
           metric: 'Meshes',
           value: storeVals.meshCount,
           url: `/meshes/${this.selectedMesh}`
+        },
+        {
+          metric: 'Internal Services',
+          value: storeVals.internalServiceCount,
+          url: `/${this.selectedMesh}/internal-services`
+        },
+        {
+          metric: 'External Services',
+          value: storeVals.externalServiceCount,
+          url: `/${this.selectedMesh}/external-services`
         },
         {
           metric: 'Data Plane Proxies',
@@ -236,6 +250,8 @@ export default {
         actions = [
           'fetchTotalClusterCount',
           'fetchMeshTotalCount',
+          'fetchInternalServiceTotalCount',
+          'fetchExternalServiceTotalCount',
           'fetchDataplaneTotalCount',
           'fetchHealthCheckTotalCount',
           'fetchProxyTemplateTotalCount',
@@ -256,6 +272,8 @@ export default {
         // load the total counts just for that selected mesh
         actions = [
           'fetchTotalClusterCount',
+          'fetchInternalServiceTotalCountFromMesh',
+          'fetchExternalServiceTotalCountFromMesh',
           'fetchDataplaneTotalCountFromMesh',
           'fetchHealthCheckTotalCountFromMesh',
           'fetchProxyTemplateTotalCountFromMesh',

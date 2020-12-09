@@ -23,6 +23,8 @@ export default (api) => {
       dataplanes: [],
       selectedMesh: 'all', // shows all meshes on initial load
       totalMeshCount: 0,
+      totalInternalServiceCount: 0,
+      totalExternalServiceCount: 0,
       totalDataplaneCount: 0,
       totalHealthCheckCount: 0,
       totalProxyTemplateCount: 0,
@@ -43,6 +45,8 @@ export default (api) => {
       totalTrafficTraceCountFromMesh: 0,
       totalFaultInjectionCountFromMesh: 0,
       totalCircuitBreakerCountFromMesh: 0,
+      totalInternalServiceCountFromMesh: 0,
+      totalExternalServiceCountFromMesh: 0,
       totalDataplaneCountFromMesh: 0,
       tagline: null,
       version: null,
@@ -63,6 +67,8 @@ export default (api) => {
       getAnyDpOffline: (state) => state.anyDataplanesOffline,
       // total counts for all meshes
       getTotalMeshCount: (state) => state.totalMeshCount,
+      getTotalInternalServiceCount: (state) => state.totalInternalServiceCount,
+      getTotalExternalServiceCount: (state) => state.totalExternalServiceCount,
       getTotalDataplaneCount: (state) => state.totalDataplaneCount,
       getTotalHealthCheckCount: (state) => state.totalHealthCheckCount,
       getTotalProxyTemplateCount: (state) => state.totalProxyTemplateCount,
@@ -73,6 +79,8 @@ export default (api) => {
       getTotalFaultInjectionCount: (state) => state.totalFaultInjectionCount,
       getTotalCircuitBreakerCount: (state) => state.totalCircuitBreakerCount,
       // total counts per single mesh
+      getTotalInternalServiceCountFromMesh: (state) => state.totalInternalServiceCountFromMesh,
+      getTotalExternalServiceCountFromMesh: (state) => state.totalExternalServiceCountFromMesh,
       getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
       getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRouteCountFromMesh,
       getTotalTrafficPermissionsCountFromMesh: (state) => state.totalTrafficPermissionCountFromMesh,
@@ -119,6 +127,8 @@ export default (api) => {
       SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
       SET_TOTAL_MESH_COUNT: (state, count) => (state.totalMeshCount = count),
       SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
+      SET_TOTAL_INTERNAL_SERVICE_COUNT: (state, count) => (state.totalInternalServiceCount = count),
+      SET_TOTAL_EXTERNAL_SERVICE_COUNT: (state, count) => (state.totalExternalServiceCount = count),
       SET_TOTAL_HEALTH_CHECK_COUNT: (state, count) => (state.totalHealthCheckCount = count),
       SET_TOTAL_PROXY_TEMPLATE_COUNT: (state, count) => (state.totalProxyTemplateCount = count),
       SET_TOTAL_TRAFFIC_LOG_COUNT: (state, count) => (state.totalTrafficLogCount = count),
@@ -129,6 +139,8 @@ export default (api) => {
       SET_TOTAL_FAULT_INJECTION_COUNT: (state, count) => (state.totalFaultInjectionCount = count),
       SET_TOTAL_CIRCUIT_BREAKER_COUNT: (state, count) => (state.totalCircuitBreakerCount = count),
       SET_TOTAL_DATAPLANE_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
+      SET_TOTAL_INTERNAL_SERVICE_COUNT_FROM_MESH: (state, count) => (state.totalInternalServiceCountFromMesh = count),
+      SET_TOTAL_EXTERNAL_SERVICE_COUNT_FROM_MESH: (state, count) => (state.totalExternalServiceCountFromMesh = count),
       SET_TOTAL_HEALTH_CHECK_COUNT_FROM_MESH: (state, count) => (state.totalHealthCheckCountFromMesh = count),
       SET_TOTAL_PROXY_TEMPLATE_COUNT_FROM_MESH: (state, count) => (state.totalProxyTemplateCountFromMesh = count),
       SET_TOTAL_TRAFFIC_LOG_COUNT_FROM_MESH: (state, count) => (state.totalTrafficLogCountFromMesh = count),
@@ -213,6 +225,36 @@ export default (api) => {
             const total = response.total
 
             commit('SET_TOTAL_MESH_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of internal services present
+      fetchInternalServiceTotalCount ({ commit }) {
+        const params = { size: 1 }
+
+        return api.getAllServiceInsights(params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_INTERNAL_SERVICE_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of external services present
+      fetchExternalServiceTotalCount ({ commit }) {
+        const params = { size: 1 }
+
+        return api.getAllExternalServices(params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_EXTERNAL_SERVICE_COUNT', total)
           })
           .catch(error => {
             console.error(error)
@@ -357,6 +399,36 @@ export default (api) => {
       /**
        * Total counts (per mesh)
        */
+
+      // get the total number of internal services from a specific mesh
+      fetchInternalServiceTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllServiceInsightsFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_INTERNAL_SERVICE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of external services from a specific mesh
+      fetchExternalServiceTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllExternalServicesFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_EXTERNAL_SERVICE_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
 
       // get the total number of dataplanes from a specific mesh
       fetchDataplaneTotalCountFromMesh ({ commit }, mesh) {

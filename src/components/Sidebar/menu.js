@@ -27,6 +27,22 @@ export default [
               pathFlip: true
             },
             {
+              name: 'Services',
+              title: true
+            },
+            {
+              name: 'Internal',
+              link: 'internal-services',
+              title: false,
+              nested: true
+            },
+            {
+              name: 'External',
+              link: 'external-services',
+              title: false,
+              nested: true
+            },
+            {
               name: 'Data plane proxies',
               title: true
             },
@@ -50,22 +66,6 @@ export default [
             {
               name: 'Gateway',
               link: 'gateway-dataplanes',
-              title: false,
-              nested: true
-            },
-            {
-              name: 'Services',
-              title: true
-            },
-            {
-              name: 'Internal',
-              link: 'internal-services',
-              title: false,
-              nested: true
-            },
-            {
-              name: 'External',
-              link: 'external-services',
               title: false,
               nested: true
             },

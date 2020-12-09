@@ -13,7 +13,13 @@
           v-if="metric.value !== null"
           :key="index"
           :data-testid="metric.metric | formatTestId"
-          :class="metric.status"
+          :class="[
+            metric.status,
+            {
+              'metric--third-in-row': (index + 1) % 3 === 0,
+              'metric--in-last-row': index + metrics.length % 3 >= metrics.length
+            }
+          ]"
           class="metric"
         >
           <router-link
@@ -148,8 +154,12 @@ export default {
     @media (min-width: 841px) {
       border-right: var(--border);
 
-      &:nth-child(3n) {
+      &.metric--third-in-row {
         border-right: 0;
+      }
+
+      &.metric--in-last-row {
+        border-bottom: 0;
       }
     }
 
@@ -220,22 +230,6 @@ export default {
 
       .metric-value {
         color: #D90000;
-      }
-    }
-  }
-
-  @media (min-width: 841px) {
-    &.metric-count--odd {
-
-      .metric:nth-last-child(-n+2) {
-        border-bottom: 0;
-      }
-    }
-
-    &.metric-count--even {
-
-      .metric:nth-last-child(-n+3) {
-        border-bottom: 0;
       }
     }
   }
