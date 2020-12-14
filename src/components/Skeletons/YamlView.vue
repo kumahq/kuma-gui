@@ -205,7 +205,7 @@ export default {
       const kubernetes = () => {
         const newObj = {}
         const sourceObj = Object.assign({}, this.content)
-        const { name, type, metadata } = sourceObj
+        const { name, mesh, type } = sourceObj
 
         // all other parts of the Kubernetes object have to be placed under `spec`
         const spec = () => {
@@ -224,15 +224,26 @@ export default {
           return false
         }
 
-        // we remove the `name` and `type` because they need to be placed under `metadata`
-        delete sourceObj.type
-        delete sourceObj.name
-
         // assemble the main part of our object
         newObj.apiVersion = 'kuma.io/v1alpha1'
         newObj.kind = type
-        newObj.metadata = {
-          name: name
+        if (mesh !== undefined) { // mesh is not defined on global scoped objects
+          newObj.mesh = sourceObj.mesh
+        }
+
+        if (name.includes('.')) { // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
+          const parts = name.split('.')
+          const namespace = parts.pop()
+          const k8sName = parts.join('.') // on multi-zone when dataplanes from remote are synced to global the format is 'name.<remote-ns>.<global-ns>' so the name is `name.<remote-ns>`
+
+          newObj.metadata = {
+            name: k8sName,
+            namespace: namespace
+          }
+        } else {
+          newObj.metadata = {
+            name: name
+          }
         }
 
         // if there are additional values, place them under `spec` accordingly
