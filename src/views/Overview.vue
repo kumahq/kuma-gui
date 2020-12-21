@@ -108,7 +108,8 @@ export default {
           trafficPermissionCount: state.totalTrafficPermissionCount,
           trafficRouteCount: state.totalTrafficRouteCount,
           trafficTraceCount: state.totalTrafficTraceCount,
-          circuitBreakerCount: state.totalCircuitBreakerCount
+          circuitBreakerCount: state.totalCircuitBreakerCount,
+          retryCount: state.totalRetryCount
         }
       } else {
         storeVals = {
@@ -122,7 +123,8 @@ export default {
           trafficPermissionCount: state.totalTrafficPermissionCountFromMesh,
           trafficRouteCount: state.totalTrafficRouteCountFromMesh,
           trafficTraceCount: state.totalTrafficTraceCountFromMesh,
-          circuitBreakerCount: state.totalCircuitBreakerCountFromMesh
+          circuitBreakerCount: state.totalCircuitBreakerCountFromMesh,
+          retryCount: state.totalRetryCountFromMesh
         }
       }
 
@@ -186,6 +188,11 @@ export default {
           metric: 'Traffic Traces',
           value: storeVals.trafficTraceCount,
           url: `/${this.selectedMesh}/traffic-traces`
+        },
+        {
+          metric: 'Retries',
+          value: storeVals.retryCount,
+          url: `/${this.selectedMesh}/retries`
         }
       ]
 
@@ -260,7 +267,8 @@ export default {
           'fetchTrafficRouteTotalCount',
           'fetchTrafficTraceTotalCount',
           'fetchFaultInjectionTotalCount',
-          'fetchCircuitBreakerTotalCount'
+          'fetchCircuitBreakerTotalCount',
+          'fetchRetryTotalCount'
         ]
 
         // run each action
@@ -282,7 +290,8 @@ export default {
           'fetchTrafficRouteTotalCountFromMesh',
           'fetchTrafficTraceTotalCountFromMesh',
           'fetchFaultInjectionTotalCountFromMesh',
-          'fetchCircuitBreakerTotalCountFromMesh'
+          'fetchCircuitBreakerTotalCountFromMesh',
+          'fetchRetryTotalCountFromMesh'
         ]
 
         // run each action
