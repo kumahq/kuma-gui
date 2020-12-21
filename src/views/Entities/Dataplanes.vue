@@ -206,7 +206,9 @@ export default {
           { label: 'Tags', key: 'tags' },
           { label: 'Last Connected', key: 'lastConnected' },
           { label: 'Last Updated', key: 'lastUpdated' },
-          { label: 'Total Updates', key: 'totalUpdates' }
+          { label: 'Total Updates', key: 'totalUpdates' },
+          { label: 'Kuma DP version', key: 'dpVersion' },
+          { label: 'Envoy version', key: 'envoyVersion' }
         ],
         data: []
       },
@@ -354,6 +356,8 @@ export default {
             let totalUpdates = []
             let totalRejectedUpdates = []
             let status = 'Offline'
+            let dpVersion = ''
+            let envoyVersion = ''
             const connectTimes = []
             const updateTimes = []
 
@@ -402,6 +406,11 @@ export default {
                   status = 'Online'
                 } else {
                   status = 'Offline'
+                }
+
+                if (item.version && item.version.kumaDp) {
+                  dpVersion = item.version.kumaDp.version
+                  envoyVersion = item.version.envoy.version
                 }
               })
 
@@ -454,6 +463,8 @@ export default {
               lastUpdated = 'never'
               totalUpdates = 0
               totalRejectedUpdates = 0
+              dpVersion = '-'
+              envoyVersion = '-'
             }
 
             // assemble the table data
@@ -466,6 +477,8 @@ export default {
               lastUpdated: lastUpdated,
               totalUpdates: totalUpdates,
               totalRejectedUpdates: totalRejectedUpdates,
+              dpVersion: dpVersion,
+              envoyVersion: envoyVersion,
               type: dataplaneType()
             })
 
