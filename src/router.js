@@ -306,6 +306,15 @@ export default (store) => {
             title: 'Proxy Templates'
           },
           component: () => import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates')
+        },
+        // retries
+        {
+          path: 'retries',
+          name: 'retries',
+          meta: {
+            title: 'Retries'
+          },
+          component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries')
         }
       ]
     }

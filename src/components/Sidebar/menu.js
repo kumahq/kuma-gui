@@ -120,6 +120,12 @@ export default [
               link: 'traffic-traces',
               title: false,
               parent: 'policies'
+            },
+            {
+              name: 'Retries',
+              link: 'retries',
+              title: false,
+              parent: 'policies'
             }
           ]
         }

@@ -270,6 +270,25 @@ export default class Kuma {
   }
 
   /**
+   * Retries
+   */
+
+  // get all retries
+  getAllRetries (params) {
+    return this.client.get('/retries', { params })
+  }
+
+  // get all retries from mesh
+  getAllRetriesFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/retries`, { params })
+  }
+
+  // get retry details
+  getRetry (mesh, retry, params) {
+    return this.client.get(`/meshes/${mesh}/retries/${retry}`, { params })
+  }
+
+  /**
    * External Services
    */
 
