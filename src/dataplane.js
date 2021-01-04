@@ -52,16 +52,14 @@ getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' o
  */
 export function getStatus (dataplane, dataplaneInsight) {
   const inbounds = dataplane.networking.inbound
+    ? dataplane.networking.inbound
+    : [{ health: { ready: true } }]
 
-  const appStatus = inbounds
-    ? inbounds
-      .map(item => item.health ? item.health.ready : true)
-      .reduce((a, b) => a || b)
-    : true
+  const everyInboundHealthy = inbounds
+    .every(item => item.health ? item.health.ready : true)
 
-  const proxyStatus = dataplaneInsight.subscriptions
-    .map(item => item.connectTime && item.connectTime.length && !item.disconnectTime)
-    .reduce((a, b) => a || b)
+  const someSubscriptionOnline = dataplaneInsight.subscriptions
+    .some(item => item.connectTime && item.connectTime.length && !item.disconnectTime)
 
-  return proxyStatus && appStatus ? 'Online' : 'Offline'
+  return someSubscriptionOnline && everyInboundHealthy ? 'Online' : 'Offline'
 }
