@@ -46,3 +46,22 @@ export function dpTags (dataplane) {
   return tags.map(tagPair => tagPair.split('='))
     .map(([key, value]) => ({ label: key, value: value }))
 }
+
+/*
+getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
+ */
+export function getStatus (dataplane, dataplaneInsight) {
+  const inbounds = dataplane.networking.inbound
+
+  const appStatus = inbounds
+    ? inbounds
+      .map(item => item.health ? item.health.ready : true)
+      .reduce((a, b) => a || b)
+    : true
+
+  const proxyStatus = dataplaneInsight.subscriptions
+    .map(item => item.connectTime && item.connectTime.length && !item.disconnectTime)
+    .reduce((a, b) => a || b)
+
+  return proxyStatus && appStatus ? 'Online' : 'Offline'
+}

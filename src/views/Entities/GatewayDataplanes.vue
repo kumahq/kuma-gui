@@ -164,7 +164,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { dpTags } from '@/dataplane'
+import { dpTags, getStatus } from '@/dataplane'
 
 export default {
   name: 'GatewayDataplanes',
@@ -387,24 +387,19 @@ export default {
                 const rejectedResponsesSent = item.status.total.responsesRejected || 0
                 const connectTime = item.connectTime || placeholder
                 const lastUpdateTime = item.status.lastUpdateTime || placeholder
-                const disconnectTime = item.disconnectTime || null
 
                 totalUpdates.push(parseInt(responsesSent))
                 totalRejectedUpdates.push(parseInt(rejectedResponsesSent))
                 connectTimes.push(connectTime)
                 updateTimes.push(lastUpdateTime)
 
-                if (connectTime && connectTime.length && !disconnectTime) {
-                  status = 'Online'
-                } else {
-                  status = 'Offline'
-                }
-
                 if (item.version && item.version.kumaDp) {
                   dpVersion = item.version.kumaDp.version
                   envoyVersion = item.version.envoy.version
                 }
               })
+
+              status = getStatus(response.dataplane, response.dataplaneInsight)
 
               // get the sum of total updates (with some precautions)
               totalUpdates = totalUpdates.reduce((a, b) => a + b)
