@@ -55,11 +55,11 @@ export function getStatus (dataplane, dataplaneInsight) {
     ? dataplane.networking.inbound
     : [{ health: { ready: true } }]
 
-  const everyInboundHealthy = inbounds
-    .every(item => item.health ? item.health.ready : true)
+  const someInboundUnhealthy = inbounds
+    .some(item => item.health ? !item.health.ready : false)
 
   const someSubscriptionOnline = dataplaneInsight.subscriptions
     .some(item => item.connectTime && item.connectTime.length && !item.disconnectTime)
 
-  return someSubscriptionOnline && everyInboundHealthy ? 'Online' : 'Offline'
+  return someSubscriptionOnline && !someInboundUnhealthy ? 'Online' : 'Offline'
 }
