@@ -44,7 +44,10 @@ export function dpTags (dataplane) {
   tags = Array.from(new Set(tags)) // remove duplicates
 
   return tags.map(tagPair => tagPair.split('='))
-    .map(([key, value]) => ({ label: key, value: value }))
+    .map(([key, value]) => ({
+      label: key,
+      value: value
+    }))
 }
 
 /*
@@ -55,11 +58,34 @@ export function getStatus (dataplane, dataplaneInsight) {
     ? dataplane.networking.inbound
     : [{ health: { ready: true } }]
 
-  const someInboundUnhealthy = inbounds
-    .some(item => item.health ? !item.health.ready : false)
+  const errors = inbounds
+    .filter(item => item.health && !item.health.ready)
+    .map(item => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
 
-  const someSubscriptionOnline = dataplaneInsight.subscriptions
+  const subscriptions = dataplaneInsight.subscriptions
+    ? dataplaneInsight.subscriptions
+    : []
+
+  const proxyOnline = subscriptions
     .some(item => item.connectTime && item.connectTime.length && !item.disconnectTime)
 
-  return someSubscriptionOnline && !someInboundUnhealthy ? 'Online' : 'Offline'
+  const status = () => {
+    const allInboundsOffline = errors.length === inbounds.length
+    const allInboundsOnline = errors.length === 0
+
+    if (!proxyOnline || allInboundsOffline) {
+      return 'Offline'
+    }
+
+    if (!allInboundsOnline) {
+      return 'Partially degraded'
+    }
+
+    return 'Online'
+  }
+
+  return {
+    status: status(),
+    reason: errors,
+  }
 }

@@ -78,10 +78,33 @@
                   v-for="(val, key) in entity.basicData"
                   :key="key"
                 >
-                  <h4>{{ key }}</h4>
-                  <p>
+                  <div v-if="key === 'status'">
+                    <h4>{{ key }}</h4>
+                    <div
+                      class="entity-status"
+                      :class="{
+                        'is-offline': (val.status.toString().toLowerCase() === 'offline' || val.status === false),
+                        'is-degraded': (val.status.toString().toLowerCase() === 'partially degraded' || val.status === false)
+                      }"
+                    >
+                      <span class="entity-status__label">{{ val.status }}</span>
+                    </div>
+                    <div class="reason-list">
+                      <ul>
+                        <li
+                          v-for="reason in val.reason"
+                          :key="reason"
+                        >
+                          <span class="entity-status__dot"/>
+                          {{ reason }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <h4>{{ key }}</h4>
                     {{ val }}
-                  </p>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -320,7 +343,6 @@ export default {
             let tags = []
             let totalUpdates = []
             let totalRejectedUpdates = []
-            let status = 'Offline'
             let dpVersion = ''
             let envoyVersion = ''
             const connectTimes = []
@@ -340,6 +362,8 @@ export default {
              * Handle our tag collection
              */
             tags = dpTags(response.dataplane)
+
+            const { status } = getStatus(response.dataplane, response.dataplaneInsight)
 
             /**
              * Iterate through the subscriptions
@@ -361,8 +385,6 @@ export default {
                   envoyVersion = item.version.envoy.version
                 }
               })
-
-              status = getStatus(response.dataplane, response.dataplaneInsight)
 
               // get the sum of total updates (with some precautions)
               totalUpdates = totalUpdates.reduce((a, b) => a + b)
@@ -533,9 +555,22 @@ export default {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
+              const getDpStatus = async () => {
+                try {
+                  const res = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
+
+                  return getStatus(response, res.dataplaneInsight)
+                } catch (error) {
+                  console.error(error)
+                }
+              }
+
               const newEntity = async () => {
                 return {
-                  basicData: { ...getSome(response, selected) },
+                  basicData: {
+                    ...getSome(response, selected),
+                    status: await getDpStatus(),
+                  },
                   tags: dpTags(response),
                 }
               }
@@ -577,5 +612,17 @@ export default {
 <style lang="scss" scoped>
 .add-dp-button {
   background-color: var(--logo-green) !important;
+}
+.reason-list {
+  ul {
+    li {
+      margin-left: 20px;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+}
+.reason-list .entity-status__dot {
+  background-color: var(--black-85);
 }
 </style>

@@ -62,7 +62,10 @@
           >
             <div
               class="entity-status"
-              :class="{ 'is-offline': (rowValue.toString().toLowerCase() === 'offline' || rowValue === false) }"
+              :class="{
+                'is-offline': (rowValue.toString().toLowerCase() === 'offline' || rowValue === false),
+                'is-degraded': (rowValue.toString().toLowerCase() === 'partially degraded' || rowValue === false)
+              }"
             >
               <span class="entity-status__dot" />
               <span class="entity-status__label">{{ rowValue }}</span>
