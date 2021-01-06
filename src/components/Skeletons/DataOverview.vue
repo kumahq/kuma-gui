@@ -468,6 +468,8 @@ span[class*="kuma-io-"] {
 }
 
 .data-overview-table {
+  // this accounts for super long table widths
+  overflow-x: auto;
 
   @media (max-width: 1110px) {
     overflow-x: scroll;

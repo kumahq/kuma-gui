@@ -367,6 +367,10 @@ export default class Mock {
           ],
           ingress: [
             {
+              publicAddress: '192.168.0.123',
+              publicPort: 1234,
+            },
+            {
               'kuma.io/service': 'frontend.kuma-demo.svc:8080',
               tags: {
                 app: 'kuma-demo-frontend',
@@ -430,6 +434,10 @@ export default class Mock {
                 ],
                 ingress: [
                   {
+                    publicAddress: '192.168.0.123',
+                    publicPort: 1234,
+                  },
+                  {
                     'kuma.io/service': 'frontend.kuma-demo.svc:8080',
                     tags: {
                       app: 'kuma-demo-frontend',
@@ -490,6 +498,10 @@ export default class Mock {
                   }
                 ],
                 ingress: [
+                  {
+                    publicAddress: '192.168.0.123',
+                    publicPort: 1234,
+                  },
                   {
                     'kuma.io/service': 'frontend.kuma-demo.svc:8080',
                     tags: {
@@ -558,7 +570,11 @@ export default class Mock {
                   reallyLongTagLabelHere: 'a-really-long-tag-value-here'
                 }
               }
-            ]
+            ],
+            ingress: {
+              publicAddress: '192.168.0.123',
+              publicPort: 1234,
+            }
           }
         },
         dataplaneInsight: {
@@ -610,6 +626,10 @@ export default class Mock {
               }
             ],
             ingress: [
+              {
+                publicAddress: '192.168.0.123',
+                publicPort: 1234,
+              },
               {
                 'kuma.io/service': 'frontend.kuma-demo.svc:8080',
                 tags: {
@@ -710,6 +730,10 @@ export default class Mock {
             }
           ],
           ingress: [
+            {
+              publicAddress: '192.168.0.123',
+              publicPort: 1234,
+            },
             {
               'kuma.io/service': 'frontend.kuma-demo.svc:8080',
               tags: {
