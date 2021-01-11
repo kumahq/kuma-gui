@@ -78,10 +78,33 @@
                   v-for="(val, key) in entity.basicData"
                   :key="key"
                 >
-                  <h4>{{ key }}</h4>
-                  <p>
+                  <div v-if="key === 'status'">
+                    <h4>{{ key }}</h4>
+                    <div
+                      class="entity-status"
+                      :class="{
+                        'is-offline': (val.status.toString().toLowerCase() === 'offline' || val.status === false),
+                        'is-degraded': (val.status.toString().toLowerCase() === 'partially degraded' || val.status === false)
+                      }"
+                    >
+                      <span class="entity-status__label">{{ val.status }}</span>
+                    </div>
+                    <div class="reason-list">
+                      <ul>
+                        <li
+                          v-for="reason in val.reason"
+                          :key="reason"
+                        >
+                          <span class="entity-status__dot"/>
+                          {{ reason }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div v-else>
+                    <h4>{{ key }}</h4>
                     {{ val }}
-                  </p>
+                  </div>
                 </li>
               </ul>
             </div>
@@ -122,7 +145,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
-import { dpTags } from '@/dataplane'
+import { dpTags, getDataplane, getDataplaneInsight, getStatus } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -320,7 +343,6 @@ export default {
             let tags = []
             let totalUpdates = []
             let totalRejectedUpdates = []
-            let status = 'Offline'
             let dpVersion = ''
             let envoyVersion = ''
             const connectTimes = []
@@ -341,6 +363,8 @@ export default {
              */
             tags = dpTags(response.dataplane)
 
+            const { status } = getStatus(response.dataplane, response.dataplaneInsight)
+
             /**
              * Iterate through the subscriptions
              */
@@ -350,18 +374,11 @@ export default {
                 const rejectedResponsesSent = item.status.total.responsesRejected || 0
                 const connectTime = item.connectTime || placeholder
                 const lastUpdateTime = item.status.lastUpdateTime || placeholder
-                const disconnectTime = item.disconnectTime || null
 
                 totalUpdates.push(parseInt(responsesSent))
                 totalRejectedUpdates.push(parseInt(rejectedResponsesSent))
                 connectTimes.push(connectTime)
                 updateTimes.push(lastUpdateTime)
-
-                if (connectTime && connectTime.length && !disconnectTime) {
-                  status = 'Online'
-                } else {
-                  status = 'Offline'
-                }
 
                 if (item.version && item.version.kumaDp) {
                   dpVersion = item.version.kumaDp.version
@@ -533,15 +550,26 @@ export default {
           ? entity.mesh
           : mesh
 
-        return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
+        return this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
           .then(response => {
-            if (response) {
+            if (getDataplane(response)) {
               const selected = ['type', 'name', 'mesh']
+
+              const getDpStatus = async () => {
+                try {
+                  return getStatus(getDataplane(response), getDataplaneInsight(response))
+                } catch (error) {
+                  console.error(error)
+                }
+              }
 
               const newEntity = async () => {
                 return {
-                  basicData: { ...getSome(response, selected) },
-                  tags: dpTags(response),
+                  basicData: {
+                    ...getSome(getDataplane(response), selected),
+                    status: await getDpStatus(),
+                  },
+                  tags: dpTags(getDataplane(response)),
                 }
               }
 
@@ -553,7 +581,7 @@ export default {
               })
 
               // this.rawEntity = response
-              this.rawEntity = stripTimes(response)
+              this.rawEntity = stripTimes(getDataplane(response))
             } else {
               this.entity = null
               this.entityIsEmpty = true
@@ -582,5 +610,17 @@ export default {
 <style lang="scss" scoped>
 .add-dp-button {
   background-color: var(--logo-green) !important;
+}
+.reason-list {
+  ul {
+    li {
+      margin-left: 20px;
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+  }
+}
+.reason-list .entity-status__dot {
+  background-color: var(--black-85);
 }
 </style>
