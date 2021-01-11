@@ -187,7 +187,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { dpTags, getStatus } from '@/dataplane'
+import { dpTags, getDataplane, getDataplaneInsight, getStatus } from '@/dataplane'
 
 export default {
   name: 'Dataplanes',
@@ -593,9 +593,9 @@ export default {
           ? entity.mesh
           : mesh
 
-        return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
+        return this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
           .then(response => {
-            if (response) {
+            if (getDataplane(response)) {
               const selected = ['type', 'name', 'mesh']
 
               // get mTLS data if it's present
@@ -603,10 +603,8 @@ export default {
                 let data = null
 
                 try {
-                  const res = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
-
-                  if (res.dataplaneInsight.mTLS) {
-                    const mtls = res.dataplaneInsight.mTLS
+                  if (getDataplaneInsight(response).mTLS) {
+                    const mtls = getDataplaneInsight(response).mTLS
 
                     const rawExpDate = new Date(mtls.certificateExpirationTime)
                     // this prevents any weird date shifting
@@ -644,9 +642,7 @@ export default {
 
               const getDpStatus = async () => {
                 try {
-                  const res = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
-
-                  return getStatus(response, res.dataplaneInsight)
+                  return getStatus(getDataplane(response), getDataplaneInsight(response))
                 } catch (error) {
                   console.error(error)
                 }
@@ -655,10 +651,10 @@ export default {
               const newEntity = async () => {
                 return {
                   basicData: {
-                    ...getSome(response, selected),
+                    ...getSome(getDataplane(response), selected),
                     status: await getDpStatus(),
                   },
-                  tags: dpTags(response),
+                  tags: dpTags(getDataplane(response)),
                   mtls: await getMTLSData()
                 }
               }
@@ -671,7 +667,7 @@ export default {
               })
 
               // this.rawEntity = response
-              this.rawEntity = stripTimes(response)
+              this.rawEntity = stripTimes(getDataplane(response))
             } else {
               this.entity = null
               this.entityIsEmpty = true

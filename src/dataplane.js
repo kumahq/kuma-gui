@@ -89,3 +89,25 @@ export function getStatus (dataplane, dataplaneInsight) {
     reason: errors,
   }
 }
+
+export function getDataplane (dataplaneOverview) {
+  const { name, mesh, type } = dataplaneOverview
+
+  return {
+    name: name,
+    mesh: mesh,
+    type: type,
+    ...dataplaneOverview.dataplane,
+  }
+}
+
+export function getDataplaneInsight (dataplaneOverview) {
+  const { name, mesh, type } = dataplaneOverview
+
+  return {
+    name: name,
+    mesh: mesh,
+    type: type,
+    ...dataplaneOverview.dataplaneInsight,
+  }
+}

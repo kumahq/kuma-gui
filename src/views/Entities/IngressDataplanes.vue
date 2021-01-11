@@ -145,7 +145,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
-import { dpTags, getStatus } from '@/dataplane'
+import { dpTags, getDataplane, getDataplaneInsight, getStatus } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -550,16 +550,14 @@ export default {
           ? entity.mesh
           : mesh
 
-        return this.$api.getDataplaneFromMesh(entityMesh, entity.name)
+        return this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
           .then(response => {
-            if (response) {
+            if (getDataplane(response)) {
               const selected = ['type', 'name', 'mesh']
 
               const getDpStatus = async () => {
                 try {
-                  const res = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
-
-                  return getStatus(response, res.dataplaneInsight)
+                  return getStatus(getDataplane(response), getDataplaneInsight(response))
                 } catch (error) {
                   console.error(error)
                 }
@@ -568,10 +566,10 @@ export default {
               const newEntity = async () => {
                 return {
                   basicData: {
-                    ...getSome(response, selected),
+                    ...getSome(getDataplane(response), selected),
                     status: await getDpStatus(),
                   },
-                  tags: dpTags(response),
+                  tags: dpTags(getDataplane(response)),
                 }
               }
 
@@ -583,7 +581,7 @@ export default {
               })
 
               // this.rawEntity = response
-              this.rawEntity = stripTimes(response)
+              this.rawEntity = stripTimes(getDataplane(response))
             } else {
               this.entity = null
               this.entityIsEmpty = true
