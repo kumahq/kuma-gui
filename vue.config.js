@@ -1,5 +1,7 @@
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+process.env.VUE_APP_KUMA_SUPPORTED_VERSIONS = JSON.stringify(require('./versions.json'))
+
 module.exports = {
   publicPath: './',
   runtimeCompiler: true,

@@ -1,3 +1,5 @@
+import semver from 'semver'
+
 const capitalizeRegEx = /(?:^|[\s-:'"])\w/g
 
 export const uuidRegEx = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
@@ -426,6 +428,26 @@ export function kebabCase (value) {
   return newValue
 }
 
+export function getLastDate(a, b) {
+  if (a instanceof Date && b instanceof Date) {
+    return a > b ? a : b
+  }
+
+  if (a instanceof Date && !(b instanceof Date)) {
+    return a
+  }
+
+  if (b instanceof Date && !(a instanceof Date)) {
+    return b
+  }
+
+  return null
+}
+
+export function verifyVersion(version, condition) {
+  return semver.satisfies(version, condition)
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -449,5 +471,6 @@ export default {
   stripTimes,
   cleanTag,
   camelCaseToWords,
-  kebabCase
+  kebabCase,
+  getLastDate
 }

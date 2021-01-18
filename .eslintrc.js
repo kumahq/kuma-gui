@@ -8,7 +8,8 @@ module.exports = {
   },
   env: {
     browser: true,
-    es6: true
+    es6: true,
+    jest: true
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: [
@@ -17,7 +18,10 @@ module.exports = {
     'standard'
   ],
   // required to lint *.vue files
-  plugins: ['vue'],
+  plugins: [
+    'vue',
+    'jest'
+  ],
   // add your custom rules here
   rules: {
     // allow paren-less arrow functions

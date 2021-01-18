@@ -104,6 +104,17 @@
               </p>
             </div>
           </LabelList>
+          <div
+            v-if="!isEnvoySupported()"
+            class="m-4 mt-0 rounded border p-4 bg-yellow-100 border-yellow-300 color-yellow-400 yaml-view"
+          >
+            <p>There is mismatch between Kuma DP version and supported Envoy version.</p>
+            <prism
+              class="code-block"
+              language="yaml"
+              :code="getVersionConditions()"
+            />
+          </div>
         </template>
         <template slot="mtls">
           <LabelList
@@ -155,7 +166,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
+import { getOffset, getSome, stripTimes, verifyVersion } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -164,7 +175,11 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { dpTags } from '@/dataplane'
+import { dpTags, reduceSubscriptions, parseMTLS } from '@/dataplane'
+
+import Prism from 'vue-prismjs'
+import 'prismjs/themes/prism.css'
+import json2yaml from '@appscode/json2yaml'
 
 export default {
   name: 'Dataplanes',
@@ -178,7 +193,8 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
+    prism: Prism
   },
   mixins: [
     sortEntities
@@ -208,7 +224,8 @@ export default {
           { label: 'Last Updated', key: 'lastUpdated' },
           { label: 'Total Updates', key: 'totalUpdates' },
           { label: 'Kuma DP version', key: 'dpVersion' },
-          { label: 'Envoy version', key: 'envoyVersion' }
+          { label: 'Envoy version', key: 'envoyVersion' },
+          { key: 'versionStatus', hideLabel: true },
         ],
         data: []
       },
@@ -285,10 +302,40 @@ export default {
   },
   beforeMount () {
     this.loadData()
+    this.parseSupportedVersions()
   },
   methods: {
     init () {
       this.loadData()
+    },
+    parseSupportedVersions() {
+      const rawSupportedVersion = process.env.VUE_APP_KUMA_SUPPORTED_VERSIONS
+
+      this.supportedVersions = rawSupportedVersion
+        ? JSON.parse(rawSupportedVersion)
+        : {}
+    },
+    isEnvoySupported () {
+      if (this.isLoading || !this.entity) {
+        return true
+      }
+
+      const { dpVersion, envoyVersion } = this.entity
+
+      const expected = this.supportedVersions[dpVersion]
+
+      if (expected && expected.envoy) {
+        return verifyVersion(envoyVersion, expected.envoy)
+      }
+
+      return true
+    },
+    getVersionConditions () {
+      const { dpVersion } = this.entity
+
+      return json2yaml({
+        [`kuma-dp@${dpVersion}`]: this.supportedVersions[dpVersion]
+      })
     },
     goToPreviousPage () {
       this.pageOffset = this.previous.pop()
@@ -326,6 +373,8 @@ export default {
         offset: this.pageOffset
       }
 
+      const placeholder = 'n/a'
+
       /**
        * determine which endpoint to use based on the mesh.
        * we are either fetching entities from one mesh, or fetching
@@ -348,19 +397,6 @@ export default {
       const dpFetcher = (mesh, name, finalArr) => {
         this.$api.getDataplaneOverviewFromMesh(mesh, name)
           .then(response => {
-            const placeholder = 'n/a'
-
-            let lastConnected
-            let lastUpdated
-            let tags = []
-            let totalUpdates = []
-            let totalRejectedUpdates = []
-            let status = 'Offline'
-            let dpVersion = ''
-            let envoyVersion = ''
-            const connectTimes = []
-            const updateTimes = []
-
             /**
              * Dataplane type conditions
              */
@@ -381,105 +417,13 @@ export default {
               return 'Standard'
             }
 
-            /**
-             * Handle our tag collections based on the dataplane type.
-             */
-            tags = dpTags(response.dataplane)
-
-            /**
-             * Iterate through the subscriptions
-             */
-            if (response.dataplaneInsight.subscriptions && response.dataplaneInsight.subscriptions.length) {
-              response.dataplaneInsight.subscriptions.forEach(item => {
-                const responsesSent = item.status.total.responsesSent || 0
-                const rejectedResponsesSent = item.status.total.responsesRejected || 0
-                const connectTime = item.connectTime || placeholder
-                const lastUpdateTime = item.status.lastUpdateTime || placeholder
-                const disconnectTime = item.disconnectTime || null
-
-                totalUpdates.push(parseInt(responsesSent))
-                totalRejectedUpdates.push(parseInt(rejectedResponsesSent))
-                connectTimes.push(connectTime)
-                updateTimes.push(lastUpdateTime)
-
-                if (connectTime && connectTime.length && !disconnectTime) {
-                  status = 'Online'
-                } else {
-                  status = 'Offline'
-                }
-
-                if (item.version && item.version.kumaDp) {
-                  dpVersion = item.version.kumaDp.version
-                  envoyVersion = item.version.envoy.version
-                }
-              })
-
-              // get the sum of total updates (with some precautions)
-              totalUpdates = totalUpdates.reduce((a, b) => a + b)
-              // get the sum of total rejection
-              totalRejectedUpdates = totalRejectedUpdates.reduce((a, b) => a + b)
-              // select the most recent LAST CONNECTED timestamp
-              const selectedTime = connectTimes.reduce((a, b) => {
-                if (a && b) {
-                  return a.MeasureDate > b.MeasureDate ? a : b
-                }
-
-                return null
-              })
-
-              // select the most recent LAST UPDATED timestamnp
-              const selectedUpdateTime = updateTimes.reduce((a, b) => {
-                if (a && b) {
-                  return a.MeasureDate > b.MeasureDate ? a : b
-                }
-
-                return null
-              })
-
-              // format each reduced value as a date to compare against
-              const selectedTimeAsDate = new Date(selectedTime)
-              const selectedUpdateTimeAsDate = new Date(selectedUpdateTime)
-
-              /**
-               * @todo refactor this to use a function instead
-               */
-
-              // formatted time for LAST CONNECTED (if there is a value present)
-              if (selectedTime && !isNaN(selectedTimeAsDate)) {
-                lastConnected = humanReadableDate(selectedTimeAsDate)
-              } else {
-                lastConnected = 'never'
-              }
-
-              // formatted time for LAST UPDATED (if there is a value present)
-              if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
-                lastUpdated = humanReadableDate(selectedUpdateTimeAsDate)
-              } else {
-                lastUpdated = 'never'
-              }
-            } else {
-              // if there are no subscriptions, set them all to a fallback
-              lastConnected = 'never'
-              lastUpdated = 'never'
-              totalUpdates = 0
-              totalRejectedUpdates = 0
-              dpVersion = '-'
-              envoyVersion = '-'
-            }
-
             // assemble the table data
             finalArr.push({
               name: response.name,
               mesh: response.mesh,
-              tags: tags,
-              status: status,
-              lastConnected: lastConnected,
-              lastUpdated: lastUpdated,
-              totalUpdates: totalUpdates,
-              totalRejectedUpdates: totalRejectedUpdates,
-              dpVersion: dpVersion,
-              envoyVersion: envoyVersion,
-              type: dataplaneType()
+              tags: dpTags(response.dataplane),
+              type: dataplaneType(),
+              ...reduceSubscriptions(response.dataplaneInsight.subscriptions)
             })
 
             this.sortEntities(finalArr)
@@ -571,7 +515,7 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      if (entity && entity !== null) {
+      if (entity) {
         const entityMesh = (mesh === 'all')
           ? entity.mesh
           : mesh
@@ -581,57 +525,41 @@ export default {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
-              // get mTLS data if it's present
-              const getMTLSData = async () => {
-                let data = null
+              const getDataPlaneOverview = async () => {
+                const overview = {
+                  mtls: null,
+                  dpVersion: null,
+                  envoyVersion: null,
+                }
 
                 try {
                   const res = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
 
-                  if (res.dataplaneInsight.mTLS) {
-                    const mtls = res.dataplaneInsight.mTLS
+                  // get mTLS data if it's present
+                  if (res.dataplaneInsight) {
+                    if (res.dataplaneInsight.mTLS) {
+                      overview.mtls = parseMTLS(res.dataplaneInsight.mTLS)
+                    }
 
-                    const rawExpDate = new Date(mtls.certificateExpirationTime)
-                    // this prevents any weird date shifting
-                    const fixedExpDate = new Date(
-                      rawExpDate.getTime() +
-                      rawExpDate.getTimezoneOffset() * 60000
-                    )
-                    // assembled to display date and time (in 24-hour format)
-                    const assembledExpDate = `
-                      ${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
-                    `
+                    if (res.dataplaneInsight.subscriptions) {
+                      const { dpVersion, envoyVersion } = reduceSubscriptions(res.dataplaneInsight.subscriptions)
 
-                    data = {
-                      certificateExpirationTime: {
-                        label: 'Expiration Time',
-                        // value: new Date(mtls.certificateExpirationTime).toLocaleDateString('en-US')
-                        value: assembledExpDate
-                      },
-                      lastCertificateRegeneration: {
-                        label: 'Last Generated',
-                        value: humanReadableDate(mtls.lastCertificateRegeneration)
-                      },
-                      certificateRegenerations: {
-                        label: 'Regenerations',
-                        value: mtls.certificateRegenerations
-                      }
+                      overview.dpVersion = dpVersion
+                      overview.envoyVersion = envoyVersion
                     }
                   }
                 } catch (error) {
                   console.error(error)
                 }
 
-                return data
+                return overview
               }
 
-              const newEntity = async () => {
-                return {
-                  basicData: { ...getSome(response, selected) },
-                  tags: dpTags(response),
-                  mtls: await getMTLSData()
-                }
-              }
+              const newEntity = async () => ({
+                basicData: { ...getSome(response, selected) },
+                tags: dpTags(response),
+                ...await getDataPlaneOverview()
+              })
 
               newEntity().then(i => {
                 this.entity = i
@@ -670,5 +598,11 @@ export default {
 <style lang="scss" scoped>
 .add-dp-button {
   background-color: var(--logo-green) !important;
+}
+
+.code-block {
+  border-radius: 3px;
+  background-color: rgba(150, 58, 133, 0.05);
+  font-size: var(--type-sm);
 }
 </style>
