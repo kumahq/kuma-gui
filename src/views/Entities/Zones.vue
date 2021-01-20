@@ -253,7 +253,8 @@ export default {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
-          { label: 'Name', key: 'name' }
+          { label: 'Name', key: 'name' },
+          { label: 'Remote CP Version', key: 'remoteCpVersion' },
         ],
         data: []
       },
@@ -387,6 +388,26 @@ export default {
                 delete i.active
 
                 i.status = status
+
+                // make call to get zone remote-cp version
+                this.$api.getZoneOverview(i.name)
+                  .then((response) => {
+                    let remoteCpVersion = '-'
+                    if (response.zoneInsight.subscriptions && response.zoneInsight.subscriptions.length) {
+                      response.zoneInsight.subscriptions.forEach((item, index) => {
+                        if (item.version && item.version.kumaCp) {
+                          remoteCpVersion = item.version.kumaCp.version
+                        }
+                      })
+                    }
+
+                    i.remoteCpVersion = remoteCpVersion
+                  }).catch(error => {
+                    // if zone overview fails show version as empty instead of showing error.
+                    i.remoteCpVersion = '-'
+
+                    console.error(error)
+                  })
               })
 
               // sort the table data by name and the mesh it's associated with
