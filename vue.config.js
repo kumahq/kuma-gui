@@ -11,13 +11,6 @@ module.exports = {
     config.output
       .chunkFilename('js/[name].js?t=[chunkhash:8]')
 
-    config.module
-      .rule('ignore-some-things')
-      .test(/\/(LICENSE|COPYRIGHT|CONTRIBUTORS|README)$|.*\.(txt|ijmap|md)|\/\..*/i)
-      .use('ignore')
-      .loader('ignore-loader')
-      .end()
-
     const svgRule = config.module.rule('svg')
 
     svgRule.uses.clear()

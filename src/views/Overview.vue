@@ -1,5 +1,13 @@
 <template>
   <div class="overview">
+    <div class="flex flex-col lg:flex-row">
+      <OverviewCharts
+        :dataplanes="dataplaneStatuses(selectedMesh)"
+        :services="servicesForChart(selectedMesh)"
+        :selected-mesh="selectedMesh"
+        class="my-5"
+      />
+    </div>
     <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
@@ -60,6 +68,7 @@ import { mapGetters } from 'vuex'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
+import OverviewCharts from '@/components/OverviewCharts'
 
 export default {
   name: 'Overview',
@@ -69,6 +78,7 @@ export default {
     }
   },
   components: {
+    OverviewCharts,
     MetricGrid,
     CardSkeleton,
     Resources
@@ -78,7 +88,9 @@ export default {
       title: 'getTagline',
       environment: 'getEnvironment',
       selectedMesh: 'getSelectedMesh',
-      multicluster: 'getMulticlusterStatus'
+      multicluster: 'getMulticlusterStatus',
+      dataplaneStatuses: 'getDataplaneStatusesForChart',
+      servicesForChart: 'getServicesForChart',
     }),
     pageTitle () {
       const metaTitle = this.$route.meta.title
@@ -133,21 +145,6 @@ export default {
           metric: 'Meshes',
           value: storeVals.meshCount,
           url: `/meshes/${this.selectedMesh}`
-        },
-        {
-          metric: 'Internal Services',
-          value: storeVals.internalServiceCount,
-          url: `/${this.selectedMesh}/internal-services`
-        },
-        {
-          metric: 'External Services',
-          value: storeVals.externalServiceCount,
-          url: `/${this.selectedMesh}/external-services`
-        },
-        {
-          metric: 'Data Plane Proxies',
-          value: storeVals.dataplaneCount,
-          url: `/${this.selectedMesh}/dataplanes`
         },
         {
           metric: 'Circuit Breakers',
@@ -243,6 +240,9 @@ export default {
     init () {
       this.getCounts()
 
+      this.$store.dispatch('fetchAllDataplaneInsights')
+      this.$store.dispatch('fetchAllServices')
+
       if (this.multicluster) {
         this.$store.dispatch('fetchTotalClusterCount')
       }
@@ -300,7 +300,7 @@ export default {
         })
       }
     }
-  }
+  },
 }
 </script>
 
