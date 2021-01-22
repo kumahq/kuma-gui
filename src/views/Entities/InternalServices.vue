@@ -136,6 +136,7 @@ export default {
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
+          { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
           { label: 'Data plane proxies: Online / Total', key: 'totalOnline' },
@@ -309,6 +310,14 @@ export default {
                 entity.online = entity.online || 0
                 entity.total = entity.total || 0
                 entity.totalOnline = `${entity.online} / ${entity.total}`
+
+                if (entity.online === 0) {
+                  entity.status = 'Offline'
+                } else if (entity.online === entity.total) {
+                  entity.status = 'Online'
+                } else {
+                  entity.status = 'Partially degraded'
+                }
 
                 return entity
               })
