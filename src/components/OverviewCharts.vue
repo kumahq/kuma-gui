@@ -59,6 +59,10 @@ export default {
   },
   beforeDestroy () {
     this.disposeCharts()
+
+    if (this.container) {
+      this.container.dispose()
+    }
   },
   methods: {
     disposeCharts () {
@@ -155,6 +159,8 @@ export default {
     createContainer () {
       const container = am4core.create(this.$refs.chart, am4core.Container)
 
+      this.container = container
+
       container.width = am4core.percent(100)
       container.height = am4core.percent(100)
       container.layout = 'horizontal'
@@ -175,7 +181,7 @@ export default {
       this.dataplanesSeries = dataplanesSeries
       this.dataplanesSumLabel = dataplanesSumLabel
 
-      dataplanesSliceTemplate.events.on('hit', (e) => {
+      dataplanesSliceTemplate.events.on('hit', () => {
         this.$router.push(`/${this.selectedMesh}/dataplanes`)
       })
 
