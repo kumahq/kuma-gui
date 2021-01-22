@@ -859,23 +859,25 @@ export default {
       // now we clean up our output based on the above conditions
       const schemaClean = rejectKeys(schemaNew, filteredFeatures)
 
-      // Type and Name
-      let meshType
+      // Mesh yaml creation
+      let meshYaml
 
       if (this.selectedTab === '#kubernetes') {
         // Kubernetes
-        meshType = {
+        meshYaml = {
           apiVersion: 'kuma.io/v1alpha1',
           kind: 'Mesh',
           metadata: {
             name: newData.meshName
-          }
+          },
+          spec: schemaClean,
         }
       } else {
         // Universal
-        meshType = {
+        meshYaml = {
           type: 'Mesh',
-          name: newData.meshName
+          name: newData.meshName,
+          ...schemaClean,
         }
       }
 
@@ -883,12 +885,11 @@ export default {
        * Finalized output
        */
 
-      const codeBlock = { ...meshType, ...schemaClean }
       const cliConditionCode = () => {
         if (this.selectedTab === '#kubernetes') {
-          return this.formatForCLI(codeBlock, '" | kubectl apply -f -')
+          return this.formatForCLI(meshYaml, '" | kubectl apply -f -')
         } else {
-          return this.formatForCLI(codeBlock, '" | kumactl apply -f -')
+          return this.formatForCLI(meshYaml, '" | kumactl apply -f -')
         }
       }
 
