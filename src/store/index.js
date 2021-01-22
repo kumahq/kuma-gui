@@ -830,7 +830,9 @@ export default (api) => {
             const params = { ...otherParams, size: pageSize, offset: offset++ }
             const { items, next } = await callApi(params)
 
-            allItems = allItems.concat(items)
+            if (items) {
+              allItems = allItems.concat(items)
+            }
 
             if (!next) {
               break
@@ -854,7 +856,9 @@ export default (api) => {
             const params = { size: pageSize, offset: offset++ }
             const { items, next } = await api.getAllDataplaneOverviews(params)
 
-            allItems = allItems.concat(items)
+            if (items) {
+              allItems = allItems.concat(items)
+            }
 
             if (!next) {
               break
@@ -878,7 +882,9 @@ export default (api) => {
             const params = { size: pageSize, offset: offset++ }
             const { items, next } = await api.getAllServiceInsights(params)
 
-            allItems = allItems.concat(items)
+            if (items) {
+              allItems = allItems.concat(items)
+            }
 
             if (!next) {
               break
