@@ -53,7 +53,7 @@ export function dpTags (dataplane) {
 /*
 getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
  */
-export function getStatus (dataplane, dataplaneInsight) {
+export function getStatus (dataplane, dataplaneInsight = {}) {
   const inbounds = dataplane.networking.inbound
     ? dataplane.networking.inbound
     : [{ health: { ready: true } }]
