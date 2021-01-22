@@ -12,6 +12,7 @@
     "test:unit": "yarn vue-cli-service test:unit"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.13",
     "@appscode/json2yaml": "^0.1.2",
     "@kongponents/kalert": "1.0.7",
     "@kongponents/kbadge": "^1.0.0",

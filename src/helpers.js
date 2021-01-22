@@ -426,6 +426,16 @@ export function kebabCase (value) {
   return newValue
 }
 
+export function filterResourceByMesh (resources) {
+  return (wantMesh) => {
+    if (!wantMesh || wantMesh === 'all') {
+      return resources
+    }
+
+    return resources.filter(({ mesh }) => mesh === wantMesh)
+  }
+}
+
 export default {
   forEach,
   decodeJWT,

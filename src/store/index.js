@@ -4,6 +4,10 @@ import Vuex from 'vuex'
 import sidebar from '@/store/modules/sidebar'
 // import workspaces from '@/store/modules/workspaces'
 
+import { getStatus, getStatusFromObject } from '@/dataplane'
+import { filterResourceByMesh } from '@/helpers'
+import * as am4core from '@amcharts/amcharts4/core'
+
 Vue.use(Vuex)
 
 export default (api) => {
@@ -19,6 +23,7 @@ export default (api) => {
       onboardingComplete: false,
       globalLoading: null,
       meshPageSize: 500,
+      pageSize: 500,
       meshes: [],
       dataplanes: [],
       selectedMesh: 'all', // shows all meshes on initial load
@@ -57,7 +62,12 @@ export default (api) => {
       selectedTableRow: null,
       storedWizardData: null,
       itemQueryNamespace: 'item',
-      totalClusters: 0
+      totalClusters: 0,
+
+      // NEW
+      dataplaneInsights: [],
+      serviceInsights: [],
+      externalServices: [],
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -121,7 +131,77 @@ export default (api) => {
 
         return status
       },
-      getClusterCount: (state) => state.totalClusters
+      getClusterCount: (state) => state.totalClusters,
+      getDataplaneInsights: state => state.dataplaneInsights,
+      getDataplaneInsightsFromMesh: ({ dataplaneInsights }) => {
+        return filterResourceByMesh(dataplaneInsights)
+      },
+      getDataplaneStatuses: (state, getters) => {
+        return (wantMesh) => {
+          const insights = getters.getDataplaneInsightsFromMesh(wantMesh)
+          const statuses = insights.map(getStatusFromObject)
+
+          return statuses.map(({ status }) => status)
+        }
+      },
+      getDataplaneStatusesForChart: (state, getters) => {
+        return (wantMesh) => {
+          const statuses = getters.getDataplaneStatuses(wantMesh)
+
+          return statuses.reduce((acc, curr) => {
+            const findItem = ({ category }) => category === curr
+            const item = acc.find(findItem)
+
+            if (!item) {
+              return [...acc, { category: curr, value: 1 }]
+            }
+
+            item.value++
+
+            return acc
+          }, [
+            {
+              category: 'Online',
+              value: 0,
+              color: am4core.color('#19A654'),
+            },
+            {
+              category: 'Offline',
+              value: 0,
+              color: am4core.color('#BF1330'),
+            },
+            {
+              category: 'Partially degraded',
+              value: 0,
+              color: am4core.color('#F2A230')
+            },
+          ])
+        }
+      },
+      getServiceInsightsFromMesh: ({ serviceInsights }) => {
+        return filterResourceByMesh(serviceInsights)
+      },
+      getExternalServicesFromMesh: ({ externalServices }) => {
+        return filterResourceByMesh(externalServices)
+      },
+      getServicesForChart: (state, getters) => {
+        return (wantMesh) => {
+          const insights = getters.getServiceInsightsFromMesh(wantMesh)
+          const external = getters.getExternalServicesFromMesh(wantMesh)
+
+          const result = []
+
+          if (insights.length) {
+            result.push({ category: 'Internal', value: insights.length })
+          }
+
+          if (external.length) {
+            result.push({ category: 'External', value: external.length })
+          }
+
+          return result
+        }
+      },
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -164,7 +244,12 @@ export default (api) => {
       SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
       SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
       SET_ENVIRONMENT: (state, value) => (state.environment = value),
-      SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value)
+      SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value),
+
+      // NEW
+      SET_DATAPLANE_INSIGHTS: (state, value) => (state.dataplaneInsights = value),
+      SET_SERVICE_INSIGHTS: (state, value) => (state.serviceInsights = value),
+      SET_EXTERNAL_SERVICES: (state, value) => (state.externalServices = value),
     },
     actions: {
       // update the onboarding state
@@ -727,6 +812,114 @@ export default (api) => {
       // update the stored Wizard data for use in generating code output
       updateWizardData ({ commit }, value) {
         commit('SET_WIZARD_DATA', value)
+      },
+
+      // NEW
+      async fetchDataplaneInsights ({ commit, state }, { mesh, ...otherParams } = {}) {
+        const callApi = mesh
+          ? params => api.getAllDataplaneOverviewsFromMesh(mesh, params)
+          : params => api.getAllDataplaneOverviews(params)
+
+        const { pageSize } = state
+
+        try {
+          let offset = 0
+          let allItems = []
+
+          while (true) {
+            const params = { ...otherParams, size: pageSize, offset: offset++ }
+            const { items, next } = await callApi(params)
+
+            allItems = allItems.concat(items)
+
+            if (!next) {
+              break
+            }
+          }
+
+          commit('SET_DATAPLANE_INSIGHTS', allItems)
+        } catch (e) {
+          console.error(e)
+        }
+      },
+
+      async fetchAllDataplaneInsights ({ commit, state }) {
+        const { pageSize } = state
+
+        try {
+          let offset = 0
+          let allItems = []
+
+          while (true) {
+            const params = { size: pageSize, offset: offset++ }
+            const { items, next } = await api.getAllDataplaneOverviews(params)
+
+            allItems = allItems.concat(items)
+
+            if (!next) {
+              break
+            }
+          }
+
+          commit('SET_DATAPLANE_INSIGHTS', allItems)
+        } catch (e) {
+          console.error(e)
+        }
+      },
+
+      async fetchAllServiceInsights ({ commit, state }) {
+        const { pageSize } = state
+
+        try {
+          let offset = 0
+          let allItems = []
+
+          while (true) {
+            const params = { size: pageSize, offset: offset++ }
+            const { items, next } = await api.getAllServiceInsights(params)
+
+            allItems = allItems.concat(items)
+
+            if (!next) {
+              break
+            }
+          }
+
+          commit('SET_SERVICE_INSIGHTS', allItems)
+        } catch (e) {
+          console.error(e)
+        }
+      },
+
+      async fetchAllExternalServices ({ commit, state }) {
+        const { pageSize } = state
+
+        try {
+          let offset = 0
+          let allItems = []
+
+          while (true) {
+            const params = { size: pageSize, offset: offset++ }
+            const { items, next } = await api.getAllExternalServices(params)
+
+            allItems = allItems.concat(items)
+
+            if (!next) {
+              break
+            }
+          }
+
+          commit('SET_EXTERNAL_SERVICES', allItems)
+        } catch (e) {
+          console.error(e)
+        }
+      },
+
+      async fetchAllServices ({ dispatch }) {
+        const serviceInsights = dispatch('fetchAllServiceInsights')
+        const externalServices = dispatch('fetchAllExternalServices')
+
+        await Promise.all([serviceInsights, externalServices])
       }
     }
   })

@@ -90,6 +90,10 @@ export function getStatus (dataplane, dataplaneInsight) {
   }
 }
 
+export function getStatusFromObject ({ dataplane, dataplaneInsight }) {
+  return getStatus(dataplane, dataplaneInsight)
+}
+
 export function getDataplane (dataplaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
