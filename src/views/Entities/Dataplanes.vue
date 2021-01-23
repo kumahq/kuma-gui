@@ -95,7 +95,7 @@
                           v-for="reason in val.reason"
                           :key="reason"
                         >
-                          <span class="entity-status__dot"/>
+                          <span class="entity-status__dot" />
                           {{ reason }}
                         </li>
                       </ul>
