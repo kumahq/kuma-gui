@@ -18,6 +18,7 @@ const getEmptyData = () => [{
   color: am4core.color('#dadada'),
   opacity: 0.3,
   strokeDasharray: '4,4',
+  strokeWidth: 1,
 }]
 
 export default {
@@ -88,7 +89,11 @@ export default {
         ? 'Total: 0'
         : 'Total: {values.value.sum}'
 
-      this.dataplanesSeries.tooltip.disabled = sum === 0
+      this.dataplanesSliceTemplate.cursorOverStyle = am4core.MouseCursorStyle.pointer
+
+      this.dataplanesSliceTemplate.states.getKey('hover').properties.fillOpacity = sum === 0
+        ? 0.7
+        : 1
 
       this.dataplanesChart.data = sum === 0
         ? getEmptyData()
@@ -101,7 +106,13 @@ export default {
         ? 'Total: 0'
         : 'Total: {values.value.sum}'
 
-      this.serviceSeries.tooltip.disabled = sum === 0
+      this.servicesSliceTemplate.cursorOverStyle = sum === 0
+        ? am4core.MouseCursorStyle.default
+        : am4core.MouseCursorStyle.pointer
+
+      this.servicesSliceTemplate.states.getKey('hover').properties.fillOpacity = sum === 0
+        ? 0.3
+        : 1
 
       this.servicesChart.data = sum === 0
         ? getEmptyData()
@@ -128,17 +139,22 @@ export default {
       series.labels.template.padding(0, 0, 5, 0)
       series.labels.template.text = '{category}: {value}'
       series.labels.template.propertyFields.disabled = 'disabled'
+      series.tooltip.disabled = true
+      series.ticks.template.disabled = true
 
       const sliceTemplate = series.slices.template
 
       sliceTemplate.cornerRadius = 0
-      sliceTemplate.inert = true
       sliceTemplate.propertyFields.fill = 'color'
       sliceTemplate.propertyFields.fillOpacity = 'opacity'
       sliceTemplate.propertyFields.stroke = 'color'
       sliceTemplate.propertyFields.strokeDasharray = 'strokeDasharray'
-      sliceTemplate.strokeWidth = 1
+      sliceTemplate.propertyFields.strokeWidth = 'strokeWidth'
+      sliceTemplate.strokeWidth = 0
       sliceTemplate.strokeOpacity = 1
+      sliceTemplate.fillOpacity = 0.7
+      sliceTemplate.states.getKey('hover').properties.scale = 1
+      sliceTemplate.states.getKey('active').properties.shiftRadius = 0
 
       const sumLabel = series.createChild(am4core.Label)
 
@@ -179,6 +195,7 @@ export default {
 
       this.dataplanesChart = dataplanesChart
       this.dataplanesSeries = dataplanesSeries
+      this.dataplanesSliceTemplate = dataplanesSliceTemplate
       this.dataplanesSumLabel = dataplanesSumLabel
 
       dataplanesSliceTemplate.events.on('hit', () => {
@@ -196,6 +213,7 @@ export default {
 
       this.servicesChart = servicesChart
       this.serviceSeries = serviceSeries
+      this.servicesSliceTemplate = servicesSliceTemplate
       this.servicesSumLabel = servicesSumLabel
 
       servicesSliceTemplate.events.on('hit', (e) => {
