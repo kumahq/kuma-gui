@@ -87,16 +87,9 @@ export default class RestClient {
     const opts = await options || {}
     const url = await path
     const client = await this.client
+    const { statusText } = await client.get(url, opts)
 
-    return client.get(url, opts)
-      .then(response => {
-        return response.statusText
-      })
-      .catch(error => {
-        console.error(error)
-
-        return error
-      })
+    return statusText
   }
 
   /** fetch all Kuma API endpoints */
@@ -105,30 +98,16 @@ export default class RestClient {
     // const url = this.buildUrl(path)
     const url = await path
     const client = await this.client
+    const { data } = await client.get(url, opts)
 
-    return client.get(url, opts)
-      .then(response => {
-        const data = response.data
-
-        return data
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    return data
   }
 
   /** fetch all Kuma API endpoints */
   async getConfig () {
     const client = await this.clientConfig
+    const { data } = await client.get('')
 
-    return client.get('')
-      .then(response => {
-        const data = response.data
-
-        return data
-      })
-      .catch(error => {
-        console.error(error)
-      })
+    return data
   }
 }
