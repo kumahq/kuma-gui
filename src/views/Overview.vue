@@ -2,6 +2,7 @@
   <div class="overview">
     <div class="flex flex-col lg:flex-row">
       <OverviewCharts
+        :zones="zonesForChart"
         :dataplanes="dataplaneStatuses(selectedMesh)"
         :services="servicesForChart(selectedMesh)"
         :selected-mesh="selectedMesh"
@@ -89,7 +90,7 @@ export default {
       environment: 'getEnvironment',
       selectedMesh: 'getSelectedMesh',
       multicluster: 'getMulticlusterStatus',
-      dataplaneStatuses: 'getDataplaneStatusesForChart',
+      dataplaneStatuses: 'getDataplaneStatuses',
       servicesForChart: 'getServicesForChart',
     }),
     pageTitle () {
@@ -101,6 +102,11 @@ export default {
       } else {
         return `${metaTitle} for ${mesh}`
       }
+    },
+    zonesForChart () {
+      return this.multicluster
+        ? this.$store.state.totalClusters
+        : 1
     },
     overviewMetrics () {
       let storeVals
@@ -193,27 +199,10 @@ export default {
         }
       ]
 
-      // append Zones to the data
-      const clusters = {
-        metric: 'Zones',
-        value: this.multicluster
-          ? this.$store.state.totalClusters
-          : '1',
-        extraLabel: !this.multicluster ? '(Standalone)' : false,
-        url: '/zones'
-      }
-
-      // prepend our Zones to the beginning of the array
-      tableData.unshift(clusters)
-
       if (mesh !== 'all') {
         // if the user is viewing the overview with a mesh selected,
         // we hide these items from the metrics grid.
-        return tableData.filter((value, index, arr) => {
-          const metric = value.metric
-
-          return metric !== 'Meshes' && metric !== 'Zones'
-        })
+        return tableData.filter(({ metric }) => metric !== 'Meshes')
       }
 
       return tableData

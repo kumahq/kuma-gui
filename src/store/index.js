@@ -141,41 +141,18 @@ export default (api) => {
           const insights = getters.getDataplaneInsightsFromMesh(wantMesh)
           const statuses = insights.map(getStatusFromObject)
 
-          return statuses.map(({ status }) => status)
-        }
-      },
-      getDataplaneStatusesForChart: (state, getters) => {
-        return (wantMesh) => {
-          const statuses = getters.getDataplaneStatuses(wantMesh)
+          return statuses
+            .reduce((acc, { status }) => {
+              const item = acc.find(({ category }) => category === status)
 
-          return statuses.reduce((acc, curr) => {
-            const findItem = ({ category }) => category === curr
-            const item = acc.find(findItem)
+              if (item) {
+                item.value++
+              } else {
+                acc.push({ category: status, value: 1 })
+              }
 
-            if (!item) {
-              return [...acc, { category: curr, value: 1 }]
-            }
-
-            item.value++
-
-            return acc
-          }, [
-            {
-              category: 'Online',
-              value: 0,
-              color: am4core.color('#19A654'),
-            },
-            {
-              category: 'Offline',
-              value: 0,
-              color: am4core.color('#BF1330'),
-            },
-            {
-              category: 'Partially degraded',
-              value: 0,
-              color: am4core.color('#F2A230')
-            },
-          ])
+              return acc
+            }, [])
         }
       },
       getServiceInsightsFromMesh: ({ serviceInsights }) => {

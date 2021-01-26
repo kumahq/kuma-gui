@@ -13,8 +13,6 @@ import configUrl from '@/configUrl'
 
 /** amCharts */
 import * as am4core from '@amcharts/amcharts4/core'
-// eslint-disable-next-line camelcase
-import am4themes_animated from '@amcharts/amcharts4/themes/animated'
 
 /** Kongponents */
 import './kongponents'
@@ -176,8 +174,6 @@ function SETUP_VUE_APP () {
  * Now we can run our app
  */
 SETUP_VUE_APP()
-
-am4core.useTheme(am4themes_animated)
 
 if (process.env.VUE_APP_AMCHARTS_LICENSE) {
   am4core.addLicense(process.env.VUE_APP_AMCHARTS_LICENSE)
