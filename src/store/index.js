@@ -4,9 +4,8 @@ import Vuex from 'vuex'
 import sidebar from '@/store/modules/sidebar'
 // import workspaces from '@/store/modules/workspaces'
 
-import { getStatus, getStatusFromObject } from '@/dataplane'
+import { getStatusFromObject } from '@/dataplane'
 import { filterResourceByMesh } from '@/helpers'
-import * as am4core from '@amcharts/amcharts4/core'
 
 Vue.use(Vuex)
 
