@@ -68,6 +68,7 @@ export default (api) => {
       dataplaneInsights: [],
       serviceInsights: [],
       externalServices: [],
+      meshInsights: [],
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -227,6 +228,7 @@ export default (api) => {
       SET_DATAPLANE_INSIGHTS: (state, value) => (state.dataplaneInsights = value),
       SET_SERVICE_INSIGHTS: (state, value) => (state.serviceInsights = value),
       SET_EXTERNAL_SERVICES: (state, value) => (state.externalServices = value),
+      SET_MESH_INSIGHTS: (state, value) => (state.meshInsights = value),
     },
     actions: {
       // update the onboarding state
@@ -792,11 +794,8 @@ export default (api) => {
       },
 
       // NEW
-      async fetchDataplaneInsights ({ commit, state }, { mesh, ...otherParams } = {}) {
-        const callApi = mesh
-          ? params => api.getAllDataplaneOverviewsFromMesh(mesh, params)
-          : params => api.getAllDataplaneOverviews(params)
 
+      async fetchAllResources ({ commit, state }, { endpoint, mutation, ...otherParams }) {
         const { pageSize } = state
 
         try {
@@ -805,7 +804,7 @@ export default (api) => {
 
           while (true) {
             const params = { ...otherParams, size: pageSize, offset: offset++ }
-            const { items, next } = await callApi(params)
+            const { items, next } = await endpoint(params)
 
             if (items) {
               allItems = allItems.concat(items)
@@ -816,86 +815,46 @@ export default (api) => {
             }
           }
 
-          commit('SET_DATAPLANE_INSIGHTS', allItems)
+          commit(mutation, allItems)
         } catch (e) {
           console.error(e)
         }
       },
 
-      async fetchAllDataplaneInsights ({ commit, state }) {
-        const { pageSize } = state
-
-        try {
-          let offset = 0
-          let allItems = []
-
-          while (true) {
-            const params = { size: pageSize, offset: offset++ }
-            const { items, next } = await api.getAllDataplaneOverviews(params)
-
-            if (items) {
-              allItems = allItems.concat(items)
-            }
-
-            if (!next) {
-              break
-            }
-          }
-
-          commit('SET_DATAPLANE_INSIGHTS', allItems)
-        } catch (e) {
-          console.error(e)
+      fetchAllMeshInsights ({ dispatch }) {
+        const params = {
+          endpoint: (...params) => api.getAllMeshInsights(...params),
+          mutation: 'SET_MESH_INSIGHTS',
         }
+
+        return dispatch('fetchAllResources', params)
       },
 
-      async fetchAllServiceInsights ({ commit, state }) {
-        const { pageSize } = state
-
-        try {
-          let offset = 0
-          let allItems = []
-
-          while (true) {
-            const params = { size: pageSize, offset: offset++ }
-            const { items, next } = await api.getAllServiceInsights(params)
-
-            if (items) {
-              allItems = allItems.concat(items)
-            }
-
-            if (!next) {
-              break
-            }
-          }
-
-          commit('SET_SERVICE_INSIGHTS', allItems)
-        } catch (e) {
-          console.error(e)
+      fetchAllDataplaneInsights ({ dispatch }) {
+        const params = {
+          endpoint: (...params) => api.getAllDataplaneOverviews(...params),
+          mutation: 'SET_DATAPLANE_INSIGHTS',
         }
+
+        return dispatch('fetchAllResources', params)
       },
 
-      async fetchAllExternalServices ({ commit, state }) {
-        const { pageSize } = state
-
-        try {
-          let offset = 0
-          let allItems = []
-
-          while (true) {
-            const params = { size: pageSize, offset: offset++ }
-            const { items, next } = await api.getAllExternalServices(params)
-
-            allItems = allItems.concat(items)
-
-            if (!next) {
-              break
-            }
-          }
-
-          commit('SET_EXTERNAL_SERVICES', allItems)
-        } catch (e) {
-          console.error(e)
+      fetchAllServiceInsights ({ dispatch }) {
+        const params = {
+          endpoint: (...params) => api.getAllServiceInsights(...params),
+          mutation: 'SET_SERVICE_INSIGHTS',
         }
+
+        return dispatch('fetchAllResources', params)
+      },
+
+      async fetchAllExternalServices ({ dispatch }) {
+        const params = {
+          endpoint: (...params) => api.getAllExternalServices(...params),
+          mutation: 'SET_EXTERNAL_SERVICES',
+        }
+
+        return dispatch('fetchAllResources', params)
       },
 
       async fetchAllServices ({ dispatch }) {

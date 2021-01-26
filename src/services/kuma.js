@@ -325,4 +325,18 @@ export default class Kuma {
   getServiceInsight (name, service, params) {
     return this.client.get(`/meshes/${name}/service-insights/${service}`, { params })
   }
+
+  /**
+   * Mesh Insights
+   */
+
+  // Get all Mesh Insights
+  getAllMeshInsights (params) {
+    return this.client.get('/mesh-insights', { params })
+  }
+
+  // Get a single Mesh Insight
+  getMeshInsight (name, params) {
+    return this.client.get(`/mesh-insights/${name}`, { params })
+  }
 }
