@@ -55,7 +55,7 @@ export default (api) => {
       totalDataplaneCountFromMesh: 0,
       totalRetryCountFromMesh: 0,
       tagline: null,
-      version: null,
+      version: '',
       status: null,
       selectedTab: '#overview',
       selectedTableRow: null,
