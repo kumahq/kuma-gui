@@ -16,8 +16,9 @@ const getEmptyData = () => [{
   value: 1,
   color: am4core.color('#dadada'),
   opacity: 0.3,
+  strokeColor: am4core.color('#dadada'),
   strokeDasharray: '4,4',
-  strokeWidth: 1,
+  strokeWidth: 2,
 }]
 
 const ZONES_CHART_NAME = 'Zones'
@@ -32,7 +33,7 @@ export default {
       required: true,
     },
     dataplanes: {
-      type: Array,
+      type: Object,
       required: true,
     },
     services: {
@@ -41,12 +42,12 @@ export default {
     },
     selectedMesh: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data () {
     return {
-      charts: {}
+      charts: {},
     }
   },
   watch: {
@@ -83,18 +84,10 @@ export default {
         case ZONES_CHART_NAME:
           return [{ category: 'Zone', value: data, labelDisabled: true }]
         case DATAPLANES_CHART_NAME:
-          return data.map((item) => {
-            switch (item.category) {
-              case 'Online':
-                return { ...item, color: am4core.color('#19A654') }
-              case 'Offline':
-                return { ...item, color: am4core.color('#BF1330') }
-              case 'Partially degraded':
-                return { ...item, color: am4core.color('#F2A230') }
-              default:
-                return item
-            }
-          })
+          return [
+            { category: 'Online', value: data.online, color: am4core.color('#19A654') },
+            { category: 'Offline', value: data.offline, color: am4core.color('#BF1330') },
+          ].filter(({ value }) => value > 0)
         case SERVICES_CHART_NAME:
           return data
       }
@@ -110,11 +103,11 @@ export default {
       const data = this.prepareData(name, newData)
 
       if (!data.length) {
-        sumLabel.text = 'Total: 0'
+        sumLabel.text = `${name}: [bold]0[/]`
         chart.data = getEmptyData()
         chartObject.data.length = 0
       } else {
-        sumLabel.text = 'Total: {values.value.sum}'
+        sumLabel.text = `[text-transform: uppercase]${name}[/]: [bold]{values.value.sum}[/]`
         chart.data = chartObject.data = data
       }
 
@@ -135,14 +128,13 @@ export default {
 
       return container
     },
-    createChart(zIndex = 1) {
+    createChart () {
       const chart = this.container.createChild(am4charts.PieChart)
 
       chart.fontSize = 13
       chart.hiddenState.properties.opacity = 0
-      chart.radius = am4core.percent(80)
-      chart.innerRadius = am4core.percent(55)
-      chart.zIndex = zIndex
+      chart.radius = am4core.percent(95)
+      chart.innerRadius = am4core.percent(65)
 
       return chart
     },
@@ -154,82 +146,99 @@ export default {
       series.colors.step = 2
       series.alignLabels = false
       series.rotation = 180
+
+      series.labels.template.fontWeight = '500'
       series.labels.template.bent = true
-      series.labels.template.radius = 3
-      series.labels.template.padding(0, 0, 5, 0)
-      series.labels.template.text = '{category}: {value}'
+      series.labels.template.radius = -25
+      series.labels.template.fill = am4core.color('#ffffff')
+      series.labels.template.padding(0, 0, 0, 0)
+      series.labels.template.text = '{category}'
+      // interactionsEnabled sets the label as kind of transparent for events
+      //  it's useful for us as we want to catch the click ('hit' in amcharts)
+      //  event on series to be able to redirect user to proper subpage,
+      //  and without it being set, the label become a 'non clickable' space
+      series.labels.template.interactionsEnabled = false
+      // pie-chart-label applies some additional styles we want to apply
+      //  to our raw label element, see 'style' section of this component
+      //  to see which styles this class applies
+      series.labels.template.userClassName = 'pie-chart-label'
       series.labels.template.propertyFields.disabled = 'labelDisabled'
-      series.tooltip.disabled = true
+
       series.ticks.template.disabled = true
+
+      series.tooltip.background.filters.clear()
+      series.tooltip.background.strokeWidth = 0
+
+      // initial animation
+      series.hiddenState.properties.opacity = 1;
+      series.hiddenState.properties.endAngle = -90;
+      series.hiddenState.properties.startAngle = -90;
 
       return series
     },
     createSliceTemplate ({ slices }) {
       const { template } = slices
 
-      template.cornerRadius = 0
+      template.cornerRadius = 5
       template.propertyFields.fill = 'color'
       template.propertyFields.fillOpacity = 'opacity'
-      template.propertyFields.stroke = 'color'
+      template.propertyFields.stroke = 'strokeColor'
       template.propertyFields.strokeDasharray = 'strokeDasharray'
       template.propertyFields.strokeWidth = 'strokeWidth'
-      template.strokeWidth = 0
+      template.stroke = am4core.color('#ffffff')
+      template.strokeWidth = 2
       template.strokeOpacity = 1
       template.fillOpacity = 0.7
+      template.tooltipPosition = 'pointer'
       template.states.getKey('hover').properties.scale = 1
       template.states.getKey('active').properties.shiftRadius = 0
 
       return template
     },
-    createSumLabel(series) {
+    createSumLabel (series, name) {
       const sumLabel = series.createChild(am4core.Label)
 
       sumLabel.horizontalCenter = 'middle'
       sumLabel.verticalCenter = 'middle'
       sumLabel.fontSize = 18
-      sumLabel.text = 'Total: {values.value.sum}'
+      sumLabel.text = `[text-transform: uppercase]${name}[/]: [bold]{values.value.sum}[/]`
       sumLabel.rotation = 180
+      sumLabel.fill = am4core.color('rgba(41, 11, 83, 0.75)')
+      sumLabel.pixelPerfect = true
+      sumLabel.fontWeight = '400'
 
       return sumLabel
     },
-    createChartTitle (chart, text = '') {
-      const title = chart.titles.create()
-
-      title.text = text
-      title.fontSize = 18
-      title.marginBottom = 0
-
-      return title
-    },
-    renderChart (name, params = { zIndex: 1 }, callback = () => {}) {
+    renderChart (name, callback = () => {}) {
       if (!this.container) {
         return
       }
 
-      const chart = this.createChart(params.zIndex)
+      const chart = this.createChart()
       const series = this.createSeries(chart)
       const sliceTemplate = this.createSliceTemplate(series)
-      const sumLabel = this.createSumLabel(series)
-      const chartTitle = this.createChartTitle(chart, name)
+      const sumLabel = this.createSumLabel(series, name)
 
-      this.charts[name] = { chart, sliceTemplate, sumLabel, chartTitle, data: [], callbacks: [] }
+      this.charts[name] = { chart, sliceTemplate, series, sumLabel, data: [], callbacks: [] }
 
       callback(this.charts[name])
     },
     createZonesChart () {
-      const renderCallback = ({ chart, sliceTemplate }) => {
+      const renderCallback = ({ chart, sliceTemplate, series }) => {
         chart.toBack()
 
         sliceTemplate.cursorOverStyle = am4core.MouseCursorStyle.pointer
 
         sliceTemplate.states.getKey('hover').properties.fillOpacity = 1
 
+        series.tooltip.disabled = true
+
         sliceTemplate.events.on('hit', () => {
           this.$router.push({ name: 'zones', params: { mesh: this.selectedMesh } })
         })
       }
 
-      this.renderChart(ZONES_CHART_NAME, { zIndex: 1 }, renderCallback)
+      this.renderChart(ZONES_CHART_NAME, renderCallback)
       this.loadDataIntoChart(ZONES_CHART_NAME, this.zones)
     },
     createDataplanesChart () {
@@ -247,7 +256,7 @@ export default {
           : 0.7
       }
 
-      this.renderChart(DATAPLANES_CHART_NAME, { zIndex: 2 }, renderCallback)
+      this.renderChart(DATAPLANES_CHART_NAME, renderCallback)
       this.loadDataIntoChart(DATAPLANES_CHART_NAME, this.dataplanes, loadDataCallback)
     },
     createServicesChart () {
@@ -282,7 +291,7 @@ export default {
           : am4core.MouseCursorStyle.default
       }
 
-      this.renderChart(SERVICES_CHART_NAME, { zIndex: 3 }, renderCallback)
+      this.renderChart(SERVICES_CHART_NAME, renderCallback)
       this.loadDataIntoChart(SERVICES_CHART_NAME, this.services, loadDataCallback)
     },
     renderCharts () {
@@ -292,9 +301,19 @@ export default {
         this.createZonesChart()
       }
 
-      this.createDataplanesChart()
       this.createServicesChart()
+      this.createDataplanesChart()
     },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+// v-deep is a deep selector which is equivalent of ">>>" as sass loader is not
+//  able to properly parse ">>>"
+// ref:
+//  https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors
+::v-deep .pie-chart-label {
+  @apply tracking-widest uppercase;
+}
+</style>
