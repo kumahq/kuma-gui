@@ -336,7 +336,7 @@ export default class Kuma {
   }
 
   // Get a single Mesh Insight
-  getMeshInsight (name, params) {
+  getMeshInsights (name, params) {
     return this.client.get(`/mesh-insights/${name}`, { params })
   }
 }
