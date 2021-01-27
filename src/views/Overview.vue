@@ -67,8 +67,6 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import 'vue-progress-path/dist/vue-progress-path.css'
-
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
