@@ -3,7 +3,7 @@
     <div class="flex flex-col lg:flex-row">
       <OverviewCharts
         :zones="zonesForChart"
-        :dataplanes="dataplaneStatuses(selectedMesh)"
+        :dataplanes="meshInsight.dataplanes"
         :services="servicesForChart(selectedMesh)"
         :selected-mesh="selectedMesh"
         class="my-5"
@@ -38,7 +38,7 @@
         >
           <template slot="cardContent">
             <p>
-              We need a data plane proxy for each replicata of our services within a Mesh resource.
+              We need a data plane proxy for each replica of our services within a Mesh resource.
             </p>
           </template>
         </CardSkeleton>
@@ -66,6 +66,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import 'vue-progress-path/dist/vue-progress-path.css'
+
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
@@ -90,18 +93,17 @@ export default {
       environment: 'getEnvironment',
       selectedMesh: 'getSelectedMesh',
       multicluster: 'getMulticlusterStatus',
-      dataplaneStatuses: 'getDataplaneStatuses',
       servicesForChart: 'getServicesForChart',
+      meshInsight: 'getMeshInsight',
+      meshInsightsFetching: 'getMeshInsightsFetching',
     }),
     pageTitle () {
       const metaTitle = this.$route.meta.title
       const mesh = this.selectedMesh
 
-      if (mesh === 'all') {
-        return `${metaTitle} for all Meshes`
-      } else {
-        return `${metaTitle} for ${mesh}`
-      }
+      return mesh === 'all'
+        ? `${metaTitle} for all Meshes`
+        : `${metaTitle} for ${mesh}`
     },
     zonesForChart () {
       return this.multicluster
@@ -109,94 +111,60 @@ export default {
         : 1
     },
     overviewMetrics () {
-      let storeVals
       const mesh = this.selectedMesh
-      const state = this.$store.state
-
-      if (mesh === 'all') {
-        storeVals = {
-          meshCount: state.totalMeshCount,
-          dataplaneCount: state.totalDataplaneCount,
-          internalServiceCount: state.totalInternalServiceCount,
-          externalServiceCount: state.totalExternalServiceCount,
-          faultInjectionCount: state.totalFaultInjectionCount,
-          healthCheckCount: state.totalHealthCheckCount,
-          proxyTemplateCount: state.totalProxyTemplateCount,
-          trafficLogCount: state.totalTrafficLogCount,
-          trafficPermissionCount: state.totalTrafficPermissionCount,
-          trafficRouteCount: state.totalTrafficRouteCount,
-          trafficTraceCount: state.totalTrafficTraceCount,
-          circuitBreakerCount: state.totalCircuitBreakerCount,
-          retryCount: state.totalRetryCount
-        }
-      } else {
-        storeVals = {
-          dataplaneCount: state.totalDataplaneCountFromMesh,
-          internalServiceCount: state.totalInternalServiceCountFromMesh,
-          externalServiceCount: state.totalExternalServiceCountFromMesh,
-          faultInjectionCount: state.totalFaultInjectionCountFromMesh,
-          healthCheckCount: state.totalHealthCheckCountFromMesh,
-          proxyTemplateCount: state.totalProxyTemplateCountFromMesh,
-          trafficLogCount: state.totalTrafficLogCountFromMesh,
-          trafficPermissionCount: state.totalTrafficPermissionCountFromMesh,
-          trafficRouteCount: state.totalTrafficRouteCountFromMesh,
-          trafficTraceCount: state.totalTrafficTraceCountFromMesh,
-          circuitBreakerCount: state.totalCircuitBreakerCountFromMesh,
-          retryCount: state.totalRetryCountFromMesh
-        }
-      }
+      const { policies, meshesTotal } = this.meshInsight
 
       const tableData = [
         {
           metric: 'Meshes',
-          value: storeVals.meshCount,
-          url: `/meshes/${this.selectedMesh}`
+          value: meshesTotal,
+          url: `/meshes/${mesh}`,
         },
         {
           metric: 'Circuit Breakers',
-          value: storeVals.circuitBreakerCount,
-          url: `/${this.selectedMesh}/circuit-breakers`
+          value: policies.CircuitBreaker.total,
+          url: `/${mesh}/circuit-breakers`,
         },
         {
           metric: 'Fault Injections',
-          value: storeVals.faultInjectionCount,
-          url: `/${this.selectedMesh}/fault-injections`
+          value: policies.FaultInjection.total,
+          url: `/${mesh}/fault-injections`,
         },
         {
           metric: 'Health Checks',
-          value: storeVals.healthCheckCount,
-          url: `/${this.selectedMesh}/health-checks`
+          value: policies.HealthCheck.total,
+          url: `/${mesh}/health-checks`,
         },
         {
           metric: 'Proxy Templates',
-          value: storeVals.proxyTemplateCount,
-          url: `/${this.selectedMesh}/proxy-templates`
+          value: policies.ProxyTemplate.total,
+          url: `/${mesh}/proxy-templates`,
         },
         {
           metric: 'Traffic Logs',
-          value: storeVals.trafficLogCount,
-          url: `/${this.selectedMesh}/traffic-logs`
+          value: policies.TrafficLog.total,
+          url: `/${mesh}/traffic-logs`,
         },
         {
           metric: 'Traffic Permissions',
-          value: storeVals.trafficPermissionCount,
-          url: `/${this.selectedMesh}/traffic-permissions`
+          value: policies.TrafficPermission.total,
+          url: `/${mesh}/traffic-permissions`,
         },
         {
           metric: 'Traffic Routes',
-          value: storeVals.trafficRouteCount,
-          url: `/${this.selectedMesh}/traffic-routes`
+          value: policies.TrafficRoute.total,
+          url: `/${mesh}/traffic-routes`,
         },
         {
           metric: 'Traffic Traces',
-          value: storeVals.trafficTraceCount,
-          url: `/${this.selectedMesh}/traffic-traces`
+          value: policies.TrafficTrace.total,
+          url: `/${mesh}/traffic-traces`,
         },
         {
           metric: 'Retries',
-          value: storeVals.retryCount,
-          url: `/${this.selectedMesh}/retries`
-        }
+          value: policies.Retry.total,
+          url: `/${mesh}/retries`,
+        },
       ]
 
       if (mesh !== 'all') {
@@ -210,85 +178,30 @@ export default {
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
       // wizard based on environment.
-      if (this.environment === 'universal') {
-        return { name: 'universal-dataplane' }
-      } else {
-        return { name: 'kubernetes-dataplane' }
-      }
-    }
+      const name = this.environment === 'universal'
+        ? 'universal-dataplane'
+        : 'kubernetes-dataplane'
+
+      return { name }
+    },
   },
   watch: {
     selectedMesh () {
       this.init()
-    }
+    },
   },
   beforeMount () {
     this.init()
   },
   methods: {
     init () {
-      this.getCounts()
-
-      this.$store.dispatch('fetchAllDataplaneInsights')
       this.$store.dispatch('fetchAllServices')
+      this.$store.dispatch('fetchMeshInsights', this.selectedMesh)
 
       if (this.multicluster) {
         this.$store.dispatch('fetchTotalClusterCount')
       }
     },
-    getCounts () {
-      let actions
-      const mesh = this.selectedMesh
-
-      if (mesh === 'all') {
-        // if we are viewing data for all meshes,
-        // load the total counts for everything
-        actions = [
-          'fetchTotalClusterCount',
-          'fetchMeshTotalCount',
-          'fetchInternalServiceTotalCount',
-          'fetchExternalServiceTotalCount',
-          'fetchDataplaneTotalCount',
-          'fetchHealthCheckTotalCount',
-          'fetchProxyTemplateTotalCount',
-          'fetchTrafficLogTotalCount',
-          'fetchTrafficPermissionTotalCount',
-          'fetchTrafficRouteTotalCount',
-          'fetchTrafficTraceTotalCount',
-          'fetchFaultInjectionTotalCount',
-          'fetchCircuitBreakerTotalCount',
-          'fetchRetryTotalCount'
-        ]
-
-        // run each action
-        actions.forEach(i => {
-          this.$store.dispatch(i)
-        })
-      } else {
-        // if we are viewing data for a single selected mesh,
-        // load the total counts just for that selected mesh
-        actions = [
-          'fetchTotalClusterCount',
-          'fetchInternalServiceTotalCountFromMesh',
-          'fetchExternalServiceTotalCountFromMesh',
-          'fetchDataplaneTotalCountFromMesh',
-          'fetchHealthCheckTotalCountFromMesh',
-          'fetchProxyTemplateTotalCountFromMesh',
-          'fetchTrafficLogTotalCountFromMesh',
-          'fetchTrafficPermissionTotalCountFromMesh',
-          'fetchTrafficRouteTotalCountFromMesh',
-          'fetchTrafficTraceTotalCountFromMesh',
-          'fetchFaultInjectionTotalCountFromMesh',
-          'fetchCircuitBreakerTotalCountFromMesh',
-          'fetchRetryTotalCountFromMesh'
-        ]
-
-        // run each action
-        actions.forEach(i => {
-          this.$store.dispatch(i, mesh)
-        })
-      }
-    }
   },
 }
 </script>
