@@ -4,8 +4,12 @@ import Vuex from 'vuex'
 import sidebar from '@/store/modules/sidebar'
 // import workspaces from '@/store/modules/workspaces'
 
-import { getStatusFromObject } from '@/dataplane'
 import { filterResourceByMesh } from '@/helpers'
+import {
+  getEmptyInsight,
+  mergeInsightsReducer,
+  parseInsightReducer
+} from '@/store/reducers/mesh-insights'
 
 Vue.use(Vuex)
 
@@ -64,10 +68,10 @@ export default (api) => {
       totalClusters: 0,
 
       // NEW
-      dataplaneInsights: [],
       serviceInsights: [],
       externalServices: [],
-      meshInsights: [],
+      meshInsight: getEmptyInsight(),
+      meshInsightsFetching: false,
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -132,29 +136,6 @@ export default (api) => {
         return status
       },
       getClusterCount: (state) => state.totalClusters,
-      getDataplaneInsights: state => state.dataplaneInsights,
-      getDataplaneInsightsFromMesh: ({ dataplaneInsights }) => {
-        return filterResourceByMesh(dataplaneInsights)
-      },
-      getDataplaneStatuses: (state, getters) => {
-        return (wantMesh) => {
-          const insights = getters.getDataplaneInsightsFromMesh(wantMesh)
-          const statuses = insights.map(getStatusFromObject)
-
-          return statuses
-            .reduce((acc, { status }) => {
-              const item = acc.find(({ category }) => category === status)
-
-              if (item) {
-                item.value++
-              } else {
-                acc.push({ category: status, value: 1 })
-              }
-
-              return acc
-            }, [])
-        }
-      },
       getServiceInsightsFromMesh: ({ serviceInsights }) => {
         return filterResourceByMesh(serviceInsights)
       },
@@ -179,6 +160,8 @@ export default (api) => {
           return result
         }
       },
+      getMeshInsight: (state) => state.meshInsight,
+      getMeshInsightsFetching: (state) => state.meshInsightsFetching,
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -224,10 +207,11 @@ export default (api) => {
       SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value),
 
       // NEW
-      SET_DATAPLANE_INSIGHTS: (state, value) => (state.dataplaneInsights = value),
       SET_SERVICE_INSIGHTS: (state, value) => (state.serviceInsights = value),
       SET_EXTERNAL_SERVICES: (state, value) => (state.externalServices = value),
-      SET_MESH_INSIGHTS: (state, value) => (state.meshInsights = value),
+      SET_MESH_INSIGHT: (state, value) => (state.meshInsight = parseInsightReducer(value)),
+      SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value)),
+      SET_MESH_INSIGHTS_FETCHING: (state, value) => (state.meshInsightsFetching = value),
     },
     actions: {
       // update the onboarding state
@@ -820,22 +804,32 @@ export default (api) => {
         }
       },
 
-      fetchAllMeshInsights ({ dispatch }) {
-        const params = {
-          endpoint: (...params) => api.getAllMeshInsights(...params),
-          mutation: 'SET_MESH_INSIGHTS',
+      async fetchResource ({ commit, state }, { endpoint, mutation, ...params }) {
+        try {
+          commit(mutation, await endpoint(params))
+        } catch (e) {
+          commit(mutation, getEmptyInsight())
         }
-
-        return dispatch('fetchAllResources', params)
       },
 
-      fetchAllDataplaneInsights ({ dispatch }) {
-        const params = {
-          endpoint: (...params) => api.getAllDataplaneOverviews(...params),
-          mutation: 'SET_DATAPLANE_INSIGHTS',
-        }
+      async fetchMeshInsights ({ commit, dispatch }, mesh = 'all') {
+        commit('SET_MESH_INSIGHTS_FETCHING', true)
 
-        return dispatch('fetchAllResources', params)
+        const endpoint = mesh === 'all'
+          ? (...params) => api.getAllMeshInsights(...params)
+          : (...params) => api.getMeshInsights(mesh, ...params)
+
+        const mutation = mesh === 'all'
+          ? 'SET_MESH_INSIGHT_FROM_ALL_MESHES'
+          : 'SET_MESH_INSIGHT'
+
+        const action = mesh === 'all'
+          ? 'fetchAllResources'
+          : 'fetchResource'
+
+        await dispatch(action, { endpoint, mutation })
+
+        return commit('SET_MESH_INSIGHTS_FETCHING', false)
       },
 
       fetchAllServiceInsights ({ dispatch }) {
