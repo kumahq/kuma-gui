@@ -1,51 +1,4 @@
-import transform from 'lodash/transform'
-import isEqual from 'lodash/isEqual'
 import isPlainObject from 'lodash/isPlainObject'
-import has from 'lodash/has'
-import forOwn from 'lodash/forOwn'
-
-/**
- * Deep diff between two objects - i.e. an object with the new value of new & changed fields.
- * Removed fields will be set as undefined on the result.
- * Only plain objects will be deeply compared (@see _.isPlainObject)
- *
- * Ref: https://gist.github.com/TeNNoX/5125ab5770ba287012316dd62231b764
- *
- * @param  {Object} base   Object to compare with (if falsy we return object)
- * @param  {Object} object Object compared
- * @return {Object}        Return a new object who represent the changed & new values
- */
-export function deepDiffObj(base, object) {
-  if (!object) {
-    throw new Error(`The object compared should be an object: ${object}`)
-  }
-
-  if (!base) {
-    return object
-  }
-
-  const result = transform(object, (result, value, key) => {
-    // fix edge case: not defined to explicitly defined as undefined
-    if (!has(base, key)) {
-      result[key] = value
-    }
-
-    if (!isEqual(value, base[key])) {
-      result[key] = isPlainObject(value) && isPlainObject(base[key])
-        ? deepDiffObj(base[key], value)
-        : value
-    }
-  });
-
-  // map removed fields to undefined
-  forOwn(base, (value, key) => {
-    if (!has(object, key)) {
-      result[key] = undefined
-    }
-  })
-
-  return result;
-}
 
 const capitalizeRegEx = /(?:^|[\s-:'"])\w/g
 
@@ -528,23 +481,6 @@ export async function fetchAllResources ({ callEndpoint, ...otherParams }) {
     throw new Error(`Resource fetching failed: ${e}`)
   }
 }
-
-// 1. We are not importing whole lodash and then destructuring it like:
-//      export { isPlainObject } from 'lodash'
-//    because in the past it was causing problems during the 'tree shaking'
-//    (ref. https://webpack.js.org/guides/tree-shaking/), and importing
-//    only the things you need as a "whole" package, like:
-//    `lodash/isplainobject` when the whole lodash is passed as a dependency
-//    in the `package.json` file or like `lodash.isplainobject`, when we
-//    explicitly marked this as a dependency
-// 2. Reexporting `isPlainObject` instead of directly importing lodash
-//    in the applications gives as additional `adapter`ish layer, and if
-//    in the future we'll decide we want to get rid of the lodash as a dependency
-//    we can just introduce our own function which just needs to fulfill
-//    the same API as the function before
-export { default as isFunction } from 'lodash/isFunction'
-export { default as merge } from 'lodash/merge'
-export { default as transform } from 'lodash/transform'
 
 export default {
   forEach,
