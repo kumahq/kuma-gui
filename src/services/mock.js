@@ -2551,7 +2551,7 @@ export default class Mock {
       // Zone Insights
       .onGet('/zones+insights')
       .reply(200, {
-        total: 2,
+        total: 3,
         items: [
           {
             type: 'ZoneOverview',
@@ -2560,9 +2560,7 @@ export default class Mock {
             creationTime: '2020-07-28T23:08:22.317322+07:00',
             modificationTime: '2020-07-28T23:08:22.317322+07:00',
             zone: {
-              ingress: {
-                address: '127.0.0.1:10000'
-              }
+              enabled: true,
             },
             zoneInsight: {
               subscriptions: [
@@ -2631,6 +2629,9 @@ export default class Mock {
                         responsesAcknowledged: '94694269'
                       }
                     }
+                  },
+                  version: {
+                    version: '1.0.5'
                   }
                 }
               ]
@@ -2643,9 +2644,7 @@ export default class Mock {
             creationTime: '2018-07-17T16:05:36.995Z',
             modificationTime: '2019-07-17T18:08:41Z',
             zone: {
-              ingress: {
-                address: '192.168.1.2:1000'
-              }
+              enabled: true,
             },
             zoneInsight: {
               subscriptions: [
@@ -2659,7 +2658,10 @@ export default class Mock {
                 },
                 {
                   id: '3',
-                  globalInstanceId: 'node-003'
+                  globalInstanceId: 'node-003',
+                  version: {
+                    version: '1.0.6'
+                  }
                 }
               ]
             }
@@ -2671,9 +2673,7 @@ export default class Mock {
             creationTime: '2018-07-17T16:05:36.995Z',
             modificationTime: '2019-07-17T18:08:41Z',
             zone: {
-              ingress: {
-                address: '192.168.1.2:1000'
-              }
+              enabled: false,
             },
             zoneInsight: {
               subscriptions: [
@@ -2687,7 +2687,10 @@ export default class Mock {
                 },
                 {
                   id: '3',
-                  globalInstanceId: 'node-003'
+                  globalInstanceId: 'node-003',
+                  version: {
+                    version: '1.0.4'
+                  }
                 }
               ]
             }
@@ -2837,6 +2840,356 @@ export default class Mock {
           ]
         }
       })
+      .onGet('/mesh-insights')
+      .reply(200, {
+        total: 1,
+        items: [
+          {
+            type: 'MeshInsight',
+            name: 'default',
+            creationTime: '2021-01-29T07:10:02.339031+01:00',
+            modificationTime: '2021-01-29T07:29:02.314448+01:00',
+            lastSync: '2021-01-29T06:29:02.314447Z',
+            dataplanes: {
+              total: 8,
+              online: 3
+            },
+            policies: {
+              Secret: {
+                total: 6
+              },
+              ServiceInsight: {
+                total: 11
+              },
+              TrafficPermission: {
+                total: 3
+              },
+              TrafficRoute: {
+                total: 5
+              }
+            },
+            dpVersions: {
+              kumaDp: {
+                '1.0.4': {
+                  total: 3,
+                  online: 2
+                },
+                '1.0.5': {
+                  total: 1,
+                  online: 1
+                },
+                '1.0.6': {
+                  total: 2,
+                  online: 1
+                },
+              },
+              envoy: {
+                '1.16.2': {
+                  total: 4,
+                  online: 1
+                },
+                '1.14.0': {
+                  total: 7,
+                  online: 1
+                },
+                '1.16.1': {
+                  total: 8,
+                  online: 1
+                },
+              }
+            }
+          }
+        ],
+        next: null
+      })
+      .onGet('/service-insights')
+      .reply(200, {
+        total: 600,
+        items: [
+          {
+            type: 'ServiceInsight',
+            mesh: 'default',
+            name: 'backend',
+            creationTime: '2021-01-31T13:12:35.937706+01:00',
+            modificationTime: '2021-02-02T06:45:23.759876+01:00',
+            total: 400,
+            online: 301
+          },
+          {
+            type: 'ServiceInsight',
+            mesh: 'foo',
+            name: 'backend',
+            creationTime: '2021-01-31T13:12:35.937706+01:00',
+            modificationTime: '2021-02-02T06:45:23.759876+01:00',
+            total: 100,
+            online: 59
+          },
+        ],
+        next: null
+      })
+      .onGet('/external-services')
+      .reply(200, {
+        total: 17,
+        items: [
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+          {
+            type: 'ExternalService',
+            mesh: 'foo',
+            name: 'httpbin2',
+            creationTime: '2021-02-02T10:59:26.640498+01:00',
+            modificationTime: '2021-02-02T10:59:26.640498+01:00',
+            networking: {
+              address: 'httpbin.org:80',
+              tls: {}
+            },
+            tags: {
+              'kuma.io/protocol': 'http',
+              'kuma.io/service': 'httpbin'
+            }
+          },
+        ],
+        next: null
+      }
+      )
       .onAny()
       .passThrough()
   }

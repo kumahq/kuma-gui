@@ -71,7 +71,7 @@ Vue.use(VueMeta)
 
 Vue.config.productionTip = false
 
-am4core.useTheme(am4themesAnimated);
+am4core.useTheme(am4themesAnimated)
 
 /**
  * APP SETUP

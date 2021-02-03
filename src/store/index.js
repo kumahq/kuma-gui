@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import sidebar from '@/store/modules/sidebar'
 // import workspaces from '@/store/modules/workspaces'
 
-import { filterResourceByMesh } from '@/helpers'
+import { fetchAllResources, filterResourceByMesh } from '@/helpers'
 import {
   getEmptyInsight,
   mergeInsightsReducer,
@@ -68,10 +68,43 @@ export default (api) => {
       totalClusters: 0,
 
       // NEW
-      serviceInsights: [],
-      externalServices: [],
+      serviceSummary: {
+        total: 0,
+        internal: {
+          total: 0,
+          online: 0,
+          offline: 0,
+          degraded: 0,
+        },
+        external: {
+          total: 0,
+        }
+      },
+      overviewCharts: {
+        dataplanes: {
+          data: [],
+        },
+        services: {
+          data: [],
+        },
+        zones: {
+          data: [],
+        },
+        zonesCPVersions: {
+          data: [],
+        },
+        kumaDPVersions: {
+          data: [],
+        },
+        envoyVersions: {
+          data: [],
+        },
+      },
       meshInsight: getEmptyInsight(),
       meshInsightsFetching: false,
+      serviceInsightsFetching: false,
+      externalServicesFetching: false,
+      zonesInsightsFetching: false,
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -142,26 +175,21 @@ export default (api) => {
       getExternalServicesFromMesh: ({ externalServices }) => {
         return filterResourceByMesh(externalServices)
       },
-      getServicesForChart: (state, getters) => {
-        return (wantMesh) => {
-          const insights = getters.getServiceInsightsFromMesh(wantMesh)
-          const external = getters.getExternalServicesFromMesh(wantMesh)
-
-          const result = []
-
-          if (insights.length) {
-            result.push({ category: 'Internal', value: insights.length })
-          }
-
-          if (external.length) {
-            result.push({ category: 'External', value: external.length })
-          }
-
-          return result
-        }
-      },
       getMeshInsight: (state) => state.meshInsight,
       getMeshInsightsFetching: (state) => state.meshInsightsFetching,
+      getServiceInsightsFetching: (state) => state.serviceInsightsFetching,
+      getExternalServicesFetching: (state) => state.externalServicesFetching,
+      getResourceFetching: ({
+        meshInsightsFetching,
+        serviceInsightsFetching,
+        externalServicesFetching,
+      }) => meshInsightsFetching || serviceInsightsFetching || externalServicesFetching,
+      getServiceResourcesFetching: ({
+        serviceInsightsFetching,
+        externalServicesFetching,
+      }) => serviceInsightsFetching || externalServicesFetching,
+      getChart: ({ overviewCharts }) => (chartName) => overviewCharts[chartName],
+      getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -207,11 +235,40 @@ export default (api) => {
       SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value),
 
       // NEW
-      SET_SERVICE_INSIGHTS: (state, value) => (state.serviceInsights = value),
-      SET_EXTERNAL_SERVICES: (state, value) => (state.externalServices = value),
+      SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
+        const { serviceSummary } = state
+
+        const { total, online, degraded } = data.reduce((acc, { total = 0, online = 0, degraded = 0 }) => ({
+          total: acc.total + total,
+          online: acc.online + online,
+          degraded: acc.degraded + degraded,
+        }), { total: 0, online: 0, degraded: 0 })
+
+        serviceSummary.internal = {
+          ...serviceSummary.internal,
+          total,
+          online,
+          degraded,
+          offline: total - online,
+        }
+
+        serviceSummary.total = serviceSummary.external.total + total
+      },
+      SET_EXTERNAL_SERVICE_SUMMARY: (state, { total = 0 } = {}) => {
+        state.serviceSummary.external.total = total
+        state.serviceSummary.total = state.serviceSummary.internal.total + total
+      },
       SET_MESH_INSIGHT: (state, value) => (state.meshInsight = parseInsightReducer(value)),
-      SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value)),
+      SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value.data)),
+      SET_ZONES_INSIGHTS_FETCHING: (state, value) => (state.zonesInsightsFetching = value),
       SET_MESH_INSIGHTS_FETCHING: (state, value) => (state.meshInsightsFetching = value),
+      SET_SERVICE_INSIGHTS_FETCHING: (state, value) => (state.serviceInsightsFetching = value),
+      SET_EXTERNAL_SERVICES_FETCHING: (state, value) => (state.externalServicesFetching = value),
+      SET_OVERVIEW_CHART_DATA: (state, value) => {
+        const { chartName, data } = value
+
+        state.overviewCharts[chartName].data = data
+      },
     },
     actions: {
       // update the onboarding state
@@ -778,84 +835,232 @@ export default (api) => {
 
       // NEW
 
-      async fetchAllResources ({ commit, state }, { endpoint, mutation, ...otherParams }) {
-        const { pageSize } = state
-
-        try {
-          let offset = 0
-          let allItems = []
-
-          while (true) {
-            const params = { ...otherParams, size: pageSize, offset: offset++ }
-            const { items, next } = await endpoint(params)
-
-            if (items) {
-              allItems = allItems.concat(items)
-            }
-
-            if (!next) {
-              break
-            }
-          }
-
-          commit(mutation, allItems)
-        } catch (e) {
-          console.error(e)
-        }
-      },
-
-      async fetchResource ({ commit, state }, { endpoint, mutation, ...params }) {
-        try {
-          commit(mutation, await endpoint(params))
-        } catch (e) {
-          commit(mutation, getEmptyInsight())
-        }
-      },
-
-      async fetchMeshInsights ({ commit, dispatch }, mesh = 'all') {
+      async fetchMeshInsights ({ commit, dispatch, state }, mesh = 'all') {
         commit('SET_MESH_INSIGHTS_FETCHING', true)
 
-        const endpoint = mesh === 'all'
-          ? (...params) => api.getAllMeshInsights(...params)
-          : (...params) => api.getMeshInsights(mesh, ...params)
+        try {
+          if (mesh === 'all') {
+            const params = {
+              callEndpoint: api.getAllMeshInsights.bind(api),
+              size: state.pageSize,
+            }
 
-        const mutation = mesh === 'all'
-          ? 'SET_MESH_INSIGHT_FROM_ALL_MESHES'
-          : 'SET_MESH_INSIGHT'
-
-        const action = mesh === 'all'
-          ? 'fetchAllResources'
-          : 'fetchResource'
-
-        await dispatch(action, { endpoint, mutation })
-
-        return commit('SET_MESH_INSIGHTS_FETCHING', false)
-      },
-
-      fetchAllServiceInsights ({ dispatch }) {
-        const params = {
-          endpoint: (...params) => api.getAllServiceInsights(...params),
-          mutation: 'SET_SERVICE_INSIGHTS',
+            commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', await fetchAllResources(params))
+          } else {
+            commit('SET_MESH_INSIGHT', await api.getMeshInsights(mesh))
+          }
+        } catch (e) {
+          commit('SET_MESH_INSIGHT', getEmptyInsight())
+        } finally {
+          dispatch('setChartsFromMeshInsights')
         }
 
-        return dispatch('fetchAllResources', params)
+        commit('SET_MESH_INSIGHTS_FETCHING', false)
       },
 
-      async fetchAllExternalServices ({ dispatch }) {
-        const params = {
-          endpoint: (...params) => api.getAllExternalServices(...params),
-          mutation: 'SET_EXTERNAL_SERVICES',
+      async fetchServiceInsights ({ commit, state }, mesh = 'all') {
+        commit('SET_SERVICE_INSIGHTS_FETCHING', true)
+
+        try {
+          const params = {
+            callEndpoint: mesh === 'all'
+              ? api.getAllServiceInsights.bind(api)
+              : api.getAllServiceInsightsFromMesh.bind(api, mesh),
+            size: state.pageSize,
+          }
+
+          commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
+        } catch (e) {
+          commit('SET_INTERNAL_SERVICE_SUMMARY')
         }
 
-        return dispatch('fetchAllResources', params)
+        commit('SET_SERVICE_INSIGHTS_FETCHING', false)
       },
 
-      async fetchAllServices ({ dispatch }) {
-        const serviceInsights = dispatch('fetchAllServiceInsights')
-        const externalServices = dispatch('fetchAllExternalServices')
+      async fetchExternalServices ({ commit, state, dispatch }, mesh = 'all') {
+        commit('SET_EXTERNAL_SERVICES_FETCHING', true)
+
+        try {
+          const params = {
+            callEndpoint: mesh === 'all'
+              ? api.getAllExternalServices.bind(api)
+              : api.getAllExternalServicesFromMesh.bind(api, mesh),
+            size: state.pageSize,
+          }
+
+          commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
+        } catch (e) {
+          commit('SET_EXTERNAL_SERVICE_SUMMARY')
+        }
+
+        commit('SET_EXTERNAL_SERVICES_FETCHING', false)
+      },
+
+      async fetchServices ({ dispatch }, mesh = 'all') {
+        const externalServices = dispatch('fetchExternalServices', mesh)
+        const serviceInsights = dispatch('fetchServiceInsights', mesh)
 
         await Promise.all([serviceInsights, externalServices])
-      }
+        await dispatch('setOverviewServicesChartData')
+      },
+
+      async fetchZonesInsights ({ commit, dispatch, state }, multicluster = false) {
+        commit('SET_ZONES_INSIGHTS_FETCHING', true)
+
+        try {
+          if (multicluster) {
+            const params = {
+              callEndpoint: api.getAllZoneOverviews.bind(api),
+              size: state.pageSize,
+            }
+
+            const response = await fetchAllResources(params)
+
+            dispatch('setOverviewZonesChartData', response)
+            dispatch('setOverviewZonesCPVersionsChartData', response)
+          } else {
+            await dispatch('getVersion')
+
+            const zonesData = [{
+              category: 'Zone',
+              value: 1,
+              tooltipDisabled: true,
+              labelDisabled: true,
+            }]
+
+            const versionsData = [{
+              category: state.version,
+              value: 1,
+              tooltipDisabled: true,
+            }]
+
+            commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: zonesData })
+            commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: versionsData })
+          }
+        } catch (e) {
+          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: [] })
+          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: [] })
+        }
+
+        commit('SET_ZONES_INSIGHTS_FETCHING', false)
+      },
+
+      setChartsFromMeshInsights ({ dispatch }) {
+        dispatch('setOverviewDataplanesChartData')
+        dispatch('setOverviewKumaDPVersionsChartData')
+        dispatch('setOverviewEnvoyVersionsChartData')
+      },
+
+      setOverviewZonesChartData({ state, commit }, { total, data }) {
+        const online = data.reduce((acc, { zone }) => acc + (zone.enabled || 0), 0)
+
+        const chartData = []
+
+        if (total) {
+          chartData.push({
+            category: 'Online',
+            value: online,
+          })
+
+          if (online !== total) {
+            chartData.push({
+              category: 'Offline',
+              value: total - online,
+            })
+          }
+        }
+
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: chartData })
+      },
+
+      setOverviewServicesChartData({ state, commit }) {
+        const { internal, external } = state.serviceSummary
+
+        const data = []
+
+        if (internal.total) {
+          data.push({
+            category: 'Internal',
+            value: internal.total,
+            minSizeForLabel: 0.16,
+          })
+        }
+
+        if (external.total) {
+          data.push({
+            category: 'External',
+            value: external.total,
+            minSizeForLabel: 0.16,
+          })
+        }
+
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'services', data })
+      },
+
+      setOverviewDataplanesChartData({ state, commit }) {
+        const { dataplanes } = state.meshInsight
+        const { total, online } = dataplanes
+
+        const data = []
+
+        if (total) {
+          data.push({
+            category: 'Online',
+            value: online,
+          })
+
+          if (online !== total) {
+            data.push({
+              category: 'Offline',
+              value: total - online,
+            })
+          }
+        }
+
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'dataplanes', data })
+      },
+
+      setOverviewZonesCPVersionsChartData({ state, commit }, { data }) {
+        const chartData = data.reduce((acc, curr) => {
+          const { subscriptions } = curr.zoneInsight
+
+          if (!subscriptions.length) {
+            return acc
+          }
+
+          const { version } = curr.zoneInsight.subscriptions.pop()
+
+          const item = acc.find(({ category }) => category === version.version)
+
+          if (!item) {
+            acc.push({ category: version.version, value: 1 })
+          } else {
+            item.value++
+          }
+
+          return acc
+        }, [])
+
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: chartData })
+      },
+
+      setOverviewEnvoyVersionsChartData({ state, commit }) {
+        const { envoy } = state.meshInsight.dpVersions
+
+        const data = Object.entries(envoy)
+          .map(([version, stats]) => ({ category: version, value: stats.total }))
+
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'envoyVersions', data })
+      },
+
+      setOverviewKumaDPVersionsChartData({ state, commit }) {
+        const { kumaDp } = state.meshInsight.dpVersions
+
+        const data = Object.entries(kumaDp)
+          .map(([version, stats]) => ({ category: version, value: stats.total }))
+
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
+      },
     }
   })
 

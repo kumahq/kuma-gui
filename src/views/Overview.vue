@@ -1,14 +1,50 @@
 <template>
   <div class="overview">
-    <div class="flex flex-col lg:flex-row">
-      <OverviewCharts
-        :zones="zonesForChart"
-        :dataplanes="meshInsight.dataplanes"
-        :services="servicesForChart(selectedMesh)"
-        :selected-mesh="selectedMesh"
-        class="my-5"
+    <div :class="chartContainerClass">
+      <DonutChart
+        v-if="selectedMesh === 'all'"
+        :class="chartClass"
+        :title="{ singular: 'ZONE', plural: 'ZONES' }"
+        :data="zonesChart.data"
+        :url="{ name: 'zones' }"
+        :is-loading="areZonesInsightsLoading"
+      />
+      <DonutChart
+        :class="chartClass"
+        :title="{ singular: 'SERVICE', plural: 'SERVICES' }"
+        :data="servicesChart.data"
+        :is-loading="areServicesLoading"
+        save-chart
+      />
+      <DonutChart
+        :class="chartClass"
+        :title="{ singular: 'DATAPLANE', plural: 'DATAPLANES' }"
+        :data="dataplanesChart.data"
+        :url="{ name: 'dataplanes' }"
+        :is-loading="areMeshInsightsLoading"
+      />
+      <VersionsDonutChart
+        v-if="selectedMesh === 'all'"
+        :class="chartClass"
+        title="ZONE CP"
+        :data="zonesCPVersionsChart.data"
+        :is-loading="areZonesInsightsLoading"
+      />
+      <VersionsDonutChart
+        :class="chartClass"
+        title="KUMA DP"
+        :data="kumaDPVersionsChart.data"
+        :is-loading="areMeshInsightsLoading"
+      />
+      <VersionsDonutChart
+        :class="chartClass"
+        title="ENVOY"
+        :data="envoyVersionsChart.data"
+        :is-loading="areMeshInsightsLoading"
+        display-am-charts-logo
       />
     </div>
+
     <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
@@ -65,14 +101,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
-import 'vue-progress-path/dist/vue-progress-path.css'
+import { mapActions, mapGetters } from 'vuex'
 
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
-import OverviewCharts from '@/components/OverviewCharts'
+import DonutChart from '@/components/DonutChart'
+import VersionsDonutChart from '@/components/VersionsDonutChart'
 
 export default {
   name: 'Overview',
@@ -82,7 +117,8 @@ export default {
     }
   },
   components: {
-    OverviewCharts,
+    DonutChart,
+    VersionsDonutChart,
     MetricGrid,
     CardSkeleton,
     Resources
@@ -93,10 +129,30 @@ export default {
       environment: 'getEnvironment',
       selectedMesh: 'getSelectedMesh',
       multicluster: 'getMulticlusterStatus',
-      servicesForChart: 'getServicesForChart',
       meshInsight: 'getMeshInsight',
-      meshInsightsFetching: 'getMeshInsightsFetching',
+      areMeshInsightsLoading: 'getMeshInsightsFetching',
+      areZonesInsightsLoading: 'getZonesInsightsFetching',
+      areServicesLoading: 'getServiceResourcesFetching',
+      getChart: 'getChart',
     }),
+    dataplanesChart () {
+      return this.getChart('dataplanes')
+    },
+    servicesChart () {
+      return this.getChart('services')
+    },
+    zonesChart () {
+      return this.getChart('zones')
+    },
+    zonesCPVersionsChart () {
+      return this.getChart('zonesCPVersions')
+    },
+    kumaDPVersionsChart () {
+      return this.getChart('kumaDPVersions')
+    },
+    envoyVersionsChart () {
+      return this.getChart('envoyVersions')
+    },
     pageTitle () {
       const metaTitle = this.$route.meta.title
       const mesh = this.selectedMesh
@@ -184,6 +240,36 @@ export default {
 
       return { name }
     },
+    chartClass () {
+      const isAll = this.selectedMesh === 'all'
+
+      return [
+        'flex',
+        'flex-1',
+        'md:flex-1/2',
+        isAll && 'xl:flex-1/3',
+        !isAll && 'xl:flex-1',
+        'md:w-1/2',
+        isAll && 'xl:w-1/3',
+        !isAll && 'xl:w-auto'
+      ].filter(item => item).join(' ')
+    },
+    chartContainerClass () {
+      const isAll = this.selectedMesh === 'all'
+
+      return [
+        'flex',
+        'flex-col',
+        'md:flex-row',
+        'md:flex-wrap',
+        isAll && 'md:h-540p',
+        !isAll && 'md:h-360p',
+        isAll && 'xl:h-360p',
+        !isAll && 'xl:h-180p',
+        'my-2',
+        'py-2',
+      ].filter(item => item).join(' ')
+    },
   },
   watch: {
     selectedMesh () {
@@ -194,12 +280,19 @@ export default {
     this.init()
   },
   methods: {
+    ...mapActions([
+      'fetchMeshInsights',
+      'fetchTotalClusterCount',
+      'fetchZonesInsights',
+      'fetchServices',
+    ]),
     init () {
-      this.$store.dispatch('fetchAllServices')
-      this.$store.dispatch('fetchMeshInsights', this.selectedMesh)
+      this.fetchMeshInsights(this.selectedMesh)
+      this.fetchServices(this.selectedMesh)
+      this.fetchZonesInsights(this.multicluster)
 
       if (this.multicluster) {
-        this.$store.dispatch('fetchTotalClusterCount')
+        this.fetchTotalClusterCount()
       }
     },
   },
@@ -258,5 +351,39 @@ export default {
       --i: 25%;
     }
   }
+}
+
+@responsive {
+  .h-180p {
+    height: 180px;
+  }
+
+  .h-360p {
+    height: 360px;
+  }
+
+  .h-540p {
+    height: 540px;
+  }
+
+  .flex-1 {
+    flex: 1 1 0;
+  }
+
+  .flex-1\/2 {
+    flex: 1 1 50%;
+  }
+
+  .flex-1\/3 {
+    flex: 1 1 33%;
+  }
+}
+
+// v-deep is a deep selector which is equivalent of ">>>" as sass loader is not
+//  able to properly parse ">>>"
+// ref:
+//  https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors
+::v-deep .pie-chart-label {
+  @apply tracking-widest uppercase
 }
 </style>
