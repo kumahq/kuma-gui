@@ -18,7 +18,7 @@
       />
       <DonutChart
         :class="chartClass"
-        :title="{ singular: 'DATAPLANE', plural: 'DATAPLANES' }"
+        :title="{ singular: 'DP PROXY', plural: 'DP PROXIES' }"
         :data="dataplanesChart.data"
         :url="{ name: 'dataplanes' }"
         :is-loading="areMeshInsightsLoading"
