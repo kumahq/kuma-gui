@@ -1,11 +1,14 @@
 const sumDataplanes = (curr = {}, next = {}) => {
   const currOnline = curr.online || 0
   const nextOnline = next.online || 0
+  const currPartiallyDegraded = curr.partiallyDegraded || 0
+  const nextPartiallyDegraded = next.partiallyDegraded || 0
   const currTotal = curr.total || 0
   const nextTotal = next.total || 0
 
   return {
     online: currOnline + nextOnline,
+    partiallyDegraded: currPartiallyDegraded + nextPartiallyDegraded,
     total: currTotal + nextTotal,
   }
 }
@@ -68,7 +71,7 @@ const sumVersions = (curr = {}, next = {}) => ({
 export function getEmptyInsight () {
   return {
     meshesTotal: 0,
-    dataplanes: { online: 0, total: 0 },
+    dataplanes: { online: 0, partiallyDegraded: 0, total: 0 },
     policies: getInitialPolicies(),
     dpVersions: { kumaDp: {}, envoy: {} }
   }

@@ -7,6 +7,7 @@ const SubTitleLabelClassName = 'DonutChart--sumLabel'
 const defaultLabelsColor = 'rgba(41, 11, 83, 0.75)'
 const onlineColor = '#19A654'
 const offlineColor = '#BF1330'
+const partiallyDegradedColor = '#F2A230'
 
 const getEmptyData = () => [{
   category: 'Empty',
@@ -301,7 +302,9 @@ export default {
           case 'online':
             return { fill: onlineColor, minSizeForLabel: 0.13, ...item }
           case 'offline':
-            return { fill: offlineColor, minSizeForLabel: 0.13, ...item }
+            return { fill: offlineColor, minSizeForLabel: 0.14, ...item }
+          case 'partially degraded':
+            return { fill: partiallyDegradedColor, minSizeForLabel: 0.30, ...item }
           default:
             return item
         }

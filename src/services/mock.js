@@ -2851,8 +2851,9 @@ export default class Mock {
             modificationTime: '2021-01-29T07:29:02.314448+01:00',
             lastSync: '2021-01-29T06:29:02.314447Z',
             dataplanes: {
-              total: 8,
-              online: 3
+              total: 13,
+              online: 3,
+              partiallyDegraded: 5,
             },
             policies: {
               Secret: {

@@ -74,7 +74,7 @@ export default (api) => {
           total: 0,
           online: 0,
           offline: 0,
-          degraded: 0,
+          partiallyDegraded: 0,
         },
         external: {
           total: 0,
@@ -238,18 +238,20 @@ export default (api) => {
       SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
         const { serviceSummary } = state
 
-        const { total, online, degraded } = data.reduce((acc, { total = 0, online = 0, degraded = 0 }) => ({
+        const reducer = (acc, { total = 0, online = 0, partiallyDegraded = 0 }) => ({
           total: acc.total + total,
           online: acc.online + online,
-          degraded: acc.degraded + degraded,
-        }), { total: 0, online: 0, degraded: 0 })
+          partiallyDegraded: acc.partiallyDegraded + partiallyDegraded,
+        })
+
+        const { total, online, partiallyDegraded } = data.reduce(reducer, { total: 0, online: 0, partiallyDegraded: 0 })
 
         serviceSummary.internal = {
           ...serviceSummary.internal,
           total,
           online,
-          degraded,
-          offline: total - online,
+          partiallyDegraded,
+          offline: total - online - partiallyDegraded,
         }
 
         serviceSummary.total = serviceSummary.external.total + total
@@ -999,7 +1001,7 @@ export default (api) => {
 
       setOverviewDataplanesChartData({ state, commit }) {
         const { dataplanes } = state.meshInsight
-        const { total, online } = dataplanes
+        const { total, online, partiallyDegraded = 0 } = dataplanes
 
         const data = []
 
@@ -1009,10 +1011,17 @@ export default (api) => {
             value: online,
           })
 
-          if (online !== total) {
+          if (partiallyDegraded) {
+            data.push({
+              category: 'Partially Degraded',
+              value: partiallyDegraded,
+            })
+          }
+
+          if (online + partiallyDegraded !== total) {
             data.push({
               category: 'Offline',
-              value: total - online,
+              value: total - partiallyDegraded - online,
             })
           }
         }
