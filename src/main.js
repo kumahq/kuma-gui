@@ -13,6 +13,7 @@ import configUrl from '@/configUrl'
 
 /** amCharts */
 import * as am4core from '@amcharts/amcharts4/core'
+import am4themesAnimated from '@amcharts/amcharts4/themes/animated';
 
 /** Kongponents */
 import './kongponents'
@@ -69,6 +70,8 @@ import '@/assets/styles/transitions.scss'
 Vue.use(VueMeta)
 
 Vue.config.productionTip = false
+
+am4core.useTheme(am4themesAnimated)
 
 /**
  * APP SETUP

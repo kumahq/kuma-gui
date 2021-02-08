@@ -1,3 +1,5 @@
+import isPlainObject from 'lodash/isPlainObject'
+
 const capitalizeRegEx = /(?:^|[\s-:'"])\w/g
 
 export const uuidRegEx = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
@@ -436,6 +438,50 @@ export function filterResourceByMesh (resources) {
   }
 }
 
+export function applyPropsToObject (props = {}, object = {}) {
+  Object.entries(props).forEach(([key, value]) => {
+    if (isPlainObject(value)) {
+      return applyPropsToObject(value, object[key])
+    }
+
+    object[key] = value
+  })
+}
+
+export async function fetchAllResources ({ callEndpoint, ...otherParams }) {
+  try {
+    let allTotal = null
+    let offset = 0
+    let allItems = []
+
+    while (true) {
+      // Set default page size to 500, can be overwritten by otherParams
+      const params = { size: 500, ...otherParams, offset: offset++ }
+      const { total, items, next } = await callEndpoint(params)
+
+      if (items) {
+        allItems = allItems.concat(items)
+      }
+
+      if (allTotal === null) {
+        allTotal = total
+      }
+
+      if (total !== allTotal) {
+        return new Error('Mismatch between "total" values between requests')
+      }
+
+      if (!next) {
+        break
+      }
+    }
+
+    return { total: allTotal, data: allItems }
+  } catch (e) {
+    throw new Error(`Resource fetching failed: ${e}`)
+  }
+}
+
 export default {
   forEach,
   decodeJWT,
@@ -459,5 +505,5 @@ export default {
   stripTimes,
   cleanTag,
   camelCaseToWords,
-  kebabCase
+  kebabCase,
 }

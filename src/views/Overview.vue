@@ -1,14 +1,50 @@
 <template>
   <div class="overview">
-    <div class="flex flex-col lg:flex-row">
-      <OverviewCharts
-        :zones="zonesForChart"
-        :dataplanes="dataplaneStatuses(selectedMesh)"
-        :services="servicesForChart(selectedMesh)"
-        :selected-mesh="selectedMesh"
-        class="my-5"
+    <div :class="chartContainerClass">
+      <DonutChart
+        v-if="selectedMesh === 'all'"
+        :class="chartClass"
+        :title="{ singular: 'ZONE', plural: 'ZONES' }"
+        :data="zonesChart.data"
+        :url="{ name: 'zones' }"
+        :is-loading="areZonesInsightsLoading"
+      />
+      <DonutChart
+        :class="chartClass"
+        :title="{ singular: 'SERVICE', plural: 'SERVICES' }"
+        :data="servicesChart.data"
+        :is-loading="areServicesLoading"
+        save-chart
+      />
+      <DonutChart
+        :class="chartClass"
+        :title="{ singular: 'DP PROXY', plural: 'DP PROXIES' }"
+        :data="dataplanesChart.data"
+        :url="{ name: 'dataplanes' }"
+        :is-loading="areMeshInsightsLoading"
+      />
+      <VersionsDonutChart
+        v-if="selectedMesh === 'all'"
+        :class="chartClass"
+        title="ZONE CP"
+        :data="zonesCPVersionsChart.data"
+        :is-loading="areZonesInsightsLoading"
+      />
+      <VersionsDonutChart
+        :class="chartClass"
+        title="KUMA DP"
+        :data="kumaDPVersionsChart.data"
+        :is-loading="areMeshInsightsLoading"
+      />
+      <VersionsDonutChart
+        :class="chartClass"
+        title="ENVOY"
+        :data="envoyVersionsChart.data"
+        :is-loading="areMeshInsightsLoading"
+        display-am-charts-logo
       />
     </div>
+
     <!-- metrics boxes -->
     <MetricGrid
       :metrics="overviewMetrics"
@@ -38,7 +74,7 @@
         >
           <template slot="cardContent">
             <p>
-              We need a data plane proxy for each replicata of our services within a Mesh resource.
+              We need a data plane proxy for each replica of our services within a Mesh resource.
             </p>
           </template>
         </CardSkeleton>
@@ -65,11 +101,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
-import OverviewCharts from '@/components/OverviewCharts'
+import DonutChart from '@/components/DonutChart'
+import VersionsDonutChart from '@/components/VersionsDonutChart'
 
 export default {
   name: 'Overview',
@@ -79,7 +117,8 @@ export default {
     }
   },
   components: {
-    OverviewCharts,
+    DonutChart,
+    VersionsDonutChart,
     MetricGrid,
     CardSkeleton,
     Resources
@@ -90,18 +129,37 @@ export default {
       environment: 'getEnvironment',
       selectedMesh: 'getSelectedMesh',
       multicluster: 'getMulticlusterStatus',
-      dataplaneStatuses: 'getDataplaneStatuses',
-      servicesForChart: 'getServicesForChart',
+      meshInsight: 'getMeshInsight',
+      areMeshInsightsLoading: 'getMeshInsightsFetching',
+      areZonesInsightsLoading: 'getZonesInsightsFetching',
+      areServicesLoading: 'getServiceResourcesFetching',
+      getChart: 'getChart',
     }),
+    dataplanesChart () {
+      return this.getChart('dataplanes')
+    },
+    servicesChart () {
+      return this.getChart('services')
+    },
+    zonesChart () {
+      return this.getChart('zones')
+    },
+    zonesCPVersionsChart () {
+      return this.getChart('zonesCPVersions')
+    },
+    kumaDPVersionsChart () {
+      return this.getChart('kumaDPVersions')
+    },
+    envoyVersionsChart () {
+      return this.getChart('envoyVersions')
+    },
     pageTitle () {
       const metaTitle = this.$route.meta.title
       const mesh = this.selectedMesh
 
-      if (mesh === 'all') {
-        return `${metaTitle} for all Meshes`
-      } else {
-        return `${metaTitle} for ${mesh}`
-      }
+      return mesh === 'all'
+        ? `${metaTitle} for all Meshes`
+        : `${metaTitle} for ${mesh}`
     },
     zonesForChart () {
       return this.multicluster
@@ -109,94 +167,60 @@ export default {
         : 1
     },
     overviewMetrics () {
-      let storeVals
       const mesh = this.selectedMesh
-      const state = this.$store.state
-
-      if (mesh === 'all') {
-        storeVals = {
-          meshCount: state.totalMeshCount,
-          dataplaneCount: state.totalDataplaneCount,
-          internalServiceCount: state.totalInternalServiceCount,
-          externalServiceCount: state.totalExternalServiceCount,
-          faultInjectionCount: state.totalFaultInjectionCount,
-          healthCheckCount: state.totalHealthCheckCount,
-          proxyTemplateCount: state.totalProxyTemplateCount,
-          trafficLogCount: state.totalTrafficLogCount,
-          trafficPermissionCount: state.totalTrafficPermissionCount,
-          trafficRouteCount: state.totalTrafficRouteCount,
-          trafficTraceCount: state.totalTrafficTraceCount,
-          circuitBreakerCount: state.totalCircuitBreakerCount,
-          retryCount: state.totalRetryCount
-        }
-      } else {
-        storeVals = {
-          dataplaneCount: state.totalDataplaneCountFromMesh,
-          internalServiceCount: state.totalInternalServiceCountFromMesh,
-          externalServiceCount: state.totalExternalServiceCountFromMesh,
-          faultInjectionCount: state.totalFaultInjectionCountFromMesh,
-          healthCheckCount: state.totalHealthCheckCountFromMesh,
-          proxyTemplateCount: state.totalProxyTemplateCountFromMesh,
-          trafficLogCount: state.totalTrafficLogCountFromMesh,
-          trafficPermissionCount: state.totalTrafficPermissionCountFromMesh,
-          trafficRouteCount: state.totalTrafficRouteCountFromMesh,
-          trafficTraceCount: state.totalTrafficTraceCountFromMesh,
-          circuitBreakerCount: state.totalCircuitBreakerCountFromMesh,
-          retryCount: state.totalRetryCountFromMesh
-        }
-      }
+      const { policies, meshesTotal } = this.meshInsight
 
       const tableData = [
         {
           metric: 'Meshes',
-          value: storeVals.meshCount,
-          url: `/meshes/${this.selectedMesh}`
+          value: meshesTotal,
+          url: `/meshes/${mesh}`,
         },
         {
           metric: 'Circuit Breakers',
-          value: storeVals.circuitBreakerCount,
-          url: `/${this.selectedMesh}/circuit-breakers`
+          value: policies.CircuitBreaker.total,
+          url: `/${mesh}/circuit-breakers`,
         },
         {
           metric: 'Fault Injections',
-          value: storeVals.faultInjectionCount,
-          url: `/${this.selectedMesh}/fault-injections`
+          value: policies.FaultInjection.total,
+          url: `/${mesh}/fault-injections`,
         },
         {
           metric: 'Health Checks',
-          value: storeVals.healthCheckCount,
-          url: `/${this.selectedMesh}/health-checks`
+          value: policies.HealthCheck.total,
+          url: `/${mesh}/health-checks`,
         },
         {
           metric: 'Proxy Templates',
-          value: storeVals.proxyTemplateCount,
-          url: `/${this.selectedMesh}/proxy-templates`
+          value: policies.ProxyTemplate.total,
+          url: `/${mesh}/proxy-templates`,
         },
         {
           metric: 'Traffic Logs',
-          value: storeVals.trafficLogCount,
-          url: `/${this.selectedMesh}/traffic-logs`
+          value: policies.TrafficLog.total,
+          url: `/${mesh}/traffic-logs`,
         },
         {
           metric: 'Traffic Permissions',
-          value: storeVals.trafficPermissionCount,
-          url: `/${this.selectedMesh}/traffic-permissions`
+          value: policies.TrafficPermission.total,
+          url: `/${mesh}/traffic-permissions`,
         },
         {
           metric: 'Traffic Routes',
-          value: storeVals.trafficRouteCount,
-          url: `/${this.selectedMesh}/traffic-routes`
+          value: policies.TrafficRoute.total,
+          url: `/${mesh}/traffic-routes`,
         },
         {
           metric: 'Traffic Traces',
-          value: storeVals.trafficTraceCount,
-          url: `/${this.selectedMesh}/traffic-traces`
+          value: policies.TrafficTrace.total,
+          url: `/${mesh}/traffic-traces`,
         },
         {
           metric: 'Retries',
-          value: storeVals.retryCount,
-          url: `/${this.selectedMesh}/retries`
-        }
+          value: policies.Retry.total,
+          url: `/${mesh}/retries`,
+        },
       ]
 
       if (mesh !== 'all') {
@@ -210,85 +234,67 @@ export default {
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
       // wizard based on environment.
-      if (this.environment === 'universal') {
-        return { name: 'universal-dataplane' }
-      } else {
-        return { name: 'kubernetes-dataplane' }
-      }
-    }
+      const name = this.environment === 'universal'
+        ? 'universal-dataplane'
+        : 'kubernetes-dataplane'
+
+      return { name }
+    },
+    chartClass () {
+      const isAll = this.selectedMesh === 'all'
+
+      return [
+        'flex',
+        'flex-1',
+        'md:flex-1/2',
+        isAll && 'xl:flex-1/3',
+        !isAll && 'xl:flex-1',
+        'md:w-1/2',
+        isAll && 'xl:w-1/3',
+        !isAll && 'xl:w-auto'
+      ].filter(item => item).join(' ')
+    },
+    chartContainerClass () {
+      const isAll = this.selectedMesh === 'all'
+
+      return [
+        'flex',
+        'flex-col',
+        'md:flex-row',
+        'md:flex-wrap',
+        isAll && 'md:h-540p',
+        !isAll && 'md:h-360p',
+        isAll && 'xl:h-360p',
+        !isAll && 'xl:h-180p',
+        'my-2',
+        'py-2',
+      ].filter(item => item).join(' ')
+    },
   },
   watch: {
     selectedMesh () {
       this.init()
-    }
+    },
   },
   beforeMount () {
     this.init()
   },
   methods: {
+    ...mapActions([
+      'fetchMeshInsights',
+      'fetchTotalClusterCount',
+      'fetchZonesInsights',
+      'fetchServices',
+    ]),
     init () {
-      this.getCounts()
-
-      this.$store.dispatch('fetchAllDataplaneInsights')
-      this.$store.dispatch('fetchAllServices')
+      this.fetchMeshInsights(this.selectedMesh)
+      this.fetchServices(this.selectedMesh)
+      this.fetchZonesInsights(this.multicluster)
 
       if (this.multicluster) {
-        this.$store.dispatch('fetchTotalClusterCount')
+        this.fetchTotalClusterCount()
       }
     },
-    getCounts () {
-      let actions
-      const mesh = this.selectedMesh
-
-      if (mesh === 'all') {
-        // if we are viewing data for all meshes,
-        // load the total counts for everything
-        actions = [
-          'fetchTotalClusterCount',
-          'fetchMeshTotalCount',
-          'fetchInternalServiceTotalCount',
-          'fetchExternalServiceTotalCount',
-          'fetchDataplaneTotalCount',
-          'fetchHealthCheckTotalCount',
-          'fetchProxyTemplateTotalCount',
-          'fetchTrafficLogTotalCount',
-          'fetchTrafficPermissionTotalCount',
-          'fetchTrafficRouteTotalCount',
-          'fetchTrafficTraceTotalCount',
-          'fetchFaultInjectionTotalCount',
-          'fetchCircuitBreakerTotalCount',
-          'fetchRetryTotalCount'
-        ]
-
-        // run each action
-        actions.forEach(i => {
-          this.$store.dispatch(i)
-        })
-      } else {
-        // if we are viewing data for a single selected mesh,
-        // load the total counts just for that selected mesh
-        actions = [
-          'fetchTotalClusterCount',
-          'fetchInternalServiceTotalCountFromMesh',
-          'fetchExternalServiceTotalCountFromMesh',
-          'fetchDataplaneTotalCountFromMesh',
-          'fetchHealthCheckTotalCountFromMesh',
-          'fetchProxyTemplateTotalCountFromMesh',
-          'fetchTrafficLogTotalCountFromMesh',
-          'fetchTrafficPermissionTotalCountFromMesh',
-          'fetchTrafficRouteTotalCountFromMesh',
-          'fetchTrafficTraceTotalCountFromMesh',
-          'fetchFaultInjectionTotalCountFromMesh',
-          'fetchCircuitBreakerTotalCountFromMesh',
-          'fetchRetryTotalCountFromMesh'
-        ]
-
-        // run each action
-        actions.forEach(i => {
-          this.$store.dispatch(i, mesh)
-        })
-      }
-    }
   },
 }
 </script>
@@ -345,5 +351,39 @@ export default {
       --i: 25%;
     }
   }
+}
+
+@responsive {
+  .h-180p {
+    height: 180px;
+  }
+
+  .h-360p {
+    height: 360px;
+  }
+
+  .h-540p {
+    height: 540px;
+  }
+
+  .flex-1 {
+    flex: 1 1 0;
+  }
+
+  .flex-1\/2 {
+    flex: 1 1 50%;
+  }
+
+  .flex-1\/3 {
+    flex: 1 1 33%;
+  }
+}
+
+// v-deep is a deep selector which is equivalent of ">>>" as sass loader is not
+//  able to properly parse ">>>"
+// ref:
+//  https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors
+::v-deep .pie-chart-label {
+  @apply tracking-widest uppercase
 }
 </style>
