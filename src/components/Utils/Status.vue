@@ -1,15 +1,15 @@
 <template>
-  <div class="status">
+  <div class="status flex items-center justify-center">
     <span
       class="status__dot"
       :class="{ 'is-active': active }"
     />
-    <span
-      class="status__label"
+    <div
+      class="flex items-center"
       :title="content"
     >
       <slot name="content" />
-    </span>
+    </div>
   </div>
 </template>
 
@@ -31,9 +31,6 @@ export default {
 
 <style lang="scss" scoped>
 .status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   font-size: var(--type-sm);
   color: var(--gray-3);
   letter-spacing: 0;
@@ -52,9 +49,5 @@ export default {
   &.is-active {
     --status-color: var(--green-500);
   }
-}
-
-.status__label {
-
 }
 </style>
