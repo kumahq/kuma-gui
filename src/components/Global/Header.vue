@@ -20,6 +20,7 @@
       </div>
     </div>
     <div class="flex justify-between items-center">
+      <EnterpriseBox />
       <div
         v-if="showStatus"
         class="py-1 md:py-0 md:px-4"
@@ -85,11 +86,13 @@
 import { mapGetters } from 'vuex'
 import Status from '@/components/Utils/Status'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
+import EnterpriseBox from '@/components/Utils/EnterpriseBox'
 
 export default {
   components: {
     Status,
-    UpgradeCheck
+    UpgradeCheck,
+    EnterpriseBox,
   },
   data () {
     return {
