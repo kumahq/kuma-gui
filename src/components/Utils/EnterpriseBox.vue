@@ -7,13 +7,14 @@
     <template slot="alertMessage">
       <div class="alert-content flex items-center text-sm">
         <div class="mr-3">
-          some message
+          Do more with Kuma <span class="alert-content__arrow">&rarr;</span>
         </div>
         <div>
           <KButton
             class="no-underline"
             appearance="primary"
             size="small"
+            target="_blank"
             :to="url"
           >
             Enterprise
@@ -29,7 +30,7 @@ export default {
   name: 'EnterpriseBox',
   data () {
     return {
-      url: process.env.VUE_APP_INSTALL_URL,
+      url: 'https://kuma.io/enterprise/'
     }
   },
 }
