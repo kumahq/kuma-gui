@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="flex justify-between items-center">
-      <EnterpriseBox />
+      <EnterpriseBox v-if="showEnterprise"/>
       <div
         v-if="showStatus"
         class="py-1 md:py-0 md:px-4"
@@ -115,6 +115,9 @@ export default {
     }),
     showStatus () {
       return !this.$route.meta.hideStatus && this.status === 'OK'
+    },
+    showEnterprise() {
+      return process.env.VUE_APP_SHOW_ENTERPRISE_BUTTON === 'true'
     }
   },
   beforeMount () {
