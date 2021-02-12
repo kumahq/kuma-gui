@@ -1,12 +1,14 @@
+import Vue from 'vue'
+
 /**
  * updateQuery
  *
  * This mixin will let you add and remove URL queries
  *
  */
-export default {
+export default Vue.extend({
   methods: {
-    updateQuery (query, value, remove) {
+    updateQuery (query: string, value: string, remove: string) {
       const router = this.$router
       const route = this.$route
 
@@ -29,4 +31,4 @@ export default {
       }
     }
   }
-}
+})

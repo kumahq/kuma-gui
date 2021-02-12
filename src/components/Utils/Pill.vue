@@ -15,11 +15,13 @@ export default {
     },
     background: {
       type: String,
-      required: false
+      required: false,
+      default: undefined
     },
     color: {
       type: String,
-      required: false
+      required: false,
+      default: undefined
     }
   }
 }

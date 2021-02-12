@@ -7,7 +7,7 @@
  * @param {Object} obj
  * @param {Array} keys
  */
-export function rejectKeys (obj, keys) {
+export function rejectKeys (obj: any, keys: any) {
   return Object.keys(obj)
     .filter(k => !keys.includes(k))
     .map(k => Object.assign({}, { [k]: obj[k] }))
@@ -24,9 +24,9 @@ export function rejectKeys (obj, keys) {
  * @param {Object} obj
  * @param {Array} keys
  */
-export function pickKeys (obj, keys) {
-  return keys.map(k => k in obj ? { [k]: obj[k] } : {})
-    .reduce((res, o) => Object.assign(res, o), {})
+export function pickKeys (obj: any, keys: any) {
+  return keys.map((k: any) => k in obj ? { [k]: obj[k] } : {})
+    .reduce((res: any, o: any) => Object.assign(res, o), {})
 }
 
 export default {

@@ -38,7 +38,6 @@ import Sidebar from '@/components/Sidebar/Sidebar'
 import KLoader from '@/components/KLoader'
 import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage'
 import OnboardingCheck from '@/components/Utils/OnboardingCheck'
-
 export default {
   components: {
     GlobalHeader,
@@ -86,31 +85,25 @@ export default {
           if (this.$store.getters.getStatus === 'OK') {
             // set the current environment
             this.$store.dispatch('updateEnvironment', localStorage.getItem('kumaEnv'))
-
             // fetch the mesh list
             this.$store.dispatch('fetchMeshList')
-
             // fetch the version and store it in localStorage
             this.$store.dispatch('getVersion')
               .then(() => {
                 const newVersion = this.$store.getters.getVersion
                 const lsVersion = localStorage.getItem('kumaVersion') || null
-
                 // if the version stored in the browser is different than the
                 // version running, update the version in localStorage, and
                 // reload the page
                 if (lsVersion !== newVersion) {
                   // reload the app
                   this.$router.go()
-
                   // update the version in localStorage
                   localStorage.setItem('kumaVersion', newVersion)
                 }
               })
-
             // fetch the tagline
             this.$store.dispatch('getTagline')
-
             // fetch the config
             this.$store.dispatch('getConfig')
               .then(() => {
@@ -129,12 +122,10 @@ export default {
                  */
                 localStorage.setItem('kumaMode', mode)
               })
-
             // set the selected mesh in localStorage
             const mesh = () => {
               const lsMesh = localStorage.getItem('selectedMesh')
               const routeMesh = this.$route.params.mesh || null
-
               if (routeMesh) {
                 // if the `mesh` param is present, use that
                 return routeMesh
@@ -149,7 +140,6 @@ export default {
 
             // set the selected mesh in our VueX store
             this.$store.dispatch('updateSelectedMesh', mesh())
-
             // update the selected mesh in localStorage
             localStorage.setItem('selectedMesh', mesh())
           }
@@ -164,18 +154,15 @@ export default {
   padding: 44px;
   transition: var(--transitionTiming) margin var(--transition);
 }
-
 .page {
   max-width: 76rem;
   margin: 0 auto;
 }
-
 .main-content-container {
   max-width: var(--global-content-max-width);
   position: relative;
   margin: 0 auto;
 }
-
 .full-screen {
   background: #fff;
   position: fixed;
