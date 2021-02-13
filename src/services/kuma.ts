@@ -50,7 +50,7 @@ export default class Kuma {
   }
 
   // Zones
-  getZones (params: any) {
+  getZones (params?: any) {
     return this.client.get('/zones', { params })
   }
 
@@ -91,7 +91,7 @@ export default class Kuma {
   }
 
   // get a list of all dataplanes
-  getAllDataplanesFromMesh (name: string, params: any) {
+  getAllDataplanesFromMesh (name: string, params?: any) {
     return this.client.get(`/meshes/${name}/dataplanes`, { params })
   }
 
@@ -105,7 +105,7 @@ export default class Kuma {
    */
 
   // get a specific dataplane overview from its associated mesh
-  getDataplaneOverviewFromMesh (mesh: string, dataplane: string, params: any) {
+  getDataplaneOverviewFromMesh (mesh: string, dataplane: string, params?: any) {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
   }
 
@@ -341,7 +341,7 @@ export default class Kuma {
   }
 
   // Get a single Mesh Insight
-  getMeshInsights (name: string, params: any) {
+  getMeshInsights (name: string, params?: any) {
     return this.client.get(`/mesh-insights/${name}`, { params })
   }
 

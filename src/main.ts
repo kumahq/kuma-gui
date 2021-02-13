@@ -116,7 +116,7 @@ function SETUP_VUE_APP () {
       const kumaEnv = response.data.environment
 
       const storedKumaEnv = localStorage.getItem('kumaEnv') !== null
-        ? localStorage.getItem('kumaEnv').toString()
+        ? localStorage.getItem('kumaEnv')?.toString()
         : null
 
       /**
@@ -147,7 +147,7 @@ function SETUP_VUE_APP () {
        * back through the onboarding process.
        */
       if (!storedKumaEnv || storedKumaEnv !== kumaEnv) {
-        localStorage.setItem('kumaOnboardingComplete', false)
+        localStorage.setItem('kumaOnboardingComplete', 'false')
         localStorage.setItem('kumaEnv', kumaEnv)
       }
     })

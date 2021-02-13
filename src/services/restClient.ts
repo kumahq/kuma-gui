@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import Mock from '@/services/mock'
 
 export interface RestClientOptions {
-  injectMocks: boolean
+  injectMocks: any
 }
 export default class RestClient {
   headers: Record<string, string>
@@ -14,7 +14,9 @@ export default class RestClient {
   host: string
 
   constructor (options?: RestClientOptions) {
-    const opts = options || {}
+    const opts = options || {
+      injectMocks: undefined
+    }
 
     // this.host = opts.url
     this.host = ''
@@ -71,7 +73,7 @@ export default class RestClient {
    * @param {Object} injectMocks - the mock endpoint functions defined by any
    * external plugins - if they exist. If not, then it passes the real (unmocked) response.
    */
-  static setupMocks (injectMocks: ((mock: any) => void)[]) {
+  static setupMocks (injectMocks: ((mock: any) => void)[]|undefined) {
     const mock = new Mock(axios)
     if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
       mock.setupMockEndpoints()

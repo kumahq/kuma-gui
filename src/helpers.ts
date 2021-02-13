@@ -1,107 +1,25 @@
 import isPlainObject from 'lodash/isPlainObject'
 
-const capitalizeRegEx = /(?:^|[\s-:'"])\w/g
+type TODO = any
 
 export const uuidRegEx = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
-
-export function capitalize (str) {
-  return str.replace(capitalizeRegEx, (a) => a.toUpperCase())
-}
 
 /**
  * Test if a string is a valid uuid
  * @param {String} str - the string to test
  * @returns {boolean}
  */
-export function isValidUuid (str) {
+export function isValidUuid (str: string) {
   return str.length === 36 && new RegExp(`^${uuidRegEx}$`).test(str)
 }
 
-export function getConfig (name, defaultValue) {
-  if (!window.K_CONFIG) {
-    return defaultValue
-  }
-
-  const value = window.K_CONFIG[name]
-  if (value === '' || value == null || value.indexOf('{{') === 0) {
-    return defaultValue
-  }
-
-  try {
-    // Properly handle booleans, numbers, arrays, and objects
-    return JSON.parse(value)
-  } catch (e) {
-    // Value must have be a string or empty
-    return value
-  }
-}
-
-export function redirectOnResponseStatus ($router, status, location, options) {
-  const opts = options || {}
-  const changeRoute = opts.replace ? $router.replace : $router.push
-
-  return function (response) {
-    // Handle both success and error responses
-    const resp = response.response ? response.response : response
-
-    if (resp && resp.status === status) {
-      changeRoute.call($router, location)
-    }
-  }
-}
-
-export function redirectBackOnResponseStatus ($router, status) {
-  return function (response) {
-    const resp = response.response ? response.response : response
-    if (resp && resp.status === status) {
-      $router.go(-1)
-    }
-  }
-}
-
-export function getPortalURL (config, workspaceName) {
-  if (!config || !config.portal_gui_protocol || !config.portal_gui_host) {
-    const protocol = window.location.protocol
-    const domain = window.location.hostname
-    const listenerPort = protocol === 'https:'
-      ? config.portal_gui_listeners.filter(item => item.ssl === true)[0].port
-      : config.portal_gui_listeners.filter(item => item.ssl === false)[0].port
-
-    return `${protocol}//${domain}:${listenerPort}`
-  }
-
-  if (config.portal_gui_use_subdomains) {
-    return `${config.portal_gui_protocol}://${workspaceName}.${config.portal_gui_host}`
-  }
-
-  return `${config.portal_gui_protocol}://${config.portal_gui_host}/${workspaceName}`
-}
-
-/**
- * Base64 encoded string that is an object
- * @param {string} item
- * @returns {Object}
- */
-export function decodeItem (item) {
-  const decoded = atob(item)
-  if (decoded && item) {
-    return JSON.parse(decoded)
-  }
-
-  return {}
-}
-
-export function encodeItem (item) {
-  return btoa(JSON.stringify(item))
-}
-
-export function forEach (array, callback, scope) {
+export function forEach (array: any[], callback: (...args: any) => void, scope: any) {
   for (let i = 0; i < array.length; i++) {
     callback.call(scope, i, array[i])
   }
 }
 
-export function removeObjectKeys (object, key) {
+export function removeObjectKeys (object: Record<string, any>, key: string) {
   const obj = object
 
   Object.keys(obj).forEach(field => {
@@ -113,28 +31,7 @@ export function removeObjectKeys (object, key) {
   return obj
 }
 
-/**
- * Check if string has a protocol (e.g. http or https)
- * @param {String} str the string in question
- */
-export function hasProtocol (str) {
-  const protocolPattern = /^https?:\/\//i
-
-  return protocolPattern.test(str)
-}
-
-export function decodeJWT (token) {
-  const base64Url = token.split('.')[1]
-  const base64 = base64Url.replace('-', '+').replace('_', '/')
-
-  return JSON.parse(window.atob(base64))
-}
-
-export function convertToDotNotation (key) {
-  return key.replace(/-/g, '.')
-}
-
-export function getPluginIcon (pluginName) {
+export function getPluginIcon (pluginName: string) {
   let icon
 
   try {
@@ -151,10 +48,10 @@ export function getPluginIcon (pluginName) {
  * @param {Number} timestamp a unix timestamp in seconds
  * @returns a date string with format YYYY-MM-DD HH:mm:ss ZZ
  */
-export function formatDate (timestamp) {
+export function formatDate (timestamp: number) {
   const date = new Date(timestamp * 1000)
-  const day = date.getDate().toString().padStart(2, 0)
-  const month = (date.getMonth() + 1).toString().padStart(2, 0)
+  const day = date.getDate().toString().padStart(2, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const year = date.getFullYear()
   const time = date.toTimeString().split(' ')
 
@@ -167,7 +64,7 @@ export function formatDate (timestamp) {
  * @param {Object} Object B
  * @return {Boolean}
  */
-export function compareObjects (a, b) {
+export function compareObjects (a: Object, b: Object) {
   return JSON.stringify(a) === JSON.stringify(b)
 }
 
@@ -176,7 +73,7 @@ export function compareObjects (a, b) {
  * @param {Object} Object to check
  * @return {Boolean}
  */
-export function isObjectEmpty (obj) {
+export function isObjectEmpty (obj: Object) {
   return Object.keys(obj).length === 0
 }
 
@@ -186,7 +83,7 @@ export function isObjectEmpty (obj) {
  * @param {Object} obj
  * @returns {Object}
  */
-export function unFlattenObject (obj) {
+export function unFlattenObject (obj: TODO) {
   const result = {}
 
   // Loop object and reduce each key to build
@@ -194,12 +91,12 @@ export function unFlattenObject (obj) {
   for (const key in obj) {
     const keys = key.split('.')
 
-    keys.reduce((acc, cur, curIdx) => {
+    keys.reduce((acc: TODO, cur: TODO, curIdx: TODO) => {
       return acc[cur] ||
         // If current key in acc is the next
         // item in the split array (dot notation)
         // set its value
-        (acc[cur] = isNaN(keys[curIdx + 1])
+        (acc[cur] = isNaN(keys[curIdx + 1] as TODO)
           ? (keys.length - 1 === curIdx ? obj[key] : {})
           : [])
     }, result)
@@ -216,7 +113,7 @@ export function unFlattenObject (obj) {
  * @param {Array} target
  * @returns {Boolean}
  */
-export function deepIncludes (src, target) {
+export function deepIncludes (src: any[], target: any[]): boolean {
   if (!(src instanceof Array)) throw new Error('Params[0] needs to be an Array')
 
   if (target instanceof Array) return target.some(arr => deepIncludes(src, arr))
@@ -234,23 +131,11 @@ export function deepIncludes (src, target) {
  * Outputs a friendly human-readable timeframe between now and the date string entered
  * @param {String} tdate
  */
-export function humanReadableDate (tdate) {
-  let systemDate = new Date(Date.parse(tdate))
+export function humanReadableDate (tdate: string) {
+  const systemDate = new Date(Date.parse(tdate))
   const userDate = new Date()
 
-  const K = () => {
-    const a = navigator.userAgent
-
-    return {
-      ie: a.match(/MSIE\s([^]*)/),
-    }
-  }
-
-  if (K.ie) {
-    systemDate = Date.parse(tdate.replace(/( \+)/, ' UTC$1'))
-  }
-
-  const diff = Math.floor((userDate - systemDate) / 1000)
+  const diff = Math.floor((+userDate - +systemDate) / 1000)
 
   if (diff <= 1) {
     return 'just now'
@@ -303,7 +188,7 @@ export function humanReadableDate (tdate) {
 /**
  * rawReadableDate
  */
-export function rawReadableDate (date) {
+export function rawReadableDate (date: string) {
   const rawDate = new Date(Date.parse(date))
   const options = {
     year: 'numeric',
@@ -322,11 +207,11 @@ export function rawReadableDate (date) {
  * @param {Object, Array} original
  * @param {Object} desired
  */
-export function getSome (original, desired) {
+export function getSome (original: TODO, desired: TODO) {
   // we have to determine if we're dealing with an array or an object
   const cleaned = (original && typeof original === 'object' && original.constructor === Array) ? Object.assign({}, ...original) : original
 
-  return desired.reduce((obj, key) => ({ ...obj, [key]: cleaned[key] }), {})
+  return desired.reduce((obj: TODO, key: TODO) => ({ ...obj, [key]: cleaned[key] }), {})
 }
 
 /**
@@ -338,9 +223,9 @@ export function getSome (original, desired) {
  *
  * @param {String} url
  */
-export function stripUrl (url) {
+export function stripUrl (url: string) {
   const regex = new RegExp(/([^\/]+$)/g)
-  const match = url.match(regex)[0]
+  const match = url.match(regex)?.[0]
 
   return match
 }
@@ -354,9 +239,9 @@ export function stripUrl (url) {
  * @param {String} url The URL you want to find `offset` in and
  * simply return the value for.
  */
-export function getOffset (url) {
+export function getOffset (url: string) {
   const regex = new RegExp(/offset=(\w+)/)
-  const match = url.match(regex)[0].replace('offset=', '')
+  const match = url.match(regex)?.[0].replace('offset=', '')
 
   return match
 }
@@ -370,7 +255,7 @@ export function getOffset (url) {
  * @param {Object} content The Object you want to remove the
  * date/time strings from.
  */
-export function stripTimes (content) {
+export function stripTimes (content: TODO) {
   const { creationTime, modificationTime, ...noTimes } = content
 
   return noTimes
@@ -382,7 +267,7 @@ export function stripTimes (content) {
  * This function will take native Kuma tags and format
  * them for things like CSS class usage.
  */
-export function cleanTag (tag) {
+export function cleanTag (tag: string) {
   /**
    * this takes something like `kuma.io/service` and turns it into
    * `kuma-io-service`.
@@ -401,10 +286,10 @@ export function cleanTag (tag) {
  *
  * @param {String} str
  */
-export function camelCaseToWords (str) {
+export function camelCaseToWords (str: string) {
   const search = /^[a-z]+|[A-Z][a-z]*/g
 
-  return str.match(search).map((x) => {
+  return str.match(search)?.map((x: string) => {
     return x[0].toUpperCase() + x.substr(1).toLowerCase()
   }).join(' ')
 }
@@ -414,7 +299,7 @@ export function camelCaseToWords (str) {
  *
  * @param {*} value
  */
-export function kebabCase (value) {
+export function kebabCase (value: string) {
   const newValue = (value)
     .replace(/[^a-zA-Z0-9 -]/g, '')
     .replace(/\s+/g, '-')
@@ -428,8 +313,8 @@ export function kebabCase (value) {
   return newValue
 }
 
-export function filterResourceByMesh (resources) {
-  return (wantMesh) => {
+export function filterResourceByMesh (resources: {mesh: string}[]) {
+  return (wantMesh: undefined|'all') => {
     if (!wantMesh || wantMesh === 'all') {
       return resources
     }
@@ -438,7 +323,7 @@ export function filterResourceByMesh (resources) {
   }
 }
 
-export function applyPropsToObject (props = {}, object = {}) {
+export function applyPropsToObject (props: TODO = {}, object: TODO = {}) {
   Object.entries(props).forEach(([key, value]) => {
     if (isPlainObject(value)) {
       return applyPropsToObject(value, object[key])
@@ -448,11 +333,11 @@ export function applyPropsToObject (props = {}, object = {}) {
   })
 }
 
-export async function fetchAllResources ({ callEndpoint, ...otherParams }) {
+export async function fetchAllResources ({ callEndpoint, ...otherParams }: TODO) {
   try {
     let allTotal = null
     let offset = 0
-    let allItems = []
+    let allItems: TODO[] = []
 
     while (true) {
       // Set default page size to 500, can be overwritten by otherParams
@@ -484,16 +369,7 @@ export async function fetchAllResources ({ callEndpoint, ...otherParams }) {
 
 export default {
   forEach,
-  decodeJWT,
-  getConfig,
-  capitalize,
-  encodeItem,
-  decodeItem,
-  hasProtocol,
-  getPortalURL,
   removeObjectKeys,
-  convertToDotNotation,
-  redirectOnResponseStatus,
   getPluginIcon,
   formatDate,
   deepIncludes,
