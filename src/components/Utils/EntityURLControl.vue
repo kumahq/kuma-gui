@@ -24,8 +24,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'EntityURLControl',
   props: {
     url: {
@@ -42,7 +44,7 @@ export default {
     }
   },
   computed: {
-    shouldDisplay () {
+    shouldDisplay (): boolean {
       const mesh = this.$route.params.mesh || null
 
       // we only want to display the copy button when the user has filtered
@@ -54,9 +56,5 @@ export default {
       return false
     }
   }
-}
+})
 </script>
-
-<style>
-
-</style>
