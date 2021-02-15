@@ -2631,7 +2631,9 @@ export default class Mock {
                     }
                   },
                   version: {
-                    version: '1.0.5'
+                    kumaCp: {
+                      version: '1.0.5'
+                    }
                   }
                 }
               ]
@@ -2660,7 +2662,9 @@ export default class Mock {
                   id: '3',
                   globalInstanceId: 'node-003',
                   version: {
-                    version: '1.0.6'
+                    kumaCp: {
+                      version: '1.0.6'
+                    }
                   }
                 }
               ]
@@ -2689,7 +2693,9 @@ export default class Mock {
                   id: '3',
                   globalInstanceId: 'node-003',
                   version: {
-                    version: '1.0.4'
+                    kumaCp: {
+                      version: '1.0.4'
+                    }
                   }
                 }
               ]

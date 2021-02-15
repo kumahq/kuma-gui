@@ -1039,10 +1039,10 @@ export default (api) => {
 
           const { version } = curr.zoneInsight.subscriptions.pop()
 
-          const item = acc.find(({ category }) => category === version.version)
+          const item = acc.find(({ category }) => category === version.kumaCp.version)
 
           if (!item) {
-            acc.push({ category: version.version, value: 1 })
+            acc.push({ category: version.kumaCp.version, value: 1 })
           } else {
             item.value++
           }
