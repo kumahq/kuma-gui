@@ -221,6 +221,11 @@ export default {
           value: policies.Retry.total,
           url: `/${mesh}/retries`,
         },
+        {
+          metric: 'Timeouts',
+          value: policies.Timeout.total,
+          url: `/${mesh}/timeouts`,
+        },
       ]
 
       if (mesh !== 'all') {

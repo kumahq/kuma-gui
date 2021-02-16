@@ -289,6 +289,25 @@ export default class Kuma {
   }
 
   /**
+   * Timeouts
+   */
+
+  // get all timeouts
+  getAllTimeouts (params) {
+    return this.client.get('/timeouts', { params })
+  }
+
+  // get all timeouts from mesh
+  getAllTimeoutsFromMesh (mesh, params) {
+    return this.client.get(`/meshes/${mesh}/timeouts`, { params })
+  }
+
+  // get timeout details
+  getTimeout (mesh, retry, params) {
+    return this.client.get(`/meshes/${mesh}/timeouts/${retry}`, { params })
+  }
+
+  /**
    * External Services
    */
 

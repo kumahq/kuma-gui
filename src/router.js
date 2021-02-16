@@ -315,6 +315,15 @@ export default (store) => {
             title: 'Retries'
           },
           component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries')
+        },
+        // timeouts
+        {
+          path: 'timeouts',
+          name: 'timeouts',
+          meta: {
+            title: 'Timeouts'
+          },
+          component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Timeouts')
         }
       ]
     }

@@ -41,6 +41,9 @@ const getInitialPolicies = () => ({
   Retry: {
     total: 0,
   },
+  Timeout: {
+    total: 0,
+  }
 })
 
 const sumPolicies = (curr = getInitialPolicies(), next = {}) =>

@@ -126,6 +126,12 @@ export default [
               link: 'retries',
               title: false,
               parent: 'policies'
+            },
+            {
+              name: 'Timeouts',
+              link: 'timeouts',
+              title: false,
+              parent: 'timeouts'
             }
           ]
         }
