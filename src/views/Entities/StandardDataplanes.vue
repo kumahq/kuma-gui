@@ -260,7 +260,7 @@ export default {
       tabGroupTitle: null,
       entityNamespace: null,
       entityOverviewTitle: null,
-      showmTLSTab: false
+      shownTLSTab: false
     }
   },
   computed: {

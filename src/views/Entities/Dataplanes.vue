@@ -260,7 +260,7 @@ export default {
       tabGroupTitle: null,
       entityNamespace: null,
       entityOverviewTitle: null,
-      showmTLSTab: false
+      shownTLSTab: false
     }
   },
   computed: {
@@ -444,7 +444,7 @@ export default {
                 return null
               })
 
-              // select the most recent LAST UPDATED timestamnp
+              // select the most recent LAST UPDATED timestamp
               const selectedUpdateTime = updateTimes.reduce((a, b) => {
                 if (a && b) {
                   return a.MeasureDate > b.MeasureDate ? a : b
