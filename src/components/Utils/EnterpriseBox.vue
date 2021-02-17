@@ -30,7 +30,7 @@ export default {
   name: 'EnterpriseBox',
   data () {
     return {
-      url: 'https://kuma.io/enterprise/'
+      url: 'https://kuma.io/enterprise/?utm_source=Kuma-GUI'
     }
   },
 }

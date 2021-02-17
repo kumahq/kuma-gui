@@ -82,7 +82,7 @@
       <div>
         <CardSkeleton
           class="card-item"
-          card-action-route="https://kuma.io/policies/"
+          card-action-route="https://kuma.io/policies/?utm_source=Kuma-GUI"
           :card-title="`Apply ${title} policies`"
           card-action-button-text="Explore Policies"
         >
