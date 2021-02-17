@@ -9,6 +9,7 @@
         :display-data-table="true"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
+        :show-warnings="tableData.data.some((item) => item.warnings.length)"
         table-data-function-text="View"
         table-data-row="name"
         @tableAction="tableAction"
@@ -54,7 +55,7 @@
         v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
-        :tabs="tabs"
+        :tabs="filterTabs()"
         initial-tab-override="overview"
       >
         <template slot="tabHeader">
@@ -95,7 +96,7 @@
                           v-for="reason in val.reason"
                           :key="reason"
                         >
-                          <span class="entity-status__dot"/>
+                          <span class="entity-status__dot" />
                           {{ reason }}
                         </li>
                       </ul>
@@ -137,14 +138,17 @@
             :content="rawEntity"
           />
         </template>
+        <template slot="warnings">
+          <Warnings :warnings="warnings" />
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { getSome, humanReadableDate, getOffset, stripTimes } from '@/helpers'
+import { mapActions, mapGetters } from 'vuex'
+import { getSome, humanReadableDate, getOffset, stripTimes, checkVersionsCompatibility } from '@/helpers'
 import { dpTags, getDataplane, getDataplaneInsight, getStatus } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
@@ -154,6 +158,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
+import Warnings from '@/views/Entities/components/Warnings'
 
 export default {
   name: 'IngressDataplanes',
@@ -161,6 +166,7 @@ export default {
     title: 'Ingress data plane proxies'
   },
   components: {
+    Warnings,
     EntityURLControl,
     FrameSkeleton,
     Pagination,
@@ -180,6 +186,7 @@ export default {
       entityIsLoading: true,
       entityIsEmpty: false,
       entityHasError: false,
+      warnings: [],
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
@@ -198,7 +205,8 @@ export default {
           { label: 'Last Updated', key: 'lastUpdated' },
           { label: 'Total Updates', key: 'totalUpdates' },
           { label: 'Kuma DP version', key: 'dpVersion' },
-          { label: 'Envoy version', key: 'envoyVersion' }
+          { label: 'Envoy version', key: 'envoyVersion' },
+          { key: 'warnings', hideLabel: true },
         ],
         data: []
       },
@@ -210,7 +218,11 @@ export default {
         {
           hash: '#yaml',
           title: 'YAML'
-        }
+        },
+        {
+          hash: '#warnings',
+          title: 'Warnings'
+        },
       ],
       entity: [],
       rawEntity: null,
@@ -229,7 +241,9 @@ export default {
   computed: {
     ...mapGetters({
       environment: 'getEnvironment',
-      queryNamespace: 'getItemQueryNamespace'
+      queryNamespace: 'getItemQueryNamespace',
+      supportedVersions: 'getSupportedVersions',
+      supportedVersionsLoading: 'getSupportedVersionsFetching',
     }),
     dataplaneWizardRoute () {
       // we change the route to the Dataplane
@@ -265,7 +279,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    '$route' () {
       this.loadData()
     }
   },
@@ -273,8 +287,19 @@ export default {
     this.loadData()
   },
   methods: {
+    ...mapActions(['fetchSupportedVersions']),
     init () {
       this.loadData()
+    },
+    filterTabs () {
+      if (!this.warnings.length) {
+        return this.tabs.filter(tab => tab.hash !== '#warnings')
+      }
+
+      return this.tabs
+    },
+    checkVersionsCompatibility (kumaDpVersion = '', envoyVersion = '') {
+      return checkVersionsCompatibility(this.supportedVersions, kumaDpVersion, envoyVersion)
     },
     goToPreviousPage () {
       this.pageOffset = this.previous.pop()
@@ -399,7 +424,7 @@ export default {
                 return null
               })
 
-              // select the most recent LAST UPDATED timestamnp
+              // select the most recent LAST UPDATED timestamp
               const selectedUpdateTime = updateTimes.reduce((a, b) => {
                 if (a && b) {
                   return a.MeasureDate > b.MeasureDate ? a : b
@@ -439,6 +464,13 @@ export default {
               envoyVersion = '-'
             }
 
+            const warnings = []
+            const { compatible, payload } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
+
+            if (!compatible) {
+              warnings.push(payload)
+            }
+
             // assemble the table data
             finalArr.push({
               name: response.name,
@@ -453,6 +485,7 @@ export default {
               publicPort: (response.dataplane.networking.ingress.publicPort || null),
               dpVersion: dpVersion,
               envoyVersion: envoyVersion,
+              warnings: warnings,
               type: dataplaneType
             })
 
@@ -545,7 +578,7 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      if (entity && entity !== null) {
+      if (entity) {
         const entityMesh = (mesh === 'all')
           ? entity.mesh
           : mesh
@@ -580,7 +613,33 @@ export default {
                 this.entityOverviewTitle = `Entity Overview for ${i.basicData.name}`
               })
 
-              // this.rawEntity = response
+              this.warnings = []
+
+              const { subscriptions = [] } = response.dataplaneInsight
+
+              if (subscriptions.length) {
+                const { version = {} } = subscriptions.pop()
+                const { kumaDp = {}, envoy = {} } = version
+
+                if (kumaDp && envoy) {
+                  const { compatible, payload } = this.checkVersionsCompatibility(
+                    kumaDp.version,
+                    envoy.version,
+                  )
+
+                  if (!compatible) {
+                    const warning = {
+                      payload,
+                      kind: typeof payload === 'object'
+                        ? 'envoyIncompatible'
+                        : 'other'
+                    }
+
+                    this.warnings.push(warning)
+                  }
+                }
+              }
+
               this.rawEntity = stripTimes(getDataplane(response))
             } else {
               this.entity = null
