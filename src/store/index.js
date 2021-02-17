@@ -105,6 +105,8 @@ export default (api) => {
       serviceInsightsFetching: false,
       externalServicesFetching: false,
       zonesInsightsFetching: false,
+      supportedVersionsFetching: false,
+      supportedVersions: {},
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -190,6 +192,8 @@ export default (api) => {
       }) => serviceInsightsFetching || externalServicesFetching,
       getChart: ({ overviewCharts }) => (chartName) => overviewCharts[chartName],
       getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
+      getSupportedVersions: ({ supportedVersions }) => supportedVersions,
+      getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -271,6 +275,8 @@ export default (api) => {
 
         state.overviewCharts[chartName].data = data
       },
+      SET_SUPPORTED_VERSIONS_FETCHING: (state, value) => (state.supportedVersionsFetching = value),
+      SET_SUPPORTED_VERSIONS: (state, value) => (state.supportedVersions = value),
     },
     actions: {
       // update the onboarding state
@@ -1070,7 +1076,19 @@ export default (api) => {
 
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
       },
-    }
+
+      async fetchSupportedVersions ({ commit }) {
+        commit('SET_SUPPORTED_VERSIONS_FETCHING', true)
+
+        try {
+          commit('SET_SUPPORTED_VERSIONS', await api.getSupportedVersions())
+        } catch (e) {
+          console.error(e)
+        }
+
+        commit('SET_SUPPORTED_VERSIONS_FETCHING', false)
+      },
+    },
   })
 
   return store

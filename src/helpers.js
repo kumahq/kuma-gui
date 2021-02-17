@@ -1,3 +1,4 @@
+import { satisfies } from 'semver'
 import isPlainObject from 'lodash/isPlainObject'
 
 const capitalizeRegEx = /(?:^|[\s-:'"])\w/g
@@ -479,6 +480,48 @@ export async function fetchAllResources ({ callEndpoint, ...otherParams }) {
     return { total: allTotal, data: allItems }
   } catch (e) {
     throw new Error(`Resource fetching failed: ${e}`)
+  }
+}
+
+const wrongFormatErr = () => ({
+  compatible: false,
+  payload: 'Unexpected format of message containing the list of ' +
+    'compatible versions',
+})
+
+export function checkVersionsCompatibility (
+  supportedVersions = {},
+  kumaDpVersion = '',
+  envoyVersion = '',
+) {
+  const { kumaDp } = supportedVersions
+
+  if (!kumaDp) {
+    return wrongFormatErr()
+  }
+
+  const requirements = kumaDp[kumaDpVersion]
+
+  if (!requirements) {
+    return {
+      compatible: false,
+      payload: `Unexpected Kuma DP version (${kumaDpVersion})`
+    }
+  }
+
+  if (!requirements.envoy) {
+    return wrongFormatErr()
+  }
+
+  const compatible = satisfies(envoyVersion, requirements.envoy)
+
+  return {
+    compatible,
+    payload: {
+      envoy: envoyVersion,
+      kumaDp: kumaDpVersion,
+      requirements: requirements.envoy,
+    },
   }
 }
 

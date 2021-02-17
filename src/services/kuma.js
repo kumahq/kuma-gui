@@ -339,4 +339,8 @@ export default class Kuma {
   getMeshInsights (name, params) {
     return this.client.get(`/mesh-insights/${name}`, { params })
   }
+
+  getSupportedVersions (params) {
+    return this.client.get('/config/versions', { params })
+  }
 }

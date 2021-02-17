@@ -38,6 +38,7 @@
     "axios-mock-adapter": "^1.18.2",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
+    "semver": "^7.3.4",
     "semver-compare": "^1.0.0",
     "tailwindcss": "^1.7.3",
     "vue": "^2.6.12",

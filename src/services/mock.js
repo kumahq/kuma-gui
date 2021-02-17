@@ -198,7 +198,8 @@ export default class Mock {
           }
         }
       })
-      .onGet('/dataplanes').reply(200, {
+      .onGet('/dataplanes')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -415,7 +416,8 @@ export default class Mock {
           ]
         }
       })
-      .onGet('/meshes/default/dataplanes+insights').reply(200, {
+      .onGet('/meshes/default/dataplanes+insights')
+      .reply(200, {
         total: 2,
         items: [
           {
@@ -3195,8 +3197,460 @@ export default class Mock {
           },
         ],
         next: null
-      }
-      )
+      })
+      .onGet('/config/versions')
+      .reply(200, {
+        kumaDp: {
+          '1.0.6': {
+            envoy: '>= 1.16.0'
+          },
+          '1.0.7': {
+            envoy: '~1.16.0'
+          }
+        },
+      })
+      .onGet('/dataplanes+insights')
+      .reply(200, {
+        total: 3,
+        items: [
+          {
+            type: 'DataplaneOverview',
+            mesh: 'default',
+            name: 'backend',
+            creationTime: '2021-02-17T08:33:36.442044+01:00',
+            modificationTime: '2021-02-17T08:33:36.442044+01:00',
+            dataplane: {
+              networking: {
+                address: '127.0.0.1',
+                inbound: [
+                  {
+                    port: 7776,
+                    servicePort: 7777,
+                    serviceAddress: '127.0.0.1',
+                    tags: {
+                      'kuma.io/protocol': 'http',
+                      'kuma.io/service': 'backend'
+                    }
+                  }
+                ],
+                outbound: [
+                  {
+                    port: 10001,
+                    tags: {
+                      'kuma.io/service': 'frontend'
+                    }
+                  }
+                ]
+              }
+            },
+            dataplaneInsight: {
+              subscriptions: [
+                {
+                  id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
+                  controlPlaneInstanceId: 'foo',
+                  connectTime: '2021-02-17T07:33:36.412683Z',
+                  status: {
+                    lastUpdateTime: '2021-02-17T10:48:03.638434Z',
+                    total: {
+                      responsesSent: '5',
+                      responsesAcknowledged: '5'
+                    },
+                    cds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    eds: {
+                      responsesSent: '2',
+                      responsesAcknowledged: '2'
+                    },
+                    lds: {
+                      responsesSent: '2',
+                      responsesAcknowledged: '2'
+                    },
+                    rds: {}
+                  },
+                  version: {
+                    kumaDp: {
+                      version: '1.0.7',
+                      gitTag: 'unknown',
+                      gitCommit: 'unknown',
+                      buildDate: 'unknown'
+                    },
+                    envoy: {
+                      version: '1.16.2',
+                      build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL'
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            type: 'DataplaneOverview',
+            mesh: 'default',
+            name: 'frontend',
+            creationTime: '2021-02-17T11:48:01.997694+01:00',
+            modificationTime: '2021-02-17T11:48:01.997694+01:00',
+            dataplane: {
+              networking: {
+                address: '127.0.0.1',
+                inbound: [
+                  {
+                    port: 8887,
+                    servicePort: 8888,
+                    serviceAddress: '127.0.0.1',
+                    tags: {
+                      'kuma.io/protocol': 'http',
+                      'kuma.io/service': 'frontend'
+                    }
+                  }
+                ],
+                outbound: [
+                  {
+                    port: 10002,
+                    tags: {
+                      'kuma.io/service': 'backend'
+                    }
+                  }
+                ]
+              }
+            },
+            dataplaneInsight: {
+              subscriptions: [
+                {
+                  id: '25875983-ba09-47f2-91c4-5c0471a954ce',
+                  controlPlaneInstanceId: 'foo',
+                  connectTime: '2021-02-17T10:48:01.962002Z',
+                  status: {
+                    lastUpdateTime: '2021-02-17T10:48:04.004243Z',
+                    total: {
+                      responsesSent: '3',
+                      responsesAcknowledged: '3'
+                    },
+                    cds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    eds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    lds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    rds: {}
+                  },
+                  version: {
+                    kumaDp: {
+                      version: '1.0.6',
+                      gitTag: 'unknown',
+                      gitCommit: 'unknown',
+                      buildDate: 'unknown'
+                    },
+                    envoy: {
+                      version: '1.15.2',
+                      build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL'
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            type: 'DataplaneOverview',
+            mesh: 'default',
+            name: 'db',
+            creationTime: '2021-02-17T11:48:01.997694+01:00',
+            modificationTime: '2021-02-17T11:48:01.997694+01:00',
+            dataplane: {
+              networking: {
+                address: '127.0.0.1',
+                inbound: [
+                  {
+                    port: 8887,
+                    servicePort: 8888,
+                    serviceAddress: '127.0.0.1',
+                    tags: {
+                      'kuma.io/protocol': 'http',
+                      'kuma.io/service': 'db'
+                    }
+                  }
+                ],
+                outbound: [
+                  {
+                    port: 10002,
+                    tags: {
+                      'kuma.io/service': 'backend'
+                    }
+                  }
+                ]
+              }
+            },
+            dataplaneInsight: {
+              subscriptions: [
+                {
+                  id: '25875983-ba09-47f2-91c4-5c0471a954ce',
+                  controlPlaneInstanceId: 'foo',
+                  connectTime: '2021-02-17T10:48:01.962002Z',
+                  status: {
+                    lastUpdateTime: '2021-02-17T10:48:04.004243Z',
+                    total: {
+                      responsesSent: '3',
+                      responsesAcknowledged: '3'
+                    },
+                    cds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    eds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    lds: {
+                      responsesSent: '1',
+                      responsesAcknowledged: '1'
+                    },
+                    rds: {}
+                  },
+                  version: {
+                    kumaDp: {
+                      version: 'unknown',
+                      gitTag: 'unknown',
+                      gitCommit: 'unknown',
+                      buildDate: 'unknown'
+                    },
+                    envoy: {
+                      version: '1.15.2',
+                      build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL'
+                    }
+                  }
+                }
+              ]
+            }
+          },
+        ],
+        next: null
+      })
+      .onGet('/meshes/default/dataplanes+insights/backend')
+      .reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'backend',
+        creationTime: '2021-02-17T08:33:36.442044+01:00',
+        modificationTime: '2021-02-17T08:33:36.442044+01:00',
+        dataplane: {
+          networking: {
+            address: '127.0.0.1',
+            inbound: [
+              {
+                port: 7776,
+                servicePort: 7777,
+                serviceAddress: '127.0.0.1',
+                tags: {
+                  'kuma.io/protocol': 'http',
+                  'kuma.io/service': 'backend'
+                }
+              }
+            ],
+            outbound: [
+              {
+                port: 10001,
+                tags: {
+                  'kuma.io/service': 'frontend'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '118b4d6f-7a98-4172-96d9-85ffb8b20b16',
+              controlPlaneInstanceId: 'foo',
+              connectTime: '2021-02-17T07:33:36.412683Z',
+              status: {
+                lastUpdateTime: '2021-02-17T10:48:03.638434Z',
+                total: {
+                  responsesSent: '5',
+                  responsesAcknowledged: '5'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '2',
+                  responsesAcknowledged: '2'
+                },
+                lds: {
+                  responsesSent: '2',
+                  responsesAcknowledged: '2'
+                },
+                rds: {}
+              },
+              version: {
+                kumaDp: {
+                  version: '1.0.7',
+                  gitTag: 'unknown',
+                  gitCommit: 'unknown',
+                  buildDate: 'unknown'
+                },
+                envoy: {
+                  version: '1.16.2',
+                  build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL'
+                }
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes+insights/frontend')
+      .reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'frontend',
+        creationTime: '2021-02-17T11:48:01.997694+01:00',
+        modificationTime: '2021-02-17T11:48:01.997694+01:00',
+        dataplane: {
+          networking: {
+            address: '127.0.0.1',
+            inbound: [
+              {
+                port: 8887,
+                servicePort: 8888,
+                serviceAddress: '127.0.0.1',
+                tags: {
+                  'kuma.io/protocol': 'http',
+                  'kuma.io/service': 'frontend'
+                }
+              }
+            ],
+            outbound: [
+              {
+                port: 10002,
+                tags: {
+                  'kuma.io/service': 'backend'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '25875983-ba09-47f2-91c4-5c0471a954ce',
+              controlPlaneInstanceId: 'foo',
+              connectTime: '2021-02-17T10:48:01.962002Z',
+              status: {
+                lastUpdateTime: '2021-02-17T10:48:04.004243Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              },
+              version: {
+                kumaDp: {
+                  version: '1.0.6',
+                  gitTag: 'unknown',
+                  gitCommit: 'unknown',
+                  buildDate: 'unknown'
+                },
+                envoy: {
+                  version: '1.15.2',
+                  build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL'
+                }
+              }
+            }
+          ]
+        }
+      })
+      .onGet('/meshes/default/dataplanes+insights/db')
+      .reply(200, {
+        type: 'DataplaneOverview',
+        mesh: 'default',
+        name: 'db',
+        creationTime: '2021-02-17T11:48:01.997694+01:00',
+        modificationTime: '2021-02-17T11:48:01.997694+01:00',
+        dataplane: {
+          networking: {
+            address: '127.0.0.1',
+            inbound: [
+              {
+                port: 8887,
+                servicePort: 8888,
+                serviceAddress: '127.0.0.1',
+                tags: {
+                  'kuma.io/protocol': 'http',
+                  'kuma.io/service': 'db'
+                }
+              }
+            ],
+            outbound: [
+              {
+                port: 10002,
+                tags: {
+                  'kuma.io/service': 'backend'
+                }
+              }
+            ]
+          }
+        },
+        dataplaneInsight: {
+          subscriptions: [
+            {
+              id: '25875983-ba09-47f2-91c4-5c0471a954ce',
+              controlPlaneInstanceId: 'foo',
+              connectTime: '2021-02-17T10:48:01.962002Z',
+              status: {
+                lastUpdateTime: '2021-02-17T10:48:04.004243Z',
+                total: {
+                  responsesSent: '3',
+                  responsesAcknowledged: '3'
+                },
+                cds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                eds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                lds: {
+                  responsesSent: '1',
+                  responsesAcknowledged: '1'
+                },
+                rds: {}
+              },
+              version: {
+                kumaDp: {
+                  version: 'unknown',
+                  gitTag: 'unknown',
+                  gitCommit: 'unknown',
+                  buildDate: 'unknown'
+                },
+                envoy: {
+                  version: '1.15.2',
+                  build: 'e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL'
+                }
+              }
+            }
+          ]
+        }
+      })
       .onAny()
       .passThrough()
   }
