@@ -1,0 +1,17 @@
+[
+  {
+    "name":"zone-1",
+    "url":"192.168.0.1:1000",
+    "active":false
+  },
+  {
+    "name":"zone-2",
+    "url":"192.168.0.1:1000",
+    "active":true
+  },
+  {
+    "name":"zone-3",
+    "url":"192.168.0.1:1000",
+    "active":false
+  }
+]
