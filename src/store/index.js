@@ -107,6 +107,7 @@ export default (api) => {
       zonesInsightsFetching: false,
       supportedVersionsFetching: false,
       supportedVersions: {},
+      supportedVersionsFailed: '',
     },
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
@@ -194,6 +195,7 @@ export default (api) => {
       getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
       getSupportedVersions: ({ supportedVersions }) => supportedVersions,
       getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
+      getSupportedVersionsFailed: ({ supportedVersionsFailed }) => supportedVersionsFailed,
     },
     mutations: {
       SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -276,7 +278,11 @@ export default (api) => {
         state.overviewCharts[chartName].data = data
       },
       SET_SUPPORTED_VERSIONS_FETCHING: (state, value) => (state.supportedVersionsFetching = value),
-      SET_SUPPORTED_VERSIONS: (state, value) => (state.supportedVersions = value),
+      SET_SUPPORTED_VERSIONS: (state, value) => {
+        state.supportedVersions = value
+        state.supportedVersionsFailed = ''
+      },
+      SET_SUPPORTED_VERSIONS_FAILED: (state, value) => (state.supportedVersionsFailed = value),
     },
     actions: {
       // update the onboarding state
@@ -1083,7 +1089,7 @@ export default (api) => {
         try {
           commit('SET_SUPPORTED_VERSIONS', await api.getSupportedVersions())
         } catch (e) {
-          console.error(e)
+          commit('SET_SUPPORTED_VERSIONS_FAILED', e.toString())
         }
 
         commit('SET_SUPPORTED_VERSIONS_FETCHING', false)
