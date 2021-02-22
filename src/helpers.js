@@ -1,4 +1,3 @@
-import { satisfies } from 'semver'
 import isPlainObject from 'lodash/isPlainObject'
 
 const capitalizeRegEx = /(?:^|[\s-:'"])\w/g
@@ -243,7 +242,7 @@ export function humanReadableDate (tdate) {
     const a = navigator.userAgent
 
     return {
-      ie: a.match(/MSIE\s([^]*)/)
+      ie: a.match(/MSIE\s([^]*)/),
     }
   }
 
@@ -309,7 +308,7 @@ export function rawReadableDate (date) {
   const options = {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   }
   const formattedDate = rawDate.toLocaleDateString('en-US', options)
   const formattedTime = `${rawDate.getHours()}:${rawDate.getMinutes()}:${rawDate.getSeconds()}`
@@ -480,48 +479,6 @@ export async function fetchAllResources ({ callEndpoint, ...otherParams }) {
     return { total: allTotal, data: allItems }
   } catch (e) {
     throw new Error(`Resource fetching failed: ${e}`)
-  }
-}
-
-const wrongFormatErr = () => ({
-  compatible: false,
-  payload: 'Unexpected format of message containing the list of ' +
-    'compatible versions',
-})
-
-export function checkVersionsCompatibility (
-  supportedVersions = {},
-  kumaDpVersion = '',
-  envoyVersion = '',
-) {
-  const { kumaDp } = supportedVersions
-
-  if (!kumaDp) {
-    return wrongFormatErr()
-  }
-
-  const requirements = kumaDp[kumaDpVersion]
-
-  if (!requirements) {
-    return {
-      compatible: false,
-      payload: `Unexpected Kuma DP version (${kumaDpVersion})`
-    }
-  }
-
-  if (!requirements.envoy) {
-    return wrongFormatErr()
-  }
-
-  const compatible = satisfies(envoyVersion, requirements.envoy)
-
-  return {
-    compatible,
-    payload: {
-      envoy: envoyVersion,
-      kumaDp: kumaDpVersion,
-      requirements: requirements.envoy,
-    },
   }
 }
 

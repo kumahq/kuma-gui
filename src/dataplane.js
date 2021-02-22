@@ -1,3 +1,6 @@
+import { humanReadableDate } from '@/helpers'
+import { satisfies } from 'semver'
+
 /*
 dpTags takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
 It flattens common tags so we don't display them twice.
@@ -25,6 +28,7 @@ Will produce:
   { label: 'version', value: '1'},
 ]
  */
+
 export function dpTags (dataplane) {
   let tags = []
 
@@ -115,3 +119,113 @@ export function getDataplaneInsight (dataplaneOverview) {
     ...dataplaneOverview.dataplaneInsight,
   }
 }
+
+export async function checkKumaDpAndZoneVersionsMismatch (api, zoneName, dpVersion) {
+  const response = await api.getZoneOverview(zoneName) || {}
+  const { zoneInsight = {} } = response
+  const { subscriptions = [] } = zoneInsight
+
+  if (subscriptions.length) {
+    const { version = {} } = subscriptions.pop()
+    const { kumaCp = {} } = version
+
+    return {
+      compatible: dpVersion === kumaCp.version,
+      payload: {
+        zoneVersion: kumaCp.version,
+        kumaDpVersion: dpVersion,
+      },
+    }
+  }
+
+  return { compatible: true }
+}
+
+export function parseMTLSData (mtls) {
+  const rawExpDate = new Date(mtls.certificateExpirationTime)
+  // this prevents any weird date shifting
+  const fixedExpDate = new Date(
+    rawExpDate.getTime() +
+    rawExpDate.getTimezoneOffset() * 60000
+  )
+  // assembled to display date and time (in 24-hour format)
+  const assembledExpDate = `
+                      ${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
+                    `
+
+  return {
+    certificateExpirationTime: {
+      label: 'Expiration Time',
+      value: assembledExpDate
+    },
+    lastCertificateRegeneration: {
+      label: 'Last Generated',
+      value: humanReadableDate(mtls.lastCertificateRegeneration)
+    },
+    certificateRegenerations: {
+      label: 'Regenerations',
+      value: mtls.certificateRegenerations
+    }
+  }
+}
+
+export function getDataplaneType (dataplane = {}) {
+  const { networking = {} } = dataplane
+  const { gateway, ingress } = networking
+
+  if (gateway) {
+    return 'Gateway'
+  }
+
+  if (ingress) {
+    return 'Ingress'
+  }
+
+  return 'Standard'
+}
+
+export function checkVersionsCompatibility (
+  supportedVersions = {},
+  kumaDpVersion = '',
+  envoyVersion = '',
+) {
+  const { kumaDp } = supportedVersions
+
+  if (!kumaDp) {
+    return { kind: INCOMPATIBLE_WRONG_FORMAT }
+  }
+
+  const requirements = kumaDp[kumaDpVersion]
+
+  if (!requirements) {
+    return {
+      kind: INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
+      payload: { kumaDpVersion },
+    }
+  }
+
+  if (!requirements.envoy) {
+    return { kind: INCOMPATIBLE_WRONG_FORMAT }
+  }
+
+  const kind = satisfies(envoyVersion, requirements.envoy)
+    ? COMPATIBLE
+    : INCOMPATIBLE_UNSUPPORTED_ENVOY
+
+  const payload = {
+    envoy: envoyVersion,
+    kumaDp: kumaDpVersion,
+    requirements: requirements.envoy,
+  }
+
+  return {
+    kind,
+    payload,
+  }
+}
+
+export const COMPATIBLE = 'COMPATIBLE'
+export const INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS = 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'
+export const INCOMPATIBLE_UNSUPPORTED_KUMA_DP = 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP'
+export const INCOMPATIBLE_UNSUPPORTED_ENVOY = 'INCOMPATIBLE_UNSUPPORTED_ENVOY'
+export const INCOMPATIBLE_WRONG_FORMAT = 'INCOMPATIBLE_WRONG_FORMAT'

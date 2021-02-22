@@ -22,17 +22,18 @@
 </template>
 
 <script>
-import {
-  INCOMPATIBLE_UNSUPPORTED_ENVOY,
-  INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
-  INCOMPATIBLE_WRONG_FORMAT,
-} from '@/helpers'
 import WarningDefault from '@/views/Entities/components/WarningDefault'
 import WarningEnvoyIncompatible from '@/views/Entities/components/WarningEnvoyIncompatible'
 import WarningZoneAndKumaDPVersionsIncompatible
   from '@/views/Entities/components/WarningZoneAndKumaDPVersionsIncompatible'
 import WarningUnsupportedKumaDPVersion from '@/views/Entities/components/WarningUnsupportedKumaDPVersion'
 import WarningWrongFormat from '@/views/Entities/components/WarningWrongFormat'
+import {
+  INCOMPATIBLE_UNSUPPORTED_ENVOY,
+  INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
+  INCOMPATIBLE_WRONG_FORMAT,
+  INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
+} from '@/dataplane'
 
 export default {
   name: 'Warnings',
@@ -51,7 +52,7 @@ export default {
           return WarningUnsupportedKumaDPVersion
         case INCOMPATIBLE_WRONG_FORMAT:
           return WarningWrongFormat
-        case 'ZONE_CP_AND_KUMA_DP_VERSIONS_INCOMPATIBLE':
+        case INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS:
           return WarningZoneAndKumaDPVersionsIncompatible
         default:
           return WarningDefault
