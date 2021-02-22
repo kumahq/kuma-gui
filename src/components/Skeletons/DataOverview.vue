@@ -153,7 +153,7 @@
           >
             <div
               :class="{
-                'are-warnings': row.warnings.length,
+                'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
               }"
             >
               {{ rowValue }}
@@ -164,7 +164,7 @@
           >
             <div
               :class="{
-                'are-warnings': row.warnings.length,
+                'with-warnings': row.unsupportedEnvoyVersion,
               }"
             >
               {{ rowValue }}
@@ -176,7 +176,7 @@
             v-slot:warnings="{ row }"
           >
             <KIcon
-              v-if="row.warnings.length"
+              v-if="row.withWarnings"
               class="mr-1"
               color="var(--yellow-400)"
               icon="warning"
@@ -665,7 +665,7 @@ span[class*="kuma-io-"] {
   display: inline;
 }
 
-.are-warnings {
+.with-warnings {
   color: var(--yellow-400)
 }
 </style>
