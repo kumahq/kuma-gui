@@ -28,10 +28,14 @@ import WarningZoneAndKumaDPVersionsIncompatible
   from '@/views/Entities/components/WarningZoneAndKumaDPVersionsIncompatible'
 import WarningUnsupportedKumaDPVersion from '@/views/Entities/components/WarningUnsupportedKumaDPVersion'
 import WarningWrongFormat from '@/views/Entities/components/WarningWrongFormat'
+import WarningZoneAndGlobalCPSVersionsIncompatible
+  from '@/views/Entities/components/WarningZoneAndGlobalCPSVersionsIncompatible'
+
 import {
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_WRONG_FORMAT,
+  INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/dataplane'
 
@@ -54,6 +58,8 @@ export default {
           return WarningWrongFormat
         case INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS:
           return WarningZoneAndKumaDPVersionsIncompatible
+        case INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS:
+          return WarningZoneAndGlobalCPSVersionsIncompatible
         default:
           return WarningDefault
       }
