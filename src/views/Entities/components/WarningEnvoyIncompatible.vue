@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'EnvoyIncompatibleWarning',
+  name: 'WarningEnvoyIncompatible',
   props: {
     payload: {
       type: Object,
