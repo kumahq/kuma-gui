@@ -197,7 +197,7 @@ import {
 
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
-  INCOMPATIBLE_UNSUPPORTED_KUMA_DP, INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
+  INCOMPATIBLE_UNSUPPORTED_KUMA_DP, INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS, INCOMPATIBLE_WRONG_FORMAT,
 } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
@@ -735,7 +735,7 @@ export default {
                 )
                 const { kind } = compatible
 
-                if (kind !== COMPATIBLE) {
+                if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
                   this.warnings.push(compatible)
                 }
               }
