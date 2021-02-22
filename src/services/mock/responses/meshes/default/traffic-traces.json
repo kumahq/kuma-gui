@@ -1,0 +1,35 @@
+{
+  "total":2,
+  "items":[
+    {
+      "type":"TrafficTrace",
+      "mesh":"default",
+      "name":"tt-1",
+      "selectors":[
+        {
+          "match":{
+            "service":"*"
+          }
+        }
+      ],
+      "conf":{
+        "backend":"my-zipkin"
+      }
+    },
+    {
+      "type":"TrafficTrace",
+      "mesh":"default",
+      "name":"traffic-trace-02",
+      "selectors":[
+        {
+          "match":{
+            "service":"*"
+          }
+        }
+      ],
+      "conf":{
+        "backend":"my-zipkin"
+      }
+    }
+  ]
+}

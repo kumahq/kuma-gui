@@ -1,0 +1,27 @@
+{
+  "type":"HealthCheck",
+  "mesh":"default",
+  "name":"hello-health-check",
+  "sources":[
+    {
+      "match":{
+        "service":"web"
+      }
+    }
+  ],
+  "destinations":[
+    {
+      "match":{
+        "service":"backend"
+      }
+    }
+  ],
+  "conf":{
+    "activeChecks":{
+      "interval":"10s",
+      "timeout":"2s",
+      "unhealthyThreshold":3,
+      "healthyThreshold":4
+    }
+  }
+}
