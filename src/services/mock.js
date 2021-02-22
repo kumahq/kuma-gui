@@ -1,14 +1,13 @@
+import MockAdapter from 'axios-mock-adapter'
+
 const MOCK_FILES_ROOT_PATH = './mock/responses'
 
 const requireMockFile = filename => require(`${MOCK_FILES_ROOT_PATH}/${filename}`)
 
 export default class Mock {
   constructor (axios) {
-    var MockAdapter = require('axios-mock-adapter')
+    this.mock = new MockAdapter(axios, { delayResponse: 0 })
 
-    const mockDelay = 0
-
-    this.mock = new MockAdapter(axios, { delayResponse: mockDelay })
     this.mock.injectMocks = () => {
       return this.mock
     }
@@ -22,10 +21,8 @@ export default class Mock {
   }
 
   withMockFile (config) {
-    const { url } = config
-
     try {
-      return [200, require(`${MOCK_FILES_ROOT_PATH}${url}.json`)]
+      return [200, require(`${MOCK_FILES_ROOT_PATH}${config.url}.json`)]
     } catch (_) {
       return this.mock.originalAdapter(config)
     }
