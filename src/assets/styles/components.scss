@@ -20,11 +20,11 @@
 }
 
 .entity-status.is-degraded {
-  color: var(--yellow-300);
+  color: #ff8040;
 }
 
 .entity-status.is-degraded .entity-status__dot {
-  background-color: var(--yellow-300);
+  background-color: #ff8040;
 }
 
 .entity-status.is-offline .entity-status__dot {

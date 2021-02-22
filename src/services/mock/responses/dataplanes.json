@@ -1,0 +1,18 @@
+{
+  "total":2,
+  "items":[
+    {
+      "mesh":"default",
+      "name":"gateway-dp-87qntx",
+      "networking":{},
+      "type":"Dataplane"
+    },
+    {
+      "mesh":"default",
+      "name":"test-dp-02",
+      "networking":{},
+      "type":"Dataplane"
+    }
+  ],
+  "next":null
+}
