@@ -341,6 +341,6 @@ export default class Kuma {
   }
 
   getSupportedVersions (params) {
-    return this.client.get('/config/versions', { params })
+    return this.client.get('/versions', { params })
   }
 }
