@@ -238,20 +238,27 @@ export default (api) => {
       SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
         const { serviceSummary } = state
 
-        const reducer = (acc, { total = 0, online = 0, partiallyDegraded = 0 }) => ({
-          total: acc.total + total,
-          online: acc.online + online,
-          partiallyDegraded: acc.partiallyDegraded + partiallyDegraded,
+        const reducer = (acc, { status = 'offline' }) => ({
+          ...acc,
+          [status]: acc[status] + 1,
         })
 
-        const { total, online, partiallyDegraded } = data.reduce(reducer, { total: 0, online: 0, partiallyDegraded: 0 })
+        const initialState = { online: 0, partially_degraded: 0, offline: 0 }
+
+        const {
+          online,
+          offline,
+          partially_degraded: partiallyDegraded,
+        } = data.reduce(reducer, initialState)
+
+        const total = online + offline + partiallyDegraded
 
         serviceSummary.internal = {
           ...serviceSummary.internal,
           total,
           online,
           partiallyDegraded,
-          offline: total - online - partiallyDegraded,
+          offline,
         }
 
         serviceSummary.total = serviceSummary.external.total + total
