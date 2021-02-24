@@ -183,7 +183,7 @@ export default (store) => {
           meta: {
             title: 'Data Plane Proxies'
           },
-          component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/Dataplanes')
+          component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes')
         },
         // standard dataplanes
         {

@@ -242,7 +242,7 @@ export function humanReadableDate (tdate) {
     const a = navigator.userAgent
 
     return {
-      ie: a.match(/MSIE\s([^]*)/)
+      ie: a.match(/MSIE\s([^]*)/),
     }
   }
 
@@ -308,7 +308,7 @@ export function rawReadableDate (date) {
   const options = {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
+    day: 'numeric',
   }
   const formattedDate = rawDate.toLocaleDateString('en-US', options)
   const formattedTime = `${rawDate.getHours()}:${rawDate.getMinutes()}:${rawDate.getSeconds()}`
