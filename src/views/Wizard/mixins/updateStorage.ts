@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 /**
  * updateStorage
  *
@@ -5,25 +7,29 @@
  * for use with Wizard flow.
  *
  */
-
-import { mapGetters } from 'vuex'
-
-export default {
+export default Vue.extend({
   data () {
     return {
       storedData: [],
-      storedVal: null,
-      storedKey: null
+      storedVal: '',
+      storedKey: ''
+    }
+  },
+  watch: {
+    storedVal () {
+      const data = JSON.stringify(this.storedData)
+
+      localStorage.storedFormData = data
     }
   },
   mounted () {
     this.clearStorage()
   },
   methods: {
-    updateStorage (key, value) {
+    updateStorage (key: string, value: string) {
       // add (or update) item in/to localStorage
-      this.storedVal = value || null
-      this.storedKey = key || null
+      this.storedVal = value || ''
+      this.storedKey = key || ''
 
       this.storedData = { ...this.storedData, ...{ [key]: value } }
 
@@ -31,7 +37,7 @@ export default {
 
       this.$emit('storageItemModified', value)
     },
-    getStorageItem (value) {
+    getStorageItem (value: string) {
       const data = localStorage.storedFormData
 
       this.$emit('storageItemRetrieved', value)
@@ -46,12 +52,5 @@ export default {
       localStorage.removeItem('storedFormData')
       this.$store.dispatch('updateWizardData', null)
     }
-  },
-  watch: {
-    storedVal () {
-      const data = JSON.stringify(this.storedData)
-
-      localStorage.storedFormData = data
-    }
   }
-}
+})

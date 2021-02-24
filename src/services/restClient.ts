@@ -1,11 +1,25 @@
-import axios from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import Mock from '@/services/mock'
 
+export interface RestClientOptions {
+  injectMocks: any
+}
 export default class RestClient {
-  constructor (options) {
-    const opts = options || {}
+  headers: Record<string, string>
+
+  client: AxiosInstance
+
+  clientConfig: AxiosInstance
+
+  host: string
+
+  constructor (options?: RestClientOptions) {
+    const opts = options || {
+      injectMocks: undefined
+    }
 
     // this.host = opts.url
+    this.host = ''
 
     // leave this blank!
     this.headers = {}
@@ -29,32 +43,28 @@ export default class RestClient {
    * This function creates the Axios endpoint with the
    * value from localStorage
    */
-  static axiosInit () {
-    const apiUrlFromLS = localStorage.getItem('kumaApiUrl')
-    const kumaEnvFromLS = localStorage.getItem('kumaEnv')
+  static axiosInit (): AxiosInstance {
+    const apiUrlFromLS: string = localStorage.getItem('kumaApiUrl') || ''
+    const kumaEnvFromLS: string = localStorage.getItem('kumaEnv') || ''
 
     return axios.create({
-      baseURL: apiUrlFromLS,
-      headers: this.headers,
-      ...this.axiosConfig
+      baseURL: apiUrlFromLS
     })
   }
 
   /**
    * kumaClientConfig
    *
-   * This function creates the Axios endpoint for
-   * fetching data from the Kuma config. It contains
+   * This function creates the Axios instance for
+   * fetching data from the Kuma api. It contains
    * information that goes beyond simply providing
    * our app with the API URL endpoint and simple info.
    */
-  static kumaClientConfig () {
+  static kumaClientConfig (): AxiosInstance {
     const configUrl = `${localStorage.getItem('kumaApiUrl')}config`
 
     return axios.create({
-      baseURL: configUrl,
-      headers: this.headers,
-      ...this.axiosConfig
+      baseURL: configUrl
     })
   }
 
@@ -63,7 +73,7 @@ export default class RestClient {
    * @param {Object} injectMocks - the mock endpoint functions defined by any
    * external plugins - if they exist. If not, then it passes the real (unmocked) response.
    */
-  static setupMocks (injectMocks) {
+  static setupMocks (injectMocks: ((mock: any) => void)[]|undefined) {
     const mock = new Mock(axios)
     if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
       mock.setupMockEndpoints()
@@ -78,12 +88,12 @@ export default class RestClient {
     }
   }
 
-  buildUrl (path) {
+  buildUrl (path: string) {
     return `${this.host}${path}`
   }
 
   /** fetch the status information of Kuma */
-  async status (path, options) {
+  async status (path: string, options?: AxiosRequestConfig) {
     const opts = await options || {}
     const url = await path
     const client = await this.client
@@ -93,7 +103,7 @@ export default class RestClient {
   }
 
   /** fetch all Kuma API endpoints */
-  async get (path, options) {
+  async get (path: string, options?: AxiosRequestConfig) {
     const opts = await options || {}
     // const url = this.buildUrl(path)
     const url = await path

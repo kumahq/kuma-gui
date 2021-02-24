@@ -1,4 +1,11 @@
-const sumDataplanes = (curr = {}, next = {}) => {
+type TODO = any
+type DataPlaneStats = {
+  online?: number
+  partiallyDegraded?: number
+  total?: number
+}
+
+const sumDataplanes = (curr:DataPlaneStats = {}, next:DataPlaneStats = {}) => {
   const currOnline = curr.online || 0
   const nextOnline = next.online || 0
   const currPartiallyDegraded = curr.partiallyDegraded || 0
@@ -43,7 +50,7 @@ const getInitialPolicies = () => ({
   },
 })
 
-const sumPolicies = (curr = getInitialPolicies(), next = {}) =>
+const sumPolicies = (curr: any = getInitialPolicies(), next: any = {}) =>
   Object.entries(next).reduce((acc, [name, stat]) => {
     const currTotal = acc[name]
       ? acc[name].total
@@ -52,18 +59,19 @@ const sumPolicies = (curr = getInitialPolicies(), next = {}) =>
     return {
       ...acc,
       [name]: {
-        total: currTotal + stat.total,
+        total: currTotal + (stat as TODO).total,
       },
     }
   }, curr)
 
-const sumDependencyVersion = (curr = {}, next = {}) =>
-  Object.entries(next).reduce((acc, [version, stat]) => ({
-    ...acc,
-    [version]: sumDataplanes(acc[version], stat),
-  }), curr)
+const sumDependencyVersion = (curr: TODO = {}, next: TODO = {}): TODO =>
+  Object.entries(next)
+    .reduce((acc, [version, stat]) => ({
+      ...acc,
+      [version]: sumDataplanes(acc[version], stat as TODO),
+    }), curr)
 
-const sumVersions = (curr = {}, next = {}) => ({
+const sumVersions = (curr: TODO = {}, next: TODO = {}) => ({
   kumaDp: sumDependencyVersion(curr.kumaDp, next.kumaDp),
   envoy: sumDependencyVersion(curr.envoy, next.envoy),
 })
@@ -77,12 +85,12 @@ export function getEmptyInsight () {
   }
 }
 
-export function parseInsightReducer (insight = {}) {
+export function parseInsightReducer (insight: TODO = {}) {
   return mergeInsightsReducer([insight])
 }
 
-export function mergeInsightsReducer (insights = []) {
-  return insights.reduce((acc, insight) => ({
+export function mergeInsightsReducer (insights: TODO = []) {
+  return insights.reduce((acc: TODO, insight: TODO) => ({
     meshesTotal: insights.length,
     dataplanes: sumDataplanes(acc.dataplanes, insight.dataplanes),
     policies: sumPolicies(acc.policies, insight.policies),

@@ -1,12 +1,40 @@
-import meshIcon from './../../assets/images/icon-service-mesh.svg'
+import { RawLocation } from 'vue-router'
+import meshIcon from '@/assets/images/icon-service-mesh.svg'
 
-export default [
+type TODO = any
+type KIconType = 'gearFilled'
+
+export interface MenuNavItem {
+  name: string,
+  link?: RawLocation,
+  subNav?: MenuNavItem[],
+  title?: boolean,
+  nested?: boolean,
+  parent?: string,
+  pathFlip?: boolean,
+}
+
+export interface MenuItem {
+  name: string
+  icon?: KIconType
+  link?: string,
+  iconCustom?: TODO,
+  subNav?: {
+    items: MenuNavItem[]
+  },
+}
+
+export interface MenuSection {
+  position: string
+  items: MenuItem[]
+}
+
+const menu: MenuSection[] = [
   {
     position: 'top',
     items: [
       {
         name: 'Service Mesh',
-        // icon: 'services',
         iconCustom: meshIcon,
         link: 'home',
         subNav: {
@@ -143,3 +171,5 @@ export default [
     ]
   }
 ]
+
+export default menu

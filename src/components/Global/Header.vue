@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="flex justify-between items-center">
-      <EnterpriseBox v-if="showEnterprise"/>
+      <EnterpriseBox v-if="showEnterprise" />
       <div
         v-if="showStatus"
         class="py-1 md:py-0 md:px-4"

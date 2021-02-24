@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import sidebar from '@/store/modules/sidebar'
-// import workspaces from '@/store/modules/workspaces'
 
 import { fetchAllResources, filterResourceByMesh } from '@/helpers'
 import {
@@ -10,14 +9,16 @@ import {
   mergeInsightsReducer,
   parseInsightReducer
 } from '@/store/reducers/mesh-insights'
+import Kuma from '@/services/kuma'
+
+type TODO = any
 
 Vue.use(Vuex)
 
-export default (api) => {
+export default (api: Kuma) => {
   const store = new Vuex.Store({
     modules: {
       sidebar
-      // workspaces
     },
     state: {
       menu: null,
@@ -108,7 +109,7 @@ export default (api) => {
       supportedVersionsFetching: false,
       supportedVersions: {},
       supportedVersionsFailed: '',
-    },
+    } as TODO,
     getters: {
       getOnboardingStatus: (state) => state.onboardingComplete,
       globalLoading: (state) => state.globalLoading,
@@ -191,7 +192,7 @@ export default (api) => {
         serviceInsightsFetching,
         externalServicesFetching,
       }) => serviceInsightsFetching || externalServicesFetching,
-      getChart: ({ overviewCharts }) => (chartName) => overviewCharts[chartName],
+      getChart: ({ overviewCharts }) => (chartName: string) => overviewCharts[chartName],
       getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
       getSupportedVersions: ({ supportedVersions }) => supportedVersions,
       getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
@@ -244,7 +245,7 @@ export default (api) => {
       SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
         const { serviceSummary } = state
 
-        const reducer = (acc, { status = 'offline' }) => ({
+        const reducer = (acc: TODO, { status = 'offline' }) => ({
           ...acc,
           [status]: acc[status] + 1,
         })
@@ -313,7 +314,7 @@ export default (api) => {
       },
 
       // fetch all dataplanes from a specific mesh
-      fetchDataplanesFromMesh ({ commit }, mesh) {
+      fetchDataplanesFromMesh ({ commit }, mesh: string) {
         return api.getAllDataplanesFromMesh(mesh)
           .then(response => {
             commit('FETCH_DATAPLANES_FROM_MESH', response)
@@ -733,7 +734,7 @@ export default (api) => {
       // this will get the current status of all dataplanes
       getAllDataplanes ({ commit }, params) {
         const getDataplanes = async () => {
-          return new Promise(async (resolve, reject) => {
+          return new Promise<void>(async (resolve, reject) => {
             const result = []
             const states = []
 
@@ -973,7 +974,7 @@ export default (api) => {
       },
 
       setOverviewZonesChartData({ state, commit }, { total, data }) {
-        const online = data.reduce((acc, { zone }) => acc + (zone.enabled || 0), 0)
+        const online = data.reduce((acc: TODO, { zone }: { zone: TODO }) => acc + (zone.enabled || 0), 0)
 
         const chartData = []
 
@@ -1049,7 +1050,7 @@ export default (api) => {
       },
 
       setOverviewZonesCPVersionsChartData({ state, commit }, { data }) {
-        const chartData = data.reduce((acc, curr) => {
+        const chartData = data.reduce((acc: TODO, curr: TODO) => {
           const { subscriptions } = curr.zoneInsight
 
           if (!subscriptions.length) {
@@ -1058,7 +1059,7 @@ export default (api) => {
 
           const { version } = curr.zoneInsight.subscriptions.pop()
 
-          const item = acc.find(({ category }) => category === version.kumaCp.version)
+          const item = acc.find(({ category }: { category: TODO }) => category === version.kumaCp.version)
 
           if (!item) {
             acc.push({ category: version.kumaCp.version, value: 1 })
@@ -1076,7 +1077,7 @@ export default (api) => {
         const { envoy } = state.meshInsight.dpVersions
 
         const data = Object.entries(envoy)
-          .map(([version, stats]) => ({ category: version, value: stats.total }))
+          .map(([version, stats]: [TODO, TODO]) => ({ category: version, value: stats.total }))
 
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'envoyVersions', data })
       },
@@ -1085,7 +1086,7 @@ export default (api) => {
         const { kumaDp } = state.meshInsight.dpVersions
 
         const data = Object.entries(kumaDp)
-          .map(([version, stats]) => ({ category: version, value: stats.total }))
+          .map(([version, stats]: [TODO, TODO]) => ({ category: version, value: stats.total }))
 
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
       },

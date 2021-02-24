@@ -1,3 +1,5 @@
+// TODO: Typescript
+
 import Vue from 'vue'
 import '@kongponents/styles/styles.css'
 import KAlert from '@kongponents/kalert'

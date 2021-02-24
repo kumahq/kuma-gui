@@ -1,11 +1,14 @@
 import { humanReadableDate } from '@/helpers'
 import { satisfies } from 'semver'
+import Kuma from '@/services/kuma'
 
 /*
 dpTags takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
 It flattens common tags so we don't display them twice.
 
-Example:
+Takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
+It flattens common tags so we don't display them twice.
+@example
 
 type: Dataplane
 mesh: default
@@ -29,8 +32,20 @@ Will produce:
 ]
  */
 
-export function dpTags (dataplane) {
-  let tags = []
+type TODO = any
+type DataPlane = {
+  networking: {
+    inbound: Array<{
+      port: number
+      tags: Record<string, string>
+      health?: { ready: boolean }
+    }>
+    gateway: TODO
+  }
+}
+
+export function dpTags (dataplane: DataPlane): { label: string, value: string}[] {
+  let tags: TODO[] = []
 
   const inbounds = dataplane.networking.inbound || null
   if (inbounds) {
@@ -57,21 +72,21 @@ export function dpTags (dataplane) {
 /*
 getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
  */
-export function getStatus (dataplane, dataplaneInsight = {}) {
-  const inbounds = dataplane.networking.inbound
+export function getStatus (dataplane: DataPlane, dataplaneInsight: TODO = {}) {
+  const inbounds: TODO = dataplane.networking.inbound
     ? dataplane.networking.inbound
     : [{ health: { ready: true } }]
 
   const errors = inbounds
-    .filter(item => item.health && !item.health.ready)
-    .map(item => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
+    .filter((item: TODO) => item.health && !item.health.ready)
+    .map((item: TODO) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
 
   const subscriptions = dataplaneInsight.subscriptions
     ? dataplaneInsight.subscriptions
     : []
 
   const proxyOnline = subscriptions
-    .some(item => item.connectTime && item.connectTime.length && !item.disconnectTime)
+    .some((item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime)
 
   const status = () => {
     const allInboundsOffline = errors.length === inbounds.length
@@ -94,11 +109,19 @@ export function getStatus (dataplane, dataplaneInsight = {}) {
   }
 }
 
-export function getStatusFromObject ({ dataplane, dataplaneInsight }) {
+export function getStatusFromObject ({ dataplane, dataplaneInsight }: { dataplane: DataPlane, dataplaneInsight: TODO}) {
   return getStatus(dataplane, dataplaneInsight)
 }
 
-export function getDataplane (dataplaneOverview) {
+type DataPlaneOverview = {
+  name: string,
+  mesh: string,
+  type: string,
+  dataplane: DataPlane,
+  dataplaneInsight: TODO
+}
+
+export function getDataplane (dataplaneOverview: DataPlaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
   return {
@@ -109,7 +132,7 @@ export function getDataplane (dataplaneOverview) {
   }
 }
 
-export function getDataplaneInsight (dataplaneOverview) {
+export function getDataplaneInsight (dataplaneOverview: DataPlaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
   return {
@@ -120,7 +143,7 @@ export function getDataplaneInsight (dataplaneOverview) {
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch (api, zoneName, dpVersion) {
+export async function checkKumaDpAndZoneVersionsMismatch (api: Kuma, zoneName: string, dpVersion: string) {
   const response = await api.getZoneOverview(zoneName) || {}
   const { zoneInsight = {} } = response
   const { subscriptions = [] } = zoneInsight
@@ -141,7 +164,7 @@ export async function checkKumaDpAndZoneVersionsMismatch (api, zoneName, dpVersi
   return { compatible: true }
 }
 
-export function parseMTLSData (mtls) {
+export function parseMTLSData (mtls: TODO) {
   const rawExpDate = new Date(mtls.certificateExpirationTime)
   // this prevents any weird date shifting
   const fixedExpDate = new Date(
@@ -169,7 +192,7 @@ export function parseMTLSData (mtls) {
   }
 }
 
-export function getDataplaneType (dataplane = {}) {
+export function getDataplaneType (dataplane: { networking: { gateway?: TODO, ingress?: TODO } } = { networking: {} }) {
   const { networking = {} } = dataplane
   const { gateway, ingress } = networking
 
@@ -185,7 +208,7 @@ export function getDataplaneType (dataplane = {}) {
 }
 
 export function checkVersionsCompatibility (
-  supportedVersions = {},
+  supportedVersions: { kumaDp?: TODO } = {},
   kumaDpVersion = '',
   envoyVersion = '',
 ) {
@@ -195,7 +218,7 @@ export function checkVersionsCompatibility (
     return { kind: INCOMPATIBLE_WRONG_FORMAT }
   }
 
-  const requirements = kumaDp[kumaDpVersion]
+  const requirements: TODO = kumaDp[kumaDpVersion]
 
   if (!requirements) {
     return {

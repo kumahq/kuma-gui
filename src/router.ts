@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { Store } from 'vuex'
 
 Vue.use(VueRouter)
 
-export default (store) => {
+export default (store: Store<any>) => {
   const routes = [
     {
       path: '/404',
@@ -13,7 +14,7 @@ export default (store) => {
         title: 'Page not found',
         excludeAsBreadcrumb: true
       },
-      component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound')
+      component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound.vue')
     },
     // Home - a landing place that resets things
     {
@@ -30,7 +31,7 @@ export default (store) => {
     {
       path: '/get-started',
       redirect: { name: 'setup-welcome' },
-      component: () => import('@/views/ShellEmpty'),
+      component: () => import('@/views/ShellEmpty.vue'),
       children: [
         {
           path: 'welcome',
@@ -44,7 +45,7 @@ export default (store) => {
             simpleContent: true,
             onboardingProcess: true
           },
-          component: () => import(/* webpackChunkName: "onboarding-get-started" */ '@/views/Onboarding/GetStarted')
+          component: () => import(/* webpackChunkName: "onboarding-get-started" */ '@/views/Onboarding/GetStarted.vue')
         },
         {
           path: 'complete',
@@ -58,7 +59,7 @@ export default (store) => {
             simpleContent: true,
             onboardingProcess: true
           },
-          component: () => import(/* webpackChunkName: "onboarding-complete" */ '@/views/Onboarding/Complete')
+          component: () => import(/* webpackChunkName: "onboarding-complete" */ '@/views/Onboarding/Complete.vue')
         }
       ]
     },
@@ -66,7 +67,7 @@ export default (store) => {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
+      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell.vue'),
       children: [
         {
           path: 'mesh',
@@ -76,7 +77,7 @@ export default (store) => {
             excludeAsBreadcrumb: true,
             wizardProcess: true
           },
-          component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh')
+          component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh.vue')
         },
         {
           path: 'kubernetes-dataplane',
@@ -86,7 +87,7 @@ export default (store) => {
             excludeAsBreadcrumb: true,
             wizardProcess: true
           },
-          component: () => import(/* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes')
+          component: () => import(/* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes.vue')
         },
         {
           path: 'universal-dataplane',
@@ -96,7 +97,7 @@ export default (store) => {
             excludeAsBreadcrumb: true,
             wizardProcess: true
           },
-          component: () => import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal')
+          component: () => import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal.vue')
         }
       ]
     },
@@ -106,7 +107,7 @@ export default (store) => {
     {
       path: '/diagnostics',
       name: 'diagnostics',
-      component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/Diagnostics'),
+      component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/Diagnostics.vue'),
       meta: {
         title: 'Diagnostics',
         breadcrumb: 'Diagnostics',
@@ -120,7 +121,7 @@ export default (store) => {
       meta: {
         title: 'Zones'
       },
-      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
+      component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones.vue')
     },
     // all Meshes
     {
@@ -132,7 +133,7 @@ export default (store) => {
         parent: 'global-overview'
       },
       params: { mesh: ':mesh' },
-      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
+      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell.vue'),
       children: [
         {
           path: ':mesh',
@@ -142,7 +143,7 @@ export default (store) => {
             parent: 'all-meshes'
           },
           params: { mesh: ':mesh' },
-          component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/Meshes')
+          component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/Meshes.vue')
         }
       ]
     },
@@ -155,7 +156,7 @@ export default (store) => {
         parent: 'all-meshes'
       },
       params: { mesh: ':mesh' },
-      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell'),
+      component: () => import(/* webpackChunkName: "shell-default" */ '@/views/Shell.vue'),
       children: [
         // overview
         {
@@ -165,7 +166,7 @@ export default (store) => {
           meta: {
             title: 'Global Overview'
           },
-          component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview')
+          component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview.vue')
         },
         // Zones
         // {
@@ -174,7 +175,7 @@ export default (store) => {
         //   meta: {
         //     title: 'Zones'
         //   },
-        //   component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones')
+        //   component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones.vue')
         // },
         // all dataplanes
         {
@@ -183,13 +184,13 @@ export default (store) => {
           meta: {
             title: 'Data Plane Proxies'
           },
-          component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes')
+          component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes.vue')
         },
         // standard dataplanes
         {
           path: 'standard-dataplanes',
           name: 'standard-dataplanes',
-          component: () => import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes'),
+          component: () => import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes.vue'),
           meta: {
             title: 'Standard Data Plane Proxies',
             breadcrumb: 'Standard Data Plane Proxies'
@@ -199,7 +200,7 @@ export default (store) => {
         {
           path: 'ingress-dataplanes',
           name: 'ingress-dataplanes',
-          component: () => import(/* webpackChunkName: "dataplanes-ingress" */ '@/views/Entities/IngressDataplanes'),
+          component: () => import(/* webpackChunkName: "dataplanes-ingress" */ '@/views/Entities/IngressDataplanes.vue'),
           meta: {
             title: 'Ingress Data Plane Proxies',
             breadcrumb: 'Ingress Data Plane Proxies'
@@ -209,7 +210,7 @@ export default (store) => {
         {
           path: 'gateway-dataplanes',
           name: 'gateway-dataplanes',
-          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes'),
+          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes.vue'),
           meta: {
             title: 'Gateway Data Plane Proxies',
             breadcrumb: 'Gateway Data Plane Proxies'
@@ -219,7 +220,7 @@ export default (store) => {
         {
           path: 'internal-services',
           name: 'internal-services',
-          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices'),
+          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices.vue'),
           meta: {
             title: 'Internal Services',
             breadcrumb: 'Internal Services'
@@ -229,7 +230,7 @@ export default (store) => {
         {
           path: 'external-services',
           name: 'external-services',
-          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/ExternalServices'),
+          component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/ExternalServices.vue'),
           meta: {
             title: 'External Services',
             breadcrumb: 'External Services'
@@ -242,7 +243,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Permissions'
           },
-          component: () => import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions')
+          component: () => import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions.vue')
         },
         // traffic routes
         {
@@ -251,7 +252,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Routes'
           },
-          component: () => import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes')
+          component: () => import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes.vue')
         },
         // traffic logs
         {
@@ -260,7 +261,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Logs'
           },
-          component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs')
+          component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs.vue')
         },
         // traffic traces
         {
@@ -269,7 +270,7 @@ export default (store) => {
           meta: {
             title: 'Traffic Traces'
           },
-          component: () => import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces')
+          component: () => import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces.vue')
         },
         // fault injections
         {
@@ -278,7 +279,7 @@ export default (store) => {
           meta: {
             title: 'Fault Injections'
           },
-          component: () => import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections')
+          component: () => import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections.vue')
         },
         // circuit breakers
         {
@@ -287,7 +288,7 @@ export default (store) => {
           meta: {
             title: 'Circuit Breakers'
           },
-          component: () => import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers')
+          component: () => import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers.vue')
         },
         // health checks
         {
@@ -296,7 +297,7 @@ export default (store) => {
           meta: {
             title: 'Health Checks'
           },
-          component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks')
+          component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks.vue')
         },
         // proxy templates
         {
@@ -305,7 +306,7 @@ export default (store) => {
           meta: {
             title: 'Proxy Templates'
           },
-          component: () => import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates')
+          component: () => import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates.vue')
         },
         // retries
         {
@@ -314,7 +315,7 @@ export default (store) => {
           meta: {
             title: 'Retries'
           },
-          component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries')
+          component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries.vue')
         }
       ]
     }
@@ -329,12 +330,6 @@ export default (store) => {
     // mode: 'history',
     base: process.env.BASE_URL,
     routes: routes
-  })
-
-  // Set $router.previous on each route
-  router.beforeResolve((to, from, next) => {
-    router.previous = from
-    next()
   })
 
   /**
@@ -390,7 +385,7 @@ export default (store) => {
    * so that they're not sent through it again.
    */
   router.beforeEach((to, from, next) => {
-    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || null)
+    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || 'false')
     const currentRoute = to.meta.onboardingProcess
 
     if ((!hasOnboarded || hasOnboarded === false) && !currentRoute) {
@@ -399,28 +394,6 @@ export default (store) => {
       next()
     }
   })
-
-  /**
-   * Navigate up URL hierarchy
-   *
-   * @param {Number} levels - number of url directories to jump up e.g. if
-   *   "/consumers/123/update" is currentRoute, then levels = 2 would return
-   *   "/consumers"
-   * @param {Boolean} redirect - if true, this will perform a redirect
-   * @returns {String} returns the path of the path calculation
-   */
-  router.navigateUp = function (levels = 1, redirect = true) {
-    var upperPath = this.currentRoute.path.split('/')
-
-    if (upperPath.length >= levels) {
-      upperPath.splice(upperPath.length - levels)
-      const path = upperPath.join('/')
-
-      redirect && this.push({ path })
-
-      return path
-    }
-  }
 
   router.onReady(() => {
     store.commit('SET_GLOBAL_LOADING', { globalLoading: true })
