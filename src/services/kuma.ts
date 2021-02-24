@@ -64,7 +64,7 @@ export default class Kuma {
   }
 
   // Get a single Zone Insight/Overview
-  getZoneOverview (name: string, params: any) {
+  getZoneOverview (name: string, params?: any) {
     return this.client.get(`/zones+insights/${name}`, { params })
   }
 
@@ -345,7 +345,7 @@ export default class Kuma {
     return this.client.get(`/mesh-insights/${name}`, { params })
   }
 
-  getSupportedVersions (params) {
+  getSupportedVersions (params?: any) {
     return this.client.get('/versions', { params })
   }
 }

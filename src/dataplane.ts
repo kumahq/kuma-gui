@@ -1,5 +1,6 @@
 import { humanReadableDate } from '@/helpers'
 import { satisfies } from 'semver'
+import Kuma from '@/services/kuma'
 
 /*
 dpTags takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
@@ -142,7 +143,7 @@ export function getDataplaneInsight (dataplaneOverview: DataPlaneOverview) {
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch (api, zoneName, dpVersion) {
+export async function checkKumaDpAndZoneVersionsMismatch (api: Kuma, zoneName: string, dpVersion: string) {
   const response = await api.getZoneOverview(zoneName) || {}
   const { zoneInsight = {} } = response
   const { subscriptions = [] } = zoneInsight
@@ -163,7 +164,7 @@ export async function checkKumaDpAndZoneVersionsMismatch (api, zoneName, dpVersi
   return { compatible: true }
 }
 
-export function parseMTLSData (mtls) {
+export function parseMTLSData (mtls: TODO) {
   const rawExpDate = new Date(mtls.certificateExpirationTime)
   // this prevents any weird date shifting
   const fixedExpDate = new Date(
@@ -191,7 +192,7 @@ export function parseMTLSData (mtls) {
   }
 }
 
-export function getDataplaneType (dataplane = {}) {
+export function getDataplaneType (dataplane: { networking: { gateway?: TODO, ingress?: TODO } } = { networking: {} }) {
   const { networking = {} } = dataplane
   const { gateway, ingress } = networking
 
@@ -207,7 +208,7 @@ export function getDataplaneType (dataplane = {}) {
 }
 
 export function checkVersionsCompatibility (
-  supportedVersions = {},
+  supportedVersions: { kumaDp?: TODO } = {},
   kumaDpVersion = '',
   envoyVersion = '',
 ) {
@@ -217,7 +218,7 @@ export function checkVersionsCompatibility (
     return { kind: INCOMPATIBLE_WRONG_FORMAT }
   }
 
-  const requirements = kumaDp[kumaDpVersion]
+  const requirements: TODO = kumaDp[kumaDpVersion]
 
   if (!requirements) {
     return {

@@ -245,7 +245,7 @@ export default (api: Kuma) => {
       SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
         const { serviceSummary } = state
 
-        const reducer = (acc, { status = 'offline' }) => ({
+        const reducer = (acc: TODO, { status = 'offline' }) => ({
           ...acc,
           [status]: acc[status] + 1,
         })
