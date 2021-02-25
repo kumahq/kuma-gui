@@ -41,6 +41,7 @@
         :display-data-table="true"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
+        :show-warnings="tableData.data.some((item) => item.withWarnings)"
         table-data-function-text="View"
         table-data-row="name"
         @tableAction="tableAction"
@@ -59,7 +60,7 @@
         v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
-        :tabs="tabs"
+        :tabs="filterTabs()"
         initial-tab-override="overview"
       >
         <template slot="tabHeader">
@@ -180,6 +181,9 @@
             :content="yamlEntity"
           />
         </template>
+        <template slot="warnings">
+          <Warnings :warnings="warnings" />
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
@@ -198,6 +202,9 @@ import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import LoaderCard from '@/components/Utils/LoaderCard'
+import Warnings from '@/views/Entities/components/Warnings'
+
+import { INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 
 export default {
   name: 'Zones',
@@ -213,7 +220,8 @@ export default {
     Tabs,
     YamlView,
     LabelList,
-    LoaderCard
+    LoaderCard,
+    Warnings,
   },
   filters: {
     formatValue (value) {
@@ -255,6 +263,7 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Remote CP Version', key: 'remoteCpVersion' },
+          { key: 'warnings', hideLabel: true },
         ],
         data: []
       },
@@ -267,10 +276,10 @@ export default {
           hash: '#insights',
           title: 'Zone Insights'
         },
-        // {
-        //   hash: '#yaml',
-        //   title: 'YAML'
-        // }
+        {
+          hash: '#warnings',
+          title: 'Warnings'
+        },
       ],
       entity: [],
       rawEntity: null,
@@ -283,7 +292,8 @@ export default {
       previous: [],
       tabGroupTitle: null,
       entityOverviewTitle: null,
-      itemsPerCol: 3
+      itemsPerCol: 3,
+      warnings: [],
     }
   },
   computed: {
@@ -291,7 +301,8 @@ export default {
       mesh: 'selectedMesh'
     }),
     ...mapGetters({
-      multicluster: 'getMulticlusterStatus'
+      multicluster: 'getMulticlusterStatus',
+      globalCpVersion: 'getVersion',
     }),
     // If you need to test multicluster without actually having it enabled
     // in Kuma, uncomment this and comment out the mapGetters above.
@@ -299,9 +310,7 @@ export default {
     //   return true
     // },
     pageTitle () {
-      const metaTitle = this.$route.meta.title
-
-      return metaTitle
+      return this.$route.meta.title
     },
     shareUrl () {
       const urlRoot = `${window.location.origin}#`
@@ -319,7 +328,7 @@ export default {
     }
   },
   watch: {
-    '$route' (to, from) {
+    '$route' () {
       this.init()
     }
   },
@@ -331,6 +340,13 @@ export default {
       if (this.multicluster) {
         this.loadData()
       }
+    },
+    filterTabs () {
+      if (!this.warnings.length) {
+        return this.tabs.filter(tab => tab.hash !== '#warnings')
+      }
+
+      return this.tabs
     },
     goToPreviousPage () {
       this.pageOffset = this.previous.pop()
@@ -402,9 +418,14 @@ export default {
                     }
 
                     i.remoteCpVersion = remoteCpVersion
+
+                    if (remoteCpVersion !== this.globalCpVersion) {
+                      i.withWarnings = true
+                    }
                   }).catch(error => {
                     // if zone overview fails show version as empty instead of showing error.
                     i.remoteCpVersion = '-'
+                    i.withWarnings = true
 
                     console.error(error)
                   })
@@ -448,66 +469,59 @@ export default {
 
       getZoneStatus()
     },
-    getEntity (entity) {
+    async getEntity (entity) {
       this.entityIsLoading = true
-      this.entityIsEmpty = false
+      this.entityIsEmpty = true
 
       const selected = ['type', 'name', 'mesh']
 
-      const promise = new Promise((resolve, reject) => {
-        if (entity && entity !== null) {
-          resolve(entity)
-        } else {
-          const error = new Error('Entity is either undefined or not present.')
+      const timeout = setTimeout(() => {
+        this.entityIsEmpty = true
+        this.entityIsLoading = false
+      }, process.env.VUE_APP_DATA_TIMEOUT)
 
-          reject(error)
-        }
-      })
+      if (entity) {
+        this.entityIsEmpty = false
+        this.warnings = []
 
-      if (entity && entity !== null) {
-        promise
-          .then(response => {
-            if (response) {
-              // get the Zone details from the Zone Insights endpoint
-              this.$api.getZoneOverview(response.name)
-                .then((response) => {
-                  this.tabGroupTitle = `Zone: ${response.name}`
-                  this.entityOverviewTitle = `Zone Overview for ${response.name}`
+        try {
+          // get the Zone details from the Zone Insights endpoint
+          const response = await this.$api.getZoneOverview(entity.name)
+          const { name, zoneInsight, ...rest } = response
+          const { subscriptions = [] } = zoneInsight
 
-                  // remove `zoneInsight` from the response since we already
-                  // use it in the Zone Insights tab
-                  const cleanRes = () => {
-                    const src = Object.assign({}, response)
+          this.tabGroupTitle = `Zone: ${name}`
+          this.entityOverviewTitle = `Zone Overview for ${name}`
+          this.entity = getSome(response, selected)
+          this.rawEntity = stripTimes(response)
+          this.yamlEntity = { name, ...rest }
 
-                    delete src.zoneInsight
+          if (subscriptions.length) {
+            const { version = {} } = subscriptions.pop()
+            const { kumaCp = {} } = version
 
-                    return src
-                  }
+            const kumaCpVersion = kumaCp.version || '-'
 
-                  this.entity = getSome(response, selected)
-                  this.rawEntity = stripTimes(response)
-                  this.yamlEntity = cleanRes()
-                })
-            } else {
-              this.entity = null
-              this.entityIsEmpty = true
+            if (kumaCpVersion !== this.globalCpVersion) {
+              this.warnings.push({
+                kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
+                payload: {
+                  zoneCpVersion: kumaCpVersion,
+                  globalCpVersion: this.globalCpVersion,
+                },
+              })
             }
-          })
-          .catch(error => {
-            this.entityHasError = true
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.entityIsLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      } else {
-        setTimeout(() => {
+          }
+        } catch (e) {
+          this.entity = null
+          this.entityHasError = true
           this.entityIsEmpty = true
-          this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
+        } finally {
+          clearTimeout(timeout)
+        }
       }
+
+      this.entityIsLoading = false
     }
   }
 }

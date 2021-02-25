@@ -7,9 +7,9 @@
   "scripts": {
     "serve": "yarn vue-cli-service serve",
     "build": "yarn vue-cli-service build --mode production",
-    "lint": "yarn vue-cli-service lint",
+    "test:unit": "yarn vue-cli-service test:unit",
     "test:e2e": "yarn vue-cli-service test:e2e",
-    "test:unit": "yarn vue-cli-service test:unit"
+    "lint": "yarn vue-cli-service lint"
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.13",
@@ -38,6 +38,7 @@
     "axios-mock-adapter": "^1.18.2",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
+    "semver": "^7.3.4",
     "semver-compare": "^1.0.0",
     "tailwindcss": "^1.7.3",
     "vue": "^2.6.12",
@@ -47,11 +48,18 @@
     "vuex": "^3.5.1"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.19",
+    "@types/lodash": "^4.14.168",
+    "@types/semver": "^7.3.4",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "^4.5.4",
     "@vue/cli-plugin-e2e-cypress": "^4.5.4",
     "@vue/cli-plugin-eslint": "^4.5.4",
+    "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "^4.5.4",
     "@vue/cli-service": "^4.5.4",
+    "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "1.0.4",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -70,9 +78,14 @@
     "raw-loader": "^4.0.1",
     "sass-loader": "^10.0.1",
     "standard": "^14.3.4",
+    "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.12",
     "webpack-bundle-analyzer": "^3.8.0"
   },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ],
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -101,12 +114,9 @@
     "watchPlugins": [
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
-    ]
+    ],
+    "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ],
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0",

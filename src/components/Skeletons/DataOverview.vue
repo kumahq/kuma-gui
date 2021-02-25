@@ -148,6 +148,43 @@
               </span>
             </a>
           </template>
+          <template
+            v-slot:dpVersion="{ row, rowValue }"
+          >
+            <div
+              :class="{
+                'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
+              }"
+            >
+              {{ rowValue }}
+            </div>
+          </template>
+          <template
+            v-slot:envoyVersion="{ row, rowValue }"
+          >
+            <div
+              :class="{
+                'with-warnings': row.unsupportedEnvoyVersion,
+              }"
+            >
+              {{ rowValue }}
+            </div>
+          </template>
+
+          <template
+            v-if="showWarnings"
+            v-slot:warnings="{ row }"
+          >
+            <KIcon
+              v-if="row.withWarnings"
+              class="mr-1"
+              color="var(--yellow-400)"
+              icon="warning"
+              view-box="0 0 18 16"
+              size="20"
+            />
+            <div v-else />
+          </template>
         </KTable>
 
         <slot name="pagination" />
@@ -310,6 +347,9 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    showWarnings: {
+      type: Boolean,
     }
   },
   computed: {
@@ -329,6 +369,10 @@ export default {
       const data = this.tableData.data
       const headers = this.tableData.headers
       const newData = { headers, data: [...data] }
+
+      if (!this.showWarnings) {
+        newData.headers = newData.headers.filter(({ key }) => key !== 'warnings')
+      }
 
       return newData
     }
@@ -619,5 +663,9 @@ span[class*="kuma-io-"] {
 
 .k-tooltip {
   display: inline;
+}
+
+.with-warnings {
+  color: var(--yellow-400)
 }
 </style>

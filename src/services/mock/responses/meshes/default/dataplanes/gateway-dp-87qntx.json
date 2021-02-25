@@ -1,0 +1,22 @@
+{
+  "type":"Dataplane",
+  "mesh":"default",
+  "name":"gateway-dp-87qntx",
+  "creationTime":"2020-06-02T09:33:09.208372-04:00",
+  "modificationTime":"2020-06-02T09:33:09.208372-04:00",
+  "networking":{
+    "address":"10.0.0.1",
+    "inbound":[
+      {
+        "port":10000,
+        "servicePort":9000,
+        "tags":{
+          "env":"dev",
+          "kuma.io/service":"kuma-example-backend",
+          "tag01":"value01",
+          "reallyLongTagLabelHere":"a-really-long-tag-value-here"
+        }
+      }
+    ]
+  }
+}

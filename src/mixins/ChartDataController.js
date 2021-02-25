@@ -1,3 +1,5 @@
+// TODO: Typescript
+
 import { mapGetters } from 'vuex'
 import moment from 'moment'
 

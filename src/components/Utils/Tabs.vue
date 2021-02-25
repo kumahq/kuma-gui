@@ -5,9 +5,6 @@
       class="tab__header"
     >
       <slot name="tabHeader" />
-      <!-- <h3 class="tab__header__title">
-        {{ tabGroupTitle }}
-      </h3> -->
     </header>
 
     <div
@@ -26,6 +23,23 @@
           :slot="tab.hash.replace('#','')"
         >
           <slot :name="tab.hash.replace('#','')" />
+        </template>
+
+        <template
+          slot="warnings-anchor"
+        >
+          <span class="flex items-center with-warnings">
+            <KIcon
+              color="var(--yellow-400)"
+              class="mr-1"
+              icon="warning"
+              view-box="0 0 18 16"
+              size="16"
+            />
+            <span>
+              Warnings
+            </span>
+          </span>
         </template>
       </KTabs>
 
@@ -266,5 +280,9 @@ export default {
     border-top: 0;
     border-radius: var(--tab-panel-radius);
   }
+}
+
+.with-warnings {
+  color: var(--yellow-400)
 }
 </style>

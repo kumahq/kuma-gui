@@ -40,18 +40,20 @@ export default {
         ? storedVersion
         : 'latest'
 
+      const utmSource = '?utm_source=Kuma-GUI'
+
       if (storedVersion) {
         return [
           {
-            link: `https://kuma.io/docs/${versionOutput}/`,
+            link: `https://kuma.io/docs/${versionOutput}/${utmSource}`,
             label: `${process.env.VUE_APP_NAMESPACE} Documentation`
           },
           {
-            link: 'https://kuma-mesh.slack.com/',
+            link: `https://kuma-mesh.slack.com/${utmSource}`,
             label: `${process.env.VUE_APP_NAMESPACE} Community Chat`
           },
           {
-            link: 'https://github.com/kumahq/kuma',
+            link: `https://github.com/kumahq/kuma${utmSource}`,
             label: `${process.env.VUE_APP_NAMESPACE} GitHub Repository`
           }
         ]
