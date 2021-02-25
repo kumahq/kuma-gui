@@ -159,7 +159,7 @@ const menu: MenuSection[] = [
               name: 'Timeouts',
               link: 'timeouts',
               title: false,
-              parent: 'timeouts'
+              parent: 'policies'
             }
           ]
         }
