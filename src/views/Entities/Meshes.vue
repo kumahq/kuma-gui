@@ -301,6 +301,14 @@ export default {
         {
           title: 'Traffic Traces',
           value: state.totalTrafficTraceCountFromMesh
+        },
+        {
+          title: 'Retries',
+          value: state.totalRetryCountFromMesh
+        },
+        {
+          title: 'Timeouts',
+          value: state.totalTimeoutCountFromMesh
         }
       ]
     },
@@ -457,7 +465,9 @@ export default {
                 'fetchTrafficRouteTotalCountFromMesh',
                 'fetchTrafficTraceTotalCountFromMesh',
                 'fetchFaultInjectionTotalCountFromMesh',
-                'fetchCircuitBreakerTotalCountFromMesh'
+                'fetchCircuitBreakerTotalCountFromMesh',
+                'fetchTimeoutTotalCountFromMesh',
+                'fetchRetryTotalCountFromMesh'
               ]
 
               // run each action

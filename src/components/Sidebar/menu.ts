@@ -154,6 +154,12 @@ const menu: MenuSection[] = [
               link: 'retries',
               title: false,
               parent: 'policies'
+            },
+            {
+              name: 'Timeouts',
+              link: 'timeouts',
+              title: false,
+              parent: 'policies'
             }
           ]
         }
