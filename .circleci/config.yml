@@ -4,7 +4,7 @@ reusable:
 
   docker-images:
     - &circleci_node_image "circleci/node:12"
-  
+
   snippets:
 
     # filters for the kuma-master workflow
@@ -29,10 +29,13 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
       - run:
           name: "Install dependencies"
-          command: "yarn install --frozen-lockfile" 
+          command: "yarn install --frozen-lockfile"
       - run:
           name: "Run code checks"
           command: "yarn run lint"
+      - run:
+          name: "Build"
+          command: "yarn build"
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -43,7 +46,7 @@ workflows:
   kuma-commit:
     jobs:
       - check: *commit_workflow_filters
-  
+
   kuma-master:
     jobs:
       - check: *master_workflow_filters
