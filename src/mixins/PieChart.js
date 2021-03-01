@@ -381,10 +381,12 @@ export default {
         window.series = this.series
       }
 
-      this.chart.logo.disabled = !this.displayAmChartsLogo
+      if (this.chart.logo) {
+        this.chart.logo.disabled = !this.displayAmChartsLogo
 
-      if (this.displayAmChartsLogo) {
-        this.chart.logo.properties.align = 'right'
+        if (this.displayAmChartsLogo) {
+          this.chart.logo.properties.align = 'right'
+        }
       }
 
       this.series.labels.template.disabled = this.hideSliceLabels
