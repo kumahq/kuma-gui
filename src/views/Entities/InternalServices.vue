@@ -305,18 +305,21 @@ export default {
               }
 
               this.tableData.data = this.tableData.data.map(entity => {
-                // API can skip the field if there is no stat
-                entity.offline = entity.offline || 0
-                entity.online = entity.online || 0
-                entity.total = entity.total || 0
-                entity.totalOnline = `${entity.online} / ${entity.total}`
+                const { dataplanes = {} } = entity
+                const { online = 0, total = 0 } = dataplanes
 
-                if (entity.online === 0) {
-                  entity.status = 'Offline'
-                } else if (entity.online === entity.total) {
-                  entity.status = 'Online'
-                } else {
-                  entity.status = 'Partially degraded'
+                entity.totalOnline = `${online} / ${total}`
+
+                switch (entity.status) {
+                  case 'online':
+                    entity.status = 'Online'
+                    break
+                  case 'partially_degraded':
+                    entity.status = 'Partially degraded'
+                    break
+                  case 'offline':
+                  default:
+                    entity.status = 'Offline'
                 }
 
                 return entity
