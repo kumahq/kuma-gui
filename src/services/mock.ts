@@ -68,7 +68,8 @@ const mockFilenameBasePaths = [
   '/meshes/default/dataplanes+insights/cluster-1.gateway-01',
   '/meshes/default/dataplanes+insights/backend',
   '/meshes/default/dataplanes+insights/frontend',
-  '/meshes/default/dataplanes+insights/db'
+  '/meshes/default/dataplanes+insights/db',
+  '/meshes/default/dataplanes+insights/no-subscriptions',
 ] as const
 
 type MockFilename = typeof mockFilenameBasePaths[number]
