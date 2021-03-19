@@ -477,17 +477,8 @@ export default {
         try {
           const response = await this.$api.getDataplaneOverviewFromMesh(mesh, name)
           const { dataplane = {}, dataplaneInsight = {} } = response
+          const { name: responseName = '', mesh: responseMesh = '' } = response
           const { subscriptions = [] } = dataplaneInsight
-          const placeholder = 'n/a'
-
-          let lastConnected = 'never'
-          let lastUpdated = 'never'
-          let totalUpdates = []
-          let totalRejectedUpdates = []
-          let dpVersion = '-'
-          let envoyVersion = '-'
-          const connectTimes = []
-          const updateTimes = []
 
           /**
            * Handle our tag collections based on the dataplane type.
@@ -499,67 +490,71 @@ export default {
           /**
            * Iterate through the subscriptions
            */
-          subscriptions.forEach(item => {
-            const responsesSent = item.status.total.responsesSent || 0
-            const rejectedResponsesSent = item.status.total.responsesRejected || 0
-            const connectTime = item.connectTime || placeholder
-            const lastUpdateTime = item.status.lastUpdateTime || placeholder
-
-            totalUpdates.push(parseInt(responsesSent))
-            totalRejectedUpdates.push(parseInt(rejectedResponsesSent))
-            connectTimes.push(connectTime)
-            updateTimes.push(lastUpdateTime)
-
-            if (item.version && item.version.kumaDp) {
-              dpVersion = item.version.kumaDp.version
-              envoyVersion = item.version.envoy.version
-            }
-          })
-
-          // get the sum of total updates (with some precautions)
-          totalUpdates = totalUpdates.reduce((a, b) => a + b)
-          // get the sum of total rejection
-          totalRejectedUpdates = totalRejectedUpdates.reduce((a, b) => a + b)
-          // select the most recent LAST CONNECTED timestamp
-          const selectedTime = connectTimes.reduce((a, b) => {
-            if (a && b) {
-              return a.MeasureDate > b.MeasureDate ? a : b
-            }
-
-            return null
-          })
-
-          // select the most recent LAST UPDATED timestamp
-          const selectedUpdateTime = updateTimes.reduce((a, b) => {
-            if (a && b) {
-              return a.MeasureDate > b.MeasureDate ? a : b
-            }
-
-            return null
-          })
-
-          // format each reduced value as a date to compare against
-          const selectedTimeAsDate = new Date(selectedTime)
-          const selectedUpdateTimeAsDate = new Date(selectedUpdateTime)
-
-          /**
-           * @todo refactor this to use a function instead
-           */
-
-          // formatted time for LAST CONNECTED (if there is a value present)
-          if (selectedTime && !isNaN(selectedTimeAsDate)) {
-            lastConnected = humanReadableDate(selectedTimeAsDate)
+          const initial = {
+            totalUpdates: 0,
+            totalRejectedUpdates: 0,
+            dpVersion: '-',
+            envoyVersion: '-',
+            selectedTime: NaN,
+            selectedUpdateTime: NaN,
           }
 
-          // formatted time for LAST UPDATED (if there is a value present)
-          if (selectedUpdateTime && !isNaN(selectedUpdateTimeAsDate)) {
-            lastUpdated = humanReadableDate(selectedUpdateTimeAsDate)
-          }
+          const reduced = subscriptions.reduce((acc, curr) => {
+            const { status = {}, connectTime, version = {} } = curr
+            const { total = {}, lastUpdateTime } = status
+            const { responsesSent = '0', responsesRejected = '0' } = total
+            const { kumaDp = {}, envoy = {} } = version
+            const { version: dpVersion } = kumaDp
+            const { version: envoyVersion } = envoy
+
+            let { selectedTime, selectedUpdateTime } = acc
+
+            const connectDate = Date.parse(connectTime)
+            const lastUpdateDate = Date.parse(lastUpdateTime)
+
+            if (connectDate) {
+              if (!selectedTime || connectDate > selectedTime) {
+                selectedTime = connectDate
+              }
+            }
+
+            if (lastUpdateDate) {
+              if (!selectedUpdateTime || lastUpdateDate > selectedUpdateTime) {
+                selectedUpdateTime = lastUpdateDate
+              }
+            }
+
+            return {
+              totalUpdates: acc.totalUpdates + parseInt(responsesSent),
+              totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(responsesRejected),
+              dpVersion: dpVersion || acc.dpVersion,
+              envoyVersion: envoyVersion || acc.envoyVersion,
+              selectedTime,
+              selectedUpdateTime,
+            }
+          }, initial)
+
+          const {
+            totalUpdates,
+            totalRejectedUpdates,
+            dpVersion,
+            envoyVersion,
+            selectedTime,
+            selectedUpdateTime,
+          } = reduced
+
+          const lastConnected = selectedTime
+            ? humanReadableDate(new Date(selectedTime).toUTCString())
+            : 'never'
+
+          const lastUpdated = selectedUpdateTime
+            ? humanReadableDate(new Date(selectedUpdateTime).toUTCString())
+            : 'never'
 
           // assemble the table data
           const item = {
-            name: response.name,
-            mesh: response.mesh,
+            name: responseName,
+            mesh: responseMesh,
             tags: tags,
             status: status,
             lastConnected: lastConnected,
