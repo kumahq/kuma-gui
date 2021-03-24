@@ -34,7 +34,7 @@ export default {
   name: 'UpgradeCheck',
   data () {
     return {
-      url: `${process.env.VUE_APP_INSTALL_URL}?utm_source=Kuma-GUI`,
+      url: `${process.env.VUE_APP_INSTALL_URL}${process.env.VUE_APP_UTM}`,
       latestVerSrc: process.env.VUE_APP_VERSION_URL,
       latestVer: null,
       showNotice: false
