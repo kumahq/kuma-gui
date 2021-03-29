@@ -497,7 +497,7 @@ export default {
           this.yamlEntity = { name, ...rest }
 
           if (subscriptions.length) {
-            const { version = {} } = subscriptions.pop()
+            const { version = {} } = subscriptions[subscriptions.length - 1]
             const { kumaCp = {} } = version
 
             const kumaCpVersion = kumaCp.version || '-'
