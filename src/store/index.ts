@@ -972,10 +972,11 @@ export default (api: Kuma) => {
               size: state.pageSize,
             }
 
-            const response = await fetchAllResources(params)
+            const overviews = await fetchAllResources(params)
+            const statuses = await api.getZoneStatus({ size: state.pageSize })
 
-            dispatch('setOverviewZonesChartData', response)
-            dispatch('setOverviewZonesCPVersionsChartData', response)
+            dispatch('setOverviewZonesChartData', statuses)
+            dispatch('setOverviewZonesCPVersionsChartData', overviews)
           } else {
             await dispatch('getVersion')
 
@@ -1009,8 +1010,9 @@ export default (api: Kuma) => {
         dispatch('setOverviewEnvoyVersionsChartData')
       },
 
-      setOverviewZonesChartData({ state, commit }, { total, data }) {
-        const online = data.reduce((acc: TODO, { zone }: { zone: TODO }) => acc + (zone.enabled || 0), 0)
+      setOverviewZonesChartData({ state, commit }, statuses = []) {
+        const total = statuses.length
+        const online = statuses.filter(({ active }: { active: boolean }) => active).length
 
         const chartData = []
 
