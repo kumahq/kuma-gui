@@ -101,7 +101,7 @@ const menu: MenuSection[] = [
               name: 'Policies',
               title: true
             },
-            {
+            ...[{
               name: 'Circuit Breakers',
               link: 'circuit-breakers',
               title: false,
@@ -160,7 +160,7 @@ const menu: MenuSection[] = [
               link: 'timeouts',
               title: false,
               parent: 'policies'
-            }
+            }].sort((a, b) => a.name < b.name ? -1 : 1)
           ]
         }
       }
