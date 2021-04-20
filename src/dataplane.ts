@@ -218,7 +218,20 @@ export function checkVersionsCompatibility (
     return { kind: INCOMPATIBLE_WRONG_FORMAT }
   }
 
-  const requirements: TODO = kumaDp[kumaDpVersion]
+  const versionKeys = Object.keys(kumaDp)
+  let requirements: TODO = kumaDp[kumaDpVersion]
+
+  if (!requirements) {
+    for (let i = 0; i < versionKeys.length; i++) {
+      const currentVersion = versionKeys[i]
+
+      if (satisfies(kumaDpVersion, currentVersion)) {
+        requirements = kumaDp[currentVersion]
+
+        break
+      }
+    }
+  }
 
   if (!requirements) {
     return {
