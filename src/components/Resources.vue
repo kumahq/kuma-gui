@@ -40,7 +40,7 @@ export default {
         ? storedVersion
         : 'latest'
 
-      const utmSource = '?utm_source=Kuma-GUI'
+      const utmSource = process.env.VUE_APP_UTM
 
       if (storedVersion) {
         return [

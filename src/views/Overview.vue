@@ -82,7 +82,7 @@
       <div>
         <CardSkeleton
           class="card-item"
-          card-action-route="https://kuma.io/policies/?utm_source=Kuma-GUI"
+          :card-action-route="cardActionPoliciesRoute"
           :card-title="`Apply ${title} policies`"
           card-action-button-text="Explore Policies"
         >
@@ -135,6 +135,9 @@ export default {
       areServicesLoading: 'getServiceResourcesFetching',
       getChart: 'getChart',
     }),
+    cardActionPoliciesRoute () {
+      return `https://kuma.io/policies/${process.env.VUE_APP_UTM}`
+    },
     dataplanesChart () {
       return this.getChart('dataplanes')
     },

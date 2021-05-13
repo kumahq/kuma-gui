@@ -589,7 +589,7 @@
           </p>
           <p>
             <a
-              :href="`https://kuma.io/docs/${version}/policies/mesh/?utm_source=Kuma-GUI`"
+              :href="`https://kuma.io/docs/${version}/policies/mesh/${process.env.VUE_APP_UTM}`"
               target="_blank"
             >
               Learn More
