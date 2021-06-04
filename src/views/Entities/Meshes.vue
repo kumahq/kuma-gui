@@ -303,6 +303,10 @@ export default {
           value: state.totalTrafficTraceCountFromMesh
         },
         {
+          title: 'Rate Limits',
+          value: state.totalRateLimitCountFromMesh
+        },
+        {
           title: 'Retries',
           value: state.totalRetryCountFromMesh
         },
@@ -467,6 +471,7 @@ export default {
                 'fetchFaultInjectionTotalCountFromMesh',
                 'fetchCircuitBreakerTotalCountFromMesh',
                 'fetchTimeoutTotalCountFromMesh',
+                'fetchRateLimitTotalCountFromMesh',
                 'fetchRetryTotalCountFromMesh'
               ]
 

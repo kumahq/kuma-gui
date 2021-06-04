@@ -220,6 +220,11 @@ export default {
           url: `/${mesh}/traffic-traces`,
         },
         {
+          metric: 'Rate Limits',
+          value: policies.RateLimit.total,
+          url: `/${mesh}/rate-limits`,
+        },
+        {
           metric: 'Retries',
           value: policies.Retry.total,
           url: `/${mesh}/retries`,
