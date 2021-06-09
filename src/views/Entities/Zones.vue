@@ -31,7 +31,7 @@
       </template>
     </KEmptyState>
 
-    <!-- Remote CPs information for when Multicluster is enabled -->
+    <!-- Zone CPs information for when Multicluster is enabled -->
     <FrameSkeleton v-else>
       <DataOverview
         :page-size="pageSize"
@@ -262,7 +262,7 @@ export default {
           { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
-          { label: 'Remote CP Version', key: 'remoteCpVersion' },
+          { label: 'Zone CP Version', key: 'zoneCpVersion' },
           { key: 'warnings', hideLabel: true },
         ],
         data: []
@@ -405,26 +405,26 @@ export default {
 
                 i.status = status
 
-                // make call to get zone remote-cp version
+                // make call to get zone zone-cp version
                 this.$api.getZoneOverview(i.name)
                   .then((response) => {
-                    let remoteCpVersion = '-'
+                    let zoneCpVersion = '-'
                     if (response.zoneInsight.subscriptions && response.zoneInsight.subscriptions.length) {
                       response.zoneInsight.subscriptions.forEach((item, index) => {
                         if (item.version && item.version.kumaCp) {
-                          remoteCpVersion = item.version.kumaCp.version
+                          zoneCpVersion = item.version.kumaCp.version
                         }
                       })
                     }
 
-                    i.remoteCpVersion = remoteCpVersion
+                    i.zoneCpVersion = zoneCpVersion
 
-                    if (remoteCpVersion !== this.globalCpVersion) {
+                    if (zoneCpVersion !== this.globalCpVersion) {
                       i.withWarnings = true
                     }
                   }).catch(error => {
                     // if zone overview fails show version as empty instead of showing error.
-                    i.remoteCpVersion = '-'
+                    i.zoneCpVersion = '-'
                     i.withWarnings = true
 
                     console.error(error)

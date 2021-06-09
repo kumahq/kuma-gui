@@ -234,7 +234,7 @@ export default {
         if (name.includes('.')) { // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
           const parts = name.split('.')
           const namespace = parts.pop()
-          const k8sName = parts.join('.') // on multi-zone when dataplanes from remote are synced to global the format is 'name.<remote-ns>.<global-ns>' so the name is `name.<remote-ns>`
+          const k8sName = parts.join('.') // on multi-zone when dataplanes from zone are synced to global the format is 'name.<zone-ns>.<global-ns>' so the name is `name.<remote-ns>`
 
           newObj.metadata = {
             name: k8sName,
