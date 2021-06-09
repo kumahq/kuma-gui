@@ -308,6 +308,15 @@ export default (store: Store<any>) => {
           },
           component: () => import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates.vue')
         },
+        // rate limits
+        {
+          path: 'rate-limits',
+          name: 'rate-limits',
+          meta: {
+            title: 'Rate Limits'
+          },
+          component: () => import(/* webpackChunkName: "rate-limits" */ '@/views/Policies/RateLimits.vue')
+        },
         // retries
         {
           path: 'retries',

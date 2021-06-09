@@ -45,6 +45,9 @@ const getInitialPolicies = () => ({
   TrafficTrace: {
     total: 0,
   },
+  RateLimit: {
+    total: 0,
+  },
   Retry: {
     total: 0,
   },

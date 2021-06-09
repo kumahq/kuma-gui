@@ -150,6 +150,12 @@ const menu: MenuSection[] = [
               parent: 'policies'
             },
             {
+              name: 'Rate Limits',
+              link: 'rate-limits',
+              title: false,
+              parent: 'policies'
+            },
+            {
               name: 'Retries',
               link: 'retries',
               title: false,

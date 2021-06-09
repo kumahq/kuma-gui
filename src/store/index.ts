@@ -43,6 +43,7 @@ export default (api: Kuma) => {
       totalTrafficTraceCount: 0,
       totalFaultInjectionCount: 0,
       totalCircuitBreakerCount: 0,
+      totalRateLimitCount: 0,
       totalRetryCount: 0,
       totalTimeoutCount: 0,
       totalDataplaneList: [],
@@ -59,6 +60,7 @@ export default (api: Kuma) => {
       totalInternalServiceCountFromMesh: 0,
       totalExternalServiceCountFromMesh: 0,
       totalDataplaneCountFromMesh: 0,
+      totalRateLimitCountFromMesh: 0,
       totalRetryCountFromMesh: 0,
       totalTimeoutCountFromMesh: 0,
       tagline: null,
@@ -133,6 +135,7 @@ export default (api: Kuma) => {
       getTotalTrafficTraceCount: (state) => state.totalTrafficTraceCount,
       getTotalFaultInjectionCount: (state) => state.totalFaultInjectionCount,
       getTotalCircuitBreakerCount: (state) => state.totalCircuitBreakerCount,
+      getTotalRateLimitCount: (state) => state.totalRateLimitCount,
       getTotalRetryCount: (state) => state.totalRetryCount,
       getTotalTimeoutCount: (state) => state.totalTimeoutCount,
       // total counts per single mesh
@@ -147,6 +150,7 @@ export default (api: Kuma) => {
       getTotalTrafficTracesCountFromMesh: (state) => state.totalTrafficTraceCountFromMesh,
       getTotalFaultInjectionsCountFromMesh: (state) => state.totalFaultInjectionCountFromMesh,
       getTotalCircuitBreakersCountFromMesh: (state) => state.totalCircuitBreakerCountFromMesh,
+      getTotalRateLimitCountFromMesh: (state) => state.totalRateLimitCountFromMesh,
       getTotalRetryCountFromMesh: (state) => state.totalRetryCountFromMesh,
       getTotalTimeoutCountFromMesh: (state) => state.totalTimeoutCountFromMesh,
       getVersion: (state) => state.version,
@@ -221,6 +225,7 @@ export default (api: Kuma) => {
       SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
       SET_TOTAL_FAULT_INJECTION_COUNT: (state, count) => (state.totalFaultInjectionCount = count),
       SET_TOTAL_CIRCUIT_BREAKER_COUNT: (state, count) => (state.totalCircuitBreakerCount = count),
+      SET_TOTAL_RATE_LIMIT_COUNT: (state, count) => (state.totalRateLimitCount = count),
       SET_TOTAL_RETRY_COUNT: (state, count) => (state.totalRetryCount = count),
       SET_TOTAL_TIMEOUT_COUNT: (state, count) => (state.totalTimeoutCount = count),
       SET_TOTAL_DATAPLANE_COUNT_FROM_MESH: (state, count) => (state.totalDataplaneCountFromMesh = count),
@@ -234,6 +239,7 @@ export default (api: Kuma) => {
       SET_TOTAL_TRAFFIC_TRACE_COUNT_FROM_MESH: (state, count) => (state.totalTrafficTraceCountFromMesh = count),
       SET_TOTAL_FAULT_INJECTION_COUNT_FROM_MESH: (state, count) => (state.totalFaultInjectionCountFromMesh = count),
       SET_TOTAL_CIRCUIT_BREAKER_COUNT_FROM_MESH: (state, count) => (state.totalCircuitBreakerCountFromMesh = count),
+      SET_TOTAL_RATE_LIMIT_COUNT_FROM_MESH: (state, count) => (state.totalRateLimitCountFromMesh = count),
       SET_TOTAL_RETRY_COUNT_FROM_MESH: (state, count) => (state.totalRetryCountFromMesh = count),
       SET_TOTAL_TIMEOUT_COUNT_FROM_MESH: (state, count) => (state.totalTimeoutCountFromMesh = count),
       SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
@@ -534,6 +540,21 @@ export default (api: Kuma) => {
           })
       },
 
+      // get the total number of rate limits present
+      fetchRateLimitTotalCount ({ commit }) {
+        const params = { size: 1 }
+
+        return api.getAllRateLimits(params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_RATE_LIMIT_COUNT', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
       // get the total number of retries present
       fetchRetryTotalCount ({ commit }) {
         const params = { size: 1 }
@@ -727,6 +748,21 @@ export default (api: Kuma) => {
             const total = response.total
 
             commit('SET_TOTAL_CIRCUIT_BREAKER_COUNT_FROM_MESH', total)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      },
+
+      // get the total number of rate limits from a specific mesh
+      fetchRateLimitTotalCountFromMesh ({ commit }, mesh) {
+        const params = { size: 1 }
+
+        return api.getAllRateLimitsFromMesh(mesh, params)
+          .then(response => {
+            const total = response.total
+
+            commit('SET_TOTAL_RATE_LIMIT_COUNT_FROM_MESH', total)
           })
           .catch(error => {
             console.error(error)

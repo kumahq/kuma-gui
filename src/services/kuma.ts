@@ -275,6 +275,25 @@ export default class Kuma {
   }
 
   /**
+   * Rate Limits
+   */
+
+  // get all rate limits
+  getAllRateLimits (params: any) {
+    return this.client.get('/rate-limits', { params })
+  }
+
+  // get all rate limits from mesh
+  getAllRateLimitsFromMesh (mesh: string, params: any) {
+    return this.client.get(`/meshes/${mesh}/rate-limits`, { params })
+  }
+
+  // get rate limit details
+  getRateLimit (mesh: string, ratelimit: string, params: any) {
+    return this.client.get(`/meshes/${mesh}/rate-limits/${ratelimit}`, { params })
+  }
+
+  /**
    * Retries
    */
 
