@@ -109,6 +109,30 @@ export function getStatus (dataplane: DataPlane, dataplaneInsight: TODO = {}) {
   }
 }
 
+/*
+getStatus takes ZoneIngressInsight and returns the status 'Online' or 'Offline'
+ */
+export function getZoneIngressStatus (zoneIngressInsight: TODO = {}) {
+  const subscriptions = zoneIngressInsight.subscriptions
+    ? zoneIngressInsight.subscriptions
+    : []
+
+  const proxyOnline = subscriptions
+    .some((item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime)
+
+  const status = () => {
+    if (proxyOnline) {
+      return 'Online'
+    }
+
+    return 'Offline'
+  }
+
+  return {
+    status: status(),
+  }
+}
+
 export function getStatusFromObject ({ dataplane, dataplaneInsight }: { dataplane: DataPlane, dataplaneInsight: TODO}) {
   return getStatus(dataplane, dataplaneInsight)
 }

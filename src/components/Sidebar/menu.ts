@@ -50,6 +50,12 @@ const menu: MenuSection[] = [
               // multicluster: true
             },
             {
+              name: 'Zone Ingresses',
+              link: 'zoneingresses'
+              // root: true
+              // multicluster: true
+            },
+            {
               name: 'Meshes',
               link: 'mesh-child',
               pathFlip: true
@@ -82,12 +88,6 @@ const menu: MenuSection[] = [
             {
               name: 'Standard',
               link: 'standard-dataplanes',
-              title: false,
-              nested: true
-            },
-            {
-              name: 'Ingress',
-              link: 'ingress-dataplanes',
               title: false,
               nested: true
             },

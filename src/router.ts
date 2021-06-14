@@ -123,6 +123,15 @@ export default (store: Store<any>) => {
       },
       component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones.vue')
     },
+    // Zone Ingresses
+    {
+      path: '/zone-ingresses',
+      name: 'zoneingresses',
+      meta: {
+        title: 'Zone Ingresses'
+      },
+      component: () => import(/* webpackChunkName: "zoneingresses" */ '@/views/Entities/ZoneIngresses.vue')
+    },
     // all Meshes
     {
       path: '/meshes',
@@ -194,16 +203,6 @@ export default (store: Store<any>) => {
           meta: {
             title: 'Standard Data Plane Proxies',
             breadcrumb: 'Standard Data Plane Proxies'
-          }
-        },
-        // ingress dataplanes
-        {
-          path: 'ingress-dataplanes',
-          name: 'ingress-dataplanes',
-          component: () => import(/* webpackChunkName: "dataplanes-ingress" */ '@/views/Entities/IngressDataplanes.vue'),
-          meta: {
-            title: 'Ingress Data Plane Proxies',
-            breadcrumb: 'Ingress Data Plane Proxies'
           }
         },
         // gateway dataplanes
