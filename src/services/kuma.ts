@@ -69,6 +69,20 @@ export default class Kuma {
   }
 
   /**
+   * Zone Ingress Insights
+   */
+
+  // Get all Zone Ingress Insights/Overviews
+  getAllZoneIngressOverviews (params: any) {
+    return this.client.get('/zoneingresses+insights', { params })
+  }
+
+  // Get a single Zone Ingress Insight/Overview
+  getZoneIngressOverview (name: string, params?: any) {
+    return this.client.get(`/zoneingresses+insights/${name}`, { params })
+  }
+
+  /**
    * Meshes
    */
 
