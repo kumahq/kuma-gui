@@ -589,7 +589,7 @@
           </p>
           <p>
             <a
-              :href="`https://kuma.io/docs/${version}/policies/mesh/${process.env.VUE_APP_UTM}`"
+              :href="`https://kuma.io/docs/${version}/policies/mesh/${utm}`"
               target="_blank"
             >
               Learn More
@@ -702,7 +702,8 @@ export default {
         meshTracingBackend: '',
         meshMetricsName: ''
       },
-      vmsg: []
+      vmsg: [],
+      utm: process.env.VUE_APP_UTM
     }
   },
   computed: {
