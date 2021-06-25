@@ -305,8 +305,11 @@ export default {
               }
 
               this.tableData.data = this.tableData.data.map(entity => {
-                entity.address = entity.networking.address
-                entity.tlsEnabled = entity.networking.tls.enabled ? 'Enabled' : 'Disabled'
+                const { networking = {} } = entity
+                const { tls = {} } = networking
+
+                entity.address = networking.address
+                entity.tlsEnabled = tls.enabled ? 'Enabled' : 'Disabled'
 
                 return entity
               })
