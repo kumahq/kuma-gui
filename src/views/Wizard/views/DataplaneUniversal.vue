@@ -582,7 +582,7 @@ export default {
     generateDpTokenCodeOutput () {
       const { meshName, univDataplaneId } = this.validate
 
-      const cmdStructure = `kumactl generate dataplane-token --dataplane=${univDataplaneId} > kuma-token-${univDataplaneId}`
+      const cmdStructure = `kumactl generate dataplane-token --name=${univDataplaneId} > kuma-token-${univDataplaneId}`
 
       return cmdStructure
     },
