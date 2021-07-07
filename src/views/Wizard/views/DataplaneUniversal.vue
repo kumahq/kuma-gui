@@ -592,10 +592,8 @@ export default {
      */
     startDpCodeOutput () {
       // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
-      const { meshName, univDataplaneId } = this.validate
+      const { univDataplaneId } = this.validate
       const cmdStructure = `kuma-dp run \\
-      --name=${univDataplaneId} \\
-      --mesh=${meshName} \\
       --cp-address=${this.getDpServerUrl} \\
       --dataplane=${`"${json2yaml(this.getDataplaneSchema)}"`} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
