@@ -1,9 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import Mock from '@/services/mock'
-
-export interface RestClientOptions {
-  injectMocks: any
-}
+import { RestRequest } from 'msw'
 export default class RestClient {
   headers: Record<string, string>
 
@@ -13,26 +9,14 @@ export default class RestClient {
 
   host: string
 
-  constructor (options?: RestClientOptions) {
-    const opts = options || {
-      injectMocks: undefined
-    }
-
+  constructor () {
     // this.host = opts.url
     this.host = ''
 
     // leave this blank!
     this.headers = {}
 
-    // RestClient.setupMocks(opts.injectMocks)
-
-    /**
-     * We no longer need to run this because the setup is done
-     * at app launch before anything else happens.
-     */
-    // RestClient.apiConfig()
-
-    RestClient.setupMocks(opts.injectMocks)
+    RestClient.setupMocks()
     this.client = RestClient.axiosInit()
     this.clientConfig = RestClient.kumaClientConfig()
   }
@@ -68,23 +52,28 @@ export default class RestClient {
     })
   }
 
-  /**
-   * Setup mock endpoints that override axios calls
-   * @param {Object} injectMocks - the mock endpoint functions defined by any
-   * external plugins - if they exist. If not, then it passes the real (unmocked) response.
-   */
-  static setupMocks (injectMocks: ((mock: any) => void)[]|undefined) {
-    const mock = new Mock(axios)
+  static setupMocks () {
     if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
-      mock.setupMockEndpoints()
-    } else {
-      if (injectMocks && injectMocks.length) {
-        injectMocks.forEach(injectedMock => {
-          injectedMock(mock.mock)
-        })
-      }
+      const { worker } = require('./mock')
 
-      mock.setupPluginMocks()
+      worker.start({
+        onUnhandledRequest(req: RestRequest) {
+          if (
+            // to do not inform us about not handled XHRs which are conneceted to resources
+            req.url.pathname.startsWith('/fonts') ||
+            req.url.pathname.startsWith('/img') ||
+            req.url.pathname.startsWith('/js')
+          ) {
+            return
+          }
+
+          console.info(
+            'Found an unhandled %s request to %s',
+            req.method,
+            req.url.href,
+          )
+        }
+      })
     }
   }
 

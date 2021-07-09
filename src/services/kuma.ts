@@ -1,16 +1,11 @@
-import RestClient, { RestClientOptions } from '@/services/restClient'
+import RestClient from '@/services/restClient'
 import { AxiosRequestConfig } from 'axios'
 
 export default class Kuma {
   client: RestClient
 
-  options: RestClientOptions
-
-  constructor (options?: any) {
-    const opts = options || {}
-
-    this.options = opts
-    this.client = new RestClient(opts)
+  constructor () {
+    this.client = new RestClient()
   }
 
   buildUrl (path: string) {
