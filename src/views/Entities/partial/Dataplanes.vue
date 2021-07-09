@@ -191,10 +191,10 @@ import {
   checkKumaDpAndZoneVersionsMismatch, checkVersionsCompatibility,
   dpTags,
   getDataplane,
-  getDataplaneInsight, getDataplaneType,
+  getDataplaneInsight,
+  getDataplaneType,
   getStatus,
   parseMTLSData,
-
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP, INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS, INCOMPATIBLE_WRONG_FORMAT,
@@ -245,10 +245,6 @@ export default {
         return {}
       },
     },
-    getDataplaneType: {
-      type: Function,
-      default: getDataplaneType,
-    },
     tableHeaders: {
       type: Array,
       default () {
@@ -290,22 +286,6 @@ export default {
           },
         ]
       },
-    },
-    buildEntity: {
-      type: Function,
-      default (basicData, tags, dataplaneInsight) {
-        const mtls = dataplaneInsight.mTLS
-          ? parseMTLSData(dataplaneInsight.mTLS)
-          : null
-
-        return { basicData, tags, mtls }
-      }
-    },
-    addDataFields: {
-      type: Function,
-      default () {
-        return {}
-      }
     },
     showMtls: {
       type: Boolean,
@@ -392,6 +372,13 @@ export default {
   },
   methods: {
     ...mapActions(['fetchSupportedVersions']),
+    buildEntity (basicData, tags, dataplaneInsight) {
+      const mtls = dataplaneInsight.mTLS
+        ? parseMTLSData(dataplaneInsight.mTLS)
+        : null
+
+      return { basicData, tags, mtls }
+    },
     init () {
       this.loadData()
     },
@@ -567,8 +554,7 @@ export default {
             unsupportedEnvoyVersion: false,
             unsupportedKumaDPVersion: false,
             kumaDpAndKumaCpMismatch: false,
-            type: this.getDataplaneType(),
-            ...this.addDataFields(dataplane),
+            type: getDataplaneType(dataplane),
           }
 
           const { kind } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
@@ -618,7 +604,7 @@ export default {
       try {
         const response = await endpoint()
 
-        const items = () => {
+        const getItems = () => {
           const r = response
 
           if ('total' in r) {
@@ -632,7 +618,9 @@ export default {
           return r
         }
 
-        if (items()) {
+        const items = getItems()
+
+        if (items) {
           // check to see if the `next` url is present
           if (response.next) {
             this.next = getOffset(response.next)
@@ -643,8 +631,8 @@ export default {
 
           const final = []
           const itemSelect = query
-            ? items()
-            : items()[0]
+            ? items
+            : items[0]
 
           // set the first item as the default for initial load
           this.firstEntity = itemSelect.name
@@ -658,7 +646,7 @@ export default {
           if ((query && query.length) && (mesh && mesh.length)) {
             await dpFetcher(mesh, query, final)
           } else {
-            const promises = items().map(item => dpFetcher(item.mesh, item.name, final))
+            const promises = items.map(item => dpFetcher(item.mesh, item.name, final))
 
             await Promise.all(promises)
           }

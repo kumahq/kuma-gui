@@ -21,9 +21,6 @@ export default {
         gateway: true,
       },
       emptyStateMsg: 'There are no Gateway data plane proxies present.',
-      getDataplaneType () {
-        return 'Gateway'
-      },
     }
   },
 }
