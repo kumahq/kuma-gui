@@ -2,7 +2,6 @@
   <div class="standard-dataplanes">
     <Dataplanes
       :dataplane-api-params="{ gateway: false, ingress: false }"
-      :get-dataplane-type="getDataplaneType"
       empty-state-msg="There are no Standard data plane proxies present."
     />
   </div>
@@ -18,11 +17,6 @@ export default {
   },
   components: {
     Dataplanes,
-  },
-  methods: {
-    getDataplaneType () {
-      return 'Standard'
-    }
   },
 }
 </script>
