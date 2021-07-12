@@ -54,7 +54,16 @@ export default class RestClient {
 
   static setupMocks () {
     if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
-      const { worker } = require('./mock')
+      const apiURL = localStorage.getItem('kumaApiUrl')
+
+      const { worker: setupWorker } = require('./mocks')
+
+      const worker = setupWorker(apiURL)
+
+      console.warn(
+        '%c ✨You are mocking api requests.',
+        'background: gray; color: white; display: block; padding: 0.25rem;'
+      )
 
       worker.start({
         onUnhandledRequest(req: RestRequest) {
