@@ -271,7 +271,7 @@ view). Your route would instead be structured like so: `/meshes/default`
 
 ### Creating mock data
 
-For handling mock data, we use [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter).
+For handling mock data, we use [msw](https://github.com/mswjs/msw).
 
 **NOTE: Mocking is enabled by default.** If you need to disable this in order to see only data coming from Kuma itself:
 
@@ -282,7 +282,7 @@ For handling mock data, we use [axios-mock-adapter](https://github.com/ctimmerm/
 #### Creating and modifying mocks
 
 All of our mock data is located in `src/services/mock.js`. We recommend reading the
-[documentation](https://github.com/ctimmerm/axios-mock-adapter#readme) for axios-mock-adapter to get an understanding
+[documentation](https://mswjs.io/docs/getting-started/mocks) for msw to get an understanding
 on how it works and what it has to offer.
 
 Right now, our mock file is quite large. If you are so inclined and would like to help us organize it better, please feel
