@@ -90,10 +90,7 @@ export default {
       type: Array,
       default: () => {}
     },
-    advanceCheck: {
-      type: Boolean,
-      default: false
-    },
+
     sidebarContent: {
       type: Array,
       required: true,
@@ -116,7 +113,7 @@ export default {
   computed: {
     step: {
       get () {
-        return this.steps[this.start].slug || 0
+        return this.steps[this.start].slug
       },
       set (index) {
         return this.steps[index].slug
@@ -127,6 +124,14 @@ export default {
     },
     indexCanReverse () {
       return this.start <= 0
+    }
+  },
+  watch: {
+    '$route.query.step'(val = 0) {
+      if (this.start !== val) {
+        this.start = val
+        this.$emit('goToNextStep', val)
+      }
     }
   },
   mounted () {
@@ -162,11 +167,11 @@ export default {
       const query = this.$route.query.step
 
       this.start = query || 0
-      this.updateQuery('step', this.start)
     },
     resetProcess () {
       // revert back to the first step
       this.start = 0
+
       // go to first step in the UI
       if (process.env.NODE_ENV === 'production') {
         this.goToStep(0)
@@ -246,6 +251,7 @@ export default {
 <style lang="scss" scoped>
 $sidebar-width: 320px; // was 240px
 $bp-min-width: 1220px;
+$bp-lg-min-width: 1760px;
 $bp-max-width: 1219px;
 
 .wizard-steps {
@@ -262,7 +268,6 @@ $bp-max-width: 1219px;
     }
 
     .wizard-steps__sidebar {
-      // position: fixed;
       position: absolute;
       top: 0;
       right: 0;
@@ -271,9 +276,16 @@ $bp-max-width: 1219px;
 
     .wizard-steps__sidebar__content {
       width: $sidebar-width;
-      height: 100vh;
+      height: calc(100vh - 80px);
       overflow-y: auto;
       overflow-x: hidden;
+    }
+  }
+
+  @media screen and (min-width: $bp-lg-min-width) {
+    .wizard-steps__content-wrapper {
+      width: calc(100% - #{$sidebar-width * 0.75});
+      padding: 0 16px;
     }
   }
 
@@ -316,15 +328,6 @@ $bp-max-width: 1219px;
       margin-bottom: var(--spacing-sm);
     }
   }
-
-  // a {
-  //   color: var(--blue-base);
-  //   text-decoration: underline;
-
-  //   &:hover, &:active {
-  //     color: #000;
-  //   }
-  // }
 
   code {
     display: block;

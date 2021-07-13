@@ -96,54 +96,45 @@ export default {
   },
   data () {
     return {
-      guiStatus: false,
-      statusContent: '',
       statusVersion: '',
       shortVersion: '',
-      env: ''
+      apiUrl: localStorage.getItem('kumaApiUrl')
     }
   },
   computed: {
     ...mapGetters({
       // this checks the status of the API itself
       status: 'getStatus',
+      environment: 'getEnvironment',
       // the currently selected mesh
       currentMesh: 'getSelectedMesh',
       // the status of multicluster
       multicluster: 'getMulticlusterStatus',
-      tagline: 'getTagline'
+      tagline: 'getTagline',
+      version: 'getVersion',
     }),
+    env() {
+      if (this.environment) {
+        return `${this.environment.charAt(0).toUpperCase()}${this.environment.slice(1)}`
+      }
+
+      return ''
+    },
     showStatus () {
       return !this.$route.meta.hideStatus && this.status === 'OK'
     },
     showEnterprise() {
       return process.env.VUE_APP_SHOW_ENTERPRISE_BUTTON === 'true'
-    }
-  },
-  beforeMount () {
-    this.getGuiStatus()
-  },
-  methods: {
-    getGuiStatus () {
-      // these localStorage items are set on app launch
-      const env = localStorage.getItem('kumaEnv')
-      const apiUrl = localStorage.getItem('kumaApiUrl')
-
-      // get the other values from our state
-      const tagline = this.$store.getters.getTagline
-      const version = this.$store.getters.getVersion
-      const truncVersion = `${version.substring(0, 12)} [...]`
-
-      if (env && apiUrl) {
-        this.env = `${env.charAt(0).toUpperCase()}${env.slice(1)}`
-        this.statusVersion = version
-        // this.statusContent = `${tagline} v${truncVersion}`
-        this.statusContent = `${tagline} v${version}`
-        this.guiStatus = true
-      } else {
-        this.statusContent = `Unable to determine ${tagline}'s status`
-        this.guiStatus = false
+    },
+    statusContent() {
+      if (this.guiStatus) {
+        return `${this.tagline} v${this.version}`
       }
+
+      return `Unable to determine ${this.tagline}'s status`
+    },
+    guiStatus() {
+      return Boolean(this.env && this.apiUrl)
     }
   }
 }

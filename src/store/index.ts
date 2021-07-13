@@ -25,7 +25,7 @@ export default (api: Kuma) => {
       config: null,
       environment: null,
       onboardingComplete: false,
-      globalLoading: null,
+      globalLoading: true,
       meshPageSize: 500,
       pageSize: 500,
       meshes: [],
@@ -305,6 +305,66 @@ export default (api: Kuma) => {
       SET_SUPPORTED_VERSIONS_FAILED: (state, value) => (state.supportedVersionsFailed = value),
     },
     actions: {
+      // bootstrap app
+
+      async bootstrap ({ commit, dispatch, getters }, routeMesh) {
+        // check the API status before we do anything else
+        await dispatch('getStatus')
+        // only dispatch these actions if the API is online
+        if (getters.getStatus === 'OK') {
+          // set the current environment
+          commit('SET_ENVIRONMENT', localStorage.getItem('kumaEnv'))
+
+          // fetch the mesh list
+          dispatch('fetchMeshList')
+          // fetch the tagline
+          dispatch('getTagline')
+          // fetch the config
+          dispatch('getConfig')
+
+          // fetch the version and store it in localStorage
+          dispatch('getVersion')
+            .then(() => {
+              const newVersion = getters.getVersion
+              const lsVersion = localStorage.getItem('kumaVersion') || null
+              // if the version stored in the browser is different than the
+              // version running, update the version in localStorage, and
+              // reload the page
+
+              if (lsVersion !== newVersion) {
+                // reload the app
+                window.location.reload()
+                // update the version in localStorage
+                localStorage.setItem('kumaVersion', newVersion)
+              } else {
+                store.commit('SET_GLOBAL_LOADING', { globalLoading: false })
+              }
+            })
+
+          // set the selected mesh in localStorage
+          const mesh = () => {
+            const lsMesh = localStorage.getItem('selectedMesh')
+            if (routeMesh) {
+              // if the `mesh` param is present, use that
+              return routeMesh
+            } else if (lsMesh && lsMesh !== 'undefined' && lsMesh.length > 0) {
+              // or use what's available in localStorage
+              return lsMesh
+            } else {
+              // otherwise, fall back to the default value from our VueX store
+              return getters.getSelectedMesh
+            }
+          }
+
+          // set the selected mesh in our VueX store
+          dispatch('updateSelectedMesh', mesh())
+          // update the selected mesh in localStorage
+          localStorage.setItem('selectedMesh', mesh())
+        } else {
+          store.commit('SET_GLOBAL_LOADING', { globalLoading: false })
+        }
+      },
+
       // update the onboarding state
       updateOnboardingStatus ({ commit }, status) {
         commit('SET_ONBOARDING_STATUS', status)
@@ -915,11 +975,6 @@ export default (api: Kuma) => {
       // set the selected table row in the state
       updateSelectedTableRow ({ commit }, row) {
         commit('SET_NEW_TABLE_ROW', row)
-      },
-
-      // set the user's environment (this is discovered upon app launch)
-      updateEnvironment ({ commit }, value) {
-        commit('SET_ENVIRONMENT', value)
       },
 
       // update the stored Wizard data for use in generating code output

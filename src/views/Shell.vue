@@ -1,25 +1,40 @@
 <template>
-  <div class="overview">
-    <page-header noflex>
-      <breadcrumbs />
-    </page-header>
-    <page-content>
-      <router-view />
-    </page-content>
+  <div
+    class="main-content-container"
+  >
+    <Sidebar />
+
+    <main
+      class="main-content"
+    >
+      <div
+        class="page"
+      >
+        <OnboardingCheck />
+        <div class="overview">
+          <PageHeader noflex>
+            <Breadcrumbs />
+          </PageHeader>
+          <router-view />
+        </div>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
+import Sidebar from '@/components/Sidebar/Sidebar'
+import OnboardingCheck from '@/components/Utils/OnboardingCheck'
 import PageHeader from '@/components/Utils/PageHeader.vue'
-import PageContent from '@/components/Utils/PageContent.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Shell',
   components: {
     PageHeader,
-    PageContent,
-    Breadcrumbs
+    Breadcrumbs,
+    Sidebar,
+    OnboardingCheck
   }
 }
 </script>

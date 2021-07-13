@@ -141,7 +141,6 @@
       </div>
       <div
         v-else
-        class="dataplane-fallback-wrapper"
       >
         <div class="dataplane-fallback">
           <div class="dataplane-fallback__inner flex -mx-4">
@@ -182,7 +181,6 @@
               <KButton
                 :to="{ name: 'kubernetes-dataplane' }"
                 appearance="primary"
-                @click.native="completeOnboarding()"
               >
                 Kubernetes data plane proxy wizard
               </KButton>
@@ -200,10 +198,7 @@
             <div class="cols">
               <KButton
                 :to="{
-                  name: 'universal-dataplane',
-                  params: {
-                    mesh: 'all'
-                  }
+                  name: 'universal-dataplane'
                 }"
                 appearance="primary"
               >
@@ -230,7 +225,7 @@
               expandSidebar: true
             }
           }"
-          appearance="primary"
+          appearance="secondary"
           size="small"
           @click.native="completeOnboarding()"
         >
@@ -247,7 +242,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import axios from 'axios'
-import { setItemToStorage, getItemFromStorage } from '@/Cache'
+import { setItemToStorage } from '@/Cache'
 import configUrl from '@/configUrl'
 
 export default {
@@ -259,7 +254,6 @@ export default {
   },
   data () {
     return {
-      appSource: false,
       appSourceError: false,
       tableDataLoadDelay: 1500,
       tableDataIsEmpty: true,
@@ -278,7 +272,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline'
+      title: 'getTagline',
+      appSource: 'getEnvironment'
     }),
     dataplaneCountForTitle () {
       const count = this.tableDataDataplaneCount
@@ -300,7 +295,6 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      this.getAppType()
       this.getDataplaneTableData()
       this.completeOnboarding()
     },
@@ -337,25 +331,7 @@ export default {
         })
     },
 
-    getAppType () {
-      axios
-        .get(configUrl())
-        .then(response => {
-          const kumaEnv = response.data.environment
-
-          if (response.status === 200 && kumaEnv && kumaEnv.length) {
-            this.appSource = kumaEnv
-          } else {
-            this.appSource = null
-          }
-        })
-        .catch(error => {
-          this.appSource = null
-          console.error(error)
-        })
-    },
-
-    completeOnboarding (route) {
+    completeOnboarding () {
       this.$store.dispatch('updateOnboardingStatus', true)
 
       setItemToStorage('kumaOnboardingComplete', true)
@@ -379,15 +355,16 @@ export default {
   border-radius: 4px;
 }
 
+.welcome {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .app-setup {
   padding: var(--spacing-md) 0;
   margin: var(--spacing-md) 0;
   border-top: 1px solid var(--grey-200);
-  // border-bottom: 1px solid var(--grey-200);
-}
-
-.app-source-check {
-
 }
 
 .app-source-check--error {
@@ -409,10 +386,6 @@ export default {
   > *:last-child {
     margin-left: auto;
   }
-}
-
-.dataplane-fallback-wrapper {
-
 }
 
 .dataplane-fallback {
@@ -464,21 +437,13 @@ export default {
   }
 }
 
-.dataplane-loading-state {
-
-}
-
-.dataplane-global-status {
-  // color: var(--red-base);
-  // font-weight: 500;
-}
-
 .dataplane-global-status__helper-text {
   border-top: 1px solid var(--grey-200);
 }
 
 .cols {
   display: flex;
+  justify-content: center;
   align-items: center;
   margin: 20px -8px;
 
@@ -488,6 +453,8 @@ export default {
 }
 
 .extra-controls {
+  display: flex;
+  justify-content: flex-end;
   border-top: 1px solid var(--grey-200);
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-sm);
@@ -495,14 +462,6 @@ export default {
 
 .dataplane-status-alert {
   padding: var(--spacing-xs) !important;
-}
-
-@media (min-width: 768px) {
-  .dataplane-global-status {
-    // display: flex;
-    // align-items: center;
-    // justify-content: space-between;
-  }
 }
 
 @media (max-width: 767px) {

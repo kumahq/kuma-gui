@@ -94,7 +94,7 @@ function VUE_APP () {
   Vue.prototype.$appWindow = window
 
   const store = Store(kuma)
-  const router = Router(store)
+  const router = Router()
 
   new Vue({
     store,

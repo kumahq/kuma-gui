@@ -11,6 +11,7 @@
 import { isValidUuid } from '@/helpers'
 
 export default {
+  name: 'Breadcrumbs',
   computed: {
     pageMesh () {
       return this.$route.params.mesh
