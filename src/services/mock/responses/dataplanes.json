@@ -1,18 +1,18 @@
 {
-  "total":2,
-  "items":[
+  "total": 2,
+  "items": [
     {
-      "mesh":"default",
-      "name":"gateway-dp-87qntx",
-      "networking":{},
-      "type":"Dataplane"
+      "mesh": "default",
+      "name": "dataplane-test-456",
+      "networking": {},
+      "type": "Dataplane"
     },
     {
-      "mesh":"default",
-      "name":"test-dp-02",
-      "networking":{},
-      "type":"Dataplane"
+      "mesh": "default",
+      "name": "ingress-dp-test-123",
+      "networking": {},
+      "type": "Dataplane"
     }
   ],
-  "next":null
+  "next": null
 }
