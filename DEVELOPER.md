@@ -451,3 +451,10 @@ All of our needed Tailwind components are included with the `src/assets/styles/t
 @tailwind components;
 @tailwind utilities;
 ```
+
+#### Testing
+
+For tests we use [vue-testing-library](https://github.com/testing-library/vue-testing-library).
+Overall we should place our tests next to the file which we are testing.
+For example if you have file in `./src/components/HelloWorld.vue` you should create test file in `./src/components/HelloWorld.spec.ts`.
+You can find some examples how we should structure our tests in `./tests/examples/*`.
