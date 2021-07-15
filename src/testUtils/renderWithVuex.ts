@@ -1,10 +1,10 @@
 import { render, RenderOptions, RenderResult } from '@testing-library/vue'
 import { StoreOptions } from 'vuex'
-import Vue, { VueConstructor } from 'vue'
+import Vue from 'vue'
 import Store from '@/store'
 import Kuma from '@/services/kuma'
 
-function renderWithVuex(Component: VueConstructor, options: RenderOptions<Vue> = { store: {}, routes: [] }): RenderResult {
+function renderWithVuex(Component: any, options: RenderOptions<Vue> = { store: {}, routes: [] }): RenderResult {
   const kuma: Kuma = new Kuma();
   const store: StoreOptions<any> = Store(kuma)
 
