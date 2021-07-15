@@ -47,6 +47,7 @@
                     id="dp-mesh"
                     v-model="validate.meshName"
                     class="k-input w-100"
+                    data-testid="mesh-select"
                   >
                     <option
                       disabled
@@ -133,10 +134,12 @@
           <FormFragment
             all-inline
             title="Service name"
+            for-attr="service-name"
           >
             <input
               id="service-name"
               v-model="validate.univDataplaneServiceName"
+              data-testid="service-name"
               type="text"
               class="k-input w-100 mr-4"
             >
@@ -600,9 +603,8 @@ export default {
     },
 
     nextDisabled() {
-      const mesh = this.validate.meshName
-
       const {
+        meshName,
         univDataplaneServiceName,
         univDataplaneId,
         univDataplaneNetworkAddress,
@@ -611,29 +613,21 @@ export default {
         univDataplaneNetworkProtocol
       } = this.validate
 
-      if (!mesh.length) {
+      if (!meshName.length) {
         return true
       }
 
       if (this.$route.query.step === '1') {
-        if (univDataplaneServiceName && univDataplaneId) {
-          return false
-        } else {
-          return true
-        }
+        return !(univDataplaneServiceName && univDataplaneId)
       }
 
       if (this.$route.query.step === '2') {
-        if (
+        return !(
           univDataplaneNetworkAddress &&
             univDataplaneNetworkServicePort &&
             univDataplaneNetworkDPPort &&
             univDataplaneNetworkProtocol
-        ) {
-          return false
-        } else {
-          return true
-        }
+        )
       }
 
       return false
@@ -723,6 +717,9 @@ export default {
         })
     },
     compeleteDataPlaneSetup() {
+      this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
+      localStorage.setItem('selectedMesh', this.validate.meshName)
+
       this.$router.push({
         name: 'dataplanes',
         params: {

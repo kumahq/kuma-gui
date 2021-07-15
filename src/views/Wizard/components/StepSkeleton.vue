@@ -90,7 +90,6 @@ export default {
       type: Array,
       default: () => {}
     },
-
     sidebarContent: {
       type: Array,
       required: true,

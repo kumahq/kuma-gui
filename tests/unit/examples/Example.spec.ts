@@ -1,5 +1,5 @@
 import { render } from '@testing-library/vue'
-import Example from '../../tests/unit/Example.vue'
+import Example from './Example.vue'
 
 describe('Example.vue', () => {
   const props = { msg: 'new message' }

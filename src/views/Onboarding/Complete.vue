@@ -138,13 +138,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.welcome {
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .app-checkmarks {
   margin: var(--spacing-xl) auto;
 

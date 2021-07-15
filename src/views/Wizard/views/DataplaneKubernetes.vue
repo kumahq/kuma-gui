@@ -783,22 +783,17 @@ export default {
     },
 
     nextDisabled() {
-      const mesh = this.validate.meshName
-
       const {
-        k8sNamespaceSelection
+        k8sNamespaceSelection,
+        meshName
       } = this.validate
 
-      if (!mesh.length) {
+      if (!meshName.length) {
         return true
       }
 
       if (this.$route.query.step === '1') {
-        if (k8sNamespaceSelection) {
-          return false
-        } else {
-          return true
-        }
+        return !k8sNamespaceSelection
       }
 
       return false
@@ -866,6 +861,9 @@ export default {
         })
     },
     compeleteDataPlaneSetup() {
+      this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
+      localStorage.setItem('selectedMesh', this.validate.meshName)
+
       this.$router.push({
         name: 'dataplanes',
         params: {

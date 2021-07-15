@@ -60,7 +60,6 @@ import { mapState } from 'vuex'
 export default {
 
   name: 'Sidebar',
-
   components: {
     MeshSelector,
     NavItem,

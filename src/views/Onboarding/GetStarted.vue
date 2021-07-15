@@ -355,12 +355,6 @@ export default {
   border-radius: 4px;
 }
 
-.welcome {
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .app-setup {
   padding: var(--spacing-md) 0;
   margin: var(--spacing-md) 0;
