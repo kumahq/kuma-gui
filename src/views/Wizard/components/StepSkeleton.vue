@@ -258,11 +258,11 @@ $bp-max-width: 1219px;
   @media screen and (min-width: $bp-min-width) {
     display: flex;
     align-items: stretch;
-    justify-content: stretch;
-    margin: 0 -16px;
+    justify-content: center;
+    margin-right: calc(320px - 44px);
 
     .wizard-steps__content-wrapper {
-      width: calc(100% - #{$sidebar-width});
+      width: 800px;
       padding: 0 16px;
     }
 
@@ -283,7 +283,7 @@ $bp-max-width: 1219px;
 
   @media screen and (min-width: $bp-lg-min-width) {
     .wizard-steps__content-wrapper {
-      width: calc(100% - #{$sidebar-width * 0.75});
+      width: 1000px;
       padding: 0 16px;
     }
   }
