@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { RootInterface } from '..';
+import { RootInterface } from '../..';
 
 export interface Auth {
       allowFromLocalhost: boolean;
@@ -336,10 +336,10 @@ export interface ClientConfigInterface {
   }
 
 export interface ConfigInterface {
+  clientConfig: ClientConfigInterface | null;
   status: string | null;
   tagline: string | null;
   version: string | null;
-  clientConfig: ClientConfigInterface | null;
 }
 
 export type ConfigType = Module<ConfigInterface, RootInterface>

@@ -1,6 +1,6 @@
 import Kuma from '@/services/kuma'
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { RootInterface } from '..'
+import { RootInterface } from '../..'
 import { ConfigInterface, ConfigType } from './config.types'
 
 const state: ConfigInterface = {
