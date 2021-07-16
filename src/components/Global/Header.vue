@@ -104,8 +104,8 @@ export default {
   computed: {
     ...mapGetters({
       // this checks the status of the API itself
-      status: 'getStatus',
-      environment: 'getEnvironment',
+      status: 'config2/getStatus',
+      environment: 'config2/getEnvironment',
       // the currently selected mesh
       currentMesh: 'getSelectedMesh',
       // the status of multicluster

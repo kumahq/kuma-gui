@@ -322,7 +322,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      environment: 'getEnvironment',
+      environment: 'config2/getEnvironment',
       queryNamespace: 'getItemQueryNamespace',
       supportedVersions: 'getSupportedVersions',
       supportedVersionsLoading: 'getSupportedVersionsFetching',

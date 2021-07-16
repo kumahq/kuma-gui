@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex, { StoreOptions } from 'vuex'
 
+import config from '@/store/modules/config'
 import sidebar from '@/store/modules/sidebar'
 
 import { fetchAllResources, filterResourceByMesh } from '@/helpers'
@@ -15,14 +16,17 @@ type TODO = any
 
 Vue.use(Vuex)
 
-export default (api: Kuma): StoreOptions<any> => ({
+export type RootInterface = any
+
+export default (api: Kuma): StoreOptions<RootInterface> => ({
   modules: {
-    sidebar
+    sidebar,
+    config2: config(api)
   },
   state: {
     menu: null,
     config: null,
-    environment: null,
+
     onboardingComplete: false,
     globalLoading: true,
     meshPageSize: 500,
@@ -64,7 +68,6 @@ export default (api: Kuma): StoreOptions<any> => ({
     totalTimeoutCountFromMesh: 0,
     tagline: null,
     version: '',
-    status: null,
     selectedTab: '#overview',
     selectedTableRow: null,
     storedWizardData: null,
@@ -154,11 +157,10 @@ export default (api: Kuma): StoreOptions<any> => ({
     getTotalTimeoutCountFromMesh: (state) => state.totalTimeoutCountFromMesh,
     getVersion: (state) => state.version,
     getTagline: (state) => state.tagline,
-    getStatus: (state) => state.status,
     getConfig: (state) => state.config,
     getSelectedTab: (state) => state.selectedTab,
     getSelectedTableRow: (state) => state.selectedTableRow,
-    getEnvironment: (state) => state.environment,
+
     getStoredWizardData: (state) => state.storedWizardData,
     getItemQueryNamespace: (state) => state.itemQueryNamespace,
     getMulticlusterStatus: (state) => {
@@ -245,11 +247,10 @@ export default (api: Kuma): StoreOptions<any> => ({
     SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
     SET_VERSION: (state, version) => (state.version = version),
     SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
-    SET_STATUS: (state, status) => (state.status = status),
     SET_CONFIG_DATA: (state, config) => (state.config = config),
     SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
     SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
-    SET_ENVIRONMENT: (state, value) => (state.environment = value),
+
     SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value),
 
     // NEW
@@ -306,13 +307,14 @@ export default (api: Kuma): StoreOptions<any> => ({
   actions: {
     // bootstrap app
 
-    async bootstrap ({ commit, dispatch, getters }, routeMesh) {
+    async bootstrap ({ commit, dispatch, getters, rootGetters }, routeMesh) {
       // check the API status before we do anything else
-      await dispatch('getStatus')
+      await dispatch('config2/getStatus', null, { root: true })
+
       // only dispatch these actions if the API is online
-      if (getters.getStatus === 'OK') {
+      if (rootGetters['config2/getStatus'] === 'OK') {
         // set the current environment
-        commit('SET_ENVIRONMENT', localStorage.getItem('kumaEnv'))
+        commit('config2/SET_ENVIRONMENT', localStorage.getItem('kumaEnv'))
 
         // fetch the mesh list
         dispatch('fetchMeshList')
@@ -947,14 +949,6 @@ export default (api: Kuma): StoreOptions<any> => ({
         })
         .catch(error => {
           console.error(error)
-        })
-    },
-
-    // get the status of the API
-    getStatus ({ commit }) {
-      return api.getStatus()
-        .then(response => {
-          commit('SET_STATUS', response)
         })
     },
 

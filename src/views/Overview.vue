@@ -126,7 +126,7 @@ export default {
   computed: {
     ...mapGetters({
       title: 'getTagline',
-      environment: 'getEnvironment',
+      environment: 'config2/getEnvironment',
       selectedMesh: 'getSelectedMesh',
       multicluster: 'getMulticlusterStatus',
       meshInsight: 'getMeshInsight',

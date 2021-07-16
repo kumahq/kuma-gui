@@ -734,7 +734,7 @@ export default {
     ...mapGetters({
       title: 'getTagline',
       version: 'getVersion',
-      environment: 'getEnvironment',
+      environment: 'config2/getEnvironment',
       formData: 'getStoredWizardData',
       selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'

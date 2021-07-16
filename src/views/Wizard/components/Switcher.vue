@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      environment: 'getEnvironment'
+      environment: 'config2/getEnvironment'
     }),
     instructionsCtaText () {
       return (this.environment === 'universal')

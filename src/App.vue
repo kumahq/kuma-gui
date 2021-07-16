@@ -44,7 +44,7 @@ export default {
       loading: state => state.globalLoading
     }),
     ...mapGetters({
-      status: 'getStatus'
+      status: 'config2/getStatus'
     })
   },
   beforeMount () {
