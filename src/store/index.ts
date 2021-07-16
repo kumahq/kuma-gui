@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuex, { StoreOptions } from 'vuex'
+import Vuex, { Module } from 'vuex'
 
 import config from '@/store/modules/config'
 import sidebar from '@/store/modules/sidebar'
@@ -18,15 +18,13 @@ Vue.use(Vuex)
 
 export type RootInterface = any
 
-export default (api: Kuma): StoreOptions<RootInterface> => ({
+export default (api: Kuma): Module<RootInterface, RootInterface> => ({
   modules: {
     sidebar,
-    config2: config(api)
+    config: config(api)
   },
   state: {
     menu: null,
-    config: null,
-
     onboardingComplete: false,
     globalLoading: true,
     meshPageSize: 500,
@@ -66,7 +64,6 @@ export default (api: Kuma): StoreOptions<RootInterface> => ({
     totalRateLimitCountFromMesh: 0,
     totalRetryCountFromMesh: 0,
     totalTimeoutCountFromMesh: 0,
-    tagline: null,
     version: '',
     selectedTab: '#overview',
     selectedTableRow: null,
@@ -155,32 +152,12 @@ export default (api: Kuma): StoreOptions<RootInterface> => ({
     getTotalRateLimitCountFromMesh: (state) => state.totalRateLimitCountFromMesh,
     getTotalRetryCountFromMesh: (state) => state.totalRetryCountFromMesh,
     getTotalTimeoutCountFromMesh: (state) => state.totalTimeoutCountFromMesh,
-    getVersion: (state) => state.version,
-    getTagline: (state) => state.tagline,
-    getConfig: (state) => state.config,
+
     getSelectedTab: (state) => state.selectedTab,
     getSelectedTableRow: (state) => state.selectedTableRow,
 
     getStoredWizardData: (state) => state.storedWizardData,
     getItemQueryNamespace: (state) => state.itemQueryNamespace,
-    getMulticlusterStatus: (state) => {
-      // is Kuma running in Multi-Zone mode?
-
-      let status
-
-      if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_FAKE_MULTIZONE === 'true') {
-        status = true
-
-        console.warn(
-          '%c ✨You are currently faking Multi-Zone mode.',
-          'background: black; color: white; display: block; padding: 0.25rem;'
-        )
-      } else {
-        status = (state.config.mode === 'global')
-      }
-
-      return status
-    },
     getClusterCount: (state) => state.totalClusters,
     getServiceInsightsFromMesh: ({ serviceInsights }) => {
       return filterResourceByMesh(serviceInsights)
@@ -245,12 +222,8 @@ export default (api: Kuma): StoreOptions<RootInterface> => ({
     SET_TOTAL_TIMEOUT_COUNT_FROM_MESH: (state, count) => (state.totalTimeoutCountFromMesh = count),
     SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
     SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
-    SET_VERSION: (state, version) => (state.version = version),
-    SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
-    SET_CONFIG_DATA: (state, config) => (state.config = config),
     SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
     SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
-
     SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value),
 
     // NEW
@@ -309,24 +282,21 @@ export default (api: Kuma): StoreOptions<RootInterface> => ({
 
     async bootstrap ({ commit, dispatch, getters, rootGetters }, routeMesh) {
       // check the API status before we do anything else
-      await dispatch('config2/getStatus', null, { root: true })
+      await dispatch('config/getStatus', null, { root: true })
 
       // only dispatch these actions if the API is online
-      if (rootGetters['config2/getStatus'] === 'OK') {
-        // set the current environment
-        commit('config2/SET_ENVIRONMENT', localStorage.getItem('kumaEnv'))
-
+      if (rootGetters['config/getStatus'] === 'OK') {
         // fetch the mesh list
         dispatch('fetchMeshList')
         // fetch the tagline
-        dispatch('getTagline')
+        dispatch('config/getTagline')
         // fetch the config
-        dispatch('getConfig')
+        dispatch('config/getConfig')
 
         // fetch the version and store it in localStorage
-        dispatch('getVersion')
+        dispatch('config/getVersion')
           .then(() => {
-            const newVersion = getters.getVersion
+            const newVersion = rootGetters['config/getVersion']
             const lsVersion = localStorage.getItem('kumaVersion') || null
             // if the version stored in the browser is different than the
             // version running, update the version in localStorage, and
@@ -930,36 +900,6 @@ export default (api: Kuma): StoreOptions<RootInterface> => ({
       return getDataplanes()
     },
 
-    // get the current version
-    getVersion ({ commit }) {
-      return api.getInfo()
-        .then(response => {
-          commit('SET_VERSION', response.version)
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
-
-    // get the current tagline
-    getTagline ({ commit }) {
-      return api.getInfo()
-        .then(response => {
-          commit('SET_TAGLINE', response.tagline)
-        })
-        .catch(error => {
-          console.error(error)
-        })
-    },
-
-    // get the general Kuma config (this differs from the API config endpoint)
-    getConfig ({ commit }) {
-      return api.getConfig()
-        .then(response => {
-          commit('SET_CONFIG_DATA', response)
-        })
-    },
-
     // allows us to set the selected tab outside of the Tabs component
     updateSelectedTab ({ commit }, tab) {
       commit('SET_NEW_TAB', tab)
@@ -1062,7 +1002,7 @@ export default (api: Kuma): StoreOptions<RootInterface> => ({
           dispatch('setOverviewZonesChartData', statuses)
           dispatch('setOverviewZonesCPVersionsChartData', overviews)
         } else {
-          await dispatch('getVersion')
+          await dispatch('config/getVersion')
 
           const zonesData = [{
             category: 'Zone',

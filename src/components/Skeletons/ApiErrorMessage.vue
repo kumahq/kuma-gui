@@ -30,7 +30,7 @@ export default {
       return localStorage.getItem('kumaApiUrl') || null
     },
     ...mapGetters({
-      tagline: 'getTagline'
+      tagline: 'config/getTagline'
     })
   }
 }

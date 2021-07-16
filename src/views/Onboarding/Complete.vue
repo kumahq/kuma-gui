@@ -106,7 +106,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline'
+      title: 'config/getTagline'
     }),
     hasUserBeenOnboarded () {
       return getItemFromStorage('kumaOnboardingComplete')

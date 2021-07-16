@@ -180,7 +180,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      environment: 'config2/getEnvironment',
+      environment: 'config/getEnvironment',
     }),
     tabGroupTitle() {
       const entity = this.entity;

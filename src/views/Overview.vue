@@ -125,10 +125,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline',
-      environment: 'config2/getEnvironment',
+      title: 'config/getTagline',
+      environment: 'config/getEnvironment',
       selectedMesh: 'getSelectedMesh',
-      multicluster: 'getMulticlusterStatus',
+      multicluster: 'config/getMulticlusterStatus',
       meshInsight: 'getMeshInsight',
       areMeshInsightsLoading: 'getMeshInsightsFetching',
       areZonesInsightsLoading: 'getZonesInsightsFetching',

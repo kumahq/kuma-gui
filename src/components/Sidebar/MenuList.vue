@@ -49,7 +49,7 @@ export default {
   computed: {
     ...mapState(['selectedMesh']),
     ...mapGetters({
-      multicluster: 'getMulticlusterStatus'
+      multicluster: 'config/getMulticlusterStatus'
     }),
     filteredItems () {
       const items = this.menuItems

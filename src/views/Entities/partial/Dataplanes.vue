@@ -322,11 +322,11 @@ export default {
   },
   computed: {
     ...mapGetters({
-      environment: 'config2/getEnvironment',
+      environment: 'config/getEnvironment',
       queryNamespace: 'getItemQueryNamespace',
       supportedVersions: 'getSupportedVersions',
       supportedVersionsLoading: 'getSupportedVersionsFetching',
-      multicluster: 'getMulticlusterStatus',
+      multicluster: 'config/getMulticlusterStatus',
     }),
     dataplaneWizardRoute () {
       // we change the route to the Dataplane

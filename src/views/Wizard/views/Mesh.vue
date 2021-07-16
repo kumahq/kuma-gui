@@ -707,9 +707,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline',
-      version: 'getVersion',
-      environment: 'config2/getEnvironment',
+      title: 'config/getTagline',
+      version: 'config/getVersion',
+      environment: 'config/getEnvironment',
       formData: 'getStoredWizardData',
       selectedTab: 'getSelectedTab'
     }),

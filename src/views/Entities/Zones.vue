@@ -294,8 +294,8 @@ export default {
       mesh: 'selectedMesh'
     }),
     ...mapGetters({
-      multicluster: 'getMulticlusterStatus',
-      globalCpVersion: 'getVersion',
+      multicluster: 'config/getMulticlusterStatus',
+      globalCpVersion: 'config/getVersion',
     }),
     // If you need to test multicluster without actually having it enabled
     // in Kuma, uncomment this and comment out the mapGetters above.
