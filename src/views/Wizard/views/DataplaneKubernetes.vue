@@ -3,13 +3,15 @@
     <div class="wizard__content">
       <StepSkeleton
         :steps="steps"
-        :advance-check="true"
         :sidebar-content="sidebarContent"
         :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
         <template slot="general">
+          <h3>
+            Create Kubernetes Dataplane
+          </h3>
           <p>
             Welcome to the wizard to create a new Dataplane resource in {{ title }}.
             We will be providing you with a few steps that will get you started.
@@ -17,9 +19,6 @@
           <p>
             As you know, the {{ $productName }} GUI is read-only.
           </p>
-
-          <!-- wizard switcher -- based on environment -->
-          <Switcher />
 
           <h3>
             To get started, please select on what Mesh you would like to add the Dataplane:
@@ -29,6 +28,8 @@
             If you've got an existing Mesh that you would like to associate with your
             Dataplane, you can select it below, or create a new one using our Mesh Wizard.
           </p>
+
+          <small>Would you like to see instructions for Universal? Use sidebar to change wizard!</small>
 
           <!-- mesh selection -->
           <KCard
@@ -173,7 +174,7 @@
                       type="radio"
                       name="k8s-services"
                       value="individual-services"
-                      disabled="disabled"
+                      disabled
                     >
                     <span>
                       Individual Services
@@ -510,9 +511,11 @@
         </template>
         <template slot="complete">
           <div v-if="validate.meshName">
-            <div v-if="hideScannerSiblings === false">
+            <div
+              v-if="hideScannerSiblings === false"
+            >
               <h3>
-                Install a new Dataplane
+                Auto-Inject DPP
               </h3>
               <p>
                 You can now execute the following commands to automatically inject
@@ -533,21 +536,8 @@
                   />
                 </template>
               </Tabs>
-              <div v-if="dataplaneUrl">
-                <KAlert appearance="info">
-                  <template slot="alertIcon">
-                    <KIcon icon="portal" />
-                  </template>
-                  <template slot="alertMessage">
-                    Once you have completed the steps above, you can go to the
-                    <router-link :to="dataplaneUrl">
-                      data plane proxies view
-                    </router-link>.
-                  </template>
-                </KAlert>
-              </div>
             </div>
-            <!-- <Scanner
+            <Scanner
               :loader-function="scanForEntity"
               :should-start="true"
               :has-error="scanError"
@@ -563,6 +553,7 @@
               <template slot="complete-title">
                 <h3>Done!</h3>
               </template>
+
               <template slot="complete-content">
                 <p>
                   Your Dataplane
@@ -572,11 +563,15 @@
                   was found!
                 </p>
                 <p>
+                  Proceed to the next step where we will show you
+                  your new Dataplane.
+                </p>
+                <p>
                   <KButton
                     appearance="primary"
-                    :to="{ name: 'all-meshes' }"
+                    @click="compeleteDataPlaneSetup"
                   >
-                    See Meshes
+                    View Your Dataplane
                   </KButton>
                 </p>
               </template>
@@ -586,7 +581,7 @@
               <template slot="error-content">
                 <p>We were unable to find your mesh.</p>
               </template>
-            </Scanner> -->
+            </Scanner>
           </div>
           <KAlert
             v-else
@@ -634,6 +629,10 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
+        <template slot="switch">
+          <!-- wizard switcher -- based on environment -->
+          <Switcher />
+        </template>
       </StepSkeleton>
     </div>
   </div>
@@ -649,7 +648,7 @@ import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
 import Switcher from '@/views/Wizard/components/Switcher'
 import CodeView from '@/components/Skeletons/CodeView'
-// import Scanner from '@/views/Wizard/components/Scanner'
+import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output (TBD)
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneKubernetes'
@@ -664,8 +663,8 @@ export default {
     Tabs,
     StepSkeleton,
     Switcher,
-    CodeView
-    // Scanner
+    CodeView,
+    Scanner
   },
   mixins: [
     FormatForCLI,
@@ -704,6 +703,9 @@ export default {
         },
         {
           name: 'example'
+        },
+        {
+          name: 'switch'
         }
       ],
       startScanner: false,
@@ -711,7 +713,6 @@ export default {
       hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
-      nextDisabled: true,
       validate: {
         meshName: '',
         k8sDataplaneType: 'dataplane-type-service',
@@ -779,33 +780,26 @@ export default {
       const assembledBlock = this.formatForCLI(schema, codeClosing)
 
       return assembledBlock
+    },
+
+    nextDisabled() {
+      const {
+        k8sNamespaceSelection,
+        meshName
+      } = this.validate
+
+      if (!meshName.length) {
+        return true
+      }
+
+      if (this.$route.query.step === '1') {
+        return !k8sNamespaceSelection
+      }
+
+      return false
     }
   },
   watch: {
-    validate: {
-      handler () {
-        const data = JSON.stringify(this.validate)
-        const mesh = this.validate.meshName
-
-        // write the v-model data to localStorage whenever it changes
-        localStorage.setItem('storedFormData', data)
-
-        // allow the user to proceed if they've selected a Mesh
-        mesh.length
-          ? this.nextDisabled = false
-          : this.nextDisabled = true
-
-        // namespace validation
-        if (this.$route.query.step === 1) {
-          if (this.validate.k8sNamespaceSelection) {
-            this.nextDisabled = false
-          } else {
-            this.nextDisabled = true
-          }
-        }
-      },
-      deep: true
-    },
 
     'validate.k8sNamespaceSelection' (value) {
       const newId = (value)
@@ -830,16 +824,16 @@ export default {
     }
   },
   methods: {
-    // hideSiblings () {
-    //   // this triggers when to hide the siblings related to the Scanner
-    //   // component that need to be hidden once the scan succeeds.
-    //   this.hideScannerSiblings = true
-    // },
+    hideSiblings () {
+      // this triggers when to hide the siblings related to the Scanner
+      // component that need to be hidden once the scan succeeds.
+      this.hideScannerSiblings = true
+    },
     scanForEntity () {
       // get our entity from the VueX store
       const entity = this.validate
       const mesh = entity.meshName
-      const dataplane = 'test' // this is a placeholder
+      const dataplane = this.validate.k8sNamespaceSelection // this is a placeholder
 
       // reset things if the user is starting over
       this.scanComplete = false
@@ -865,6 +859,17 @@ export default {
         .finally(() => {
           this.scanComplete = true
         })
+    },
+    compeleteDataPlaneSetup() {
+      this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
+      localStorage.setItem('selectedMesh', this.validate.meshName)
+
+      this.$router.push({
+        name: 'dataplanes',
+        params: {
+          mesh: this.validate.meshName,
+        }
+      })
     }
   }
 }

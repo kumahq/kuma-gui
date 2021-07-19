@@ -1,5 +1,4 @@
 import RestClient from '@/services/restClient'
-import { AxiosRequestConfig } from 'axios'
 
 export default class Kuma {
   client: RestClient

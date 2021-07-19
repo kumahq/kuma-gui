@@ -55,7 +55,7 @@ npx vue-cli-service serve
 * [Vue Router](https://router.vuejs.org/)
 * [Kongponents](https://kongponents.netlify.app/) - An open source Vue component library created by [Kong](https://konghq.com/)
 * [Axios](https://github.com/axios/axios) - For making promise-based API requests
-* [axios-mock-adapter](https://github.com/ctimmerm/axios-mock-adapter) - For creating mock endpoint data (covered further down)
+* [msw](https://github.com/mswjs/msw) - For creating mock endpoint data (covered further down)
 
 All styles are written as scoped SCSS inside of each component. For all utility and broader use CSS, styles can be written
 in the appropriate place in `src/assets/styles`.

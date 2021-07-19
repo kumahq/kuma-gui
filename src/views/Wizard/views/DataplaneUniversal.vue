@@ -2,14 +2,16 @@
   <div class="wizard">
     <div class="wizard__content">
       <StepSkeleton
-        ref="stepSystem"
         :steps="steps"
-        :advance-check="true"
         :sidebar-content="sidebarContent"
+        :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
         <template slot="general">
+          <h3>
+            Create Universal Dataplane
+          </h3>
           <p>
             Welcome to the wizard to create a new Dataplane resource in {{ title }}.
             We will be providing you with a few steps that will get you started.
@@ -17,9 +19,6 @@
           <p>
             As you know, the {{ $productName }} GUI is read-only.
           </p>
-
-          <!-- wizard switcher -- based on environment -->
-          <Switcher />
 
           <h3>
             To get started, please select on what Mesh you would like to add the Dataplane:
@@ -29,6 +28,8 @@
             If you've got an existing Mesh that you would like to associate with your
             Dataplane, you can select it below, or create a new one using our Mesh Wizard.
           </p>
+
+          <small>Would you like to see instructions for Kubernetes? Use sidebar to change wizard!</small>
 
           <!-- mesh selection -->
           <KCard
@@ -46,6 +47,7 @@
                     id="dp-mesh"
                     v-model="validate.meshName"
                     class="k-input w-100"
+                    data-testid="mesh-select"
                   >
                     <option
                       disabled
@@ -132,10 +134,12 @@
           <FormFragment
             all-inline
             title="Service name"
+            for-attr="service-name"
           >
             <input
               id="service-name"
               v-model="validate.univDataplaneServiceName"
+              data-testid="service-name"
               type="text"
               class="k-input w-100 mr-4"
             >
@@ -273,35 +277,39 @@
 
         <template slot="complete">
           <div v-if="validate.meshName">
-            <h3>
-              Install your Dataplane
-            </h3>
-            <p>
-              It's time to first generate the credentials so that {{ title }} will allow
-              the Dataplane to successfully authenticate itself with the control plane,
-              and then finally install the Dataplane process (powered by Envoy).
-            </p>
-            <Tabs
-              :loaders="false"
-              :tabs="tabs"
-              :has-border="true"
-              initial-tab-override="universal"
+            <div
+              v-if="hideScannerSiblings === false"
             >
-              <template slot="universal">
-                <CodeView
-                  title="Generate Dataplane Token"
-                  copy-button-text="Copy Command to Clipboard"
-                  lang="bash"
-                  :content="generateDpTokenCodeOutput"
-                />
-                <CodeView
-                  title="Start Dataplane Process"
-                  copy-button-text="Copy Command to Clipboard"
-                  lang="bash"
-                  :content="startDpCodeOutput"
-                />
-              </template>
-            </Tabs>
+              <h3>
+                Auto-Inject DPP
+              </h3>
+              <p>
+                It's time to first generate the credentials so that {{ title }} will allow
+                the Dataplane to successfully authenticate itself with the control plane,
+                and then finally install the Dataplane process (powered by Envoy).
+              </p>
+              <Tabs
+                :loaders="false"
+                :tabs="tabs"
+                :has-border="true"
+                initial-tab-override="universal"
+              >
+                <template slot="universal">
+                  <CodeView
+                    title="Generate Dataplane Token"
+                    copy-button-text="Copy Command to Clipboard"
+                    lang="bash"
+                    :content="generateDpTokenCodeOutput"
+                  />
+                  <CodeView
+                    title="Start Dataplane Process"
+                    copy-button-text="Copy Command to Clipboard"
+                    lang="bash"
+                    :content="startDpCodeOutput"
+                  />
+                </template>
+              </Tabs>
+            </div>
             <Scanner
               :loader-function="scanForEntity"
               :should-start="true"
@@ -392,6 +400,10 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
+        <template slot="switch">
+          <!-- wizard switcher -- based on environment -->
+          <Switcher />
+        </template>
       </StepSkeleton>
     </div>
   </div>
@@ -400,7 +412,6 @@ networking:
 <script>
 import { mapGetters } from 'vuex'
 import { kumaDpServerUrl } from '@/configUrl'
-import updateStorage from '@/views/Wizard/mixins/updateStorage'
 import json2yaml from '@appscode/json2yaml'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
@@ -427,11 +438,12 @@ export default {
     CodeView,
     Scanner
   },
-  mixins: [
-    updateStorage
-  ],
   data () {
     return {
+      randString: Math
+        .random()
+        .toString(36)
+        .substring(2, 8),
       schema: dataplaneSchema,
       steps: [
         {
@@ -463,6 +475,9 @@ export default {
         },
         {
           name: 'example'
+        },
+        {
+          name: 'switch'
         }
       ],
       startScanner: false,
@@ -470,7 +485,6 @@ export default {
       hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
-      nextDisabled: true,
       validate: {
         meshName: '',
         univDataplaneType: 'dataplane-type-service',
@@ -502,19 +516,6 @@ export default {
       selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'
     }),
-
-    randString () {
-      return Math
-        .random()
-        .toString(36)
-        .substring(2, 8)
-    },
-
-    getDpServerUrl () {
-      const url = kumaDpServerUrl()
-
-      return url
-    },
 
     getDataplaneSchema() {
       const schema = Object.assign({}, this.schema)
@@ -594,66 +595,16 @@ export default {
       // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
       const { univDataplaneId } = this.validate
       const cmdStructure = `kuma-dp run \\
-      --cp-address=${this.getDpServerUrl} \\
+      --cp-address=${kumaDpServerUrl()} \\
       --dataplane=${`"${json2yaml(this.getDataplaneSchema)}"`} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure
-    }
-  },
-  watch: {
-    validate: {
-      handler () {
-        const data = JSON.stringify(this.validate)
-        const mesh = this.validate.meshName
-
-        const {
-          univDataplaneServiceName,
-          univDataplaneId,
-          univDataplaneNetworkAddress,
-          univDataplaneNetworkServicePort,
-          univDataplaneNetworkDPPort,
-          univDataplaneNetworkProtocol
-        } = this.validate
-
-        // write the v-model data to localStorage whenever it changes
-        localStorage.setItem('storedFormData', data)
-
-        // allow the user to proceed if they've selected a Mesh
-        mesh.length
-          ? this.nextDisabled = false
-          : this.nextDisabled = true
-
-        // networking field validation
-        if (this.$route.query.step === 2) {
-          if (
-            univDataplaneNetworkAddress &&
-            univDataplaneNetworkServicePort &&
-            univDataplaneNetworkDPPort &&
-            univDataplaneNetworkProtocol
-          ) {
-            this.nextDisabled = false
-          } else {
-            this.nextDisabled = true
-          }
-        }
-
-        // topology field validation
-        if (this.$route.query.step === 1) {
-          if (univDataplaneServiceName && univDataplaneId) {
-            this.nextDisabled = false
-          } else {
-            this.nextDisabled = true
-          }
-        }
-      },
-      deep: true
     },
 
-    '$route' () {
-      const step = this.$route.query.step
-
+    nextDisabled() {
       const {
+        meshName,
         univDataplaneServiceName,
         univDataplaneId,
         univDataplaneNetworkAddress,
@@ -662,32 +613,27 @@ export default {
         univDataplaneNetworkProtocol
       } = this.validate
 
-      // topology step field validation
-      if (step === 1) {
-        if (
-          univDataplaneServiceName &&
-            univDataplaneId
-        ) {
-          this.nextDisabled = false
-        } else {
-          this.nextDisabled = true
-        }
+      if (!meshName.length) {
+        return true
       }
 
-      // network step field validation
-      if (step === 2) {
-        if (
+      if (this.$route.query.step === '1') {
+        return !(univDataplaneServiceName && univDataplaneId)
+      }
+
+      if (this.$route.query.step === '2') {
+        return !(
           univDataplaneNetworkAddress &&
             univDataplaneNetworkServicePort &&
             univDataplaneNetworkDPPort &&
             univDataplaneNetworkProtocol
-        ) {
-          this.nextDisabled = false
-        } else {
-          this.nextDisabled = true
-        }
+        )
       }
-    },
+
+      return false
+    }
+  },
+  watch: {
 
     'validate.univDataplaneId' (value) {
       const newId = (value)
@@ -771,6 +717,9 @@ export default {
         })
     },
     compeleteDataPlaneSetup() {
+      this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
+      localStorage.setItem('selectedMesh', this.validate.meshName)
+
       this.$router.push({
         name: 'dataplanes',
         params: {

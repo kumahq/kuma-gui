@@ -2,6 +2,8 @@ import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
 import { server as setupServer } from '@/services/mocks'
 
+import './src/kongponents'
+
 const server = setupServer('http://localhost/')
 
 // Establish API mocking before all tests.

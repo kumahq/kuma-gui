@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  name: 'PageHeader',
   props: {
     noflex: {
       type: Boolean,

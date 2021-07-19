@@ -3,7 +3,6 @@
     id="the-sidebar"
     class="has-subnav"
     :class="[
-      //{ 'has-subnav': hasSubnav },
       { 'is-collapsed': isCollapsed },
       { 'subnav-expanded': subnavIsExpanded },
     ]"
@@ -56,10 +55,11 @@ import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
 
-import { getItemFromStorage, setItemToStorage } from '@/Cache'
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
+
+  name: 'Sidebar',
   components: {
     MeshSelector,
     NavItem,
@@ -77,9 +77,6 @@ export default {
   },
 
   computed: {
-    // ...mapState('auth', {
-    //   perms: state => state.permissions
-    // }),
 
     ...mapState('sidebar', {
       menu: (state) => state.menu,

@@ -12,6 +12,12 @@
       "name": "ingress-dp-test-123",
       "networking": {},
       "type": "Dataplane"
+    },
+    {
+      "mesh": "default",
+      "name": "no-subscriptions",
+      "networking": {},
+      "type": "Dataplane"
     }
   ],
   "next": null

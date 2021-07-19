@@ -1,8 +1,5 @@
 <template>
   <div class="zones">
-    <page-header noflex>
-      <breadcrumbs />
-    </page-header>
     <KEmptyState
       v-if="multicluster === false"
       class="global-api-status"
@@ -194,8 +191,6 @@ import { mapState, mapGetters } from 'vuex'
 import { humanReadableDate, getOffset, getSome, stripTimes, camelCaseToWords } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import PageHeader from '@/components/Utils/PageHeader.vue'
-import Breadcrumbs from '@/components/Breadcrumbs.vue'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -213,8 +208,6 @@ export default {
   },
   components: {
     FrameSkeleton,
-    PageHeader,
-    Breadcrumbs,
     Pagination,
     DataOverview,
     Tabs,

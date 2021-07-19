@@ -65,7 +65,7 @@ const mockFilenameBasePaths: string[] = [
   'service-insights',
   'external-services',
   'versions',
-  'dataplanes', // comment to have onboarding without data planes active
+  // 'dataplanes', // comment to have onboarding without data planes active
   'meshes/default/dataplanes+insights/cluster-1.backend-02',
   'meshes/default/dataplanes+insights/cluster-1.backend-03',
   'meshes/default/dataplanes+insights/cluster-1.ingress-02',

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from 'vuex'
 import App from '@/App.vue'
 import Router from '@/router'
 import VueMeta from 'vue-meta'
@@ -93,8 +94,8 @@ function VUE_APP () {
 
   Vue.prototype.$appWindow = window
 
-  const store = Store(kuma)
-  const router = Router(store)
+  const store = new Vuex.Store(Store(kuma))
+  const router = Router()
 
   new Vue({
     store,

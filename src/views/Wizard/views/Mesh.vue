@@ -3,7 +3,6 @@
     <div class="wizard__content">
       <StepSkeleton
         :steps="steps"
-        :advance-check="true"
         :sidebar-content="sidebarContent"
         :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"

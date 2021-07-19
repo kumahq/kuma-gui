@@ -1,35 +1,30 @@
 <template>
   <div
-    class="overview"
-    :class="{ 'overview--simple': $route.meta.simpleContent }"
+    class="main-content-container"
   >
-    <page-header
-      v-if="$route.meta.hideHeader === true"
-      noflex
-    >
-      <h2 class="xxl">
-        {{ pageTitle }}
-      </h2>
-    </page-header>
-    <page-content>
-      <transition
-        mode="out-in"
-        name="fade"
+    <div class="main-content">
+      <div
+        class="overview"
       >
-        <router-view />
-      </transition>
-    </page-content>
+        <page-content>
+          <transition
+            mode="out-in"
+            name="fade"
+          >
+            <router-view />
+          </transition>
+        </page-content>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import PageHeader from '@/components/Utils/PageHeader.vue'
 import PageContent from '@/components/Utils/PageContent.vue'
 
 export default {
-  name: 'Shell',
+  name: 'ShellEmpty',
   components: {
-    PageHeader,
     PageContent
   },
   computed: {
@@ -53,11 +48,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.overview--simple {
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
-}
-</style>
