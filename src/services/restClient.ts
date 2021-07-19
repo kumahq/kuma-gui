@@ -45,7 +45,8 @@ export default class RestClient {
    * our app with the API URL endpoint and simple info.
    */
   static kumaClientConfig (): AxiosInstance {
-    const configUrl = `${localStorage.getItem('kumaApiUrl')}config`
+    const kumaApiUrl = localStorage.getItem('kumaApiUrl') || ''
+    const configUrl = `${kumaApiUrl}config`
 
     return axios.create({
       baseURL: configUrl

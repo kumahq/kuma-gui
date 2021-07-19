@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      config: 'getConfig'
+      config: 'config/getConfig'
     }),
     icon () {
       if (this.isLoading) {

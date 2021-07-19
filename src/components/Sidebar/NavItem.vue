@@ -108,7 +108,7 @@ export default {
   computed: {
     ...mapState(['selectedMesh']),
     ...mapGetters({
-      multicluster: 'getMulticlusterStatus'
+      multicluster: 'config/getMulticlusterStatus'
     }),
     linkPath () {
       const link = this.link

@@ -509,9 +509,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline',
-      version: 'getVersion',
-      environment: 'getEnvironment',
+      title: 'config/getTagline',
+      version: 'config/getVersion',
+      environment: 'config/getEnvironment',
       formData: 'getStoredWizardData',
       selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'

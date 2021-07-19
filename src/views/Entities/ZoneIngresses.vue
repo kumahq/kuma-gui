@@ -279,7 +279,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      multicluster: 'getMulticlusterStatus',
+      multicluster: 'config/getMulticlusterStatus',
     }),
     // If you need to test multicluster without actually having it enabled
     // in Kuma, uncomment this and comment out the mapGetters above.

@@ -32,7 +32,7 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      version: 'getVersion'
+      version: 'config/getVersion'
     }),
     resourceLinks () {
       const storedVersion = this.version

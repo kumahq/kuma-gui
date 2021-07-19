@@ -272,8 +272,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'getTagline',
-      appSource: 'getEnvironment'
+      title: 'config/getTagline',
+      appSource: 'config/getEnvironment'
     }),
     dataplaneCountForTitle () {
       const count = this.tableDataDataplaneCount

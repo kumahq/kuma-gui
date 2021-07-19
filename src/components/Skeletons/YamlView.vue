@@ -178,7 +178,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      environment: 'getEnvironment'
+      environment: 'config/getEnvironment'
     }),
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading

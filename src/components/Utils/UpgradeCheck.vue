@@ -42,8 +42,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      currentVer: 'getVersion',
-      tagline: 'getTagline'
+      currentVer: 'config/getVersion',
+      tagline: 'config/getTagline'
     })
   },
   beforeMount () {
