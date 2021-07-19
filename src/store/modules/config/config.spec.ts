@@ -8,6 +8,18 @@ describe('config module', () => {
 
       expect(store.getters.getStatus).toBe('foo')
     })
+
+    it('tests getMulticlusterStatus getter when global mode', () => {
+      const store = setupStore(config, { clientConfig: { mode: 'global' } })
+
+      expect(store.getters.getMulticlusterStatus).toBe(true)
+    })
+
+    it('tests getMulticlusterStatus getter when standalone', () => {
+      const store = setupStore(config, { clientConfig: { mode: 'standalone' } })
+
+      expect(store.getters.getMulticlusterStatus).toBe(false)
+    })
   })
 
   describe('actions', () => {

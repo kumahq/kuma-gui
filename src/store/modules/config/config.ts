@@ -37,7 +37,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
         'background: black; color: white; display: block; padding: 0.25rem;'
       )
     } else {
-      status = getters['config/getMode'] === 'global'
+      status = getters.getMode === 'global'
     }
 
     return status
