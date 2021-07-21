@@ -70,17 +70,11 @@
                   </label>
                   <KButton
                     :to="{ name: 'create-mesh' }"
-                    appearance="primary"
+                    appearance="secondary"
                   >
                     Create a new Mesh
                   </KButton>
                 </div>
-                <!-- <KAlert
-                  v-if="vmsg.meshName"
-                  appearance="danger"
-                  size="small"
-                  :alert-message="vmsg.meshName"
-                /> -->
               </FormFragment>
             </template>
           </KCard>
@@ -160,7 +154,7 @@
             </div>
             <div>
               <KButton
-                appearance="primary"
+                appearance="secondary"
                 @click="validate.univDataplaneCustomIdDisabled = false"
               >
                 Edit
@@ -412,6 +406,7 @@ networking:
 <script>
 import { mapGetters } from 'vuex'
 import { kumaDpServerUrl } from '@/configUrl'
+import { kebabCase } from '@/helpers'
 import json2yaml from '@appscode/json2yaml'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
@@ -497,7 +492,6 @@ export default {
         univDataplaneNetworkDPPort: null,
         univDataplaneNetworkProtocol: 'tcp'
       },
-      vmsg: [],
       formFields: {
         protocols: [
           'tcp',
@@ -581,7 +575,7 @@ export default {
      * Part 1 of the last step: Generate the Dataplane Token
      */
     generateDpTokenCodeOutput () {
-      const { meshName, univDataplaneId } = this.validate
+      const { univDataplaneId } = this.validate
 
       const cmdStructure = `kumactl generate dataplane-token --name=${univDataplaneId} > kuma-token-${univDataplaneId}`
 
@@ -636,33 +630,18 @@ export default {
   watch: {
 
     'validate.univDataplaneId' (value) {
-      const newId = (value)
-        .replace(/[^a-zA-Z0-9 -]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
-
-      this.validate.univDataplaneId = newId
+      this.validate.univDataplaneId = kebabCase(value)
     },
 
     'validate.univDataplaneServiceName' (value) {
-      const newName = (value)
-        .replace(/[^a-zA-Z0-9 -]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
-
-      const newStr = (`${value}-${this.randString}`)
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
+      const newName = kebabCase(value)
 
       this.validate.univDataplaneServiceName = newName
 
       if (this.validate.univDataplaneServiceName === '') {
         this.validate.univDataplaneId = ''
       } else {
-        this.validate.univDataplaneId = newStr
+        this.validate.univDataplaneId = kebabCase(`${value}-${this.randString}`)
       }
     },
 

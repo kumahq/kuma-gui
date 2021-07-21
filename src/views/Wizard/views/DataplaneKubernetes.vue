@@ -69,17 +69,11 @@
                   </label>
                   <KButton
                     :to="{ name: 'create-mesh' }"
-                    appearance="primary"
+                    appearance="secondary"
                   >
                     Create a new Mesh
                   </KButton>
                 </div>
-                <!-- <KAlert
-                  v-if="vmsg.meshName"
-                  appearance="danger"
-                  size="small"
-                  :alert-message="vmsg.meshName"
-                /> -->
               </FormFragment>
             </template>
           </KCard>
@@ -640,8 +634,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
-// import { rejectKeys } from '@/views/Wizard/helpers'
-import updateStorage from '@/views/Wizard/mixins/updateStorage'
+import { kebabCase } from '@/helpers'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
@@ -668,7 +661,6 @@ export default {
   },
   mixins: [
     FormatForCLI,
-    updateStorage
   ],
   data () {
     return {
@@ -692,10 +684,6 @@ export default {
           hash: '#kubernetes',
           title: 'Kubernetes'
         }
-        // {
-        //   hash: '#universal',
-        //   title: 'Universal'
-        // }
       ],
       sidebarContent: [
         {
@@ -726,8 +714,7 @@ export default {
         k8sIngressType: '',
         k8sIngressBrand: 'kong-ingress',
         k8sIngressSelection: ''
-      },
-      vmsg: []
+      }
     }
   },
   computed: {
@@ -741,7 +728,6 @@ export default {
     }),
 
     dataplaneUrl () {
-      const urlRoot = `${window.location.origin}/#`
       const fields = this.validate
 
       if (fields.meshName && fields.k8sNamespaceSelection) {
@@ -802,13 +788,7 @@ export default {
   watch: {
 
     'validate.k8sNamespaceSelection' (value) {
-      const newId = (value)
-        .replace(/[^a-zA-Z0-9 -]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
-
-      this.validate.k8sNamespaceSelection = newId
+      this.validate.k8sNamespaceSelection = kebabCase(value)
     },
 
     '$route' () {
@@ -878,6 +858,5 @@ export default {
 <style lang="scss" scoped>
 input:disabled + span {
   color: #999;
-  // font-style: italic;
 }
 </style>

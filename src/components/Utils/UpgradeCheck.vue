@@ -12,6 +12,7 @@
           </div>
           <div>
             <KButton
+              class="warning-button"
               appearance="primary"
               size="small"
               :to="url"
@@ -124,4 +125,11 @@ export default {
     }
   }
 }
+
+.warning-button {
+--KButtonPrimaryBase: #f2a230;
+--KButtonPrimaryHover: #f2a230;
+--KButtonPrimaryActive: #f2a230;
+}
+
 </style>

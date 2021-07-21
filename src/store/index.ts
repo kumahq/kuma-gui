@@ -29,7 +29,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     globalLoading: true,
     meshPageSize: 500,
     pageSize: 500,
-    meshes: [],
+    meshes: {},
     dataplanes: [],
     selectedMesh: 'all', // shows all meshes on initial load
     totalMeshCount: 0,

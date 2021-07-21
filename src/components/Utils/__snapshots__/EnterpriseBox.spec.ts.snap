@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnterpriseBox.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="k-alert py-1 success small"
+    data-v-e0379b86=""
+    role="alert"
+  >
+    <!---->
+    <!---->
+    <span
+      data-v-e0379b86=""
+    >
+      <div
+        class="alert-content flex items-center text-sm"
+        data-v-e0379b86=""
+      >
+        <div
+          class="mr-3"
+          data-v-e0379b86=""
+        >
+          
+        Do more with Kuma 
+          <span
+            class="alert-content__arrow"
+            data-v-e0379b86=""
+          >
+            →
+          </span>
+        </div>
+         
+        <div
+          data-v-e0379b86=""
+        >
+          <a
+            class="k-button no-underline success-button small primary"
+            data-v-90a15d32=""
+            data-v-e0379b86=""
+            href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
+            target="_blank"
+            type="button"
+          >
+            
+          Enterprise
+        
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+`;

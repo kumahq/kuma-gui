@@ -10,31 +10,38 @@
       <div
         class="page"
       >
-        <OnboardingCheck />
-        <div class="overview">
-          <PageHeader noflex>
-            <Breadcrumbs />
-          </PageHeader>
-          <router-view />
-        </div>
+        <OnboardingCheck v-if="showOnboarding" />
+        <Breadcrumbs />
+        <router-view />
       </div>
     </main>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import OnboardingCheck from '@/components/Utils/OnboardingCheck'
-import PageHeader from '@/components/Utils/PageHeader.vue'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
   name: 'Shell',
   components: {
-    PageHeader,
     Breadcrumbs,
     Sidebar,
     OnboardingCheck
-  }
+  },
+  computed: {
+    ...mapState({
+      dpCount: 'totalDataplaneCount',
+      meshes: 'meshes'
+    }),
+    showOnboarding () {
+      const onlyDefaultMesh = this.meshes.total === 1 && this.meshes.items[0].name === 'default'
+      const noDataplane = this.dpCount === 0
+
+      return noDataplane && onlyDefaultMesh
+    }
+  },
 }
 </script>
