@@ -34,7 +34,7 @@
             >
           </div>
           <div class="app-source-check__content px-4">
-            <p>{{ title }} is running on {{ appSource }}</p>
+            <p>{{ title }} is running on  <span class="capitalize">{{ appSource }}</span></p>
           </div>
           <div class="px-4">
             <img
@@ -156,7 +156,7 @@
               </h3>
               <p class="mb-2">
                 To bring your applications into {{ $productName }} Service Mesh,
-                you need to deploy data plane proxies (also known as Sidecar Proxies)
+                you need to deploy data plane proxies (also known as sidecar proxies)
                 next to them.
               </p>
             </div>
@@ -165,13 +165,9 @@
         <!-- .dataplane-fallback -->
         <div class="dataplane-walkthrough my-4">
           <!-- kubernetes instructions -->
-          <div
-            v-if="appSource
-              && appSource === 'kubernetes'
-              || appSource === 'k8s'"
-          >
+          <div>
             <h3 class="type-xl mb-2">
-              Adding New Data Plane Proxies on Kubernetes
+              Next steps
             </h3>
             <p class="mb-2">
               The data plane proxy wizard will walk you through the creation of new
@@ -179,30 +175,12 @@
             </p>
             <div class="cols">
               <KButton
-                :to="{ name: 'kubernetes-dataplane' }"
+                :to="{ name: appSource
+                  && appSource === 'kubernetes'
+                  || appSource === 'k8s' ? 'kubernetes-dataplane' : 'universal-dataplane'}"
                 appearance="primary"
               >
-                Kubernetes data plane proxy wizard
-              </KButton>
-            </div>
-          </div>
-          <!-- universal instructions -->
-          <div v-else>
-            <h3 class="type-xl mb-2">
-              Adding New Data Plane Proxies on Universal
-            </h3>
-            <p class="mb-2">
-              The data plane proxy wizard will walk you through the creation of new
-              sidecar proxies.
-            </p>
-            <div class="cols">
-              <KButton
-                :to="{
-                  name: 'universal-dataplane'
-                }"
-                appearance="primary"
-              >
-                Universal Data Plane Proxy Wizard
+                Get started
               </KButton>
             </div>
           </div>
@@ -241,9 +219,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import axios from 'axios'
 import { setItemToStorage } from '@/Cache'
-import configUrl from '@/configUrl'
 
 export default {
   name: 'OnboardingStep1',

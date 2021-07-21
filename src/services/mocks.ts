@@ -135,6 +135,15 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
 
 const worker = (apiURL: string) => setupWorker(...setupHandlers(apiURL))
 
-const server = (apiURL: string) => setupServer(...setupHandlers(apiURL))
+const additionalTestHandlers: RestHandler[] = [
+  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.text('1.2.2')
+    )
+  })
+]
+
+const server = (apiURL: string) => setupServer(...setupHandlers(apiURL), ...additionalTestHandlers)
 
 export { worker, server }

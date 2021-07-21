@@ -568,7 +568,7 @@ networking:
             class="wizard-steps__footer"
           >
             <button
-              class="k-button primary"
+              class="k-button secondary"
               data-v-90a15d32=""
               style=""
               type="button"

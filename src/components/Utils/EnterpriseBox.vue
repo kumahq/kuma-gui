@@ -11,7 +11,7 @@
         </div>
         <div>
           <KButton
-            class="no-underline"
+            class="no-underline success-button"
             appearance="primary"
             size="small"
             target="_blank"
@@ -54,4 +54,11 @@ export default {
     }
   }
 }
+
+.success-button {
+--KButtonPrimaryBase: #19a654;
+--KButtonPrimaryHover: #19a654;
+--KButtonPrimaryActive: #19a654;
+}
+
 </style>

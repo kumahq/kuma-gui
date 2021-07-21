@@ -152,11 +152,6 @@ export default {
   background-color: #fff;
 }
 
-.main-header__content {
-  max-width: var(--global-content-max-width);
-  margin: 0 auto;
-}
-
 .main-header--simple {
   border-bottom: 0;
   background: none;
@@ -184,23 +179,6 @@ export default {
 .app-status {
   display: flex;
   align-items: center;
-
-  // button {
-  //   position: relative;
-  //   overflow: hidden;
-  //   display: inline-block;
-  //   background: var(--blue-500);
-  //   border-radius: 3px;
-  //   width: 32px;
-  //   height: 32px;
-  //   line-height: 32px;
-  //   text-align: center;
-
-  //   > * {
-  //     display: block;
-  //     margin: auto;
-  //   }
-  // }
 
   .kpop-control {
     max-height: 27px;

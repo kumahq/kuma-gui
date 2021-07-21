@@ -23,7 +23,7 @@
             <p>
               <KButton
                 :to="{ name: wizardRoutes.universal }"
-                appearance="primary"
+                appearance="secondary"
               >
                 Switch to Universal instructions
               </KButton>
@@ -37,7 +37,7 @@
             <p>
               <KButton
                 :to="{ name: wizardRoutes.kubernetes }"
-                appearance="primary"
+                appearance="secondary"
               >
                 Switch back to Kubernetes instructions
               </KButton>
@@ -53,7 +53,7 @@
             <p>
               <KButton
                 :to="{ name: wizardRoutes.universal }"
-                appearance="primary"
+                appearance="secondary"
               >
                 Switch back to Universal instructions
               </KButton>
@@ -68,7 +68,7 @@
             <p>
               <KButton
                 :to="{ name: wizardRoutes.kubernetes }"
-                appearance="primary"
+                appearance="secondary"
               >
                 Switch to Kubernetes instructions
               </KButton>

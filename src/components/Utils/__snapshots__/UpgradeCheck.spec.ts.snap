@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpgradeCheck.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="upgrade-check"
+  >
+    <div
+      class="k-alert warning small"
+      data-v-e0379b86=""
+      role="alert"
+    >
+      <!---->
+      <!---->
+      <span
+        data-v-e0379b86=""
+      >
+        <div
+          class="alert-content"
+          data-v-e0379b86=""
+        >
+          <div
+            data-v-e0379b86=""
+          >
+            
+          Kuma update available
+        
+          </div>
+           
+          <div
+            data-v-e0379b86=""
+          >
+            <a
+              class="k-button warning-button small primary"
+              data-v-90a15d32=""
+              data-v-e0379b86=""
+              href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+              type="button"
+            >
+              
+            Update
+          
+            </a>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;
