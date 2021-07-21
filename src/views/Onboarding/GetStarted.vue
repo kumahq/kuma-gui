@@ -175,9 +175,7 @@
             </p>
             <div class="cols">
               <KButton
-                :to="{ name: appSource
-                  && appSource === 'kubernetes'
-                  || appSource === 'k8s' ? 'kubernetes-dataplane' : 'universal-dataplane'}"
+                :to="{ name: dataplaneWizardRoute}"
                 appearance="primary"
               >
                 Get started
@@ -261,6 +259,9 @@ export default {
     },
     overallDpStatus () {
       return this.$store.getters.getAnyDpOffline
+    },
+    dataplaneWizardRoute () {
+      return this.appSource === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane'
     }
   },
   beforeMount () {

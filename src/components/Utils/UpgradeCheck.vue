@@ -70,7 +70,6 @@ export default {
           if (this.latestVer) {
             // compare the latest version to the currently running version
             // but only if we were able to set the latest version in the first place.
-
             const comparison = compare(this.latestVer, this.currentVer)
 
             if (comparison === 1) {
