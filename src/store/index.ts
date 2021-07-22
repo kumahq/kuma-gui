@@ -6,6 +6,7 @@ import notifications from '@/store/modules/notifications'
 import sidebar from '@/store/modules/sidebar'
 import { getItemStatusFromInsight } from '@/dataplane'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
+import onboarding from '@/store/modules/onboarding'
 
 import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
@@ -22,6 +23,7 @@ export default (): Module<RootInterface, RootInterface> => ({
     sidebar,
     config,
     notifications,
+    onboarding,
   },
   state: {
     menu: null,
