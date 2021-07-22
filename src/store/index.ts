@@ -3,6 +3,7 @@ import Vuex, { Module } from 'vuex'
 
 import config from '@/store/modules/config'
 import sidebar from '@/store/modules/sidebar'
+import onboarding from '@/store/modules/onboarding'
 
 import { fetchAllResources, filterResourceByMesh } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
@@ -18,6 +19,7 @@ export default (): Module<RootInterface, RootInterface> => ({
   modules: {
     sidebar,
     config,
+    onboarding
   },
   state: {
     menu: null,
