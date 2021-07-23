@@ -20,6 +20,7 @@
             appearance="primary"
             size="small"
             :to="{ path: '/wizard/mesh' }"
+            @click.native="onCreateClick"
           >
             <span class="custom-control-icon">
               +
@@ -170,6 +171,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { datadogLogs } from '@datadog/browser-logs'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
 // import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
@@ -179,8 +181,6 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-
-import * as Sentry from '@sentry/browser'
 
 export default {
   name: 'Meshes',
@@ -357,6 +357,9 @@ export default {
       this.next = null
 
       this.loadData()
+    },
+    onCreateClick() {
+      datadogLogs.logger.info('create-mesh-clicked')
     },
     tableAction (ev) {
       const data = ev

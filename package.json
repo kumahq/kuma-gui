@@ -17,6 +17,7 @@
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.13",
     "@appscode/json2yaml": "^0.1.2",
+    "@datadog/browser-logs": "^2.18.0",
     "@kongponents/kalert": "1.0.7",
     "@kongponents/kbadge": "^1.0.0",
     "@kongponents/kbutton": "1.0.2",
@@ -35,8 +36,6 @@
     "@kongponents/ktoaster": "1.1.1",
     "@kongponents/ktoggle": "^0.1.6",
     "@kongponents/styles": "^1.0.2",
-    "@sentry/browser": "^5.21.4",
-    "@sentry/integrations": "^5.21.4",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",

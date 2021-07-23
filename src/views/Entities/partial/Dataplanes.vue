@@ -20,6 +20,7 @@
           appearance="primary"
           size="small"
           :to="dataplaneWizardRoute"
+          @click.native="onCreateClick"
         >
           <span class="custom-control-icon">
             +
@@ -181,6 +182,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import { datadogLogs } from '@datadog/browser-logs'
 import {
   getOffset,
   getSome,
@@ -372,6 +374,9 @@ export default {
   },
   methods: {
     ...mapActions(['fetchSupportedVersions']),
+    onCreateClick() {
+      datadogLogs.logger.info('create-data-proxy-plane-clicked')
+    },
     buildEntity (basicData, tags, dataplaneInsight) {
       const mtls = dataplaneInsight.mTLS
         ? parseMTLSData(dataplaneInsight.mTLS)
