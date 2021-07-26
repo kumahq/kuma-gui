@@ -13,6 +13,7 @@ import KToaster from '@kongponents/ktoaster'
 import KoolTip from '@kongponents/kooltip'
 import KClipboardProvider from '@kongponents/kclipboardprovider'
 import Krumbs from '@kongponents/krumbs'
+import KRadio from '@kongponents/kradio/dist/KRadio.umd.min.js'
 import KPop from '@kongponents/kpop'
 import KToggle from '@kongponents/ktoggle'
 import KTabs from '@kongponents/ktabs'
@@ -32,6 +33,7 @@ Vue.component('KoolTip', KoolTip)
 Vue.component('KClipboardProvider', KClipboardProvider)
 Vue.component('Krumbs', Krumbs)
 Vue.component('KPop', KPop)
+Vue.component('KRadio', KRadio)
 Vue.component('KTabs', KTabs)
 Vue.component('KToggle', KToggle)
 Vue.component('KInput', KInput)
