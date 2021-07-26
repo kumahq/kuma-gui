@@ -9,3 +9,7 @@ body {
   font-family: var(--base-font-family);
   /* font-size: var(--base-font-size); */
 }
+
+button, [type=button], [type=reset], [type=submit] {
+  -webkit-appearance: none;
+  }
