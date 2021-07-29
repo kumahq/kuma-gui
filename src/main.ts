@@ -2,15 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from '@/App.vue'
 import Router from '@/router'
+import { datadogLogs } from '@datadog/browser-logs'
 import VueMeta from 'vue-meta'
 import Store from '@/store'
 import axios from 'axios'
 import Kuma from '@/services/kuma'
 import configUrl from '@/configUrl'
-
-/** Sentry */
-// import * as Sentry from '@sentry/browser'
-// import * as Integrations from '@sentry/integrations'
 
 /** amCharts */
 import * as am4core from '@amcharts/amcharts4/core'
@@ -32,40 +29,18 @@ import '@/assets/styles/inputs.scss'
 import '@/assets/styles/components.scss'
 import '@/assets/styles/transitions.scss'
 
-/** Initiate Sentry */
-// let sentryDebugging = true
-// let sentryEnv = 'staging'
+/** Initiate Datadog */
 
-// if (process.env.NODE_ENV === 'production') {
-//   sentryDebugging = false
-//   sentryEnv = 'production'
-// }
-
-/**
- * Sentry integration
- *
- * Sentry's out-of-box documentation implements this in a way that
- * does not work for everyone. To get error tracking working, the below
- * integration follows these instructions:
- *
- * https://github.com/getsentry/sentry-javascript/issues/2160#issuecomment-509964166
- */
-// Sentry.init({
-//   dsn: process.env.VUE_APP_SENTRY_DSN,
-//   debug: sentryDebugging,
-//   environment: sentryEnv,
-//   integrations: integrations => [
-//     ...integrations,
-//     new Integrations.Vue({
-//       Vue,
-//       attachProps: true,
-//       logErrors: true
-//     })
-//   ]
-// })
-
-/** Send a test Sentry error. Uncomment this and reload the app to trigger */
-// Sentry.captureException(new Error('This is a test error for Sentry.'))
+if (process.env.NODE_ENV === 'production') {
+  datadogLogs.init({
+    clientToken: 'pub94a0029259f79f29a5d881a06d1e9653',
+    site: 'datadoghq.com',
+    forwardErrorsToLogs: true,
+    service: process.env.VUE_APP_NAMESPACE,
+    sampleRate: 100,
+    env: process.env.NODE_ENV
+  })
+}
 
 /** Initiate plugins */
 Vue.use(VueMeta)
