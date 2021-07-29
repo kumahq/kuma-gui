@@ -368,10 +368,10 @@
               >
                 <input
                   id="tracing-zipkin-url"
+                  v-model="validate.meshTracingZipkinURL"
                   type="text"
                   class="k-input w-100"
                   placeholder="http://zipkin.url:1234"
-                  :value="getStorageItem('meshTracingZipkinURL')"
                   @change="updateStorage('meshTracingZipkinURL', $event.target.value)"
                 >
               </FormFragment>
@@ -693,13 +693,13 @@ export default {
       hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
-      nextDisabled: true,
       validate: {
         meshName: '',
         meshCAName: '',
         meshLoggingBackend: '',
         meshTracingBackend: '',
-        meshMetricsName: ''
+        meshMetricsName: '',
+        meshTracingZipkinURL: ''
       },
       vmsg: [],
       utm: process.env.VUE_APP_UTM
@@ -894,6 +894,35 @@ export default {
       }
 
       return cliConditionCode()
+    },
+    nextDisabled() {
+      const {
+        meshName,
+        meshCAName,
+        meshLoggingBackend,
+        meshTracingBackend,
+        meshTracingZipkinURL,
+        meshMetricsName
+      } = this.validate
+      const { mtlsEnabled, loggingEnabled, tracingEnabled, metricsEnabled } = this.formConditions
+
+      if (!meshName.length || (mtlsEnabled && !meshCAName)) {
+        return true
+      }
+
+      if (this.$route.query.step === '1') {
+        return loggingEnabled && !meshLoggingBackend
+      }
+
+      if (this.$route.query.step === '2') {
+        return tracingEnabled && !(meshTracingBackend && meshTracingZipkinURL)
+      }
+
+      if (this.$route.query.step === '3') {
+        return metricsEnabled && !meshMetricsName
+      }
+
+      return false
     }
   },
   watch: {
@@ -934,10 +963,8 @@ export default {
     validateMeshName (value) {
       if (!value || value === '') {
         this.vmsg.meshName = 'A Mesh name is required to proceed'
-        this.nextDisabled = true
       } else {
         this.vmsg.meshName = ''
-        this.nextDisabled = false
       }
     },
     scanForEntity () {
