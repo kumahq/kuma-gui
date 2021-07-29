@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KLoader.vue renders snapshot at the beginning 1`] = `
+<div>
+  <div
+    class="loading-container"
+  >
+    <img
+      src="../assets/images/kuma-loader-v1.gif?external"
+    />
+     
+    <div
+      class="progress"
+    >
+      <div
+        class="progress-bar"
+        role="progressbar"
+        style="width: 10%;"
+      />
+    </div>
+  </div>
+</div>
+`;
