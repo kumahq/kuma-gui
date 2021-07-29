@@ -36,7 +36,7 @@
     "@kongponents/ktoaster": "1.1.1",
     "@kongponents/ktoggle": "^0.1.6",
     "@kongponents/styles": "^1.0.2",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "lodash": "^4.17.20",
     "msw": "^0.30.1",
