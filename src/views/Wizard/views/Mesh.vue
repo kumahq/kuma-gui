@@ -78,6 +78,7 @@
               <FormFragment
                 v-if="validate.mtlsEnabled === 'enabled'"
                 title="Certificate name"
+                for-attr="certificate-name"
               >
                 <input
                   id="certificate-name"
@@ -165,6 +166,7 @@
               <FormFragment
                 v-if="validate.loggingEnabled === 'enabled'"
                 title="Backend name"
+                for-attr="backend-name"
               >
                 <input
                   id="backend-name"
@@ -387,6 +389,7 @@
               <FormFragment
                 v-if="validate.metricsEnabled === 'enabled'"
                 title="Backend name"
+                for-attr="metrics-name"
               >
                 <input
                   id="metrics-name"
@@ -880,7 +883,7 @@ export default {
           return true
         }
 
-        return loggingType === 'file' ? !meshLoggingPath : false
+        return loggingType === 'file' && !meshLoggingPath
       }
 
       if (this.$route.query.step === '2') {
@@ -937,7 +940,6 @@ export default {
       }
     },
     scanForEntity () {
-      // get our entity from the VueX store
       const entity = this.validate.meshName
 
       // reset things if the user is starting over
@@ -947,7 +949,6 @@ export default {
       // do nothing if there's nothing found
       if (!entity) return
 
-      // this.$api.getMesh(entity)
       this.$api.getMesh(entity)
         .then(response => {
           if (response && response.name.length > 0) {

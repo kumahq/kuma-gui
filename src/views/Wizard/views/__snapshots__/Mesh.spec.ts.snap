@@ -1,0 +1,578 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
+<div>
+  <div
+    class="wizard"
+  >
+    <div
+      class="wizard__content"
+    >
+      <div
+        class="wizard-steps"
+      >
+        <div
+          class="wizard-steps__content-wrapper"
+        >
+          <header
+            class="wizard-steps__indicator"
+          >
+            <ul
+              aria-label="steptabs"
+              class="wizard-steps__indicator__controls"
+              role="tablist"
+            >
+              <li
+                aria-controls="wizard-steps__content__item--0"
+                aria-selected="false"
+                class="wizard-steps__indicator__item is-complete"
+              >
+                <span>
+                  
+            General & Security
+          
+                </span>
+              </li>
+              <li
+                aria-controls="wizard-steps__content__item--1"
+                aria-selected="false"
+                class="wizard-steps__indicator__item is-complete"
+              >
+                <span>
+                  
+            Logging
+          
+                </span>
+              </li>
+              <li
+                aria-controls="wizard-steps__content__item--2"
+                aria-selected="false"
+                class="wizard-steps__indicator__item is-complete"
+              >
+                <span>
+                  
+            Tracing
+          
+                </span>
+              </li>
+              <li
+                aria-controls="wizard-steps__content__item--3"
+                aria-selected="false"
+                class="wizard-steps__indicator__item is-complete"
+              >
+                <span>
+                  
+            Metrics
+          
+                </span>
+              </li>
+              <li
+                aria-controls="wizard-steps__content__item--4"
+                aria-selected="true"
+                class="wizard-steps__indicator__item is-complete"
+              >
+                <span>
+                  
+            Install
+          
+                </span>
+              </li>
+            </ul>
+          </header>
+           
+          <div
+            class="wizard-steps__content"
+          >
+            <form
+              autocomplete="off"
+            >
+              <div
+                aria-labelledby="wizard-steps__content__item--0"
+                class="wizard-steps__content__item"
+                id="wizard-steps__content__item--0"
+                role="tabpanel"
+                tabindex="0"
+              >
+                <!---->
+              </div>
+              <div
+                aria-labelledby="wizard-steps__content__item--1"
+                class="wizard-steps__content__item"
+                id="wizard-steps__content__item--1"
+                role="tabpanel"
+                tabindex="0"
+              >
+                <!---->
+              </div>
+              <div
+                aria-labelledby="wizard-steps__content__item--2"
+                class="wizard-steps__content__item"
+                id="wizard-steps__content__item--2"
+                role="tabpanel"
+                tabindex="0"
+              >
+                <!---->
+              </div>
+              <div
+                aria-labelledby="wizard-steps__content__item--3"
+                class="wizard-steps__content__item"
+                id="wizard-steps__content__item--3"
+                role="tabpanel"
+                tabindex="0"
+              >
+                <!---->
+              </div>
+              <div
+                aria-labelledby="wizard-steps__content__item--4"
+                class="wizard-steps__content__item"
+                id="wizard-steps__content__item--4"
+                role="tabpanel"
+                tabindex="0"
+              >
+                <div>
+                  <div>
+                    <h3>
+                      
+              Install a new Mesh
+            
+                    </h3>
+                     
+                    <p>
+                      
+              Since the  GUI is read-only mode to follow Ops best practices,
+              please execute the following command in your shell to create the entity.
+               will automatically detect when the new entity has been created.
+            
+                    </p>
+                     
+                    <div
+                      class="tab-container"
+                    >
+                      <!---->
+                       
+                      <div
+                        class="tab__content-container has-border"
+                      >
+                        <div
+                          class="k-tabs"
+                          data-v-a38b664a=""
+                        >
+                          <ul
+                            aria-label="ktabs"
+                            data-v-a38b664a=""
+                            role="tablist"
+                          >
+                            <li
+                              aria-controls="panel-0"
+                              aria-selected="false"
+                              class="tab-item"
+                              data-v-a38b664a=""
+                              id="kubernetes-tab"
+                              role="tab"
+                              tabindex="0"
+                            >
+                              <a
+                                class="tab-link"
+                                data-v-a38b664a=""
+                              >
+                                Kubernetes
+                              </a>
+                            </li>
+                            <li
+                              aria-controls="panel-1"
+                              aria-selected="true"
+                              class="tab-item active"
+                              data-v-a38b664a=""
+                              id="universal-tab"
+                              role="tab"
+                              tabindex="0"
+                            >
+                              <a
+                                class="tab-link"
+                                data-v-a38b664a=""
+                              >
+                                Universal
+                              </a>
+                            </li>
+                          </ul>
+                          <div
+                            aria-labelledby="kubernetes-tab"
+                            class="tab-container"
+                            data-v-a38b664a=""
+                            id="panel-0"
+                            role="tabpanel"
+                            tabindex="0"
+                          >
+                            <!---->
+                          </div>
+                          <div
+                            aria-labelledby="universal-tab"
+                            class="tab-container"
+                            data-v-a38b664a=""
+                            id="panel-1"
+                            role="tabpanel"
+                            tabindex="0"
+                          >
+                            <div
+                              class="code-view"
+                              data-v-a38b664a=""
+                            >
+                              <div
+                                class="code-view-content"
+                              >
+                                <div
+                                  class="kong-card noBorder"
+                                  data-v-4ad076e4=""
+                                >
+                                  <div
+                                    class="k-card-header"
+                                    data-v-4ad076e4=""
+                                  >
+                                    <div
+                                      class="k-card-title"
+                                      data-v-4ad076e4=""
+                                    >
+                                      <h4
+                                        data-v-4ad076e4=""
+                                      >
+                                        Universal
+                                      </h4>
+                                    </div>
+                                    <div
+                                      class="k-card-actions"
+                                      data-v-4ad076e4=""
+                                    >
+                                      <div
+                                        data-v-07815fc5=""
+                                        data-v-4ad076e4=""
+                                      >
+                                        <button
+                                          class="k-button primary"
+                                          data-v-07815fc5=""
+                                          data-v-90a15d32=""
+                                          type="button"
+                                        >
+                                          
+              Copy Command to Clipboard
+            
+                                        </button>
+                                         
+                                        <transition-stub
+                                          data-v-07815fc5=""
+                                          name="fade"
+                                        >
+                                          <div
+                                            class="k-popover"
+                                            data-v-07815fc5=""
+                                            style="width: 200px; display: none;"
+                                          >
+                                            <!---->
+                                            <div
+                                              class="k-popover-content"
+                                              data-v-07815fc5=""
+                                            >
+                                              <div>
+                                                <p>
+                                                  Entity copied to clipboard!
+                                                </p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </transition-stub>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="k-card-body"
+                                    data-v-4ad076e4=""
+                                  >
+                                    <pre
+                                      class="code-block language-bash"
+                                      data-v-4ad076e4=""
+                                    >
+                                      <code
+                                        class=" language-bash"
+                                      >
+                                        <span
+                                          class="token builtin class-name"
+                                        >
+                                          echo
+                                        </span>
+                                         
+                                        <span
+                                          class="token string"
+                                        >
+                                          "type: Mesh
+name: default
+mtls: 
+  enabledBackend: fake-name
+  backends: 
+    - name: fake-name
+      type: builtin
+  enabled: true
+tracing: 
+  defaultBackend: fake-name
+  backends: 
+    - name: fake-name
+      type: zipkin
+      conf: 
+        sampling: 99.9
+        url: fake-name
+logging: 
+  backends: 
+    - name: fake-name
+      format: '{ start_time: ''%START_TIME%'', source: ''%KUMA_SOURCE_SERVICE%'', destination: ''%KUMA_DESTINATION_SERVICE%'', source_address: ''%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%'', destination_address: ''%UPSTREAM_HOST%'', duration_millis: ''%DURATION%'', bytes_received: ''%BYTES_RECEIVED%'', bytes_sent: ''%BYTES_SENT%'' }'
+      type: tcp
+      conf: 
+        address: '127.0.0.1:5000'
+metrics: 
+  enabledBackend: fake-name
+  backends: 
+    - name: fake-name
+      type: prometheus
+      conf: 
+        port: 5670
+        path: /metrics"
+                                        </span>
+                                         
+                                        <span
+                                          class="token operator"
+                                        >
+                                          |
+                                        </span>
+                                         kumactl apply -f -
+                                      </code>
+                                    </pre>
+                                  </div>
+                                </div>
+                              </div>
+                               
+                              <div>
+                                <!---->
+                                 
+                                <!---->
+                                 
+                                <!---->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                         
+                        <!---->
+                      </div>
+                    </div>
+                  </div>
+                   
+                  <div
+                    class="scanner"
+                  >
+                    <div
+                      class="scanner-content"
+                    >
+                      <div
+                        class="empty-state-wrapper"
+                        data-v-7725326c=""
+                      >
+                        <div
+                          class="empty-state-title"
+                          data-v-7725326c=""
+                        >
+                          <!---->
+                          <h5
+                            data-v-7725326c=""
+                          >
+                            <div
+                              class="card-icon mb-3"
+                              data-v-7725326c=""
+                            >
+                              <svg
+                                class="kong-icon kong-icon-spinner"
+                                data-v-77239f42=""
+                                data-v-7725326c=""
+                                height="42"
+                                role="img"
+                                viewBox="0 0 24 24"
+                                width="42"
+                              >
+                                <title
+                                  data-v-77239f42=""
+                                >
+                                  spinner
+                                </title>
+                                <g
+                                  data-v-77239f42=""
+                                >
+                                  <path
+                                    d="M13.3154759 4.60336552c.6394482-.63889655.6394482-1.67503449 0-2.31393104-.6388966-.63889655-1.6744828-.63889655-2.3133793 0-.6394483.63889655-.6394483 1.67503449 0 2.31393104.6388965.63889655 1.6744827.63889655 2.3133793 0"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".1"
+                                  />
+                                  <path
+                                    d="M13.9609931 6.17246897c-.9037241 0-1.6364138.73268965-1.6364138 1.63641379 0 .90317241.7326897 1.63586207 1.6364138 1.63586207.9037241 0 1.6358621-.73268966 1.6358621-1.63586207 0-.90372414-.732138-1.63641379-1.6358621-1.63641379"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".25"
+                                  />
+                                  <path
+                                    d="M10.9938207 11.0105379c-.6388966.6388966-.6388966 1.6750345 0 2.3139311.6388965.6388965 1.6750345.6388965 2.313931 0 .6388966-.6388966.6388966-1.6750345 0-2.3139311-.6388965-.6388965-1.6750345-.6388965-2.313931 0"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".35"
+                                  />
+                                  <path
+                                    d="M7.79988966 12.3247448c-.90372414 0-1.63586207.7326897-1.63586207 1.6364138 0 .9031724.73213793 1.6358621 1.63586207 1.6358621.90372413 0 1.63641379-.7326897 1.63641379-1.6358621 0-.9037241-.73268966-1.6364138-1.63641379-1.6364138"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".5"
+                                  />
+                                  <path
+                                    d="M2.28706207 11.004469c-.63889655.6388965-.63889655 1.6750344 0 2.313931.63889655.6388966 1.67503448.6388966 2.31393103 0 .63889656-.6388966.63889656-1.6750345 0-2.313931-.63889655-.6388966-1.67503448-.6388966-2.31393103 0"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".65"
+                                  />
+                                  <path
+                                    d="M3.27244138 7.80888276c0-.90372414-.73268966-1.63641379-1.63641379-1.63641379-.90372414 0-1.63586207.73268965-1.63586207 1.63641379 0 .90317241.73213793 1.63586207 1.63586207 1.63586207.90372413 0 1.63641379-.73268966 1.63641379-1.63586207"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".75"
+                                  />
+                                  <path
+                                    d="M4.59271724 4.60943448c.63889655-.63889655.63889655-1.67503448 0-2.31393103-.63889655-.63889655-1.67503448-.63889655-2.31393103 0-.63889655.63889655-.63889655 1.67503448 0 2.31393103.63889655.63889655 1.67503448.63889655 2.31393103 0"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".85"
+                                  />
+                                  <path
+                                    d="M6.16402759 1.6361931c0 .90372414.73213793 1.6364138 1.63586207 1.6364138.90372413 0 1.63641379-.73268966 1.63641379-1.6364138 0-.90372413-.73268966-1.63641379-1.63641379-1.63641379-.90372414 0-1.63586207.73268966-1.63586207 1.63641379z"
+                                    data-v-77239f42=""
+                                    fill="rgba(0, 0, 0, 0.1)"
+                                    opacity=".95"
+                                  />
+                                </g>
+                              </svg>
+                            </div>
+                             
+                            <!---->
+                             
+                            <h3
+                              data-v-7725326c=""
+                            >
+                              Searching…
+                            </h3>
+                             
+                            <!---->
+                          </h5>
+                        </div>
+                        <div
+                          class="empty-state-content"
+                          data-v-7725326c=""
+                        >
+                          <p
+                            data-v-7725326c=""
+                          >
+                            <p
+                              data-v-7725326c=""
+                            >
+                              We are looking for your mesh.
+                            </p>
+                             
+                            <!---->
+                          </p>
+                          <p
+                            data-v-7725326c=""
+                          >
+                            <!---->
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+           
+          <footer
+            class="wizard-steps__footer"
+          >
+            <button
+              class="k-button secondary"
+              data-v-90a15d32=""
+              style=""
+              type="button"
+            >
+              
+        ‹ Previous
+      
+            </button>
+             
+            <button
+              class="k-button primary"
+              data-v-90a15d32=""
+              style="display: none;"
+              type="button"
+            >
+              
+        Next ›
+      
+            </button>
+          </footer>
+        </div>
+         
+        <aside
+          class="wizard-steps__sidebar"
+        >
+          <div
+            class="wizard-steps__sidebar__content"
+          >
+            <div
+              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--0"
+            >
+              <h3>
+                Mesh
+              </h3>
+               
+              <p>
+                
+          In Kuma, a Mesh resource allows you to define an isolated environment
+          for your data-planes and policies. It's isolated because the mTLS CA
+          you choose can be different from the one configured for our Meshes.
+          Ideally, you will have either a large Mesh with all the workloads, or
+          one Mesh per application for better isolation.
+        
+              </p>
+               
+              <p>
+                <a
+                  href="https://kuma.io/docs/null/policies/mesh/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                  target="_blank"
+                >
+                  
+            Learn More
+          
+                </a>
+              </p>
+            </div>
+            <div
+              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--1"
+            >
+              <h3>
+                Did You Know?
+              </h3>
+               
+              <p>
+                
+          As you know, the GUI is read-only, but it will be providing instructions
+          to create a new Mesh and verify everything worked well.
+        
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+`;
