@@ -722,7 +722,6 @@ export default {
       title: 'config/getTagline',
       version: 'config/getVersion',
       environment: 'config/getEnvironment',
-      formData: 'getStoredWizardData',
       selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'
     }),

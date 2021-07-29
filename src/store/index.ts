@@ -67,7 +67,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     version: '',
     selectedTab: '#overview',
     selectedTableRow: null,
-    storedWizardData: null,
     itemQueryNamespace: 'item',
     totalClusters: 0,
 
@@ -156,7 +155,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     getSelectedTab: (state) => state.selectedTab,
     getSelectedTableRow: (state) => state.selectedTableRow,
 
-    getStoredWizardData: (state) => state.storedWizardData,
     getItemQueryNamespace: (state) => state.itemQueryNamespace,
     getClusterCount: (state) => state.totalClusters,
     getServiceInsightsFromMesh: ({ serviceInsights }) => {
@@ -224,7 +222,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
     SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
     SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
-    SET_WIZARD_DATA: (state, value) => (state.storedWizardData = value),
 
     // NEW
     SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
@@ -908,11 +905,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     // set the selected table row in the state
     updateSelectedTableRow ({ commit }, row) {
       commit('SET_NEW_TABLE_ROW', row)
-    },
-
-    // update the stored Wizard data for use in generating code output
-    updateWizardData ({ commit }, value) {
-      commit('SET_WIZARD_DATA', value)
     },
 
     // NEW
