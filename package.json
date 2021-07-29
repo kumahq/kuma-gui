@@ -38,7 +38,7 @@
     "@kongponents/styles": "^1.0.2",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "msw": "^0.30.1",
     "semver": "^7.3.4",
     "semver-compare": "^1.0.0",
