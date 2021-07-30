@@ -96,10 +96,6 @@ export default {
       type: Boolean,
       default: true
     },
-    vuexState: {
-      type: String,
-      default: 'updateSelectedTab'
-    },
     isLoading: {
       type: Boolean,
       default: false
@@ -137,12 +133,14 @@ export default {
     activeTab: {
       get () {
         if (!this.tabState) {
-          return this.$store.state.selectedTab
+          return this.tabs[0].hash
         } else {
-          return `#${this.$store.state[this.tabState]}`
+          return `#${this.tabState}`
         }
       },
       set (newTab) {
+        this.$emit('onTabChange', newTab)
+
         return newTab
       }
     },
@@ -154,14 +152,9 @@ export default {
       }
     }
   },
-  beforeMount () {
-    // display the first tab on load
-    this.$store.dispatch(this.vuexState, `#${this.initialTabOverride}` || this.tabs[0].hash)
-  },
   methods: {
     switchTab (newTab) {
       this.activeTab = newTab
-      this.$store.dispatch(this.vuexState, newTab)
     }
   }
 }

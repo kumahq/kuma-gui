@@ -364,12 +364,6 @@ export default {
     tableAction (ev) {
       const data = ev
 
-      // reset back to the first tab
-      this.$store.dispatch('updateSelectedTab', this.tabs[0].hash)
-
-      // set the active table row
-      this.$store.dispatch('updateSelectedTableRow', data.name)
-
       // load the data into the tabs
       this.getEntity(data)
     },
@@ -425,9 +419,6 @@ export default {
               // load the YAML entity for the first item on page load
               this.getEntity(items[0])
 
-              // set the selected table row for the first item on page load
-              this.$store.dispatch('updateSelectedTableRow', this.firstEntity)
-
               this.tableData.data = [...items]
               this.tableDataIsEmpty = false
               this.isEmpty = false
@@ -457,6 +448,7 @@ export default {
     getEntity (entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
+      this.entityHasError = false
 
       if (entity && entity !== null) {
         return this.$api.getMesh(entity.name)

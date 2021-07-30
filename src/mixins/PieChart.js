@@ -298,7 +298,7 @@ export default {
 
         return defaultItem
       }).map((item) => {
-        const { category } = item
+        const { category = '' } = item
 
         switch (category.toLowerCase()) {
           case 'online':

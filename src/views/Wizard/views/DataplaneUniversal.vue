@@ -507,7 +507,6 @@ export default {
       version: 'config/getVersion',
       environment: 'config/getEnvironment',
       formData: 'getStoredWizardData',
-      selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'
     }),
 
