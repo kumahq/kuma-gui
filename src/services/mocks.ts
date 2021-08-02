@@ -9,20 +9,42 @@ const requireMockFile = (filename: string) => require(`${MOCK_FILES_ROOT_PATH}/$
 const mockFilenameBasePaths: string[] = [
   // all of matches which contain "+" in url could be matched only by
   // RegEx as some of other examples below.
+  'versions',
   'meshes',
+  'mesh-insights',
+  'mesh-insights/default',
+  'mesh-insights/hello-world',
+  // 'dataplanes', // comment to have onboarding without data planes active
+  'health-checks',
+  'proxytemplates',
+  'traffic-logs',
+  'traffic-traces',
+  'traffic-permissions',
+  'traffic-routes',
+  'fault-injections',
+  'service-insights',
+  'external-services',
+  'retries',
+  'circuit-breakers',
+  'zones',
+  'status/zones',
+
   'meshes/default',
   'meshes/mesh-01',
   'meshes/kong-mania-12',
   'meshes/hello-world',
+
+  'meshes/default/dataplanes',
   'meshes/default/dataplanes/test-dp-02',
   'meshes/default/dataplanes/ingress-dp-test-123',
   'meshes/default/dataplanes+insights/ingress-dp-test-123',
   'meshes/default/dataplanes/gateway-dp-87qntx',
   'meshes/default/dataplanes/dataplane-test-456',
+
   'meshes/default/traffic-traces',
   'meshes/default/traffic-traces/tt-1',
   'meshes/default/traffic-traces/traffic-trace-02',
-  'traffic-traces',
+
   'meshes/default/health-checks',
   'meshes/default/health-checks/web-to-backend',
   'meshes/default/health-checks/web-to-banana',
@@ -31,41 +53,42 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/health-checks/health-check-0023',
   'meshes/default/health-checks/health-check-12345',
   'meshes/default/health-checks/foo-bar-baz-123',
-  'health-checks',
+
   'meshes/default/fault-injections',
   'meshes/default/fault-injections/web-to-backend.kuma-system',
   'meshes/default/fault-injections/fi1.kuma-system',
-  'fault-injections',
-  'proxytemplates',
+
+  'meshes/default/traffic-routes',
+
+  'meshes/default/timeouts',
+
+  'meshes/default/retries',
+
   'meshes/default/proxytemplates',
   'meshes/helloworld/proxytemplates',
   'meshes/default/proxytemplates/pt-1',
   'meshes/helloworld/proxytemplates/pt-123',
+
   'meshes/default/traffic-logs',
   'meshes/default/traffic-logs/tl-1',
   'meshes/default/traffic-logs/tl-123',
-  'traffic-permissions',
+
   'meshes/default/traffic-permissions',
   'meshes/default/traffic-permissions/tp-1',
   'meshes/default/traffic-permissions/tp-1234',
   'meshes/default/traffic-permissions/tp-alpha-tango-donut',
+
   'meshes/default/circuit-breakers',
-  'circuit-breakers',
-  'meshes/alpha-tango-mesh/circuit-breakers',
   'meshes/default/circuit-breakers/cb1',
   'meshes/default/circuit-breakers/cb2',
-  'status/zones',
-  'zones',
+  'meshes/alpha-tango-mesh/circuit-breakers',
+
   'zones+insights',
   'zones+insights/zone-1',
   'zones+insights/zone-2',
   'zones+insights/zone-3',
   'zones+insights/cluster-1',
-  'mesh-insights',
-  'service-insights',
-  'external-services',
-  'versions',
-  // 'dataplanes', // comment to have onboarding without data planes active
+
   'meshes/default/dataplanes+insights/cluster-1.backend-02',
   'meshes/default/dataplanes+insights/cluster-1.backend-03',
   'meshes/default/dataplanes+insights/cluster-1.ingress-02',
