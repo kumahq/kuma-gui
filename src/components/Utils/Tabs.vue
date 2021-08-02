@@ -13,8 +13,7 @@
     >
       <KTabs
         v-if="isReady"
-        :key="activeTab"
-        v-model="activeTab"
+        v-model="tabState"
         :tabs="tabs"
         @changed="hash => switchTab(hash)"
       >
@@ -112,38 +111,22 @@ export default {
       type: Array,
       required: true
     },
-    tabGroupTitle: {
-      type: String,
-      default: null
-    },
     hasBorder: {
       type: Boolean,
       default: false
-    },
-    tabState: {
-      type: String,
-      default: null
     },
     initialTabOverride: {
       type: String,
       default: null
     }
   },
-  computed: {
-    activeTab: {
-      get () {
-        if (!this.tabState) {
-          return this.tabs[0].hash
-        } else {
-          return `#${this.tabState}`
-        }
-      },
-      set (newTab) {
-        this.$emit('onTabChange', newTab)
+  data() {
+    return {
+      tabState: this.initialTabOverride && `#${this.initialTabOverride}`
+    }
+  },
 
-        return newTab
-      }
-    },
+  computed: {
     isReady () {
       if (this.loaders !== false) {
         return !this.isEmpty && !this.hasError && !this.isLoading
@@ -152,9 +135,10 @@ export default {
       }
     }
   },
+
   methods: {
     switchTab (newTab) {
-      this.activeTab = newTab
+      this.$emit('onTabChange', newTab)
     }
   }
 }

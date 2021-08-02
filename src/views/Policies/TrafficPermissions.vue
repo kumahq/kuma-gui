@@ -62,7 +62,6 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :tabs="tabs"
-        :tab-group-title="tabGroupTitle"
         initial-tab-override="overview"
       >
         <template slot="tabHeader">
