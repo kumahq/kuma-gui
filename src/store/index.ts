@@ -65,8 +65,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     totalRetryCountFromMesh: 0,
     totalTimeoutCountFromMesh: 0,
     version: '',
-    selectedTab: '#overview',
-    selectedTableRow: null,
     itemQueryNamespace: 'item',
     totalClusters: 0,
 
@@ -152,9 +150,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     getTotalRetryCountFromMesh: (state) => state.totalRetryCountFromMesh,
     getTotalTimeoutCountFromMesh: (state) => state.totalTimeoutCountFromMesh,
 
-    getSelectedTab: (state) => state.selectedTab,
-    getSelectedTableRow: (state) => state.selectedTableRow,
-
     getItemQueryNamespace: (state) => state.itemQueryNamespace,
     getClusterCount: (state) => state.totalClusters,
     getServiceInsightsFromMesh: ({ serviceInsights }) => {
@@ -220,8 +215,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     SET_TOTAL_TIMEOUT_COUNT_FROM_MESH: (state, count) => (state.totalTimeoutCountFromMesh = count),
     SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
     SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
-    SET_NEW_TAB: (state, tab) => (state.selectedTab = tab),
-    SET_NEW_TABLE_ROW: (state, row) => (state.selectedTableRow = row),
 
     // NEW
     SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
@@ -895,16 +888,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       }
 
       return getDataplanes()
-    },
-
-    // allows us to set the selected tab outside of the Tabs component
-    updateSelectedTab ({ commit }, tab) {
-      commit('SET_NEW_TAB', tab)
-    },
-
-    // set the selected table row in the state
-    updateSelectedTableRow ({ commit }, row) {
-      commit('SET_NEW_TABLE_ROW', row)
     },
 
     // NEW

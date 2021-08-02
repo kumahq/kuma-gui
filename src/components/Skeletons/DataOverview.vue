@@ -129,10 +129,10 @@
             <a
               v-if="tableDataFunctionText"
               class="data-table-action-link"
-              :class="{ 'is-active': ($store.state.selectedTableRow === row.name) }"
+              :class="{ 'is-active': (selectedRow=== row.name) }"
             >
               <span
-                v-if="$store.state.selectedTableRow === row.name"
+                v-if="selectedRow === row.name"
                 class="action-link__active-state"
               >
                 &#x2713;
@@ -352,6 +352,9 @@ export default {
       type: Boolean,
     }
   },
+  data() {
+    return { selectedRow: '' }
+  },
   computed: {
     isReady () {
       return !this.isEmpty && !this.hasError && !this.isLoading
@@ -377,8 +380,16 @@ export default {
       return newData
     }
   },
+  watch: {
+    isLoading(val) {
+      if (!val && this.tableData.data.length > 0) {
+        this.selectedRow = this.tableData.data[0].name
+      }
+    }
+  },
   methods: {
     tableRowHandler (e, row, type) {
+      this.selectedRow = row.name
       this.$emit('tableAction', row)
     },
     cleanTagLabel (val) {

@@ -464,6 +464,7 @@
                 :tabs="tabs"
                 :has-border="true"
                 :initial-tab-override="environment"
+                @onTabChange="onTabChange"
               >
                 <template slot="kubernetes">
                   <CodeView
@@ -598,6 +599,7 @@ export default {
   ],
   data () {
     return {
+      selectedTab: '',
       schema: meshSchema,
       steps: [
         {
@@ -682,7 +684,6 @@ export default {
       title: 'config/getTagline',
       version: 'config/getVersion',
       environment: 'config/getEnvironment',
-      selectedTab: 'getSelectedTab'
     }),
 
     // Our generated code output
@@ -840,19 +841,7 @@ export default {
         }
       }
 
-      /**
-       * Finalized output
-       */
-
-      const cliConditionCode = () => {
-        if (this.selectedTab === '#kubernetes') {
-          return this.formatForCLI(meshYaml, '" | kubectl apply -f -')
-        } else {
-          return this.formatForCLI(meshYaml, '" | kumactl apply -f -')
-        }
-      }
-
-      return cliConditionCode()
+      return this.formatForCLI(meshYaml, '" | kumactl apply -f -')
     },
     nextDisabled() {
       const {
@@ -921,12 +910,10 @@ export default {
       this.validate.meshMetricsName = kebabCase(value)
     }
   },
-  mounted () {
-    // this ensures the Wizard tab is actively set based on
-    // the user's Kuma environment (Universal or Kubernetes)
-    this.$store.dispatch('updateSelectedTab', `#${this.environment}`)
-  },
   methods: {
+    onTabChange(newTab) {
+      this.selectedTab = newTab
+    },
     hideSiblings () {
       // this triggers when to hide the siblings related to the Scanner
       // component that need to be hidden once the scan succeeds.

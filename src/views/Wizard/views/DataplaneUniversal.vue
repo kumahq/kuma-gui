@@ -506,7 +506,6 @@ export default {
       title: 'config/getTagline',
       version: 'config/getVersion',
       environment: 'config/getEnvironment',
-      selectedTab: 'getSelectedTab',
       meshes: 'getMeshList'
     }),
 

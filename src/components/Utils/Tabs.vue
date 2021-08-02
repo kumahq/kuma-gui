@@ -13,8 +13,7 @@
     >
       <KTabs
         v-if="isReady"
-        :key="activeTab"
-        v-model="activeTab"
+        v-model="tabState"
         :tabs="tabs"
         @changed="hash => switchTab(hash)"
       >
@@ -96,10 +95,6 @@ export default {
       type: Boolean,
       default: true
     },
-    vuexState: {
-      type: String,
-      default: 'updateSelectedTab'
-    },
     isLoading: {
       type: Boolean,
       default: false
@@ -116,36 +111,22 @@ export default {
       type: Array,
       required: true
     },
-    tabGroupTitle: {
-      type: String,
-      default: null
-    },
     hasBorder: {
       type: Boolean,
       default: false
-    },
-    tabState: {
-      type: String,
-      default: null
     },
     initialTabOverride: {
       type: String,
       default: null
     }
   },
+  data() {
+    return {
+      tabState: this.initialTabOverride && `#${this.initialTabOverride}`
+    }
+  },
+
   computed: {
-    activeTab: {
-      get () {
-        if (!this.tabState) {
-          return this.$store.state.selectedTab
-        } else {
-          return `#${this.$store.state[this.tabState]}`
-        }
-      },
-      set (newTab) {
-        return newTab
-      }
-    },
     isReady () {
       if (this.loaders !== false) {
         return !this.isEmpty && !this.hasError && !this.isLoading
@@ -154,14 +135,10 @@ export default {
       }
     }
   },
-  beforeMount () {
-    // display the first tab on load
-    this.$store.dispatch(this.vuexState, `#${this.initialTabOverride}` || this.tabs[0].hash)
-  },
+
   methods: {
     switchTab (newTab) {
-      this.activeTab = newTab
-      this.$store.dispatch(this.vuexState, newTab)
+      this.$emit('onTabChange', newTab)
     }
   }
 }
