@@ -15,33 +15,24 @@
 export default {
   data () {
     return {
+      timer: null,
       progress: 10
     }
   },
 
-  computed: {
-    loading () {
-      return this.$store.state.globalLoading
-    }
-  },
-
-  watch: {
-    loading (newVal) {
-      if (!newVal) {
-        this.progress = 100
-      }
-    }
-  },
-
   mounted () {
-    const timer = setInterval(() => {
+    this.timer = setInterval(() => {
       if (this.progress >= 100) {
-        clearInterval(timer)
+        clearInterval(this.timer)
         this.progress = 100
       }
 
-      this.progress += Math.ceil(Math.random(10) * 30)
+      this.progress = Math.min(this.progress + Math.ceil(Math.random(10) * 30), 100)
     }, 150)
+  },
+
+  destroyed () {
+    clearInterval(this.timer)
   }
 }
 </script>

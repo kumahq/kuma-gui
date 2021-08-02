@@ -11,7 +11,12 @@ import axios from 'axios'
 
 export default {
   name: 'HelloWorld',
-  props: ['msg'],
+  props: {
+    msg: {
+      type: String,
+      default: ''
+    }
+  },
   data: () => ({
     msg2: ''
   }),
