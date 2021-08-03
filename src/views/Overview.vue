@@ -182,57 +182,57 @@ export default {
         {
           metric: 'Circuit Breakers',
           value: policies.CircuitBreaker.total,
-          url: `/${mesh}/circuit-breakers`,
+          url: `/mesh/${mesh}/circuit-breakers`,
         },
         {
           metric: 'Fault Injections',
           value: policies.FaultInjection.total,
-          url: `/${mesh}/fault-injections`,
+          url: `/mesh/${mesh}/fault-injections`,
         },
         {
           metric: 'Health Checks',
           value: policies.HealthCheck.total,
-          url: `/${mesh}/health-checks`,
+          url: `/mesh/${mesh}/health-checks`,
         },
         {
           metric: 'Proxy Templates',
           value: policies.ProxyTemplate.total,
-          url: `/${mesh}/proxy-templates`,
+          url: `/mesh/${mesh}/proxy-templates`,
         },
         {
           metric: 'Traffic Logs',
           value: policies.TrafficLog.total,
-          url: `/${mesh}/traffic-logs`,
+          url: `/mesh/${mesh}/traffic-logs`,
         },
         {
           metric: 'Traffic Permissions',
           value: policies.TrafficPermission.total,
-          url: `/${mesh}/traffic-permissions`,
+          url: `/mesh/${mesh}/traffic-permissions`,
         },
         {
           metric: 'Traffic Routes',
           value: policies.TrafficRoute.total,
-          url: `/${mesh}/traffic-routes`,
+          url: `/mesh/${mesh}/traffic-routes`,
         },
         {
           metric: 'Traffic Traces',
           value: policies.TrafficTrace.total,
-          url: `/${mesh}/traffic-traces`,
+          url: `/mesh/${mesh}/traffic-traces`,
         },
         {
           metric: 'Rate Limits',
           value: policies.RateLimit.total,
-          url: `/${mesh}/rate-limits`,
+          url: `/mesh/${mesh}/rate-limits`,
         },
         {
           metric: 'Retries',
           value: policies.Retry.total,
-          url: `/${mesh}/retries`,
+          url: `/mesh/${mesh}/retries`,
         },
         {
           metric: 'Timeouts',
           value: policies.Timeout.total,
-          url: `/${mesh}/timeouts`,
+          url: `/mesh/${mesh}/timeouts`,
         },
       ]
 
