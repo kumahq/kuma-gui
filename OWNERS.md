@@ -10,6 +10,7 @@ Please see [GOVERNANCE.md](GOVERNANCE.md) for governance guidelines and responsi
 
 In alphabetical order:
 
+- Adrian Goławski([pan-bubr](https://github.com/pan-bubr)) (adrian.golawski@gmail.com)
 - Austin Cawley-Edwards([austince](https://github.com/austince)) (austin.cawley@gmail.com)
 - Bart Smykla ([bartsmykla](https://github.com/bartsmykla)) (bartek@smykla.com)
 - Charly Molter ([lahabana](https://github.com/lahabana)) (charly@molter.io)
