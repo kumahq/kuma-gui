@@ -1,13 +1,13 @@
 import RestClient from '@/services/restClient'
 
 export default class Kuma {
-  client: RestClient
+  private client: RestClient
 
-  constructor () {
+  public constructor () {
     this.client = new RestClient()
   }
 
-  buildUrl (path: string) {
+  public buildUrl (path: string) {
     return this.client.buildUrl(path)
   }
 
@@ -15,22 +15,22 @@ export default class Kuma {
    * Info / Config
    */
 
-  getInfo () {
+  public getInfo () {
     return this.client.get('/')
   }
 
-  getStatus () {
+  public getStatus () {
     return this.client.status('/')
   }
 
-  getConfig () {
+  public getConfig () {
     return this.client.getConfig()
   }
 
   /**
    * Custom query
    */
-  query (model: string, params: any) {
+  public query (model: string, params: any) {
     return this.client.get(`/${model}`, { params })
   }
 
@@ -39,12 +39,12 @@ export default class Kuma {
    */
 
   // Zone status
-  getZoneStatus (params: any) {
+  public getZoneStatus (params: any) {
     return this.client.get('/status/zones', { params })
   }
 
   // Zones
-  getZones (params?: any) {
+  public getZones (params?: any) {
     return this.client.get('/zones', { params })
   }
 
@@ -53,12 +53,12 @@ export default class Kuma {
    */
 
   // Get all Zone Insights/Overviews
-  getAllZoneOverviews (params: any) {
+  public getAllZoneOverviews (params: any) {
     return this.client.get('/zones+insights', { params })
   }
 
   // Get a single Zone Insight/Overview
-  getZoneOverview (name: string, params?: any) {
+  public getZoneOverview (name: string, params?: any) {
     return this.client.get(`/zones+insights/${name}`, { params })
   }
 
@@ -67,12 +67,12 @@ export default class Kuma {
    */
 
   // Get all Zone Ingress Insights/Overviews
-  getAllZoneIngressOverviews (params: any) {
+  public getAllZoneIngressOverviews (params: any) {
     return this.client.get('/zoneingresses+insights', { params })
   }
 
   // Get a single Zone Ingress Insight/Overview
-  getZoneIngressOverview (name: string, params?: any) {
+  public getZoneIngressOverview (name: string, params?: any) {
     return this.client.get(`/zoneingresses+insights/${name}`, { params })
   }
 
@@ -81,12 +81,12 @@ export default class Kuma {
    */
 
   // get a list of all meshes
-  getAllMeshes (params: any) {
+  public getAllMeshes (params: any) {
     return this.client.get('/meshes', { params })
   }
 
   // get a single mesh
-  getMesh (name: string, params: any) {
+  public getMesh (name: string, params: any) {
     return this.client.get(`/meshes/${name}`, { params })
   }
 
@@ -94,17 +94,17 @@ export default class Kuma {
    * Dataplanes
    */
 
-  getAllDataplanes (params: any) {
+  public getAllDataplanes (params: any) {
     return this.client.get('/dataplanes', { params })
   }
 
   // get a list of all dataplanes
-  getAllDataplanesFromMesh (name: string, params?: any) {
+  public getAllDataplanesFromMesh (name: string, params?: any) {
     return this.client.get(`/meshes/${name}/dataplanes`, { params })
   }
 
   // get a single dataplane
-  getDataplaneFromMesh (name: string, dataplane: string, params: any) {
+  public getDataplaneFromMesh (name: string, dataplane: string, params: any) {
     return this.client.get(`/meshes/${name}/dataplanes/${dataplane}`, { params })
   }
 
@@ -113,17 +113,17 @@ export default class Kuma {
    */
 
   // get a specific dataplane overview from its associated mesh
-  getDataplaneOverviewFromMesh (mesh: string, dataplane: string, params?: any) {
+  public getDataplaneOverviewFromMesh (mesh: string, dataplane: string, params?: any) {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights/${dataplane}`, { params })
   }
 
   // get all dataplane overviews from a specific mesh
-  getAllDataplaneOverviewsFromMesh (mesh: string, params: any) {
+  public getAllDataplaneOverviewsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/dataplanes+insights`, { params })
   }
 
   // get all dataplane overviews
-  getAllDataplaneOverviews (params: any) {
+  public getAllDataplaneOverviews (params: any) {
     return this.client.get('/dataplanes+insights', { params })
   }
 
@@ -132,17 +132,17 @@ export default class Kuma {
    */
 
   // get all traffic logs
-  getAllTrafficLogs (params: any) {
+  public getAllTrafficLogs (params: any) {
     return this.client.get('/traffic-logs', { params })
   }
 
   // get all traffic logs from mesh
-  getAllTrafficLogsFromMesh (mesh: string, params: any) {
+  public getAllTrafficLogsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-logs`, { params })
   }
 
   // get traffic log details
-  getTrafficLog (mesh: string, trafficlog: string, params: any) {
+  public getTrafficLog (mesh: string, trafficlog: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-logs/${trafficlog}`, { params })
   }
 
@@ -151,17 +151,17 @@ export default class Kuma {
    */
 
   // get traffic permissions
-  getAllTrafficPermissions (params: any) {
+  public getAllTrafficPermissions (params: any) {
     return this.client.get('/traffic-permissions', { params })
   }
 
   // get traffic permissions from mesh
-  getAllTrafficPermissionsFromMesh (mesh: string, params: any) {
+  public getAllTrafficPermissionsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-permissions`, { params })
   }
 
   // get traffic permission details
-  getTrafficPermission (mesh: string, trafficpermission: string, params: any) {
+  public getTrafficPermission (mesh: string, trafficpermission: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-permissions/${trafficpermission}`, { params })
   }
 
@@ -170,17 +170,17 @@ export default class Kuma {
    */
 
   // get all traffic routes
-  getAllTrafficRoutes (params: any) {
+  public getAllTrafficRoutes (params: any) {
     return this.client.get('/traffic-routes', { params })
   }
 
   // get traffic routes from mesh
-  getAllTrafficRoutesFromMesh (mesh: string, params: any) {
+  public getAllTrafficRoutesFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-routes`, { params })
   }
 
   // get traffic route details
-  getTrafficRoute (mesh: string, trafficroute: string, params: any) {
+  public getTrafficRoute (mesh: string, trafficroute: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-routes/${trafficroute}`, { params })
   }
 
@@ -189,17 +189,17 @@ export default class Kuma {
    */
 
   // get all traffic traces
-  getAllTrafficTraces (params: any) {
+  public getAllTrafficTraces (params: any) {
     return this.client.get('/traffic-traces', { params })
   }
 
   // get traffic traces from mesh
-  getAllTrafficTracesFromMesh (mesh: string, params: any) {
+  public getAllTrafficTracesFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-traces`, { params })
   }
 
   // get traffic trace details
-  getTrafficTrace (mesh: string, traffictrace: string, params: any) {
+  public getTrafficTrace (mesh: string, traffictrace: string, params: any) {
     return this.client.get(`/meshes/${mesh}/traffic-traces/${traffictrace}`, { params })
   }
 
@@ -208,7 +208,7 @@ export default class Kuma {
    */
 
   // get all proxy templates
-  getAllProxyTemplates (params: any) {
+  public getAllProxyTemplates (params: any) {
     return this.client.get('/proxytemplates', { params })
 
     // this may change to this:
@@ -216,12 +216,12 @@ export default class Kuma {
   }
 
   // get all proxy templates from mesh
-  getAllProxyTemplatesFromMesh (mesh: string, params: any) {
+  public getAllProxyTemplatesFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/proxytemplates`, { params })
   }
 
   // get proxy template details
-  getProxyTemplate (mesh: string, proxytemplate: string, params: any) {
+  public getProxyTemplate (mesh: string, proxytemplate: string, params: any) {
     return this.client.get(`/meshes/${mesh}/proxytemplates/${proxytemplate}`, { params })
   }
 
@@ -230,17 +230,17 @@ export default class Kuma {
    */
 
   // get all health checks
-  getAllHealthChecks (params: any) {
+  public getAllHealthChecks (params: any) {
     return this.client.get('/health-checks', { params })
   }
 
   // get all health checks from mesh
-  getAllHealthChecksFromMesh (mesh: string, params: any) {
+  public getAllHealthChecksFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/health-checks`, { params })
   }
 
   // get health check details
-  getHealthCheck (mesh: string, name: string, params: any) {
+  public getHealthCheck (mesh: string, name: string, params: any) {
     return this.client.get(`/meshes/${mesh}/health-checks/${name}`, { params })
   }
 
@@ -249,17 +249,17 @@ export default class Kuma {
    */
 
   // get all fault injections
-  getAllFaultInjections (params: any) {
+  public getAllFaultInjections (params: any) {
     return this.client.get('/fault-injections', { params })
   }
 
   // get all fault injections from mesh
-  getAllFaultInjectionsFromMesh (mesh: string, params: any) {
+  public getAllFaultInjectionsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/fault-injections`, { params })
   }
 
   // get fault injection details
-  getFaultInjection (mesh: string, faultinjection: string, params: any) {
+  public getFaultInjection (mesh: string, faultinjection: string, params: any) {
     return this.client.get(`/meshes/${mesh}/fault-injections/${faultinjection}`, { params })
   }
 
@@ -268,17 +268,17 @@ export default class Kuma {
    */
 
   // get all circuit breakers
-  getAllCircuitBreakers (params: any) {
+  public getAllCircuitBreakers (params: any) {
     return this.client.get('/circuit-breakers', { params })
   }
 
   // get all circuit breakers from mesh
-  getAllCircuitBreakersFromMesh (mesh: string, params: any) {
+  public getAllCircuitBreakersFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/circuit-breakers`, { params })
   }
 
   // get circuit breaker details
-  getCircuitBreaker (mesh: string, circuitbreaker: string, params: any) {
+  public getCircuitBreaker (mesh: string, circuitbreaker: string, params: any) {
     return this.client.get(`/meshes/${mesh}/circuit-breakers/${circuitbreaker}`, { params })
   }
 
@@ -287,17 +287,17 @@ export default class Kuma {
    */
 
   // get all rate limits
-  getAllRateLimits (params: any) {
+  public getAllRateLimits (params: any) {
     return this.client.get('/rate-limits', { params })
   }
 
   // get all rate limits from mesh
-  getAllRateLimitsFromMesh (mesh: string, params: any) {
+  public getAllRateLimitsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/rate-limits`, { params })
   }
 
   // get rate limit details
-  getRateLimit (mesh: string, ratelimit: string, params: any) {
+  public getRateLimit (mesh: string, ratelimit: string, params: any) {
     return this.client.get(`/meshes/${mesh}/rate-limits/${ratelimit}`, { params })
   }
 
@@ -306,17 +306,17 @@ export default class Kuma {
    */
 
   // get all retries
-  getAllRetries (params: any) {
+  public getAllRetries (params: any) {
     return this.client.get('/retries', { params })
   }
 
   // get all retries from mesh
-  getAllRetriesFromMesh (mesh: string, params: any) {
+  public getAllRetriesFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/retries`, { params })
   }
 
   // get retry details
-  getRetry (mesh: string, retry: string, params: any) {
+  public getRetry (mesh: string, retry: string, params: any) {
     return this.client.get(`/meshes/${mesh}/retries/${retry}`, { params })
   }
 
@@ -325,17 +325,17 @@ export default class Kuma {
    */
 
   // get all timeouts
-  getAllTimeouts (params: any) {
+  public getAllTimeouts (params: any) {
     return this.client.get('/timeouts', { params })
   }
 
   // get all timeouts from mesh
-  getAllTimeoutsFromMesh (mesh: string, params: any) {
+  public getAllTimeoutsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/timeouts`, { params })
   }
 
   // get timeout details
-  getTimeout (mesh: string, timeout: string, params: any) {
+  public getTimeout (mesh: string, timeout: string, params: any) {
     return this.client.get(`/meshes/${mesh}/timeouts/${timeout}`, { params })
   }
 
@@ -344,17 +344,17 @@ export default class Kuma {
    */
 
   // get all external services
-  getAllExternalServices (params: any) {
+  public getAllExternalServices (params: any) {
     return this.client.get('/external-services', { params })
   }
 
   // get all external services from mesh
-  getAllExternalServicesFromMesh (mesh: string, params: any) {
+  public getAllExternalServicesFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/external-services`, { params })
   }
 
   // get external service details
-  getExternalService (mesh: string, externalservice: string, params: any) {
+  public getExternalService (mesh: string, externalservice: string, params: any) {
     return this.client.get(`/meshes/${mesh}/external-services/${externalservice}`, { params })
   }
 
@@ -363,17 +363,17 @@ export default class Kuma {
    */
 
   // get all services
-  getAllServiceInsights (params: any) {
+  public getAllServiceInsights (params: any) {
     return this.client.get('/service-insights', { params })
   }
 
   // get all services from mesh
-  getAllServiceInsightsFromMesh (mesh: string, params: any) {
+  public getAllServiceInsightsFromMesh (mesh: string, params: any) {
     return this.client.get(`/meshes/${mesh}/service-insights`, { params })
   }
 
   // get service details
-  getServiceInsight (name: string, service: string, params: any) {
+  public getServiceInsight (name: string, service: string, params: any) {
     return this.client.get(`/meshes/${name}/service-insights/${service}`, { params })
   }
 
@@ -382,16 +382,16 @@ export default class Kuma {
    */
 
   // Get all Mesh Insights
-  getAllMeshInsights (params: any) {
+  public getAllMeshInsights (params: any) {
     return this.client.get('/mesh-insights', { params })
   }
 
   // Get a single Mesh Insight
-  getMeshInsights (name: string, params?: any) {
+  public getMeshInsights (name: string, params?: any) {
     return this.client.get(`/mesh-insights/${name}`, { params })
   }
 
-  getSupportedVersions (params?: any) {
+  public getSupportedVersions (params?: any) {
     return this.client.get('/versions', { params })
   }
 }

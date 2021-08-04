@@ -152,12 +152,8 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
 
     getItemQueryNamespace: (state) => state.itemQueryNamespace,
     getClusterCount: (state) => state.totalClusters,
-    getServiceInsightsFromMesh: ({ serviceInsights }) => {
-      return filterResourceByMesh(serviceInsights)
-    },
-    getExternalServicesFromMesh: ({ externalServices }) => {
-      return filterResourceByMesh(externalServices)
-    },
+    getServiceInsightsFromMesh: ({ serviceInsights }) => filterResourceByMesh(serviceInsights),
+    getExternalServicesFromMesh: ({ externalServices }) => filterResourceByMesh(externalServices),
     getMeshInsight: (state) => state.meshInsight,
     getMeshInsightsFetching: (state) => state.meshInsightsFetching,
     getServiceInsightsFetching: (state) => state.serviceInsightsFetching,
@@ -826,66 +822,64 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
 
     // this will get the current status of all dataplanes
     getAllDataplanes ({ commit }, params) {
-      const getDataplanes = async () => {
-        return new Promise<void>(async (resolve, reject) => {
-          const result = []
-          const states = []
+      const getDataplanes = async () => new Promise<void>(async (resolve, reject) => {
+        const result = []
+        const states = []
 
-          const dataplanes = await api.getAllDataplanes(params)
-          const items = await dataplanes.items
+        const dataplanes = await api.getAllDataplanes(params)
+        const items = await dataplanes.items
 
-          for (let i = 0; i < items.length; i++) {
-            const itemName = items[i].name
-            const itemMesh = items[i].mesh
+        for (let i = 0; i < items.length; i++) {
+          const itemName = items[i].name
+          const itemMesh = items[i].mesh
 
-            const itemStatus = await api.getDataplaneOverviewFromMesh(itemMesh, itemName)
-              .then(response => {
-                const items = response.dataplaneInsight.subscriptions
+          const itemStatus = await api.getDataplaneOverviewFromMesh(itemMesh, itemName)
+            .then(response => {
+              const items = response.dataplaneInsight.subscriptions
 
-                if (items && items.length > 0) {
-                  for (let i = 0; i < items.length; i++) {
-                    const connectTime = items[i].connectTime
-                    const disconnectTime = items[i].disconnectTime
+              if (items && items.length > 0) {
+                for (let i = 0; i < items.length; i++) {
+                  const connectTime = items[i].connectTime
+                  const disconnectTime = items[i].disconnectTime
 
-                    if (connectTime && connectTime.length && !disconnectTime) {
-                      return 'Online'
-                    }
+                  if (connectTime && connectTime.length && !disconnectTime) {
+                    return 'Online'
                   }
                 }
+              }
 
-                return 'Offline'
-              })
-
-            // create the full data array
-            result.push({
-              status: itemStatus,
-              name: itemName,
-              mesh: itemMesh
+              return 'Offline'
             })
-          }
 
-          // create a simple flat status object with booleans for checking
-          // if any dataplanes are offline
-          for (let i = 0; i < Object.values(result).length; i++) {
-            const statusVal = Object.values(result[i])[0]
-            const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
+          // create the full data array
+          result.push({
+            status: itemStatus,
+            name: itemName,
+            mesh: itemMesh
+          })
+        }
 
-            states.push(isOnline)
-          }
+        // create a simple flat status object with booleans for checking
+        // if any dataplanes are offline
+        for (let i = 0; i < Object.values(result).length; i++) {
+          const statusVal = Object.values(result[i])[0]
+          const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
 
-          // if any of the dataplanes return false for being online
-          // commit this so we can check against it
-          const anyDpOffline = states.some(i => i === false)
+          states.push(isOnline)
+        }
 
-          commit('SET_ANY_DP_OFFLINE', anyDpOffline)
+        // if any of the dataplanes return false for being online
+        // commit this so we can check against it
+        const anyDpOffline = states.some(i => i === false)
 
-          // commit the total list of dataplanes
-          commit('SET_TOTAL_DP_LIST', result)
+        commit('SET_ANY_DP_OFFLINE', anyDpOffline)
 
-          // resolve the promise
-          resolve()
-        })
-      }
+        // commit the total list of dataplanes
+        commit('SET_TOTAL_DP_LIST', result)
+
+        // resolve the promise
+        resolve()
+      })
 
       return getDataplanes()
     },

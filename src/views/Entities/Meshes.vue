@@ -381,66 +381,64 @@ export default {
         ? this.$api.getAllMeshes(params)
         : this.$api.getMesh(mesh)
 
-      const getMeshes = () => {
-        return endpoint
-          .then(response => {
-            const cleanRes = () => {
-              if (mesh === 'all') {
-                return response.items
-              }
-
-              const newItems = { items: [] }
-
-              newItems.items.push(response)
-
-              return newItems.items
+      const getMeshes = () => endpoint
+        .then(response => {
+          const cleanRes = () => {
+            if (mesh === 'all') {
+              return response.items
             }
 
-            // check to see if the `next` url is present
-            if (response.next) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
-            } else {
-              this.hasNext = false
+            const newItems = { items: [] }
+
+            newItems.items.push(response)
+
+            return newItems.items
+          }
+
+          // check to see if the `next` url is present
+          if (response.next) {
+            this.next = getOffset(response.next)
+            this.hasNext = true
+          } else {
+            this.hasNext = false
+          }
+
+          const items = cleanRes()
+
+          if (items.length > 0) {
+            // sort the table data by name and the mesh it's associated with
+            if (mesh === 'all') {
+              this.sortEntities(items)
             }
 
-            const items = cleanRes()
+            // set the first item as the default for initial load
+            this.firstEntity = items[0].name
 
-            if (items.length > 0) {
-              // sort the table data by name and the mesh it's associated with
-              if (mesh === 'all') {
-                this.sortEntities(items)
-              }
+            // load the YAML entity for the first item on page load
+            this.getEntity(items[0])
 
-              // set the first item as the default for initial load
-              this.firstEntity = items[0].name
-
-              // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
-
-              this.tableData.data = [...items]
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
-            } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
-
-              this.getEntity(null)
-            }
-          })
-          .catch(error => {
-            this.hasError = true
+            this.tableData.data = [...items]
+            this.tableDataIsEmpty = false
+            this.isEmpty = false
+          } else {
+            this.tableData.data = []
+            this.tableDataIsEmpty = true
             this.isEmpty = true
 
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      }
+            this.getEntity(null)
+          }
+        })
+        .catch(error => {
+          this.hasError = true
+          this.isEmpty = true
+
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
+        })
 
       getMeshes()
     },

@@ -213,7 +213,7 @@ export default {
   },
   filters: {
     formatValue (value) {
-      return value ? parseInt(value).toLocaleString('en').toString() : 0
+      return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
     },
     readableDate (value) {
       return humanReadableDate(value)
@@ -343,61 +343,59 @@ export default {
 
       const endpoint = this.$api.getAllZoneIngressOverviews()
 
-      const getZoneIngress = () => {
-        return endpoint
-          .then((response = {}) => {
-            const nextCheck = !!response.next
+      const getZoneIngress = () => endpoint
+        .then((response = {}) => {
+          const nextCheck = !!response.next
 
-            // check to see if the `next` url is present
-            if (nextCheck) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
-            } else {
-              this.hasNext = false
-            }
+          // check to see if the `next` url is present
+          if (nextCheck) {
+            this.next = getOffset(response.next)
+            this.hasNext = true
+          } else {
+            this.hasNext = false
+          }
 
-            let { items = [] } = response
+          let { items = [] } = response
 
-            if (items.length > 0) {
-              // rewrite the status column to be more human-readable
-              items = items.map(item => {
-                const { zoneIngressInsight = {} } = item
+          if (items.length > 0) {
+            // rewrite the status column to be more human-readable
+            items = items.map(item => {
+              const { zoneIngressInsight = {} } = item
 
-                return { ...item, ...getZoneIngressStatus(zoneIngressInsight) }
-              })
+              return { ...item, ...getZoneIngressStatus(zoneIngressInsight) }
+            })
 
-              // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
+            // sort the table data by name and the mesh it's associated with
+            this.sortEntities(items)
 
-              // set the first item as the default for initial load
-              this.firstEntity = items[0].name
+            // set the first item as the default for initial load
+            this.firstEntity = items[0].name
 
-              // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
+            // load the YAML entity for the first item on page load
+            this.getEntity(items[0])
 
-              this.tableData.data = [...items]
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
-            } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
-
-              this.getEntity(null)
-            }
-          })
-          .catch(error => {
-            this.hasError = true
+            this.tableData.data = [...items]
+            this.tableDataIsEmpty = false
+            this.isEmpty = false
+          } else {
+            this.tableData.data = []
+            this.tableDataIsEmpty = true
             this.isEmpty = true
 
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      }
+            this.getEntity(null)
+          }
+        })
+        .catch(error => {
+          this.hasError = true
+          this.isEmpty = true
+
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
+        })
 
       getZoneIngress()
     },

@@ -85,13 +85,11 @@ const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestConte
 }
 
 const setupHandlers = (apiURL: string): RestHandler[] => {
-  const handlers = mockFilenameBasePaths.map((path: string) => {
-    return rest.get(`${apiURL}${path}`,
-      (req, res, ctx) => res(
-        ctx.json(requireMockFile(`${path}.json`))
-      )
+  const handlers = mockFilenameBasePaths.map((path: string) => rest.get(`${apiURL}${path}`,
+    (req, res, ctx) => res(
+      ctx.json(requireMockFile(`${path}.json`))
     )
-  }
+  )
   )
 
   handlers.push(rest.get(/zones\+insights/, regexMatcher))
@@ -136,12 +134,10 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
 const worker = (apiURL: string) => setupWorker(...setupHandlers(apiURL))
 
 const additionalTestHandlers: RestHandler[] = [
-  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.text('1.2.2')
-    )
-  })
+  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(
+    ctx.status(200),
+    ctx.text('1.2.2')
+  ))
 ]
 
 const server = (apiURL: string) => setupServer(...setupHandlers(apiURL), ...additionalTestHandlers)

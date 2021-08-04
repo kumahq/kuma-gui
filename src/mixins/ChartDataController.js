@@ -94,35 +94,33 @@ export default {
       const endTimestamp = Math.floor(moment().unix() / this.timeFrame.stepSize) * this.timeFrame.stepSize
       const startTimestamp = endTimestamp - this.timeFrame.timeFrameLength
 
-      return Promise.all(this.urls.map(dataUrl => {
-        return Promise.resolve()
-          .then(() => {
-            // Do not call endpoint if vitals is disabled.
-            if (!this.vitalsEnabled) {
-              return
-            }
+      return Promise.all(this.urls.map(dataUrl => Promise.resolve()
+        .then(() => {
+          // Do not call endpoint if vitals is disabled.
+          if (!this.vitalsEnabled) {
+            return
+          }
 
-            // Otherwise, call vitals
-            const opt = {
-              start_ts: startTimestamp,
-              interval
-            }
+          // Otherwise, call vitals
+          const opt = {
+            start_ts: startTimestamp,
+            interval
+          }
 
-            return this.$api.getVitals(dataUrl, opt, this.workspace && this.workspace.name)
-              .then(response => response.data)
-              .catch((err) => {
-                console.debug('vitals returned err: ', err)
-              })
-          })
-          .then(rawData => {
-            // if param has not changed before response, assign the data to rawData
-            if (rawData && rawData.meta && interval === this.timeFrame.param) {
-              rawData.meta.clientEndTimestamp = endTimestamp
-              rawData.meta.clientStartTimestamp = startTimestamp
-              this.setRawData(rawData, dataUrl)
-            }
-          })
-      }))
+          return this.$api.getVitals(dataUrl, opt, this.workspace && this.workspace.name)
+            .then(response => response.data)
+            .catch((err) => {
+              console.debug('vitals returned err: ', err)
+            })
+        })
+        .then(rawData => {
+          // if param has not changed before response, assign the data to rawData
+          if (rawData && rawData.meta && interval === this.timeFrame.param) {
+            rawData.meta.clientEndTimestamp = endTimestamp
+            rawData.meta.clientStartTimestamp = startTimestamp
+            this.setRawData(rawData, dataUrl)
+          }
+        })))
         .then(() => {
         // cancel loading animation
           this.vitalsLoading = false

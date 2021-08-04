@@ -254,79 +254,77 @@ export default {
         return this.$api.getAllExternalServicesFromMesh(mesh)
       }
 
-      const getExternalServices = () => {
-        return endpoint()
-          .then(response => {
-            const items = () => {
-              const r = response
+      const getExternalServices = () => endpoint()
+        .then(response => {
+          const items = () => {
+            const r = response
 
-              if ('total' in r) {
-                if (r.total !== 0 && r.items && r.items.length > 0) {
-                  return this.sortEntities(r.items)
-                }
-
-                return null
+            if ('total' in r) {
+              if (r.total !== 0 && r.items && r.items.length > 0) {
+                return this.sortEntities(r.items)
               }
 
-              return r
+              return null
             }
 
-            const entityList = items()
+            return r
+          }
 
-            if (items()) {
-              const firstItem = query
-                ? entityList
-                : entityList[0]
+          const entityList = items()
 
-              // set the first item as the default for initial load
-              this.firstEntity = firstItem.name
+          if (items()) {
+            const firstItem = query
+              ? entityList
+              : entityList[0]
 
-              // load the YAML entity for the first item on page load
-              this.getEntity(stripTimes(firstItem))
+            // set the first item as the default for initial load
+            this.firstEntity = firstItem.name
 
-              this.tableData.data = query
-                ? [entityList]
-                : entityList
+            // load the YAML entity for the first item on page load
+            this.getEntity(stripTimes(firstItem))
 
-              if (response.next) {
-                this.next = getOffset(response.next)
-                this.hasNext = true
-              } else {
-                this.hasNext = false
-              }
+            this.tableData.data = query
+              ? [entityList]
+              : entityList
 
-              this.tableData.data = this.tableData.data.map(entity => {
-                const { networking = {} } = entity
-                const { tls = {} } = networking
-
-                entity.address = networking.address
-                entity.tlsEnabled = tls.enabled ? 'Enabled' : 'Disabled'
-
-                return entity
-              })
-
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
+            if (response.next) {
+              this.next = getOffset(response.next)
+              this.hasNext = true
             } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
-
-              this.getEntity(null)
+              this.hasNext = false
             }
-          })
-          .catch(error => {
-            this.hasError = true
+
+            this.tableData.data = this.tableData.data.map(entity => {
+              const { networking = {} } = entity
+              const { tls = {} } = networking
+
+              entity.address = networking.address
+              entity.tlsEnabled = tls.enabled ? 'Enabled' : 'Disabled'
+
+              return entity
+            })
+
+            this.tableDataIsEmpty = false
+            this.isEmpty = false
+          } else {
+            this.tableData.data = []
+            this.tableDataIsEmpty = true
             this.isEmpty = true
 
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      }
+            this.getEntity(null)
+          }
+        })
+        .catch(error => {
+          this.hasError = true
+          this.isEmpty = true
+
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
+        })
 
       getExternalServices()
     },

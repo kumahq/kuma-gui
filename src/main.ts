@@ -111,7 +111,7 @@ function SETUP_VUE_APP () {
         if (process.env.NODE_ENV === 'development') {
           apiUrl = process.env.VUE_APP_KUMA_CONFIG?.replace('/config', '/')
         } else {
-          apiUrl = url.substring(0, url.indexOf('/gui')) + '/'
+          apiUrl = `${url.substring(0, url.indexOf('/gui'))}/`
         }
       }
 

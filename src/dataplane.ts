@@ -33,13 +33,13 @@ Will produce:
  */
 
 type TODO = any
-type DataPlane = {
+interface DataPlane {
   networking: {
-    inbound: Array<{
+    inbound: {
       port: number
       tags: Record<string, string>
       health?: { ready: boolean }
-    }>
+    }[]
     gateway: TODO
   }
 }
@@ -50,14 +50,14 @@ export function dpTags (dataplane: DataPlane): { label: string, value: string}[]
   const inbounds = dataplane.networking.inbound || null
   if (inbounds) {
     tags = inbounds.flatMap(inbound => Object.entries(inbound.tags))
-      .map(([key, value]) => key + '=' + value)
+      .map(([key, value]) => `${key}=${value}`)
   }
 
   // gateway data plane has no inbounds, but has tags embedded in gateway branch
   const gateway = dataplane.networking.gateway || null
   if (gateway) {
     tags = Object.entries(gateway.tags)
-      .map(([key, value]) => key + '=' + value)
+      .map(([key, value]) => `${key}=${value}`)
   }
 
   tags = Array.from(new Set(tags)) // remove duplicates
@@ -137,7 +137,7 @@ export function getStatusFromObject ({ dataplane, dataplaneInsight }: { dataplan
   return getStatus(dataplane, dataplaneInsight)
 }
 
-type DataPlaneOverview = {
+interface DataPlaneOverview {
   name: string,
   mesh: string,
   type: string,

@@ -1,5 +1,5 @@
 type TODO = any
-type DataPlaneStats = {
+interface DataPlaneStats {
   online?: number
   partiallyDegraded?: number
   total?: number

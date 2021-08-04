@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/vue'
-import KLoader from './KLoader.vue'
 import Vue from 'vue'
+import KLoader from './KLoader.vue'
 
 jest.useFakeTimers()
 

@@ -19,18 +19,6 @@ export function forEach (array: any[], callback: (...args: any) => void, scope: 
   }
 }
 
-export function removeObjectKeys (object: Record<string, any>, key: string) {
-  const obj = object
-
-  Object.keys(obj).forEach(field => {
-    if (field.indexOf(key) === 0) {
-      delete obj[field]
-    }
-  })
-
-  return obj
-}
-
 export function getPluginIcon (pluginName: string) {
   let icon
 
@@ -55,7 +43,7 @@ export function formatDate (timestamp: number) {
   const year = date.getFullYear()
   const time = date.toTimeString().split(' ')
 
-  return year + '-' + month + '-' + day + ' ' + time[0] + ' ' + time[1].substring(3, time[1].length)
+  return `${year}-${month}-${day} ${time[0]} ${time[1].substring(3, time[1].length)}`
 }
 
 /**
@@ -75,34 +63,6 @@ export function compareObjects (a: Object, b: Object) {
  */
 export function isObjectEmpty (obj: Object) {
   return Object.keys(obj).length === 0
-}
-
-/**
- * Takes an object with dot notated keys (key.nested.values)
- * and returns an object with nested objects (key: { nested: values })
- * @param {Object} obj
- * @returns {Object}
- */
-export function unFlattenObject (obj: TODO) {
-  const result = {}
-
-  // Loop object and reduce each key to build
-  // nested structure
-  for (const key in obj) {
-    const keys = key.split('.')
-
-    keys.reduce((acc: TODO, cur: TODO, curIdx: TODO) => {
-      return acc[cur] ||
-        // If current key in acc is the next
-        // item in the split array (dot notation)
-        // set its value
-        (acc[cur] = isNaN(keys[curIdx + 1] as TODO)
-          ? (keys.length - 1 === curIdx ? obj[key] : {})
-          : [])
-    }, result)
-  }
-
-  return result
 }
 
 /**
@@ -142,7 +102,7 @@ export function humanReadableDate (tdate: string) {
   }
 
   if (diff < 20) {
-    return diff + ' seconds ago'
+    return `${diff} seconds ago`
   }
 
   if (diff < 40) {
@@ -158,7 +118,7 @@ export function humanReadableDate (tdate: string) {
   }
 
   if (diff <= 3540) {
-    return Math.round(diff / 60) + ' minutes ago'
+    return `${Math.round(diff / 60)} minutes ago`
   }
 
   if (diff <= 5400) {
@@ -166,7 +126,7 @@ export function humanReadableDate (tdate: string) {
   }
 
   if (diff <= 86400) {
-    return Math.round(diff / 3600) + ' hours ago'
+    return `${Math.round(diff / 3600)} hours ago`
   }
 
   if (diff <= 129600) {
@@ -174,7 +134,7 @@ export function humanReadableDate (tdate: string) {
   }
 
   if (diff < 604800) {
-    return Math.round(diff / 86400) + ' days ago'
+    return `${Math.round(diff / 86400)} days ago`
   }
 
   if (diff <= 777600) {
@@ -289,9 +249,7 @@ export function cleanTag (tag: string) {
 export function camelCaseToWords (str: string) {
   const search = /^[a-z]+|[A-Z][a-z]*/g
 
-  return str.match(search)?.map((x: string) => {
-    return x[0].toUpperCase() + x.substr(1).toLowerCase()
-  }).join(' ')
+  return str.match(search)?.map((x: string) => x[0].toUpperCase() + x.substr(1).toLowerCase()).join(' ')
 }
 
 /**
@@ -369,7 +327,6 @@ export async function fetchAllResources ({ callEndpoint, ...otherParams }: TODO)
 
 export default {
   forEach,
-  removeObjectKeys,
   getPluginIcon,
   formatDate,
   deepIncludes,

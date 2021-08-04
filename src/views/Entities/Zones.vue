@@ -218,7 +218,7 @@ export default {
   },
   filters: {
     formatValue (value) {
-      return value ? parseInt(value).toLocaleString('en').toString() : 0
+      return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
     },
     readableDate (value) {
       return humanReadableDate(value)
@@ -366,90 +366,88 @@ export default {
 
       const endpoint = this.$api.getZoneStatus()
 
-      const getZoneStatus = () => {
-        return endpoint
-          .then(response => {
-            const nextCheck = (response && response.next) ? response.next : false
+      const getZoneStatus = () => endpoint
+        .then(response => {
+          const nextCheck = (response && response.next) ? response.next : false
 
-            // check to see if the `next` url is present
-            if (nextCheck) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
-            } else {
-              this.hasNext = false
-            }
+          // check to see if the `next` url is present
+          if (nextCheck) {
+            this.next = getOffset(response.next)
+            this.hasNext = true
+          } else {
+            this.hasNext = false
+          }
 
-            const items = response
+          const items = response
 
-            if (items && items.length > 0) {
-              // rewrite the status column to be more human-readable
-              items.forEach(i => {
-                const status = (i.active === false)
-                  ? 'Offline'
-                  : 'Online'
+          if (items && items.length > 0) {
+            // rewrite the status column to be more human-readable
+            items.forEach(i => {
+              const status = (i.active === false)
+                ? 'Offline'
+                : 'Online'
 
-                delete i.active
+              delete i.active
 
-                i.status = status
+              i.status = status
 
-                // make call to get zone zone-cp version
-                this.$api.getZoneOverview(i.name)
-                  .then((response) => {
-                    let zoneCpVersion = '-'
-                    if (response.zoneInsight.subscriptions && response.zoneInsight.subscriptions.length) {
-                      response.zoneInsight.subscriptions.forEach((item, index) => {
-                        if (item.version && item.version.kumaCp) {
-                          zoneCpVersion = item.version.kumaCp.version
-                        }
-                      })
-                    }
+              // make call to get zone zone-cp version
+              this.$api.getZoneOverview(i.name)
+                .then((response) => {
+                  let zoneCpVersion = '-'
+                  if (response.zoneInsight.subscriptions && response.zoneInsight.subscriptions.length) {
+                    response.zoneInsight.subscriptions.forEach((item, index) => {
+                      if (item.version && item.version.kumaCp) {
+                        zoneCpVersion = item.version.kumaCp.version
+                      }
+                    })
+                  }
 
-                    i.zoneCpVersion = zoneCpVersion
+                  i.zoneCpVersion = zoneCpVersion
 
-                    if (zoneCpVersion !== this.globalCpVersion) {
-                      i.withWarnings = true
-                    }
-                  }).catch(error => {
-                    // if zone overview fails show version as empty instead of showing error.
-                    i.zoneCpVersion = '-'
+                  if (zoneCpVersion !== this.globalCpVersion) {
                     i.withWarnings = true
+                  }
+                }).catch(error => {
+                  // if zone overview fails show version as empty instead of showing error.
+                  i.zoneCpVersion = '-'
+                  i.withWarnings = true
 
-                    console.error(error)
-                  })
-              })
+                  console.error(error)
+                })
+            })
 
-              // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
+            // sort the table data by name and the mesh it's associated with
+            this.sortEntities(items)
 
-              // set the first item as the default for initial load
-              this.firstEntity = items[0].name
+            // set the first item as the default for initial load
+            this.firstEntity = items[0].name
 
-              // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
+            // load the YAML entity for the first item on page load
+            this.getEntity(items[0])
 
-              this.tableData.data = [...items]
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
-            } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
-
-              this.getEntity(null)
-            }
-          })
-          .catch(error => {
-            this.hasError = true
+            this.tableData.data = [...items]
+            this.tableDataIsEmpty = false
+            this.isEmpty = false
+          } else {
+            this.tableData.data = []
+            this.tableDataIsEmpty = true
             this.isEmpty = true
 
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      }
+            this.getEntity(null)
+          }
+        })
+        .catch(error => {
+          this.hasError = true
+          this.isEmpty = true
+
+          console.error(error)
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.isLoading = false
+          }, process.env.VUE_APP_DATA_TIMEOUT)
+        })
 
       getZoneStatus()
     },

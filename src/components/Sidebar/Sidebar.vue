@@ -111,9 +111,9 @@ export default {
 
       for (const section of this.menu) {
         for (const item of section.items) {
-          const urlPath = route.path.split('/')[2]
           const isNotRootLevelMenuItem = route.name !== item.link
-          const matchesUrlPath = urlPath === item.link
+          // const urlPath = route.path.split('/')[2]
+          // const matchesUrlPath = urlPath === item.link
 
           // const conditions = matchesUrlPath &&
           //   isNotRootLevelMenuItem &&
