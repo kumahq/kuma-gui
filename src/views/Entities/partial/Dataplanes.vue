@@ -511,8 +511,8 @@ export default {
             }
 
             return {
-              totalUpdates: acc.totalUpdates + parseInt(responsesSent),
-              totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(responsesRejected),
+              totalUpdates: acc.totalUpdates + parseInt(responsesSent, 10),
+              totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(responsesRejected, 10),
               dpVersion: dpVersion || acc.dpVersion,
               envoyVersion: envoyVersion || acc.envoyVersion,
               selectedTime,

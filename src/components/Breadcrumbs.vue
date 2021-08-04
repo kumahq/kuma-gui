@@ -23,8 +23,6 @@ export default {
       const items = []
 
       this.$route.matched.map(r => {
-        const text = this.calculateRouteText(r)
-        const title = this.calculateRouteTitle(r)
         const key = (r.redirect !== undefined && r.redirect.name !== undefined) ? r.redirect.name : r.name
 
         /** this adds the mesh name and url to the breadcrumb chain */

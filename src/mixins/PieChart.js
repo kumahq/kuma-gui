@@ -74,6 +74,7 @@ export default {
   },
   computed: {
     defaultConfig() {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this
 
       return {
@@ -243,17 +244,17 @@ export default {
       this.applyData(newData)
     },
     isLoading(isLoading) {
-      this.series && isLoading
-        ? this.series.hide(0)
-        : this.series.show()
-
-      this.titleContainer && isLoading
-        ? this.titleContainer.hide(0)
-        : this.titleContainer.show()
+      if (isLoading) {
+        this.series?.hide(0)
+        this.titleContainer?.hide(0)
+      } else {
+        this.series?.show()
+        this.titleContainer?.show()
+      }
     },
   },
   beforeDestroy () {
-    this.chart && this.chart.dispose()
+    this.chart?.dispose()
   },
   mounted () {
     this.createChart()

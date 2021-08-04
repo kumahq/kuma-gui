@@ -1,15 +1,15 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { RestRequest } from 'msw'
 export default class RestClient {
-  headers: Record<string, string>
+  public headers: Record<string, string>
 
-  client: AxiosInstance
+  public client: AxiosInstance
 
-  clientConfig: AxiosInstance
+  public clientConfig: AxiosInstance
 
-  host: string
+  public host: string
 
-  constructor () {
+  public constructor () {
     // this.host = opts.url
     this.host = ''
 
@@ -27,7 +27,7 @@ export default class RestClient {
    * This function creates the Axios endpoint with the
    * value from localStorage
    */
-  static axiosInit (): AxiosInstance {
+  public static axiosInit (): AxiosInstance {
     const apiUrlFromLS: string = localStorage.getItem('kumaApiUrl') || ''
     const kumaEnvFromLS: string = localStorage.getItem('kumaEnv') || ''
 
@@ -44,7 +44,7 @@ export default class RestClient {
    * information that goes beyond simply providing
    * our app with the API URL endpoint and simple info.
    */
-  static kumaClientConfig (): AxiosInstance {
+  public static kumaClientConfig (): AxiosInstance {
     const kumaApiUrl = localStorage.getItem('kumaApiUrl') || ''
     const configUrl = `${kumaApiUrl}config`
 
@@ -53,7 +53,7 @@ export default class RestClient {
     })
   }
 
-  static setupMocks () {
+  public static setupMocks () {
     if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
       const apiURL = localStorage.getItem('kumaApiUrl')
 
@@ -87,12 +87,12 @@ export default class RestClient {
     }
   }
 
-  buildUrl (path: string) {
+  public buildUrl (path: string) {
     return `${this.host}${path}`
   }
 
   /** fetch the status information of Kuma */
-  async status (path: string, options?: AxiosRequestConfig) {
+  public async status (path: string, options?: AxiosRequestConfig) {
     const opts = await options || {}
     const url = await path
     const client = await this.client
@@ -102,7 +102,7 @@ export default class RestClient {
   }
 
   /** fetch all Kuma API endpoints */
-  async get (path: string, options?: AxiosRequestConfig) {
+  public async get (path: string, options?: AxiosRequestConfig) {
     const opts = await options || {}
     // const url = this.buildUrl(path)
     const url = await path
@@ -113,7 +113,7 @@ export default class RestClient {
   }
 
   /** fetch all Kuma API endpoints */
-  async getConfig () {
+  public async getConfig () {
     const client = await this.clientConfig
     const { data } = await client.get('')
 

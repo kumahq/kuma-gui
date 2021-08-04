@@ -180,9 +180,6 @@ export interface InitContainer {
       image: string;
   }
 
-export interface EnvVars {
-  }
-
 export interface LivenessProbe {
       failureThreshold: number;
       initialDelaySeconds: number;
@@ -216,7 +213,7 @@ export interface Resources {
 export interface SidecarContainer {
       adminPort: number;
       drainTime: string;
-      envVars: EnvVars;
+      envVars: Record<string, string>;
       gid: number;
       image: string;
       livenessProbe: LivenessProbe;

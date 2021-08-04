@@ -163,9 +163,7 @@ export default {
 
       if (currentRouteSubpath === this.routerLink.name) { return true }
 
-      return navItemRouteName && currentRoute.matched.some(r => {
-        return navItemRouteName === r.name || navItemRouteName === r.redirect
-      })
+      return navItemRouteName && currentRoute.matched.some(r => navItemRouteName === r.name || navItemRouteName === r.redirect)
     }
   },
   watch: {
