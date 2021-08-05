@@ -1,36 +1,19 @@
 import { getOffset } from '@/helpers'
-import { TableDataParams } from './tableDataUtils.types'
+import { TableDataParams, TableItem } from './tableDataUtils.types'
 
-function sortEntities(
-  items: {
-    name: string
-    mesh: string
-  }[],
-) {
+function sortEntities(items: TableItem[]): TableItem[] {
   return [...items].sort((a, b) => (a.name > b.name ? 1 : a.name === b.name ? (a.mesh > b.mesh ? 1 : -1) : -1))
 }
 
-const getItems = (response: {
-  total: number
-  items: {
-    name: string
-    mesh: string
-  }[]
-}) => {
-  const r = response
-
-  if (!r.total) {
-    return [r]
+const getItems = (response: { total: number; items: TableItem[] }): TableItem[] => {
+  if (response.total !== 0 && response.items && response.items.length > 0) {
+    return sortEntities(response.items)
   }
 
-  if (r.total !== 0 && r.items && r.items.length > 0) {
-    return sortEntities(r.items)
-  }
-
-  return null
+  return []
 }
 
-async function getAPICallFunction({
+function getAPICallFunction({
   getSingleEntity,
   getAllEntities,
   getAllEntitiesFromMesh,
@@ -45,12 +28,12 @@ async function getAPICallFunction({
   }
 
   if (mesh === 'all') {
-    return await getAllEntities(params)
+    return getAllEntities(params)
   } else if (query && query.length && mesh !== 'all') {
-    return await getSingleEntity(mesh, query, params)
+    return getSingleEntity(mesh, query, params)
   }
 
-  return await getAllEntitiesFromMesh(mesh)
+  return getAllEntitiesFromMesh(mesh)
 }
 
 export async function getTableData({
@@ -61,7 +44,7 @@ export async function getTableData({
   query,
   size,
   offset,
-}: TableDataParams) {
+}: TableDataParams): Promise<{ data: TableItem[]; next: string | null }> {
   const response = await getAPICallFunction({
     getSingleEntity,
     getAllEntities,
@@ -72,9 +55,7 @@ export async function getTableData({
     offset,
   })
 
-  const entityList = getItems(response)
-
-  if (!entityList) {
+  if (!response) {
     return {
       data: [],
       next: null,
@@ -82,7 +63,7 @@ export async function getTableData({
   }
 
   return {
-    data: entityList,
-    next: response.next ? getOffset(response.next) : null,
+    data: response.total ? getItems(response) : [response],
+    next: response.next && getOffset(response.next),
   }
 }

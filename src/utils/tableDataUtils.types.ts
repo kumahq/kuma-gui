@@ -7,3 +7,8 @@ export interface TableDataParams {
   query: string | null
   offset: string | null
 }
+
+export interface TableItem {
+  name: string
+  mesh: string
+}

@@ -45,7 +45,7 @@ describe('tableDataUtils', () => {
           "data": Array [
             Object {},
           ],
-          "next": null,
+          "next": undefined,
         }
       `)
     })
@@ -62,7 +62,7 @@ describe('tableDataUtils', () => {
               "name": "bar",
             },
           ],
-          "next": null,
+          "next": undefined,
         }
       `)
     })
