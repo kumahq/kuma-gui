@@ -6,7 +6,7 @@
     >
       <template slot="body">
         <p>
-          Join the {{ $productName }} community and ask questions:
+          Join the {{ productName }} community and ask questions:
         </p>
         <ul class="resource-list">
           <li
@@ -28,8 +28,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { PRODUCT_NAME } from '@/consts'
 
 export default {
+  data: () => ({
+    productName: PRODUCT_NAME
+  }),
   computed: {
     ...mapGetters({
       version: 'config/getVersion'

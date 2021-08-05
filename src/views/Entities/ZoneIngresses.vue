@@ -10,7 +10,7 @@
           icon="dangerCircle"
           size="64"
         />
-        {{ $productName }} is running in Standalone mode.
+        {{ productName }} is running in Standalone mode.
       </template>
       <template slot="message">
         <p>
@@ -196,12 +196,10 @@ import LabelList from '@/components/Utils/LabelList'
 import LoaderCard from '@/components/Utils/LoaderCard'
 
 import { getZoneIngressStatus } from '@/dataplane'
+import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'ZoneIngresses',
-  metaInfo: {
-    title: 'ZoneIngresses'
-  },
   components: {
     FrameSkeleton,
     Pagination,
@@ -232,8 +230,12 @@ export default {
   mixins: [
     sortEntities
   ],
+  metaInfo: {
+    title: 'ZoneIngresses'
+  },
   data () {
     return {
+      productName: PRODUCT_NAME,
       isLoading: true,
       isEmpty: false,
       hasError: false,
@@ -267,7 +269,7 @@ export default {
       rawEntity: null,
       yamlEntity: null,
       firstEntity: null,
-      pageSize: this.$pageSize,
+      pageSize: PAGE_SIZE_DEFAULT,
       pageOffset: null,
       next: null,
       hasNext: false,

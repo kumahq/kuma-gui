@@ -17,7 +17,7 @@
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
-            As you know, the {{ $productName }} GUI is read-only.
+            As you know, the {{ productName }} GUI is read-only.
           </p>
 
           <h3>
@@ -418,6 +418,7 @@ import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneUniversal'
+import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'DataplaneWizardUniversal',
@@ -435,6 +436,7 @@ export default {
   },
   data () {
     return {
+      productName: PRODUCT_NAME,
       randString: Math
         .random()
         .toString(36)

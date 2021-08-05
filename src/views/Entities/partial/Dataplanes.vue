@@ -158,7 +158,7 @@
                 class="external-link"
                 target="_blank"
               >
-                Learn About Certificates in {{ $productName }}
+                Learn About Certificates in {{ productName }}
               </a>
             </template>
           </KAlert>
@@ -210,6 +210,7 @@ import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
+import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
 const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
 
@@ -296,6 +297,7 @@ export default {
   },
   data () {
     return {
+      productName: PRODUCT_NAME,
       isLoading: true,
       isEmpty: false,
       hasError: false,
@@ -311,7 +313,7 @@ export default {
       entity: [],
       rawEntity: null,
       firstEntity: null,
-      pageSize: this.$pageSize,
+      pageSize: PAGE_SIZE_DEFAULT,
       pageOffset: null,
       next: null,
       hasNext: false,

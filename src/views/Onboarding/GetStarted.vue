@@ -47,7 +47,7 @@
           v-else
           class="app-source-check--error"
         >
-          <p>The app was unable to determine {{ $productName }}'s environment.</p>
+          <p>The app was unable to determine {{ productName }}'s environment.</p>
         </div>
       </div>
 
@@ -155,7 +155,7 @@
                 No data plane proxies detected.
               </h3>
               <p class="mb-2">
-                To bring your applications into {{ $productName }} Service Mesh,
+                To bring your applications into {{ productName }} Service Mesh,
                 you need to deploy data plane proxies (also known as sidecar proxies)
                 next to them.
               </p>
@@ -218,17 +218,19 @@
 <script>
 import { mapGetters } from 'vuex'
 import { setItemToStorage } from '@/Cache'
+import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'OnboardingStep1',
   metaInfo () {
     return {
-      title: `Welcome to ${this.$productName}!`
+      title: `Welcome to ${this.productName}!`
     }
   },
   data () {
     return {
       appSourceError: false,
+      productName: PRODUCT_NAME,
       tableDataLoadDelay: 1500,
       tableDataIsEmpty: true,
       tableDataLoadAttempted: false,

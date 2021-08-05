@@ -57,17 +57,8 @@ am4core.useTheme(am4themesAnimated)
 function VUE_APP () {
   const kuma = new Kuma()
 
-  // setup the product namespace
-  Vue.prototype.$productName = process.env.VUE_APP_NAMESPACE
-
   // setup the HTTP API namespace
   Vue.prototype.$api = kuma
-
-  // define the page size globally for fetching
-  // API item count on table views
-  Vue.prototype.$pageSize = 12
-
-  Vue.prototype.$appWindow = window
 
   const store = new Vuex.Store(Store(kuma))
   const router = Router()

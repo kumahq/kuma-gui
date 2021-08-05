@@ -56,6 +56,7 @@ import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
 
 import { mapState } from 'vuex'
+import { APP_WINDOW } from '@/consts'
 
 export default {
 
@@ -137,18 +138,6 @@ export default {
   },
 
   mounted() {
-    // const app = this.$appWindow
-
-    // if (app.innerWidth <= 900) {
-    //   this.isCollapsed = true
-    // } else {
-    //   this.isCollapsed = false
-    // }
-
-    // window.addEventListener('resize', this.handleResize)
-
-    // this.subnavIsExpanded = localStorage.sidebarCollapsed === 'true'
-
     this.sidebarEvent()
   },
 
@@ -163,7 +152,7 @@ export default {
 
     handleResize() {
       // const sidebarState = getItemFromStorage('sidebarCollapsed')
-      const appWidth = this.$appWindow.innerWidth
+      const appWidth = APP_WINDOW.innerWidth
 
       if (appWidth <= 900) {
         this.isCollapsed = true

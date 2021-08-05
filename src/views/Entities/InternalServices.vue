@@ -6,7 +6,6 @@
   />
 </template>
 <script>
-
 import Services from '@/views/Entities/partial/Services.vue'
 
 export default {
