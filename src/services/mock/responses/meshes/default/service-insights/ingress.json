@@ -1,0 +1,8 @@
+{
+  "type": "ServiceInsight",
+  "mesh": "default",
+  "name": "ingress",
+  "creationTime": "2021-07-29T10:19:08.955514+02:00",
+  "modificationTime": "2021-08-02T14:01:02.511831+02:00",
+  "dataplanes": {}
+}

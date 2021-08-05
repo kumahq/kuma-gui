@@ -29,7 +29,7 @@
     {
       "type": "ServiceInsight",
       "mesh": "default",
-      "name": "backend",
+      "name": "redis",
       "creationTime": "2021-01-31T13:12:35.937706+01:00",
       "modificationTime": "2021-02-02T06:45:23.759876+01:00",
       "status": "partially_degraded",
@@ -40,8 +40,8 @@
     },
     {
       "type": "ServiceInsight",
-      "mesh": "foo",
-      "name": "backend",
+      "mesh": "hello-world",
+      "name": "frontend",
       "creationTime": "2021-01-31T13:12:35.937706+01:00",
       "modificationTime": "2021-02-02T06:45:23.759876+01:00",
       "status": "partially_degraded",
