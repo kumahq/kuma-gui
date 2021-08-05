@@ -274,6 +274,8 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       if (rootGetters['config/getStatus'] === 'OK') {
         // fetch the mesh list
         dispatch('fetchMeshList')
+        // fetch the dataplanes
+        dispatch('fetchDataplaneTotalCount')
         // fetch the tagline
         dispatch('config/getTagline')
         // fetch the config
