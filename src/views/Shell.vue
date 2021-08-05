@@ -1,15 +1,9 @@
 <template>
-  <div
-    class="main-content-container"
-  >
+  <div class="main-content-container">
     <Sidebar />
 
-    <main
-      class="main-content"
-    >
-      <div
-        class="page"
-      >
+    <main class="main-content">
+      <div class="page">
         <OnboardingCheck v-if="showOnboarding" />
         <Breadcrumbs />
         <router-view />
@@ -29,19 +23,19 @@ export default {
   components: {
     Breadcrumbs,
     Sidebar,
-    OnboardingCheck
+    OnboardingCheck,
   },
   computed: {
     ...mapState({
       dpCount: 'totalDataplaneCount',
-      meshes: 'meshes'
+      meshes: 'meshes',
     }),
-    showOnboarding () {
+    showOnboarding() {
       const onlyDefaultMesh = this.meshes.total === 1 && this.meshes.items[0].name === 'default'
       const noDataplane = this.dpCount === 0
 
       return noDataplane && onlyDefaultMesh
-    }
+    },
   },
 }
 </script>
