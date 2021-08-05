@@ -118,6 +118,7 @@ import DataOverview from '@/components/Skeletons/DataOverview';
 import Tabs from '@/components/Utils/Tabs';
 import YamlView from '@/components/Skeletons/YamlView';
 import LabelList from '@/components/Utils/LabelList';
+import { PAGE_SIZE_DEFAULT } from '@/consts';
 
 export default {
   name: 'TrafficPermissions',
@@ -169,7 +170,7 @@ export default {
       entity: [],
       rawEntity: null,
       firstEntity: null,
-      pageSize: this.$pageSize,
+      pageSize: PAGE_SIZE_DEFAULT,
       pageOffset: null,
       next: null,
       hasNext: false,

@@ -88,7 +88,7 @@
         >
           <template slot="cardContent">
             <p>
-              We can apply {{ $productName }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
+              We can apply {{ productName }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
             </p>
           </template>
         </CardSkeleton>
@@ -108,6 +108,7 @@ import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
 import DonutChart from '@/components/DonutChart'
 import VersionsDonutChart from '@/components/VersionsDonutChart'
+import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'Overview',
@@ -122,6 +123,11 @@ export default {
     MetricGrid,
     CardSkeleton,
     Resources
+  },
+  data() {
+    return {
+      productName: PRODUCT_NAME
+    }
   },
   computed: {
     ...mapGetters({

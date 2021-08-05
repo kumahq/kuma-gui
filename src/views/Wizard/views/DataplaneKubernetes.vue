@@ -17,7 +17,7 @@
             We will be providing you with a few steps that will get you started.
           </p>
           <p>
-            As you know, the {{ $productName }} GUI is read-only.
+            As you know, the {{ productName }} GUI is read-only.
           </p>
 
           <h3>
@@ -645,6 +645,7 @@ import Scanner from '@/views/Wizard/components/Scanner'
 
 // schema for building code output (TBD)
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneKubernetes'
+import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'DataplaneWizardKubernetes',
@@ -664,6 +665,7 @@ export default {
   ],
   data () {
     return {
+      productName: PRODUCT_NAME,
       schema: dataplaneSchema,
       steps: [
         {

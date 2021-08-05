@@ -139,9 +139,9 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                      
                     <p>
                       
-              Since the  GUI is read-only mode to follow Ops best practices,
+              Since the Kuma GUI is read-only mode to follow Ops best practices,
               please execute the following command in your shell to create the entity.
-               will automatically detect when the new entity has been created.
+              Kuma will automatically detect when the new entity has been created.
             
                     </p>
                      

@@ -10,7 +10,7 @@
           icon="dangerCircle"
           size="64"
         />
-        {{ $productName }} is running in Standalone mode.
+        {{ productName }} is running in Standalone mode.
       </template>
       <template slot="message">
         <p>
@@ -200,12 +200,10 @@ import LoaderCard from '@/components/Utils/LoaderCard'
 import Warnings from '@/views/Entities/components/Warnings'
 
 import { INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
+import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'Zones',
-  metaInfo: {
-    title: 'Zones'
-  },
   components: {
     FrameSkeleton,
     Pagination,
@@ -237,8 +235,12 @@ export default {
   mixins: [
     sortEntities
   ],
+  metaInfo: {
+    title: 'Zones'
+  },
   data () {
     return {
+      productName: PRODUCT_NAME,
       isLoading: true,
       isEmpty: false,
       hasError: false,
@@ -278,7 +280,7 @@ export default {
       rawEntity: null,
       yamlEntity: null,
       firstEntity: null,
-      pageSize: this.$pageSize,
+      pageSize: PAGE_SIZE_DEFAULT,
       pageOffset: null,
       next: null,
       hasNext: false,

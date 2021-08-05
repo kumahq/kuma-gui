@@ -12,7 +12,7 @@
       <template slot="alertMessage">
         <div class="alert-content">
           <div>
-            <strong>Welcome to {{ $productName }}!</strong> We've detected that you don't have
+            <strong>Welcome to {{ productName }}!</strong> We've detected that you don't have
             any data plane proxies running yet. We've created an onboarding process to
             help you!
           </div>
@@ -33,12 +33,14 @@
 </template>
 
 <script>
+import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'OnboardingCheck',
   data () {
     return {
-      alertClosed: false
+      alertClosed: false,
+      productName: PRODUCT_NAME
     }
   },
   methods: {
