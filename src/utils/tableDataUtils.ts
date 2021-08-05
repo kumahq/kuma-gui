@@ -1,14 +1,5 @@
 import { getOffset } from '@/helpers'
-
-interface TableDataParams {
-  getSingleEntity: (mesh: string, query: string | null, params: { size: number; offset: string | null }) => any
-  getAllEntities: (params: { size: number; offset: string | null }) => any
-  getAllEntitiesFromMesh: (mesh: string) => any
-  mesh: string
-  size: number
-  query: string | null
-  offset: string | null
-}
+import { TableDataParams } from './tableDataUtils.types'
 
 function sortEntities(
   items: {
@@ -62,7 +53,7 @@ async function getAPICallFunction({
   return await getAllEntitiesFromMesh(mesh)
 }
 
-async function getTableData({
+export async function getTableData({
   getSingleEntity,
   getAllEntities,
   getAllEntitiesFromMesh,
@@ -95,5 +86,3 @@ async function getTableData({
     next: response.next ? getOffset(response.next) : null,
   }
 }
-
-export { getTableData }
