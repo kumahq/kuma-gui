@@ -244,7 +244,7 @@ export default {
 
         // set table data
 
-        if (data) {
+        if (data.length) {
           this.tableData.data = data
           this.tableDataIsEmpty = false
           this.isEmpty = false

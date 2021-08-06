@@ -94,5 +94,21 @@ describe('tableDataUtils', () => {
         }
       `)
     })
+
+    it('with empty array of items', async () => {
+      params.getAllEntities = jest.fn().mockResolvedValue({
+        items: [],
+        total: 0,
+        next: null,
+      })
+      const response = await getTableData(params)
+
+      expect(response).toMatchInlineSnapshot(`
+        Object {
+          "data": Array [],
+          "next": null,
+        }
+      `)
+    })
   })
 })

@@ -244,7 +244,7 @@ export default {
         this.next = next
         this.hasNext = !!next
         // set table data
-        if (data) {
+        if (data.length) {
           this.tableData.data = data
           this.tableDataIsEmpty = false
           this.isEmpty = false

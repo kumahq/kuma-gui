@@ -63,7 +63,7 @@ export async function getTableData({
   }
 
   return {
-    data: response.total ? getItems(response) : [response],
+    data: response.items ? getItems(response) : [response],
     next: response.next && getOffset(response.next),
   }
 }
