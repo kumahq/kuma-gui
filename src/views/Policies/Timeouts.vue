@@ -93,7 +93,6 @@
 import { getSome, stripTimes } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -116,7 +115,6 @@ export default {
     YamlView,
     LabelList,
   },
-  mixins: [sortEntities],
   data() {
     return {
       isLoading: true,

@@ -93,7 +93,6 @@
 import { getSome, stripTimes } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -116,7 +115,6 @@ export default {
     YamlView,
     LabelList,
   },
-  mixins: [sortEntities],
   data() {
     return {
       isLoading: true,
@@ -279,7 +277,7 @@ export default {
 
       const mesh = this.$route.params.mesh
 
-      if (entity && entity !== null) {
+      if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
         return this.$api
