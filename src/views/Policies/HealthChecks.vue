@@ -90,9 +90,9 @@
 </template>
 
 <script>
-import { getOffset, getSome, stripTimes } from '@/helpers'
+import { getSome, stripTimes } from '@/helpers'
+import { getTableData } from '@/utils/tableDataUtils'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -104,7 +104,7 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 export default {
   name: 'HealthChecks',
   metaInfo: {
-    title: 'Health Checks'
+    title: 'Health Checks',
   },
   components: {
     EntityURLControl,
@@ -113,12 +113,9 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
   },
-  mixins: [
-    sortEntities
-  ],
-  data () {
+  data() {
     return {
       isLoading: true,
       isEmpty: false,
@@ -129,26 +126,26 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Health Checks present.'
+        message: 'There are no Health Checks present.',
       },
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
           { label: 'Mesh', key: 'mesh' },
-          { label: 'Type', key: 'type' }
+          { label: 'Type', key: 'type' },
         ],
-        data: []
+        data: [],
       },
       tabs: [
         {
           hash: '#overview',
-          title: 'Overview'
+          title: 'Overview',
         },
         {
           hash: '#yaml',
-          title: 'YAML'
-        }
+          title: 'YAML',
+        },
       ],
       entity: [],
       rawEntity: null,
@@ -157,11 +154,11 @@ export default {
       pageOffset: null,
       next: null,
       hasNext: false,
-      previous: []
+      previous: [],
     }
   },
   computed: {
-    tabGroupTitle () {
+    tabGroupTitle() {
       const entity = this.entity
 
       if (entity) {
@@ -170,7 +167,7 @@ export default {
         return null
       }
     },
-    entityOverviewTitle () {
+    entityOverviewTitle() {
       const entity = this.entity
 
       if (entity) {
@@ -179,7 +176,7 @@ export default {
         return null
       }
     },
-    shareUrl () {
+    shareUrl() {
       const urlRoot = `${window.location.origin}#`
       const entity = this.entity
 
@@ -192,138 +189,102 @@ export default {
       }
 
       return shareUrl()
-    }
+    },
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.init()
-    }
+    },
   },
-  beforeMount () {
+  beforeMount() {
     this.init()
   },
   methods: {
-    init () {
+    init() {
       this.loadData()
     },
-    goToPreviousPage () {
+    goToPreviousPage() {
       this.pageOffset = this.previous.pop()
       this.next = null
 
       this.loadData()
     },
-    goToNextPage () {
+    goToNextPage() {
       this.previous.push(this.pageOffset)
       this.pageOffset = this.next
       this.next = null
 
       this.loadData()
     },
-    tableAction (ev) {
+    tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData () {
+
+    async loadData() {
       this.isLoading = true
 
-      const mesh = this.$route.params.mesh || null
       const query = this.$route.query.ns || null
+      const mesh = this.$route.params.mesh || null
 
-      const params = {
-        size: this.pageSize,
-        offset: this.pageOffset
-      }
-
-      const endpoint = () => {
-        if (mesh === 'all') {
-          return this.$api.getAllHealthChecks(params)
-        } else if ((query && query.length) && mesh !== 'all') {
-          return this.$api.getHealthCheck(mesh, query, params)
-        }
-
-        return this.$api.getAllHealthChecksFromMesh(mesh)
-      }
-
-      const getHealthChecks = () => endpoint()
-        .then(response => {
-          const items = () => {
-            const r = response
-
-            if ('total' in r) {
-              if (r.total !== 0 && r.items && r.items.length > 0) {
-                return this.sortEntities(r.items)
-              }
-
-              return null
-            }
-
-            return r
-          }
-
-          const entityList = items()
-
-          if (items()) {
-            const firstItem = query
-              ? entityList
-              : entityList[0]
-
-            // set the first item as the default for initial load
-            this.firstEntity = firstItem.name
-
-            // load the YAML entity for the first item on page load
-            this.getEntity(stripTimes(firstItem))
-
-            if (response.next) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
-            } else {
-              this.hasNext = false
-            }
-
-            this.tableData.data = query
-              ? [entityList]
-              : entityList
-
-            this.tableDataIsEmpty = false
-            this.isEmpty = false
-          } else {
-            this.tableData.data = []
-            this.tableDataIsEmpty = true
-            this.isEmpty = true
-
-            this.getEntity(null)
-          }
+      try {
+        const { data, next } = await getTableData({
+          getSingleEntity: this.$api.getHealthCheck.bind(this.$api),
+          getAllEntities: this.$api.getAllHealthChecks.bind(this.$api),
+          getAllEntitiesFromMesh: this.$api.getAllHealthChecksFromMesh.bind(this.$api),
+          mesh,
+          query,
+          size: this.pageSize,
+          offset: this.pageOffset,
         })
-        .catch(error => {
-          this.hasError = true
+
+        // set pagination
+        this.next = next
+        this.hasNext = !!next
+
+        // set table data
+
+        if (data.length) {
+          this.tableData.data = data
+          this.tableDataIsEmpty = false
+          this.isEmpty = false
+
+          const selected = ['type', 'name', 'mesh']
+          const selectedEntity = data[0]
+
+          this.entity = getSome(selectedEntity, selected)
+          this.rawEntity = stripTimes(selectedEntity)
+        } else {
+          this.tableData.data = []
+          this.tableDataIsEmpty = true
           this.isEmpty = true
+          this.entityIsEmpty = true
+        }
+      } catch (error) {
+        this.hasError = true
+        this.isEmpty = true
 
-          console.error(error)
-        })
-        .finally(() => {
-          setTimeout(() => {
-            this.isLoading = false
-          }, process.env.VUE_APP_DATA_TIMEOUT)
-        })
-
-      getHealthChecks()
+        console.error(error)
+      } finally {
+        this.isLoading = false
+        this.entityIsLoading = false
+      }
     },
-    getEntity (entity) {
+    getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
 
       const mesh = this.$route.params.mesh
 
-      if (entity && entity !== null) {
-        const entityMesh = (mesh === 'all')
-          ? entity.mesh
-          : mesh
+      if (entity) {
+        const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return this.$api.getHealthCheck(entityMesh, entity.name)
-          .then(response => {
+        return this.$api
+          .getHealthCheck(entityMesh, entity.name)
+          .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
@@ -335,7 +296,7 @@ export default {
               this.entityIsEmpty = true
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.entityHasError = true
             console.error(error)
           })
@@ -350,7 +311,7 @@ export default {
           this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
-    }
-  }
+    },
+  },
 }
 </script>
