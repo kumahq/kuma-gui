@@ -957,7 +957,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       await dispatch('setOverviewServicesChartData')
     },
 
-    async fetchZonesInsights ({ commit, dispatch, state }, multicluster = false) {
+    async fetchZonesInsights ({ commit, dispatch, state, rootGetters }, multicluster = false) {
       commit('SET_ZONES_INSIGHTS_FETCHING', true)
 
       try {
@@ -973,8 +973,6 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
           dispatch('setOverviewZonesChartData', statuses)
           dispatch('setOverviewZonesCPVersionsChartData', overviews)
         } else {
-          await dispatch('config/getVersion')
-
           const zonesData = [{
             category: 'Zone',
             value: 1,
@@ -983,7 +981,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
           }]
 
           const versionsData = [{
-            category: state.version,
+            category: rootGetters['config/getVersion'],
             value: 1,
             tooltipDisabled: true,
           }]
