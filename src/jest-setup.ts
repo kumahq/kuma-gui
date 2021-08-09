@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
 import { server as setupServer } from '@/services/mocks'
 
-import './src/kongponents'
+import './kongponents'
 
 const server = setupServer('http://localhost/')
 
@@ -13,3 +13,5 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 // Clean up after the tests are finished.
 afterAll(() => server.close())
+
+export { server }

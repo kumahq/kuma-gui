@@ -1,4 +1,3 @@
-
 import { rest, RestRequest, ResponseComposition, RestContext, RestHandler, setupWorker } from 'msw'
 import { setupServer } from 'msw/node'
 
@@ -14,7 +13,7 @@ const mockFilenameBasePaths: string[] = [
   'mesh-insights',
   'mesh-insights/default',
   'mesh-insights/hello-world',
-  // 'dataplanes', // comment to have onboarding without data planes active
+  'dataplanes', // comment to have onboarding without data planes active
   'health-checks',
   'proxytemplates',
   'traffic-logs',
@@ -102,54 +101,43 @@ const mockFilenameBasePaths: string[] = [
 const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
   const pathname = req.url.pathname.substring(1)
 
-  return res(
-    ctx.json(requireMockFile(`${pathname}.json`))
-  )
+  return res(ctx.json(requireMockFile(`${pathname}.json`)))
 }
 
 const setupHandlers = (apiURL: string): RestHandler[] => {
-  const handlers = mockFilenameBasePaths.map((path: string) => rest.get(`${apiURL}${path}`,
-    (req, res, ctx) => res(
-      ctx.json(requireMockFile(`${path}.json`))
-    )
-  )
+  const handlers = mockFilenameBasePaths.map((path: string) =>
+    rest.get(`${apiURL}${path}`, (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`)))),
   )
 
   handlers.push(rest.get(/zones\+insights/, regexMatcher))
   handlers.push(rest.get(/zoneingresses\+insights/, regexMatcher))
   handlers.push(rest.get(/meshes\/default\/dataplanes\+insights/, regexMatcher))
 
-  handlers.push(rest.get(/dataplanes\+insights/, (req, res, ctx) => {
-    const ingress = req.url.searchParams.get('ingress')
-    const gateway = req.url.searchParams.get('gateway')
+  handlers.push(
+    rest.get(/dataplanes\+insights/, (req, res, ctx) => {
+      const ingress = req.url.searchParams.get('ingress')
+      const gateway = req.url.searchParams.get('gateway')
 
-    if (gateway === 'false' && ingress === 'false') {
-      // standard
-      return res(
-        ctx.json(requireMockFile('dataplanes+insights__no-gateways-and-ingresses.json'))
-      )
-    }
+      if (gateway === 'false' && ingress === 'false') {
+        // standard
+        return res(ctx.json(requireMockFile('dataplanes+insights__no-gateways-and-ingresses.json')))
+      }
 
-    if (gateway === 'true' && !ingress) {
-      // gateway
-      return res(
-        ctx.json(requireMockFile('dataplanes+insights__only-gateways.json'))
-      )
-    }
+      if (gateway === 'true' && !ingress) {
+        // gateway
+        return res(ctx.json(requireMockFile('dataplanes+insights__only-gateways.json')))
+      }
 
-    if (ingress === 'true' && !gateway) {
-      return res(
-        ctx.json(requireMockFile('dataplanes+insights__only-ingresses.json'))
-      )
-    }
+      if (ingress === 'true' && !gateway) {
+        return res(ctx.json(requireMockFile('dataplanes+insights__only-ingresses.json')))
+      }
 
-    if (!gateway && !ingress) {
-      // all
-      return res(
-        ctx.json(requireMockFile('dataplanes+insights.json'))
-      )
-    }
-  }))
+      if (!gateway && !ingress) {
+        // all
+        return res(ctx.json(requireMockFile('dataplanes+insights.json')))
+      }
+    }),
+  )
 
   return handlers
 }
@@ -157,10 +145,7 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
 const worker = (apiURL: string) => setupWorker(...setupHandlers(apiURL))
 
 const additionalTestHandlers: RestHandler[] = [
-  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(
-    ctx.status(200),
-    ctx.text('1.2.2')
-  ))
+  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.2'))),
 ]
 
 const server = (apiURL: string) => setupServer(...setupHandlers(apiURL), ...additionalTestHandlers)

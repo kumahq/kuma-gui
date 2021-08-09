@@ -96,9 +96,15 @@ export default class RestClient {
     const opts = await options || {}
     const url = await path
     const client = await this.client
-    const { status } = await client.get(url, opts)
+    let statusCode
 
-    return status === 200 ? 'OK' : null
+    try {
+      const { status } = await client.get(url, opts)
+
+      statusCode = status
+    } catch (e) {}
+
+    return statusCode === 200 ? 'OK' : null
   }
 
   /** fetch all Kuma API endpoints */

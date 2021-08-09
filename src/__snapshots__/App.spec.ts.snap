@@ -1,0 +1,170 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.vue fails to renders basic view 1`] = `
+<div>
+  <div
+    id="app"
+  >
+    <div>
+      <header
+        class="main-header px-4 py-1 flex justify-between items-center"
+      >
+        <div
+          class="py-1 md:py-0 flex justify-between items-center"
+        >
+          <a
+            aria-current="page"
+            class="logo router-link-exact-active router-link-active"
+            href="#/"
+          >
+            <img
+              alt="Kuma Logo"
+              src="@/assets/images/product-logo.png?external"
+            />
+          </a>
+           
+          <div
+            class="my-0 mx-6 upgrade-check-wrapper"
+          >
+            <div
+              class="upgrade-check"
+            >
+              <!---->
+            </div>
+          </div>
+        </div>
+         
+        <div
+          class="flex justify-between items-center"
+        >
+          <div
+            class="k-alert py-1 success small"
+            data-v-e0379b86=""
+            role="alert"
+          >
+            <!---->
+            <!---->
+            <span
+              data-v-e0379b86=""
+            >
+              <div
+                class="alert-content flex items-center text-sm"
+                data-v-e0379b86=""
+              >
+                <div
+                  class="mr-3"
+                  data-v-e0379b86=""
+                >
+                  
+        Do more with Kuma 
+                  <span
+                    class="alert-content__arrow"
+                    data-v-e0379b86=""
+                  >
+                    →
+                  </span>
+                </div>
+                 
+                <div
+                  data-v-e0379b86=""
+                >
+                  <a
+                    class="k-button no-underline success-button small primary"
+                    data-v-90a15d32=""
+                    data-v-e0379b86=""
+                    href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                    target="_blank"
+                    type="button"
+                  >
+                    
+          Enterprise
+        
+                  </a>
+                </div>
+              </div>
+            </span>
+          </div>
+           
+          <!---->
+        </div>
+      </header>
+       
+      <main
+        class="main-content"
+      >
+        <div
+          class="empty-state-wrapper global-api-status empty-state--wide-content empty-state--compact"
+          data-v-7725326c=""
+        >
+          <div
+            class="empty-state-title"
+            data-v-7725326c=""
+          >
+            <!---->
+            <h5
+              data-v-7725326c=""
+            >
+              <svg
+                class="kong-icon kong-icon--centered kong-icon-warning"
+                data-v-77239f42=""
+                data-v-7725326c=""
+                height="64"
+                role="img"
+                viewBox="0 0 24 24"
+                width="64"
+              >
+                <title
+                  data-v-77239f42=""
+                >
+                  warning
+                </title>
+                <g
+                  data-v-77239f42=""
+                >
+                  <path
+                    d="M7.926.621a1.24 1.24 0 0 1 2.148 0l7.763 13.535A1.235 1.235 0 0 1 16.763 16H1.237a1.23 1.23 0 0 1-1.074-1.844L7.926.621z"
+                    data-v-77239f42=""
+                    fill="var(--yellow-300)"
+                  />
+                  <path
+                    d="M10 11v2H8v-2h2zm0-7v5.5H8V4h2z"
+                    data-v-77239f42=""
+                    fill="#000"
+                    fill-opacity=".9"
+                    id="preserveColor"
+                  />
+                </g>
+              </svg>
+              
+    Unable to reach the API
+  
+            </h5>
+          </div>
+          <div
+            class="empty-state-content"
+            data-v-7725326c=""
+          >
+            <p
+              data-v-7725326c=""
+            >
+              <p
+                data-v-7725326c=""
+              >
+                
+      Please double check to make sure it is up and running
+      
+                <!---->
+              </p>
+            </p>
+            <p
+              data-v-7725326c=""
+            >
+              <!---->
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>
+`;
