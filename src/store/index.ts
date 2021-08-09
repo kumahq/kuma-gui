@@ -266,62 +266,32 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
   actions: {
     // bootstrap app
 
-    async bootstrap ({ commit, dispatch, getters, rootGetters }, routeMesh) {
+    async bootstrap ({ commit, dispatch, getters }) {
       // check the API status before we do anything else
-      await dispatch('config/getStatus', null, { root: true })
+      await dispatch('config/getStatus')
 
       // only dispatch these actions if the API is online
-      if (rootGetters['config/getStatus'] === 'OK') {
-        // fetch the mesh list
-        dispatch('fetchMeshList')
-        // fetch the dataplanes
-        dispatch('fetchDataplaneTotalCount')
-        // fetch the tagline
-        dispatch('config/getTagline')
-        // fetch the config
-        dispatch('config/getConfig')
+      if (getters['config/getStatus'] === 'OK') {
+        // get mesh from localStorage or default one from vuex
+        const mesh = localStorage.getItem('selectedMesh')
 
-        // fetch the version and store it in localStorage
-        dispatch('config/getVersion')
-          .then(() => {
-            const newVersion = rootGetters['config/getVersion']
-            const lsVersion = localStorage.getItem('kumaVersion') || null
-            // if the version stored in the browser is different than the
-            // version running, update the version in localStorage, and
-            // reload the page
-
-            if (lsVersion !== newVersion) {
-              // reload the app
-              window.location.reload()
-              // update the version in localStorage
-              localStorage.setItem('kumaVersion', newVersion)
-            } else {
-              commit('SET_GLOBAL_LOADING', { globalLoading: false })
-            }
-          })
-
-        // set the selected mesh in localStorage
-        const mesh = () => {
-          const lsMesh = localStorage.getItem('selectedMesh')
-          if (routeMesh) {
-            // if the `mesh` param is present, use that
-            return routeMesh
-          } else if (lsMesh && lsMesh !== 'undefined' && lsMesh.length > 0) {
-            // or use what's available in localStorage
-            return lsMesh
-          } else {
-            // otherwise, fall back to the default value from our VueX store
-            return getters.getSelectedMesh
-          }
+        if (mesh) {
+          dispatch('updateSelectedMesh', mesh)
+        } else {
+          localStorage.setItem('selectedMesh', getters.getSelectedMesh)
         }
 
-        // set the selected mesh in our VueX store
-        dispatch('updateSelectedMesh', mesh())
-        // update the selected mesh in localStorage
-        localStorage.setItem('selectedMesh', mesh())
-      } else {
-        commit('SET_GLOBAL_LOADING', { globalLoading: false })
+        // fetch the mesh list
+        const meshPromise = dispatch('fetchMeshList')
+        // fetch the dataplanes
+        const dataplanePromise = dispatch('fetchDataplaneTotalCount')
+        // bootstrap config data
+        const configPromise = dispatch('config/bootstrapConfig')
+
+        await Promise.all([meshPromise, dataplanePromise, configPromise])
       }
+
+      commit('SET_GLOBAL_LOADING', { globalLoading: false })
     },
 
     // update the onboarding state
@@ -957,7 +927,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       await dispatch('setOverviewServicesChartData')
     },
 
-    async fetchZonesInsights ({ commit, dispatch, state, rootGetters }, multicluster = false) {
+    async fetchZonesInsights ({ commit, dispatch, state, getters }, multicluster = false) {
       commit('SET_ZONES_INSIGHTS_FETCHING', true)
 
       try {
@@ -981,7 +951,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
           }]
 
           const versionsData = [{
-            category: rootGetters['config/getVersion'],
+            category: getters['config/getVersion'],
             value: 1,
             tooltipDisabled: true,
           }]

@@ -22,17 +22,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   computed: {
-    url () {
+    url() {
       return localStorage.getItem('kumaApiUrl') || null
     },
-    ...mapGetters({
-      tagline: 'config/getTagline'
-    })
-  }
+  },
 }
 </script>
 
