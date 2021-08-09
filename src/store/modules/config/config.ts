@@ -7,7 +7,7 @@ const state: ConfigInterface = {
   status: null,
   tagline: null,
   version: null,
-  clientConfig: null
+  clientConfig: null,
 }
 
 const mutations: MutationTree<ConfigInterface> = {
@@ -18,12 +18,12 @@ const mutations: MutationTree<ConfigInterface> = {
 }
 
 const getters: GetterTree<ConfigInterface, RootInterface> = {
-  getStatus: (state) => state.status,
-  getConfig: (state) => state.clientConfig,
-  getEnvironment: (state) => state.clientConfig?.environment,
-  getMode: (state) => state.clientConfig?.mode,
-  getTagline: (state) => state.tagline,
-  getVersion: (state) => state.version,
+  getStatus: state => state.status,
+  getConfig: state => state.clientConfig,
+  getEnvironment: state => state.clientConfig?.environment,
+  getMode: state => state.clientConfig?.mode,
+  getTagline: state => state.tagline,
+  getVersion: state => state.version,
   getMulticlusterStatus: (state, getters) => {
     // is Kuma running in Multi-Zone mode?
 
@@ -34,7 +34,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
 
       console.warn(
         '%c ✨You are currently faking Multi-Zone mode.',
-        'background: black; color: white; display: block; padding: 0.25rem;'
+        'background: black; color: white; display: block; padding: 0.25rem;',
       )
     } else {
       status = getters.getMode === 'global'
@@ -44,39 +44,33 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   },
 }
 
-const actions:(api: Kuma) => ActionTree<ConfigInterface, RootInterface> = (api: Kuma) => ({
+const actions: (api: Kuma) => ActionTree<ConfigInterface, RootInterface> = (api: Kuma) => ({
+  bootstrapConfig({ dispatch }) {
+    const infoPromise = dispatch('getInfo')
+    const configPromise = dispatch('getConfig')
 
+    return Promise.all([infoPromise, configPromise])
+  },
   // get the general Kuma config (this differs from the API config endpoint)
-  getConfig ({ commit }) {
-    return api.getConfig()
-      .then(response => {
-        commit('SET_CONFIG_DATA', response)
-      })
+  getConfig({ commit }) {
+    return api.getConfig().then(response => {
+      commit('SET_CONFIG_DATA', response)
+    })
   },
 
   // get the status of the API
-  getStatus ({ commit }) {
-    return api.getStatus()
-      .then(response => {
-        commit('SET_STATUS', response)
-      })
+  getStatus({ commit }) {
+    return api.getStatus().then(response => {
+      commit('SET_STATUS', response)
+    })
   },
 
-  // get the current tagline
-  getTagline ({ commit }) {
-    return api.getInfo()
+  // get the current tagline and version
+  getInfo({ commit }) {
+    return api
+      .getInfo()
       .then(response => {
         commit('SET_TAGLINE', response.tagline)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-  },
-
-  // get the current version
-  getVersion ({ commit }) {
-    return api.getInfo()
-      .then(response => {
         commit('SET_VERSION', response.version)
       })
       .catch(error => {
@@ -90,5 +84,5 @@ export default (api: Kuma): ConfigType => ({
   state,
   getters,
   mutations,
-  actions: actions(api)
+  actions: actions(api),
 })

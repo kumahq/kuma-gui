@@ -129,7 +129,7 @@
     ],
     "preset": "@vue/cli-plugin-unit-jest/presets/typescript-and-babel",
     "setupFilesAfterEnv": [
-      "<rootDir>/jest-setup.ts"
+      "<rootDir>/src/jest-setup.ts"
     ]
   },
   "engines": {
