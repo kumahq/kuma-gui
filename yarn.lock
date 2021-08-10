@@ -1384,10 +1384,10 @@
   dependencies:
     popper.js "^1.15.0"
 
-"@kongponents/kradio@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@kongponents/kradio/-/kradio-0.2.3.tgz#238477165f6950600a8111896c2599166f022d26"
-  integrity sha512-VYguXR7r+R45c8VhR7FfcrWkc5o6DtstmQVDHEY3dlnluIO4x7QsTEJfjFbAYrD5ccdZqEvSahMhF52zx3XnGQ==
+"@kongponents/kradio@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@kongponents/kradio/-/kradio-0.2.4.tgz#5a4dec5392e299aa97dcd92b447330fa5be98e1a"
+  integrity sha512-QzzpvU/hxpYhYhdZvc5prIPoe5xJtzirDPX72jPoFmRknekMzdO2xtZSlf/s3vQrYSlT487lPNXFzNpCAhSzVA==
 
 "@kongponents/krumbs@0.2.0":
   version "0.2.0"
