@@ -172,6 +172,12 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     getSupportedVersions: ({ supportedVersions }) => supportedVersions,
     getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
     getSupportedVersionsFailed: ({ supportedVersionsFailed }) => supportedVersionsFailed,
+    showOnboarding: ({ totalDataplaneCount, meshes }) => {
+      const onlyDefaultMesh = meshes.total === 1 && meshes.items[0].name === 'default'
+      const noDataplane = totalDataplaneCount === 0
+
+      return noDataplane && onlyDefaultMesh
+    }
   },
   mutations: {
     SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),

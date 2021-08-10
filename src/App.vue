@@ -36,23 +36,36 @@ export default {
     title: 'Home',
     titleTemplate: `%s | ${process.env.VUE_APP_NAMESPACE}`,
     htmlAttrs: {
-      lang: 'en'
-    }
+      lang: 'en',
+    },
+  },
+  data() {
+    return { loading: true, timeount: null }
   },
   computed: {
     ...mapState({
-      loading: state => state.globalLoading
+      globalLoading: (state) => state.globalLoading,
     }),
     ...mapGetters({
-      status: 'config/getStatus'
-    })
+      status: 'config/getStatus',
+    }),
   },
-  beforeMount () {
+  watch: {
+    globalLoading: function (val) {
+      this.timeout = setTimeout(() => {
+        this.loading = val
+      }, 200)
+    },
+  },
+  beforeMount() {
     this.bootstrap()
   },
+  destroyed() {
+    clearTimeout(this.timeout)
+  },
   methods: {
-    ...mapActions(['bootstrap'])
-  }
+    ...mapActions(['bootstrap']),
+  },
 }
 </script>
 
