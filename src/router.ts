@@ -1,9 +1,11 @@
 import Vue from 'vue'
+import { Store } from 'vuex'
 import VueRouter from 'vue-router'
+import { RootInterface } from './store'
 
 Vue.use(VueRouter)
 
-export default () => {
+export default (store: Store<RootInterface>) => {
   const routes = [
     {
       path: '/404',
@@ -28,7 +30,6 @@ export default () => {
       },
       children: [
         // App
-
         // diagnostics
         {
           path: '/diagnostics',
@@ -356,7 +357,6 @@ export default () => {
     },
 
   ]
-
   const router = new VueRouter({
     /**
      * Defaulting to hash mode since this runs within Kuma itself
@@ -365,7 +365,7 @@ export default () => {
      */
     // mode: 'history',
     base: process.env.BASE_URL,
-    routes: routes
+    routes: routes,
   })
 
   /**
@@ -392,7 +392,7 @@ export default () => {
       /** send the user to the Global Overview from "/" */
       next({
         name: 'global-overview',
-        params: { mesh: targetMesh }
+        params: { mesh: targetMesh },
       })
     } else {
       next()
@@ -403,11 +403,32 @@ export default () => {
    * sends them through it. Once completed, a localStorage value is set to true
    * so that they're not sent through it again.
    */
-  router.beforeEach((to, from, next) => {
-    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || 'false')
-    const currentRoute = to.meta.onboardingProcess
 
-    if ((!hasOnboarded || hasOnboarded === false) && !currentRoute) {
+  router.beforeEach(async (to, from, next) => {
+    // eslint-disable-next-line no-unmodified-loop-condition
+    // This below is to make sure the inital calls have been fulfilled and it does not try to
+    // access any route before it will be resolved
+    while (store.getters.globalLoading) {
+      await new Promise(resolve => {
+        setTimeout(() => {
+          resolve(null)
+        }, 20)
+      })
+    }
+
+    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || 'false')
+    const showOnboarding = store.getters.showOnboarding
+
+    const onboardingRoute = to.meta.onboardingProcess
+
+    // If someone is going to open onboarding page but fulfiled already conditionn related to
+    // show onboarding, then redirect user to overview
+    if (onboardingRoute && !showOnboarding) {
+      next({ name: 'global-overview' })
+      // if someone never had onboarding and do not fulfiled condition to skip it
+      // and try to access some other page than onboarding ones
+      // then redirect into first onboarding page
+    } else if (!hasOnboarded && !onboardingRoute && showOnboarding) {
       next({ name: 'setup-welcome' })
     } else {
       next()

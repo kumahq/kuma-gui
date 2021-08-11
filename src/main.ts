@@ -61,7 +61,7 @@ function VUE_APP () {
   Vue.prototype.$api = kuma
 
   const store = new Vuex.Store(Store(kuma))
-  const router = Router()
+  const router = Router(store)
 
   new Vue({
     store,

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import OnboardingCheck from '@/components/Utils/OnboardingCheck'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
@@ -26,16 +26,9 @@ export default {
     OnboardingCheck,
   },
   computed: {
-    ...mapState({
-      dpCount: 'totalDataplaneCount',
-      meshes: 'meshes',
+    ...mapGetters({
+      showOnboarding: 'showOnboarding',
     }),
-    showOnboarding() {
-      const onlyDefaultMesh = this.meshes.total === 1 && this.meshes.items[0].name === 'default'
-      const noDataplane = this.dpCount === 0
-
-      return noDataplane && onlyDefaultMesh
-    },
   },
 }
 </script>
