@@ -171,6 +171,7 @@
 <script>
 import { mapState } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
 // import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
@@ -359,7 +360,7 @@ export default {
       this.loadData()
     },
     onCreateClick() {
-      datadogLogs.logger.info('create-mesh-clicked')
+      datadogLogs.logger.info(datadogLogEvents.CREATE_MESH_CLICKED)
     },
     tableAction (ev) {
       const data = ev

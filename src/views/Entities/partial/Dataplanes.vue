@@ -189,6 +189,7 @@ import {
   humanReadableDate,
   stripTimes,
 } from '@/helpers'
+import { datadogLogEvents } from '@/datadogEvents'
 import {
   checkKumaDpAndZoneVersionsMismatch, checkVersionsCompatibility,
   dpTags,
@@ -377,7 +378,7 @@ export default {
   methods: {
     ...mapActions(['fetchSupportedVersions']),
     onCreateClick() {
-      datadogLogs.logger.info('create-data-proxy-plane-clicked')
+      datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
     },
     buildEntity (basicData, tags, dataplaneInsight) {
       const mtls = dataplaneInsight.mTLS

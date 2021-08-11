@@ -12,6 +12,7 @@
     <slot />
     <router-link
       :to="routerLink"
+      @click.native="onNavItemClick"
     >
       <div
         v-if="hasIcon || hasCustomIcon"
@@ -52,7 +53,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { datadogLogs } from '@datadog/browser-logs'
+import { datadogLogEvents } from '@/datadogEvents'
 
 export default {
   name: 'NavItem',
@@ -60,142 +62,96 @@ export default {
     link: {
       type: String,
       default: '',
-      required: false
-    },
-    linkObj: {
-      type: Object,
-      default: () => null,
-      required: false
+      required: false,
     },
     name: {
       type: String,
-      default: ''
+      default: '',
     },
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
     hasIcon: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasCustomIcon: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isMenuItem: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isDisabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     title: {
       type: Boolean,
-      default: false
+      default: false,
     },
     nested: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
-      meshPath: null
+      meshPath: null,
     }
   },
   computed: {
-    ...mapState(['selectedMesh']),
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus'
-    }),
-    linkPath () {
-      const link = this.link
-
-      if (this.link.pathFlip) {
-        return link.root
-          ? this.preparePath(link.url)
-          : `${this.preparePath(link.url)}/${this.meshPath}`
-      }
-
-      return link.root
-        ? this.preparePath(link.url)
-        : `/${this.meshPath}${this.preparePath(link.url)}`
-    },
-    routerLink () {
-      const params = !this.subNav && Object.keys(this.$route?.params || {}).length > 0
-        ? this.$route?.params
-        : undefined
+    routerLink() {
+      const params = !this.subNav && Object.keys(this.$route?.params || {}).length > 0 ? this.$route?.params : undefined
 
       const link = () => {
-        if (this.linkObj) {
-          return this.linkObj
-        }
-
         if (this.link) {
           return {
             name: this.link,
-            params
+            params,
           }
         }
 
         if (this.title) {
           return {
-            name: null
+            name: null,
           }
         }
 
         return {
           name: this.$route.name,
-          params
+          params,
         }
       }
 
       return link()
     },
-    isActive () {
+    isActive() {
       const navItemRouteName = this.link
       const currentRoute = this.$route
       const currentRouteSubpath = this.$route.path.split('/')[2]
 
-      if (navItemRouteName === currentRoute.name) { return true }
-
-      if (currentRouteSubpath === this.routerLink.name) { return true }
-
-      return navItemRouteName && currentRoute.matched.some(r => navItemRouteName === r.name || navItemRouteName === r.redirect)
-    }
-  },
-  watch: {
-    selectedMesh () {
-      // set the menu links accordingly when the selected mesh changes
-      this.setMeshPath()
-    }
-  },
-  beforeMount () {
-    this.setMeshPath()
-  },
-  methods: {
-    preparePath (path) {
-      return path[0] === '/' ? path : `/${path}`
-    },
-
-    setMeshPath () {
-      const meshFromLocalStorage = localStorage.getItem('selectedMesh')
-      const meshFromRoute = this.$route.params.mesh
-
-      if (meshFromRoute && meshFromRoute.length > 0) {
-        // if the route has a mesh param set, use that for the path
-        this.meshPath = meshFromRoute
-      } else if (meshFromLocalStorage && meshFromLocalStorage.length > 0) {
-        // otherwise fall back to what's present in localStorage
-        this.meshPath = meshFromLocalStorage
+      if (navItemRouteName === currentRoute.name) {
+        return true
       }
 
-      // otherwise fallback to what's in the store (it has a default value)
-      this.meshPath = this.$store.getters.getSelectedMesh
-    }
-  }
+      if (currentRouteSubpath === this.routerLink.name) {
+        return true
+      }
+
+      return (
+        navItemRouteName &&
+        currentRoute.matched.some((r) => navItemRouteName === r.name || navItemRouteName === r.redirect)
+      )
+    },
+  },
+  methods: {
+    onNavItemClick() {
+      datadogLogs.logger.info(datadogLogEvents.SIDEBAR_ITEM_CLICKED, { data: this.routerLink })
+    },
+  },
 }
 </script>
 
@@ -232,12 +188,11 @@ export default {
   }
 
   &.is-disabled {
-    opacity: .5;
+    opacity: 0.5;
     pointer-events: none;
   }
 
   &.is-title {
-
     a {
       padding-left: 0;
       padding-right: 0;

@@ -139,5 +139,10 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "resolutions": {
+    "jest": "^26.3.0",
+    "ts-jest": "^26.3.0",
+    "babel-jest": "^26.3.0"
   }
 }
