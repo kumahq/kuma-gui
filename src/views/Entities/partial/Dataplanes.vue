@@ -182,7 +182,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { datadogLogEvents } from '@/datadogLogEvents'
 import { datadogLogs } from '@datadog/browser-logs'
 import {
   getOffset,
@@ -190,6 +189,7 @@ import {
   humanReadableDate,
   stripTimes,
 } from '@/helpers'
+import { datadogLogEvents } from '@/datadogEvents'
 import {
   checkKumaDpAndZoneVersionsMismatch, checkVersionsCompatibility,
   dpTags,
