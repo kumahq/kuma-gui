@@ -4,7 +4,7 @@
       v-if="hasPrevious"
       ref="paginatePrev"
       appearance="primary"
-      @click="$emit('previous')"
+      @click="onPreviousButtonClick"
     >
       &lsaquo; Previous
     </KButton>
@@ -13,7 +13,7 @@
       v-if="hasNext"
       ref="paginateNext"
       appearance="primary"
-      @click="$emit('next')"
+      @click="onNextButtonClick"
     >
       Next &rsaquo;
     </KButton>
@@ -21,18 +21,29 @@
 </template>
 
 <script>
+import { datadogLogs } from '@datadog/browser-logs'
 export default {
   name: 'Pagination',
   props: {
     hasPrevious: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasNext: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
+  methods: {
+    onNextButtonClick() {
+      this.$emit('next')
+      datadogLogs.logger.info('pagination-next-button-clicked')
+    },
+    onPreviousButtonClick() {
+      this.$emit('previous')
+      datadogLogs.logger.info('pagination-previous-button-clicked')
+    },
+  },
 }
 </script>
 

@@ -24,9 +24,7 @@
           <slot :name="tab.hash.replace('#','')" />
         </template>
 
-        <template
-          slot="warnings-anchor"
-        >
+        <template slot="warnings-anchor">
           <span class="flex items-center with-warnings">
             <KIcon
               color="var(--yellow-400)"
@@ -83,64 +81,70 @@
 </template>
 
 <script>
+import { datadogLogs } from '@datadog/browser-logs'
 import KEmptyState from '@kongponents/kemptystate'
 
 export default {
   name: 'Tabs',
   components: {
-    KEmptyState
+    KEmptyState,
   },
   props: {
     loaders: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isEmpty: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tabs: {
       type: Array,
-      required: true
+      required: true,
     },
     hasBorder: {
       type: Boolean,
-      default: false
+      default: false,
     },
     initialTabOverride: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
-      tabState: this.initialTabOverride && `#${this.initialTabOverride}`
+      tabState: this.initialTabOverride && `#${this.initialTabOverride}`,
     }
   },
 
   computed: {
-    isReady () {
+    isReady() {
       if (this.loaders !== false) {
         return !this.isEmpty && !this.hasError && !this.isLoading
       } else {
         return true
       }
-    }
+    },
   },
 
   methods: {
-    switchTab (newTab) {
+    switchTab(newTab) {
+      datadogLogs.logger.info('tabs-tab-change', {
+        data: {
+          newTab,
+        },
+      })
       this.$emit('onTabChange', newTab)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -183,7 +187,12 @@ export default {
   margin: var(--tab-header-margin);
   padding: var(--tab-header-padding);
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: var(--tab-header-title-font-size);
     font-weight: var(--tab-header-title-font-weight);
   }
@@ -235,7 +244,6 @@ export default {
 }
 
 .tab__nav-item--active {
-
   .tab__nav-link {
     @include active-link-border;
     @include active-link-background;
@@ -260,6 +268,6 @@ export default {
 }
 
 .with-warnings {
-  color: var(--yellow-400)
+  color: var(--yellow-400);
 }
 </style>

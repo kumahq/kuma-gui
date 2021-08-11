@@ -9,7 +9,7 @@
         appearance="primary"
         size="small"
         :disabled="isLoading"
-        @click="$emit('reloadData')"
+        @click="onRefreshButtonClick"
       >
         <div
           class="refresh-icon"
@@ -72,9 +72,7 @@
             </div>
           </template>
           <!-- tags -->
-          <template
-            v-slot:tags="{ rowValue }"
-          >
+          <template v-slot:tags="{ rowValue }">
             <span
               v-for="(item, key) in rowValue"
               :key="key"
@@ -96,9 +94,7 @@
             </span>
           </template>
           <!--- total Updates --->
-          <template
-            v-slot:totalUpdates="{ row }"
-          >
+          <template v-slot:totalUpdates="{ row }">
             <span class="entity-total-updates">
               <span>
                 {{ row.totalUpdates }}
@@ -131,25 +127,17 @@
               </span>
             </a>
           </template>
-          <template
-            v-slot:dpVersion="{ row, rowValue }"
-          >
-            <div
-              :class="{
+          <template v-slot:dpVersion="{ row, rowValue }">
+            <div :class="{
                 'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
-              }"
-            >
+              }">
               {{ rowValue }}
             </div>
           </template>
-          <template
-            v-slot:envoyVersion="{ row, rowValue }"
-          >
-            <div
-              :class="{
+          <template v-slot:envoyVersion="{ row, rowValue }">
+            <div :class="{
                 'with-warnings': row.unsupportedEnvoyVersion,
-              }"
-            >
+              }">
               {{ rowValue }}
             </div>
           </template>
@@ -244,114 +232,115 @@
 </template>
 
 <script>
+import { datadogLogs } from '@datadog/browser-logs'
 import MetricGrid from '@/components/Metrics/MetricGrid'
 
 export default {
   name: 'DataOverview',
   components: {
-    MetricGrid
+    MetricGrid,
   },
   props: {
     pageSize: {
       type: Number,
-      default: 12
+      default: 12,
     },
     displayMetrics: {
       type: Boolean,
-      default: false
+      default: false,
     },
     metricsData: {
       type: Array,
-      default: null
+      default: null,
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isEmpty: {
       type: Boolean,
-      default: false
+      default: false,
     },
     emptyState: {
       type: Object,
-      default: null
+      default: null,
     },
     ctaAction: {
       type: Object,
-      default: () => {}
+      default: () => {},
     },
     showCta: {
       type: Boolean,
-      default: true
+      default: true,
     },
     displayDataTable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tableData: {
       type: Object,
-      default: null
+      default: null,
     },
     tableHasBorder: {
       type: Boolean,
       required: false,
-      default: false
+      default: false,
     },
     tableDataIsEmpty: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tableDataActionsLink: {
       type: String,
-      default: null
+      default: null,
     },
     tableActionsRouteName: {
       type: String,
-      default: null
+      default: null,
     },
     displayTableDataStatus: {
       type: Boolean,
-      default: true
+      default: true,
     },
     displayRefreshControl: {
       type: Boolean,
-      default: true
+      default: true,
     },
     tableDataRow: {
       type: String,
       required: false,
-      default: 'name'
+      default: 'name',
     },
     tableDataFunctionText: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     showWarnings: {
       type: Boolean,
-    }
+    },
   },
   data() {
     return { selectedRow: '' }
   },
   computed: {
-    isReady () {
+    isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
-    tableRowCount () {
+    tableRowCount() {
       return Object.entries(this.tableData.data).length
     },
-    pageCount () {
+    pageCount() {
       const itemCount = Object.entries(this.tableData.data).length
       const pageSize = this.pageSize
 
       return Math.ceil(itemCount / pageSize)
     },
-    tableDataFiltered () {
+    tableDataFiltered() {
       const data = this.tableData.data
       const headers = this.tableData.headers
       const newData = { headers, data: [...data] }
@@ -361,37 +350,39 @@ export default {
       }
 
       return newData
-    }
+    },
   },
   watch: {
     isLoading(val) {
       if (!val && this.tableData.data.length > 0) {
         this.selectedRow = this.tableData.data[0].name
       }
-    }
+    },
   },
   methods: {
-    tableRowHandler (e, row, type) {
+    tableRowHandler(e, row, type) {
       this.selectedRow = row.name
+      console.log(row)
       this.$emit('tableAction', row)
     },
-    cleanTagLabel (val) {
-      return val
-        .toLowerCase()
-        .replace('.', '-')
-        .replace('/', '-')
-    }
-  }
+    cleanTagLabel(val) {
+      return val.toLowerCase().replace('.', '-').replace('/', '-')
+    },
+    onRefreshButtonClick() {
+      this.$emit('reloadData')
+      datadogLogs.logger.info('table-refresh-button-clicked')
+    },
+  },
 }
 </script>
 
 <style lang="scss">
 .empty-state-title {
-
   .card-icon {
     text-align: center;
 
-    img, svg {
+    img,
+    svg {
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -423,8 +414,12 @@ export default {
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(1turn); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(1turn);
+    }
   }
 }
 
@@ -433,7 +428,8 @@ export default {
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 
   // no arrows on buttons
-  .k-button:after, button:after {
+  .k-button:after,
+  button:after {
     display: none !important;
   }
 
@@ -491,7 +487,7 @@ export default {
 
 // this gives kuma-specific native tags a different color
 // to differentiate them from user-created tags.
-span[class*="kuma-io-"] {
+span[class*='kuma-io-'] {
   --color: var(--brand-color-6);
 
   background-color: var(--color);
@@ -522,7 +518,8 @@ span[class*="kuma-io-"] {
   --dp-table-font-size: 14px;
   --dp-table-padding: 10px;
 
-  th, td {
+  th,
+  td {
     padding: var(--dp-table-padding);
   }
 
@@ -559,7 +556,6 @@ span[class*="kuma-io-"] {
   }
 
   tbody {
-
     td {
       vertical-align: top;
     }
@@ -604,7 +600,6 @@ span[class*="kuma-io-"] {
       display: block;
     }
   }
-
 }
 
 // some reusable styles
@@ -633,7 +628,6 @@ span[class*="kuma-io-"] {
 }
 
 .overview-group-list {
-
 }
 
 .overview-stat-grid {
@@ -647,7 +641,6 @@ span[class*="kuma-io-"] {
 }
 
 .overview-stack {
-
   &:not(:last-of-type) {
     padding: 0 0 var(--spacing-xl) 0;
     margin: 0 0 var(--spacing-xl) 0;
@@ -660,6 +653,6 @@ span[class*="kuma-io-"] {
 }
 
 .with-warnings {
-  color: var(--yellow-400)
+  color: var(--yellow-400);
 }
 </style>
