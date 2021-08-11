@@ -362,7 +362,6 @@ export default {
   methods: {
     tableRowHandler(e, row, type) {
       this.selectedRow = row.name
-      console.log(row)
       this.$emit('tableAction', row)
     },
     cleanTagLabel(val) {
