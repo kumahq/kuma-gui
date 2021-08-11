@@ -59,7 +59,6 @@ import { mapState } from 'vuex'
 import { APP_WINDOW } from '@/consts'
 
 export default {
-
   name: 'Sidebar',
   components: {
     MeshSelector,
@@ -78,7 +77,6 @@ export default {
   },
 
   computed: {
-
     ...mapState('sidebar', {
       menu: (state) => state.menu,
     }),
@@ -187,10 +185,7 @@ export default {
       const el = this.$refs.sidebarControl
 
       // if the route instructs the sidebar to be expanded, handle it
-      if (
-        this.$route.params.expandSidebar &&
-        this.$route.params.expandSidebar === true
-      ) {
+      if (this.$route.params.expandSidebar && this.$route.params.expandSidebar === true) {
         this.subnavIsExpanded = true
         localStorage.setItem('sidebarCollapsed', true)
       }
@@ -253,8 +248,7 @@ export default {
 
     &.subnav-expanded {
       .main-nav.is-hovering {
-        box-shadow: 0 20px 25px -5px var(--black-10),
-          0 10px 10px -5px var(--black-10);
+        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
       }
     }
 

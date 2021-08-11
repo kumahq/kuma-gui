@@ -11,7 +11,7 @@ import configUrl from '@/configUrl'
 
 /** amCharts */
 import * as am4core from '@amcharts/amcharts4/core'
-import am4themesAnimated from '@amcharts/amcharts4/themes/animated';
+import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 /** Kongponents */
 import './kongponents'
@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'production') {
     forwardErrorsToLogs: true,
     service: process.env.VUE_APP_NAMESPACE,
     sampleRate: 100,
-    env: process.env.NODE_ENV
+    env: process.env.NODE_ENV,
   })
 }
 
@@ -54,7 +54,7 @@ am4core.useTheme(am4themesAnimated)
  */
 
 /** the app itself */
-function VUE_APP () {
+function VUE_APP() {
   const kuma = new Kuma()
 
   // setup the HTTP API namespace
@@ -66,12 +66,12 @@ function VUE_APP () {
   new Vue({
     store,
     router,
-    render: h => h(App)
+    render: h => h(App),
   }).$mount('#app')
 }
 
 /** bootstrapping to run our Vue app */
-function SETUP_VUE_APP () {
+function SETUP_VUE_APP() {
   /**
    * Always check the Kuma environment and api URL in storage
    * and update it upon GUI launch.
@@ -82,9 +82,8 @@ function SETUP_VUE_APP () {
     .then(response => {
       const kumaEnv = response.data.environment
 
-      const storedKumaEnv = localStorage.getItem('kumaEnv') !== null
-        ? localStorage.getItem('kumaEnv')?.toString()
-        : null
+      const storedKumaEnv =
+        localStorage.getItem('kumaEnv') !== null ? localStorage.getItem('kumaEnv')?.toString() : null
 
       /**
        * Always check the API URL and set it accordingly for the app to access.
