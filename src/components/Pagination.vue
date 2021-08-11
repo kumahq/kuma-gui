@@ -22,6 +22,8 @@
 
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogLogEvents } from '@/datadogEvents'
+
 export default {
   name: 'Pagination',
   props: {
@@ -37,11 +39,11 @@ export default {
   methods: {
     onNextButtonClick() {
       this.$emit('next')
-      datadogLogs.logger.info('pagination-next-button-clicked')
+      datadogLogs.logger.info(datadogLogEvents.PAGINATION_NEXT_BUTTON_CLICKED)
     },
     onPreviousButtonClick() {
       this.$emit('previous')
-      datadogLogs.logger.info('pagination-previous-button-clicked')
+      datadogLogs.logger.info(datadogLogEvents.PAGINATION_PREVIOUS_BUTTON_CLICKED)
     },
   },
 }

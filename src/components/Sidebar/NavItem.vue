@@ -54,6 +54,7 @@
 
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogLogEvents } from '@/datadogEvents'
 
 export default {
   name: 'NavItem',
@@ -148,7 +149,7 @@ export default {
   },
   methods: {
     onNavItemClick() {
-      datadogLogs.logger.info('sidebar-item-clicked', { data: this.routerLink })
+      datadogLogs.logger.info(datadogLogEvents.SIDEBAR_ITEM_CLICKED, { data: this.routerLink })
     },
   },
 }

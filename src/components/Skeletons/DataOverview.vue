@@ -233,6 +233,7 @@
 
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogLogEvents } from '@/datadogEvents'
 import MetricGrid from '@/components/Metrics/MetricGrid'
 
 export default {
@@ -369,7 +370,7 @@ export default {
     },
     onRefreshButtonClick() {
       this.$emit('reloadData')
-      datadogLogs.logger.info('table-refresh-button-clicked')
+      datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
     },
   },
 }

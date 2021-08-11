@@ -82,6 +82,7 @@
 
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
+import { datadogLogEvents } from '@/datadogEvents'
 import KEmptyState from '@kongponents/kemptystate'
 
 export default {
@@ -137,7 +138,7 @@ export default {
 
   methods: {
     switchTab(newTab) {
-      datadogLogs.logger.info('tabs-tab-change', {
+      datadogLogs.logger.info(datadogLogEvents.TABS_TAB_CHANGE, {
         data: {
           newTab,
         },
