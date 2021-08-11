@@ -40,7 +40,7 @@ export default {
     },
   },
   data() {
-    return { loading: true, timeount: null }
+    return { loading: true, timeout: null }
   },
   computed: {
     ...mapState({
@@ -51,9 +51,9 @@ export default {
     }),
   },
   watch: {
-    globalLoading: function (val) {
+    globalLoading: function (loading) {
       this.timeout = setTimeout(() => {
-        this.loading = val
+        this.loading = loading
       }, 200)
     },
   },
