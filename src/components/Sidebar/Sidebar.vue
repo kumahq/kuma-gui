@@ -149,7 +149,6 @@ export default {
     },
 
     handleResize() {
-      // const sidebarState = getItemFromStorage('sidebarCollapsed')
       const appWidth = APP_WINDOW.innerWidth
 
       if (appWidth <= 900) {

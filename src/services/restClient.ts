@@ -3,23 +3,12 @@ import { RestRequest } from 'msw'
 export default class RestClient {
   public client: AxiosInstance
 
+  public url: string
+
   public constructor() {
-    this.client = RestClient.axiosInit()
+    this.url = this.setupUrl()
+    this.client = this.axiosInit()
     RestClient.setupMocks()
-  }
-
-  /**
-   * axiosInit
-   *
-   * This function creates the Axios endpoint with the
-   * value from localStorage
-   */
-  public static axiosInit(): AxiosInstance {
-    const apiUrlFromLS: string = localStorage.getItem('kumaApiUrl') || ''
-
-    return axios.create({
-      baseURL: apiUrlFromLS,
-    })
   }
 
   public static setupMocks() {
@@ -50,6 +39,33 @@ export default class RestClient {
         },
       })
     }
+  }
+
+  /**
+   * axiosInit
+   *
+   * This function creates the Axios endpoint with the
+   * value from localStorage
+   */
+  public axiosInit(): AxiosInstance {
+    return axios.create({
+      baseURL: this.url,
+    })
+  }
+
+  public setupUrl(): string {
+    let url
+    if (process.env.NODE_ENV === 'development') {
+      url = process.env.VUE_APP_KUMA_CONFIG?.replace('/config', '/') || ''
+    } else {
+      const href = window.location.href
+
+      url = `${href.substring(0, href.indexOf('/gui'))}/`
+    }
+
+    localStorage.setItem('kumaApiUrl', url)
+
+    return url
   }
 
   public async get(path: string, options?: AxiosRequestConfig) {
