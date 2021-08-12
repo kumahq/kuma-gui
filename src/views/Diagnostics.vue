@@ -120,14 +120,6 @@ export default {
 
       return JSON.stringify(code, null, 2)
     },
-    configUrl () {
-      const url = localStorage.getItem('kumaApiUrl') || null
-      const apiUrl = url
-        ? `${url}/config`
-        : null
-
-      return apiUrl
-    }
   },
   beforeMount () {
     this.fetchData()

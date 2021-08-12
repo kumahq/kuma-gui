@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { getKumaCpServerUrl } from '@/configUrl'
 import { RestRequest } from 'msw'
 export default class RestClient {
   public client: AxiosInstance
@@ -8,16 +9,14 @@ export default class RestClient {
   public constructor() {
     this.url = this.setupUrl()
     this.client = this.axiosInit()
-    RestClient.setupMocks()
+    this.setupMocks()
   }
 
-  public static setupMocks() {
+  public setupMocks() {
     if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
-      const apiURL = localStorage.getItem('kumaApiUrl')
-
       const { worker: setupWorker } = require('./mocks')
 
-      const worker = setupWorker(apiURL)
+      const worker = setupWorker(this.url)
 
       console.warn(
         '%c ✨You are mocking api requests.',
@@ -54,18 +53,7 @@ export default class RestClient {
   }
 
   public setupUrl(): string {
-    let url
-    if (process.env.NODE_ENV === 'development') {
-      url = process.env.VUE_APP_KUMA_CONFIG?.replace('/config', '/') || ''
-    } else {
-      const href = window.location.href
-
-      url = `${href.substring(0, href.indexOf('/gui'))}/`
-    }
-
-    localStorage.setItem('kumaApiUrl', url)
-
-    return url
+    return getKumaCpServerUrl()
   }
 
   public async get(path: string, options?: AxiosRequestConfig) {

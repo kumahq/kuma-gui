@@ -55,7 +55,7 @@
           </KPop>
         </div>
         <div class="app-status app-status--desktop">
-          <status
+          <Status
             :active="guiStatus"
             :title="statusContent"
           >
@@ -75,7 +75,7 @@
                 </span>
               </KBadge>
             </template>
-          </status>
+          </Status>
         </div>
       </div>
     </div>
@@ -84,6 +84,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { getKumaCpServerUrl } from '@/configUrl'
 import Status from '@/components/Utils/Status'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
 import EnterpriseBox from '@/components/Utils/EnterpriseBox'
@@ -94,11 +95,11 @@ export default {
     UpgradeCheck,
     EnterpriseBox,
   },
-  data () {
+  data() {
     return {
       statusVersion: '',
       shortVersion: '',
-      apiUrl: localStorage.getItem('kumaApiUrl')
+      apiUrl: getKumaCpServerUrl(),
     }
   },
   computed: {
@@ -120,7 +121,7 @@ export default {
 
       return ''
     },
-    showStatus () {
+    showStatus() {
       return !this.$route.meta.hideStatus && this.status === 'OK'
     },
     showEnterprise() {
@@ -135,8 +136,8 @@ export default {
     },
     guiStatus() {
       return Boolean(this.env && this.apiUrl)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -158,7 +159,6 @@ export default {
 }
 
 .logo {
-
   img {
     display: block;
     width: auto;
