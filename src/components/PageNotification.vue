@@ -23,25 +23,25 @@ export default {
         variant: '',
         message: '',
         link: null,
-        timeoutMilliseconds: 4000
-      })
-    }
+        timeoutMilliseconds: 4000,
+      }),
+    },
   },
 
-  data () {
+  data() {
     return {
-      isVisible: false
+      isVisible: false,
     }
   },
 
-  created () {
+  created() {
     this.$nextTick(() => {
       this.isVisible = true
     })
   },
 
   methods: {
-    closeToaster () {
+    closeToaster() {
       this.isVisible = false
 
       setTimeout(() => {
@@ -50,8 +50,8 @@ export default {
     },
 
     ...mapActions({
-      handleDismiss: 'dismissNotification'
-    })
-  }
+      handleDismiss: 'dismissNotification',
+    }),
+  },
 }
 </script>

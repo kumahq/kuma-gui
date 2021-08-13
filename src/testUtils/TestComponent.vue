@@ -5,8 +5,7 @@
 </template>
 
 <script>
-
 export default {
-  name: 'TestComponent'
+  name: 'TestComponent',
 }
 </script>

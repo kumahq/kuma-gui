@@ -1,20 +1,20 @@
 {
-  "type":"TrafficPermission",
-  "mesh":"default",
-  "name":"tp-alpha-tango-donut",
-  "creationTime":"2020-05-12T12:31:45.606217+02:00",
-  "modificationTime":"2020-05-12T12:31:45.606217+02:00",
-  "sources":[
+  "type": "TrafficPermission",
+  "mesh": "default",
+  "name": "tp-alpha-tango-donut",
+  "creationTime": "2020-05-12T12:31:45.606217+02:00",
+  "modificationTime": "2020-05-12T12:31:45.606217+02:00",
+  "sources": [
     {
-      "match":{
-        "service":"backend"
+      "match": {
+        "service": "backend"
       }
     }
   ],
-  "destinations":[
+  "destinations": [
     {
-      "match":{
-        "service":"redis"
+      "match": {
+        "service": "redis"
       }
     }
   ]

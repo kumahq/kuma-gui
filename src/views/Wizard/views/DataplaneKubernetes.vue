@@ -505,9 +505,7 @@
         </template>
         <template slot="complete">
           <div v-if="validate.meshName">
-            <div
-              v-if="hideScannerSiblings === false"
-            >
+            <div v-if="hideScannerSiblings === false">
               <h3>
                 Auto-Inject DPP
               </h3>
@@ -650,7 +648,7 @@ import { PRODUCT_NAME } from '@/consts'
 export default {
   name: 'DataplaneWizardKubernetes',
   metaInfo: {
-    title: 'Create a new Dataplane on Kubernetes'
+    title: 'Create a new Dataplane on Kubernetes',
   },
   components: {
     FormFragment,
@@ -658,45 +656,43 @@ export default {
     StepSkeleton,
     Switcher,
     CodeView,
-    Scanner
+    Scanner,
   },
-  mixins: [
-    FormatForCLI,
-  ],
-  data () {
+  mixins: [FormatForCLI],
+  data() {
     return {
       productName: PRODUCT_NAME,
       schema: dataplaneSchema,
       steps: [
         {
           label: 'General',
-          slug: 'general'
+          slug: 'general',
         },
         {
           label: 'Scope Settings',
-          slug: 'scope-settings'
+          slug: 'scope-settings',
         },
         {
           label: 'Install',
-          slug: 'complete'
-        }
+          slug: 'complete',
+        },
       ],
       tabs: [
         {
           hash: '#kubernetes',
-          title: 'Kubernetes'
-        }
+          title: 'Kubernetes',
+        },
       ],
       sidebarContent: [
         {
-          name: 'dataplane'
+          name: 'dataplane',
         },
         {
-          name: 'example'
+          name: 'example',
         },
         {
-          name: 'switch'
-        }
+          name: 'switch',
+        },
       ],
       startScanner: false,
       scanFound: false,
@@ -715,8 +711,8 @@ export default {
         k8sIngressDeploymentSelection: '',
         k8sIngressType: '',
         k8sIngressBrand: 'kong-ingress',
-        k8sIngressSelection: ''
-      }
+        k8sIngressSelection: '',
+      },
     }
   },
   computed: {
@@ -724,18 +720,18 @@ export default {
       title: 'config/getTagline',
       version: 'config/getVersion',
       environment: 'config/getEnvironment',
-      meshes: 'getMeshList'
+      meshes: 'getMeshList',
     }),
 
-    dataplaneUrl () {
+    dataplaneUrl() {
       const fields = this.validate
 
       if (fields.meshName && fields.k8sNamespaceSelection) {
         return {
           name: 'dataplanes',
           params: {
-            mesh: fields.meshName
-          }
+            mesh: fields.meshName,
+          },
         }
       }
 
@@ -743,7 +739,7 @@ export default {
     },
 
     // Our generated code output
-    codeOutput () {
+    codeOutput() {
       const schema = Object.assign({}, this.schema)
       const namespace = this.validate.k8sNamespaceSelection
 
@@ -769,10 +765,7 @@ export default {
     },
 
     nextDisabled() {
-      const {
-        k8sNamespaceSelection,
-        meshName
-      } = this.validate
+      const { k8sNamespaceSelection, meshName } = this.validate
 
       if (!meshName.length) {
         return true
@@ -783,15 +776,14 @@ export default {
       }
 
       return false
-    }
+    },
   },
   watch: {
-
-    'validate.k8sNamespaceSelection' (value) {
+    'validate.k8sNamespaceSelection'(value) {
       this.validate.k8sNamespaceSelection = kebabCase(value)
     },
 
-    '$route' () {
+    $route() {
       const step = this.$route.query.step
 
       if (step === 1) {
@@ -801,15 +793,15 @@ export default {
           this.nextDisabled = true
         }
       }
-    }
+    },
   },
   methods: {
-    hideSiblings () {
+    hideSiblings() {
       // this triggers when to hide the siblings related to the Scanner
       // component that need to be hidden once the scan succeeds.
       this.hideScannerSiblings = true
     },
-    scanForEntity () {
+    scanForEntity() {
       // get our entity from the VueX store
       const entity = this.validate
       const mesh = entity.meshName
@@ -822,8 +814,9 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!mesh || !dataplane) return
 
-      this.$api.getDataplaneFromMesh(mesh, dataplane)
-        .then(response => {
+      this.$api
+        .getDataplaneFromMesh(mesh, dataplane)
+        .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true
             this.scanFound = true
@@ -831,7 +824,7 @@ export default {
             this.scanError = true
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.scanError = true
 
           console.error(error)
@@ -848,10 +841,10 @@ export default {
         name: 'dataplanes',
         params: {
           mesh: this.validate.meshName,
-        }
+        },
       })
-    }
-  }
+    },
+  },
 }
 </script>
 

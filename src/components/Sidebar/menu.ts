@@ -5,23 +5,23 @@ type TODO = any
 type KIconType = 'gearFilled'
 
 export interface MenuNavItem {
-  name: string,
-  link?: RawLocation,
-  subNav?: MenuNavItem[],
-  title?: boolean,
-  nested?: boolean,
-  parent?: string,
-  pathFlip?: boolean,
+  name: string
+  link?: RawLocation
+  subNav?: MenuNavItem[]
+  title?: boolean
+  nested?: boolean
+  parent?: string
+  pathFlip?: boolean
 }
 
 export interface MenuItem {
   name: string
   icon?: KIconType
-  link?: string,
-  iconCustom?: TODO,
+  link?: string
+  iconCustom?: TODO
   subNav?: {
     items: MenuNavItem[]
-  },
+  }
 }
 
 export interface MenuSection {
@@ -41,136 +41,138 @@ const menu: MenuSection[] = [
           items: [
             {
               name: 'Overview',
-              link: 'global-overview'
+              link: 'global-overview',
             },
             {
               name: 'Zones',
-              link: 'zones'
+              link: 'zones',
               // root: true
               // multicluster: true
             },
             {
               name: 'Zone Ingresses',
-              link: 'zoneingresses'
+              link: 'zoneingresses',
               // root: true
               // multicluster: true
             },
             {
               name: 'Meshes',
               link: 'mesh-child',
-              pathFlip: true
+              pathFlip: true,
             },
             {
               name: 'Services',
-              title: true
+              title: true,
             },
             {
               name: 'Internal',
               link: 'internal-services',
               title: false,
-              nested: true
+              nested: true,
             },
             {
               name: 'External',
               link: 'external-services',
               title: false,
-              nested: true
+              nested: true,
             },
             {
               name: 'Data plane proxies',
-              title: true
+              title: true,
             },
             {
               name: 'All',
               link: 'dataplanes',
-              title: false
+              title: false,
             },
             {
               name: 'Standard',
               link: 'standard-dataplanes',
               title: false,
-              nested: true
+              nested: true,
             },
             {
               name: 'Gateway',
               link: 'gateway-dataplanes',
               title: false,
-              nested: true
+              nested: true,
             },
             {
               name: 'Policies',
-              title: true
+              title: true,
             },
-            ...[{
-              name: 'Circuit Breakers',
-              link: 'circuit-breakers',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Fault Injections',
-              link: 'fault-injections',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Health Checks',
-              link: 'health-checks',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Proxy Templates',
-              link: 'proxy-templates',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Traffic Logs',
-              link: 'traffic-logs',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Traffic Permissions',
-              link: 'traffic-permissions',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Traffic Routes',
-              link: 'traffic-routes',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Traffic Traces',
-              link: 'traffic-traces',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Rate Limits',
-              link: 'rate-limits',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Retries',
-              link: 'retries',
-              title: false,
-              parent: 'policies'
-            },
-            {
-              name: 'Timeouts',
-              link: 'timeouts',
-              title: false,
-              parent: 'policies'
-            }].sort((a, b) => a.name < b.name ? -1 : 1)
-          ]
-        }
-      }
-    ]
+            ...[
+              {
+                name: 'Circuit Breakers',
+                link: 'circuit-breakers',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Fault Injections',
+                link: 'fault-injections',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Health Checks',
+                link: 'health-checks',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Proxy Templates',
+                link: 'proxy-templates',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Traffic Logs',
+                link: 'traffic-logs',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Traffic Permissions',
+                link: 'traffic-permissions',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Traffic Routes',
+                link: 'traffic-routes',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Traffic Traces',
+                link: 'traffic-traces',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Rate Limits',
+                link: 'rate-limits',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Retries',
+                link: 'retries',
+                title: false,
+                parent: 'policies',
+              },
+              {
+                name: 'Timeouts',
+                link: 'timeouts',
+                title: false,
+                parent: 'policies',
+              },
+            ].sort((a, b) => (a.name < b.name ? -1 : 1)),
+          ],
+        },
+      },
+    ],
   },
   {
     position: 'bottom',
@@ -178,10 +180,10 @@ const menu: MenuSection[] = [
       {
         name: 'Diagnostics',
         icon: 'gearFilled',
-        link: 'diagnostics'
-      }
-    ]
-  }
+        link: 'diagnostics',
+      },
+    ],
+  },
 ]
 
 export default menu

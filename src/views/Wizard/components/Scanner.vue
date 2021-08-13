@@ -65,62 +65,62 @@ import IconSuccess from '@/components/Utils/IconSuccess'
 export default {
   name: 'Scanner',
   components: {
-    IconSuccess
+    IconSuccess,
   },
   props: {
     interval: {
       type: Number,
       required: false,
-      default: 1000 // 1000ms = 1s
+      default: 1000, // 1000ms = 1s
     },
     retries: {
       type: Number,
       required: false,
-      default: 3600 // 3600s = 1h
+      default: 3600, // 3600s = 1h
     },
     shouldStart: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     loaderFunction: {
       type: Function,
-      required: true
+      required: true,
     },
     canComplete: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       i: 0,
       isRunning: false,
       isComplete: false,
-      intervalId: null
+      intervalId: null,
     }
   },
   watch: {
-    shouldStart (val, oldVal) {
+    shouldStart(val, oldVal) {
       if (val !== oldVal && val === true) {
         this.runScanner()
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     // only run the function when instructed to
     if (this.shouldStart === true) {
       this.runScanner()
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     clearInterval(this.intervalId)
   },
   methods: {
-    runScanner () {
+    runScanner() {
       this.isRunning = true
       this.isComplete = false
 
@@ -141,15 +141,14 @@ export default {
           this.$emit('hideSiblings', true)
         }
       }, this.interval)
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
 // style override for the KEmptyState content
 .scanner-content {
-
   .empty-state-wrapper p {
     max-width: 100% !important;
   }
@@ -158,11 +157,9 @@ export default {
 
 <style lang="scss" scoped>
 .scanner {
-
 }
 
 .scanner-content {
-
   p {
     border: 1px solid red;
     margin: 0;
@@ -171,7 +168,8 @@ export default {
   .card-icon {
     text-align: center;
 
-    img, svg {
+    img,
+    svg {
       display: block;
       margin-left: auto;
       margin-right: auto;

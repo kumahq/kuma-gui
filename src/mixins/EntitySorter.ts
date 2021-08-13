@@ -8,15 +8,15 @@
 
 export default {
   methods: {
-    sortEntities (items: {
-      name: string
-      mesh: string
-    }[]) {
-      const sorted = items.sort((a, b) =>
-        (a.name > b.name) ? 1 : (a.name === b.name) ? ((a.mesh > b.mesh) ? 1 : -1) : -1
-      )
+    sortEntities(
+      items: {
+        name: string
+        mesh: string
+      }[],
+    ) {
+      const sorted = items.sort((a, b) => (a.name > b.name ? 1 : a.name === b.name ? (a.mesh > b.mesh ? 1 : -1) : -1))
 
       return sorted
-    }
-  }
+    },
+  },
 }

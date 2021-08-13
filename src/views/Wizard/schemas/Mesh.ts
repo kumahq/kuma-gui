@@ -3,33 +3,34 @@ module.exports = {
   // type: 'Mesh', // or `kind` for Kubernetes
   mtls: {
     enabledBackend: null,
-    backends: []
+    backends: [],
   },
   tracing: {
     defaultBackend: null,
     backends: [
       {
         name: null,
-        type: null
-      }
-    ]
+        type: null,
+      },
+    ],
   },
   logging: {
     backends: [
       {
         name: null,
-        format: '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
-        type: null
-      }
-    ]
+        format:
+          '{ "destination": "%KUMA_DESTINATION_SERVICE%", "destinationAddress": "%UPSTREAM_LOCAL_ADDRESS%", "source": "%KUMA_SOURCE_SERVICE%", "sourceAddress": "%KUMA_SOURCE_ADDRESS%", "bytesReceived": "%BYTES_RECEIVED%", "bytesSent": "%BYTES_SENT%"}',
+        type: null,
+      },
+    ],
   },
   metrics: {
     enabledBackend: null,
     backends: [
       {
         name: null,
-        type: null
-      }
-    ]
-  }
+        type: null,
+      },
+    ],
+  },
 }

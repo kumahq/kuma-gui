@@ -32,30 +32,30 @@ export default {
     title: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     forAttr: {
       type: String,
       required: false,
-      default: null
+      default: null,
     },
     allInline: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hideLabelCol: {
       type: Boolean,
-      default: false
+      default: false,
     },
     equalCols: {
       type: Boolean,
-      default: false
+      default: false,
     },
     shiftRight: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 
@@ -120,7 +120,6 @@ $last-col-flex: 1 0 0;
     }
 
     &.has-equal-cols {
-
       > * {
         flex: 1 0 0;
         margin: 0 8px;

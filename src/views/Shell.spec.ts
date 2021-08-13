@@ -1,4 +1,3 @@
-
 import TestComponent from '@/testUtils/TestComponent.vue'
 import renderWithVuex from '@/testUtils/renderWithVuex'
 import Shell from './Shell.vue'
@@ -10,9 +9,9 @@ describe('Shell.vue', () => {
         {
           path: '/',
           name: 'default',
-          component: TestComponent
-        }
-      ]
+          component: TestComponent,
+        },
+      ],
     })
 
     expect(container).toMatchSnapshot()

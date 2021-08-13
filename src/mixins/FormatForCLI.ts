@@ -18,11 +18,11 @@ import json2yaml from '@appscode/json2yaml'
 
 export default {
   methods: {
-    formatForCLI (content: Object, codeClosing = '" | kumactl apply -f -') {
+    formatForCLI(content: Object, codeClosing = '" | kumactl apply -f -') {
       const codeOpening = 'echo "'
       const entity = json2yaml(content)
 
       return `${codeOpening}${entity}${codeClosing}`
-    }
-  }
+    },
+  },
 }

@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="main-content-container"
-  >
+  <div class="main-content-container">
     <div class="main-content">
       <transition
         mode="out-in"
@@ -15,6 +13,6 @@
 
 <script>
 export default {
-  name: 'ShellEmpty'
+  name: 'ShellEmpty',
 }
 </script>

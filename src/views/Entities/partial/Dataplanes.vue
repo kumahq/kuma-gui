@@ -183,15 +183,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
-import {
-  getOffset,
-  getSome,
-  humanReadableDate,
-  stripTimes,
-} from '@/helpers'
+import { getOffset, getSome, humanReadableDate, stripTimes } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'
 import {
-  checkKumaDpAndZoneVersionsMismatch, checkVersionsCompatibility,
+  checkKumaDpAndZoneVersionsMismatch,
+  checkVersionsCompatibility,
   dpTags,
   getDataplane,
   getDataplaneInsight,
@@ -200,7 +196,9 @@ import {
   parseMTLSData,
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
-  INCOMPATIBLE_UNSUPPORTED_KUMA_DP, INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS, INCOMPATIBLE_WRONG_FORMAT,
+  INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
+  INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
+  INCOMPATIBLE_WRONG_FORMAT,
 } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
@@ -225,11 +223,9 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
   },
-  mixins: [
-    sortEntities
-  ],
+  mixins: [sortEntities],
   props: {
     nsBackButtonRoute: {
       type: Object,
@@ -241,17 +237,17 @@ export default {
     },
     emptyStateMsg: {
       type: String,
-      default: 'There are no data plane proxies present.'
+      default: 'There are no data plane proxies present.',
     },
     dataplaneApiParams: {
       type: Object,
-      default () {
+      default() {
         return {}
       },
     },
     tableHeaders: {
       type: Array,
-      default () {
+      default() {
         return [
           { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
@@ -266,27 +262,27 @@ export default {
           { label: 'Envoy version', key: 'envoyVersion' },
           { key: 'warnings', hideLabel: true },
         ]
-      }
+      },
     },
     tabs: {
       type: Array,
-      default () {
+      default() {
         return [
           {
             hash: '#overview',
-            title: 'Overview'
+            title: 'Overview',
           },
           {
             hash: '#mtls',
-            title: 'Certificate Insights'
+            title: 'Certificate Insights',
           },
           {
             hash: '#yaml',
-            title: 'YAML'
+            title: 'YAML',
           },
           {
             hash: '#warnings',
-            title: 'Warnings'
+            title: 'Warnings',
           },
         ]
       },
@@ -296,7 +292,7 @@ export default {
       default: true,
     },
   },
-  data () {
+  data() {
     return {
       productName: PRODUCT_NAME,
       isLoading: true,
@@ -309,7 +305,7 @@ export default {
       tableDataIsEmpty: false,
       tableData: {
         headers: [],
-        data: []
+        data: [],
       },
       entity: [],
       rawEntity: null,
@@ -322,7 +318,7 @@ export default {
       tabGroupTitle: null,
       entityNamespace: null,
       entityOverviewTitle: null,
-      shownTLSTab: false
+      shownTLSTab: false,
     }
   },
   computed: {
@@ -333,7 +329,7 @@ export default {
       supportedVersionsLoading: 'getSupportedVersionsFetching',
       multicluster: 'config/getMulticlusterStatus',
     }),
-    dataplaneWizardRoute () {
+    dataplaneWizardRoute() {
       // we change the route to the Dataplane
       // wizard based on environment.
       if (this.environment === 'universal') {
@@ -342,12 +338,12 @@ export default {
         return { name: 'kubernetes-dataplane' }
       }
     },
-    version () {
+    version() {
       const storedVersion = this.$store.getters.getVersion
 
-      return (storedVersion !== null) ? storedVersion : 'latest'
+      return storedVersion !== null ? storedVersion : 'latest'
     },
-    shareUrl () {
+    shareUrl() {
       const urlRoot = `${window.location.origin}/#`
       const entity = this.entity
 
@@ -364,14 +360,14 @@ export default {
       }
 
       return shareUrl()
-    }
+    },
   },
   watch: {
-    '$route' () {
+    $route() {
       this.loadData()
-    }
+    },
   },
-  beforeMount () {
+  beforeMount() {
     this.fetchSupportedVersions()
     this.loadData()
   },
@@ -380,58 +376,56 @@ export default {
     onCreateClick() {
       datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
     },
-    buildEntity (basicData, tags, dataplaneInsight) {
-      const mtls = dataplaneInsight.mTLS
-        ? parseMTLSData(dataplaneInsight.mTLS)
-        : null
+    buildEntity(basicData, tags, dataplaneInsight) {
+      const mtls = dataplaneInsight.mTLS ? parseMTLSData(dataplaneInsight.mTLS) : null
 
       return { basicData, tags, mtls }
     },
-    init () {
+    init() {
       this.loadData()
     },
-    getEmptyState () {
+    getEmptyState() {
       return {
         title: 'No Data',
         message: this.emptyStateMsg,
       }
     },
-    filterTabs () {
+    filterTabs() {
       if (!this.warnings.length) {
-        return this.tabs.filter(tab => tab.hash !== '#warnings')
+        return this.tabs.filter((tab) => tab.hash !== '#warnings')
       }
 
       return this.tabs
     },
-    buildTableData () {
+    buildTableData() {
       return {
         ...this.tableData,
         headers: this.tableHeaders,
       }
     },
-    checkVersionsCompatibility (kumaDpVersion = '', envoyVersion = '') {
+    checkVersionsCompatibility(kumaDpVersion = '', envoyVersion = '') {
       return checkVersionsCompatibility(this.supportedVersions, kumaDpVersion, envoyVersion)
     },
-    goToPreviousPage () {
+    goToPreviousPage() {
       this.pageOffset = this.previous.pop()
       this.next = null
 
       this.loadData()
     },
-    goToNextPage () {
+    goToNextPage() {
       this.previous.push(this.pageOffset)
       this.pageOffset = this.next
       this.next = null
 
       this.loadData()
     },
-    tableAction (ev) {
+    tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    async loadData () {
+    async loadData() {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
@@ -451,7 +445,7 @@ export default {
       const endpoint = () => {
         if (mesh === 'all') {
           return this.$api.getAllDataplaneOverviews(params)
-        } else if ((query && query.length) && mesh !== 'all') {
+        } else if (query && query.length && mesh !== 'all') {
           return this.$api.getDataplaneOverviewFromMesh(mesh, query)
         }
 
@@ -523,18 +517,10 @@ export default {
             }
           }, initial)
 
-          const {
-            totalUpdates,
-            totalRejectedUpdates,
-            dpVersion,
-            envoyVersion,
-            selectedTime,
-            selectedUpdateTime,
-          } = reduced
+          const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime } =
+            reduced
 
-          const lastConnected = selectedTime
-            ? humanReadableDate(new Date(selectedTime).toUTCString())
-            : 'never'
+          const lastConnected = selectedTime ? humanReadableDate(new Date(selectedTime).toUTCString()) : 'never'
 
           const lastUpdated = selectedUpdateTime
             ? humanReadableDate(new Date(selectedUpdateTime).toUTCString())
@@ -577,11 +563,7 @@ export default {
 
             if (zoneTag) {
               try {
-                const { compatible } = await checkKumaDpAndZoneVersionsMismatch(
-                  this.$api,
-                  zoneTag.value,
-                  dpVersion,
-                )
+                const { compatible } = await checkKumaDpAndZoneVersionsMismatch(this.$api, zoneTag.value, dpVersion)
 
                 if (!compatible) {
                   item.withWarnings = true
@@ -632,9 +614,7 @@ export default {
           }
 
           const final = []
-          const itemSelect = query
-            ? items
-            : items[0]
+          const itemSelect = query ? items : items[0]
 
           // set the first item as the default for initial load
           this.firstEntity = itemSelect.name
@@ -642,10 +622,10 @@ export default {
           // load the YAML entity for the first item on page load
           await this.getEntity(itemSelect)
 
-          if ((query && query.length) && (mesh && mesh.length)) {
+          if (query && query.length && mesh && mesh.length) {
             await dpFetcher(mesh, query, final)
           } else {
-            const promises = items.map(item => dpFetcher(item.mesh, item.name, final))
+            const promises = items.map((item) => dpFetcher(item.mesh, item.name, final))
 
             await Promise.all(promises)
           }
@@ -671,7 +651,7 @@ export default {
         this.isLoading = false
       }, process.env.VUE_APP_DATA_TIMEOUT)
     },
-    async getEntity (entity) {
+    async getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
@@ -679,9 +659,7 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity) {
-        const entityMesh = (mesh === 'all')
-          ? entity.mesh
-          : mesh
+        const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
         try {
           const response = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
@@ -712,10 +690,7 @@ export default {
               const { kumaDp = {}, envoy = {} } = version
 
               if (kumaDp && envoy) {
-                const compatible = this.checkVersionsCompatibility(
-                  kumaDp.version,
-                  envoy.version,
-                )
+                const compatible = this.checkVersionsCompatibility(kumaDp.version, envoy.version)
                 const { kind } = compatible
 
                 if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
@@ -767,8 +742,8 @@ export default {
           this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

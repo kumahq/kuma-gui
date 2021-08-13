@@ -54,19 +54,19 @@ export default {
   props: {
     types: {
       type: Array,
-      default: () => [{}]
-    }
+      default: () => [{}],
+    },
   },
-  data () {
+  data() {
     return {
-      checked: null
+      checked: null,
     }
   },
   methods: {
-    handleToggle (ev) {
+    handleToggle(ev) {
       this.checked = ev
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -80,7 +80,6 @@ export default {
 }
 
 .topology__card {
-
 }
 
 .topology__label {
@@ -98,7 +97,9 @@ export default {
   justify-content: stretch;
 }
 
-.topology__switch, .topology__card__image, .topology__card__content {
+.topology__switch,
+.topology__card__image,
+.topology__card__content {
   margin: 0 16px;
 }
 

@@ -33,27 +33,28 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'UpgradeCheck',
-  data () {
+  data() {
     return {
       url: `${process.env.VUE_APP_INSTALL_URL}${process.env.VUE_APP_UTM}`,
       latestVerSrc: process.env.VUE_APP_VERSION_URL,
       latestVer: null,
-      showNotice: false
+      showNotice: false,
     }
   },
   computed: {
     ...mapGetters({
       currentVer: 'config/getVersion',
-      tagline: 'config/getTagline'
-    })
+      tagline: 'config/getTagline',
+    }),
   },
-  beforeMount () {
+  beforeMount() {
     this.checkVersion()
   },
   methods: {
-    checkVersion () {
-      axios.get(this.latestVerSrc)
-        .then(response => {
+    checkVersion() {
+      axios
+        .get(this.latestVerSrc)
+        .then((response) => {
           const status = response.status
           const data = response.data
 
@@ -61,7 +62,7 @@ export default {
             this.latestVer = data
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.showNotice = false
 
           console.error(error)
@@ -81,11 +82,7 @@ export default {
             const timespan = 3 // months
             const today = new Date()
             const refDate = new Date('2020-06-03 12:00:00')
-            const later = new Date(
-              refDate.getFullYear(),
-              refDate.getMonth() + timespan,
-              refDate.getDate()
-            )
+            const later = new Date(refDate.getFullYear(), refDate.getMonth() + timespan, refDate.getDate())
 
             // compare dates and handle the notice accordingly
             if (today.getTime() >= later.getTime()) {
@@ -95,14 +92,13 @@ export default {
             }
           }
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .upgrade-check {
-
   .k-alert.k-alert {
     padding: var(--spacing-xxs) var(--spacing-xs);
   }
@@ -127,9 +123,8 @@ export default {
 }
 
 .warning-button {
---KButtonPrimaryBase: #f2a230;
---KButtonPrimaryHover: #f2a230;
---KButtonPrimaryActive: #f2a230;
+  --KButtonPrimaryBase: #f2a230;
+  --KButtonPrimaryHover: #f2a230;
+  --KButtonPrimaryActive: #f2a230;
 }
-
 </style>

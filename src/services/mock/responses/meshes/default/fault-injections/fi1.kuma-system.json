@@ -1,33 +1,33 @@
 {
-  "type":"FaultInjection",
-  "mesh":"default",
-  "name":"fi1.kuma-system",
-  "sources":[
+  "type": "FaultInjection",
+  "mesh": "default",
+  "name": "fi1.kuma-system",
+  "sources": [
     {
-      "match":{
-        "service":"web"
+      "match": {
+        "service": "web"
       }
     }
   ],
-  "destinations":[
+  "destinations": [
     {
-      "match":{
-        "service":"backend"
+      "match": {
+        "service": "backend"
       }
     }
   ],
-  "conf":{
-    "delay":{
-      "percentage":50,
-      "value":"0.010s"
+  "conf": {
+    "delay": {
+      "percentage": 50,
+      "value": "0.010s"
     },
-    "abort":{
-      "percentage":40,
-      "httpStatus":500
+    "abort": {
+      "percentage": 40,
+      "httpStatus": 500
     },
-    "responseBandwidth":{
-      "percentage":40,
-      "limit":"50kbps"
+    "responseBandwidth": {
+      "percentage": 40,
+      "limit": "50kbps"
     }
   }
 }

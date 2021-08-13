@@ -10,12 +10,12 @@ import Dataplanes from '@/views/Entities/partial/Dataplanes'
 export default {
   name: 'GatewayDataplanes',
   metaInfo: {
-    title: 'Gateway Data plane proxies'
+    title: 'Gateway Data plane proxies',
   },
   components: {
     Dataplanes,
   },
-  data () {
+  data() {
     return {
       dataplaneApiParams: {
         gateway: true,

@@ -1,61 +1,61 @@
 {
-  "type":"Dataplane",
-  "mesh":"default",
-  "name":"dataplane-test-456",
-  "creationTime":"2020-06-02T09:33:09.208372-04:00",
-  "modificationTime":"2020-06-02T09:33:09.208372-04:00",
-  "networking":{
-    "address":"192.168.64.8",
-    "inbound":[
+  "type": "Dataplane",
+  "mesh": "default",
+  "name": "dataplane-test-456",
+  "creationTime": "2020-06-02T09:33:09.208372-04:00",
+  "modificationTime": "2020-06-02T09:33:09.208372-04:00",
+  "networking": {
+    "address": "192.168.64.8",
+    "inbound": [
       {
-        "port":10001
+        "port": 10001
       }
     ],
-    "ingress":[
+    "ingress": [
       {
-        "publicAddress":"192.168.0.123",
-        "publicPort":1234
+        "publicAddress": "192.168.0.123",
+        "publicPort": 1234
       },
       {
-        "kuma.io/service":"frontend.kuma-demo.svc:8080",
-        "tags":{
-          "app":"kuma-demo-frontend",
-          "env":"prod",
-          "pod-template-hash-super-long-title":"69c9fd4bd",
-          "kuma.io/protocol":"http",
-          "version":"v8",
-          "some-duplicate-tag":"1234567890"
+        "kuma.io/service": "frontend.kuma-demo.svc:8080",
+        "tags": {
+          "app": "kuma-demo-frontend",
+          "env": "prod",
+          "pod-template-hash-super-long-title": "69c9fd4bd",
+          "kuma.io/protocol": "http",
+          "version": "v8",
+          "some-duplicate-tag": "1234567890"
         }
       },
       {
-        "kuma.io/service":"backend.kuma-demo.svc:3001",
-        "tags":{
-          "app":"kuma-demo-backend",
-          "env":"prod",
-          "pod-template-hash":"d7cb6b576",
-          "kuma.io/protocol":"http",
-          "version":"v0",
-          "some-duplicate-tag":"1234567890"
+        "kuma.io/service": "backend.kuma-demo.svc:3001",
+        "tags": {
+          "app": "kuma-demo-backend",
+          "env": "prod",
+          "pod-template-hash": "d7cb6b576",
+          "kuma.io/protocol": "http",
+          "version": "v0",
+          "some-duplicate-tag": "1234567890"
         }
       },
       {
-        "kuma.io/service":"postgres.kuma-demo.svc:5432",
-        "tags":{
-          "app":"postgres",
-          "pod-template-hash":"65df766577",
-          "kuma.io/protocol":"tcp",
-          "some-duplicate-tag":"1234567890"
+        "kuma.io/service": "postgres.kuma-demo.svc:5432",
+        "tags": {
+          "app": "postgres",
+          "pod-template-hash": "65df766577",
+          "kuma.io/protocol": "tcp",
+          "some-duplicate-tag": "1234567890"
         }
       },
       {
-        "kuma.io/service":"redis.kuma-demo.svc:6379",
-        "tags":{
-          "app":"redis",
-          "pod-template-hash":"78ff699f7",
-          "kuma.io/protocol":"tcp",
-          "role":"master",
-          "tier":"backend",
-          "some-duplicate-tag":"1234567890"
+        "kuma.io/service": "redis.kuma-demo.svc:6379",
+        "tags": {
+          "app": "redis",
+          "pod-template-hash": "78ff699f7",
+          "kuma.io/protocol": "tcp",
+          "role": "master",
+          "tier": "backend",
+          "some-duplicate-tag": "1234567890"
         }
       }
     ]

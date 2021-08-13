@@ -75,35 +75,33 @@ export default {
   props: {
     title: {
       type: String,
-      default: null
+      default: null,
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isEmpty: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    isReady () {
+    isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
 .loader-card {
-
 }
 
 .loader-card-content {
-
 }
 </style>

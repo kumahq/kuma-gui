@@ -11,19 +11,19 @@ export default {
   props: {
     label: {
       type: String,
-      required: true
+      required: true,
     },
     background: {
       type: String,
       required: false,
-      default: undefined
+      default: undefined,
     },
     color: {
       type: String,
       required: false,
-      default: undefined
-    }
-  }
+      default: undefined,
+    },
+  },
 }
 </script>
 

@@ -46,9 +46,7 @@
     </div>
 
     <!-- metrics boxes -->
-    <MetricGrid
-      :metrics="overviewMetrics"
-    />
+    <MetricGrid :metrics="overviewMetrics" />
 
     <div class="card-wrapper card-wrapper--4-col">
       <div>
@@ -112,9 +110,9 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'Overview',
-  metaInfo () {
+  metaInfo() {
     return {
-      title: this.$route.meta.title
+      title: this.$route.meta.title,
     }
   },
   components: {
@@ -122,11 +120,11 @@ export default {
     VersionsDonutChart,
     MetricGrid,
     CardSkeleton,
-    Resources
+    Resources,
   },
   data() {
     return {
-      productName: PRODUCT_NAME
+      productName: PRODUCT_NAME,
     }
   },
   computed: {
@@ -141,41 +139,37 @@ export default {
       areServicesLoading: 'getServiceResourcesFetching',
       getChart: 'getChart',
     }),
-    cardActionPoliciesRoute () {
+    cardActionPoliciesRoute() {
       return `https://kuma.io/policies/${process.env.VUE_APP_UTM}`
     },
-    dataplanesChart () {
+    dataplanesChart() {
       return this.getChart('dataplanes')
     },
-    servicesChart () {
+    servicesChart() {
       return this.getChart('services')
     },
-    zonesChart () {
+    zonesChart() {
       return this.getChart('zones')
     },
-    zonesCPVersionsChart () {
+    zonesCPVersionsChart() {
       return this.getChart('zonesCPVersions')
     },
-    kumaDPVersionsChart () {
+    kumaDPVersionsChart() {
       return this.getChart('kumaDPVersions')
     },
-    envoyVersionsChart () {
+    envoyVersionsChart() {
       return this.getChart('envoyVersions')
     },
-    pageTitle () {
+    pageTitle() {
       const metaTitle = this.$route.meta.title
       const mesh = this.selectedMesh
 
-      return mesh === 'all'
-        ? `${metaTitle} for all Meshes`
-        : `${metaTitle} for ${mesh}`
+      return mesh === 'all' ? `${metaTitle} for all Meshes` : `${metaTitle} for ${mesh}`
     },
-    zonesForChart () {
-      return this.multicluster
-        ? this.$store.state.totalClusters
-        : 1
+    zonesForChart() {
+      return this.multicluster ? this.$store.state.totalClusters : 1
     },
-    overviewMetrics () {
+    overviewMetrics() {
       const mesh = this.selectedMesh
       const { policies, meshesTotal } = this.meshInsight
 
@@ -250,16 +244,14 @@ export default {
 
       return tableData
     },
-    dataplaneWizardRoute () {
+    dataplaneWizardRoute() {
       // we change the route to the Dataplane
       // wizard based on environment.
-      const name = this.environment === 'universal'
-        ? 'universal-dataplane'
-        : 'kubernetes-dataplane'
+      const name = this.environment === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane'
 
       return { name }
     },
-    chartClass () {
+    chartClass() {
       const isAll = this.selectedMesh === 'all'
 
       return [
@@ -270,10 +262,12 @@ export default {
         !isAll && 'xl:flex-1',
         'md:w-1/2',
         isAll && 'xl:w-1/3',
-        !isAll && 'xl:w-auto'
-      ].filter(item => item).join(' ')
+        !isAll && 'xl:w-auto',
+      ]
+        .filter((item) => item)
+        .join(' ')
     },
-    chartContainerClass () {
+    chartContainerClass() {
       const isAll = this.selectedMesh === 'all'
 
       return [
@@ -287,25 +281,22 @@ export default {
         !isAll && 'xl:h-180p',
         'my-2',
         'py-2',
-      ].filter(item => item).join(' ')
+      ]
+        .filter((item) => item)
+        .join(' ')
     },
   },
   watch: {
-    selectedMesh () {
+    selectedMesh() {
       this.init()
     },
   },
-  beforeMount () {
+  beforeMount() {
     this.init()
   },
   methods: {
-    ...mapActions([
-      'fetchMeshInsights',
-      'fetchTotalClusterCount',
-      'fetchZonesInsights',
-      'fetchServices',
-    ]),
-    init () {
+    ...mapActions(['fetchMeshInsights', 'fetchTotalClusterCount', 'fetchZonesInsights', 'fetchServices']),
+    init() {
       this.fetchMeshInsights(this.selectedMesh)
       this.fetchServices(this.selectedMesh)
       this.fetchZonesInsights(this.multicluster)
@@ -320,11 +311,11 @@ export default {
 
 <style lang="scss" scoped>
 .empty-state-title {
-
   .card-icon {
     text-align: center;
 
-    img, svg {
+    img,
+    svg {
       display: block;
       margin-left: auto;
       margin-right: auto;
@@ -333,7 +324,6 @@ export default {
 }
 
 .card-wrapper {
-
   @media only screen and (max-width: 840px) {
     .card-item {
       margin-bottom: 0.5rem;
@@ -403,6 +393,6 @@ export default {
 // ref:
 //  https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors
 ::v-deep .pie-chart-label {
-  @apply tracking-widest uppercase
+  @apply tracking-widest uppercase;
 }
 </style>

@@ -6,7 +6,7 @@ module.exports = {
     namespace: null,
     annotations: {
       'kuma.io/sidecar-injection': 'enabled',
-      'kuma.io/mesh': null
-    }
-  }
+      'kuma.io/mesh': null,
+    },
+  },
 }

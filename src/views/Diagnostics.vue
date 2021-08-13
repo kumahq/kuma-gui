@@ -74,24 +74,24 @@ import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 export default {
   name: 'Diagnostics',
   metaInfo: {
-    title: 'Diagnostics'
+    title: 'Diagnostics',
   },
   components: {
     PageHeader,
     FrameSkeleton,
-    Prism
+    Prism,
   },
-  data () {
+  data() {
     return {
       isLoading: true,
-      hasError: false
+      hasError: false,
     }
   },
   computed: {
     ...mapGetters({
-      config: 'config/getConfig'
+      config: 'config/getConfig',
     }),
-    icon () {
+    icon() {
       if (this.isLoading) {
         return 'spinner'
       } else if (this.hasError) {
@@ -100,37 +100,38 @@ export default {
 
       return false
     },
-    iconColor () {
+    iconColor() {
       if (this.hasError) {
         return 'var(--yellow-200)'
       }
 
       return '#ccc'
     },
-    isReady () {
+    isReady() {
       return !this.hasError && !this.isLoading
     },
-    pageTitle () {
+    pageTitle() {
       const metaTitle = this.$route.meta.title
 
       return metaTitle
     },
-    codeOutput () {
+    codeOutput() {
       const code = this.config
 
       return JSON.stringify(code, null, 2)
     },
   },
-  beforeMount () {
+  beforeMount() {
     this.fetchData()
   },
   methods: {
-    fetchData () {
+    fetchData() {
       // if the config isn't present, run
       if (!this.config) {
         // fetch the config
-        this.$store.dispatch('getConfig')
-          .catch(error => {
+        this.$store
+          .dispatch('getConfig')
+          .catch((error) => {
             this.hasError = true
 
             console.log(error)
@@ -145,8 +146,8 @@ export default {
           this.isLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -154,7 +155,8 @@ export default {
 .card-icon {
   text-align: center;
 
-  img, svg {
+  img,
+  svg {
     display: block;
     margin-left: auto;
     margin-right: auto;

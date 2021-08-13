@@ -26,13 +26,13 @@ export default {
   props: {
     rows: {
       type: Number,
-      default: 6
+      default: 6,
     },
     columns: {
       type: Number,
-      default: 6
-    }
-  }
+      default: 6,
+    },
+  },
 }
 </script>
 

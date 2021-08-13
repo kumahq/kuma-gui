@@ -5,7 +5,7 @@ interface DataPlaneStats {
   total?: number
 }
 
-const sumDataplanes = (curr:DataPlaneStats = {}, next:DataPlaneStats = {}) => {
+const sumDataplanes = (curr: DataPlaneStats = {}, next: DataPlaneStats = {}) => {
   const currOnline = curr.online || 0
   const nextOnline = next.online || 0
   const currPartiallyDegraded = curr.partiallyDegraded || 0
@@ -53,14 +53,12 @@ const getInitialPolicies = () => ({
   },
   Timeout: {
     total: 0,
-  }
+  },
 })
 
 const sumPolicies = (curr: any = getInitialPolicies(), next: any = {}) =>
   Object.entries(next).reduce((acc, [name, stat]) => {
-    const currTotal = acc[name]
-      ? acc[name].total
-      : 0
+    const currTotal = acc[name] ? acc[name].total : 0
 
     return {
       ...acc,
@@ -71,35 +69,40 @@ const sumPolicies = (curr: any = getInitialPolicies(), next: any = {}) =>
   }, curr)
 
 const sumDependencyVersion = (curr: TODO = {}, next: TODO = {}): TODO =>
-  Object.entries(next)
-    .reduce((acc, [version, stat]) => ({
+  Object.entries(next).reduce(
+    (acc, [version, stat]) => ({
       ...acc,
       [version]: sumDataplanes(acc[version], stat as TODO),
-    }), curr)
+    }),
+    curr,
+  )
 
 const sumVersions = (curr: TODO = {}, next: TODO = {}) => ({
   kumaDp: sumDependencyVersion(curr.kumaDp, next.kumaDp),
   envoy: sumDependencyVersion(curr.envoy, next.envoy),
 })
 
-export function getEmptyInsight () {
+export function getEmptyInsight() {
   return {
     meshesTotal: 0,
     dataplanes: { online: 0, partiallyDegraded: 0, total: 0 },
     policies: getInitialPolicies(),
-    dpVersions: { kumaDp: {}, envoy: {} }
+    dpVersions: { kumaDp: {}, envoy: {} },
   }
 }
 
-export function parseInsightReducer (insight: TODO = {}) {
+export function parseInsightReducer(insight: TODO = {}) {
   return mergeInsightsReducer([insight])
 }
 
-export function mergeInsightsReducer (insights: TODO = []) {
-  return insights.reduce((acc: TODO, insight: TODO) => ({
-    meshesTotal: insights.length,
-    dataplanes: sumDataplanes(acc.dataplanes, insight.dataplanes),
-    policies: sumPolicies(acc.policies, insight.policies),
-    dpVersions: sumVersions(acc.dpVersions, insight.dpVersions),
-  }), {})
+export function mergeInsightsReducer(insights: TODO = []) {
+  return insights.reduce(
+    (acc: TODO, insight: TODO) => ({
+      meshesTotal: insights.length,
+      dataplanes: sumDataplanes(acc.dataplanes, insight.dataplanes),
+      policies: sumPolicies(acc.policies, insight.policies),
+      dpVersions: sumVersions(acc.dpVersions, insight.dpVersions),
+    }),
+    {},
+  )
 }

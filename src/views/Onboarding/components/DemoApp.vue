@@ -23,16 +23,14 @@ import { PRODUCT_NAME } from '@/consts'
 export default {
   data() {
     return {
-      productName: PRODUCT_NAME
+      productName: PRODUCT_NAME,
     }
-  }
-
+  },
 }
 </script>
 
 <style lang="scss">
 .app-setup-demo {
-
   .light-text {
     color: var(--tblack-45);
   }

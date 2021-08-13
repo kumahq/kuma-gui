@@ -11,12 +11,12 @@ import Services from '@/views/Entities/partial/Services.vue'
 export default {
   name: 'InternalServices',
   metaInfo: {
-    title: 'Internal Services'
+    title: 'Internal Services',
   },
   components: {
-    Services
+    Services,
   },
-  data () {
+  data() {
     return {
       tabHeaders: [
         { key: 'actions', hideLabel: true },
@@ -24,8 +24,8 @@ export default {
         { label: 'Name', key: 'name' },
         { label: 'Mesh', key: 'mesh' },
         { label: 'Data plane proxies: Online / Total', key: 'totalOnline' },
-      ]
+      ],
     }
-  }
+  },
 }
 </script>

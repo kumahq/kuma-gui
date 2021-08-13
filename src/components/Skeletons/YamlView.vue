@@ -134,72 +134,72 @@ import json2yaml from '@appscode/json2yaml'
 export default {
   name: 'YamlView',
   components: {
-    prism: Prism
+    prism: Prism,
   },
   props: {
     title: {
       type: String,
-      default: null
+      default: null,
     },
     content: {
       type: Object,
-      default: null
+      default: null,
     },
     loaders: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isEmpty: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       tabs: [
         {
           hash: '#universal',
-          title: 'Universal'
+          title: 'Universal',
         },
         {
           hash: '#kubernetes',
-          title: 'Kubernetes'
-        }
-      ]
+          title: 'Kubernetes',
+        },
+      ],
     }
   },
   computed: {
     ...mapGetters({
-      environment: 'config/getEnvironment'
+      environment: 'config/getEnvironment',
     }),
-    isReady () {
+    isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
     activeTab: {
-      get () {
+      get() {
         const env = this.environment
 
         return {
           hash: `#${env}`,
-          nohash: env
+          nohash: env,
         }
       },
-      set (newTab) {
+      set(newTab) {
         return {
           hash: `#${newTab}`,
-          nohash: newTab
+          nohash: newTab,
         }
-      }
+      },
     },
-    yamlContent () {
+    yamlContent() {
       const content = this.content
 
       const kubernetes = () => {
@@ -227,22 +227,24 @@ export default {
         // assemble the main part of our object
         newObj.apiVersion = 'kuma.io/v1alpha1'
         newObj.kind = type
-        if (mesh !== undefined) { // mesh is not defined on global scoped objects
+        if (mesh !== undefined) {
+          // mesh is not defined on global scoped objects
           newObj.mesh = sourceObj.mesh
         }
 
-        if (name.includes('.')) { // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
+        if (name.includes('.')) {
+          // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
           const parts = name.split('.')
           const namespace = parts.pop()
           const k8sName = parts.join('.') // on multi-zone when dataplanes from zone are synced to global the format is 'name.<zone-ns>.<global-ns>' so the name is `name.<zone-ns>`
 
           newObj.metadata = {
             name: k8sName,
-            namespace: namespace
+            namespace: namespace,
           }
         } else {
           newObj.metadata = {
-            name: name
+            name: name,
           }
         }
 
@@ -256,12 +258,12 @@ export default {
 
       const items = {
         universal: json2yaml(content),
-        kubernetes: json2yaml(kubernetes())
+        kubernetes: json2yaml(kubernetes()),
       }
 
       return items
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -279,11 +281,11 @@ export default {
 }
 
 .empty-state-title {
-
   .card-icon {
     text-align: center;
 
-    img, svg {
+    img,
+    svg {
       display: block;
       margin-left: auto;
       margin-right: auto;

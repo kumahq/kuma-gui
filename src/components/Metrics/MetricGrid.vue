@@ -68,11 +68,11 @@ export default {
   name: 'MetricsGrid',
 
   filters: {
-    formatValue (value) {
+    formatValue(value) {
       return value ? value.toLocaleString('en').toString() : 0
     },
 
-    formatError (value) {
+    formatError(value) {
       if (value === '--') {
         return 'error calculating'
       }
@@ -80,26 +80,24 @@ export default {
       return value
     },
 
-    formatTestId (value) {
-      return value
-        .replace(' ', '-')
-        .toLowerCase()
-    }
+    formatTestId(value) {
+      return value.replace(' ', '-').toLowerCase()
+    },
   },
 
   props: {
     metrics: {
       type: Array,
       required: true,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
 
   computed: {
-    hasError () {
+    hasError() {
       const errors = {}
 
-      Object.keys(this.metrics).forEach(key => {
+      Object.keys(this.metrics).forEach((key) => {
         if (this.metrics[key].value === '--') {
           errors[key] = key
         }
@@ -108,7 +106,7 @@ export default {
       return errors
     },
 
-    metricCountClass () {
+    metricCountClass() {
       const count = this.metrics.length
       const prefix = 'metric-count--'
 
@@ -117,8 +115,8 @@ export default {
       }
 
       return `${prefix}even`
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -199,7 +197,7 @@ export default {
     .metric-value {
       // font-weight: 400;
       // font-size: 28px;
-      color: rgba(0,0,0,.85);
+      color: rgba(0, 0, 0, 0.85);
 
       &:last-child {
         margin-bottom: auto;
@@ -226,10 +224,10 @@ export default {
     }
 
     &.danger {
-      border-color: #E6B8B8;
+      border-color: #e6b8b8;
 
       .metric-value {
-        color: #D90000;
+        color: #d90000;
       }
     }
   }

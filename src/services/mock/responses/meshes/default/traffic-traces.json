@@ -1,34 +1,34 @@
 {
-  "total":2,
-  "items":[
+  "total": 2,
+  "items": [
     {
-      "type":"TrafficTrace",
-      "mesh":"default",
-      "name":"tt-1",
-      "selectors":[
+      "type": "TrafficTrace",
+      "mesh": "default",
+      "name": "tt-1",
+      "selectors": [
         {
-          "match":{
-            "service":"*"
+          "match": {
+            "service": "*"
           }
         }
       ],
-      "conf":{
-        "backend":"my-zipkin"
+      "conf": {
+        "backend": "my-zipkin"
       }
     },
     {
-      "type":"TrafficTrace",
-      "mesh":"default",
-      "name":"traffic-trace-02",
-      "selectors":[
+      "type": "TrafficTrace",
+      "mesh": "default",
+      "name": "traffic-trace-02",
+      "selectors": [
         {
-          "match":{
-            "service":"*"
+          "match": {
+            "service": "*"
           }
         }
       ],
-      "conf":{
-        "backend":"my-zipkin"
+      "conf": {
+        "backend": "my-zipkin"
       }
     }
   ]

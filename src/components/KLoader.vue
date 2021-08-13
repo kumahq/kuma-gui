@@ -13,14 +13,14 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       timer: null,
-      progress: 10
+      progress: 10,
     }
   },
 
-  mounted () {
+  mounted() {
     this.timer = setInterval(() => {
       if (this.progress >= 100) {
         clearInterval(this.timer)
@@ -31,9 +31,9 @@ export default {
     }, 150)
   },
 
-  destroyed () {
+  destroyed() {
     clearInterval(this.timer)
-  }
+  },
 }
 </script>
 

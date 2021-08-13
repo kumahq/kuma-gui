@@ -26,10 +26,10 @@ import { setItemToStorage } from '@/Cache'
 export default {
   name: 'OnboardingRestart',
   metaInfo: {
-    title: 'Setup Already Completed'
+    title: 'Setup Already Completed',
   },
   methods: {
-    restartOnboarding () {
+    restartOnboarding() {
       this.$store.dispatch('updateOnboardingStatus', false)
 
       setItemToStorage('kumaOnboardingComplete', false)
@@ -37,7 +37,7 @@ export default {
       // this.$router.push({
       //   name: 'setup-welcome'
       // })
-    }
-  }
+    },
+  },
 }
 </script>

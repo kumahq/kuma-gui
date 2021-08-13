@@ -271,9 +271,7 @@
 
         <template slot="complete">
           <div v-if="validate.meshName">
-            <div
-              v-if="hideScannerSiblings === false"
-            >
+            <div v-if="hideScannerSiblings === false">
               <h3>
                 Auto-Inject DPP
               </h3>
@@ -423,7 +421,7 @@ import { PRODUCT_NAME } from '@/consts'
 export default {
   name: 'DataplaneWizardUniversal',
   metaInfo: {
-    title: 'Create a new Dataplane on Universal'
+    title: 'Create a new Dataplane on Universal',
   },
   components: {
     FormFragment,
@@ -432,50 +430,47 @@ export default {
     Switcher,
     HelperTooltip,
     CodeView,
-    Scanner
+    Scanner,
   },
-  data () {
+  data() {
     return {
       productName: PRODUCT_NAME,
-      randString: Math
-        .random()
-        .toString(36)
-        .substring(2, 8),
+      randString: Math.random().toString(36).substring(2, 8),
       schema: dataplaneSchema,
       steps: [
         {
           label: 'General',
-          slug: 'general'
+          slug: 'general',
         },
         {
           label: 'Topology',
-          slug: 'topology'
+          slug: 'topology',
         },
         {
           label: 'Networking',
-          slug: 'networking'
+          slug: 'networking',
         },
         {
           label: 'Install',
-          slug: 'complete'
-        }
+          slug: 'complete',
+        },
       ],
       tabs: [
         {
           hash: '#universal',
-          title: 'Universal'
-        }
+          title: 'Universal',
+        },
       ],
       sidebarContent: [
         {
-          name: 'dataplane'
+          name: 'dataplane',
         },
         {
-          name: 'example'
+          name: 'example',
         },
         {
-          name: 'switch'
-        }
+          name: 'switch',
+        },
       ],
       startScanner: false,
       scanFound: false,
@@ -492,15 +487,11 @@ export default {
         univDataplaneNetworkServicePort: null,
         univDataplaneNetworkServiceAddress: '127.0.0.1',
         univDataplaneNetworkDPPort: null,
-        univDataplaneNetworkProtocol: 'tcp'
+        univDataplaneNetworkProtocol: 'tcp',
       },
       formFields: {
-        protocols: [
-          'tcp',
-          'http',
-          'grpc'
-        ]
-      }
+        protocols: ['tcp', 'http', 'grpc'],
+      },
     }
   },
   computed: {
@@ -508,7 +499,7 @@ export default {
       title: 'config/getTagline',
       version: 'config/getVersion',
       environment: 'config/getEnvironment',
-      meshes: 'getMeshList'
+      meshes: 'getMeshList',
     }),
 
     getDataplaneSchema() {
@@ -523,7 +514,7 @@ export default {
         univDataplaneNetworkServicePort,
         univDataplaneNetworkServiceAddress,
         univDataplaneNetworkDPPort,
-        univDataplaneNetworkProtocol
+        univDataplaneNetworkProtocol,
       } = this.validate
 
       // if no namespace is set, do nothing
@@ -548,10 +539,10 @@ export default {
               serviceAddress: univDataplaneNetworkServiceAddress,
               tags: {
                 'kuma.io/service': univDataplaneServiceName,
-                'kuma.io/protocol': univDataplaneNetworkProtocol
-              }
-            }
-          ]
+                'kuma.io/protocol': univDataplaneNetworkProtocol,
+              },
+            },
+          ],
         }
       } else if (univDataplaneType === 'dataplane-type-gateway') {
         if (schema.networking.inbound) {
@@ -562,9 +553,9 @@ export default {
           address: univDataplaneNetworkAddress,
           gateway: {
             tags: {
-              'kuma.io/service': univDataplaneServiceName
-            }
-          }
+              'kuma.io/service': univDataplaneServiceName,
+            },
+          },
         }
       }
 
@@ -574,7 +565,7 @@ export default {
     /**
      * Part 1 of the last step: Generate the Dataplane Token
      */
-    generateDpTokenCodeOutput () {
+    generateDpTokenCodeOutput() {
       const { univDataplaneId } = this.validate
 
       const cmdStructure = `kumactl generate dataplane-token --name=${univDataplaneId} > kuma-token-${univDataplaneId}`
@@ -585,7 +576,7 @@ export default {
     /**
      * Part 2 of the last step: Install the Dataplane
      */
-    startDpCodeOutput () {
+    startDpCodeOutput() {
       // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
       const { univDataplaneId } = this.validate
       const cmdStructure = `kuma-dp run \\
@@ -604,7 +595,7 @@ export default {
         univDataplaneNetworkAddress,
         univDataplaneNetworkServicePort,
         univDataplaneNetworkDPPort,
-        univDataplaneNetworkProtocol
+        univDataplaneNetworkProtocol,
       } = this.validate
 
       if (!meshName.length) {
@@ -618,22 +609,21 @@ export default {
       if (this.$route.query.step === '2') {
         return !(
           univDataplaneNetworkAddress &&
-            univDataplaneNetworkServicePort &&
-            univDataplaneNetworkDPPort &&
-            univDataplaneNetworkProtocol
+          univDataplaneNetworkServicePort &&
+          univDataplaneNetworkDPPort &&
+          univDataplaneNetworkProtocol
         )
       }
 
       return false
-    }
+    },
   },
   watch: {
-
-    'validate.univDataplaneId' (value) {
+    'validate.univDataplaneId'(value) {
       this.validate.univDataplaneId = kebabCase(value)
     },
 
-    'validate.univDataplaneServiceName' (value) {
+    'validate.univDataplaneServiceName'(value) {
       const newName = kebabCase(value)
 
       this.validate.univDataplaneServiceName = newName
@@ -645,29 +635,25 @@ export default {
       }
     },
 
-    'validate.univDataplaneNetworkServicePort' (value) {
-      const newId = (value)
-        .replace(/[a-zA-Z]*$/g, '')
-        .trim()
+    'validate.univDataplaneNetworkServicePort'(value) {
+      const newId = value.replace(/[a-zA-Z]*$/g, '').trim()
 
       this.validate.univDataplaneNetworkServicePort = newId
     },
 
-    'validate.univDataplaneNetworkDPPort' (value) {
-      const newId = (value)
-        .replace(/[a-zA-Z]*$/g, '')
-        .trim()
+    'validate.univDataplaneNetworkDPPort'(value) {
+      const newId = value.replace(/[a-zA-Z]*$/g, '').trim()
 
       this.validate.univDataplaneNetworkDPPort = newId
-    }
+    },
   },
   methods: {
-    hideSiblings () {
+    hideSiblings() {
       // this triggers when to hide the siblings related to the Scanner
       // component that need to be hidden once the scan succeeds.
       this.hideScannerSiblings = true
     },
-    scanForEntity () {
+    scanForEntity() {
       const { meshName, univDataplaneId } = this.validate
 
       // reset things if the user is starting over
@@ -677,8 +663,9 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!meshName || !univDataplaneId) return
 
-      this.$api.getDataplaneFromMesh(meshName, univDataplaneId)
-        .then(response => {
+      this.$api
+        .getDataplaneFromMesh(meshName, univDataplaneId)
+        .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true
             this.scanFound = true
@@ -686,7 +673,7 @@ export default {
             this.scanError = true
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.scanError = true
 
           console.error(error)
@@ -703,9 +690,9 @@ export default {
         name: 'dataplanes',
         params: {
           mesh: this.validate.meshName,
-        }
+        },
       })
-    }
-  }
+    },
+  },
 }
 </script>

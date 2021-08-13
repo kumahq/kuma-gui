@@ -1,59 +1,59 @@
 {
-  "total":3,
-  "items":[
+  "total": 3,
+  "items": [
     {
-      "type":"TrafficPermission",
-      "mesh":"default",
-      "name":"tp-1",
-      "sources":[
+      "type": "TrafficPermission",
+      "mesh": "default",
+      "name": "tp-1",
+      "sources": [
         {
-          "match":{
-            "service":"backend"
+          "match": {
+            "service": "backend"
           }
         }
       ],
-      "destinations":[
+      "destinations": [
         {
-          "match":{
-            "service":"redis"
+          "match": {
+            "service": "redis"
           }
         }
       ]
     },
     {
-      "type":"TrafficPermission",
-      "mesh":"default",
-      "name":"tp-1234",
-      "sources":[
+      "type": "TrafficPermission",
+      "mesh": "default",
+      "name": "tp-1234",
+      "sources": [
         {
-          "match":{
-            "service":"backend"
+          "match": {
+            "service": "backend"
           }
         }
       ],
-      "destinations":[
+      "destinations": [
         {
-          "match":{
-            "service":"redis"
+          "match": {
+            "service": "redis"
           }
         }
       ]
     },
     {
-      "type":"TrafficPermission",
-      "mesh":"default",
-      "name":"tp-alpha-tango-donut",
-      "sources":[
+      "type": "TrafficPermission",
+      "mesh": "default",
+      "name": "tp-alpha-tango-donut",
+      "sources": [
         {
-          "match":{
-            "service":"backend"
+          "match": {
+            "service": "backend"
           }
         }
       ],
-      "destinations":[
+      "destinations": [
         {
-          "match":{
-            "service":"redis"
+          "match": {
+            "service": "redis"
           }
         }
       ]

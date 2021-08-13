@@ -3,7 +3,9 @@ import UpgradeCheck from './UpgradeCheck.vue'
 
 describe('UpgradeCheck.vue', () => {
   it('renders snapshot', async () => {
-    const { container, findByText } = renderWithVuex(UpgradeCheck, { store: { modules: { config: { state: { version: '1.2.0', tagline: 'Kuma' } } } } })
+    const { container, findByText } = renderWithVuex(UpgradeCheck, {
+      store: { modules: { config: { state: { version: '1.2.0', tagline: 'Kuma' } } } },
+    })
 
     await findByText('Update')
     expect(container).toMatchSnapshot()
