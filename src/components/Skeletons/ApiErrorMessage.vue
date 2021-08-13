@@ -22,10 +22,12 @@
 </template>
 
 <script>
+import { getKumaCpServerUrl } from '@/configUrl'
+
 export default {
   computed: {
     url() {
-      return localStorage.getItem('kumaApiUrl') || null
+      return getKumaCpServerUrl()
     },
   },
 }
