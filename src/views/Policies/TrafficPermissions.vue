@@ -109,6 +109,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getSome, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
@@ -254,9 +255,9 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: this.$api.getTrafficPermission.bind(this.$api),
-          getAllEntities: this.$api.getAllTrafficPermissions.bind(this.$api),
-          getAllEntitiesFromMesh: this.$api.getAllTrafficPermissionsFromMesh.bind(this.$api),
+          getSingleEntity: Kuma.getTrafficPermission.bind(Kuma),
+          getAllEntities: Kuma.getAllTrafficPermissions.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllTrafficPermissionsFromMesh.bind(Kuma),
           mesh,
           query,
           size: this.pageSize,
@@ -303,8 +304,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return this.$api
-          .getTrafficPermission(entityMesh, entity.name)
+        return Kuma.getTrafficPermission(entityMesh, entity.name)
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
@@ -340,7 +340,7 @@ export default {
       const entityMesh = mesh !== 'all' ? mesh : false
 
       if (entityMesh) {
-        return this.$api.getMesh(entityMesh).then((response) => {
+        return Kuma.getMesh(entityMesh).then((response) => {
           const isSecure = () => {
             // we have to find the right mTLS reference in the object
             // based on the environment (Universal or Kubernetes)

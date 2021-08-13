@@ -552,6 +552,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import Kuma from '@/services/kuma'
 import { rejectKeys } from '@/views/Wizard/helpers'
 import { kebabCase } from '@/helpers'
 import FormatForCLI from '@/mixins/FormatForCLI'
@@ -919,8 +920,7 @@ export default {
       // do nothing if there's nothing found
       if (!entity) return
 
-      this.$api
-        .getMesh(entity)
+      Kuma.getMesh(entity)
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

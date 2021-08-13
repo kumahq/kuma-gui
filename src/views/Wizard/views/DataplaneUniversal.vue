@@ -403,6 +403,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
+import Kuma from '@/services/kuma'
 import { kumaDpServerUrl } from '@/configUrl'
 import { kebabCase } from '@/helpers'
 import json2yaml from '@appscode/json2yaml'
@@ -663,8 +664,7 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!meshName || !univDataplaneId) return
 
-      this.$api
-        .getDataplaneFromMesh(meshName, univDataplaneId)
+      Kuma.getDataplaneFromMesh(meshName, univDataplaneId)
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

@@ -91,6 +91,7 @@
 
 <script>
 import { getSome, stripTimes } from '@/helpers'
+import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -230,9 +231,9 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: this.$api.getRateLimit.bind(this.$api),
-          getAllEntities: this.$api.getAllRateLimits.bind(this.$api),
-          getAllEntitiesFromMesh: this.$api.getAllRateLimitsFromMesh.bind(this.$api),
+          getSingleEntity: Kuma.getRateLimit.bind(Kuma),
+          getAllEntities: Kuma.getAllRateLimits.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllRateLimitsFromMesh.bind(Kuma),
           mesh,
           query,
           size: this.pageSize,
@@ -280,8 +281,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return this.$api
-          .getRateLimit(entityMesh, entity.name)
+        return Kuma.getRateLimit(entityMesh, entity.name)
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

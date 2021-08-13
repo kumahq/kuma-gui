@@ -632,6 +632,7 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
+import Kuma from '@/services/kuma'
 import { kebabCase } from '@/helpers'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment'
@@ -814,8 +815,7 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!mesh || !dataplane) return
 
-      this.$api
-        .getDataplaneFromMesh(mesh, dataplane)
+      Kuma.getDataplaneFromMesh(mesh, dataplane)
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

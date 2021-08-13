@@ -1,7 +1,7 @@
 import Kuma from '@/services/kuma'
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { RootInterface } from '../..'
-import { ConfigInterface, ConfigType } from './config.types'
+import { ConfigInterface } from './config.types'
 
 const state: ConfigInterface = {
   status: null,
@@ -44,7 +44,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   },
 }
 
-const actions: (api: Kuma) => ActionTree<ConfigInterface, RootInterface> = (api: Kuma) => ({
+const actions: ActionTree<ConfigInterface, RootInterface> = {
   bootstrapConfig({ dispatch }) {
     const infoPromise = dispatch('getInfo')
     const configPromise = dispatch('getConfig')
@@ -53,22 +53,21 @@ const actions: (api: Kuma) => ActionTree<ConfigInterface, RootInterface> = (api:
   },
   // get the general Kuma config (this differs from the API config endpoint)
   getConfig({ commit }) {
-    return api.getConfig().then(response => {
+    return Kuma.getConfig().then(response => {
       commit('SET_CONFIG_DATA', response)
     })
   },
 
   // get the status of the API
   getStatus({ commit }) {
-    return api.getStatus().then(response => {
+    return Kuma.getStatus().then(response => {
       commit('SET_STATUS', response)
     })
   },
 
   // get the current tagline and version
   getInfo({ commit }) {
-    return api
-      .getInfo()
+    return Kuma.getInfo()
       .then(response => {
         commit('SET_TAGLINE', response.tagline)
         commit('SET_VERSION', response.version)
@@ -77,12 +76,12 @@ const actions: (api: Kuma) => ActionTree<ConfigInterface, RootInterface> = (api:
         console.error(error)
       })
   },
-})
+}
 
-export default (api: Kuma): ConfigType => ({
+export default {
   namespaced: true,
   state,
   getters,
   mutations,
-  actions: actions(api),
-})
+  actions,
+}

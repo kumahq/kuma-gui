@@ -186,6 +186,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { humanReadableDate, getOffset, getSome, stripTimes, camelCaseToWords } from '@/helpers'
+import Kuma from '@/services/kuma'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import Pagination from '@/components/Pagination'
@@ -341,7 +342,7 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const endpoint = this.$api.getAllZoneIngressOverviews()
+      const endpoint = Kuma.getAllZoneIngressOverviews()
 
       const getZoneIngress = () =>
         endpoint
@@ -416,7 +417,7 @@ export default {
 
         try {
           // get the ZoneIngress details from the ZoneIngress Insights endpoint
-          const response = await this.$api.getZoneIngressOverview(entity.name)
+          const response = await Kuma.getZoneIngressOverview(entity.name)
           const { name, zoneIngressInsight, ...rest } = response
 
           this.tabGroupTitle = `Zone Ingress: ${name}`

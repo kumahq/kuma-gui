@@ -54,12 +54,7 @@ am4core.useTheme(am4themesAnimated)
 
 /** the app itself */
 function VUE_APP() {
-  const kuma = new Kuma()
-
-  // setup the HTTP API namespace
-  Vue.prototype.$api = kuma
-
-  const store = new Vuex.Store(Store(kuma))
+  const store = new Vuex.Store(Store())
   const router = Router(store)
 
   new Vue({

@@ -188,6 +188,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import Kuma from '@/services/kuma'
 import { humanReadableDate, getOffset, getSome, stripTimes, camelCaseToWords } from '@/helpers'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -364,7 +365,7 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const endpoint = this.$api.getZoneStatus()
+      const endpoint = Kuma.getZoneStatus()
 
       const getZoneStatus = () =>
         endpoint
@@ -391,8 +392,7 @@ export default {
                 i.status = status
 
                 // make call to get zone zone-cp version
-                this.$api
-                  .getZoneOverview(i.name)
+                Kuma.getZoneOverview(i.name)
                   .then((response) => {
                     let zoneCpVersion = '-'
                     if (response.zoneInsight.subscriptions && response.zoneInsight.subscriptions.length) {
@@ -469,7 +469,7 @@ export default {
 
         try {
           // get the Zone details from the Zone Insights endpoint
-          const response = await this.$api.getZoneOverview(entity.name)
+          const response = await Kuma.getZoneOverview(entity.name)
           const { name, zoneInsight, ...rest } = response
           const { subscriptions = [] } = zoneInsight
 

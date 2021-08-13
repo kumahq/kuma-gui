@@ -162,8 +162,8 @@ export function getDataplaneInsight(dataplaneOverview: DataPlaneOverview) {
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch(api: Kuma, zoneName: string, dpVersion: string) {
-  const response = (await api.getZoneOverview(zoneName)) || {}
+export async function checkKumaDpAndZoneVersionsMismatch(zoneName: string, dpVersion: string) {
+  const response = (await Kuma.getZoneOverview(zoneName)) || {}
   const { zoneInsight = {} } = response
   const { subscriptions = [] } = zoneInsight
 
