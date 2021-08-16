@@ -18,9 +18,7 @@ describe('Mesh.vue', () => {
     if (typeof target === 'string') {
       await userEvent.type(screen.getByLabelText(target), 'fake-name')
     } else {
-      const map = target.map(targetName =>
-        userEvent.type(screen.getByLabelText(targetName), 'fake-name'),
-      )
+      const map = target.map(targetName => userEvent.type(screen.getByLabelText(targetName), 'fake-name'))
 
       await Promise.all(map)
     }
@@ -31,11 +29,8 @@ describe('Mesh.vue', () => {
   }
 
   it('passes whole wizzard and render yaml', async () => {
-    const {
-      container,
-    } = renderWithVuex(Mesh, {
+    const { container } = renderWithVuex(Mesh, {
       store: {
-
         modules: {
           config: { state: { tagline: 'Kuma', clientConfig: { environment: 'universal' } } },
         },

@@ -13,9 +13,9 @@ export default (store: Store<RootInterface>) => {
       alias: '*',
       meta: {
         title: 'Page not found',
-        excludeAsBreadcrumb: true
+        excludeAsBreadcrumb: true,
       },
-      component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound.vue')
+      component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound.vue'),
     },
     // Home - a landing place that resets things
     {
@@ -25,8 +25,8 @@ export default (store: Store<RootInterface>) => {
       redirect: {
         name: 'global-overview',
         params: {
-          mesh: 'all'
-        }
+          mesh: 'all',
+        },
       },
       children: [
         // App
@@ -38,26 +38,26 @@ export default (store: Store<RootInterface>) => {
           meta: {
             title: 'Diagnostics',
             breadcrumb: 'Diagnostics',
-            hideSubnav: true
-          }
+            hideSubnav: true,
+          },
         },
         // Zones
         {
           path: '/zones',
           name: 'zones',
           meta: {
-            title: 'Zones'
+            title: 'Zones',
           },
-          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones.vue')
+          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones.vue'),
         },
         // Zone Ingresses
         {
           path: '/zone-ingresses',
           name: 'zoneingresses',
           meta: {
-            title: 'Zone Ingresses'
+            title: 'Zone Ingresses',
           },
-          component: () => import(/* webpackChunkName: "zoneingresses" */ '@/views/Entities/ZoneIngresses.vue')
+          component: () => import(/* webpackChunkName: "zoneingresses" */ '@/views/Entities/ZoneIngresses.vue'),
         },
         // all Meshes
         {
@@ -67,14 +67,14 @@ export default (store: Store<RootInterface>) => {
           meta: {
             title: 'Meshes',
             breadcrumb: 'Meshes',
-            parent: 'global-overview'
+            parent: 'global-overview',
           },
           params: { mesh: ':mesh' },
           redirect: {
             name: 'mesh-child',
             params: {
-              mesh: 'all'
-            }
+              mesh: 'all',
+            },
           },
           component: {
             // Inline declaration of a component that renders our <router-view>
@@ -86,12 +86,12 @@ export default (store: Store<RootInterface>) => {
               name: 'mesh-child',
               meta: {
                 title: 'Mesh Overview',
-                parent: 'all-meshes'
+                parent: 'all-meshes',
               },
               params: { mesh: ':mesh' },
-              component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/Meshes.vue')
-            }
-          ]
+              component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/Meshes.vue'),
+            },
+          ],
         },
         {
           path: '/mesh',
@@ -104,190 +104,201 @@ export default (store: Store<RootInterface>) => {
           redirect: {
             name: 'global-overview',
             params: {
-              mesh: 'all'
-            }
+              mesh: 'all',
+            },
           },
           component: {
             // Inline declaration of a component that renders our <router-view>
             render: (c: typeof Vue.prototype.$createElement) => c('router-view'),
           },
-          children: [{
-            path: ':mesh',
-            name: 'mesh',
-            meta: {
-              title: 'Meshes',
-              breadcrumb: 'Meshes',
-              parent: 'all-meshes'
+          children: [
+            {
+              path: ':mesh',
+              name: 'mesh',
+              meta: {
+                title: 'Meshes',
+                breadcrumb: 'Meshes',
+                parent: 'all-meshes',
+              },
+              params: { mesh: ':mesh' },
+              component: {
+                // Inline declaration of a component that renders our <router-view>
+                render: (c: typeof Vue.prototype.$createElement) => c('router-view'),
+              },
+              children: [
+                // overview
+                {
+                  path: 'overview',
+                  name: 'global-overview',
+                  alias: '/',
+                  meta: {
+                    title: 'Global Overview',
+                  },
+                  component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview.vue'),
+                },
+                // all dataplanes
+                {
+                  path: 'dataplanes',
+                  name: 'dataplanes',
+                  meta: {
+                    title: 'Data Plane Proxies',
+                  },
+                  component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes.vue'),
+                },
+                // standard dataplanes
+                {
+                  path: 'standard-dataplanes',
+                  name: 'standard-dataplanes',
+                  component: () =>
+                    import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes.vue'),
+                  meta: {
+                    title: 'Standard Data Plane Proxies',
+                    breadcrumb: 'Standard Data Plane Proxies',
+                  },
+                },
+                // gateway dataplanes
+                {
+                  path: 'gateway-dataplanes',
+                  name: 'gateway-dataplanes',
+                  component: () =>
+                    import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes.vue'),
+                  meta: {
+                    title: 'Gateway Data Plane Proxies',
+                    breadcrumb: 'Gateway Data Plane Proxies',
+                  },
+                },
+                // internal services
+                {
+                  path: 'internal-services',
+                  name: 'internal-services',
+                  component: () =>
+                    import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices.vue'),
+                  meta: {
+                    title: 'Internal Services',
+                    breadcrumb: 'Internal Services',
+                  },
+                },
+                // external services
+                {
+                  path: 'external-services',
+                  name: 'external-services',
+                  component: () =>
+                    import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/ExternalServices.vue'),
+                  meta: {
+                    title: 'External Services',
+                    breadcrumb: 'External Services',
+                  },
+                },
+                // traffic permissions
+                {
+                  path: 'traffic-permissions',
+                  name: 'traffic-permissions',
+                  meta: {
+                    title: 'Traffic Permissions',
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions.vue'),
+                },
+                // traffic routes
+                {
+                  path: 'traffic-routes',
+                  name: 'traffic-routes',
+                  meta: {
+                    title: 'Traffic Routes',
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes.vue'),
+                },
+                // traffic logs
+                {
+                  path: 'traffic-logs',
+                  name: 'traffic-logs',
+                  meta: {
+                    title: 'Traffic Logs',
+                  },
+                  component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs.vue'),
+                },
+                // traffic traces
+                {
+                  path: 'traffic-traces',
+                  name: 'traffic-traces',
+                  meta: {
+                    title: 'Traffic Traces',
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces.vue'),
+                },
+                // fault injections
+                {
+                  path: 'fault-injections',
+                  name: 'fault-injections',
+                  meta: {
+                    title: 'Fault Injections',
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections.vue'),
+                },
+                // circuit breakers
+                {
+                  path: 'circuit-breakers',
+                  name: 'circuit-breakers',
+                  meta: {
+                    title: 'Circuit Breakers',
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers.vue'),
+                },
+                // health checks
+                {
+                  path: 'health-checks',
+                  name: 'health-checks',
+                  meta: {
+                    title: 'Health Checks',
+                  },
+                  component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks.vue'),
+                },
+                // proxy templates
+                {
+                  path: 'proxy-templates',
+                  name: 'proxy-templates',
+                  meta: {
+                    title: 'Proxy Templates',
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates.vue'),
+                },
+                // rate limits
+                {
+                  path: 'rate-limits',
+                  name: 'rate-limits',
+                  meta: {
+                    title: 'Rate Limits',
+                  },
+                  component: () => import(/* webpackChunkName: "rate-limits" */ '@/views/Policies/RateLimits.vue'),
+                },
+                // retries
+                {
+                  path: 'retries',
+                  name: 'retries',
+                  meta: {
+                    title: 'Retries',
+                  },
+                  component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries.vue'),
+                },
+                // timeouts
+                {
+                  path: 'timeouts',
+                  name: 'timeouts',
+                  meta: {
+                    title: 'Timeouts',
+                  },
+                  component: () => import(/* webpackChunkName: "timeouts" */ '@/views/Policies/Timeouts.vue'),
+                },
+              ],
             },
-            params: { mesh: ':mesh' },
-            component: {
-              // Inline declaration of a component that renders our <router-view>
-              render: (c: typeof Vue.prototype.$createElement) => c('router-view'),
-            },
-            children: [
-              // overview
-              {
-                path: 'overview',
-                name: 'global-overview',
-                alias: '/',
-                meta: {
-                  title: 'Global Overview'
-                },
-                component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview.vue')
-              },
-              // all dataplanes
-              {
-                path: 'dataplanes',
-                name: 'dataplanes',
-                meta: {
-                  title: 'Data Plane Proxies'
-                },
-                component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes.vue')
-              },
-              // standard dataplanes
-              {
-                path: 'standard-dataplanes',
-                name: 'standard-dataplanes',
-                component: () => import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes.vue'),
-                meta: {
-                  title: 'Standard Data Plane Proxies',
-                  breadcrumb: 'Standard Data Plane Proxies'
-                }
-              },
-              // gateway dataplanes
-              {
-                path: 'gateway-dataplanes',
-                name: 'gateway-dataplanes',
-                component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes.vue'),
-                meta: {
-                  title: 'Gateway Data Plane Proxies',
-                  breadcrumb: 'Gateway Data Plane Proxies'
-                }
-              },
-              // internal services
-              {
-                path: 'internal-services',
-                name: 'internal-services',
-                component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices.vue'),
-                meta: {
-                  title: 'Internal Services',
-                  breadcrumb: 'Internal Services'
-                }
-              },
-              // external services
-              {
-                path: 'external-services',
-                name: 'external-services',
-                component: () => import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/ExternalServices.vue'),
-                meta: {
-                  title: 'External Services',
-                  breadcrumb: 'External Services'
-                }
-              },
-              // traffic permissions
-              {
-                path: 'traffic-permissions',
-                name: 'traffic-permissions',
-                meta: {
-                  title: 'Traffic Permissions'
-                },
-                component: () => import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions.vue')
-              },
-              // traffic routes
-              {
-                path: 'traffic-routes',
-                name: 'traffic-routes',
-                meta: {
-                  title: 'Traffic Routes'
-                },
-                component: () => import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes.vue')
-              },
-              // traffic logs
-              {
-                path: 'traffic-logs',
-                name: 'traffic-logs',
-                meta: {
-                  title: 'Traffic Logs'
-                },
-                component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs.vue')
-              },
-              // traffic traces
-              {
-                path: 'traffic-traces',
-                name: 'traffic-traces',
-                meta: {
-                  title: 'Traffic Traces'
-                },
-                component: () => import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces.vue')
-              },
-              // fault injections
-              {
-                path: 'fault-injections',
-                name: 'fault-injections',
-                meta: {
-                  title: 'Fault Injections'
-                },
-                component: () => import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections.vue')
-              },
-              // circuit breakers
-              {
-                path: 'circuit-breakers',
-                name: 'circuit-breakers',
-                meta: {
-                  title: 'Circuit Breakers'
-                },
-                component: () => import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers.vue')
-              },
-              // health checks
-              {
-                path: 'health-checks',
-                name: 'health-checks',
-                meta: {
-                  title: 'Health Checks'
-                },
-                component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks.vue')
-              },
-              // proxy templates
-              {
-                path: 'proxy-templates',
-                name: 'proxy-templates',
-                meta: {
-                  title: 'Proxy Templates'
-                },
-                component: () => import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates.vue')
-              },
-              // rate limits
-              {
-                path: 'rate-limits',
-                name: 'rate-limits',
-                meta: {
-                  title: 'Rate Limits'
-                },
-                component: () => import(/* webpackChunkName: "rate-limits" */ '@/views/Policies/RateLimits.vue')
-              },
-              // retries
-              {
-                path: 'retries',
-                name: 'retries',
-                meta: {
-                  title: 'Retries'
-                },
-                component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries.vue')
-              },
-              // timeouts
-              {
-                path: 'timeouts',
-                name: 'timeouts',
-                meta: {
-                  title: 'Timeouts'
-                },
-                component: () => import(/* webpackChunkName: "timeouts" */ '@/views/Policies/Timeouts.vue')
-              }
-            ]
-          }]
+          ],
         },
-
-      ]
+      ],
     },
     // Onboarding
     {
@@ -301,9 +312,9 @@ export default (store: Store<RootInterface>) => {
           meta: {
             title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`,
             hideStatus: true,
-            onboardingProcess: true
+            onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding-get-started" */ '@/views/Onboarding/GetStarted.vue')
+          component: () => import(/* webpackChunkName: "onboarding-get-started" */ '@/views/Onboarding/GetStarted.vue'),
         },
         {
           path: 'complete',
@@ -311,11 +322,11 @@ export default (store: Store<RootInterface>) => {
           meta: {
             title: 'Congratulations!',
             hideStatus: true,
-            onboardingProcess: true
+            onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding-complete" */ '@/views/Onboarding/Complete.vue')
-        }
-      ]
+          component: () => import(/* webpackChunkName: "onboarding-complete" */ '@/views/Onboarding/Complete.vue'),
+        },
+      ],
     },
     {
       // Entity Wizard
@@ -331,7 +342,7 @@ export default (store: Store<RootInterface>) => {
             wizardProcess: true,
             hideStatus: true,
           },
-          component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh.vue')
+          component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh.vue'),
         },
         {
           path: 'kubernetes-dataplane',
@@ -341,7 +352,10 @@ export default (store: Store<RootInterface>) => {
             wizardProcess: true,
             hideStatus: true,
           },
-          component: () => import(/* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes.vue')
+          component: () =>
+            import(
+              /* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes.vue'
+            ),
         },
         {
           path: 'universal-dataplane',
@@ -351,11 +365,11 @@ export default (store: Store<RootInterface>) => {
             wizardProcess: true,
             hideStatus: true,
           },
-          component: () => import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal.vue')
-        }
-      ]
+          component: () =>
+            import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal.vue'),
+        },
+      ],
     },
-
   ]
   const router = new VueRouter({
     /**

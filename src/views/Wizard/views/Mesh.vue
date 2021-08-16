@@ -100,19 +100,13 @@
                   class="k-input w-100"
                   name="certificate-authority"
                 >
-                  <option
-                    value="builtin"
-                  >
+                  <option value="builtin">
                     builtin
                   </option>
-                  <option
-                    value="provided"
-                  >
+                  <option value="provided">
                     provided
                   </option>
-                  <option
-                    value="vault"
-                  >
+                  <option value="vault">
                     vault
                   </option>
                 </select>
@@ -185,14 +179,10 @@
                     class="k-input w-100"
                     name="logging-type"
                   >
-                    <option
-                      value="tcp"
-                    >
+                    <option value="tcp">
                       TCP
                     </option>
-                    <option
-                      value="file"
-                    >
+                    <option value="file">
                       File
                     </option>
                   </select>
@@ -254,9 +244,7 @@
             has-shadow
           >
             <template slot="body">
-              <FormFragment
-                title="Tracing"
-              >
+              <FormFragment title="Tracing">
                 <label class="k-input-label mx-2">
                   <input
                     id="tracing-disabled"
@@ -306,9 +294,7 @@
                   class="k-input w-100"
                   name="tracing-type"
                 >
-                  <option
-                    value="zipkin"
-                  >
+                  <option value="zipkin">
                     Zipkin
                   </option>
                 </select>
@@ -360,9 +346,7 @@
             has-shadow
           >
             <template slot="body">
-              <FormFragment
-                title="Metrics"
-              >
+              <FormFragment title="Metrics">
                 <label class="k-input-label mx-2">
                   <input
                     id="metrics-disabled"
@@ -410,9 +394,7 @@
                   class="k-input w-100"
                   name="metrics-type"
                 >
-                  <option
-                    value="prometheus"
-                  >
+                  <option value="prometheus">
                     Prometheus
                   </option>
                 </select>
@@ -586,19 +568,17 @@ import { PRODUCT_NAME } from '@/consts'
 export default {
   name: 'MeshWizard',
   metaInfo: {
-    title: 'Create a new Mesh'
+    title: 'Create a new Mesh',
   },
   components: {
     FormFragment,
     Tabs,
     StepSkeleton,
     CodeView,
-    Scanner
+    Scanner,
   },
-  mixins: [
-    FormatForCLI
-  ],
-  data () {
+  mixins: [FormatForCLI],
+  data() {
     return {
       productName: PRODUCT_NAME,
       selectedTab: '',
@@ -606,49 +586,49 @@ export default {
       steps: [
         {
           label: 'General & Security',
-          slug: 'general'
+          slug: 'general',
         },
         {
           label: 'Logging',
-          slug: 'logging'
+          slug: 'logging',
         },
         {
           label: 'Tracing',
-          slug: 'tracing'
+          slug: 'tracing',
         },
         {
           label: 'Metrics',
-          slug: 'metrics'
+          slug: 'metrics',
         },
         {
           label: 'Install',
-          slug: 'complete'
-        }
+          slug: 'complete',
+        },
       ],
       tabs: [
         {
           hash: '#kubernetes',
-          title: 'Kubernetes'
+          title: 'Kubernetes',
         },
         {
           hash: '#universal',
-          title: 'Universal'
-        }
+          title: 'Universal',
+        },
       ],
       sidebarContent: [
         {
-          name: 'mesh'
+          name: 'mesh',
         },
         {
-          name: 'did-you-know'
-        }
+          name: 'did-you-know',
+        },
       ],
       formConditions: {
         mtlsEnabled: false,
         loggingEnabled: false,
         tracingEnabled: false,
         metricsEnabled: false,
-        loggingType: null
+        loggingType: null,
       },
       startScanner: false,
       scanFound: false,
@@ -668,17 +648,18 @@ export default {
         loggingType: 'tcp',
         meshLoggingPath: '/',
         meshLoggingAddress: '127.0.0.1:5000',
-        meshLoggingBackendFormat: "{ start_time: '%START_TIME%', source: '%KUMA_SOURCE_SERVICE%', destination: '%KUMA_DESTINATION_SERVICE%', source_address: '%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%', destination_address: '%UPSTREAM_HOST%', duration_millis: '%DURATION%', bytes_received: '%BYTES_RECEIVED%', bytes_sent: '%BYTES_SENT%' }",
+        meshLoggingBackendFormat:
+          "{ start_time: '%START_TIME%', source: '%KUMA_SOURCE_SERVICE%', destination: '%KUMA_DESTINATION_SERVICE%', source_address: '%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%', destination_address: '%UPSTREAM_HOST%', duration_millis: '%DURATION%', bytes_received: '%BYTES_RECEIVED%', bytes_sent: '%BYTES_SENT%' }",
         tracingEnabled: 'disabled',
         meshTracingType: 'zipkin',
         meshTracingSampling: 99.9,
         metricsEnabled: 'disabled',
         meshMetricsType: 'prometheus',
         meshMetricsDataplanePort: 5670,
-        meshMetricsDataplanePath: '/metrics'
+        meshMetricsDataplanePath: '/metrics',
       },
       vmsg: [],
-      utm: process.env.VUE_APP_UTM
+      utm: process.env.VUE_APP_UTM,
     }
   },
   computed: {
@@ -689,7 +670,7 @@ export default {
     }),
 
     // Our generated code output
-    codeOutput () {
+    codeOutput() {
       const schema = this.schema
       const schemaNew = Object.assign({}, schema)
       const newData = this.validate
@@ -712,18 +693,18 @@ export default {
         mtls: hasMtls,
         logging: hasLogging,
         tracing: hasTracing,
-        metrics: hasMetrics
+        metrics: hasMetrics,
       }
 
       // define the features we are going to omit from our object
       const filteredFeatures = []
 
-      Object.entries(featureStatus).forEach(r => {
+      Object.entries(featureStatus).forEach((r) => {
         const condition = r[1]
         const value = r[0]
 
         if (condition) {
-          filteredFeatures.filter(i => i !== value)
+          filteredFeatures.filter((i) => i !== value)
         } else {
           filteredFeatures.push(value)
         }
@@ -749,20 +730,20 @@ export default {
               type: certAuth,
               conf: {
                 cert: {
-                  secret: ''
+                  secret: '',
                 },
                 key: {
-                  secret: ''
-                }
-              }
-            }
+                  secret: '',
+                },
+              },
+            },
           ]
         } else {
           mtlsObject.backends = [
             {
               name: certName,
-              type: certAuth
-            }
+              type: certAuth,
+            },
           ]
         }
       }
@@ -830,7 +811,7 @@ export default {
           apiVersion: 'kuma.io/v1alpha1',
           kind: 'Mesh',
           metadata: {
-            name: newData.meshName
+            name: newData.meshName,
           },
           spec: schemaClean,
         }
@@ -858,7 +839,7 @@ export default {
         tracingEnabled,
         metricsEnabled,
         meshLoggingPath,
-        loggingType
+        loggingType,
       } = this.validate
 
       if (!meshName.length || (mtlsEnabled === 'enabled' && !meshCAName)) {
@@ -886,49 +867,49 @@ export default {
       }
 
       return false
-    }
+    },
   },
   watch: {
     // mesh name
-    'validate.meshName' (value) {
+    'validate.meshName'(value) {
       const newName = kebabCase(value)
 
       this.validate.meshName = newName
       this.validateMeshName(newName)
     },
     // mesh cert name
-    'validate.meshCAName' (value) {
+    'validate.meshCAName'(value) {
       this.validate.meshCAName = kebabCase(value)
     },
     // mesh logging backend name
-    'validate.meshLoggingBackend' (value) {
+    'validate.meshLoggingBackend'(value) {
       this.validate.meshLoggingBackend = kebabCase(value)
     },
     // mesh tracing backend name
-    'validate.meshTracingBackend' (value) {
+    'validate.meshTracingBackend'(value) {
       this.validate.meshTracingBackend = kebabCase(value)
     },
-    'validate.meshMetricsName' (value) {
+    'validate.meshMetricsName'(value) {
       this.validate.meshMetricsName = kebabCase(value)
-    }
+    },
   },
   methods: {
     onTabChange(newTab) {
       this.selectedTab = newTab
     },
-    hideSiblings () {
+    hideSiblings() {
       // this triggers when to hide the siblings related to the Scanner
       // component that need to be hidden once the scan succeeds.
       this.hideScannerSiblings = true
     },
-    validateMeshName (value) {
+    validateMeshName(value) {
       if (!value || value === '') {
         this.vmsg.meshName = 'A Mesh name is required to proceed'
       } else {
         this.vmsg.meshName = ''
       }
     },
-    scanForEntity () {
+    scanForEntity() {
       const entity = this.validate.meshName
 
       // reset things if the user is starting over
@@ -938,8 +919,9 @@ export default {
       // do nothing if there's nothing found
       if (!entity) return
 
-      this.$api.getMesh(entity)
-        .then(response => {
+      this.$api
+        .getMesh(entity)
+        .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true
             this.scanFound = true
@@ -947,7 +929,7 @@ export default {
             this.scanError = true
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.scanError = true
 
           console.error(error)
@@ -955,7 +937,7 @@ export default {
         .finally(() => {
           this.scanComplete = true
         })
-    }
-  }
+    },
+  },
 }
 </script>

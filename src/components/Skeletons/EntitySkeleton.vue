@@ -27,47 +27,44 @@ import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 
 export default {
   name: 'EntitySkeleton',
-  components: [
-    MetricGrid
-  ],
+  components: [MetricGrid],
   props: {
     delayMilliseconds: {
       type: Number,
       required: false,
-      default: 750
+      default: 750,
     },
     metrics: {
       type: Object,
       required: false,
-      default: null
+      default: null,
     },
     tableData: {
       type: Object,
-      required: true
+      required: true,
     },
     tableActions: {
       type: Boolean,
-      default: false
+      default: false,
     },
     tableSlotScope: {
       type: Object,
       required: false,
-      default: null
-    }
+      default: null,
+    },
   },
-  data () {
+  data() {
     return {
-      isVisible: false
+      isVisible: false,
     }
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
       this.isVisible = true
     }, this.delayMilliseconds)
-  }
+  },
 }
 </script>
 
 <style>
-
 </style>

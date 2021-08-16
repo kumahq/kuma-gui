@@ -40,19 +40,19 @@ export default {
   props: {
     items: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    selectedMesh () {
+    selectedMesh() {
       const stored = localStorage.getItem('selectedMesh')
       const query = this.$route.params.mesh
 
       return stored || query
-    }
+    },
   },
   methods: {
-    changeMesh (event) {
+    changeMesh(event) {
       const val = event.target.value
 
       // update the selected mesh in the store
@@ -62,19 +62,20 @@ export default {
       localStorage.setItem('selectedMesh', val)
 
       // push the update mesh param to the route
-      this.$root.$router.push({
-        params: {
-          mesh: val
-        }
-      }).catch(() => {})
-    }
-  }
+      this.$root.$router
+        .push({
+          params: {
+            mesh: val,
+          },
+        })
+        .catch(() => {})
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .mesh-selector-container {
-
 }
 
 .mesh-selector {
@@ -84,7 +85,8 @@ export default {
   border-color: var(--MeshSelectorInputBorderColor);
   outline: none;
 
-  &:focus, &:active {
+  &:focus,
+  &:active {
     border-color: var(--MeshSelectorInputBorderColorFocus);
   }
 }

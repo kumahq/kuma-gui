@@ -37,17 +37,17 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'OnboardingCheck',
-  data () {
+  data() {
     return {
       alertClosed: false,
-      productName: PRODUCT_NAME
+      productName: PRODUCT_NAME,
     }
   },
   methods: {
-    closeAlert () {
+    closeAlert() {
       this.alertClosed = true
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -57,7 +57,6 @@ export default {
 }
 
 .alert-content {
-
   @media screen and (min-width: 700px) {
     display: flex;
     align-items: center;

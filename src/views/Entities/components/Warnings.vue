@@ -24,11 +24,9 @@
 <script>
 import WarningDefault from '@/views/Entities/components/WarningDefault'
 import WarningEnvoyIncompatible from '@/views/Entities/components/WarningEnvoyIncompatible'
-import WarningZoneAndKumaDPVersionsIncompatible
-  from '@/views/Entities/components/WarningZoneAndKumaDPVersionsIncompatible'
+import WarningZoneAndKumaDPVersionsIncompatible from '@/views/Entities/components/WarningZoneAndKumaDPVersionsIncompatible'
 import WarningUnsupportedKumaDPVersion from '@/views/Entities/components/WarningUnsupportedKumaDPVersion'
-import WarningZoneAndGlobalCPSVersionsIncompatible
-  from '@/views/Entities/components/WarningZoneAndGlobalCPSVersionsIncompatible'
+import WarningZoneAndGlobalCPSVersionsIncompatible from '@/views/Entities/components/WarningZoneAndGlobalCPSVersionsIncompatible'
 
 import {
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
@@ -46,7 +44,7 @@ export default {
     },
   },
   methods: {
-    getWarningComponent (kind = '') {
+    getWarningComponent(kind = '') {
       switch (kind) {
         case INCOMPATIBLE_UNSUPPORTED_ENVOY:
           return WarningEnvoyIncompatible
@@ -59,7 +57,7 @@ export default {
         default:
           return WarningDefault
       }
-    }
+    },
   },
 }
 </script>

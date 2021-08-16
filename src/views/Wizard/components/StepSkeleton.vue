@@ -82,48 +82,46 @@
 import updateQuery from '@/views/Wizard/mixins/updateQuery'
 
 export default {
-  mixins: [
-    updateQuery
-  ],
+  mixins: [updateQuery],
   props: {
     steps: {
       type: Array,
-      default: () => {}
+      default: () => {},
     },
     sidebarContent: {
       type: Array,
       required: true,
-      default: () => {}
+      default: () => {},
     },
     footerEnabled: {
       type: Boolean,
-      default: true
+      default: true,
     },
     nextDisabled: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
-  data () {
+  data() {
     return {
-      start: 0
+      start: 0,
     }
   },
   computed: {
     step: {
-      get () {
+      get() {
         return this.steps[this.start].slug
       },
-      set (index) {
+      set(index) {
         return this.steps[index].slug
-      }
+      },
     },
-    indexCanAdvance () {
+    indexCanAdvance() {
       return this.start >= this.steps.length - 1
     },
-    indexCanReverse () {
+    indexCanReverse() {
       return this.start <= 0
-    }
+    },
   },
   watch: {
     '$route.query.step'(val = 0) {
@@ -131,36 +129,36 @@ export default {
         this.start = val
         this.$emit('goToNextStep', val)
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     // this clears out any old stored data upon starting the wizard
     this.resetProcess()
     // this sets the starting step upon load
     this.setStartingStep()
   },
   methods: {
-    goToStep (index) {
+    goToStep(index) {
       this.start = index
       this.updateQuery('step', index)
       this.$emit('goToStep', this.step)
     },
-    goToNextStep () {
+    goToNextStep() {
       this.start++
       this.updateQuery('step', this.start)
       this.$emit('goToNextStep', this.step)
     },
-    goToPrevStep () {
+    goToPrevStep() {
       this.start--
       this.updateQuery('step', this.start)
       this.$emit('goToPrevStep', this.step)
     },
-    setStartingStep () {
+    setStartingStep() {
       const query = this.$route.query.step
 
       this.start = query || 0
     },
-    resetProcess () {
+    resetProcess() {
       // revert back to the first step
       this.start = 0
 
@@ -174,16 +172,15 @@ export default {
       // reset all input values so the browser can't pre-fill them
       const fields = this.$refs.wizardForm.querySelectorAll('input[type="text"]')
 
-      fields.forEach(r => {
+      fields.forEach((r) => {
         r.setAttribute('value', '')
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
-
 .wizard-steps .debugger {
   padding: 10px;
   margin: 30px auto;
@@ -222,7 +219,6 @@ export default {
     font-style: italic;
   }
 }
-
 </style>
 
 <style lang="scss" scoped>
@@ -232,7 +228,6 @@ $bp-lg-min-width: 1760px;
 $bp-max-width: 1219px;
 
 .wizard-steps {
-
   @media screen and (min-width: $bp-min-width) {
     display: flex;
     align-items: stretch;
@@ -287,20 +282,23 @@ $bp-max-width: 1219px;
 }
 
 .wizard-steps__sidebar__item {
-
   &:not(:last-of-type) {
     margin-bottom: var(--spacing-xl);
     padding-bottom: var(--spacing-xl);
     border-bottom: 1px solid #e6e7e8;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: var(--type-lg);
     margin: 0 0 var(--spacing-sm) 0;
   }
 
   p {
-
     &:not(:last-of-type) {
       margin-bottom: var(--spacing-sm);
     }
@@ -349,7 +347,7 @@ $bp-max-width: 1219px;
     @include highlighted-step;
   }
 
-  li[aria-selected="true"] {
+  li[aria-selected='true'] {
     @include highlighted-step;
 
     position: relative;
@@ -360,7 +358,7 @@ $bp-max-width: 1219px;
       --i: 20px;
 
       position: absolute;
-      content: "";
+      content: '';
       display: block;
       top: 0;
       right: calc(var(--i) * -1);
@@ -388,8 +386,10 @@ $bp-max-width: 1219px;
 }
 
 .wizard-steps__content {
-
-  p, h2, h3, h4 {
+  p,
+  h2,
+  h3,
+  h4 {
     margin-bottom: var(--spacing-md);
   }
 

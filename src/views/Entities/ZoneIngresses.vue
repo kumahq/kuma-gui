@@ -210,30 +210,28 @@ export default {
     LoaderCard,
   },
   filters: {
-    formatValue (value) {
+    formatValue(value) {
       return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
     },
-    readableDate (value) {
+    readableDate(value) {
       return humanReadableDate(value)
     },
-    humanReadable (value) {
+    humanReadable(value) {
       return camelCaseToWords(value)
     },
-    formatError (value) {
+    formatError(value) {
       if (value === '--') {
         return 'error calculating'
       }
 
       return value
-    }
+    },
   },
-  mixins: [
-    sortEntities
-  ],
+  mixins: [sortEntities],
   metaInfo: {
-    title: 'ZoneIngresses'
+    title: 'ZoneIngresses',
   },
-  data () {
+  data() {
     return {
       productName: PRODUCT_NAME,
       isLoading: true,
@@ -245,7 +243,7 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Zone Ingresses present.'
+        message: 'There are no Zone Ingresses present.',
       },
       tableData: {
         headers: [
@@ -253,16 +251,16 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
         ],
-        data: []
+        data: [],
       },
       tabs: [
         {
           hash: '#overview',
-          title: 'Overview'
+          title: 'Overview',
         },
         {
           hash: '#insights',
-          title: 'Zone Ingress Insights'
+          title: 'Zone Ingress Insights',
         },
       ],
       entity: [],
@@ -288,10 +286,10 @@ export default {
     // multicluster () {
     //   return true
     // },
-    pageTitle () {
+    pageTitle() {
       return this.$route.meta.title
     },
-    shareUrl () {
+    shareUrl() {
       const urlRoot = `${window.location.origin}#`
       const entity = this.entity
 
@@ -304,104 +302,105 @@ export default {
       }
 
       return shareUrl()
-    }
+    },
   },
   watch: {
-    '$route' () {
+    $route() {
       this.init()
-    }
+    },
   },
-  beforeMount () {
+  beforeMount() {
     this.init()
   },
   methods: {
-    init () {
+    init() {
       if (this.multicluster) {
         this.loadData()
       }
     },
-    goToPreviousPage () {
+    goToPreviousPage() {
       this.pageOffset = this.previous.pop()
       this.next = null
 
       this.loadData()
     },
-    goToNextPage () {
+    goToNextPage() {
       this.previous.push(this.pageOffset)
       this.pageOffset = this.next
       this.next = null
 
       this.loadData()
     },
-    tableAction (ev) {
+    tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData () {
+    loadData() {
       this.isLoading = true
       this.isEmpty = false
 
       const endpoint = this.$api.getAllZoneIngressOverviews()
 
-      const getZoneIngress = () => endpoint
-        .then((response = {}) => {
-          const nextCheck = !!response.next
+      const getZoneIngress = () =>
+        endpoint
+          .then((response = {}) => {
+            const nextCheck = !!response.next
 
-          // check to see if the `next` url is present
-          if (nextCheck) {
-            this.next = getOffset(response.next)
-            this.hasNext = true
-          } else {
-            this.hasNext = false
-          }
+            // check to see if the `next` url is present
+            if (nextCheck) {
+              this.next = getOffset(response.next)
+              this.hasNext = true
+            } else {
+              this.hasNext = false
+            }
 
-          let { items = [] } = response
+            let { items = [] } = response
 
-          if (items.length > 0) {
-            // rewrite the status column to be more human-readable
-            items = items.map(item => {
-              const { zoneIngressInsight = {} } = item
+            if (items.length > 0) {
+              // rewrite the status column to be more human-readable
+              items = items.map((item) => {
+                const { zoneIngressInsight = {} } = item
 
-              return { ...item, ...getZoneIngressStatus(zoneIngressInsight) }
-            })
+                return { ...item, ...getZoneIngressStatus(zoneIngressInsight) }
+              })
 
-            // sort the table data by name and the mesh it's associated with
-            this.sortEntities(items)
+              // sort the table data by name and the mesh it's associated with
+              this.sortEntities(items)
 
-            // set the first item as the default for initial load
-            this.firstEntity = items[0].name
+              // set the first item as the default for initial load
+              this.firstEntity = items[0].name
 
-            // load the YAML entity for the first item on page load
-            this.getEntity(items[0])
+              // load the YAML entity for the first item on page load
+              this.getEntity(items[0])
 
-            this.tableData.data = [...items]
-            this.tableDataIsEmpty = false
-            this.isEmpty = false
-          } else {
-            this.tableData.data = []
-            this.tableDataIsEmpty = true
+              this.tableData.data = [...items]
+              this.tableDataIsEmpty = false
+              this.isEmpty = false
+            } else {
+              this.tableData.data = []
+              this.tableDataIsEmpty = true
+              this.isEmpty = true
+
+              this.getEntity(null)
+            }
+          })
+          .catch((error) => {
+            this.hasError = true
             this.isEmpty = true
 
-            this.getEntity(null)
-          }
-        })
-        .catch(error => {
-          this.hasError = true
-          this.isEmpty = true
-
-          console.error(error)
-        })
-        .finally(() => {
-          setTimeout(() => {
-            this.isLoading = false
-          }, process.env.VUE_APP_DATA_TIMEOUT)
-        })
+            console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.isLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
+          })
 
       getZoneIngress()
     },
-    async getEntity (entity) {
+    async getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = true
 
@@ -435,8 +434,8 @@ export default {
       }
 
       this.entityIsLoading = false
-    }
-  }
+    },
+  },
 }
 </script>
 

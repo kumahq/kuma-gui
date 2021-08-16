@@ -5,11 +5,7 @@ import config from '@/store/modules/config'
 import sidebar from '@/store/modules/sidebar'
 
 import { fetchAllResources, filterResourceByMesh } from '@/helpers'
-import {
-  getEmptyInsight,
-  mergeInsightsReducer,
-  parseInsightReducer
-} from '@/store/reducers/mesh-insights'
+import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import Kuma from '@/services/kuma'
 
 type TODO = any
@@ -21,7 +17,7 @@ export type RootInterface = any
 export default (api: Kuma): Module<RootInterface, RootInterface> => ({
   modules: {
     sidebar,
-    config: config(api)
+    config: config(api),
   },
   state: {
     menu: null,
@@ -79,7 +75,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       },
       external: {
         total: 0,
-      }
+      },
     },
     overviewCharts: {
       dataplanes: {
@@ -111,62 +107,57 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     supportedVersionsFailed: '',
   } as TODO,
   getters: {
-    getOnboardingStatus: (state) => state.onboardingComplete,
-    globalLoading: (state) => state.globalLoading,
-    getSelectedMesh: (state) => state.selectedMesh,
-    getMeshList: (state) => state.meshes,
-    getDataplanes: (state) => state.dataplanes,
-    getDataplanesList: (state) => state.totalDataplaneList,
-    getAnyDpOffline: (state) => state.anyDataplanesOffline,
+    getOnboardingStatus: state => state.onboardingComplete,
+    globalLoading: state => state.globalLoading,
+    getSelectedMesh: state => state.selectedMesh,
+    getMeshList: state => state.meshes,
+    getDataplanes: state => state.dataplanes,
+    getDataplanesList: state => state.totalDataplaneList,
+    getAnyDpOffline: state => state.anyDataplanesOffline,
     // total counts for all meshes
-    getTotalMeshCount: (state) => state.totalMeshCount,
-    getTotalInternalServiceCount: (state) => state.totalInternalServiceCount,
-    getTotalExternalServiceCount: (state) => state.totalExternalServiceCount,
-    getTotalDataplaneCount: (state) => state.totalDataplaneCount,
-    getTotalHealthCheckCount: (state) => state.totalHealthCheckCount,
-    getTotalProxyTemplateCount: (state) => state.totalProxyTemplateCount,
-    getTotalTrafficLogCount: (state) => state.totalTrafficLogCount,
-    getTotalTrafficPermissionCount: (state) => state.totalTrafficPermissionCount,
-    getTotalTrafficRouteCount: (state) => state.totalTrafficRouteCount,
-    getTotalTrafficTraceCount: (state) => state.totalTrafficTraceCount,
-    getTotalFaultInjectionCount: (state) => state.totalFaultInjectionCount,
-    getTotalCircuitBreakerCount: (state) => state.totalCircuitBreakerCount,
-    getTotalRateLimitCount: (state) => state.totalRateLimitCount,
-    getTotalRetryCount: (state) => state.totalRetryCount,
-    getTotalTimeoutCount: (state) => state.totalTimeoutCount,
+    getTotalMeshCount: state => state.totalMeshCount,
+    getTotalInternalServiceCount: state => state.totalInternalServiceCount,
+    getTotalExternalServiceCount: state => state.totalExternalServiceCount,
+    getTotalDataplaneCount: state => state.totalDataplaneCount,
+    getTotalHealthCheckCount: state => state.totalHealthCheckCount,
+    getTotalProxyTemplateCount: state => state.totalProxyTemplateCount,
+    getTotalTrafficLogCount: state => state.totalTrafficLogCount,
+    getTotalTrafficPermissionCount: state => state.totalTrafficPermissionCount,
+    getTotalTrafficRouteCount: state => state.totalTrafficRouteCount,
+    getTotalTrafficTraceCount: state => state.totalTrafficTraceCount,
+    getTotalFaultInjectionCount: state => state.totalFaultInjectionCount,
+    getTotalCircuitBreakerCount: state => state.totalCircuitBreakerCount,
+    getTotalRateLimitCount: state => state.totalRateLimitCount,
+    getTotalRetryCount: state => state.totalRetryCount,
+    getTotalTimeoutCount: state => state.totalTimeoutCount,
     // total counts per single mesh
-    getTotalInternalServiceCountFromMesh: (state) => state.totalInternalServiceCountFromMesh,
-    getTotalExternalServiceCountFromMesh: (state) => state.totalExternalServiceCountFromMesh,
-    getTotalDataplaneCountFromMesh: (state) => state.totalDataplaneCountFromMesh,
-    getTotalTrafficRoutesCountFromMesh: (state) => state.totalTrafficRouteCountFromMesh,
-    getTotalTrafficPermissionsCountFromMesh: (state) => state.totalTrafficPermissionCountFromMesh,
-    getTotalHealthChecksCountFromMesh: (state) => state.totalHealthCheckCountFromMesh,
-    getTotalProxyTemplatesCountFromMesh: (state) => state.totalProxyTemplateCountFromMesh,
-    getTotalTrafficLogsFromMesh: (state) => state.totalTrafficLogCountFromMesh,
-    getTotalTrafficTracesCountFromMesh: (state) => state.totalTrafficTraceCountFromMesh,
-    getTotalFaultInjectionsCountFromMesh: (state) => state.totalFaultInjectionCountFromMesh,
-    getTotalCircuitBreakersCountFromMesh: (state) => state.totalCircuitBreakerCountFromMesh,
-    getTotalRateLimitCountFromMesh: (state) => state.totalRateLimitCountFromMesh,
-    getTotalRetryCountFromMesh: (state) => state.totalRetryCountFromMesh,
-    getTotalTimeoutCountFromMesh: (state) => state.totalTimeoutCountFromMesh,
+    getTotalInternalServiceCountFromMesh: state => state.totalInternalServiceCountFromMesh,
+    getTotalExternalServiceCountFromMesh: state => state.totalExternalServiceCountFromMesh,
+    getTotalDataplaneCountFromMesh: state => state.totalDataplaneCountFromMesh,
+    getTotalTrafficRoutesCountFromMesh: state => state.totalTrafficRouteCountFromMesh,
+    getTotalTrafficPermissionsCountFromMesh: state => state.totalTrafficPermissionCountFromMesh,
+    getTotalHealthChecksCountFromMesh: state => state.totalHealthCheckCountFromMesh,
+    getTotalProxyTemplatesCountFromMesh: state => state.totalProxyTemplateCountFromMesh,
+    getTotalTrafficLogsFromMesh: state => state.totalTrafficLogCountFromMesh,
+    getTotalTrafficTracesCountFromMesh: state => state.totalTrafficTraceCountFromMesh,
+    getTotalFaultInjectionsCountFromMesh: state => state.totalFaultInjectionCountFromMesh,
+    getTotalCircuitBreakersCountFromMesh: state => state.totalCircuitBreakerCountFromMesh,
+    getTotalRateLimitCountFromMesh: state => state.totalRateLimitCountFromMesh,
+    getTotalRetryCountFromMesh: state => state.totalRetryCountFromMesh,
+    getTotalTimeoutCountFromMesh: state => state.totalTimeoutCountFromMesh,
 
-    getItemQueryNamespace: (state) => state.itemQueryNamespace,
-    getClusterCount: (state) => state.totalClusters,
+    getItemQueryNamespace: state => state.itemQueryNamespace,
+    getClusterCount: state => state.totalClusters,
     getServiceInsightsFromMesh: ({ serviceInsights }) => filterResourceByMesh(serviceInsights),
     getExternalServicesFromMesh: ({ externalServices }) => filterResourceByMesh(externalServices),
-    getMeshInsight: (state) => state.meshInsight,
-    getMeshInsightsFetching: (state) => state.meshInsightsFetching,
-    getServiceInsightsFetching: (state) => state.serviceInsightsFetching,
-    getExternalServicesFetching: (state) => state.externalServicesFetching,
-    getResourceFetching: ({
-      meshInsightsFetching,
-      serviceInsightsFetching,
-      externalServicesFetching,
-    }) => meshInsightsFetching || serviceInsightsFetching || externalServicesFetching,
-    getServiceResourcesFetching: ({
-      serviceInsightsFetching,
-      externalServicesFetching,
-    }) => serviceInsightsFetching || externalServicesFetching,
+    getMeshInsight: state => state.meshInsight,
+    getMeshInsightsFetching: state => state.meshInsightsFetching,
+    getServiceInsightsFetching: state => state.serviceInsightsFetching,
+    getExternalServicesFetching: state => state.externalServicesFetching,
+    getResourceFetching: ({ meshInsightsFetching, serviceInsightsFetching, externalServicesFetching }) =>
+      meshInsightsFetching || serviceInsightsFetching || externalServicesFetching,
+    getServiceResourcesFetching: ({ serviceInsightsFetching, externalServicesFetching }) =>
+      serviceInsightsFetching || externalServicesFetching,
     getChart: ({ overviewCharts }) => (chartName: string) => overviewCharts[chartName],
     getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
     getSupportedVersions: ({ supportedVersions }) => supportedVersions,
@@ -177,7 +168,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       const noDataplane = totalDataplaneCount === 0
 
       return noDataplane && onlyDefaultMesh
-    }
+    },
   },
   mutations: {
     SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
@@ -229,11 +220,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
 
       const initialState = { online: 0, partially_degraded: 0, offline: 0 }
 
-      const {
-        online,
-        offline,
-        partially_degraded: partiallyDegraded,
-      } = data.reduce(reducer, initialState)
+      const { online, offline, partially_degraded: partiallyDegraded } = data.reduce(reducer, initialState)
 
       const total = online + offline + partiallyDegraded
 
@@ -272,7 +259,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
   actions: {
     // bootstrap app
 
-    async bootstrap ({ commit, dispatch, getters }) {
+    async bootstrap({ commit, dispatch, getters }) {
       // check the API status before we do anything else
       await dispatch('config/getStatus')
 
@@ -301,17 +288,18 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // update the onboarding state
-    updateOnboardingStatus ({ commit }, status) {
+    updateOnboardingStatus({ commit }, status) {
       commit('SET_ONBOARDING_STATUS', status)
     },
 
     // fetch all of the meshes from the API
-    fetchMeshList ({ commit, state }) {
+    fetchMeshList({ commit, state }) {
       const params = {
-        size: state.meshPageSize
+        size: state.meshPageSize,
       }
 
-      return api.getAllMeshes(params)
+      return api
+        .getAllMeshes(params)
         .then(response => {
           commit('FETCH_ALL_MESHES', response)
         })
@@ -321,8 +309,9 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // fetch all dataplanes from a specific mesh
-    fetchDataplanesFromMesh ({ commit }, mesh: string) {
-      return api.getAllDataplanesFromMesh(mesh)
+    fetchDataplanesFromMesh({ commit }, mesh: string) {
+      return api
+        .getAllDataplanesFromMesh(mesh)
         .then(response => {
           commit('FETCH_DATAPLANES_FROM_MESH', response)
         })
@@ -332,34 +321,34 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // update the selected mesh
-    updateSelectedMesh ({ commit }, mesh) {
+    updateSelectedMesh({ commit }, mesh) {
       commit('SET_SELECTED_MESH', mesh)
     },
 
     /**
-       * Total Counts (for all items)
-       *
-       * Setting the `size` to 1 on these requests prevents
-       * the unneeded listing of max 100 items.
-       */
+     * Total Counts (for all items)
+     *
+     * Setting the `size` to 1 on these requests prevents
+     * the unneeded listing of max 100 items.
+     */
 
     // get total clusters (Zones) when in multicluster (or "Multi-Zone") mode
-    fetchTotalClusterCount ({ commit }) {
-      return api.getZones()
-        .then(response => {
-          const total = response.total
+    fetchTotalClusterCount({ commit }) {
+      return api.getZones().then(response => {
+        const total = response.total
 
-          commit('SET_TOTAL_CLUSTER_COUNT', total)
-        })
+        commit('SET_TOTAL_CLUSTER_COUNT', total)
+      })
     },
 
     // get the total number of meshes
-    fetchMeshTotalCount ({ commit, state }) {
+    fetchMeshTotalCount({ commit, state }) {
       const params = {
-        size: state.meshPageSize
+        size: state.meshPageSize,
       }
 
-      return api.getAllMeshes(params)
+      return api
+        .getAllMeshes(params)
         .then(response => {
           const total = response.total
 
@@ -371,10 +360,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of internal services present
-    fetchInternalServiceTotalCount ({ commit }) {
+    fetchInternalServiceTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllServiceInsights(params)
+      return api
+        .getAllServiceInsights(params)
         .then(response => {
           const total = response.total
 
@@ -386,10 +376,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of external services present
-    fetchExternalServiceTotalCount ({ commit }) {
+    fetchExternalServiceTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllExternalServices(params)
+      return api
+        .getAllExternalServices(params)
         .then(response => {
           const total = response.total
 
@@ -401,10 +392,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of dataplanes present
-    fetchDataplaneTotalCount ({ commit }) {
+    fetchDataplaneTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllDataplanes(params)
+      return api
+        .getAllDataplanes(params)
         .then(response => {
           const total = response.total
 
@@ -416,10 +408,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of health checks present
-    fetchHealthCheckTotalCount ({ commit }) {
+    fetchHealthCheckTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllHealthChecks(params)
+      return api
+        .getAllHealthChecks(params)
         .then(response => {
           const total = response.total
 
@@ -431,10 +424,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of proxy templates present
-    fetchProxyTemplateTotalCount ({ commit }) {
+    fetchProxyTemplateTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllProxyTemplates(params)
+      return api
+        .getAllProxyTemplates(params)
         .then(response => {
           const total = response.total
 
@@ -446,10 +440,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic logs present
-    fetchTrafficLogTotalCount ({ commit }) {
+    fetchTrafficLogTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllTrafficLogs(params)
+      return api
+        .getAllTrafficLogs(params)
         .then(response => {
           const total = response.total
 
@@ -461,10 +456,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic permissions present
-    fetchTrafficPermissionTotalCount ({ commit }) {
+    fetchTrafficPermissionTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllTrafficPermissions(params)
+      return api
+        .getAllTrafficPermissions(params)
         .then(response => {
           const total = response.total
 
@@ -476,10 +472,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic routes present
-    fetchTrafficRouteTotalCount ({ commit }) {
+    fetchTrafficRouteTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllTrafficRoutes(params)
+      return api
+        .getAllTrafficRoutes(params)
         .then(response => {
           const total = response.total
 
@@ -491,10 +488,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic traces present
-    fetchTrafficTraceTotalCount ({ commit }) {
+    fetchTrafficTraceTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllTrafficTraces(params)
+      return api
+        .getAllTrafficTraces(params)
         .then(response => {
           const total = response.total
 
@@ -506,10 +504,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of fault injections present
-    fetchFaultInjectionTotalCount ({ commit }) {
+    fetchFaultInjectionTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllFaultInjections(params)
+      return api
+        .getAllFaultInjections(params)
         .then(response => {
           const total = response.total
 
@@ -521,10 +520,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of circuit breakers present
-    fetchCircuitBreakerTotalCount ({ commit }) {
+    fetchCircuitBreakerTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllCircuitBreakers(params)
+      return api
+        .getAllCircuitBreakers(params)
         .then(response => {
           const total = response.total
 
@@ -536,10 +536,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of rate limits present
-    fetchRateLimitTotalCount ({ commit }) {
+    fetchRateLimitTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllRateLimits(params)
+      return api
+        .getAllRateLimits(params)
         .then(response => {
           const total = response.total
 
@@ -551,10 +552,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of retries present
-    fetchRetryTotalCount ({ commit }) {
+    fetchRetryTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllRetries(params)
+      return api
+        .getAllRetries(params)
         .then(response => {
           const total = response.total
 
@@ -566,10 +568,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of timeouts present
-    fetchTimeoutTotalCount ({ commit }) {
+    fetchTimeoutTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return api.getAllTimeouts(params)
+      return api
+        .getAllTimeouts(params)
         .then(response => {
           const total = response.total
 
@@ -581,14 +584,15 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     /**
-       * Total counts (per mesh)
-       */
+     * Total counts (per mesh)
+     */
 
     // get the total number of internal services from a specific mesh
-    fetchInternalServiceTotalCountFromMesh ({ commit }, mesh) {
+    fetchInternalServiceTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllServiceInsightsFromMesh(mesh, params)
+      return api
+        .getAllServiceInsightsFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -600,10 +604,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of external services from a specific mesh
-    fetchExternalServiceTotalCountFromMesh ({ commit }, mesh) {
+    fetchExternalServiceTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllExternalServicesFromMesh(mesh, params)
+      return api
+        .getAllExternalServicesFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -615,10 +620,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of dataplanes from a specific mesh
-    fetchDataplaneTotalCountFromMesh ({ commit }, mesh) {
+    fetchDataplaneTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllDataplanesFromMesh(mesh, params)
+      return api
+        .getAllDataplanesFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -630,10 +636,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of health checks from a specific mesh
-    fetchHealthCheckTotalCountFromMesh ({ commit }, mesh) {
+    fetchHealthCheckTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllHealthChecksFromMesh(mesh, params)
+      return api
+        .getAllHealthChecksFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -645,10 +652,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of proxy templates from a specific mesh
-    fetchProxyTemplateTotalCountFromMesh ({ commit }, mesh) {
+    fetchProxyTemplateTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllProxyTemplatesFromMesh(mesh, params)
+      return api
+        .getAllProxyTemplatesFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -660,10 +668,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic logs from a specific mesh
-    fetchTrafficLogTotalCountFromMesh ({ commit }, mesh) {
+    fetchTrafficLogTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllTrafficLogsFromMesh(mesh, params)
+      return api
+        .getAllTrafficLogsFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -675,10 +684,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic permissions from a specific mesh
-    fetchTrafficPermissionTotalCountFromMesh ({ commit }, mesh) {
+    fetchTrafficPermissionTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllTrafficPermissionsFromMesh(mesh, params)
+      return api
+        .getAllTrafficPermissionsFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -690,10 +700,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic routes from a specific mesh
-    fetchTrafficRouteTotalCountFromMesh ({ commit }, mesh) {
+    fetchTrafficRouteTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllTrafficRoutesFromMesh(mesh, params)
+      return api
+        .getAllTrafficRoutesFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -705,10 +716,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of traffic traces from a specific mesh
-    fetchTrafficTraceTotalCountFromMesh ({ commit }, mesh) {
+    fetchTrafficTraceTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllTrafficTracesFromMesh(mesh, params)
+      return api
+        .getAllTrafficTracesFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -720,10 +732,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of fault injections from a specific mesh
-    fetchFaultInjectionTotalCountFromMesh ({ commit }, mesh) {
+    fetchFaultInjectionTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllFaultInjectionsFromMesh(mesh, params)
+      return api
+        .getAllFaultInjectionsFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -735,10 +748,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of circuit breakers from a specific mesh
-    fetchCircuitBreakerTotalCountFromMesh ({ commit }, mesh) {
+    fetchCircuitBreakerTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllCircuitBreakersFromMesh(mesh, params)
+      return api
+        .getAllCircuitBreakersFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -750,10 +764,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of rate limits from a specific mesh
-    fetchRateLimitTotalCountFromMesh ({ commit }, mesh) {
+    fetchRateLimitTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllRateLimitsFromMesh(mesh, params)
+      return api
+        .getAllRateLimitsFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -765,10 +780,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of retries from a specific mesh
-    fetchRetryTotalCountFromMesh ({ commit }, mesh) {
+    fetchRetryTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllRetriesFromMesh(mesh, params)
+      return api
+        .getAllRetriesFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -780,10 +796,11 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     // get the total number of timeouts from a specific mesh
-    fetchTimeoutTotalCountFromMesh ({ commit }, mesh) {
+    fetchTimeoutTotalCountFromMesh({ commit }, mesh) {
       const params = { size: 1 }
 
-      return api.getAllTimeoutsFromMesh(mesh, params)
+      return api
+        .getAllTimeoutsFromMesh(mesh, params)
         .then(response => {
           const total = response.total
 
@@ -795,24 +812,24 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     },
 
     /**
-       * Dataplane statuses
-       */
+     * Dataplane statuses
+     */
 
     // this will get the current status of all dataplanes
-    getAllDataplanes ({ commit }, params) {
-      const getDataplanes = async () => new Promise<void>(async (resolve, reject) => {
-        const result = []
-        const states = []
+    getAllDataplanes({ commit }, params) {
+      const getDataplanes = async () =>
+        new Promise<void>(async (resolve, reject) => {
+          const result = []
+          const states = []
 
-        const dataplanes = await api.getAllDataplanes(params)
-        const items = await dataplanes.items
+          const dataplanes = await api.getAllDataplanes(params)
+          const items = await dataplanes.items
 
-        for (let i = 0; i < items.length; i++) {
-          const itemName = items[i].name
-          const itemMesh = items[i].mesh
+          for (let i = 0; i < items.length; i++) {
+            const itemName = items[i].name
+            const itemMesh = items[i].mesh
 
-          const itemStatus = await api.getDataplaneOverviewFromMesh(itemMesh, itemName)
-            .then(response => {
+            const itemStatus = await api.getDataplaneOverviewFromMesh(itemMesh, itemName).then(response => {
               const items = response.dataplaneInsight.subscriptions
 
               if (items && items.length > 0) {
@@ -829,42 +846,42 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
               return 'Offline'
             })
 
-          // create the full data array
-          result.push({
-            status: itemStatus,
-            name: itemName,
-            mesh: itemMesh
-          })
-        }
+            // create the full data array
+            result.push({
+              status: itemStatus,
+              name: itemName,
+              mesh: itemMesh,
+            })
+          }
 
-        // create a simple flat status object with booleans for checking
-        // if any dataplanes are offline
-        for (let i = 0; i < Object.values(result).length; i++) {
-          const statusVal = Object.values(result[i])[0]
-          const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
+          // create a simple flat status object with booleans for checking
+          // if any dataplanes are offline
+          for (let i = 0; i < Object.values(result).length; i++) {
+            const statusVal = Object.values(result[i])[0]
+            const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
 
-          states.push(isOnline)
-        }
+            states.push(isOnline)
+          }
 
-        // if any of the dataplanes return false for being online
-        // commit this so we can check against it
-        const anyDpOffline = states.some(i => i === false)
+          // if any of the dataplanes return false for being online
+          // commit this so we can check against it
+          const anyDpOffline = states.some(i => i === false)
 
-        commit('SET_ANY_DP_OFFLINE', anyDpOffline)
+          commit('SET_ANY_DP_OFFLINE', anyDpOffline)
 
-        // commit the total list of dataplanes
-        commit('SET_TOTAL_DP_LIST', result)
+          // commit the total list of dataplanes
+          commit('SET_TOTAL_DP_LIST', result)
 
-        // resolve the promise
-        resolve()
-      })
+          // resolve the promise
+          resolve()
+        })
 
       return getDataplanes()
     },
 
     // NEW
 
-    async fetchMeshInsights ({ commit, dispatch, state }, mesh = 'all') {
+    async fetchMeshInsights({ commit, dispatch, state }, mesh = 'all') {
       commit('SET_MESH_INSIGHTS_FETCHING', true)
 
       try {
@@ -887,14 +904,13 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       commit('SET_MESH_INSIGHTS_FETCHING', false)
     },
 
-    async fetchServiceInsights ({ commit, state }, mesh = 'all') {
+    async fetchServiceInsights({ commit, state }, mesh = 'all') {
       commit('SET_SERVICE_INSIGHTS_FETCHING', true)
 
       try {
         const params = {
-          callEndpoint: mesh === 'all'
-            ? api.getAllServiceInsights.bind(api)
-            : api.getAllServiceInsightsFromMesh.bind(api, mesh),
+          callEndpoint:
+            mesh === 'all' ? api.getAllServiceInsights.bind(api) : api.getAllServiceInsightsFromMesh.bind(api, mesh),
           size: state.pageSize,
         }
 
@@ -906,14 +922,13 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       commit('SET_SERVICE_INSIGHTS_FETCHING', false)
     },
 
-    async fetchExternalServices ({ commit, state, dispatch }, mesh = 'all') {
+    async fetchExternalServices({ commit, state, dispatch }, mesh = 'all') {
       commit('SET_EXTERNAL_SERVICES_FETCHING', true)
 
       try {
         const params = {
-          callEndpoint: mesh === 'all'
-            ? api.getAllExternalServices.bind(api)
-            : api.getAllExternalServicesFromMesh.bind(api, mesh),
+          callEndpoint:
+            mesh === 'all' ? api.getAllExternalServices.bind(api) : api.getAllExternalServicesFromMesh.bind(api, mesh),
           size: state.pageSize,
         }
 
@@ -925,7 +940,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       commit('SET_EXTERNAL_SERVICES_FETCHING', false)
     },
 
-    async fetchServices ({ dispatch }, mesh = 'all') {
+    async fetchServices({ dispatch }, mesh = 'all') {
       const externalServices = dispatch('fetchExternalServices', mesh)
       const serviceInsights = dispatch('fetchServiceInsights', mesh)
 
@@ -933,7 +948,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       await dispatch('setOverviewServicesChartData')
     },
 
-    async fetchZonesInsights ({ commit, dispatch, state, getters }, multicluster = false) {
+    async fetchZonesInsights({ commit, dispatch, state, getters }, multicluster = false) {
       commit('SET_ZONES_INSIGHTS_FETCHING', true)
 
       try {
@@ -949,18 +964,22 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
           dispatch('setOverviewZonesChartData', statuses)
           dispatch('setOverviewZonesCPVersionsChartData', overviews)
         } else {
-          const zonesData = [{
-            category: 'Zone',
-            value: 1,
-            tooltipDisabled: true,
-            labelDisabled: true,
-          }]
+          const zonesData = [
+            {
+              category: 'Zone',
+              value: 1,
+              tooltipDisabled: true,
+              labelDisabled: true,
+            },
+          ]
 
-          const versionsData = [{
-            category: getters['config/getVersion'],
-            value: 1,
-            tooltipDisabled: true,
-          }]
+          const versionsData = [
+            {
+              category: getters['config/getVersion'],
+              value: 1,
+              tooltipDisabled: true,
+            },
+          ]
 
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: zonesData })
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: versionsData })
@@ -973,7 +992,7 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
       commit('SET_ZONES_INSIGHTS_FETCHING', false)
     },
 
-    setChartsFromMeshInsights ({ dispatch }) {
+    setChartsFromMeshInsights({ dispatch }) {
       dispatch('setOverviewDataplanesChartData')
       dispatch('setOverviewKumaDPVersionsChartData')
       dispatch('setOverviewEnvoyVersionsChartData')
@@ -1083,8 +1102,10 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     setOverviewEnvoyVersionsChartData({ state, commit }) {
       const { envoy } = state.meshInsight.dpVersions
 
-      const data = Object.entries(envoy)
-        .map(([version, stats]: [TODO, TODO]) => ({ category: version, value: stats.total }))
+      const data = Object.entries(envoy).map(([version, stats]: [TODO, TODO]) => ({
+        category: version,
+        value: stats.total,
+      }))
 
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'envoyVersions', data })
     },
@@ -1092,13 +1113,15 @@ export default (api: Kuma): Module<RootInterface, RootInterface> => ({
     setOverviewKumaDPVersionsChartData({ state, commit }) {
       const { kumaDp } = state.meshInsight.dpVersions
 
-      const data = Object.entries(kumaDp)
-        .map(([version, stats]: [TODO, TODO]) => ({ category: version, value: stats.total }))
+      const data = Object.entries(kumaDp).map(([version, stats]: [TODO, TODO]) => ({
+        category: version,
+        value: stats.total,
+      }))
 
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
     },
 
-    async fetchSupportedVersions ({ commit }) {
+    async fetchSupportedVersions({ commit }) {
       commit('SET_SUPPORTED_VERSIONS_FETCHING', true)
 
       try {

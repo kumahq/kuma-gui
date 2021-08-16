@@ -13,20 +13,10 @@ module.exports = {
     es6: true,
   },
 
-  extends: [
-    'eslint:recommended',
-    'plugin:vue/recommended',
-    'standard',
-    '@vue/typescript',
-  ],
+  extends: ['eslint:recommended', 'plugin:vue/recommended', 'standard', '@vue/typescript'],
 
   // required to lint *.vue files
-  plugins: [
-    'vue',
-    'eslint-plugin-import',
-    '@typescript-eslint',
-    '@typescript-eslint/tslint',
-  ],
+  plugins: ['vue', 'eslint-plugin-import', '@typescript-eslint', '@typescript-eslint/tslint'],
 
   rules: {
     'arrow-parens': 0,
@@ -106,7 +96,7 @@ module.exports = {
       {
         code: 120,
         ignoreStrings: true,
-        ignoreTemplateLiterals: true
+        ignoreTemplateLiterals: true,
       },
     ],
     'no-bitwise': 'error',

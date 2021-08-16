@@ -9,9 +9,9 @@ describe('ShellEmpty.vue', () => {
         {
           path: '/',
           name: 'default',
-          component: TestComponent
-        }
-      ]
+          component: TestComponent,
+        },
+      ],
     })
 
     expect(container).toMatchSnapshot()

@@ -77,48 +77,50 @@ export default {
   props: {
     items: {
       type: Object,
-      default: null
+      default: null,
     },
     title: {
       type: String,
-      default: null
+      default: null,
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isEmpty: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    isReady () {
+    isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
 .label-list-content {
-
   .kong-card {
     margin-bottom: 0 !important;
   }
 }
 
 .label-list {
-
 }
 
 .label-list__col-wrapper {
-
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-size: var(--type-sm);
     font-weight: 500;
     text-transform: uppercase;
@@ -127,7 +129,6 @@ export default {
   }
 
   ul {
-
     li {
       display: block;
       overflow: hidden;
@@ -180,7 +181,6 @@ export default {
   }
 
   span:last-of-type {
-
   }
 }
 
@@ -191,10 +191,9 @@ export default {
   align-items: stretch;
 
   span:first-of-type {
-
     &:after {
       display: inline-block;
-      content: "/";
+      content: '/';
       margin: 0 3px 0 1px;
       color: #999;
     }

@@ -34,7 +34,7 @@
             >
           </div>
           <div class="app-source-check__content px-4">
-            <p>{{ title }} is running on  <span class="capitalize">{{ appSource }}</span></p>
+            <p>{{ title }} is running on <span class="capitalize">{{ appSource }}</span></p>
           </div>
           <div class="px-4">
             <img
@@ -85,9 +85,7 @@
         </h2>
         <div class="data-table-wrapper">
           <KTable :options="tableData">
-            <template
-              v-slot:status="{ rowValue }"
-            >
+            <template v-slot:status="{ rowValue }">
               <div
                 class="entity-status"
                 :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline' || rowValue === false) }"
@@ -139,9 +137,7 @@
           </p>
         </div>
       </div>
-      <div
-        v-else
-      >
+      <div v-else>
         <div class="dataplane-fallback">
           <div class="dataplane-fallback__inner flex -mx-4">
             <div class="dataplane-fallback__icon px-4">
@@ -222,12 +218,12 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'OnboardingStep1',
-  metaInfo () {
+  metaInfo() {
     return {
-      title: `Welcome to ${this.productName}!`
+      title: `Welcome to ${this.productName}!`,
     }
   },
-  data () {
+  data() {
     return {
       appSourceError: false,
       productName: PRODUCT_NAME,
@@ -239,19 +235,19 @@ export default {
         headers: [
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
-          { label: 'Mesh', key: 'mesh' }
+          { label: 'Mesh', key: 'mesh' },
         ],
-        data: []
+        data: [],
       },
-      pageSize: 10
+      pageSize: 10,
     }
   },
   computed: {
     ...mapGetters({
       title: 'config/getTagline',
-      appSource: 'config/getEnvironment'
+      appSource: 'config/getEnvironment',
     }),
-    dataplaneCountForTitle () {
+    dataplaneCountForTitle() {
       const count = this.tableDataDataplaneCount
       if (count && count > 10) {
         return '10+'
@@ -259,18 +255,18 @@ export default {
         return count
       }
     },
-    overallDpStatus () {
+    overallDpStatus() {
       return this.$store.getters.getAnyDpOffline
     },
-    dataplaneWizardRoute () {
+    dataplaneWizardRoute() {
       return this.appSource === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane'
-    }
+    },
   },
-  beforeMount () {
+  beforeMount() {
     this.bootstrap()
   },
   methods: {
-    bootstrap () {
+    bootstrap() {
       this.isLoading = true
       this.isEmpty = false
 
@@ -278,50 +274,49 @@ export default {
       this.completeOnboarding()
     },
 
-    reScanForDataplanes () {
+    reScanForDataplanes() {
       this.tableDataIsEmpty = false
       this.tableDataLoadAttempted = false
 
       this.getDataplaneTableData()
     },
 
-    getDataplaneTableData () {
+    getDataplaneTableData() {
       const params = {
-        size: this.pageSize
+        size: this.pageSize,
       }
 
-      this.$store.dispatch('getAllDataplanes', params)
-        .then(() => {
-          const dataplanes = Object.values(this.$store.getters.getDataplanesList)
+      this.$store.dispatch('getAllDataplanes', params).then(() => {
+        const dataplanes = Object.values(this.$store.getters.getDataplanesList)
 
-          if (dataplanes && dataplanes.length > 0) {
-            this.tableDataDataplaneCount = dataplanes.length
-            this.tableData.data = dataplanes
-            this.tableDataLoadAttempted = false
-            this.tableDataIsEmpty = false
+        if (dataplanes && dataplanes.length > 0) {
+          this.tableDataDataplaneCount = dataplanes.length
+          this.tableData.data = dataplanes
+          this.tableDataLoadAttempted = false
+          this.tableDataIsEmpty = false
 
-            setTimeout(() => {
-              this.tableDataLoadAttempted = true
-            }, this.tableDataLoadDelay)
-          } else {
+          setTimeout(() => {
             this.tableDataLoadAttempted = true
-            this.tableDataIsEmpty = true
-          }
-        })
+          }, this.tableDataLoadDelay)
+        } else {
+          this.tableDataLoadAttempted = true
+          this.tableDataIsEmpty = true
+        }
+      })
     },
 
-    completeOnboarding () {
+    completeOnboarding() {
       this.$store.dispatch('updateOnboardingStatus', true)
 
       setItemToStorage('kumaOnboardingComplete', true)
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss">
 @mixin styledPanel {
-  background-color: #F2F5F7;
+  background-color: #f2f5f7;
   padding: var(--spacing-lg);
   border-radius: 4px;
   margin-top: var(--spacing-md);
@@ -391,7 +386,6 @@ export default {
 }
 
 .dataplane-walkthrough {
-
   p:not(:last-of-type) {
     margin-bottom: 16px;
   }

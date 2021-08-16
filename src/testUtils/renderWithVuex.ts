@@ -5,8 +5,11 @@ import Vue, { ComponentOptions } from 'vue'
 import Store from '@/store'
 import Kuma from '@/services/kuma'
 
-function renderWithVuex(Component: typeof Vue | ComponentOptions<Vue>, options: RenderOptions<Vue> = { store: {}, routes: [] }): RenderResult {
-  const kuma: Kuma = new Kuma();
+function renderWithVuex(
+  Component: typeof Vue | ComponentOptions<Vue>,
+  options: RenderOptions<Vue> = { store: {}, routes: [] },
+): RenderResult {
+  const kuma: Kuma = new Kuma()
   const store: StoreOptions<any> = Store(kuma)
 
   // Render the component and merge the original store and the custom one

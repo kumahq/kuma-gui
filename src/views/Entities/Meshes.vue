@@ -110,9 +110,7 @@
                 </li>
                 <li>
                   <h4>Locality Aware Loadbalancing</h4>
-                  <p
-                    v-if="entity.localityEnabled"
-                  >
+                  <p v-if="entity.localityEnabled">
                     <KBadge
                       size="small"
                       appearance="success"
@@ -186,7 +184,7 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 export default {
   name: 'Meshes',
   metaInfo: {
-    title: 'Meshes'
+    title: 'Meshes',
   },
   components: {
     // EntityURLControl,
@@ -195,23 +193,21 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
   },
   filters: {
-    formatValue (value) {
+    formatValue(value) {
       return value ? value.toLocaleString('en').toString() : 0
     },
-    readableDate (value) {
+    readableDate(value) {
       return humanReadableDate(value)
     },
-    rawDate (value) {
+    rawDate(value) {
       return rawReadableDate(value)
-    }
+    },
   },
-  mixins: [
-    sortEntities
-  ],
-  data () {
+  mixins: [sortEntities],
+  data() {
     return {
       isLoading: true,
       isEmpty: false,
@@ -222,29 +218,29 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Meshes present.'
+        message: 'There are no Meshes present.',
       },
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Name', key: 'name' },
-          { label: 'Type', key: 'type' }
+          { label: 'Type', key: 'type' },
         ],
-        data: []
+        data: [],
       },
       tabs: [
         {
           hash: '#overview',
-          title: 'Overview'
+          title: 'Overview',
         },
         {
           hash: '#resources',
-          title: 'Resources'
+          title: 'Resources',
         },
         {
           hash: '#yaml',
-          title: 'YAML'
-        }
+          title: 'YAML',
+        },
       ],
       entity: [],
       rawEntity: null,
@@ -256,71 +252,71 @@ export default {
       previous: [],
       tabGroupTitle: null,
       entityOverviewTitle: null,
-      itemsPerCol: 3
+      itemsPerCol: 3,
     }
   },
   computed: {
     ...mapState({
-      mesh: 'selectedMesh'
+      mesh: 'selectedMesh',
     }),
-    counts () {
+    counts() {
       const state = this.$store.state
 
       return [
         {
           title: 'Data plane proxies',
-          value: state.totalDataplaneCountFromMesh
+          value: state.totalDataplaneCountFromMesh,
         },
         {
           title: 'Circuit Breakers',
-          value: state.totalCircuitBreakerCountFromMesh
+          value: state.totalCircuitBreakerCountFromMesh,
         },
         {
           title: 'Fault Injections',
-          value: state.totalFaultInjectionCountFromMesh
+          value: state.totalFaultInjectionCountFromMesh,
         },
         {
           title: 'Health Checks',
-          value: state.totalHealthCheckCountFromMesh
+          value: state.totalHealthCheckCountFromMesh,
         },
         {
           title: 'Proxy Templates',
-          value: state.totalProxyTemplateCountFromMesh
+          value: state.totalProxyTemplateCountFromMesh,
         },
         {
           title: 'Traffic Logs',
-          value: state.totalTrafficLogCountFromMesh
+          value: state.totalTrafficLogCountFromMesh,
         },
         {
           title: 'Traffic Permissions',
-          value: state.totalTrafficPermissionCountFromMesh
+          value: state.totalTrafficPermissionCountFromMesh,
         },
         {
           title: 'Traffic Routes',
-          value: state.totalTrafficRouteCountFromMesh
+          value: state.totalTrafficRouteCountFromMesh,
         },
         {
           title: 'Traffic Traces',
-          value: state.totalTrafficTraceCountFromMesh
+          value: state.totalTrafficTraceCountFromMesh,
         },
         {
           title: 'Rate Limits',
-          value: state.totalRateLimitCountFromMesh
+          value: state.totalRateLimitCountFromMesh,
         },
         {
           title: 'Retries',
-          value: state.totalRetryCountFromMesh
+          value: state.totalRetryCountFromMesh,
         },
         {
           title: 'Timeouts',
-          value: state.totalTimeoutCountFromMesh
-        }
+          value: state.totalTimeoutCountFromMesh,
+        },
       ]
     },
-    countCols () {
+    countCols() {
       return Math.ceil(this.counts.length / this.itemsPerCol)
     },
-    shareUrl () {
+    shareUrl() {
       const urlRoot = `${window.location.origin}/#`
 
       const shareUrl = () => {
@@ -332,27 +328,27 @@ export default {
       }
 
       return shareUrl()
-    }
+    },
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.init()
-    }
+    },
   },
-  beforeMount () {
+  beforeMount() {
     this.init()
   },
   methods: {
-    init () {
+    init() {
       this.loadData()
     },
-    goToPreviousPage () {
+    goToPreviousPage() {
       this.pageOffset = this.previous.pop()
       this.next = null
 
       this.loadData()
     },
-    goToNextPage () {
+    goToNextPage() {
       this.previous.push(this.pageOffset)
       this.pageOffset = this.next
       this.next = null
@@ -362,13 +358,13 @@ export default {
     onCreateClick() {
       datadogLogs.logger.info(datadogLogEvents.CREATE_MESH_CLICKED)
     },
-    tableAction (ev) {
+    tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData () {
+    loadData() {
       this.isLoading = true
       this.isEmpty = false
 
@@ -376,82 +372,82 @@ export default {
 
       const params = {
         size: this.pageSize,
-        offset: this.pageOffset
+        offset: this.pageOffset,
       }
 
-      const endpoint = (mesh === 'all' || !mesh)
-        ? this.$api.getAllMeshes(params)
-        : this.$api.getMesh(mesh)
+      const endpoint = mesh === 'all' || !mesh ? this.$api.getAllMeshes(params) : this.$api.getMesh(mesh)
 
-      const getMeshes = () => endpoint
-        .then(response => {
-          const cleanRes = () => {
-            if (mesh === 'all') {
-              return response.items
+      const getMeshes = () =>
+        endpoint
+          .then((response) => {
+            const cleanRes = () => {
+              if (mesh === 'all') {
+                return response.items
+              }
+
+              const newItems = { items: [] }
+
+              newItems.items.push(response)
+
+              return newItems.items
             }
 
-            const newItems = { items: [] }
-
-            newItems.items.push(response)
-
-            return newItems.items
-          }
-
-          // check to see if the `next` url is present
-          if (response.next) {
-            this.next = getOffset(response.next)
-            this.hasNext = true
-          } else {
-            this.hasNext = false
-          }
-
-          const items = cleanRes()
-
-          if (items.length > 0) {
-            // sort the table data by name and the mesh it's associated with
-            if (mesh === 'all') {
-              this.sortEntities(items)
+            // check to see if the `next` url is present
+            if (response.next) {
+              this.next = getOffset(response.next)
+              this.hasNext = true
+            } else {
+              this.hasNext = false
             }
 
-            // set the first item as the default for initial load
-            this.firstEntity = items[0].name
+            const items = cleanRes()
 
-            // load the YAML entity for the first item on page load
-            this.getEntity(items[0])
+            if (items.length > 0) {
+              // sort the table data by name and the mesh it's associated with
+              if (mesh === 'all') {
+                this.sortEntities(items)
+              }
 
-            this.tableData.data = [...items]
-            this.tableDataIsEmpty = false
-            this.isEmpty = false
-          } else {
-            this.tableData.data = []
-            this.tableDataIsEmpty = true
+              // set the first item as the default for initial load
+              this.firstEntity = items[0].name
+
+              // load the YAML entity for the first item on page load
+              this.getEntity(items[0])
+
+              this.tableData.data = [...items]
+              this.tableDataIsEmpty = false
+              this.isEmpty = false
+            } else {
+              this.tableData.data = []
+              this.tableDataIsEmpty = true
+              this.isEmpty = true
+
+              this.getEntity(null)
+            }
+          })
+          .catch((error) => {
+            this.hasError = true
             this.isEmpty = true
 
-            this.getEntity(null)
-          }
-        })
-        .catch(error => {
-          this.hasError = true
-          this.isEmpty = true
-
-          console.error(error)
-        })
-        .finally(() => {
-          setTimeout(() => {
-            this.isLoading = false
-          }, process.env.VUE_APP_DATA_TIMEOUT)
-        })
+            console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.isLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
+          })
 
       getMeshes()
     },
-    getEntity (entity) {
+    getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
 
       if (entity && entity !== null) {
-        return this.$api.getMesh(entity.name)
-          .then(response => {
+        return this.$api
+          .getMesh(entity.name)
+          .then((response) => {
             if (response) {
               // get the counts for this mesh
               const actions = [
@@ -466,11 +462,11 @@ export default {
                 'fetchCircuitBreakerTotalCountFromMesh',
                 'fetchTimeoutTotalCountFromMesh',
                 'fetchRateLimitTotalCountFromMesh',
-                'fetchRetryTotalCountFromMesh'
+                'fetchRetryTotalCountFromMesh',
               ]
 
               // run each action
-              actions.forEach(i => {
+              actions.forEach((i) => {
                 this.$store.dispatch(i, entity.name)
               })
 
@@ -495,25 +491,25 @@ export default {
 
                   if (subData && subData.enabledBackend) {
                     const enabled = subData.enabledBackend
-                    const matched = subData.backends.find(obj => obj.name === enabled)
+                    const matched = subData.backends.find((obj) => obj.name === enabled)
 
                     newData.push({
                       label: label,
                       value: {
                         type: matched.type,
-                        name: matched.name
-                      }
+                        name: matched.name,
+                      },
                     })
                   } else if (subData && subData.defaultBackend) {
                     const enabled = subData.defaultBackend
-                    const matched = subData.backends.find(obj => obj.name === enabled)
+                    const matched = subData.backends.find((obj) => obj.name === enabled)
 
                     newData.push({
                       label: label,
                       value: {
                         type: matched.type,
-                        name: matched.name
-                      }
+                        name: matched.name,
+                      },
                     })
                   } else if (subData && subData.backends) {
                     const backends = subData.backends[0]
@@ -522,13 +518,13 @@ export default {
                       label: label,
                       value: {
                         type: backends.type,
-                        name: backends.name
-                      }
+                        name: backends.name,
+                      },
                     })
                   } else {
                     newData.push({
                       label: label,
-                      value: null
+                      value: null,
                     })
                   }
                 })
@@ -548,7 +544,7 @@ export default {
               this.entity = {
                 basicData: col1,
                 extendedData: formatted(),
-                localityEnabled: isRoutingEnabled()
+                localityEnabled: isRoutingEnabled(),
               }
 
               // this.rawEntity = response
@@ -558,7 +554,7 @@ export default {
               this.entityIsEmpty = true
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.entityHasError = true
             console.error(error)
           })
@@ -573,8 +569,8 @@ export default {
           this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

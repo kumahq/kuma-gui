@@ -1,4 +1,4 @@
-export function getItemFromStorage (item: string) {
+export function getItemFromStorage(item: string) {
   const itemFromStorage = localStorage.getItem(item) || null
 
   if (itemFromStorage) {
@@ -6,7 +6,7 @@ export function getItemFromStorage (item: string) {
   }
 }
 
-export function setItemToStorage (cacheKey: string, value: any) {
+export function setItemToStorage(cacheKey: string, value: any) {
   return localStorage.setItem(cacheKey, value)
 }
 

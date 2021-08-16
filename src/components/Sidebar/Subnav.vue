@@ -35,40 +35,40 @@ import NavItem from '@/components/Sidebar/NavItem'
 export default {
   name: 'SubNav',
   components: {
-    NavItem
+    NavItem,
   },
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     items: {
       type: Array,
-      required: true
+      required: true,
     },
     titleLink: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data () {
+  data() {
     return {
-      isCollapsed: false
+      isCollapsed: false,
     }
   },
   computed: {
-    touchDevice () {
+    touchDevice() {
       return !!('ontouchstart' in window || navigator.maxTouchPoints)
-    }
+    },
   },
   methods: {
-    handleToggle () {
+    handleToggle() {
       if (this.touchDevice) {
         this.isCollapsed = !this.isCollapsed
         this.$emit('toggled', this.isCollapsed)
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

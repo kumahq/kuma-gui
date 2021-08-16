@@ -28,9 +28,9 @@
 <script>
 export default {
   name: 'EnterpriseBox',
-  data () {
+  data() {
     return {
-      url: `https://kuma.io/enterprise/${process.env.VUE_APP_UTM}`
+      url: `https://kuma.io/enterprise/${process.env.VUE_APP_UTM}`,
     }
   },
 }
@@ -56,9 +56,8 @@ export default {
 }
 
 .success-button {
---KButtonPrimaryBase: #19a654;
---KButtonPrimaryHover: #19a654;
---KButtonPrimaryActive: #19a654;
+  --KButtonPrimaryBase: #19a654;
+  --KButtonPrimaryHover: #19a654;
+  --KButtonPrimaryActive: #19a654;
 }
-
 </style>

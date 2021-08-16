@@ -101,52 +101,52 @@ import 'prismjs/themes/prism.css'
 export default {
   name: 'CodeView',
   components: {
-    prism: Prism
+    prism: Prism,
   },
   props: {
     lang: {
       type: String,
-      required: true
+      required: true,
     },
     copyButtonText: {
       type: String,
-      default: 'Copy to Clipboard'
+      default: 'Copy to Clipboard',
     },
     title: {
       type: String,
-      default: null
+      default: null,
     },
     content: {
       type: String,
-      default: null
+      default: null,
     },
     loaders: {
       type: Boolean,
-      default: true
+      default: true,
     },
     isLoading: {
       type: Boolean,
-      default: false
+      default: false,
     },
     hasError: {
       type: Boolean,
-      default: false
+      default: false,
     },
     isEmpty: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   computed: {
-    isReady () {
+    isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
-    codeContent () {
+    codeContent() {
       const content = this.content
 
       return content
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -158,11 +158,11 @@ export default {
 }
 
 .empty-state-title {
-
   .card-icon {
     text-align: center;
 
-    img, svg {
+    img,
+    svg {
       display: block;
       margin-left: auto;
       margin-right: auto;

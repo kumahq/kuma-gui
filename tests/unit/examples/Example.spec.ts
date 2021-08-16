@@ -6,7 +6,7 @@ describe('Example.vue', () => {
 
   it('renders props.msg when passed', () => {
     const { getByText } = render(Example, {
-      props
+      props,
     })
 
     expect(getByText(props.msg)).toBeInTheDocument()
@@ -15,7 +15,7 @@ describe('Example.vue', () => {
   it('renders fetch data', async () => {
     const mock = jest.fn()
     const { findByText } = render(Example, {
-      props
+      props,
     })
 
     expect(await findByText(1)).toBeInTheDocument()

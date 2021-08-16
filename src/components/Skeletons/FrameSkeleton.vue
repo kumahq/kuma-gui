@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'FrameSkeleton'
+  name: 'FrameSkeleton',
 }
 </script>
 

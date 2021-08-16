@@ -19,5 +19,5 @@ module.exports = {
     //     service: null
     //   }
     // }
-  }
+  },
 }

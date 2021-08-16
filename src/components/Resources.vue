@@ -32,17 +32,15 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   data: () => ({
-    productName: PRODUCT_NAME
+    productName: PRODUCT_NAME,
   }),
   computed: {
     ...mapGetters({
-      version: 'config/getVersion'
+      version: 'config/getVersion',
     }),
-    resourceLinks () {
+    resourceLinks() {
       const storedVersion = this.version
-      const versionOutput = (storedVersion !== null)
-        ? storedVersion
-        : 'latest'
+      const versionOutput = storedVersion !== null ? storedVersion : 'latest'
 
       const utmSource = process.env.VUE_APP_UTM
 
@@ -50,22 +48,22 @@ export default {
         return [
           {
             link: `https://kuma.io/docs/${versionOutput}/${utmSource}`,
-            label: `${process.env.VUE_APP_NAMESPACE} Documentation`
+            label: `${process.env.VUE_APP_NAMESPACE} Documentation`,
           },
           {
             link: `https://kuma-mesh.slack.com/${utmSource}`,
-            label: `${process.env.VUE_APP_NAMESPACE} Community Chat`
+            label: `${process.env.VUE_APP_NAMESPACE} Community Chat`,
           },
           {
             link: `https://github.com/kumahq/kuma${utmSource}`,
-            label: `${process.env.VUE_APP_NAMESPACE} GitHub Repository`
-          }
+            label: `${process.env.VUE_APP_NAMESPACE} GitHub Repository`,
+          },
         ]
       }
 
       return false
-    }
-  }
+    },
+  },
 }
 </script>
 

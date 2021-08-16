@@ -9,17 +9,17 @@ export const uuidRegEx = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-
  * @param {String} str - the string to test
  * @returns {boolean}
  */
-export function isValidUuid (str: string) {
+export function isValidUuid(str: string) {
   return str.length === 36 && new RegExp(`^${uuidRegEx}$`).test(str)
 }
 
-export function forEach (array: any[], callback: (...args: any) => void, scope: any) {
+export function forEach(array: any[], callback: (...args: any) => void, scope: any) {
   for (let i = 0; i < array.length; i++) {
     callback.call(scope, i, array[i])
   }
 }
 
-export function getPluginIcon (pluginName: string) {
+export function getPluginIcon(pluginName: string) {
   let icon
 
   try {
@@ -36,9 +36,12 @@ export function getPluginIcon (pluginName: string) {
  * @param {Number} timestamp a unix timestamp in seconds
  * @returns a date string with format YYYY-MM-DD HH:mm:ss ZZ
  */
-export function formatDate (timestamp: number) {
+export function formatDate(timestamp: number) {
   const date = new Date(timestamp * 1000)
-  const day = date.getDate().toString().padStart(2, '0')
+  const day = date
+    .getDate()
+    .toString()
+    .padStart(2, '0')
   const month = (date.getMonth() + 1).toString().padStart(2, '0')
   const year = date.getFullYear()
   const time = date.toTimeString().split(' ')
@@ -52,7 +55,7 @@ export function formatDate (timestamp: number) {
  * @param {Object} Object B
  * @return {Boolean}
  */
-export function compareObjects (a: Object, b: Object) {
+export function compareObjects(a: Object, b: Object) {
   return JSON.stringify(a) === JSON.stringify(b)
 }
 
@@ -61,7 +64,7 @@ export function compareObjects (a: Object, b: Object) {
  * @param {Object} Object to check
  * @return {Boolean}
  */
-export function isObjectEmpty (obj: Object) {
+export function isObjectEmpty(obj: Object) {
   return Object.keys(obj).length === 0
 }
 
@@ -73,7 +76,7 @@ export function isObjectEmpty (obj: Object) {
  * @param {Array} target
  * @returns {Boolean}
  */
-export function deepIncludes (src: any[], target: any[]): boolean {
+export function deepIncludes(src: any[], target: any[]): boolean {
   if (!(src instanceof Array)) throw new Error('Params[0] needs to be an Array')
 
   if (target instanceof Array) return target.some(arr => deepIncludes(src, arr))
@@ -91,7 +94,7 @@ export function deepIncludes (src: any[], target: any[]): boolean {
  * Outputs a friendly human-readable timeframe between now and the date string entered
  * @param {String} tdate
  */
-export function humanReadableDate (tdate: string) {
+export function humanReadableDate(tdate: string) {
   const systemDate = new Date(Date.parse(tdate))
   const userDate = new Date()
 
@@ -148,7 +151,7 @@ export function humanReadableDate (tdate: string) {
 /**
  * rawReadableDate
  */
-export function rawReadableDate (date: string) {
+export function rawReadableDate(date: string) {
   const rawDate = new Date(Date.parse(date))
   const options = {
     year: 'numeric',
@@ -167,9 +170,12 @@ export function rawReadableDate (date: string) {
  * @param {Object, Array} original
  * @param {Object} desired
  */
-export function getSome (original: TODO, desired: TODO) {
+export function getSome(original: TODO, desired: TODO) {
   // we have to determine if we're dealing with an array or an object
-  const cleaned = (original && typeof original === 'object' && original.constructor === Array) ? Object.assign({}, ...original) : original
+  const cleaned =
+    original && typeof original === 'object' && original.constructor === Array
+      ? Object.assign({}, ...original)
+      : original
 
   return desired.reduce((obj: TODO, key: TODO) => ({ ...obj, [key]: cleaned[key] }), {})
 }
@@ -183,7 +189,7 @@ export function getSome (original: TODO, desired: TODO) {
  *
  * @param {String} url
  */
-export function stripUrl (url: string) {
+export function stripUrl(url: string) {
   const regex = new RegExp(/([^\/]+$)/g)
   const match = url.match(regex)?.[0]
 
@@ -199,7 +205,7 @@ export function stripUrl (url: string) {
  * @param {String} url The URL you want to find `offset` in and
  * simply return the value for.
  */
-export function getOffset (url: string) {
+export function getOffset(url: string) {
   const regex = new RegExp(/offset=(\w+)/)
   const match = url.match(regex)?.[0].replace('offset=', '')
 
@@ -215,7 +221,7 @@ export function getOffset (url: string) {
  * @param {Object} content The Object you want to remove the
  * date/time strings from.
  */
-export function stripTimes (content: TODO) {
+export function stripTimes(content: TODO) {
   const { creationTime, modificationTime, ...noTimes } = content
 
   return noTimes
@@ -227,7 +233,7 @@ export function stripTimes (content: TODO) {
  * This function will take native Kuma tags and format
  * them for things like CSS class usage.
  */
-export function cleanTag (tag: string) {
+export function cleanTag(tag: string) {
   /**
    * this takes something like `kuma.io/service` and turns it into
    * `kuma-io-service`.
@@ -246,10 +252,13 @@ export function cleanTag (tag: string) {
  *
  * @param {String} str
  */
-export function camelCaseToWords (str: string) {
+export function camelCaseToWords(str: string) {
   const search = /^[a-z]+|[A-Z][a-z]*/g
 
-  return str.match(search)?.map((x: string) => x[0].toUpperCase() + x.substr(1).toLowerCase()).join(' ')
+  return str
+    .match(search)
+    ?.map((x: string) => x[0].toUpperCase() + x.substr(1).toLowerCase())
+    .join(' ')
 }
 
 /**
@@ -257,8 +266,8 @@ export function camelCaseToWords (str: string) {
  *
  * @param {*} value
  */
-export function kebabCase (value: string) {
-  const newValue = (value)
+export function kebabCase(value: string) {
+  const newValue = value
     .replace(/[^a-zA-Z0-9 -]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
@@ -271,8 +280,8 @@ export function kebabCase (value: string) {
   return newValue
 }
 
-export function filterResourceByMesh (resources: {mesh: string}[]) {
-  return (wantMesh: undefined|'all') => {
+export function filterResourceByMesh(resources: { mesh: string }[]) {
+  return (wantMesh: undefined | 'all') => {
     if (!wantMesh || wantMesh === 'all') {
       return resources
     }
@@ -281,7 +290,7 @@ export function filterResourceByMesh (resources: {mesh: string}[]) {
   }
 }
 
-export function applyPropsToObject (props: TODO = {}, object: TODO = {}) {
+export function applyPropsToObject(props: TODO = {}, object: TODO = {}) {
   Object.entries(props).forEach(([key, value]) => {
     if (isPlainObject(value)) {
       return applyPropsToObject(value, object[key])
@@ -291,7 +300,7 @@ export function applyPropsToObject (props: TODO = {}, object: TODO = {}) {
   })
 }
 
-export async function fetchAllResources ({ callEndpoint, ...otherParams }: TODO) {
+export async function fetchAllResources({ callEndpoint, ...otherParams }: TODO) {
   try {
     let allTotal = null
     let offset = 0

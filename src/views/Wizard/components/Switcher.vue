@@ -85,29 +85,25 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Switcher',
-  data () {
+  data() {
     return {
       wizardRoutes: {
         kubernetes: 'kubernetes-dataplane',
-        universal: 'universal-dataplane'
-      }
+        universal: 'universal-dataplane',
+      },
     }
   },
   computed: {
     ...mapGetters({
-      environment: 'config/getEnvironment'
+      environment: 'config/getEnvironment',
     }),
-    instructionsCtaText () {
-      return (this.environment === 'universal')
-        ? 'Switch to Kubernetes instructions'
-        : 'Switch to Universal instructions'
+    instructionsCtaText() {
+      return this.environment === 'universal' ? 'Switch to Kubernetes instructions' : 'Switch to Universal instructions'
     },
-    instructionsCtaRoute () {
-      return (this.environment === 'kubernetes')
-        ? { name: 'universal-dataplane' }
-        : { name: 'kubernetes-dataplane' }
-    }
-  }
+    instructionsCtaRoute() {
+      return this.environment === 'kubernetes' ? { name: 'universal-dataplane' } : { name: 'kubernetes-dataplane' }
+    },
+  },
 }
 </script>
 

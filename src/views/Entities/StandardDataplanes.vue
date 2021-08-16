@@ -13,10 +13,10 @@ import Dataplanes from '@/views/Entities/partial/Dataplanes'
 export default {
   name: 'StandardDataplanes',
   metaInfo: {
-    title: 'Standard Data plane proxies'
+    title: 'Standard Data plane proxies',
   },
   components: {
     Dataplanes,
-  }
+  },
 }
 </script>

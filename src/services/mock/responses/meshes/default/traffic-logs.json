@@ -1,50 +1,50 @@
 {
-  "total":2,
-  "items":[
+  "total": 2,
+  "items": [
     {
-      "type":"TrafficLog",
-      "mesh":"default",
-      "name":"tl-1",
-      "sources":[
+      "type": "TrafficLog",
+      "mesh": "default",
+      "name": "tl-1",
+      "sources": [
         {
-          "match":{
-            "service":"web",
-            "version":"1.0"
+          "match": {
+            "service": "web",
+            "version": "1.0"
           }
         }
       ],
-      "destinations":[
+      "destinations": [
         {
-          "match":{
-            "service":"backend"
+          "match": {
+            "service": "backend"
           }
         }
       ],
-      "conf":{
-        "backend":"file"
+      "conf": {
+        "backend": "file"
       }
     },
     {
-      "type":"TrafficLog",
-      "mesh":"default",
-      "name":"tl-123",
-      "sources":[
+      "type": "TrafficLog",
+      "mesh": "default",
+      "name": "tl-123",
+      "sources": [
         {
-          "match":{
-            "service":"web",
-            "version":"1.0"
+          "match": {
+            "service": "web",
+            "version": "1.0"
           }
         }
       ],
-      "destinations":[
+      "destinations": [
         {
-          "match":{
-            "service":"backend"
+          "match": {
+            "service": "backend"
           }
         }
       ],
-      "conf":{
-        "backend":"file"
+      "conf": {
+        "backend": "file"
       }
     }
   ]

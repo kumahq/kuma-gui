@@ -1,15 +1,13 @@
 module.exports = {
-  purge: [
-    './src/**/*.vue'
-  ],
+  purge: ['./src/**/*.vue'],
   theme: {
     container: {
       center: true,
-      padding: '2rem'
-    }
+      padding: '2rem',
+    },
   },
   future: {
     removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true
-  }
+    purgeLayersByDefault: true,
+  },
 }

@@ -97,7 +97,7 @@ import { setItemToStorage, getItemFromStorage } from '@/Cache'
 export default {
   name: 'OnboardingComplete',
   metaInfo: {
-    title: 'Congratulations!'
+    title: 'Congratulations!',
   },
   data() {
     return {
@@ -106,21 +106,21 @@ export default {
   },
   computed: {
     ...mapGetters({
-      title: 'config/getTagline'
+      title: 'config/getTagline',
     }),
-    hasUserBeenOnboarded () {
+    hasUserBeenOnboarded() {
       return getItemFromStorage('kumaOnboardingComplete')
     },
 
-    runningVersion () {
+    runningVersion() {
       const storedVersion = this.$store.getters.getVersion
-      const ver = (storedVersion !== null) ? storedVersion : 'latest'
+      const ver = storedVersion !== null ? storedVersion : 'latest'
 
       return ver
-    }
+    },
   },
   methods: {
-    completeOnboarding () {
+    completeOnboarding() {
       this.$store.dispatch('updateOnboardingStatus', true)
 
       setItemToStorage('kumaOnboardingComplete', true)
@@ -129,11 +129,11 @@ export default {
         name: 'global-overview',
         params: {
           mesh: 'all',
-          expandSidebar: true
-        }
+          expandSidebar: true,
+        },
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -151,7 +151,6 @@ export default {
 }
 
 .app-source-check__content {
-
   a {
     text-decoration: underline;
     color: var(--blue-link);

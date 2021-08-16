@@ -34,10 +34,10 @@
 export default {
   name: 'NotFound',
   metaInfo: {
-    title: 'Item Not Found'
+    title: 'Item Not Found',
   },
   computed: {
-    currentMesh () {
+    currentMesh() {
       const meshFromLS = localStorage.getItem('selectedMesh')
       const meshFromState = this.$store.getters.getSelectedMesh
 
@@ -46,7 +46,7 @@ export default {
       } else {
         return meshFromState
       }
-    }
-  }
+    },
+  },
 }
 </script>

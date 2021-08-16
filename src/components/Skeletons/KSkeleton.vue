@@ -34,45 +34,45 @@ export default {
   name: 'KSkeleton',
   components: {
     CardSkeleton,
-    TableSkeleton
+    TableSkeleton,
   },
   props: {
     delayMilliseconds: {
       type: Number,
       required: false,
-      default: 750
+      default: 750,
     },
     type: {
       type: String,
       default: '',
-      validator: (val) => ['table', 'card', 'form', 'spinner', ''].indexOf(val) !== -1
+      validator: (val) => ['table', 'card', 'form', 'spinner', ''].indexOf(val) !== -1,
     },
     cardCount: {
       type: Number,
-      default: 1
+      default: 1,
     },
     tableColumns: {
       type: Number,
       required: false,
-      default: undefined
+      default: undefined,
     },
     tableRows: {
       type: Number,
       required: false,
-      default: undefined
-    }
+      default: undefined,
+    },
   },
-  data () {
+  data() {
     return {
-      isVisible: false
+      isVisible: false,
     }
   },
 
-  mounted () {
+  mounted() {
     setTimeout(() => {
       this.isVisible = true
     }, this.delayMilliseconds)
-  }
+  },
 }
 </script>
 
@@ -83,33 +83,48 @@ export default {
   .box {
     display: inline-flex;
     border-radius: 3px;
-    background: linear-gradient(
-      -70deg,
-      #f2f2f2 0%,
-      #f2f2f2 40%,
-      #f7f7f7 50%,
-      #f2f2f2 60%,
-      #f2f2f2 100%
-    ) repeat;
+    background: linear-gradient(-70deg, #f2f2f2 0%, #f2f2f2 40%, #f7f7f7 50%, #f2f2f2 60%, #f2f2f2 100%) repeat;
     background-size: 400% 100%;
     animation: gradient 1s ease infinite;
 
     // Provided box widths
     &.width {
-      &-1 { width: 1rem; }
-      &-2 { width: 2rem; }
-      &-5 { width: 5rem; }
-      &-6 { width: 6rem; }
-      &-10 { width: 10rem; }
-      &-12 { width: 12rem; }
-      &-50 { width: 50%; }
-      &-80 { width: 80%; }
-      &-100 { width: 100%; }
+      &-1 {
+        width: 1rem;
+      }
+      &-2 {
+        width: 2rem;
+      }
+      &-5 {
+        width: 5rem;
+      }
+      &-6 {
+        width: 6rem;
+      }
+      &-10 {
+        width: 10rem;
+      }
+      &-12 {
+        width: 12rem;
+      }
+      &-50 {
+        width: 50%;
+      }
+      &-80 {
+        width: 80%;
+      }
+      &-100 {
+        width: 100%;
+      }
     }
     // Provided box heights
     &.height {
-      &-1 { height: 1rem; }
-      &-2 { height: 2rem; }
+      &-1 {
+        height: 1rem;
+      }
+      &-2 {
+        height: 2rem;
+      }
     }
   }
 }

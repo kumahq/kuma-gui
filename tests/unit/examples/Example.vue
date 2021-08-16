@@ -14,17 +14,17 @@ export default {
   props: {
     msg: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data: () => ({
-    msg2: ''
+    msg2: '',
   }),
 
   async mounted() {
     const response = await axios('/zones')
 
     this.msg2 = response.data.total
-  }
+  },
 }
 </script>

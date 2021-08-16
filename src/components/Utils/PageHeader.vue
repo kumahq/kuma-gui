@@ -13,9 +13,9 @@ export default {
   props: {
     noflex: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 

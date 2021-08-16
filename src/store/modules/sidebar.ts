@@ -8,13 +8,13 @@ export interface SidebarState {
 const state = { menu }
 
 const mutations = {
-  setMenu (state: SidebarState, menu: Menu) {
+  setMenu(state: SidebarState, menu: Menu) {
     state.menu = menu
-  }
+  },
 }
 
 export default {
   namespaced: true,
   state,
-  mutations
+  mutations,
 }

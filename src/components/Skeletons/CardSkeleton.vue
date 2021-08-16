@@ -44,37 +44,36 @@ export default {
   name: 'CardSkeleton',
   components: {
     KCard,
-    KButton
+    KButton,
   },
   props: {
     cardTitle: {
       type: String,
-      required: true
+      required: true,
     },
     cardActionRoute: {
       // this can be a router-link object or a URL string
       type: [Object, String],
-      required: true
+      required: true,
     },
     cardActionButtonText: {
       type: String,
-      required: true
+      required: true,
     },
     centerText: {
       type: Boolean,
-      default: false
+      default: false,
     },
     externalLink: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .skeleton-card-wrapper {
-
 }
 
 .skeleton-card__action,
@@ -83,20 +82,17 @@ export default {
 }
 
 .skeleton-card__title {
-
 }
 
 .skeleton-card__content {
-
 }
 
 .skeleton-card__action {
-
 }
 
 .is-centered {
-
-  &, * {
+  &,
+  * {
     text-align: center;
   }
 }

@@ -11,18 +11,20 @@ const onlineColor = '#19A654'
 const offlineColor = '#BF1330'
 const partiallyDegradedColor = '#F2A230'
 
-const getEmptyData = () => [{
-  category: 'Empty',
-  disabled: true,
-  labelDisabled: true,
-  tooltipDisabled: true,
-  value: 1,
-  fill: '#dadada',
-  fillOpacity: 0.3,
-  strokeColor: '#dadada',
-  strokeDasharray: '4,4',
-  strokeWidth: 2,
-}]
+const getEmptyData = () => [
+  {
+    category: 'Empty',
+    disabled: true,
+    labelDisabled: true,
+    tooltipDisabled: true,
+    value: 1,
+    fill: '#dadada',
+    fillOpacity: 0.3,
+    strokeColor: '#dadada',
+    strokeDasharray: '4,4',
+    strokeWidth: 2,
+  },
+]
 
 export default {
   props: {
@@ -69,7 +71,7 @@ export default {
   },
   data() {
     return {
-      labels: []
+      labels: [],
     }
   },
   computed: {
@@ -113,7 +115,7 @@ export default {
               },
               adapter: {
                 radius: this.labelRadiusAdapter,
-                disabled (value, { dataItem }) {
+                disabled(value, { dataItem }) {
                   if (dataItem) {
                     const minSize = dataItem.dataContext.minSizeForLabel || 0.1
 
@@ -121,7 +123,7 @@ export default {
                   }
 
                   return value
-                }
+                },
               },
             },
             ticks: {
@@ -130,7 +132,7 @@ export default {
             tooltip: {
               pointerOrientation: 'down',
               background: {
-                callback () {
+                callback() {
                   // Removing shadow behind the tooltip
                   this.filters.clear()
                 },
@@ -163,7 +165,7 @@ export default {
               strokeWidth: 2,
               strokeOpacity: 1,
               tooltipPosition: 'pointer',
-              callback () {
+              callback() {
                 this.states.getKey('hover').properties.scale = 1
                 this.states.getKey('active').properties.shiftRadius = 0
                 this.states.getKey('hover').properties.fillOpacity = 1
@@ -180,7 +182,7 @@ export default {
                 background: {
                   fill: '#ffffff',
                 },
-                callback () {
+                callback() {
                   this.toBack()
 
                   self.titleContainer = this
@@ -237,7 +239,7 @@ export default {
           data: this.dataAdapter.bind(this),
         },
       }
-    }
+    },
   },
   watch: {
     data(newData) {
@@ -253,15 +255,15 @@ export default {
       }
     },
   },
-  beforeDestroy () {
+  beforeDestroy() {
     this.chart?.dispose()
   },
-  mounted () {
+  mounted() {
     this.createChart()
     this.applyData(this.data)
   },
   methods: {
-    applyData (data) {
+    applyData(data) {
       if (!this.chart) {
         return
       }
@@ -272,46 +274,46 @@ export default {
 
       this.chart.data = data
     },
-    dataAdapter (data, chart) {
+    dataAdapter(data, chart) {
       if (!data.length) {
         return getEmptyData()
       }
 
       // If data item includes property 'route' it means it should move user
       //  somewhere, and we'll use router to compute the proper url
-      return data.map((item) => {
-        const { route } = item
+      return data
+        .map(item => {
+          const { route } = item
 
-        const defaultItem = route || chart.url
-          ? { ...item, fillOpacity: 0.7 }
-          : item
+          const defaultItem = route || chart.url ? { ...item, fillOpacity: 0.7 } : item
 
-        if (route) {
-          const { href, resolved } = this.$router.resolve(route)
-          const { title } = resolved.meta
+          if (route) {
+            const { href, resolved } = this.$router.resolve(route)
+            const { title } = resolved.meta
 
-          return {
-            url: href,
-            urlTitle: title,
-            ...defaultItem,
+            return {
+              url: href,
+              urlTitle: title,
+              ...defaultItem,
+            }
           }
-        }
 
-        return defaultItem
-      }).map((item) => {
-        const { category = '' } = item
+          return defaultItem
+        })
+        .map(item => {
+          const { category = '' } = item
 
-        switch (category.toLowerCase()) {
-          case 'online':
-            return { fill: onlineColor, minSizeForLabel: 0.13, ...item }
-          case 'offline':
-            return { fill: offlineColor, minSizeForLabel: 0.14, ...item }
-          case 'partially degraded':
-            return { fill: partiallyDegradedColor, minSizeForLabel: 0.30, ...item }
-          default:
-            return item
-        }
-      })
+          switch (category.toLowerCase()) {
+            case 'online':
+              return { fill: onlineColor, minSizeForLabel: 0.13, ...item }
+            case 'offline':
+              return { fill: offlineColor, minSizeForLabel: 0.14, ...item }
+            case 'partially degraded':
+              return { fill: partiallyDegradedColor, minSizeForLabel: 0.3, ...item }
+            default:
+              return item
+          }
+        })
     },
     labelRadiusAdapter(value, target) {
       const { fontSize } = target.properties
@@ -324,13 +326,11 @@ export default {
 
       return (2 - donutThickness - fontSize) / 2
     },
-    setTitle () {
+    setTitle() {
       const total = this.data.reduce((acc, { value }) => acc + value, 0)
 
       if (typeof this.title === 'object' && this.title.singular && this.title.plural) {
-        this.titleLabel.text = total === 1
-          ? this.title.singular
-          : this.title.plural
+        this.titleLabel.text = total === 1 ? this.title.singular : this.title.plural
       }
 
       if (typeof this.title === 'string') {
@@ -339,7 +339,7 @@ export default {
 
       this.titleContainer.invalidateLabels()
     },
-    dataItemsValidatedHandler () {
+    dataItemsValidatedHandler() {
       this.setTitle()
 
       if (!this.data.length && this.subTitleLabel.currentText !== this.emptySubTitle) {
@@ -354,27 +354,20 @@ export default {
       }
 
       if (this.data.length && this.subTitleLabel.currentText === this.emptySubTitle) {
-        this.titleLabel.fontWeight = this.titleProps && this.titleProps.fontWeight
-          ? this.titleProps.fontWeight
-          : '400'
-        this.titleLabel.fontSize = this.titleProps && this.titleProps.fontSize
-          ? this.titleProps.fontSize
-          : 13
+        this.titleLabel.fontWeight = this.titleProps && this.titleProps.fontWeight ? this.titleProps.fontWeight : '400'
+        this.titleLabel.fontSize = this.titleProps && this.titleProps.fontSize ? this.titleProps.fontSize : 13
 
-        this.subTitleLabel.text = this.subTitleProps && this.subTitleProps.text
-          ? this.subTitleProps.text
-          : '{values.value.sum}'
-        this.subTitleLabel.fontWeight = this.subTitleProps && this.subTitleProps.fontWeight
-          ? this.subTitleProps.fontWeight
-          : '700'
-        this.subTitleLabel.fontSize = this.subTitleProps && this.subTitleProps.fontSize
-          ? this.subTitleProps.fontSize
-          : 22
+        this.subTitleLabel.text =
+          this.subTitleProps && this.subTitleProps.text ? this.subTitleProps.text : '{values.value.sum}'
+        this.subTitleLabel.fontWeight =
+          this.subTitleProps && this.subTitleProps.fontWeight ? this.subTitleProps.fontWeight : '700'
+        this.subTitleLabel.fontSize =
+          this.subTitleProps && this.subTitleProps.fontSize ? this.subTitleProps.fontSize : 22
 
         this.titleContainer.invalidateLabels()
       }
     },
-    createChart () {
+    createChart() {
       this.chart = am4core.createFromConfig(this.defaultConfig, this.$refs.chart, am4charts.PieChart)
 
       if (this.saveChart) {

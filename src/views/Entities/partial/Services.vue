@@ -113,27 +113,24 @@ export default {
     DataOverview,
     Tabs,
     YamlView,
-    LabelList
+    LabelList,
   },
-  mixins: [
-    FormatForCLI,
-    sortEntities
-  ],
+  mixins: [FormatForCLI, sortEntities],
   props: {
     routeName: {
       type: String,
-      required: true
+      required: true,
     },
     name: {
       type: String,
-      default: ''
+      default: '',
     },
     tabHeaders: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
-  data () {
+  data() {
     return {
       isLoading: true,
       isEmpty: false,
@@ -144,21 +141,21 @@ export default {
       tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: `There are not ${this.name} present.`
+        message: `There are not ${this.name} present.`,
       },
       tableData: {
         headers: this.tabHeaders,
-        data: []
+        data: [],
       },
       tabs: [
         {
           hash: '#overview',
-          title: 'Overview'
+          title: 'Overview',
         },
         {
           hash: '#yaml',
-          title: 'YAML'
-        }
+          title: 'YAML',
+        },
       ],
       entity: [],
       rawEntity: null,
@@ -167,11 +164,11 @@ export default {
       pageOffset: null,
       next: null,
       hasNext: false,
-      previous: []
+      previous: [],
     }
   },
   computed: {
-    tabGroupTitle () {
+    tabGroupTitle() {
       const entity = this.entity
 
       if (entity) {
@@ -180,7 +177,7 @@ export default {
         return null
       }
     },
-    entityOverviewTitle () {
+    entityOverviewTitle() {
       const entity = this.entity
 
       if (entity) {
@@ -189,12 +186,12 @@ export default {
         return null
       }
     },
-    formattedRawEntity () {
+    formattedRawEntity() {
       const entity = this.formatForCLI(this.rawEntity)
 
       return entity
     },
-    shareUrl () {
+    shareUrl() {
       const urlRoot = `${window.location.origin}#`
       const entity = this.entity
 
@@ -207,25 +204,31 @@ export default {
       }
 
       return shareUrl()
-    }
+    },
   },
   watch: {
-    '$route' (to, from) {
+    $route(to, from) {
       this.init()
-    }
+    },
   },
-  beforeMount () {
+  beforeMount() {
     this.init()
   },
   methods: {
     getAllServices(params) {
-      return this.name === 'Internal Services' ? this.$api.getAllServiceInsights(params) : this.$api.getAllExternalServices(params)
+      return this.name === 'Internal Services'
+        ? this.$api.getAllServiceInsights(params)
+        : this.$api.getAllExternalServices(params)
     },
     getService(mesh, query, params) {
-      return this.name === 'Internal Services' ? this.$api.getServiceInsight(mesh, query, params) : this.$api.getAllExternalServices(mesh, query, params)
+      return this.name === 'Internal Services'
+        ? this.$api.getServiceInsight(mesh, query, params)
+        : this.$api.getAllExternalServices(mesh, query, params)
     },
     getServiceFromMesh(mesh) {
-      return this.name === 'Internal Services' ? this.$api.getAllServiceInsightsFromMesh(mesh) : this.$api.getAllExternalServicesFromMesh(mesh)
+      return this.name === 'Internal Services'
+        ? this.$api.getAllServiceInsightsFromMesh(mesh)
+        : this.$api.getAllExternalServicesFromMesh(mesh)
     },
     parseData(entity) {
       if (this.name === 'Internal Services') {
@@ -257,29 +260,29 @@ export default {
 
       return entity
     },
-    init () {
+    init() {
       this.loadData()
     },
-    goToPreviousPage () {
+    goToPreviousPage() {
       this.pageOffset = this.previous.pop()
       this.next = null
 
       this.loadData()
     },
-    goToNextPage () {
+    goToNextPage() {
       this.previous.push(this.pageOffset)
       this.pageOffset = this.next
       this.next = null
 
       this.loadData()
     },
-    tableAction (ev) {
+    tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData () {
+    loadData() {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
@@ -287,86 +290,83 @@ export default {
 
       const params = {
         size: this.pageSize,
-        offset: this.pageOffset
+        offset: this.pageOffset,
       }
 
       const endpoint = () => {
         if (mesh === 'all') {
           return this.getAllServices(params)
-        } else if ((query && query.length) && mesh !== 'all') {
+        } else if (query && query.length && mesh !== 'all') {
           return this.getService(mesh, query, params)
         }
 
         return this.getServiceFromMesh(mesh)
       }
 
-      const getService = () => endpoint()
-        .then(response => {
-          const items = () => {
-            const r = response
+      const getService = () =>
+        endpoint()
+          .then((response) => {
+            const items = () => {
+              const r = response
 
-            if ('total' in r) {
-              if (r.total !== 0 && r.items && r.items.length > 0) {
-                return this.sortEntities(r.items)
+              if ('total' in r) {
+                if (r.total !== 0 && r.items && r.items.length > 0) {
+                  return this.sortEntities(r.items)
+                }
+
+                return null
               }
 
-              return null
+              return r
             }
 
-            return r
-          }
+            const entityList = items()
 
-          const entityList = items()
+            if (items()) {
+              const firstItem = query ? entityList : entityList[0]
 
-          if (items()) {
-            const firstItem = query
-              ? entityList
-              : entityList[0]
+              // set the first item as the default for initial load
+              this.firstEntity = firstItem.name
 
-            // set the first item as the default for initial load
-            this.firstEntity = firstItem.name
+              // load the YAML entity for the first item on page load
+              this.getEntity(stripTimes(firstItem))
 
-            // load the YAML entity for the first item on page load
-            this.getEntity(stripTimes(firstItem))
+              this.tableData.data = query ? [entityList] : entityList
 
-            this.tableData.data = query
-              ? [entityList]
-              : entityList
+              if (response.next) {
+                this.next = getOffset(response.next)
+                this.hasNext = true
+              } else {
+                this.hasNext = false
+              }
 
-            if (response.next) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
+              this.tableData.data = this.tableData.data.map(this.parseData)
+
+              this.tableDataIsEmpty = false
+              this.isEmpty = false
             } else {
-              this.hasNext = false
+              this.tableData.data = []
+              this.tableDataIsEmpty = true
+              this.isEmpty = true
+
+              this.getEntity(null)
             }
-
-            this.tableData.data = this.tableData.data.map(this.parseData)
-
-            this.tableDataIsEmpty = false
-            this.isEmpty = false
-          } else {
-            this.tableData.data = []
-            this.tableDataIsEmpty = true
+          })
+          .catch((error) => {
+            this.hasError = true
             this.isEmpty = true
 
-            this.getEntity(null)
-          }
-        })
-        .catch(error => {
-          this.hasError = true
-          this.isEmpty = true
-
-          console.error(error)
-        })
-        .finally(() => {
-          setTimeout(() => {
-            this.isLoading = false
-          }, process.env.VUE_APP_DATA_TIMEOUT)
-        })
+            console.error(error)
+          })
+          .finally(() => {
+            setTimeout(() => {
+              this.isLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
+          })
 
       getService()
     },
-    getEntity (entity) {
+    getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
@@ -374,12 +374,10 @@ export default {
       const mesh = this.$route.params.mesh
 
       if (entity && entity !== null) {
-        const entityMesh = (mesh === 'all')
-          ? entity.mesh
-          : mesh
+        const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
         return this.getService(entityMesh, entity.name)
-          .then(response => {
+          .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
 
@@ -391,7 +389,7 @@ export default {
               this.entityIsEmpty = true
             }
           })
-          .catch(error => {
+          .catch((error) => {
             this.entityHasError = true
             console.error(error)
           })
@@ -406,7 +404,7 @@ export default {
           this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
-    }
-  }
+    },
+  },
 }
 </script>
