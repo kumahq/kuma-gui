@@ -20,7 +20,7 @@ const sumDataplanes = (curr: DataPlaneStats = {}, next: DataPlaneStats = {}) => 
   }
 }
 
-const getInitialPolicies = () => ({
+export const getInitialPolicies = () => ({
   CircuitBreaker: {
     total: 0,
   },

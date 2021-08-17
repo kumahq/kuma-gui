@@ -169,6 +169,7 @@
 <script>
 import { mapState } from 'vuex'
 import Kuma from '@/services/kuma'
+import { getEmptyInsight } from '@/store/reducers/mesh-insights'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
@@ -254,6 +255,7 @@ export default {
       tabGroupTitle: null,
       entityOverviewTitle: null,
       itemsPerCol: 3,
+      meshInsight: getEmptyInsight(),
     }
   },
   computed: {
@@ -261,56 +263,59 @@ export default {
       mesh: 'selectedMesh',
     }),
     counts() {
-      const state = this.$store.state
+      const {
+        policies,
+        dataplanes: { total },
+      } = this.meshInsight
 
       return [
         {
           title: 'Data plane proxies',
-          value: state.totalDataplaneCountFromMesh,
+          value: total,
         },
         {
           title: 'Circuit Breakers',
-          value: state.totalCircuitBreakerCountFromMesh,
+          value: policies.CircuitBreaker?.total,
         },
         {
           title: 'Fault Injections',
-          value: state.totalFaultInjectionCountFromMesh,
+          value: policies.FaultInjection?.total,
         },
         {
           title: 'Health Checks',
-          value: state.totalHealthCheckCountFromMesh,
+          value: policies.HealthCheck?.total,
         },
         {
           title: 'Proxy Templates',
-          value: state.totalProxyTemplateCountFromMesh,
+          value: policies.ProxyTemplate?.total,
         },
         {
           title: 'Traffic Logs',
-          value: state.totalTrafficLogCountFromMesh,
+          value: policies.TrafficLog?.total,
         },
         {
           title: 'Traffic Permissions',
-          value: state.totalTrafficPermissionCountFromMesh,
+          value: policies.TrafficPermission?.total,
         },
         {
           title: 'Traffic Routes',
-          value: state.totalTrafficRouteCountFromMesh,
+          value: policies.TrafficRoute?.total,
         },
         {
           title: 'Traffic Traces',
-          value: state.totalTrafficTraceCountFromMesh,
+          value: policies.TrafficTrace?.total,
         },
         {
           title: 'Rate Limits',
-          value: state.totalRateLimitCountFromMesh,
+          value: policies.RateLimit?.total,
         },
         {
           title: 'Retries',
-          value: state.totalRetryCountFromMesh,
+          value: policies.Retry?.total,
         },
         {
           title: 'Timeouts',
-          value: state.totalTimeoutCountFromMesh,
+          value: policies.Timeout?.total,
         },
       ]
     },
@@ -449,26 +454,11 @@ export default {
         return Kuma.getMesh(entity.name)
           .then((response) => {
             if (response) {
-              // get the counts for this mesh
-              const actions = [
-                'fetchDataplaneTotalCountFromMesh',
-                'fetchHealthCheckTotalCountFromMesh',
-                'fetchProxyTemplateTotalCountFromMesh',
-                'fetchTrafficLogTotalCountFromMesh',
-                'fetchTrafficPermissionTotalCountFromMesh',
-                'fetchTrafficRouteTotalCountFromMesh',
-                'fetchTrafficTraceTotalCountFromMesh',
-                'fetchFaultInjectionTotalCountFromMesh',
-                'fetchCircuitBreakerTotalCountFromMesh',
-                'fetchTimeoutTotalCountFromMesh',
-                'fetchRateLimitTotalCountFromMesh',
-                'fetchRetryTotalCountFromMesh',
-              ]
-
-              // run each action
-              actions.forEach((i) => {
-                this.$store.dispatch(i, entity.name)
+              Kuma.getMeshInsights(entity.name).then((meshInsightResponse) => {
+                this.meshInsight = meshInsightResponse
               })
+
+              // get the counts for this mesh
 
               // const col1 = getSome(response, ['type', 'name', 'creationTime', 'modificationTime'])
               const col1 = getSome(response, ['type', 'name'])
