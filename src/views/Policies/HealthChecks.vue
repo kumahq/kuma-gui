@@ -91,6 +91,7 @@
 
 <script>
 import { getSome, stripTimes } from '@/helpers'
+import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -231,9 +232,9 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: this.$api.getHealthCheck.bind(this.$api),
-          getAllEntities: this.$api.getAllHealthChecks.bind(this.$api),
-          getAllEntitiesFromMesh: this.$api.getAllHealthChecksFromMesh.bind(this.$api),
+          getSingleEntity: Kuma.getHealthCheck.bind(Kuma),
+          getAllEntities: Kuma.getAllHealthChecks.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllHealthChecksFromMesh.bind(Kuma),
           mesh,
           query,
           size: this.pageSize,
@@ -282,8 +283,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return this.$api
-          .getHealthCheck(entityMesh, entity.name)
+        return Kuma.getHealthCheck(entityMesh, entity.name)
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

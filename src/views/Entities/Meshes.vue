@@ -168,6 +168,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import Kuma from '@/services/kuma'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
@@ -375,7 +376,7 @@ export default {
         offset: this.pageOffset,
       }
 
-      const endpoint = mesh === 'all' || !mesh ? this.$api.getAllMeshes(params) : this.$api.getMesh(mesh)
+      const endpoint = mesh === 'all' || !mesh ? Kuma.getAllMeshes(params) : Kuma.getMesh(mesh)
 
       const getMeshes = () =>
         endpoint
@@ -445,8 +446,7 @@ export default {
       this.entityHasError = false
 
       if (entity && entity !== null) {
-        return this.$api
-          .getMesh(entity.name)
+        return Kuma.getMesh(entity.name)
           .then((response) => {
             if (response) {
               // get the counts for this mesh

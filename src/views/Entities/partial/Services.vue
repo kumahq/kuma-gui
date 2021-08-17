@@ -92,6 +92,7 @@
 
 <script>
 import { getOffset, getSome, stripTimes } from '@/helpers'
+import Kuma from '@/services/kuma'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FormatForCLI from '@/mixins/FormatForCLI'
@@ -217,18 +218,18 @@ export default {
   methods: {
     getAllServices(params) {
       return this.name === 'Internal Services'
-        ? this.$api.getAllServiceInsights(params)
-        : this.$api.getAllExternalServices(params)
+        ? Kuma.getAllServiceInsights(params)
+        : Kuma.getAllExternalServices(params)
     },
     getService(mesh, query, params) {
       return this.name === 'Internal Services'
-        ? this.$api.getServiceInsight(mesh, query, params)
-        : this.$api.getAllExternalServices(mesh, query, params)
+        ? Kuma.getServiceInsight(mesh, query, params)
+        : Kuma.getAllExternalServices(mesh, query, params)
     },
     getServiceFromMesh(mesh) {
       return this.name === 'Internal Services'
-        ? this.$api.getAllServiceInsightsFromMesh(mesh)
-        : this.$api.getAllExternalServicesFromMesh(mesh)
+        ? Kuma.getAllServiceInsightsFromMesh(mesh)
+        : Kuma.getAllExternalServicesFromMesh(mesh)
     },
     parseData(entity) {
       if (this.name === 'Internal Services') {

@@ -1,6 +1,6 @@
 import RestClient from '@/services/restClient'
 
-export default class Kuma {
+class Kuma {
   private client: RestClient
 
   public constructor() {
@@ -399,3 +399,5 @@ export default class Kuma {
     return this.client.get('/versions', { params })
   }
 }
+
+export default new Kuma()

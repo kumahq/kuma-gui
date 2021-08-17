@@ -182,6 +182,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import Kuma from '@/services/kuma'
 import { datadogLogs } from '@datadog/browser-logs'
 import { getOffset, getSome, humanReadableDate, stripTimes } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'
@@ -444,12 +445,12 @@ export default {
        */
       const endpoint = () => {
         if (mesh === 'all') {
-          return this.$api.getAllDataplaneOverviews(params)
+          return Kuma.getAllDataplaneOverviews(params)
         } else if (query && query.length && mesh !== 'all') {
-          return this.$api.getDataplaneOverviewFromMesh(mesh, query)
+          return Kuma.getDataplaneOverviewFromMesh(mesh, query)
         }
 
-        return this.$api.getAllDataplaneOverviewsFromMesh(mesh, params)
+        return Kuma.getAllDataplaneOverviewsFromMesh(mesh, params)
       }
 
       /**
@@ -458,7 +459,7 @@ export default {
        */
       const dpFetcher = async (mesh, name, finalArr) => {
         try {
-          const response = await this.$api.getDataplaneOverviewFromMesh(mesh, name)
+          const response = await Kuma.getDataplaneOverviewFromMesh(mesh, name)
           const { dataplane = {}, dataplaneInsight = {} } = response
           const { name: responseName = '', mesh: responseMesh = '' } = response
           const { subscriptions = [] } = dataplaneInsight
@@ -563,7 +564,7 @@ export default {
 
             if (zoneTag) {
               try {
-                const { compatible } = await checkKumaDpAndZoneVersionsMismatch(this.$api, zoneTag.value, dpVersion)
+                const { compatible } = await checkKumaDpAndZoneVersionsMismatch(zoneTag.value, dpVersion)
 
                 if (!compatible) {
                   item.withWarnings = true
@@ -662,7 +663,7 @@ export default {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
         try {
-          const response = await this.$api.getDataplaneOverviewFromMesh(entityMesh, entity.name)
+          const response = await Kuma.getDataplaneOverviewFromMesh(entityMesh, entity.name)
           const dataplane = getDataplane(response)
 
           if (dataplane) {
@@ -704,7 +705,6 @@ export default {
                 if (zoneTag) {
                   try {
                     const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(
-                      this.$api,
                       zoneTag.value,
                       kumaDp.version,
                     )
