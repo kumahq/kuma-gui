@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'MeshSelector',
   props: {
@@ -44,12 +46,9 @@ export default {
     },
   },
   computed: {
-    selectedMesh() {
-      const stored = localStorage.getItem('selectedMesh')
-      const query = this.$route.params.mesh
-
-      return stored || query
-    },
+    ...mapGetters({
+      selectedMesh: 'getSelectedMesh',
+    }),
   },
   methods: {
     changeMesh(event) {

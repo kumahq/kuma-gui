@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
+<div>
+  <div
+    class="nav-item is-menu-item"
+  >
+     
+    <a
+      class=""
+      href="#/all/default"
+    >
+      <!---->
+       
+      <div
+        class="nav-link"
+      >
+        
+        Default
+      
+      </div>
+       
+    </a>
+  </div>
+</div>
+`;
