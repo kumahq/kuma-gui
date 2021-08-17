@@ -169,7 +169,7 @@
 <script>
 import { mapState } from 'vuex'
 import Kuma from '@/services/kuma'
-import { getEmptyInsight } from '@/store/reducers/mesh-insights'
+import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
@@ -268,6 +268,11 @@ export default {
         dataplanes: { total },
       } = this.meshInsight
 
+      const allPolicies = {
+        ...getInitialPolicies(),
+        ...policies,
+      }
+
       return [
         {
           title: 'Data plane proxies',
@@ -275,47 +280,47 @@ export default {
         },
         {
           title: 'Circuit Breakers',
-          value: policies.CircuitBreaker?.total,
+          value: allPolicies.CircuitBreaker.total,
         },
         {
           title: 'Fault Injections',
-          value: policies.FaultInjection?.total,
+          value: allPolicies.FaultInjection.total,
         },
         {
           title: 'Health Checks',
-          value: policies.HealthCheck?.total,
+          value: allPolicies.HealthCheck.total,
         },
         {
           title: 'Proxy Templates',
-          value: policies.ProxyTemplate?.total,
+          value: allPolicies.ProxyTemplate.total,
         },
         {
           title: 'Traffic Logs',
-          value: policies.TrafficLog?.total,
+          value: allPolicies.TrafficLog.total,
         },
         {
           title: 'Traffic Permissions',
-          value: policies.TrafficPermission?.total,
+          value: allPolicies.TrafficPermission.total,
         },
         {
           title: 'Traffic Routes',
-          value: policies.TrafficRoute?.total,
+          value: allPolicies.TrafficRoute.total,
         },
         {
           title: 'Traffic Traces',
-          value: policies.TrafficTrace?.total,
+          value: allPolicies.TrafficTrace.total,
         },
         {
           title: 'Rate Limits',
-          value: policies.RateLimit?.total,
+          value: allPolicies.RateLimit.total,
         },
         {
           title: 'Retries',
-          value: policies.Retry?.total,
+          value: allPolicies.Retry.total,
         },
         {
           title: 'Timeouts',
-          value: policies.Timeout?.total,
+          value: allPolicies.Timeout.total,
         },
       ]
     },

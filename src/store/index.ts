@@ -92,12 +92,17 @@ export default (): Module<RootInterface, RootInterface> => ({
     getClusterCount: state => state.totalClusters,
     getMeshInsight: state => state.meshInsight,
     getMeshInsightsFetching: state => state.meshInsightsFetching,
+    getServiceInsightsFetching: state => state.serviceInsightsFetching,
+    getExternalServicesFetching: state => state.externalServicesFetching,
+    getResourceFetching: ({ meshInsightsFetching, serviceInsightsFetching, externalServicesFetching }) =>
+      meshInsightsFetching || serviceInsightsFetching || externalServicesFetching,
     getServiceResourcesFetching: ({ serviceInsightsFetching, externalServicesFetching }) =>
       serviceInsightsFetching || externalServicesFetching,
     getChart: ({ overviewCharts }) => (chartName: string) => overviewCharts[chartName],
     getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
     getSupportedVersions: ({ supportedVersions }) => supportedVersions,
     getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
+    getSupportedVersionsFailed: ({ supportedVersionsFailed }) => supportedVersionsFailed,
     showOnboarding: ({ totalDataplaneCount, meshes }) => {
       const onlyDefaultMesh = meshes.total === 1 && meshes.items[0].name === 'default'
       const noDataplane = totalDataplaneCount === 0
