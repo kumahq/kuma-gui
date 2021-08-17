@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 
@@ -103,8 +104,13 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      selectedMesh: 'getSelectedMesh',
+    }),
     routerLink() {
-      const params = !this.subNav && Object.keys(this.$route?.params || {}).length > 0 ? this.$route?.params : undefined
+      const params = {
+        mesh: this.selectedMesh,
+      }
 
       const link = () => {
         if (this.link) {
