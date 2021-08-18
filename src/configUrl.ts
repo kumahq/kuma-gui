@@ -4,7 +4,7 @@
 
 export function getKumaCpServerUrl(): string {
   if (process.env.NODE_ENV === 'development') {
-    return process.env.VUE_APP_KUMA_CONFIG?.replace('/config', '/') || ''
+    return process.env.VUE_APP_KUMA_CONFIG.replace('/config', '/') || ''
   } else {
     const href = window.location.href
 
