@@ -22,7 +22,7 @@ describe('DataOverview.vue', () => {
   it('renders pagination and react on click', async () => {
     render(DataOverview, {
       propsData: {
-        next: '2',
+        next: true,
         displayDataTable: true,
         tableData: {
           headers: [],
