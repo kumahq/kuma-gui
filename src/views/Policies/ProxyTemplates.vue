@@ -143,7 +143,6 @@ export default {
       rawEntity: null,
       firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
-
       next: null,
     }
   },
