@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { datadogLogs } from '@datadog/browser-logs'
-import { datadogRum } from '@datadog/browser-rum'
-import VueMeta from 'vue-meta'
 import App from '@/App.vue'
 import Router from '@/router'
+import { datadogLogs } from '@datadog/browser-logs'
+import VueMeta from 'vue-meta'
 import Store from '@/store'
+import axios from 'axios'
+import Kuma from '@/services/kuma'
 
 /** amCharts */
 import * as am4core from '@amcharts/amcharts4/core'
@@ -27,28 +28,15 @@ import '@/assets/styles/inputs.scss'
 import '@/assets/styles/components.scss'
 import '@/assets/styles/transitions.scss'
 
-/* Initiate Datadog Logs */
+/** Initiate Datadog */
 
 if (process.env.NODE_ENV === 'production') {
   datadogLogs.init({
-    clientToken: process.env.VUE_APP_DATADOG_LOGS_CLIENT_TOKEN,
-    site: process.env.VUE_APP_DATADOG_SITE,
+    clientToken: 'pub94a0029259f79f29a5d881a06d1e9653',
+    site: 'datadoghq.com',
     forwardErrorsToLogs: true,
     service: process.env.VUE_APP_NAMESPACE,
     sampleRate: 100,
-    env: process.env.NODE_ENV,
-  })
-}
-
-/* Initiate Datadog RUM */
-
-if (process.env.NODE_ENV === 'production') {
-  datadogRum.init({
-    applicationId: process.env.VUE_APP_DATADOG_RUM_APPLICATION_ID,
-    clientToken: process.env.VUE_APP_DATADOG_RUM_CLIENT_TOKEN,
-    site: process.env.VUE_APP_DATADOG_SITE,
-    sampleRate: 100,
-    trackInteractions: true,
     env: process.env.NODE_ENV,
   })
 }
