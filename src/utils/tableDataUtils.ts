@@ -1,4 +1,3 @@
-import { getOffset } from '@/helpers'
 import { TableDataParams, TableItem } from './tableDataUtils.types'
 
 function sortEntities(items: TableItem[]): TableItem[] {
@@ -44,7 +43,7 @@ export async function getTableData({
   query,
   size,
   offset,
-}: TableDataParams): Promise<{ data: TableItem[]; next: string | null }> {
+}: TableDataParams): Promise<{ data: TableItem[]; next: boolean }> {
   const response = await getAPICallFunction({
     getSingleEntity,
     getAllEntities,
@@ -58,12 +57,12 @@ export async function getTableData({
   if (!response) {
     return {
       data: [],
-      next: null,
+      next: false,
     }
   }
 
   return {
     data: response.items ? getItems(response) : [response],
-    next: response.next && getOffset(response.next),
+    next: Boolean(response.next),
   }
 }

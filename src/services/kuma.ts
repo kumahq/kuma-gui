@@ -43,7 +43,7 @@ class Kuma {
    */
 
   // Zone status
-  public getZoneStatus(params: any) {
+  public getZonesStatus(params: any) {
     return this.client.get('/status/zones', { params })
   }
 

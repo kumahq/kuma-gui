@@ -45,7 +45,7 @@ describe('tableDataUtils', () => {
           "data": Array [
             Object {},
           ],
-          "next": undefined,
+          "next": false,
         }
       `)
     })
@@ -62,7 +62,7 @@ describe('tableDataUtils', () => {
               "name": "bar",
             },
           ],
-          "next": undefined,
+          "next": false,
         }
       `)
     })
@@ -90,7 +90,7 @@ describe('tableDataUtils', () => {
               "name": "foo",
             },
           ],
-          "next": "2",
+          "next": true,
         }
       `)
     })
@@ -106,7 +106,7 @@ describe('tableDataUtils', () => {
       expect(response).toMatchInlineSnapshot(`
         Object {
           "data": Array [],
-          "next": null,
+          "next": false,
         }
       `)
     })
