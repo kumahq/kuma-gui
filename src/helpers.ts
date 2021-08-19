@@ -206,6 +206,10 @@ export function stripUrl(url: string) {
  * simply return the value for.
  */
 export function getOffset(url: string) {
+  if (!url) {
+    return ''
+  }
+
   const regex = new RegExp(/offset=(\w+)/)
   const match = url.match(regex)?.[0].replace('offset=', '')
 

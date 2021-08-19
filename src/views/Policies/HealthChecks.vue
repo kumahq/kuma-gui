@@ -10,10 +10,12 @@
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         table-data-function-text="View"
-        table-data-row="name"
+        :next="next"
         @tableAction="tableAction"
         @reloadData="loadData"
+        @loadData="loadData($event)"
       >
+        >
         <template slot="additionalControls">
           <KButton
             v-if="this.$route.query.ns"
@@ -29,14 +31,6 @@
             </span>
             View All
           </KButton>
-        </template>
-        <template slot="pagination">
-          <Pagination
-            :has-previous="previous.length > 0"
-            :has-next="hasNext"
-            @next="goToNextPage"
-            @previous="goToPreviousPage"
-          />
         </template>
       </DataOverview>
       <Tabs
@@ -95,7 +89,6 @@ import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -110,7 +103,6 @@ export default {
   components: {
     EntityURLControl,
     FrameSkeleton,
-    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -152,10 +144,7 @@ export default {
       rawEntity: null,
       firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
-      pageOffset: null,
       next: null,
-      hasNext: false,
-      previous: [],
     }
   },
   computed: {
@@ -204,19 +193,6 @@ export default {
     init() {
       this.loadData()
     },
-    goToPreviousPage() {
-      this.pageOffset = this.previous.pop()
-      this.next = null
-
-      this.loadData()
-    },
-    goToNextPage() {
-      this.previous.push(this.pageOffset)
-      this.pageOffset = this.next
-      this.next = null
-
-      this.loadData()
-    },
     tableAction(ev) {
       const data = ev
 
@@ -224,7 +200,7 @@ export default {
       this.getEntity(data)
     },
 
-    async loadData() {
+    async loadData(offset = '') {
       this.isLoading = true
 
       const query = this.$route.query.ns || null
@@ -238,12 +214,11 @@ export default {
           mesh,
           query,
           size: this.pageSize,
-          offset: this.pageOffset,
+          offset,
         })
 
         // set pagination
         this.next = next
-        this.hasNext = !!next
 
         // set table data
 

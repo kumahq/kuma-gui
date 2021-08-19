@@ -10,10 +10,12 @@
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         table-data-function-text="View"
-        table-data-row="name"
+        :next="next"
         @tableAction="tableAction"
         @reloadData="loadData"
+        @loadData="loadData($event)"
       >
+        >
         <template slot="additionalControls">
           <KButton
             v-if="this.$route.query.ns"
@@ -29,14 +31,6 @@
             </span>
             View All
           </KButton>
-        </template>
-        <template slot="pagination">
-          <Pagination
-            :has-previous="previous.length > 0"
-            :has-next="hasNext"
-            @next="goToNextPage"
-            @previous="goToPreviousPage"
-          />
         </template>
       </DataOverview>
       <Tabs
@@ -97,7 +91,6 @@ import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -110,7 +103,6 @@ export default {
   components: {
     EntityURLControl,
     FrameSkeleton,
-    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -162,10 +154,7 @@ export default {
       rawEntity: null,
       firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
-      pageOffset: null,
       next: null,
-      hasNext: false,
-      previous: [],
     }
   },
   computed: {
@@ -283,7 +272,7 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData() {
+    loadData(offset = '') {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
@@ -291,7 +280,7 @@ export default {
 
       const params = {
         size: this.pageSize,
-        offset: this.pageOffset,
+        offset,
       }
 
       const endpoint = () => {
@@ -334,12 +323,7 @@ export default {
 
               this.tableData.data = query ? [entityList] : entityList
 
-              if (response.next) {
-                this.next = getOffset(response.next)
-                this.hasNext = true
-              } else {
-                this.hasNext = false
-              }
+              this.next = getOffset(response.next)
 
               this.tableData.data = this.tableData.data.map(this.parseData)
 

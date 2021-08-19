@@ -11,8 +11,10 @@
       :show-warnings="tableData.data.some((item) => item.withWarnings)"
       table-data-function-text="View"
       table-data-row="name"
+      :next="next"
       @tableAction="tableAction"
       @reloadData="loadData"
+      @loadData="loadData($event)"
     >
       <template slot="additionalControls">
         <KButton
@@ -39,14 +41,6 @@
           </span>
           View All
         </KButton>
-      </template>
-      <template slot="pagination">
-        <Pagination
-          :has-previous="previous.length > 0"
-          :has-next="hasNext"
-          @next="goToNextPage"
-          @previous="goToPreviousPage"
-        />
       </template>
     </DataOverview>
     <Tabs
@@ -204,7 +198,6 @@ import {
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -220,7 +213,6 @@ export default {
     Warnings,
     EntityURLControl,
     FrameSkeleton,
-    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -312,10 +304,7 @@ export default {
       rawEntity: null,
       firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
-      pageOffset: null,
       next: null,
-      hasNext: false,
-      previous: [],
       tabGroupTitle: null,
       entityNamespace: null,
       entityOverviewTitle: null,
@@ -407,26 +396,13 @@ export default {
     checkVersionsCompatibility(kumaDpVersion = '', envoyVersion = '') {
       return checkVersionsCompatibility(this.supportedVersions, kumaDpVersion, envoyVersion)
     },
-    goToPreviousPage() {
-      this.pageOffset = this.previous.pop()
-      this.next = null
-
-      this.loadData()
-    },
-    goToNextPage() {
-      this.previous.push(this.pageOffset)
-      this.pageOffset = this.next
-      this.next = null
-
-      this.loadData()
-    },
     tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    async loadData() {
+    async loadData(offset = '') {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
@@ -434,7 +410,7 @@ export default {
 
       const params = {
         size: this.pageSize,
-        offset: this.pageOffset,
+        offset,
         ...this.dataplaneApiParams,
       }
 
@@ -607,12 +583,7 @@ export default {
 
         if (items) {
           // check to see if the `next` url is present
-          if (response.next) {
-            this.next = getOffset(response.next)
-            this.hasNext = true
-          } else {
-            this.hasNext = false
-          }
+          this.next = getOffset(response.next)
 
           const final = []
           const itemSelect = query ? items : items[0]

@@ -158,7 +158,12 @@
           </template>
         </KTable>
 
-        <slot name="pagination" />
+        <Pagination
+          :has-previous="previous.length > 0"
+          :has-next="!!next"
+          @next="goToNextPage"
+          @previous="goToPreviousPage"
+        />
       </div>
 
       <!-- empty state if no items are found -->
@@ -324,9 +329,16 @@ export default {
     showWarnings: {
       type: Boolean,
     },
+    next: {
+      type: String,
+      default: '',
+    },
   },
   data() {
-    return { selectedRow: '' }
+    return {
+      selectedRow: '',
+      previous: [],
+    }
   },
   computed: {
     isReady() {
@@ -371,6 +383,16 @@ export default {
     onRefreshButtonClick() {
       this.$emit('reloadData')
       datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
+    },
+    goToPreviousPage() {
+      const offset = this.previous.pop()
+
+      this.emit('loadData', offset)
+    },
+    goToNextPage() {
+      this.previous.push(this.next)
+
+      this.emit('loadData', this.next)
     },
   },
 }

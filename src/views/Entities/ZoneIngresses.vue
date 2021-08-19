@@ -41,18 +41,11 @@
         :show-warnings="tableData.data.some((item) => item.withWarnings)"
         table-data-function-text="View"
         table-data-row="name"
+        :next="next"
         @tableAction="tableAction"
         @reloadData="loadData"
-      >
-        <template slot="pagination">
-          <Pagination
-            :has-previous="previous.length > 0"
-            :has-next="hasNext"
-            @next="goToNextPage"
-            @previous="goToPreviousPage"
-          />
-        </template>
-      </DataOverview>
+        @loadData="loadData($event)"
+      />
       <Tabs
         v-if="isEmpty === false"
         :has-error="hasError"
@@ -189,7 +182,6 @@ import { humanReadableDate, getOffset, getSome, stripTimes, camelCaseToWords } f
 import Kuma from '@/services/kuma'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import Pagination from '@/components/Pagination'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -203,7 +195,6 @@ export default {
   name: 'ZoneIngresses',
   components: {
     FrameSkeleton,
-    Pagination,
     DataOverview,
     Tabs,
     YamlView,
@@ -269,10 +260,7 @@ export default {
       yamlEntity: null,
       firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
-      pageOffset: null,
       next: null,
-      hasNext: false,
-      previous: [],
       tabGroupTitle: null,
       entityOverviewTitle: null,
       itemsPerCol: 3,
@@ -319,43 +307,27 @@ export default {
         this.loadData()
       }
     },
-    goToPreviousPage() {
-      this.pageOffset = this.previous.pop()
-      this.next = null
-
-      this.loadData()
-    },
-    goToNextPage() {
-      this.previous.push(this.pageOffset)
-      this.pageOffset = this.next
-      this.next = null
-
-      this.loadData()
-    },
     tableAction(ev) {
       const data = ev
 
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData() {
+    loadData(offset = '') {
       this.isLoading = true
       this.isEmpty = false
 
-      const endpoint = Kuma.getAllZoneIngressOverviews()
+      const params = {
+        size: this.pageSize,
+        offset,
+      }
+
+      const endpoint = Kuma.getAllZoneIngressOverviews(params)
 
       const getZoneIngress = () =>
         endpoint
           .then((response = {}) => {
-            const nextCheck = !!response.next
-
-            // check to see if the `next` url is present
-            if (nextCheck) {
-              this.next = getOffset(response.next)
-              this.hasNext = true
-            } else {
-              this.hasNext = false
-            }
+            this.next = getOffset(response.next)
 
             let { items = [] } = response
 

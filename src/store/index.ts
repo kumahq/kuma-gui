@@ -404,7 +404,7 @@ export default (): Module<RootInterface, RootInterface> => ({
           }
 
           const overviews = await fetchAllResources(params)
-          const statuses = await Kuma.getZoneStatus({ size: state.pageSize })
+          const statuses = await Kuma.getZonesStatus({ size: state.pageSize })
 
           dispatch('setOverviewZonesChartData', statuses)
           dispatch('setOverviewZonesCPVersionsChartData', overviews)
