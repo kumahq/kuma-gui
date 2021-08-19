@@ -160,7 +160,7 @@
 
         <Pagination
           :has-previous="pageOffset > 0"
-          :has-next="!!next"
+          :has-next="next"
           @next="goToNextPage"
           @previous="goToPreviousPage"
         />
@@ -332,8 +332,8 @@ export default {
       type: Boolean,
     },
     next: {
-      type: String,
-      default: '',
+      type: Boolean,
+      default: false,
     },
   },
   data() {
