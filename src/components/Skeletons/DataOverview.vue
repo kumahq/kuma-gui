@@ -159,7 +159,7 @@
         </KTable>
 
         <Pagination
-          :has-previous="previous.length > 0"
+          :has-previous="pageOffset > 0"
           :has-next="!!next"
           @next="goToNextPage"
           @previous="goToPreviousPage"
@@ -240,11 +240,13 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import MetricGrid from '@/components/Metrics/MetricGrid'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'DataOverview',
   components: {
     MetricGrid,
+    Pagination,
   },
   props: {
     pageSize: {
@@ -337,7 +339,7 @@ export default {
   data() {
     return {
       selectedRow: '',
-      previous: [],
+      pageOffset: 0,
     }
   },
   computed: {
@@ -381,18 +383,19 @@ export default {
       return val.toLowerCase().replace('.', '-').replace('/', '-')
     },
     onRefreshButtonClick() {
-      this.$emit('reloadData')
+      this.pageOffset = 0
+      this.$emit('loadData', this.pageOffset)
       datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
     },
     goToPreviousPage() {
-      const offset = this.previous.pop()
+      this.pageOffset -= this.pageSize
 
-      this.emit('loadData', offset)
+      this.$emit('loadData', this.pageOffset)
     },
     goToNextPage() {
-      this.previous.push(this.next)
+      this.pageOffset += this.pageSize
 
-      this.emit('loadData', this.next)
+      this.$emit('loadData', this.pageOffset)
     },
   },
 }

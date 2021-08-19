@@ -13,7 +13,6 @@
       table-data-row="name"
       :next="next"
       @tableAction="tableAction"
-      @reloadData="loadData"
       @loadData="loadData($event)"
     >
       <template slot="additionalControls">
@@ -178,7 +177,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { datadogLogs } from '@datadog/browser-logs'
-import { getOffset, getSome, humanReadableDate, stripTimes } from '@/helpers'
+import { getSome, humanReadableDate, stripTimes } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'
 import {
   checkKumaDpAndZoneVersionsMismatch,
@@ -402,7 +401,7 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    async loadData(offset = '') {
+    async loadData(offset = '0') {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
@@ -583,7 +582,7 @@ export default {
 
         if (items) {
           // check to see if the `next` url is present
-          this.next = getOffset(response.next)
+          this.next = Boolean(response.next)
 
           const final = []
           const itemSelect = query ? items : items[0]

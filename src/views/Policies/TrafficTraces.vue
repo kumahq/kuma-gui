@@ -13,7 +13,6 @@
         table-data-row="name"
         :next="next"
         @tableAction="tableAction"
-        @reloadData="loadData"
         @loadData="loadData($event)"
       >
         <template slot="additionalControls">
@@ -199,7 +198,7 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    async loadData(offset = '') {
+    async loadData(offset = '0') {
       this.isLoading = true
 
       const query = this.$route.query.ns || null

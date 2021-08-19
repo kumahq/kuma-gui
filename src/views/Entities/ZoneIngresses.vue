@@ -43,7 +43,6 @@
         table-data-row="name"
         :next="next"
         @tableAction="tableAction"
-        @reloadData="loadData"
         @loadData="loadData($event)"
       />
       <Tabs
@@ -178,7 +177,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { humanReadableDate, getOffset, getSome, stripTimes, camelCaseToWords } from '@/helpers'
+import { humanReadableDate, getSome, stripTimes, camelCaseToWords } from '@/helpers'
 import Kuma from '@/services/kuma'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -313,7 +312,7 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData(offset = '') {
+    loadData(offset = '0') {
       this.isLoading = true
       this.isEmpty = false
 
@@ -327,7 +326,7 @@ export default {
       const getZoneIngress = () =>
         endpoint
           .then((response = {}) => {
-            this.next = getOffset(response.next)
+            this.next = Boolean(response.next)
 
             let { items = [] } = response
 

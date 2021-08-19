@@ -13,7 +13,6 @@
         table-data-row="name"
         :next="next"
         @tableAction="tableAction"
-        @reloadData="loadData"
         @loadData="loadData($event)"
       >
         <template slot="additionalControls">
@@ -166,7 +165,7 @@ import Kuma from '@/services/kuma'
 import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
-import { getSome, humanReadableDate, rawReadableDate, getOffset, stripTimes } from '@/helpers'
+import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
 // import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -352,8 +351,9 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData(offset = '') {
+    loadData(offset = '0') {
       this.isLoading = true
+      this.hasError = false
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
@@ -380,7 +380,7 @@ export default {
               return newItems.items
             }
 
-            this.next = getOffset(response.next)
+            this.next = Boolean(response.next)
 
             const items = cleanRes()
 

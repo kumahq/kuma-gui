@@ -12,7 +12,6 @@
         table-data-function-text="View"
         :next="next"
         @tableAction="tableAction"
-        @reloadData="loadData"
         @loadData="loadData($event)"
       >
         >
@@ -200,7 +199,7 @@ export default {
       this.getEntity(data)
     },
 
-    async loadData(offset = '') {
+    async loadData(offset = '0') {
       this.isLoading = true
 
       const query = this.$route.query.ns || null

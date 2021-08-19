@@ -12,7 +12,6 @@
         table-data-function-text="View"
         :next="next"
         @tableAction="tableAction"
-        @reloadData="loadData"
         @loadData="loadData($event)"
       >
         >
@@ -85,7 +84,7 @@
 </template>
 
 <script>
-import { getOffset, getSome, stripTimes } from '@/helpers'
+import { getSome, stripTimes } from '@/helpers'
 import Kuma from '@/services/kuma'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
@@ -272,7 +271,7 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData(offset = '') {
+    loadData(offset = '0') {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
@@ -323,7 +322,7 @@ export default {
 
               this.tableData.data = query ? [entityList] : entityList
 
-              this.next = getOffset(response.next)
+              this.next = Boolean(response.next)
 
               this.tableData.data = this.tableData.data.map(this.parseData)
 
