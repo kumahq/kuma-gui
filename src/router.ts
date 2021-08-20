@@ -328,6 +328,86 @@ export default (store: Store<RootInterface>) => {
         },
       ],
     },
+    // Onboarding
+    {
+      path: '/onboarding',
+      redirect: { name: 'onboarding-welcome' },
+      component: () => import(/* webpackChunkName: "shell-empty" */ '@/views/ShellEmpty.vue'),
+      children: [
+        {
+          path: 'welcome',
+          name: 'onboarding-welcome',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-welcome" */ '@/views/Onboarding/Welcome.vue')
+        },
+        {
+          path: 'deployment-types',
+          name: 'onboarding-deployment-types',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-deployment-types" */ '@/views/Onboarding/DeploymentTypes.vue')
+        },
+        {
+          path: 'backend-types',
+          name: 'onboarding-backend-types',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-backend-types" */ '@/views/Onboarding/BackendTypes.vue')
+        },
+        {
+          path: 'populating-mesh',
+          name: 'onboarding-populating-mesh',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-populating-mesh" */ '@/views/Onboarding/PopulatingMesh.vue')
+        },
+        {
+          path: 'adding-dpp',
+          name: 'onboarding-adding-dpp',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-adding-dpp" */ '@/views/Onboarding/AddingDataplanes.vue')
+        },
+        {
+          path: 'adding-dpp-code',
+          name: 'onboarding-adding-dpp-code',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-adding-dpp-code" */ '@/views/Onboarding/AddingDataplanesCode.vue')
+        },
+        {
+          path: 'dataplanes-overview',
+          name: 'onboarding-dataplanes-overview',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-dataplanes-overview" */ '@/views/Onboarding/DataplanesOverview.vue')
+        },
+        {
+          path: 'completed',
+          name: 'onboarding-completed',
+          meta: {
+            hideStatus: true,
+            onboardingProcess: true
+          },
+          component: () => import(/* webpackChunkName: "onboarding-completed" */ '@/views/Onboarding/Completed.vue')
+        },
+      ]
+    },
     {
       // Entity Wizard
       path: '/wizard',
