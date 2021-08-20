@@ -1,5 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`DataOverview.vue refresh page on second page 1`] = `
+Object {
+  "loadData": Array [
+    Array [
+      12,
+    ],
+    Array [
+      12,
+    ],
+  ],
+}
+`;
+
+exports[`DataOverview.vue refresh page on second page 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "pagination-next-button-clicked",
+    ],
+    Array [
+      "table-refresh-button-clicked",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
 exports[`DataOverview.vue renders basic snapshot 1`] = `
 <div>
   <div
