@@ -383,7 +383,6 @@ export default {
       return val.toLowerCase().replace('.', '-').replace('/', '-')
     },
     onRefreshButtonClick() {
-      this.pageOffset = 0
       this.$emit('loadData', this.pageOffset)
       datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
     },

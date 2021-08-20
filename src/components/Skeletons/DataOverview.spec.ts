@@ -1,10 +1,14 @@
 import { render, screen } from '@testing-library/vue'
+import { datadogLogs } from '@datadog/browser-logs'
 import userEvent from '@testing-library/user-event'
 import DataOverview from './DataOverview.vue'
 
 jest.mock('@datadog/browser-logs')
 
 describe('DataOverview.vue', () => {
+  beforeEach(() => {
+    ;(datadogLogs.logger.info as jest.MockedFunction<any>).mockClear()
+  })
   it('renders basic snapshot', () => {
     const { container } = render(DataOverview, {
       propsData: {
@@ -47,5 +51,29 @@ describe('DataOverview.vue', () => {
 
     expect(next).toBeInTheDocument()
     expect(back).not.toBeInTheDocument()
+  })
+
+  it('refresh page on second page', async () => {
+    const { emitted } = render(DataOverview, {
+      propsData: {
+        next: true,
+        displayDataTable: true,
+        tableData: {
+          headers: [],
+          data: [],
+        },
+      },
+    })
+
+    const next = screen.getByText(/Next/)
+    const refresh = screen.getByText(/Refresh/)
+
+    expect(next).toBeInTheDocument()
+
+    await userEvent.click(next)
+    await userEvent.click(refresh)
+
+    expect(emitted()).toMatchSnapshot()
+    expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 })
