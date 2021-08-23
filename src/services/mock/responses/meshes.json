@@ -25,6 +25,10 @@
                 "secret": "name-of-secret"
               }
             }
+          },
+          {
+            "name": "ca-2",
+            "type": "builtin"
           }
         ]
       }

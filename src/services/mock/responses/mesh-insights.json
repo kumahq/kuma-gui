@@ -55,6 +55,28 @@
             "online": 1
           }
         }
+      },
+      "mTLS": {
+        "issuedBackends": {
+          "ca-2": {
+            "total": 2,
+            "online": 2
+          },
+          "ca-1": {
+            "total": 4,
+            "online": 4
+          }
+        },
+        "supportedBackends": {
+          "ca-2": {
+            "total": 6,
+            "online": 6
+          },
+          "ca-1": {
+            "total": 6,
+            "online": 6
+          }
+        }
       }
     },
     {
@@ -103,7 +125,8 @@
             "partiallyDegraded": 1
           }
         }
-      }
+      },
+      "mTLS": {}
     }
   ],
   "next": null

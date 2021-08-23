@@ -1,11 +1,11 @@
 {
   "type": "MeshInsight",
-  "name": "hello-world",
+  "name": "Kong Mania",
   "creationTime": "0001-01-01T00:00:00Z",
   "modificationTime": "0001-01-01T00:00:00Z",
   "lastSync": "2020-11-17T12:24:11.941534Z",
   "dataplanes": {
-    "total": 1,
+    "total": 4,
     "partiallyDegraded": 1
   },
   "policies": {
@@ -50,26 +50,5 @@
       }
     }
   },
-  "mTLS": {
-    "issuedBackends": {
-      "ca-2": {
-        "total": 2,
-        "online": 2
-      },
-      "ca-1": {
-        "total": 4,
-        "online": 4
-      }
-    },
-    "supportedBackends": {
-      "ca-2": {
-        "total": 2,
-        "online": 2
-      },
-      "ca-1": {
-        "total": 4,
-        "online": 4
-      }
-    }
-  }
+  "mTLS": {}
 }

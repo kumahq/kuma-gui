@@ -13,6 +13,7 @@ const mockFilenameBasePaths: string[] = [
   'mesh-insights',
   'mesh-insights/default',
   'mesh-insights/hello-world',
+  'mesh-insights/kong-mania-12',
   'dataplanes', // comment to have onboarding without data planes active
   'health-checks',
   'proxytemplates',
