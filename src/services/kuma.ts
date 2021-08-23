@@ -90,7 +90,7 @@ class Kuma {
   }
 
   // get a single mesh
-  public getMesh(name: string, params: any) {
+  public getMesh(name: string, params?: any) {
     return this.client.get(`/meshes/${name}`, { params })
   }
 

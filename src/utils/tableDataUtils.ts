@@ -1,3 +1,4 @@
+import { PAGE_SIZE_DEFAULT } from '@/consts'
 import { TableDataParams, TableItem } from './tableDataUtils.types'
 
 function sortEntities(items: TableItem[]): TableItem[] {
@@ -28,11 +29,11 @@ function getAPICallFunction({
 
   if (mesh === 'all') {
     return getAllEntities(params)
-  } else if (query && query.length && mesh !== 'all') {
+  } else if (getSingleEntity && query && query.length && mesh !== 'all') {
     return getSingleEntity(mesh, query, params)
   }
 
-  return getAllEntitiesFromMesh(mesh)
+  return getAllEntitiesFromMesh(mesh, params)
 }
 
 export async function getTableData({
@@ -41,7 +42,7 @@ export async function getTableData({
   getAllEntitiesFromMesh,
   mesh,
   query,
-  size,
+  size = PAGE_SIZE_DEFAULT,
   offset,
 }: TableDataParams): Promise<{ data: TableItem[]; next: boolean }> {
   const response = await getAPICallFunction({

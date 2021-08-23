@@ -50,6 +50,13 @@
           "rds": {}
         }
       }
-    ]
+    ],
+    "mTLS": {
+      "certificateExpirationTime": "2021-08-20T09:45:51Z",
+      "lastCertificateRegeneration": "2021-08-20T08:45:51.869135Z",
+      "certificateRegenerations": 4,
+      "issuedBackend": "ca-2",
+      "supportedBackends": ["ca-2", "ca-1"]
+    }
   }
 }

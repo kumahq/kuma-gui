@@ -64,6 +64,51 @@
             }
           ]
         }
+      },
+      "dataplaneInsight": {
+        "subscriptions": [
+          {
+            "id": "bf086d62-568d-4dce-ae21-fa58ddea5d5a",
+            "controlPlaneInstanceId": "foo",
+            "connectTime": "2021-08-20T13:31:36.594439Z",
+            "status": {
+              "lastUpdateTime": "2021-08-20T13:31:37.763782Z",
+              "total": {
+                "responsesSent": "2",
+                "responsesAcknowledged": "2"
+              },
+              "cds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "eds": {},
+              "lds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "rds": {}
+            },
+            "version": {
+              "kumaDp": {
+                "version": "1.2.0-154-g7aa9724d",
+                "gitTag": "1.2.0-154-g7aa9724d",
+                "gitCommit": "7aa9724d3d341e0b751ec333599fd639df6783ea",
+                "buildDate": "2021-08-19T09:24:20Z"
+              },
+              "envoy": {
+                "version": "1.18.3",
+                "build": "98c1c9e9a40804b93b074badad1cdf284b47d58b/1.18.3/Modified/RELEASE/BoringSSL"
+              }
+            }
+          }
+        ],
+        "mTLS": {
+          "certificateExpirationTime": "2021-08-20T09:45:51Z",
+          "lastCertificateRegeneration": "2021-08-20T08:45:51.869135Z",
+          "certificateRegenerations": 4,
+          "issuedBackend": "ca-2",
+          "supportedBackends": ["ca-2", "ca-1"]
+        }
       }
     },
     {
@@ -128,6 +173,51 @@
               }
             }
           ]
+        }
+      },
+      "dataplaneInsight": {
+        "subscriptions": [
+          {
+            "id": "bf086d62-568d-4dce-ae21-fa58ddea5d5a",
+            "controlPlaneInstanceId": "foo",
+            "connectTime": "2021-08-20T13:31:36.594439Z",
+            "status": {
+              "lastUpdateTime": "2021-08-20T13:31:37.763782Z",
+              "total": {
+                "responsesSent": "2",
+                "responsesAcknowledged": "2"
+              },
+              "cds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "eds": {},
+              "lds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "rds": {}
+            },
+            "version": {
+              "kumaDp": {
+                "version": "1.2.0-154-g7aa9724d",
+                "gitTag": "1.2.0-154-g7aa9724d",
+                "gitCommit": "7aa9724d3d341e0b751ec333599fd639df6783ea",
+                "buildDate": "2021-08-19T09:24:20Z"
+              },
+              "envoy": {
+                "version": "1.18.3",
+                "build": "98c1c9e9a40804b93b074badad1cdf284b47d58b/1.18.3/Modified/RELEASE/BoringSSL"
+              }
+            }
+          }
+        ],
+        "mTLS": {
+          "certificateExpirationTime": "2021-08-20T09:45:51Z",
+          "lastCertificateRegeneration": "2021-08-20T08:45:51.869135Z",
+          "certificateRegenerations": 4,
+          "issuedBackend": "ca-2",
+          "supportedBackends": ["ca-2", "ca-1"]
         }
       }
     }

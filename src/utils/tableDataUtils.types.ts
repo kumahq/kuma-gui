@@ -1,10 +1,10 @@
 export interface TableDataParams {
-  getSingleEntity: (mesh: string, query: string | null, params: { size: number; offset: string | null }) => any
+  getSingleEntity?: (mesh: string, query: string | null, params: { size: number; offset: string | null }) => any
   getAllEntities: (params: { size: number; offset: string | null }) => any
-  getAllEntitiesFromMesh: (mesh: string) => any
+  getAllEntitiesFromMesh: (mesh: string, params: { size: number; offset: string | null }) => any
   mesh: string
   size: number
-  query: string | null
+  query?: string | null
   offset: string | null
 }
 
