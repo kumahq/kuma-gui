@@ -1,5 +1,8 @@
 <template>
-  <div class="data-overview">
+  <div
+    class="data-overview"
+    data-testid="data-overview"
+  >
     <!-- controls -->
     <div class="data-table-controls mb-2">
       <slot name="additionalControls" />

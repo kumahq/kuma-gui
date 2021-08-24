@@ -40,6 +40,7 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
 <div>
   <div
     class="data-overview"
+    data-testid="data-overview"
   >
     <div
       class="data-table-controls mb-2"

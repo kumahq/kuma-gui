@@ -34,6 +34,8 @@ jobs:
       - run:
           name: 'Run tests'
           command: 'yarn test:unit'
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
       - run:
           name: 'Build'
           command: 'yarn build'
