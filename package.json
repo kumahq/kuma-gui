@@ -109,7 +109,7 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/"
+      "[/\\\\]node_modules[/\\\\](?!(@amcharts)\\/).+\\.js$"
     ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1",

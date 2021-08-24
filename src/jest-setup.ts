@@ -4,6 +4,11 @@ import { server as setupServer } from '@/services/mocks'
 
 import './kongponents'
 
+class SVGPathElement extends HTMLElement {}
+
+// @ts-ignore
+window.SVGPathElement = SVGPathElement
+
 const server = setupServer('http://localhost/')
 
 // Establish API mocking before all tests.
