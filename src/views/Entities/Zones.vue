@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 <template>
   <div class="zones">
     <KEmptyState
@@ -183,6 +182,7 @@
 import { mapState, mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { humanReadableDate, getSome, stripTimes, camelCaseToWords } from '@/helpers'
+import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -269,7 +269,6 @@ export default {
       entity: [],
       rawEntity: null,
       yamlEntity: null,
-      firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       tabGroupTitle: null,
@@ -337,83 +336,60 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData(offset = '0') {
+    parseData(entity) {
+      const { zoneInsight = {} } = entity
+      let zoneCpVersion = '-'
+
+      if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
+        zoneInsight.subscriptions.forEach((item, index) => {
+          if (item.version && item.version.kumaCp) {
+            zoneCpVersion = item.version.kumaCp.version
+          }
+        })
+      }
+
+      return {
+        ...entity,
+        status: getItemStatusFromInsight(zoneInsight).status,
+        zoneCpVersion,
+        withWarnings: zoneCpVersion !== this.globalCpVersion,
+      }
+    },
+    async loadData(offset = '0') {
       this.isLoading = true
       this.isEmpty = false
 
-      const params = {
-        size: this.pageSize,
-        offset,
+      try {
+        const { data, next } = await getTableData({
+          getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
+          size: this.pageSize,
+          offset,
+        })
+
+        // set pagination
+        this.next = next
+
+        // set table data
+        if (data.length) {
+          this.tableData.data = data.map(this.parseData)
+          this.tableDataIsEmpty = false
+          this.isEmpty = false
+
+          this.getEntity({ name: data[0].name })
+        } else {
+          this.tableData.data = []
+          this.tableDataIsEmpty = true
+          this.isEmpty = true
+          this.entityIsEmpty = true
+        }
+      } catch (error) {
+        this.hasError = true
+        this.isEmpty = true
+
+        console.error(error)
+      } finally {
+        this.isLoading = false
       }
-
-      const endpoint = Kuma.getAllZoneOverviews(params)
-
-      const getZonesStatus = () =>
-        endpoint
-          .then((response) => {
-            const { items } = response
-
-            this.next = Boolean(response.next)
-
-            // rewrite the status column to be more human-readable
-
-            if (items && items.length > 0) {
-              // rewrite the status column to be more human-readable
-
-              items.forEach((item) => {
-                const { zoneInsight = {} } = item
-                let zoneCpVersion = '-'
-
-                if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
-                  zoneInsight.subscriptions.forEach((item, index) => {
-                    if (item.version && item.version.kumaCp) {
-                      zoneCpVersion = item.version.kumaCp.version
-                    }
-                  })
-                }
-
-                item.status = getItemStatusFromInsight(zoneInsight).status
-
-                item.zoneCpVersion = zoneCpVersion
-
-                if (zoneCpVersion !== this.globalCpVersion) {
-                  item.withWarnings = true
-                }
-              })
-
-              // sort the table data by name and the mesh it's associated with
-              this.sortEntities(items)
-
-              // set the first item as the default for initial load
-              this.firstEntity = items[0].name
-
-              // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
-
-              this.tableData.data = [...items]
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
-            } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
-
-              this.getEntity(null)
-            }
-          })
-          .catch((error) => {
-            this.hasError = true
-            this.isEmpty = true
-
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-
-      getZonesStatus()
     },
     async getEntity(entity) {
       this.entityIsLoading = true

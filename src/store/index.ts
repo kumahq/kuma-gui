@@ -437,7 +437,6 @@ export default (): Module<RootInterface, RootInterface> => ({
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: versionsData })
         }
       } catch (e) {
-        console.log(e)
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: [] })
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: [] })
       }

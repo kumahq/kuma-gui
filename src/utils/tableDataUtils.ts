@@ -27,13 +27,17 @@ function getAPICallFunction({
     offset,
   }
 
-  if (mesh === 'all') {
+  if (!mesh || mesh === 'all') {
     return getAllEntities(params)
   } else if (getSingleEntity && query && query.length && mesh !== 'all') {
     return getSingleEntity(mesh, query, params)
   }
 
-  return getAllEntitiesFromMesh(mesh, params)
+  if (getAllEntitiesFromMesh) {
+    return getAllEntitiesFromMesh(mesh, params)
+  }
+
+  return Promise.resolve()
 }
 
 export async function getTableData({
