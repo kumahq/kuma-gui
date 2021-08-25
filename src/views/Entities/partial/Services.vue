@@ -94,7 +94,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
+import { OFFLINE, ONLINE, PARTIALLY_DEGRADED, PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
   name: 'Services',
@@ -228,14 +228,14 @@ export default {
 
         switch (entity.status) {
           case 'online':
-            entity.status = 'Online'
+            entity.status = ONLINE
             break
           case 'partially_degraded':
-            entity.status = 'Partially degraded'
+            entity.status = PARTIALLY_DEGRADED
             break
           case 'offline':
           default:
-            entity.status = 'Offline'
+            entity.status = OFFLINE
         }
 
         return entity

@@ -187,7 +187,7 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import LoaderCard from '@/components/Utils/LoaderCard'
 
-import { getZoneIngressStatus } from '@/dataplane'
+import { getItemStatusFromInsight } from '@/dataplane'
 import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
 export default {
@@ -335,7 +335,7 @@ export default {
               items = items.map((item) => {
                 const { zoneIngressInsight = {} } = item
 
-                return { ...item, ...getZoneIngressStatus(zoneIngressInsight) }
+                return { ...item, ...getItemStatusFromInsight(zoneIngressInsight) }
               })
 
               // sort the table data by name and the mesh it's associated with

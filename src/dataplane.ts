@@ -1,4 +1,5 @@
 import { humanReadableDate } from '@/helpers'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
 import { satisfies } from 'semver'
 import Kuma from '@/services/kuma'
 
@@ -89,14 +90,14 @@ export function getStatus(dataplane: DataPlane, dataplaneInsight: TODO = {}) {
     const allInboundsOnline = errors.length === 0
 
     if (!proxyOnline || allInboundsOffline) {
-      return 'Offline'
+      return OFFLINE
     }
 
     if (!allInboundsOnline) {
-      return 'Partially degraded'
+      return PARTIALLY_DEGRADED
     }
 
-    return 'Online'
+    return ONLINE
   }
 
   return {
@@ -106,10 +107,10 @@ export function getStatus(dataplane: DataPlane, dataplaneInsight: TODO = {}) {
 }
 
 /*
-getStatus takes ZoneIngressInsight and returns the status 'Online' or 'Offline'
+getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
  */
-export function getZoneIngressStatus(zoneIngressInsight: TODO = {}) {
-  const subscriptions = zoneIngressInsight.subscriptions ? zoneIngressInsight.subscriptions : []
+export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLINE | typeof OFFLINE } {
+  const subscriptions = item.subscriptions ? item.subscriptions : []
 
   const proxyOnline = subscriptions.some(
     (item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime,
@@ -117,19 +118,15 @@ export function getZoneIngressStatus(zoneIngressInsight: TODO = {}) {
 
   const status = () => {
     if (proxyOnline) {
-      return 'Online'
+      return ONLINE
     }
 
-    return 'Offline'
+    return OFFLINE
   }
 
   return {
     status: status(),
   }
-}
-
-export function getStatusFromObject({ dataplane, dataplaneInsight }: { dataplane: DataPlane; dataplaneInsight: TODO }) {
-  return getStatus(dataplane, dataplaneInsight)
 }
 
 interface DataPlaneOverview {

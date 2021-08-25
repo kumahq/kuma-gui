@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 <template>
   <div class="zones">
     <KEmptyState
@@ -182,6 +183,7 @@
 import { mapState, mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { humanReadableDate, getSome, stripTimes, camelCaseToWords } from '@/helpers'
+import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -191,7 +193,6 @@ import LabelList from '@/components/Utils/LabelList'
 import LoaderCard from '@/components/Utils/LoaderCard'
 import Warnings from '@/views/Entities/components/Warnings'
 
-import { INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
 export default {
@@ -345,49 +346,39 @@ export default {
         offset,
       }
 
-      const endpoint = Kuma.getZonesStatus(params)
+      const endpoint = Kuma.getAllZoneOverviews(params)
 
       const getZonesStatus = () =>
         endpoint
           .then((response) => {
+            const { items } = response
+
             this.next = Boolean(response.next)
 
-            const items = response
+            // rewrite the status column to be more human-readable
 
             if (items && items.length > 0) {
               // rewrite the status column to be more human-readable
-              items.forEach((i) => {
-                const status = i.active === false ? 'Offline' : 'Online'
 
-                delete i.active
+              items.forEach((item) => {
+                const { zoneInsight = {} } = item
+                let zoneCpVersion = '-'
 
-                i.status = status
-
-                // make call to get zone zone-cp version
-                Kuma.getZoneOverview(i.name)
-                  .then((response) => {
-                    let zoneCpVersion = '-'
-                    if (response.zoneInsight.subscriptions && response.zoneInsight.subscriptions.length) {
-                      response.zoneInsight.subscriptions.forEach((item, index) => {
-                        if (item.version && item.version.kumaCp) {
-                          zoneCpVersion = item.version.kumaCp.version
-                        }
-                      })
-                    }
-
-                    i.zoneCpVersion = zoneCpVersion
-
-                    if (zoneCpVersion !== this.globalCpVersion) {
-                      i.withWarnings = true
+                if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
+                  zoneInsight.subscriptions.forEach((item, index) => {
+                    if (item.version && item.version.kumaCp) {
+                      zoneCpVersion = item.version.kumaCp.version
                     }
                   })
-                  .catch((error) => {
-                    // if zone overview fails show version as empty instead of showing error.
-                    i.zoneCpVersion = '-'
-                    i.withWarnings = true
+                }
 
-                    console.error(error)
-                  })
+                item.status = getItemStatusFromInsight(zoneInsight).status
+
+                item.zoneCpVersion = zoneCpVersion
+
+                if (zoneCpVersion !== this.globalCpVersion) {
+                  item.withWarnings = true
+                }
               })
 
               // sort the table data by name and the mesh it's associated with

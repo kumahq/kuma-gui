@@ -3,6 +3,8 @@ import Vuex, { Module } from 'vuex'
 
 import config from '@/store/modules/config'
 import sidebar from '@/store/modules/sidebar'
+import { getItemStatusFromInsight } from '@/dataplane'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
 
 import { fetchAllResources, filterResourceByMesh } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
@@ -279,12 +281,12 @@ export default (): Module<RootInterface, RootInterface> => ({
                   const disconnectTime = items[i].disconnectTime
 
                   if (connectTime && connectTime.length && !disconnectTime) {
-                    return 'Online'
+                    return ONLINE
                   }
                 }
               }
 
-              return 'Offline'
+              return OFFLINE
             })
 
             // create the full data array
@@ -299,7 +301,7 @@ export default (): Module<RootInterface, RootInterface> => ({
           // if any dataplanes are offline
           for (let i = 0; i < Object.values(result).length; i++) {
             const statusVal = Object.values(result[i])[0]
-            const isOnline = !(statusVal === 'Offline' || statusVal === 'offline')
+            const isOnline = !(statusVal === OFFLINE || statusVal === OFFLINE.toLowerCase())
 
             states.push(isOnline)
           }
@@ -398,13 +400,18 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       try {
         if (multicluster) {
-          const params = {
+          const overviewsParams = {
             callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
             size: state.pageSize,
           }
 
-          const overviews = await fetchAllResources(params)
-          const statuses = await Kuma.getZonesStatus({ size: state.pageSize })
+          const statusesParams = {
+            callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
+            size: state.pageSize,
+          }
+
+          const overviews = await fetchAllResources(overviewsParams)
+          const statuses = await fetchAllResources(statusesParams)
 
           dispatch('setOverviewZonesChartData', statuses)
           dispatch('setOverviewZonesCPVersionsChartData', overviews)
@@ -430,6 +437,7 @@ export default (): Module<RootInterface, RootInterface> => ({
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: versionsData })
         }
       } catch (e) {
+        console.log(e)
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: [] })
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: [] })
       }
@@ -443,21 +451,30 @@ export default (): Module<RootInterface, RootInterface> => ({
       dispatch('setOverviewEnvoyVersionsChartData')
     },
 
-    setOverviewZonesChartData({ state, commit }, statuses = []) {
-      const total = statuses.length
-      const online = statuses.filter(({ active }: { active: boolean }) => active).length
+    setOverviewZonesChartData({ state, commit }, { data = [] }) {
+      const total = data.length
+
+      let online = 0
+
+      data.forEach((item: any): void => {
+        const status = getItemStatusFromInsight(item.zoneInsight).status
+
+        if (status === ONLINE) {
+          online++
+        }
+      })
 
       const chartData = []
 
       if (total) {
         chartData.push({
-          category: 'Online',
+          category: ONLINE,
           value: online,
         })
 
         if (online !== total) {
           chartData.push({
-            category: 'Offline',
+            category: OFFLINE,
             value: total - online,
           })
         }
@@ -498,20 +515,20 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       if (total) {
         data.push({
-          category: 'Online',
+          category: ONLINE,
           value: online,
         })
 
         if (partiallyDegraded) {
           data.push({
-            category: 'Partially Degraded',
+            category: PARTIALLY_DEGRADED,
             value: partiallyDegraded,
           })
         }
 
         if (online + partiallyDegraded !== total) {
           data.push({
-            category: 'Offline',
+            category: OFFLINE,
             value: total - partiallyDegraded - online,
           })
         }
@@ -530,7 +547,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
         const { version } = curr.zoneInsight.subscriptions.pop()
 
-        const item = acc.find(({ category }: { category: TODO }) => category === version.kumaCp.version)
+        const item = acc.find(({ category }: { category: TODO }) => category === version?.kumaCp?.version)
 
         if (!item) {
           acc.push({ category: version.kumaCp.version, value: 1 })
