@@ -29,7 +29,9 @@ function getAPICallFunction({
 
   if (!mesh || mesh === 'all') {
     return getAllEntities(params)
-  } else if (getSingleEntity && query && query.length && mesh !== 'all') {
+  }
+
+  if (getSingleEntity && query && query.length && mesh !== 'all') {
     return getSingleEntity(mesh, query, params)
   }
 

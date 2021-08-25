@@ -110,7 +110,7 @@ export function getStatus(dataplane: DataPlane, dataplaneInsight: TODO = {}) {
 getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
  */
 export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLINE | typeof OFFLINE } {
-  const subscriptions = item.subscriptions ? item.subscriptions : []
+  const { subscriptions = [] } = item
 
   const proxyOnline = subscriptions.some(
     (item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime,
