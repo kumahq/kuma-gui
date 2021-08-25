@@ -23,6 +23,12 @@ describe('tableDataUtils', () => {
       expect(params.getAllEntities).toHaveBeenCalled()
     })
 
+    it('calls getAllEntities when no mesh provided', () => {
+      getTableData({ ...params, mesh: undefined })
+
+      expect(params.getAllEntities).toHaveBeenCalled()
+    })
+
     it('calls getAllEntitiesFromMesh', () => {
       getTableData({ ...params, mesh: 'default' })
 
@@ -37,6 +43,22 @@ describe('tableDataUtils', () => {
   })
 
   describe('handles reponses', () => {
+    it('when no corresponding function provided', async () => {
+      const response = await getTableData({
+        ...params,
+        mesh: 'default',
+        getSingleEntity: undefined,
+        getAllEntitiesFromMesh: undefined,
+      })
+
+      expect(response).toMatchInlineSnapshot(`
+        Object {
+          "data": Array [],
+          "next": false,
+        }
+      `)
+    })
+
     it('without data', async () => {
       const response = await getTableData(params)
 

@@ -1,19 +1,19 @@
 {
   "type": "ZoneOverview",
   "name": "cluster-1",
-  "creationTime": "2021-02-19T11:58:05.898336+01:00",
-  "modificationTime": "2021-02-19T11:58:05.898336+01:00",
+  "creationTime": "2021-02-19T08:06:15.380674+01:00",
+  "modificationTime": "2021-02-19T08:06:15.380674+01:00",
   "zone": {
     "enabled": true
   },
   "zoneInsight": {
     "subscriptions": [
       {
-        "id": "4c4002d8-226b-4576-8f3c-21fe1ebfc928",
+        "id": "b21265cf-f856-4214-ad1b-42539c4b20a9",
         "globalInstanceId": "foobar",
-        "connectTime": "2021-02-19T10:58:05.898402Z",
+        "connectTime": "2021-02-19T07:06:15.380718Z",
         "status": {
-          "lastUpdateTime": "2021-02-19T10:58:06.902847Z",
+          "lastUpdateTime": "2021-02-19T07:06:16.384057Z",
           "total": {
             "responsesSent": "14",
             "responsesAcknowledged": "14"
@@ -79,7 +79,85 @@
         },
         "version": {
           "kumaCp": {
-            "version": "1.0.8",
+            "version": "1.0.0-rc2-211-g823fe8ce",
+            "gitTag": "1.0.0-rc2-211-g823fe8ce",
+            "gitCommit": "823fe8cef6430a8f75e72a7224eb5a8ab571ec42",
+            "buildDate": "2021-02-18T13:22:30Z"
+          }
+        }
+      },
+      {
+        "id": "3d3b7a11-e0f9-4f70-8cc9-2594318488d3",
+        "globalInstanceId": "MacBook-Pro-Bartlomiej.local-9e52",
+        "connectTime": "2021-02-19T07:07:15.535286Z",
+        "status": {
+          "lastUpdateTime": "2021-02-19T07:07:15.537654Z",
+          "total": {
+            "responsesSent": "14",
+            "responsesAcknowledged": "14"
+          },
+          "stat": {
+            "CircuitBreaker": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "Config": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "Dataplane": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "ExternalService": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "FaultInjection": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "HealthCheck": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "Mesh": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "ProxyTemplate": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "Retry": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "Secret": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "TrafficLog": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "TrafficPermission": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "TrafficRoute": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            },
+            "TrafficTrace": {
+              "responsesSent": "1",
+              "responsesAcknowledged": "1"
+            }
+          }
+        },
+        "version": {
+          "kumaCp": {
+            "version": "1.0.0-rc2-211-g823fe8ce",
             "gitTag": "1.0.0-rc2-211-g823fe8ce",
             "gitCommit": "823fe8cef6430a8f75e72a7224eb5a8ab571ec42",
             "buildDate": "2021-02-18T13:22:30Z"
