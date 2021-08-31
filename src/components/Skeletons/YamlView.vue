@@ -128,7 +128,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import Prism from 'vue-prismjs'
-import 'prismjs/themes/prism.css'
 import json2yaml from '@appscode/json2yaml'
 
 export default {

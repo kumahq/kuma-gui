@@ -203,7 +203,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Prism from 'vue-prismjs'
-import 'prismjs/themes/prism.css'
+
 import Kuma from '@/services/kuma'
 import { humanReadableDate, getSome, stripTimes, camelCaseToWords, getZoneDpServerAuthType } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
