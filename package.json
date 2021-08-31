@@ -7,12 +7,12 @@
   "scripts": {
     "serve": "yarn vue-cli-service serve",
     "build": "yarn vue-cli-service build --mode production",
-    "test:unit": "yarn vue-cli-service test:unit",
+    "test:unit": "yarn vue-cli-service test:unit -i",
     "test:e2e": "yarn vue-cli-service test:e2e",
     "lint": "yarn vue-cli-service lint",
     "msw:cleanup": "rm -f public/mockServiceWorker.js",
     "prebuild": "yarn msw:cleanup",
-    "test:unit:watch": "vue-cli-service test:unit --watch"
+    "test:unit:watch": "vue-cli-service test:unit --watch -i"
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.13",
