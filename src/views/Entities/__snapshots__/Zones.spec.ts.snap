@@ -566,6 +566,22 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                 aria-selected="false"
                 class="tab-item"
                 data-v-a38b664a=""
+                id="config-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Config
+                </a>
+              </li>
+              <li
+                aria-controls="panel-3"
+                aria-selected="false"
+                class="tab-item"
+                data-v-a38b664a=""
                 id="warnings-tab"
                 role="tab"
                 tabindex="0"
@@ -750,10 +766,20 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
               <!---->
             </div>
             <div
-              aria-labelledby="warnings-tab"
+              aria-labelledby="config-tab"
               class="tab-container"
               data-v-a38b664a=""
               id="panel-2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="warnings-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-3"
               role="tabpanel"
               tabindex="0"
             >

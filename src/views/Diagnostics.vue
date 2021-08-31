@@ -67,7 +67,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Prism from 'vue-prismjs'
-import 'prismjs/themes/prism.css'
+
 import PageHeader from '@/components/Utils/PageHeader.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 
