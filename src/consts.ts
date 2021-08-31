@@ -5,3 +5,5 @@ export const APP_WINDOW = window
 export const ONLINE = 'Online'
 export const OFFLINE = 'Offline'
 export const PARTIALLY_DEGRADED = 'Partially degraded'
+
+export const DISABLED = 'Disabled'

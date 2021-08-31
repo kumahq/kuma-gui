@@ -181,7 +181,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
-import { humanReadableDate, getSome, stripTimes, camelCaseToWords } from '@/helpers'
+import { humanReadableDate, getSome, stripTimes, camelCaseToWords, getZoneDpServerAuthType } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import sortEntities from '@/mixins/EntitySorter'
@@ -248,6 +248,7 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Zone CP Version', key: 'zoneCpVersion' },
+          { label: 'Backend', key: 'backend' },
           { key: 'warnings', hideLabel: true },
         ],
         data: [],
@@ -339,11 +340,13 @@ export default {
     parseData(entity) {
       const { zoneInsight = {} } = entity
       let zoneCpVersion = '-'
+      let backend = ''
 
       if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
         zoneInsight.subscriptions.forEach((item, index) => {
           if (item.version && item.version.kumaCp) {
             zoneCpVersion = item.version.kumaCp.version
+            backend = JSON.parse(item.config).store.type
           }
         })
       }
@@ -352,6 +355,7 @@ export default {
         ...entity,
         status: getItemStatusFromInsight(zoneInsight).status,
         zoneCpVersion,
+        backend,
         withWarnings: zoneCpVersion !== this.globalCpVersion,
       }
     },
@@ -414,7 +418,7 @@ export default {
 
           this.tabGroupTitle = `Zone: ${name}`
           this.entityOverviewTitle = `Zone Overview for ${name}`
-          this.entity = getSome(response, selected)
+          this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
           this.rawEntity = stripTimes(response)
           this.yamlEntity = { name, ...rest }
 
