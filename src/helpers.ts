@@ -1,4 +1,7 @@
+import { DISABLED } from '@/consts'
 import isPlainObject from 'lodash/isPlainObject'
+import { ZoneOverview } from '@/types'
+import get from 'lodash/get'
 
 type TODO = any
 
@@ -338,6 +341,18 @@ export async function fetchAllResources({ callEndpoint, ...otherParams }: TODO) 
   }
 }
 
+export function getZoneDpServerAuthType(zone: ZoneOverview): string {
+  const subscriptionsLength = get(zone, 'zoneInsight.subscriptions.length', 0)
+
+  if (subscriptionsLength) {
+    const parsedConfig = JSON.parse(zone.zoneInsight.subscriptions[subscriptionsLength - 1].config)
+
+    return get(parsedConfig, 'dpServer.auth.type', DISABLED)
+  }
+
+  return DISABLED
+}
+
 export default {
   forEach,
   getPluginIcon,
@@ -352,4 +367,5 @@ export default {
   cleanTag,
   camelCaseToWords,
   kebabCase,
+  getZoneDpServerAuthType,
 }

@@ -96,7 +96,6 @@
 
 <script>
 import Prism from 'vue-prismjs'
-import 'prismjs/themes/prism.css'
 
 export default {
   name: 'CodeView',

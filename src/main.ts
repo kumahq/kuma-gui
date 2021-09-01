@@ -18,6 +18,9 @@ import './kongponents'
 /** Tailwind */
 import '@/assets/styles/third-party/tailwind.css'
 
+/** Prismjs */
+import 'prismjs/themes/prism.css'
+
 /** Styles */
 import '@/assets/styles/variables.scss'
 import '@/assets/styles/utilities.scss'

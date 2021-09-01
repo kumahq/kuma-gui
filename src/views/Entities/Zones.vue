@@ -161,14 +161,36 @@
             </div>
           </LoaderCard>
         </template>
-        <template slot="yaml">
-          <YamlView
-            :title="entityOverviewTitle"
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="yamlEntity"
-          />
+        <template slot="config">
+          <KCard
+            v-if="codeOutput"
+            border-variant="noBorder"
+          >
+            <template slot="body">
+              <Prism
+                language="json"
+                :code="codeOutput"
+              />
+            </template>
+            <template slot="actions">
+              <KClipboardProvider
+                v-if="codeOutput"
+                v-slot="{ copyToClipboard }"
+              >
+                <KPop placement="bottom">
+                  <KButton
+                    appearance="primary"
+                    @click="() => { copyToClipboard(codeOutput) }"
+                  >
+                    Copy config to clipboard
+                  </KButton>
+                  <div slot="content">
+                    <p>Config copied to clipboard!</p>
+                  </div>
+                </KPop>
+              </KClipboardProvider>
+            </template>
+          </KCard>
         </template>
         <template slot="warnings">
           <Warnings :warnings="warnings" />
@@ -180,15 +202,17 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import Prism from 'vue-prismjs'
+
 import Kuma from '@/services/kuma'
-import { humanReadableDate, getSome, stripTimes, camelCaseToWords } from '@/helpers'
+import { humanReadableDate, getSome, stripTimes, camelCaseToWords, getZoneDpServerAuthType } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
-import YamlView from '@/components/Skeletons/YamlView'
+
 import LabelList from '@/components/Utils/LabelList'
 import LoaderCard from '@/components/Utils/LoaderCard'
 import Warnings from '@/views/Entities/components/Warnings'
@@ -201,10 +225,10 @@ export default {
     FrameSkeleton,
     DataOverview,
     Tabs,
-    YamlView,
     LabelList,
     LoaderCard,
     Warnings,
+    Prism,
   },
   filters: {
     formatValue(value) {
@@ -248,6 +272,7 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Zone CP Version', key: 'zoneCpVersion' },
+          { label: 'Backend', key: 'backend' },
           { key: 'warnings', hideLabel: true },
         ],
         data: [],
@@ -262,19 +287,22 @@ export default {
           title: 'Zone Insights',
         },
         {
+          hash: '#config',
+          title: 'Config',
+        },
+        {
           hash: '#warnings',
           title: 'Warnings',
         },
       ],
       entity: [],
       rawEntity: null,
-      yamlEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       tabGroupTitle: null,
-      entityOverviewTitle: null,
       itemsPerCol: 3,
       warnings: [],
+      codeOutput: null,
     }
   },
   computed: {
@@ -285,28 +313,6 @@ export default {
       multicluster: 'config/getMulticlusterStatus',
       globalCpVersion: 'config/getVersion',
     }),
-    // If you need to test multicluster without actually having it enabled
-    // in Kuma, uncomment this and comment out the mapGetters above.
-    // multicluster () {
-    //   return true
-    // },
-    pageTitle() {
-      return this.$route.meta.title
-    },
-    shareUrl() {
-      const urlRoot = `${window.location.origin}#`
-      const entity = this.entity
-
-      const shareUrl = () => {
-        if (this.$route.query.ns) {
-          return this.$route.fullPath
-        }
-
-        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
-      }
-
-      return shareUrl()
-    },
   },
   watch: {
     $route() {
@@ -339,11 +345,16 @@ export default {
     parseData(entity) {
       const { zoneInsight = {} } = entity
       let zoneCpVersion = '-'
+      let backend = ''
 
       if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
         zoneInsight.subscriptions.forEach((item, index) => {
           if (item.version && item.version.kumaCp) {
             zoneCpVersion = item.version.kumaCp.version
+
+            if (item.config) {
+              backend = JSON.parse(item.config).store.type
+            }
           }
         })
       }
@@ -352,6 +363,7 @@ export default {
         ...entity,
         status: getItemStatusFromInsight(zoneInsight).status,
         zoneCpVersion,
+        backend,
         withWarnings: zoneCpVersion !== this.globalCpVersion,
       }
     },
@@ -409,14 +421,12 @@ export default {
         try {
           // get the Zone details from the Zone Insights endpoint
           const response = await Kuma.getZoneOverview(entity.name)
-          const { name, zoneInsight, ...rest } = response
+          const { name, zoneInsight } = response
           const { subscriptions = [] } = zoneInsight
 
           this.tabGroupTitle = `Zone: ${name}`
-          this.entityOverviewTitle = `Zone Overview for ${name}`
-          this.entity = getSome(response, selected)
+          this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
           this.rawEntity = stripTimes(response)
-          this.yamlEntity = { name, ...rest }
 
           if (subscriptions.length) {
             const { version = {} } = subscriptions[subscriptions.length - 1]
@@ -433,6 +443,10 @@ export default {
                 },
               })
             }
+
+            if (subscriptions[subscriptions.length - 1].config) {
+              this.codeOutput = JSON.stringify(JSON.parse(subscriptions[subscriptions.length - 1].config), null, 2)
+            }
           }
         } catch (e) {
           this.entity = null
@@ -448,9 +462,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.add-mesh-button {
-  background-color: var(--logo-green) !important;
-}
-</style>
