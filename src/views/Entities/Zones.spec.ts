@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import renderWithVuex from '@/testUtils/renderWithVuex'
-import Vue from 'vue'
 import Zones from './Zones.vue'
 
 describe('Zones.vue', () => {

@@ -351,7 +351,10 @@ export default {
         zoneInsight.subscriptions.forEach((item, index) => {
           if (item.version && item.version.kumaCp) {
             zoneCpVersion = item.version.kumaCp.version
-            backend = JSON.parse(item.config).store.type
+
+            if (item.config) {
+              backend = JSON.parse(item.config).store.type
+            }
           }
         })
       }
@@ -441,7 +444,9 @@ export default {
               })
             }
 
-            this.codeOutput = JSON.stringify(JSON.parse(subscriptions[subscriptions.length - 1].config), null, 2)
+            if (subscriptions[subscriptions.length - 1].config) {
+              this.codeOutput = JSON.stringify(JSON.parse(subscriptions[subscriptions.length - 1].config), null, 2)
+            }
           }
         } catch (e) {
           this.entity = null
