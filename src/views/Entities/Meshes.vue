@@ -459,34 +459,40 @@ export default {
                     const enabled = subData.enabledBackend
                     const matched = subData.backends.find((obj) => obj.name === enabled)
 
-                    newData.push({
-                      label: label,
-                      value: {
-                        type: matched.type,
-                        name: matched.name,
-                      },
-                    })
+                    if (matched) {
+                      newData.push({
+                        label: label,
+                        value: {
+                          type: matched.type,
+                          name: matched.name,
+                        },
+                      })
+                    }
                   } else if (subData && subData.defaultBackend) {
                     const enabled = subData.defaultBackend
                     const matched = subData.backends.find((obj) => obj.name === enabled)
 
-                    newData.push({
-                      label: label,
-                      value: {
-                        type: matched.type,
-                        name: matched.name,
-                      },
-                    })
+                    if (matched) {
+                      newData.push({
+                        label: label,
+                        value: {
+                          type: matched.type,
+                          name: matched.name,
+                        },
+                      })
+                    }
                   } else if (subData && subData.backends) {
                     const backends = subData.backends[0]
 
-                    newData.push({
-                      label: label,
-                      value: {
-                        type: backends.type,
-                        name: backends.name,
-                      },
-                    })
+                    if (backends) {
+                      newData.push({
+                        label: label,
+                        value: {
+                          type: backends.type,
+                          name: backends.name,
+                        },
+                      })
+                    }
                   } else {
                     newData.push({
                       label: label,
