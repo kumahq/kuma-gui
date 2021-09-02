@@ -53,7 +53,7 @@ exports[`Pagination.vue renders pagination 1`] = `
   >
     <button
       class="k-button primary"
-      data-v-90a15d32=""
+      data-v-38fa8ecf=""
       type="button"
     >
       
@@ -63,7 +63,7 @@ exports[`Pagination.vue renders pagination 1`] = `
      
     <button
       class="k-button primary"
-      data-v-90a15d32=""
+      data-v-38fa8ecf=""
       type="button"
     >
       

@@ -203,14 +203,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                         <button
                                           class="k-button primary"
                                           data-v-07815fc5=""
-                                          data-v-90a15d32=""
+                                          data-v-38fa8ecf=""
                                           type="button"
                                         >
                                           
               Copy Command to Clipboard
             
                                         </button>
-                                         
                                         <transition-stub
                                           data-v-07815fc5=""
                                           name="fade"
@@ -311,14 +310,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                         <button
                                           class="k-button primary"
                                           data-v-07815fc5=""
-                                          data-v-90a15d32=""
+                                          data-v-38fa8ecf=""
                                           type="button"
                                         >
                                           
               Copy Command to Clipboard
             
                                         </button>
-                                         
                                         <transition-stub
                                           data-v-07815fc5=""
                                           name="fade"
@@ -569,7 +567,7 @@ networking:
           >
             <button
               class="k-button secondary"
-              data-v-90a15d32=""
+              data-v-38fa8ecf=""
               style=""
               type="button"
             >
@@ -580,7 +578,7 @@ networking:
              
             <button
               class="k-button primary"
-              data-v-90a15d32=""
+              data-v-38fa8ecf=""
               style="display: none;"
               type="button"
             >

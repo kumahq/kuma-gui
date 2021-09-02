@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tabs.vue renders basic snapshot 1`] = `
+<div>
+  <div
+    class="tab-container"
+  >
+    <!---->
+     
+    <div
+      class="tab__content-container"
+    >
+      <div
+        class="k-tabs"
+        data-v-a38b664a=""
+      >
+        <ul
+          aria-label="ktabs"
+          data-v-a38b664a=""
+          role="tablist"
+        >
+          <li
+            aria-controls="panel-0"
+            aria-selected="true"
+            class="tab-item active"
+            data-v-a38b664a=""
+            id="universal-tab"
+            role="tab"
+            tabindex="0"
+          >
+            <a
+              class="tab-link"
+              data-v-a38b664a=""
+            >
+              Universal
+            </a>
+          </li>
+          <li
+            aria-controls="panel-1"
+            aria-selected="false"
+            class="tab-item"
+            data-v-a38b664a=""
+            id="kubernetes-tab"
+            role="tab"
+            tabindex="0"
+          >
+            <a
+              class="tab-link"
+              data-v-a38b664a=""
+            >
+              Kubernetes
+            </a>
+          </li>
+        </ul>
+        <div
+          aria-labelledby="universal-tab"
+          class="tab-container"
+          data-v-a38b664a=""
+          id="panel-0"
+          role="tabpanel"
+          tabindex="0"
+        >
+          <div
+            data-v-a38b664a=""
+          >
+            Universal
+          </div>
+        </div>
+        <div
+          aria-labelledby="kubernetes-tab"
+          class="tab-container"
+          data-v-a38b664a=""
+          id="panel-1"
+          role="tabpanel"
+          tabindex="0"
+        >
+          <!---->
+        </div>
+      </div>
+       
+      <div>
+        <!---->
+         
+        <!---->
+      </div>
+    </div>
+  </div>
+</div>
+`;
