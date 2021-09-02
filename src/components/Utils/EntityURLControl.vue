@@ -15,8 +15,8 @@
               view-box="0 0 16 16"
               icon="externalLink"
             />
-            {{ copyButtonText }}
           </template>
+          {{ copyButtonText }}
         </KButton>
         <template v-slot:content>
           <div>
