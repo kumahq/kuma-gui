@@ -15,9 +15,9 @@
         @loadData="loadData($event)"
       >
         >
-        <template slot="additionalControls">
+        <template v-slot:additionalControls>
           <KButton
-            v-if="this.$route.query.ns"
+            v-if="$route.query.ns"
             class="back-button"
             appearance="primary"
             size="small"
@@ -39,7 +39,7 @@
         :tabs="tabs"
         initial-tab-override="overview"
       >
-        <template slot="tabHeader">
+        <template v-slot:tabHeader>
           <div>
             <h3>{{ tabGroupTitle }}</h3>
           </div>
@@ -47,7 +47,7 @@
             <EntityURLControl :url="shareUrl" />
           </div>
         </template>
-        <template slot="overview">
+        <template v-slot:overview>
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -68,7 +68,7 @@
             </div>
           </LabelList>
         </template>
-        <template slot="yaml">
+        <template v-slot:yaml>
           <YamlView
             :title="entityOverviewTitle"
             :has-error="entityHasError"

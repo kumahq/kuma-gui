@@ -4,7 +4,7 @@
       :title="cardTitle"
       :class="{ 'is-centered': centerText }"
     >
-      <template slot="body">
+      <template v-slot:body>
         <slot
           name="cardContent"
           class="skeleton-card__content"

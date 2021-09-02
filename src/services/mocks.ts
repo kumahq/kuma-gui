@@ -3,6 +3,8 @@ import { setupServer } from 'msw/node'
 
 const MOCK_FILES_ROOT_PATH: string = './mock/responses'
 
+const OK: number = 200
+
 const requireMockFile = (filename: string) => require(`${MOCK_FILES_ROOT_PATH}/${filename}`)
 
 const mockFilenameBasePaths: string[] = [
@@ -146,7 +148,7 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
 const worker = (apiURL: string) => setupWorker(...setupHandlers(apiURL))
 
 const additionalTestHandlers: RestHandler[] = [
-  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.2'))),
+  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(OK), ctx.text('1.2.2'))),
 ]
 
 const server = (apiURL: string) => setupServer(...setupHandlers(apiURL), ...additionalTestHandlers)

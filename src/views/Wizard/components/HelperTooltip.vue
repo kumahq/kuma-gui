@@ -4,9 +4,11 @@
     class="help-icon"
   >
     <a>?</a>
-    <div slot="content">
-      <slot />
-    </div>
+    <template v-slot:content>
+      <div>
+        <slot />
+      </div>
+    </template>
   </KPop>
 </template>
 

@@ -3,7 +3,7 @@
     v-if="metrics"
     class="info-grid-wrapper mb-4"
   >
-    <template slot="body">
+    <template v-slot:body>
       <div
         class="info-grid"
         :class="metricCountClass"

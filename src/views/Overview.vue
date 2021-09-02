@@ -56,7 +56,7 @@
           card-title="Create a virtual Mesh"
           card-action-button-text="Create Mesh"
         >
-          <template slot="cardContent">
+          <template v-slot:cardContent>
             <p>
               We can create multiple isolated Mesh resources (i.e. per application/team/business unit).
             </p>
@@ -70,7 +70,7 @@
           card-title="Connect data plane proxies"
           card-action-button-text="Get Started"
         >
-          <template slot="cardContent">
+          <template v-slot:cardContent>
             <p>
               We need a data plane proxy for each replica of our services within a Mesh resource.
             </p>
@@ -84,7 +84,7 @@
           :card-title="`Apply ${title} policies`"
           card-action-button-text="Explore Policies"
         >
-          <template slot="cardContent">
+          <template v-slot:cardContent>
             <p>
               We can apply {{ productName }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
             </p>

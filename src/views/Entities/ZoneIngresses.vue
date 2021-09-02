@@ -4,7 +4,7 @@
       v-if="multicluster === false"
       class="global-api-status"
     >
-      <template slot="title">
+      <template v-slot:title>
         <KIcon
           class="kong-icon--centered"
           icon="dangerCircle"
@@ -12,12 +12,12 @@
         />
         {{ productName }} is running in Standalone mode.
       </template>
-      <template slot="message">
+      <template v-slot:message>
         <p>
           To access this page, you must be running in <strong>Multi-Zone</strong> mode.
         </p>
       </template>
-      <template slot="cta">
+      <template v-slot:cta>
         <KButton
           to="https://kuma.io/docs/0.6.0/documentation/deployments/"
           target="_blank"
@@ -52,12 +52,12 @@
         :tabs="tabs"
         initial-tab-override="overview"
       >
-        <template slot="tabHeader">
+        <template v-slot:tabHeader>
           <div>
             <h3>{{ tabGroupTitle }}</h3>
           </div>
         </template>
-        <template slot="overview">
+        <template v-slot:overview>
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -85,7 +85,7 @@
             </div>
           </LabelList>
         </template>
-        <template slot="insights">
+        <template v-slot:insights>
           <LoaderCard
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -150,10 +150,10 @@
                   appearance="info"
                   class="mt-4"
                 >
-                  <template slot="alertIcon">
+                  <template v-slot:alertIcon>
                     <KIcon icon="portal" />
                   </template>
-                  <template slot="alertMessage">
+                  <template v-slot:alertMessage>
                     There are no Policy statistics for <strong>{{ value.id }}</strong>
                   </template>
                 </KAlert>
@@ -161,7 +161,7 @@
             </div>
           </LoaderCard>
         </template>
-        <template slot="yaml">
+        <template v-slot:yaml>
           <YamlView
             :title="entityOverviewTitle"
             :has-error="entityHasError"

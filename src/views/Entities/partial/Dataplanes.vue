@@ -15,7 +15,7 @@
       @tableAction="tableAction"
       @loadData="loadData($event)"
     >
-      <template slot="additionalControls">
+      <template v-slot:additionalControls>
         <KButton
           class="add-dp-button"
           appearance="primary"
@@ -29,7 +29,7 @@
           Create data plane proxy
         </KButton>
         <KButton
-          v-if="this.$route.query.ns"
+          v-if="$route.query.ns"
           class="back-button"
           appearance="primary"
           size="small"
@@ -49,7 +49,7 @@
       :tabs="filterTabs()"
       initial-tab-override="overview"
     >
-      <template slot="tabHeader">
+      <template v-slot:tabHeader>
         <div>
           <h3>{{ tabGroupTitle }}</h3>
         </div>
@@ -57,7 +57,7 @@
           <EntityURLControl :url="shareUrl" />
         </div>
       </template>
-      <template slot="overview">
+      <template v-slot:overview>
         <LabelList
           :has-error="entityHasError"
           :is-loading="entityIsLoading"
@@ -122,7 +122,7 @@
       </template>
       <template
         v-if="showMtls"
-        slot="mtls"
+        v-slot:mtls
       >
         <LabelList
           :has-error="entityHasError"
@@ -144,7 +144,7 @@
             v-else
             appearance="danger"
           >
-            <template slot="alertMessage">
+            <template v-slot:alertMessage>
               This data plane proxy does not yet have mTLS configured &mdash;
               <a
                 :href="`https://kuma.io/docs/${version}/documentation/security/#certificates`"
@@ -157,7 +157,7 @@
           </KAlert>
         </LabelList>
       </template>
-      <template slot="yaml">
+      <template v-slot:yaml>
         <YamlView
           :title="entityOverviewTitle"
           :has-error="entityHasError"
@@ -166,7 +166,7 @@
           :content="rawEntity"
         />
       </template>
-      <template slot="warnings">
+      <template v-slot:warnings>
         <Warnings :warnings="warnings" />
       </template>
     </Tabs>

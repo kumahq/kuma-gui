@@ -9,13 +9,13 @@
         :title="title"
         border-variant="noBorder"
       >
-        <template slot="body">
+        <template v-slot:body>
           <KTabs
             :key="environment"
             v-model="activeTab.hash"
             :tabs="tabs"
           >
-            <template slot="universal">
+            <template v-slot:universal>
               <KClipboardProvider v-slot="{ copyToClipboard }">
                 <KPop placement="bottom">
                   <KButton
@@ -28,9 +28,12 @@
                   >
                     Copy Universal YAML
                   </KButton>
-                  <div slot="content">
-                    <p>Entity copied to clipboard!</p>
-                  </div>
+
+                  <template v-slot:content>
+                    <div>
+                      <p>Entity copied to clipboard!</p>
+                    </div>
+                  </template>
                 </KPop>
               </KClipboardProvider>
               <prism
@@ -39,7 +42,7 @@
                 :code="yamlContent.universal"
               />
             </template>
-            <template slot="kubernetes">
+            <template v-slot:kubernetes>
               <KClipboardProvider v-slot="{ copyToClipboard }">
                 <KPop placement="bottom">
                   <KButton
@@ -52,9 +55,11 @@
                   >
                     Copy Kubernetes YAML
                   </KButton>
-                  <div slot="content">
-                    <p>Entity copied to clipboard!</p>
-                  </div>
+                  <template v-slot:content>
+                    <div>
+                      <p>Entity copied to clipboard!</p>
+                    </div>
+                  </template>
                 </KPop>
               </KClipboardProvider>
               <prism
@@ -74,7 +79,7 @@
         v-if="isLoading"
         cta-is-hidden
       >
-        <template slot="title">
+        <template v-slot:title>
           <div class="card-icon mb-3">
             <KIcon
               icon="spinner"
@@ -91,7 +96,7 @@
         v-if="isEmpty && !isLoading"
         cta-is-hidden
       >
-        <template slot="title">
+        <template v-slot:title>
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"
@@ -109,7 +114,7 @@
         v-if="hasError"
         cta-is-hidden
       >
-        <template slot="title">
+        <template v-slot:title>
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"

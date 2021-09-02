@@ -6,7 +6,7 @@
     <div class="scanner-content">
       <!-- loading state -->
       <KEmptyState cta-is-hidden>
-        <template slot="title">
+        <template v-slot:title>
           <div
             v-if="isRunning"
             class="card-icon mb-3"
@@ -38,7 +38,7 @@
             />
           </div>
         </template>
-        <template slot="message">
+        <template v-slot:message>
           <slot
             v-if="isRunning"
             name="loading-content"

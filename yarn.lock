@@ -1318,12 +1318,7 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kbadge/-/kbadge-1.1.1.tgz#9192f7642b822cb31c9c8546f297a74625afccd5"
   integrity sha512-q7cjodVxk10hPhzaG30ExGE6xJEf8g4EjKcwCTvrJC+QPAAZ9moFB1CGuSehYpr7BhMswMtYGCQ1r1EpArg0kA==
 
-"@kongponents/kbutton@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-1.0.2.tgz#c8a85f4549812bef02d75f1b5eb243b81c4dbd4d"
-  integrity sha512-HxnPdEHQipTK/ZcLDLPN+uk/AV5aKnXuRq6874zhczfJnyRPOGxo2KTxGdDiq4mQ63lWqvfExm040nW0POLocg==
-
-"@kongponents/kbutton@^1.0.2", "@kongponents/kbutton@^1.0.3":
+"@kongponents/kbutton@1.0.3", "@kongponents/kbutton@^1.0.2", "@kongponents/kbutton@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@kongponents/kbutton/-/kbutton-1.0.3.tgz#68cafafaf4ac850c4e00c7ae5d2e1d7e8ea26ac2"
   integrity sha512-qvSzTe8lKBgSmYPm+duH0n763mJR3aqXQQXP6feBaoaKGoNCLVXFsDSxv7ZRUBAyF9GsybXCLU+j4dawKxdvCA==

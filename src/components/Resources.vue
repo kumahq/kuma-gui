@@ -4,7 +4,7 @@
       v-if="version"
       title="Resources"
     >
-      <template slot="body">
+      <template v-slot:body>
         <p>
           Join the {{ productName }} community and ask questions:
         </p>

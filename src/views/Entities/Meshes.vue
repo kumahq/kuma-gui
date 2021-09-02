@@ -15,7 +15,7 @@
         @tableAction="tableAction"
         @loadData="loadData($event)"
       >
-        <template slot="additionalControls">
+        <template v-slot:additionalControls>
           <KButton
             class="add-mesh-button"
             appearance="primary"
@@ -37,7 +37,7 @@
         :tabs="tabs"
         initial-tab-override="overview"
       >
-        <template slot="tabHeader">
+        <template v-slot:tabHeader>
           <div>
             <h3>{{ tabGroupTitle }}</h3>
           </div>
@@ -45,7 +45,7 @@
             <EntityURLControl :url="shareUrl" />
           </div> -->
         </template>
-        <template slot="overview">
+        <template v-slot:overview>
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -123,7 +123,7 @@
             </div>
           </LabelList>
         </template>
-        <template slot="yaml">
+        <template v-slot:yaml>
           <YamlView
             :title="entityOverviewTitle"
             :has-error="entityHasError"
@@ -132,7 +132,7 @@
             :content="rawEntity"
           />
         </template>
-        <template slot="resources">
+        <template v-slot:resources>
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
