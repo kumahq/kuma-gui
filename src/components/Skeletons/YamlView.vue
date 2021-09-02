@@ -231,7 +231,7 @@ export default {
           newObj.mesh = sourceObj.mesh
         }
 
-        if (name.includes('.')) {
+        if (name?.includes('.')) {
           // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
           const parts = name.split('.')
           const namespace = parts.pop()

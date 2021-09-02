@@ -100,7 +100,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-
+import { getInitialPolicies } from '@/store/reducers/mesh-insights'
 import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
@@ -173,6 +173,11 @@ export default {
       const mesh = this.selectedMesh
       const { policies, meshesTotal } = this.meshInsight
 
+      const allPolicies = {
+        ...getInitialPolicies(),
+        ...policies,
+      }
+
       const tableData = [
         {
           metric: 'Meshes',
@@ -181,57 +186,57 @@ export default {
         },
         {
           metric: 'Circuit Breakers',
-          value: policies.CircuitBreaker.total,
+          value: allPolicies.CircuitBreaker.total,
           url: `/mesh/${mesh}/circuit-breakers`,
         },
         {
           metric: 'Fault Injections',
-          value: policies.FaultInjection.total,
+          value: allPolicies.FaultInjection.total,
           url: `/mesh/${mesh}/fault-injections`,
         },
         {
           metric: 'Health Checks',
-          value: policies.HealthCheck.total,
+          value: allPolicies.HealthCheck.total,
           url: `/mesh/${mesh}/health-checks`,
         },
         {
           metric: 'Proxy Templates',
-          value: policies.ProxyTemplate.total,
+          value: allPolicies.ProxyTemplate.total,
           url: `/mesh/${mesh}/proxy-templates`,
         },
         {
           metric: 'Traffic Logs',
-          value: policies.TrafficLog.total,
+          value: allPolicies.TrafficLog.total,
           url: `/mesh/${mesh}/traffic-logs`,
         },
         {
           metric: 'Traffic Permissions',
-          value: policies.TrafficPermission.total,
+          value: allPolicies.TrafficPermission.total,
           url: `/mesh/${mesh}/traffic-permissions`,
         },
         {
           metric: 'Traffic Routes',
-          value: policies.TrafficRoute.total,
+          value: allPolicies.TrafficRoute.total,
           url: `/mesh/${mesh}/traffic-routes`,
         },
         {
           metric: 'Traffic Traces',
-          value: policies.TrafficTrace.total,
+          value: allPolicies.TrafficTrace.total,
           url: `/mesh/${mesh}/traffic-traces`,
         },
         {
           metric: 'Rate Limits',
-          value: policies.RateLimit.total,
+          value: allPolicies.RateLimit.total,
           url: `/mesh/${mesh}/rate-limits`,
         },
         {
           metric: 'Retries',
-          value: policies.Retry.total,
+          value: allPolicies.Retry.total,
           url: `/mesh/${mesh}/retries`,
         },
         {
           metric: 'Timeouts',
-          value: policies.Timeout.total,
+          value: allPolicies.Timeout.total,
           url: `/mesh/${mesh}/timeouts`,
         },
       ]

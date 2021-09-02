@@ -2,7 +2,7 @@
   <div class="traffic-permissions">
     <div
       v-if="securityWarning"
-      class="alert-wrapper"
+      class="mb-4"
     >
       <KAlert appearance="warning">
         <template slot="alertMessage">
@@ -316,34 +316,9 @@ export default {
 
       if (entityMesh) {
         return Kuma.getMesh(entityMesh).then((response) => {
-          const isSecure = () => {
-            // we have to find the right mTLS reference in the object
-            // based on the environment (Universal or Kubernetes)
-            const env = this.environment.toLowerCase()
+          const { mtls } = response
 
-            // determine where to look for mTLS data
-            const mtls = () => {
-              if (env === 'universal') {
-                if (response.mtls) {
-                  return response.mtls
-                } else {
-                  return false
-                }
-              } else if (env === 'kubernetes') {
-                if (response.spec.mtls) {
-                  return response.spec.mtls
-                } else {
-                  return false
-                }
-              } else {
-                return false
-              }
-            }
-
-            return Boolean(mtls()?.enabledBackend?.length > 0)
-          }
-
-          if (isSecure()) {
+          if (mtls?.enabledBackend?.length > 0) {
             // if mTLS is found on the mesh and it's enabled, we don't need to show
             // a warning to the user
             this.securityWarning = false
@@ -359,9 +334,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.alert-wrapper {
-  margin-bottom: var(--spacing-md);
-}
-</style>

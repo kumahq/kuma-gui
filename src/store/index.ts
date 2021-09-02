@@ -507,7 +507,7 @@ export default (): Module<RootInterface, RootInterface> => ({
     },
 
     setOverviewDataplanesChartData({ state, commit }) {
-      const { dataplanes } = state.meshInsight
+      const { dataplanes = {} } = state.meshInsight
       const { total, online, partiallyDegraded = 0 } = dataplanes
 
       const data = []
