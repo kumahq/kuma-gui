@@ -8,7 +8,7 @@
         v-if="!isLoading && !isEmpty"
         border-variant="noBorder"
       >
-        <template slot="body">
+        <template v-slot:body>
           <div class="label-list__col-wrapper multi-col">
             <slot />
           </div>
@@ -21,7 +21,7 @@
       v-if="isLoading"
       cta-is-hidden
     >
-      <template slot="title">
+      <template v-slot:title>
         <div class="card-icon mb-3">
           <KIcon
             icon="spinner"
@@ -38,7 +38,7 @@
       v-if="isEmpty && !isLoading"
       cta-is-hidden
     >
-      <template slot="title">
+      <template v-slot:title>
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
@@ -56,7 +56,7 @@
       v-if="hasError"
       cta-is-hidden
     >
-      <template slot="title">
+      <template v-slot:title>
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"

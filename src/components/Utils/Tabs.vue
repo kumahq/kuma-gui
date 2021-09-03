@@ -18,13 +18,13 @@
         @changed="hash => switchTab(hash)"
       >
         <template
-          v-for="tab in tabs"
-          :slot="tab.hash.replace('#','')"
+          v-for="tab in tabsSlots"
+          v-slot:[tab]
         >
-          <slot :name="tab.hash.replace('#','')" />
+          <slot :name="tab" />
         </template>
 
-        <template slot="warnings-anchor">
+        <template v-slot:warnings-anchor>
           <span class="flex items-center with-warnings">
             <KIcon
               color="var(--yellow-400)"
@@ -46,7 +46,7 @@
           v-if="isLoading"
           cta-is-hidden
         >
-          <template slot="title">
+          <template v-slot:title>
             <div class="card-icon mb-3">
               <KIcon
                 icon="spinner"
@@ -63,7 +63,7 @@
           v-if="hasError"
           cta-is-hidden
         >
-          <template slot="title">
+          <template v-slot:title>
             <div class="card-icon mb-3">
               <KIcon
                 class="kong-icon--centered"
@@ -127,6 +127,9 @@ export default {
   },
 
   computed: {
+    tabsSlots() {
+      return this.tabs.map((tab) => tab.hash.replace('#', ''))
+    },
     isReady() {
       if (this.loaders !== false) {
         return !this.isEmpty && !this.hasError && !this.isLoading

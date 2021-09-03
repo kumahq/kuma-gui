@@ -37,21 +37,23 @@
             >
               Info
             </KButton>
-            <div slot="content">
-              <p>
-                {{ statusContent }} on <strong>{{ env }}</strong>
-              </p>
-              <p>
-                <KBadge appearance="success">
-                  <span v-if="multicluster">
-                    Multi-Zone
-                  </span>
-                  <span v-else>
-                    Standalone
-                  </span>
-                </KBadge>
-              </p>
-            </div>
+            <template v-slot:content>
+              <div>
+                <p>
+                  {{ statusContent }} on <strong>{{ env }}</strong>
+                </p>
+                <p>
+                  <KBadge appearance="success">
+                    <span v-if="multicluster">
+                      Multi-Zone
+                    </span>
+                    <span v-else>
+                      Standalone
+                    </span>
+                  </KBadge>
+                </p>
+              </div>
+            </template>
           </KPop>
         </div>
         <div class="app-status app-status--desktop">
@@ -59,7 +61,7 @@
             :active="guiStatus"
             :title="statusContent"
           >
-            <template slot="content">
+            <template v-slot:content>
               <span :title="`v${statusVersion}`">
                 {{ statusContent }} on <strong>{{ env }}</strong>
               </span>

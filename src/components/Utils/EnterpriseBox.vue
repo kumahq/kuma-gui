@@ -4,7 +4,7 @@
     appearance="success"
     size="small"
   >
-    <template slot="alertMessage">
+    <template v-slot:alertMessage>
       <div class="alert-content flex items-center text-sm">
         <div class="mr-3">
           Do more with Kuma <span class="alert-content__arrow">&rarr;</span>

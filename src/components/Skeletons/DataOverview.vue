@@ -38,12 +38,6 @@
       v-if="isReady"
       class="data-overview-content"
     >
-      <!-- metrics -->
-      <MetricGrid
-        v-if="!isLoading && displayMetrics && metricsData"
-        :metrics="metricsData"
-      />
-
       <!-- data -->
       <div
         v-if="displayDataTable && !tableDataIsEmpty && tableData"
@@ -104,10 +98,7 @@
               </span>
             </span>
           </template>
-          <template
-            slot="actions"
-            slot-scope="{ row }"
-          >
+          <template v-slot:actions="{row}">
             <a
               v-if="tableDataFunctionText"
               class="data-table-action-link"
@@ -174,7 +165,7 @@
         v-if="displayDataTable && tableDataIsEmpty && tableData"
         cta-is-hidden
       >
-        <template slot="title">
+        <template v-slot:title>
           <div class="card-icon mb-3">
             <img src="~@/assets/images/icon-empty-table.svg?external">
           </div>
@@ -187,7 +178,7 @@
         </template>
         <template
           v-if="emptyState.message"
-          slot="message"
+          v-slot:message
         >
           {{ emptyState.message }}
         </template>
@@ -207,7 +198,7 @@
       v-if="isLoading"
       cta-is-hidden
     >
-      <template slot="title">
+      <template v-slot:title>
         <div class="card-icon mb-3">
           <KIcon
             icon="spinner"
@@ -224,7 +215,7 @@
       v-if="hasError"
       cta-is-hidden
     >
-      <template slot="title">
+      <template v-slot:title>
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
@@ -242,27 +233,17 @@
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
-import MetricGrid from '@/components/Metrics/MetricGrid'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'DataOverview',
   components: {
-    MetricGrid,
     Pagination,
   },
   props: {
     pageSize: {
       type: Number,
       default: 12,
-    },
-    displayMetrics: {
-      type: Boolean,
-      default: false,
-    },
-    metricsData: {
-      type: Array,
-      default: null,
     },
     isLoading: {
       type: Boolean,

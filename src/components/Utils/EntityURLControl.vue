@@ -10,15 +10,19 @@
           size="small"
           @click="() => { copyToClipboard(url) }"
         >
-          <KIcon
-            slot="icon"
-            icon="externalLink"
-          />
+          <template v-slot:icon>
+            <KIcon
+              view-box="0 0 16 16"
+              icon="externalLink"
+            />
+          </template>
           {{ copyButtonText }}
         </KButton>
-        <div slot="content">
-          <p>{{ confirmationText }}</p>
-        </div>
+        <template v-slot:content>
+          <div>
+            <p>{{ confirmationText }}</p>
+          </div>
+        </template>
       </KPop>
     </KClipboardProvider>
   </div>
@@ -32,19 +36,19 @@ export default Vue.extend({
   props: {
     url: {
       type: String,
-      required: true
+      required: true,
     },
     copyButtonText: {
       type: String,
-      default: 'Copy URL'
+      default: 'Copy URL',
     },
     confirmationText: {
       type: String,
-      default: 'URL copied to clipboard!'
-    }
+      default: 'URL copied to clipboard!',
+    },
   },
   computed: {
-    shouldDisplay (): boolean {
+    shouldDisplay(): boolean {
       const mesh = this.$route.params.mesh || null
 
       // we only want to display the copy button when the user has filtered
@@ -54,7 +58,7 @@ export default Vue.extend({
       }
 
       return false
-    }
-  }
+    },
+  },
 })
 </script>

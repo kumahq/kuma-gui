@@ -8,13 +8,13 @@
     >
       <template
         v-if="environment === 'kubernetes' || environment === 'universal'"
-        slot="title"
+        v-slot:title
       >
         Running on <span class="env-name">{{ environment }}</span>
       </template>
-      <template slot="message">
+      <template v-slot:message>
         <div v-if="environment === 'kubernetes'">
-          <div v-if="this.$route.name === wizardRoutes.kubernetes">
+          <div v-if="$route.name === wizardRoutes.kubernetes">
             <p>
               We have detected that you are running on a <strong>Kubernetes environment</strong>,
               and we are going to be showing you instructions for Kubernetes unless you
@@ -29,7 +29,7 @@
               </KButton>
             </p>
           </div>
-          <div v-else-if="this.$route.name === wizardRoutes.universal">
+          <div v-else-if="$route.name === wizardRoutes.universal">
             <p>
               We have detected that you are running on a <strong>Kubernetes environment</strong>,
               but you are viewing instructions for Universal.
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div v-else-if="environment === 'universal'">
-          <div v-if="this.$route.name === wizardRoutes.kubernetes">
+          <div v-if="$route.name === wizardRoutes.kubernetes">
             <p>
               We have detected that you are running on a <strong>Universal environment</strong>,
               but you are viewing instructions for Kubernetes.
@@ -59,7 +59,7 @@
               </KButton>
             </p>
           </div>
-          <div v-else-if="this.$route.name === wizardRoutes.universal">
+          <div v-else-if="$route.name === wizardRoutes.universal">
             <p>
               We have detected that you are running on a <strong>Universal environment</strong>,
               and we are going to be showing you instructions for Universal unless you

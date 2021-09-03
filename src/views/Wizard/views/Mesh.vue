@@ -8,7 +8,7 @@
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
-        <template slot="general">
+        <template v-slot:general>
           <p>
             Welcome to the wizard for creating a new Mesh resource in {{ productName }}.
             We will be providing you with a few steps that will get you started.
@@ -29,7 +29,7 @@
             title="Mesh Information"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment
                 title="Mesh name"
                 for-attr="mesh-name"
@@ -117,7 +117,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="logging">
+        <template v-slot:logging>
           <h3>
             Setup Logging
           </h3>
@@ -132,7 +132,7 @@
             title="Logging Configuration"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment title="Logging">
                 <label class="k-input-label mx-2">
                   <input
@@ -228,7 +228,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="tracing">
+        <template v-slot:tracing>
           <h3>
             Setup Tracing
           </h3>
@@ -243,7 +243,7 @@
             title="Tracing Configuration"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment title="Tracing">
                 <label class="k-input-label mx-2">
                   <input
@@ -332,7 +332,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="metrics">
+        <template v-slot:metrics>
           <h3>
             Setup Metrics
           </h3>
@@ -345,7 +345,7 @@
             title="Metrics Configuration"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment title="Metrics">
                 <label class="k-input-label mx-2">
                   <input
@@ -430,7 +430,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="complete">
+        <template v-slot:complete>
           <div v-if="codeOutput">
             <div v-if="hideScannerSiblings === false">
               <h3>
@@ -448,7 +448,7 @@
                 :initial-tab-override="environment"
                 @onTabChange="onTabChange"
               >
-                <template slot="kubernetes">
+                <template v-slot:kubernetes>
                   <CodeView
                     title="Kubernetes"
                     copy-button-text="Copy Command to Clipboard"
@@ -456,7 +456,7 @@
                     :content="codeOutput"
                   />
                 </template>
-                <template slot="universal">
+                <template v-slot:universal>
                   <CodeView
                     title="Universal"
                     copy-button-text="Copy Command to Clipboard"
@@ -474,17 +474,17 @@
               @hideSiblings="hideSiblings"
             >
               <!-- loading -->
-              <template slot="loading-title">
+              <template v-slot:loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
-              <template slot="loading-content">
+              <template v-slot:loading-content>
                 <p>We are looking for your mesh.</p>
               </template>
               <!-- complete -->
-              <template slot="complete-title">
+              <template v-slot:complete-title>
                 <h3>Done!</h3>
               </template>
-              <template slot="complete-content">
+              <template v-slot:complete-content>
                 <p>
                   Your Mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
                 </p>
@@ -498,10 +498,10 @@
                 </p>
               </template>
               <!-- error -->
-              <template slot="error-title">
+              <template v-slot:error-title>
                 <h3>Mesh not found</h3>
               </template>
-              <template slot="error-content">
+              <template v-slot:error-content>
                 <p>We were unable to find your mesh.</p>
               </template>
             </Scanner>
@@ -510,7 +510,7 @@
             v-else
             appearance="danger"
           >
-            <template slot="alertMessage">
+            <template v-slot:alertMessage>
               <p>
                 You haven't filled any data out yet! Please return to the first
                 step and fill out your information.
@@ -520,7 +520,7 @@
         </template>
 
         <!-- sidebar content -->
-        <template slot="mesh">
+        <template v-slot:mesh>
           <h3>Mesh</h3>
           <p>
             In {{ title }}, a Mesh resource allows you to define an isolated environment
@@ -538,7 +538,7 @@
             </a>
           </p>
         </template>
-        <template slot="did-you-know">
+        <template v-slot:did-you-know>
           <h3>Did You Know?</h3>
           <p>
             As you know, the GUI is read-only, but it will be providing instructions

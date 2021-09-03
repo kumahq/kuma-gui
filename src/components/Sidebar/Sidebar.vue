@@ -22,7 +22,7 @@
         >
           <template
             v-if="item.iconCustom && !item.icon"
-            slot="item-icon"
+            v-slot:item-icon
           >
             <div v-html="item.iconCustom" />
           </template>
@@ -43,7 +43,7 @@
       :title-link="titleNavItems[0].link"
       :items="topNavItems"
     >
-      <template slot="top">
+      <template v-slot:top>
         <MeshSelector :items="meshList" />
       </template>
     </Subnav>

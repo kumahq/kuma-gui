@@ -8,7 +8,7 @@
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
-        <template slot="general">
+        <template v-slot:general>
           <h3>
             Create Kubernetes Dataplane
           </h3>
@@ -36,7 +36,7 @@
             class="my-6"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment
                 title="Choose a Mesh"
                 for-attr="dp-mesh"
@@ -78,7 +78,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="scope-settings">
+        <template v-slot:scope-settings>
           <h3>
             Setup Dataplane Mode
           </h3>
@@ -91,7 +91,7 @@
             class="my-6"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment
                 all-inline
                 equal-cols
@@ -140,7 +140,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -183,7 +183,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -225,7 +225,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
@@ -270,7 +270,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -312,7 +312,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   title="Namespace"
                   for-attr="k8s-namespace-selection"
@@ -363,7 +363,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -409,7 +409,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -450,7 +450,7 @@
               class="my-6"
               has-shadow
             >
-              <template slot="body">
+              <template v-slot:body>
                 <FormFragment
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
@@ -494,7 +494,7 @@
               v-if="validate.k8sIngressBrand === 'other-ingress'"
               appearance="info"
             >
-              <template slot="alertMessage">
+              <template v-slot:alertMessage>
                 <p>
                   Please go ahead and deploy the Ingress first, then restart this
                   wizard and select &quot;Existing Ingress&quot;.
@@ -503,7 +503,7 @@
             </KAlert>
           </div>
         </template>
-        <template slot="complete">
+        <template v-slot:complete>
           <div v-if="validate.meshName">
             <div v-if="hideScannerSiblings === false">
               <h3>
@@ -519,7 +519,7 @@
                 :has-border="true"
                 initial-tab-override="kubernetes"
               >
-                <template slot="kubernetes">
+                <template v-slot:kubernetes>
                   <CodeView
                     title="Kubernetes"
                     copy-button-text="Copy Command to Clipboard"
@@ -536,17 +536,17 @@
               :can-complete="scanFound"
               @hideSiblings="hideSiblings"
             >
-              <template slot="loading-title">
+              <template v-slot:loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
-              <template slot="loading-content">
+              <template v-slot:loading-content>
                 <p>We are looking for your dataplane.</p>
               </template>
-              <template slot="complete-title">
+              <template v-slot:complete-title>
                 <h3>Done!</h3>
               </template>
 
-              <template slot="complete-content">
+              <template v-slot:complete-content>
                 <p>
                   Your Dataplane
                   <strong v-if="validate.k8sNamespaceSelection">
@@ -567,10 +567,10 @@
                   </KButton>
                 </p>
               </template>
-              <template slot="error-title">
+              <template v-slot:error-title>
                 <h3>Mesh not found</h3>
               </template>
-              <template slot="error-content">
+              <template v-slot:error-content>
                 <p>We were unable to find your mesh.</p>
               </template>
             </Scanner>
@@ -579,7 +579,7 @@
             v-else
             appearance="danger"
           >
-            <template slot="alertMessage">
+            <template v-slot:alertMessage>
               <p>
                 Please return to the first step and make sure to select an
                 existing Mesh, or create a new one.
@@ -589,7 +589,7 @@
         </template>
 
         <!-- sidebar content -->
-        <template slot="dataplane">
+        <template v-slot:dataplane>
           <h3>Dataplane</h3>
           <p>
             In {{ title }}, a Dataplane resource represents a data plane proxy running
@@ -598,7 +598,7 @@
             by {{ title }}.
           </p>
         </template>
-        <template slot="example">
+        <template v-slot:example>
           <h3>Example</h3>
           <p>
             Below is an example of a Dataplane resource output:
@@ -621,7 +621,7 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
-        <template slot="switch">
+        <template v-slot:switch>
           <!-- wizard switcher -- based on environment -->
           <Switcher />
         </template>

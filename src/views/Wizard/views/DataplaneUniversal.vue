@@ -8,7 +8,7 @@
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
-        <template slot="general">
+        <template v-slot:general>
           <h3>
             Create Universal Dataplane
           </h3>
@@ -36,7 +36,7 @@
             class="my-6"
             has-shadow
           >
-            <template slot="body">
+            <template v-slot:body>
               <FormFragment
                 title="Choose a Mesh"
                 for-attr="dp-mesh"
@@ -79,7 +79,7 @@
             </template>
           </KCard>
         </template>
-        <template slot="topology">
+        <template v-slot:topology>
           <h3>
             Setup Dataplane Mode
           </h3>
@@ -165,7 +165,7 @@
             </div>
           </FormFragment>
         </template>
-        <template slot="networking">
+        <template v-slot:networking>
           <h3>
             Networking
           </h3>
@@ -269,7 +269,7 @@
           </FormFragment>
         </template>
 
-        <template slot="complete">
+        <template v-slot:complete>
           <div v-if="validate.meshName">
             <div v-if="hideScannerSiblings === false">
               <h3>
@@ -286,7 +286,7 @@
                 :has-border="true"
                 initial-tab-override="universal"
               >
-                <template slot="universal">
+                <template v-slot:universal>
                   <CodeView
                     title="Generate Dataplane Token"
                     copy-button-text="Copy Command to Clipboard"
@@ -310,17 +310,17 @@
               @hideSiblings="hideSiblings"
             >
               <!-- loading -->
-              <template slot="loading-title">
+              <template v-slot:loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
-              <template slot="loading-content">
+              <template v-slot:loading-content>
                 <p>We are looking for your dataplane.</p>
               </template>
               <!-- complete -->
-              <template slot="complete-title">
+              <template v-slot:complete-title>
                 <h3>Done!</h3>
               </template>
-              <template slot="complete-content">
+              <template v-slot:complete-content>
                 <p>
                   Your Dataplane
                   <strong v-if="validate.univDataplaneId">
@@ -342,10 +342,10 @@
                 </p>
               </template>
               <!-- error -->
-              <template slot="error-title">
+              <template v-slot:error-title>
                 <h3>Dataplane not found</h3>
               </template>
-              <template slot="error-content">
+              <template v-slot:error-content>
                 <p>We were unable to find your dataplane.</p>
               </template>
             </Scanner>
@@ -354,7 +354,7 @@
             v-else
             appearance="danger"
           >
-            <template slot="alertMessage">
+            <template v-slot:alertMessage>
               <p>
                 Please return to the first step and make sure to select an
                 existing Mesh, or create a new one.
@@ -364,7 +364,7 @@
         </template>
 
         <!-- sidebar content -->
-        <template slot="dataplane">
+        <template v-slot:dataplane>
           <h3>Dataplane</h3>
           <p>
             In {{ title }}, a Dataplane resource represents a data plane proxy running
@@ -374,7 +374,7 @@
           </p>
         </template>
 
-        <template slot="example">
+        <template v-slot:example>
           <h3>Example</h3>
           <p>
             Below is an example of a Dataplane resource output:
@@ -392,7 +392,7 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
-        <template slot="switch">
+        <template v-slot:switch>
           <!-- wizard switcher -- based on environment -->
           <Switcher />
         </template>

@@ -10,14 +10,14 @@
         v-if="isReady"
         border-variant="noBorder"
       >
-        <template slot="body">
+        <template v-slot:body>
           <prism
             class="code-block"
             language="json"
             :code="codeOutput"
           />
         </template>
-        <template slot="actions">
+        <template v-slot:actions>
           <KClipboardProvider
             v-if="codeOutput"
             v-slot="{ copyToClipboard }"
@@ -29,9 +29,11 @@
               >
                 Copy config to clipboard
               </KButton>
-              <div slot="content">
-                <p>Config copied to clipboard!</p>
-              </div>
+              <template v-slot:content>
+                <div>
+                  <p>Config copied to clipboard!</p>
+                </div>
+              </template>
             </KPop>
           </KClipboardProvider>
         </template>
@@ -42,7 +44,7 @@
         v-if="isLoading || hasError"
         cta-is-hidden
       >
-        <template slot="title">
+        <template v-slot:title>
           <div class="card-icon mb-3">
             <KIcon
               v-if="icon"

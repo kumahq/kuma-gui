@@ -1,6 +1,6 @@
 <template>
   <KCard border-variant="noBorder">
-    <template slot="body">
+    <template v-slot:body>
       <ul>
         <li
           v-for="{ kind, payload, index } in warnings"
@@ -8,7 +8,7 @@
           class="mb-1"
         >
           <KAlert appearance="warning">
-            <template slot="alertMessage">
+            <template v-slot:alertMessage>
               <component
                 :is="getWarningComponent(kind)"
                 :payload="payload"

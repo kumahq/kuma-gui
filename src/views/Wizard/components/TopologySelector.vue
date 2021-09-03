@@ -13,7 +13,7 @@
           @click="handleToggle(index)"
         >
           <KCard has-hover>
-            <template slot="body">
+            <template v-slot:body>
               <div class="topology__content-container">
                 <div class="topology__switch">
                   <input
