@@ -212,7 +212,7 @@ export default {
     getService(mesh, query, params) {
       return this.name === 'Internal Services'
         ? Kuma.getServiceInsight(mesh, query, params)
-        : Kuma.getAllExternalServices(mesh, query, params)
+        : Kuma.getExternalService(mesh, query, params)
     },
     getServiceFromMesh(mesh) {
       return this.name === 'Internal Services'
