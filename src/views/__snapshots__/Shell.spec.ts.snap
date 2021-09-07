@@ -105,7 +105,7 @@ exports[`Shell.vue renders component with route 1`] = `
           class="mt-3"
         >
           <div
-            class="mesh-selector-container px-4 pb-4"
+            class="px-4 pb-4"
           >
             <div>
               <h3

@@ -256,11 +256,8 @@ export default {
       z-index: 1100;
 
       &.is-hovering {
-        // max-width: max-content;
-        // width: calc(var(--subnavWidth) + 1rem);
         width: var(--subnavWidth);
         cursor: pointer;
-        // box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
       }
     }
   }
@@ -280,7 +277,6 @@ export default {
   }
 
   & + .main-content {
-    // margin-left: var(--sidebarCollapsedWidth);
     margin-left: var(--sidebarOpenWidth);
   }
 
@@ -291,16 +287,5 @@ export default {
   .no-pointer-events {
     pointer-events: none;
   }
-
-  // Move content over
-  // @media only screen and (max-width: 800px) {
-  //   & + .main-content {
-  //     margin-left: var(--sidebarOpenWidth);
-  //   }
-
-  //   &.subnav-expanded + .main-content {
-  //     margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
-  //   }
-  // }
 }
 </style>

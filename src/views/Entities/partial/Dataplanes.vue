@@ -5,7 +5,6 @@
       :has-error="hasError"
       :is-loading="isLoading"
       :empty-state="getEmptyState()"
-      :display-data-table="true"
       :table-data="buildTableData()"
       :table-data-is-empty="tableDataIsEmpty"
       :show-warnings="tableData.data.some((item) => item.withWarnings)"

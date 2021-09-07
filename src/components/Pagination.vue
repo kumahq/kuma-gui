@@ -51,8 +51,6 @@ export default {
 
 <style lang="scss" scoped>
 .pagination {
-  // display: flex;
-  // justify-content: space-between;
   padding: var(--spacing-sm);
   text-align: right;
 

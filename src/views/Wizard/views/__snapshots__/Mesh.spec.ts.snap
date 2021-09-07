@@ -151,7 +151,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                       <!---->
                        
                       <div
-                        class="tab__content-container has-border"
+                        class="tab__content-container"
                       >
                         <div
                           class="k-tabs"

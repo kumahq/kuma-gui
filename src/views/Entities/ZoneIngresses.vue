@@ -1,9 +1,6 @@
 <template>
   <div class="zoneingresses">
-    <KEmptyState
-      v-if="multicluster === false"
-      class="global-api-status"
-    >
+    <KEmptyState v-if="multicluster === false">
       <template v-slot:title>
         <KIcon
           class="kong-icon--centered"
@@ -35,7 +32,6 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :empty-state="empty_state"
-        :display-data-table="true"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :show-warnings="tableData.data.some((item) => item.withWarnings)"
@@ -410,9 +406,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.add-mesh-button {
-  background-color: var(--logo-green) !important;
-}
-</style>

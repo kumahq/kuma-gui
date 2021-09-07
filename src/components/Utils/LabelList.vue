@@ -1,5 +1,5 @@
 <template>
-  <div class="label-list">
+  <div>
     <div
       v-if="isReady"
       class="label-list-content"
@@ -111,9 +111,6 @@ export default {
   }
 }
 
-.label-list {
-}
-
 .label-list__col-wrapper {
   h1,
   h2,
@@ -154,11 +151,6 @@ export default {
       }
     }
   }
-}
-
-.label-list__items__value {
-  // font-size: var(--type-sm);
-  // font-family: var(--font-family-mono);
 }
 
 // Tag columns

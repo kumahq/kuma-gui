@@ -516,7 +516,6 @@
               <Tabs
                 :loaders="false"
                 :tabs="tabs"
-                :has-border="true"
                 initial-tab-override="kubernetes"
               >
                 <template v-slot:kubernetes>

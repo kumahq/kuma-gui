@@ -7,10 +7,7 @@
       <slot name="tabHeader" />
     </header>
 
-    <div
-      class="tab__content-container"
-      :class="{ 'has-border': hasBorder }"
-    >
+    <div class="tab__content-container">
       <KTabs
         v-if="isReady"
         v-model="tabState"
@@ -206,69 +203,9 @@ export default {
   }
 }
 
-.tab__nav {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: stretch;
-  text-align: center;
-  margin-bottom: -1px;
-  border-bottom: var(--tab-nav-border-bottom);
-}
-
-.tab__nav-item {
-  margin-left: var(--tab-link-gap);
-}
-
-@mixin active-link-background {
-  background-color: var(--tab-active-background-color);
-}
-
-@mixin active-link-border {
-  border-top-color: var(--tab-active-border-color);
-  border-right-color: var(--tab-active-border-color);
-  border-left-color: var(--tab-active-border-color);
-}
-
-.tab__nav-link {
-  display: block;
-  background-color: var(--tab-link-background-color);
-  padding: var(--tab-link-padding);
-  border-radius: var(--tab-link-radius);
-  border: var(--tab-link-border);
-  border-bottom-color: #fff;
-  cursor: pointer;
-
-  &:hover {
-    @include active-link-border;
-    @include active-link-background;
-
-    color: var(--tab-link-active-text-color);
-  }
-}
-
-.tab__nav-item--active {
-  .tab__nav-link {
-    @include active-link-border;
-    @include active-link-background;
-
-    color: var(--tab-link-active-text-color);
-  }
-}
-
 .tab__content-container {
   position: relative;
   z-index: 1;
-}
-
-.tab__content-panel {
-  // padding: var(--tab-panel-padding);
-
-  &.has-border {
-    border: var(--tab-panel-border);
-    border-top: 0;
-    border-radius: var(--tab-panel-radius);
-  }
 }
 
 .with-warnings {

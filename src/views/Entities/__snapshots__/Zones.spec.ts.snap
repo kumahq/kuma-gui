@@ -644,7 +644,6 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
               tabindex="0"
             >
               <div
-                class="label-list"
                 data-v-a38b664a=""
               >
                 <div
@@ -803,7 +802,7 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
     class="zones"
   >
     <div
-      class="empty-state-wrapper global-api-status"
+      class="empty-state-wrapper"
       data-v-7725326c=""
     >
       <div
