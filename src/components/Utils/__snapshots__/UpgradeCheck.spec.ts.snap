@@ -7,20 +7,20 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
   >
     <div
       class="k-alert warning small"
-      data-v-e0379b86=""
+      data-v-14c8a976=""
       role="alert"
     >
       <!---->
       <!---->
       <span
-        data-v-e0379b86=""
+        data-v-14c8a976=""
       >
         <div
           class="alert-content"
-          data-v-e0379b86=""
+          data-v-14c8a976=""
         >
           <div
-            data-v-e0379b86=""
+            data-v-14c8a976=""
           >
             
           Kuma update available
@@ -28,12 +28,12 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
           </div>
            
           <div
-            data-v-e0379b86=""
+            data-v-14c8a976=""
           >
             <a
               class="k-button warning-button small primary"
+              data-v-14c8a976=""
               data-v-38fa8ecf=""
-              data-v-e0379b86=""
               href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >

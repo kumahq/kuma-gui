@@ -223,34 +223,34 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                               >
                                 <div
                                   class="kong-card noBorder"
-                                  data-v-4ad076e4=""
+                                  data-v-0029352b=""
                                 >
                                   <div
-                                    class="k-card-header"
-                                    data-v-4ad076e4=""
+                                    class="k-card-header mb-4"
+                                    data-v-0029352b=""
                                   >
                                     <div
                                       class="k-card-title"
-                                      data-v-4ad076e4=""
+                                      data-v-0029352b=""
                                     >
                                       <h4
-                                        data-v-4ad076e4=""
+                                        data-v-0029352b=""
                                       >
                                         Universal
                                       </h4>
                                     </div>
                                     <div
                                       class="k-card-actions"
-                                      data-v-4ad076e4=""
+                                      data-v-0029352b=""
                                     >
                                       <div
-                                        data-v-07815fc5=""
-                                        data-v-4ad076e4=""
+                                        data-v-0029352b=""
+                                        data-v-3cb990b6=""
                                       >
                                         <button
                                           class="k-button primary"
-                                          data-v-07815fc5=""
                                           data-v-38fa8ecf=""
+                                          data-v-3cb990b6=""
                                           type="button"
                                         >
                                           
@@ -258,18 +258,18 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
             
                                         </button>
                                         <transition-stub
-                                          data-v-07815fc5=""
+                                          data-v-3cb990b6=""
                                           name="fade"
                                         >
                                           <div
                                             class="k-popover"
-                                            data-v-07815fc5=""
+                                            data-v-3cb990b6=""
                                             style="width: 200px; display: none;"
                                           >
                                             <!---->
                                             <div
                                               class="k-popover-content"
-                                              data-v-07815fc5=""
+                                              data-v-3cb990b6=""
                                             >
                                               <div>
                                                 <p>
@@ -282,13 +282,14 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       </div>
                                     </div>
                                   </div>
+                                  <!---->
                                   <div
                                     class="k-card-body"
-                                    data-v-4ad076e4=""
+                                    data-v-0029352b=""
                                   >
                                     <pre
                                       class="code-block language-bash"
-                                      data-v-4ad076e4=""
+                                      data-v-0029352b=""
                                     >
                                       <code
                                         class=" language-bash"
@@ -371,24 +372,24 @@ metrics:
                     >
                       <div
                         class="empty-state-wrapper"
-                        data-v-7725326c=""
+                        data-v-567e03f2=""
                       >
                         <div
                           class="empty-state-title"
-                          data-v-7725326c=""
+                          data-v-567e03f2=""
                         >
                           <!---->
                           <h5
-                            data-v-7725326c=""
+                            data-v-567e03f2=""
                           >
                             <div
                               class="card-icon mb-3"
-                              data-v-7725326c=""
+                              data-v-567e03f2=""
                             >
                               <svg
                                 class="kong-icon kong-icon-spinner"
+                                data-v-567e03f2=""
                                 data-v-77239f42=""
-                                data-v-7725326c=""
                                 height="42"
                                 role="img"
                                 viewBox="0 0 24 24"
@@ -457,7 +458,7 @@ metrics:
                             <!---->
                              
                             <h3
-                              data-v-7725326c=""
+                              data-v-567e03f2=""
                             >
                               Searching…
                             </h3>
@@ -467,13 +468,13 @@ metrics:
                         </div>
                         <div
                           class="empty-state-content"
-                          data-v-7725326c=""
+                          data-v-567e03f2=""
                         >
                           <p
-                            data-v-7725326c=""
+                            data-v-567e03f2=""
                           >
                             <p
-                              data-v-7725326c=""
+                              data-v-567e03f2=""
                             >
                               We are looking for your mesh.
                             </p>
@@ -481,7 +482,7 @@ metrics:
                             <!---->
                           </p>
                           <p
-                            data-v-7725326c=""
+                            data-v-567e03f2=""
                           >
                             <!---->
                           </p>

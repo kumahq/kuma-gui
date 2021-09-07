@@ -89,17 +89,17 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
       >
         <table
           class="k-table micro-table has-hover is-clickable"
-          data-v-59ad4099=""
+          data-v-bfeabd48=""
         >
           <thead
-            data-v-59ad4099=""
+            data-v-bfeabd48=""
           >
             <tr
-              data-v-59ad4099=""
+              data-v-bfeabd48=""
             />
           </thead>
           <tbody
-            data-v-59ad4099=""
+            data-v-bfeabd48=""
           />
         </table>
          

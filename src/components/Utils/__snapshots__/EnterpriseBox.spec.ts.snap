@@ -4,39 +4,39 @@ exports[`EnterpriseBox.vue renders snapshot 1`] = `
 <div>
   <div
     class="k-alert py-1 success small"
-    data-v-e0379b86=""
+    data-v-14c8a976=""
     role="alert"
   >
     <!---->
     <!---->
     <span
-      data-v-e0379b86=""
+      data-v-14c8a976=""
     >
       <div
         class="alert-content flex items-center text-sm"
-        data-v-e0379b86=""
+        data-v-14c8a976=""
       >
         <div
           class="mr-3"
-          data-v-e0379b86=""
+          data-v-14c8a976=""
         >
           
         Do more with Kuma 
           <span
             class="alert-content__arrow"
-            data-v-e0379b86=""
+            data-v-14c8a976=""
           >
             →
           </span>
         </div>
          
         <div
-          data-v-e0379b86=""
+          data-v-14c8a976=""
         >
           <a
             class="k-button no-underline success-button small primary"
+            data-v-14c8a976=""
             data-v-38fa8ecf=""
-            data-v-e0379b86=""
             href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
             target="_blank"
             type="button"

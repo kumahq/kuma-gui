@@ -15,7 +15,7 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
         <div
           class="data-table-controls mb-2"
         >
-           
+
           <button
             class="k-button ml-2 refresh-button small primary"
             data-v-38fa8ecf=""
@@ -42,7 +42,7 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                 </g>
               </svg>
             </div>
-             
+
             <span
               data-v-38fa8ecf=""
             >
@@ -50,7 +50,7 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
             </span>
           </button>
         </div>
-         
+
         <div
           class="data-overview-content"
         >
@@ -59,125 +59,125 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
           >
             <table
               class="k-table micro-table has-hover is-clickable"
-              data-v-59ad4099=""
+              data-v-bfeabd48=""
             >
               <thead
-                data-v-59ad4099=""
+                data-v-bfeabd48=""
               >
                 <tr
-                  data-v-59ad4099=""
+                  data-v-bfeabd48=""
                 >
                   <th
                     class=""
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <!---->
                   </th>
                   <th
                     class=""
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
-                     Status 
+                     Status
                   </th>
                   <th
                     class=""
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
-                     Name 
+                     Name
                   </th>
                   <th
                     class=""
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
-                     Zone CP Version 
+                     Zone CP Version
                   </th>
                   <th
                     class=""
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
-                     Backend 
+                     Backend
                   </th>
                   <th
                     class=""
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <!---->
                   </th>
                 </tr>
               </thead>
               <tbody
-                data-v-59ad4099=""
+                data-v-bfeabd48=""
               >
                 <tr
-                  data-v-59ad4099=""
+                  data-v-bfeabd48=""
                 >
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <a
                       class="data-table-action-link is-active"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="action-link__active-state"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
-                        
+
               ✓
-              
+
                         <span
                           class="sr-only"
-                          data-v-59ad4099=""
+                          data-v-bfeabd48=""
                         >
-                          
+
                 Selected
-              
+
                         </span>
                       </span>
                     </a>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <div
                       class="entity-status"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="entity-status__dot"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       />
-                       
+
                       <span
                         class="entity-status__label"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
                         Online
                       </span>
                     </div>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     cluster-1
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     1.0.0-rc2-211-g823fe8ce
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     memory
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <svg
                       class="kong-icon mr-1 kong-icon-warning"
-                      data-v-59ad4099=""
                       data-v-77239f42=""
+                      data-v-bfeabd48=""
                       height="20"
                       role="img"
                       viewBox="0 0 18 16"
@@ -208,67 +208,67 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                   </td>
                 </tr>
                 <tr
-                  data-v-59ad4099=""
+                  data-v-bfeabd48=""
                 >
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <a
                       class="data-table-action-link"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="action-link__normal-state"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
-                        
+
               View
-            
+
                       </span>
                     </a>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <div
                       class="entity-status"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="entity-status__dot"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       />
-                       
+
                       <span
                         class="entity-status__label"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
                         Online
                       </span>
                     </div>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     zone-1
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     1.0.0-rc2-211-g823fe8ce
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     memory
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <svg
                       class="kong-icon mr-1 kong-icon-warning"
-                      data-v-59ad4099=""
                       data-v-77239f42=""
+                      data-v-bfeabd48=""
                       height="20"
                       role="img"
                       viewBox="0 0 18 16"
@@ -299,67 +299,67 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                   </td>
                 </tr>
                 <tr
-                  data-v-59ad4099=""
+                  data-v-bfeabd48=""
                 >
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <a
                       class="data-table-action-link"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="action-link__normal-state"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
-                        
+
               View
-            
+
                       </span>
                     </a>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <div
                       class="entity-status"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="entity-status__dot"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       />
-                       
+
                       <span
                         class="entity-status__label"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
                         Online
                       </span>
                     </div>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     zone-2
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     1.0.0-rc2-211-g823fe8ce
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     memory
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <svg
                       class="kong-icon mr-1 kong-icon-warning"
-                      data-v-59ad4099=""
                       data-v-77239f42=""
+                      data-v-bfeabd48=""
                       height="20"
                       role="img"
                       viewBox="0 0 18 16"
@@ -390,67 +390,67 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                   </td>
                 </tr>
                 <tr
-                  data-v-59ad4099=""
+                  data-v-bfeabd48=""
                 >
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <a
                       class="data-table-action-link"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="action-link__normal-state"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
-                        
+
               View
-            
+
                       </span>
                     </a>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <div
                       class="entity-status"
-                      data-v-59ad4099=""
+                      data-v-bfeabd48=""
                     >
                       <span
                         class="entity-status__dot"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       />
-                       
+
                       <span
                         class="entity-status__label"
-                        data-v-59ad4099=""
+                        data-v-bfeabd48=""
                       >
                         Online
                       </span>
                     </div>
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     zone-3
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     1.0.0-rc2-211-g823fe8ce
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     memory
                   </td>
                   <td
-                    data-v-59ad4099=""
+                    data-v-bfeabd48=""
                   >
                     <svg
                       class="kong-icon mr-1 kong-icon-warning"
-                      data-v-59ad4099=""
                       data-v-77239f42=""
+                      data-v-bfeabd48=""
                       height="20"
                       role="img"
                       viewBox="0 0 18 16"
@@ -482,26 +482,26 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                 </tr>
               </tbody>
             </table>
-             
+
             <div
               class="pagination"
             >
               <!---->
-               
+
               <!---->
             </div>
           </div>
-           
+
           <!---->
-           
+
           <!---->
         </div>
-         
+
         <!---->
-         
+
         <!---->
       </div>
-       
+
       <div
         class="tab-container"
         data-testid="tab-container"
@@ -510,12 +510,12 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
           class="tab__header"
         >
           <h3>
-            
+
           Zone: cluster-1
-        
+
           </h3>
         </header>
-         
+
         <div
           class="tab__content-container"
         >
@@ -624,13 +624,13 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                         />
                       </g>
                     </svg>
-                     
+
                     <span
                       data-v-a38b664a=""
                     >
-                      
+
             Warnings
-          
+
                     </span>
                   </span>
                 </a>
@@ -652,78 +652,92 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                 >
                   <div
                     class="kong-card noBorder"
-                    data-v-4ad076e4=""
+                    data-v-0029352b=""
                   >
+                    <!---->
                     <!---->
                     <div
                       class="k-card-body"
-                      data-v-4ad076e4=""
+                      data-v-0029352b=""
                     >
                       <div
                         class="label-list__col-wrapper multi-col"
-                        data-v-4ad076e4=""
+                        data-v-0029352b=""
                       >
                         <div
-                          data-v-4ad076e4=""
+                          data-v-0029352b=""
                         >
                           <ul
-                            data-v-4ad076e4=""
+                            data-v-0029352b=""
                           >
                             <li
-                              data-v-4ad076e4=""
+                              data-v-0029352b=""
                             >
                               <h4
-                                data-v-4ad076e4=""
+                                data-v-0029352b=""
                               >
-                                
+
                   type
-                
+
                               </h4>
-                               
+
                               <p
-                                data-v-4ad076e4=""
+                                data-v-0029352b=""
                               >
-                                
+
                   ZoneOverview
-                
+
                               </p>
                             </li>
                             <li
-                              data-v-4ad076e4=""
+                              data-v-0029352b=""
                             >
                               <h4
-                                data-v-4ad076e4=""
+                                data-v-0029352b=""
                               >
-                                
+
                   name
-                
+
                               </h4>
-                               
+
                               <p
-                                data-v-4ad076e4=""
+                                data-v-0029352b=""
                               >
-                                
+
                   cluster-1
-                
+
                               </p>
                             </li>
                             <li
-                              data-v-4ad076e4=""
+                              data-v-0029352b=""
+                            >
+                              <!---->
+
+                              <p
+                                data-v-0029352b=""
+                              >
+
+
+
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
                             >
                               <h4
-                                data-v-4ad076e4=""
+                                data-v-0029352b=""
                               >
-                                
+
                   Authentication Type
-                
+
                               </h4>
-                               
+
                               <p
-                                data-v-4ad076e4=""
+                                data-v-0029352b=""
                               >
-                                
+
                   dpToken
-                
+
                               </p>
                             </li>
                           </ul>
@@ -732,11 +746,11 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                     </div>
                   </div>
                 </div>
-                 
+
                 <!---->
-                 
+
                 <!---->
-                 
+
                 <!---->
               </div>
             </div>
@@ -771,10 +785,10 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
               <!---->
             </div>
           </div>
-           
+
           <div>
             <!---->
-             
+
             <!---->
           </div>
         </div>
@@ -791,20 +805,20 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
   >
     <div
       class="empty-state-wrapper"
-      data-v-7725326c=""
+      data-v-567e03f2=""
     >
       <div
         class="empty-state-title"
-        data-v-7725326c=""
+        data-v-567e03f2=""
       >
         <!---->
         <h5
-          data-v-7725326c=""
+          data-v-567e03f2=""
         >
           <svg
             class="kong-icon kong-icon--centered kong-icon-dangerCircle"
+            data-v-567e03f2=""
             data-v-77239f42=""
-            data-v-7725326c=""
             height="64"
             role="img"
             viewBox="0 0 24 24"
@@ -831,46 +845,46 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
               />
             </g>
           </svg>
-          
+
     Kuma is running in Standalone mode.
-  
+
         </h5>
       </div>
       <div
         class="empty-state-content"
-        data-v-7725326c=""
+        data-v-567e03f2=""
       >
         <p
-          data-v-7725326c=""
+          data-v-567e03f2=""
         >
           <p
-            data-v-7725326c=""
+            data-v-567e03f2=""
           >
-            
-      To access this page, you must be running in 
+
+      To access this page, you must be running in
             <strong
-              data-v-7725326c=""
+              data-v-567e03f2=""
             >
               Multi-Zone
             </strong>
              mode.
-    
+
           </p>
         </p>
         <p
-          data-v-7725326c=""
+          data-v-567e03f2=""
         >
           <a
             class="k-button primary"
             data-v-38fa8ecf=""
-            data-v-7725326c=""
+            data-v-567e03f2=""
             href="https://kuma.io/docs/0.6.0/documentation/deployments/"
             target="_blank"
             type="button"
           >
-            
+
       Learn More
-    
+
           </a>
         </p>
       </div>
@@ -888,12 +902,12 @@ exports[`Zones.vue renders zone insights 1`] = `
     class="tab__header"
   >
     <h3>
-      
+
           Zone: cluster-1
-        
+
     </h3>
   </header>
-   
+
   <div
     class="tab__content-container"
   >
@@ -1002,13 +1016,13 @@ exports[`Zones.vue renders zone insights 1`] = `
                   />
                 </g>
               </svg>
-               
+
               <span
                 data-v-a38b664a=""
               >
-                
+
             Warnings
-          
+
               </span>
             </span>
           </a>
@@ -1058,16 +1072,16 @@ exports[`Zones.vue renders zone insights 1`] = `
                     <span
                       class="color-green-400"
                     >
-                      
+
 
     Connect time: 2021-02-19T07:11:15.535286Z
-  
+
                     </span>
-                     
+
                     <!---->
                   </h4>
                 </div>
-                 
+
                 <transition-stub
                   name="accordion"
                 >
@@ -1078,38 +1092,38 @@ exports[`Zones.vue renders zone insights 1`] = `
                           <h5
                             class="overview-tertiary-title"
                           >
-                            
+
       General Information:
-    
+
                           </h5>
-                           
+
                           <ul>
                             <li>
                               <strong>
                                 Global Instance ID:
                               </strong>
                                
-        
+
                               <span
                                 class="mono"
                               >
                                 MacBook-Pro-Bartlomiej.local-9e52
                               </span>
                             </li>
-                             
+
                             <li>
                               <strong>
                                 Last Connected:
                               </strong>
                                
         on 2/19/2021
-      
+
                             </li>
-                             
+
                             <!---->
                           </ul>
                         </div>
-                         
+
                         <div>
                           <ul
                             class="overview-stat-grid"
@@ -1118,18 +1132,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Circuit Breaker:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1141,7 +1155,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1154,18 +1168,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Config:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1177,7 +1191,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1190,18 +1204,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Dataplane:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1213,7 +1227,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1226,18 +1240,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           External Service:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1249,7 +1263,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1262,18 +1276,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Fault Injection:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1285,7 +1299,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1298,18 +1312,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Health Check:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1321,7 +1335,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1334,18 +1348,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Mesh:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1357,7 +1371,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1370,18 +1384,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Proxy Template:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1393,7 +1407,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1406,18 +1420,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Retry:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1429,7 +1443,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1442,18 +1456,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Secret:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1465,7 +1479,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1478,18 +1492,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Log:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1501,7 +1515,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1514,18 +1528,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Permission:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1537,7 +1551,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1550,18 +1564,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Route:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1573,7 +1587,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1586,18 +1600,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Trace:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1609,7 +1623,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1637,22 +1651,22 @@ exports[`Zones.vue renders zone insights 1`] = `
                     <span
                       class="color-green-400"
                     >
-                      
+
 
     Connect time: 2020-07-28T16:18:09.743141Z
-  
+
                     </span>
-                     
+
                     <span
                       class="ml-4 color-red-400"
                     >
-                      
+
     Disconnect time: 2020-07-28T16:18:09.743194Z
-  
+
                     </span>
                   </h4>
                 </div>
-                 
+
                 <transition-stub
                   name="accordion"
                 >
@@ -1665,45 +1679,45 @@ exports[`Zones.vue renders zone insights 1`] = `
                           <h5
                             class="overview-tertiary-title"
                           >
-                            
+
       General Information:
-    
+
                           </h5>
-                           
+
                           <ul>
                             <li>
                               <strong>
                                 Global Instance ID:
                               </strong>
                                
-        
+
                               <span
                                 class="mono"
                               >
                                 foobar
                               </span>
                             </li>
-                             
+
                             <li>
                               <strong>
                                 Last Connected:
                               </strong>
                                
         on 7/28/2020
-      
+
                             </li>
-                             
+
                             <li>
                               <strong>
                                 Last Disconnected:
                               </strong>
                                
         on 7/28/2020
-      
+
                             </li>
                           </ul>
                         </div>
-                         
+
                         <div>
                           <ul
                             class="overview-stat-grid"
@@ -1712,18 +1726,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Circuit Breaker:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1735,7 +1749,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1748,18 +1762,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Config:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1771,7 +1785,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1784,18 +1798,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Dataplane:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1807,7 +1821,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1820,18 +1834,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           External Service:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1843,7 +1857,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1856,18 +1870,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Fault Injection:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1879,7 +1893,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1892,18 +1906,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Health Check:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1915,7 +1929,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1928,18 +1942,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Mesh:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1951,7 +1965,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1964,18 +1978,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Proxy Template:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -1987,7 +2001,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2000,18 +2014,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Retry:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2023,7 +2037,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2036,18 +2050,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Secret:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2059,7 +2073,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2072,18 +2086,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Log:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2095,7 +2109,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2108,18 +2122,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Permission:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2131,7 +2145,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2144,18 +2158,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Route:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2167,7 +2181,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2180,18 +2194,18 @@ exports[`Zones.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                
+
           Traffic Trace:
-        
+
                               </h6>
-                               
+
                               <ul>
                                 <li>
                                   <strong>
                                     Responses Sent:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2203,7 +2217,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                     Responses Acknowledged:
                                   </strong>
                                    
-            
+
                                   <span
                                     class="mono"
                                   >
@@ -2244,10 +2258,10 @@ exports[`Zones.vue renders zone insights 1`] = `
         <!---->
       </div>
     </div>
-     
+
     <div>
       <!---->
-       
+
       <!---->
     </div>
   </div>

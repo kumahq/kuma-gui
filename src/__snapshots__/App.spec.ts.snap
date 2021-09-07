@@ -39,39 +39,39 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <div
             class="k-alert py-1 success small"
-            data-v-e0379b86=""
+            data-v-14c8a976=""
             role="alert"
           >
             <!---->
             <!---->
             <span
-              data-v-e0379b86=""
+              data-v-14c8a976=""
             >
               <div
                 class="alert-content flex items-center text-sm"
-                data-v-e0379b86=""
+                data-v-14c8a976=""
               >
                 <div
                   class="mr-3"
-                  data-v-e0379b86=""
+                  data-v-14c8a976=""
                 >
                   
         Do more with Kuma 
                   <span
                     class="alert-content__arrow"
-                    data-v-e0379b86=""
+                    data-v-14c8a976=""
                   >
                     →
                   </span>
                 </div>
                  
                 <div
-                  data-v-e0379b86=""
+                  data-v-14c8a976=""
                 >
                   <a
                     class="k-button no-underline success-button small primary"
+                    data-v-14c8a976=""
                     data-v-38fa8ecf=""
-                    data-v-e0379b86=""
                     href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
                     target="_blank"
                     type="button"
@@ -94,20 +94,20 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         <div
           class="empty-state-wrapper global-api-status empty-state--wide-content empty-state--compact"
-          data-v-7725326c=""
+          data-v-567e03f2=""
         >
           <div
             class="empty-state-title"
-            data-v-7725326c=""
+            data-v-567e03f2=""
           >
             <!---->
             <h5
-              data-v-7725326c=""
+              data-v-567e03f2=""
             >
               <svg
                 class="kong-icon kong-icon--centered kong-icon-warning"
+                data-v-567e03f2=""
                 data-v-77239f42=""
-                data-v-7725326c=""
                 height="64"
                 role="img"
                 viewBox="0 0 24 24"
@@ -142,23 +142,23 @@ exports[`App.vue fails to renders basic view 1`] = `
           </div>
           <div
             class="empty-state-content"
-            data-v-7725326c=""
+            data-v-567e03f2=""
           >
             <p
-              data-v-7725326c=""
+              data-v-567e03f2=""
             >
               <p
-                data-v-7725326c=""
+                data-v-567e03f2=""
               >
                 
       Please double check to make sure it is up and running
       
                 <span
-                  data-v-7725326c=""
+                  data-v-567e03f2=""
                 >
                   , and it is reachable at 
                   <code
-                    data-v-7725326c=""
+                    data-v-567e03f2=""
                   >
                     /
                   </code>
@@ -166,7 +166,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               </p>
             </p>
             <p
-              data-v-7725326c=""
+              data-v-567e03f2=""
             >
               <!---->
             </p>
