@@ -97,10 +97,6 @@ export default {
     a {
       color: var(--SidebarTitleColor);
       text-decoration: none;
-
-      // &:hover {
-      //   color: var(--blue-700);
-      // }
     }
   }
 }

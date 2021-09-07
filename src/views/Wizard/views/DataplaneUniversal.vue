@@ -283,7 +283,6 @@
               <Tabs
                 :loaders="false"
                 :tabs="tabs"
-                :has-border="true"
                 initial-tab-override="universal"
               >
                 <template v-slot:universal>

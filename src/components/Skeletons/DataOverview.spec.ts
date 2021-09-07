@@ -12,7 +12,6 @@ describe('DataOverview.vue', () => {
   it('renders basic snapshot', () => {
     const { container } = render(DataOverview, {
       propsData: {
-        displayDataTable: true,
         tableData: {
           headers: [],
           data: [],
@@ -27,7 +26,6 @@ describe('DataOverview.vue', () => {
     render(DataOverview, {
       propsData: {
         next: true,
-        displayDataTable: true,
         tableData: {
           headers: [],
           data: [],
@@ -57,7 +55,6 @@ describe('DataOverview.vue', () => {
     const { emitted } = render(DataOverview, {
       propsData: {
         next: true,
-        displayDataTable: true,
         tableData: {
           headers: [],
           data: [],

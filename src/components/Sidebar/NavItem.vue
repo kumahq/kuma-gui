@@ -186,8 +186,6 @@ export default {
   .title-text {
     display: flex;
     align-items: center;
-    // height: 40px;
-    // padding: 0 1rem;
     font-weight: 500;
     font-size: var(--type-sm);
     color: var(--SidebarTitleColor);

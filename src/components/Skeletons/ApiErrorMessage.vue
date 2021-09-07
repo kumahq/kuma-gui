@@ -32,8 +32,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss">
-.global-api-status {
-}
-</style>

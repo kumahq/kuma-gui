@@ -6,7 +6,6 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :empty-state="empty_state"
-        :display-data-table="true"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         table-data-function-text="View"

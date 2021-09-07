@@ -1,5 +1,5 @@
 <template>
-  <div class="mesh-selector-container px-4 pb-4">
+  <div class="px-4 pb-4">
     <div v-if="items">
       <h3 class="menu-title uppercase">
         Filter by Mesh:
@@ -74,9 +74,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mesh-selector-container {
-}
-
 .mesh-selector {
   display: block;
   width: 100%;

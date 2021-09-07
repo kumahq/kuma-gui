@@ -357,6 +357,7 @@ export default {
       --i: 16px;
       --x: calc(var(--i) / 2);
       margin: 0 var(--x) var(--i) var(--x);
+      min-height: 210px;
     }
   }
 

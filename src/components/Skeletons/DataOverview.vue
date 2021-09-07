@@ -40,7 +40,7 @@
     >
       <!-- data -->
       <div
-        v-if="displayDataTable && !tableDataIsEmpty && tableData"
+        v-if="!tableDataIsEmpty && tableData"
         class="data-overview-table"
       >
         <KTable
@@ -162,7 +162,7 @@
 
       <!-- empty state if no items are found -->
       <KEmptyState
-        v-if="displayDataTable && tableDataIsEmpty && tableData"
+        v-if="tableDataIsEmpty && tableData"
         cta-is-hidden
       >
         <template v-slot:title>
@@ -261,18 +261,7 @@ export default {
       type: Object,
       default: null,
     },
-    ctaAction: {
-      type: Object,
-      default: () => {},
-    },
-    showCta: {
-      type: Boolean,
-      default: true,
-    },
-    displayDataTable: {
-      type: Boolean,
-      default: false,
-    },
+
     tableData: {
       type: Object,
       default: null,
@@ -446,10 +435,6 @@ export default {
   }
 }
 
-.empty-state-wrapper {
-  // margin-bottom: 2em;
-}
-
 .entity-tags {
   font-size: var(--type-xs);
   background-color: #fff;
@@ -547,11 +532,6 @@ span[class*='kuma-io-'] {
 
   tr {
     cursor: pointer;
-
-    td:first-of-type {
-      // width: 5%;
-      // text-align: center;
-    }
   }
 
   th {
@@ -598,7 +578,6 @@ span[class*='kuma-io-'] {
     line-height: var(--size);
     border-radius: 50%;
     background-color: var(--logo-green);
-    // margin: 0 auto;
     margin: 0 0 0 5px;
     color: #fff;
     font-size: 13px;
@@ -619,23 +598,12 @@ span[class*='kuma-io-'] {
   color: var(--tblack-85);
 }
 
-.overview-sub-title {
-  font-size: var(--type-md);
-  font-weight: 500;
-  // text-transform: uppercase;
-  // color: var(--gray-3);
-  margin: 0 0 var(--spacing-xs) 0;
-}
-
 .overview-tertiary-title {
   font-size: var(--type-sm);
   font-weight: 500;
   text-transform: uppercase;
   color: var(--gray-3);
   margin: var(--spacing-xs) 0;
-}
-
-.overview-group-list {
 }
 
 .overview-stat-grid {
@@ -654,10 +622,6 @@ span[class*='kuma-io-'] {
     margin: 0 0 var(--spacing-xl) 0;
     border-bottom: 1px solid var(--gray-4);
   }
-}
-
-.k-tooltip {
-  display: inline;
 }
 
 .with-warnings {

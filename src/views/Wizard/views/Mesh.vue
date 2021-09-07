@@ -444,7 +444,6 @@
               <Tabs
                 :loaders="false"
                 :tabs="tabs"
-                :has-border="true"
                 :initial-tab-override="environment"
                 @onTabChange="onTabChange"
               >
