@@ -1060,7 +1060,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                     >
                       
 
-    Connect time: February 19, 2021 @ 8:11:15
+    Connect time: 2021-02-19T07:11:15.535286Z
   
                     </span>
                      
@@ -1639,7 +1639,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                     >
                       
 
-    Connect time: July 28, 2020 @ 18:18:9
+    Connect time: 2020-07-28T16:18:09.743141Z
   
                     </span>
                      
@@ -1647,7 +1647,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                       class="ml-4 color-red-400"
                     >
                       
-    Disconnect time: July 28, 2020 @ 18:18:9
+    Disconnect time: 2020-07-28T16:18:09.743194Z
   
                     </span>
                   </h4>

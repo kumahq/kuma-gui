@@ -3,6 +3,16 @@ import userEvent from '@testing-library/user-event'
 import renderWithVuex from '@/testUtils/renderWithVuex'
 import Zones from './Zones.vue'
 
+jest.mock('@/helpers', () => {
+  const originalModule = jest.requireActual('@/helpers')
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    rawReadableDate: (data: string) => data,
+  }
+})
+
 describe('Zones.vue', () => {
   it('renders snapshot when no multizone', () => {
     const { container } = renderWithVuex(Zones)
