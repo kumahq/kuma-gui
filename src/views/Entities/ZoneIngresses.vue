@@ -251,6 +251,8 @@ export default {
 
           this.entity = getSome(response, selected)
         } catch (e) {
+          console.error(e)
+
           this.entity = null
           this.entityHasError = true
           this.entityIsEmpty = true

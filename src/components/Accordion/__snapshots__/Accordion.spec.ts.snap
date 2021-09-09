@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Accordion.vue renders snapshot at the beginning 1`] = `
+<div>
+  <ul
+    class="accordion"
+  >
+    <li
+      class="relative cursor-pointer border-b py-2 px-4"
+    >
+      <div
+        class="flex py-2"
+      >
+        
+        Header 1
+      
+      </div>
+       
+      <transition-stub
+        name="accordion"
+      >
+        <div
+          style="display: none;"
+        >
+          <ul>
+            
+        Content 1
+      
+          </ul>
+        </div>
+      </transition-stub>
+    </li>
+    <li
+      class="relative cursor-pointer border-b py-2 px-4"
+    >
+      <div
+        class="flex py-2"
+      >
+        
+        Header 2
+      
+      </div>
+       
+      <transition-stub
+        name="accordion"
+      >
+        <div
+          style="display: none;"
+        >
+          <ul>
+            
+        Content 2
+      
+          </ul>
+        </div>
+      </transition-stub>
+    </li>
+  </ul>
+</div>
+`;

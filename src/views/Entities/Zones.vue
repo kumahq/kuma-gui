@@ -351,7 +351,7 @@ export default {
             }
           }
         } catch (e) {
-          console.log(e)
+          console.error(e)
 
           this.entity = null
           this.entityHasError = true

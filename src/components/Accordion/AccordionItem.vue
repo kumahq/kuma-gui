@@ -56,11 +56,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.accordion__header {
-  display: flex;
-  justify-content: space-between;
-}
-
 .accordion-enter-active,
 .accordion-leave-active {
   will-change: height, opacity;

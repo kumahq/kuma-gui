@@ -1,0 +1,635 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
+<div>
+  <div
+    class="zoneingresses"
+  >
+    <div
+      class="component-frame"
+    >
+      <div
+        class="data-overview"
+        data-testid="data-overview"
+      >
+        <div
+          class="data-table-controls mb-2"
+        >
+           
+          <button
+            class="k-button ml-2 refresh-button small primary"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            <div
+              class="refresh-icon"
+              data-v-38fa8ecf=""
+            >
+              <svg
+                data-v-38fa8ecf=""
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  data-v-38fa8ecf=""
+                  fill="#fff"
+                  fill-rule="nonzero"
+                >
+                  <path
+                    d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
+                    data-v-38fa8ecf=""
+                  />
+                </g>
+              </svg>
+            </div>
+             
+            <span
+              data-v-38fa8ecf=""
+            >
+              Refresh
+            </span>
+          </button>
+        </div>
+         
+        <div
+          class="data-overview-content"
+        >
+          <div
+            class="data-overview-table"
+          >
+            <table
+              class="k-table micro-table has-hover is-clickable"
+              data-v-59ad4099=""
+            >
+              <thead
+                data-v-59ad4099=""
+              >
+                <tr
+                  data-v-59ad4099=""
+                >
+                  <th
+                    class=""
+                    data-v-59ad4099=""
+                  >
+                    <!---->
+                  </th>
+                  <th
+                    class=""
+                    data-v-59ad4099=""
+                  >
+                     Status 
+                  </th>
+                  <th
+                    class=""
+                    data-v-59ad4099=""
+                  >
+                     Name 
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                data-v-59ad4099=""
+              >
+                <tr
+                  data-v-59ad4099=""
+                >
+                  <td
+                    data-v-59ad4099=""
+                  >
+                    <a
+                      class="data-table-action-link is-active"
+                      data-v-59ad4099=""
+                    >
+                      <span
+                        class="action-link__active-state"
+                        data-v-59ad4099=""
+                      >
+                        
+              ✓
+              
+                        <span
+                          class="sr-only"
+                          data-v-59ad4099=""
+                        >
+                          
+                Selected
+              
+                        </span>
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    data-v-59ad4099=""
+                  >
+                    <div
+                      class="entity-status"
+                      data-v-59ad4099=""
+                    >
+                      <span
+                        class="entity-status__dot"
+                        data-v-59ad4099=""
+                      />
+                       
+                      <span
+                        class="entity-status__label"
+                        data-v-59ad4099=""
+                      >
+                        Online
+                      </span>
+                    </div>
+                  </td>
+                  <td
+                    data-v-59ad4099=""
+                  >
+                    zone-1
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+             
+            <div
+              class="pagination"
+            >
+              <!---->
+               
+              <!---->
+            </div>
+          </div>
+           
+          <!---->
+           
+          <!---->
+        </div>
+         
+        <!---->
+         
+        <!---->
+      </div>
+       
+      <div
+        class="tab-container"
+        data-testid="tab-container"
+      >
+        <header
+          class="tab__header"
+        >
+          <h3>
+            
+          Zone Ingress: 
+        
+          </h3>
+        </header>
+         
+        <div
+          class="tab__content-container"
+        >
+          <div
+            class="k-tabs"
+            data-v-a38b664a=""
+          >
+            <ul
+              aria-label="ktabs"
+              data-v-a38b664a=""
+              role="tablist"
+            >
+              <li
+                aria-controls="panel-0"
+                aria-selected="true"
+                class="tab-item active"
+                data-v-a38b664a=""
+                id="overview-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Overview
+                </a>
+              </li>
+              <li
+                aria-controls="panel-1"
+                aria-selected="false"
+                class="tab-item"
+                data-v-a38b664a=""
+                id="insights-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Zone Ingress Insights
+                </a>
+              </li>
+            </ul>
+            <div
+              aria-labelledby="overview-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div
+                data-v-a38b664a=""
+              >
+                <!---->
+                 
+                <div
+                  class="empty-state-wrapper"
+                  data-v-7725326c=""
+                >
+                  <div
+                    class="empty-state-title"
+                    data-v-7725326c=""
+                  >
+                    <!---->
+                    <h5
+                      data-v-7725326c=""
+                    >
+                      <div
+                        class="card-icon mb-3"
+                        data-v-7725326c=""
+                      >
+                        <svg
+                          class="kong-icon kong-icon-spinner"
+                          data-v-77239f42=""
+                          data-v-7725326c=""
+                          height="42"
+                          role="img"
+                          viewBox="0 0 24 24"
+                          width="42"
+                        >
+                          <title
+                            data-v-77239f42=""
+                          >
+                            spinner
+                          </title>
+                          <g
+                            data-v-77239f42=""
+                          >
+                            <path
+                              d="M13.3154759 4.60336552c.6394482-.63889655.6394482-1.67503449 0-2.31393104-.6388966-.63889655-1.6744828-.63889655-2.3133793 0-.6394483.63889655-.6394483 1.67503449 0 2.31393104.6388965.63889655 1.6744827.63889655 2.3133793 0"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".1"
+                            />
+                            <path
+                              d="M13.9609931 6.17246897c-.9037241 0-1.6364138.73268965-1.6364138 1.63641379 0 .90317241.7326897 1.63586207 1.6364138 1.63586207.9037241 0 1.6358621-.73268966 1.6358621-1.63586207 0-.90372414-.732138-1.63641379-1.6358621-1.63641379"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".25"
+                            />
+                            <path
+                              d="M10.9938207 11.0105379c-.6388966.6388966-.6388966 1.6750345 0 2.3139311.6388965.6388965 1.6750345.6388965 2.313931 0 .6388966-.6388966.6388966-1.6750345 0-2.3139311-.6388965-.6388965-1.6750345-.6388965-2.313931 0"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".35"
+                            />
+                            <path
+                              d="M7.79988966 12.3247448c-.90372414 0-1.63586207.7326897-1.63586207 1.6364138 0 .9031724.73213793 1.6358621 1.63586207 1.6358621.90372413 0 1.63641379-.7326897 1.63641379-1.6358621 0-.9037241-.73268966-1.6364138-1.63641379-1.6364138"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".5"
+                            />
+                            <path
+                              d="M2.28706207 11.004469c-.63889655.6388965-.63889655 1.6750344 0 2.313931.63889655.6388966 1.67503448.6388966 2.31393103 0 .63889656-.6388966.63889656-1.6750345 0-2.313931-.63889655-.6388966-1.67503448-.6388966-2.31393103 0"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".65"
+                            />
+                            <path
+                              d="M3.27244138 7.80888276c0-.90372414-.73268966-1.63641379-1.63641379-1.63641379-.90372414 0-1.63586207.73268965-1.63586207 1.63641379 0 .90317241.73213793 1.63586207 1.63586207 1.63586207.90372413 0 1.63641379-.73268966 1.63641379-1.63586207"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".75"
+                            />
+                            <path
+                              d="M4.59271724 4.60943448c.63889655-.63889655.63889655-1.67503448 0-2.31393103-.63889655-.63889655-1.67503448-.63889655-2.31393103 0-.63889655.63889655-.63889655 1.67503448 0 2.31393103.63889655.63889655 1.67503448.63889655 2.31393103 0"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".85"
+                            />
+                            <path
+                              d="M6.16402759 1.6361931c0 .90372414.73213793 1.6364138 1.63586207 1.6364138.90372413 0 1.63641379-.73268966 1.63641379-1.6364138 0-.90372413-.73268966-1.63641379-1.63641379-1.63641379-.90372414 0-1.63586207.73268966-1.63586207 1.63641379z"
+                              data-v-77239f42=""
+                              fill="rgba(0, 0, 0, 0.1)"
+                              opacity=".95"
+                            />
+                          </g>
+                        </svg>
+                      </div>
+                      
+      Data Loading...
+    
+                    </h5>
+                  </div>
+                  <div
+                    class="empty-state-content"
+                    data-v-7725326c=""
+                  >
+                    <p
+                      data-v-7725326c=""
+                    />
+                    <p
+                      data-v-7725326c=""
+                    >
+                      <!---->
+                    </p>
+                  </div>
+                </div>
+                 
+                <!---->
+                 
+                <!---->
+              </div>
+            </div>
+            <div
+              aria-labelledby="insights-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+          </div>
+           
+          <div>
+            <!---->
+             
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
+<div>
+  <div
+    class="zoneingresses"
+  >
+    <div
+      class="empty-state-wrapper"
+      data-v-7725326c=""
+    >
+      <div
+        class="empty-state-title"
+        data-v-7725326c=""
+      >
+        <!---->
+        <h5
+          data-v-7725326c=""
+        >
+          <svg
+            class="kong-icon kong-icon--centered kong-icon-dangerCircle"
+            data-v-77239f42=""
+            data-v-7725326c=""
+            height="64"
+            role="img"
+            viewBox="0 0 24 24"
+            width="64"
+          >
+            <title
+              data-v-77239f42=""
+            >
+              dangerCircle
+            </title>
+            <g
+              data-v-77239f42=""
+            >
+              <path
+                d="M0,8a8,8 0 1,0 16,0a8,8 0 1,0 -16,0"
+                data-v-77239f42=""
+                fill="#BFBFBF"
+              />
+              <path
+                d="M9 11v2H7v-2h2zm0-8v6.5H7V3h2z"
+                data-v-77239f42=""
+                fill="#FFF"
+                id="preserveColor"
+              />
+            </g>
+          </svg>
+          
+    Kuma is running in Standalone mode.
+  
+        </h5>
+      </div>
+      <div
+        class="empty-state-content"
+        data-v-7725326c=""
+      >
+        <p
+          data-v-7725326c=""
+        >
+          <p
+            data-v-7725326c=""
+          >
+            
+      To access this page, you must be running in 
+            <strong
+              data-v-7725326c=""
+            >
+              Multi-Zone
+            </strong>
+             mode.
+    
+          </p>
+        </p>
+        <p
+          data-v-7725326c=""
+        >
+          <a
+            class="k-button primary"
+            data-v-38fa8ecf=""
+            data-v-7725326c=""
+            href="https://kuma.io/docs/0.6.0/documentation/deployments/"
+            target="_blank"
+            type="button"
+          >
+            
+      Learn More
+    
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
+<div
+  class="tab-container"
+  data-testid="tab-container"
+>
+  <header
+    class="tab__header"
+  >
+    <h3>
+      
+          Zone Ingress: zone-1
+        
+    </h3>
+  </header>
+   
+  <div
+    class="tab__content-container"
+  >
+    <div
+      class="k-tabs"
+      data-v-a38b664a=""
+    >
+      <ul
+        aria-label="ktabs"
+        data-v-a38b664a=""
+        role="tablist"
+      >
+        <li
+          aria-controls="panel-0"
+          aria-selected="false"
+          class="tab-item"
+          data-v-a38b664a=""
+          id="overview-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            Overview
+          </a>
+        </li>
+        <li
+          aria-controls="panel-1"
+          aria-selected="true"
+          class="tab-item active"
+          data-v-a38b664a=""
+          id="insights-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            Zone Ingress Insights
+          </a>
+        </li>
+      </ul>
+      <div
+        aria-labelledby="overview-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-0"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="insights-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-1"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div
+          class="kong-card noBorder"
+          data-v-4ad076e4=""
+          data-v-a38b664a=""
+        >
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-4ad076e4=""
+          >
+            <ul
+              class="accordion"
+              data-v-4ad076e4=""
+            >
+              <li
+                class="relative cursor-pointer border-b py-2 px-4"
+              >
+                <div
+                  class="flex py-2"
+                >
+                  <h4
+                    class="text-lg font-medium"
+                  >
+                    <span
+                      class="color-green-400"
+                    >
+                      
+
+    Connect time: July 13, 2021 @ 10:41:4
+  
+                    </span>
+                     
+                    <!---->
+                  </h4>
+                </div>
+                 
+                <transition-stub
+                  name="accordion"
+                >
+                  <div>
+                    <ul>
+                      <div>
+                        <div>
+                          <h5
+                            class="overview-tertiary-title"
+                          >
+                            
+      General Information:
+    
+                          </h5>
+                           
+                          <ul>
+                            <!---->
+                             
+                            <li>
+                              <strong>
+                                Last Connected:
+                              </strong>
+                               
+        on 7/13/2021
+      
+                            </li>
+                             
+                            <!---->
+                          </ul>
+                        </div>
+                         
+                        <div>
+                          <!---->
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                </transition-stub>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <div>
+      <!---->
+       
+      <!---->
+    </div>
+  </div>
+</div>
+`;

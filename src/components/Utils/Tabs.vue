@@ -1,5 +1,8 @@
 <template>
-  <div class="tab-container">
+  <div
+    class="tab-container"
+    data-testid="tab-container"
+  >
     <header
       v-if="$slots.tabHeader && isReady"
       class="tab__header"
