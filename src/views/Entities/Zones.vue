@@ -1,29 +1,6 @@
 <template>
   <div class="zones">
-    <KEmptyState v-if="multicluster === false">
-      <template v-slot:title>
-        <KIcon
-          class="kong-icon--centered"
-          icon="dangerCircle"
-          size="64"
-        />
-        {{ productName }} is running in Standalone mode.
-      </template>
-      <template v-slot:message>
-        <p>
-          To access this page, you must be running in <strong>Multi-Zone</strong> mode.
-        </p>
-      </template>
-      <template v-slot:cta>
-        <KButton
-          to="https://kuma.io/docs/0.6.0/documentation/deployments/"
-          target="_blank"
-          appearance="primary"
-        >
-          Learn More
-        </KButton>
-      </template>
-    </KEmptyState>
+    <MultizoneInfo v-if="multicluster === false" />
 
     <!-- Zone CPs information for when Multicluster is enabled -->
     <FrameSkeleton v-else>
@@ -32,7 +9,6 @@
         :has-error="hasError"
         :is-loading="isLoading"
         :empty-state="empty_state"
-
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :show-warnings="tableData.data.some((item) => item.withWarnings)"
@@ -50,9 +26,9 @@
         initial-tab-override="overview"
       >
         <template v-slot:tabHeader>
-          <div>
-            <h3>{{ tabGroupTitle }}</h3>
-          </div>
+          <h3 v-if="entity">
+            Zone: {{ entity.name }}
+          </h3>
         </template>
         <template v-slot:overview>
           <LabelList
@@ -83,80 +59,24 @@
           </LabelList>
         </template>
         <template v-slot:insights>
-          <LoaderCard
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-          >
-            <div v-if="rawEntity">
-              <div
-                v-for="(value, key) in rawEntity.zoneInsight.subscriptions"
-                :key="key"
-                class="overview-stack"
-              >
-                <h4 class="overview-title">
-                  ID: <span class="mono">{{ value.id }}</span>
-                </h4>
-
-                <div v-if="value.globalInstanceId || value.connectTime || value.disconnectTime">
-                  <h5 class="overview-tertiary-title">
-                    General Information:
-                  </h5>
-                  <ul>
-                    <li v-if="value.globalInstanceId">
-                      <strong>Global Instance ID:</strong>&nbsp;
-                      <span class="mono">{{ value.globalInstanceId }}</span>
-                    </li>
-                    <li v-if="value.connectTime">
-                      <strong>Last Connected:</strong>&nbsp;
-                      {{ value.connectTime | readableDate }}
-                    </li>
-                    <li v-if="value.disconnectTime">
-                      <strong>Last Disconnected:</strong>&nbsp;
-                      {{ value.disconnectTime | readableDate }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div v-if="value.status">
-                  <ul
-                    v-if="value.status.stat"
-                    class="overview-stat-grid"
-                  >
-                    <li
-                      v-for="(item, label) in value.status.stat"
-                      :key="label"
-                    >
-                      <h6 class="overview-tertiary-title">
-                        {{ label | humanReadable }}:
-                      </h6>
-                      <ul>
-                        <li
-                          v-for="(k, v) in item"
-                          :key="v"
-                        >
-                          <strong>{{ v | humanReadable }}:</strong>&nbsp;
-                          <span class="mono">{{ k | formatValue | formatError }}</span>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-                <KAlert
-                  v-else
-                  appearance="info"
-                  class="mt-4"
+          <KCard border-variant="noBorder">
+            <template v-slot:body>
+              <Accordion :initially-open="0">
+                <AccordionItem
+                  v-for="(value, key) in zoneInsightSubscriptionsReversed"
+                  :key="key"
                 >
-                  <template v-slot:alertIcon>
-                    <KIcon icon="portal" />
+                  <template slot="accordion-header">
+                    <ZoneInsightSubscriptionHeader :details="value" />
                   </template>
-                  <template v-slot:alertMessage>
-                    There are no Policy statistics for <strong>{{ value.id }}</strong>
+
+                  <template slot="accordion-content">
+                    <ZoneInsightSubscriptionDetails :details="value" />
                   </template>
-                </KAlert>
-              </div>
-            </div>
-          </LoaderCard>
+                </AccordionItem>
+              </Accordion>
+            </template>
+          </KCard>
         </template>
         <template v-slot:config>
           <KCard
@@ -201,59 +121,46 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import get from 'lodash/get'
 import Prism from 'vue-prismjs'
-
 import Kuma from '@/services/kuma'
-import { humanReadableDate, getSome, stripTimes, camelCaseToWords, getZoneDpServerAuthType } from '@/helpers'
+import { getSome, getZoneDpServerAuthType } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
+import Accordion from '@/components/Accordion/Accordion'
+import AccordionItem from '@/components/Accordion/AccordionItem'
 
 import LabelList from '@/components/Utils/LabelList'
-import LoaderCard from '@/components/Utils/LoaderCard'
 import Warnings from '@/views/Entities/components/Warnings'
+import { PAGE_SIZE_DEFAULT } from '@/consts'
 
-import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
+import ZoneInsightSubscriptionDetails from './components/ZoneInsightSubscriptionDetails'
+import ZoneInsightSubscriptionHeader from './components/ZoneInsightSubscriptionHeader'
+import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
   name: 'Zones',
   components: {
+    Accordion,
+    AccordionItem,
     FrameSkeleton,
     DataOverview,
     Tabs,
     LabelList,
-    LoaderCard,
     Warnings,
     Prism,
+    ZoneInsightSubscriptionDetails,
+    ZoneInsightSubscriptionHeader,
+    MultizoneInfo,
   },
-  filters: {
-    formatValue(value) {
-      return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
-    },
-    readableDate(value) {
-      return humanReadableDate(value)
-    },
-    humanReadable(value) {
-      return camelCaseToWords(value)
-    },
-    formatError(value) {
-      if (value === '--') {
-        return 'error calculating'
-      }
-
-      return value
-    },
-  },
-  mixins: [sortEntities],
   metaInfo: {
     title: 'Zones',
   },
   data() {
     return {
-      productName: PRODUCT_NAME,
       isLoading: true,
       isEmpty: false,
       hasError: false,
@@ -294,13 +201,11 @@ export default {
           title: 'Warnings',
         },
       ],
-      entity: [],
-      rawEntity: null,
+      entity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
-      tabGroupTitle: null,
-      itemsPerCol: 3,
       warnings: [],
+      zoneInsightSubscriptionsReversed: [],
       codeOutput: null,
     }
   },
@@ -406,7 +311,7 @@ export default {
       this.entityIsLoading = true
       this.entityIsEmpty = true
 
-      const selected = ['type', 'name', 'mesh']
+      const selected = ['type', 'name']
 
       const timeout = setTimeout(() => {
         this.entityIsEmpty = true
@@ -420,12 +325,10 @@ export default {
         try {
           // get the Zone details from the Zone Insights endpoint
           const response = await Kuma.getZoneOverview(entity.name)
-          const { name, zoneInsight } = response
-          const { subscriptions = [] } = zoneInsight
+          const subscriptions = get(response, 'zoneInsight.subscriptions', [])
 
-          this.tabGroupTitle = `Zone: ${name}`
           this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
-          this.rawEntity = stripTimes(response)
+          this.zoneInsightSubscriptionsReversed = Array.from(subscriptions).reverse()
 
           if (subscriptions.length) {
             const { version = {} } = subscriptions[subscriptions.length - 1]
@@ -448,6 +351,8 @@ export default {
             }
           }
         } catch (e) {
+          console.log(e)
+
           this.entity = null
           this.entityHasError = true
           this.entityIsEmpty = true

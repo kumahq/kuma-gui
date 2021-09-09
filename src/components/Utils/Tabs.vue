@@ -198,7 +198,8 @@ export default {
     font-weight: var(--tab-header-title-font-weight);
   }
 
-  > div {
+  > div,
+  > h3 {
     padding: 0 10px;
   }
 }

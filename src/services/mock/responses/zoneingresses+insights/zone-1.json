@@ -1,6 +1,6 @@
 {
   "type": "ZoneIngressOverview",
-  "name": "zone-1.kuma-ingress-69546d6d48-n98tq.kuma-system.default",
+  "name": "zone-1",
   "creationTime": "2021-07-13T08:40:59Z",
   "modificationTime": "2021-07-13T08:40:59Z",
   "zoneIngress": {
@@ -42,6 +42,7 @@
         "id": "cc2743b5-43e0-45b6-be88-956ea91a4aad",
         "controlPlaneInstanceId": "kuma-control-plane-84f5589874-nmspq-0867",
         "connectTime": "2021-07-13T08:41:04.556796688Z",
+        "generation": 409,
         "status": {
           "lastUpdateTime": "2021-07-13T09:03:11.614941842Z",
           "total": {
