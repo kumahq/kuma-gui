@@ -8,7 +8,7 @@
     "serve": "yarn vue-cli-service serve",
     "prebuild": "yarn msw:cleanup",
     "build": "yarn vue-cli-service build --mode production",
-    "build:ci": "yarn vue-cli-service build",
+    "build:ci": "yarn vue-cli-service build --mode development",
     "test:unit": "yarn vue-cli-service test:unit -i",
     "test:e2e": "yarn vue-cli-service test:e2e",
     "lint": "yarn vue-cli-service lint",
