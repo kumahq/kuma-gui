@@ -42,6 +42,7 @@
             class="kong-icon--centered"
             color="var(--yellow-200)"
             icon="warning"
+            secondary-color="var(--black-75)"
             size="42"
           />
         </div>
@@ -60,6 +61,7 @@
             class="kong-icon--centered"
             color="var(--yellow-200)"
             icon="warning"
+            secondary-color="var(--black-75)"
             size="42"
           />
         </div>

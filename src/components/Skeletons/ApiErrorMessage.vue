@@ -7,6 +7,7 @@
       <KIcon
         class="kong-icon--centered"
         color="var(--yellow-300)"
+        secondary-color="var(--black-75)"
         icon="warning"
         size="64"
       />
