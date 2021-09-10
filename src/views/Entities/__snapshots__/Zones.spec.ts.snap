@@ -504,15 +504,16 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
        
       <div
         class="tab-container"
+        data-testid="tab-container"
       >
         <header
           class="tab__header"
         >
-          <div>
-            <h3>
-              Zone: cluster-1
-            </h3>
-          </div>
+          <h3>
+            
+          Zone: cluster-1
+        
+          </h3>
         </header>
          
         <div
@@ -709,19 +710,6 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                             <li
                               data-v-4ad076e4=""
                             >
-                              <!---->
-                               
-                              <p
-                                data-v-4ad076e4=""
-                              >
-                                
-                  
-                
-                              </p>
-                            </li>
-                            <li
-                              data-v-4ad076e4=""
-                            >
                               <h4
                                 data-v-4ad076e4=""
                               >
@@ -844,8 +832,8 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
             </g>
           </svg>
           
-      Kuma is running in Standalone mode.
-    
+    Kuma is running in Standalone mode.
+  
         </h5>
       </div>
       <div
@@ -859,14 +847,14 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
             data-v-7725326c=""
           >
             
-        To access this page, you must be running in 
+      To access this page, you must be running in 
             <strong
               data-v-7725326c=""
             >
               Multi-Zone
             </strong>
              mode.
-      
+    
           </p>
         </p>
         <p
@@ -881,11 +869,1386 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
             type="button"
           >
             
-        Learn More
-      
+      Learn More
+    
           </a>
         </p>
       </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Zones.vue renders zone insights 1`] = `
+<div
+  class="tab-container"
+  data-testid="tab-container"
+>
+  <header
+    class="tab__header"
+  >
+    <h3>
+      
+          Zone: cluster-1
+        
+    </h3>
+  </header>
+   
+  <div
+    class="tab__content-container"
+  >
+    <div
+      class="k-tabs"
+      data-v-a38b664a=""
+    >
+      <ul
+        aria-label="ktabs"
+        data-v-a38b664a=""
+        role="tablist"
+      >
+        <li
+          aria-controls="panel-0"
+          aria-selected="false"
+          class="tab-item"
+          data-v-a38b664a=""
+          id="overview-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            Overview
+          </a>
+        </li>
+        <li
+          aria-controls="panel-1"
+          aria-selected="true"
+          class="tab-item active"
+          data-v-a38b664a=""
+          id="insights-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            Zone Insights
+          </a>
+        </li>
+        <li
+          aria-controls="panel-2"
+          aria-selected="false"
+          class="tab-item"
+          data-v-a38b664a=""
+          id="config-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            Config
+          </a>
+        </li>
+        <li
+          aria-controls="panel-3"
+          aria-selected="false"
+          class="tab-item"
+          data-v-a38b664a=""
+          id="warnings-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            <span
+              class="flex items-center with-warnings"
+              data-v-a38b664a=""
+            >
+              <svg
+                class="kong-icon mr-1 kong-icon-warning"
+                data-v-77239f42=""
+                data-v-a38b664a=""
+                height="16"
+                role="img"
+                viewBox="0 0 18 16"
+                width="16"
+              >
+                <title
+                  data-v-77239f42=""
+                >
+                  warning
+                </title>
+                <g
+                  data-v-77239f42=""
+                >
+                  <path
+                    d="M7.926.621a1.24 1.24 0 0 1 2.148 0l7.763 13.535A1.235 1.235 0 0 1 16.763 16H1.237a1.23 1.23 0 0 1-1.074-1.844L7.926.621z"
+                    data-v-77239f42=""
+                    fill="var(--yellow-400)"
+                  />
+                  <path
+                    d="M10 11v2H8v-2h2zm0-7v5.5H8V4h2z"
+                    data-v-77239f42=""
+                    fill="#000"
+                    fill-opacity=".9"
+                    id="preserveColor"
+                  />
+                </g>
+              </svg>
+               
+              <span
+                data-v-a38b664a=""
+              >
+                
+            Warnings
+          
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div
+        aria-labelledby="overview-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-0"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="insights-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-1"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <div
+          class="kong-card noBorder"
+          data-v-4ad076e4=""
+          data-v-a38b664a=""
+        >
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-4ad076e4=""
+          >
+            <ul
+              class="accordion"
+              data-v-4ad076e4=""
+            >
+              <li
+                class="relative cursor-pointer border-b py-2 px-4"
+              >
+                <div
+                  class="flex py-2"
+                >
+                  <h4
+                    class="text-lg font-medium"
+                  >
+                    <span
+                      class="color-green-400"
+                    >
+                      
+
+    Connect time: 2021-02-19T07:11:15.535286Z
+  
+                    </span>
+                     
+                    <!---->
+                  </h4>
+                </div>
+                 
+                <transition-stub
+                  name="accordion"
+                >
+                  <div>
+                    <ul>
+                      <div>
+                        <div>
+                          <h5
+                            class="overview-tertiary-title"
+                          >
+                            
+      General Information:
+    
+                          </h5>
+                           
+                          <ul>
+                            <li>
+                              <strong>
+                                Global Instance ID:
+                              </strong>
+                               
+        
+                              <span
+                                class="mono"
+                              >
+                                MacBook-Pro-Bartlomiej.local-9e52
+                              </span>
+                            </li>
+                             
+                            <li>
+                              <strong>
+                                Last Connected:
+                              </strong>
+                               
+        on 2/19/2021
+      
+                            </li>
+                             
+                            <!---->
+                          </ul>
+                        </div>
+                         
+                        <div>
+                          <ul
+                            class="overview-stat-grid"
+                          >
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Circuit Breaker:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Config:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Dataplane:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          External Service:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Fault Injection:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Health Check:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Mesh:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Proxy Template:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Retry:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Secret:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Log:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Permission:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Route:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Trace:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                </transition-stub>
+              </li>
+              <li
+                class="relative cursor-pointer border-b py-2 px-4"
+              >
+                <div
+                  class="flex py-2"
+                >
+                  <h4
+                    class="text-lg font-medium"
+                  >
+                    <span
+                      class="color-green-400"
+                    >
+                      
+
+    Connect time: 2020-07-28T16:18:09.743141Z
+  
+                    </span>
+                     
+                    <span
+                      class="ml-4 color-red-400"
+                    >
+                      
+    Disconnect time: 2020-07-28T16:18:09.743194Z
+  
+                    </span>
+                  </h4>
+                </div>
+                 
+                <transition-stub
+                  name="accordion"
+                >
+                  <div
+                    style="display: none;"
+                  >
+                    <ul>
+                      <div>
+                        <div>
+                          <h5
+                            class="overview-tertiary-title"
+                          >
+                            
+      General Information:
+    
+                          </h5>
+                           
+                          <ul>
+                            <li>
+                              <strong>
+                                Global Instance ID:
+                              </strong>
+                               
+        
+                              <span
+                                class="mono"
+                              >
+                                foobar
+                              </span>
+                            </li>
+                             
+                            <li>
+                              <strong>
+                                Last Connected:
+                              </strong>
+                               
+        on 7/28/2020
+      
+                            </li>
+                             
+                            <li>
+                              <strong>
+                                Last Disconnected:
+                              </strong>
+                               
+        on 7/28/2020
+      
+                            </li>
+                          </ul>
+                        </div>
+                         
+                        <div>
+                          <ul
+                            class="overview-stat-grid"
+                          >
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Circuit Breaker:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Config:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Dataplane:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          External Service:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Fault Injection:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Health Check:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Mesh:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Proxy Template:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Retry:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Secret:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Log:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Permission:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Route:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                
+          Traffic Trace:
+        
+                              </h6>
+                               
+                              <ul>
+                                <li>
+                                  <strong>
+                                    Responses Sent:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    Responses Acknowledged:
+                                  </strong>
+                                   
+            
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </ul>
+                  </div>
+                </transition-stub>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        aria-labelledby="config-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-2"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="warnings-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-3"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+    </div>
+     
+    <div>
+      <!---->
+       
+      <!---->
     </div>
   </div>
 </div>

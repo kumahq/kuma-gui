@@ -127,6 +127,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                      
                     <div
                       class="tab-container"
+                      data-testid="tab-container"
                     >
                       <!---->
                        

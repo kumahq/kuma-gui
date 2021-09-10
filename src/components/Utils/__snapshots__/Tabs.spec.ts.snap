@@ -4,6 +4,7 @@ exports[`Tabs.vue renders basic snapshot 1`] = `
 <div>
   <div
     class="tab-container"
+    data-testid="tab-container"
   >
     <!---->
      

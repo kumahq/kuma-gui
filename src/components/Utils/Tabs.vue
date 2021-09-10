@@ -1,5 +1,8 @@
 <template>
-  <div class="tab-container">
+  <div
+    class="tab-container"
+    data-testid="tab-container"
+  >
     <header
       v-if="$slots.tabHeader && isReady"
       class="tab__header"
@@ -198,7 +201,8 @@ export default {
     font-weight: var(--tab-header-title-font-weight);
   }
 
-  > div {
+  > div,
+  > h3 {
     padding: 0 10px;
   }
 }

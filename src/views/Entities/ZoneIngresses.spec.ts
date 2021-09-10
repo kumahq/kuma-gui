@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import renderWithVuex from '@/testUtils/renderWithVuex'
-import Zones from './Zones.vue'
+import ZoneIngresses from './ZoneIngresses.vue'
 
 jest.mock('@/helpers', () => {
   const originalModule = jest.requireActual('@/helpers')
@@ -13,43 +13,31 @@ jest.mock('@/helpers', () => {
   }
 })
 
-describe('Zones.vue', () => {
+describe('ZoneIngresses.vue', () => {
   it('renders snapshot when no multizone', () => {
-    const { container } = renderWithVuex(Zones)
+    const { container } = renderWithVuex(ZoneIngresses)
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders snapshot when multizone', async () => {
-    const { container } = renderWithVuex(Zones, {
+    const { container } = renderWithVuex(ZoneIngresses, {
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
-    await screen.findByText(/cluster-1/)
-    await screen.findByText(/dpToken/)
+    await screen.findByText(/zone-1/)
 
     expect(container).toMatchSnapshot()
   })
 
-  it('renders config of multizone', async () => {
-    renderWithVuex(Zones, {
+  it('renders zoneingress insights', async () => {
+    renderWithVuex(ZoneIngresses, {
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
-    await screen.findByText(/dpToken/)
+    await screen.findByText(/ZoneIngressOverview/)
 
-    await userEvent.click(screen.getByText('Config'))
-    expect(await screen.findByText(/adminAccessLogPath/)).toBeInTheDocument()
-  })
-
-  it('renders zone insights', async () => {
-    renderWithVuex(Zones, {
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
-
-    await screen.findByText(/dpToken/)
-
-    await userEvent.click(screen.getByText(/Zone Insights/))
+    await userEvent.click(screen.getByText(/Zone Ingress Insights/))
     expect(screen.getByTestId('tab-container')).toMatchSnapshot()
   })
 })
