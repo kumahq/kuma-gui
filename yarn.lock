@@ -1338,30 +1338,6 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-4.0.2.tgz#1d471624a6c9750e1438278d26ab54ce62bc44b5"
   integrity sha512-P1r7Nd/ek/uCZElJp1vwtIVbeKkG61NzyN7qoZVwQKDeO22DGAyl02wzHcyoYfjaSJURwugW1nE2zTq/+YOHBw==
 
-"@kongponents/kinput@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/kinput/-/kinput-4.0.2.tgz#240f54404f3a241bd015b8aa0b6879728eb5f8d1"
-  integrity sha512-AMEV05LXWK/8z09GBlhAZOEiwBN2ChuqOlZcJVXhGYOzirkUIzTMuqbdPhCKh/qqbX5ut5AgoQs8fd0h15PW1A==
-
-"@kongponents/kinputswitch@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/kinputswitch/-/kinputswitch-4.0.2.tgz#0035078931265d46a97bb795f4b3dcef79faf199"
-  integrity sha512-4S9yh4LbIS37UV/5B+YH8dTAKOPg1lcWIjf4U83t/2mJatq1kN/A/nX4RhCi/hZ7myL4vuFkdXGu1BJehOz9ig==
-
-"@kongponents/kmodal@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-4.0.2.tgz#49213531268e13225bb1554e1fb0bef14e7a9283"
-  integrity sha512-hg0eKqLBMbW9B1yAFY1VMIsWSkjcTbK/Fc8s0CpHzkRdXxayO4+fetKoBTomI1PXsuVVtTP/rjtgsNdeDkWfvw==
-  dependencies:
-    "@kongponents/kbutton" "^4.0.2"
-
-"@kongponents/kooltip@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/kooltip/-/kooltip-4.0.2.tgz#712afbe00d71d2910e48381d4d69c7292a02a30d"
-  integrity sha512-HHV0BTMF3Ucjmqqul08eeZwNXteZ6b59oK280rzn+qB269eEvDr1NkFi6Ymb02I1UnhDpO8bguPR9Hr6l0wURQ==
-  dependencies:
-    "@kongponents/kpop" "^4.0.2"
-
 "@kongponents/kpop@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@kongponents/kpop/-/kpop-4.0.2.tgz#a6a8c562962046987d3ab757ebe1df45fb281354"
@@ -1383,18 +1359,6 @@
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@kongponents/ktabs/-/ktabs-4.0.2.tgz#ec1f0747d9f06e930bff38aea9df1ee9ba5b13e8"
   integrity sha512-SJoDxhfsYii+apfBkrkAHuy4FqT4hcaIhR/fvorDpfmVtuC990x6ziVrJ1xC5l11YAYt3GmyjoLxT0VXnKNDMg==
-
-"@kongponents/ktoaster@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/ktoaster/-/ktoaster-4.0.2.tgz#588bc84a6455ff3530c6e31c7bde0ebe27958d1b"
-  integrity sha512-cbJAqhqkFQ6fgHcNfD0QHkayxIaEKBXgq6SQl4TqniG7cT9ClZZRnQOMwc8zjOjc+mxc1mrgZ76MwlYZK/uSpA==
-  dependencies:
-    "@kongponents/kalert" "^4.0.2"
-
-"@kongponents/ktoggle@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@kongponents/ktoggle/-/ktoggle-4.0.2.tgz#55b7ee22bafc9d161759abe366ff673980c5c008"
-  integrity sha512-dkIgQ3baE8ta5MepL4GjVIM/+wLWvjxhN+I4KymtpnWTZZJ+gdBss+e3GuAjAMoxZASlnj5tPxi+buFOrPIkPg==
 
 "@kongponents/styles@^4.0.2":
   version "4.0.2"
