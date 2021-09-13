@@ -8,6 +8,7 @@ const requireMockFile = (filename: string) => require(`${MOCK_FILES_ROOT_PATH}/$
 const mockFilenameBasePaths: string[] = [
   // all of matches which contain "+" in url could be matched only by
   // RegEx as some of other examples below.
+  'config',
   'versions',
   'meshes',
   'mesh-insights',
@@ -108,6 +109,20 @@ const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestConte
 const setupHandlers = (apiURL: string): RestHandler[] => {
   const handlers = mockFilenameBasePaths.map((path: string) =>
     rest.get(`${apiURL}${path}`, (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`)))),
+  )
+
+  handlers.push(
+    rest.get('http://localhost:5681/', (req, res, ctx) =>
+      res(
+        ctx.json({
+          hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
+          tagline: 'Kuma',
+          version: '1.2.0-225-g858034a9',
+          instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
+          clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
+        }),
+      ),
+    ),
   )
 
   handlers.push(rest.get(/zones\+insights/, regexMatcher))
