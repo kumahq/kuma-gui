@@ -6,6 +6,7 @@
           class="kong-icon--centered"
           color="var(--yellow-200)"
           icon="warning"
+          secondary-color="var(--black-75)"
           size="64"
         />
         Page Not Found

@@ -78,7 +78,7 @@ export default {
   left: var(--sidebarCollapsedWidth);
   width: var(--subnavWidth);
   height: calc(100vh - 3rem - 10px); // -10px because of items padding
-  border-left: 1px solid var(--steal-300);
+  border-left: 1px solid var(--steel-300);
   background-color: var(--white);
   transition: width 200ms ease-out;
 

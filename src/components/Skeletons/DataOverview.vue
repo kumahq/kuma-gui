@@ -145,7 +145,7 @@
               class="mr-1"
               color="var(--yellow-400)"
               icon="warning"
-              view-box="0 0 18 16"
+              secondary-color="var(--black-75)"
               size="20"
             />
             <div v-else />
@@ -221,6 +221,7 @@
             class="kong-icon--centered"
             color="var(--yellow-200)"
             icon="warning"
+            secondary-color="var(--black-75)"
             size="42"
           />
         </div>
