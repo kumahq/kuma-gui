@@ -4,7 +4,7 @@
       <KIcon
         class="kong-icon--centered"
         icon="dangerCircle"
-        size="64"
+        size="42"
       />
       {{ productName }} is running in Standalone mode.
     </template>
