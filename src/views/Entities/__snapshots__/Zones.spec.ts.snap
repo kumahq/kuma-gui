@@ -856,10 +856,10 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
             class="kong-icon kong-icon--centered kong-icon-dangerCircle"
             data-v-567e03f2=""
             data-v-a7c9c1d2=""
-            height="64"
+            height="42"
             role="img"
             viewBox="0 0 16 16"
-            width="64"
+            width="42"
           >
             <title
               data-v-a7c9c1d2=""
