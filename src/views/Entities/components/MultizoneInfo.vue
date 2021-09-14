@@ -15,7 +15,7 @@
     </template>
     <template v-slot:cta>
       <KButton
-        to="https://kuma.io/docs/0.6.0/documentation/deployments/"
+        :to="`https://kuma.io/docs/${version}/documentation/deployments/`"
         target="_blank"
         appearance="primary"
       >
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { PRODUCT_NAME } from '@/consts'
 export default {
   name: 'MultizoneInfo',
@@ -33,6 +34,11 @@ export default {
     return {
       productName: PRODUCT_NAME,
     }
+  },
+  computed: {
+    ...mapGetters({
+      version: 'config/getVersion',
+    }),
   },
 }
 </script>
