@@ -16,7 +16,7 @@
       </template>
       <template v-slot:cta>
         <KButton
-          to="https://kuma.io/docs/0.6.0/documentation/deployments/"
+          :to="`https://kuma.io/docs/${globalCpVersion}/documentation/deployments/`"
           target="_blank"
           appearance="primary"
         >
@@ -264,6 +264,7 @@ export default {
   computed: {
     ...mapGetters({
       multicluster: 'config/getMulticlusterStatus',
+      globalCpVersion: 'config/getVersion',
     }),
     // If you need to test multicluster without actually having it enabled
     // in Kuma, uncomment this and comment out the mapGetters above.

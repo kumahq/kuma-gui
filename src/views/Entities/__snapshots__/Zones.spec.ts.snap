@@ -876,7 +876,7 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
             class="k-button primary"
             data-v-38fa8ecf=""
             data-v-7725326c=""
-            href="https://kuma.io/docs/0.6.0/documentation/deployments/"
+            href="https://kuma.io/docs/null/documentation/deployments/"
             target="_blank"
             type="button"
           >
