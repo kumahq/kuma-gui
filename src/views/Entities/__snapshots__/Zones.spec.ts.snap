@@ -915,7 +915,7 @@ exports[`Zones.vue renders snapshot when no multizone 1`] = `
             class="k-button primary"
             data-v-38fa8ecf=""
             data-v-567e03f2=""
-            href="https://kuma.io/docs/0.6.0/documentation/deployments/"
+            href="https://kuma.io/docs/null/documentation/deployments/"
             target="_blank"
             type="button"
           >
@@ -1164,7 +1164,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                 Last Connected:
                               </strong>
                                
-        on 2/19/2021
+        on 2/18/2021
       
                             </li>
                              
