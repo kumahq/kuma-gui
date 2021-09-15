@@ -1164,7 +1164,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                 Last Connected:
                               </strong>
                                
-        on 2/18/2021
+        2021-02-19T07:11:15.535286Z
       
                             </li>
                              
@@ -1751,7 +1751,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                 Last Connected:
                               </strong>
                                
-        on 7/28/2020
+        2020-07-28T16:18:09.743141Z
       
                             </li>
                              
@@ -1760,7 +1760,7 @@ exports[`Zones.vue renders zone insights 1`] = `
                                 Last Disconnected:
                               </strong>
                                
-        on 7/28/2020
+        2020-07-28T16:18:09.743194Z
       
                             </li>
                           </ul>
