@@ -133,7 +133,7 @@ export default {
       return Boolean(this.env && this.apiUrl)
     },
   },
-  beforeCreate() {
+  mounted() {
     document.body.style.paddingTop = 'var(--topbar-height)'
   },
   destroyed() {
