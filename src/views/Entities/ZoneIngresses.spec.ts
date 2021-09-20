@@ -9,6 +9,7 @@ jest.mock('@/helpers', () => {
   return {
     __esModule: true,
     ...originalModule,
+    humanReadableDate: (data: string) => data,
     rawReadableDate: (data: string) => data,
   }
 })
