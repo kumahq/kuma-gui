@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      showOnboarding: 'showOnboarding',
+      showOnboarding: 'onboarding/showOnboarding',
     }),
   },
 }
