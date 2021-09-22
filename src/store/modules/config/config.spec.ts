@@ -1,3 +1,5 @@
+import { rest } from 'msw'
+import { server } from '@/jest-setup'
 import setupStore from '@/testUtils/setupStore'
 import config from '.'
 
@@ -23,9 +25,8 @@ describe('config module', () => {
   })
 
   describe('actions', () => {
-    // It will require to create a mock for request on '/'
-
-    xit('tests getStatus action', async () => {
+    it('tests getStatus action', async () => {
+      server.use(rest.get('http://localhost/', (req, res, ctx) => res(ctx.status(200))))
       const store = setupStore(config)
 
       await store.dispatch('getStatus')

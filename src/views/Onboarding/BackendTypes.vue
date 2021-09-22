@@ -49,7 +49,6 @@ import PostgresGraph from '@/views/Onboarding/components/graphs/PostgresGraph'
 import MemoryGraph from '@/views/Onboarding/components/graphs/MemoryGraph'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import HoverableSvgWrapper from '@/views/Onboarding/components/HoverableSvgWrapper'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 
 export default {
@@ -60,7 +59,6 @@ export default {
     MemoryGraph,
     OnboardingNavigation,
     OnboardingHeading,
-    HoverableSvgWrapper,
     OnboardingPage,
   },
   data() {

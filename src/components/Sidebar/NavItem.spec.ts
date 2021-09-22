@@ -3,7 +3,7 @@ import TestComponent from '@/testUtils/TestComponent.vue'
 import NavItem from './NavItem.vue'
 
 describe('NavItem.vue', () => {
-  it('renders snapshot with link to selected mesh', async () => {
+  it('renders snapshot with link to selected mesh', () => {
     const { container } = renderWithVuex(NavItem, {
       routes: [
         {

@@ -1,0 +1,181 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddingNewServices.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="onboarding-container"
+  >
+    <div
+      class="onboarding-container__header"
+    >
+      <div
+        class="relative"
+      >
+        <h1
+          class="onboarding-title"
+        >
+          
+    4. Adding New Services
+  
+        </h1>
+         
+        <!---->
+         
+        <div
+          class="absolute right-0 top-0 mt-4 m-a flex items-center"
+        >
+          <button
+            class="k-button skip-button small btn-link"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+      Skip Setup
+    
+          </button>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="onboarding-container__content"
+    >
+      <div
+        class="w-full"
+      >
+        <div
+          class="h-full w-full flex justify-evenly items-center"
+        >
+          <div
+            class="cursor-pointer box box--active"
+          >
+            <div>
+              <img
+                src="@/assets/images/new-service-demo.svg?external"
+              />
+               
+              <div
+                class="ml-3"
+              >
+                <p
+                  class="uppercase font-bold tracking-wider"
+                >
+                  
+              Demo app
+            
+                </p>
+                 
+                <p>
+                  Pre-Configured
+                </p>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="cursor-pointer box"
+          >
+            <div
+              class="cursor-pointer"
+            >
+              <img
+                src="@/assets/images/new-service-manually.svg?external"
+              />
+               
+              <div
+                class="ml-3"
+              >
+                <p
+                  class="uppercase font-bold tracking-wider"
+                >
+                  
+              Manually
+            
+                </p>
+                 
+                <p>
+                  Custom Config
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="mt-10 flex items-center flex-col sm:flex-row justify-between"
+    >
+      <a
+        aria-current="page"
+        class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
+        data-v-38fa8ecf=""
+        href="#/"
+        type="button"
+      >
+        
+    Back
+  
+      </a>
+       
+      <div
+        class="radio flex justify-between w-full sm:w-3/5 md:w-1/2 lg:w-2/5"
+      >
+        <label
+          class="k-radio d-inline-block"
+          data-v-b7148f78=""
+          name="deployment"
+        >
+          <input
+            class="k-input float-left"
+            data-v-b7148f78=""
+            name="deployment"
+            type="radio"
+          />
+          <span
+            class="float-left"
+            data-v-b7148f78=""
+          >
+            
+          Demo
+        
+          </span>
+        </label>
+         
+        <label
+          class="k-radio d-inline-block"
+          data-v-b7148f78=""
+          name="deployment"
+        >
+          <input
+            class="k-input float-left"
+            data-v-b7148f78=""
+            name="deployment"
+            type="radio"
+          />
+          <span
+            class="float-left"
+            data-v-b7148f78=""
+          >
+            
+          Manually
+        
+          </span>
+        </label>
+      </div>
+       
+      <a
+        aria-current="page"
+        class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+        data-v-38fa8ecf=""
+        href="#/"
+        type="button"
+      >
+        
+    Next
+  
+      </a>
+    </div>
+  </div>
+</div>
+`;

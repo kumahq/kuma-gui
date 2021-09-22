@@ -1,13 +1,16 @@
 import renderWithVuex from '@/testUtils/renderWithVuex'
+import { screen } from '@testing-library/vue'
 import DataplanesOverview from './DataplanesOverview.vue'
 
 describe('DataplanesOverview.vue', () => {
   it('renders snapshot', async () => {
-    const { container, getByTestId, findByText } = renderWithVuex(DataplanesOverview)
+    const { container } = renderWithVuex(DataplanesOverview)
 
-    expect(getByTestId('loading')).toBeInTheDocument()
+    expect(screen.getByTestId('loading')).toBeInTheDocument()
+    expect(screen.getByText(/Waiting for DPPs/)).toBeInTheDocument()
+    expect(screen.queryByText(/Next/)).not.toBeInTheDocument()
 
-    await findByText(/dataplane-test-456/)
+    await screen.findByText(/dataplane-test-456/)
 
     expect(container).toMatchSnapshot()
   })

@@ -7,12 +7,6 @@
       />
     </template>
     <template #content>
-      <p
-        v-if="isMultiZone"
-        class="text-xs tracking-wider px-4 py-2 text-red-500"
-      >
-        Remember to apply yamls into control plane with "mode=zone"
-      </p>
       <div v-if="onboardingMode==='demo'">
         <CodeView
           title="Clone app and follow the steps"
@@ -55,7 +49,7 @@ import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 
 export default {
-  name: 'AddingDataplanesCode',
+  name: 'AddingNewServicesCode',
   components: {
     CodeView,
     OnboardingNavigation,

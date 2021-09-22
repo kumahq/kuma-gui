@@ -1,7 +1,7 @@
 <template>
   <div :class="classes">
     <KButton
-      v-show="previousStep"
+      v-if="previousStep"
       appearance="primary"
       class="navigation-button navigation-button--back"
       :to="{

@@ -110,20 +110,16 @@ export default {
       const items = dataplanes.items
 
       for (let i = 0; i < items.length; i++) {
-        const itemName = items[i].name
-        const itemMesh = items[i].mesh
+        const { name, mesh } = items[i]
 
-        const itemStatus = await Kuma.getDataplaneOverviewFromMesh(itemMesh, itemName).then((response) => {
-          const { status } = getItemStatusFromInsight(response.dataplaneInsight)
+        const { status } = await Kuma.getDataplaneOverviewFromMesh(mesh, name).then((response) =>
+          getItemStatusFromInsight(response.dataplaneInsight),
+        )
 
-          return status
-        })
-
-        // create the full data array
         result.push({
-          status: itemStatus,
-          name: itemName,
-          mesh: itemMesh,
+          status,
+          name,
+          mesh,
         })
       }
 

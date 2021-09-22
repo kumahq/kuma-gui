@@ -304,7 +304,7 @@ export default (store: Store<RootInterface>) => {
     {
       path: '/onboarding',
       redirect: { name: 'onboarding-welcome' },
-      component: () => import(/* webpackChunkName: "shell-empty" */ '@/views/ShellEmpty.vue'),
+      component: () => import(/* webpackChunkName: "shell" */ '@/views/ShellEmpty.vue'),
       children: [
         {
           path: 'welcome',
@@ -314,7 +314,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding-welcome" */ '@/views/Onboarding/Welcome.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Welcome.vue'),
         },
         {
           path: 'deployment-types',
@@ -323,8 +323,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () =>
-            import(/* webpackChunkName: "onboarding-deployment-types" */ '@/views/Onboarding/DeploymentTypes.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DeploymentTypes.vue'),
         },
         {
           path: 'backend-types',
@@ -333,8 +332,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () =>
-            import(/* webpackChunkName: "onboarding-backend-types" */ '@/views/Onboarding/BackendTypes.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/BackendTypes.vue'),
         },
         {
           path: 'populating-mesh',
@@ -343,8 +341,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () =>
-            import(/* webpackChunkName: "onboarding-populating-mesh" */ '@/views/Onboarding/PopulatingMesh.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/PopulatingMesh.vue'),
         },
         {
           path: 'adding-dpp',
@@ -353,8 +350,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () =>
-            import(/* webpackChunkName: "onboarding-adding-dpp" */ '@/views/Onboarding/AddingDataplanes.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServices.vue'),
         },
         {
           path: 'adding-dpp-code',
@@ -363,8 +359,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () =>
-            import(/* webpackChunkName: "onboarding-adding-dpp-code" */ '@/views/Onboarding/AddingDataplanesCode.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServicesCode.vue'),
         },
         {
           path: 'dataplanes-overview',
@@ -373,10 +368,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () =>
-            import(
-              /* webpackChunkName: "onboarding-dataplanes-overview" */ '@/views/Onboarding/DataplanesOverview.vue'
-            ),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DataplanesOverview.vue'),
         },
         {
           path: 'completed',
@@ -385,7 +377,7 @@ export default (store: Store<RootInterface>) => {
             hideStatus: true,
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding-completed" */ '@/views/Onboarding/Completed.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Completed.vue'),
         },
       ],
     },
@@ -393,7 +385,7 @@ export default (store: Store<RootInterface>) => {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import(/* webpackChunkName: "shell-empty" */ '@/views/ShellWithHeader.vue'),
+      component: () => import(/* webpackChunkName: "shell" */ '@/views/ShellWithHeader.vue'),
       children: [
         {
           path: 'mesh',

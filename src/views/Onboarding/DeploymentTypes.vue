@@ -46,7 +46,6 @@ import MultizoneGraph from '@/views/Onboarding/components/graphs/MultizoneGraph'
 import StandaloneGraph from '@/views/Onboarding/components/graphs/StandaloneGraph'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import HoverableSvgWrapper from '@/views/Onboarding/components/HoverableSvgWrapper'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 
 export default {
@@ -56,7 +55,6 @@ export default {
     StandaloneGraph,
     OnboardingNavigation,
     OnboardingHeading,
-    HoverableSvgWrapper,
     OnboardingPage,
   },
   data() {

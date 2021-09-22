@@ -71,7 +71,7 @@ import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 import Box from '@/views/Onboarding/components/Box'
 
 export default {
-  name: 'AddingDataplanes',
+  name: 'AddingNewServices',
   components: {
     OnboardingNavigation,
     OnboardingHeading,

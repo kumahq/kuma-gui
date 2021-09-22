@@ -4,7 +4,7 @@ import PopulatingMesh from './PopulatingMesh.vue'
 describe('PopulatingMesh.vue', () => {
   const customStore = { modules: { config: { state: { tagline: 'Kuma' } } } }
 
-  it('renders snapshot', async () => {
+  it('renders snapshot', () => {
     const { container } = renderWithVuex(PopulatingMesh, { store: customStore })
 
     expect(container).toMatchSnapshot()

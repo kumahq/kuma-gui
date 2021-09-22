@@ -135,18 +135,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
     <div
       class="mt-10 flex items-center flex-col sm:flex-row justify-end"
     >
-      <a
-        aria-current="page"
-        class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
-        data-v-38fa8ecf=""
-        href="#/"
-        style="display: none;"
-        type="button"
-      >
-        
-    Back
-  
-      </a>
+      <!---->
        
       <!---->
        

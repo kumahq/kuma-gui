@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnboardingHeading.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="relative"
+  >
+    <h1
+      class="onboarding-title"
+    >
+      
+    title
+  
+    </h1>
+     
+    <p
+      class="text-center text-lg mt-3"
+    >
+      
+    description
+  
+    </p>
+     
+    <div
+      class="absolute right-0 top-0 mt-4 m-a flex items-center"
+    >
+      <button
+        class="k-button skip-button small btn-link"
+        data-v-38fa8ecf=""
+        type="button"
+      >
+        
+      Skip Setup
+    
+      </button>
+    </div>
+  </div>
+</div>
+`;
