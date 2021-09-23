@@ -39,7 +39,7 @@ export default {
 
   &__content {
     // @apply h-px p-10 w-full bg-white text-lg; (option with strict height TODO check which option)
-    @apply flex items-center justify-center p-10 w-full bg-white text-lg;
+    @apply relative flex items-center justify-center p-10 w-full bg-white text-lg;
     min-height: 500px;
     box-shadow: 4px 4px 14px 4px rgba(103, 71, 128, 0.11);
 
@@ -53,5 +53,10 @@ export default {
   @media screen and (min-width: 768px) {
     max-width: 1075px;
   }
+}
+
+.k-radio {
+  --KRadioPrimary: #5da46f;
+  color: #5da46f;
 }
 </style>

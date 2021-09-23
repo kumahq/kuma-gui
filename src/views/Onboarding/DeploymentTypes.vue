@@ -9,8 +9,24 @@
       />
     </template>
     <template #content>
-      <div class="h-full w-full flex items-center justify-center">
+      <div class="h-full w-full flex items-center justify-center mb-10">
         <component :is="currentGraph" />
+      </div>
+      <div class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto">
+        <KRadio
+          v-model="mode"
+          name="mode"
+          value="standalone"
+        >
+          Standalone Deployment
+        </KRadio>
+        <KRadio
+          v-model="mode"
+          name="mode"
+          value="multi-zone"
+        >
+          Multi-Zone deployment
+        </KRadio>
       </div>
     </template>
 
@@ -18,24 +34,7 @@
       <OnboardingNavigation
         next-step="onboarding-backend-types"
         previous-step="onboarding-welcome"
-      >
-        <template #selector>
-          <KRadio
-            v-model="mode"
-            name="mode"
-            value="standalone"
-          >
-            Standalone Deployment
-          </KRadio>
-          <KRadio
-            v-model="mode"
-            name="mode"
-            value="multi-zone"
-          >
-            Multi-Zone deployment
-          </KRadio>
-        </template>
-      </OnboardingNavigation>
+      />
     </template>
   </OnboardingPage>
 </template>

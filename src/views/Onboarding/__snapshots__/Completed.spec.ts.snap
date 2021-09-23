@@ -43,6 +43,7 @@ exports[`Completed.vue renders snapshot 1`] = `
           >
             <div
               class="box box--small"
+              data-testid="box"
             >
               <div
                 class="flex h-full items-end font-bold tracking-wider"
@@ -54,6 +55,7 @@ exports[`Completed.vue renders snapshot 1`] = `
             </div>
             <div
               class="box box--small"
+              data-testid="box"
             >
               <div
                 class="flex h-full items-end font-bold tracking-wider"
@@ -65,6 +67,7 @@ exports[`Completed.vue renders snapshot 1`] = `
             </div>
             <div
               class="box box--small"
+              data-testid="box"
             >
               <div
                 class="flex h-full items-end font-bold tracking-wider"
@@ -76,6 +79,7 @@ exports[`Completed.vue renders snapshot 1`] = `
             </div>
             <div
               class="box box--small"
+              data-testid="box"
             >
               <div
                 class="flex h-full items-end font-bold tracking-wider"
@@ -87,6 +91,7 @@ exports[`Completed.vue renders snapshot 1`] = `
             </div>
             <div
               class="box box--small"
+              data-testid="box"
             >
               <div
                 class="flex h-full items-end font-bold tracking-wider"
@@ -104,8 +109,6 @@ exports[`Completed.vue renders snapshot 1`] = `
     <div
       class="mt-10 flex items-center flex-col sm:flex-row justify-end"
     >
-      <!---->
-       
       <!---->
        
       <a

@@ -11,14 +11,6 @@
     >
       Back
     </KButton>
-
-    <div
-      v-if="$slots.selector"
-      class="radio flex justify-between w-full sm:w-3/5 md:w-1/2 lg:w-2/5"
-    >
-      <slot name="selector" />
-    </div>
-
     <KButton
       v-if="shouldDisplayNext"
       class="navigation-button navigation-button--next"
@@ -91,10 +83,5 @@ export default {
     --KButtonPrimaryHover: #{darken(#5da46f, 5%)};
     --KButtonPrimaryActive: #{darken(#5da46f, 5%)};
   }
-}
-
-.k-radio {
-  --KRadioPrimary: #5da46f;
-  color: #5da46f;
 }
 </style>

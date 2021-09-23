@@ -34,15 +34,14 @@
     </template>
 
     <template #navigation>
-      <OnboardingNavigation
-        next-step="onboarding-deployment-types"
-      />
+      <OnboardingNavigation next-step="onboarding-deployment-types" />
     </template>
   </OnboardingPage>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { PRODUCT_NAME } from '@/consts'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
@@ -56,7 +55,8 @@ export default {
   },
   metaInfo() {
     return {
-      title: `Welcome to ${this.$productName}!`,
+      // TODO CHANGE
+      title: `Welcome to ${PRODUCT_NAME}!`,
     }
   },
   computed: {

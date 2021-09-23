@@ -50,7 +50,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
         class="w-full"
       >
         <div
-          class="h-full w-full flex items-center justify-center"
+          class="h-full w-full flex items-center justify-center mb-10"
         >
           <svg
             data-testid="standalone-graph"
@@ -627,6 +627,52 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
             </defs>
           </svg>
         </div>
+         
+        <div
+          class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto"
+        >
+          <label
+            class="k-radio d-inline-block"
+            data-v-b7148f78=""
+            name="mode"
+          >
+            <input
+              class="k-input float-left"
+              data-v-b7148f78=""
+              name="mode"
+              type="radio"
+            />
+            <span
+              class="float-left"
+              data-v-b7148f78=""
+            >
+              
+        Standalone Deployment
+      
+            </span>
+          </label>
+           
+          <label
+            class="k-radio d-inline-block"
+            data-v-b7148f78=""
+            name="mode"
+          >
+            <input
+              class="k-input float-left"
+              data-v-b7148f78=""
+              name="mode"
+              type="radio"
+            />
+            <span
+              class="float-left"
+              data-v-b7148f78=""
+            >
+              
+        Multi-Zone deployment
+      
+            </span>
+          </label>
+        </div>
       </div>
     </div>
      
@@ -644,52 +690,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
     Back
   
       </a>
-       
-      <div
-        class="radio flex justify-between w-full sm:w-3/5 md:w-1/2 lg:w-2/5"
-      >
-        <label
-          class="k-radio d-inline-block"
-          data-v-b7148f78=""
-          name="mode"
-        >
-          <input
-            class="k-input float-left"
-            data-v-b7148f78=""
-            name="mode"
-            type="radio"
-          />
-          <span
-            class="float-left"
-            data-v-b7148f78=""
-          >
-            
-          Standalone Deployment
-        
-          </span>
-        </label>
-         
-        <label
-          class="k-radio d-inline-block"
-          data-v-b7148f78=""
-          name="mode"
-        >
-          <input
-            class="k-input float-left"
-            data-v-b7148f78=""
-            name="mode"
-            type="radio"
-          />
-          <span
-            class="float-left"
-            data-v-b7148f78=""
-          >
-            
-          Multi-Zone deployment
-        
-          </span>
-        </label>
-      </div>
        
       <a
         aria-current="page"

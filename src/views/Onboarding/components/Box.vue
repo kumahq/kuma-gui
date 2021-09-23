@@ -1,5 +1,6 @@
 <template>
   <div
+    data-testid="box"
     :class="classes"
     @click="$emit('clicked')"
   >

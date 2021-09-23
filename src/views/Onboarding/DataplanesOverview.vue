@@ -8,13 +8,7 @@
     </template>
     <template #content>
       <div class="justify-center flex my-4">
-        <KIcon
-          v-if="!tableData.data.length"
-          data-testid="loading"
-          icon="spinner"
-          color="rgba(0, 0, 0, 0.2)"
-          size="42"
-        />
+        <Loading v-if="!tableData.data.length" />
 
         <div v-else>
           <p class="font-bold mb-4">
@@ -52,6 +46,7 @@
 import { getItemStatusFromInsight } from '@/dataplane'
 import Kuma from '@/services/kuma'
 import debounce from 'lodash/debounce'
+import Loading from '@/components/Loading'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
@@ -62,6 +57,7 @@ export default {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
+    Loading,
   },
   data() {
     return {
@@ -100,7 +96,10 @@ export default {
     }, 1000),
   },
   created() {
-    this.getAllDataplanes()
+    // TODO remove before merge
+    setTimeout(() => {
+      this.getAllDataplanes()
+    }, 2000)
   },
   methods: {
     async getAllDataplanes() {

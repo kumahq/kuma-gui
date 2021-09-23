@@ -13,15 +13,16 @@ describe('AddingNewServices.vue', () => {
   it('changes selected box', async () => {
     renderWithVuex(AddingNewServices)
 
-    const demoRadio = <HTMLInputElement>screen.getByLabelText(/Demo/)
-    const manuallyRadio = <HTMLInputElement>screen.getByLabelText(/Manually/)
+    const demoRadio = screen.getAllByTestId('box')[0]
+    const manuallyRadio = screen.getAllByTestId('box')[1]
 
-    expect(demoRadio.checked).toBe(true)
-    expect(manuallyRadio.checked).toBe(false)
+    expect(demoRadio.className).toMatch('box--active')
+    expect(manuallyRadio.className).not.toMatch('box--active')
 
     await userEvent.click(screen.getByText(/Custom Config/))
 
-    expect(demoRadio.checked).toBe(false)
-    expect(manuallyRadio.checked).toBe(true)
+    expect(demoRadio.className).not.toMatch('box--active')
+
+    expect(manuallyRadio.className).toMatch('box--active')
   })
 })

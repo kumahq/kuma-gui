@@ -137,8 +137,6 @@ exports[`Welcome.vue renders snapshot 1`] = `
     >
       <!---->
        
-      <!---->
-       
       <a
         aria-current="page"
         class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"

@@ -218,8 +218,6 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
   
       </a>
        
-      <!---->
-       
       <a
         aria-current="page"
         class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"

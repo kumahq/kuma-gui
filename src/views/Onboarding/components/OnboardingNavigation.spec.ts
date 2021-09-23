@@ -69,20 +69,6 @@ describe('OnboardingNavigation.vue', () => {
     expect(screen.queryByText(/Back/)).not.toBeInTheDocument()
   })
 
-  it('displays selector slot if provided', () => {
-    renderWithVuex(OnboardingNavigation, {
-      props: {
-        ...props,
-      },
-      routes,
-      slots: {
-        selector: '<div>Selector</div>',
-      },
-    })
-
-    expect(screen.queryByText(/Selector/)).toBeInTheDocument()
-  })
-
   it('changes step to previous', async () => {
     let globalRouter
     let globalVuex

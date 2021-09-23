@@ -471,6 +471,7 @@ export default (store: Store<RootInterface>) => {
    * so that they're not sent through it again.
    */
 
+  // TODO uncomment before merge
   // router.beforeEach(async (to, from, next) => {
   //   // eslint-disable-next-line no-unmodified-loop-condition
   //   // This below is to make sure the inital calls have been fulfilled and it does not try to

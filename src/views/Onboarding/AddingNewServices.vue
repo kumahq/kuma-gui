@@ -41,24 +41,7 @@
       <OnboardingNavigation
         next-step="onboarding-adding-dpp-code"
         previous-step="onboarding-populating-mesh"
-      >
-        <template #selector>
-          <KRadio
-            v-model="mode"
-            name="deployment"
-            value="demo"
-          >
-            Demo
-          </KRadio>
-          <KRadio
-            v-model="mode"
-            name="deployment"
-            value="manually"
-          >
-            Manually
-          </KRadio>
-        </template>
-      </OnboardingNavigation>
+      />
     </template>
   </OnboardingPage>
 </template>

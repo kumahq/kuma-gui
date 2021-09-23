@@ -48,6 +48,7 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
         >
           <div
             class="cursor-pointer box box--active"
+            data-testid="box"
           >
             <div>
               <img
@@ -74,6 +75,7 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
            
           <div
             class="cursor-pointer box"
+            data-testid="box"
           >
             <div
               class="cursor-pointer"
@@ -117,52 +119,6 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
     Back
   
       </a>
-       
-      <div
-        class="radio flex justify-between w-full sm:w-3/5 md:w-1/2 lg:w-2/5"
-      >
-        <label
-          class="k-radio d-inline-block"
-          data-v-b7148f78=""
-          name="deployment"
-        >
-          <input
-            class="k-input float-left"
-            data-v-b7148f78=""
-            name="deployment"
-            type="radio"
-          />
-          <span
-            class="float-left"
-            data-v-b7148f78=""
-          >
-            
-          Demo
-        
-          </span>
-        </label>
-         
-        <label
-          class="k-radio d-inline-block"
-          data-v-b7148f78=""
-          name="deployment"
-        >
-          <input
-            class="k-input float-left"
-            data-v-b7148f78=""
-            name="deployment"
-            type="radio"
-          />
-          <span
-            class="float-left"
-            data-v-b7148f78=""
-          >
-            
-          Manually
-        
-          </span>
-        </label>
-      </div>
        
       <a
         aria-current="page"
