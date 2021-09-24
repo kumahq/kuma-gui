@@ -112,7 +112,7 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
   )
 
   handlers.push(
-    rest.get('http://localhost:5681/', (req, res, ctx) =>
+    rest.get(apiURL, (req, res, ctx) =>
       res(
         ctx.json({
           hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',

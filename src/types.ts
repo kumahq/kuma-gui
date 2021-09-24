@@ -31,3 +31,14 @@ export interface ZoneOverview {
   zone: Zone
   zoneInsight: ZoneInsight
 }
+
+export interface ResourceResponse<T = {}> {
+  total: number
+  items: T[]
+  next: boolean | null
+}
+
+export interface AllResourceResponse<T = {}> {
+  data: T[]
+  total: number
+}
