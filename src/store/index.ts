@@ -4,9 +4,9 @@ import Vuex, { Module } from 'vuex'
 import config from '@/store/modules/config'
 import sidebar from '@/store/modules/sidebar'
 import { getItemStatusFromInsight } from '@/dataplane'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
 
-import { fetchAllResources, filterResourceByMesh } from '@/helpers'
+import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import Kuma from '@/services/kuma'
 
@@ -25,8 +25,6 @@ export default (): Module<RootInterface, RootInterface> => ({
     menu: null,
     onboardingComplete: false,
     globalLoading: true,
-    meshPageSize: 500,
-    pageSize: 500,
     meshes: {},
     dataplanes: [],
     selectedMesh: 'all', // shows all meshes on initial load
@@ -91,7 +89,6 @@ export default (): Module<RootInterface, RootInterface> => ({
     getAnyDpOffline: state => state.anyDataplanesOffline,
 
     getItemQueryNamespace: state => state.itemQueryNamespace,
-    getClusterCount: state => state.totalClusters,
     getMeshInsight: state => state.meshInsight,
     getMeshInsightsFetching: state => state.meshInsightsFetching,
     getServiceInsightsFetching: state => state.serviceInsightsFetching,
@@ -207,9 +204,9 @@ export default (): Module<RootInterface, RootInterface> => ({
     },
 
     // fetch all of the meshes from the Kuma
-    fetchMeshList({ commit, state }) {
+    fetchMeshList({ commit }) {
       const params = {
-        size: state.meshPageSize,
+        size: PAGE_REQUEST_SIZE_DEFAULT,
       }
 
       return Kuma.getAllMeshes(params)
@@ -324,14 +321,13 @@ export default (): Module<RootInterface, RootInterface> => ({
 
     // NEW
 
-    async fetchMeshInsights({ commit, dispatch, state }, mesh = 'all') {
+    async fetchMeshInsights({ commit, dispatch }, mesh = 'all') {
       commit('SET_MESH_INSIGHTS_FETCHING', true)
 
       try {
         if (mesh === 'all') {
           const params = {
             callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
-            size: state.pageSize,
           }
 
           commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', await fetchAllResources(params))
@@ -347,7 +343,7 @@ export default (): Module<RootInterface, RootInterface> => ({
       commit('SET_MESH_INSIGHTS_FETCHING', false)
     },
 
-    async fetchServiceInsights({ commit, state }, mesh = 'all') {
+    async fetchServiceInsights({ commit }, mesh = 'all') {
       commit('SET_SERVICE_INSIGHTS_FETCHING', true)
 
       try {
@@ -356,7 +352,6 @@ export default (): Module<RootInterface, RootInterface> => ({
             mesh === 'all'
               ? Kuma.getAllServiceInsights.bind(Kuma)
               : Kuma.getAllServiceInsightsFromMesh.bind(Kuma, mesh),
-          size: state.pageSize,
         }
 
         commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
@@ -367,7 +362,7 @@ export default (): Module<RootInterface, RootInterface> => ({
       commit('SET_SERVICE_INSIGHTS_FETCHING', false)
     },
 
-    async fetchExternalServices({ commit, state, dispatch }, mesh = 'all') {
+    async fetchExternalServices({ commit }, mesh = 'all') {
       commit('SET_EXTERNAL_SERVICES_FETCHING', true)
 
       try {
@@ -376,7 +371,6 @@ export default (): Module<RootInterface, RootInterface> => ({
             mesh === 'all'
               ? Kuma.getAllExternalServices.bind(Kuma)
               : Kuma.getAllExternalServicesFromMesh.bind(Kuma, mesh),
-          size: state.pageSize,
         }
 
         commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
@@ -395,19 +389,17 @@ export default (): Module<RootInterface, RootInterface> => ({
       await dispatch('setOverviewServicesChartData')
     },
 
-    async fetchZonesInsights({ commit, dispatch, state, getters }, multicluster = false) {
+    async fetchZonesInsights({ commit, dispatch, getters }, multicluster = false) {
       commit('SET_ZONES_INSIGHTS_FETCHING', true)
 
       try {
         if (multicluster) {
           const overviewsParams = {
             callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
-            size: state.pageSize,
           }
 
           const statusesParams = {
             callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
-            size: state.pageSize,
           }
 
           const overviews = await fetchAllResources(overviewsParams)

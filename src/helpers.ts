@@ -1,6 +1,6 @@
-import { DISABLED } from '@/consts'
+import { DISABLED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
 import isPlainObject from 'lodash/isPlainObject'
-import { ZoneOverview } from '@/types'
+import { ZoneOverview, ResourceResponse } from '@/types'
 import get from 'lodash/get'
 
 type TODO = any
@@ -307,15 +307,18 @@ export function applyPropsToObject(props: TODO = {}, object: TODO = {}) {
   })
 }
 
-export async function fetchAllResources({ callEndpoint, ...otherParams }: TODO) {
+export async function fetchAllResources({
+  callEndpoint,
+}: {
+  callEndpoint: (params: Object) => Promise<ResourceResponse>
+}): Promise<Error | { data: Object[]; total: number }> {
   try {
     let allTotal = null
     let offset = 0
     let allItems: TODO[] = []
 
     while (true) {
-      // Set default page size to 500, can be overwritten by otherParams
-      const params = { size: 500, ...otherParams, offset: offset++ }
+      const params = { size: PAGE_REQUEST_SIZE_DEFAULT, offset }
       const { total, items, next } = await callEndpoint(params)
 
       if (items) {
@@ -333,6 +336,8 @@ export async function fetchAllResources({ callEndpoint, ...otherParams }: TODO) 
       if (!next) {
         break
       }
+
+      offset += PAGE_REQUEST_SIZE_DEFAULT
     }
 
     return { total: allTotal, data: allItems }
