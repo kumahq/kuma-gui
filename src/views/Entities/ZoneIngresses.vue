@@ -66,11 +66,11 @@
                   v-for="(value, key) in zoneIngressInsightSubscriptionsReversed"
                   :key="key"
                 >
-                  <template slot="accordion-header">
+                  <template v-slot:accordion-header>
                     <ZoneInsightSubscriptionHeader :details="value" />
                   </template>
 
-                  <template slot="accordion-content">
+                  <template v-slot:accordion-content>
                     <ZoneInsightSubscriptionDetails :details="value" />
                   </template>
                 </AccordionItem>

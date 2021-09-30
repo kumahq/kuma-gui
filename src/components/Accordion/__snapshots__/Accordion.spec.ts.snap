@@ -6,10 +6,10 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
     class="accordion"
   >
     <li
-      class="relative cursor-pointer border-b py-2 px-4"
+      class="relative border-b py-2 px-4"
     >
       <div
-        class="flex py-2"
+        class="accordion-item-header"
       >
         
         Header 1
@@ -22,19 +22,17 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
         <div
           style="display: none;"
         >
-          <ul>
-            
+          
         Content 1
       
-          </ul>
         </div>
       </transition-stub>
     </li>
     <li
-      class="relative cursor-pointer border-b py-2 px-4"
+      class="relative border-b py-2 px-4"
     >
       <div
-        class="flex py-2"
+        class="accordion-item-header"
       >
         
         Header 2
@@ -47,11 +45,9 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
         <div
           style="display: none;"
         >
-          <ul>
-            
+          
         Content 2
       
-          </ul>
         </div>
       </transition-stub>
     </li>

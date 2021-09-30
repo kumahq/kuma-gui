@@ -560,10 +560,10 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
               data-v-0029352b=""
             >
               <li
-                class="relative cursor-pointer border-b py-2 px-4"
+                class="relative border-b py-2 px-4 active"
               >
                 <div
-                  class="flex py-2"
+                  class="accordion-item-header"
                 >
                   <h4
                     class="text-lg font-medium"
@@ -585,38 +585,36 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                   name="accordion"
                 >
                   <div>
-                    <ul>
+                    <div>
                       <div>
-                        <div>
-                          <h5
-                            class="overview-tertiary-title"
-                          >
-                            
+                        <h5
+                          class="overview-tertiary-title"
+                        >
+                          
       General Information:
     
-                          </h5>
+                        </h5>
+                         
+                        <ul>
+                          <!---->
                            
-                          <ul>
-                            <!---->
-                             
-                            <li>
-                              <strong>
-                                Last Connected:
-                              </strong>
-                               
+                          <li>
+                            <strong>
+                              Last Connected:
+                            </strong>
+                             
         2021-07-13T08:41:04.556796688Z
       
-                            </li>
-                             
-                            <!---->
-                          </ul>
-                        </div>
-                         
-                        <div>
+                          </li>
+                           
                           <!---->
-                        </div>
+                        </ul>
                       </div>
-                    </ul>
+                       
+                      <div>
+                        <!---->
+                      </div>
+                    </div>
                   </div>
                 </transition-stub>
               </li>
