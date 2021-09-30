@@ -425,12 +425,6 @@ export default {
   text-align: right;
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 
-  // no arrows on buttons
-  .k-button:after,
-  button:after {
-    display: none !important;
-  }
-
   .k-button {
     margin-left: var(--spacing-xs);
   }

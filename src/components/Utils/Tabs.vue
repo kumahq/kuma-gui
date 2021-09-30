@@ -157,10 +157,6 @@ export default {
 .k-tabs ul .tab-link {
   text-decoration: none !important;
 }
-
-.tab__header .k-button:after {
-  display: none !important;
-}
 </style>
 
 <style lang="scss" scoped>

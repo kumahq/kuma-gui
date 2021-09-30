@@ -11,7 +11,7 @@
         </div>
         <div>
           <KButton
-            class="no-underline success-button"
+            class="success-button"
             appearance="primary"
             size="small"
             target="_blank"
@@ -48,10 +48,6 @@ export default {
 
   .k-button {
     text-decoration: none;
-
-    &:after {
-      display: none;
-    }
   }
 }
 

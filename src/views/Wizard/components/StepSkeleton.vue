@@ -421,9 +421,5 @@ $bp-max-width: 1219px;
   > *:last-of-type {
     margin-left: auto;
   }
-
-  .k-button:after {
-    display: none;
-  }
 }
 </style>
