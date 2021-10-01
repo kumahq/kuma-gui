@@ -4,7 +4,7 @@
 
     <main class="main-content">
       <div class="page">
-        <OnboardingCheck v-if="showOnboarding" />
+        <NotificationManager />
         <Breadcrumbs />
         <router-view />
       </div>
@@ -14,8 +14,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 import Sidebar from '@/components/Sidebar/Sidebar'
-import OnboardingCheck from '@/components/Utils/OnboardingCheck'
+import NotificationManager from '@/components/NotificationManager'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
 
 export default {
@@ -23,7 +24,7 @@ export default {
   components: {
     Breadcrumbs,
     Sidebar,
-    OnboardingCheck,
+    NotificationManager,
   },
   computed: {
     ...mapGetters({

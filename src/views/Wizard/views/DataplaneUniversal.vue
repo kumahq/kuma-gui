@@ -378,7 +378,7 @@
           <p>
             Below is an example of a Dataplane resource output:
           </p>
-          <code>
+          <code class="block">
             <pre>type: Dataplane
 mesh: default
 name: dp-echo-1

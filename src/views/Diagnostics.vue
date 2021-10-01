@@ -11,7 +11,7 @@
         border-variant="noBorder"
       >
         <template v-slot:body>
-          <prism
+          <Prism
             class="code-block"
             language="json"
             :code="codeOutput"

@@ -74,6 +74,13 @@
   outline: 0 !important;
 }
 
+/* KModal overrides */
+
+.k-modal .modal-body {
+  max-height: calc(100vh - 250px);
+  overflow-y: auto;
+}
+
 /* KPopover overrides */
 
 .k-popover {

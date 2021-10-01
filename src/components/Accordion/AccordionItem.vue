@@ -11,6 +11,7 @@
     <transition
       name="accordion"
       @enter="start"
+      @after-enter="end"
       @before-leave="start"
     >
       <div v-show="visible">
@@ -69,6 +70,9 @@ export default {
     },
     start(el) {
       el.style.height = `${el.scrollHeight}px`
+    },
+    end(el) {
+      el.style.height = 'auto'
     },
   },
 }

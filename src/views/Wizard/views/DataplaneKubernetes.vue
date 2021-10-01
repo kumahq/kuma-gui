@@ -602,7 +602,7 @@
           <p>
             Below is an example of a Dataplane resource output:
           </p>
-          <code>
+          <code class="block">
             <pre>apiVersion: 'kuma.io/v1alpha1'
 kind: Dataplane
 mesh: default

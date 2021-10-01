@@ -1,24 +1,16 @@
 <template>
-  <div
-    v-if="alertClosed === false"
-    class="onboarding-check"
-  >
-    <KAlert
-      appearance="info"
-      class="dismissible"
-      is-dismissible
-      @closed="closeAlert"
-    >
+  <div class="onboarding-check">
+    <KAlert appearance="success">
       <template v-slot:alertMessage>
-        <div class="alert-content">
-          <div>
+        <div class="flex justify-between items-center">
+          <div class="w-4/5">
             <strong>Welcome to {{ productName }}!</strong> We've detected that you don't have
             any data plane proxies running yet. We've created an onboarding process to
             help you!
           </div>
-          <div>
+          <div class="w-1/5">
             <KButton
-              appearance="primary"
+              appearance="outline-primary"
               size="small"
               class="action-button"
               :to="{ path: '/get-started' }"
@@ -36,7 +28,7 @@
 import { PRODUCT_NAME } from '@/consts'
 
 export default {
-  name: 'OnboardingCheck',
+  name: 'OnboardingNotification',
   data() {
     return {
       alertClosed: false,
@@ -54,27 +46,6 @@ export default {
 <style lang="scss" scoped>
 .onboarding-check {
   margin: 0 0 var(--spacing-xl) 0;
-}
-
-.alert-content {
-  @media screen and (min-width: 700px) {
-    display: flex;
-    align-items: center;
-
-    > *:first-of-type {
-      margin-right: var(--spacing-md);
-    }
-
-    > *:last-of-type {
-      min-width: 150px;
-    }
-  }
-
-  @media screen and (max-width: 699px) {
-    > *:last-of-type {
-      margin-top: 10px;
-    }
-  }
 }
 
 .action-button.action-button {

@@ -13,6 +13,7 @@ import KClipboardProvider from '@kongponents/kclipboardprovider'
 import Krumbs from '@kongponents/krumbs'
 import KPop from '@kongponents/kpop'
 import KTabs from '@kongponents/ktabs'
+import KModal from '@kongponents/kmodal'
 
 Vue.component('KAlert', KAlert)
 Vue.component('KBadge', KBadge)
@@ -20,6 +21,7 @@ Vue.component('KButton', KButton)
 Vue.component('KCard', KCard)
 Vue.component('KEmptyState', KEmptyState)
 Vue.component('KIcon', KIcon)
+Vue.component('KModal', KModal)
 Vue.component('KTable', KTable)
 Vue.component('KClipboardProvider', KClipboardProvider)
 Vue.component('Krumbs', Krumbs)

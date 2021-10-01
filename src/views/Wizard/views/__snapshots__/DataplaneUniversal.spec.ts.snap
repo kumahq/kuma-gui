@@ -627,7 +627,9 @@ networking:
           
               </p>
                
-              <code>
+              <code
+                class="block"
+              >
                 <pre>
                   type: Dataplane
 mesh: default
