@@ -55,7 +55,7 @@ const getters: GetterTree<NotificationsInterface, RootInterface> = {
     if (rootGetters.showOnboarding) {
       items.unshift({
         name: 'First Steps',
-        component: 'OnboardingCheck',
+        component: 'OnboardingNotification',
         isCompleted: false,
       })
     }

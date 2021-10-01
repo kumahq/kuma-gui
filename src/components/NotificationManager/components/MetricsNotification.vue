@@ -32,6 +32,8 @@ metrics:
     conf:
       skipMTLS: true </pre>
           </code>
+          We can apply the configuration with
+          <code class="inline">kubectl apply -f [..]</code>.
         </template>
       </Tabs>
     </p>

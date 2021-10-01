@@ -42,6 +42,8 @@ tracing:
     conf:
       url: http://jaeger-collector.kuma-tracing:9411/api/v2/spans</pre>
           </code>
+          We can apply the configuration with
+          <code class="inline">kubectl apply -f [..]</code>.
         </template>
       </Tabs>
     </p>

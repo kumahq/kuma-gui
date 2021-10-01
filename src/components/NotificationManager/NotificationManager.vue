@@ -11,7 +11,7 @@
         <div class="mr-4">
           <span class="mr-2">
             <strong>ProTip:</strong>
-            We've detected that there might be some possible to adjust the way how you use service mesh.
+            We've detected that there are actions that you might take to adjust the way how you use service mesh.
           </span>
           <KButton
             appearance="outline-primary"
