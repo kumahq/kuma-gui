@@ -76,23 +76,7 @@
                   Standalone
                 </span>
               </KBadge>
-              <!-- TODO add number to right top corner and hide when no notification -->
-              <div
-                class="relative cursor-pointer"
-                @click="openModal"
-              >
-                <KIcon
-                  color="var(--yellow-300)"
-                  icon="notificationBell"
-                  size="16"
-                  class="ml-1"
-                />
-                <span
-                  v-if="amountOfActions > 0"
-                  :style="{top: '-8px', right: '-8px'}"
-                  class="absolute text-xs text-white bg-yellow-300 rounded-full w-4 h-4 flex justify-center items-center"
-                >{{ amountOfActions }}</span>
-              </div>
+              <NotificationIcon />
             </template>
           </Status>
         </div>
@@ -102,17 +86,19 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getKumaCpServerUrl } from '@/configUrl'
 import Status from '@/components/Utils/Status'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
 import EnterpriseBox from '@/components/Utils/EnterpriseBox'
+import NotificationIcon from './NotificationIcon'
 
 export default {
   components: {
     Status,
     UpgradeCheck,
     EnterpriseBox,
+    NotificationIcon,
   },
   data() {
     return {
@@ -132,7 +118,6 @@ export default {
       multicluster: 'config/getMulticlusterStatus',
       tagline: 'config/getTagline',
       version: 'config/getVersion',
-      amountOfActions: 'notifications/amountOfActions',
     }),
     env() {
       if (this.environment) {
@@ -157,11 +142,6 @@ export default {
     guiStatus() {
       return Boolean(this.env && this.apiUrl)
     },
-  },
-  methods: {
-    ...mapActions({
-      openModal: 'notifications/openModal',
-    }),
   },
 }
 </script>

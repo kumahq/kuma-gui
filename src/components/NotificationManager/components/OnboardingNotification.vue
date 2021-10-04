@@ -1,5 +1,5 @@
 <template>
-  <div class="onboarding-check">
+  <div class="py-4">
     <KAlert appearance="success">
       <template v-slot:alertMessage>
         <div class="flex justify-between items-center">
@@ -31,23 +31,13 @@ export default {
   name: 'OnboardingNotification',
   data() {
     return {
-      alertClosed: false,
       productName: PRODUCT_NAME,
     }
-  },
-  methods: {
-    closeAlert() {
-      this.alertClosed = true
-    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.onboarding-check {
-  margin: 0 0 var(--spacing-xl) 0;
-}
-
 .action-button.action-button {
   text-decoration: none;
 }

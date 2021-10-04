@@ -167,8 +167,10 @@
 }
 
 code.inline {
-
-  @apply py-1 px-2 m-0 text-sm;
+  padding: 4px 8px;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
   background-color: var(--gray-1);
   border-radius: 3px;
 }

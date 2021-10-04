@@ -696,6 +696,7 @@ exports[`Shell.vue renders component with route 1`] = `
         <div>
           <div
             class="k-alert mb-4 info"
+            data-testid="notification-info"
             data-v-14c8a976=""
             role="alert"
           >
@@ -750,7 +751,7 @@ exports[`Shell.vue renders component with route 1`] = `
                     ProTip:
                   </strong>
                   
-          We've detected that there might be some possible to adjust the way how you use service mesh.
+          We've detected that there are actions that you might take to adjust the way how you use service mesh.
         
                 </span>
                  

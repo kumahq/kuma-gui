@@ -19,13 +19,7 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
       <transition-stub
         name="accordion"
       >
-        <div
-          style="display: none;"
-        >
-          
-        Content 1
-      
-        </div>
+        <!---->
       </transition-stub>
     </li>
     <li
@@ -42,13 +36,7 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
       <transition-stub
         name="accordion"
       >
-        <div
-          style="display: none;"
-        >
-          
-        Content 2
-      
-        </div>
+        <!---->
       </transition-stub>
     </li>
   </ul>

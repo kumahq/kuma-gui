@@ -14,7 +14,7 @@
       @after-enter="end"
       @before-leave="start"
     >
-      <div v-show="visible">
+      <div v-if="visible">
         <!-- This slot will display whole content -->
         <slot name="accordion-content" />
       </div>

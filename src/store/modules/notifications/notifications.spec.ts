@@ -33,7 +33,7 @@ describe('notifications module', () => {
           Object {
             "component": "TracingNotification",
             "isCompleted": false,
-            "name": " Tracking",
+            "name": "Tracing",
           },
         ]
       `)
@@ -48,7 +48,7 @@ describe('notifications module', () => {
             items: [
               {
                 logging: {},
-                tracking: {},
+                tracing: {},
                 mtls: {},
                 metrics: {},
               },
@@ -61,9 +61,14 @@ describe('notifications module', () => {
       expect(store.getters.items).toMatchInlineSnapshot(`
         Array [
           Object {
-            "component": "OnboardingCheck",
+            "component": "OnboardingNotification",
             "isCompleted": false,
             "name": "First Steps",
+          },
+          Object {
+            "component": "TracingNotification",
+            "isCompleted": false,
+            "name": "Tracing",
           },
           Object {
             "component": "LoggingNotification",
@@ -79,11 +84,6 @@ describe('notifications module', () => {
             "component": "MetricsNotification",
             "isCompleted": true,
             "name": "Observability & Metrics",
-          },
-          Object {
-            "component": "TracingNotification",
-            "isCompleted": true,
-            "name": " Tracking",
           },
         ]
       `)

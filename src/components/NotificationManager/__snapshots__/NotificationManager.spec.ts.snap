@@ -1,0 +1,329 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationManager.vue renders modal 1`] = `
+<div
+  aria-hidden="false"
+  class="k-modal modal"
+  data-v-2636d531=""
+  role="dialog"
+>
+  <div
+    class="modal-backdrop"
+    data-v-2636d531=""
+  >
+    <div
+      class="modal-dialog"
+      data-v-2636d531=""
+    >
+      <div
+        class="modal-content"
+        data-v-2636d531=""
+      >
+        <div
+          class="modal-header mb-4"
+          data-v-2636d531=""
+        >
+          Here is a list of possible actions you might take to improve usability of your service mesh!
+        </div>
+        <!---->
+        <div
+          class="modal-body"
+          data-v-2636d531=""
+        >
+          <ul
+            class="accordion"
+            data-v-2636d531=""
+          >
+            <li
+              class="relative border-b py-2 px-4"
+            >
+              <div
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center"
+                >
+                  <svg
+                    class="kong-icon mr-4 kong-icon-check"
+                    data-v-a7c9c1d2=""
+                    height="20"
+                    role="img"
+                    viewBox="0 0 14 10"
+                    width="20"
+                  >
+                    <title
+                      data-v-a7c9c1d2=""
+                    >
+                      check
+                    </title>
+                    <g
+                      data-v-a7c9c1d2=""
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                        data-v-a7c9c1d2=""
+                        fill="var(--green-400)"
+                        fill-rule="evenodd"
+                      />
+                    </g>
+                  </svg>
+                   
+                  <strong>
+                    Logging
+                  </strong>
+                </div>
+              </div>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2 px-4"
+            >
+              <div
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center"
+                >
+                  <svg
+                    class="kong-icon mr-4 kong-icon-check"
+                    data-v-a7c9c1d2=""
+                    height="20"
+                    role="img"
+                    viewBox="0 0 14 10"
+                    width="20"
+                  >
+                    <title
+                      data-v-a7c9c1d2=""
+                    >
+                      check
+                    </title>
+                    <g
+                      data-v-a7c9c1d2=""
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                        data-v-a7c9c1d2=""
+                        fill="var(--green-400)"
+                        fill-rule="evenodd"
+                      />
+                    </g>
+                  </svg>
+                   
+                  <strong>
+                    Zero-trust security
+                  </strong>
+                </div>
+              </div>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2 px-4"
+            >
+              <div
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center"
+                >
+                  <svg
+                    class="kong-icon mr-4 kong-icon-check"
+                    data-v-a7c9c1d2=""
+                    height="20"
+                    role="img"
+                    viewBox="0 0 14 10"
+                    width="20"
+                  >
+                    <title
+                      data-v-a7c9c1d2=""
+                    >
+                      check
+                    </title>
+                    <g
+                      data-v-a7c9c1d2=""
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                        data-v-a7c9c1d2=""
+                        fill="var(--green-400)"
+                        fill-rule="evenodd"
+                      />
+                    </g>
+                  </svg>
+                   
+                  <strong>
+                    Observability & Metrics
+                  </strong>
+                </div>
+              </div>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2 px-4"
+            >
+              <div
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center"
+                >
+                  <svg
+                    class="kong-icon mr-4 kong-icon-check"
+                    data-v-a7c9c1d2=""
+                    height="20"
+                    role="img"
+                    viewBox="0 0 14 10"
+                    width="20"
+                  >
+                    <title
+                      data-v-a7c9c1d2=""
+                    >
+                      check
+                    </title>
+                    <g
+                      data-v-a7c9c1d2=""
+                    >
+                      <path
+                        clip-rule="evenodd"
+                        d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                        data-v-a7c9c1d2=""
+                        fill="var(--green-400)"
+                        fill-rule="evenodd"
+                      />
+                    </g>
+                  </svg>
+                   
+                  <strong>
+                    Tracing
+                  </strong>
+                </div>
+              </div>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="modal-footer"
+          data-v-2636d531=""
+        >
+          <button
+            class="k-button no-underline success-button secondary"
+            data-v-2636d531=""
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+        Close
+      
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NotificationManager.vue renders snapshot with information that there are actions which user may take 1`] = `
+<div>
+  <div>
+    <div
+      class="k-alert mb-4 info"
+      data-testid="notification-info"
+      data-v-14c8a976=""
+      role="alert"
+    >
+      <button
+        aria-label="Close"
+        class="close"
+        data-v-14c8a976=""
+        type="button"
+      >
+        <svg
+          class="kong-icon kong-icon-close"
+          data-v-14c8a976=""
+          data-v-7d3d19ac=""
+          height="12"
+          role="img"
+          viewBox="0 0 12 12"
+          width="12"
+        >
+          <title
+            data-v-7d3d19ac=""
+          >
+            close
+          </title>
+          <g
+            data-v-7d3d19ac=""
+          >
+            <path
+              d="M0 1l1-1h.5L6 4.49993896 10.5 0h.5l1 1v.5L7.5 6l4.5 4.5v.5l-1 1h-.5L6 7.5 1.5 12H1l-1-1v-.5L4.5 6 0 1.5z"
+              data-v-7d3d19ac=""
+              fill="#000"
+              fill-opacity=".25"
+              fill-rule="evenodd"
+            />
+          </g>
+        </svg>
+      </button>
+      <!---->
+      <span
+        data-v-14c8a976=""
+      >
+        <div
+          class="mr-4"
+          data-v-14c8a976=""
+        >
+          <span
+            class="mr-2"
+            data-v-14c8a976=""
+          >
+            <strong
+              data-v-14c8a976=""
+            >
+              ProTip:
+            </strong>
+            
+          We've detected that there are actions that you might take to adjust the way how you use service mesh.
+        
+          </span>
+           
+          <button
+            class="k-button outline-primary"
+            data-v-14c8a976=""
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+          Check!
+        
+          </button>
+        </div>
+      </span>
+    </div>
+     
+    <!---->
+  </div>
+</div>
+`;

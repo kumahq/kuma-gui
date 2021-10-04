@@ -50,6 +50,6 @@ export interface Mesh {
   type: 'Mesh'
   mtls?: Object
   logging?: Object
-  tracking?: Object
+  tracing?: Object
   metrics?: Object
 }

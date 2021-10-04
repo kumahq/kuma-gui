@@ -22,10 +22,9 @@ const getters: GetterTree<NotificationsInterface, RootInterface> = {
   hasMetrics(state, getters, rootState, rootGetters) {
     return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.metrics))
   },
-  hasTracking(state, getters, rootState, rootGetters) {
-    return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.tracking))
+  hasTracing(state, getters, rootState, rootGetters) {
+    return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.tracing))
   },
-
   items(state, getters, rootState, rootGetters): NotificationItem[] {
     const items: NotificationItem[] = [
       {
@@ -44,9 +43,9 @@ const getters: GetterTree<NotificationsInterface, RootInterface> = {
         isCompleted: getters.hasMetrics,
       },
       {
-        name: ' Tracking',
+        name: 'Tracing',
         component: 'TracingNotification',
-        isCompleted: getters.hasTracking,
+        isCompleted: getters.hasTracing,
       },
     ]
 

@@ -5,6 +5,7 @@
       class="mb-4"
       appearance="info"
       is-dismissible
+      data-testid="notification-info"
       @closed="closeAlert"
     >
       <template v-slot:alertMessage>
@@ -119,10 +120,6 @@ export default {
     }),
 
     ...mapGetters({
-      hasLogging: 'notifications/hasLogging',
-      hasMtls: 'notifications/hasMtls',
-      hasMetrics: 'notifications/hasMetrics',
-      hasTracking: 'notifications/hasTracking',
       items: 'notifications/items',
       amountOfActions: 'notifications/amountOfActions',
     }),

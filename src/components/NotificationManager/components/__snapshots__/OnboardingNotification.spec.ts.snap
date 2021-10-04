@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OnboardingNotification.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="py-4"
+  >
+    <div
+      class="k-alert success"
+      data-v-14c8a976=""
+      role="alert"
+    >
+      <!---->
+      <!---->
+      <span
+        data-v-14c8a976=""
+      >
+        <div
+          class="flex justify-between items-center"
+          data-v-14c8a976=""
+        >
+          <div
+            class="w-4/5"
+            data-v-14c8a976=""
+          >
+            <strong
+              data-v-14c8a976=""
+            >
+              Welcome to Kuma!
+            </strong>
+             We've detected that you don't have
+          any data plane proxies running yet. We've created an onboarding process to
+          help you!
+        
+          </div>
+           
+          <div
+            class="w-1/5"
+            data-v-14c8a976=""
+          >
+            <a
+              class="k-button action-button small outline-primary"
+              data-v-14c8a976=""
+              data-v-38fa8ecf=""
+              href="#/get-started"
+              type="button"
+            >
+              
+            Get Started
+          
+            </a>
+          </div>
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+`;
