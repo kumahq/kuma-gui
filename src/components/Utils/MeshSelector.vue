@@ -61,7 +61,7 @@ export default {
       localStorage.setItem('selectedMesh', val)
 
       // push the update mesh param to the route
-      this.$root.$router
+      this.$router
         .push({
           params: {
             mesh: val,

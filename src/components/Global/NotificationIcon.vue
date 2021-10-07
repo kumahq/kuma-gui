@@ -34,12 +34,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.notification-amount {
-  @apply absolute text-xs text-white bg-yellow-300 rounded-full w-4 h-4 flex justify-center items-center;
-
-  top: -8px;
-  right: -8px;
-}
-</style>

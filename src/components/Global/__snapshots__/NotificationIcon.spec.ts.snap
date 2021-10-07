@@ -36,12 +36,7 @@ exports[`NotificationIcon.vue renders snapshot 1`] = `
       </g>
     </svg>
      
-    <span
-      class="notification-amount"
-      data-testid="notification-amount"
-    >
-      4
-    </span>
+    <!---->
   </div>
 </div>
 `;

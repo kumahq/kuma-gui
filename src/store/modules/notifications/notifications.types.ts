@@ -12,4 +12,11 @@ export interface NotificationItem {
   component?: string
 }
 
+export interface MeshNotificationItem {
+  hasTracing: boolean
+  hasLogging: boolean
+  hasMtls: boolean
+  hasMetrics: boolean
+}
+
 export type NotificationsType = Module<NotificationsInterface, RootInterface>

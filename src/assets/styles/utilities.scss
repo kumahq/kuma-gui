@@ -167,21 +167,14 @@
 }
 
 code.inline {
-  padding: 4px 8px;
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  @apply py-1 px-2 m-0 text-sm rounded;
+
   background-color: var(--gray-1);
-  border-radius: 3px;
 }
 
 code.block {
-  display: block;
-  margin: var(--spacing-md) 0;
+  @apply block my-4 rounded-md overflow-auto p-4 text-sm;
+
   background-color: var(--gray-1);
   border: 1px solid var(--gray-4);
-  border-radius: 6px;
-  padding: var(--spacing-md);
-  font-size: var(--base-font-size);
-  overflow: auto;
 }

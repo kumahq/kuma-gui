@@ -5,7 +5,13 @@ import NotificationManager from './NotificationManager.vue'
 
 describe('NotificationManager.vue', () => {
   it('renders snapshot with information that there are actions which user may take', () => {
-    const { container } = renderWithVuex(NotificationManager)
+    const { container } = renderWithVuex(NotificationManager, {
+      store: {
+        state: {
+          meshes: { items: [{ logging: {}, tracing: {}, metrics: {} }] },
+        },
+      },
+    })
 
     expect(container).toMatchSnapshot()
   })
@@ -23,20 +29,40 @@ describe('NotificationManager.vue', () => {
   })
 
   it("doesn't render notification info after it's closed", async () => {
-    renderWithVuex(NotificationManager)
+    renderWithVuex(NotificationManager, {
+      store: {
+        state: {
+          meshes: { items: [{}] },
+        },
+      },
+    })
 
     await userEvent.click(screen.getByLabelText('Close'))
 
     expect(screen.queryByTestId('notification-info')).not.toBeInTheDocument()
   })
 
-  it('renders modal', async () => {
+  it('renders all meshes notification modal', async () => {
     renderWithVuex(NotificationManager, {
       store: {
         state: {
-          meshes: { items: [{ mtls: {}, logging: {}, tracing: {}, metrics: {} }] },
+          meshes: { items: [{ name: 'test-mesh' }] },
         },
-        modules: { notifications: { getters: { amountOfActions: () => 2 } } },
+      },
+    })
+
+    await userEvent.click(screen.getByText(/Check!/))
+
+    expect(screen.getByRole('dialog')).toMatchSnapshot()
+  })
+
+  it('renders single mesh notification modal', async () => {
+    renderWithVuex(NotificationManager, {
+      store: {
+        state: {
+          selectedMesh: 'test-mesh',
+          meshes: { items: [{ name: 'test-mesh' }] },
+        },
       },
     })
 

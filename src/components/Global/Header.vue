@@ -57,28 +57,21 @@
           </KPop>
         </div>
         <div class="app-status app-status--desktop">
-          <Status
-            :active="guiStatus"
-            :title="statusContent"
-          >
-            <template v-slot:content>
-              <span :title="`v${statusVersion}`">
-                {{ statusContent }} on <strong>{{ env }}</strong>
+          <div class="flex items-center justify-center text-sm">
+            <strong> {{ statusContent }} on {{ env }}</strong>
+            <KBadge
+              appearance="success"
+              class="status-badge"
+            >
+              <span v-if="multicluster">
+                Multi-Zone
               </span>
-              <KBadge
-                appearance="success"
-                class="status-badge"
-              >
-                <span v-if="multicluster">
-                  Multi-Zone
-                </span>
-                <span v-else>
-                  Standalone
-                </span>
-              </KBadge>
-              <NotificationIcon />
-            </template>
-          </Status>
+              <span v-else>
+                Standalone
+              </span>
+            </KBadge>
+            <NotificationIcon />
+          </div>
         </div>
       </div>
     </div>
@@ -88,21 +81,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getKumaCpServerUrl } from '@/configUrl'
-import Status from '@/components/Utils/Status'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
 import EnterpriseBox from '@/components/Utils/EnterpriseBox'
 import NotificationIcon from './NotificationIcon'
 
 export default {
   components: {
-    Status,
     UpgradeCheck,
     EnterpriseBox,
     NotificationIcon,
   },
   data() {
     return {
-      statusVersion: '',
       shortVersion: '',
       apiUrl: getKumaCpServerUrl(),
     }
@@ -191,6 +181,11 @@ export default {
     &:after {
       display: none;
     }
+  }
+
+  &--desktop {
+    letter-spacing: 0.025em;
+    color: var(--gray-3);
   }
 
   @media screen and (min-width: 1024px) {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <KAlert
-      v-if="!alertClosed && amountOfActions > 0"
+      v-if="shouldRenderAlert"
       class="mb-4"
       appearance="info"
       is-dismissible
@@ -27,57 +27,39 @@
     <KModal
       class="modal"
       :is-visible="isOpen"
-      title="Here is a list of possible actions you might take to improve usability of your service mesh!"
     >
-      <template v-slot:body-content>
-        <Accordion
-          multiple-open
-          :initially-open="initiallyOpen"
+      <template v-slot:header-content>
+        <div
+          v-if="isAllMeshesView"
+          class="flex items-center"
         >
-          <AccordionItem
-            v-for="item in items"
-            :key="item.name"
-          >
-            <template v-slot:accordion-header>
-              <div class="flex items-center">
-                <KIcon
-                  v-if="item.isCompleted"
-                  color="var(--green-400)"
-                  icon="check"
-                  size="20"
-                  class="mr-4"
-                />
-                <KIcon
-                  v-else
-                  color="var(--yellow-300)"
-                  secondary-color="var(--black-75)"
-                  icon="warning"
-                  size="20"
-                  class="mr-4"
-                />
-                <strong>{{ item.name }}</strong>
-              </div>
-            </template>
+          <KIcon
+            color="var(--yellow-300)"
+            icon="notificationBell"
+            size="24"
+            class="mr-2"
+          /> All mesh notifications
+        </div>
+        <div v-else>
+          Here is a list of possible actions you might take to improve usability of your service mesh!
 
-            <template v-slot:accordion-content>
-              <component
-                :is="item.component"
-                v-if="item.component"
-              />
-              <template v-else>
-                <KCard>
-                  <template v-slot:body>
-                    {{ item.content }}
-                  </template>
-                </KCard>
-              </template>
-            </template>
-          </AccordionItem>
-        </Accordion>
+          <KBadge
+            class="cursor-pointer"
+            @click.native="changeMesh('all')"
+          >
+            &lsaquo; Back to all
+          </KBadge>
+        </div>
+      </template>
+      <template v-slot:body-content>
+        <AllMeshesNotifications
+          v-if="isAllMeshesView"
+          @meshSelected="changeMesh($event)"
+        />
+        <SingleMeshNotifications v-else />
       </template>
       <template v-slot:footer-content>
         <KButton
-          class="no-underline success-button"
           appearance="secondary"
           @click="closeModal"
         >
@@ -90,24 +72,15 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex'
-import Accordion from '@/components/Accordion/Accordion'
-import AccordionItem from '@/components/Accordion/AccordionItem'
-import OnboardingNotification from './components/OnboardingNotification.vue'
-import LoggingNotification from './components/LoggingNotification.vue'
-import MetricsNotification from './components/MetricsNotification.vue'
-import MtlsNotification from './components/MtlsNotification.vue'
-import TracingNotification from './components/TracingNotification.vue'
+
+import AllMeshesNotifications from './components/AllMeshesNotifications.vue'
+import SingleMeshNotifications from './components/SingleMeshNotifications.vue'
 
 export default {
   name: 'NotificationManager',
   components: {
-    Accordion,
-    AccordionItem,
-    OnboardingNotification,
-    LoggingNotification,
-    MetricsNotification,
-    MtlsNotification,
-    TracingNotification,
+    AllMeshesNotifications,
+    SingleMeshNotifications,
   },
   data() {
     return {
@@ -120,26 +93,40 @@ export default {
     }),
 
     ...mapGetters({
-      items: 'notifications/items',
+      selectedMesh: 'getSelectedMesh',
       amountOfActions: 'notifications/amountOfActions',
+      showOnboarding: 'showOnboarding',
     }),
-    initiallyOpen() {
-      return this.items.reduce((acc, cur, index) => {
-        if (!cur.isCompleted) {
-          acc.push(index)
-        }
 
-        return acc
-      }, [])
+    isAllMeshesView() {
+      return this.selectedMesh === 'all'
+    },
+
+    shouldRenderAlert() {
+      return !this.alertClosed && !this.showOnboarding && this.amountOfActions > 0
     },
   },
   methods: {
     ...mapActions({
       openModal: 'notifications/openModal',
       closeModal: 'notifications/closeModal',
+      updateSelectedMesh: 'updateSelectedMesh',
     }),
     closeAlert() {
       this.alertClosed = true
+    },
+
+    changeMesh(mesh) {
+      this.updateSelectedMesh(mesh)
+      localStorage.setItem('selectedMesh', mesh)
+
+      this.$router
+        .push({
+          params: {
+            mesh,
+          },
+        })
+        .catch(() => {})
     },
   },
 }

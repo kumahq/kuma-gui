@@ -9,7 +9,7 @@ describe('NotificationIcon.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders snapshot without notifications', async () => {
+  it('renders icon without notification number', async () => {
     renderWithVuex(NotificationIcon, {
       store: {
         state: {

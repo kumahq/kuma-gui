@@ -3,18 +3,22 @@ import notifications from '.'
 
 describe('notifications module', () => {
   describe('getters', () => {
-    it('tests items getter when no mesh fulfil terms and no onboarding', () => {
+    it('tests singleMeshNotificationItems getter ', () => {
       const store = setupStore({
         ...notifications,
         getters: {
           ...notifications.getters,
           getMeshList: () => ({ items: [{}] }),
-          showOnboarding: () => false,
         },
       })
 
-      expect(store.getters.items).toMatchInlineSnapshot(`
+      expect(store.getters.singleMeshNotificationItems).toMatchInlineSnapshot(`
         Array [
+          Object {
+            "component": "MetricsNotification",
+            "isCompleted": false,
+            "name": "Observability, Metrics & Service Map",
+          },
           Object {
             "component": "LoggingNotification",
             "isCompleted": false,
@@ -24,11 +28,6 @@ describe('notifications module', () => {
             "component": "MtlsNotification",
             "isCompleted": false,
             "name": "Zero-trust security",
-          },
-          Object {
-            "component": "MetricsNotification",
-            "isCompleted": false,
-            "name": "Observability & Metrics",
           },
           Object {
             "component": "TracingNotification",
@@ -39,7 +38,7 @@ describe('notifications module', () => {
       `)
     })
 
-    it('tests items getter when meshes fulfil terms and onboarding active', () => {
+    it('tests meshNotificationItemMapWithAction getter', () => {
       const store = setupStore({
         ...notifications,
         getters: {
@@ -48,45 +47,53 @@ describe('notifications module', () => {
             items: [
               {
                 logging: {},
-                tracing: {},
                 mtls: {},
+                tracing: {},
                 metrics: {},
+                name: 'default',
+              },
+              {
+                mtls: {},
+                name: 'test',
               },
             ],
           }),
-          showOnboarding: () => true,
         },
       })
 
-      expect(store.getters.items).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "component": "OnboardingNotification",
-            "isCompleted": false,
-            "name": "First Steps",
+      expect(store.getters.meshNotificationItemMapWithAction).toMatchInlineSnapshot(`
+        Object {
+          "test": Object {
+            "hasLogging": false,
+            "hasMetrics": false,
+            "hasMtls": true,
+            "hasTracing": false,
           },
-          Object {
-            "component": "TracingNotification",
-            "isCompleted": false,
-            "name": "Tracing",
-          },
-          Object {
-            "component": "LoggingNotification",
-            "isCompleted": true,
-            "name": "Logging",
-          },
-          Object {
-            "component": "MtlsNotification",
-            "isCompleted": true,
-            "name": "Zero-trust security",
-          },
-          Object {
-            "component": "MetricsNotification",
-            "isCompleted": true,
-            "name": "Observability & Metrics",
-          },
-        ]
+        }
       `)
+    })
+
+    it('tests amountOfActions getter', () => {
+      const store = setupStore({
+        ...notifications,
+        getters: {
+          ...notifications.getters,
+          getMeshList: () => ({
+            items: [
+              {
+                logging: {},
+                name: 'default',
+              },
+              {
+                mtls: {},
+                name: 'test',
+              },
+            ],
+          }),
+        },
+      })
+
+      expect(store.getters.amountOfActions).toBe(2)
     })
   })
 })

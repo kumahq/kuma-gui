@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { Mesh } from '@/types'
 import { RootInterface } from '../..'
-import { NotificationsInterface, NotificationItem } from './notifications.types'
+import { NotificationsInterface, NotificationItem, MeshNotificationItem } from './notifications.types'
 
 const state: NotificationsInterface = {
   isOpen: false,
@@ -13,65 +13,79 @@ const mutations: MutationTree<NotificationsInterface> = {
 }
 
 const getters: GetterTree<NotificationsInterface, RootInterface> = {
-  hasLogging(state, getters, rootState, rootGetters) {
-    return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.logging))
+  meshNotificationItemMap(state, getters, rootState, rootGetters) {
+    const meshList = rootGetters.getMeshList?.items || []
+
+    const aggregatedList = meshList.reduce((meshAggregator: Record<string, MeshNotificationItem>, mesh: Mesh) => {
+      meshAggregator[mesh.name] = {
+        hasLogging: Boolean(mesh.logging),
+        hasMtls: Boolean(mesh.mtls),
+        hasMetrics: Boolean(mesh.metrics),
+        hasTracing: Boolean(mesh.tracing),
+      }
+
+      return meshAggregator
+    }, {})
+
+    return aggregatedList
   },
-  hasMtls(state, getters, rootState, rootGetters) {
-    return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.mtls))
+
+  meshNotificationItemMapWithAction(state, getters, rootState, rootGetters) {
+    const meshMap = getters.meshNotificationItemMap
+
+    return Object.entries<MeshNotificationItem>(meshMap).reduce(
+      (meshAggregator: Record<string, MeshNotificationItem>, [meshName, meshItem]: [string, MeshNotificationItem]) => {
+        const hasAnyAction = Object.values(meshItem).some(actionState => !actionState)
+
+        if (hasAnyAction) {
+          meshAggregator[meshName] = meshItem
+        }
+
+        return meshAggregator
+      },
+      {},
+    )
   },
-  hasMetrics(state, getters, rootState, rootGetters) {
-    return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.metrics))
-  },
-  hasTracing(state, getters, rootState, rootGetters) {
-    return rootGetters.getMeshList.items?.some((mesh: Mesh) => Boolean(mesh.tracing))
-  },
-  items(state, getters, rootState, rootGetters): NotificationItem[] {
+
+  singleMeshNotificationItems(state, getters, rootState, rootGetters): NotificationItem[] {
+    const selectedMesh = rootGetters.getSelectedMesh
+
+    if (selectedMesh === 'all') {
+      return []
+    }
+
+    const meshItem: MeshNotificationItem = getters.meshNotificationItemMap[selectedMesh]
+
     const items: NotificationItem[] = [
+      {
+        name: 'Observability, Metrics & Service Map',
+        component: 'MetricsNotification',
+        isCompleted: meshItem.hasMetrics,
+      },
       {
         name: 'Logging',
         component: 'LoggingNotification',
-        isCompleted: getters.hasLogging,
+        isCompleted: meshItem.hasLogging,
       },
       {
         name: 'Zero-trust security',
         component: 'MtlsNotification',
-        isCompleted: getters.hasMtls,
-      },
-      {
-        name: 'Observability & Metrics',
-        component: 'MetricsNotification',
-        isCompleted: getters.hasMetrics,
+        isCompleted: meshItem.hasMtls,
       },
       {
         name: 'Tracing',
         component: 'TracingNotification',
-        isCompleted: getters.hasTracing,
+        isCompleted: meshItem.hasTracing,
       },
     ]
 
     items.sort((itemX: NotificationItem, itemY: NotificationItem) => +itemX.isCompleted - +itemY.isCompleted)
 
-    if (rootGetters.showOnboarding) {
-      items.unshift({
-        name: 'First Steps',
-        component: 'OnboardingNotification',
-        isCompleted: false,
-      })
-    }
-
     return items
   },
 
   amountOfActions(state, getters) {
-    let amount = 0
-
-    getters.items.forEach(({ isCompleted }: NotificationItem) => {
-      if (!isCompleted) {
-        amount++
-      }
-    })
-
-    return amount
+    return Object.keys(getters.meshNotificationItemMapWithAction).length
   },
 }
 

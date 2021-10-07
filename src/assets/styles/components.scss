@@ -84,7 +84,7 @@
 /* KPopover overrides */
 
 .k-popover {
-  z-index: 1031 !important;
+  z-index: 2000 !important;
 
   .k-badge {
     display: inline;
@@ -168,4 +168,12 @@
   max-width: 640px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.notification-amount {
+  @apply absolute text-xs text-white rounded-full w-4 h-4 flex justify-center items-center border border-white;
+
+  background: var(--yellow-300);
+  top: -8px;
+  right: -8px;
 }
