@@ -44,7 +44,16 @@ const menu: MenuSection[] = [
               link: 'global-overview',
             },
             {
+              name: 'Meshes',
+              link: 'mesh-child',
+              pathFlip: true,
+            },
+            {
               name: 'Zones',
+              title: true,
+            },
+            {
+              name: 'Zone CPs',
               link: 'zones',
               // root: true
               // multicluster: true
@@ -56,11 +65,6 @@ const menu: MenuSection[] = [
               // multicluster: true
             },
             {
-              name: 'Meshes',
-              link: 'mesh-child',
-              pathFlip: true,
-            },
-            {
               name: 'Services',
               title: true,
             },
@@ -68,13 +72,11 @@ const menu: MenuSection[] = [
               name: 'Internal',
               link: 'internal-services',
               title: false,
-              nested: true,
             },
             {
               name: 'External',
               link: 'external-services',
               title: false,
-              nested: true,
             },
             {
               name: 'Data plane proxies',

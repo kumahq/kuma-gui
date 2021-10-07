@@ -175,48 +175,6 @@ exports[`Shell.vue renders component with route 1`] = `
         </div>
         <div
           class="nav-item is-menu-item"
-        >
-           
-          <a
-            aria-current="page"
-            class="router-link-exact-active router-link-active"
-            href="#/"
-          >
-            <!---->
-             
-            <div
-              class="nav-link"
-            >
-              
-        Zones
-      
-            </div>
-             
-          </a>
-        </div>
-        <div
-          class="nav-item is-menu-item"
-        >
-           
-          <a
-            aria-current="page"
-            class="router-link-exact-active router-link-active"
-            href="#/"
-          >
-            <!---->
-             
-            <div
-              class="nav-link"
-            >
-              
-        Zone Ingresses
-      
-            </div>
-             
-          </a>
-        </div>
-        <div
-          class="nav-item is-menu-item"
           pathflip="true"
         >
            
@@ -255,6 +213,73 @@ exports[`Shell.vue renders component with route 1`] = `
                 class="text-uppercase"
               >
                 
+        Zones
+      
+              </span>
+            </div>
+             
+          </a>
+        </div>
+        <div
+          class="nav-item is-menu-item"
+        >
+           
+          <a
+            aria-current="page"
+            class="router-link-exact-active router-link-active"
+            href="#/"
+          >
+            <!---->
+             
+            <div
+              class="nav-link"
+            >
+              
+        Zone CPs
+      
+            </div>
+             
+          </a>
+        </div>
+        <div
+          class="nav-item is-menu-item"
+        >
+           
+          <a
+            aria-current="page"
+            class="router-link-exact-active router-link-active"
+            href="#/"
+          >
+            <!---->
+             
+            <div
+              class="nav-link"
+            >
+              
+        Zone Ingresses
+      
+            </div>
+             
+          </a>
+        </div>
+        <div
+          class="nav-item is-menu-item is-title"
+        >
+           
+          <a
+            aria-current="page"
+            class="router-link-exact-active router-link-active"
+            href="#/"
+          >
+            <!---->
+             
+            <div
+              class="title-text"
+            >
+              <span
+                class="text-uppercase"
+              >
+                
         Services
       
               </span>
@@ -263,7 +288,7 @@ exports[`Shell.vue renders component with route 1`] = `
           </a>
         </div>
         <div
-          class="nav-item is-menu-item is-nested"
+          class="nav-item is-menu-item"
         >
            
           <a
@@ -284,7 +309,7 @@ exports[`Shell.vue renders component with route 1`] = `
           </a>
         </div>
         <div
-          class="nav-item is-menu-item is-nested"
+          class="nav-item is-menu-item"
         >
            
           <a
