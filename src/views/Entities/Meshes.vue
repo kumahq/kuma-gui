@@ -8,8 +8,6 @@
         :empty-state="empty_state"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
-        table-data-function-text="View"
-        table-data-row="name"
         :next="next"
         @tableAction="tableAction"
         @loadData="loadData($event)"

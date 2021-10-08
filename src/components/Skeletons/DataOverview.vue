@@ -7,7 +7,6 @@
     <div class="data-table-controls mb-2">
       <slot name="additionalControls" />
       <KButton
-        v-if="displayRefreshControl"
         class="ml-2 refresh-button"
         appearance="primary"
         size="small"
@@ -53,10 +52,7 @@
           @row:click="tableRowHandler"
         >
           <!-- status -->
-          <template
-            v-if="displayTableDataStatus"
-            v-slot:status="{ rowValue }"
-          >
+          <template v-slot:status="{ rowValue }">
             <div
               class="entity-status"
               :class="{
@@ -98,9 +94,9 @@
               </span>
             </span>
           </template>
+          <!--- actions --->
           <template v-slot:actions="{row}">
             <a
-              v-if="tableDataFunctionText"
               class="data-table-action-link"
               :class="{ 'is-active': (selectedRow=== row.name) }"
             >
@@ -117,10 +113,11 @@
                 v-else
                 class="action-link__normal-state"
               >
-                {{ tableDataFunctionText }}
+                View
               </span>
             </a>
           </template>
+          <!--- dp Version --->
           <template v-slot:dpVersion="{ row, rowValue }">
             <div :class="{
                 'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
@@ -128,6 +125,7 @@
               {{ rowValue }}
             </div>
           </template>
+          <!--- envoy Version --->
           <template v-slot:envoyVersion="{ row, rowValue }">
             <div :class="{
                 'with-warnings': row.unsupportedEnvoyVersion,
@@ -135,7 +133,7 @@
               {{ rowValue }}
             </div>
           </template>
-
+          <!--- warnings --->
           <template
             v-if="showWarnings"
             v-slot:warnings="{ row }"
@@ -262,7 +260,6 @@ export default {
       type: Object,
       default: null,
     },
-
     tableData: {
       type: Object,
       default: null,
@@ -275,32 +272,6 @@ export default {
     tableDataIsEmpty: {
       type: Boolean,
       default: false,
-    },
-    tableDataActionsLink: {
-      type: String,
-      default: null,
-    },
-    tableActionsRouteName: {
-      type: String,
-      default: null,
-    },
-    displayTableDataStatus: {
-      type: Boolean,
-      default: true,
-    },
-    displayRefreshControl: {
-      type: Boolean,
-      default: true,
-    },
-    tableDataRow: {
-      type: String,
-      required: false,
-      default: 'name',
-    },
-    tableDataFunctionText: {
-      type: String,
-      required: false,
-      default: null,
     },
     showWarnings: {
       type: Boolean,
@@ -319,15 +290,6 @@ export default {
   computed: {
     isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
-    },
-    tableRowCount() {
-      return Object.entries(this.tableData.data).length
-    },
-    pageCount() {
-      const itemCount = Object.entries(this.tableData.data).length
-      const pageSize = this.pageSize
-
-      return Math.ceil(itemCount / pageSize)
     },
     tableDataFiltered() {
       const data = this.tableData.data
@@ -357,6 +319,7 @@ export default {
       return val.toLowerCase().replace('.', '-').replace('/', '-')
     },
     onRefreshButtonClick() {
+      this.$emit('refresh')
       this.$emit('loadData', this.pageOffset)
       datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
     },
@@ -424,10 +387,6 @@ export default {
 .data-table-controls {
   text-align: right;
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
-
-  .k-button {
-    margin-left: var(--spacing-xs);
-  }
 }
 
 .entity-tags {
@@ -552,7 +511,6 @@ span[class*='kuma-io-'] {
   .data-table-action-link {
     display: block;
     padding: var(--spacing-sm);
-    // cursor: pointer;
     overflow: hidden;
     padding: 0;
     text-decoration: none !important;
