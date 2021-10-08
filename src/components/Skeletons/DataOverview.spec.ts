@@ -9,6 +9,7 @@ describe('DataOverview.vue', () => {
   beforeEach(() => {
     ;(datadogLogs.logger.info as jest.MockedFunction<any>).mockClear()
   })
+
   it('renders basic snapshot', () => {
     const { container } = render(DataOverview, {
       propsData: {
@@ -72,5 +73,53 @@ describe('DataOverview.vue', () => {
 
     expect(emitted()).toMatchSnapshot()
     expect(datadogLogs.logger.info).toMatchSnapshot()
+  })
+
+  it('renders all custom templates for data', async () => {
+    const { container } = render(DataOverview, {
+      propsData: {
+        showWarnings: true,
+        tableData: {
+          headers: [
+            { key: 'actions', hideLabel: true },
+            { label: 'Status', key: 'status' },
+            { label: 'Tags', key: 'tags' },
+            { label: 'Total Updates', key: 'totalUpdates' },
+            { label: 'Kuma DP version', key: 'dpVersion' },
+            { label: 'Envoy version', key: 'envoyVersion' },
+            { key: 'warnings', hideLabel: true },
+          ],
+          data: [
+            {
+              status: 'offline',
+              tags: [
+                {
+                  label: 'env',
+                  value: 'dev',
+                },
+                {
+                  label: 'kuma.io/service',
+                  value: 'kuma-example-backend',
+                },
+                {
+                  label: 'tag01',
+                  value: 'value01',
+                },
+                {
+                  label: 'reallyLongTagLabelHere',
+                  value: 'a-really-long-tag-value-here',
+                },
+              ],
+              totalUpdates: 1,
+              dpVersion: 'foo',
+              envoyVersion: '1.2',
+              withWarnings: true,
+            },
+          ],
+        },
+      },
+    })
+
+    expect(container).toMatchSnapshot()
   })
 })

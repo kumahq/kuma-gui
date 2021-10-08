@@ -12,8 +12,6 @@
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :show-warnings="tableData.data.some((item) => item.withWarnings)"
-        table-data-function-text="View"
-        table-data-row="name"
         :next="next"
         @tableAction="tableAction"
         @loadData="loadData($event)"
