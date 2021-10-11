@@ -41,16 +41,13 @@ export default {
   display: flex;
   align-items: center;
   font-size: var(--type-sm);
-
   > *:first-of-type {
     margin-right: var(--spacing-sm);
   }
-
   .k-button {
     text-decoration: none;
   }
 }
-
 .success-button {
   --KButtonPrimaryBase: #19a654;
   --KButtonPrimaryHover: #19a654;

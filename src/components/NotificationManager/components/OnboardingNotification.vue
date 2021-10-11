@@ -4,7 +4,7 @@
     class="onboarding-check"
   >
     <KAlert
-      appearance="info"
+      appearance="success"
       class="dismissible"
       is-dismissible
       @closed="closeAlert"
@@ -36,7 +36,7 @@
 import { PRODUCT_NAME } from '@/consts'
 
 export default {
-  name: 'OnboardingCheck',
+  name: 'OnboardingNotification',
   data() {
     return {
       alertClosed: false,
@@ -55,7 +55,6 @@ export default {
 .onboarding-check {
   margin: 0 0 var(--spacing-xl) 0;
 }
-
 .alert-content {
   @media screen and (min-width: 700px) {
     display: flex;
@@ -69,14 +68,12 @@ export default {
       min-width: 150px;
     }
   }
-
   @media screen and (max-width: 699px) {
     > *:last-of-type {
       margin-top: 10px;
     }
   }
 }
-
 .action-button.action-button {
   text-decoration: none;
 }

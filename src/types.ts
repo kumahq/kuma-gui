@@ -42,3 +42,14 @@ export interface AllResourceResponse<T = {}> {
   data: T[]
   total: number
 }
+
+export interface Mesh {
+  creationTime: string
+  modificationTime: string
+  name: string
+  type: 'Mesh'
+  mtls?: Object
+  logging?: Object
+  tracing?: Object
+  metrics?: Object
+}

@@ -166,10 +166,15 @@
   min-height: 100vh;
 }
 
-code {
-  // padding: 0.2rem 0.4rem;
-  // font-size: 90%;
-  // color: #bd4147;
-  // background-color: #f7f7f9;
-  // border-radius: 0.25rem;
+code.inline {
+  @apply py-1 px-2 m-0 text-sm rounded;
+
+  background-color: var(--gray-1);
+}
+
+code.block {
+  @apply block my-4 rounded-md overflow-auto p-4 text-sm;
+
+  background-color: var(--gray-1);
+  border: 1px solid var(--gray-4);
 }

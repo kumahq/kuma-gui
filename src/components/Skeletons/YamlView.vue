@@ -36,7 +36,7 @@
                   </template>
                 </KPop>
               </KClipboardProvider>
-              <prism
+              <Prism
                 class="code-block"
                 language="yaml"
                 :code="yamlContent.universal"
@@ -62,7 +62,7 @@
                   </template>
                 </KPop>
               </KClipboardProvider>
-              <prism
+              <Prism
                 class="code-block"
                 language="yaml"
                 :code="yamlContent.kubernetes"
@@ -140,7 +140,7 @@ import json2yaml from '@appscode/json2yaml'
 export default {
   name: 'YamlView',
   components: {
-    prism: Prism,
+    Prism,
   },
   props: {
     title: {

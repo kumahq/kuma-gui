@@ -1338,6 +1338,13 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-4.0.2.tgz#1d471624a6c9750e1438278d26ab54ce62bc44b5"
   integrity sha512-P1r7Nd/ek/uCZElJp1vwtIVbeKkG61NzyN7qoZVwQKDeO22DGAyl02wzHcyoYfjaSJURwugW1nE2zTq/+YOHBw==
 
+"@kongponents/kmodal@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-4.0.2.tgz#49213531268e13225bb1554e1fb0bef14e7a9283"
+  integrity sha512-hg0eKqLBMbW9B1yAFY1VMIsWSkjcTbK/Fc8s0CpHzkRdXxayO4+fetKoBTomI1PXsuVVtTP/rjtgsNdeDkWfvw==
+  dependencies:
+    "@kongponents/kbutton" "^4.0.2"
+
 "@kongponents/kpop@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@kongponents/kpop/-/kpop-4.0.2.tgz#a6a8c562962046987d3ab757ebe1df45fb281354"

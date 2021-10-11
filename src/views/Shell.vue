@@ -4,7 +4,8 @@
 
     <main class="main-content">
       <div class="page">
-        <OnboardingCheck v-if="showOnboarding" />
+        <NotificationManager />
+        <OnboardingNotification v-if="showOnboarding" />
         <Breadcrumbs />
         <router-view />
       </div>
@@ -14,16 +15,19 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 import Sidebar from '@/components/Sidebar/Sidebar'
-import OnboardingCheck from '@/components/Utils/OnboardingCheck'
+import NotificationManager from '@/components/NotificationManager'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
+import OnboardingNotification from '@/components/NotificationManager/components/OnboardingNotification.vue'
 
 export default {
   name: 'Shell',
   components: {
     Breadcrumbs,
     Sidebar,
-    OnboardingCheck,
+    NotificationManager,
+    OnboardingNotification,
   },
   computed: {
     ...mapGetters({

@@ -303,17 +303,6 @@ $bp-max-width: 1219px;
       margin-bottom: var(--spacing-sm);
     }
   }
-
-  code {
-    display: block;
-    margin: var(--spacing-md) 0;
-    background-color: var(--gray-1);
-    border: 1px solid var(--gray-4);
-    border-radius: 6px;
-    padding: var(--spacing-md);
-    font-size: var(--base-font-size);
-    overflow: auto;
-  }
 }
 
 .wizard-steps__indicator {

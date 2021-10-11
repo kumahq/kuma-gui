@@ -48,13 +48,13 @@ describe('Accordion.vue', () => {
   it('renders with opened second panel and switch opened panel on click', async () => {
     render(Accordion, { ...options, props: { initiallyOpen: 1 } })
 
-    expect(screen.getByText(/Content 1/)).toHaveStyle('display: none')
+    expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
     expect(screen.getByText(/Content 2/)).toHaveStyle('display: block')
 
     await userEvent.click(screen.getByText(/Header 1/))
 
-    expect(screen.getByText(/Content 1/)).toHaveStyle('display: block')
-    expect(screen.getByText(/Content 2/)).toHaveStyle('display: none')
+    expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
+    expect(screen.queryByText(/Content 2/)).not.toBeInTheDocument()
   })
 
   it('renders initally two opened accordion', async () => {
@@ -67,13 +67,13 @@ describe('Accordion.vue', () => {
   it('renders initally two closed accordions and open it', async () => {
     render(Accordion, { ...options, props: { multipleOpen: true } })
 
-    expect(screen.getByText(/Content 1/)).toHaveStyle('display: none')
-    expect(screen.getByText(/Content 2/)).toHaveStyle('display: none')
+    expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/Content 2/)).not.toBeInTheDocument()
 
     await userEvent.click(screen.getByText(/Header 1/))
     await userEvent.click(screen.getByText(/Header 2/))
 
-    expect(screen.getByText(/Content 1/)).toHaveStyle('display: block')
-    expect(screen.getByText(/Content 2/)).toHaveStyle('display: block')
+    expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
+    expect(await screen.findByText(/Content 2/)).toHaveStyle('display: block')
   })
 })

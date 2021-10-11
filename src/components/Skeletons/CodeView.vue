@@ -10,7 +10,7 @@
         border-variant="noBorder"
       >
         <template v-slot:body>
-          <prism
+          <Prism
             class="code-block"
             :language="lang"
             :code="codeContent"
@@ -104,7 +104,7 @@ import Prism from 'vue-prismjs'
 export default {
   name: 'CodeView',
   components: {
-    prism: Prism,
+    Prism,
   },
   props: {
     lang: {

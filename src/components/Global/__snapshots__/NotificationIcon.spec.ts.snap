@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationIcon.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="relative cursor-pointer"
+  >
+    <svg
+      class="kong-icon ml-1 kong-icon-notificationBell"
+      data-v-a7c9c1d2=""
+      height="16"
+      role="img"
+      viewBox="0 0 16 18"
+      width="16"
+    >
+      <title
+        data-v-a7c9c1d2=""
+      >
+        notificationBell
+      </title>
+      <g
+        data-v-a7c9c1d2=""
+      >
+        <path
+          class="bell-clapper"
+          d="M9.74999955 15h-4.5c-.207 0-.375.168-.375.375 0 1.4475 1.1775 2.625 2.625 2.625s2.62499995-1.1775 2.62499995-2.625c0-.207-.16799995-.375-.37499995-.375"
+          data-v-a7c9c1d2=""
+          fill="var(--yellow-300)"
+        />
+        <path
+          class="bell-body"
+          d="M13.4999995 11.25v-3c0-4.5-.93-5.21325-3.45225-6.24375C9.76649955.831 8.72774955 0 7.49999955 0c-1.209 0-2.268.84825-2.55 2.00625-2.52075 1.0305-3.45 1.84522492-3.45 6.24375v3c0 1.03425-1.49171255 1.1053638-1.49171255 2.25v.75h15.0009542v-.75c0-1.1029353-1.5092417-1.21575-1.5092417-2.25z"
+          data-v-a7c9c1d2=""
+          fill="var(--yellow-300)"
+        />
+      </g>
+    </svg>
+     
+    <!---->
+  </div>
+</div>
+`;

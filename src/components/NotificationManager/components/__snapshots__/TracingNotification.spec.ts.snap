@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TracingNotification.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="py-4"
+  >
+    <p
+      class="mb-4"
+    >
+      
+      Injecting distributed tracing into each of your services will enable you to monitor and
+      troubleshoot microservice behavior without introducing any dependencies to the existing application code.
+    
+    </p>
+     
+    <p
+      class="mb-4"
+    >
+      
+      To capture traces between Kong and your applications, you can use Kuma’s Traffic Trace policy.
+      Kuma provides a native
+      
+      <a
+        href="https://www.jaegertracing.io/"
+        target="_blank"
+      >
+        
+        Jaeger
+      
+      </a>
+       and
+      
+      <a
+        href="https://zipkin.io/"
+        target="_blank"
+      >
+        
+        Zipkin
+      
+      </a>
+       integration so you can run
+
+      
+      <div
+        class="tab-container"
+        data-testid="tab-container"
+      >
+        <!---->
+         
+        <div
+          class="tab__content-container"
+        >
+          <div
+            class="k-tabs"
+            data-v-a38b664a=""
+          >
+            <ul
+              aria-label="ktabs"
+              data-v-a38b664a=""
+              role="tablist"
+            >
+              <li
+                aria-controls="panel-0"
+                aria-selected="true"
+                class="tab-item active"
+                data-v-a38b664a=""
+                id="universal-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Universal
+                </a>
+              </li>
+              <li
+                aria-controls="panel-1"
+                aria-selected="false"
+                class="tab-item"
+                data-v-a38b664a=""
+                id="kubernetes-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Kubernetes
+                </a>
+              </li>
+            </ul>
+            <div
+              aria-labelledby="universal-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <code
+                class="block"
+                data-v-a38b664a=""
+              >
+                <pre
+                  data-v-a38b664a=""
+                >
+                  type: Mesh
+name: default
+tracing:
+  defaultBackend: jaeger-collector
+  backends:
+  - name: jaeger-collector
+    type: zipkin
+    sampling: 100.0
+    conf:
+      url: http://jaeger-collector.kuma-tracing:9411/api/v2/spans
+                </pre>
+              </code>
+              
+          We can apply the configuration with
+          
+              <code
+                class="inline"
+                data-v-a38b664a=""
+              >
+                kubectl apply -f [..]
+              </code>
+              .
+        
+            </div>
+            <div
+              aria-labelledby="kubernetes-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+          </div>
+           
+          <div>
+            <!---->
+             
+            <!---->
+          </div>
+        </div>
+      </div>
+    </p>
+     
+    <p
+      class="mb-4"
+    >
+      
+      Also you can integrate it with
+      
+      <a
+        href="https://docs.datadoghq.com/tracing/"
+        target="_blank"
+      >
+        
+        Datadog
+      
+      </a>
+      .
+    
+    </p>
+     
+    <a
+      class="k-button outline-primary"
+      data-v-38fa8ecf=""
+      href="https://kuma.io/docs/1.2.0/policies/traffic-trace/"
+      target="_blank"
+      type="button"
+    >
+      
+      Learn More
+    
+    </a>
+  </div>
+</div>
+`;

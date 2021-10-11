@@ -11,9 +11,10 @@
     <transition
       name="accordion"
       @enter="start"
+      @after-enter="end"
       @before-leave="start"
     >
-      <div v-show="visible">
+      <div v-if="visible">
         <!-- This slot will display whole content -->
         <slot name="accordion-content" />
       </div>
@@ -69,6 +70,9 @@ export default {
     },
     start(el) {
       el.style.height = `${el.scrollHeight}px`
+    },
+    end(el) {
+      el.style.height = 'auto'
     },
   },
 }

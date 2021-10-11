@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex, { Module } from 'vuex'
 
 import config from '@/store/modules/config'
+import notifications from '@/store/modules/notifications'
 import sidebar from '@/store/modules/sidebar'
 import { getItemStatusFromInsight } from '@/dataplane'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
@@ -20,6 +21,7 @@ export default (): Module<RootInterface, RootInterface> => ({
   modules: {
     sidebar,
     config,
+    notifications,
   },
   state: {
     menu: null,
