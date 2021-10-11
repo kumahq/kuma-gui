@@ -61,6 +61,7 @@ export default {
       localStorage.setItem('selectedMesh', val)
 
       // push the update mesh param to the route
+      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
       this.$router
         .push({
           params: {

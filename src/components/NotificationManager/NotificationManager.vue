@@ -120,6 +120,7 @@ export default {
       this.updateSelectedMesh(mesh)
       localStorage.setItem('selectedMesh', mesh)
 
+      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
       this.$router
         .push({
           params: {

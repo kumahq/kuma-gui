@@ -12,6 +12,7 @@ export default Vue.extend({
       const router = this.$router
       const route = this.$route
 
+      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
       if (!route.query) {
         // if the URL contains no current queries, simply add the query and value
         router
