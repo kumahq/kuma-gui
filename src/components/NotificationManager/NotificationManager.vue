@@ -95,7 +95,7 @@ export default {
     ...mapGetters({
       selectedMesh: 'getSelectedMesh',
       amountOfActions: 'notifications/amountOfActions',
-      showOnboarding: 'showOnboarding',
+      showOnboarding: 'onboarding/showOnboarding',
     }),
 
     isAllMeshesView() {
