@@ -103,6 +103,18 @@ export function mergeInsightsReducer(insights: TODO = []) {
       policies: sumPolicies(acc.policies, insight.policies),
       dpVersions: sumVersions(acc.dpVersions, insight.dpVersions),
     }),
-    {},
+    {
+      meshesTotal: 0,
+      dataplanes: {
+        online: 0,
+        partiallyDegraded: 0,
+        total: 0,
+      },
+      policies: getInitialPolicies(),
+      dpVersions: {
+        kumaDp: {},
+        envoy: {},
+      },
+    },
   )
 }

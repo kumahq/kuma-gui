@@ -1,0 +1,257 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
+Object {
+  "dataplanes": Object {
+    "online": 0,
+    "partiallyDegraded": 0,
+    "total": 0,
+  },
+  "dpVersions": Object {
+    "envoy": Object {},
+    "kumaDp": Object {},
+  },
+  "meshesTotal": 0,
+  "policies": Object {
+    "CircuitBreaker": Object {
+      "total": 0,
+    },
+    "FaultInjection": Object {
+      "total": 0,
+    },
+    "HealthCheck": Object {
+      "total": 0,
+    },
+    "ProxyTemplate": Object {
+      "total": 0,
+    },
+    "RateLimit": Object {
+      "total": 0,
+    },
+    "Retry": Object {
+      "total": 0,
+    },
+    "Timeout": Object {
+      "total": 0,
+    },
+    "TrafficLog": Object {
+      "total": 0,
+    },
+    "TrafficPermission": Object {
+      "total": 0,
+    },
+    "TrafficRoute": Object {
+      "total": 0,
+    },
+    "TrafficTrace": Object {
+      "total": 0,
+    },
+  },
+}
+`;
+
+exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] = `
+Object {
+  "dataplanes": Object {
+    "online": 6,
+    "partiallyDegraded": 10,
+    "total": 26,
+  },
+  "dpVersions": Object {
+    "envoy": Object {
+      "1.16.1": Object {
+        "online": 1,
+        "partiallyDegraded": 0,
+        "total": 8,
+      },
+      "1.16.2": Object {
+        "online": 1,
+        "partiallyDegraded": 0,
+        "total": 4,
+      },
+    },
+    "kumaDp": Object {
+      "1.0.4": Object {
+        "online": 4,
+        "partiallyDegraded": 0,
+        "total": 6,
+      },
+      "1.0.5": Object {
+        "online": 2,
+        "partiallyDegraded": 0,
+        "total": 2,
+      },
+    },
+  },
+  "meshesTotal": 5,
+  "policies": Object {
+    "CircuitBreaker": Object {
+      "total": 0,
+    },
+    "FaultInjection": Object {
+      "total": 0,
+    },
+    "HealthCheck": Object {
+      "total": 0,
+    },
+    "ProxyTemplate": Object {
+      "total": 0,
+    },
+    "RateLimit": Object {
+      "total": 0,
+    },
+    "Retry": Object {
+      "total": 0,
+    },
+    "Secret": Object {
+      "total": 12,
+    },
+    "ServiceInsight": Object {
+      "total": 22,
+    },
+    "Timeout": Object {
+      "total": 0,
+    },
+    "TrafficLog": Object {
+      "total": 0,
+    },
+    "TrafficPermission": Object {
+      "total": 6,
+    },
+    "TrafficRoute": Object {
+      "total": 10,
+    },
+    "TrafficTrace": Object {
+      "total": 0,
+    },
+  },
+}
+`;
+
+exports[`mesh-insights calls parseInsightReducer with mesh insights 1`] = `
+Object {
+  "dataplanes": Object {
+    "online": 3,
+    "partiallyDegraded": 5,
+    "total": 13,
+  },
+  "dpVersions": Object {
+    "envoy": Object {
+      "1.16.1": Object {
+        "online": 1,
+        "partiallyDegraded": 0,
+        "total": 8,
+      },
+      "1.16.2": Object {
+        "online": 1,
+        "partiallyDegraded": 0,
+        "total": 4,
+      },
+    },
+    "kumaDp": Object {
+      "1.0.4": Object {
+        "online": 2,
+        "partiallyDegraded": 0,
+        "total": 3,
+      },
+      "1.0.5": Object {
+        "online": 1,
+        "partiallyDegraded": 0,
+        "total": 1,
+      },
+    },
+  },
+  "meshesTotal": 1,
+  "policies": Object {
+    "CircuitBreaker": Object {
+      "total": 0,
+    },
+    "FaultInjection": Object {
+      "total": 0,
+    },
+    "HealthCheck": Object {
+      "total": 0,
+    },
+    "ProxyTemplate": Object {
+      "total": 0,
+    },
+    "RateLimit": Object {
+      "total": 0,
+    },
+    "Retry": Object {
+      "total": 0,
+    },
+    "Secret": Object {
+      "total": 6,
+    },
+    "ServiceInsight": Object {
+      "total": 11,
+    },
+    "Timeout": Object {
+      "total": 0,
+    },
+    "TrafficLog": Object {
+      "total": 0,
+    },
+    "TrafficPermission": Object {
+      "total": 3,
+    },
+    "TrafficRoute": Object {
+      "total": 5,
+    },
+    "TrafficTrace": Object {
+      "total": 0,
+    },
+  },
+}
+`;
+
+exports[`mesh-insights calls parseInsightReducer without any data 1`] = `
+Object {
+  "dataplanes": Object {
+    "online": 0,
+    "partiallyDegraded": 0,
+    "total": 0,
+  },
+  "dpVersions": Object {
+    "envoy": Object {},
+    "kumaDp": Object {},
+  },
+  "meshesTotal": 1,
+  "policies": Object {
+    "CircuitBreaker": Object {
+      "total": 0,
+    },
+    "FaultInjection": Object {
+      "total": 0,
+    },
+    "HealthCheck": Object {
+      "total": 0,
+    },
+    "ProxyTemplate": Object {
+      "total": 0,
+    },
+    "RateLimit": Object {
+      "total": 0,
+    },
+    "Retry": Object {
+      "total": 0,
+    },
+    "Timeout": Object {
+      "total": 0,
+    },
+    "TrafficLog": Object {
+      "total": 0,
+    },
+    "TrafficPermission": Object {
+      "total": 0,
+    },
+    "TrafficRoute": Object {
+      "total": 0,
+    },
+    "TrafficTrace": Object {
+      "total": 0,
+    },
+  },
+}
+`;
