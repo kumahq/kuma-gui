@@ -203,15 +203,21 @@ export default {
   );
   --path12: path('M605 817V497M1851 959h-518M944 570H390');
   --path13: path('M638 912H342M635 1139V912');
-  width: 1800px;
-  min-height: 1080px;
+  // width: 1800px;
+  // min-height: 1080px;
   position: absolute;
-  left: 50%;
-  // top: -100px;
-  transform: translateX(-50%);
 
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  min-width: 1700px;
+
+  @media screen and (max-width: 1699px) {
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  // left: 50%;
+  // top: 50%;
+  // transform: translateX(-50%) translateY(-50%);
 
   foreignObject {
     position: relative;
@@ -332,6 +338,12 @@ export default {
     }
   }
 
+  @supports (not (offset-distance: 100%)) {
+    foreignObject div {
+      display: none;
+    }
+  }
+
   &.active {
     g {
       foreignObject {
@@ -380,6 +392,11 @@ export default {
       &.circle {
         transform: scale(1);
         opacity: 1;
+      }
+    }
+    @supports (not (offset-distance: 100%)) {
+      foreignObject div {
+        display: none;
       }
     }
   }

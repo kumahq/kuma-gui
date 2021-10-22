@@ -1,14 +1,18 @@
 <template>
-  <div class="onboarding-container">
-    <div class="onboarding-container__header">
-      <slot name="header" />
-    </div>
-    <div :class="classes">
-      <div class="w-full">
-        <slot name="content" />
+  <div>
+    <div class="onboarding-container">
+      <div class="onboarding-container__header">
+        <slot name="header" />
       </div>
+      <div :class="classes">
+        <div class="w-full">
+          <slot name="content" />
+        </div>
+      </div>
+      <slot name="navigation" />
     </div>
-    <slot name="navigation" />
+
+    <div class="foo" />
   </div>
 </template>
 
@@ -39,8 +43,7 @@ export default {
   }
 
   &__content {
-    // @apply h-px p-10 w-full bg-white text-lg; (option with strict height TODO check which option)
-    @apply relative flex items-center justify-center p-10 w-full bg-transparent text-lg;
+    @apply relative flex items-center justify-center p-10 w-full bg-white text-lg;
     min-height: 500px;
     box-shadow: 4px 4px 14px 4px rgba(103, 71, 128, 0.11);
 
@@ -59,5 +62,25 @@ export default {
 .k-radio {
   --KRadioPrimary: #5da46f;
   color: #5da46f;
+}
+
+.foo {
+  position: fixed;
+  top: 0;
+  z-index: -2;
+  opacity: 0.05;
+  left: 0;
+  height: 100vh;
+  filter: grayscale(1);
+  width: 100vw;
+  background: transparent url('../../../assets/images/onboarding-background.svg?external') no-repeat scroll 0% 0%;
+
+  min-width: 1700px;
+
+  @media screen and (max-width: 1699px) {
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
 }
 </style>

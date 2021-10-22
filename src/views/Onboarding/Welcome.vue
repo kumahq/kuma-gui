@@ -1,26 +1,27 @@
 <template>
   <div class="screen">
     <div class="classss">
-      <h1 class="welcome-title">
-        Welcome to {{ productName }}
-      </h1>
-      <p class="welcome-description">
-        Congratulations for downloading
-        {{ productName }} — <strong>setup takes about 4 minutes</strong> to get your service mesh fully online.
-      </p>
-      <h2 class="welcome-detected">
-        We’ve automatically detected...
-      </h2>
+      <div class="content">
+        <h1 class="welcome-title">
+          Welcome to {{ productName }}
+        </h1>
+        <p class="welcome-description">
+          Congratulations for downloading
+          {{ productName }} — <strong>setup takes about 4 minutes</strong> to get your service mesh fully online.
+        </p>
+        <h2 class="welcome-detected">
+          We’ve automatically detected...
+        </h2>
 
-      <ul>
-        <ItemStatus
-          v-for="item in statuses"
-          :key="item.name"
-          :name="item.name"
-          :status="item.status"
-        />
-      </ul>
-
+        <ul>
+          <ItemStatus
+            v-for="item in statuses"
+            :key="item.name"
+            :name="item.name"
+            :status="item.status"
+          />
+        </ul>
+      </div>
       <OnboardingNavigation
         next-step="onboarding-deployment-types"
         next-step-title="Step 1"
@@ -109,17 +110,28 @@ export default {
 
 <style lang="scss" scoped>
 .classss {
-  @apply w-112 absolute left-0 right-0 mx-auto mt-8;
+  @apply w-112 absolute left-0 right-0 mx-auto mt-16;
 
   z-index: 1;
 
-  top: 330px;
-
-  top: 50%;
-  transform: translateY(-50%);
   opacity: 0;
 
+  top: 14.5vw;
+
+  @media screen and (max-width: 1699px) {
+    @apply mt-10;
+
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   animation: show 1.5s 7.2s 1 forwards;
+}
+
+.content {
+  @media screen and (min-width: 1700px) {
+    min-height: 23vw;
+  }
 }
 
 @keyframes show {
@@ -158,6 +170,7 @@ export default {
   top: 0;
   left: 0;
   z-index: -1;
+  overflow: scroll;
 }
 
 .skip-button {
