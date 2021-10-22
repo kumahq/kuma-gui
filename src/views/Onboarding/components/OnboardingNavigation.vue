@@ -11,6 +11,7 @@
     >
       Back
     </KButton>
+    <slot />
     <KButton
       v-if="shouldDisplayNext"
       class="navigation-button navigation-button--next"

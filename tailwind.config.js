@@ -11,6 +11,8 @@ module.exports = {
         80: '20rem',
         88: '22rem',
         96: '24rem',
+        104: '26rem',
+        112: '28rem',
       },
       minHeight: theme => ({
         ...theme('spacing'),
