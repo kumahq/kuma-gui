@@ -51,7 +51,7 @@ export default {
   computed: {
     classes() {
       return [
-        'mt-10 flex items-center flex-col sm:flex-row',
+        'mt-6 flex items-center flex-col sm:flex-row',
         {
           'justify-between': this.previousStep,
           'justify-end': !this.previousStep,
