@@ -42,6 +42,11 @@ export default {
     OnboardingHeading,
     OnboardingPage,
   },
+  metaInfo() {
+    return {
+      title: 'Populating a Mesh',
+    }
+  },
   data() {
     return {
       tableData: {

@@ -46,6 +46,11 @@ export default {
     OnboardingPage,
     Box,
   },
+  metaInfo() {
+    return {
+      title: 'Completed',
+    }
+  },
   data() {
     return {
       items: ['MESHES', 'ZONES', 'SERVICES', 'DPPs', 'POLICIES'],

@@ -56,6 +56,11 @@ export default {
     OnboardingHeading,
     OnboardingPage,
   },
+  metaInfo() {
+    return {
+      title: 'Adding New Services',
+    }
+  },
   data() {
     return {
       githubLink: 'https://github.com/kumahq/kuma-counter-demo/',

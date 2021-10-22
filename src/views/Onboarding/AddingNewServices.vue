@@ -61,6 +61,11 @@ export default {
     OnboardingPage,
     Box,
   },
+  metaInfo() {
+    return {
+      title: 'Adding New Services',
+    }
+  },
   computed: {
     ...mapGetters({
       onboardingMode: 'onboarding/getMode',

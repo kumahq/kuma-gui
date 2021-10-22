@@ -60,6 +60,11 @@ export default {
     OnboardingHeading,
     OnboardingPage,
   },
+  metaInfo() {
+    return {
+      title: 'Backend Types',
+    }
+  },
   data() {
     return { mode: 'kubernetess' }
   },

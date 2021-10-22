@@ -59,6 +59,11 @@ export default {
     OnboardingPage,
     Loading,
   },
+  metaInfo() {
+    return {
+      title: this.title,
+    }
+  },
   data() {
     return {
       tableData: {

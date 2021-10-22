@@ -1,6 +1,6 @@
 <template>
   <div class="screen">
-    <div class="classss">
+    <div class="welcome-container">
       <div class="content">
         <h1 class="welcome-title">
           Welcome to {{ productName }}
@@ -57,7 +57,6 @@ export default {
 
   metaInfo() {
     return {
-      // TODO CHANGE
       title: `Welcome to ${PRODUCT_NAME}!`,
     }
   },
@@ -109,14 +108,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.classss {
-  @apply w-112 absolute left-0 right-0 mx-auto mt-16;
-
-  z-index: 1;
-
-  opacity: 0;
+.welcome-container {
+  @apply w-112 absolute left-0 right-0 mx-auto mt-16 opacity-0 z-10;
 
   top: 14.5vw;
+  animation: show 1.5s 7.2s 1 forwards;
 
   @media screen and (max-width: 1699px) {
     @apply mt-10;
@@ -124,23 +120,11 @@ export default {
     top: 50%;
     transform: translateY(-50%);
   }
-
-  animation: show 1.5s 7.2s 1 forwards;
 }
 
 .content {
   @media screen and (min-width: 1700px) {
     min-height: 23vw;
-  }
-}
-
-@keyframes show {
-  0% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
   }
 }
 
@@ -150,17 +134,22 @@ export default {
   background: -webkit-linear-gradient(#260d50, #822dc5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  @media screen and (max-width: 1699px) {
+    @apply mb-3;
+  }
 }
 
 .welcome-description {
   @apply text-lg mb-12;
 
-  color: #260d50;
+  @media screen and (max-width: 1699px) {
+    @apply mb-5;
+  }
 }
 
 .welcome-detected {
   @apply text-2xl mb-8 font-bold;
-  color: #260d50;
 }
 
 .screen {
@@ -171,11 +160,22 @@ export default {
   left: 0;
   z-index: -1;
   overflow: scroll;
+  color: #260d50;
 }
 
 .skip-button {
   @apply font-medium mr-8;
 
   --KButtonBtnLink: rgba(38, 13, 80, 0.3);
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 </style>
