@@ -66,7 +66,7 @@ exports[`ShellWithHeader.vue renders component with route 1`] = `
                 data-v-14c8a976=""
               >
                 <a
-                  class="k-button no-underline success-button small primary"
+                  class="k-button success-button small primary"
                   data-v-14c8a976=""
                   data-v-38fa8ecf=""
                   href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"

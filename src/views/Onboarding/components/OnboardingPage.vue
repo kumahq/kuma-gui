@@ -12,7 +12,7 @@
       <slot name="navigation" />
     </div>
 
-    <div class="foo" />
+    <div class="background-image" />
   </div>
 </template>
 
@@ -57,6 +57,15 @@ export default {
   @media screen and (min-width: 768px) {
     max-width: 1075px;
   }
+
+  @media screen and (min-height: 950px) {
+    width: 100%;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    left: 0;
+    right: 0;
+  }
 }
 
 .k-radio {
@@ -64,7 +73,7 @@ export default {
   color: #5da46f;
 }
 
-.foo {
+.background-image {
   position: fixed;
   top: 0;
   z-index: -2;

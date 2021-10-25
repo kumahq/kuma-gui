@@ -62,7 +62,6 @@ export default {
   },
   data() {
     return {
-      mounted: false,
       productName: PRODUCT_NAME,
     }
   },

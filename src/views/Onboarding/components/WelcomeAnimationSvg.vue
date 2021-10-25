@@ -179,7 +179,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.mounted = true
-    }, 10)
+    }, 20)
   },
 }
 </script>
@@ -203,6 +203,12 @@ export default {
   );
   --path12: path('M605 817V497M1851 959h-518M944 570H390');
   --path13: path('M638 912H342M635 1139V912');
+
+  $pathLength1: 252;
+  $pathLength2: 469;
+  $pathLength3: 937.256;
+
+  $lengths: $pathLength1, $pathLength2, $pathLength3;
 
   position: absolute;
   min-width: 1700px;
@@ -330,6 +336,16 @@ export default {
       transform: scale(0);
       transition: 0.2s ease-in-out;
       transform-origin: 1022px 570px;
+    }
+
+    @for $i from 1 through 3 {
+      $length: nth($lengths, $i);
+      filter: hue-rotate(90deg) brightness(3) blur(5px);
+
+      &:nth-of-type(#{$i}) {
+        stroke-dasharray: #{$length}px #{$length}px;
+        stroke-dashoffset: -#{$length}px;
+      }
     }
   }
 

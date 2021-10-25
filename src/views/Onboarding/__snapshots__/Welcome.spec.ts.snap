@@ -3,152 +3,385 @@
 exports[`Welcome.vue renders snapshot 1`] = `
 <div>
   <div
-    class="onboarding-container"
+    class="screen"
   >
     <div
-      class="onboarding-container__header"
+      class="welcome-container"
     >
       <div
-        class="relative"
+        class="content"
       >
         <h1
-          class="onboarding-title"
+          class="welcome-title"
         >
           
-    Welcome to Kuma
-  
+        Welcome to Kuma
+      
         </h1>
          
         <p
-          class="text-center text-lg mt-3"
+          class="welcome-description"
         >
           
-    Congratulations for downloading Kuma! In just few steps your
-      service mesh will be fully online
-  
+        Congratulations for downloading
+        Kuma — 
+          <strong>
+            setup takes about 4 minutes
+          </strong>
+           to get your service mesh fully online.
+      
         </p>
          
-        <div
-          class="absolute right-0 top-0 mt-4 m-a flex items-center"
+        <h2
+          class="welcome-detected"
         >
-          <button
-            class="k-button skip-button small btn-link"
-            data-v-38fa8ecf=""
-            type="button"
+          
+        We’ve automatically detected...
+      
+        </h2>
+         
+        <ul>
+          <li
+            class="flex items-center mb-2"
           >
+            <span
+              class="circle"
+            >
+              <!---->
+            </span>
             
-      Skip Setup
-    
-          </button>
-        </div>
-      </div>
-    </div>
-     
-    <div
-      class="onboarding-container__content"
-    >
-      <div
-        class="w-full"
-      >
-        <div
-          class="md:w-2/3 mx-auto"
-        >
-          <p
+  Chose Deployment Type
+
+          </li>
+          <li
             class="flex items-center mb-2"
           >
-            <svg
-              class="kong-icon mr-2 kong-icon-check"
-              data-v-a7c9c1d2=""
-              height="14"
-              role="img"
-              viewBox="0 0 14 10"
-              width="14"
+            <span
+              class="circle"
             >
-              <title
-                data-v-a7c9c1d2=""
-              >
-                check
-              </title>
-              <g
-                data-v-a7c9c1d2=""
-              >
-                <path
-                  clip-rule="evenodd"
-                  d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
-                  data-v-a7c9c1d2=""
-                  fill="var(--logo-green)"
-                  fill-rule="evenodd"
-                />
-              </g>
-            </svg>
-             
-            <span>
-              
-          Automatically detected running in  Standalone  deployment
-        
+              <!---->
             </span>
-          </p>
-           
-          <p
+            
+  Kubernetes
+
+          </li>
+          <li
             class="flex items-center mb-2"
           >
-            <svg
-              class="kong-icon mr-2 kong-icon-check"
-              data-v-a7c9c1d2=""
-              height="14"
-              role="img"
-              viewBox="0 0 14 10"
-              width="14"
+            <span
+              class="circle"
             >
-              <title
+              <svg
+                class="kong-icon kong-icon-check"
                 data-v-a7c9c1d2=""
+                height="10"
+                role="img"
+                viewBox="0 0 14 10"
+                width="10"
               >
-                check
-              </title>
-              <g
-                data-v-a7c9c1d2=""
-              >
-                <path
-                  clip-rule="evenodd"
-                  d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                <title
                   data-v-a7c9c1d2=""
-                  fill="var(--logo-green)"
-                  fill-rule="evenodd"
-                />
-              </g>
-            </svg>
-             
-            <span>
-              
-          Automatically detected running in 
-              <span
-                class="capitalize"
-              >
-                
-              </span>
+                >
+                  check
+                </title>
+                <g
+                  data-v-a7c9c1d2=""
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                    data-v-a7c9c1d2=""
+                    fill="#260D50"
+                    fill-rule="evenodd"
+                  />
+                </g>
+              </svg>
             </span>
-          </p>
-        </div>
+            
+  Choose Backend Type
+
+          </li>
+          <li
+            class="flex items-center mb-2"
+          >
+            <span
+              class="circle"
+            >
+              <svg
+                class="kong-icon kong-icon-check"
+                data-v-a7c9c1d2=""
+                height="10"
+                role="img"
+                viewBox="0 0 14 10"
+                width="10"
+              >
+                <title
+                  data-v-a7c9c1d2=""
+                >
+                  check
+                </title>
+                <g
+                  data-v-a7c9c1d2=""
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
+                    data-v-a7c9c1d2=""
+                    fill="#260D50"
+                    fill-rule="evenodd"
+                  />
+                </g>
+              </svg>
+            </span>
+            
+  Populate a Mesh
+
+          </li>
+          <li
+            class="flex items-center mb-2"
+          >
+            <span
+              class="circle"
+            >
+              <!---->
+            </span>
+            
+  Add Services
+
+          </li>
+        </ul>
       </div>
-    </div>
-     
-    <div
-      class="mt-10 flex items-center flex-col sm:flex-row justify-end"
-    >
-      <!---->
        
-      <a
-        aria-current="page"
-        class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-        data-v-38fa8ecf=""
-        href="#/"
-        type="button"
+      <div
+        class="mt-6 flex items-center flex-col sm:flex-row justify-end"
       >
-        
-    Next
+        <!---->
+         
+        <button
+          class="k-button skip-button small btn-link"
+          data-v-38fa8ecf=""
+          type="button"
+        >
+          
+        Skip Setup
+      
+        </button>
+         
+        <a
+          aria-current="page"
+          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+          data-v-38fa8ecf=""
+          href="#/"
+          type="button"
+        >
+          
+    Step 1
   
-      </a>
+        </a>
+      </div>
     </div>
+     
+    <svg
+      class="svg"
+      viewBox="0 0 1920 1080"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs />
+       
+      <defs>
+        <lineargradient
+          id="a"
+          x1="64.8%"
+          x2="34.4%"
+          y1="-12.6%"
+          y2="153.1%"
+        >
+          <stop
+            offset="0%"
+            stop-color="#260D50"
+          />
+           
+          <stop
+            offset="100%"
+            stop-color="#822DC5"
+          />
+        </lineargradient>
+         
+        <lineargradient
+          id="b"
+          x1="0%"
+          x2="107.4%"
+          y1="41.5%"
+          y2="41.5%"
+        >
+          <stop
+            offset="0%"
+            stop-color="#260D50"
+          />
+           
+          <stop
+            offset="100%"
+            stop-color="#822DC5"
+          />
+        </lineargradient>
+      </defs>
+       
+      <g
+        fill="none"
+        fill-rule="evenodd"
+        mask="url(#ccard)"
+        transform="translate(-63 -285)"
+      >
+        <g
+          stroke="#822DC5"
+          stroke-width="6"
+        >
+          <path
+            class="nodepath"
+            d="M1444 893h252"
+          />
+           
+          <path
+            class="nodepath"
+            d="M1529 705h232M1452 603h237"
+            stroke-opacity=".4"
+          />
+           
+          <path
+            class="nodepath"
+            d="M1754 563l-332 332h-76M1444 935l121 121M263 859l156 156"
+          />
+           
+          <path
+            class="nodepath"
+            d="M742 781H556"
+            stroke-opacity=".4"
+          />
+           
+          <path
+            class="nodepath"
+            d="M697 736H513"
+          />
+           
+          <path
+            class="nodepath"
+            d="M695 783V577"
+            stroke-opacity=".4"
+          />
+           
+          <path
+            class="nodepath"
+            d="M261 1026V751M509 573V438M1502 415l291 290"
+          />
+           
+          <path
+            class="nodepath"
+            d="M698 912L26 240M1368 411v540l61 61 95-95M1434 3h267l193 192v354"
+            stroke-opacity=".4"
+          />
+           
+          <path
+            class="nodepath"
+            d="M517 411h342l138 138M1416 573v242l371 323"
+          />
+           
+          <path
+            class="nodepath"
+            d="M1486 817V612l-146-146M839 243h-97l-83 84v348M1698 1063V817l58-57h122M1069 299L558 810M696 1058H585L468 941V570L322 424"
+          />
+           
+          <path
+            class="nodepath"
+            d="M277 528l160 160 236-236 121 121M632 979h-45l-67-67v-86H0M106 669h275M70 707h331M207 745h210M85 784h356M1417 558h228M1609 634h203M528 946h76M619 604v131M1359 567l125 125M1332 594l156 156M1594 1070V959M381 632L260 753"
+          />
+           
+          <path
+            class="nodepath"
+            d="M605 817V497M1851 959h-518M944 570H390"
+            stroke-opacity=".4"
+          />
+           
+          <path
+            class="nodepath"
+            d="M638 912H342M635 1139V912"
+          />
+           
+          <path
+            class="final"
+            d="M1024 573h297v522h-31"
+            stroke="url(#a)"
+            transform="translate(0 3)"
+          />
+           
+          <path
+            class="final circle"
+            d="M1024 592a18 18 0 100-36 18 18 0 000 36z"
+            fill="url(#b)"
+            fill-rule="nonzero"
+            transform="translate(0 3)"
+          />
+        </g>
+         
+        <foreignobject
+          height="100%"
+          width="100%"
+          x="0"
+          y="0"
+        >
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+           
+          <div />
+        </foreignobject>
+      </g>
+    </svg>
   </div>
 </div>
 `;

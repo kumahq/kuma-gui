@@ -2,127 +2,133 @@
 
 exports[`Completed.vue renders snapshot 1`] = `
 <div>
-  <div
-    class="onboarding-container"
-  >
+  <div>
     <div
-      class="onboarding-container__header"
+      class="onboarding-container"
     >
       <div
-        class="relative"
+        class="onboarding-container__header"
       >
-        <h1
-          class="onboarding-title"
+        <div
+          class="relative"
         >
-          
+          <h1
+            class="onboarding-title"
+          >
+            
     Go to the dashboard
   
-        </h1>
-         
-        <p
-          class="text-center text-lg mt-3"
-        >
-          
+          </h1>
+           
+          <p
+            class="text-center text-lg mt-3"
+          >
+            
     You have completed the initial wizard! You can now visualize the dashboard were you can find:
   
-        </p>
-         
-        <!---->
+          </p>
+           
+          <!---->
+        </div>
       </div>
-    </div>
-     
-    <div
-      class="onboarding-container__content"
-    >
+       
       <div
-        class="w-full"
+        class="onboarding-container__content"
       >
-        <div>
-          <div
-            class="justify-between flex my-4"
-          >
+        <div
+          class="w-full"
+        >
+          <div>
             <div
-              class="box box--small"
-              data-testid="box"
+              class="justify-between flex my-4"
             >
               <div
-                class="flex h-full items-end font-bold tracking-wider"
+                class="box box--small"
+                data-testid="box"
               >
-                
+                <div
+                  class="flex h-full items-end font-bold tracking-wider"
+                >
+                  
             MESHES
           
+                </div>
               </div>
-            </div>
-            <div
-              class="box box--small"
-              data-testid="box"
-            >
               <div
-                class="flex h-full items-end font-bold tracking-wider"
+                class="box box--small"
+                data-testid="box"
               >
-                
+                <div
+                  class="flex h-full items-end font-bold tracking-wider"
+                >
+                  
             ZONES
           
+                </div>
               </div>
-            </div>
-            <div
-              class="box box--small"
-              data-testid="box"
-            >
               <div
-                class="flex h-full items-end font-bold tracking-wider"
+                class="box box--small"
+                data-testid="box"
               >
-                
+                <div
+                  class="flex h-full items-end font-bold tracking-wider"
+                >
+                  
             SERVICES
           
+                </div>
               </div>
-            </div>
-            <div
-              class="box box--small"
-              data-testid="box"
-            >
               <div
-                class="flex h-full items-end font-bold tracking-wider"
+                class="box box--small"
+                data-testid="box"
               >
-                
+                <div
+                  class="flex h-full items-end font-bold tracking-wider"
+                >
+                  
             DPPs
           
+                </div>
               </div>
-            </div>
-            <div
-              class="box box--small"
-              data-testid="box"
-            >
               <div
-                class="flex h-full items-end font-bold tracking-wider"
+                class="box box--small"
+                data-testid="box"
               >
-                
+                <div
+                  class="flex h-full items-end font-bold tracking-wider"
+                >
+                  
             POLICIES
           
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+       
+      <div
+        class="mt-6 flex items-center flex-col sm:flex-row justify-end"
+      >
+        <!---->
+          
+        <a
+          aria-current="page"
+          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+          data-v-38fa8ecf=""
+          href="#/"
+          type="button"
+        >
+          
+    View Dashboard
+  
+        </a>
+      </div>
     </div>
      
     <div
-      class="mt-10 flex items-center flex-col sm:flex-row justify-end"
-    >
-      <!---->
-       
-      <a
-        aria-current="page"
-        class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-        data-v-38fa8ecf=""
-        href="#/"
-        type="button"
-      >
-        
-    View Dashboard
-  
-      </a>
-    </div>
+      class="background-image"
+    />
   </div>
 </div>
 `;
