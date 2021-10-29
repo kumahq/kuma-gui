@@ -241,6 +241,8 @@ export default {
       --duration: 5s;
       offset-distance: var(--start);
       filter: hue-rotate(180deg) brightness(6) blur(40px);
+      will-change: offset-distance, filter;
+
       &:before,
       &:after {
         content: '';
@@ -328,6 +330,8 @@ export default {
     stroke-dashoffset: -1000px;
     filter: hue-rotate(180deg) brightness(6) blur(40px);
     opacity: 0.3;
+    will-change: stroke-dashoffset, filter;
+
     &.final {
       stroke-dashoffset: 1000px;
     }
