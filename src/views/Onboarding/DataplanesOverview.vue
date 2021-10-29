@@ -15,6 +15,7 @@
             Found {{ tableData.data.length }} DPPs, including:
           </p>
           <KTable
+            class="onboarding-dataplane-table"
             :options="tableData"
             is-small
           >
@@ -132,3 +133,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.onboarding-dataplane-table tbody tr {
+  // hack to do not allow shadow overflow on top/bottom
+  box-shadow: -3px 0 0 -1px var(--KTableBorder, var(--steel-200, #dae3f2)) !important;
+}
+</style>

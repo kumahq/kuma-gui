@@ -75,14 +75,15 @@ export default {
 
   &--back {
     color: #646464 !important;
-    --KButtonPrimaryBase: #f6f8fd;
-    --KButtonPrimaryHover: #{darken(#f6f8fd, 5%)};
-    --KButtonPrimaryActive: #{darken(#f6f8fd, 5%)};
+    --KButtonPrimaryBase: var(--OnboardingBackButton);
+    --KButtonPrimaryHover: var(--OnboardingBackButtonHover);
+    --KButtonPrimaryActive: var(--OnboardingBackButtonHover);
   }
+
   &--next {
-    --KButtonPrimaryBase: #5da46f;
-    --KButtonPrimaryHover: #{darken(#5da46f, 5%)};
-    --KButtonPrimaryActive: #{darken(#5da46f, 5%)};
+    --KButtonPrimaryBase: var(--OnboardingNextButton);
+    --KButtonPrimaryHover: var(--OnboardingNextButtonHover);
+    --KButtonPrimaryActive: var(--OnboardingNextButtonHover);
   }
 }
 </style>

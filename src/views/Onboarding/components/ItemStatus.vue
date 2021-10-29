@@ -5,7 +5,7 @@
         v-if="status"
         icon="check"
         size="10"
-        color="#260D50"
+        color="var(--kuma-purple-1)"
       />
     </span>
     {{ name }}
@@ -32,6 +32,6 @@ export default {
 .circle {
   @apply flex items-center justify-center w-5 h-5 rounded-full mr-2;
 
-  background-color: rgba(38, 13, 80, 0.1);
+  background-color: rgba(var(--kuma-purple-1-rgb), 0.1);
 }
 </style>

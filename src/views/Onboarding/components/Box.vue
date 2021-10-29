@@ -54,10 +54,10 @@ export default {
 
   border: 3px solid #c2c2c2;
   border-radius: 5px;
-  box-shadow: 4px 4px 14px 4px rgba(103, 71, 128, 0.11);
+  box-shadow: 4px 4px 14px 4px var(--OnboardingShadow);
 
   &--active {
-    border-color: #7b2bbc;
+    border-color: var(--OnbordingBoxBorder);
   }
 
   &--small {

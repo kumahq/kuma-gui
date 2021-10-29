@@ -134,8 +134,8 @@ export default {
 .welcome-title {
   @apply text-5xl font-bold mb-6;
 
-  background: -webkit-linear-gradient(#260d50, #822dc5);
-  -webkit-background-clip: text;
+  background: linear-gradient(to right, var(--OnboardingTitle));
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 
   @media screen and (max-width: 1699px) {
@@ -163,13 +163,13 @@ export default {
   left: 0;
   z-index: -1;
   overflow: scroll;
-  color: #260d50;
+  color: var(--kuma-purple-1);
 }
 
 .skip-button {
   @apply font-medium mr-8;
 
-  --KButtonBtnLink: rgba(38, 13, 80, 0.3);
+  --KButtonBtnLink: var(--OnboardingSkipSetupButton);
 }
 
 @keyframes show {

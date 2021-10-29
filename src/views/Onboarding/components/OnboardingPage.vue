@@ -45,12 +45,12 @@ export default {
   &__content {
     @apply relative flex items-center justify-center p-10 w-full bg-white text-lg;
     min-height: 500px;
-    box-shadow: 4px 4px 14px 4px rgba(103, 71, 128, 0.11);
+    box-shadow: var(--OnboardingShadow);
 
     --KTableHeaderSize: 18px;
 
     &--with-image {
-      background: #f6f8fd;
+      background: var(--OnboardingPageGraphBackground);
     }
   }
 
@@ -69,8 +69,8 @@ export default {
 }
 
 .k-radio {
-  --KRadioPrimary: #5da46f;
-  color: #5da46f;
+  --KRadioPrimary: var(--OnboardingRadio);
+  color: var(--OnboardingRadio);
 }
 
 .background-image {

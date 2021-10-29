@@ -62,14 +62,14 @@ export default {
 .onboarding-title {
   @apply text-center text-4xl font-bold;
 
-  background: -webkit-linear-gradient(#260d50, #822dc5);
-  -webkit-background-clip: text;
+  background: linear-gradient(to right, var(--OnboardingTitle));
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .skip-button {
   @apply font-medium;
 
-  --KButtonBtnLink: rgba(38, 13, 80, 0.3);
+  --KButtonBtnLink: var(--OnboardingSkipSetupButton);
 }
 </style>

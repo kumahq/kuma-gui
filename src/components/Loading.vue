@@ -27,7 +27,11 @@ export default {
     height: 18px;
     width: 18px;
     border-radius: 50%;
-    background: linear-gradient(90deg, rgba(130, 45, 197, 0.3) 0%, rgba(130, 45, 197, 0.3) 107.42%);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--OnboardingLoading), 0.3) 0%,
+      rgba(var(--OnboardingLoading), 0.3) 107.42%
+    );
     animation: loadingAnimation 0.5s infinite linear alternate;
 
     &:nth-of-type(2) {
@@ -49,15 +53,23 @@ export default {
 @keyframes loadingAnimation {
   0%,
   50% {
-    background: linear-gradient(90deg, rgba(130, 45, 197, 0.3) 0%, rgba(130, 45, 197, 0.3) 107.42%);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--OnboardingLoading), 0.3) 0%,
+      rgba(var(--OnboardingLoading), 0.3) 107.42%
+    );
   }
 
   75% {
-    background: linear-gradient(90deg, rgba(130, 45, 197, 0.6) 0%, rgba(130, 45, 197, 0.6) 107.42%);
+    background: linear-gradient(
+      90deg,
+      rgba(var(--OnboardingLoading), 0.6) 0%,
+      rgba(var(--OnboardingLoading), 0.6) 107.42%
+    );
   }
 
   100% {
-    background: linear-gradient(90deg, #822dc5 0%, #822dc5 107.42%);
+    background: linear-gradient(90deg, rgba(var(--OnboardingLoading), 1) 0%, rgba(var(--OnboardingLoading), 1) 107.42%);
   }
 }
 </style>

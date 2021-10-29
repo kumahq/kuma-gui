@@ -179,7 +179,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.mounted = true
-    }, 20)
+    }, 30)
   },
 }
 </script>

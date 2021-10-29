@@ -149,4 +149,40 @@
 
   // Empty State
   --KEmptyStateContentWidth: 85%;
+
+  // Onboarding
+
+  --kuma-purple-1: #260D50;
+  --kuma-purple-1-rgb: 38, 13, 80;
+
+  --kuma-purple-2: #822DC5;
+  --kuma-purple-2-rgb: 130, 45, 197;
+
+  --kuma-gradient: var(--kuma-purple-1), var(--kuma-purple-2);
+
+  --onboarding-green: #5da46f;
+  --onboarding-green-darken: #539464;
+
+  --onboarding-blueish: #f6f8fd;
+  --onboarding-blueish-darken: #e1e8f8;
+
+  --OnboardingTitle: var(--kuma-gradient);
+
+  --OnboardingRadio: var(--onboarding-green);
+
+  --OnboardingPageGraphBackground: var(--onboarding-blueish);
+
+  --OnboardingNextButton: var(--onboarding-green);
+  --OnboardingNextButtonHover: var(--onboarding-green-darken);
+
+  --OnboardingBackButton: var(--onboarding-blueish);
+  --OnboardingBackButtonHover: var(--onboarding-blueish-darken);
+
+  --OnboardingSkipSetupButton: rgba(var(--kuma-purple-1-rgb), 0.3);
+
+  --OnbordingBoxBorder: #7b2bbc;
+
+  --OnboardingLoading: var(--kuma-purple-2-rgb);
+
+  --OnboardingShadow: 4px 4px 14px 4px rgba(103, 71, 128, 0.11);
 }
