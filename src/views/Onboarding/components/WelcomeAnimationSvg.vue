@@ -207,8 +207,10 @@ export default {
   $pathLength1: 252;
   $pathLength2: 469;
   $pathLength3: 937.256;
+  $pathLength4: 186;
+  $pathLength5: 184;
 
-  $lengths: $pathLength1, $pathLength2, $pathLength3;
+  $lengths: $pathLength1, $pathLength2, $pathLength3, pathLength4, pathLength5;
 
   position: absolute;
   min-width: 1700px;
@@ -338,9 +340,9 @@ export default {
       transform-origin: 1022px 570px;
     }
 
-    @for $i from 1 through 3 {
+    @for $i from 1 through 5 {
       $length: nth($lengths, $i);
-      filter: hue-rotate(90deg) brightness(3) blur(5px);
+      filter: hue-rotate(40deg) brightness(2) blur(4px);
 
       &:nth-of-type(#{$i}) {
         stroke-dasharray: #{$length}px #{$length}px;

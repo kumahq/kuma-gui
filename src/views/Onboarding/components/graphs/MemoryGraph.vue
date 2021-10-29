@@ -105,7 +105,7 @@
       placement="rightEnd"
       :popover-timeout="5"
     >
-      <g class="cursor-help animate-pulse ">
+      <g class="cursor-help animate-pulse">
         <g filter="url(#filter4_d)">
           <circle
             cx="495"

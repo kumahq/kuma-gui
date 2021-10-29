@@ -91,8 +91,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      isMultiZone: 'config/getMulticlusterStatus',
-      env: 'config/getEnvironment',
       onboardingMode: 'onboarding/getMode',
     }),
   },

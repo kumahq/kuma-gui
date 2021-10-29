@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 import KubernetesGraph from '@/views/Onboarding/components/graphs/KubernetesGraph'
 import PostgresGraph from '@/views/Onboarding/components/graphs/PostgresGraph'
 import MemoryGraph from '@/views/Onboarding/components/graphs/MemoryGraph'
@@ -69,9 +67,6 @@ export default {
     return { mode: 'kubernetess' }
   },
   computed: {
-    ...mapGetters({
-      title: 'config/getTagline',
-    }),
     currentGraph() {
       switch (this.mode) {
         case 'kubernetess':

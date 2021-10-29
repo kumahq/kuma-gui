@@ -1,6 +1,6 @@
 <template>
   <li class="flex items-center mb-2">
-    <span :class="circleClasses">
+    <span class="circle">
       <KIcon
         v-if="status"
         icon="check"
@@ -23,12 +23,6 @@ export default {
     status: {
       type: Boolean,
       default: false,
-    },
-  },
-
-  computed: {
-    circleClasses() {
-      return ['circle', {}]
     },
   },
 }

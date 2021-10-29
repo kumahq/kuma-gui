@@ -42,7 +42,7 @@
 
 <script>
 import { PRODUCT_NAME } from '@/consts'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import ItemStatus from './components/ItemStatus'
 import WelcomeAnimationSvg from './components/WelcomeAnimationSvg'
@@ -66,6 +66,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      environment: 'config/getEnvironment',
+      getMulticlusterStatus: 'config/getMulticlusterStatus',
+    }),
     statuses() {
       return [
         {
@@ -73,19 +77,19 @@ export default {
           status: false,
         },
         {
-          name: 'Kubernetes',
+          name: 'Choose Backend Type',
           status: false,
         },
         {
-          name: 'Choose Backend Type',
+          name: this.environment.charAt(0).toUpperCase() + this.environment.slice(1),
+          status: true,
+        },
+        {
+          name: this.getMulticlusterStatus ? ' Multi-Zone ' : ' Standalone',
           status: true,
         },
         {
           name: 'Populate a Mesh',
-          status: true,
-        },
-        {
-          name: 'Add Services',
           status: false,
         },
       ]
