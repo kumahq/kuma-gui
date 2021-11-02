@@ -196,9 +196,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
         const sidebarInsightsPromise = dispatch('sidebar/getInsights')
 
-        const meshInsightsPromise = dispatch('fetchMeshInsights', getters.getSelectedMesh)
-
-        await Promise.all([meshPromise, dataplanePromise, configPromise, meshInsightsPromise, sidebarInsightsPromise])
+        await Promise.all([meshPromise, dataplanePromise, configPromise, sidebarInsightsPromise])
       }
 
       commit('SET_GLOBAL_LOADING', { globalLoading: false })
