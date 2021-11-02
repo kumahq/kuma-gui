@@ -62,10 +62,31 @@
       }
     }
   },
-  "mTLS": {},
+  "mTLS": {
+    "issuedBackends": {
+      "ca-2": {
+        "total": 2,
+        "online": 2
+      },
+      "ca-1": {
+        "total": 4,
+        "online": 4
+      }
+    },
+    "supportedBackends": {
+      "ca-2": {
+        "total": 2,
+        "online": 2
+      },
+      "ca-1": {
+        "total": 4,
+        "online": 4
+      }
+    }
+  },
   "services": {
-    "total": 2,
-    "internal": 0,
-    "external": 2
+    "total": 1,
+    "internal": 1,
+    "external": 0
   }
 }
