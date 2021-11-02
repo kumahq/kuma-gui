@@ -193,7 +193,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -246,7 +246,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -275,7 +275,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -328,7 +328,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -357,7 +357,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -410,7 +410,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -439,7 +439,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -468,7 +468,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -522,7 +522,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -552,7 +552,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -582,7 +582,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -612,7 +612,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -642,7 +642,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -672,7 +672,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -702,7 +702,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -732,7 +732,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -762,7 +762,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -792,7 +792,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 
@@ -822,7 +822,7 @@ exports[`Sidebar.vue renders snapshot 1`] = `
 
         
             <span
-              class="amount"
+              class="amount amount--empty"
             >
               
 

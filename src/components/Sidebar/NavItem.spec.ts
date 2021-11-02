@@ -75,4 +75,29 @@ describe('NavItem.vue', () => {
 
     expect(screen.getByText(/99+/)).toBeInTheDocument()
   })
+
+  it('renders additonal class when amount equal to 0', () => {
+    renderWithVuex(NavItem, {
+      routes,
+      propsData: {
+        ...basicProps,
+        insightsFieldAccessor: 'dataplanes.total',
+      },
+      store: {
+        modules: {
+          sidebar: {
+            state: {
+              insights: {
+                dataplanes: {
+                  total: 0,
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+
+    expect(screen.getByText(/0/)).toHaveClass('amount--empty')
+  })
 })

@@ -196,7 +196,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -249,7 +249,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -278,7 +278,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -331,7 +331,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -360,7 +360,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -413,7 +413,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -442,7 +442,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -471,7 +471,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -525,7 +525,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -555,7 +555,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -585,7 +585,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -615,7 +615,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -645,7 +645,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -675,7 +675,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -705,7 +705,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -735,7 +735,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -765,7 +765,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -795,7 +795,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 
@@ -825,7 +825,7 @@ exports[`Shell.vue renders component with route 1`] = `
 
         
               <span
-                class="amount"
+                class="amount amount--empty"
               >
                 
 

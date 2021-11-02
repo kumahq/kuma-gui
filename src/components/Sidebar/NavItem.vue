@@ -48,7 +48,7 @@
 
           <span
             v-if="insightsFieldAccessor"
-            class="amount"
+            :class="insightsClassess"
           >
 
             {{ amount }}
@@ -123,6 +123,15 @@ export default {
     ...mapState('sidebar', {
       insights: (state) => state.insights,
     }),
+
+    insightsClassess() {
+      return [
+        'amount',
+        {
+          'amount--empty': this.amount === 0,
+        },
+      ]
+    },
     amount() {
       const value = get(this.insights, this.insightsFieldAccessor, 0)
 
@@ -248,6 +257,10 @@ export default {
 
   background-color: var(--gray-2);
   right: 1px;
+
+  &--empty {
+    background-color: var(--gray-4);
+  }
 }
 </style>
 
