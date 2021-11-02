@@ -4,8 +4,8 @@ exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
 <div>
   <div
     class="nav-item is-menu-item"
+    data-testid="default"
   >
-     
     <a
       class=""
       href="#/all/default"
@@ -17,9 +17,10 @@ exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
       >
         
         Default
-      
+
+        
+        <!---->
       </div>
-       
     </a>
   </div>
 </div>

@@ -8,6 +8,7 @@
       { 'is-nested': nested }
     ]"
     class="nav-item"
+    :data-testid="link"
   >
     <router-link
       :to="routerLink"

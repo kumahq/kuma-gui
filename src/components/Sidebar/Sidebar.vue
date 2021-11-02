@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
@@ -78,6 +79,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      selectedMesh: 'getSelectedMesh',
+    }),
     titleNavItems() {
       return this.menu.find((i) => i.position === 'top').items
     },
@@ -132,6 +136,13 @@ export default {
     },
   },
 
+  watch: {
+    selectedMesh(vaue) {
+      console.log('selected', vaue)
+      this.getMeshInsights()
+    },
+  },
+
   mounted() {
     this.sidebarEvent()
   },
@@ -141,6 +152,9 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      getMeshInsights: 'sidebar/getMeshInsights',
+    }),
     getNavItems(menu, position, items) {
       return menu.find((i) => i.position === position).items
     },

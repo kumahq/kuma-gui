@@ -78,7 +78,7 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
 
     const globalInsights = {
       meshes: globalInsightsRawData.meshes.total,
-      zoneCps: globalInsightsRawData.zones.total,
+      zones: globalInsightsRawData.zones.total,
       zoneIngresses: globalInsightsRawData.zoneIngresses.total,
     }
 
