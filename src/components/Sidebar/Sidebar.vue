@@ -138,7 +138,6 @@ export default {
 
   watch: {
     selectedMesh(vaue) {
-      console.log('selected', vaue)
       this.getMeshInsights()
     },
   },
