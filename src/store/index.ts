@@ -123,7 +123,7 @@ export default (): Module<RootInterface, RootInterface> => ({
     SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
 
     // NEW
-    SET_INTERNAL_SERVICE_SUMMARY: (state, { data = [] } = {}) => {
+    SET_INTERNAL_SERVICE_SUMMARY: (state, { items = [] } = {}) => {
       const { serviceSummary } = state
 
       const reducer = (acc: TODO, { status = 'offline' }) => ({
@@ -133,7 +133,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       const initialState = { online: 0, partially_degraded: 0, offline: 0 }
 
-      const { online, offline, partially_degraded: partiallyDegraded } = data.reduce(reducer, initialState)
+      const { online, offline, partially_degraded: partiallyDegraded } = items.reduce(reducer, initialState)
 
       const total = online + offline + partiallyDegraded
 
@@ -152,7 +152,7 @@ export default (): Module<RootInterface, RootInterface> => ({
       state.serviceSummary.total = state.serviceSummary.internal.total + total
     },
     SET_MESH_INSIGHT: (state, value) => (state.meshInsight = parseInsightReducer(value)),
-    SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value.data)),
+    SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value.items)),
     SET_ZONES_INSIGHTS_FETCHING: (state, value) => (state.zonesInsightsFetching = value),
     SET_MESH_INSIGHTS_FETCHING: (state, value) => (state.meshInsightsFetching = value),
     SET_SERVICE_INSIGHTS_FETCHING: (state, value) => (state.serviceInsightsFetching = value),
@@ -194,7 +194,11 @@ export default (): Module<RootInterface, RootInterface> => ({
         // bootstrap config data
         const configPromise = dispatch('config/bootstrapConfig')
 
-        await Promise.all([meshPromise, dataplanePromise, configPromise])
+        const sidebarInsightsPromise = dispatch('sidebar/getInsights')
+
+        const meshInsightsPromise = dispatch('fetchMeshInsights', getters.getSelectedMesh)
+
+        await Promise.all([meshPromise, dataplanePromise, configPromise, meshInsightsPromise, sidebarInsightsPromise])
       }
 
       commit('SET_GLOBAL_LOADING', { globalLoading: false })
@@ -444,12 +448,12 @@ export default (): Module<RootInterface, RootInterface> => ({
       dispatch('setOverviewEnvoyVersionsChartData')
     },
 
-    setOverviewZonesChartData({ state, commit }, { data = [] }) {
-      const total = data.length
+    setOverviewZonesChartData({ state, commit }, { items = [] }) {
+      const total = items.length
 
       let online = 0
 
-      data.forEach((item: any): void => {
+      items.forEach((item: any): void => {
         const { status } = getItemStatusFromInsight(item.zoneInsight)
 
         if (status === ONLINE) {
@@ -530,8 +534,8 @@ export default (): Module<RootInterface, RootInterface> => ({
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'dataplanes', data })
     },
 
-    setOverviewZonesCPVersionsChartData({ state, commit }, { data }) {
-      const chartData = data.reduce((acc: TODO, curr: TODO) => {
+    setOverviewZonesCPVersionsChartData({ state, commit }, { items }) {
+      const chartData = items.reduce((acc: TODO, curr: TODO) => {
         const { subscriptions } = curr.zoneInsight
 
         if (!subscriptions.length) {

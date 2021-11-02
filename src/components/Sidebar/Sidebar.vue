@@ -54,8 +54,8 @@
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
+import menu from '@/components/Sidebar/menu'
 
-import { mapState } from 'vuex'
 import { APP_WINDOW } from '@/consts'
 
 export default {
@@ -73,14 +73,11 @@ export default {
       toggleWorkspaces: false,
       isHovering: false,
       subnavIsExpanded: true,
+      menu,
     }
   },
 
   computed: {
-    ...mapState('sidebar', {
-      menu: (state) => state.menu,
-    }),
-
     titleNavItems() {
       return this.menu.find((i) => i.position === 'top').items
     },

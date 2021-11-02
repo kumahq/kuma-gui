@@ -35,6 +35,12 @@ const mockFilenameBasePaths: string[] = [
   'meshes/kong-mania-12',
   'meshes/hello-world',
 
+  'meshes/default/service-insights',
+
+  'meshes/default/external-services',
+  'meshes/default/external-services/httpbin',
+  'meshes/default/external-services/httpbin2',
+
   'meshes/default/dataplanes',
   'meshes/default/dataplanes/test-dp-02',
   'meshes/default/dataplanes/ingress-dp-test-123',
@@ -98,6 +104,8 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/dataplanes+insights/frontend',
   'meshes/default/dataplanes+insights/db',
   'meshes/default/dataplanes+insights/no-subscriptions',
+
+  'global-insights',
 ]
 
 const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {

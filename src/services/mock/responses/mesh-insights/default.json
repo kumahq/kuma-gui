@@ -9,12 +9,21 @@
     "online": 3,
     "partiallyDegraded": 5
   },
+  "dataplanesByType": {
+    "standard": {
+      "total": 8,
+      "online": 2,
+      "partiallyDegraded": 4
+    },
+    "gateway": {
+      "total": 5,
+      "online": 1,
+      "partiallyDegraded": 1
+    }
+  },
   "policies": {
     "Secret": {
       "total": 6
-    },
-    "ServiceInsight": {
-      "total": 11
     },
     "TrafficPermission": {
       "total": 3
@@ -29,7 +38,7 @@
         "total": 3,
         "online": 2
       },
-      "1.0.5": {
+      "1.0.0-rc2": {
         "total": 1,
         "online": 1
       },
@@ -70,9 +79,14 @@
         "online": 6
       },
       "ca-1": {
-        "total": 5,
-        "online": 5
+        "total": 6,
+        "online": 6
       }
     }
+  },
+  "services": {
+    "total": 3,
+    "internal": 2,
+    "external": 1
   }
 }

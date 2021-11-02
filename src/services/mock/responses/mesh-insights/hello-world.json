@@ -8,6 +8,18 @@
     "total": 1,
     "partiallyDegraded": 1
   },
+  "dataplanesByType": {
+    "standard": {
+      "total": 1,
+      "online": 0,
+      "partiallyDegraded": 1
+    },
+    "gateway": {
+      "total": 0,
+      "online": 0,
+      "partiallyDegraded": 0
+    }
+  },
   "policies": {
     "Secret": {
       "total": 1
@@ -50,26 +62,10 @@
       }
     }
   },
-  "mTLS": {
-    "issuedBackends": {
-      "ca-2": {
-        "total": 2,
-        "online": 2
-      },
-      "ca-1": {
-        "total": 4,
-        "online": 4
-      }
-    },
-    "supportedBackends": {
-      "ca-2": {
-        "total": 2,
-        "online": 2
-      },
-      "ca-1": {
-        "total": 4,
-        "online": 4
-      }
-    }
+  "mTLS": {},
+  "services": {
+    "total": 2,
+    "internal": 0,
+    "external": 2
   }
 }

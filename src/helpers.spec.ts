@@ -66,8 +66,8 @@ describe('helpers', () => {
 
       const response = (await fetchAllResources({ callEndpoint: request })) as AllResourceResponse
 
-      expect(response.data.length).toBe(501)
-      expect(response.data[0]).toBe('')
+      expect(response.items.length).toBe(501)
+      expect(response.items[0]).toBe('')
       expect(response.total).toBe(501)
       expect(request).toHaveBeenCalledTimes(2)
       expect(request).toHaveBeenNthCalledWith(1, { offset: 0, size: 500 })
