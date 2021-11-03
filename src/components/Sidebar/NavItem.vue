@@ -8,8 +8,8 @@
       { 'is-nested': nested }
     ]"
     class="nav-item"
+    :data-testid="link"
   >
-    <slot />
     <router-link
       :to="routerLink"
       @click.native="onNavItemClick"
@@ -45,15 +45,23 @@
       >
         <slot name="item-link">
           {{ name }}
+
+          <span
+            v-if="insightsFieldAccessor"
+            :class="insightsClassess"
+          >
+
+            {{ amount }}
+          </span>
         </slot>
       </div>
-      <slot />
     </router-link>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
+import get from 'lodash/get'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 
@@ -61,6 +69,11 @@ export default {
   name: 'NavItem',
   props: {
     link: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    insightsFieldAccessor: {
       type: String,
       default: '',
       required: false,
@@ -107,6 +120,27 @@ export default {
     ...mapGetters({
       selectedMesh: 'getSelectedMesh',
     }),
+    ...mapState('sidebar', {
+      insights: (state) => state.insights,
+    }),
+
+    insightsClassess() {
+      return [
+        'amount',
+        {
+          'amount--empty': this.amount === 0,
+        },
+      ]
+    },
+    amount() {
+      const value = get(this.insights, this.insightsFieldAccessor, 0)
+
+      if (value > 99) {
+        return '99+'
+      }
+
+      return value
+    },
     routerLink() {
       const params = {
         mesh: this.selectedMesh,
@@ -215,6 +249,17 @@ export default {
     a {
       padding: 5px 15px;
     }
+  }
+}
+
+.amount {
+  @apply absolute text-xs font-normal top-0 bottom-0 m-auto rounded w-6 h-5 flex justify-center items-center border border-white;
+
+  background-color: var(--gray-2);
+  right: 1px;
+
+  &--empty {
+    background-color: var(--gray-4);
   }
 }
 </style>

@@ -307,11 +307,11 @@ export function applyPropsToObject(props: TODO = {}, object: TODO = {}) {
   })
 }
 
-export async function fetchAllResources({
+export async function fetchAllResources<T = Object>({
   callEndpoint,
 }: {
-  callEndpoint: (params: Object) => Promise<ResourceResponse>
-}): Promise<Error | { data: Object[]; total: number }> {
+  callEndpoint: (params: Object) => Promise<ResourceResponse<T>>
+}): Promise<{ items: T[]; total: number }> {
   try {
     let allTotal = null
     let offset = 0
@@ -330,7 +330,7 @@ export async function fetchAllResources({
       }
 
       if (total !== allTotal) {
-        return new Error('Mismatch between "total" values between requests')
+        throw new Error('Mismatch between "total" values between requests')
       }
 
       if (!next) {
@@ -340,7 +340,7 @@ export async function fetchAllResources({
       offset += PAGE_REQUEST_SIZE_DEFAULT
     }
 
-    return { total: allTotal, data: allItems }
+    return { total: allTotal, items: allItems }
   } catch (e) {
     throw new Error(`Resource fetching failed: ${e}`)
   }

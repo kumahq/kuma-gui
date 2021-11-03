@@ -17,10 +17,10 @@ exports[`Shell.vue renders component with route 1`] = `
         >
           <div
             class="nav-item is-menu-item"
+            data-testid="home"
             iconcustom=""
             subnav="[object Object]"
           >
-             
             <a
               aria-current="page"
               class="router-link-exact-active router-link-active"
@@ -37,9 +37,10 @@ exports[`Shell.vue renders component with route 1`] = `
               >
                 
         Service Mesh
-      
+
+        
+                <!---->
               </div>
-               
             </a>
           </div>
         </div>
@@ -49,8 +50,8 @@ exports[`Shell.vue renders component with route 1`] = `
         >
           <div
             class="nav-item is-menu-item"
+            data-testid="diagnostics"
           >
-             
             <a
               aria-current="page"
               class="router-link-exact-active router-link-active"
@@ -90,9 +91,10 @@ exports[`Shell.vue renders component with route 1`] = `
               >
                 
         Diagnostics
-      
+
+        
+                <!---->
               </div>
-               
             </a>
           </div>
         </div>
@@ -154,8 +156,8 @@ exports[`Shell.vue renders component with route 1`] = `
           
         <div
           class="nav-item is-menu-item"
+          data-testid="global-overview"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -168,16 +170,17 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Overview
-      
+
+        
+              <!---->
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="mesh-child"
           pathflip="true"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -190,15 +193,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Meshes
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item is-title"
+          data-testid=""
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -217,13 +228,12 @@ exports[`Shell.vue renders component with route 1`] = `
       
               </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="zones"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -236,15 +246,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Zone CPs
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="zoneingresses"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -257,15 +275,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Zone Ingresses
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item is-title"
+          data-testid=""
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -284,13 +310,12 @@ exports[`Shell.vue renders component with route 1`] = `
       
               </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="internal-services"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -303,15 +328,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Internal
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="external-services"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -324,15 +357,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         External
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item is-title"
+          data-testid=""
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -351,13 +392,12 @@ exports[`Shell.vue renders component with route 1`] = `
       
               </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="dataplanes"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -370,15 +410,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         All
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item is-nested"
+          data-testid="standard-dataplanes"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -391,15 +439,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Standard
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item is-nested"
+          data-testid="gateway-dataplanes"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -412,15 +468,23 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Gateway
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item is-title"
+          data-testid=""
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -439,14 +503,13 @@ exports[`Shell.vue renders component with route 1`] = `
       
               </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="circuit-breakers"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -459,16 +522,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Circuit Breakers
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="fault-injections"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -481,16 +552,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Fault Injections
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="health-checks"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -503,16 +582,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Health Checks
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="proxy-templates"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -525,16 +612,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Proxy Templates
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="rate-limits"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -547,16 +642,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Rate Limits
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="retries"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -569,16 +672,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Retries
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="timeouts"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -591,16 +702,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Timeouts
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="traffic-logs"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -613,16 +732,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Traffic Logs
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="traffic-permissions"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -635,16 +762,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Traffic Permissions
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="traffic-routes"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -657,16 +792,24 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Traffic Routes
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
         <div
           class="nav-item is-menu-item"
+          data-testid="traffic-traces"
           parent="policies"
         >
-           
           <a
             aria-current="page"
             class="router-link-exact-active router-link-active"
@@ -679,9 +822,17 @@ exports[`Shell.vue renders component with route 1`] = `
             >
               
         Traffic Traces
-      
+
+        
+              <span
+                class="amount amount--empty"
+              >
+                
+
+          0
+        
+              </span>
             </div>
-             
           </a>
         </div>
       </div>

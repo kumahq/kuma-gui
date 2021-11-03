@@ -398,6 +398,15 @@ class Kuma {
   public getSupportedVersions(params?: any) {
     return this.client.get('/versions', { params })
   }
+
+  /**
+   * Global Insights
+   */
+
+  // Get global insights
+  public getGlobalInsights() {
+    return this.client.get('/global-insights')
+  }
 }
 
 export default new Kuma()

@@ -1,5 +1,5 @@
 <template>
-  <div class="overview">
+  <div class="overview mt-32">
     <div :class="chartContainerClass">
       <DonutChart
         v-if="selectedMesh === 'all'"
@@ -44,9 +44,6 @@
         display-am-charts-logo
       />
     </div>
-
-    <!-- metrics boxes -->
-    <MetricGrid :metrics="overviewMetrics" />
 
     <div class="card-wrapper card-wrapper--4-col">
       <div>
@@ -100,7 +97,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
 import DonutChart from '@/components/DonutChart'
@@ -117,7 +113,6 @@ export default {
   components: {
     DonutChart,
     VersionsDonutChart,
-    MetricGrid,
     CardSkeleton,
     Resources,
   },
@@ -275,9 +270,9 @@ export default {
         'md:flex-row',
         'md:flex-wrap',
         isAll && 'md:h-540p',
-        !isAll && 'md:h-360p',
-        isAll && 'xl:h-360p',
-        !isAll && 'xl:h-180p',
+        !isAll && 'md:h-400p',
+        isAll && 'xl:h-400p',
+        !isAll && 'xl:h-200p',
         'my-2',
         'py-2',
       ]
@@ -332,7 +327,7 @@ export default {
   @media only screen and (min-width: 841px) {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -0.5rem 0;
+    margin: 8rem -0.5rem 0;
 
     &.card-wrapper--4-col {
       --i: 50%;
@@ -363,12 +358,12 @@ export default {
 }
 
 @responsive {
-  .h-180p {
-    height: 180px;
+  .h-200p {
+    height: 200px;
   }
 
-  .h-360p {
-    height: 360px;
+  .h-400p {
+    height: 400px;
   }
 
   .h-540p {
