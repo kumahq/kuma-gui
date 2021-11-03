@@ -48,9 +48,8 @@ const mutations: MutationTree<SidebarInterface> = {
 const getters: GetterTree<SidebarInterface, RootInterface> = {}
 
 const actions: ActionTree<SidebarInterface, RootInterface> = {
-  async getInsights({ dispatch }) {
-    await dispatch('getGlobalInsights')
-    await dispatch('getMeshInsights')
+  getInsights({ dispatch }) {
+    return Promise.all([dispatch('getGlobalInsights'), dispatch('getMeshInsights')])
   },
 
   async getMeshInsights({ commit, rootGetters }) {

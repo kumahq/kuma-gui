@@ -70,11 +70,10 @@ export interface MeshInsight {
   dataplanes: UnitStatus
   dataplanesByType: Record<string, UnitStatus>
   policies: Record<string, UnitStatus>
-  dpVersions: Record<string, UnitStatus>
-  envoy: Record<string, UnitStatus>
+  dpVersions: Record<string, Record<string, UnitStatus>>
   mTLS: {
-    issuedBackends: Record<string, UnitStatus>
-    supportedBackends: Record<string, UnitStatus>
+    issuedBackends?: Record<string, UnitStatus>
+    supportedBackends?: Record<string, UnitStatus>
   }
-  services: Record<string, UnitStatus>
+  services: Record<string, number>
 }

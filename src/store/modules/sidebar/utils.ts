@@ -2,15 +2,15 @@ import { MeshInsight } from '@/types'
 
 export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] }) {
   const meshInsight = rawMeshInsights.items.reduce(
-    (acc: any, { dataplanes, dataplanesByType: { standard, gateway }, policies, services }: MeshInsight) => {
+    (acc: any, { dataplanes, dataplanesByType, policies, services }: MeshInsight) => {
       // Sum services
       acc.services.internal += services.internal || 0
       acc.services.external += services.external || 0
 
       // Sum dataplanes
       acc.dataplanes.total += dataplanes.total || 0
-      acc.dataplanes.standard += standard.total || 0
-      acc.dataplanes.total += gateway.total || 0
+      acc.dataplanes.standard += dataplanesByType.standard?.total || 0
+      acc.dataplanes.total += dataplanesByType.gateway?.total || 0
 
       // Sum policies
 
