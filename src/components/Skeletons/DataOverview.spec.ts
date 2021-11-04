@@ -23,6 +23,30 @@ describe('DataOverview.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
+  it('renders additional scoped slot', () => {
+    render(DataOverview, {
+      propsData: {
+        tableData: {
+          headers: [{ key: 'custom', hideLabel: true }],
+          data: [
+            {
+              custom: ['custom', 'vaues', 'in', 'an', 'array'],
+            },
+          ],
+        },
+      },
+      scopedSlots: {
+        custom: `
+        <ul>
+          <li v-for="item in props.rowValue" :key="item">{{item}}</li>
+        </ul>
+        `,
+      },
+    })
+
+    expect(screen.getByRole('table')).toMatchSnapshot()
+  })
+
   it('renders pagination and react on click', async () => {
     render(DataOverview, {
       propsData: {

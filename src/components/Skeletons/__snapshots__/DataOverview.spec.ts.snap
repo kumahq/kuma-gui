@@ -39,6 +39,69 @@ exports[`DataOverview.vue refresh page on second page 2`] = `
 }
 `;
 
+exports[`DataOverview.vue renders additional scoped slot 1`] = `
+<table
+  class="k-table micro-table has-hover is-clickable"
+  data-v-bfeabd48=""
+>
+  <thead
+    data-v-bfeabd48=""
+  >
+    <tr
+      data-v-bfeabd48=""
+    >
+      <th
+        class=""
+        data-v-bfeabd48=""
+      >
+        <!---->
+      </th>
+    </tr>
+  </thead>
+  <tbody
+    data-v-bfeabd48=""
+  >
+    <tr
+      data-v-bfeabd48=""
+    >
+      <td
+        data-v-bfeabd48=""
+      >
+        <ul
+          data-v-bfeabd48=""
+        >
+          <li
+            data-v-bfeabd48=""
+          >
+            custom
+          </li>
+          <li
+            data-v-bfeabd48=""
+          >
+            vaues
+          </li>
+          <li
+            data-v-bfeabd48=""
+          >
+            in
+          </li>
+          <li
+            data-v-bfeabd48=""
+          >
+            an
+          </li>
+          <li
+            data-v-bfeabd48=""
+          >
+            array
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
 exports[`DataOverview.vue renders all custom templates for data 1`] = `
 <div>
   <div
