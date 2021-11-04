@@ -51,6 +51,18 @@
           is-clickable
           @row:click="tableRowHandler"
         >
+          <!-- Custom slots provided by parent -->
+          <template
+            v-for="slot in customSlots"
+            v-slot:[slot]="{ rowValue, row }"
+          >
+            <slot
+              :name="slot"
+              :row-value="rowValue"
+              :row="row"
+            />
+          </template>
+
           <!-- status -->
           <template v-slot:status="{ rowValue }">
             <div
@@ -288,6 +300,9 @@ export default {
     }
   },
   computed: {
+    customSlots() {
+      return this.tableData.headers.map(({ key }) => key).filter((key) => this.$scopedSlots[key])
+    },
     isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
