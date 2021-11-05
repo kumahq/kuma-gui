@@ -1,0 +1,631 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Meshes.vue renders snapshot 1`] = `
+<div>
+  <div
+    class="all-meshes"
+  >
+    <div
+      class="component-frame"
+    >
+      <div
+        class="data-overview"
+        data-testid="data-overview"
+      >
+        <div
+          class="data-table-controls mb-2"
+        >
+          <router-link-stub
+            class="k-button add-mesh-button small primary"
+            data-v-38fa8ecf=""
+            to="[object Object]"
+            type="button"
+          >
+            <span
+              class="custom-control-icon"
+            >
+              
+            +
+          
+            </span>
+            
+          Create Mesh
+        
+          </router-link-stub>
+           
+          <button
+            class="k-button ml-2 refresh-button small primary"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            <div
+              class="refresh-icon"
+              data-v-38fa8ecf=""
+            >
+              <svg
+                data-v-38fa8ecf=""
+                viewBox="0 0 36 36"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                  data-v-38fa8ecf=""
+                  fill="#fff"
+                  fill-rule="nonzero"
+                >
+                  <path
+                    d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
+                    data-v-38fa8ecf=""
+                  />
+                </g>
+              </svg>
+            </div>
+             
+            <span
+              data-v-38fa8ecf=""
+            >
+              Refresh
+            </span>
+          </button>
+        </div>
+         
+        <div
+          class="data-overview-content"
+        >
+          <div
+            class="data-overview-table"
+          >
+            <table
+              class="k-table micro-table has-hover is-clickable"
+              data-v-bfeabd48=""
+            >
+              <thead
+                data-v-bfeabd48=""
+              >
+                <tr
+                  data-v-bfeabd48=""
+                >
+                  <th
+                    class=""
+                    data-v-bfeabd48=""
+                  >
+                    <!---->
+                  </th>
+                  <th
+                    class=""
+                    data-v-bfeabd48=""
+                  >
+                     Name 
+                  </th>
+                  <th
+                    class=""
+                    data-v-bfeabd48=""
+                  >
+                     Type 
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                data-v-bfeabd48=""
+              >
+                <tr
+                  data-v-bfeabd48=""
+                >
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    <a
+                      class="data-table-action-link is-active"
+                      data-v-bfeabd48=""
+                    >
+                      <span
+                        class="action-link__active-state"
+                        data-v-bfeabd48=""
+                      >
+                        
+              ✓
+              
+                        <span
+                          class="sr-only"
+                          data-v-bfeabd48=""
+                        >
+                          
+                Selected
+              
+                        </span>
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    default
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    Mesh
+                  </td>
+                </tr>
+                <tr
+                  data-v-bfeabd48=""
+                >
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    <a
+                      class="data-table-action-link"
+                      data-v-bfeabd48=""
+                    >
+                      <span
+                        class="action-link__normal-state"
+                        data-v-bfeabd48=""
+                      >
+                        
+              View
+            
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    hello-world
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    Mesh
+                  </td>
+                </tr>
+                <tr
+                  data-v-bfeabd48=""
+                >
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    <a
+                      class="data-table-action-link"
+                      data-v-bfeabd48=""
+                    >
+                      <span
+                        class="action-link__normal-state"
+                        data-v-bfeabd48=""
+                      >
+                        
+              View
+            
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    kong-mania-12
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    Mesh
+                  </td>
+                </tr>
+                <tr
+                  data-v-bfeabd48=""
+                >
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    <a
+                      class="data-table-action-link"
+                      data-v-bfeabd48=""
+                    >
+                      <span
+                        class="action-link__normal-state"
+                        data-v-bfeabd48=""
+                      >
+                        
+              View
+            
+                      </span>
+                    </a>
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    mesh-01
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    Mesh
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+             
+            <div
+              class="pagination"
+            >
+              <!---->
+               
+              <button
+                class="k-button primary"
+                data-v-38fa8ecf=""
+                type="button"
+              >
+                
+    Next ›
+  
+              </button>
+            </div>
+          </div>
+           
+          <!---->
+           
+          <!---->
+        </div>
+         
+        <!---->
+         
+        <!---->
+      </div>
+       
+      <div
+        class="tab-container"
+        data-testid="tab-container"
+      >
+        <header
+          class="tab__header"
+        >
+          <div>
+            <h3>
+              Mesh: default
+            </h3>
+          </div>
+        </header>
+         
+        <div
+          class="tab__content-container"
+        >
+          <div
+            class="k-tabs"
+            data-v-a38b664a=""
+          >
+            <ul
+              aria-label="ktabs"
+              data-v-a38b664a=""
+              role="tablist"
+            >
+              <li
+                aria-controls="panel-0"
+                aria-selected="false"
+                class="tab-item"
+                data-v-a38b664a=""
+                id="overview-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Overview
+                </a>
+              </li>
+              <li
+                aria-controls="panel-1"
+                aria-selected="true"
+                class="tab-item active"
+                data-v-a38b664a=""
+                id="resources-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  Resources
+                </a>
+              </li>
+              <li
+                aria-controls="panel-2"
+                aria-selected="false"
+                class="tab-item"
+                data-v-a38b664a=""
+                id="yaml-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  YAML
+                </a>
+              </li>
+            </ul>
+            <div
+              aria-labelledby="overview-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="resources-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div
+                data-v-a38b664a=""
+              >
+                <div
+                  class="label-list-content"
+                >
+                  <div
+                    class="kong-card noBorder"
+                    data-v-0029352b=""
+                  >
+                    <!---->
+                    <!---->
+                    <div
+                      class="k-card-body"
+                      data-v-0029352b=""
+                    >
+                      <div
+                        class="label-list__col-wrapper multi-col"
+                        data-v-0029352b=""
+                      >
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Data plane proxies
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                13
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Circuit Breakers
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Fault Injections
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Health Checks
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Proxy Templates
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Logs
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Permissions
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                3
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Routes
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                5
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Traces
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Rate Limits
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Retries
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Timeouts
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                 
+                <!---->
+                 
+                <!---->
+                 
+                <!---->
+              </div>
+            </div>
+            <div
+              aria-labelledby="yaml-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+          </div>
+           
+          <div>
+            <!---->
+             
+            <!---->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

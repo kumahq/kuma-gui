@@ -8,6 +8,7 @@ describe('DataplaneUniversal.vue', () => {
       store: {
         state: { meshes: { items: [{ name: 'testMesh' }, { name: 'testMesh2' }] } },
       },
+      routes: [],
     })
 
     const select = <HTMLInputElement>getByDisplayValue('Select an existing Mesh…')

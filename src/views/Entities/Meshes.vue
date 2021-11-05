@@ -159,7 +159,7 @@
 <script>
 import { mapState } from 'vuex'
 import Kuma from '@/services/kuma'
-import { getEmptyInsight } from '@/store/reducers/mesh-insights'
+import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
@@ -249,9 +249,14 @@ export default {
     }),
     counts() {
       const {
-        policies,
+        policies: allPolicies,
         dataplanes: { total },
       } = this.meshInsight
+
+      const policies = {
+        ...getInitialPolicies(),
+        ...allPolicies,
+      }
 
       return [
         {
