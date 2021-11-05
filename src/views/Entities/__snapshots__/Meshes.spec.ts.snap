@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Meshes.vue renders snapshot 1`] = `
+exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
 <div>
   <div
     class="all-meshes"
