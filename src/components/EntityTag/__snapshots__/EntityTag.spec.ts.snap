@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntityTag.vue renders basic snapshot 1`] = `
+<div>
+  <span
+    class="entity-tag"
+  >
+    <span
+      class="entity-tag__label entity-tag__label--kuma-io-service"
+    >
+      
+    kuma.io/service
+  
+    </span>
+     
+    <span
+      class="entity-tag__value entity-tag__value--backend"
+    >
+      
+    backend
+  
+    </span>
+  </span>
+</div>
+`;
