@@ -254,91 +254,83 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                 data-v-bfeabd48=""
               >
                 <span
-                  class="entity-tags entity-tags--0"
+                  class="entity-tag"
                   data-v-bfeabd48=""
                 >
                   <span
-                    class="entity-tags__label entity-tags__label--env"
-                    data-v-bfeabd48=""
+                    class="entity-tag__label entity-tag__label--env"
                   >
                     
-              env
-            
+    env
+  
                   </span>
                    
                   <span
-                    class="entity-tags__value entity-tags__value--dev"
-                    data-v-bfeabd48=""
+                    class="entity-tag__value entity-tag__value--dev"
                   >
                     
-              dev
-            
+    dev
+  
                   </span>
                 </span>
                 <span
-                  class="entity-tags entity-tags--1"
+                  class="entity-tag"
                   data-v-bfeabd48=""
                 >
                   <span
-                    class="entity-tags__label entity-tags__label--kuma-io-service"
-                    data-v-bfeabd48=""
+                    class="entity-tag__label entity-tag__label--kuma-io-service"
                   >
                     
-              kuma.io/service
-            
+    kuma.io/service
+  
                   </span>
                    
                   <span
-                    class="entity-tags__value entity-tags__value--kuma-example-backend"
-                    data-v-bfeabd48=""
+                    class="entity-tag__value entity-tag__value--kuma-example-backend"
                   >
                     
-              kuma-example-backend
-            
+    kuma-example-backend
+  
                   </span>
                 </span>
                 <span
-                  class="entity-tags entity-tags--2"
+                  class="entity-tag"
                   data-v-bfeabd48=""
                 >
                   <span
-                    class="entity-tags__label entity-tags__label--tag01"
-                    data-v-bfeabd48=""
+                    class="entity-tag__label entity-tag__label--tag01"
                   >
                     
-              tag01
-            
+    tag01
+  
                   </span>
                    
                   <span
-                    class="entity-tags__value entity-tags__value--value01"
-                    data-v-bfeabd48=""
+                    class="entity-tag__value entity-tag__value--value01"
                   >
                     
-              value01
-            
+    value01
+  
                   </span>
                 </span>
                 <span
-                  class="entity-tags entity-tags--3"
+                  class="entity-tag"
                   data-v-bfeabd48=""
                 >
                   <span
-                    class="entity-tags__label entity-tags__label--reallylongtaglabelhere"
-                    data-v-bfeabd48=""
+                    class="entity-tag__label entity-tag__label--reallylongtaglabelhere"
                   >
                     
-              reallyLongTagLabelHere
-            
+    reallyLongTagLabelHere
+  
                   </span>
                    
                   <span
-                    class="entity-tags__value entity-tags__value--a-really-long-tag-value-here"
-                    data-v-bfeabd48=""
+                    class="entity-tag__value entity-tag__value--a-really-long-tag-value-here"
                   >
                     
-              a-really-long-tag-value-here
-            
+    a-really-long-tag-value-here
+  
                   </span>
                 </span>
               </td>
