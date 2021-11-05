@@ -35,6 +35,7 @@ describe('Mesh.vue', () => {
           config: { state: { tagline: 'Kuma', clientConfig: { environment: 'universal' } } },
         },
       },
+      routes: [],
     })
 
     const nextButton = screen.getByText(/Next ›/i).closest('button')
