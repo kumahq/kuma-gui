@@ -76,9 +76,9 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
     const globalInsightsRawData = await Kuma.getGlobalInsights()
 
     const globalInsights = {
-      meshes: globalInsightsRawData.meshes.total,
-      zones: globalInsightsRawData.zones.total,
-      zoneIngresses: globalInsightsRawData.zoneIngresses.total,
+      meshes: globalInsightsRawData.resources.Mesh.total,
+      zones: globalInsightsRawData.resources.Zone.total,
+      zoneIngresses: globalInsightsRawData.resources.ZoneIngress.total,
     }
 
     commit('SET_GLOBAL_INSIGHTS', globalInsights)
