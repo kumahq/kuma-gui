@@ -187,9 +187,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
             data-v-2636d531=""
           >
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -240,7 +240,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Observability, Metrics & Service Map
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -249,9 +249,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -302,7 +302,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Logging
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -311,9 +311,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -364,7 +364,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Zero-trust security
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -373,9 +373,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -426,7 +426,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Tracing
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"

@@ -6,15 +6,15 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
     class="accordion"
   >
     <li
-      class="relative border-b py-2 px-4"
+      class="relative border-b py-2"
     >
-      <div
+      <button
         class="accordion-item-header"
       >
         
         Header 1
       
-      </div>
+      </button>
        
       <transition-stub
         name="accordion"
@@ -23,15 +23,15 @@ exports[`Accordion.vue renders snapshot at the beginning 1`] = `
       </transition-stub>
     </li>
     <li
-      class="relative border-b py-2 px-4"
+      class="relative border-b py-2"
     >
-      <div
+      <button
         class="accordion-item-header"
       >
         
         Header 2
       
-      </div>
+      </button>
        
       <transition-stub
         name="accordion"
