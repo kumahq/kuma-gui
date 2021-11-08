@@ -12,13 +12,13 @@
         <div class="mr-4">
           <span class="mr-2">
             <strong>ProTip:</strong>
-            We've detected that there are actions that you might take to adjust the way how you use service mesh.
+            You might want to adjust your {{ isAllMeshesView ? 'meshes' : 'mesh' }} configuration
           </span>
           <KButton
             appearance="outline-primary"
             @click="openModal"
           >
-            Check!
+            Check your {{ isAllMeshesView ? 'meshes' : 'mesh' }}!
           </KButton>
         </div>
       </template>
@@ -41,7 +41,9 @@
           /> All mesh notifications
         </div>
         <div v-else>
-          Here is a list of possible actions you might take to improve usability of your service mesh!
+          Some of these features are not enabled for
+          <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
+          mesh. Consider implementing them.
 
           <KBadge
             class="cursor-pointer"

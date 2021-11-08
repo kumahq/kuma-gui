@@ -9,150 +9,24 @@ exports[`LoggingNotification.vue renders snapshot 1`] = `
       class="mb-4"
     >
       
-      Kuma is presenting a simple solution to aggregate the
-      logs of your containers and the access logs of your data-planes.
-    
+    A traffic log policy lets you collect access logs for every data plane proxy in your service mesh.
+  
     </p>
      
-    <p
-      class="mb-4"
+    <ul
+      class="list-disc pl-4"
     >
-      
-      Kuma natively integrates with 
-      <a
-        href="https://github.com/grafana/loki"
-        target="_blank"
-      >
-        Loki
-      </a>
-      . To install it you can run
-      
-      <div
-        class="tab-container"
-        data-testid="tab-container"
-      >
-        <!---->
-         
-        <div
-          class="tab__content-container"
+      <li>
+        <a
+          href="https://kuma.io/docs/1.2.0/policies/traffic-log/"
+          target="_blank"
         >
-          <div
-            class="k-tabs"
-            data-v-a38b664a=""
-          >
-            <ul
-              aria-label="ktabs"
-              data-v-a38b664a=""
-              role="tablist"
-            >
-              <li
-                aria-controls="panel-0"
-                aria-selected="true"
-                class="tab-item active"
-                data-v-a38b664a=""
-                id="universal-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <a
-                  class="tab-link"
-                  data-v-a38b664a=""
-                >
-                  Universal
-                </a>
-              </li>
-              <li
-                aria-controls="panel-1"
-                aria-selected="false"
-                class="tab-item"
-                data-v-a38b664a=""
-                id="kubernetes-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <a
-                  class="tab-link"
-                  data-v-a38b664a=""
-                >
-                  Kubernetes
-                </a>
-              </li>
-            </ul>
-            <div
-              aria-labelledby="universal-tab"
-              class="tab-container"
-              data-v-a38b664a=""
-              id="panel-0"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <code
-                class="block"
-                data-v-a38b664a=""
-              >
-                <pre
-                  data-v-a38b664a=""
-                >
-                  type: Mesh
-name: default
-logging:
-  defaultBackend: file
-  backends:
-    - name: logstash
-      format: '{"start_time": "%START_TIME%", "source": "%KUMA_SOURCE_SERVICE%", "destination": "%KUMA_DESTINATION_SERVICE%", "source_address": "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", "destination_address": "%UPSTREAM_HOST%", "duration_millis": "%DURATION%", "bytes_received": "%BYTES_RECEIVED%", "bytes_sent": "%BYTES_SENT%"}'
-      type: tcp
-      conf:
-        address: 127.0.0.1:5000
-    - name: file
-      type: file
-      conf:
-        path: /tmp/access.log
-                </pre>
-              </code>
-              
-          We can apply the configuration with
           
-              <code
-                class="inline"
-                data-v-a38b664a=""
-              >
-                kubectl apply -f [..]
-              </code>
-              .
-        
-            </div>
-            <div
-              aria-labelledby="kubernetes-tab"
-              class="tab-container"
-              data-v-a38b664a=""
-              id="panel-1"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-          </div>
-           
-          <div>
-            <!---->
-             
-            <!---->
-          </div>
-        </div>
-      </div>
-    </p>
-     
-    <a
-      class="k-button outline-primary"
-      data-v-38fa8ecf=""
-      href="https://kuma.io/docs/1.2.0/policies/traffic-log/"
-      target="_blank"
-      type="button"
-    >
+        Traffic Log policy documentation
       
-      Learn More
-    
-    </a>
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
 `;
