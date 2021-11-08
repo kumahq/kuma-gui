@@ -560,9 +560,10 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
               data-v-0029352b=""
             >
               <li
-                class="relative border-b py-2 px-4 active"
+                class="relative border-b py-2 active"
               >
-                <div
+                <button
+                  aria-expanded="true"
                   class="accordion-item-header"
                 >
                   <h4
@@ -579,12 +580,14 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                      
                     <!---->
                   </h4>
-                </div>
+                </button>
                  
                 <transition-stub
                   name="accordion"
                 >
-                  <div>
+                  <div
+                    class="px-4"
+                  >
                     <div>
                       <div>
                         <h5

@@ -1,12 +1,13 @@
 <template>
   <li :class="accordionItemClasses">
-    <div
+    <button
       class="accordion-item-header"
+      :aria-expanded="visible"
       @click="open"
     >
       <!-- This slot will display header -->
       <slot name="accordion-header" />
-    </div>
+    </button>
 
     <transition
       name="accordion"
@@ -14,7 +15,10 @@
       @after-enter="end"
       @before-leave="start"
     >
-      <div v-if="visible">
+      <div
+        v-if="visible"
+        class="px-4"
+      >
         <!-- This slot will display whole content -->
         <slot name="accordion-content" />
       </div>
@@ -40,7 +44,7 @@ export default {
       return this.index === this.parentAccordion.active
     },
     accordionItemClasses() {
-      return ['relative border-b py-2 px-4', { active: this.visible }]
+      return ['relative border-b py-2', { active: this.visible }]
     },
   },
   created() {
@@ -95,15 +99,16 @@ export default {
 .active {
   .accordion-item-header::after {
     transform: rotate(-180deg) translateY(-50%);
+    top: calc(50% - 4px);
   }
 }
 
 .accordion-item-header {
-  @apply py-2 cursor-pointer pr-4 relative;
+  @apply block py-2 px-4 cursor-pointer relative w-full text-left;
 
   &::after {
     position: absolute;
-    right: 0;
+    right: 4px;
     top: 50%;
     transform: translateY(-50%);
     content: '';
