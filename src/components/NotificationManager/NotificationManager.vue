@@ -38,7 +38,7 @@
             icon="notificationBell"
             size="24"
             class="mr-2"
-          /> All mesh notifications
+          /> Notifications
         </div>
         <div v-else>
           Some of these features are not enabled for

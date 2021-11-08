@@ -76,9 +76,15 @@
 
 /* KModal overrides */
 
-.k-modal .modal-body {
-  max-height: calc(100vh - 250px);
-  overflow-y: auto;
+.k-modal {
+  .modal-body {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+  }
+
+  .modal-body, .modal-header, .modal-footer {
+    padding: 4px;
+  }
 }
 
 /* KPopover overrides */
