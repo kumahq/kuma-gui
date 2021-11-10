@@ -51,7 +51,7 @@ describe('NotificationManager.vue', () => {
       },
     })
 
-    await userEvent.click(screen.getByText(/Check!/))
+    await userEvent.click(screen.getByText(/Check your meshes!/))
 
     expect(screen.getByRole('dialog')).toMatchSnapshot()
   })
@@ -66,7 +66,7 @@ describe('NotificationManager.vue', () => {
       },
     })
 
-    await userEvent.click(screen.getByText(/Check!/))
+    await userEvent.click(screen.getByText(/Check your mesh!/))
 
     expect(screen.getByRole('dialog')).toMatchSnapshot()
   })

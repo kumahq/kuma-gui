@@ -81,13 +81,7 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
              
             <p>
               
-    We noticed that you have some available actions in your meshes.
-  
-            </p>
-             
-            <p>
-              
-    Below you can find meshes in which these actions are available.
+    Check the following meshes for suggestions to adjust the configuration
   
             </p>
              
@@ -163,7 +157,16 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
             data-v-2636d531=""
           >
             
-        Here is a list of possible actions you might take to improve usability of your service mesh!
+        Some of these features are not enabled for
+        
+            <span
+              class="text-xl tracking-wide"
+              data-v-2636d531=""
+            >
+               "test-mesh"
+            </span>
+            
+        mesh. Consider implementing them.
 
         
             <div
@@ -517,7 +520,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
               ProTip:
             </strong>
             
-          We've detected that there are actions that you might take to adjust the way how you use service mesh.
+          You might want to adjust your meshes configuration
         
           </span>
            
@@ -528,7 +531,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
             type="button"
           >
             
-          Check!
+          Check your meshes!
         
           </button>
         </div>

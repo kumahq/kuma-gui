@@ -7,10 +7,7 @@
       Meshes
     </h3>
     <p>
-      We noticed that you have some available actions in your meshes.
-    </p>
-    <p>
-      Below you can find meshes in which these actions are available.
+      Check the following meshes for suggestions to adjust the configuration
     </p>
     <div class="pt-4">
       <span
@@ -29,7 +26,7 @@
     </div>
   </div>
   <div v-else>
-    Looks like you have done all proposed actions!
+    Looks like none of your meshes are missing any features. Well done!
   </div>
 </template>
 
