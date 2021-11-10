@@ -1,14 +1,14 @@
 <template>
-  <div class="entity-url-control">
-    <KClipboardProvider
-      v-if="shouldDisplay"
-      v-slot="{ copyToClipboard }"
-    >
+  <div
+    v-if="shouldDisplay"
+    data-testid="entity-url-control"
+  >
+    <KClipboardProvider v-slot="{ copyToClipboard }">
       <KPop placement="bottom">
         <KButton
           appearance="secondary"
           size="small"
-          @click="() => { copyToClipboard(url) }"
+          @click="() => { copyToClipboard(shareUrl) }"
         >
           <template v-slot:icon>
             <KIcon
@@ -28,13 +28,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
+<script >
+export default {
   name: 'EntityURLControl',
   props: {
-    url: {
+    name: {
       type: String,
       required: true,
     },
@@ -48,7 +46,12 @@ export default Vue.extend({
     },
   },
   computed: {
-    shouldDisplay(): boolean {
+    shareUrl() {
+      const urlRoot = `${window.location.href.replace(window.location.hash, '')}#`
+
+      return `${urlRoot}${this.$route.fullPath}?ns=${this.name}`
+    },
+    shouldDisplay() {
       const mesh = this.$route.params.mesh || null
 
       // we only want to display the copy button when the user has filtered
@@ -60,5 +63,5 @@ export default Vue.extend({
       return false
     },
   },
-})
+}
 </script>

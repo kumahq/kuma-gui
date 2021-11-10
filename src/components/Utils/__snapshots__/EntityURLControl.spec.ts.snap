@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntityURLControl.vue renders snapshot 1`] = `
+<div>
+  <div
+    data-testid="entity-url-control"
+  >
+    <div
+      data-v-3cb990b6=""
+    >
+      <button
+        class="k-button small secondary"
+        data-v-38fa8ecf=""
+        data-v-3cb990b6=""
+        type="button"
+      >
+        <svg
+          class="kong-icon kong-icon-externalLink"
+          data-v-38fa8ecf=""
+          data-v-a7c9c1d2=""
+          height="12"
+          role="img"
+          viewBox="0 0 16 16"
+          width="12"
+        >
+          <title
+            data-v-a7c9c1d2=""
+          >
+            externalLink
+          </title>
+          <g
+            data-v-a7c9c1d2=""
+          >
+            <path
+              d="M8.24308 1.5C7.83269 1.5 7.5 1.16710138 7.5.75c0-.41421356.33823-.75.74308-.75h3.00568C11.6666 0 12 .336341 12 .75123866v3.00567786C12 4.1673102 11.6671 4.5 11.25 4.5c-.41421 0-.75-.3382314-.75-.74308348V2.625L6.53246 6.59254c-.28982.2898217-.76955.2953689-1.06202.0029022l-.06588-.0658844c-.29098-.2909742-.29117-.7679483.0029-1.0620178L9.375 1.5H8.24308zm-6.74753 0C.67089 1.5 0 2.1695784 0 2.99554521v7.50890959C0 11.3291147.66958 12 1.49555 12h7.5089C9.82911 12 10.5 11.3304216 10.5 10.5044548V6.75H9v3.75H1.5V3h3.75V1.5H1.49555z"
+              data-v-a7c9c1d2=""
+              fill="#000"
+              fill-opacity=".25"
+              fill-rule="evenodd"
+            />
+          </g>
+        </svg>
+        
+        Copy URL
+      
+      </button>
+      <transition-stub
+        data-v-3cb990b6=""
+        name="fade"
+      >
+        <div
+          class="k-popover"
+          data-v-3cb990b6=""
+          style="width: 200px; display: none;"
+        >
+          <!---->
+          <div
+            class="k-popover-content"
+            data-v-3cb990b6=""
+          >
+            <div>
+              <p>
+                URL copied to clipboard!
+              </p>
+            </div>
+          </div>
+        </div>
+      </transition-stub>
+    </div>
+  </div>
+</div>
+`;
