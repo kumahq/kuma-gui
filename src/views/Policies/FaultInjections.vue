@@ -42,7 +42,7 @@
             <h3>{{ tabGroupTitle }}</h3>
           </div>
           <div>
-            <EntityURLControl :url="shareUrl" />
+            <EntityURLControl :name="entity.name" />
           </div>
         </template>
         <template v-slot:overview>
@@ -163,20 +163,6 @@ export default {
       } else {
         return null
       }
-    },
-    shareUrl() {
-      const urlRoot = `${window.location.origin}#`
-      const entity = this.entity
-
-      const shareUrl = () => {
-        if (this.$route.query.ns) {
-          return this.$route.fullPath
-        }
-
-        return `${urlRoot}${this.$route.fullPath}?ns=${entity.name}`
-      }
-
-      return shareUrl()
     },
   },
   watch: {
