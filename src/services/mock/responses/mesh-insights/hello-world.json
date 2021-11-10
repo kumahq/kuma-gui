@@ -8,6 +8,18 @@
     "total": 1,
     "partiallyDegraded": 1
   },
+  "dataplanesByType": {
+    "standard": {
+      "total": 1,
+      "online": 0,
+      "partiallyDegraded": 1
+    },
+    "gateway": {
+      "total": 0,
+      "online": 0,
+      "partiallyDegraded": 0
+    }
+  },
   "policies": {
     "Secret": {
       "total": 1
@@ -71,5 +83,10 @@
         "online": 4
       }
     }
+  },
+  "services": {
+    "total": 1,
+    "internal": 1,
+    "external": 0
   }
 }

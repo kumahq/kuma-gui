@@ -34,54 +34,6 @@ exports[`ShellWithHeader.vue renders component with route 1`] = `
       <div
         class="flex justify-between items-center"
       >
-        <div
-          class="k-alert py-1 success small"
-          data-v-14c8a976=""
-          role="alert"
-        >
-          <!---->
-          <!---->
-          <span
-            data-v-14c8a976=""
-          >
-            <div
-              class="alert-content flex items-center text-sm"
-              data-v-14c8a976=""
-            >
-              <div
-                class="mr-3"
-                data-v-14c8a976=""
-              >
-                
-        Do more with Kuma 
-                <span
-                  class="alert-content__arrow"
-                  data-v-14c8a976=""
-                >
-                  →
-                </span>
-              </div>
-               
-              <div
-                data-v-14c8a976=""
-              >
-                <a
-                  class="k-button success-button small primary"
-                  data-v-14c8a976=""
-                  data-v-38fa8ecf=""
-                  href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                  target="_blank"
-                  type="button"
-                >
-                  
-          Enterprise
-        
-                </a>
-              </div>
-            </div>
-          </span>
-        </div>
-         
         <!---->
       </div>
     </header>

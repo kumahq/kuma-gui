@@ -20,7 +20,6 @@
       </div>
     </div>
     <div class="flex justify-between items-center">
-      <EnterpriseBox v-if="showEnterprise" />
       <div
         v-if="showStatus"
         class="py-1 md:py-0 md:px-4"
@@ -82,13 +81,11 @@
 import { mapGetters } from 'vuex'
 import { getKumaCpServerUrl } from '@/configUrl'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
-import EnterpriseBox from '@/components/Utils/EnterpriseBox'
 import NotificationIcon from './NotificationIcon'
 
 export default {
   components: {
     UpgradeCheck,
-    EnterpriseBox,
     NotificationIcon,
   },
   data() {

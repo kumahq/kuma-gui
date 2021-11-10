@@ -11,6 +11,7 @@ describe('OnboardingHeading.vue', () => {
         title: 'title',
         description: 'description',
       },
+      routes: [],
     })
 
     expect(container).toMatchSnapshot()

@@ -9,13 +9,14 @@ describe('DeploymentTypes.vue', () => {
   it('renders snapshot', () => {
     const { container } = renderWithVuex(DeploymentTypes, {
       store: customStore,
+      routes: [],
     })
 
     expect(container).toMatchSnapshot()
   })
 
   it('changes selected graph', async () => {
-    renderWithVuex(DeploymentTypes, { store: customStore })
+    renderWithVuex(DeploymentTypes, { store: customStore, routes: [] })
 
     await userEvent.click(screen.getByText(/Multi-Zone deployment/))
 

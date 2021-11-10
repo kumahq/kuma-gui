@@ -7,13 +7,14 @@ describe('Welcome.vue', () => {
   }
 
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(Welcome, { store: customStore })
+    const { container } = renderWithVuex(Welcome, { store: customStore, routes: [] })
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders multi-zone', () => {
     const { getByText } = renderWithVuex(Welcome, {
+      routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global', environment: 'universal' } } } } },
     })
 

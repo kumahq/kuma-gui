@@ -1,35 +1,56 @@
 <template>
-  <div
-    v-if="hasMeshesWithAction"
-    class="py-4"
-  >
-    <h3 class="font-bold mb-4">
-      Meshes
-    </h3>
-    <p>
-      We noticed that you have some available actions in your meshes.
-    </p>
-    <p>
-      Below you can find meshes in which these actions are available.
-    </p>
-    <div class="pt-4">
-      <span
-        v-for="(value, name) in meshNotificationItemMapWithAction"
-        :key="name"
-        class="relative"
-      >
-        <KBadge
-          class="ml-2 cursor-pointer transform hover:scale-110"
-          @click.native="meshSelected(name)"
-        >
-          {{ name }}
-        </KBadge>
-        <span class="notification-amount">{{ calculateActions(value) }}</span>
-      </span>
+  <div>
+    <div class="py-4">
+      <h3 class="font-bold mb-4">
+        Meshes
+      </h3>
+      <div v-if="hasMeshesWithAction">
+        <p>
+          Check the following meshes for suggestions to adjust the configuration
+        </p>
+        <div class="pt-4">
+          <span
+            v-for="(value, name) in meshNotificationItemMapWithAction"
+            :key="name"
+            class="relative"
+          >
+            <KBadge
+              class="ml-2 cursor-pointer transform hover:scale-110"
+              @click.native="meshSelected(name)"
+            >
+              {{ name }}
+            </KBadge>
+            <span class="notification-amount">{{ calculateActions(value) }}</span>
+          </span>
+        </div>
+      </div>
+      <div v-else>
+        Looks like none of your meshes are missing any features. Well done!
+      </div>
     </div>
-  </div>
-  <div v-else>
-    Looks like you have done all proposed actions!
+    <div class="py-4">
+      <h3 class="font-bold mb-4">
+        Enterprise
+      </h3>
+      <p>
+        Kuma’s ecosystem has created enterprise offerings to do more with the product, including advanced integrations and support.
+      </p>
+
+      <KButton
+        class="enterprise-button"
+        appearance="primary"
+        target="_blank"
+        :to="url"
+      >
+        <KIcon
+          icon="organizations"
+          color="white"
+          size="24"
+        />
+
+        Kuma Enterprise Offerings
+      </KButton>
+    </div>
   </div>
 </template>
 
@@ -37,7 +58,11 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'AllMeshesNotifications',
-  components: {},
+  data() {
+    return {
+      url: `https://kuma.io/enterprise/${process.env.VUE_APP_UTM}`,
+    }
+  },
   computed: {
     ...mapGetters({
       meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
@@ -59,3 +84,12 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.enterprise-button {
+  @apply mt-4 shadow-lg;
+  --KButtonPrimaryBase: #19a654;
+  --KButtonPrimaryHover: #19a654;
+  --KButtonPrimaryActive: #19a654;
+}
+</style>

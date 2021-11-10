@@ -51,11 +51,12 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
+import menu from '@/components/Sidebar/menu'
 
-import { mapState } from 'vuex'
 import { APP_WINDOW } from '@/consts'
 
 export default {
@@ -73,14 +74,14 @@ export default {
       toggleWorkspaces: false,
       isHovering: false,
       subnavIsExpanded: true,
+      menu,
     }
   },
 
   computed: {
-    ...mapState('sidebar', {
-      menu: (state) => state.menu,
+    ...mapGetters({
+      selectedMesh: 'getSelectedMesh',
     }),
-
     titleNavItems() {
       return this.menu.find((i) => i.position === 'top').items
     },
@@ -135,6 +136,12 @@ export default {
     },
   },
 
+  watch: {
+    selectedMesh(vaue) {
+      this.getMeshInsights()
+    },
+  },
+
   mounted() {
     this.sidebarEvent()
   },
@@ -144,6 +151,9 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      getMeshInsights: 'sidebar/getMeshInsights',
+    }),
     getNavItems(menu, position, items) {
       return menu.find((i) => i.position === position).items
     },

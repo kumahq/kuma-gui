@@ -5,7 +5,7 @@ describe('PopulatingMesh.vue', () => {
   const customStore = { modules: { config: { state: { tagline: 'Kuma' } } } }
 
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(PopulatingMesh, { store: customStore })
+    const { container } = renderWithVuex(PopulatingMesh, { store: customStore, routes: [] })
 
     expect(container).toMatchSnapshot()
   })

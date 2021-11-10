@@ -1,12 +1,24 @@
 {
   "type": "MeshInsight",
-  "name": "Kong Mania",
+  "name": "kong-mania-12",
   "creationTime": "0001-01-01T00:00:00Z",
   "modificationTime": "0001-01-01T00:00:00Z",
   "lastSync": "2020-11-17T12:24:11.941534Z",
   "dataplanes": {
     "total": 4,
     "partiallyDegraded": 1
+  },
+  "dataplanesByType": {
+    "standard": {
+      "total": 4,
+      "online": 0,
+      "partiallyDegraded": 1
+    },
+    "gateway": {
+      "total": 0,
+      "online": 0,
+      "partiallyDegraded": 0
+    }
   },
   "policies": {
     "Secret": {
@@ -50,5 +62,10 @@
       }
     }
   },
-  "mTLS": {}
+  "mTLS": {},
+  "services": {
+    "total": 2,
+    "internal": 0,
+    "external": 2
+  }
 }

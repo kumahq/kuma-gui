@@ -76,4 +76,17 @@ describe('Accordion.vue', () => {
     expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
     expect(await screen.findByText(/Content 2/)).toHaveStyle('display: block')
   })
+
+  it('checks keyboard accessebility', async () => {
+    render(Accordion, { ...options, props: { multipleOpen: true } })
+
+    expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
+
+    userEvent.tab()
+    expect(screen.queryByText(/Header 1/)).toHaveFocus()
+
+    userEvent.keyboard('[Enter]')
+
+    expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
+  })
 })

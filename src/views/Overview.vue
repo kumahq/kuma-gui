@@ -1,5 +1,5 @@
 <template>
-  <div class="overview">
+  <div class="overview mt-32">
     <div :class="chartContainerClass">
       <DonutChart
         v-if="selectedMesh === 'all'"
@@ -44,9 +44,6 @@
         display-am-charts-logo
       />
     </div>
-
-    <!-- metrics boxes -->
-    <MetricGrid :metrics="overviewMetrics" />
 
     <div class="card-wrapper card-wrapper--4-col">
       <div>
@@ -100,8 +97,6 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { getInitialPolicies } from '@/store/reducers/mesh-insights'
-import MetricGrid from '@/components/Metrics/MetricGrid.vue'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
 import DonutChart from '@/components/DonutChart'
@@ -118,7 +113,6 @@ export default {
   components: {
     DonutChart,
     VersionsDonutChart,
-    MetricGrid,
     CardSkeleton,
     Resources,
   },
@@ -173,11 +167,6 @@ export default {
       const mesh = this.selectedMesh
       const { policies, meshesTotal } = this.meshInsight
 
-      const allPolicies = {
-        ...getInitialPolicies(),
-        ...policies,
-      }
-
       const tableData = [
         {
           metric: 'Meshes',
@@ -186,57 +175,57 @@ export default {
         },
         {
           metric: 'Circuit Breakers',
-          value: allPolicies.CircuitBreaker.total,
+          value: policies.CircuitBreaker.total,
           url: `/mesh/${mesh}/circuit-breakers`,
         },
         {
           metric: 'Fault Injections',
-          value: allPolicies.FaultInjection.total,
+          value: policies.FaultInjection.total,
           url: `/mesh/${mesh}/fault-injections`,
         },
         {
           metric: 'Health Checks',
-          value: allPolicies.HealthCheck.total,
+          value: policies.HealthCheck.total,
           url: `/mesh/${mesh}/health-checks`,
         },
         {
           metric: 'Proxy Templates',
-          value: allPolicies.ProxyTemplate.total,
+          value: policies.ProxyTemplate.total,
           url: `/mesh/${mesh}/proxy-templates`,
         },
         {
           metric: 'Traffic Logs',
-          value: allPolicies.TrafficLog.total,
+          value: policies.TrafficLog.total,
           url: `/mesh/${mesh}/traffic-logs`,
         },
         {
           metric: 'Traffic Permissions',
-          value: allPolicies.TrafficPermission.total,
+          value: policies.TrafficPermission.total,
           url: `/mesh/${mesh}/traffic-permissions`,
         },
         {
           metric: 'Traffic Routes',
-          value: allPolicies.TrafficRoute.total,
+          value: policies.TrafficRoute.total,
           url: `/mesh/${mesh}/traffic-routes`,
         },
         {
           metric: 'Traffic Traces',
-          value: allPolicies.TrafficTrace.total,
+          value: policies.TrafficTrace.total,
           url: `/mesh/${mesh}/traffic-traces`,
         },
         {
           metric: 'Rate Limits',
-          value: allPolicies.RateLimit.total,
+          value: policies.RateLimit.total,
           url: `/mesh/${mesh}/rate-limits`,
         },
         {
           metric: 'Retries',
-          value: allPolicies.Retry.total,
+          value: policies.Retry.total,
           url: `/mesh/${mesh}/retries`,
         },
         {
           metric: 'Timeouts',
-          value: allPolicies.Timeout.total,
+          value: policies.Timeout.total,
           url: `/mesh/${mesh}/timeouts`,
         },
       ]
@@ -281,9 +270,9 @@ export default {
         'md:flex-row',
         'md:flex-wrap',
         isAll && 'md:h-540p',
-        !isAll && 'md:h-360p',
-        isAll && 'xl:h-360p',
-        !isAll && 'xl:h-180p',
+        !isAll && 'md:h-400p',
+        isAll && 'xl:h-400p',
+        !isAll && 'xl:h-200p',
         'my-2',
         'py-2',
       ]
@@ -338,7 +327,7 @@ export default {
   @media only screen and (min-width: 841px) {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -0.5rem 0;
+    margin: 8rem -0.5rem 0;
 
     &.card-wrapper--4-col {
       --i: 50%;
@@ -369,12 +358,12 @@ export default {
 }
 
 @responsive {
-  .h-180p {
-    height: 180px;
+  .h-200p {
+    height: 200px;
   }
 
-  .h-360p {
-    height: 360px;
+  .h-400p {
+    height: 400px;
   }
 
   .h-540p {

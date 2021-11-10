@@ -249,13 +249,13 @@ export default {
     }),
     counts() {
       const {
-        policies,
+        policies: allPolicies,
         dataplanes: { total },
       } = this.meshInsight
 
-      const allPolicies = {
+      const policies = {
         ...getInitialPolicies(),
-        ...policies,
+        ...allPolicies,
       }
 
       return [
@@ -265,47 +265,47 @@ export default {
         },
         {
           title: 'Circuit Breakers',
-          value: allPolicies.CircuitBreaker.total,
+          value: policies.CircuitBreaker.total,
         },
         {
           title: 'Fault Injections',
-          value: allPolicies.FaultInjection.total,
+          value: policies.FaultInjection.total,
         },
         {
           title: 'Health Checks',
-          value: allPolicies.HealthCheck.total,
+          value: policies.HealthCheck.total,
         },
         {
           title: 'Proxy Templates',
-          value: allPolicies.ProxyTemplate.total,
+          value: policies.ProxyTemplate.total,
         },
         {
           title: 'Traffic Logs',
-          value: allPolicies.TrafficLog.total,
+          value: policies.TrafficLog.total,
         },
         {
           title: 'Traffic Permissions',
-          value: allPolicies.TrafficPermission.total,
+          value: policies.TrafficPermission.total,
         },
         {
           title: 'Traffic Routes',
-          value: allPolicies.TrafficRoute.total,
+          value: policies.TrafficRoute.total,
         },
         {
           title: 'Traffic Traces',
-          value: allPolicies.TrafficTrace.total,
+          value: policies.TrafficTrace.total,
         },
         {
           title: 'Rate Limits',
-          value: allPolicies.RateLimit.total,
+          value: policies.RateLimit.total,
         },
         {
           title: 'Retries',
-          value: allPolicies.Retry.total,
+          value: policies.Retry.total,
         },
         {
           title: 'Timeouts',
-          value: allPolicies.Timeout.total,
+          value: policies.Timeout.total,
         },
       ]
     },

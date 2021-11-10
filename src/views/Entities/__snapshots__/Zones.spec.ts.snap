@@ -1109,9 +1109,10 @@ exports[`Zones.vue renders zone insights 1`] = `
               data-v-0029352b=""
             >
               <li
-                class="relative border-b py-2 px-4 active"
+                class="relative border-b py-2 active"
               >
-                <div
+                <button
+                  aria-expanded="true"
                   class="accordion-item-header"
                 >
                   <h4
@@ -1128,12 +1129,14 @@ exports[`Zones.vue renders zone insights 1`] = `
                      
                     <!---->
                   </h4>
-                </div>
+                </button>
                  
                 <transition-stub
                   name="accordion"
                 >
-                  <div>
+                  <div
+                    class="px-4"
+                  >
                     <div>
                       <div>
                         <h5
@@ -1686,9 +1689,9 @@ exports[`Zones.vue renders zone insights 1`] = `
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2 px-4"
+                class="relative border-b py-2"
               >
-                <div
+                <button
                   class="accordion-item-header"
                 >
                   <h4
@@ -1711,7 +1714,7 @@ exports[`Zones.vue renders zone insights 1`] = `
   
                     </span>
                   </h4>
-                </div>
+                </button>
                  
                 <transition-stub
                   name="accordion"

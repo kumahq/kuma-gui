@@ -9,156 +9,24 @@ exports[`MetricsNotification.vue renders snapshot 1`] = `
       class="mb-4"
     >
       
-      Observability will give you a better understanding of service behavior
-      to increase development teams’ reliability and efficiency.
-    
+    A traffic metrics policy lets you collect key data for observability of your service mesh.
+  
     </p>
      
-    <p
-      class="mb-4"
+    <ul
+      class="list-disc pl-4"
     >
-      
-      Kuma natively integrates with 
-      <a
-        href="https://prometheus.io/docs/visualization/grafana/"
-        target="_blank"
-      >
-        Prometheus
-      </a>
-       for auto-service discovery and traffic metrics
-      collection. We also integrate with Grafana dashboards for performance monitoring. You can install your own
-      Prometheus and Grafana, or you can run
-      
-      <div
-        class="tab-container"
-        data-testid="tab-container"
-      >
-        <!---->
-         
-        <div
-          class="tab__content-container"
+      <li>
+        <a
+          href="https://kuma.io/docs/1.2.0/policies/traffic-metrics/"
+          target="_blank"
         >
-          <div
-            class="k-tabs"
-            data-v-a38b664a=""
-          >
-            <ul
-              aria-label="ktabs"
-              data-v-a38b664a=""
-              role="tablist"
-            >
-              <li
-                aria-controls="panel-0"
-                aria-selected="true"
-                class="tab-item active"
-                data-v-a38b664a=""
-                id="universal-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <a
-                  class="tab-link"
-                  data-v-a38b664a=""
-                >
-                  Universal
-                </a>
-              </li>
-              <li
-                aria-controls="panel-1"
-                aria-selected="false"
-                class="tab-item"
-                data-v-a38b664a=""
-                id="kubernetes-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <a
-                  class="tab-link"
-                  data-v-a38b664a=""
-                >
-                  Kubernetes
-                </a>
-              </li>
-            </ul>
-            <div
-              aria-labelledby="universal-tab"
-              class="tab-container"
-              data-v-a38b664a=""
-              id="panel-0"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <code
-                class="block"
-                data-v-a38b664a=""
-              >
-                <pre
-                  data-v-a38b664a=""
-                >
-                  type: Mesh
-name: default
-metrics:
-  enabledBackend: prometheus-1
-  backends:
-  - name: prometheus-1
-    type: prometheus
-    conf:
-      skipMTLS: true 
-                </pre>
-              </code>
-              
-          We can apply the configuration with
           
-              <code
-                class="inline"
-                data-v-a38b664a=""
-              >
-                kubectl apply -f [..]
-              </code>
-              .
-        
-            </div>
-            <div
-              aria-labelledby="kubernetes-tab"
-              class="tab-container"
-              data-v-a38b664a=""
-              id="panel-1"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
-            </div>
-          </div>
-           
-          <div>
-            <!---->
-             
-            <!---->
-          </div>
-        </div>
-      </div>
-    </p>
-     
-    <p
-      class="mb-4"
-    >
+        Traffic Metrics policy documentation
       
-      If you want to use Splunk, Logstash or any other system, Kuma supports
-      those as well.
-    
-    </p>
-     
-    <a
-      class="k-button outline-primary"
-      data-v-38fa8ecf=""
-      href="https://kuma.io/docs/1.2.0/policies/traffic-metrics/"
-      target="_blank"
-      type="button"
-    >
-      
-      Learn More
-    
-    </a>
+        </a>
+      </li>
+    </ul>
   </div>
 </div>
 `;

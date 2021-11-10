@@ -15,7 +15,7 @@ function renderWithVuex(
   // provided as a parameter. This way, we can alter some behaviors of the
   // initial implementation.
 
-  return render(Component, { ...options, store: merge(store, options.store), routes: options.routes || [] }, configure)
+  return render(Component, { ...options, store: merge(store, options.store), routes: options.routes }, configure)
 }
 
 export default renderWithVuex

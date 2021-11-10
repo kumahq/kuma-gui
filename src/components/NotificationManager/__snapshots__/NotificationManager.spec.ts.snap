@@ -58,7 +58,7 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
                 />
               </g>
             </svg>
-             All mesh notifications
+             Notifications
       
           </div>
         </div>
@@ -68,50 +68,104 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
           data-v-2636d531=""
         >
           <div
-            class="py-4"
             data-v-2636d531=""
           >
-            <h3
-              class="font-bold mb-4"
+            <div
+              class="py-4"
             >
-              
-    Meshes
-  
-            </h3>
-             
-            <p>
-              
-    We noticed that you have some available actions in your meshes.
-  
-            </p>
-             
-            <p>
-              
-    Below you can find meshes in which these actions are available.
-  
-            </p>
+              <h3
+                class="font-bold mb-4"
+              >
+                
+      Meshes
+    
+              </h3>
+               
+              <div>
+                <p>
+                  
+        Check the following meshes for suggestions to adjust the configuration
+      
+                </p>
+                 
+                <div
+                  class="pt-4"
+                >
+                  <span
+                    class="relative"
+                  >
+                    <div
+                      class="k-badge truncate ml-2 cursor-pointer transform hover:scale-110 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+            test-mesh
+          
+                    </div>
+                     
+                    <span
+                      class="notification-amount"
+                    >
+                      4
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
              
             <div
-              class="pt-4"
+              class="py-4"
             >
-              <span
-                class="relative"
+              <h3
+                class="font-bold mb-4"
               >
-                <div
-                  class="k-badge truncate ml-2 cursor-pointer transform hover:scale-110 kbadge-default"
-                  data-v-07ccd633=""
+                
+      Enterprise
+    
+              </h3>
+               
+              <p>
+                
+      Kuma’s ecosystem has created enterprise offerings to do more with the product, including advanced integrations and support.
+    
+              </p>
+               
+              <a
+                class="k-button enterprise-button primary"
+                data-v-38fa8ecf=""
+                href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                target="_blank"
+                type="button"
+              >
+                <svg
+                  class="kong-icon kong-icon-organizations"
+                  data-v-38fa8ecf=""
+                  data-v-a7c9c1d2=""
+                  height="24"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="24"
                 >
-                  
-        test-mesh
-      
-                </div>
-                 
-                <span
-                  class="notification-amount"
-                >
-                  4
-                </span>
-              </span>
+                  <title
+                    data-v-a7c9c1d2=""
+                  >
+                    organizations
+                  </title>
+                  <g
+                    data-v-a7c9c1d2=""
+                  >
+                    <path
+                      d="M16.191 10.947H12.82l2.122 1.977v5.11l4.777.018v-4.019l-3.528-3.086ZM4.11 10.107 0 13.194v4.838h12.99v-4.838l-3.848-3.087H4.11ZM6.476 8.216c1.74 0 3.151-1.403 3.151-3.134a3.143 3.143 0 0 0-3.15-3.135 3.143 3.143 0 0 0-3.151 3.135 3.143 3.143 0 0 0 3.15 3.134ZM13.333 9.526a2.85 2.85 0 0 0 2.857-2.842 2.85 2.85 0 0 0-2.857-2.842 2.85 2.85 0 0 0-2.857 2.842 2.85 2.85 0 0 0 2.857 2.842Z"
+                      data-v-a7c9c1d2=""
+                      fill="white"
+                    />
+                  </g>
+                </svg>
+                
+
+      Kuma Enterprise Offerings
+    
+              </a>
             </div>
           </div>
         </div>
@@ -163,7 +217,16 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
             data-v-2636d531=""
           >
             
-        Here is a list of possible actions you might take to improve usability of your service mesh!
+        Some of these features are not enabled for
+        
+            <span
+              class="text-xl tracking-wide"
+              data-v-2636d531=""
+            >
+               "test-mesh"
+            </span>
+            
+        mesh. Consider implementing them.
 
         
             <div
@@ -187,9 +250,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
             data-v-2636d531=""
           >
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -240,7 +303,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Observability, Metrics & Service Map
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -249,9 +312,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -302,7 +365,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Logging
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -311,9 +374,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -364,7 +427,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Zero-trust security
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -373,9 +436,9 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2 px-4"
+              class="relative border-b py-2"
             >
-              <div
+              <button
                 class="accordion-item-header"
               >
                 <div
@@ -426,7 +489,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     Tracing
                   </strong>
                 </div>
-              </div>
+              </button>
                
               <transition-stub
                 name="accordion"
@@ -517,7 +580,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
               ProTip:
             </strong>
             
-          We've detected that there are actions that you might take to adjust the way how you use service mesh.
+          You might want to adjust your meshes configuration
         
           </span>
            
@@ -528,7 +591,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
             type="button"
           >
             
-          Check!
+          Check your meshes!
         
           </button>
         </div>

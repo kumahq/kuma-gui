@@ -1338,6 +1338,11 @@
   resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-4.0.2.tgz#1d471624a6c9750e1438278d26ab54ce62bc44b5"
   integrity sha512-P1r7Nd/ek/uCZElJp1vwtIVbeKkG61NzyN7qoZVwQKDeO22DGAyl02wzHcyoYfjaSJURwugW1nE2zTq/+YOHBw==
 
+"@kongponents/kicon@^5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@kongponents/kicon/-/kicon-5.0.7.tgz#09ad47968da1ce9ca1581f0b012eb510fd3516da"
+  integrity sha512-9Y6+SVpxpgcNpYsHaNhQwIy8zbwy+DhdYzTS0J3IO9bDX6URka865gGGCHG9zVNLXe1O7xmxyzru6Qm4wV1JBQ==
+
 "@kongponents/kmodal@^4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@kongponents/kmodal/-/kmodal-4.0.2.tgz#49213531268e13225bb1554e1fb0bef14e7a9283"

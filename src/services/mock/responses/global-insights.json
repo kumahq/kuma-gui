@@ -1,0 +1,18 @@
+{
+  "type": "GlobalInsights",
+  "creationTime": "2018-07-17T16:05:36.995Z",
+  "resources": {
+    "GlobalSecret": {
+      "total": 0
+    },
+    "Mesh": {
+      "total": 4
+    },
+    "Zone": {
+      "total": 4
+    },
+    "ZoneIngress": {
+      "total": 1
+    }
+  }
+}
