@@ -112,7 +112,7 @@ export default {
     },
 
     shouldRenderAlert() {
-      return !this.alertClosed && this.amountOfActions > 0
+      return !this.alertClosed && !this.showOnboarding && this.amountOfActions > 0
     },
 
     hasAnyAction() {
