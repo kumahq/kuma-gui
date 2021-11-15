@@ -51,7 +51,7 @@
           <h3>{{ tabGroupTitle }}</h3>
         </div>
         <div>
-          <EntityURLControl :name="entity.name" />
+          <EntityURLControl :name="entityName" />
         </div>
       </template>
       <template v-slot:overview>
@@ -328,6 +328,9 @@ export default {
       const storedVersion = this.$store.getters.getVersion
 
       return storedVersion !== null ? storedVersion : 'latest'
+    },
+    entityName() {
+      return this.entity?.basicData?.name || ''
     },
   },
   watch: {

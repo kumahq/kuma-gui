@@ -4,8 +4,8 @@
 
     <main class="main-content">
       <div class="page">
-        <NotificationManager />
         <OnboardingNotification v-if="showOnboarding" />
+        <NotificationManager v-else />
         <Breadcrumbs />
         <router-view />
       </div>

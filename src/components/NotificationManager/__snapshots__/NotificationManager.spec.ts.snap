@@ -216,23 +216,29 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
           <div
             data-v-2636d531=""
           >
-            
-        Some of these features are not enabled for
-        
             <span
-              class="text-xl tracking-wide"
               data-v-2636d531=""
             >
-               "test-mesh"
-            </span>
-            
-        mesh. Consider implementing them.
+              
+          Some of these features are not enabled for
+          
+              <span
+                class="text-xl tracking-wide"
+                data-v-2636d531=""
+              >
+                 "test-mesh"
+              </span>
+              
+          mesh. Consider implementing them.
 
         
+            </span>
+             
             <div
               class="k-badge truncate cursor-pointer kbadge-default"
               data-v-07ccd633=""
               data-v-2636d531=""
+              role="button"
             >
               
           ‹ Back to all

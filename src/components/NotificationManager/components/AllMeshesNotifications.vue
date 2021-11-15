@@ -67,13 +67,13 @@ export default {
     ...mapGetters({
       meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
     }),
+    hasMeshesWithAction() {
+      return Object.keys(this.meshNotificationItemMapWithAction).length > 0
+    },
   },
   methods: {
     meshSelected(name) {
       this.$emit('meshSelected', name)
-    },
-    hasMeshesWithAction() {
-      return Object.keys(this.meshNotificationItemMapWithAction).length > 0
     },
     calculateActions(meshActions) {
       const allActions = Object.values(meshActions)
