@@ -850,6 +850,8 @@ exports[`Shell.vue renders component with route 1`] = `
           <!---->
         </div>
          
+        <!---->
+         
         <div>
           <ul
             class="krumbs"
