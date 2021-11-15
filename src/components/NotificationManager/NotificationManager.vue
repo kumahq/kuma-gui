@@ -104,6 +104,7 @@ export default {
     ...mapGetters({
       selectedMesh: 'getSelectedMesh',
       amountOfActions: 'notifications/amountOfActions',
+      showOnboarding: 'showOnboarding',
       meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
     }),
 

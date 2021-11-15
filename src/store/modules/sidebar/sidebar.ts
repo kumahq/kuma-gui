@@ -56,18 +56,23 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
     const selectedMesh = rootGetters.getSelectedMesh
 
     let meshInsightsRawData: { items: MeshInsight[]; total: number }
+    let meshInsights
 
-    if (selectedMesh === 'all') {
-      const params = {
-        callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
+    try {
+      if (selectedMesh === 'all') {
+        const params = {
+          callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
+        }
+
+        meshInsightsRawData = await fetchAllResources<MeshInsight>(params)
+      } else {
+        meshInsightsRawData = { items: [await Kuma.getMeshInsights(selectedMesh)], total: 1 }
       }
 
-      meshInsightsRawData = await fetchAllResources<MeshInsight>(params)
-    } else {
-      meshInsightsRawData = { items: [await Kuma.getMeshInsights(selectedMesh)], total: 1 }
+      meshInsights = calculateMeshInsights(meshInsightsRawData)
+    } catch {
+      meshInsights = []
     }
-
-    const meshInsights = calculateMeshInsights(meshInsightsRawData)
 
     commit('SET_MESH_INSIGHTS', meshInsights)
   },
