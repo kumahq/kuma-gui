@@ -38,9 +38,6 @@
           <div>
             <h3>{{ tabGroupTitle }}</h3>
           </div>
-          <!-- <div>
-            <EntityURLControl :url="shareUrl" />
-          </div> -->
         </template>
         <template v-slot:overview>
           <LabelList
@@ -163,7 +160,6 @@ import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insig
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
-// import EntityURLControl from '@/components/Utils/EntityURLControl'
 import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
@@ -178,7 +174,6 @@ export default {
     title: 'Meshes',
   },
   components: {
-    // EntityURLControl,
     FrameSkeleton,
     DataOverview,
     Tabs,
@@ -311,19 +306,6 @@ export default {
     },
     countCols() {
       return Math.ceil(this.counts.length / this.itemsPerCol)
-    },
-    shareUrl() {
-      const urlRoot = `${window.location.origin}/#`
-
-      const shareUrl = () => {
-        if (this.$route.query.ns) {
-          return this.$route.fullPath
-        }
-
-        return `${urlRoot}${this.$route.fullPath}`
-      }
-
-      return shareUrl()
     },
   },
   watch: {

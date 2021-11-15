@@ -41,12 +41,19 @@
           /> Notifications
         </div>
         <div v-else>
-          Some of these features are not enabled for
-          <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
-          mesh. Consider implementing them.
+          <span v-if="hasAnyAction">
+            Some of these features are not enabled for
+            <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
+            mesh. Consider implementing them.
 
+          </span>
+          <span v-else> Looks like
+            <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
+            isn't missing any features. Well done!
+          </span>
           <KBadge
             class="cursor-pointer"
+            role="button"
             @click.native="changeMesh('all')"
           >
             &lsaquo; Back to all
@@ -98,6 +105,7 @@ export default {
       selectedMesh: 'getSelectedMesh',
       amountOfActions: 'notifications/amountOfActions',
       showOnboarding: 'onboarding/showOnboarding',
+      meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
     }),
 
     isAllMeshesView() {
@@ -106,6 +114,10 @@ export default {
 
     shouldRenderAlert() {
       return !this.alertClosed && !this.showOnboarding && this.amountOfActions > 0
+    },
+
+    hasAnyAction() {
+      return this.meshNotificationItemMapWithAction[this.selectedMesh]
     },
   },
   methods: {

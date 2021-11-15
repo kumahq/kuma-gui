@@ -51,7 +51,7 @@
           <h3>{{ tabGroupTitle }}</h3>
         </div>
         <div>
-          <EntityURLControl :url="shareUrl" />
+          <EntityURLControl :name="entityName" />
         </div>
       </template>
       <template v-slot:overview>
@@ -329,23 +329,8 @@ export default {
 
       return storedVersion !== null ? storedVersion : 'latest'
     },
-    shareUrl() {
-      const urlRoot = `${window.location.origin}/#`
-      const entity = this.entity
-
-      const shareUrl = () => {
-        if (entity.basicData) {
-          if (this.$route.query.ns) {
-            return this.$route.fullPath
-          }
-
-          return `${urlRoot}${this.$route.fullPath}?ns=${entity.basicData.name}`
-        }
-
-        return null
-      }
-
-      return shareUrl()
+    entityName() {
+      return this.entity?.basicData?.name || ''
     },
   },
   watch: {
