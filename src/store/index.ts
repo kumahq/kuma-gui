@@ -446,8 +446,6 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       let online = 0
 
-      console.log({ items })
-
       items.forEach((item: any): void => {
         const { status } = getItemStatusFromInsight(item.zoneInsight)
 
