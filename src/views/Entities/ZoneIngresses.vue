@@ -241,7 +241,7 @@ export default {
 
         try {
           // get the ZoneIngress details from the ZoneIngress Insights endpoint
-          const response = await Kuma.getZoneIngressOverview(entity.name)
+          const response = await Kuma.getZoneIngressOverview({ name: entity.name })
 
           const subscriptions = get(response, 'zoneIngressInsight.subscriptions', [])
 

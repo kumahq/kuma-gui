@@ -342,7 +342,7 @@ export default {
         offset,
       }
 
-      const endpoint = mesh === 'all' || !mesh ? Kuma.getAllMeshes(params) : Kuma.getMesh(mesh)
+      const endpoint = mesh === 'all' || !mesh ? Kuma.getAllMeshes(params) : Kuma.getMesh({ name: mesh })
 
       const getMeshes = () =>
         endpoint
@@ -406,10 +406,10 @@ export default {
       this.entityHasError = false
 
       if (entity && entity !== null) {
-        return Kuma.getMesh(entity.name)
+        return Kuma.getMesh({ name: entity.name })
           .then((response) => {
             if (response) {
-              Kuma.getMeshInsights(entity.name).then((meshInsightResponse) => {
+              Kuma.getMeshInsights({ name: entity.name }).then((meshInsightResponse) => {
                 this.meshInsight = meshInsightResponse
               })
 

@@ -663,7 +663,7 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!meshName || !univDataplaneId) return
 
-      Kuma.getDataplaneFromMesh(meshName, univDataplaneId)
+      Kuma.getDataplaneFromMesh({ mesh: meshName, name: univDataplaneId })
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

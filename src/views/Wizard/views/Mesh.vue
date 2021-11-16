@@ -919,7 +919,7 @@ export default {
       // do nothing if there's nothing found
       if (!entity) return
 
-      Kuma.getMesh(entity)
+      Kuma.getMesh({ name: entity })
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

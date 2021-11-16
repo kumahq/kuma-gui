@@ -241,7 +241,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return Kuma.getRetry(entityMesh, entity.name)
+        return Kuma.getRetry({ mesh: entityMesh, name: entity.name })
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
