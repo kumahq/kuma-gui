@@ -238,7 +238,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return Kuma.getFaultInjection(entityMesh, entity.name)
+        return Kuma.getFaultInjection({ mesh: entityMesh, name: entity.name })
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

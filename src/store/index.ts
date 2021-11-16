@@ -270,10 +270,10 @@ export default (): Module<RootInterface, RootInterface> => ({
           const items = await dataplanes.items
 
           for (let i = 0; i < items.length; i++) {
-            const itemName = items[i].name
-            const itemMesh = items[i].mesh
+            const name = items[i].name
+            const mesh = items[i].mesh
 
-            const itemStatus = await Kuma.getDataplaneOverviewFromMesh(itemMesh, itemName).then(response => {
+            const itemStatus = await Kuma.getDataplaneOverviewFromMesh({ name, mesh }).then(response => {
               const items = response.dataplaneInsight.subscriptions
 
               if (items && items.length > 0) {
@@ -293,8 +293,8 @@ export default (): Module<RootInterface, RootInterface> => ({
             // create the full data array
             result.push({
               status: itemStatus,
-              name: itemName,
-              mesh: itemMesh,
+              name,
+              mesh,
             })
           }
 
@@ -336,7 +336,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
           commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', await fetchAllResources(params))
         } else {
-          commit('SET_MESH_INSIGHT', await Kuma.getMeshInsights(mesh))
+          commit('SET_MESH_INSIGHT', await Kuma.getMeshInsights({ name: mesh }))
         }
       } catch (e) {
         commit('SET_MESH_INSIGHT', getEmptyInsight())
@@ -355,7 +355,7 @@ export default (): Module<RootInterface, RootInterface> => ({
           callEndpoint:
             mesh === 'all'
               ? Kuma.getAllServiceInsights.bind(Kuma)
-              : Kuma.getAllServiceInsightsFromMesh.bind(Kuma, mesh),
+              : Kuma.getAllServiceInsightsFromMesh.bind(Kuma, { mesh }),
         }
 
         commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
@@ -374,7 +374,7 @@ export default (): Module<RootInterface, RootInterface> => ({
           callEndpoint:
             mesh === 'all'
               ? Kuma.getAllExternalServices.bind(Kuma)
-              : Kuma.getAllExternalServicesFromMesh.bind(Kuma, mesh),
+              : Kuma.getAllExternalServicesFromMesh.bind(Kuma, { mesh }),
         }
 
         commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
@@ -398,19 +398,14 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       try {
         if (multicluster) {
-          const overviewsParams = {
+          const params = {
             callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
           }
 
-          const statusesParams = {
-            callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
-          }
+          const data = await fetchAllResources(params)
 
-          const overviews = await fetchAllResources(overviewsParams)
-          const statuses = await fetchAllResources(statusesParams)
-
-          dispatch('setOverviewZonesChartData', statuses)
-          dispatch('setOverviewZonesCPVersionsChartData', overviews)
+          dispatch('setOverviewZonesChartData', data)
+          dispatch('setOverviewZonesCPVersionsChartData', data)
         } else {
           const zonesData = [
             {
@@ -450,6 +445,8 @@ export default (): Module<RootInterface, RootInterface> => ({
       const total = items.length
 
       let online = 0
+
+      console.log({ items })
 
       items.forEach((item: any): void => {
         const { status } = getItemStatusFromInsight(item.zoneInsight)

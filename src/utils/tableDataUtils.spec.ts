@@ -40,6 +40,12 @@ describe('tableDataUtils', () => {
 
       expect(params.getSingleEntity).toHaveBeenCalled()
     })
+
+    it('calls getSingleEntity with mesh all', () => {
+      getTableData({ ...params, query: 'foo', mesh: 'all' })
+
+      expect(params.getSingleEntity).toHaveBeenCalled()
+    })
   })
 
   describe('handles reponses', () => {

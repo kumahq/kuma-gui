@@ -66,7 +66,7 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
 
         meshInsightsRawData = await fetchAllResources<MeshInsight>(params)
       } else {
-        meshInsightsRawData = { items: [await Kuma.getMeshInsights(selectedMesh)], total: 1 }
+        meshInsightsRawData = { items: [await Kuma.getMeshInsights({ name: selectedMesh })], total: 1 }
       }
 
       meshInsights = calculateMeshInsights(meshInsightsRawData)

@@ -241,7 +241,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return Kuma.getProxyTemplate(entityMesh, entity.name)
+        return Kuma.getProxyTemplate({ mesh: entityMesh, name: entity.name })
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

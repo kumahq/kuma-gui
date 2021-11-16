@@ -195,13 +195,13 @@ export default {
     },
     getService(mesh, query, params) {
       return this.name === 'Internal Services'
-        ? Kuma.getServiceInsight(mesh, query, params)
-        : Kuma.getExternalService(mesh, query, params)
+        ? Kuma.getServiceInsight({ mesh, name: query }, params)
+        : Kuma.getExternalService({ mesh, name: query }, params)
     },
     getServiceFromMesh(mesh) {
       return this.name === 'Internal Services'
-        ? Kuma.getAllServiceInsightsFromMesh(mesh)
-        : Kuma.getAllExternalServicesFromMesh(mesh)
+        ? Kuma.getAllServiceInsightsFromMesh({ mesh })
+        : Kuma.getAllExternalServicesFromMesh({ mesh })
     },
     parseData(entity) {
       if (this.name === 'Internal Services') {

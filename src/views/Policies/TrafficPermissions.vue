@@ -262,7 +262,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return Kuma.getTrafficPermission(entityMesh, entity.name)
+        return Kuma.getTrafficPermission({ mesh: entityMesh, name: entity.name })
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
@@ -298,7 +298,7 @@ export default {
       const entityMesh = mesh !== 'all' ? mesh : false
 
       if (entityMesh) {
-        return Kuma.getMesh(entityMesh).then((response) => {
+        return Kuma.getMesh({ name: entityMesh }).then((response) => {
           const { mtls } = response
 
           if (mtls?.enabledBackend?.length > 0) {

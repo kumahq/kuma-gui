@@ -404,10 +404,10 @@ export default {
         if (mesh === 'all') {
           return Kuma.getAllDataplaneOverviews(params)
         } else if (query && query.length && mesh !== 'all') {
-          return Kuma.getDataplaneOverviewFromMesh(mesh, query)
+          return Kuma.getDataplaneOverviewFromMesh({ mesh, name: query })
         }
 
-        return Kuma.getAllDataplaneOverviewsFromMesh(mesh, params)
+        return Kuma.getAllDataplaneOverviewsFromMesh({ mesh }, params)
       }
 
       /**
@@ -416,7 +416,7 @@ export default {
        */
       const dpFetcher = async (mesh, name, finalArr) => {
         try {
-          const response = await Kuma.getDataplaneOverviewFromMesh(mesh, name)
+          const response = await Kuma.getDataplaneOverviewFromMesh({ mesh, name })
           const { dataplane = {}, dataplaneInsight = {} } = response
           const { name: responseName = '', mesh: responseMesh = '' } = response
           const { subscriptions = [] } = dataplaneInsight
@@ -615,7 +615,7 @@ export default {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
         try {
-          const response = await Kuma.getDataplaneOverviewFromMesh(entityMesh, entity.name)
+          const response = await Kuma.getDataplaneOverviewFromMesh({ mesh: entityMesh, name: entity.name })
           const dataplane = getDataplane(response)
 
           if (dataplane) {
