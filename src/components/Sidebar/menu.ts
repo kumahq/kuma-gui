@@ -12,6 +12,7 @@ export interface MenuNavItem {
   nested?: boolean
   parent?: string
   pathFlip?: boolean
+  params?: boolean
   insightsFieldAccessor?: string
 }
 
@@ -19,6 +20,7 @@ export interface MenuItem {
   name: string
   icon?: KIconType
   link?: string
+
   iconCustom?: TODO
   subNav?: {
     items: MenuNavItem[]
@@ -58,6 +60,7 @@ const menu: MenuSection[] = [
               name: 'Zone CPs',
               link: 'zones',
               insightsFieldAccessor: 'global.zones',
+              params: true,
               // root: true
               // multicluster: true
             },
