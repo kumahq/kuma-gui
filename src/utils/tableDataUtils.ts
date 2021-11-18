@@ -27,16 +27,16 @@ function getAPICallFunction({
     offset,
   }
 
+  if (getSingleEntity && query) {
+    return getSingleEntity({ mesh, name: query }, params)
+  }
+
   if (!mesh || mesh === 'all') {
     return getAllEntities(params)
   }
 
-  if (getSingleEntity && query && query.length && mesh !== 'all') {
-    return getSingleEntity(mesh, query, params)
-  }
-
-  if (getAllEntitiesFromMesh) {
-    return getAllEntitiesFromMesh(mesh, params)
+  if (getAllEntitiesFromMesh && mesh) {
+    return getAllEntitiesFromMesh({ mesh }, params)
   }
 
   return Promise.resolve()

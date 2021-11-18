@@ -235,7 +235,7 @@ export default {
       this.entityHasError = false
 
       if (entity) {
-        return Kuma.getCircuitBreaker(entity.mesh, entity.name)
+        return Kuma.getCircuitBreaker({ mesh: entity.mesh, name: entity.name })
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']

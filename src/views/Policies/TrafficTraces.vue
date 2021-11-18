@@ -239,7 +239,7 @@ export default {
       if (entity) {
         const entityMesh = mesh === 'all' ? entity.mesh : mesh
 
-        return Kuma.getTrafficTrace(entityMesh, entity.name)
+        return Kuma.getTrafficTrace({ mesh: entityMesh, name: entity.name })
           .then((response) => {
             if (response) {
               const selected = ['type', 'name', 'mesh']
