@@ -27,8 +27,6 @@ exports[`Completed.vue renders snapshot 1`] = `
     You have completed the initial wizard! You can now visualize the dashboard were you can find:
   
           </p>
-           
-          <!---->
         </div>
       </div>
        
@@ -108,21 +106,25 @@ exports[`Completed.vue renders snapshot 1`] = `
       </div>
        
       <div
-        class="mt-6 flex items-center flex-col sm:flex-row justify-end"
+        class="mt-4 flex items-center flex-col sm:flex-row justify-end"
       >
         <!---->
-          
-        <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
-          href="#/"
-          type="button"
-        >
-          
-    View Dashboard
-  
-        </a>
+         
+        <div>
+          <!---->
+           
+          <a
+            aria-current="page"
+            class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+            data-v-38fa8ecf=""
+            href="#/"
+            type="button"
+          >
+            
+      Go to dashboard
+    
+          </a>
+        </div>
       </div>
     </div>
      

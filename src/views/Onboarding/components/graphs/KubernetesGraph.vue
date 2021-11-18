@@ -57,10 +57,7 @@
       d="M624.841 67L608.904 76.2014L608.904 57.7987L624.841 67ZM529.999 65.4063L610.497 65.4063L610.497 68.5937L529.999 68.5937L529.999 65.4063Z"
       fill="#7B2BBC"
     />
-    <path
-      d="M281.807 106.436L498.554 106.436L498.554 114.723C498.554 117.54 496.27 119.823 493.454 119.823L286.907 119.823C284.091 119.823 281.807 117.54 281.807 114.723L281.807 106.436Z"
-      fill="#7B2BBC"
-    />
+
     <g filter="url(#filter1_d)">
       <path
         d="M79 106C79 107.105 78.1046 108 77 108L16 108C14.8954 108 14 107.105 14 106L14 28C14 26.8954 14.8954 26 16 26L67 26L67 39.5C67 40.6046 67.8954 41.5 69 41.5L79 41.5L79 106Z"
@@ -120,13 +117,13 @@
 
     <KPop
       trigger="hover"
-      title="Service"
+      title="Yaml"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
       :popover-timeout="5"
     >
-      <g class="cursor-help animate-pulse ">
+      <g class="cursor-help animate-pulse">
         <g filter="url(#filter7_d)">
           <circle
             cx="92"
@@ -148,19 +145,20 @@
         />
       </g>
       <template v-slot:content>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti, modi! Quis consectetur, esse ipsum ullam, eaque aspernatur hic vel veniam reprehenderit voluptates explicabo repellendus, error at. Non quod inventore pariatur.
+        With a Kubernetes backend, {{ productName }} leverages native Kubernetes CRDs to store all the configuration, that can be applied with kubectl or any other Kubernetes tooling.
+
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      title="Service"
+      :title="productName"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
       :popover-timeout="5"
     >
-      <g class="cursor-help animate-pulse ">
+      <g class="cursor-help animate-pulse">
         <g filter="url(#filter8_d)">
           <circle
             cx="495"
@@ -182,19 +180,20 @@
         />
       </g>
       <template v-slot:content>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti, modi! Quis consectetur, esse ipsum ullam, eaque aspernatur hic vel veniam reprehenderit voluptates explicabo repellendus, error at. Non quod inventore pariatur.
+        In Kubernetes mode, the {{ productName }} control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh.
+
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      title="Service"
+      title="Kubernetes"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
       :popover-timeout="5"
     >
-      <g class="cursor-help animate-pulse ">
+      <g class="cursor-help animate-pulse">
         <g filter="url(#filter9_d)">
           <circle
             cx="745"
@@ -216,7 +215,7 @@
         />
       </g>
       <template v-slot:content>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti, modi! Quis consectetur, esse ipsum ullam, eaque aspernatur hic vel veniam reprehenderit voluptates explicabo repellendus, error at. Non quod inventore pariatur.
+        The Kubernetes API server ultimately is the source of truth that stores the {{ productName }} configuration that will be applied at runtime.
       </template>
     </KPop>
 
@@ -728,7 +727,13 @@
 </template>
 
 <script>
+import { PRODUCT_NAME } from '@/consts'
 export default {
   name: 'KubernetesGraph',
+  data() {
+    return {
+      productName: PRODUCT_NAME,
+    }
+  },
 }
 </script>

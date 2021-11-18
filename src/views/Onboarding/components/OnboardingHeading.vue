@@ -9,24 +9,10 @@
     >
       {{ description }}
     </p>
-    <div
-      v-if="showSkip"
-      class="absolute right-0 top-0 mt-4 m-a flex items-center"
-    >
-      <KButton
-        class="skip-button"
-        appearance="btn-link"
-        size="small"
-        @click.native="skipOnboarding"
-      >
-        Skip Setup
-      </KButton>
-    </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 export default {
   name: 'OnboardingHeading',
   props: {
@@ -37,22 +23,6 @@ export default {
     description: {
       type: String,
       default: '',
-    },
-    showSkip: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  methods: {
-    ...mapActions('onboarding', ['completeOnboarding']),
-    skipOnboarding() {
-      this.completeOnboarding()
-      this.$router.push({
-        name: 'global-overview',
-        params: {
-          mesh: 'all',
-        },
-      })
     },
   },
 }
@@ -65,11 +35,5 @@ export default {
   background: linear-gradient(to right, var(--OnboardingTitle));
   background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.skip-button {
-  @apply font-medium;
-
-  --KButtonBtnLink: var(--OnboardingSkipSetupButton);
 }
 </style>

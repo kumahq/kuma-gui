@@ -6,11 +6,15 @@
           Welcome to {{ productName }}
         </h1>
         <p class="welcome-description">
-          Congratulations for downloading
-          {{ productName }} — <strong>setup takes about 4 minutes</strong> to get your service mesh fully online.
+          Congratulations for downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
         </p>
+
+        <p class="welcome-description">
+          We have automatically detected that you are running on <strong>{{ enviromentFormatted }}</strong>.
+        </p>
+
         <h2 class="welcome-detected">
-          We’ve automatically detected...
+          Let's get started:
         </h2>
 
         <ul>
@@ -22,19 +26,9 @@
           />
         </ul>
       </div>
-      <OnboardingNavigation
-        next-step="onboarding-deployment-types"
-        next-step-title="Step 1"
-      >
-        <KButton
-          class="skip-button"
-          appearance="btn-link"
-          size="small"
-          @click.native="skipOnboarding"
-        >
-          Skip Setup
-        </KButton>
-      </OnboardingNavigation>
+      <div>
+        <OnboardingNavigation next-step="onboarding-deployment-types" />
+      </div>
     </div>
     <WelcomeAnimationSvg />
   </div>
@@ -42,7 +36,7 @@
 
 <script>
 import { PRODUCT_NAME } from '@/consts'
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import ItemStatus from './components/ItemStatus'
 import WelcomeAnimationSvg from './components/WelcomeAnimationSvg'
@@ -68,43 +62,37 @@ export default {
   computed: {
     ...mapGetters({
       environment: 'config/getEnvironment',
-      getMulticlusterStatus: 'config/getMulticlusterStatus',
     }),
+    enviromentFormatted() {
+      return this.environment.charAt(0).toUpperCase() + this.environment.slice(1)
+    },
     statuses() {
       return [
         {
-          name: 'Chose Deployment Type',
-          status: false,
-        },
-        {
-          name: 'Choose Backend Type',
-          status: false,
-        },
-        {
-          name: this.environment.charAt(0).toUpperCase() + this.environment.slice(1),
+          name: `Running ${this.productName}`,
           status: true,
         },
         {
-          name: this.getMulticlusterStatus ? ' Multi-Zone ' : ' Standalone',
-          status: true,
+          name: 'Learn about deployments',
+          status: false,
         },
         {
-          name: 'Populate a Mesh',
+          name: 'Learn about backends',
+          status: false,
+        },
+        {
+          name: 'Creating a mesh',
+          status: false,
+        },
+        {
+          name: 'Adding new services',
+          status: false,
+        },
+        {
+          name: 'Go to the dashboard',
           status: false,
         },
       ]
-    },
-  },
-  methods: {
-    ...mapActions('onboarding', ['completeOnboarding']),
-    skipOnboarding() {
-      this.completeOnboarding()
-      this.$router.push({
-        name: 'global-overview',
-        params: {
-          mesh: 'all',
-        },
-      })
     },
   },
 }
@@ -123,6 +111,10 @@ export default {
     top: 50%;
     transform: translateY(-50%);
   }
+
+  @media screen and (min-width: 1700px) and (max-width: 1850px) {
+    top: 12.5vw;
+  }
 }
 
 .content {
@@ -132,27 +124,27 @@ export default {
 }
 
 .welcome-title {
-  @apply text-5xl font-bold mb-6;
+  @apply text-5xl font-bold mb-3;
 
   background: linear-gradient(to right, var(--OnboardingTitle));
   background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  @media screen and (max-width: 1699px) {
-    @apply mb-3;
-  }
 }
 
 .welcome-description {
-  @apply text-lg mb-12;
+  @apply text-base mb-4;
 
   @media screen and (max-width: 1699px) {
-    @apply mb-5;
+    @apply mb-2;
   }
 }
 
 .welcome-detected {
-  @apply text-2xl mb-8 font-bold;
+  @apply text-2xl mb-4 font-bold;
+
+  @media screen and (max-width: 1699px) {
+    @apply text-xl mb-3;
+  }
 }
 
 .screen {
@@ -164,12 +156,6 @@ export default {
   z-index: -1;
   overflow: scroll;
   color: var(--kuma-purple-1);
-}
-
-.skip-button {
-  @apply font-medium mr-8;
-
-  --KButtonBtnLink: var(--OnboardingSkipSetupButton);
 }
 
 @keyframes show {

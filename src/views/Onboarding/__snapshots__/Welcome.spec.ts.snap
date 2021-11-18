@@ -23,12 +23,23 @@ exports[`Welcome.vue renders snapshot 1`] = `
           class="welcome-description"
         >
           
-        Congratulations for downloading
-        Kuma — 
+        Congratulations for downloading Kuma! You are just a 
           <strong>
-            setup takes about 4 minutes
+            few minutes
           </strong>
-           to get your service mesh fully online.
+           away from getting your service mesh fully online.
+      
+        </p>
+         
+        <p
+          class="welcome-description"
+        >
+          
+        We have automatically detected that you are running on 
+          <strong>
+            Universal
+          </strong>
+          .
       
         </p>
          
@@ -36,7 +47,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
           class="welcome-detected"
         >
           
-        We’ve automatically detected...
+        Let's get started:
       
         </h2>
          
@@ -47,30 +58,6 @@ exports[`Welcome.vue renders snapshot 1`] = `
             <span
               class="circle"
             >
-              <!---->
-            </span>
-            
-  Chose Deployment Type
-
-          </li>
-          <li
-            class="flex items-center mb-2"
-          >
-            <span
-              class="circle"
-            >
-              <!---->
-            </span>
-            
-  Choose Backend Type
-
-          </li>
-          <li
-            class="flex items-center mb-2"
-          >
-            <span
-              class="circle"
-            >
               <svg
                 class="kong-icon kong-icon-check"
                 data-v-a7c9c1d2=""
@@ -98,43 +85,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
               </svg>
             </span>
             
-  Universal
-
-          </li>
-          <li
-            class="flex items-center mb-2"
-          >
-            <span
-              class="circle"
-            >
-              <svg
-                class="kong-icon kong-icon-check"
-                data-v-a7c9c1d2=""
-                height="10"
-                role="img"
-                viewBox="0 0 14 10"
-                width="10"
-              >
-                <title
-                  data-v-a7c9c1d2=""
-                >
-                  check
-                </title>
-                <g
-                  data-v-a7c9c1d2=""
-                >
-                  <path
-                    clip-rule="evenodd"
-                    d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
-                    data-v-a7c9c1d2=""
-                    fill="var(--kuma-purple-1)"
-                    fill-rule="evenodd"
-                  />
-                </g>
-              </svg>
-            </span>
-            
-   Standalone
+  Running Kuma
 
           </li>
           <li
@@ -146,38 +97,90 @@ exports[`Welcome.vue renders snapshot 1`] = `
               <!---->
             </span>
             
-  Populate a Mesh
+  Learn about deployments
+
+          </li>
+          <li
+            class="flex items-center mb-2"
+          >
+            <span
+              class="circle"
+            >
+              <!---->
+            </span>
+            
+  Learn about backends
+
+          </li>
+          <li
+            class="flex items-center mb-2"
+          >
+            <span
+              class="circle"
+            >
+              <!---->
+            </span>
+            
+  Creating a mesh
+
+          </li>
+          <li
+            class="flex items-center mb-2"
+          >
+            <span
+              class="circle"
+            >
+              <!---->
+            </span>
+            
+  Adding new services
+
+          </li>
+          <li
+            class="flex items-center mb-2"
+          >
+            <span
+              class="circle"
+            >
+              <!---->
+            </span>
+            
+  Go to the dashboard
 
           </li>
         </ul>
       </div>
        
-      <div
-        class="mt-6 flex items-center flex-col sm:flex-row justify-end"
-      >
-        <!---->
-         
-        <button
-          class="k-button skip-button small btn-link"
-          data-v-38fa8ecf=""
-          type="button"
+      <div>
+        <div
+          class="mt-4 flex items-center flex-col sm:flex-row justify-end"
         >
-          
-        Skip Setup
-      
-        </button>
-         
-        <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
-          href="#/"
-          type="button"
-        >
-          
-    Step 1
-  
-        </a>
+          <!---->
+           
+          <div>
+            <button
+              class="k-button skip-button small btn-link"
+              data-v-38fa8ecf=""
+              type="button"
+            >
+              
+      Skip Setup
+    
+            </button>
+             
+            <a
+              aria-current="page"
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+              data-v-38fa8ecf=""
+              href="#/"
+              type="button"
+            >
+              
+      Next
+    
+            </a>
+          </div>
+        </div>
       </div>
     </div>
      
@@ -308,7 +311,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
            
           <path
             class="final"
-            d="M1024 573h297v522h-31"
+            d="M1024 573h297v532h-31"
             stroke="url(#a)"
             transform="translate(0 3)"
           />

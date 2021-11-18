@@ -11,18 +11,27 @@
     >
       Back
     </KButton>
-    <slot />
-    <KButton
-      v-if="shouldDisplayNext"
-      class="navigation-button navigation-button--next"
-      appearance="primary"
-      :to="{
-        name: nextStep,
-      }"
-      @click.native="changeStep(nextStep)"
-    >
-      {{ nextStepTitle }}
-    </KButton>
+    <div v-if="shouldDisplayNext">
+      <KButton
+        v-if="showSkip"
+        class="skip-button"
+        appearance="btn-link"
+        size="small"
+        @click.native="skipOnboarding"
+      >
+        Skip Setup
+      </KButton>
+      <KButton
+        class="navigation-button navigation-button--next"
+        appearance="primary"
+        :to="{
+          name: nextStep,
+        }"
+        @click.native="changeStep(nextStep)"
+      >
+        {{ nextStepTitle }}
+      </KButton>
+    </div>
   </div>
 </template>
 
@@ -32,6 +41,10 @@ export default {
   name: 'OnboardingNavigation',
   props: {
     shouldDisplayNext: {
+      type: Boolean,
+      default: true,
+    },
+    showSkip: {
       type: Boolean,
       default: true,
     },
@@ -51,7 +64,7 @@ export default {
   computed: {
     classes() {
       return [
-        'mt-6 flex items-center flex-col sm:flex-row',
+        'mt-4 flex items-center flex-col sm:flex-row',
         {
           'justify-between': this.previousStep,
           'justify-end': !this.previousStep,
@@ -61,6 +74,16 @@ export default {
   },
   methods: {
     ...mapActions('onboarding', ['completeOnboarding', 'changeStep']),
+
+    skipOnboarding() {
+      this.completeOnboarding()
+      this.$router.push({
+        name: 'global-overview',
+        params: {
+          mesh: 'all',
+        },
+      })
+    },
   },
 }
 </script>
@@ -85,5 +108,11 @@ export default {
     --KButtonPrimaryHover: var(--OnboardingNextButtonHover);
     --KButtonPrimaryActive: var(--OnboardingNextButtonHover);
   }
+}
+
+.skip-button {
+  @apply font-medium mr-8;
+
+  --KButtonBtnLink: var(--OnboardingSkipSetupButton);
 }
 </style>

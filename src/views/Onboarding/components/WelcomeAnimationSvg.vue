@@ -108,7 +108,7 @@
         />
         <path
           stroke="url(#a)"
-          d="M1024 573h297v522h-31"
+          d="M1024 573h297v532h-31"
           class="final"
           transform="translate(0 3)"
         />

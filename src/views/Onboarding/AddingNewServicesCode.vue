@@ -2,17 +2,33 @@
   <OnboardingPage>
     <template #header>
       <OnboardingHeading
-        title="4. Adding New Services"
-        description="To add data plane proxy manually, follow additional steps after this onboarding:"
+        title="Adding New Services"
+        :description="
+          `${productName} ships with a counter demo application that showcases a very simple application with two services, a Redis backend to store the counter value and a frontend application.`
+        "
       />
     </template>
     <template #content>
       <div v-if="onboardingMode==='demo'">
         <CodeView
-          title="Clone app and follow the steps"
+          title="You can find the counter demo application at the following GitHub repository:"
           copy-button-text="Copy Command to Clipboard"
           lang="bash"
           :content="githubLink"
+        />
+        <CodeView
+          v-if="isKubernetes"
+          title="Then run the following command:"
+          copy-button-text="Copy Command to Clipboard"
+          lang="bash"
+          :content="k8sRunCommand"
+        />
+        <CodeView
+          v-else
+          title="Please follow the instructions in the Readme.md"
+          copy-button-text="Copy Command to Clipboard"
+          lang="bash"
+          :content="githubLinkReadme"
         />
       </div>
       <div v-else>
@@ -41,6 +57,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { PRODUCT_NAME } from '@/consts'
 import { kumaDpServerUrl } from '@/configUrl'
 import json2yaml from '@appscode/json2yaml'
 import CodeView from '@/components/Skeletons/CodeView'
@@ -63,7 +80,10 @@ export default {
   },
   data() {
     return {
+      productName: PRODUCT_NAME,
       githubLink: 'https://github.com/kumahq/kuma-counter-demo/',
+      githubLinkReadme: 'https://github.com/kumahq/kuma-counter-demo/blob/master/README.md',
+      k8sRunCommand: 'kubectl apply -f demo.yaml',
       generateDpTokenCode: 'kumactl generate dataplane-token --name=redis > kuma-token-redis',
       startDpCode: `kuma-dp run \\
       --cp-address=${kumaDpServerUrl()} \\
@@ -92,7 +112,11 @@ export default {
   computed: {
     ...mapGetters({
       onboardingMode: 'onboarding/getMode',
+      environment: 'config/getEnvironment',
     }),
+    isKubernetes() {
+      return this.environment === 'kubernetes'
+    },
   },
 }
 </script>

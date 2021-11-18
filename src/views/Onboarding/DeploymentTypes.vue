@@ -2,9 +2,9 @@
   <OnboardingPage with-image>
     <template #header>
       <OnboardingHeading
-        title="1. Choose Deployment Types"
+        title="Learn about deployments"
         :description="
-          `${title} is a multi-tenant system that can support multiple service meshes in the same cluster:`
+          `${productName} can be deployed in two ways, standalone or multi-zone mode. Click on the image below to learn about it:`
         "
       />
     </template>
@@ -41,6 +41,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { PRODUCT_NAME } from '@/consts'
 import MultizoneGraph from '@/views/Onboarding/components/graphs/MultizoneGraph'
 import StandaloneGraph from '@/views/Onboarding/components/graphs/StandaloneGraph'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
@@ -62,12 +63,11 @@ export default {
     }
   },
   data() {
-    return { mode: 'standalone' }
+    return { mode: 'standalone', productName: PRODUCT_NAME }
   },
 
   computed: {
     ...mapGetters({
-      title: 'config/getTagline',
       multicluster: 'config/getMulticlusterStatus',
     }),
     currentGraph() {

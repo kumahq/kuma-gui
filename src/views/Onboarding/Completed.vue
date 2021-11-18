@@ -4,7 +4,6 @@
       <OnboardingHeading
         title="Go to the dashboard"
         description="You have completed the initial wizard! You can now visualize the dashboard were you can find:"
-        :show-skip="false"
       />
     </template>
     <template #content>
@@ -26,7 +25,8 @@
     <template #navigation>
       <OnboardingNavigation
         next-step="global-overview"
-        next-step-title="View Dashboard"
+        next-step-title="Go to dashboard"
+        :show-skip="false"
       />
     </template>
   </OnboardingPage>

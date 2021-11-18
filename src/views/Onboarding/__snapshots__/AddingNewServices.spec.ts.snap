@@ -16,25 +16,11 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
             class="onboarding-title"
           >
             
-    4. Adding New Services
+    Adding new services
   
           </h1>
            
           <!---->
-           
-          <div
-            class="absolute right-0 top-0 mt-4 m-a flex items-center"
-          >
-            <button
-              class="k-button skip-button small btn-link"
-              data-v-38fa8ecf=""
-              type="button"
-            >
-              
-      Skip Setup
-    
-            </button>
-          </div>
         </div>
       </div>
        
@@ -68,7 +54,7 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
                   </p>
                    
                   <p>
-                    Pre-Configured
+                    Counter application
                   </p>
                 </div>
               </div>
@@ -97,7 +83,7 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
                   </p>
                    
                   <p>
-                    Custom Config
+                    Custom config
                   </p>
                 </div>
               </div>
@@ -107,7 +93,7 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
       </div>
        
       <div
-        class="mt-6 flex items-center flex-col sm:flex-row justify-between"
+        class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
         <a
           aria-current="page"
@@ -120,18 +106,30 @@ exports[`AddingNewServices.vue renders snapshot 1`] = `
     Back
   
         </a>
-          
-        <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
-          href="#/"
-          type="button"
-        >
-          
-    Next
-  
-        </a>
+         
+        <div>
+          <button
+            class="k-button skip-button small btn-link"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+      Skip Setup
+    
+          </button>
+           
+          <a
+            aria-current="page"
+            class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+            data-v-38fa8ecf=""
+            href="#/"
+            type="button"
+          >
+            
+      Next
+    
+          </a>
+        </div>
       </div>
     </div>
      

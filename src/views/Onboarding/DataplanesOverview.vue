@@ -7,28 +7,38 @@
       />
     </template>
     <template #content>
-      <div class="justify-center flex my-4">
-        <Loading v-if="!tableData.data.length" />
+      <div
+        v-if="!tableData.data.length"
+        class="justify-center flex my-4"
+      >
+        <Loading />
+      </div>
+      <div v-else>
+        <p class="text-center my-4">
+          You have started the first services that properly registered to {{ productName }}!
+        </p>
 
-        <div v-else>
-          <p class="font-bold mb-4">
-            Found {{ tableData.data.length }} DPPs, including:
-          </p>
-          <KTable
-            class="onboarding-dataplane-table"
-            :options="tableData"
-            is-small
-          >
-            <template v-slot:status="{ rowValue }">
-              <div
-                class="entity-status"
-                :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline' || rowValue === false) }"
-              >
-                <span class="entity-status__dot" />
-                <span class="entity-status__label">{{ rowValue }}</span>
-              </div>
-            </template>
-          </KTable>
+        <div class="flex justify-center mt-10 mb-16 pb-16">
+          <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
+            <p class="font-bold mb-4">
+              Found {{ tableData.data.length }} DPPs, including:
+            </p>
+            <KTable
+              class="onboarding-dataplane-table"
+              :options="tableData"
+              is-small
+            >
+              <template v-slot:status="{ rowValue }">
+                <div
+                  class="entity-status"
+                  :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline' || rowValue === false) }"
+                >
+                  <span class="entity-status__dot" />
+                  <span class="entity-status__label">{{ rowValue }}</span>
+                </div>
+              </template>
+            </KTable>
+          </div>
         </div>
       </div>
     </template>
@@ -44,6 +54,7 @@
 </template>
 
 <script>
+import { PRODUCT_NAME } from '@/consts'
 import { getItemStatusFromInsight } from '@/dataplane'
 import Kuma from '@/services/kuma'
 import debounce from 'lodash/debounce'
@@ -67,6 +78,7 @@ export default {
   },
   data() {
     return {
+      productName: PRODUCT_NAME,
       tableData: {
         headers: [
           { label: 'Mesh', key: 'mesh' },
@@ -88,7 +100,7 @@ export default {
     },
     description() {
       if (this.tableData.data.length) {
-        return 'We have detected the following DPPs (dta plane proxies) connecting to this control plane'
+        return 'We have detected the following data plane proxies (DPPs) connecting to the control plane:'
       }
 
       return null

@@ -12,12 +12,12 @@ describe('Welcome.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders multi-zone', () => {
+  it('renders Kubernetess', () => {
     const { getByText } = renderWithVuex(Welcome, {
       routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global', environment: 'universal' } } } } },
+      store: { modules: { config: { state: { clientConfig: { mode: 'global', environment: 'kubernetess' } } } } },
     })
 
-    expect(getByText(/Multi-Zone/)).toBeInTheDocument()
+    expect(getByText(/Kubernetess/)).toBeInTheDocument()
   })
 })

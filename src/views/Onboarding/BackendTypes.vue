@@ -1,7 +1,12 @@
 <template>
   <OnboardingPage with-image>
     <template #header>
-      <OnboardingHeading title="2. Choose Backend Types" />
+      <OnboardingHeading
+        title="Learn about backends"
+        :description="
+          `${productName} supports multiple storage backends to store the service mesh policies configuration: Kubernetes, Postgres or in-memory.`
+        "
+      />
     </template>
     <template #content>
       <div class="h-full w-full flex items-center justify-center mb-10">
@@ -11,9 +16,9 @@
         <KRadio
           v-model="mode"
           name="deployment"
-          value="kubernetess"
+          value="kubernetes"
         >
-          Kubernetess
+          Kubernetes
         </KRadio>
         <KRadio
           v-model="mode"
@@ -41,6 +46,7 @@
 </template>
 
 <script>
+import { PRODUCT_NAME } from '@/consts'
 import KubernetesGraph from '@/views/Onboarding/components/graphs/KubernetesGraph'
 import PostgresGraph from '@/views/Onboarding/components/graphs/PostgresGraph'
 import MemoryGraph from '@/views/Onboarding/components/graphs/MemoryGraph'
@@ -64,12 +70,12 @@ export default {
     }
   },
   data() {
-    return { mode: 'kubernetess' }
+    return { mode: 'kubernetes', productName: PRODUCT_NAME }
   },
   computed: {
     currentGraph() {
       switch (this.mode) {
-        case 'kubernetess':
+        case 'kubernetes':
           return 'KubernetesGraph'
         case 'postgres':
           return 'PostgresGraph'

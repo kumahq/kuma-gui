@@ -98,4 +98,37 @@ describe('OnboardingNavigation.vue', () => {
     // @ts-ignore
     expect(globalVuex.state.onboarding.step).toBe('foo')
   })
+
+  it('calls skip onboarding', async () => {
+    let globalRouter
+    let globalVuex
+
+    renderWithVuex(
+      OnboardingNavigation,
+      {
+        props: {
+          ...props,
+          previousStep: 'foo',
+        },
+        routes: [
+          {
+            path: '/',
+            name: 'default',
+            component: TestComponent,
+          },
+        ],
+      },
+      (vueInstance, vuexStore, router) => {
+        globalRouter = router
+        globalVuex = vuexStore
+      },
+    )
+
+    await userEvent.click(screen.getByText(/Skip Setup/))
+
+    // @ts-ignore
+    expect(globalRouter.history.current.name).toBe('global-overview')
+    // @ts-ignore
+    expect(globalVuex.state.onboarding.isCompleted).toBe(true)
+  })
 })

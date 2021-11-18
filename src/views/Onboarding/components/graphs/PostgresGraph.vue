@@ -57,10 +57,6 @@
       d="M624.841 67L608.904 76.2014L608.904 57.7987L624.841 67ZM529.999 65.4063L610.497 65.4063L610.497 68.5937L529.999 68.5937L529.999 65.4063Z"
       fill="#7B2BBC"
     />
-    <path
-      d="M281.807 106.436L498.554 106.436L498.554 114.723C498.554 117.54 496.27 119.823 493.454 119.823L286.907 119.823C284.091 119.823 281.807 117.54 281.807 114.723L281.807 106.436Z"
-      fill="#7B2BBC"
-    />
     <g filter="url(#filter1_d)">
       <path
         d="M691.5 100C708.897 100 723 94.4036 723 87.5V80.5C723 73.5964 708.897 68 691.5 68C674.103 68 660 73.5964 660 80.5V87.5C660 94.4036 674.103 100 691.5 100Z"
@@ -117,35 +113,49 @@
         fill="#BCBCBC"
       />
     </g>
-    <g filter="url(#filter7_d)">
-      <circle
-        cx="92"
-        cy="66"
-        r="27"
-        fill="url(#paint0_linear)"
-      />
-      <circle
-        cx="92"
-        cy="66"
-        r="25"
-        stroke="white"
-        stroke-width="4"
-      />
-    </g>
-    <path
-      d="M89.7607 70.5791C89.7607 69.0296 89.9489 67.7956 90.3252 66.877C90.7015 65.9583 91.3877 65.0563 92.3838 64.1709C93.391 63.2744 94.0605 62.5495 94.3926 61.9961C94.7246 61.4316 94.8906 60.8395 94.8906 60.2197C94.8906 58.3493 94.0273 57.4141 92.3008 57.4141C91.4818 57.4141 90.8232 57.6686 90.3252 58.1777C89.8382 58.6758 89.5837 59.3675 89.5615 60.2529H84.7471C84.7692 58.139 85.4499 56.4844 86.7891 55.2891C88.1393 54.0938 89.9766 53.4961 92.3008 53.4961C94.6471 53.4961 96.4678 54.0661 97.7627 55.2061C99.0576 56.335 99.7051 57.9342 99.7051 60.0039C99.7051 60.9447 99.4948 61.8356 99.0742 62.6768C98.6536 63.5068 97.9176 64.431 96.8662 65.4492L95.5215 66.7275C94.6803 67.5355 94.1989 68.4818 94.0771 69.5664L94.0107 70.5791H89.7607ZM89.2793 75.6758C89.2793 74.9342 89.5283 74.3255 90.0264 73.8496C90.5355 73.3626 91.1829 73.1191 91.9688 73.1191C92.7546 73.1191 93.3965 73.3626 93.8945 73.8496C94.4036 74.3255 94.6582 74.9342 94.6582 75.6758C94.6582 76.4062 94.4092 77.0094 93.9111 77.4854C93.4242 77.9613 92.7767 78.1992 91.9688 78.1992C91.1608 78.1992 90.5078 77.9613 90.0098 77.4854C89.5228 77.0094 89.2793 76.4062 89.2793 75.6758Z"
-      fill="#4A4622"
-    />
-
     <KPop
       trigger="hover"
-      title="Service"
+      title="Yaml"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
       :popover-timeout="5"
     >
-      <g class="cursor-help animate-pulse ">
+      <g class="cursor-help animate-pulse">
+        <g filter="url(#filter7_d)">
+          <circle
+            cx="92"
+            cy="66"
+            r="27"
+            fill="url(#paint0_linear)"
+          />
+          <circle
+            cx="92"
+            cy="66"
+            r="25"
+            stroke="white"
+            stroke-width="4"
+          />
+        </g>
+        <path
+          d="M89.7607 70.5791C89.7607 69.0296 89.9489 67.7956 90.3252 66.877C90.7015 65.9583 91.3877 65.0563 92.3838 64.1709C93.391 63.2744 94.0605 62.5495 94.3926 61.9961C94.7246 61.4316 94.8906 60.8395 94.8906 60.2197C94.8906 58.3493 94.0273 57.4141 92.3008 57.4141C91.4818 57.4141 90.8232 57.6686 90.3252 58.1777C89.8382 58.6758 89.5837 59.3675 89.5615 60.2529H84.7471C84.7692 58.139 85.4499 56.4844 86.7891 55.2891C88.1393 54.0938 89.9766 53.4961 92.3008 53.4961C94.6471 53.4961 96.4678 54.0661 97.7627 55.2061C99.0576 56.335 99.7051 57.9342 99.7051 60.0039C99.7051 60.9447 99.4948 61.8356 99.0742 62.6768C98.6536 63.5068 97.9176 64.431 96.8662 65.4492L95.5215 66.7275C94.6803 67.5355 94.1989 68.4818 94.0771 69.5664L94.0107 70.5791H89.7607ZM89.2793 75.6758C89.2793 74.9342 89.5283 74.3255 90.0264 73.8496C90.5355 73.3626 91.1829 73.1191 91.9688 73.1191C92.7546 73.1191 93.3965 73.3626 93.8945 73.8496C94.4036 74.3255 94.6582 74.9342 94.6582 75.6758C94.6582 76.4062 94.4092 77.0094 93.9111 77.4854C93.4242 77.9613 92.7767 78.1992 91.9688 78.1992C91.1608 78.1992 90.5078 77.9613 90.0098 77.4854C89.5228 77.0094 89.2793 76.4062 89.2793 75.6758Z"
+          fill="#4A4622"
+        />
+      </g>
+      <template v-slot:content>
+        With a Postgres backend, {{ productName }} leverages a Postgres database to store all the configuration, and it provides YAML declarative configuration for every resource that can be applied via kumactl or the HTTP API.
+      </template>
+    </KPop>
+
+    <KPop
+      trigger="hover"
+      :title="productName"
+      :is-svg="true"
+      tag="g"
+      placement="rightEnd"
+      :popover-timeout="5"
+    >
+      <g class="cursor-help animate-pulse">
         <g filter="url(#filter8_d)">
           <circle
             cx="495"
@@ -168,19 +178,19 @@
 
       </g>
       <template v-slot:content>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti, modi! Quis consectetur, esse ipsum ullam, eaque aspernatur hic vel veniam reprehenderit voluptates explicabo repellendus, error at. Non quod inventore pariatur.
+        In Postgres mode, the {{ productName }} control plane connects to Postgres to fetch the right resources and configure the service mesh.
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      title="Service"
+      title="Postgres"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
       :popover-timeout="5"
     >
-      <g class="cursor-help animate-pulse ">
+      <g class="cursor-help animate-pulse">
         <g filter="url(#filter9_d)">
           <circle
             cx="745"
@@ -202,7 +212,8 @@
         />
       </g>
       <template v-slot:content>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Corrupti, modi! Quis consectetur, esse ipsum ullam, eaque aspernatur hic vel veniam reprehenderit voluptates explicabo repellendus, error at. Non quod inventore pariatur.
+        Postgres is the source of truth that stores the {{ productName }} configuration that will be applied at runtime.
+        We can also use managed Postgres services.
       </template>
     </KPop>
 
@@ -714,7 +725,13 @@
 </template>
 
 <script>
+import { PRODUCT_NAME } from '@/consts'
 export default {
   name: 'PostgresGraph',
+  data() {
+    return {
+      productName: PRODUCT_NAME,
+    }
+  },
 }
 </script>

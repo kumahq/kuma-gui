@@ -3,7 +3,7 @@
 exports[`OnboardingNavigation.vue renders snapshot 1`] = `
 <div>
   <div
-    class="mt-6 flex items-center flex-col sm:flex-row justify-between"
+    class="mt-4 flex items-center flex-col sm:flex-row justify-between"
   >
     <a
       class="k-button navigation-button navigation-button--back primary"
@@ -15,18 +15,30 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
     Back
   
     </a>
-      
-    <a
-      aria-current="page"
-      class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-      data-v-38fa8ecf=""
-      href="#/"
-      type="button"
-    >
-      
-    Next
-  
-    </a>
+     
+    <div>
+      <button
+        class="k-button skip-button small btn-link"
+        data-v-38fa8ecf=""
+        type="button"
+      >
+        
+      Skip Setup
+    
+      </button>
+       
+      <a
+        aria-current="page"
+        class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+        data-v-38fa8ecf=""
+        href="#/"
+        type="button"
+      >
+        
+      Next
+    
+      </a>
+    </div>
   </div>
 </div>
 `;

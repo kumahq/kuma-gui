@@ -19,7 +19,7 @@ describe('AddingNewServices.vue', () => {
     expect(demoRadio.className).toMatch('box--active')
     expect(manuallyRadio.className).not.toMatch('box--active')
 
-    await userEvent.click(screen.getByText(/Custom Config/))
+    await userEvent.click(screen.getByText(/Custom config/))
 
     expect(demoRadio.className).not.toMatch('box--active')
 

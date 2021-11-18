@@ -30,7 +30,7 @@ export default {
 
 <style lang="scss" scoped>
 .circle {
-  @apply flex items-center justify-center w-5 h-5 rounded-full mr-2;
+  @apply flex items-center justify-center text-sm w-4 h-4 rounded-full mr-2;
 
   background-color: rgba(var(--kuma-purple-1-rgb), 0.1);
 }

@@ -1,7 +1,7 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="4. Adding New Services" />
+      <OnboardingHeading title="Adding new services" />
     </template>
     <template #content>
       <div class="h-full w-full flex justify-evenly items-center">
@@ -16,7 +16,7 @@
               <p class="uppercase font-bold tracking-wider">
                 Demo app
               </p>
-              <p>Pre-Configured</p>
+              <p>Counter application</p>
             </div>
           </div>
         </Box>
@@ -31,7 +31,7 @@
               <p class="uppercase font-bold tracking-wider">
                 Manually
               </p>
-              <p>Custom Config</p>
+              <p>Custom config</p>
             </div>
           </div>
         </Box>
