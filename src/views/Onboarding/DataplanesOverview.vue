@@ -129,7 +129,7 @@ export default {
       for (let i = 0; i < items.length; i++) {
         const { name, mesh } = items[i]
 
-        const { status } = await Kuma.getDataplaneOverviewFromMesh(mesh, name).then((response) =>
+        const { status } = await Kuma.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
           getItemStatusFromInsight(response.dataplaneInsight),
         )
 
