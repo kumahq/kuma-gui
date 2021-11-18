@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
@@ -79,8 +79,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      selectedMesh: 'getSelectedMesh',
+    ...mapState({
+      selectedMesh: (state) => state.selectedMesh,
     }),
     titleNavItems() {
       return this.menu.find((i) => i.position === 'top').items

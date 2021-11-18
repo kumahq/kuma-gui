@@ -23,6 +23,7 @@ describe('Zones.vue', () => {
 
   it('renders snapshot when multizone', async () => {
     const { container } = renderWithVuex(Zones, {
+      routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
@@ -34,6 +35,7 @@ describe('Zones.vue', () => {
 
   it('renders config of multizone', async () => {
     renderWithVuex(Zones, {
+      routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
@@ -45,6 +47,7 @@ describe('Zones.vue', () => {
 
   it('renders zone insights', async () => {
     renderWithVuex(Zones, {
+      routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'MeshSelector',
@@ -46,8 +46,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      selectedMesh: 'getSelectedMesh',
+    ...mapState({
+      selectedMesh: (state) => state.selectedMesh,
     }),
   },
   methods: {
@@ -56,9 +56,6 @@ export default {
 
       // update the selected mesh in the store
       this.$store.dispatch('updateSelectedMesh', val)
-
-      // update the localStorage item so that it persists
-      localStorage.setItem('selectedMesh', val)
 
       // push the update mesh param to the route
       // explanation of hack https://github.com/vuejs/vue-router/issues/2872

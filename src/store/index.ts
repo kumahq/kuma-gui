@@ -84,7 +84,6 @@ export default (): Module<RootInterface, RootInterface> => ({
   getters: {
     getOnboardingStatus: state => state.onboardingComplete,
     globalLoading: state => state.globalLoading,
-    getSelectedMesh: state => state.selectedMesh,
     getMeshList: state => state.meshes,
     getDataplanes: state => state.dataplanes,
     getDataplanesList: state => state.totalDataplaneList,
@@ -184,7 +183,7 @@ export default (): Module<RootInterface, RootInterface> => ({
         if (mesh) {
           dispatch('updateSelectedMesh', mesh)
         } else {
-          localStorage.setItem('selectedMesh', getters.getSelectedMesh)
+          dispatch('updateSelectedMesh', 'all')
         }
 
         // fetch the mesh list
@@ -224,6 +223,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
     // update the selected mesh
     updateSelectedMesh({ commit }, mesh) {
+      localStorage.setItem('selectedMesh', mesh)
       commit('SET_SELECTED_MESH', mesh)
     },
 

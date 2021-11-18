@@ -52,8 +52,8 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
     return Promise.all([dispatch('getGlobalInsights'), dispatch('getMeshInsights')])
   },
 
-  async getMeshInsights({ commit, rootGetters }) {
-    const selectedMesh = rootGetters.getSelectedMesh
+  async getMeshInsights({ commit, rootState }) {
+    const selectedMesh = rootState.selectedMesh
 
     let meshInsightsRawData: { items: MeshInsight[]; total: number }
     let meshInsights
