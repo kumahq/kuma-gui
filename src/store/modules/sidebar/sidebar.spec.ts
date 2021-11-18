@@ -4,7 +4,7 @@ import sidebar from '.'
 describe('sidebar module', () => {
   describe('actions', () => {
     it('tests getInsights action', async () => {
-      const store = setupStore({ ...sidebar, getters: { getSelectedMesh: () => 'all' } })
+      const store = setupStore({ ...sidebar }, { selectedMesh: 'all' })
 
       await store.dispatch('getInsights')
 
@@ -42,6 +42,7 @@ describe('sidebar module', () => {
               },
             },
           },
+          "selectedMesh": "all",
         }
       `)
     })

@@ -51,7 +51,10 @@
           <h3>{{ tabGroupTitle }}</h3>
         </div>
         <div>
-          <EntityURLControl :name="entityName" />
+          <EntityURLControl
+            :name="entityName"
+            :mesh="entityMesh"
+          />
         </div>
       </template>
       <template v-slot:overview>
@@ -298,7 +301,6 @@ export default {
       },
       entity: [],
       rawEntity: null,
-      firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       tabGroupTitle: null,
@@ -331,6 +333,9 @@ export default {
     },
     entityName() {
       return this.entity?.basicData?.name || ''
+    },
+    entityMesh() {
+      return this.entity?.basicData?.mesh || ''
     },
   },
   watch: {
@@ -568,9 +573,6 @@ export default {
 
           const final = []
           const itemSelect = query ? items : items[0]
-
-          // set the first item as the default for initial load
-          this.firstEntity = itemSelect.name
 
           // load the YAML entity for the first item on page load
           await this.getEntity(itemSelect)

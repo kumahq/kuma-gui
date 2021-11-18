@@ -39,14 +39,9 @@ export default {
   },
   computed: {
     currentMesh() {
-      const meshFromLS = localStorage.getItem('selectedMesh')
-      const meshFromState = this.$store.getters.getSelectedMesh
+      const meshFromState = this.$store.state.selectedMesh
 
-      if (meshFromLS && meshFromLS.length > 0) {
-        return meshFromLS
-      } else {
-        return meshFromState
-      }
+      return meshFromState
     },
   },
 }

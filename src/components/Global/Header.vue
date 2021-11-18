@@ -5,7 +5,7 @@
         :to="{
           name: 'global-overview',
           params: {
-            mesh: currentMesh
+            mesh: selectedMesh
           }
         }"
         class="logo"
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { getKumaCpServerUrl } from '@/configUrl'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
 import NotificationIcon from './NotificationIcon'
@@ -95,12 +95,13 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      selectedMesh: (state) => state.selectedMesh,
+    }),
     ...mapGetters({
       // this checks the status of the API itself
       status: 'config/getStatus',
       environment: 'config/getEnvironment',
-      // the currently selected mesh
-      currentMesh: 'getSelectedMesh',
       // the status of multicluster
       multicluster: 'config/getMulticlusterStatus',
       tagline: 'config/getTagline',

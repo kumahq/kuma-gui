@@ -40,7 +40,10 @@
             <h3>{{ tabGroupTitle }}</h3>
           </div>
           <div>
-            <EntityURLControl :name="entity.name" />
+            <EntityURLControl
+              :name="entity.name"
+              :mesh="entity.mesh"
+            />
           </div>
         </template>
         <template v-slot:overview>
@@ -138,7 +141,6 @@ export default {
       ],
       entity: [],
       rawEntity: null,
-      firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }

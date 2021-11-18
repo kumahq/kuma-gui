@@ -154,13 +154,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import Kuma from '@/services/kuma'
+import { getTableData } from '@/utils/tableDataUtils'
 import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -191,7 +190,6 @@ export default {
       return rawReadableDate(value)
     },
   },
-  mixins: [sortEntities],
   data() {
     return {
       isLoading: true,
@@ -229,7 +227,6 @@ export default {
       ],
       entity: [],
       rawEntity: null,
-      firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       tabGroupTitle: null,
@@ -239,9 +236,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      mesh: 'selectedMesh',
-    }),
     counts() {
       const {
         policies: allPolicies,
@@ -330,75 +324,50 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    loadData(offset = '0') {
+    async loadData(offset = '0') {
       this.isLoading = true
-      this.hasError = false
       this.isEmpty = false
 
       const mesh = this.$route.params.mesh
+      let query
 
-      const params = {
-        size: this.pageSize,
-        offset,
+      if (mesh !== 'all') {
+        query = this.$route.params.mesh
       }
 
-      const endpoint = mesh === 'all' || !mesh ? Kuma.getAllMeshes(params) : Kuma.getMesh({ name: mesh })
+      try {
+        const { data, next } = await getTableData({
+          getSingleEntity: Kuma.getMesh.bind(Kuma),
+          getAllEntities: Kuma.getAllMeshes.bind(Kuma),
+          size: this.pageSize,
+          offset,
+          query,
+        })
 
-      const getMeshes = () =>
-        endpoint
-          .then((response) => {
-            const cleanRes = () => {
-              if (mesh === 'all') {
-                return response.items
-              }
+        // set pagination
+        this.next = next
 
-              const newItems = { items: [] }
+        // set table data
+        if (data.length) {
+          this.tableData.data = [...data]
+          this.tableDataIsEmpty = false
+          this.isEmpty = false
 
-              newItems.items.push(response)
+          this.getEntity({ name: data[0].name })
+        } else {
+          this.tableData.data = []
+          this.tableDataIsEmpty = true
+          this.isEmpty = true
+          this.entityIsEmpty = true
+        }
+      } catch (error) {
+        this.hasError = true
+        this.isEmpty = true
 
-              return newItems.items
-            }
-
-            this.next = Boolean(response.next)
-
-            const items = cleanRes()
-
-            if (items.length > 0) {
-              // sort the table data by name and the mesh it's associated with
-              if (mesh === 'all') {
-                this.sortEntities(items)
-              }
-
-              // set the first item as the default for initial load
-              this.firstEntity = items[0].name
-
-              // load the YAML entity for the first item on page load
-              this.getEntity(items[0])
-
-              this.tableData.data = [...items]
-              this.tableDataIsEmpty = false
-              this.isEmpty = false
-            } else {
-              this.tableData.data = []
-              this.tableDataIsEmpty = true
-              this.isEmpty = true
-
-              this.getEntity(null)
-            }
-          })
-          .catch((error) => {
-            this.hasError = true
-            this.isEmpty = true
-
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.isLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-
-      getMeshes()
+        console.error(error)
+      } finally {
+        this.isLoading = false
+      }
     },
     getEntity(entity) {
       this.entityIsLoading = true

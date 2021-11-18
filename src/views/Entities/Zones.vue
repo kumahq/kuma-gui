@@ -15,7 +15,24 @@
         :next="next"
         @tableAction="tableAction"
         @loadData="loadData($event)"
-      />
+      >
+        <template v-slot:additionalControls>
+          <KButton
+            v-if="$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'zones'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
+        </template>
+      </DataOverview>
       <Tabs
         v-if="isEmpty === false"
         :has-error="hasError"
@@ -24,9 +41,12 @@
         initial-tab-override="overview"
       >
         <template v-slot:tabHeader>
-          <h3 v-if="entity">
-            Zone: {{ entity.name }}
-          </h3>
+          <div>
+            <h3> Zone: {{ entity.name }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :name="entity.name" />
+          </div>
         </template>
         <template v-slot:overview>
           <LabelList
@@ -118,7 +138,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import get from 'lodash/get'
 import Prism from 'vue-prismjs'
 import Kuma from '@/services/kuma'
@@ -130,6 +150,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 
 import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
@@ -153,6 +174,7 @@ export default {
     ZoneInsightSubscriptionDetails,
     ZoneInsightSubscriptionHeader,
     MultizoneInfo,
+    EntityURLControl,
   },
   metaInfo: {
     title: 'Zones',
@@ -208,9 +230,6 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      mesh: 'selectedMesh',
-    }),
     ...mapGetters({
       multicluster: 'config/getMulticlusterStatus',
       globalCpVersion: 'config/getVersion',
@@ -273,11 +292,15 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
+      const query = this.$route.query.ns || null
+
       try {
         const { data, next } = await getTableData({
+          getSingleEntity: Kuma.getZoneOverview.bind(Kuma),
           getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
           size: this.pageSize,
           offset,
+          query,
         })
 
         // set pagination

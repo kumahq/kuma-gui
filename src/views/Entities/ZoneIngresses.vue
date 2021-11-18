@@ -15,7 +15,24 @@
         :next="next"
         @tableAction="tableAction"
         @loadData="loadData($event)"
-      />
+      >
+        <template v-slot:additionalControls>
+          <KButton
+            v-if="$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'zoneingresses'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
+        </template>
+      </DataOverview>
       <Tabs
         v-if="isEmpty === false"
         :has-error="hasError"
@@ -24,9 +41,12 @@
         initial-tab-override="overview"
       >
         <template v-slot:tabHeader>
-          <h3 v-if="entity">
-            Zone Ingress: {{ entity.name }}
-          </h3>
+          <div>
+            <h3> Zone Ingress: {{ entity.name }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :name="entity.name" />
+          </div>
         </template>
         <template v-slot:overview>
           <LabelList
@@ -89,6 +109,7 @@ import { getSome } from '@/helpers'
 import Kuma from '@/services/kuma'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 import Tabs from '@/components/Utils/Tabs'
 import LabelList from '@/components/Utils/LabelList'
 
@@ -114,6 +135,7 @@ export default {
     ZoneInsightSubscriptionDetails,
     ZoneInsightSubscriptionHeader,
     MultizoneInfo,
+    EntityURLControl,
   },
 
   metaInfo: {
@@ -189,11 +211,15 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
+      const query = this.$route.query.ns || null
+
       try {
         const { data, next } = await getTableData({
           getAllEntities: Kuma.getAllZoneIngressOverviews.bind(Kuma),
+          getSingleEntity: Kuma.getZoneIngressOverview.bind(Kuma),
           size: this.pageSize,
           offset,
+          query,
         })
 
         // set pagination
