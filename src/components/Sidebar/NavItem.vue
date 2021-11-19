@@ -254,7 +254,7 @@ export default {
   @apply absolute text-xs font-normal top-0 bottom-0 m-auto rounded w-6 h-5 flex justify-center items-center border border-white;
 
   background-color: var(--gray-2);
-  right: 1px;
+  right: 8px;
 
   &--empty {
     background-color: var(--gray-4);
