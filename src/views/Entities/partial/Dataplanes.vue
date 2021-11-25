@@ -48,7 +48,9 @@
     >
       <template v-slot:tabHeader>
         <div>
-          <h3>{{ tabGroupTitle }}</h3>
+          <h3 v-if="entity.basicData">
+            DPP: {{ entity.basicData.name }}
+          </h3>
         </div>
         <div>
           <EntityURLControl
@@ -59,7 +61,6 @@
       </template>
       <template v-slot:overview>
         <LabelList
-          :has-error="entityHasError"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
         >
@@ -117,15 +118,28 @@
                 </span>
               </span>
             </p>
+            <div v-if="entity.versions">
+              <h4>Versions</h4>
+              <p>
+                <span
+                  v-for="(val, key) in entity.versions"
+                  :key="key"
+                  class="tag-cols"
+                >
+                  <span>
+                    {{ key }}:
+                  </span>
+                  <span>
+                    {{ val }}
+                  </span>
+                </span>
+              </p>
+            </div>
           </div>
         </LabelList>
       </template>
-      <template
-        v-if="showMtls"
-        v-slot:mtls
-      >
+      <template v-slot:mtls>
         <LabelList
-          :has-error="entityHasError"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
         >
@@ -160,7 +174,6 @@
       <template v-slot:yaml>
         <YamlView
           :title="entityOverviewTitle"
-          :has-error="entityHasError"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
           :content="rawEntity"
@@ -187,6 +200,7 @@ import {
   getDataplaneInsight,
   getDataplaneType,
   getStatus,
+  getVersions,
   parseMTLSData,
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
@@ -279,10 +293,6 @@ export default {
         ]
       },
     },
-    showMtls: {
-      type: Boolean,
-      default: true,
-    },
   },
   data() {
     return {
@@ -292,19 +302,17 @@ export default {
       hasError: false,
       entityIsLoading: true,
       entityIsEmpty: false,
-      entityHasError: false,
       warnings: [],
       tableDataIsEmpty: false,
       tableData: {
         headers: [],
         data: [],
       },
-      entity: [],
+      entity: {},
       rawEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       tabGroupTitle: null,
-      entityNamespace: null,
       entityOverviewTitle: null,
       shownTLSTab: false,
       rawData: null,
@@ -353,10 +361,10 @@ export default {
     onCreateClick() {
       datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
     },
-    buildEntity(basicData, tags, dataplaneInsight) {
+    buildEntity(basicData, tags, dataplaneInsight, versions) {
       const mtls = dataplaneInsight.mTLS ? parseMTLSData(dataplaneInsight.mTLS) : null
 
-      return { basicData, tags, mtls }
+      return { basicData, tags, mtls, versions }
     },
     init() {
       this.loadData()
@@ -543,7 +551,6 @@ export default {
     async getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
-      this.entityHasError = false
 
       const response = this.rawData.find((data) => data.name === entity.name)
 
@@ -555,15 +562,15 @@ export default {
         const dataplaneInsight = getDataplaneInsight(response) || {}
         const status = getStatus(dataplane, dataplaneInsight)
         const tags = dpTags(dataplane)
+        const versions = getVersions(dataplaneInsight)
+
         const basicData = {
           ...getSome(dataplane, selected),
           status,
         }
 
-        this.entity = this.buildEntity(basicData, tags, dataplaneInsight)
+        this.entity = this.buildEntity(basicData, tags, dataplaneInsight, versions)
 
-        this.entityNamespace = basicData.name
-        this.tabGroupTitle = `DPP: ${basicData.name}`
         this.entityOverviewTitle = `Entity Overview for ${basicData.name}`
 
         this.warnings = []
@@ -571,37 +578,40 @@ export default {
         const { subscriptions = [] } = dataplaneInsight
 
         if (subscriptions.length) {
-          const { version = {} } = subscriptions[subscriptions.length - 1]
-          const { kumaDp = {}, envoy = {} } = version
-
-          if (kumaDp && envoy) {
-            const compatible = this.checkVersionsCompatibility(kumaDp.version, envoy.version)
-            const { kind } = compatible
-
-            if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
-              this.warnings.push(compatible)
-            }
-          }
-
-          if (this.multicluster) {
-            const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(tags, kumaDp.version)
-
-            if (!compatible) {
-              this.warnings.push({
-                kind: INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
-                payload,
-              })
-            }
-          }
+          this.setEntityWarnings(subscriptions, tags)
         }
 
         this.rawEntity = stripTimes(dataplane)
       } else {
-        this.entity = null
+        this.entity = {}
         this.entityIsEmpty = true
       }
 
       this.entityIsLoading = false
+    },
+    async setEntityWarnings(subscriptions, tags) {
+      const { version = {} } = subscriptions[subscriptions.length - 1]
+      const { kumaDp = {}, envoy = {} } = version
+
+      if (kumaDp && envoy) {
+        const compatible = this.checkVersionsCompatibility(kumaDp.version, envoy.version)
+        const { kind } = compatible
+
+        if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
+          this.warnings.push(compatible)
+        }
+      }
+
+      if (this.multicluster) {
+        const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(tags, kumaDp.version)
+
+        if (!compatible) {
+          this.warnings.push({
+            kind: INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
+            payload,
+          })
+        }
+      }
     },
   },
 }
