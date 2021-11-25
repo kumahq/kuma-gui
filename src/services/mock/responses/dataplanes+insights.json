@@ -466,30 +466,6 @@
       "modificationTime": "2021-02-19T07:39:23.218956+01:00",
       "dataplane": {
         "networking": {
-          "ingress": {
-            "availableServices": [
-              {
-                "tags": {
-                  "kuma.io/service": "backend",
-                  "kuma.io/zone": "cluster-1",
-                  "version": "1"
-                },
-                "instances": 1,
-                "mesh": "default"
-              },
-              {
-                "tags": {
-                  "kuma.io/service": "backend",
-                  "kuma.io/zone": "cluster-1",
-                  "version": "2"
-                },
-                "instances": 1,
-                "mesh": "default"
-              }
-            ],
-            "publicAddress": "127.0.0.1",
-            "publicPort": 20000
-          },
           "address": "127.0.0.1",
           "inbound": [
             {

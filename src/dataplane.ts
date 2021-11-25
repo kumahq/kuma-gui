@@ -222,16 +222,12 @@ export function parseMTLSData(mtls: TODO) {
   }
 }
 
-export function getDataplaneType(dataplane: { networking: { gateway?: TODO; ingress?: TODO } } = { networking: {} }) {
+export function getDataplaneType(dataplane: { networking: { gateway?: TODO } } = { networking: {} }) {
   const { networking = {} } = dataplane
-  const { gateway, ingress } = networking
+  const { gateway } = networking
 
   if (gateway) {
     return 'Gateway'
-  }
-
-  if (ingress) {
-    return 'Ingress'
   }
 
   return 'Standard'
