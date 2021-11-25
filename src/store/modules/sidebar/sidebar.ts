@@ -70,7 +70,6 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
       }
 
       meshInsights = calculateMeshInsights(meshInsightsRawData)
-      console.log({ meshInsights, meshInsightsRawData })
     } catch {
       meshInsights = []
     }

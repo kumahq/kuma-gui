@@ -204,6 +204,8 @@ import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
 import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
+import { getTableData } from '@/utils/tableDataUtils'
+
 const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
 
 export default {
@@ -388,202 +390,154 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
+    async parseData(response) {
+      const { dataplane = {}, dataplaneInsight = {} } = response
+      const { name = '', mesh = '' } = response
+      const { subscriptions = [] } = dataplaneInsight
+
+      /**
+       * Handle our tag collections based on the dataplane type.
+       */
+      const tags = dpTags(dataplane)
+
+      const { status } = getStatus(dataplane, dataplaneInsight)
+
+      /**
+       * Iterate through the subscriptions
+       */
+
+      const reduced = subscriptions.reduce(
+        (acc, curr) => {
+          const { status = {}, connectTime, version = {} } = curr
+          const { total = {}, lastUpdateTime } = status
+          const { responsesSent = '0', responsesRejected = '0' } = total
+          const { kumaDp = {}, envoy = {} } = version
+          const { version: dpVersion } = kumaDp
+          const { version: envoyVersion } = envoy
+
+          let { selectedTime, selectedUpdateTime } = acc
+
+          const connectDate = Date.parse(connectTime)
+          const lastUpdateDate = Date.parse(lastUpdateTime)
+
+          if (connectDate) {
+            if (!selectedTime || connectDate > selectedTime) {
+              selectedTime = connectDate
+            }
+          }
+
+          if (lastUpdateDate) {
+            if (!selectedUpdateTime || lastUpdateDate > selectedUpdateTime) {
+              selectedUpdateTime = lastUpdateDate
+            }
+          }
+
+          return {
+            totalUpdates: acc.totalUpdates + parseInt(responsesSent, 10),
+            totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(responsesRejected, 10),
+            dpVersion: dpVersion || acc.dpVersion,
+            envoyVersion: envoyVersion || acc.envoyVersion,
+            selectedTime,
+            selectedUpdateTime,
+          }
+        },
+        {
+          totalUpdates: 0,
+          totalRejectedUpdates: 0,
+          dpVersion: '-',
+          envoyVersion: '-',
+          selectedTime: NaN,
+          selectedUpdateTime: NaN,
+        },
+      )
+
+      const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime } = reduced
+
+      const lastConnected = selectedTime ? humanReadableDate(new Date(selectedTime).toUTCString()) : 'never'
+
+      const lastUpdated = selectedUpdateTime ? humanReadableDate(new Date(selectedUpdateTime).toUTCString()) : 'never'
+
+      // assemble the table data
+      const item = {
+        name,
+        mesh,
+        tags,
+        status,
+        lastConnected,
+        lastUpdated,
+        totalUpdates,
+        totalRejectedUpdates,
+        dpVersion,
+        envoyVersion,
+        withWarnings: false,
+        unsupportedEnvoyVersion: false,
+        unsupportedKumaDPVersion: false,
+        kumaDpAndKumaCpMismatch: false,
+        type: getDataplaneType(dataplane),
+      }
+
+      const { kind } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
+
+      switch (kind) {
+        case INCOMPATIBLE_UNSUPPORTED_ENVOY:
+          item.unsupportedEnvoyVersion = true
+          item.withWarnings = true
+          break
+        case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
+          item.unsupportedKumaDPVersion = true
+          item.withWarnings = true
+          break
+      }
+
+      if (this.multicluster) {
+        const zoneTag = tags.find((tag) => tag.label === KUMA_ZONE_TAG_NAME)
+
+        if (zoneTag) {
+          try {
+            const { compatible } = await checkKumaDpAndZoneVersionsMismatch(zoneTag.value, dpVersion)
+
+            if (!compatible) {
+              item.withWarnings = true
+              item.kumaDpAndKumaCpMismatch = true
+            }
+          } catch (e) {
+            console.error(e)
+          }
+        }
+      }
+
+      return item
+    },
     async loadData(offset = '0') {
       this.isLoading = true
 
       const mesh = this.$route.params.mesh || null
       const query = this.$route.query.ns || null
 
-      const params = {
-        size: this.pageSize,
-        offset,
-        ...this.dataplaneApiParams,
-      }
-
-      /**
-       * determine which endpoint to use based on the mesh.
-       * we are either fetching entities from one mesh, or fetching
-       * all of them from all meshes and collecting them into the view.
-       */
-      const endpoint = () => {
-        if (mesh === 'all') {
-          return Kuma.getAllDataplaneOverviews(params)
-        } else if (query && query.length && mesh !== 'all') {
-          return Kuma.getDataplaneOverviewFromMesh({ mesh, name: query })
-        }
-
-        return Kuma.getAllDataplaneOverviewsFromMesh({ mesh }, params)
-      }
-
-      /**
-       * the function used for fetching dataplanes from a mesh
-       * and then collecting them into an array.
-       */
-      const dpFetcher = async (mesh, name, finalArr) => {
-        try {
-          const response = await Kuma.getDataplaneOverviewFromMesh({ mesh, name })
-          const { dataplane = {}, dataplaneInsight = {} } = response
-          const { name: responseName = '', mesh: responseMesh = '' } = response
-          const { subscriptions = [] } = dataplaneInsight
-
-          /**
-           * Handle our tag collections based on the dataplane type.
-           */
-          const tags = dpTags(dataplane)
-
-          const { status } = getStatus(dataplane, dataplaneInsight)
-
-          /**
-           * Iterate through the subscriptions
-           */
-          const initial = {
-            totalUpdates: 0,
-            totalRejectedUpdates: 0,
-            dpVersion: '-',
-            envoyVersion: '-',
-            selectedTime: NaN,
-            selectedUpdateTime: NaN,
-          }
-
-          const reduced = subscriptions.reduce((acc, curr) => {
-            const { status = {}, connectTime, version = {} } = curr
-            const { total = {}, lastUpdateTime } = status
-            const { responsesSent = '0', responsesRejected = '0' } = total
-            const { kumaDp = {}, envoy = {} } = version
-            const { version: dpVersion } = kumaDp
-            const { version: envoyVersion } = envoy
-
-            let { selectedTime, selectedUpdateTime } = acc
-
-            const connectDate = Date.parse(connectTime)
-            const lastUpdateDate = Date.parse(lastUpdateTime)
-
-            if (connectDate) {
-              if (!selectedTime || connectDate > selectedTime) {
-                selectedTime = connectDate
-              }
-            }
-
-            if (lastUpdateDate) {
-              if (!selectedUpdateTime || lastUpdateDate > selectedUpdateTime) {
-                selectedUpdateTime = lastUpdateDate
-              }
-            }
-
-            return {
-              totalUpdates: acc.totalUpdates + parseInt(responsesSent, 10),
-              totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(responsesRejected, 10),
-              dpVersion: dpVersion || acc.dpVersion,
-              envoyVersion: envoyVersion || acc.envoyVersion,
-              selectedTime,
-              selectedUpdateTime,
-            }
-          }, initial)
-
-          const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime } =
-            reduced
-
-          const lastConnected = selectedTime ? humanReadableDate(new Date(selectedTime).toUTCString()) : 'never'
-
-          const lastUpdated = selectedUpdateTime
-            ? humanReadableDate(new Date(selectedUpdateTime).toUTCString())
-            : 'never'
-
-          // assemble the table data
-          const item = {
-            name: responseName,
-            mesh: responseMesh,
-            tags: tags,
-            status: status,
-            lastConnected: lastConnected,
-            lastUpdated: lastUpdated,
-            totalUpdates: totalUpdates,
-            totalRejectedUpdates: totalRejectedUpdates,
-            dpVersion: dpVersion,
-            envoyVersion: envoyVersion,
-            withWarnings: false,
-            unsupportedEnvoyVersion: false,
-            unsupportedKumaDPVersion: false,
-            kumaDpAndKumaCpMismatch: false,
-            type: getDataplaneType(dataplane),
-          }
-
-          const { kind } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
-
-          switch (kind) {
-            case INCOMPATIBLE_UNSUPPORTED_ENVOY:
-              item.unsupportedEnvoyVersion = true
-              item.withWarnings = true
-              break
-            case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
-              item.unsupportedKumaDPVersion = true
-              item.withWarnings = true
-              break
-          }
-
-          if (this.multicluster) {
-            const zoneTag = tags.find((tag) => tag.label === KUMA_ZONE_TAG_NAME)
-
-            if (zoneTag) {
-              try {
-                const { compatible } = await checkKumaDpAndZoneVersionsMismatch(zoneTag.value, dpVersion)
-
-                if (!compatible) {
-                  item.withWarnings = true
-                  item.kumaDpAndKumaCpMismatch = true
-                }
-              } catch (e) {
-                console.error(e)
-              }
-            }
-          }
-
-          finalArr.push(item)
-
-          this.sortEntities(finalArr)
-
-          return finalArr
-        } catch (e) {
-          console.error(e)
-        }
-      }
-
       try {
-        const response = await endpoint()
+        const { data, next } = await getTableData({
+          getSingleEntity: Kuma.getDataplaneOverviewFromMesh.bind(Kuma),
+          getAllEntities: Kuma.getAllDataplaneOverviews.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllDataplaneOverviewsFromMesh.bind(Kuma),
+          size: this.pageSize,
+          offset,
+          mesh,
+          query,
+          params: { ...this.dataplaneApiParams },
+        })
 
-        const getItems = () => {
-          const r = response
-
-          if ('total' in r) {
-            if (r.total !== 0 && r.items && r.items.length > 0) {
-              return this.sortEntities(r.items)
-            }
-
-            return null
-          }
-
-          return r
-        }
-
-        const items = getItems()
-
-        if (items) {
+        if (data.length) {
           // check to see if the `next` url is present
-          this.next = Boolean(response.next)
+          this.next = next
 
-          const final = []
-          const itemSelect = query ? items : items[0]
+          const itemSelect = data[0]
 
           // load the YAML entity for the first item on page load
           await this.getEntity(itemSelect)
 
-          if (query && query.length && mesh && mesh.length) {
-            await dpFetcher(mesh, query, final)
-          } else {
-            const promises = items.map((item) => dpFetcher(item.mesh, item.name, final))
+          const promises = data.map((item) => this.parseData(item))
 
-            await Promise.all(promises)
-          }
+          const final = await Promise.all(promises)
 
           this.tableData.data = final
           this.tableDataIsEmpty = false
@@ -592,8 +546,6 @@ export default {
           this.tableData.data = []
           this.tableDataIsEmpty = true
           this.isEmpty = true
-
-          await this.getEntity(null)
         }
       } catch (e) {
         this.hasError = true

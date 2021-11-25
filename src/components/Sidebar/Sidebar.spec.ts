@@ -30,8 +30,8 @@ describe('Sidebar.vue', () => {
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
 
-    const item = await (await screen.findByText(/18/)).parentNode
+    const item = await (await screen.findByText(/8/)).parentNode
 
-    expect(item).toHaveTextContent('All 18')
+    expect(item).toHaveTextContent('Standard 8')
   })
 })

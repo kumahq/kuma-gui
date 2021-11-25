@@ -8,6 +8,7 @@ export interface TableDataParams {
   mesh?: string
   size: number
   query?: string | null
+  params?: Object
   offset: string | null
 }
 
