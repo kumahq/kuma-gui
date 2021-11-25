@@ -1,5 +1,5 @@
 import { humanReadableDate } from '@/helpers'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
 import { satisfies } from 'semver'
 import Kuma from '@/services/kuma'
 
@@ -45,7 +45,12 @@ interface DataPlane {
   }
 }
 
-export function dpTags(dataplane: DataPlane): { label: string; value: string }[] {
+interface TagsPairLabelValue {
+  label: string
+  value: string
+}
+
+export function dpTags(dataplane: DataPlane): TagsPairLabelValue[] {
   let tags: TODO[] = []
 
   const inbounds = dataplane.networking.inbound || null
@@ -159,21 +164,31 @@ export function getDataplaneInsight(dataplaneOverview: DataPlaneOverview) {
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch(zoneName: string, dpVersion: string) {
-  const response = (await Kuma.getZoneOverview({ name: zoneName })) || {}
-  const { zoneInsight = {} } = response
-  const { subscriptions = [] } = zoneInsight
+export async function checkKumaDpAndZoneVersionsMismatch(tags: TagsPairLabelValue[], dpVersion: string) {
+  const tag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
-  if (subscriptions.length) {
-    const { version = {} } = subscriptions.pop()
-    const { kumaCp = {} } = version
+  if (tag) {
+    try {
+      const response = (await Kuma.getZoneOverview({ name: tag.value })) || {}
+      const { zoneInsight = {} } = response
+      const { subscriptions = [] } = zoneInsight
 
-    return {
-      compatible: dpVersion === kumaCp.version,
-      payload: {
-        zoneVersion: kumaCp.version,
-        kumaDpVersion: dpVersion,
-      },
+      if (subscriptions.length) {
+        const { version = {} } = subscriptions[subscriptions.length - 1]
+        const { kumaCp = {} } = version
+
+        return {
+          compatible: dpVersion === kumaCp.version,
+          payload: {
+            zoneVersion: kumaCp.version,
+            kumaDpVersion: dpVersion,
+          },
+        }
+      }
+
+      return { compatible: true }
+    } catch (e) {
+      console.error(e)
     }
   }
 
