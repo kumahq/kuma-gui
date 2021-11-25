@@ -632,8 +632,9 @@ export default {
             }
 
             this.entity = this.buildEntity(basicData, tags, dataplaneInsight)
+
             this.entityNamespace = basicData.name
-            this.tabGroupTitle = `Mesh: ${basicData.name}`
+            this.tabGroupTitle = `DPP: ${basicData.name}`
             this.entityOverviewTitle = `Entity Overview for ${basicData.name}`
 
             this.warnings = []
