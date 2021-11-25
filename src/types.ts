@@ -13,9 +13,7 @@ export interface Zone {
   name: string
   creationTime: string
   modificationTime: string
-  ingress: {
-    address: string
-  }
+  enabled: boolean
 }
 
 export interface ZoneInsight {

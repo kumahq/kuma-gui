@@ -5,9 +5,7 @@
   "creationTime": "2020-07-28T23:08:22.317322+07:00",
   "modificationTime": "2020-07-28T23:08:22.317322+07:00",
   "zone": {
-    "ingress": {
-      "address": "127.0.0.1:10000"
-    }
+    "enabled": true
   },
   "zoneInsight": {
     "subscriptions": [

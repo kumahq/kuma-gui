@@ -139,10 +139,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/helpers'
 import get from 'lodash/get'
 import Prism from 'vue-prismjs'
 import Kuma from '@/services/kuma'
-import { getSome, getZoneDpServerAuthType } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -199,6 +199,7 @@ export default {
           { label: 'Name', key: 'name' },
           { label: 'Zone CP Version', key: 'zoneCpVersion' },
           { label: 'Backend', key: 'backend' },
+          { label: 'Ingress', key: 'hasIngress' },
           { key: 'warnings', hideLabel: true },
         ],
         data: [],
@@ -227,6 +228,7 @@ export default {
       warnings: [],
       zoneInsightSubscriptionsReversed: [],
       codeOutput: null,
+      zonesWithIngress: new Set(),
     }
   },
   computed: {
@@ -264,7 +266,7 @@ export default {
       this.getEntity(data)
     },
     parseData(entity) {
-      const { zoneInsight = {} } = entity
+      const { zoneInsight = {}, name } = entity
       let zoneCpVersion = '-'
       let backend = ''
 
@@ -285,8 +287,18 @@ export default {
         status: getItemStatusFromInsight(zoneInsight).status,
         zoneCpVersion,
         backend,
+        hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',
         withWarnings: zoneCpVersion !== this.globalCpVersion,
       }
+    },
+    calculateZonesWithIngress(zoneIngresses) {
+      const zones = new Set()
+
+      zoneIngresses.forEach(({ name }) => {
+        zones.add(name)
+      })
+
+      this.zonesWithIngress = zones
     },
     async loadData(offset = '0') {
       this.isLoading = true
@@ -295,19 +307,25 @@ export default {
       const query = this.$route.query.ns || null
 
       try {
-        const { data, next } = await getTableData({
-          getSingleEntity: Kuma.getZoneOverview.bind(Kuma),
-          getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
-          size: this.pageSize,
-          offset,
-          query,
-        })
+        const [{ data, next }, { items: zoneIngresses }] = await Promise.all([
+          getTableData({
+            getSingleEntity: Kuma.getZoneOverview.bind(Kuma),
+            getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
+            size: this.pageSize,
+            offset,
+            query,
+          }),
+          fetchAllResources({
+            callEndpoint: Kuma.getAllZoneIngressOverviews.bind(Kuma),
+          }),
+        ])
 
         // set pagination
         this.next = next
 
         // set table data
         if (data.length) {
+          this.calculateZonesWithIngress(zoneIngresses)
           this.tableData.data = data.map(this.parseData)
           this.tableDataIsEmpty = false
           this.isEmpty = false
