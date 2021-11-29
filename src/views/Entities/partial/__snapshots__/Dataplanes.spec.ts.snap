@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Dataplanes.vue renders snapshot with Resource tab 1`] = `
+exports[`Dataplanes.vue renders snapshot 1`] = `
 <div>
   <div
     class="component-frame"
@@ -1761,7 +1761,9 @@ exports[`Dataplanes.vue renders snapshot with Resource tab 1`] = `
       >
         <div>
           <h3>
-            DPP: backend
+            
+          DPP: backend
+        
           </h3>
         </div>
          
@@ -2068,6 +2070,81 @@ exports[`Dataplanes.vue renders snapshot with Resource tab 1`] = `
                             </span>
                           </span>
                         </p>
+                         
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <h4
+                            data-v-0029352b=""
+                          >
+                            Versions
+                          </h4>
+                           
+                          <p
+                            data-v-0029352b=""
+                          >
+                            <span
+                              class="tag-cols"
+                              data-v-0029352b=""
+                            >
+                              <span
+                                data-v-0029352b=""
+                              >
+                                
+                  envoy:
+                
+                              </span>
+                               
+                              <span
+                                data-v-0029352b=""
+                              >
+                                
+                  1.16.2
+                
+                              </span>
+                            </span>
+                            <span
+                              class="tag-cols"
+                              data-v-0029352b=""
+                            >
+                              <span
+                                data-v-0029352b=""
+                              >
+                                
+                  kumaDp:
+                
+                              </span>
+                               
+                              <span
+                                data-v-0029352b=""
+                              >
+                                
+                  1.0.7
+                
+                              </span>
+                            </span>
+                            <span
+                              class="tag-cols"
+                              data-v-0029352b=""
+                            >
+                              <span
+                                data-v-0029352b=""
+                              >
+                                
+                  coredns:
+                
+                              </span>
+                               
+                              <span
+                                data-v-0029352b=""
+                              >
+                                
+                  1.8.3
+                
+                              </span>
+                            </span>
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </div>

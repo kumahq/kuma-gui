@@ -3,7 +3,7 @@ import renderWithVuex from '@/testUtils/renderWithVuex'
 import Dataplanes from './Dataplanes.vue'
 
 describe('Dataplanes.vue', () => {
-  it('renders snapshot with Resource tab', async () => {
+  it('renders snapshot', async () => {
     const { container } = renderWithVuex(Dataplanes, {
       mocks: {
         $route: {
