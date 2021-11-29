@@ -209,7 +209,6 @@ import {
   INCOMPATIBLE_WRONG_FORMAT,
 } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -231,7 +230,6 @@ export default {
     YamlView,
     LabelList,
   },
-  mixins: [sortEntities],
   props: {
     nsBackButtonRoute: {
       type: Object,
