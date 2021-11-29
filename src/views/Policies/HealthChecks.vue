@@ -38,9 +38,9 @@
         initial-tab-override="overview"
       >
         <template v-slot:tabHeader>
-          <div>
-            <h3>{{ tabGroupTitle }}</h3>
-          </div>
+          <h3>
+            Health Check: {{ entity.name }}
+          </h3>
           <div>
             <EntityURLControl
               :name="entity.name"
@@ -71,7 +71,6 @@
         </template>
         <template v-slot:yaml>
           <YamlView
-            :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
@@ -140,31 +139,11 @@ export default {
           title: 'YAML',
         },
       ],
-      entity: [],
+      entity: {},
       rawEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }
-  },
-  computed: {
-    tabGroupTitle() {
-      const entity = this.entity
-
-      if (entity) {
-        return `Health Check: ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    entityOverviewTitle() {
-      const entity = this.entity
-
-      if (entity) {
-        return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
-    },
   },
   watch: {
     $route(to, from) {
@@ -252,7 +231,7 @@ export default {
               // this.rawEntity = response
               this.rawEntity = stripTimes(response)
             } else {
-              this.entity = null
+              this.entity = {}
               this.entityIsEmpty = true
             }
           })

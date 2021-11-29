@@ -173,7 +173,6 @@
       </template>
       <template v-slot:yaml>
         <YamlView
-          :title="entityOverviewTitle"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
           :content="rawEntity"
@@ -310,8 +309,6 @@ export default {
       rawEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
-      tabGroupTitle: null,
-      entityOverviewTitle: null,
       shownTLSTab: false,
       rawData: null,
     }
@@ -568,8 +565,6 @@ export default {
         }
 
         this.entity = this.buildEntity(basicData, tags, dataplaneInsight, versions)
-
-        this.entityOverviewTitle = `Entity Overview for ${basicData.name}`
 
         this.warnings = []
 

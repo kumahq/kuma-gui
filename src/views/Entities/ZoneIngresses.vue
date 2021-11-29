@@ -277,7 +277,7 @@ export default {
         } catch (e) {
           console.error(e)
 
-          this.entity = null
+          this.entity = {}
           this.entityHasError = true
           this.entityIsEmpty = true
         } finally {
