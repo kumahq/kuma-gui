@@ -5,9 +5,7 @@
   "creationTime": "2018-07-17T16:05:36.995Z",
   "modificationTime": "2019-07-17T18:08:41Z",
   "zone": {
-    "ingress": {
-      "address": "192.168.1.2:1000"
-    }
+    "enabled": true
   },
   "zoneInsight": {
     "subscriptions": [
