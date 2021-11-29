@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="shouldDisplay"
-    data-testid="entity-url-control"
-  >
+  <div data-testid="entity-url-control">
     <KClipboardProvider v-slot="{ copyToClipboard }">
       <KPop placement="bottom">
         <KButton
@@ -34,7 +31,7 @@ export default {
   props: {
     name: {
       type: String,
-      required: true,
+      default: '',
     },
     copyButtonText: {
       type: String,
@@ -44,23 +41,22 @@ export default {
       type: String,
       default: 'URL copied to clipboard!',
     },
+    mesh: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     shareUrl() {
       const urlRoot = `${window.location.href.replace(window.location.hash, '')}#`
 
-      return `${urlRoot}${this.$route.fullPath}?ns=${this.name}`
-    },
-    shouldDisplay() {
-      const mesh = this.$route.params.mesh || null
+      const { fullPath } = this.$router.resolve({
+        name: this.$route.name,
+        params: { mesh: this.mesh },
+        query: { ns: this.name },
+      }).resolved
 
-      // we only want to display the copy button when the user has filtered
-      // the view by mesh and not all meshes
-      if (mesh && mesh !== 'all') {
-        return true
-      }
-
-      return false
+      return `${urlRoot}${fullPath}`
     },
   },
 }

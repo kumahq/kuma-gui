@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import CardSkeleton from '@/components/Skeletons/CardSkeleton'
 import Resources from '@/components/Resources'
 import DonutChart from '@/components/DonutChart'
@@ -122,10 +122,12 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      selectedMesh: (state) => state.selectedMesh,
+    }),
     ...mapGetters({
       title: 'config/getTagline',
       environment: 'config/getEnvironment',
-      selectedMesh: 'getSelectedMesh',
       multicluster: 'config/getMulticlusterStatus',
       meshInsight: 'getMeshInsight',
       areMeshInsightsLoading: 'getMeshInsightsFetching',

@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import get from 'lodash/get'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
@@ -117,11 +117,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
-      selectedMesh: 'getSelectedMesh',
-    }),
-    ...mapState('sidebar', {
-      insights: (state) => state.insights,
+    ...mapState({
+      selectedMesh: (state) => state.selectedMesh,
+      insights: (state) => state.sidebar.insights,
     }),
 
     insightsClassess() {
@@ -256,7 +254,7 @@ export default {
   @apply absolute text-xs font-normal top-0 bottom-0 m-auto rounded w-6 h-5 flex justify-center items-center border border-white;
 
   background-color: var(--gray-2);
-  right: 1px;
+  right: 8px;
 
   &--empty {
     background-color: var(--gray-4);

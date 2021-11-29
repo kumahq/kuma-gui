@@ -138,24 +138,19 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
 
   handlers.push(
     rest.get(/dataplanes\+insights/, (req, res, ctx) => {
-      const ingress = req.url.searchParams.get('ingress')
       const gateway = req.url.searchParams.get('gateway')
 
-      if (gateway === 'false' && ingress === 'false') {
+      if (gateway === 'false') {
         // standard
-        return res(ctx.json(requireMockFile('dataplanes+insights__no-gateways-and-ingresses.json')))
+        return res(ctx.json(requireMockFile('dataplanes+insights__only_standard.json')))
       }
 
-      if (gateway === 'true' && !ingress) {
+      if (gateway === 'true') {
         // gateway
         return res(ctx.json(requireMockFile('dataplanes+insights__only-gateways.json')))
       }
 
-      if (ingress === 'true' && !gateway) {
-        return res(ctx.json(requireMockFile('dataplanes+insights__only-ingresses.json')))
-      }
-
-      if (!gateway && !ingress) {
+      if (!gateway) {
         // all
         return res(ctx.json(requireMockFile('dataplanes+insights.json')))
       }

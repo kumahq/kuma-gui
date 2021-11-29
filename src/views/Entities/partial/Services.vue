@@ -39,10 +39,13 @@
       >
         <template v-slot:tabHeader>
           <div>
-            <h3>{{ tabGroupTitle }}</h3>
+            <h3>{{ name }}: {{ entity.name }}</h3>
           </div>
           <div>
-            <EntityURLControl :name="entity.name" />
+            <EntityURLControl
+              :name="entity.name"
+              :mesh="entity.mesh"
+            />
           </div>
         </template>
         <template v-slot:overview>
@@ -69,7 +72,6 @@
         <template v-slot:yaml>
           <YamlView
             lang="yaml"
-            :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
@@ -147,32 +149,13 @@ export default {
           title: 'YAML',
         },
       ],
-      entity: [],
+      entity: {},
       rawEntity: null,
-      firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }
   },
   computed: {
-    tabGroupTitle() {
-      const entity = this.entity
-
-      if (entity) {
-        return `${this.name}: ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    entityOverviewTitle() {
-      const entity = this.entity
-
-      if (entity) {
-        return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
-    },
     formattedRawEntity() {
       const entity = this.formatForCLI(this.rawEntity)
 
@@ -298,9 +281,6 @@ export default {
             if (items()) {
               const firstItem = query ? entityList : entityList[0]
 
-              // set the first item as the default for initial load
-              this.firstEntity = firstItem.name
-
               // load the YAML entity for the first item on page load
               this.getEntity(stripTimes(firstItem))
 
@@ -353,7 +333,7 @@ export default {
               // this.rawEntity = response
               this.rawEntity = stripTimes(response)
             } else {
-              this.entity = null
+              this.entity = {}
               this.entityIsEmpty = true
             }
           })

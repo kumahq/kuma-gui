@@ -80,7 +80,6 @@ export default (): Module<RootInterface, RootInterface> => ({
   } as TODO,
   getters: {
     globalLoading: state => state.globalLoading,
-    getSelectedMesh: state => state.selectedMesh,
     getMeshList: state => state.meshes,
 
     getItemQueryNamespace: state => state.itemQueryNamespace,
@@ -167,7 +166,7 @@ export default (): Module<RootInterface, RootInterface> => ({
         if (mesh) {
           dispatch('updateSelectedMesh', mesh)
         } else {
-          localStorage.setItem('selectedMesh', getters.getSelectedMesh)
+          dispatch('updateSelectedMesh', 'all')
         }
 
         // fetch the mesh list
@@ -202,6 +201,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
     // update the selected mesh
     updateSelectedMesh({ commit }, mesh) {
+      localStorage.setItem('selectedMesh', mesh)
       commit('SET_SELECTED_MESH', mesh)
     },
 

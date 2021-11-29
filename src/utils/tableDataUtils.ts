@@ -21,10 +21,12 @@ function getAPICallFunction({
   query,
   size,
   offset,
+  params: additionalParms = {},
 }: TableDataParams) {
   const params = {
     size,
     offset,
+    ...additionalParms,
   }
 
   if (getSingleEntity && query) {
@@ -50,6 +52,7 @@ export async function getTableData({
   query,
   size = PAGE_SIZE_DEFAULT,
   offset,
+  params = {},
 }: TableDataParams): Promise<{ data: TableItem[]; next: boolean }> {
   const response = await getAPICallFunction({
     getSingleEntity,
@@ -59,6 +62,7 @@ export async function getTableData({
     query,
     size,
     offset,
+    params,
   })
 
   if (!response) {

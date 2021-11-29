@@ -834,7 +834,6 @@ export default {
     },
     compeleteDataPlaneSetup() {
       this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
-      localStorage.setItem('selectedMesh', this.validate.meshName)
 
       this.$router.push({
         name: 'dataplanes',

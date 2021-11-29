@@ -436,34 +436,18 @@ export default (store: Store<RootInterface>) => {
   })
 
   /**
-   * If the user is sent to the homepage root url ("/")
-   * redirect them to the Global Overview and set the mesh to "all".
-   * This ensures they get to the desired starting page once finished
-   * with the onboarding process.
-   *
-   * When the user is sent to the Global Overview from the root, this will also
-   * changed the selected mesh in their localStorage if it's set to something
-   * other than "all".
+   * If users change page make sure it updates selected mesh
    */
   router.beforeEach((to, from, next) => {
-    const isRoot = to.fullPath === '/'
-    const storedMesh = localStorage.getItem('selectedMesh') || null
-    const targetMesh = 'all'
+    const mesh = store.state.selectedMesh
 
-    if (isRoot) {
-      /** sync the mesh in localStorage with the route change */
-      if (storedMesh && storedMesh !== targetMesh) {
-        localStorage.setItem('selectedMesh', targetMesh)
-      }
+    const ongoingMesh = to.params.mesh
 
-      /** send the user to the Global Overview from "/" */
-      next({
-        name: 'global-overview',
-        params: { mesh: targetMesh },
-      })
-    } else {
-      next()
+    if (ongoingMesh && mesh !== ongoingMesh) {
+      store.dispatch('updateSelectedMesh', ongoingMesh)
     }
+
+    next()
   })
   /**
    * If the user hasn't gone through the setup/onboarding process yet, this

@@ -16,11 +16,7 @@
             "reallyLongTagLabelHere": "a-really-long-tag-value-here"
           }
         }
-      ],
-      "ingress": {
-        "publicAddress": "192.168.0.123",
-        "publicPort": 1234
-      }
+      ]
     }
   },
   "dataplaneInsight": {

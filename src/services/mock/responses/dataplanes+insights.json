@@ -1,5 +1,5 @@
 {
-  "total": 3,
+  "total": 8,
   "items": [
     {
       "type": "DataplaneOverview",
@@ -67,6 +67,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -139,6 +142,9 @@
               "envoy": {
                 "version": "1.15.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -211,6 +217,9 @@
               "envoy": {
                 "version": "1.15.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -221,15 +230,15 @@
       "type": "DataplaneOverview",
       "mesh": "default",
       "name": "no-subscriptions",
-      "creationTime": "2021-02-17T11:48:01.997694+01:00",
-      "modificationTime": "2021-02-17T11:48:01.997694+01:00",
+      "creationTime": "2021-02-17T08:33:36.442044+01:00",
+      "modificationTime": "2021-02-17T08:33:36.442044+01:00",
       "dataplane": {
         "networking": {
           "address": "127.0.0.1",
           "inbound": [
             {
-              "port": 8887,
-              "servicePort": 8888,
+              "port": 7776,
+              "servicePort": 7777,
               "serviceAddress": "127.0.0.1",
               "tags": {
                 "kuma.io/protocol": "http",
@@ -239,54 +248,16 @@
           ],
           "outbound": [
             {
-              "port": 10002,
+              "port": 10001,
               "tags": {
-                "kuma.io/service": "backend"
+                "kuma.io/service": "frontend"
               }
             }
           ]
         }
       },
       "dataplaneInsight": {
-        "subscriptions": [
-          {
-            "id": "25875983-ba09-47f2-91c4-5c0471a954ce",
-            "controlPlaneInstanceId": "foo",
-            "connectTime": "2021-02-17T10:48:01.962002Z",
-            "status": {
-              "lastUpdateTime": "2021-02-17T10:48:04.004243Z",
-              "total": {
-                "responsesSent": "3",
-                "responsesAcknowledged": "3"
-              },
-              "cds": {
-                "responsesSent": "1",
-                "responsesAcknowledged": "1"
-              },
-              "eds": {
-                "responsesSent": "1",
-                "responsesAcknowledged": "1"
-              },
-              "lds": {
-                "responsesSent": "1",
-                "responsesAcknowledged": "1"
-              },
-              "rds": {}
-            },
-            "version": {
-              "kumaDp": {
-                "version": "unknown",
-                "gitTag": "unknown",
-                "gitCommit": "unknown",
-                "buildDate": "unknown"
-              },
-              "envoy": {
-                "version": "1.15.2",
-                "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
-              }
-            }
-          }
-        ]
+        "subscriptions": []
       }
     },
     {
@@ -344,6 +315,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -405,6 +379,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -472,6 +449,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -486,30 +466,6 @@
       "modificationTime": "2021-02-19T07:39:23.218956+01:00",
       "dataplane": {
         "networking": {
-          "ingress": {
-            "availableServices": [
-              {
-                "tags": {
-                  "kuma.io/service": "backend",
-                  "kuma.io/zone": "cluster-1",
-                  "version": "1"
-                },
-                "instances": 1,
-                "mesh": "default"
-              },
-              {
-                "tags": {
-                  "kuma.io/service": "backend",
-                  "kuma.io/zone": "cluster-1",
-                  "version": "2"
-                },
-                "instances": 1,
-                "mesh": "default"
-              }
-            ],
-            "publicAddress": "127.0.0.1",
-            "publicPort": 20000
-          },
           "address": "127.0.0.1",
           "inbound": [
             {
@@ -558,6 +514,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }

@@ -8,3 +8,5 @@ export const OFFLINE = 'Offline'
 export const PARTIALLY_DEGRADED = 'Partially degraded'
 
 export const DISABLED = 'Disabled'
+
+export const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'

@@ -38,7 +38,7 @@ describe('EntityURLControl.vue', () => {
     expect(screen.getByText('copy')).toBeInTheDocument()
   })
 
-  it("dosen't render for mesh all", () => {
+  it('render for mesh all', () => {
     render(EntityURLControl, {
       mocks: {
         $route: {
@@ -52,6 +52,6 @@ describe('EntityURLControl.vue', () => {
       },
     })
 
-    expect(screen.queryByTestId('entity-url-control')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('entity-url-control')).toBeInTheDocument()
   })
 })

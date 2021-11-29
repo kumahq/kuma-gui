@@ -108,8 +108,8 @@ export default {
 
   .nav-item {
     height: auto;
-    padding: 0;
-    margin: 0 var(--subnavHorizontalMargin) var(--spacing-xxs);
+    padding: 0 var(--subnavHorizontalMargin) 0 0;
+    margin: 0 0 var(--spacing-xxs) var(--subnavHorizontalMargin);
     border-radius: 5px;
 
     a {

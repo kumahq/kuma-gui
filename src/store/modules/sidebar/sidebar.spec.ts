@@ -4,7 +4,7 @@ import sidebar from '.'
 describe('sidebar module', () => {
   describe('actions', () => {
     it('tests getInsights action', async () => {
-      const store = setupStore({ ...sidebar, getters: { getSelectedMesh: () => 'all' } })
+      const store = setupStore({ ...sidebar }, { selectedMesh: 'all' })
 
       await store.dispatch('getInsights')
 
@@ -18,9 +18,9 @@ describe('sidebar module', () => {
             },
             "mesh": Object {
               "dataplanes": Object {
-                "gateway": 0,
+                "gateway": 5,
                 "standard": 13,
-                "total": 23,
+                "total": 18,
               },
               "policies": Object {
                 "CircuitBreaker": 0,
@@ -42,6 +42,7 @@ describe('sidebar module', () => {
               },
             },
           },
+          "selectedMesh": "all",
         }
       `)
     })

@@ -244,6 +244,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                     <pre
                                       class="code-block language-bash"
                                       data-v-0029352b=""
+                                      tabindex="0"
                                     >
                                       <code
                                         class=" language-bash"
@@ -352,6 +353,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                     <pre
                                       class="code-block language-bash"
                                       data-v-0029352b=""
+                                      tabindex="0"
                                     >
                                       <code
                                         class=" language-bash"

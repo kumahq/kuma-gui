@@ -16,13 +16,14 @@ jest.mock('@/helpers', () => {
 
 describe('ZoneIngresses.vue', () => {
   it('renders snapshot when no multizone', () => {
-    const { container } = renderWithVuex(ZoneIngresses)
+    const { container } = renderWithVuex(ZoneIngresses, { routes: [] })
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders snapshot when multizone', async () => {
     const { container } = renderWithVuex(ZoneIngresses, {
+      routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
@@ -33,6 +34,7 @@ describe('ZoneIngresses.vue', () => {
 
   it('renders zoneingress insights', async () => {
     renderWithVuex(ZoneIngresses, {
+      routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 

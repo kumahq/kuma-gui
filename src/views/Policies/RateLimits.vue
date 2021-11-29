@@ -39,10 +39,13 @@
       >
         <template v-slot:tabHeader>
           <div>
-            <h3>{{ tabGroupTitle }}</h3>
+            <h3>Rate Limit: {{ entity.name }}</h3>
           </div>
           <div>
-            <EntityURLControl :name="entity.name" />
+            <EntityURLControl
+              :name="entity.name"
+              :mesh="entity.mesh"
+            />
           </div>
         </template>
         <template v-slot:overview>
@@ -68,7 +71,6 @@
         </template>
         <template v-slot:yaml>
           <YamlView
-            :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
@@ -137,32 +139,11 @@ export default {
           title: 'YAML',
         },
       ],
-      entity: [],
+      entity: {},
       rawEntity: null,
-      firstEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }
-  },
-  computed: {
-    tabGroupTitle() {
-      const entity = this.entity
-
-      if (entity) {
-        return `Rate Limit: ${entity.name}`
-      } else {
-        return null
-      }
-    },
-    entityOverviewTitle() {
-      const entity = this.entity
-
-      if (entity) {
-        return `Entity Overview for ${entity.name}`
-      } else {
-        return null
-      }
-    },
   },
   watch: {
     $route(to, from) {
@@ -248,7 +229,7 @@ export default {
               // this.rawEntity = response
               this.rawEntity = stripTimes(response)
             } else {
-              this.entity = null
+              this.entity = {}
               this.entityIsEmpty = true
             }
           })

@@ -10,54 +10,6 @@
       {
         "port": 10001
       }
-    ],
-    "ingress": [
-      {
-        "publicAddress": "192.168.0.123",
-        "publicPort": 1234
-      },
-      {
-        "kuma.io/service": "frontend.kuma-demo.svc:8080",
-        "tags": {
-          "app": "kuma-demo-frontend",
-          "env": "prod",
-          "pod-template-hash": "69c9fd4bd",
-          "kuma.io/protocol": "http",
-          "version": "v8",
-          "a-duplicate-tag": "12345678"
-        }
-      },
-      {
-        "kuma.io/service": "backend.kuma-demo.svc:3001",
-        "tags": {
-          "app": "kuma-demo-backend",
-          "env": "prod",
-          "pod-template-hash": "d7cb6b576",
-          "kuma.io/protocol": "http",
-          "version": "v0",
-          "a-duplicate-tag": "12345678"
-        }
-      },
-      {
-        "kuma.io/service": "postgres.kuma-demo.svc:5432",
-        "tags": {
-          "app": "postgres",
-          "pod-template-hash": "65df766577",
-          "kuma.io/protocol": "tcp",
-          "a-duplicate-tag": "12345678"
-        }
-      },
-      {
-        "kuma.io/service": "redis.kuma-demo.svc:6379",
-        "tags": {
-          "app": "redis",
-          "pod-template-hash": "78ff699f7",
-          "kuma.io/protocol": "tcp",
-          "role": "master",
-          "tier": "backend",
-          "a-duplicate-tag": "12345678"
-        }
-      }
     ]
   }
 }

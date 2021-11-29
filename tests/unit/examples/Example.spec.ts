@@ -18,7 +18,7 @@ describe('Example.vue', () => {
       props,
     })
 
-    expect(await findByText(1)).toBeInTheDocument()
+    expect(await findByText(3)).toBeInTheDocument()
     expect(mock).not.toHaveBeenCalled()
   })
 })

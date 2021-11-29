@@ -15,7 +15,24 @@
         :next="next"
         @tableAction="tableAction"
         @loadData="loadData($event)"
-      />
+      >
+        <template v-slot:additionalControls>
+          <KButton
+            v-if="$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'zones'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
+        </template>
+      </DataOverview>
       <Tabs
         v-if="isEmpty === false"
         :has-error="hasError"
@@ -24,9 +41,12 @@
         initial-tab-override="overview"
       >
         <template v-slot:tabHeader>
-          <h3 v-if="entity">
-            Zone: {{ entity.name }}
-          </h3>
+          <div>
+            <h3> Zone: {{ entity.name }}</h3>
+          </div>
+          <div>
+            <EntityURLControl :name="entity.name" />
+          </div>
         </template>
         <template v-slot:overview>
           <LabelList
@@ -118,11 +138,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
+import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/helpers'
 import get from 'lodash/get'
 import Prism from 'vue-prismjs'
 import Kuma from '@/services/kuma'
-import { getSome, getZoneDpServerAuthType } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -130,6 +150,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
+import EntityURLControl from '@/components/Utils/EntityURLControl'
 
 import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
@@ -153,6 +174,7 @@ export default {
     ZoneInsightSubscriptionDetails,
     ZoneInsightSubscriptionHeader,
     MultizoneInfo,
+    EntityURLControl,
   },
   metaInfo: {
     title: 'Zones',
@@ -177,6 +199,7 @@ export default {
           { label: 'Name', key: 'name' },
           { label: 'Zone CP Version', key: 'zoneCpVersion' },
           { label: 'Backend', key: 'backend' },
+          { label: 'Ingress', key: 'hasIngress' },
           { key: 'warnings', hideLabel: true },
         ],
         data: [],
@@ -205,12 +228,10 @@ export default {
       warnings: [],
       zoneInsightSubscriptionsReversed: [],
       codeOutput: null,
+      zonesWithIngress: new Set(),
     }
   },
   computed: {
-    ...mapState({
-      mesh: 'selectedMesh',
-    }),
     ...mapGetters({
       multicluster: 'config/getMulticlusterStatus',
       globalCpVersion: 'config/getVersion',
@@ -245,7 +266,7 @@ export default {
       this.getEntity(data)
     },
     parseData(entity) {
-      const { zoneInsight = {} } = entity
+      const { zoneInsight = {}, name } = entity
       let zoneCpVersion = '-'
       let backend = ''
 
@@ -266,25 +287,45 @@ export default {
         status: getItemStatusFromInsight(zoneInsight).status,
         zoneCpVersion,
         backend,
+        hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',
         withWarnings: zoneCpVersion !== this.globalCpVersion,
       }
+    },
+    calculateZonesWithIngress(zoneIngresses) {
+      const zones = new Set()
+
+      zoneIngresses.forEach(({ name }) => {
+        zones.add(name)
+      })
+
+      this.zonesWithIngress = zones
     },
     async loadData(offset = '0') {
       this.isLoading = true
       this.isEmpty = false
 
+      const query = this.$route.query.ns || null
+
       try {
-        const { data, next } = await getTableData({
-          getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
-          size: this.pageSize,
-          offset,
-        })
+        const [{ data, next }, { items: zoneIngresses }] = await Promise.all([
+          getTableData({
+            getSingleEntity: Kuma.getZoneOverview.bind(Kuma),
+            getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
+            size: this.pageSize,
+            offset,
+            query,
+          }),
+          fetchAllResources({
+            callEndpoint: Kuma.getAllZoneIngressOverviews.bind(Kuma),
+          }),
+        ])
 
         // set pagination
         this.next = next
 
         // set table data
         if (data.length) {
+          this.calculateZonesWithIngress(zoneIngresses)
           this.tableData.data = data.map(this.parseData)
           this.tableDataIsEmpty = false
           this.isEmpty = false
@@ -351,7 +392,7 @@ export default {
         } catch (e) {
           console.error(e)
 
-          this.entity = null
+          this.entity = {}
           this.entityHasError = true
           this.entityIsEmpty = true
         } finally {
