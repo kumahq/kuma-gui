@@ -18,9 +18,9 @@ describe('sidebar module', () => {
             },
             "mesh": Object {
               "dataplanes": Object {
-                "gateway": 0,
+                "gateway": 5,
                 "standard": 13,
-                "total": 23,
+                "total": 18,
               },
               "policies": Object {
                 "CircuitBreaker": 0,

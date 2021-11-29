@@ -164,9 +164,9 @@ describe('sidebar utils', () => {
       expect(meshInsight).toMatchInlineSnapshot(`
         Object {
           "dataplanes": Object {
-            "gateway": 0,
+            "gateway": 5,
             "standard": 5,
-            "total": 23,
+            "total": 18,
           },
           "policies": Object {
             "CircuitBreaker": 0,

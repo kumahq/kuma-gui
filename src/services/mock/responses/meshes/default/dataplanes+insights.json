@@ -9,57 +9,16 @@
       "modificationTime": "2020-06-29T09:27:46.05334-04:00",
       "dataplane": {
         "networking": {
-          "address": "192.168.64.8",
+          "address": "10.0.0.1",
           "inbound": [
             {
-              "port": 10001
-            }
-          ],
-          "ingress": [
-            {
-              "publicAddress": "192.168.0.123",
-              "publicPort": 1234
-            },
-            {
-              "kuma.io/service": "frontend.kuma-demo.svc:8080",
+              "port": 10000,
+              "servicePort": 9000,
               "tags": {
-                "app": "kuma-demo-frontend",
-                "env": "prod",
-                "pod-template-hash": "69c9fd4bd",
-                "kuma.io/protocol": "http",
-                "version": "v8",
-                "a-duplicate-tag": "12345678"
-              }
-            },
-            {
-              "kuma.io/service": "backend.kuma-demo.svc:3001",
-              "tags": {
-                "app": "kuma-demo-backend",
-                "env": "prod",
-                "pod-template-hash": "d7cb6b576",
-                "kuma.io/protocol": "http",
-                "version": "v0",
-                "a-duplicate-tag": "12345678"
-              }
-            },
-            {
-              "kuma.io/service": "postgres.kuma-demo.svc:5432",
-              "tags": {
-                "app": "postgres",
-                "pod-template-hash": "65df766577",
-                "kuma.io/protocol": "tcp",
-                "a-duplicate-tag": "12345678"
-              }
-            },
-            {
-              "kuma.io/service": "redis.kuma-demo.svc:6379",
-              "tags": {
-                "app": "redis",
-                "pod-template-hash": "78ff699f7",
-                "kuma.io/protocol": "tcp",
-                "role": "master",
-                "tier": "backend",
-                "a-duplicate-tag": "12345678"
+                "env": "dev",
+                "kuma.io/service": "kuma-example-backend",
+                "tag01": "value01",
+                "reallyLongTagLabelHere": "a-really-long-tag-value-here"
               }
             }
           ]
@@ -68,44 +27,35 @@
       "dataplaneInsight": {
         "subscriptions": [
           {
-            "id": "bf086d62-568d-4dce-ae21-fa58ddea5d5a",
-            "controlPlaneInstanceId": "foo",
-            "connectTime": "2021-08-20T13:31:36.594439Z",
+            "id": "426fe0d8-f667-11e9-b081-acde48001122",
+            "controlPlaneInstanceId": "06070748-f667-11e9-b081-acde48001122",
+            "connectTime": "2019-10-24T14:04:56.820350Z",
             "status": {
-              "lastUpdateTime": "2021-08-20T13:31:37.763782Z",
+              "lastUpdateTime": "2019-10-24T14:04:57.832482Z",
               "total": {
-                "responsesSent": "2",
-                "responsesAcknowledged": "2"
+                "responsesSent": "3",
+                "responsesAcknowledged": "3"
               },
               "cds": {
                 "responsesSent": "1",
                 "responsesAcknowledged": "1"
               },
-              "eds": {},
+              "eds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
               "lds": {
                 "responsesSent": "1",
                 "responsesAcknowledged": "1"
               },
               "rds": {}
-            },
-            "version": {
-              "kumaDp": {
-                "version": "1.2.0-154-g7aa9724d",
-                "gitTag": "1.2.0-154-g7aa9724d",
-                "gitCommit": "7aa9724d3d341e0b751ec333599fd639df6783ea",
-                "buildDate": "2021-08-19T09:24:20Z"
-              },
-              "envoy": {
-                "version": "1.18.3",
-                "build": "98c1c9e9a40804b93b074badad1cdf284b47d58b/1.18.3/Modified/RELEASE/BoringSSL"
-              }
             }
           }
         ],
         "mTLS": {
-          "certificateExpirationTime": "2021-08-20T09:45:51Z",
-          "lastCertificateRegeneration": "2021-08-20T08:45:51.869135Z",
-          "certificateRegenerations": 4,
+          "certificateExpirationTime": "2020-05-11T16:53:55Z",
+          "lastCertificateRegeneration": "2020-05-11T16:53:40.862241Z",
+          "certificateRegenerations": 2,
           "issuedBackend": "ca-2",
           "supportedBackends": ["ca-2", "ca-1"]
         }
@@ -122,54 +72,13 @@
           "address": "192.168.64.8",
           "inbound": [
             {
-              "port": 10001
-            }
-          ],
-          "ingress": [
-            {
-              "publicAddress": "192.168.0.123",
-              "publicPort": 1234
-            },
-            {
-              "kuma.io/service": "frontend.kuma-demo.svc:8080",
+              "port": 10001,
+              "servicePort": 9000,
               "tags": {
-                "app": "kuma-demo-frontend",
-                "env": "prod",
-                "pod-template-hash": "69c9fd4bd",
-                "kuma.io/protocol": "http",
-                "version": "v8",
-                "a-duplicate-tag": "12345678"
-              }
-            },
-            {
-              "kuma.io/service": "backend.kuma-demo.svc:3001",
-              "tags": {
-                "app": "kuma-demo-backend",
-                "env": "prod",
-                "pod-template-hash": "d7cb6b576",
-                "kuma.io/protocol": "http",
-                "version": "v0",
-                "a-duplicate-tag": "12345678"
-              }
-            },
-            {
-              "kuma.io/service": "postgres.kuma-demo.svc:5432",
-              "tags": {
-                "app": "postgres",
-                "pod-template-hash": "65df766577",
-                "kuma.io/protocol": "tcp",
-                "a-duplicate-tag": "12345678"
-              }
-            },
-            {
-              "kuma.io/service": "redis.kuma-demo.svc:6379",
-              "tags": {
-                "app": "redis",
-                "pod-template-hash": "78ff699f7",
-                "kuma.io/protocol": "tcp",
-                "role": "master",
-                "tier": "backend",
-                "a-duplicate-tag": "12345678"
+                "env": "dev",
+                "kuma.io/service": "kuma-example-backend",
+                "tag01": "value01",
+                "reallyLongTagLabelHere": "a-really-long-tag-value-here"
               }
             }
           ]
@@ -178,37 +87,28 @@
       "dataplaneInsight": {
         "subscriptions": [
           {
-            "id": "bf086d62-568d-4dce-ae21-fa58ddea5d5a",
-            "controlPlaneInstanceId": "foo",
-            "connectTime": "2021-08-20T13:31:36.594439Z",
+            "id": "426fe0d8-f667-11e9-b081-acde48001122",
+            "controlPlaneInstanceId": "06070748-f667-11e9-b081-acde48001122",
+            "connectTime": "2019-10-24T14:04:56.820350Z",
             "status": {
-              "lastUpdateTime": "2021-08-20T13:31:37.763782Z",
+              "lastUpdateTime": "2019-10-24T14:04:57.832482Z",
               "total": {
-                "responsesSent": "2",
-                "responsesAcknowledged": "2"
+                "responsesSent": "3",
+                "responsesAcknowledged": "3"
               },
               "cds": {
                 "responsesSent": "1",
                 "responsesAcknowledged": "1"
               },
-              "eds": {},
+              "eds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
               "lds": {
                 "responsesSent": "1",
                 "responsesAcknowledged": "1"
               },
               "rds": {}
-            },
-            "version": {
-              "kumaDp": {
-                "version": "1.2.0-154-g7aa9724d",
-                "gitTag": "1.2.0-154-g7aa9724d",
-                "gitCommit": "7aa9724d3d341e0b751ec333599fd639df6783ea",
-                "buildDate": "2021-08-19T09:24:20Z"
-              },
-              "envoy": {
-                "version": "1.18.3",
-                "build": "98c1c9e9a40804b93b074badad1cdf284b47d58b/1.18.3/Modified/RELEASE/BoringSSL"
-              }
             }
           }
         ],

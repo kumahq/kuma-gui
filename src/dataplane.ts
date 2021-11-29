@@ -1,7 +1,8 @@
 import { humanReadableDate } from '@/helpers'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
 import { satisfies } from 'semver'
 import Kuma from '@/services/kuma'
+import { Dataplane, LabelValue, DataplaneInsight, DataplaneOverview, DiscoverySubscription } from '@/types'
 
 /*
 dpTags takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
@@ -34,18 +35,8 @@ Will produce:
  */
 
 type TODO = any
-interface DataPlane {
-  networking: {
-    inbound: {
-      port: number
-      tags: Record<string, string>
-      health?: { ready: boolean }
-    }[]
-    gateway: TODO
-  }
-}
 
-export function dpTags(dataplane: DataPlane): { label: string; value: string }[] {
+export function dpTags(dataplane: Dataplane): LabelValue[] {
   let tags: TODO[] = []
 
   const inbounds = dataplane.networking.inbound || null
@@ -72,7 +63,7 @@ export function dpTags(dataplane: DataPlane): { label: string; value: string }[]
 /*
 getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
  */
-export function getStatus(dataplane: DataPlane, dataplaneInsight: TODO = {}) {
+export function getStatus(dataplane: Dataplane, dataplaneInsight: DataplaneInsight = { subscriptions: [] }) {
   const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
 
   const errors = inbounds
@@ -107,6 +98,37 @@ export function getStatus(dataplane: DataPlane, dataplaneInsight: TODO = {}) {
 }
 
 /*
+getStatus takes DataplaneInsight and returns map of versions
+ */
+
+export function getVersions(dataplaneInsight: DataplaneInsight): Record<string, string> | null {
+  if (!dataplaneInsight.subscriptions.length) {
+    return null
+  }
+
+  const versions: Record<string, string> = {}
+
+  const lastSubscription: DiscoverySubscription =
+    dataplaneInsight.subscriptions[dataplaneInsight.subscriptions.length - 1]
+
+  if (lastSubscription.version?.envoy) {
+    versions.envoy = lastSubscription.version.envoy.version
+  }
+
+  if (lastSubscription.version?.kumaDp) {
+    versions.kumaDp = lastSubscription.version.kumaDp.version
+  }
+
+  if (lastSubscription.version?.dependencies) {
+    Object.entries(lastSubscription.version.dependencies).forEach(([key, value]) => {
+      versions[key] = value
+    })
+  }
+
+  return versions
+}
+
+/*
 getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
  */
 export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLINE | typeof OFFLINE } {
@@ -129,15 +151,7 @@ export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLI
   }
 }
 
-interface DataPlaneOverview {
-  name: string
-  mesh: string
-  type: string
-  dataplane: DataPlane
-  dataplaneInsight: TODO
-}
-
-export function getDataplane(dataplaneOverview: DataPlaneOverview) {
+export function getDataplane(dataplaneOverview: DataplaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
   return {
@@ -148,7 +162,7 @@ export function getDataplane(dataplaneOverview: DataPlaneOverview) {
   }
 }
 
-export function getDataplaneInsight(dataplaneOverview: DataPlaneOverview) {
+export function getDataplaneInsight(dataplaneOverview: DataplaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
   return {
@@ -159,21 +173,31 @@ export function getDataplaneInsight(dataplaneOverview: DataPlaneOverview) {
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch(zoneName: string, dpVersion: string) {
-  const response = (await Kuma.getZoneOverview({ name: zoneName })) || {}
-  const { zoneInsight = {} } = response
-  const { subscriptions = [] } = zoneInsight
+export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpVersion: string) {
+  const tag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
-  if (subscriptions.length) {
-    const { version = {} } = subscriptions.pop()
-    const { kumaCp = {} } = version
+  if (tag) {
+    try {
+      const response = (await Kuma.getZoneOverview({ name: tag.value })) || {}
+      const { zoneInsight = {} } = response
+      const { subscriptions = [] } = zoneInsight
 
-    return {
-      compatible: dpVersion === kumaCp.version,
-      payload: {
-        zoneVersion: kumaCp.version,
-        kumaDpVersion: dpVersion,
-      },
+      if (subscriptions.length) {
+        const { version = {} } = subscriptions[subscriptions.length - 1]
+        const { kumaCp = {} } = version
+
+        return {
+          compatible: dpVersion === kumaCp.version,
+          payload: {
+            zoneVersion: kumaCp.version,
+            kumaDpVersion: dpVersion,
+          },
+        }
+      }
+
+      return { compatible: true }
+    } catch (e) {
+      console.error(e)
     }
   }
 
@@ -207,16 +231,12 @@ export function parseMTLSData(mtls: TODO) {
   }
 }
 
-export function getDataplaneType(dataplane: { networking: { gateway?: TODO; ingress?: TODO } } = { networking: {} }) {
+export function getDataplaneType(dataplane: { networking: { gateway?: TODO } } = { networking: {} }) {
   const { networking = {} } = dataplane
-  const { gateway, ingress } = networking
+  const { gateway } = networking
 
   if (gateway) {
     return 'Gateway'
-  }
-
-  if (ingress) {
-    return 'Ingress'
   }
 
   return 'Standard'

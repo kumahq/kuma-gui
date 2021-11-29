@@ -1,7 +1,7 @@
 <template>
   <div class="standard-dataplanes">
     <Dataplanes
-      :dataplane-api-params="{ gateway: false, ingress: false }"
+      :dataplane-api-params="{ gateway: false }"
       empty-state-msg="There are no Standard data plane proxies present."
     />
   </div>

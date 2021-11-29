@@ -10,7 +10,7 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
       // Sum dataplanes
       acc.dataplanes.total += dataplanes.total || 0
       acc.dataplanes.standard += dataplanesByType.standard?.total || 0
-      acc.dataplanes.total += dataplanesByType.gateway?.total || 0
+      acc.dataplanes.gateway += dataplanesByType.gateway?.total || 0
 
       // Sum policies
 

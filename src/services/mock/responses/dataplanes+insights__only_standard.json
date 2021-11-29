@@ -56,6 +56,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }
@@ -117,6 +120,9 @@
               "envoy": {
                 "version": "1.16.2",
                 "build": "e98e41a8e168af7acae8079fc0cd68155f699aa3/1.16.2/Modified/DEBUG/BoringSSL"
+              },
+              "dependencies": {
+                "coredns": "1.8.3"
               }
             }
           }

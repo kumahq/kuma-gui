@@ -1,3 +1,5 @@
+type TODO = any
+
 export interface KDSSubscription {
   config: string
   id: string
@@ -74,4 +76,84 @@ export interface MeshInsight {
     supportedBackends?: Record<string, UnitStatus>
   }
   services: Record<string, number>
+}
+
+export interface Dataplane {
+  networking: {
+    inbound: {
+      port: number
+      tags: Record<string, string>
+      health?: { ready: boolean }
+    }[]
+    gateway: TODO
+  }
+}
+
+export interface DiscoveryServiceStats {
+  responsesSent?: number
+  responsesAcknowledged?: number
+  responsesRejected?: number
+}
+
+export interface KumaDpVersion {
+  version: string
+  gitTag: string
+  gitCommit: string
+  buildDate: string
+}
+
+export interface EnvoyVersion {
+  version: string
+  build: string
+}
+
+export interface DiscoverySubscriptionStatus {
+  lastUpdateTime: string
+  total: DiscoveryServiceStats
+  cds: DiscoveryServiceStats
+  eds: DiscoveryServiceStats
+  lds: DiscoveryServiceStats
+  rds: DiscoveryServiceStats
+}
+
+export interface Version {
+  kumaDp: KumaDpVersion
+
+  envoy: EnvoyVersion
+
+  dependencies: Record<string, string>
+}
+
+export interface DiscoverySubscription {
+  id: string
+  controlPlaneInstanceId: string
+  connectTime?: string
+  disconnectTime?: string
+  status: DiscoverySubscriptionStatus
+  generation?: number
+  version: Version
+}
+
+export interface DataplaneInsight {
+  mTLS?: {
+    certificateExpirationTime: string
+    lastCertificateRegeneration: string
+    certificateRegenerations: number
+    issuedBackend: string
+    supportedBackends: string[]
+  }
+  subscriptions: DiscoverySubscription[]
+}
+
+export interface DataplaneOverview {
+  name: string
+  mesh: string
+  type: string
+  dataplane: Dataplane
+  dataplaneInsight: DataplaneInsight
+}
+
+export interface LabelValue {
+  label: string
+  value: string
 }

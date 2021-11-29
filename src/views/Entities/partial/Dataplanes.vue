@@ -48,7 +48,9 @@
     >
       <template v-slot:tabHeader>
         <div>
-          <h3>{{ tabGroupTitle }}</h3>
+          <h3 v-if="entity.basicData">
+            DPP: {{ entity.basicData.name }}
+          </h3>
         </div>
         <div>
           <EntityURLControl
@@ -59,7 +61,6 @@
       </template>
       <template v-slot:overview>
         <LabelList
-          :has-error="entityHasError"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
         >
@@ -117,15 +118,28 @@
                 </span>
               </span>
             </p>
+            <div v-if="entity.versions">
+              <h4>Versions</h4>
+              <p>
+                <span
+                  v-for="(val, key) in entity.versions"
+                  :key="key"
+                  class="tag-cols"
+                >
+                  <span>
+                    {{ key }}:
+                  </span>
+                  <span>
+                    {{ val }}
+                  </span>
+                </span>
+              </p>
+            </div>
           </div>
         </LabelList>
       </template>
-      <template
-        v-if="showMtls"
-        v-slot:mtls
-      >
+      <template v-slot:mtls>
         <LabelList
-          :has-error="entityHasError"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
         >
@@ -160,7 +174,6 @@
       <template v-slot:yaml>
         <YamlView
           :title="entityOverviewTitle"
-          :has-error="entityHasError"
           :is-loading="entityIsLoading"
           :is-empty="entityIsEmpty"
           :content="rawEntity"
@@ -187,6 +200,7 @@ import {
   getDataplaneInsight,
   getDataplaneType,
   getStatus,
+  getVersions,
   parseMTLSData,
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
@@ -195,7 +209,6 @@ import {
   INCOMPATIBLE_WRONG_FORMAT,
 } from '@/dataplane'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
-import sortEntities from '@/mixins/EntitySorter'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
@@ -204,7 +217,7 @@ import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
 import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 
-const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
+import { getTableData } from '@/utils/tableDataUtils'
 
 export default {
   name: 'Dataplanes',
@@ -217,7 +230,6 @@ export default {
     YamlView,
     LabelList,
   },
-  mixins: [sortEntities],
   props: {
     nsBackButtonRoute: {
       type: Object,
@@ -279,10 +291,6 @@ export default {
         ]
       },
     },
-    showMtls: {
-      type: Boolean,
-      default: true,
-    },
   },
   data() {
     return {
@@ -292,21 +300,20 @@ export default {
       hasError: false,
       entityIsLoading: true,
       entityIsEmpty: false,
-      entityHasError: false,
       warnings: [],
       tableDataIsEmpty: false,
       tableData: {
         headers: [],
         data: [],
       },
-      entity: [],
+      entity: {},
       rawEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       tabGroupTitle: null,
-      entityNamespace: null,
       entityOverviewTitle: null,
       shownTLSTab: false,
+      rawData: null,
     }
   },
   computed: {
@@ -352,10 +359,10 @@ export default {
     onCreateClick() {
       datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
     },
-    buildEntity(basicData, tags, dataplaneInsight) {
+    buildEntity(basicData, tags, dataplaneInsight, versions) {
       const mtls = dataplaneInsight.mTLS ? parseMTLSData(dataplaneInsight.mTLS) : null
 
-      return { basicData, tags, mtls }
+      return { basicData, tags, mtls, versions }
     },
     init() {
       this.loadData()
@@ -388,64 +395,25 @@ export default {
       // load the data into the tabs
       this.getEntity(data)
     },
-    async loadData(offset = '0') {
-      this.isLoading = true
-
-      const mesh = this.$route.params.mesh || null
-      const query = this.$route.query.ns || null
-
-      const params = {
-        size: this.pageSize,
-        offset,
-        ...this.dataplaneApiParams,
-      }
+    async parseData(response) {
+      const { dataplane = {}, dataplaneInsight = {} } = response
+      const { name = '', mesh = '' } = response
+      const { subscriptions = [] } = dataplaneInsight
 
       /**
-       * determine which endpoint to use based on the mesh.
-       * we are either fetching entities from one mesh, or fetching
-       * all of them from all meshes and collecting them into the view.
+       * Handle our tag collections based on the dataplane type.
        */
-      const endpoint = () => {
-        if (mesh === 'all') {
-          return Kuma.getAllDataplaneOverviews(params)
-        } else if (query && query.length && mesh !== 'all') {
-          return Kuma.getDataplaneOverviewFromMesh({ mesh, name: query })
-        }
+      const tags = dpTags(dataplane)
 
-        return Kuma.getAllDataplaneOverviewsFromMesh({ mesh }, params)
-      }
+      const { status } = getStatus(dataplane, dataplaneInsight)
 
       /**
-       * the function used for fetching dataplanes from a mesh
-       * and then collecting them into an array.
+       * Iterate through the subscriptions
        */
-      const dpFetcher = async (mesh, name, finalArr) => {
-        try {
-          const response = await Kuma.getDataplaneOverviewFromMesh({ mesh, name })
-          const { dataplane = {}, dataplaneInsight = {} } = response
-          const { name: responseName = '', mesh: responseMesh = '' } = response
-          const { subscriptions = [] } = dataplaneInsight
 
-          /**
-           * Handle our tag collections based on the dataplane type.
-           */
-          const tags = dpTags(dataplane)
-
-          const { status } = getStatus(dataplane, dataplaneInsight)
-
-          /**
-           * Iterate through the subscriptions
-           */
-          const initial = {
-            totalUpdates: 0,
-            totalRejectedUpdates: 0,
-            dpVersion: '-',
-            envoyVersion: '-',
-            selectedTime: NaN,
-            selectedUpdateTime: NaN,
-          }
-
-          const reduced = subscriptions.reduce((acc, curr) => {
+      const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime } =
+        subscriptions.reduce(
+          (acc, curr) => {
             const { status = {}, connectTime, version = {} } = curr
             const { total = {}, lastUpdateTime } = status
             const { responsesSent = '0', responsesRejected = '0' } = total
@@ -478,112 +446,88 @@ export default {
               selectedTime,
               selectedUpdateTime,
             }
-          }, initial)
+          },
+          {
+            totalUpdates: 0,
+            totalRejectedUpdates: 0,
+            dpVersion: '-',
+            envoyVersion: '-',
+            selectedTime: NaN,
+            selectedUpdateTime: NaN,
+          },
+        )
 
-          const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime } =
-            reduced
+      // assemble the table data
+      const item = {
+        name,
+        mesh,
+        tags,
+        status,
+        totalUpdates,
+        totalRejectedUpdates,
+        dpVersion,
+        envoyVersion,
+        withWarnings: false,
+        unsupportedEnvoyVersion: false,
+        unsupportedKumaDPVersion: false,
+        kumaDpAndKumaCpMismatch: false,
+        lastUpdated: selectedUpdateTime ? humanReadableDate(new Date(selectedUpdateTime).toUTCString()) : 'never',
+        lastConnected: selectedTime ? humanReadableDate(new Date(selectedTime).toUTCString()) : 'never',
+        type: getDataplaneType(dataplane),
+      }
 
-          const lastConnected = selectedTime ? humanReadableDate(new Date(selectedTime).toUTCString()) : 'never'
+      const { kind } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
 
-          const lastUpdated = selectedUpdateTime
-            ? humanReadableDate(new Date(selectedUpdateTime).toUTCString())
-            : 'never'
+      switch (kind) {
+        case INCOMPATIBLE_UNSUPPORTED_ENVOY:
+          item.unsupportedEnvoyVersion = true
+          item.withWarnings = true
+          break
+        case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
+          item.unsupportedKumaDPVersion = true
+          item.withWarnings = true
+          break
+      }
 
-          // assemble the table data
-          const item = {
-            name: responseName,
-            mesh: responseMesh,
-            tags: tags,
-            status: status,
-            lastConnected: lastConnected,
-            lastUpdated: lastUpdated,
-            totalUpdates: totalUpdates,
-            totalRejectedUpdates: totalRejectedUpdates,
-            dpVersion: dpVersion,
-            envoyVersion: envoyVersion,
-            withWarnings: false,
-            unsupportedEnvoyVersion: false,
-            unsupportedKumaDPVersion: false,
-            kumaDpAndKumaCpMismatch: false,
-            type: getDataplaneType(dataplane),
-          }
+      if (this.multicluster) {
+        const { compatible } = await checkKumaDpAndZoneVersionsMismatch(tags, dpVersion)
 
-          const { kind } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
-
-          switch (kind) {
-            case INCOMPATIBLE_UNSUPPORTED_ENVOY:
-              item.unsupportedEnvoyVersion = true
-              item.withWarnings = true
-              break
-            case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
-              item.unsupportedKumaDPVersion = true
-              item.withWarnings = true
-              break
-          }
-
-          if (this.multicluster) {
-            const zoneTag = tags.find((tag) => tag.label === KUMA_ZONE_TAG_NAME)
-
-            if (zoneTag) {
-              try {
-                const { compatible } = await checkKumaDpAndZoneVersionsMismatch(zoneTag.value, dpVersion)
-
-                if (!compatible) {
-                  item.withWarnings = true
-                  item.kumaDpAndKumaCpMismatch = true
-                }
-              } catch (e) {
-                console.error(e)
-              }
-            }
-          }
-
-          finalArr.push(item)
-
-          this.sortEntities(finalArr)
-
-          return finalArr
-        } catch (e) {
-          console.error(e)
+        if (!compatible) {
+          item.withWarnings = true
+          item.kumaDpAndKumaCpMismatch = true
         }
       }
 
+      return item
+    },
+    async loadData(offset = '0') {
+      this.isLoading = true
+
+      const mesh = this.$route.params.mesh || null
+      const query = this.$route.query.ns || null
+
       try {
-        const response = await endpoint()
+        const { data, next } = await getTableData({
+          getSingleEntity: Kuma.getDataplaneOverviewFromMesh.bind(Kuma),
+          getAllEntities: Kuma.getAllDataplaneOverviews.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllDataplaneOverviewsFromMesh.bind(Kuma),
+          size: this.pageSize,
+          offset,
+          mesh,
+          query,
+          params: { ...this.dataplaneApiParams },
+        })
 
-        const getItems = () => {
-          const r = response
-
-          if ('total' in r) {
-            if (r.total !== 0 && r.items && r.items.length > 0) {
-              return this.sortEntities(r.items)
-            }
-
-            return null
-          }
-
-          return r
-        }
-
-        const items = getItems()
-
-        if (items) {
+        if (data.length) {
           // check to see if the `next` url is present
-          this.next = Boolean(response.next)
+          this.next = next
 
-          const final = []
-          const itemSelect = query ? items : items[0]
+          this.rawData = data
 
           // load the YAML entity for the first item on page load
-          await this.getEntity(itemSelect)
+          this.getEntity({ name: data[0].name })
 
-          if (query && query.length && mesh && mesh.length) {
-            await dpFetcher(mesh, query, final)
-          } else {
-            const promises = items.map((item) => dpFetcher(item.mesh, item.name, final))
-
-            await Promise.all(promises)
-          }
+          const final = await Promise.all(data.map((item) => this.parseData(item)))
 
           this.tableData.data = final
           this.tableDataIsEmpty = false
@@ -592,109 +536,79 @@ export default {
           this.tableData.data = []
           this.tableDataIsEmpty = true
           this.isEmpty = true
-
-          await this.getEntity(null)
         }
       } catch (e) {
         this.hasError = true
         this.isEmpty = true
 
         console.error(e)
-      }
-
-      setTimeout(() => {
+      } finally {
         this.isLoading = false
-      }, process.env.VUE_APP_DATA_TIMEOUT)
+      }
     },
     async getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
-      this.entityHasError = false
 
-      const mesh = this.$route.params.mesh
+      const response = this.rawData.find((data) => data.name === entity.name)
 
-      if (entity) {
-        const entityMesh = mesh === 'all' ? entity.mesh : mesh
+      const dataplane = getDataplane(response)
 
-        try {
-          const response = await Kuma.getDataplaneOverviewFromMesh({ mesh: entityMesh, name: entity.name })
-          const dataplane = getDataplane(response)
+      if (dataplane) {
+        const selected = ['type', 'name', 'mesh']
 
-          if (dataplane) {
-            const selected = ['type', 'name', 'mesh']
+        const dataplaneInsight = getDataplaneInsight(response) || {}
+        const status = getStatus(dataplane, dataplaneInsight)
+        const tags = dpTags(dataplane)
+        const versions = getVersions(dataplaneInsight)
 
-            const dataplaneInsight = getDataplaneInsight(response) || {}
-            const status = getStatus(dataplane, dataplaneInsight)
-            const tags = dpTags(dataplane)
-            const basicData = {
-              ...getSome(dataplane, selected),
-              status,
-            }
-
-            this.entity = this.buildEntity(basicData, tags, dataplaneInsight)
-            this.entityNamespace = basicData.name
-            this.tabGroupTitle = `Mesh: ${basicData.name}`
-            this.entityOverviewTitle = `Entity Overview for ${basicData.name}`
-
-            this.warnings = []
-
-            const { subscriptions = [] } = dataplaneInsight
-
-            if (subscriptions.length) {
-              const { version = {} } = subscriptions.pop()
-              const { kumaDp = {}, envoy = {} } = version
-
-              if (kumaDp && envoy) {
-                const compatible = this.checkVersionsCompatibility(kumaDp.version, envoy.version)
-                const { kind } = compatible
-
-                if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
-                  this.warnings.push(compatible)
-                }
-              }
-
-              if (this.multicluster) {
-                const zoneTag = tags.find((tag) => tag.label === KUMA_ZONE_TAG_NAME)
-
-                if (zoneTag) {
-                  try {
-                    const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(
-                      zoneTag.value,
-                      kumaDp.version,
-                    )
-
-                    if (!compatible) {
-                      this.warnings.push({
-                        kind: INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
-                        payload,
-                      })
-                    }
-                  } catch (e) {
-                    console.error(e)
-                  }
-                }
-              }
-            }
-
-            this.rawEntity = stripTimes(dataplane)
-          } else {
-            this.entity = null
-            this.entityIsEmpty = true
-          }
-        } catch (e) {
-          this.entityHasError = true
-
-          console.error(e)
+        const basicData = {
+          ...getSome(dataplane, selected),
+          status,
         }
 
-        setTimeout(() => {
-          this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
+        this.entity = this.buildEntity(basicData, tags, dataplaneInsight, versions)
+
+        this.entityOverviewTitle = `Entity Overview for ${basicData.name}`
+
+        this.warnings = []
+
+        const { subscriptions = [] } = dataplaneInsight
+
+        if (subscriptions.length) {
+          this.setEntityWarnings(subscriptions, tags)
+        }
+
+        this.rawEntity = stripTimes(dataplane)
       } else {
-        setTimeout(() => {
-          this.entityIsEmpty = true
-          this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
+        this.entity = {}
+        this.entityIsEmpty = true
+      }
+
+      this.entityIsLoading = false
+    },
+    async setEntityWarnings(subscriptions, tags) {
+      const { version = {} } = subscriptions[subscriptions.length - 1]
+      const { kumaDp = {}, envoy = {} } = version
+
+      if (kumaDp && envoy) {
+        const compatible = this.checkVersionsCompatibility(kumaDp.version, envoy.version)
+        const { kind } = compatible
+
+        if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
+          this.warnings.push(compatible)
+        }
+      }
+
+      if (this.multicluster) {
+        const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(tags, kumaDp.version)
+
+        if (!compatible) {
+          this.warnings.push({
+            kind: INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
+            payload,
+          })
+        }
       }
     },
   },
