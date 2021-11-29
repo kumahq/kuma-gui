@@ -6,7 +6,7 @@
     >
       <KCard
         v-if="!isLoading && !isEmpty"
-        :title="title"
+        :title="yamlTitle"
         border-variant="noBorder"
       >
         <template v-slot:body>
@@ -204,6 +204,17 @@ export default {
           nohash: newTab,
         }
       },
+    },
+    yamlTitle() {
+      if (this.title) {
+        return this.title
+      }
+
+      if (this.content?.name) {
+        return `Entity Overview for ${this.content.name}`
+      }
+
+      return 'Entity Overview'
     },
     yamlContent() {
       const content = this.content

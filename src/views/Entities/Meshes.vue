@@ -35,8 +35,8 @@
         initial-tab-override="overview"
       >
         <template v-slot:tabHeader>
-          <div>
-            <h3>{{ tabGroupTitle }}</h3>
+          <div v-if="entity.basicData">
+            <h3> Mesh: {{ entity.basicData.name }}</h3>
           </div>
         </template>
         <template v-slot:overview>
@@ -119,7 +119,6 @@
         </template>
         <template v-slot:yaml>
           <YamlView
-            :title="entityOverviewTitle"
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
@@ -225,12 +224,10 @@ export default {
           title: 'YAML',
         },
       ],
-      entity: [],
+      entity: {},
       rawEntity: null,
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
-      tabGroupTitle: null,
-      entityOverviewTitle: null,
       itemsPerCol: 3,
       meshInsight: getEmptyInsight(),
     }
@@ -458,9 +455,6 @@ export default {
                 return routing && routing.localityAwareLoadBalancing
               }
 
-              this.tabGroupTitle = `Mesh: ${col1.name}`
-              this.entityOverviewTitle = `Entity Overview for ${col1.name}`
-
               this.entity = {
                 basicData: col1,
                 extendedData: formatted(),
@@ -470,7 +464,7 @@ export default {
               // this.rawEntity = response
               this.rawEntity = stripTimes(response)
             } else {
-              this.entity = null
+              this.entity = {}
               this.entityIsEmpty = true
             }
           })
