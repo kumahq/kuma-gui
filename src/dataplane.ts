@@ -2,7 +2,7 @@ import { humanReadableDate } from '@/helpers'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
 import { satisfies } from 'semver'
 import Kuma from '@/services/kuma'
-import { Dataplane, TagsPairLabelValue, DataplaneInsight, DataplaneOverview, DiscoverySubscription } from '@/types'
+import { Dataplane, LabelValue, DataplaneInsight, DataplaneOverview, DiscoverySubscription } from '@/types'
 
 /*
 dpTags takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
@@ -36,7 +36,7 @@ Will produce:
 
 type TODO = any
 
-export function dpTags(dataplane: Dataplane): TagsPairLabelValue[] {
+export function dpTags(dataplane: Dataplane): LabelValue[] {
   let tags: TODO[] = []
 
   const inbounds = dataplane.networking.inbound || null
@@ -173,7 +173,7 @@ export function getDataplaneInsight(dataplaneOverview: DataplaneOverview) {
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch(tags: TagsPairLabelValue[], dpVersion: string) {
+export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpVersion: string) {
   const tag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
   if (tag) {

@@ -78,14 +78,6 @@ export interface MeshInsight {
   services: Record<string, number>
 }
 
-export interface DataplaneOverview {
-  name: string
-  mesh: string
-  type: string
-  dataplane: Dataplane
-  dataplaneInsight: DataplaneInsight
-}
-
 export interface Dataplane {
   networking: {
     inbound: {
@@ -97,33 +89,10 @@ export interface Dataplane {
   }
 }
 
-export interface DataplaneInsight {
-  mTLS?: {
-    certificateExpirationTime: string
-    lastCertificateRegeneration: string
-    certificateRegenerations: number
-    issuedBackend: string
-    supportedBackends: string[]
-  }
-  subscriptions: DiscoverySubscription[]
-}
-
-export interface DiscoverySubscription {
-  id: string
-  controlPlaneInstanceId: string
-  connectTime?: string
-  disconnectTime?: string
-  status: DiscoverySubscriptionStatus
-  generation?: number
-  version: Version
-}
-
-export interface Version {
-  kumaDp: KumaDpVersion
-
-  envoy: EnvoyVersion
-
-  dependencies: Record<string, string>
+export interface DiscoveryServiceStats {
+  responsesSent?: number
+  responsesAcknowledged?: number
+  responsesRejected?: number
 }
 
 export interface KumaDpVersion {
@@ -147,13 +116,44 @@ export interface DiscoverySubscriptionStatus {
   rds: DiscoveryServiceStats
 }
 
-export interface DiscoveryServiceStats {
-  responsesSent?: number
-  responsesAcknowledged?: number
-  responsesRejected?: number
+export interface Version {
+  kumaDp: KumaDpVersion
+
+  envoy: EnvoyVersion
+
+  dependencies: Record<string, string>
 }
 
-export interface TagsPairLabelValue {
+export interface DiscoverySubscription {
+  id: string
+  controlPlaneInstanceId: string
+  connectTime?: string
+  disconnectTime?: string
+  status: DiscoverySubscriptionStatus
+  generation?: number
+  version: Version
+}
+
+export interface DataplaneInsight {
+  mTLS?: {
+    certificateExpirationTime: string
+    lastCertificateRegeneration: string
+    certificateRegenerations: number
+    issuedBackend: string
+    supportedBackends: string[]
+  }
+  subscriptions: DiscoverySubscription[]
+}
+
+export interface DataplaneOverview {
+  name: string
+  mesh: string
+  type: string
+  dataplane: Dataplane
+  dataplaneInsight: DataplaneInsight
+}
+
+export interface LabelValue {
   label: string
   value: string
 }
