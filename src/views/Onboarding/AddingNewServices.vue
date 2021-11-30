@@ -31,7 +31,7 @@
               <p class="uppercase font-bold tracking-wider">
                 Manually
               </p>
-              <p>Custom config</p>
+              <p>After this wizzard</p>
             </div>
           </div>
         </Box>
@@ -39,7 +39,7 @@
     </template>
     <template #navigation>
       <OnboardingNavigation
-        next-step="onboarding-adding-dpp-code"
+        :next-step="nextStep"
         previous-step="onboarding-populating-mesh"
       />
     </template>
@@ -63,13 +63,21 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Adding New Services',
+      title: 'Adding new services',
     }
   },
   computed: {
     ...mapGetters({
       onboardingMode: 'onboarding/getMode',
     }),
+
+    nextStep() {
+      if (this.mode === 'manually') {
+        return 'onboarding-completed'
+      }
+
+      return 'onboarding-adding-dpp-code'
+    },
     mode: {
       get() {
         return this.onboardingMode

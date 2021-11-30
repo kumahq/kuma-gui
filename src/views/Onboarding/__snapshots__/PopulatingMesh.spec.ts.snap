@@ -37,7 +37,7 @@ exports[`PopulatingMesh.vue renders snapshot 1`] = `
           class="w-full"
         >
           <p
-            class="text-center text-base"
+            class="text-center mb-4"
           >
             
       By default, Kuma creates a "default" mesh that we can start using for our services, but we can have as many meshes as we need:
@@ -108,7 +108,7 @@ exports[`PopulatingMesh.vue renders snapshot 1`] = `
           </div>
            
           <p
-            class="text-center text-base"
+            class="text-center"
           >
             
       The "default" mesh is currently empty with no services and therefore no data plane proxies.

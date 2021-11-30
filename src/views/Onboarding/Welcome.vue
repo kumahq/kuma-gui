@@ -26,7 +26,7 @@
           />
         </ul>
       </div>
-      <div>
+      <div class="welcome-navigation">
         <OnboardingNavigation next-step="onboarding-deployment-types" />
       </div>
     </div>
@@ -144,6 +144,40 @@ export default {
 
   @media screen and (max-width: 1699px) {
     @apply text-xl mb-3;
+  }
+}
+
+.welcome-navigation {
+  @apply relative;
+
+  top: -5px;
+
+  @media screen and (min-width: 1700px) {
+    top: -20px;
+  }
+
+  @media screen and (min-width: 1750px) {
+    top: -10px;
+  }
+
+  @media screen and (min-width: 1800px) {
+    top: 0;
+  }
+
+  @media screen and (min-width: 1850px) {
+    top: -10px;
+  }
+
+  @media screen and (min-width: 1900px) {
+    top: 0px;
+  }
+
+  @media screen and (min-width: 1950px) {
+    top: 10px;
+  }
+
+  @media screen and (min-width: 2050px) {
+    top: 20px;
   }
 }
 

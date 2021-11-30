@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .box {
-  @apply w-64 h-64 p-12 flex items-center justify-center;
+  @apply w-72 h-72 p-12 flex items-center justify-center;
 
   border: 3px solid #c2c2c2;
   border-radius: 5px;
@@ -61,7 +61,7 @@ export default {
   }
 
   &--small {
-    @apply w-32 h-40 p-6;
+    @apply w-32 h-40 p-4 m-2;
   }
 }
 </style>

@@ -2,7 +2,7 @@
   <OnboardingPage>
     <template #header>
       <OnboardingHeading
-        title="Adding New Services"
+        title="Adding new services"
         :description="
           `${productName} ships with a counter demo application that showcases a very simple application with two services, a Redis backend to store the counter value and a frontend application.`
         "
@@ -29,20 +29,6 @@
           copy-button-text="Copy Command to Clipboard"
           lang="bash"
           :content="githubLinkReadme"
-        />
-      </div>
-      <div v-else>
-        <CodeView
-          title="Generate token"
-          copy-button-text="Copy Command to Clipboard"
-          lang="bash"
-          :content="generateDpTokenCode"
-        />
-        <CodeView
-          title="Start Dataplane Process"
-          copy-button-text="Copy Command to Clipboard"
-          lang="bash"
-          :content="startDpCode"
         />
       </div>
     </template>
@@ -75,7 +61,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Adding New Services',
+      title: 'Adding new services',
     }
   },
   data() {

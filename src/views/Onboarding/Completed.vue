@@ -8,7 +8,10 @@
     </template>
     <template #content>
       <div>
-        <div class="justify-between flex my-4">
+        <div class="flex justify-center">
+          <img src="@/assets/images/kuma_gui.png?external">
+        </div>
+        <div class="justify-between flex mt-8 flex-wrap">
           <Box
             v-for="item in items"
             :key="item"

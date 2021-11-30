@@ -151,7 +151,9 @@ exports[`Welcome.vue renders snapshot 1`] = `
         </ul>
       </div>
        
-      <div>
+      <div
+        class="welcome-navigation"
+      >
         <div
           class="mt-4 flex items-center flex-col sm:flex-row justify-end"
         >

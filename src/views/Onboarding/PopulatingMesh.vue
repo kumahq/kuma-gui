@@ -9,9 +9,10 @@
       />
     </template>
     <template #content>
-      <p class="text-center text-base">
+      <p class="text-center mb-4">
         By default, {{ productName }} creates a "default" mesh that we can start using for our services, but we can have as many meshes as we need:
       </p>
+
       <div class="flex justify-center mt-10 mb-12 pb-12">
         <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
           <KTable
@@ -20,7 +21,8 @@
           />
         </div>
       </div>
-      <p class="text-center text-base">
+
+      <p class="text-center">
         The "default" mesh is currently empty with no services and therefore no data plane proxies.
         Let's go ahead and start a few services in the next step.
       </p>
