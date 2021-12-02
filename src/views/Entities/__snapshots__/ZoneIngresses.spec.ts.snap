@@ -711,7 +711,6 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                       class="color-green-400"
                     >
                       
-
     Connect time: 2021-07-13T08:41:04.556796688Z
   
                     </span>
@@ -741,6 +740,19 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                            
                           <li>
                             <strong>
+                              Control Plane Instance ID:
+                            </strong>
+                             
+        
+                            <span
+                              class="mono"
+                            >
+                              kuma-control-plane-84f5589874-nmspq-0867
+                            </span>
+                          </li>
+                           
+                          <li>
+                            <strong>
                               Last Connected:
                             </strong>
                              
@@ -753,7 +765,129 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                       </div>
                        
                       <div>
-                        <!---->
+                        <ul
+                          class="overview-stat-grid"
+                        >
+                          <li>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              
+          Cds:
+        
+                            </h6>
+                             
+                            <ul>
+                              <li>
+                                <strong>
+                                  Responses Sent:
+                                </strong>
+                                 
+            
+                                <span
+                                  class="mono"
+                                >
+                                  3
+                                </span>
+                              </li>
+                              <li>
+                                <strong>
+                                  Responses Acknowledged:
+                                </strong>
+                                 
+            
+                                <span
+                                  class="mono"
+                                >
+                                  3
+                                </span>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              
+          Eds:
+        
+                            </h6>
+                             
+                            <ul>
+                              <li>
+                                <strong>
+                                  Responses Sent:
+                                </strong>
+                                 
+            
+                                <span
+                                  class="mono"
+                                >
+                                  2
+                                </span>
+                              </li>
+                              <li>
+                                <strong>
+                                  Responses Acknowledged:
+                                </strong>
+                                 
+            
+                                <span
+                                  class="mono"
+                                >
+                                  3
+                                </span>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              
+          Lds:
+        
+                            </h6>
+                             
+                            <ul>
+                              <li>
+                                <strong>
+                                  Responses Sent:
+                                </strong>
+                                 
+            
+                                <span
+                                  class="mono"
+                                >
+                                  3
+                                </span>
+                              </li>
+                              <li>
+                                <strong>
+                                  Responses Acknowledged:
+                                </strong>
+                                 
+            
+                                <span
+                                  class="mono"
+                                >
+                                  3
+                                </span>
+                              </li>
+                            </ul>
+                          </li>
+                          <li>
+                            <h6
+                              class="overview-tertiary-title"
+                            >
+                              
+          Rds:
+        
+                            </h6>
+                             
+                            <ul />
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </div>

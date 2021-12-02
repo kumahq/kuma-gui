@@ -1286,7 +1286,6 @@ exports[`Zones.vue renders zone insights 1`] = `
                       class="color-green-400"
                     >
                       
-
     Connect time: 2021-02-19T07:11:15.535286Z
   
                     </span>
@@ -1324,6 +1323,8 @@ exports[`Zones.vue renders zone insights 1`] = `
                               MacBook-Pro-Bartlomiej.local-9e52
                             </span>
                           </li>
+                           
+                          <!---->
                            
                           <li>
                             <strong>
@@ -1865,7 +1866,6 @@ exports[`Zones.vue renders zone insights 1`] = `
                       class="color-green-400"
                     >
                       
-
     Connect time: 2020-07-28T16:18:09.743141Z
   
                     </span>

@@ -1,7 +1,6 @@
 <template>
   <h4 class="text-lg font-medium">
     <span class="color-green-400">
-
       Connect time: {{ details.connectTime | rawReadableDateFilter }}
     </span>
     <span
@@ -16,7 +15,7 @@
 <script>
 import { rawReadableDate } from '@/helpers'
 export default {
-  name: 'ZoneInsightSubscriptionHeader',
+  name: 'SubscriptionHeader',
   filters: {
     rawReadableDateFilter(value) {
       return rawReadableDate(value)
