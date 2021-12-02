@@ -1325,6 +1325,8 @@ exports[`Zones.vue renders zone insights 1`] = `
                             </span>
                           </li>
                            
+                          <!---->
+                           
                           <li>
                             <strong>
                               Last Connected:
