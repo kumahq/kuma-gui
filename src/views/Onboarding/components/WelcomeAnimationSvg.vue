@@ -320,7 +320,7 @@ export default {
       }
       @for $i from 14 through 26 {
         &:nth-of-type(#{$i}) {
-          offset-path: var(--path#{calc(($i - 13))});
+          offset-path: var(--path#{ calc( #{$i} - 13 ) });
         }
       }
     }
