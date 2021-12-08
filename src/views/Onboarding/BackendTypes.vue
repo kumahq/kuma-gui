@@ -38,7 +38,7 @@
     </template>
     <template #navigation>
       <OnboardingNavigation
-        next-step="onboarding-populating-mesh"
+        :next-step="nextStep"
         previous-step="onboarding-deployment-types"
       />
     </template>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { PRODUCT_NAME } from '@/consts'
 import KubernetesGraph from '@/views/Onboarding/components/graphs/KubernetesGraph'
 import PostgresGraph from '@/views/Onboarding/components/graphs/PostgresGraph'
@@ -73,6 +74,12 @@ export default {
     return { mode: 'kubernetes', productName: PRODUCT_NAME }
   },
   computed: {
+    ...mapGetters({
+      multicluster: 'config/getMulticlusterStatus',
+    }),
+    nextStep() {
+      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-populating-mesh'
+    },
     currentGraph() {
       switch (this.mode) {
         case 'kubernetes':

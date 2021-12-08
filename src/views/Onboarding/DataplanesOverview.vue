@@ -1,16 +1,10 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading
-        :title="title"
-        :description="description"
-      />
+      <OnboardingHeading :title="title" :description="description" />
     </template>
     <template #content>
-      <div
-        v-if="!tableData.data.length"
-        class="justify-center flex my-4"
-      >
+      <div v-if="!tableData.data.length" class="justify-center flex my-4">
         <Loading />
       </div>
       <div v-else>
@@ -20,18 +14,12 @@
 
         <div class="flex justify-center mt-10 mb-16 pb-16">
           <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
-            <p class="font-bold mb-4">
-              Found {{ tableData.data.length }} DPPs, including:
-            </p>
-            <KTable
-              class="onboarding-dataplane-table"
-              :options="tableData"
-              is-small
-            >
+            <p class="font-bold mb-4">Found {{ tableData.data.length }} DPPs, including:</p>
+            <KTable class="onboarding-dataplane-table" :options="tableData" is-small>
               <template v-slot:status="{ rowValue }">
                 <div
                   class="entity-status"
-                  :class="{ 'is-offline': (rowValue.toLowerCase() === 'offline' || rowValue === false) }"
+                  :class="{ 'is-offline': rowValue.toLowerCase() === 'offline' || rowValue === false }"
                 >
                   <span class="entity-status__dot" />
                   <span class="entity-status__label">{{ rowValue }}</span>
@@ -107,14 +95,14 @@ export default {
     },
   },
   watch: {
-    'tableData.data': debounce(function (val) {
+    'tableData.data': debounce(function(val) {
       if (!val.length) {
         this.getAllDataplanes()
       }
     }, 1000),
   },
   created() {
-    // TODO remove before merge
+    // TODO before merge remove
     setTimeout(() => {
       this.getAllDataplanes()
     }, 2000)
@@ -123,21 +111,25 @@ export default {
     async getAllDataplanes() {
       const result = []
 
-      const dataplanes = await Kuma.getAllDataplanes({ size: 10 })
-      const items = dataplanes.items
+      try {
+        const dataplanes = await Kuma.getAllDataplanes({ size: 10 })
+        const items = dataplanes.items
 
-      for (let i = 0; i < items.length; i++) {
-        const { name, mesh } = items[i]
+        for (let i = 0; i < items.length; i++) {
+          const { name, mesh } = items[i]
 
-        const { status } = await Kuma.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
-          getItemStatusFromInsight(response.dataplaneInsight),
-        )
+          const { status } = await Kuma.getDataplaneOverviewFromMesh({ mesh, name }).then(response =>
+            getItemStatusFromInsight(response.dataplaneInsight),
+          )
 
-        result.push({
-          status,
-          name,
-          mesh,
-        })
+          result.push({
+            status,
+            name,
+            mesh,
+          })
+        }
+      } catch (e) {
+        console.error(e)
       }
 
       this.tableData.data = result

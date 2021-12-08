@@ -4,11 +4,8 @@ import { screen } from '@testing-library/vue'
 import DeploymentTypes from './DeploymentTypes.vue'
 
 describe('DeploymentTypes.vue', () => {
-  const customStore = { modules: { config: { state: { tagline: 'Kuma' } } } }
-
   it('renders snapshot', () => {
     const { container } = renderWithVuex(DeploymentTypes, {
-      store: customStore,
       routes: [],
     })
 
@@ -16,7 +13,7 @@ describe('DeploymentTypes.vue', () => {
   })
 
   it('changes selected graph', async () => {
-    renderWithVuex(DeploymentTypes, { store: customStore, routes: [] })
+    renderWithVuex(DeploymentTypes, { routes: [] })
 
     await userEvent.click(screen.getByText(/Multi-Zone deployment/))
 

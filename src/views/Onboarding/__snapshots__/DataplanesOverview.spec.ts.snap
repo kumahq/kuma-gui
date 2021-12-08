@@ -24,23 +24,9 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
             class="text-center text-lg mt-3"
           >
             
-    We have detected the following DPPs (dta plane proxies) connecting to this control plane
+    We have detected the following data plane proxies (DPPs) connecting to the control plane:
   
           </p>
-           
-          <div
-            class="absolute right-0 top-0 mt-4 m-a flex items-center"
-          >
-            <button
-              class="k-button skip-button small btn-link"
-              data-v-38fa8ecf=""
-              type="button"
-            >
-              
-      Skip Setup
-    
-            </button>
-          </div>
         </div>
       </div>
        
@@ -50,162 +36,172 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
         <div
           class="w-full"
         >
-          <div
-            class="justify-center flex my-4"
-          >
-            <div>
-              <p
-                class="font-bold mb-4"
+          <div>
+            <p
+              class="text-center my-4"
+            >
+              
+        You have started the first services that properly registered to Kuma!
+      
+            </p>
+             
+            <div
+              class="flex justify-center mt-10 mb-16 pb-16"
+            >
+              <div
+                class="w-full sm:w-3/5 lg:w-2/5 p-4"
               >
-                
-          Found 3 DPPs, including:
-        
-              </p>
-               
-              <table
-                class="k-table has-hover is-small side-border"
-                data-v-bfeabd48=""
-              >
-                <thead
+                <p
+                  class="font-bold mb-4"
+                >
+                  Found 3 DPPs, including:
+                </p>
+                 
+                <table
+                  class="k-table onboarding-dataplane-table has-hover is-small side-border"
                   data-v-bfeabd48=""
                 >
-                  <tr
+                  <thead
                     data-v-bfeabd48=""
                   >
-                    <th
-                      class=""
+                    <tr
                       data-v-bfeabd48=""
                     >
-                       Mesh 
-                    </th>
-                    <th
-                      class=""
-                      data-v-bfeabd48=""
-                    >
-                       Name 
-                    </th>
-                    <th
-                      class=""
-                      data-v-bfeabd48=""
-                    >
-                       Status 
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  data-v-bfeabd48=""
-                >
-                  <tr
-                    data-v-bfeabd48=""
-                  >
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      default
-                    </td>
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      dataplane-test-456
-                    </td>
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      <div
-                        class="entity-status"
+                      <th
+                        class=""
                         data-v-bfeabd48=""
                       >
-                        <span
-                          class="entity-status__dot"
-                          data-v-bfeabd48=""
-                        />
-                         
-                        <span
-                          class="entity-status__label"
-                          data-v-bfeabd48=""
-                        >
-                          Online
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-v-bfeabd48=""
-                  >
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      default
-                    </td>
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      ingress-dp-test-123
-                    </td>
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      <div
-                        class="entity-status"
+                         Mesh 
+                      </th>
+                      <th
+                        class=""
                         data-v-bfeabd48=""
                       >
-                        <span
-                          class="entity-status__dot"
-                          data-v-bfeabd48=""
-                        />
-                         
-                        <span
-                          class="entity-status__label"
-                          data-v-bfeabd48=""
-                        >
-                          Online
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr
-                    data-v-bfeabd48=""
-                  >
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      default
-                    </td>
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      no-subscriptions
-                    </td>
-                    <td
-                      data-v-bfeabd48=""
-                    >
-                      <div
-                        class="entity-status is-offline"
+                         Name 
+                      </th>
+                      <th
+                        class=""
                         data-v-bfeabd48=""
                       >
-                        <span
-                          class="entity-status__dot"
-                          data-v-bfeabd48=""
-                        />
-                         
-                        <span
-                          class="entity-status__label"
+                         Status 
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    data-v-bfeabd48=""
+                  >
+                    <tr
+                      data-v-bfeabd48=""
+                    >
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        default
+                      </td>
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        dataplane-test-456
+                      </td>
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        <div
+                          class="entity-status"
                           data-v-bfeabd48=""
                         >
-                          Offline
-                        </span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                          <span
+                            class="entity-status__dot"
+                            data-v-bfeabd48=""
+                          />
+                           
+                          <span
+                            class="entity-status__label"
+                            data-v-bfeabd48=""
+                          >
+                            Online
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      data-v-bfeabd48=""
+                    >
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        default
+                      </td>
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        ingress-dp-test-123
+                      </td>
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        <div
+                          class="entity-status"
+                          data-v-bfeabd48=""
+                        >
+                          <span
+                            class="entity-status__dot"
+                            data-v-bfeabd48=""
+                          />
+                           
+                          <span
+                            class="entity-status__label"
+                            data-v-bfeabd48=""
+                          >
+                            Online
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      data-v-bfeabd48=""
+                    >
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        default
+                      </td>
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        no-subscriptions
+                      </td>
+                      <td
+                        data-v-bfeabd48=""
+                      >
+                        <div
+                          class="entity-status is-offline"
+                          data-v-bfeabd48=""
+                        >
+                          <span
+                            class="entity-status__dot"
+                            data-v-bfeabd48=""
+                          />
+                           
+                          <span
+                            class="entity-status__label"
+                            data-v-bfeabd48=""
+                          >
+                            Offline
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
        
       <div
-        class="mt-6 flex items-center flex-col sm:flex-row justify-between"
+        class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
         <a
           aria-current="page"
@@ -218,18 +214,30 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
     Back
   
         </a>
-          
-        <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
-          href="#/"
-          type="button"
-        >
-          
-    Next
-  
-        </a>
+         
+        <div>
+          <button
+            class="k-button skip-button small btn-link"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+      Skip Setup
+    
+          </button>
+           
+          <a
+            aria-current="page"
+            class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+            data-v-38fa8ecf=""
+            href="#/"
+            type="button"
+          >
+            
+      Next
+    
+          </a>
+        </div>
       </div>
     </div>
      

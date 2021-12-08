@@ -311,7 +311,6 @@ export default (store: Store<RootInterface>) => {
           name: 'onboarding-welcome',
           meta: {
             title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`,
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Welcome.vue'),
@@ -320,7 +319,6 @@ export default (store: Store<RootInterface>) => {
           path: 'deployment-types',
           name: 'onboarding-deployment-types',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DeploymentTypes.vue'),
@@ -329,16 +327,22 @@ export default (store: Store<RootInterface>) => {
           path: 'backend-types',
           name: 'onboarding-backend-types',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/BackendTypes.vue'),
         },
         {
+          path: 'multi-zone',
+          name: 'onboarding-multi-zone',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZone.vue'),
+        },
+        {
           path: 'populating-mesh',
           name: 'onboarding-populating-mesh',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/PopulatingMesh.vue'),
@@ -347,7 +351,6 @@ export default (store: Store<RootInterface>) => {
           path: 'adding-dpp',
           name: 'onboarding-adding-dpp',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServices.vue'),
@@ -356,7 +359,6 @@ export default (store: Store<RootInterface>) => {
           path: 'adding-dpp-code',
           name: 'onboarding-adding-dpp-code',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServicesCode.vue'),
@@ -365,7 +367,6 @@ export default (store: Store<RootInterface>) => {
           path: 'dataplanes-overview',
           name: 'onboarding-dataplanes-overview',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DataplanesOverview.vue'),
@@ -374,7 +375,6 @@ export default (store: Store<RootInterface>) => {
           path: 'completed',
           name: 'onboarding-completed',
           meta: {
-            hideStatus: true,
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Completed.vue'),
@@ -455,7 +455,7 @@ export default (store: Store<RootInterface>) => {
    * so that they're not sent through it again.
    */
 
-  // TODO uncomment before merge
+  // TODO before merge uncomment
   // router.beforeEach(async (to, from, next) => {
   //   // eslint-disable-next-line no-unmodified-loop-condition
   //   // This below is to make sure the inital calls have been fulfilled and it does not try to
