@@ -14,7 +14,9 @@
 
         <div class="flex justify-center mt-10 mb-16 pb-16">
           <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
-            <p class="font-bold mb-4">Found {{ tableData.data.length }} DPPs, including:</p>
+            <p class="font-bold mb-4">
+              Found {{ tableData.data.length }} DPPs, including:
+            </p>
             <KTable class="onboarding-dataplane-table" :options="tableData" is-small>
               <template v-slot:status="{ rowValue }">
                 <div

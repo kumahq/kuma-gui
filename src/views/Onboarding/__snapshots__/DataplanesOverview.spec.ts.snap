@@ -54,7 +54,9 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                 <p
                   class="font-bold mb-4"
                 >
-                  Found 3 DPPs, including:
+                  
+            Found 3 DPPs, including:
+          
                 </p>
                  
                 <table
