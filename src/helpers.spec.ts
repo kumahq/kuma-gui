@@ -39,6 +39,18 @@ describe('helpers', () => {
         } as unknown) as ZoneOverview),
       ).toBe(type)
     })
+
+    it(`returns ${DISABLED} type when subscriptions available but no config`, () => {
+      const type = DISABLED
+
+      expect(
+        getZoneDpServerAuthType(({
+          zoneInsight: {
+            subscriptions: [{}],
+          },
+        } as unknown) as ZoneOverview),
+      ).toBe(type)
+    })
   })
 
   describe('fetchAllResources', () => {
