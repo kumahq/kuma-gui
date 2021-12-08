@@ -102,10 +102,7 @@ export default {
     }, 1000),
   },
   created() {
-    // TODO before merge remove
-    setTimeout(() => {
-      this.getAllDataplanes()
-    }, 2000)
+    this.getAllDataplanes()
   },
   methods: {
     async getAllDataplanes() {

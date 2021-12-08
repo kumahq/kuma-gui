@@ -142,63 +142,6 @@ exports[`MultiZone.vue renders snapshot 1`] = `
               <!---->
             </div>
           </div>
-           
-          <div>
-            <p
-              class="text-center my-4"
-            >
-              
-        To proceed you need to setup Zones & Zone Ingress
-      
-            </p>
-             
-            <p
-              class="text-center my-4"
-            >
-              
-        Zone status:
-        
-              <span
-                class="text-red-500"
-                data-testid="zone-offline"
-              >
-                Offline
-              </span>
-            </p>
-             
-            <p
-              class="text-center mt-4 mb-10"
-            >
-              
-        Zone ingress status:
-        
-              <span
-                class="text-red-500"
-                data-testid="zone-ingress-offline"
-              >
-                Offline
-              </span>
-            </p>
-             
-            <div
-              class="flex justify-center"
-            >
-              <div
-                class="loading"
-                data-testid="loading"
-              >
-                <div />
-                 
-                <div />
-                 
-                <div />
-                 
-                <div />
-                 
-                <div />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
        
@@ -217,7 +160,29 @@ exports[`MultiZone.vue renders snapshot 1`] = `
   
         </a>
          
-        <!---->
+        <div>
+          <button
+            class="k-button skip-button small btn-link"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+      Skip Setup
+    
+          </button>
+           
+          <a
+            aria-current="page"
+            class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+            data-v-38fa8ecf=""
+            href="#/"
+            type="button"
+          >
+            
+      Next
+    
+          </a>
+        </div>
       </div>
     </div>
      

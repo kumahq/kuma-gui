@@ -340,6 +340,14 @@ export default (store: Store<RootInterface>) => {
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZone.vue'),
         },
         {
+          path: 'multi-zone-status',
+          name: 'onboarding-multi-zone-status',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZoneStatus.vue'),
+        },
+        {
           path: 'populating-mesh',
           name: 'onboarding-populating-mesh',
           meta: {
@@ -455,39 +463,38 @@ export default (store: Store<RootInterface>) => {
    * so that they're not sent through it again.
    */
 
-  // TODO before merge uncomment
-  // router.beforeEach(async (to, from, next) => {
-  //   // eslint-disable-next-line no-unmodified-loop-condition
-  //   // This below is to make sure the inital calls have been fulfilled and it does not try to
-  //   // access any route before it will be resolved
-  //   while (store.getters.globalLoading) {
-  //     await new Promise(resolve => {
-  //       setTimeout(() => {
-  //         resolve(null)
-  //       }, 20)
-  //     })
-  //   }
+  router.beforeEach(async (to, from, next) => {
+    // eslint-disable-next-line no-unmodified-loop-condition
+    // This below is to make sure the inital calls have been fulfilled and it does not try to
+    // access any route before it will be resolved
+    while (store.getters.globalLoading) {
+      await new Promise(resolve => {
+        setTimeout(() => {
+          resolve(null)
+        }, 20)
+      })
+    }
 
-  //   const showOnboarding = store.getters['onboarding/showOnboarding']
-  //   const isCompleted = store.state.onboarding.isCompleted
+    const showOnboarding = store.getters['onboarding/showOnboarding']
+    const isCompleted = store.state.onboarding.isCompleted
 
-  //   const onboardingRoute = to.meta.onboardingProcess
+    const onboardingRoute = to.meta.onboardingProcess
 
-  //   // If someone is going to open onboarding page but fulfiled already conditionn related to
-  //   // show onboarding, then redirect user to overview
-  //   if (onboardingRoute && !showOnboarding) {
-  //     next({ name: 'global-overview' })
-  //     // if someone never had onboarding and do not fulfiled condition to skip it
-  //     // and try to access some other page than onboarding ones
-  //     // then redirect into first onboarding page
-  //   } else if (!onboardingRoute && showOnboarding && !isCompleted) {
-  //     const name = localStorage.getItem('onboarding/step') || 'onboarding-welcome'
+    // If someone is going to open onboarding page but fulfiled already conditionn related to
+    // show onboarding, then redirect user to overview
+    if (onboardingRoute && !showOnboarding) {
+      next({ name: 'global-overview' })
+      // if someone never had onboarding and do not fulfiled condition to skip it
+      // and try to access some other page than onboarding ones
+      // then redirect into first onboarding page
+    } else if (!onboardingRoute && showOnboarding && !isCompleted) {
+      const name = localStorage.getItem('onboarding/step') || 'onboarding-welcome'
 
-  //     next({ name })
-  //   } else {
-  //     next()
-  //   }
-  // })
+      next({ name })
+    } else {
+      next()
+    }
+  })
 
   return router
 }

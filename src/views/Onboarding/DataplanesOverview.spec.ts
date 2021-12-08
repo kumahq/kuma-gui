@@ -3,8 +3,7 @@ import { screen } from '@testing-library/vue'
 import DataplanesOverview from './DataplanesOverview.vue'
 
 describe('DataplanesOverview.vue', () => {
-  // TODO before merge remove skip
-  xit('renders snapshot', async () => {
+  it('renders snapshot', async () => {
     const { container } = renderWithVuex(DataplanesOverview, { routes: [] })
 
     expect(screen.getByTestId('loading')).toBeInTheDocument()
