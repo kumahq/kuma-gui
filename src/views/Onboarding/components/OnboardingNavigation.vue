@@ -27,7 +27,7 @@
         :to="{
           name: nextStep,
         }"
-        @click.native="changeStep(nextStep)"
+        @click.native="lastStep ? skipOnboarding() :changeStep(nextStep)"
       >
         {{ nextStepTitle }}
       </KButton>
@@ -59,6 +59,10 @@ export default {
     nextStepTitle: {
       type: String,
       default: 'Next',
+    },
+    lastStep: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

@@ -29,6 +29,7 @@
       <OnboardingNavigation
         next-step="global-overview"
         next-step-title="Go to dashboard"
+        last-step
         :show-skip="false"
       />
     </template>
