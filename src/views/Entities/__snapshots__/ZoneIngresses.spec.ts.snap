@@ -141,7 +141,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                   <td
                     data-v-bfeabd48=""
                   >
-                    zone-1
+                    zone-ingress-1
                   </td>
                 </tr>
               </tbody>
@@ -545,7 +545,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
   >
     <div>
       <h3>
-         Zone Ingress: zone-1
+         Zone Ingress: zone-ingress-1
       </h3>
     </div>
      
