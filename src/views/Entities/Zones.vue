@@ -294,8 +294,8 @@ export default {
     calculateZonesWithIngress(zoneIngresses) {
       const zones = new Set()
 
-      zoneIngresses.forEach(({ name }) => {
-        zones.add(name)
+      zoneIngresses.forEach(({ zoneIngress: { zone } }) => {
+        zones.add(zone)
       })
 
       this.zonesWithIngress = zones
