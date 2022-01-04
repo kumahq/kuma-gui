@@ -340,14 +340,6 @@ export default (store: Store<RootInterface>) => {
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZone.vue'),
         },
         {
-          path: 'multi-zone-status',
-          name: 'onboarding-multi-zone-status',
-          meta: {
-            onboardingProcess: true,
-          },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZoneStatus.vue'),
-        },
-        {
           path: 'populating-mesh',
           name: 'onboarding-populating-mesh',
           meta: {
@@ -356,16 +348,16 @@ export default (store: Store<RootInterface>) => {
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/PopulatingMesh.vue'),
         },
         {
-          path: 'adding-dpp',
-          name: 'onboarding-adding-dpp',
+          path: 'adding-services',
+          name: 'onboarding-adding-services',
           meta: {
             onboardingProcess: true,
           },
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServices.vue'),
         },
         {
-          path: 'adding-dpp-code',
-          name: 'onboarding-adding-dpp-code',
+          path: 'adding-services-code',
+          name: 'onboarding-adding-services-code',
           meta: {
             onboardingProcess: true,
           },

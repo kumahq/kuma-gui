@@ -2,22 +2,21 @@ import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 
 import Kuma from '@/services/kuma'
-import MultiZoneStatus from './MultiZoneStatus.vue'
+import AddingNewServicesCode from './AddingNewServicesCode.vue'
 
-describe('MultiZoneStatus.vue', () => {
+describe('AddingNewServicesCode.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(MultiZoneStatus)
+    const { container } = renderWithVuex(AddingNewServicesCode)
 
     expect(container).toMatchSnapshot()
   })
 
   it('detects resources on call and allow to proceed', async () => {
-    renderWithVuex(MultiZoneStatus, {
+    renderWithVuex(AddingNewServicesCode, {
       routes: [],
     })
 
-    expect(await screen.findByTestId('zone-online')).toBeInTheDocument()
-    expect(await screen.findByTestId('zone-ingress-online')).toBeInTheDocument()
+    expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
     expect(screen.queryByText(/Next/)).toBeInTheDocument()
     expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
   })
@@ -25,7 +24,7 @@ describe('MultiZoneStatus.vue', () => {
   it('refetch resources if any not available', async () => {
     jest.useFakeTimers()
     jest
-      .spyOn(Kuma, 'getAllZoneIngressOverviews')
+      .spyOn(Kuma, 'getAllDataplanes')
       .mockReturnValueOnce({
         // @ts-ignore
         total: 0,
@@ -35,18 +34,16 @@ describe('MultiZoneStatus.vue', () => {
         total: 1,
       })
 
-    renderWithVuex(MultiZoneStatus, {
+    renderWithVuex(AddingNewServicesCode, {
       routes: [],
     })
 
-    expect(await screen.findByTestId('zone-online')).toBeInTheDocument()
     expect(screen.queryByTestId('loading')).toBeInTheDocument()
-    expect(screen.queryByTestId('zone-ingress-offline')).toBeInTheDocument()
+    expect(screen.queryByTestId('dpps-disconnected')).toBeInTheDocument()
 
     jest.runAllTimers()
 
-    expect(Kuma.getAllZoneIngressOverviews).toHaveBeenCalledTimes(2)
-
-    expect(await screen.findByTestId('zone-ingress-online')).toBeInTheDocument()
+    expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
+    expect(Kuma.getAllDataplanes).toHaveBeenCalledTimes(2)
   })
 })

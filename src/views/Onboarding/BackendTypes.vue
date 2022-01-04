@@ -76,6 +76,7 @@ export default {
   computed: {
     ...mapGetters({
       multicluster: 'config/getMulticlusterStatus',
+      backend: 'config/getBackend',
     }),
     nextStep() {
       return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-populating-mesh'
@@ -92,6 +93,9 @@ export default {
           return 'KubernetesGraph'
       }
     },
+  },
+  mounted() {
+    this.mode = this.backend
   },
 }
 </script>

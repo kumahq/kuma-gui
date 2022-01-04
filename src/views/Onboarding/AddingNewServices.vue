@@ -76,7 +76,7 @@ export default {
         return 'onboarding-completed'
       }
 
-      return 'onboarding-adding-dpp-code'
+      return 'onboarding-adding-services-code'
     },
     mode: {
       get() {

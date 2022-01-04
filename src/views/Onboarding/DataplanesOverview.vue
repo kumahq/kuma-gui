@@ -1,10 +1,16 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading :title="title" :description="description" />
+      <OnboardingHeading
+        :title="title"
+        :description="description"
+      />
     </template>
     <template #content>
-      <div v-if="!tableData.data.length" class="justify-center flex my-4">
+      <div
+        v-if="!tableData.data.length"
+        class="justify-center flex my-4"
+      >
         <Loading />
       </div>
       <div v-else>
@@ -17,7 +23,11 @@
             <p class="font-bold mb-4">
               Found {{ tableData.data.length }} DPPs, including:
             </p>
-            <KTable class="onboarding-dataplane-table" :options="tableData" is-small>
+            <KTable
+              class="onboarding-dataplane-table"
+              :options="tableData"
+              is-small
+            >
               <template v-slot:status="{ rowValue }">
                 <div
                   class="entity-status"
@@ -36,7 +46,7 @@
     <template #navigation>
       <OnboardingNavigation
         next-step="onboarding-completed"
-        previous-step="onboarding-adding-dpp-code"
+        previous-step="onboarding-adding-services-code"
         :should-display-next="tableData.data.length > 0"
       />
     </template>
@@ -47,7 +57,6 @@
 import { PRODUCT_NAME } from '@/consts'
 import { getItemStatusFromInsight } from '@/dataplane'
 import Kuma from '@/services/kuma'
-import debounce from 'lodash/debounce'
 import Loading from '@/components/Loading'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
@@ -96,13 +105,6 @@ export default {
       return null
     },
   },
-  watch: {
-    'tableData.data': debounce(function(val) {
-      if (!val.length) {
-        this.getAllDataplanes()
-      }
-    }, 1000),
-  },
   created() {
     this.getAllDataplanes()
   },
@@ -117,7 +119,7 @@ export default {
         for (let i = 0; i < items.length; i++) {
           const { name, mesh } = items[i]
 
-          const { status } = await Kuma.getDataplaneOverviewFromMesh({ mesh, name }).then(response =>
+          const { status } = await Kuma.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
             getItemStatusFromInsight(response.dataplaneInsight),
           )
 

@@ -70,8 +70,9 @@ export default {
       return [
         'mt-4 flex items-center flex-col sm:flex-row',
         {
-          'justify-between': this.previousStep,
-          'justify-end': !this.previousStep,
+          'justify-center': this.lastStep,
+          'justify-between': this.previousStep && !this.lastStep,
+          'justify-end': !this.previousStep && !this.lastStep,
         },
       ]
     },

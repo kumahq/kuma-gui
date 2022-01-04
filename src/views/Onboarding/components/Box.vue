@@ -16,22 +16,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    type: {
-      type: String,
-      default: '',
-    },
-    title: {
-      type: String,
-      default: '',
-    },
-    subTitle: {
-      type: String,
-      default: '',
-    },
-    small: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   computed: {
@@ -40,7 +24,6 @@ export default {
         'box',
         {
           'box--active': this.active,
-          'box--small': this.small,
         },
       ]
     },

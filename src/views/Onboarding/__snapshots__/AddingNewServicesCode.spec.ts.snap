@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MultiZone.vue renders snapshot 1`] = `
+exports[`AddingNewServicesCode.vue renders snapshot 1`] = `
 <div>
   <div>
     <div
@@ -16,7 +16,7 @@ exports[`MultiZone.vue renders snapshot 1`] = `
             class="onboarding-title"
           >
             
-    Adding a new zone
+    Adding new services
   
           </h1>
            
@@ -31,22 +31,11 @@ exports[`MultiZone.vue renders snapshot 1`] = `
           class="w-full"
         >
           <p
-            class="text-center mb-4"
+            class="text-center mb-12"
           >
             
-      In a multi-zone deployment, in order to start our service mesh we must first add a new zone to our deployment by
-      starting a Zone CP and its Ingress/Egress.
-    
-          </p>
-           
-          <p
-            class="text-center my-8"
-          >
-            
-      A Zone CP will ultimately receive connections from the data plane proxies in the same zone, therefore it needs
-      to be configured in such a way that this connectivity is possible. There is no strict rule to how big or small a
-      zone can be as long as this requriement is satisifed. Therefore, a Zone CP can be a Kubernetes cluster, a VPC, a
-      cloud or region.
+      Kuma ships with a counter demo application that showcases a very simple application
+      with two services, a Redis backend to store the counter value and a frontend application.
     
           </p>
            
@@ -71,7 +60,7 @@ exports[`MultiZone.vue renders snapshot 1`] = `
                     <h4
                       data-v-0029352b=""
                     >
-                      To get started adding a new Zone, please follow the steps from link below:
+                      You can find the counter demo application at the following GitHub repository:
                     </h4>
                   </div>
                   <div
@@ -89,7 +78,100 @@ exports[`MultiZone.vue renders snapshot 1`] = `
                         type="button"
                       >
                         
-              Copy link
+              Copy Command to Clipboard
+            
+                      </button>
+                      <transition-stub
+                        data-v-3cb990b6=""
+                        name="fade"
+                      >
+                        <div
+                          class="k-popover"
+                          data-v-3cb990b6=""
+                          style="width: 200px; display: none;"
+                        >
+                          <!---->
+                          <div
+                            class="k-popover-content"
+                            data-v-3cb990b6=""
+                          >
+                            <div>
+                              <p>
+                                Entity copied to clipboard!
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </transition-stub>
+                    </div>
+                  </div>
+                </div>
+                <!---->
+                <div
+                  class="k-card-body"
+                  data-v-0029352b=""
+                >
+                  <pre
+                    class="code-block"
+                    data-v-0029352b=""
+                  >
+                    <code
+                      class="language-bash"
+                    />
+                  </pre>
+                </div>
+              </div>
+            </div>
+             
+            <div>
+              <!---->
+               
+              <!---->
+               
+              <!---->
+            </div>
+          </div>
+           
+          <div
+            class="code-view"
+          >
+            <div
+              class="code-view-content"
+            >
+              <div
+                class="kong-card noBorder"
+                data-v-0029352b=""
+              >
+                <div
+                  class="k-card-header mb-4"
+                  data-v-0029352b=""
+                >
+                  <div
+                    class="k-card-title"
+                    data-v-0029352b=""
+                  >
+                    <h4
+                      data-v-0029352b=""
+                    >
+                      Please follow the instructions in the Readme.md
+                    </h4>
+                  </div>
+                  <div
+                    class="k-card-actions"
+                    data-v-0029352b=""
+                  >
+                    <div
+                      data-v-0029352b=""
+                      data-v-3cb990b6=""
+                    >
+                      <button
+                        class="k-button primary"
+                        data-v-38fa8ecf=""
+                        data-v-3cb990b6=""
+                        type="button"
+                      >
+                        
+              Copy Command to Clipboard
             
                       </button>
                       <transition-stub
@@ -148,7 +230,7 @@ exports[`MultiZone.vue renders snapshot 1`] = `
               class="text-center font-medium my-4"
             >
               
-        To proceed you need to setup Zones & Zone Ingress
+        To proceed you need to setup DPPs
       
             </p>
              
@@ -156,27 +238,13 @@ exports[`MultiZone.vue renders snapshot 1`] = `
               class="text-center my-4"
             >
               
-        Zone status:
+        DPPs status:
         
               <span
                 class="text-red-500"
-                data-testid="zone-disconnected"
+                data-testid="dpps-disconnected"
               >
-                Disconnected
-              </span>
-            </p>
-             
-            <p
-              class="text-center mt-4 mb-10"
-            >
-              
-        Zone ingress status:
-        
-              <span
-                class="text-red-500"
-                data-testid="zone-ingress-disconnected"
-              >
-                Disconnected
+                Disconeccted
               </span>
             </p>
              

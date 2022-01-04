@@ -30,7 +30,7 @@
         <OnboardingNavigation next-step="onboarding-deployment-types" />
       </div>
     </div>
-    <WelcomeAnimationSvg />
+    <WelcomeAnimationSvg :longer="multicluster" />
   </div>
 </template>
 
@@ -62,9 +62,22 @@ export default {
   computed: {
     ...mapGetters({
       environment: 'config/getEnvironment',
+      multicluster: 'config/getMulticlusterStatus',
     }),
     enviromentFormatted() {
       return this.environment.charAt(0).toUpperCase() + this.environment.slice(1)
+    },
+    multizoneItems() {
+      const multizoneItems = []
+
+      if (this.multicluster) {
+        multizoneItems.push({
+          name: 'Creating a zone',
+          status: false,
+        })
+      }
+
+      return multizoneItems
     },
     statuses() {
       return [
@@ -80,6 +93,7 @@ export default {
           name: 'Learn about backends',
           status: false,
         },
+        ...this.multizoneItems,
         {
           name: 'Creating a mesh',
           status: false,

@@ -4,14 +4,17 @@ import BackendTypes from './BackendTypes.vue'
 
 describe('BackendTypes.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(BackendTypes)
+    const { container } = renderWithVuex(BackendTypes, {
+      store: { modules: { config: { state: { clientConfig: { store: { type: 'memory' } } } } } },
+      routes: [],
+    })
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders multizone previous step', () => {
     renderWithVuex(BackendTypes, {
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
+      store: { modules: { config: { state: { clientConfig: { mode: 'global', store: { type: 'memory' } } } } } },
       stubs: {
         routerLink: {
           props: ['to'],
