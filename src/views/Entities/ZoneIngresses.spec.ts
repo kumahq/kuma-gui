@@ -27,7 +27,7 @@ describe('ZoneIngresses.vue', () => {
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
-    await screen.findByText(/zone-1/)
+    await screen.findByText(/zone-ingress-1/)
 
     expect(container).toMatchSnapshot()
   })
