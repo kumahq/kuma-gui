@@ -134,7 +134,10 @@ export default {
     },
   },
   created() {
-    this.getDPPs()
+    // TODO before merge remove
+    setTimeout(() => {
+      this.getDPPs()
+    }, 2000)
   },
   destroyed() {
     clearTimeout(this.DPPsTimeout)
