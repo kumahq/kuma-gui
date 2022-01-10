@@ -45,7 +45,7 @@
       />
     </div>
 
-    <div class="card-wrapper card-wrapper--4-col">
+    <div class="card-wrapper">
       <div>
         <CardSkeleton
           class="card-item"
@@ -320,42 +320,23 @@ export default {
 }
 
 .card-wrapper {
-  @media only screen and (max-width: 840px) {
-    .card-item {
-      margin-bottom: 0.5rem;
-    }
+  display: grid;
+
+  gap: 8px;
+  margin-top: 4rem;
+
+  .card-item {
+    height: 100%;
   }
 
   @media only screen and (min-width: 841px) {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 8rem -0.5rem 0;
-
-    &.card-wrapper--4-col {
-      --i: 50%;
-    }
-
-    &.card-wrapper--2-col {
-      --i: 50%;
-    }
-
-    > * {
-      flex: 0 0 var(--i);
-      max-width: var(--i);
-    }
-
-    .card-item {
-      --i: 16px;
-      --x: calc(var(--i) / 2);
-      margin: 0 var(--x) var(--i) var(--x);
-      min-height: 210px;
-    }
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr;
   }
 
   @media only screen and (min-width: 1270px) {
-    &.card-wrapper--4-col {
-      --i: 25%;
-    }
+    margin-top: 8rem;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 

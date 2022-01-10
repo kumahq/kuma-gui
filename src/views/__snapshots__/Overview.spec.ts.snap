@@ -1,0 +1,2187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overview.vue renders basic snapshot 1`] = `
+<div>
+  <div
+    class="overview mt-32"
+  >
+    <div
+      class="flex flex-col md:flex-row md:flex-wrap md:h-540p xl:h-400p my-2 py-2"
+    >
+      <div
+        class="flex flex-1 md:flex-1/2 xl:flex-1/3 md:w-1/2 xl:w-1/3"
+      >
+        <div
+          style="width: 100%; height: 100%; position: relative;"
+        >
+          <svg
+            role="group"
+            style="width: 100%; height: 100%; overflow: visible;"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <clippath
+                id="id-45"
+              >
+                <rect
+                  height="0"
+                  width="0"
+                />
+              </clippath>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-50"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <fegaussianblur
+                  in="SourceGraphic"
+                  result="blurOut"
+                  stdDeviation="1.5"
+                />
+                <feoffset
+                  dx="1"
+                  dy="1"
+                  result="offsetBlur"
+                />
+                <feflood
+                  flood-color="#000000"
+                  flood-opacity="0.5"
+                />
+                <fecomposite
+                  in2="offsetBlur"
+                  operator="in"
+                />
+                <femerge>
+                  <femergenode />
+                  <femergenode
+                    in="SourceGraphic"
+                  />
+                </femerge>
+              </filter>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="120%"
+                id="filter-id-61"
+                width="120%"
+                x="-10%"
+                y="-10%"
+              >
+                <fecolormatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+              <lineargradient
+                id="gradient-id-64"
+                x1="1%"
+                x2="99%"
+                y1="59%"
+                y2="41%"
+              >
+                <stop
+                  offset="0"
+                  stop-color="#474758"
+                />
+                <stop
+                  offset="0.75"
+                  stop-color="#474758"
+                  stop-opacity="1"
+                />
+                <stop
+                  offset="0.755"
+                  stop-color="#3cabff"
+                  stop-opacity="1"
+                />
+              </lineargradient>
+              <clippath
+                id="id-71"
+              />
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-76"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              />
+            </defs>
+            <g>
+              <g
+                fill="#ffffff"
+                fill-opacity="0"
+              >
+                <rect />
+              </g>
+              <g>
+                <g
+                  clip-path="url(\\"#id-45\\")"
+                  role="region"
+                  style="cursor: pointer;"
+                >
+                  <g>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g
+                                  role="group"
+                                >
+                                  <g>
+                                    <g
+                                      clip-path="url(\\"#id-71\\")"
+                                    >
+                                      <g />
+                                    </g>
+                                    <g />
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g
+                                        fill="#ffffff"
+                                      >
+                                        <rect />
+                                      </g>
+                                      <g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--sumLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="22"
+                                          font-weight="700"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--titleLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="13"
+                                          font-weight="400"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <g>
+                                  <g />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        filter="url(\\"#filter-id-50\\")"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="1"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="1"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g>
+                          <g>
+                            <g
+                              fill="#f3f3f3"
+                              fill-opacity="0.8"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.2"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.4"
+                            >
+                              <g />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      aria-labelledby="id-61-title"
+                      display="none"
+                      filter="url(\\"#filter-id-61\\")"
+                      opacity="0.3"
+                      style="cursor: pointer;"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="0"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="#3cabff"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M15,15  C17.4001,15 22.7998,15.0001 27,15 C31.2002,14.9999 33.2999,6 36,6 C38.7001,6 38.6999,10.5 40.5,10.5 C42.3001,10.5 42.2999,6 45,6 C47.7001,6 50.9999,14.9999 54,15 C57.0002,15.0001 58.7999,15 60,15"
+                          />
+                        </g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="url(\\"#gradient-id-64\\")"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M6,15  C8.2501,15 9.7498,15.0001 15,15 C20.2502,14.9999 20.7748,3.6 27,3.6 C33.2252,3.6 33.8998,14.9999 39.9,15 C45.9002,15.0001 45.9748,15 51,15 C56.0252,15 57.7499,15 60,15"
+                          />
+                        </g>
+                      </g>
+                      <title
+                        id="id-61-title"
+                      >
+                        Chart created using amCharts library
+                      </title>
+                    </g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="0"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+       
+      <div
+        class="flex flex-1 md:flex-1/2 xl:flex-1/3 md:w-1/2 xl:w-1/3"
+      >
+        <div
+          style="width: 100%; height: 100%; position: relative;"
+        >
+          <svg
+            role="group"
+            style="width: 100%; height: 100%; overflow: visible;"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <clippath
+                id="id-120"
+              >
+                <rect
+                  height="0"
+                  width="0"
+                />
+              </clippath>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-125"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <fegaussianblur
+                  in="SourceGraphic"
+                  result="blurOut"
+                  stdDeviation="1.5"
+                />
+                <feoffset
+                  dx="1"
+                  dy="1"
+                  result="offsetBlur"
+                />
+                <feflood
+                  flood-color="#000000"
+                  flood-opacity="0.5"
+                />
+                <fecomposite
+                  in2="offsetBlur"
+                  operator="in"
+                />
+                <femerge>
+                  <femergenode />
+                  <femergenode
+                    in="SourceGraphic"
+                  />
+                </femerge>
+              </filter>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="120%"
+                id="filter-id-136"
+                width="120%"
+                x="-10%"
+                y="-10%"
+              >
+                <fecolormatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+              <lineargradient
+                id="gradient-id-139"
+                x1="1%"
+                x2="99%"
+                y1="59%"
+                y2="41%"
+              >
+                <stop
+                  offset="0"
+                  stop-color="#474758"
+                />
+                <stop
+                  offset="0.75"
+                  stop-color="#474758"
+                  stop-opacity="1"
+                />
+                <stop
+                  offset="0.755"
+                  stop-color="#3cabff"
+                  stop-opacity="1"
+                />
+              </lineargradient>
+              <clippath
+                id="id-146"
+              />
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-151"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              />
+            </defs>
+            <g>
+              <g
+                fill="#ffffff"
+                fill-opacity="0"
+              >
+                <rect />
+              </g>
+              <g>
+                <g
+                  clip-path="url(\\"#id-120\\")"
+                  role="region"
+                >
+                  <g>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g
+                                  role="group"
+                                >
+                                  <g>
+                                    <g
+                                      clip-path="url(\\"#id-146\\")"
+                                    >
+                                      <g />
+                                    </g>
+                                    <g />
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g
+                                        fill="#ffffff"
+                                      >
+                                        <rect />
+                                      </g>
+                                      <g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--sumLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="22"
+                                          font-weight="700"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--titleLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="13"
+                                          font-weight="400"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <g>
+                                  <g />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        filter="url(\\"#filter-id-125\\")"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="1"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="1"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g>
+                          <g>
+                            <g
+                              fill="#f3f3f3"
+                              fill-opacity="0.8"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.2"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.4"
+                            >
+                              <g />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      aria-labelledby="id-136-title"
+                      display="none"
+                      filter="url(\\"#filter-id-136\\")"
+                      opacity="0.3"
+                      style="cursor: pointer;"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="0"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="#3cabff"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M15,15  C17.4001,15 22.7998,15.0001 27,15 C31.2002,14.9999 33.2999,6 36,6 C38.7001,6 38.6999,10.5 40.5,10.5 C42.3001,10.5 42.2999,6 45,6 C47.7001,6 50.9999,14.9999 54,15 C57.0002,15.0001 58.7999,15 60,15"
+                          />
+                        </g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="url(\\"#gradient-id-139\\")"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M6,15  C8.2501,15 9.7498,15.0001 15,15 C20.2502,14.9999 20.7748,3.6 27,3.6 C33.2252,3.6 33.8998,14.9999 39.9,15 C45.9002,15.0001 45.9748,15 51,15 C56.0252,15 57.7499,15 60,15"
+                          />
+                        </g>
+                      </g>
+                      <title
+                        id="id-136-title"
+                      >
+                        Chart created using amCharts library
+                      </title>
+                    </g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="0"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+       
+      <div
+        class="flex flex-1 md:flex-1/2 xl:flex-1/3 md:w-1/2 xl:w-1/3"
+      >
+        <div
+          style="width: 100%; height: 100%; position: relative;"
+        >
+          <svg
+            role="group"
+            style="width: 100%; height: 100%; overflow: visible;"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <clippath
+                id="id-195"
+              >
+                <rect
+                  height="0"
+                  width="0"
+                />
+              </clippath>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-200"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <fegaussianblur
+                  in="SourceGraphic"
+                  result="blurOut"
+                  stdDeviation="1.5"
+                />
+                <feoffset
+                  dx="1"
+                  dy="1"
+                  result="offsetBlur"
+                />
+                <feflood
+                  flood-color="#000000"
+                  flood-opacity="0.5"
+                />
+                <fecomposite
+                  in2="offsetBlur"
+                  operator="in"
+                />
+                <femerge>
+                  <femergenode />
+                  <femergenode
+                    in="SourceGraphic"
+                  />
+                </femerge>
+              </filter>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="120%"
+                id="filter-id-211"
+                width="120%"
+                x="-10%"
+                y="-10%"
+              >
+                <fecolormatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+              <lineargradient
+                id="gradient-id-214"
+                x1="1%"
+                x2="99%"
+                y1="59%"
+                y2="41%"
+              >
+                <stop
+                  offset="0"
+                  stop-color="#474758"
+                />
+                <stop
+                  offset="0.75"
+                  stop-color="#474758"
+                  stop-opacity="1"
+                />
+                <stop
+                  offset="0.755"
+                  stop-color="#3cabff"
+                  stop-opacity="1"
+                />
+              </lineargradient>
+              <clippath
+                id="id-221"
+              />
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-226"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              />
+            </defs>
+            <g>
+              <g
+                fill="#ffffff"
+                fill-opacity="0"
+              >
+                <rect />
+              </g>
+              <g>
+                <g
+                  clip-path="url(\\"#id-195\\")"
+                  role="region"
+                  style="cursor: pointer;"
+                >
+                  <g>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g
+                                  role="group"
+                                >
+                                  <g>
+                                    <g
+                                      clip-path="url(\\"#id-221\\")"
+                                    >
+                                      <g />
+                                    </g>
+                                    <g />
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g
+                                        fill="#ffffff"
+                                      >
+                                        <rect />
+                                      </g>
+                                      <g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--sumLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="22"
+                                          font-weight="700"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--titleLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="13"
+                                          font-weight="400"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <g>
+                                  <g />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        filter="url(\\"#filter-id-200\\")"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="1"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="1"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g>
+                          <g>
+                            <g
+                              fill="#f3f3f3"
+                              fill-opacity="0.8"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.2"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.4"
+                            >
+                              <g />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      aria-labelledby="id-211-title"
+                      display="none"
+                      filter="url(\\"#filter-id-211\\")"
+                      opacity="0.3"
+                      style="cursor: pointer;"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="0"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="#3cabff"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M15,15  C17.4001,15 22.7998,15.0001 27,15 C31.2002,14.9999 33.2999,6 36,6 C38.7001,6 38.6999,10.5 40.5,10.5 C42.3001,10.5 42.2999,6 45,6 C47.7001,6 50.9999,14.9999 54,15 C57.0002,15.0001 58.7999,15 60,15"
+                          />
+                        </g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="url(\\"#gradient-id-214\\")"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M6,15  C8.2501,15 9.7498,15.0001 15,15 C20.2502,14.9999 20.7748,3.6 27,3.6 C33.2252,3.6 33.8998,14.9999 39.9,15 C45.9002,15.0001 45.9748,15 51,15 C56.0252,15 57.7499,15 60,15"
+                          />
+                        </g>
+                      </g>
+                      <title
+                        id="id-211-title"
+                      >
+                        Chart created using amCharts library
+                      </title>
+                    </g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="0"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+       
+      <div
+        class="flex flex-1 md:flex-1/2 xl:flex-1/3 md:w-1/2 xl:w-1/3"
+      >
+        <div
+          style="width: 100%; height: 100%; position: relative;"
+        >
+          <svg
+            role="group"
+            style="width: 100%; height: 100%; overflow: visible;"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <clippath
+                id="id-270"
+              >
+                <rect
+                  height="0"
+                  width="0"
+                />
+              </clippath>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-275"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <fegaussianblur
+                  in="SourceGraphic"
+                  result="blurOut"
+                  stdDeviation="1.5"
+                />
+                <feoffset
+                  dx="1"
+                  dy="1"
+                  result="offsetBlur"
+                />
+                <feflood
+                  flood-color="#000000"
+                  flood-opacity="0.5"
+                />
+                <fecomposite
+                  in2="offsetBlur"
+                  operator="in"
+                />
+                <femerge>
+                  <femergenode />
+                  <femergenode
+                    in="SourceGraphic"
+                  />
+                </femerge>
+              </filter>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="120%"
+                id="filter-id-286"
+                width="120%"
+                x="-10%"
+                y="-10%"
+              >
+                <fecolormatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+              <lineargradient
+                id="gradient-id-289"
+                x1="1%"
+                x2="99%"
+                y1="59%"
+                y2="41%"
+              >
+                <stop
+                  offset="0"
+                  stop-color="#474758"
+                />
+                <stop
+                  offset="0.75"
+                  stop-color="#474758"
+                  stop-opacity="1"
+                />
+                <stop
+                  offset="0.755"
+                  stop-color="#3cabff"
+                  stop-opacity="1"
+                />
+              </lineargradient>
+              <clippath
+                id="id-296"
+              />
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-301"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              />
+            </defs>
+            <g>
+              <g
+                fill="#ffffff"
+                fill-opacity="0"
+              >
+                <rect />
+              </g>
+              <g>
+                <g
+                  clip-path="url(\\"#id-270\\")"
+                  role="region"
+                >
+                  <g>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g
+                                  role="group"
+                                >
+                                  <g>
+                                    <g
+                                      clip-path="url(\\"#id-296\\")"
+                                    >
+                                      <g />
+                                    </g>
+                                    <g />
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g
+                                        fill="#ffffff"
+                                      >
+                                        <rect />
+                                      </g>
+                                      <g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--sumLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="12"
+                                          font-weight="300"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--titleLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="18"
+                                          font-weight="400"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <g>
+                                  <g />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        filter="url(\\"#filter-id-275\\")"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="1"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="1"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g>
+                          <g>
+                            <g
+                              fill="#f3f3f3"
+                              fill-opacity="0.8"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.2"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.4"
+                            >
+                              <g />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      aria-labelledby="id-286-title"
+                      display="none"
+                      filter="url(\\"#filter-id-286\\")"
+                      opacity="0.3"
+                      style="cursor: pointer;"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="0"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="#3cabff"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M15,15  C17.4001,15 22.7998,15.0001 27,15 C31.2002,14.9999 33.2999,6 36,6 C38.7001,6 38.6999,10.5 40.5,10.5 C42.3001,10.5 42.2999,6 45,6 C47.7001,6 50.9999,14.9999 54,15 C57.0002,15.0001 58.7999,15 60,15"
+                          />
+                        </g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="url(\\"#gradient-id-289\\")"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M6,15  C8.2501,15 9.7498,15.0001 15,15 C20.2502,14.9999 20.7748,3.6 27,3.6 C33.2252,3.6 33.8998,14.9999 39.9,15 C45.9002,15.0001 45.9748,15 51,15 C56.0252,15 57.7499,15 60,15"
+                          />
+                        </g>
+                      </g>
+                      <title
+                        id="id-286-title"
+                      >
+                        Chart created using amCharts library
+                      </title>
+                    </g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="0"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+       
+      <div
+        class="flex flex-1 md:flex-1/2 xl:flex-1/3 md:w-1/2 xl:w-1/3"
+      >
+        <div
+          style="width: 100%; height: 100%; position: relative;"
+        >
+          <svg
+            role="group"
+            style="width: 100%; height: 100%; overflow: visible;"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <clippath
+                id="id-345"
+              >
+                <rect
+                  height="0"
+                  width="0"
+                />
+              </clippath>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-350"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <fegaussianblur
+                  in="SourceGraphic"
+                  result="blurOut"
+                  stdDeviation="1.5"
+                />
+                <feoffset
+                  dx="1"
+                  dy="1"
+                  result="offsetBlur"
+                />
+                <feflood
+                  flood-color="#000000"
+                  flood-opacity="0.5"
+                />
+                <fecomposite
+                  in2="offsetBlur"
+                  operator="in"
+                />
+                <femerge>
+                  <femergenode />
+                  <femergenode
+                    in="SourceGraphic"
+                  />
+                </femerge>
+              </filter>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="120%"
+                id="filter-id-361"
+                width="120%"
+                x="-10%"
+                y="-10%"
+              >
+                <fecolormatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+              <lineargradient
+                id="gradient-id-364"
+                x1="1%"
+                x2="99%"
+                y1="59%"
+                y2="41%"
+              >
+                <stop
+                  offset="0"
+                  stop-color="#474758"
+                />
+                <stop
+                  offset="0.75"
+                  stop-color="#474758"
+                  stop-opacity="1"
+                />
+                <stop
+                  offset="0.755"
+                  stop-color="#3cabff"
+                  stop-opacity="1"
+                />
+              </lineargradient>
+              <clippath
+                id="id-371"
+              />
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-376"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              />
+            </defs>
+            <g>
+              <g
+                fill="#ffffff"
+                fill-opacity="0"
+              >
+                <rect />
+              </g>
+              <g>
+                <g
+                  clip-path="url(\\"#id-345\\")"
+                  role="region"
+                >
+                  <g>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g
+                                  role="group"
+                                >
+                                  <g>
+                                    <g
+                                      clip-path="url(\\"#id-371\\")"
+                                    >
+                                      <g />
+                                    </g>
+                                    <g />
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g
+                                        fill="#ffffff"
+                                      >
+                                        <rect />
+                                      </g>
+                                      <g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--sumLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="12"
+                                          font-weight="300"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--titleLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="18"
+                                          font-weight="400"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <g>
+                                  <g />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        filter="url(\\"#filter-id-350\\")"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="1"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="1"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g>
+                          <g>
+                            <g
+                              fill="#f3f3f3"
+                              fill-opacity="0.8"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.2"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.4"
+                            >
+                              <g />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      aria-labelledby="id-361-title"
+                      display="none"
+                      filter="url(\\"#filter-id-361\\")"
+                      opacity="0.3"
+                      style="cursor: pointer;"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="0"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="#3cabff"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M15,15  C17.4001,15 22.7998,15.0001 27,15 C31.2002,14.9999 33.2999,6 36,6 C38.7001,6 38.6999,10.5 40.5,10.5 C42.3001,10.5 42.2999,6 45,6 C47.7001,6 50.9999,14.9999 54,15 C57.0002,15.0001 58.7999,15 60,15"
+                          />
+                        </g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="url(\\"#gradient-id-364\\")"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M6,15  C8.2501,15 9.7498,15.0001 15,15 C20.2502,14.9999 20.7748,3.6 27,3.6 C33.2252,3.6 33.8998,14.9999 39.9,15 C45.9002,15.0001 45.9748,15 51,15 C56.0252,15 57.7499,15 60,15"
+                          />
+                        </g>
+                      </g>
+                      <title
+                        id="id-361-title"
+                      >
+                        Chart created using amCharts library
+                      </title>
+                    </g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="0"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+       
+      <div
+        class="flex flex-1 md:flex-1/2 xl:flex-1/3 md:w-1/2 xl:w-1/3"
+      >
+        <div
+          style="width: 100%; height: 100%; position: relative;"
+        >
+          <svg
+            role="group"
+            style="width: 100%; height: 100%; overflow: visible;"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <defs>
+              <clippath
+                id="id-420"
+              >
+                <rect
+                  height="0"
+                  width="0"
+                />
+              </clippath>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-425"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <fegaussianblur
+                  in="SourceGraphic"
+                  result="blurOut"
+                  stdDeviation="1.5"
+                />
+                <feoffset
+                  dx="1"
+                  dy="1"
+                  result="offsetBlur"
+                />
+                <feflood
+                  flood-color="#000000"
+                  flood-opacity="0.5"
+                />
+                <fecomposite
+                  in2="offsetBlur"
+                  operator="in"
+                />
+                <femerge>
+                  <femergenode />
+                  <femergenode
+                    in="SourceGraphic"
+                  />
+                </femerge>
+              </filter>
+              <filter
+                filterUnits="objectBoundingBox"
+                height="120%"
+                id="filter-id-436"
+                width="120%"
+                x="-10%"
+                y="-10%"
+              >
+                <fecolormatrix
+                  type="saturate"
+                  values="0"
+                />
+              </filter>
+              <lineargradient
+                id="gradient-id-439"
+                x1="1%"
+                x2="99%"
+                y1="59%"
+                y2="41%"
+              >
+                <stop
+                  offset="0"
+                  stop-color="#474758"
+                />
+                <stop
+                  offset="0.75"
+                  stop-color="#474758"
+                  stop-opacity="1"
+                />
+                <stop
+                  offset="0.755"
+                  stop-color="#3cabff"
+                  stop-opacity="1"
+                />
+              </lineargradient>
+              <clippath
+                id="id-446"
+              />
+              <filter
+                filterUnits="objectBoundingBox"
+                height="200%"
+                id="filter-id-451"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              />
+            </defs>
+            <g>
+              <g
+                fill="#ffffff"
+                fill-opacity="0"
+              >
+                <rect />
+              </g>
+              <g>
+                <g
+                  clip-path="url(\\"#id-420\\")"
+                  role="region"
+                >
+                  <g>
+                    <g>
+                      <g>
+                        <g>
+                          <g>
+                            <g>
+                              <g>
+                                <g
+                                  role="group"
+                                >
+                                  <g>
+                                    <g
+                                      clip-path="url(\\"#id-446\\")"
+                                    >
+                                      <g />
+                                    </g>
+                                    <g />
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g />
+                                    </g>
+                                    <g>
+                                      <g
+                                        fill="#ffffff"
+                                      >
+                                        <rect />
+                                      </g>
+                                      <g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--sumLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="12"
+                                          font-weight="300"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                        <g
+                                          class="amcharts-Label-group DonutChart--titleLabel"
+                                          fill="rgba(41,11,83,0.75)"
+                                          font-size="18"
+                                          font-weight="400"
+                                        >
+                                          <g
+                                            class="amcharts-Label"
+                                          />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                            <g>
+                              <g>
+                                <g>
+                                  <g />
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+                <g>
+                  <g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        filter="url(\\"#filter-id-425\\")"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="1"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="1"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g>
+                          <g>
+                            <g
+                              fill="#f3f3f3"
+                              fill-opacity="0.8"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.2"
+                              stroke-opacity="1"
+                            >
+                              <g>
+                                <g />
+                              </g>
+                            </g>
+                            <g
+                              fill="#000000"
+                              fill-opacity="0.4"
+                            >
+                              <g />
+                            </g>
+                          </g>
+                        </g>
+                      </g>
+                    </g>
+                    <g
+                      aria-labelledby="id-436-title"
+                      filter="url(\\"#filter-id-436\\")"
+                      opacity="0.3"
+                      style="cursor: pointer;"
+                    >
+                      <g
+                        fill="#ffffff"
+                        opacity="0"
+                      >
+                        <rect />
+                      </g>
+                      <g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="#3cabff"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M15,15  C17.4001,15 22.7998,15.0001 27,15 C31.2002,14.9999 33.2999,6 36,6 C38.7001,6 38.6999,10.5 40.5,10.5 C42.3001,10.5 42.2999,6 45,6 C47.7001,6 50.9999,14.9999 54,15 C57.0002,15.0001 58.7999,15 60,15"
+                          />
+                        </g>
+                        <g
+                          fill="none"
+                          shape-rendering="auto"
+                          stroke="url(\\"#gradient-id-439\\")"
+                          stroke-opacity="1"
+                          stroke-width="1.7999999999999998"
+                        >
+                          <path
+                            d=" M6,15  C8.2501,15 9.7498,15.0001 15,15 C20.2502,14.9999 20.7748,3.6 27,3.6 C33.2252,3.6 33.8998,14.9999 39.9,15 C45.9002,15.0001 45.9748,15 51,15 C56.0252,15 57.7499,15 60,15"
+                          />
+                        </g>
+                      </g>
+                      <title
+                        id="id-436-title"
+                      >
+                        Chart created using amCharts library
+                      </title>
+                    </g>
+                    <g
+                      opacity="0"
+                      role="tooltip"
+                      visibility="hidden"
+                    >
+                      <g
+                        fill="#ffffff"
+                        fill-opacity="0.9"
+                        stroke="#ffffff"
+                        stroke-opacity="1"
+                        stroke-width="0"
+                        style="pointer-events: none;"
+                      >
+                        <path />
+                      </g>
+                      <g>
+                        <g
+                          fill="#ffffff"
+                          style="pointer-events: none;"
+                        >
+                          <g
+                            transform="translate(0,7)"
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="card-wrapper"
+    >
+      <div>
+        <div
+          class="kong-card card-item border"
+          data-v-0029352b=""
+        >
+          <div
+            class="k-card-header mb-4"
+            data-v-0029352b=""
+          >
+            <div
+              class="k-card-title"
+              data-v-0029352b=""
+            >
+              <h4
+                data-v-0029352b=""
+              >
+                Create a virtual Mesh
+              </h4>
+            </div>
+            <div
+              class="k-card-actions"
+              data-v-0029352b=""
+            />
+          </div>
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-0029352b=""
+          >
+            <p
+              data-v-0029352b=""
+            >
+              
+            We can create multiple isolated Mesh resources (i.e. per application/team/business unit).
+          
+            </p>
+             
+            <div
+              class="skeleton-card__action mt-4"
+              data-v-0029352b=""
+            >
+              <a
+                aria-current="page"
+                class="k-button router-link-exact-active router-link-active primary"
+                data-v-0029352b=""
+                data-v-38fa8ecf=""
+                href="#/"
+                type="button"
+              >
+                
+          Create Mesh
+        
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <div>
+        <div
+          class="kong-card card-item border"
+          data-v-0029352b=""
+        >
+          <div
+            class="k-card-header mb-4"
+            data-v-0029352b=""
+          >
+            <div
+              class="k-card-title"
+              data-v-0029352b=""
+            >
+              <h4
+                data-v-0029352b=""
+              >
+                Connect data plane proxies
+              </h4>
+            </div>
+            <div
+              class="k-card-actions"
+              data-v-0029352b=""
+            />
+          </div>
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-0029352b=""
+          >
+            <p
+              data-v-0029352b=""
+            >
+              
+            We need a data plane proxy for each replica of our services within a Mesh resource.
+          
+            </p>
+             
+            <div
+              class="skeleton-card__action mt-4"
+              data-v-0029352b=""
+            >
+              <a
+                aria-current="page"
+                class="k-button router-link-exact-active router-link-active primary"
+                data-v-0029352b=""
+                data-v-38fa8ecf=""
+                href="#/"
+                type="button"
+              >
+                
+          Get Started
+        
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <div>
+        <div
+          class="kong-card card-item border"
+          data-v-0029352b=""
+        >
+          <div
+            class="k-card-header mb-4"
+            data-v-0029352b=""
+          >
+            <div
+              class="k-card-title"
+              data-v-0029352b=""
+            >
+              <h4
+                data-v-0029352b=""
+              >
+                Apply null policies
+              </h4>
+            </div>
+            <div
+              class="k-card-actions"
+              data-v-0029352b=""
+            />
+          </div>
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-0029352b=""
+          >
+            <p
+              data-v-0029352b=""
+            >
+              
+            We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies.
+          
+            </p>
+             
+            <div
+              class="skeleton-card__action mt-4"
+              data-v-0029352b=""
+            >
+              <a
+                class="k-button primary"
+                data-v-0029352b=""
+                data-v-38fa8ecf=""
+                href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                type="button"
+              >
+                
+          Explore Policies
+        
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <div>
+        <!---->
+      </div>
+    </div>
+  </div>
+</div>
+`;
