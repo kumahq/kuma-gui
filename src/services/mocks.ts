@@ -158,6 +158,12 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
     }),
   )
 
+  handlers.push(
+    rest.get(`${apiURL}meshes/:mesh/:policyType/:policyName/dataplanes`, (req, res, ctx) =>
+      res(ctx.json(requireMockFile('policy-connections.json'))),
+    ),
+  )
+
   return handlers
 }
 

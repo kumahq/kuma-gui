@@ -225,7 +225,7 @@ export default {
         },
       ],
       entity: {},
-      rawEntity: null,
+      rawEntity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       itemsPerCol: 3,

@@ -422,6 +422,18 @@ class Kuma {
   public getGlobalInsights(params?: any) {
     return this.client.get('/global-insights')
   }
+
+  /**
+   * Policy connections
+   */
+
+  // Get policy dpps connections
+  public getPolicyConnections(
+    { mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string },
+    params?: any,
+  ) {
+    return this.client.get(`/meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
+  }
 }
 
 export default new Kuma()

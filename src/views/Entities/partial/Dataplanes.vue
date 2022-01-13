@@ -340,7 +340,7 @@ export default {
         data: [],
       },
       entity: {},
-      rawEntity: null,
+      rawEntity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       shownTLSTab: false,
