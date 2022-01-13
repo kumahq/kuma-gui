@@ -1,7 +1,7 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Adding new services" />
+      <OnboardingHeading title="Add services" />
     </template>
     <template #content>
       <div class="h-full w-full flex justify-evenly items-center">

@@ -30,14 +30,6 @@ exports[`Completed.vue renders snapshot 1`] = `
         <div
           class="w-full"
         >
-          <p
-            class="text-center mb-12"
-          >
-            
-      You have completed the initial wizard! You can now visualize the dashboard were you can find:
-    
-          </p>
-           
           <div
             class="flex justify-center"
           >

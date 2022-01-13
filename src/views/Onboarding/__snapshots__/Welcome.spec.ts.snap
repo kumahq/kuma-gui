@@ -85,7 +85,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
               </svg>
             </span>
             
-  Running Kuma
+  Run Kuma control plane
 
           </li>
           <li
@@ -109,7 +109,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
               <!---->
             </span>
             
-  Learn about backends
+  Learn about configuration storage
 
           </li>
           <li
@@ -121,7 +121,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
               <!---->
             </span>
             
-  Creating a mesh
+  Create the mesh
 
           </li>
           <li
@@ -133,7 +133,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
               <!---->
             </span>
             
-  Adding new services
+  Add services
 
           </li>
           <li

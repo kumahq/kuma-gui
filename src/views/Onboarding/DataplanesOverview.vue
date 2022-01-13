@@ -21,7 +21,7 @@
         <div class="flex justify-center mt-10 mb-16 pb-16">
           <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
             <p class="font-bold mb-4">
-              Found {{ tableData.data.length }} DPPs, including:
+              Found {{ tableData.data.length }} DPPs:
             </p>
             <KTable
               class="onboarding-dataplane-table"
@@ -92,14 +92,14 @@ export default {
   computed: {
     title() {
       if (this.tableData.data.length) {
-        return 'Congratulations!'
+        return 'Success'
       }
 
       return 'Waiting for DPPs'
     },
     description() {
       if (this.tableData.data.length) {
-        return 'We have detected the following data plane proxies (DPPs) connecting to the control plane:'
+        return 'The following data plane proxies (DPPs) are connected to the control plane:'
       }
 
       return null

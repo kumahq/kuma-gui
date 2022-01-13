@@ -145,7 +145,7 @@
         />
       </g>
       <template v-slot:content>
-        With a Kubernetes backend, {{ productName }} leverages native Kubernetes CRDs to store all the configuration, that can be applied with kubectl or any other Kubernetes tooling.
+        Configuration for all {{ productName }} resources is specified in YAML config files. The config files can be stored in an external datastore.
 
       </template>
     </KPop>
@@ -215,7 +215,7 @@
         />
       </g>
       <template v-slot:content>
-        The Kubernetes API server ultimately is the source of truth that stores the {{ productName }} configuration that will be applied at runtime.
+        You can store the YAML config files for {{ productName }} in etcd, the native datastore for Kubernetes.
       </template>
     </KPop>
 

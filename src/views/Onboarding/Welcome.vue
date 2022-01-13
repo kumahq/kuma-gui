@@ -72,7 +72,7 @@ export default {
 
       if (this.multicluster) {
         multizoneItems.push({
-          name: 'Creating a zone',
+          name: 'Add zones',
           status: false,
         })
       }
@@ -82,7 +82,7 @@ export default {
     statuses() {
       return [
         {
-          name: `Running ${this.productName}`,
+          name: `Run ${this.productName} control plane`,
           status: true,
         },
         {
@@ -90,16 +90,16 @@ export default {
           status: false,
         },
         {
-          name: 'Learn about backends',
+          name: 'Learn about configuration storage',
           status: false,
         },
         ...this.multizoneItems,
         {
-          name: 'Creating a mesh',
+          name: 'Create the mesh',
           status: false,
         },
         {
-          name: 'Adding new services',
+          name: 'Add services',
           status: false,
         },
         {

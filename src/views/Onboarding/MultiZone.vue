@@ -1,31 +1,20 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Adding a new zone" />
+      <OnboardingHeading title="Add zones" />
     </template>
     <template #content>
       <p class="text-center mb-4">
-        In a multi-zone deployment, in order to start our service mesh we must first add a new zone to our deployment by
-        starting a Zone CP and its Ingress/Egress.
-      </p>
-
-      <p class="text-center my-8">
-        A Zone CP will ultimately receive connections from the data plane proxies in the same zone, therefore it needs
-        to be configured in such a way that this connectivity is possible. There is no strict rule to how big or small a
-        zone can be as long as this requriement is satisifed. Therefore, a Zone CP can be a Kubernetes cluster, a VPC, a
-        cloud or region.
+        A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
       </p>
 
       <CodeView
-        title="To get started adding a new Zone, please follow the steps from link below:"
+        title="See the documentation for options to install:"
         copy-button-text="Copy link"
         lang="bash"
         :content="documentationLink"
       />
       <div>
-        <p class="text-center font-medium my-4">
-          To proceed you need to setup Zones & Zone Ingress
-        </p>
         <p class="text-center my-4">
           Zone status:
           <span

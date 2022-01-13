@@ -16,17 +16,11 @@ exports[`PopulatingMesh.vue renders snapshot 1`] = `
             class="onboarding-title"
           >
             
-    Creating a mesh
+    Create the mesh
   
           </h1>
            
-          <p
-            class="text-center text-lg mt-3"
-          >
-            
-    Kuma is a multi-mesh service mesh, this means that we can create multiple different "Meshes" for our applications that are fully compartmentalized from each other to scale across an organization.
-  
-          </p>
+          <!---->
         </div>
       </div>
        
@@ -40,8 +34,11 @@ exports[`PopulatingMesh.vue renders snapshot 1`] = `
             class="text-center mb-4"
           >
             
-      By default, Kuma creates a "default" mesh that we can start using for our services, but we can have
-      as many meshes as we need:
+      When you install, Kuma creates a 
+            <i>
+              default
+            </i>
+             mesh, but you can add as many meshes as you need.
     
           </p>
            
@@ -112,8 +109,7 @@ exports[`PopulatingMesh.vue renders snapshot 1`] = `
             class="text-center"
           >
             
-      The "default" mesh is currently empty with no services and therefore no data plane proxies. Let's go ahead and
-      start a few services in the next step.
+      This mesh is empty. Next, you add services and their data plane proxies.
     
           </p>
         </div>

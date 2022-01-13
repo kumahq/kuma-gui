@@ -4,7 +4,7 @@
       <OnboardingHeading
         title="Learn about deployments"
         :description="
-          `${productName} can be deployed in two ways, standalone or multi-zone mode. Click on the image below to learn about it:`
+          `${productName} can be deployed in standalone or  multi-zone mode.`
         "
       />
     </template>
@@ -18,14 +18,14 @@
           name="mode"
           value="standalone"
         >
-          Standalone Deployment
+          Standalone deployment
         </KRadio>
         <KRadio
           v-model="mode"
           name="mode"
           value="multi-zone"
         >
-          Multi-Zone deployment
+          Multi-zone deployment
         </KRadio>
       </div>
     </template>

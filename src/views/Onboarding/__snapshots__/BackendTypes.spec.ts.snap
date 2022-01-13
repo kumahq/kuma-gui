@@ -16,17 +16,11 @@ exports[`BackendTypes.vue renders snapshot 1`] = `
             class="onboarding-title"
           >
             
-    Learn about backends
+    Learn about configuration storage
   
           </h1>
            
-          <p
-            class="text-center text-lg mt-3"
-          >
-            
-    Kuma supports multiple storage backends to store the service mesh policies configuration: Kubernetes, Postgres or in-memory.
-  
-          </p>
+          <!---->
         </div>
       </div>
        
@@ -246,7 +240,7 @@ exports[`BackendTypes.vue renders snapshot 1`] = `
                         data-v-3cb990b6=""
                       >
                         
-      With a Kubernetes backend, Kuma leverages native Kubernetes CRDs to store all the configuration, that can be applied with kubectl or any other Kubernetes tooling.
+      Configuration for all Kuma resources is specified in YAML config files. The config files can be stored in an external datastore.
 
     
                       </div>
@@ -380,7 +374,7 @@ exports[`BackendTypes.vue renders snapshot 1`] = `
                         data-v-3cb990b6=""
                       >
                         
-      The Kubernetes API server ultimately is the source of truth that stores the Kuma configuration that will be applied at runtime.
+      You can store the YAML config files for Kuma in etcd, the native datastore for Kubernetes.
     
                       </div>
                     </div>

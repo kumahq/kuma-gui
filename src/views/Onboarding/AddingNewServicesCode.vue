@@ -1,16 +1,16 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Adding new services" />
+      <OnboardingHeading title="Add services" />
     </template>
     <template #content>
       <p class="text-center mb-12">
-        {{ productName }} ships with a counter demo application that showcases a very simple application
-        with two services, a Redis backend to store the counter value and a frontend application.
+        The demo application includes two services: a Redis backend to store a counter value,
+        and a frontend web UI to show and increment the counter.
       </p>
 
       <CodeView
-        title="You can find the counter demo application at the following GitHub repository:"
+        title="Clone the GitHub repository for the demo application:"
         copy-button-text="Copy Command to Clipboard"
         lang="bash"
         :content="githubLink"
@@ -24,15 +24,12 @@
       />
       <CodeView
         v-else
-        title="Please follow the instructions in the Readme.md"
+        title="And follow the instructions in the README"
         copy-button-text="Copy Command to Clipboard"
         lang="bash"
         :content="githubLinkReadme"
       />
       <div>
-        <p class="text-center font-medium my-4">
-          To proceed you need to setup DPPs
-        </p>
         <p class="text-center my-4">
           DPPs status:
           <span

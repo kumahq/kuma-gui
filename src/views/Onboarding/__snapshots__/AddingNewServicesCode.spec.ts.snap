@@ -16,7 +16,7 @@ exports[`AddingNewServicesCode.vue renders snapshot 1`] = `
             class="onboarding-title"
           >
             
-    Adding new services
+    Add services
   
           </h1>
            
@@ -34,8 +34,8 @@ exports[`AddingNewServicesCode.vue renders snapshot 1`] = `
             class="text-center mb-12"
           >
             
-      Kuma ships with a counter demo application that showcases a very simple application
-      with two services, a Redis backend to store the counter value and a frontend application.
+      The demo application includes two services: a Redis backend to store a counter value,
+      and a frontend web UI to show and increment the counter.
     
           </p>
            
@@ -60,7 +60,7 @@ exports[`AddingNewServicesCode.vue renders snapshot 1`] = `
                     <h4
                       data-v-0029352b=""
                     >
-                      You can find the counter demo application at the following GitHub repository:
+                      Clone the GitHub repository for the demo application:
                     </h4>
                   </div>
                   <div
@@ -153,7 +153,7 @@ exports[`AddingNewServicesCode.vue renders snapshot 1`] = `
                     <h4
                       data-v-0029352b=""
                     >
-                      Please follow the instructions in the Readme.md
+                      And follow the instructions in the README
                     </h4>
                   </div>
                   <div
@@ -226,14 +226,6 @@ exports[`AddingNewServicesCode.vue renders snapshot 1`] = `
           </div>
            
           <div>
-            <p
-              class="text-center font-medium my-4"
-            >
-              
-        To proceed you need to setup DPPs
-      
-            </p>
-             
             <p
               class="text-center my-4"
             >

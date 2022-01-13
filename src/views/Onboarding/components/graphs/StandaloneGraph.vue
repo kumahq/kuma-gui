@@ -122,14 +122,12 @@
         />
       </g>
       <template v-slot:content>
-        {{ productName }} is the control plane that manages a fleet of data plane proxies that are deployed next to our services.
-        In standalone mode, {{ productName }} powers the service mesh for an individual Kubernetes cluster, or VM-based application.
-        It cannot be expanded to another cluster unless a flat networking topology is supported.
+        The control plane provides the config for all services in the mesh.
       </template>
     </KPop>
     <KPop
       trigger="hover"
-      title="Service"
+      title="Data Plane Proxy (DPP)"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
@@ -158,8 +156,8 @@
         />
       </g>
       <template v-slot:content>
-        Our services are going to be having a {{ productName }} data plane proxy - built on top of Envoy -
-        next to each instance. If a service doesn't have a data plane proxy, it doesn't belong to the mesh.
+        {{ productName }} attaches a data plane proxy sidecar to each service in your mesh.
+        This sidecar handles the mesh configuration for the service.
       </template>
     </KPop>
     <g clip-path="url(#clip0_159_853)">

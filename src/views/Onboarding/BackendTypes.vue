@@ -1,12 +1,7 @@
 <template>
   <OnboardingPage with-image>
     <template #header>
-      <OnboardingHeading
-        title="Learn about backends"
-        :description="
-          `${productName} supports multiple storage backends to store the service mesh policies configuration: Kubernetes, Postgres or in-memory.`
-        "
-      />
+      <OnboardingHeading title="Learn about configuration storage" />
     </template>
     <template #content>
       <div class="h-full w-full flex items-center justify-center mb-10">

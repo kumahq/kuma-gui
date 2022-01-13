@@ -228,8 +228,9 @@
         />
       </g>
       <template v-slot:content>
-        In multi-zone mode, {{ productName }} is still the control plane that manages a fleet of data plane proxies that are deployed next to our services.
-        The global control plane is the primary source of truth that we will be using to make any changes to our service mesh.
+        The global control plane provides the config for the entire mesh.
+        You create and update mesh configurations on the global control plane,
+        and the zone control planes fetch the config from the global control plane.
       </template>
     </KPop>
 
@@ -263,14 +264,14 @@
         />
       </g>
       <template v-slot:content>
-        The zone control plane is the secondary CP that can will deployed in every zone (like a Kubernetes cluster, VPC, region, availability zone) and it is read-only.
-        It automatically syncs with the global CP to fetch the right resources.
+        Each zone in your mesh (Kubernetes cluster, VPC, availability zone, region) includes
+        a read-only control plane that syncs with the global control plane to get the configurations the zone needs.
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      title="Service"
+      title="Data Plane Proxy (DPP)"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
@@ -298,9 +299,8 @@
         />
       </g>
       <template v-slot:content>
-        Our services are going to be having a {{ productName }} data plane proxy - built on top of Envoy - next to each instance.
-        If a service doesn't have a data plane proxy, it doesn't belong to the mesh.
-        In multi-zone, our DPPs always connect to the local Zone CP.
+        {{ productName }} attaches a data plane proxy sidecar to each service in your mesh.
+        This sidecar handles the mesh configuration for the service.
       </template>
     </KPop>
     <KPop
@@ -333,7 +333,7 @@
         />
       </g>
       <template v-slot:content>
-        In order to allow for native cross-zone connectivity, there is a special type of Ingress data plane proxy that will allow traffic to enter a zone.
+        An ingress data plane proxy handles traffic to the zone from outside.
       </template>
     </KPop>
     <g clip-path="url(#clip1_201_76)">

@@ -24,7 +24,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
             class="text-center text-lg mt-3"
           >
             
-    Kuma can be deployed in two ways, standalone or multi-zone mode. Click on the image below to learn about it:
+    Kuma can be deployed in standalone or  multi-zone mode.
   
           </p>
         </div>
@@ -212,9 +212,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                         data-v-3cb990b6=""
                       >
                         
-      Kuma is the control plane that manages a fleet of data plane proxies that are deployed next to our services.
-      In standalone mode, Kuma powers the service mesh for an individual Kubernetes cluster, or VM-based application.
-      It cannot be expanded to another cluster unless a flat networking topology is supported.
+      The control plane provides the config for all services in the mesh.
     
                       </div>
                     </div>
@@ -273,15 +271,15 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                         class="k-popover-title"
                         data-v-3cb990b6=""
                       >
-                        Service
+                        Data Plane Proxy (DPP)
                       </div>
                       <div
                         class="k-popover-content"
                         data-v-3cb990b6=""
                       >
                         
-      Our services are going to be having a Kuma data plane proxy - built on top of Envoy -
-      next to each instance. If a service doesn't have a data plane proxy, it doesn't belong to the mesh.
+      Kuma attaches a data plane proxy sidecar to each service in your mesh.
+      This sidecar handles the mesh configuration for the service.
     
                       </div>
                     </div>
@@ -688,7 +686,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                 data-v-b7148f78=""
               >
                 
-        Standalone Deployment
+        Standalone deployment
       
               </span>
             </label>
@@ -709,7 +707,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                 data-v-b7148f78=""
               >
                 
-        Multi-Zone deployment
+        Multi-zone deployment
       
               </span>
             </label>

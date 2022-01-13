@@ -89,7 +89,7 @@
 
       </g>
       <template v-slot:content>
-        With an in-memory backend, {{ productName }} stores all the configuration in memory, and it provides YAML declarative configuration for every resource that can be applied via kumactl or the HTTP API.
+        You can store the YAML config files for {{ productName }} in memory to skip the complexity of setting up a reliable datastore. For testing only. Not for production.
       </template>
     </KPop>
 

@@ -1,17 +1,11 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading
-        title="Creating a mesh"
-        :description="
-          `${productName} is a multi-mesh service mesh, this means that we can create multiple different &quot;Meshes&quot; for our applications that are fully compartmentalized from each other to scale across an organization.`
-        "
-      />
+      <OnboardingHeading title="Create the mesh" />
     </template>
     <template #content>
       <p class="text-center mb-4">
-        By default, {{ productName }} creates a "default" mesh that we can start using for our services, but we can have
-        as many meshes as we need:
+        When you install, {{ productName }} creates a <i>default</i> mesh, but you can add as many meshes as you need.
       </p>
 
       <div class="flex justify-center mt-10 mb-12 pb-12">
@@ -24,8 +18,7 @@
       </div>
 
       <p class="text-center">
-        The "default" mesh is currently empty with no services and therefore no data plane proxies. Let's go ahead and
-        start a few services in the next step.
+        This mesh is empty. Next, you add services and their data plane proxies.
       </p>
     </template>
 

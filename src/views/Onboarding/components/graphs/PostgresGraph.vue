@@ -143,7 +143,7 @@
         />
       </g>
       <template v-slot:content>
-        With a Postgres backend, {{ productName }} leverages a Postgres database to store all the configuration, and it provides YAML declarative configuration for every resource that can be applied via kumactl or the HTTP API.
+        Configuration for all {{ productName }} resources is specified in YAML config files. The config files can be stored in an external datastore.
       </template>
     </KPop>
 
@@ -212,8 +212,7 @@
         />
       </g>
       <template v-slot:content>
-        Postgres is the source of truth that stores the {{ productName }} configuration that will be applied at runtime.
-        We can also use managed Postgres services.
+        You can store the YAML config files for {{ productName }} in a Postgres database. You can work with a managed Postgres offering or manage your own.
       </template>
     </KPop>
 

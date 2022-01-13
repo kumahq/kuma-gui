@@ -15,7 +15,7 @@ describe('DeploymentTypes.vue', () => {
   it('changes selected graph', async () => {
     renderWithVuex(DeploymentTypes, { routes: [] })
 
-    await userEvent.click(screen.getByText(/Multi-Zone deployment/))
+    await userEvent.click(screen.getByText(/Multi-zone deployment/))
 
     expect(screen.getByTestId('multizone-graph')).toBeInTheDocument()
   })

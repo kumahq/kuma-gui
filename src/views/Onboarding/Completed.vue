@@ -4,9 +4,6 @@
       <OnboardingHeading title="Go to the dashboard" />
     </template>
     <template #content>
-      <p class="text-center mb-12">
-        You have completed the initial wizard! You can now visualize the dashboard were you can find:
-      </p>
       <div class="flex justify-center">
         <img src="@/assets/images/kuma_gui.png?external">
       </div>
