@@ -14,12 +14,8 @@
         <Loading />
       </div>
       <div v-else>
-        <p class="text-center my-4">
-          You have started the first services that properly registered to {{ productName }}!
-        </p>
-
         <div class="flex justify-center mt-10 mb-16 pb-16">
-          <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
+          <div class="w-full sm:w-3/5 p-4">
             <p class="font-bold mb-4">
               Found {{ tableData.data.length }} DPPs:
             </p>
@@ -106,10 +102,7 @@ export default {
     },
   },
   created() {
-    // TODO before merge remove
-    setTimeout(() => {
-      this.getAllDataplanes()
-    }, 2000)
+    this.getAllDataplanes()
   },
   methods: {
     async getAllDataplanes() {

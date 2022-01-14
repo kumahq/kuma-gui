@@ -16,7 +16,7 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
             class="onboarding-title"
           >
             
-    Congratulations!
+    Success
   
           </h1>
            
@@ -24,7 +24,7 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
             class="text-center text-lg mt-3"
           >
             
-    We have detected the following data plane proxies (DPPs) connecting to the control plane:
+    The following data plane proxies (DPPs) are connected to the control plane:
   
           </p>
         </div>
@@ -37,25 +37,17 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
           class="w-full"
         >
           <div>
-            <p
-              class="text-center my-4"
-            >
-              
-        You have started the first services that properly registered to Kuma!
-      
-            </p>
-             
             <div
               class="flex justify-center mt-10 mb-16 pb-16"
             >
               <div
-                class="w-full sm:w-3/5 lg:w-2/5 p-4"
+                class="w-full sm:w-3/5 p-4"
               >
                 <p
                   class="font-bold mb-4"
                 >
                   
-            Found 3 DPPs, including:
+            Found 3 DPPs:
           
                 </p>
                  

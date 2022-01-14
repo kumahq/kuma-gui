@@ -99,15 +99,8 @@ export default {
     },
   },
   created() {
-    // TODO before merge remove
-    setTimeout(() => {
-      this.getZoneIngresses()
-    }, 2000)
-
-    // TODO before merge remove
-    setTimeout(() => {
-      this.getZones()
-    }, 3000)
+    this.getZoneIngresses()
+    this.getZones()
   },
   destroyed() {
     clearTimeout(this.zoneTimeout)
