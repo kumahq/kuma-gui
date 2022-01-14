@@ -1,3 +1,5 @@
+# Repo labels common to all repositories in https://github.com/kumahq
+# This file is automatically synced from https://github.com/kumahq/.github/blob/main/org_labels.yml and will be overridden if modified elsewhere.
 default:
   labels:
     - color: ffaa00
@@ -18,6 +20,9 @@ default:
     - color: ffaa00
       name: triage/duplicated
       description: "already exists"
+    - color: ffaa00
+      name: triage/needs-reproducing
+      description: "Someone else should try to reproduce this"
     - color: ffaa00
       name: triage/not-reproducible
       description: "Couldn't reproduce this issue. If you add information remove this label and reopen the issue"

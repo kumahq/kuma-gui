@@ -9,6 +9,10 @@
           <strong>Global Instance ID:</strong>&nbsp;
           <span class="mono">{{ details.globalInstanceId }}</span>
         </li>
+        <li v-if="details.controlPlaneInstanceId">
+          <strong>Control Plane Instance ID:</strong>&nbsp;
+          <span class="mono">{{ details.controlPlaneInstanceId }}</span>
+        </li>
         <li v-if="details.connectTime">
           <strong>Last Connected:</strong>&nbsp;
           {{ details.connectTime | readableDate }}
@@ -20,13 +24,10 @@
       </ul>
     </div>
 
-    <div v-if="details.status">
-      <ul
-        v-if="details.status.stat"
-        class="overview-stat-grid"
-      >
+    <div v-if="detailsIterator">
+      <ul class="overview-stat-grid">
         <li
-          v-for="(item, label) in details.status.stat"
+          v-for="(item, label) in detailsIterator"
           :key="label"
         >
           <h6 class="overview-tertiary-title">
@@ -53,7 +54,7 @@
         <KIcon icon="portal" />
       </template>
       <template v-slot:alertMessage>
-        There are no Policy statistics for <strong>{{ details.id }}</strong>
+        There are no subscription statistics for <strong>{{ details.id }}</strong>
       </template>
     </KAlert>
   </div>
@@ -63,7 +64,7 @@
 import { humanReadableDate, camelCaseToWords } from '@/helpers'
 
 export default {
-  name: 'ZoneInsightSubscriptionDetails',
+  name: 'SubscriptionDetails',
   filters: {
     formatValue(value) {
       return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
@@ -86,6 +87,21 @@ export default {
     details: {
       type: Object,
       required: true,
+    },
+    isDiscoverySubscription: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    detailsIterator() {
+      if (this.isDiscoverySubscription) {
+        const { lastUpdateTime, total, ...restDetails } = this.details.status
+
+        return restDetails
+      }
+
+      return this.details.status?.stat
     },
   },
 }

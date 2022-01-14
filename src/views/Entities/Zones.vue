@@ -81,15 +81,15 @@
             <template v-slot:body>
               <Accordion :initially-open="0">
                 <AccordionItem
-                  v-for="(value, key) in zoneInsightSubscriptionsReversed"
+                  v-for="(value, key) in subscriptionsReversed"
                   :key="key"
                 >
                   <template v-slot:accordion-header>
-                    <ZoneInsightSubscriptionHeader :details="value" />
+                    <SubscriptionHeader :details="value" />
                   </template>
 
                   <template v-slot:accordion-content>
-                    <ZoneInsightSubscriptionDetails :details="value" />
+                    <SubscriptionDetails :details="value" />
                   </template>
                 </AccordionItem>
               </Accordion>
@@ -156,8 +156,8 @@ import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
-import ZoneInsightSubscriptionDetails from './components/ZoneInsightSubscriptionDetails'
-import ZoneInsightSubscriptionHeader from './components/ZoneInsightSubscriptionHeader'
+import SubscriptionDetails from './components/SubscriptionDetails'
+import SubscriptionHeader from './components/SubscriptionHeader'
 import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
@@ -171,8 +171,8 @@ export default {
     LabelList,
     Warnings,
     Prism,
-    ZoneInsightSubscriptionDetails,
-    ZoneInsightSubscriptionHeader,
+    SubscriptionDetails,
+    SubscriptionHeader,
     MultizoneInfo,
     EntityURLControl,
   },
@@ -226,7 +226,7 @@ export default {
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       warnings: [],
-      zoneInsightSubscriptionsReversed: [],
+      subscriptionsReversed: [],
       codeOutput: null,
       zonesWithIngress: new Set(),
     }
@@ -294,8 +294,8 @@ export default {
     calculateZonesWithIngress(zoneIngresses) {
       const zones = new Set()
 
-      zoneIngresses.forEach(({ name }) => {
-        zones.add(name)
+      zoneIngresses.forEach(({ zoneIngress: { zone } }) => {
+        zones.add(zone)
       })
 
       this.zonesWithIngress = zones
@@ -367,7 +367,7 @@ export default {
           const subscriptions = get(response, 'zoneInsight.subscriptions', [])
 
           this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
-          this.zoneInsightSubscriptionsReversed = Array.from(subscriptions).reverse()
+          this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
           if (subscriptions.length) {
             const { version = {} } = subscriptions[subscriptions.length - 1]

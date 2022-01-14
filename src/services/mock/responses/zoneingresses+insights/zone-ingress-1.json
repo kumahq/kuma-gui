@@ -1,6 +1,6 @@
 {
   "type": "ZoneIngressOverview",
-  "name": "zone-1",
+  "name": "zone-ingress-1",
   "creationTime": "2021-07-13T08:40:59Z",
   "modificationTime": "2021-07-13T08:40:59Z",
   "zoneIngress": {

@@ -138,6 +138,29 @@
           </div>
         </LabelList>
       </template>
+      <template v-slot:insights>
+        <KCard border-variant="noBorder">
+          <template v-slot:body>
+            <Accordion :initially-open="0">
+              <AccordionItem
+                v-for="(value, key) in subscriptionsReversed"
+                :key="key"
+              >
+                <template v-slot:accordion-header>
+                  <SubscriptionHeader :details="value" />
+                </template>
+
+                <template v-slot:accordion-content>
+                  <SubscriptionDetails
+                    :details="value"
+                    is-discovery-subscription
+                  />
+                </template>
+              </AccordionItem>
+            </Accordion>
+          </template>
+        </KCard>
+      </template>
       <template v-slot:mtls>
         <LabelList
           :is-loading="entityIsLoading"
@@ -215,8 +238,11 @@ import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
 import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
-
+import Accordion from '@/components/Accordion/Accordion'
+import AccordionItem from '@/components/Accordion/AccordionItem'
 import { getTableData } from '@/utils/tableDataUtils'
+import SubscriptionDetails from '../components/SubscriptionDetails'
+import SubscriptionHeader from '../components/SubscriptionHeader'
 
 export default {
   name: 'Dataplanes',
@@ -228,6 +254,10 @@ export default {
     Tabs,
     YamlView,
     LabelList,
+    Accordion,
+    AccordionItem,
+    SubscriptionDetails,
+    SubscriptionHeader,
   },
   props: {
     nsBackButtonRoute: {
@@ -274,6 +304,10 @@ export default {
           {
             hash: '#overview',
             title: 'Overview',
+          },
+          {
+            hash: '#insights',
+            title: 'DPP Insights',
           },
           {
             hash: '#mtls',
@@ -569,6 +603,8 @@ export default {
         this.warnings = []
 
         const { subscriptions = [] } = dataplaneInsight
+
+        this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
         if (subscriptions.length) {
           this.setEntityWarnings(subscriptions, tags)

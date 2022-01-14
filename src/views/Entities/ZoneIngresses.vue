@@ -81,15 +81,18 @@
             <template v-slot:body>
               <Accordion :initially-open="0">
                 <AccordionItem
-                  v-for="(value, key) in zoneIngressInsightSubscriptionsReversed"
+                  v-for="(value, key) in subscriptionsReversed"
                   :key="key"
                 >
                   <template v-slot:accordion-header>
-                    <ZoneInsightSubscriptionHeader :details="value" />
+                    <SubscriptionHeader :details="value" />
                   </template>
 
                   <template v-slot:accordion-content>
-                    <ZoneInsightSubscriptionDetails :details="value" />
+                    <SubscriptionDetails
+                      :details="value"
+                      is-discovery-subscription
+                    />
                   </template>
                 </AccordionItem>
               </Accordion>
@@ -119,8 +122,8 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 
-import ZoneInsightSubscriptionDetails from './components/ZoneInsightSubscriptionDetails'
-import ZoneInsightSubscriptionHeader from './components/ZoneInsightSubscriptionHeader'
+import SubscriptionDetails from './components/SubscriptionDetails'
+import SubscriptionHeader from './components/SubscriptionHeader'
 import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
@@ -132,8 +135,8 @@ export default {
     LabelList,
     Accordion,
     AccordionItem,
-    ZoneInsightSubscriptionDetails,
-    ZoneInsightSubscriptionHeader,
+    SubscriptionDetails,
+    SubscriptionHeader,
     MultizoneInfo,
     EntityURLControl,
   },
@@ -175,7 +178,7 @@ export default {
       entity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
-      zoneIngressInsightSubscriptionsReversed: [],
+      subscriptionsReversed: [],
     }
   },
   computed: {
@@ -271,7 +274,7 @@ export default {
 
           const subscriptions = get(response, 'zoneIngressInsight.subscriptions', [])
 
-          this.zoneIngressInsightSubscriptionsReversed = Array.from(subscriptions).reverse()
+          this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
           this.entity = getSome(response, selected)
         } catch (e) {
