@@ -107,6 +107,10 @@
   --core-theme-color-dark: #{darken($base-theme-color, $adjuster-3)};
   --core-theme-color-darker: #{darken($base-theme-color, $adjuster-4)};
 
+  // Code background
+
+  --code-background: rgba(150, 58, 133, 0.05);
+
   // Buttons, Forms
   // These are overrides of existing Kongponent variables.
   --KButtonPrimaryBase: var(--core-theme-color);

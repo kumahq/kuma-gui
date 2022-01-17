@@ -26,7 +26,13 @@ const getters: GetterTree<OnboardingInterface, RootInterface> = {
 
 const actions: ActionTree<OnboardingInterface, RootInterface> = {
   // complete/skip onboarding
-  completeOnboarding({ commit }) {
+  completeOnboarding({ commit, dispatch }) {
+    // fetch the dataplanes
+    dispatch('fetchDataplaneTotalCount', null, { root: true })
+
+    // fetch sidebar insights
+    dispatch('sidebar/getInsights', null, { root: true })
+
     commit('SET_IS_COMPLETED', true)
     localStorage.setItem('onboarding/isCompleted', 'true')
   },

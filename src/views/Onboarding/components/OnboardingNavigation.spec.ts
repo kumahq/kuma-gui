@@ -46,16 +46,16 @@ describe('OnboardingNavigation.vue', () => {
     expect(screen.getByText(/nextStepTitle/)).toBeInTheDocument()
   })
 
-  it("doesn't display next button", () => {
+  it('display disabled next button', () => {
     renderWithVuex(OnboardingNavigation, {
       props: {
         ...props,
-        shouldDisplayNext: false,
+        shouldAllowNext: false,
       },
       routes,
     })
 
-    expect(screen.queryByText(/Next/)).not.toBeInTheDocument()
+    expect(screen.getByText(/Next/).closest('a')).toHaveAttribute('disabled')
   })
 
   it("doesn't display previous step", () => {

@@ -10,25 +10,36 @@
       </p>
 
       <CodeView
-        title="Clone the GitHub repository for the demo application:"
-        copy-button-text="Copy Command to Clipboard"
-        lang="bash"
-        :content="githubLink"
-      />
-      <CodeView
         v-if="isKubernetes"
-        title="Then run the following command:"
+        title="To run execute the following command:"
         copy-button-text="Copy Command to Clipboard"
         lang="bash"
         :content="k8sRunCommand"
       />
-      <CodeView
-        v-else
-        title="And follow the instructions in the README"
-        copy-button-text="Copy Command to Clipboard"
-        lang="bash"
-        :content="githubLinkReadme"
-      />
+
+      <div v-else>
+        <CodeView
+          title="Clone the GitHub repository for the demo application:"
+          copy-button-text="Copy Command to Clipboard"
+          lang="bash"
+          :content="githubLink"
+        />
+
+        <KCard
+          title="And follow the instructions in the README"
+          border-variant="noBorder"
+        >
+          <template v-slot:body>
+            <a
+              target="_blank"
+              class="external-link-code-block"
+              :href="githubLinkReadme"
+            >
+              {{ githubLinkReadme }}
+            </a>
+          </template>
+        </KCard>
+      </div>
       <div>
         <p class="text-center my-4">
           DPPs status:
@@ -55,7 +66,7 @@
       <OnboardingNavigation
         next-step="onboarding-dataplanes-overview"
         previous-step="onboarding-adding-services"
-        :should-display-next="hasDPPs"
+        :should-allow-next="hasDPPs"
       />
     </template>
   </OnboardingPage>
@@ -94,7 +105,7 @@ export default {
       productName: PRODUCT_NAME,
       githubLink: 'https://github.com/kumahq/kuma-counter-demo/',
       githubLinkReadme: 'https://github.com/kumahq/kuma-counter-demo/blob/master/README.md',
-      k8sRunCommand: 'kubectl apply -f demo.yaml',
+      k8sRunCommand: 'kubectl apply -f https://bit.ly/3Kh2Try',
       generateDpTokenCode: 'kumactl generate dataplane-token --name=redis > kuma-token-redis',
       startDpCode: `kuma-dp run \\
       --cp-address=${kumaDpServerUrl()} \\

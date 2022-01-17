@@ -39,95 +39,43 @@ exports[`MultiZone.vue renders snapshot 1`] = `
           </p>
            
           <div
-            class="code-view"
+            class="kong-card noBorder"
+            data-v-0029352b=""
           >
             <div
-              class="code-view-content"
+              class="k-card-header mb-4"
+              data-v-0029352b=""
             >
               <div
-                class="kong-card noBorder"
+                class="k-card-title"
                 data-v-0029352b=""
               >
-                <div
-                  class="k-card-header mb-4"
+                <h4
                   data-v-0029352b=""
                 >
-                  <div
-                    class="k-card-title"
-                    data-v-0029352b=""
-                  >
-                    <h4
-                      data-v-0029352b=""
-                    >
-                      See the documentation for options to install:
-                    </h4>
-                  </div>
-                  <div
-                    class="k-card-actions"
-                    data-v-0029352b=""
-                  >
-                    <div
-                      data-v-0029352b=""
-                      data-v-3cb990b6=""
-                    >
-                      <button
-                        class="k-button primary"
-                        data-v-38fa8ecf=""
-                        data-v-3cb990b6=""
-                        type="button"
-                      >
-                        
-              Copy link
-            
-                      </button>
-                      <transition-stub
-                        data-v-3cb990b6=""
-                        name="fade"
-                      >
-                        <div
-                          class="k-popover"
-                          data-v-3cb990b6=""
-                          style="width: 200px; display: none;"
-                        >
-                          <!---->
-                          <div
-                            class="k-popover-content"
-                            data-v-3cb990b6=""
-                          >
-                            <div>
-                              <p>
-                                Entity copied to clipboard!
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </transition-stub>
-                    </div>
-                  </div>
-                </div>
-                <!---->
-                <div
-                  class="k-card-body"
-                  data-v-0029352b=""
-                >
-                  <pre
-                    class="code-block"
-                    data-v-0029352b=""
-                  >
-                    <code
-                      class="language-bash"
-                    />
-                  </pre>
-                </div>
+                  See the documentation for options to install:
+                </h4>
               </div>
+              <div
+                class="k-card-actions"
+                data-v-0029352b=""
+              />
             </div>
-             
-            <div>
-              <!---->
-               
-              <!---->
-               
-              <!---->
+            <!---->
+            <div
+              class="k-card-body"
+              data-v-0029352b=""
+            >
+              <a
+                class="external-link-code-block"
+                data-v-0029352b=""
+                href="https://kuma.io/docs/null/deployments/multi-zone/#zone-control-plane"
+                target="_blank"
+              >
+                
+          https://kuma.io/docs/null/deployments/multi-zone/#zone-control-plane
+        
+              </a>
             </div>
           </div>
            
@@ -197,7 +145,34 @@ exports[`MultiZone.vue renders snapshot 1`] = `
   
         </a>
          
-        <!---->
+        <div>
+          <button
+            class="k-button skip-button small btn-link"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+      Skip Setup
+    
+          </button>
+           
+          <span
+            class="inline-block cursor-not-allowed"
+          >
+            <a
+              aria-current="page"
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+              data-v-38fa8ecf=""
+              disabled="disabled"
+              href="#/"
+              type="button"
+            >
+              
+        Next
+      
+            </a>
+          </span>
+        </div>
       </div>
     </div>
      

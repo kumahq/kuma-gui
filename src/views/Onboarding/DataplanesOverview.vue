@@ -43,7 +43,7 @@
       <OnboardingNavigation
         next-step="onboarding-completed"
         previous-step="onboarding-adding-services-code"
-        :should-display-next="tableData.data.length > 0"
+        :should-allow-next="tableData.data.length > 0"
       />
     </template>
   </OnboardingPage>

@@ -141,17 +141,21 @@ exports[`PopulatingMesh.vue renders snapshot 1`] = `
     
           </button>
            
-          <a
-            aria-current="page"
-            class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-            data-v-38fa8ecf=""
-            href="#/"
-            type="button"
+          <span
+            class="inline-block"
           >
-            
-      Next
-    
-          </a>
+            <a
+              aria-current="page"
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+              data-v-38fa8ecf=""
+              href="#/"
+              type="button"
+            >
+              
+        Next
+      
+            </a>
+          </span>
         </div>
       </div>
     </div>

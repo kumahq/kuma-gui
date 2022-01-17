@@ -11,7 +11,7 @@
     >
       Back
     </KButton>
-    <div v-if="shouldDisplayNext">
+    <div>
       <KButton
         v-if="showSkip"
         class="skip-button"
@@ -21,16 +21,19 @@
       >
         Skip Setup
       </KButton>
-      <KButton
-        class="navigation-button navigation-button--next"
-        appearance="primary"
-        :to="{
-          name: nextStep,
-        }"
-        @click.native="lastStep ? skipOnboarding() :changeStep(nextStep)"
-      >
-        {{ nextStepTitle }}
-      </KButton>
+      <span :class="['inline-block', {'cursor-not-allowed': !shouldAllowNext} ]">
+        <KButton
+          :disabled="!shouldAllowNext"
+          class="navigation-button navigation-button--next"
+          appearance="primary"
+          :to="{
+            name: nextStep,
+          }"
+          @click.native="lastStep ? skipOnboarding() :changeStep(nextStep)"
+        >
+          {{ nextStepTitle }}
+        </KButton>
+      </span>
     </div>
   </div>
 </template>
@@ -40,7 +43,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'OnboardingNavigation',
   props: {
-    shouldDisplayNext: {
+    shouldAllowNext: {
       type: Boolean,
       default: true,
     },
@@ -112,6 +115,10 @@ export default {
     --KButtonPrimaryBase: var(--OnboardingNextButton);
     --KButtonPrimaryHover: var(--OnboardingNextButtonHover);
     --KButtonPrimaryActive: var(--OnboardingNextButtonHover);
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
   }
 }
 

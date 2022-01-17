@@ -31,7 +31,7 @@
               <p class="uppercase font-bold tracking-wider">
                 Manually
               </p>
-              <p>After this wizzard</p>
+              <p>After this wizard</p>
             </div>
           </div>
         </Box>

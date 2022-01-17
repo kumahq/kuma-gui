@@ -8,12 +8,21 @@
         A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
       </p>
 
-      <CodeView
+      <KCard
         title="See the documentation for options to install:"
-        copy-button-text="Copy link"
-        lang="bash"
-        :content="documentationLink"
-      />
+        border-variant="noBorder"
+      >
+        <template v-slot:body>
+          <a
+            target="_blank"
+            class="external-link-code-block"
+            :href="documentationLink"
+          >
+            {{ documentationLink }}
+          </a>
+        </template>
+      </KCard>
+
       <div>
         <p class="text-center my-4">
           Zone status:
@@ -54,7 +63,7 @@
       <OnboardingNavigation
         next-step="onboarding-populating-mesh"
         previous-step="onboarding-backend-types"
-        :should-display-next="servicesOnline"
+        :should-allow-next="servicesOnline"
       />
     </template>
   </OnboardingPage>
@@ -62,11 +71,11 @@
 
 <script>
 import Kuma from '@/services/kuma'
+import { mapGetters } from 'vuex'
 import Loading from '@/components/Loading'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
-import CodeView from '@/components/Skeletons/CodeView'
 
 const LONG_POOLING_INTERVAL = 1000
 
@@ -76,7 +85,6 @@ export default {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
-    CodeView,
     Loading,
   },
   metaInfo() {
@@ -86,7 +94,6 @@ export default {
   },
   data() {
     return {
-      documentationLink: 'https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane',
       hasZones: false,
       hasZoneIngresses: false,
       zoneTimeout: null,
@@ -97,7 +104,14 @@ export default {
     servicesOnline() {
       return this.hasZoneIngresses && this.hasZones
     },
+    ...mapGetters({
+      version: 'config/getVersion',
+    }),
+    documentationLink() {
+      return `https://kuma.io/docs/${this.version}/deployments/multi-zone/#zone-control-plane`
+    },
   },
+
   created() {
     this.getZoneIngresses()
     this.getZones()

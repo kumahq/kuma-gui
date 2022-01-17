@@ -48,17 +48,21 @@ exports[`Completed.vue renders snapshot 1`] = `
         <div>
           <!---->
            
-          <a
-            aria-current="page"
-            class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-            data-v-38fa8ecf=""
-            href="#/"
-            type="button"
+          <span
+            class="inline-block"
           >
-            
-      Completed
-    
-          </a>
+            <a
+              aria-current="page"
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+              data-v-38fa8ecf=""
+              href="#/"
+              type="button"
+            >
+              
+        Completed
+      
+            </a>
+          </span>
         </div>
       </div>
     </div>

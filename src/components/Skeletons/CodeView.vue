@@ -156,7 +156,7 @@ export default {
 <style lang="scss" scoped>
 .code-block {
   border-radius: 3px;
-  background-color: rgba(150, 58, 133, 0.05);
+  background-color:  var(--code-background);
   font-size: var(--type-sm);
 }
 

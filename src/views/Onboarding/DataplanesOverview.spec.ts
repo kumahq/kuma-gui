@@ -8,7 +8,7 @@ describe('DataplanesOverview.vue', () => {
 
     expect(screen.getByTestId('loading')).toBeInTheDocument()
     expect(screen.getByText(/Waiting for DPPs/)).toBeInTheDocument()
-    expect(screen.queryByText(/Next/)).not.toBeInTheDocument()
+    expect(screen.getByText(/Next/).closest('a')).toHaveAttribute('disabled')
 
     await screen.findByText(/dataplane-test-456/)
 
