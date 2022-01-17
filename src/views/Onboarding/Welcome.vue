@@ -6,7 +6,7 @@
           Welcome to {{ productName }}
         </h1>
         <p class="welcome-description">
-          Congratulations for downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
+          Congratulations on downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
         </p>
 
         <p class="welcome-description">

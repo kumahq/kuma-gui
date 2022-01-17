@@ -23,7 +23,7 @@ exports[`Welcome.vue renders snapshot 1`] = `
           class="welcome-description"
         >
           
-        Congratulations for downloading Kuma! You are just a 
+        Congratulations on downloading Kuma! You are just a 
           <strong>
             few minutes
           </strong>
