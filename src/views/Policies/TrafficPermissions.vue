@@ -86,6 +86,13 @@
             </div>
           </LabelList>
         </template>
+        <template v-slot:affected-dpps>
+          <PolicyConnections
+            :mesh="rawEntity.mesh"
+            :policy-name="rawEntity.name"
+            policy-type="traffic-permissions"
+          />
+        </template>
         <template v-slot:yaml>
           <YamlView
             :has-error="entityHasError"
@@ -106,6 +113,7 @@ import { getTableData } from '@/utils/tableDataUtils'
 import { getSome, stripTimes } from '@/helpers'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
@@ -124,6 +132,7 @@ export default {
     Tabs,
     YamlView,
     LabelList,
+    PolicyConnections,
   },
   data() {
     return {
@@ -152,13 +161,14 @@ export default {
           hash: '#overview',
           title: 'Overview',
         },
+        { hash: '#affected-dpps', title: 'Affected DPPs' },
         {
           hash: '#yaml',
           title: 'YAML',
         },
       ],
       entity: {},
-      rawEntity: null,
+      rawEntity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       securityWarning: false,

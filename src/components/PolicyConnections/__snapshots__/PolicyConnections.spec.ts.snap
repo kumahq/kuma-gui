@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PolicyConnections.vue renders snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <div
+        class="label-list-content"
+      >
+        <div
+          class="kong-card noBorder"
+          data-v-0029352b=""
+        >
+          <!---->
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-0029352b=""
+          >
+            <div
+              class="label-list__col-wrapper multi-col"
+              data-v-0029352b=""
+            >
+              <ul
+                data-v-0029352b=""
+              >
+                <li
+                  data-v-0029352b=""
+                >
+                  <h4
+                    data-v-0029352b=""
+                  >
+                    Dataplanes
+                  </h4>
+                   
+                  <input
+                    class="k-input mb-4"
+                    data-v-0029352b=""
+                    id="dataplane-search"
+                    placeholder="Filter by name"
+                    required="required"
+                    type="text"
+                  />
+                   
+                  <p
+                    class="my-1"
+                    data-testid="dataplane-name"
+                    data-v-0029352b=""
+                  >
+                    <a
+                      class=""
+                      data-v-0029352b=""
+                      href="#/?ns=backend"
+                    >
+                      
+            backend
+          
+                    </a>
+                  </p>
+                  <p
+                    class="my-1"
+                    data-testid="dataplane-name"
+                    data-v-0029352b=""
+                  >
+                    <a
+                      class=""
+                      data-v-0029352b=""
+                      href="#/?ns=db"
+                    >
+                      
+            db
+          
+                    </a>
+                  </p>
+                  <p
+                    class="my-1"
+                    data-testid="dataplane-name"
+                    data-v-0029352b=""
+                  >
+                    <a
+                      class=""
+                      data-v-0029352b=""
+                      href="#/?ns=frontend"
+                    >
+                      
+            frontend
+          
+                    </a>
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <!---->
+       
+      <!---->
+       
+      <!---->
+    </div>
+  </div>
+</div>
+`;

@@ -71,6 +71,13 @@
             </div>
           </LabelList>
         </template>
+        <template v-slot:affected-dpps>
+          <PolicyConnections
+            :mesh="rawEntity.mesh"
+            :policy-name="rawEntity.name"
+            policy-type="fault-injections"
+          />
+        </template>
         <template v-slot:yaml>
           <YamlView
             lang="yaml"
@@ -93,6 +100,7 @@ import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
+import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
@@ -109,6 +117,7 @@ export default {
     Tabs,
     YamlView,
     LabelList,
+    PolicyConnections,
   },
   data() {
     return {
@@ -137,13 +146,14 @@ export default {
           hash: '#overview',
           title: 'Overview',
         },
+        { hash: '#affected-dpps', title: 'Affected DPPs' },
         {
           hash: '#yaml',
           title: 'YAML',
         },
       ],
       entity: {},
-      rawEntity: null,
+      rawEntity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }
