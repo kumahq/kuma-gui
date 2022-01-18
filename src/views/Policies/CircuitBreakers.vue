@@ -1,5 +1,6 @@
 <template>
-  <div class="circuit-breakers">
+  <div class="circuit-breakers relative">
+    <DocumentationLink :href="docsURL" />
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -91,6 +92,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { getSome, stripTimes } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import Kuma from '@/services/kuma'
@@ -101,6 +103,7 @@ import Tabs from '@/components/Utils/Tabs'
 import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
+import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
@@ -116,6 +119,7 @@ export default {
     YamlView,
     LabelList,
     PolicyConnections,
+    DocumentationLink,
   },
   data() {
     return {
@@ -155,6 +159,14 @@ export default {
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }
+  },
+  computed: {
+    ...mapGetters({
+      version: 'config/getVersion',
+    }),
+    docsURL() {
+      return `https://kuma.io/docs/${this.version}/policies/circuit-breaker/`
+    },
   },
   watch: {
     $route(to, from) {

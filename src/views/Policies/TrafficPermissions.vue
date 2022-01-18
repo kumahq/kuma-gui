@@ -1,5 +1,6 @@
 <template>
-  <div class="traffic-permissions">
+  <div class="traffic-permissions relative">
+    <DocumentationLink :href="docsURL" />
     <div
       v-if="securityWarning"
       class="mb-4"
@@ -118,6 +119,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
+import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
@@ -133,6 +135,7 @@ export default {
     YamlView,
     LabelList,
     PolicyConnections,
+    DocumentationLink,
   },
   data() {
     return {
@@ -177,7 +180,11 @@ export default {
   computed: {
     ...mapGetters({
       environment: 'config/getEnvironment',
+      version: 'config/getVersion',
     }),
+    docsURL() {
+      return `https://kuma.io/docs/${this.version}/policies/traffic-permissions/`
+    },
   },
   watch: {
     $route(to, from) {

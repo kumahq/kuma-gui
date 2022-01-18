@@ -1,5 +1,6 @@
 <template>
-  <div class="traffic-logs">
+  <div class="traffic-logs relative">
+    <DocumentationLink :href="docsURL" />
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -89,6 +90,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { getSome, stripTimes } from '@/helpers'
 import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
@@ -100,6 +102,7 @@ import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
+import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
 
 export default {
   name: 'TrafficLogs',
@@ -114,6 +117,7 @@ export default {
     YamlView,
     LabelList,
     PolicyConnections,
+    DocumentationLink,
   },
   data() {
     return {
@@ -153,6 +157,14 @@ export default {
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
     }
+  },
+  computed: {
+    ...mapGetters({
+      version: 'config/getVersion',
+    }),
+    docsURL() {
+      return `https://kuma.io/docs/${this.version}/policies/traffic-log/`
+    },
   },
   watch: {
     $route(to, from) {
