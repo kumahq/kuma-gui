@@ -92,6 +92,7 @@ export default {
     return {
       shortVersion: '',
       apiUrl: getKumaCpServerUrl(),
+      initialBodyPaddingTop: '',
     }
   },
   computed: {
@@ -132,10 +133,12 @@ export default {
     },
   },
   mounted() {
+    this.initialBodyPaddingTop = document.body.style.paddingTop
+
     document.body.style.paddingTop = 'var(--topbar-height)'
   },
   destroyed() {
-    document.body.style.paddingTop = ''
+    document.body.style.paddingTop = this.initialBodyPaddingTop
   },
 }
 </script>
