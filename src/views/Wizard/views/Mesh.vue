@@ -106,9 +106,6 @@
                   <option value="provided">
                     provided
                   </option>
-                  <option value="vault">
-                    vault
-                  </option>
                 </select>
                 <p class="help">
                   If you've enabled mTLS, you must select a CA.
