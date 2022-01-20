@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Completed.vue renders snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="onboarding-container"
+    >
+      <div
+        class="onboarding-container__header"
+      >
+        <div
+          class="relative"
+        >
+          <h1
+            class="onboarding-title"
+          >
+            
+    Go to the dashboard
+  
+          </h1>
+           
+          <!---->
+        </div>
+      </div>
+       
+      <div
+        class="onboarding-container__content"
+      >
+        <div
+          class="w-full"
+        >
+          <div
+            class="flex justify-center"
+          >
+            <img
+              src="@/assets/images/kuma_gui.png?external"
+            />
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="mt-4 flex items-center flex-col sm:flex-row justify-center"
+      >
+        <!---->
+         
+        <div>
+          <!---->
+           
+          <span
+            class="inline-block"
+          >
+            <a
+              aria-current="page"
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+              data-v-38fa8ecf=""
+              href="#/"
+              type="button"
+            >
+              
+        Completed
+      
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="background-image"
+    />
+  </div>
+</div>
+`;

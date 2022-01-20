@@ -157,14 +157,18 @@
   background-color: #0089eb;
 }
 
+.external-link-code-block {
+  @apply text-sm block p-4;
+
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  background-color: var(--code-background);
+}
+
 .main-content {
   padding: 44px;
   transition: var(--transitionTiming) margin var(--transition);
 }
-.page {
-  max-width: 76rem;
-  margin: 0 auto;
-}
+
 .main-content-container {
   max-width: var(--global-content-max-width);
   margin: 0 auto;

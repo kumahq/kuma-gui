@@ -6,6 +6,7 @@ import notifications from '@/store/modules/notifications'
 import sidebar from '@/store/modules/sidebar'
 import { getItemStatusFromInsight } from '@/dataplane'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
+import onboarding from '@/store/modules/onboarding'
 
 import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
@@ -22,18 +23,14 @@ export default (): Module<RootInterface, RootInterface> => ({
     sidebar,
     config,
     notifications,
+    onboarding,
   },
   state: {
     menu: null,
-    onboardingComplete: false,
     globalLoading: true,
     meshes: {},
-    dataplanes: [],
     selectedMesh: 'all', // shows all meshes on initial load
     totalDataplaneCount: 0,
-
-    totalDataplaneList: [],
-    anyDataplanesOffline: null,
 
     version: '',
     itemQueryNamespace: 'item',
@@ -82,12 +79,8 @@ export default (): Module<RootInterface, RootInterface> => ({
     supportedVersionsFailed: '',
   } as TODO,
   getters: {
-    getOnboardingStatus: state => state.onboardingComplete,
     globalLoading: state => state.globalLoading,
     getMeshList: state => state.meshes,
-    getDataplanes: state => state.dataplanes,
-    getDataplanesList: state => state.totalDataplaneList,
-    getAnyDpOffline: state => state.anyDataplanesOffline,
 
     getItemQueryNamespace: state => state.itemQueryNamespace,
     getMeshInsight: state => state.meshInsight,
@@ -103,23 +96,13 @@ export default (): Module<RootInterface, RootInterface> => ({
     getSupportedVersions: ({ supportedVersions }) => supportedVersions,
     getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
     getSupportedVersionsFailed: ({ supportedVersionsFailed }) => supportedVersionsFailed,
-    showOnboarding: ({ totalDataplaneCount, meshes }) => {
-      const onlyDefaultMesh = meshes.total === 1 && meshes.items[0].name === 'default'
-      const noDataplane = totalDataplaneCount === 0
-
-      return noDataplane && onlyDefaultMesh
-    },
   },
   mutations: {
-    SET_ONBOARDING_STATUS: (state, status) => (state.onboardingComplete = status),
     SET_GLOBAL_LOADING: (state, { globalLoading }) => (state.globalLoading = globalLoading),
     FETCH_ALL_MESHES: (state, meshes) => (state.meshes = meshes),
-    FETCH_DATAPLANES_FROM_MESH: (state, dataplanes) => (state.dataplanes = dataplanes),
     SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
     SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
-    SET_TOTAL_DP_LIST: (state, dataplanes) => (state.totalDataplaneList = dataplanes),
     SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
-    SET_ANY_DP_OFFLINE: (state, status) => (state.anyDataplanesOffline = status),
 
     // NEW
     SET_INTERNAL_SERVICE_SUMMARY: (state, { items = [] } = {}) => {
@@ -201,11 +184,6 @@ export default (): Module<RootInterface, RootInterface> => ({
       commit('SET_GLOBAL_LOADING', { globalLoading: false })
     },
 
-    // update the onboarding state
-    updateOnboardingStatus({ commit }, status) {
-      commit('SET_ONBOARDING_STATUS', status)
-    },
-
     // fetch all of the meshes from the Kuma
     fetchMeshList({ commit }) {
       const params = {
@@ -253,74 +231,6 @@ export default (): Module<RootInterface, RootInterface> => ({
         .catch(error => {
           console.error(error)
         })
-    },
-
-    /**
-     * Dataplane statuses
-     */
-
-    // this will get the current status of all dataplanes
-    getAllDataplanes({ commit }, params) {
-      const getDataplanes = async () =>
-        new Promise<void>(async (resolve, reject) => {
-          const result = []
-          const states = []
-
-          const dataplanes = await Kuma.getAllDataplanes(params)
-          const items = await dataplanes.items
-
-          for (let i = 0; i < items.length; i++) {
-            const name = items[i].name
-            const mesh = items[i].mesh
-
-            const itemStatus = await Kuma.getDataplaneOverviewFromMesh({ name, mesh }).then(response => {
-              const items = response.dataplaneInsight.subscriptions
-
-              if (items && items.length > 0) {
-                for (let i = 0; i < items.length; i++) {
-                  const connectTime = items[i].connectTime
-                  const disconnectTime = items[i].disconnectTime
-
-                  if (connectTime && connectTime.length && !disconnectTime) {
-                    return ONLINE
-                  }
-                }
-              }
-
-              return OFFLINE
-            })
-
-            // create the full data array
-            result.push({
-              status: itemStatus,
-              name,
-              mesh,
-            })
-          }
-
-          // create a simple flat status object with booleans for checking
-          // if any dataplanes are offline
-          for (let i = 0; i < Object.values(result).length; i++) {
-            const statusVal = Object.values(result[i])[0]
-            const isOnline = !(statusVal === OFFLINE || statusVal === OFFLINE.toLowerCase())
-
-            states.push(isOnline)
-          }
-
-          // if any of the dataplanes return false for being online
-          // commit this so we can check against it
-          const anyDpOffline = states.some(i => i === false)
-
-          commit('SET_ANY_DP_OFFLINE', anyDpOffline)
-
-          // commit the total list of dataplanes
-          commit('SET_TOTAL_DP_LIST', result)
-
-          // resolve the promise
-          resolve()
-        })
-
-      return getDataplanes()
     },
 
     // NEW

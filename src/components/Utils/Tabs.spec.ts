@@ -36,7 +36,7 @@ describe('Tabs.vue', () => {
     expect(screen.getAllByText(/Kubernetes/).length).toBe(2)
   })
 
-  it('renders with initally selected tab', async () => {
+  it('renders with initally selected tab', () => {
     render(Tabs, { ...options, props: { ...options.props, initialTabOverride: 'kubernetes' } })
 
     expect(screen.getAllByText(/Kubernetes/).length).toBe(2)

@@ -69,10 +69,11 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
             data-v-14c8a976=""
           >
             <a
-              class="k-button action-button small primary"
+              aria-current="page"
+              class="k-button action-button router-link-exact-active router-link-active small primary"
               data-v-14c8a976=""
               data-v-38fa8ecf=""
-              href="#/get-started"
+              href="#/"
               type="button"
             >
               

@@ -1,21 +1,28 @@
 <template>
-  <div class="main-content-container">
-    <Sidebar />
+  <div>
+    <GlobalHeader />
+    <div class="main-content-container">
+      <Sidebar />
 
-    <main class="main-content">
-      <div class="page">
+      <main class="main-content">
         <NotificationManager />
         <OnboardingNotification v-if="showOnboarding" />
         <Breadcrumbs />
-        <router-view />
-      </div>
-    </main>
+        <transition
+          mode="out-in"
+          name="fade"
+        >
+          <router-view />
+        </transition>
+      </main>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 
+import GlobalHeader from '@/components/Global/Header'
 import Sidebar from '@/components/Sidebar/Sidebar'
 import NotificationManager from '@/components/NotificationManager'
 import Breadcrumbs from '@/components/Breadcrumbs.vue'
@@ -28,10 +35,11 @@ export default {
     Sidebar,
     NotificationManager,
     OnboardingNotification,
+    GlobalHeader,
   },
   computed: {
     ...mapGetters({
-      showOnboarding: 'showOnboarding',
+      showOnboarding: 'onboarding/showOnboarding',
     }),
   },
 }

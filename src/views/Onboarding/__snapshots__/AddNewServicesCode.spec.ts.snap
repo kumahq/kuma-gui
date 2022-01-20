@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddNewServicesCode.vue renders snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="onboarding-container"
+    >
+      <div
+        class="onboarding-container__header"
+      >
+        <div
+          class="relative"
+        >
+          <h1
+            class="onboarding-title"
+          >
+            
+    Add services
+  
+          </h1>
+           
+          <!---->
+        </div>
+      </div>
+       
+      <div
+        class="onboarding-container__content"
+      >
+        <div
+          class="w-full"
+        >
+          <p
+            class="text-center mb-12"
+          >
+            
+      The demo application includes two services: a Redis backend to store a counter value,
+      and a frontend web UI to show and increment the counter.
+    
+          </p>
+           
+          <div>
+            <div
+              class="code-view"
+            >
+              <div
+                class="code-view-content"
+              >
+                <div
+                  class="kong-card noBorder"
+                  data-v-0029352b=""
+                >
+                  <div
+                    class="k-card-header mb-4"
+                    data-v-0029352b=""
+                  >
+                    <div
+                      class="k-card-title"
+                      data-v-0029352b=""
+                    >
+                      <h4
+                        data-v-0029352b=""
+                      >
+                        Clone the GitHub repository for the demo application:
+                      </h4>
+                    </div>
+                    <div
+                      class="k-card-actions"
+                      data-v-0029352b=""
+                    >
+                      <div
+                        data-v-0029352b=""
+                        data-v-3cb990b6=""
+                      >
+                        <button
+                          class="k-button primary"
+                          data-v-38fa8ecf=""
+                          data-v-3cb990b6=""
+                          type="button"
+                        >
+                          
+              Copy Command to Clipboard
+            
+                        </button>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 200px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                <p>
+                                  Entity copied to clipboard!
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </div>
+                  </div>
+                  <!---->
+                  <div
+                    class="k-card-body"
+                    data-v-0029352b=""
+                  >
+                    <pre
+                      class="code-block"
+                      data-v-0029352b=""
+                    >
+                      <code
+                        class="language-bash"
+                      />
+                    </pre>
+                  </div>
+                </div>
+              </div>
+               
+              <div>
+                <!---->
+                 
+                <!---->
+                 
+                <!---->
+              </div>
+            </div>
+             
+            <div
+              class="kong-card noBorder"
+              data-v-0029352b=""
+            >
+              <div
+                class="k-card-header mb-4"
+                data-v-0029352b=""
+              >
+                <div
+                  class="k-card-title"
+                  data-v-0029352b=""
+                >
+                  <h4
+                    data-v-0029352b=""
+                  >
+                    And follow the instructions in the README
+                  </h4>
+                </div>
+                <div
+                  class="k-card-actions"
+                  data-v-0029352b=""
+                />
+              </div>
+              <!---->
+              <div
+                class="k-card-body"
+                data-v-0029352b=""
+              >
+                <a
+                  class="external-link-code-block"
+                  data-v-0029352b=""
+                  href="https://github.com/kumahq/kuma-counter-demo/blob/master/README.md"
+                  target="_blank"
+                >
+                  
+            https://github.com/kumahq/kuma-counter-demo/blob/master/README.md
+          
+                </a>
+              </div>
+            </div>
+          </div>
+           
+          <div>
+            <p
+              class="text-center my-4"
+            >
+              
+        DPPs status:
+        
+              <span
+                class="text-red-500"
+                data-testid="dpps-disconnected"
+              >
+                Disconeccted
+              </span>
+            </p>
+             
+            <div
+              class="flex justify-center"
+            >
+              <div
+                class="loading"
+                data-testid="loading"
+              >
+                <div />
+                 
+                <div />
+                 
+                <div />
+                 
+                <div />
+                 
+                <div />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+      >
+        <a
+          aria-current="page"
+          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
+          data-v-38fa8ecf=""
+          href="#/"
+          type="button"
+        >
+          
+    Back
+  
+        </a>
+         
+        <div>
+          <button
+            class="k-button skip-button small btn-link"
+            data-v-38fa8ecf=""
+            type="button"
+          >
+            
+      Skip Setup
+    
+          </button>
+           
+          <span
+            class="inline-block cursor-not-allowed"
+          >
+            <a
+              aria-current="page"
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
+              data-v-38fa8ecf=""
+              disabled="disabled"
+              href="#/"
+              type="button"
+            >
+              
+        Next
+      
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+     
+    <div
+      class="background-image"
+    />
+  </div>
+</div>
+`;

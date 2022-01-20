@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ShellWithHeader.vue renders component with route 1`] = `
+<div>
+  <div>
+    <header
+      class="main-header px-4 py-1 flex justify-between items-center"
+    >
+      <div
+        class="py-1 md:py-0 flex justify-between items-center"
+      >
+        <a
+          aria-current="page"
+          class="logo router-link-exact-active router-link-active"
+          href="#/"
+        >
+          <img
+            alt="null Logo"
+            src="@/assets/images/product-logo.png?external"
+          />
+        </a>
+         
+        <div
+          class="my-0 mx-6 upgrade-check-wrapper"
+        >
+          <div
+            class="upgrade-check"
+          >
+            <!---->
+          </div>
+        </div>
+      </div>
+       
+      <div
+        class="flex justify-between items-center"
+      >
+        <!---->
+      </div>
+    </header>
+     
+    <div
+      class="main-content-container"
+    >
+      <div
+        class="main-content"
+      >
+        <transition-stub
+          mode="out-in"
+          name="fade"
+        >
+          <div>
+            
+  TestComponent
+
+          </div>
+        </transition-stub>
+      </div>
+    </div>
+  </div>
+</div>
+`;

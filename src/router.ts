@@ -302,29 +302,82 @@ export default (store: Store<RootInterface>) => {
     },
     // Onboarding
     {
-      path: '/get-started',
-      redirect: { name: 'setup-welcome' },
-      component: () => import(/* webpackChunkName: "shell-empty" */ '@/views/ShellEmpty.vue'),
+      path: '/onboarding',
+      redirect: { name: 'onboarding-welcome' },
+      component: () => import(/* webpackChunkName: "shell" */ '@/views/ShellEmpty.vue'),
       children: [
         {
           path: 'welcome',
-          name: 'setup-welcome',
+          name: 'onboarding-welcome',
           meta: {
             title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`,
-            hideStatus: true,
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding-get-started" */ '@/views/Onboarding/GetStarted.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Welcome.vue'),
         },
         {
-          path: 'complete',
-          name: 'setup-complete',
+          path: 'deployment-types',
+          name: 'onboarding-deployment-types',
           meta: {
-            title: 'Congratulations!',
-            hideStatus: true,
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding-complete" */ '@/views/Onboarding/Complete.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DeploymentTypes.vue'),
+        },
+        {
+          path: 'configuration-types',
+          name: 'onboarding-configuration-types',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/ConfigurationTypes.vue'),
+        },
+        {
+          path: 'multi-zone',
+          name: 'onboarding-multi-zone',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZone.vue'),
+        },
+        {
+          path: 'create-mesh',
+          name: 'onboarding-create-mesh',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/CreateMesh.vue'),
+        },
+        {
+          path: 'add-services',
+          name: 'onboarding-add-services',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddNewServices.vue'),
+        },
+        {
+          path: 'add-services-code',
+          name: 'onboarding-add-services-code',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddNewServicesCode.vue'),
+        },
+        {
+          path: 'dataplanes-overview',
+          name: 'onboarding-dataplanes-overview',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DataplanesOverview.vue'),
+        },
+        {
+          path: 'completed',
+          name: 'onboarding-completed',
+          meta: {
+            onboardingProcess: true,
+          },
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Completed.vue'),
         },
       ],
     },
@@ -332,7 +385,7 @@ export default (store: Store<RootInterface>) => {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import(/* webpackChunkName: "shell-empty" */ '@/views/ShellEmpty.vue'),
+      component: () => import(/* webpackChunkName: "shell" */ '@/views/ShellWithHeader.vue'),
       children: [
         {
           path: 'mesh',
@@ -414,8 +467,8 @@ export default (store: Store<RootInterface>) => {
       })
     }
 
-    const hasOnboarded = JSON.parse(localStorage.getItem('kumaOnboardingComplete') || 'false')
-    const showOnboarding = store.getters.showOnboarding
+    const showOnboarding = store.getters['onboarding/showOnboarding']
+    const isCompleted = store.state.onboarding.isCompleted
 
     const onboardingRoute = to.meta.onboardingProcess
 
@@ -426,8 +479,10 @@ export default (store: Store<RootInterface>) => {
       // if someone never had onboarding and do not fulfiled condition to skip it
       // and try to access some other page than onboarding ones
       // then redirect into first onboarding page
-    } else if (!hasOnboarded && !onboardingRoute && showOnboarding) {
-      next({ name: 'setup-welcome' })
+    } else if (!onboardingRoute && showOnboarding && !isCompleted) {
+      const name = localStorage.getItem('onboarding/step') || 'onboarding-welcome'
+
+      next({ name })
     } else {
       next()
     }

@@ -104,7 +104,7 @@ export default {
 
     ...mapGetters({
       amountOfActions: 'notifications/amountOfActions',
-      showOnboarding: 'showOnboarding',
+      showOnboarding: 'onboarding/showOnboarding',
       meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
     }),
 
