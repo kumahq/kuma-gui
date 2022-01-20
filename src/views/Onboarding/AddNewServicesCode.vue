@@ -65,7 +65,7 @@
     <template #navigation>
       <OnboardingNavigation
         next-step="onboarding-dataplanes-overview"
-        previous-step="onboarding-adding-services"
+        previous-step="onboarding-add-services"
         :should-allow-next="hasDPPs"
       />
     </template>
@@ -87,7 +87,7 @@ import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 const LONG_POOLING_INTERVAL = 1000
 
 export default {
-  name: 'AddingNewServicesCode',
+  name: 'AddNewServicesCode',
   components: {
     CodeView,
     OnboardingNavigation,
@@ -97,7 +97,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Adding new services',
+      title: 'Add new services',
     }
   },
   data() {

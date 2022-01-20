@@ -40,7 +40,7 @@
     <template #navigation>
       <OnboardingNavigation
         :next-step="nextStep"
-        previous-step="onboarding-populating-mesh"
+        previous-step="onboarding-create-mesh"
       />
     </template>
   </OnboardingPage>
@@ -54,7 +54,7 @@ import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 import Box from '@/views/Onboarding/components/Box'
 
 export default {
-  name: 'AddingNewServices',
+  name: 'AddNewServices',
   components: {
     OnboardingNavigation,
     OnboardingHeading,
@@ -63,7 +63,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Adding new services',
+      title: 'Add new services',
     }
   },
   computed: {
@@ -76,7 +76,7 @@ export default {
         return 'onboarding-completed'
       }
 
-      return 'onboarding-adding-services-code'
+      return 'onboarding-add-services-code'
     },
     mode: {
       get() {

@@ -42,7 +42,7 @@
     <template #navigation>
       <OnboardingNavigation
         next-step="onboarding-completed"
-        previous-step="onboarding-adding-services-code"
+        previous-step="onboarding-add-services-code"
         :should-allow-next="tableData.data.length > 0"
       />
     </template>

@@ -24,7 +24,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   getMode: state => state.clientConfig?.mode,
   getTagline: state => state.tagline,
   getVersion: state => state.version,
-  getBackend: state => state.clientConfig?.store?.type,
+  getConfigurationType: state => state.clientConfig?.store?.type,
   getMulticlusterStatus: (state, getters) => {
     // is Kuma running in Multi-Zone mode?
 

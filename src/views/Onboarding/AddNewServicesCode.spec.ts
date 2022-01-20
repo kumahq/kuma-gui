@@ -2,17 +2,17 @@ import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 
 import Kuma from '@/services/kuma'
-import AddingNewServicesCode from './AddingNewServicesCode.vue'
+import AddNewServicesCode from './AddNewServicesCode.vue'
 
-describe('AddingNewServicesCode.vue', () => {
+describe('AddNewServicesCode.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(AddingNewServicesCode)
+    const { container } = renderWithVuex(AddNewServicesCode)
 
     expect(container).toMatchSnapshot()
   })
 
   it('detects resources on call and allow to proceed', async () => {
-    renderWithVuex(AddingNewServicesCode, {
+    renderWithVuex(AddNewServicesCode, {
       routes: [],
     })
 
@@ -34,7 +34,7 @@ describe('AddingNewServicesCode.vue', () => {
         total: 1,
       })
 
-    renderWithVuex(AddingNewServicesCode, {
+    renderWithVuex(AddNewServicesCode, {
       routes: [],
     })
 

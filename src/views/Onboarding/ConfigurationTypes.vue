@@ -51,7 +51,7 @@ import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 
 export default {
-  name: 'BackendTypes',
+  name: 'ConfigurationTypes',
   components: {
     KubernetesGraph,
     PostgresGraph,
@@ -62,7 +62,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Backend Types',
+      title: 'Configuration Types',
     }
   },
   data() {
@@ -71,10 +71,10 @@ export default {
   computed: {
     ...mapGetters({
       multicluster: 'config/getMulticlusterStatus',
-      backend: 'config/getBackend',
+      configurationType: 'config/getConfigurationType',
     }),
     nextStep() {
-      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-populating-mesh'
+      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-create-mesh'
     },
     currentGraph() {
       switch (this.mode) {
@@ -90,7 +90,7 @@ export default {
     },
   },
   mounted() {
-    this.mode = this.backend
+    this.mode = this.configurationType
   },
 }
 </script>

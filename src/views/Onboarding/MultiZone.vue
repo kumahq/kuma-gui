@@ -61,8 +61,8 @@
 
     <template #navigation>
       <OnboardingNavigation
-        next-step="onboarding-populating-mesh"
-        previous-step="onboarding-backend-types"
+        next-step="onboarding-create-mesh"
+        previous-step="onboarding-configuration-types"
         :should-allow-next="servicesOnline"
       />
     </template>

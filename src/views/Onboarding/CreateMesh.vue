@@ -24,7 +24,7 @@
 
     <template #navigation>
       <OnboardingNavigation
-        next-step="onboarding-adding-services"
+        next-step="onboarding-add-services"
         :previous-step="previousStep"
       />
     </template>
@@ -39,7 +39,7 @@ import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
 
 export default {
-  name: 'PopulatingMesh',
+  name: 'CreateMesh',
   components: {
     OnboardingNavigation,
     OnboardingHeading,
@@ -47,7 +47,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: 'Populating a Mesh',
+      title: 'Create the Mesh',
     }
   },
 
@@ -69,7 +69,7 @@ export default {
       multicluster: 'config/getMulticlusterStatus',
     }),
     previousStep() {
-      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-backend-types'
+      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-configuration-types'
     },
   },
 }

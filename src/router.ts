@@ -324,12 +324,12 @@ export default (store: Store<RootInterface>) => {
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DeploymentTypes.vue'),
         },
         {
-          path: 'backend-types',
-          name: 'onboarding-backend-types',
+          path: 'configuration-types',
+          name: 'onboarding-configuration-types',
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/BackendTypes.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/ConfigurationTypes.vue'),
         },
         {
           path: 'multi-zone',
@@ -340,28 +340,28 @@ export default (store: Store<RootInterface>) => {
           component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZone.vue'),
         },
         {
-          path: 'populating-mesh',
-          name: 'onboarding-populating-mesh',
+          path: 'create-mesh',
+          name: 'onboarding-create-mesh',
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/PopulatingMesh.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/CreateMesh.vue'),
         },
         {
-          path: 'adding-services',
-          name: 'onboarding-adding-services',
+          path: 'add-services',
+          name: 'onboarding-add-services',
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServices.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddNewServices.vue'),
         },
         {
-          path: 'adding-services-code',
-          name: 'onboarding-adding-services-code',
+          path: 'add-services-code',
+          name: 'onboarding-add-services-code',
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddingNewServicesCode.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddNewServicesCode.vue'),
         },
         {
           path: 'dataplanes-overview',

@@ -32,7 +32,7 @@
 
     <template #navigation>
       <OnboardingNavigation
-        next-step="onboarding-backend-types"
+        next-step="onboarding-configuration-types"
         previous-step="onboarding-welcome"
       />
     </template>

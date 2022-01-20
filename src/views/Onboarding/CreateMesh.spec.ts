@@ -1,16 +1,16 @@
 import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
-import PopulatingMesh from './PopulatingMesh.vue'
+import CreateMesh from './CreateMesh.vue'
 
-describe('PopulatingMesh.vue', () => {
+describe('CreateMesh.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(PopulatingMesh)
+    const { container } = renderWithVuex(CreateMesh)
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders multizone next step', () => {
-    renderWithVuex(PopulatingMesh, {
+    renderWithVuex(CreateMesh, {
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
       stubs: {
         routerLink: {
