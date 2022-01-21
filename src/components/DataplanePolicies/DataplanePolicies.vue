@@ -22,6 +22,24 @@
                   </p>
                   <p class="subtitle">
                     {{ item.type }}
+
+                    <KPop
+                      width="300"
+                      placement="right"
+                      trigger="hover"
+                    >
+                      <KIcon
+                        icon="help"
+                        size="12"
+                        class="ml-1"
+                        view-box="0 0 16 16"
+                      />
+                      <template v-slot:content>
+                        <div>
+                          {{ POLICY_TYPE_SUBTITLE[item.type] }}
+                        </div>
+                      </template>
+                    </KPop>
                   </p>
                 </div>
 
@@ -76,6 +94,12 @@ import Fetcher from '@/components/Utils/Fetcher'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 
+const POLICY_TYPE_SUBTITLE = {
+  inbound: 'Policies applied on incoming connection on address',
+  outbound: 'Policies applied on outcomming connection on address',
+  service: 'Policies applied on incoming connection on address',
+}
+
 export default {
   name: 'DataplanePolicies',
   components: {
@@ -102,6 +126,7 @@ export default {
       policies: [],
       searchInput: '',
       POLICY_MAP,
+      POLICY_TYPE_SUBTITLE,
     }
   },
 
@@ -150,7 +175,7 @@ export default {
 
 <style lang="scss" scoped>
 .subtitle {
-  @apply text-sm tracking-wide;
+  @apply text-sm capitalize tracking-wide flex items-center;
 
   color: var(--black-45);
 }
