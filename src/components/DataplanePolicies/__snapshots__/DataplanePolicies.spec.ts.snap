@@ -1,0 +1,404 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataplanePolicies.vue renders snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <div
+        class="kong-card noBorder"
+        data-v-0029352b=""
+      >
+        <!---->
+        <!---->
+        <div
+          class="k-card-body"
+          data-v-0029352b=""
+        >
+          <ul
+            class="accordion"
+            data-v-0029352b=""
+          >
+            <li
+              class="relative border-b py-2 active"
+            >
+              <button
+                aria-expanded="true"
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  192.168.0.1:80:81
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  inbound
+                
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  FaultInjection
+                
+                    </div>
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  TrafficPermission
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <div
+                  class="px-4"
+                >
+                  <div
+                    class="policy-wrapper"
+                  >
+                    <div
+                      class="policy-item"
+                    >
+                      <h4
+                        class="policy-type"
+                      >
+                        
+                  Fault Injections
+                
+                      </h4>
+                       
+                      <ul>
+                        <li
+                          class="my-1"
+                          data-testid="policy-name"
+                        >
+                          <a
+                            class=""
+                            href="#/?ns=fi1.kuma-system"
+                          >
+                            
+                      fi1.kuma-system
+                    
+                          </a>
+                        </li>
+                        <li
+                          class="my-1"
+                          data-testid="policy-name"
+                        >
+                          <a
+                            class=""
+                            href="#/?ns=web-to-backend.kuma-system"
+                          >
+                            
+                      web-to-backend.kuma-system
+                    
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="policy-item"
+                    >
+                      <h4
+                        class="policy-type"
+                      >
+                        
+                  Traffic Permissions
+                
+                      </h4>
+                       
+                      <ul>
+                        <li
+                          class="my-1"
+                          data-testid="policy-name"
+                        >
+                          <a
+                            class=""
+                            href="#/?ns=tp-1"
+                          >
+                            
+                      tp-1
+                    
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  192.168.0.2:8080
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  outbound
+                
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  Timeout
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  gateway
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+                
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  postgres
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+                
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  redis
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+                
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  web
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+                
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+     
+    <!---->
+     
+    <!---->
+     
+    <!---->
+  </div>
+</div>
+`;

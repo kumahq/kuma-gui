@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { Store } from 'vuex'
 import VueRouter from 'vue-router'
+import { POLICY_MAP } from '@/consts'
 import { RootInterface } from './store'
 
 Vue.use(VueRouter)
@@ -191,106 +192,106 @@ export default (store: Store<RootInterface>) => {
                 },
                 // traffic permissions
                 {
-                  path: 'traffic-permissions',
-                  name: 'traffic-permissions',
+                  path: POLICY_MAP.TrafficPermission.route,
+                  name: POLICY_MAP.TrafficPermission.route,
                   meta: {
-                    title: 'Traffic Permissions',
+                    title: POLICY_MAP.TrafficPermission.title,
                   },
                   component: () =>
                     import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions.vue'),
                 },
                 // traffic routes
                 {
-                  path: 'traffic-routes',
-                  name: 'traffic-routes',
+                  path: POLICY_MAP.TrafficRoute.route,
+                  name: POLICY_MAP.TrafficRoute.route,
                   meta: {
-                    title: 'Traffic Routes',
+                    title: POLICY_MAP.TrafficRoute.title,
                   },
                   component: () =>
                     import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes.vue'),
                 },
                 // traffic logs
                 {
-                  path: 'traffic-logs',
-                  name: 'traffic-logs',
+                  path: POLICY_MAP.TrafficLog.route,
+                  name: POLICY_MAP.TrafficLog.route,
                   meta: {
-                    title: 'Traffic Logs',
+                    title: POLICY_MAP.TrafficLog.title,
                   },
                   component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs.vue'),
                 },
                 // traffic traces
                 {
-                  path: 'traffic-traces',
-                  name: 'traffic-traces',
+                  path: POLICY_MAP.TrafficTrace.route,
+                  name: POLICY_MAP.TrafficTrace.route,
                   meta: {
-                    title: 'Traffic Traces',
+                    title: POLICY_MAP.TrafficTrace.title,
                   },
                   component: () =>
                     import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces.vue'),
                 },
                 // fault injections
                 {
-                  path: 'fault-injections',
-                  name: 'fault-injections',
+                  path: POLICY_MAP.FaultInjection.route,
+                  name: POLICY_MAP.FaultInjection.route,
                   meta: {
-                    title: 'Fault Injections',
+                    title: POLICY_MAP.FaultInjection.title,
                   },
                   component: () =>
                     import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections.vue'),
                 },
                 // circuit breakers
                 {
-                  path: 'circuit-breakers',
-                  name: 'circuit-breakers',
+                  path: POLICY_MAP.CircuitBreaker.route,
+                  name: POLICY_MAP.CircuitBreaker.route,
                   meta: {
-                    title: 'Circuit Breakers',
+                    title: POLICY_MAP.CircuitBreaker.title,
                   },
                   component: () =>
                     import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers.vue'),
                 },
                 // health checks
                 {
-                  path: 'health-checks',
-                  name: 'health-checks',
+                  path: POLICY_MAP.HealthCheck.route,
+                  name: POLICY_MAP.HealthCheck.route,
                   meta: {
-                    title: 'Health Checks',
+                    title: POLICY_MAP.HealthCheck.title,
                   },
                   component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks.vue'),
                 },
                 // proxy templates
                 {
-                  path: 'proxy-templates',
-                  name: 'proxy-templates',
+                  path: POLICY_MAP.ProxyTemplate.route,
+                  name: POLICY_MAP.ProxyTemplate.route,
                   meta: {
-                    title: 'Proxy Templates',
+                    title: POLICY_MAP.ProxyTemplate.title,
                   },
                   component: () =>
                     import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates.vue'),
                 },
                 // rate limits
                 {
-                  path: 'rate-limits',
-                  name: 'rate-limits',
+                  path: POLICY_MAP.RateLimit.route,
+                  name: POLICY_MAP.RateLimit.route,
                   meta: {
-                    title: 'Rate Limits',
+                    title: POLICY_MAP.RateLimit.title,
                   },
                   component: () => import(/* webpackChunkName: "rate-limits" */ '@/views/Policies/RateLimits.vue'),
                 },
                 // retries
                 {
-                  path: 'retries',
-                  name: 'retries',
+                  path: POLICY_MAP.Retry.route,
+                  name: POLICY_MAP.Retry.route,
                   meta: {
-                    title: 'Retries',
+                    title: POLICY_MAP.Retry.title,
                   },
                   component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries.vue'),
                 },
                 // timeouts
                 {
-                  path: 'timeouts',
-                  name: 'timeouts',
+                  path: POLICY_MAP.Timeout.route,
+                  name: POLICY_MAP.Timeout.route,
                   meta: {
-                    title: 'Timeouts',
+                    title: POLICY_MAP.Timeout.title,
                   },
                   component: () => import(/* webpackChunkName: "timeouts" */ '@/views/Policies/Timeouts.vue'),
                 },

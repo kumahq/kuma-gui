@@ -7,7 +7,7 @@ import CircuitBreakers from './CircuitBreakers.vue'
 describe('CircuitBreakers.vue', () => {
   it('calls getPolicyConnections only when select the tab', async () => {
     jest.spyOn(Kuma, 'getPolicyConnections')
-    const { debug } = renderWithVuex(CircuitBreakers)
+    renderWithVuex(CircuitBreakers)
 
     await screen.findByText(/Circuit Breaker: cb1/)
 

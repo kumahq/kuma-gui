@@ -33,6 +33,15 @@
         },
         "TrafficRoute": {
           "total": 5
+        },
+        "FaultInjection": {
+          "total": 2
+        },
+        "HealthCheck": {
+          "total": 7
+        },
+        "Timeout": {
+          "total": 1
         }
       },
       "dpVersions": {

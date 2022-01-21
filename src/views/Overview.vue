@@ -129,7 +129,6 @@ export default {
       title: 'config/getTagline',
       environment: 'config/getEnvironment',
       multicluster: 'config/getMulticlusterStatus',
-      meshInsight: 'getMeshInsight',
       areMeshInsightsLoading: 'getMeshInsightsFetching',
       areZonesInsightsLoading: 'getZonesInsightsFetching',
       areServicesLoading: 'getServiceResourcesFetching',
@@ -164,81 +163,6 @@ export default {
     },
     zonesForChart() {
       return this.multicluster ? this.$store.state.totalClusters : 1
-    },
-    overviewMetrics() {
-      const mesh = this.selectedMesh
-      const { policies, meshesTotal } = this.meshInsight
-
-      const tableData = [
-        {
-          metric: 'Meshes',
-          value: meshesTotal,
-          url: `/meshes/${mesh}`,
-        },
-        {
-          metric: 'Circuit Breakers',
-          value: policies.CircuitBreaker.total,
-          url: `/mesh/${mesh}/circuit-breakers`,
-        },
-        {
-          metric: 'Fault Injections',
-          value: policies.FaultInjection.total,
-          url: `/mesh/${mesh}/fault-injections`,
-        },
-        {
-          metric: 'Health Checks',
-          value: policies.HealthCheck.total,
-          url: `/mesh/${mesh}/health-checks`,
-        },
-        {
-          metric: 'Proxy Templates',
-          value: policies.ProxyTemplate.total,
-          url: `/mesh/${mesh}/proxy-templates`,
-        },
-        {
-          metric: 'Traffic Logs',
-          value: policies.TrafficLog.total,
-          url: `/mesh/${mesh}/traffic-logs`,
-        },
-        {
-          metric: 'Traffic Permissions',
-          value: policies.TrafficPermission.total,
-          url: `/mesh/${mesh}/traffic-permissions`,
-        },
-        {
-          metric: 'Traffic Routes',
-          value: policies.TrafficRoute.total,
-          url: `/mesh/${mesh}/traffic-routes`,
-        },
-        {
-          metric: 'Traffic Traces',
-          value: policies.TrafficTrace.total,
-          url: `/mesh/${mesh}/traffic-traces`,
-        },
-        {
-          metric: 'Rate Limits',
-          value: policies.RateLimit.total,
-          url: `/mesh/${mesh}/rate-limits`,
-        },
-        {
-          metric: 'Retries',
-          value: policies.Retry.total,
-          url: `/mesh/${mesh}/retries`,
-        },
-        {
-          metric: 'Timeouts',
-          value: policies.Timeout.total,
-          url: `/mesh/${mesh}/timeouts`,
-        },
-      ]
-
-      if (mesh !== 'all') {
-        // if the user is viewing the overview with a mesh selected,
-        // we hide these items from the metrics grid.
-        return tableData.filter(({ metric }) => metric !== 'Meshes')
-      }
-
-      return tableData
     },
     dataplaneWizardRoute() {
       // we change the route to the Dataplane

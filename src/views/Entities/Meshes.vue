@@ -164,7 +164,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
+import { PAGE_SIZE_DEFAULT, POLICY_MAP } from '@/consts'
 
 export default {
   name: 'Meshes',
@@ -250,47 +250,47 @@ export default {
           value: total,
         },
         {
-          title: 'Circuit Breakers',
+          title: POLICY_MAP.CircuitBreaker.title,
           value: policies.CircuitBreaker.total,
         },
         {
-          title: 'Fault Injections',
+          title: POLICY_MAP.FaultInjection.title,
           value: policies.FaultInjection.total,
         },
         {
-          title: 'Health Checks',
+          title: POLICY_MAP.HealthCheck.title,
           value: policies.HealthCheck.total,
         },
         {
-          title: 'Proxy Templates',
+          title: POLICY_MAP.ProxyTemplate.title,
           value: policies.ProxyTemplate.total,
         },
         {
-          title: 'Traffic Logs',
+          title: POLICY_MAP.TrafficLog.title,
           value: policies.TrafficLog.total,
         },
         {
-          title: 'Traffic Permissions',
+          title: POLICY_MAP.TrafficPermission.title,
           value: policies.TrafficPermission.total,
         },
         {
-          title: 'Traffic Routes',
+          title: POLICY_MAP.TrafficRoute.title,
           value: policies.TrafficRoute.total,
         },
         {
-          title: 'Traffic Traces',
+          title: POLICY_MAP.TrafficTrace.title,
           value: policies.TrafficTrace.total,
         },
         {
-          title: 'Rate Limits',
+          title: POLICY_MAP.RateLimit.title,
           value: policies.RateLimit.total,
         },
         {
-          title: 'Retries',
+          title: POLICY_MAP.Retry.title,
           value: policies.Retry.total,
         },
         {
-          title: 'Timeouts',
+          title: POLICY_MAP.Timeout.title,
           value: policies.Timeout.total,
         },
       ]
