@@ -424,7 +424,7 @@ class Kuma {
   }
 
   /**
-   * Policy connections
+   * Inspection API
    */
 
   // Get policy dpps connections
@@ -433,6 +433,11 @@ class Kuma {
     params?: any,
   ) {
     return this.client.get(`/meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
+  }
+
+  // Get policy dpps connections
+  public getDataplanePolicies({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
+    return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/policies`, { params })
   }
 }
 

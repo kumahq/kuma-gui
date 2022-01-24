@@ -10,3 +10,50 @@ export const PARTIALLY_DEGRADED = 'Partially degraded'
 export const DISABLED = 'Disabled'
 
 export const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
+
+export const POLICY_MAP = {
+  CircuitBreaker: {
+    title: 'Circuit Breakers',
+    route: 'circuit-breakers',
+  },
+  FaultInjection: {
+    title: 'Fault Injections',
+    route: 'fault-injections',
+  },
+  HealthCheck: {
+    title: 'Health Checks',
+    route: 'health-checks',
+  },
+  ProxyTemplate: {
+    title: 'Proxy Templates',
+    route: 'proxy-templates',
+  },
+  TrafficLog: {
+    title: 'Traffic Logs',
+    route: 'traffic-logs',
+  },
+  TrafficPermission: {
+    title: 'Traffic Permissions',
+    route: 'traffic-permissions',
+  },
+  TrafficRoute: {
+    title: 'Traffic Routes',
+    route: 'traffic-routes',
+  },
+  TrafficTrace: {
+    title: 'Traffic Traces',
+    route: 'traffic-traces',
+  },
+  RateLimit: {
+    title: 'Rate Limits',
+    route: 'rate-limits',
+  },
+  Retry: {
+    title: 'Retries',
+    route: 'retries',
+  },
+  Timeout: {
+    title: 'Timeouts',
+    route: 'timeouts',
+  },
+}

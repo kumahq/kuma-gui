@@ -161,6 +161,12 @@
           </template>
         </KCard>
       </template>
+      <template v-slot:dpp-policies>
+        <DataplanePolicies
+          :mesh="rawEntity.mesh"
+          :dpp-name="rawEntity.name"
+        />
+      </template>
       <template v-slot:mtls>
         <LabelList
           :is-loading="entityIsLoading"
@@ -241,6 +247,7 @@ import { PAGE_SIZE_DEFAULT, PRODUCT_NAME } from '@/consts'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 import { getTableData } from '@/utils/tableDataUtils'
+import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies'
 import SubscriptionDetails from '../components/SubscriptionDetails'
 import SubscriptionHeader from '../components/SubscriptionHeader'
 
@@ -258,6 +265,7 @@ export default {
     AccordionItem,
     SubscriptionDetails,
     SubscriptionHeader,
+    DataplanePolicies,
   },
   props: {
     nsBackButtonRoute: {
@@ -308,6 +316,10 @@ export default {
           {
             hash: '#insights',
             title: 'DPP Insights',
+          },
+          {
+            hash: '#dpp-policies',
+            title: 'Policies',
           },
           {
             hash: '#mtls',

@@ -1,0 +1,740 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataplanePolicies.vue renders snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <div
+        class="kong-card noBorder"
+        data-v-0029352b=""
+      >
+        <!---->
+        <!---->
+        <div
+          class="k-card-body"
+          data-v-0029352b=""
+        >
+          <ul
+            class="accordion"
+            data-v-0029352b=""
+          >
+            <li
+              class="relative border-b py-2 active"
+            >
+              <button
+                aria-expanded="true"
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  192.168.0.1:80:81
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  inbound
+
+                  
+                      <div
+                        data-v-3cb990b6=""
+                      >
+                        <svg
+                          class="kong-icon ml-1 kong-icon-help"
+                          data-v-3cb990b6=""
+                          data-v-a7c9c1d2=""
+                          height="12"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="12"
+                        >
+                          <title
+                            data-v-a7c9c1d2=""
+                          >
+                            help
+                          </title>
+                          <g
+                            data-v-a7c9c1d2=""
+                          >
+                            <path
+                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
+                              data-v-a7c9c1d2=""
+                              fill="#A3BBCC"
+                            />
+                            <path
+                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
+                              data-v-a7c9c1d2=""
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 300px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                
+                        Policies applied on incoming connection on address
+                      
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  FaultInjection
+                
+                    </div>
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  TrafficPermission
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <div
+                  class="px-4"
+                >
+                  <div
+                    class="policy-wrapper"
+                  >
+                    <div
+                      class="policy-item"
+                    >
+                      <h4
+                        class="policy-type"
+                      >
+                        
+                  Fault Injections
+                
+                      </h4>
+                       
+                      <ul>
+                        <li
+                          class="my-1"
+                          data-testid="policy-name"
+                        >
+                          <a
+                            class=""
+                            href="#/?ns=fi1.kuma-system"
+                          >
+                            
+                      fi1.kuma-system
+                    
+                          </a>
+                        </li>
+                        <li
+                          class="my-1"
+                          data-testid="policy-name"
+                        >
+                          <a
+                            class=""
+                            href="#/?ns=web-to-backend.kuma-system"
+                          >
+                            
+                      web-to-backend.kuma-system
+                    
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="policy-item"
+                    >
+                      <h4
+                        class="policy-type"
+                      >
+                        
+                  Traffic Permissions
+                
+                      </h4>
+                       
+                      <ul>
+                        <li
+                          class="my-1"
+                          data-testid="policy-name"
+                        >
+                          <a
+                            class=""
+                            href="#/?ns=tp-1"
+                          >
+                            
+                      tp-1
+                    
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  192.168.0.2:8080
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  outbound
+
+                  
+                      <div
+                        data-v-3cb990b6=""
+                      >
+                        <svg
+                          class="kong-icon ml-1 kong-icon-help"
+                          data-v-3cb990b6=""
+                          data-v-a7c9c1d2=""
+                          height="12"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="12"
+                        >
+                          <title
+                            data-v-a7c9c1d2=""
+                          >
+                            help
+                          </title>
+                          <g
+                            data-v-a7c9c1d2=""
+                          >
+                            <path
+                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
+                              data-v-a7c9c1d2=""
+                              fill="#A3BBCC"
+                            />
+                            <path
+                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
+                              data-v-a7c9c1d2=""
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 300px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                
+                        Policies applied on outcomming connection on address
+                      
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  Timeout
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  gateway
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+
+                  
+                      <div
+                        data-v-3cb990b6=""
+                      >
+                        <svg
+                          class="kong-icon ml-1 kong-icon-help"
+                          data-v-3cb990b6=""
+                          data-v-a7c9c1d2=""
+                          height="12"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="12"
+                        >
+                          <title
+                            data-v-a7c9c1d2=""
+                          >
+                            help
+                          </title>
+                          <g
+                            data-v-a7c9c1d2=""
+                          >
+                            <path
+                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
+                              data-v-a7c9c1d2=""
+                              fill="#A3BBCC"
+                            />
+                            <path
+                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
+                              data-v-a7c9c1d2=""
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 300px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                
+                        Policies applied on outgoing connections to service
+                      
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  postgres
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+
+                  
+                      <div
+                        data-v-3cb990b6=""
+                      >
+                        <svg
+                          class="kong-icon ml-1 kong-icon-help"
+                          data-v-3cb990b6=""
+                          data-v-a7c9c1d2=""
+                          height="12"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="12"
+                        >
+                          <title
+                            data-v-a7c9c1d2=""
+                          >
+                            help
+                          </title>
+                          <g
+                            data-v-a7c9c1d2=""
+                          >
+                            <path
+                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
+                              data-v-a7c9c1d2=""
+                              fill="#A3BBCC"
+                            />
+                            <path
+                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
+                              data-v-a7c9c1d2=""
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 300px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                
+                        Policies applied on outgoing connections to service
+                      
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  redis
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+
+                  
+                      <div
+                        data-v-3cb990b6=""
+                      >
+                        <svg
+                          class="kong-icon ml-1 kong-icon-help"
+                          data-v-3cb990b6=""
+                          data-v-a7c9c1d2=""
+                          height="12"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="12"
+                        >
+                          <title
+                            data-v-a7c9c1d2=""
+                          >
+                            help
+                          </title>
+                          <g
+                            data-v-a7c9c1d2=""
+                          >
+                            <path
+                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
+                              data-v-a7c9c1d2=""
+                              fill="#A3BBCC"
+                            />
+                            <path
+                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
+                              data-v-a7c9c1d2=""
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 300px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                
+                        Policies applied on outgoing connections to service
+                      
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+            <li
+              class="relative border-b py-2"
+            >
+              <button
+                class="accordion-item-header"
+              >
+                <div
+                  class="flex items-center justify-between"
+                >
+                  <div>
+                    <p
+                      class="text-lg"
+                    >
+                      
+                  web
+                
+                    </p>
+                     
+                    <p
+                      class="subtitle"
+                    >
+                      
+                  service
+
+                  
+                      <div
+                        data-v-3cb990b6=""
+                      >
+                        <svg
+                          class="kong-icon ml-1 kong-icon-help"
+                          data-v-3cb990b6=""
+                          data-v-a7c9c1d2=""
+                          height="12"
+                          role="img"
+                          viewBox="0 0 16 16"
+                          width="12"
+                        >
+                          <title
+                            data-v-a7c9c1d2=""
+                          >
+                            help
+                          </title>
+                          <g
+                            data-v-a7c9c1d2=""
+                          >
+                            <path
+                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
+                              data-v-a7c9c1d2=""
+                              fill="#A3BBCC"
+                            />
+                            <path
+                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
+                              data-v-a7c9c1d2=""
+                              fill="#fff"
+                            />
+                          </g>
+                        </svg>
+                        <transition-stub
+                          data-v-3cb990b6=""
+                          name="fade"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-3cb990b6=""
+                            style="width: 300px; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-3cb990b6=""
+                            >
+                              <div>
+                                
+                        Policies applied on outgoing connections to service
+                      
+                              </div>
+                            </div>
+                          </div>
+                        </transition-stub>
+                      </div>
+                    </p>
+                  </div>
+                   
+                  <div
+                    class="flex flex-wrap justify-end"
+                  >
+                    <div
+                      class="k-badge truncate mr-2 mb-2 kbadge-default"
+                      data-v-07ccd633=""
+                    >
+                      
+                  HealthCheck
+                
+                    </div>
+                  </div>
+                </div>
+              </button>
+               
+              <transition-stub
+                name="accordion"
+              >
+                <!---->
+              </transition-stub>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+     
+    <!---->
+     
+    <!---->
+     
+    <!---->
+  </div>
+</div>
+`;

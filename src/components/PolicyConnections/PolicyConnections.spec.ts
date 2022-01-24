@@ -54,7 +54,7 @@ describe('PolicyConnections.vue', () => {
 
   it('renders error', async () => {
     server.use(
-      rest.get(' http://localhost/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get('http://localhost/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
@@ -73,7 +73,7 @@ describe('PolicyConnections.vue', () => {
 
   it('renders no item', async () => {
     server.use(
-      rest.get(' http://localhost/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
+      rest.get('http://localhost/meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )
