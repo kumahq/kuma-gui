@@ -141,6 +141,7 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
   )
 
   handlers.push(rest.get(/zones\+insights/, regexMatcher))
+  handlers.push(rest.get(/zoneegresses\+insights/, regexMatcher))
   handlers.push(rest.get(/zoneingresses\+insights/, regexMatcher))
   handlers.push(rest.get(/meshes\/default\/dataplanes\+insights/, regexMatcher))
 

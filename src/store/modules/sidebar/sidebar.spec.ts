@@ -13,6 +13,7 @@ describe('sidebar module', () => {
           "insights": Object {
             "global": Object {
               "meshes": 4,
+              "zoneEgresses": 1,
               "zoneIngresses": 1,
               "zones": 4,
             },

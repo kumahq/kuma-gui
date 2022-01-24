@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
+exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
 <div>
   <div
-    class="zoneingresses"
+    class="zoneegresses"
   >
     <div
       class="component-frame"
@@ -141,7 +141,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                   <td
                     data-v-bfeabd48=""
                   >
-                    zone-ingress-1
+                    zone-egress-1
                   </td>
                 </tr>
               </tbody>
@@ -175,7 +175,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
         >
           <div>
             <h3>
-               Zone Ingress: zone-ingress-1
+               Zone Egress: zone-egress-1
             </h3>
           </div>
            
@@ -290,7 +290,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                   class="tab-link"
                   data-v-a38b664a=""
                 >
-                  Zone Ingress Insights
+                  Zone Egress Insights
                 </a>
               </li>
             </ul>
@@ -343,7 +343,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                                 data-v-0029352b=""
                               >
                                 
-                  ZoneIngressOverview
+                  ZoneEgressOverview
                 
                               </p>
                             </li>
@@ -362,7 +362,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                                 data-v-0029352b=""
                               >
                                 
-                  zone-ingress-1
+                  zone-egress-1
                 
                               </p>
                             </li>
@@ -404,10 +404,10 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
 </div>
 `;
 
-exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
+exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
 <div>
   <div
-    class="zoneingresses"
+    class="zoneegresses"
   >
     <div
       class="empty-state-wrapper"
@@ -499,7 +499,7 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
 </div>
 `;
 
-exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
+exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
 <div
   class="tab-container"
   data-testid="tab-container"
@@ -509,7 +509,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
   >
     <div>
       <h3>
-         Zone Ingress: zone-ingress-1
+         Zone Egress: zone-egress-1
       </h3>
     </div>
      
@@ -624,7 +624,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
             class="tab-link"
             data-v-a38b664a=""
           >
-            Zone Ingress Insights
+            Zone Egress Insights
           </a>
         </li>
       </ul>

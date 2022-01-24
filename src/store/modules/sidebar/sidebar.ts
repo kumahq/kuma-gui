@@ -87,6 +87,7 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
       meshes: globalInsightsRawData.resources.Mesh.total,
       zones: globalInsightsRawData.resources.Zone.total,
       zoneIngresses: globalInsightsRawData.resources.ZoneIngress.total,
+      zoneEgresses: globalInsightsRawData.resources.ZoneEgress.total,
     }
 
     commit('SET_GLOBAL_INSIGHTS', globalInsights)

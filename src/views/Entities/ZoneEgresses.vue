@@ -1,5 +1,5 @@
 <template>
-  <div class="zoneingresses">
+  <div class="zoneegresses">
     <MultizoneInfo v-if="multicluster === false" />
 
     <!-- Zone CPs information for when Multicluster is enabled -->
@@ -22,7 +22,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'zoneingresses'
+              name: 'zoneegresses'
             }"
           >
             <span class="custom-control-icon">
@@ -41,7 +41,7 @@
       >
         <template v-slot:tabHeader>
           <div>
-            <h3> Zone Ingress: {{ entity.name }}</h3>
+            <h3> Zone Egress: {{ entity.name }}</h3>
           </div>
           <div>
             <EntityURLControl :name="entity.name" />
@@ -117,7 +117,7 @@ import SubscriptionHeader from './components/SubscriptionHeader'
 import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
-  name: 'ZoneIngresses',
+  name: 'ZoneEgresses',
   components: {
     FrameSkeleton,
     DataOverview,
@@ -132,7 +132,7 @@ export default {
   },
 
   metaInfo: {
-    title: 'ZoneIngresses',
+    title: 'ZoneEgresses',
   },
   data() {
     return {
@@ -142,7 +142,7 @@ export default {
 
       empty_state: {
         title: 'No Data',
-        message: 'There are no Zone Ingresses present.',
+        message: 'There are no Zone Egresses present.',
       },
       tableData: {
         headers: [
@@ -159,7 +159,7 @@ export default {
         },
         {
           hash: '#insights',
-          title: 'Zone Ingress Insights',
+          title: 'Zone Egress Insights',
         },
       ],
       entity: {},
@@ -203,8 +203,8 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getAllEntities: Kuma.getAllZoneIngressOverviews.bind(Kuma),
-          getSingleEntity: Kuma.getZoneIngressOverview.bind(Kuma),
+          getAllEntities: Kuma.getAllZoneEgressOverviews.bind(Kuma),
+          getSingleEntity: Kuma.getZoneEgressOverview.bind(Kuma),
           size: this.pageSize,
           offset,
           query,
@@ -220,9 +220,9 @@ export default {
           this.getEntity({ name: data[0].name })
 
           this.tableData.data = data.map((item) => {
-            const { zoneIngressInsight = {} } = item
+            const { zoneEgressInsight = {} } = item
 
-            return { ...item, ...getItemStatusFromInsight(zoneIngressInsight) }
+            return { ...item, ...getItemStatusFromInsight(zoneEgressInsight) }
           })
         } else {
           this.tableData.data = []
@@ -241,7 +241,7 @@ export default {
       const selected = ['type', 'name']
       const item = this.rawData.find((data) => data.name === entity.name)
 
-      const subscriptions = get(item, 'zoneIngressInsight.subscriptions', [])
+      const subscriptions = get(item, 'zoneEgressInsight.subscriptions', [])
 
       this.subscriptionsReversed = Array.from(subscriptions).reverse()
 

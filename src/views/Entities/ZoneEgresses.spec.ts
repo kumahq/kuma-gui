@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import renderWithVuex from '@/testUtils/renderWithVuex'
-import ZoneIngresses from './ZoneIngresses.vue'
+import ZoneEgresses from './ZoneEgresses.vue'
 
 jest.mock('@/helpers', () => {
   const originalModule = jest.requireActual('@/helpers')
@@ -14,33 +14,33 @@ jest.mock('@/helpers', () => {
   }
 })
 
-describe('ZoneIngresses.vue', () => {
+describe('ZoneEgresses.vue', () => {
   it('renders snapshot when no multizone', () => {
-    const { container } = renderWithVuex(ZoneIngresses, { routes: [] })
+    const { container } = renderWithVuex(ZoneEgresses, { routes: [] })
 
     expect(container).toMatchSnapshot()
   })
 
-  fit('renders snapshot when multizone', async () => {
-    const { container } = renderWithVuex(ZoneIngresses, {
+  it('renders snapshot when multizone', async () => {
+    const { container } = renderWithVuex(ZoneEgresses, {
       routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
-    await screen.findByText(/ZoneIngressOverview/)
+    await screen.findByText(/ZoneEgressOverview/)
 
     expect(container).toMatchSnapshot()
   })
 
-  it('renders zoneingress insights', async () => {
-    renderWithVuex(ZoneIngresses, {
+  it('renders zoneegress insights', async () => {
+    renderWithVuex(ZoneEgresses, {
       routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
     })
 
-    await screen.findByText(/ZoneIngressOverview/)
+    await screen.findByText(/ZoneEgressOverview/)
 
-    await userEvent.click(screen.getByText(/Zone Ingress Insights/))
+    await userEvent.click(screen.getByText(/Zone Egress Insights/))
     expect(screen.getByTestId('tab-container')).toMatchSnapshot()
   })
 })

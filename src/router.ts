@@ -60,6 +60,15 @@ export default (store: Store<RootInterface>) => {
           },
           component: () => import(/* webpackChunkName: "zoneingresses" */ '@/views/Entities/ZoneIngresses.vue'),
         },
+        // Zone Egresses
+        {
+          path: '/zone-egresses',
+          name: 'zoneegresses',
+          meta: {
+            title: 'Zone Egresses',
+          },
+          component: () => import(/* webpackChunkName: "zoneegresses" */ '@/views/Entities/ZoneEgresses.vue'),
+        },
         // all Meshes
         {
           // TODO - talk if we want to have separate mesh view there

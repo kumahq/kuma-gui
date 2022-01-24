@@ -96,6 +96,20 @@ class Kuma {
   }
 
   /**
+   * Zone Egress Insights
+   */
+
+  // Get all Zone Egress Insights/Overviews
+  public getAllZoneEgressOverviews(params?: any) {
+    return this.client.get('/zoneegresses+insights', { params })
+  }
+
+  // Get a single Zone Egress Insight/Overview
+  public getZoneEgressOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/zoneegresses+insights/${name}`, { params })
+  }
+
+  /**
    * Meshes
    */
 
