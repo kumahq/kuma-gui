@@ -382,7 +382,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             >
                               <div>
                                 
-                        Policies applied on incoming connection on address
+                        Policies applied on outgoing connections to service
                       
                               </div>
                             </div>
@@ -486,7 +486,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             >
                               <div>
                                 
-                        Policies applied on incoming connection on address
+                        Policies applied on outgoing connections to service
                       
                               </div>
                             </div>
@@ -590,7 +590,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             >
                               <div>
                                 
-                        Policies applied on incoming connection on address
+                        Policies applied on outgoing connections to service
                       
                               </div>
                             </div>
@@ -694,7 +694,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             >
                               <div>
                                 
-                        Policies applied on incoming connection on address
+                        Policies applied on outgoing connections to service
                       
                               </div>
                             </div>
