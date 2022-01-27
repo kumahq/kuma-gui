@@ -56,4 +56,16 @@ export const POLICY_MAP = {
     title: 'Timeouts',
     route: 'timeouts',
   },
+  Gateway: {
+    title: 'Gateways',
+    route: 'gateways',
+  },
+  GatewayRoute: {
+    title: 'Gateway Routes',
+    route: 'gateway-routes',
+  },
+}
+
+export const FEATURE_FLAG = {
+  GATEWAY: 'gateway',
 }

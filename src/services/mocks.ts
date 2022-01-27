@@ -48,6 +48,14 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/dataplanes/gateway-dp-87qntx',
   'meshes/default/dataplanes/dataplane-test-456',
 
+  'gateways',
+  'meshes/default/gateways',
+  'meshes/default/gateways/edge-gateway',
+
+  'gateway-routes',
+  'meshes/default/gateway-routes',
+  'meshes/default/gateway-routes/edge-gateway',
+
   'meshes/default/traffic-traces',
   'meshes/default/traffic-traces/tt-1',
   'meshes/default/traffic-traces/traffic-trace-02',

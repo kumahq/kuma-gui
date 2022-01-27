@@ -1,8 +1,31 @@
 {
+  "access": {
+    "static": {
+      "adminResources": {
+        "groups": ["mesh-system:admin"],
+        "users": ["mesh-system:admin"]
+      },
+      "generateDpToken": {
+        "groups": ["mesh-system:admin"],
+        "users": ["mesh-system:admin"]
+      },
+      "generateUserToken": {
+        "groups": ["mesh-system:admin"],
+        "users": ["mesh-system:admin"]
+      }
+    },
+    "type": "static"
+  },
   "apiServer": {
     "auth": {
-      "allowFromLocalhost": true,
       "clientCertsDir": ""
+    },
+    "authn": {
+      "localhostIsAdmin": true,
+      "tokens": {
+        "bootstrapAdminToken": true
+      },
+      "type": "tokens"
     },
     "corsAllowedDomains": [".*"],
     "http": {
@@ -20,7 +43,6 @@
     "readOnly": false
   },
   "bootstrapServer": {
-    "apiVersion": "v3",
     "params": {
       "adminAccessLogPath": "/dev/null",
       "adminAddress": "127.0.0.1",
@@ -40,7 +62,8 @@
   "dnsServer": {
     "CIDR": "240.0.0.0/4",
     "domain": "mesh",
-    "port": 5653
+    "port": 5653,
+    "serviceVipEnabled": true
   },
   "dpServer": {
     "auth": {
@@ -63,6 +86,9 @@
     "tlsKeyFile": "/Users/tomasz.wylezek/.kuma/kuma-cp.key"
   },
   "environment": "universal",
+  "experimental": {
+    "gateway": true
+  },
   "general": {
     "dnsCacheTTL": "10s",
     "tlsCertFile": "/Users/tomasz.wylezek/.kuma/kuma-cp.crt",
@@ -74,7 +100,6 @@
   },
   "metrics": {
     "dataplane": {
-      "enabled": true,
       "idleTimeout": "5m0s",
       "subscriptionLimit": 2
     },
@@ -83,7 +108,6 @@
       "minResyncTimeout": "1s"
     },
     "zone": {
-      "enabled": true,
       "idleTimeout": "5m0s",
       "subscriptionLimit": 10
     }
@@ -183,7 +207,8 @@
         "virtualProbesEnabled": true,
         "virtualProbesPort": 9000
       },
-      "marshalingCacheExpirationTime": "5m0s"
+      "marshalingCacheExpirationTime": "5m0s",
+      "serviceAccountName": "system:serviceaccount:kuma-system:kuma-control-plane"
     },
     "universal": {
       "dataplaneCleanupAge": "72h0m0s"
@@ -201,8 +226,8 @@
       "connectionTimeout": 5,
       "dbName": "kuma",
       "host": "127.0.0.1",
-      "maxIdleConnections": 0,
-      "maxOpenConnections": 0,
+      "maxIdleConnections": 50,
+      "maxOpenConnections": 50,
       "maxReconnectInterval": "1m0s",
       "minReconnectInterval": "10s",
       "password": "*****",

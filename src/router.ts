@@ -295,6 +295,25 @@ export default (store: Store<RootInterface>) => {
                   },
                   component: () => import(/* webpackChunkName: "timeouts" */ '@/views/Policies/Timeouts.vue'),
                 },
+                // gateways
+                {
+                  path: POLICY_MAP.Gateway.route,
+                  name: POLICY_MAP.Gateway.route,
+                  meta: {
+                    title: POLICY_MAP.Gateway.title,
+                  },
+                  component: () => import(/* webpackChunkName: "gateways" */ '@/views/Policies/Gateways.vue'),
+                },
+                // gateway routes
+                {
+                  path: POLICY_MAP.GatewayRoute.route,
+                  name: POLICY_MAP.GatewayRoute.route,
+                  meta: {
+                    title: POLICY_MAP.GatewayRoute.title,
+                  },
+                  component: () =>
+                    import(/* webpackChunkName: "gateway-routes" */ '@/views/Policies/GatewayRoutes.vue'),
+                },
               ],
             },
           ],

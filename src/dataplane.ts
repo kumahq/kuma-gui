@@ -102,7 +102,7 @@ getStatus takes DataplaneInsight and returns map of versions
  */
 
 export function getVersions(dataplaneInsight: DataplaneInsight): Record<string, string> | null {
-  if (!dataplaneInsight.subscriptions.length) {
+  if (!dataplaneInsight.subscriptions?.length) {
     return null
   }
 
@@ -236,7 +236,9 @@ export function getDataplaneType(dataplane: { networking: { gateway?: TODO } } =
   const { gateway } = networking
 
   if (gateway) {
-    return 'Gateway'
+    const type = gateway?.type ? ` / ${gateway.type}` : ''
+
+    return `Gateway${type}`
   }
 
   return 'Standard'

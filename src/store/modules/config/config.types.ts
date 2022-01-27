@@ -1,9 +1,30 @@
 import { Module } from 'vuex'
 import { RootInterface } from '../..'
 
+export interface AccessScope {
+  groups: String[]
+  users: String[]
+}
+
+export interface Access {
+  static: {
+    adminResources: AccessScope
+    generateDpToken: AccessScope
+    generateUserToken: AccessScope
+  }
+  type: string
+}
+
 export interface Auth {
-  allowFromLocalhost: boolean
   clientCertsDir: string
+}
+
+export interface Authn {
+  localhostIsAdmin: boolean
+  tokens: {
+    bootstrapAdminToken: boolean
+  }
+  type: string
 }
 
 export interface Http {
@@ -22,6 +43,7 @@ export interface Https {
 
 export interface ApiServer {
   auth: Auth
+  authn: Authn
   corsAllowedDomains: string[]
   http: Http
   https: Https
@@ -38,7 +60,6 @@ export interface Params {
 }
 
 export interface BootstrapServer {
-  apiVersion: string
   params: Params
 }
 
@@ -55,6 +76,7 @@ export interface DnsServer {
   CIDR: string
   domain: string
   port: number
+  serviceVipEnabled: boolean
 }
 
 export interface Auth2 {
@@ -84,6 +106,10 @@ export interface DpServer {
   tlsKeyFile: string
 }
 
+export interface Experimental {
+  gateway: boolean
+}
+
 export interface General {
   dnsCacheTTL: string
   tlsCertFile: string
@@ -96,7 +122,7 @@ export interface GuiServer {
 }
 
 export interface Dataplane {
-  enabled: boolean
+  idleTimeout: string
   subscriptionLimit: number
 }
 
@@ -106,7 +132,7 @@ export interface Mesh {
 }
 
 export interface Zone {
-  enabled: boolean
+  idleTimeout: string
   subscriptionLimit: number
 }
 
@@ -247,6 +273,7 @@ export interface Kubernetes {
   controlPlaneServiceName: string
   injector: Injector
   marshalingCacheExpirationTime: string
+  serviceAccountName: string
 }
 
 export interface Universal {
@@ -312,6 +339,7 @@ export interface XdsServer {
 }
 
 export interface ClientConfigInterface {
+  access: Access
   apiServer: ApiServer
   bootstrapServer: BootstrapServer
   defaults: Defaults
@@ -320,6 +348,7 @@ export interface ClientConfigInterface {
   dpServer: DpServer
   environment: string
   general: General
+  experimental: Experimental
   guiServer: GuiServer
   metrics: Metrics
   mode: string

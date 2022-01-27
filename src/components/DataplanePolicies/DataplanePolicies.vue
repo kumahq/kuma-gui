@@ -1,5 +1,5 @@
 <template>
-  <Fetcher
+  <StatusInfo
     :has-error="hasError"
     :is-loading="isLoading"
     :is-empty="!hasItems"
@@ -84,13 +84,13 @@
         </Accordion>
       </template>
     </kcard>
-  </Fetcher>
+  </StatusInfo>
 </template>
 
 <script>
 import { POLICY_MAP } from '@/consts'
 import Kuma from '@/services/kuma'
-import Fetcher from '@/components/Utils/Fetcher'
+import StatusInfo from '@/components/Utils/StatusInfo'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 
@@ -103,7 +103,7 @@ const POLICY_TYPE_SUBTITLE = {
 export default {
   name: 'DataplanePolicies',
   components: {
-    Fetcher,
+    StatusInfo,
     Accordion,
     AccordionItem,
   },
