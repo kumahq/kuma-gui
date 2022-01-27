@@ -15,6 +15,8 @@ describe('sidebar utils', () => {
           "policies": Object {
             "CircuitBreaker": 0,
             "FaultInjection": 0,
+            "Gateway": 0,
+            "GatewayRoute": 0,
             "HealthCheck": 0,
             "ProxyTemplate": 0,
             "RateLimit": 0,
@@ -171,6 +173,8 @@ describe('sidebar utils', () => {
           "policies": Object {
             "CircuitBreaker": 0,
             "FaultInjection": 0,
+            "Gateway": 0,
+            "GatewayRoute": 0,
             "HealthCheck": 0,
             "ProxyTemplate": 0,
             "RateLimit": 0,

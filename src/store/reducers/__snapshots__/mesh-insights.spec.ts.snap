@@ -19,6 +19,12 @@ Object {
     "FaultInjection": Object {
       "total": 0,
     },
+    "Gateway": Object {
+      "total": 0,
+    },
+    "GatewayRoute": Object {
+      "total": 0,
+    },
     "HealthCheck": Object {
       "total": 0,
     },
@@ -89,6 +95,12 @@ Object {
       "total": 0,
     },
     "FaultInjection": Object {
+      "total": 0,
+    },
+    "Gateway": Object {
+      "total": 0,
+    },
+    "GatewayRoute": Object {
       "total": 0,
     },
     "HealthCheck": Object {
@@ -169,6 +181,12 @@ Object {
     "FaultInjection": Object {
       "total": 0,
     },
+    "Gateway": Object {
+      "total": 0,
+    },
+    "GatewayRoute": Object {
+      "total": 0,
+    },
     "HealthCheck": Object {
       "total": 0,
     },
@@ -223,6 +241,12 @@ Object {
       "total": 0,
     },
     "FaultInjection": Object {
+      "total": 0,
+    },
+    "Gateway": Object {
+      "total": 0,
+    },
+    "GatewayRoute": Object {
       "total": 0,
     },
     "HealthCheck": Object {

@@ -25,6 +25,8 @@ describe('sidebar module', () => {
               "policies": Object {
                 "CircuitBreaker": 0,
                 "FaultInjection": 2,
+                "Gateway": 1,
+                "GatewayRoute": 1,
                 "HealthCheck": 7,
                 "ProxyTemplate": 0,
                 "RateLimit": 0,
