@@ -286,6 +286,35 @@ exports[`Sidebar.vue renders snapshot 1`] = `
         </a>
       </div>
       <div
+        class="nav-item is-menu-item"
+        data-testid="zoneegresses"
+      >
+        <a
+          aria-current="page"
+          class="router-link-exact-active router-link-active"
+          href="#/"
+        >
+          <!---->
+           
+          <div
+            class="nav-link"
+          >
+            
+        Zone Egresses
+
+        
+            <span
+              class="amount amount--empty"
+            >
+              
+
+          0
+        
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
         class="nav-item is-menu-item is-title"
         data-testid=""
       >

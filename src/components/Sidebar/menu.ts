@@ -60,15 +60,16 @@ const menu: MenuSection[] = [
               name: 'Zone CPs',
               link: 'zones',
               insightsFieldAccessor: 'global.zones',
-              // root: true
-              // multicluster: true
             },
             {
               name: 'Zone Ingresses',
               link: 'zoneingresses',
               insightsFieldAccessor: 'global.zoneIngresses',
-              // root: true
-              // multicluster: true
+            },
+            {
+              name: 'Zone Egresses',
+              link: 'zoneegresses',
+              insightsFieldAccessor: 'global.zoneEgresses',
             },
             {
               name: 'Services',
