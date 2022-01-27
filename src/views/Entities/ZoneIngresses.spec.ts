@@ -21,7 +21,7 @@ describe('ZoneIngresses.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  fit('renders snapshot when multizone', async () => {
+  it('renders snapshot when multizone', async () => {
     const { container } = renderWithVuex(ZoneIngresses, {
       routes: [],
       store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },

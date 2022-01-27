@@ -7,6 +7,7 @@ export interface SidebarInterface {
       meshes: number
       zoneCps: number
       zoneIngresses: number
+      zoneEgresses: number
     }
     mesh: {
       services: {

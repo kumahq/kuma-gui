@@ -13,6 +13,7 @@ const state: SidebarInterface = {
       meshes: 0,
       zoneCps: 0,
       zoneIngresses: 0,
+      zoneEgresses: 0
     },
     mesh: {
       services: {
