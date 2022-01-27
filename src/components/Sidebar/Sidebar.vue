@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
@@ -82,12 +82,23 @@ export default {
     ...mapState({
       selectedMesh: (state) => state.selectedMesh,
     }),
+    ...mapGetters({
+      featureFlags: 'config/featureFlags',
+    }),
     titleNavItems() {
       return this.menu.find((i) => i.position === 'top').items
     },
 
     topNavItems() {
-      return this.menu.find((i) => i.position === 'top').items[0].subNav.items
+      return this.menu
+        .find((i) => i.position === 'top')
+        .items[0].subNav.items.filter((menuItem) => {
+          if (!menuItem.featureFlags) {
+            return true
+          }
+
+          return menuItem.featureFlags.every((featureFlag) => this.featureFlags.includes(featureFlag))
+        })
     },
 
     bottomNavItems() {

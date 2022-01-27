@@ -808,7 +808,7 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
                 <td
                   data-v-bfeabd48=""
                 >
-                  Gateway
+                  Gateway / BUILTIN
                 </td>
                 <td
                   data-v-bfeabd48=""

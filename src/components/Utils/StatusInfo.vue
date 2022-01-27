@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  name: 'Fetcher',
+  name: 'StatusInfo',
   props: {
     isLoading: {
       type: Boolean,

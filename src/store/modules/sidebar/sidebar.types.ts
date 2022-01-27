@@ -30,6 +30,8 @@ export interface SidebarInterface {
         RateLimit: number
         Retry: number
         Timeout: number
+        Gateway: number
+        GatewayRoute: number
       }
     }
   }

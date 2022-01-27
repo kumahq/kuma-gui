@@ -1,6 +1,6 @@
 import { RawLocation } from 'vue-router'
 import meshIcon from '@/assets/images/icon-service-mesh.svg'
-import { POLICY_MAP } from '@/consts'
+import { POLICY_MAP, FEATURE_FLAG } from '@/consts'
 
 type TODO = any
 type KIconType = 'gearFilled'
@@ -14,6 +14,7 @@ export interface MenuNavItem {
   parent?: string
   pathFlip?: boolean
   insightsFieldAccessor?: string
+  featureFlags?: string[]
 }
 
 export interface MenuItem {
@@ -190,6 +191,22 @@ const menu: MenuSection[] = [
                 title: false,
                 parent: 'policies',
                 insightsFieldAccessor: 'mesh.policies.Timeout',
+              },
+              {
+                name: POLICY_MAP.Gateway.title,
+                link: POLICY_MAP.Gateway.route,
+                title: false,
+                parent: 'policies',
+                insightsFieldAccessor: 'mesh.policies.Gateway',
+                featureFlags: [FEATURE_FLAG.GATEWAY],
+              },
+              {
+                name: POLICY_MAP.GatewayRoute.title,
+                link: POLICY_MAP.GatewayRoute.route,
+                title: false,
+                parent: 'policies',
+                insightsFieldAccessor: 'mesh.policies.GatewayRoute',
+                featureFlags: [FEATURE_FLAG.GATEWAY],
               },
             ].sort((a, b) => (a.name < b.name ? -1 : 1)),
           ],

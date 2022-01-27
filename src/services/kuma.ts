@@ -359,6 +359,44 @@ class Kuma {
   }
 
   /**
+   * Gateways
+   */
+
+  // get all gateway
+  public getAllGateways(params?: any) {
+    return this.client.get('/gateways', { params })
+  }
+
+  // get all gateways from mesh
+  public getAllGatewaysFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/gateways`, { params })
+  }
+
+  // get timeout details
+  public getGateway({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/gateways/${name}`, { params })
+  }
+
+  /**
+   * Gateway routes
+   */
+
+  // get all gateway routes
+  public getAllGatewayRoutes(params?: any) {
+    return this.client.get('/gateway-routes', { params })
+  }
+
+  // get all gateway routes from mesh
+  public getAllGatewayRoutesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/gateway-routes`, { params })
+  }
+
+  // get timeout details
+  public getGatewayRoute({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/gateway-routes/${name}`, { params })
+  }
+
+  /**
    * External Services
    */
 

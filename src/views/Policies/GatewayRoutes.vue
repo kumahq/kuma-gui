@@ -1,6 +1,20 @@
 <template>
-  <div class="proxy-templates relative">
+  <div class="gateway-routes relative">
     <DocumentationLink :href="docsURL" />
+    <div class="mb-4">
+      <KAlert appearance="warning">
+        <template v-slot:alertMessage>
+          <p>
+            <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
+            <a
+              href="https://github.com/kumahq/kuma/issues/new/choose"
+              target="_blank"
+              rel="noopener noreferrer"
+            >issue</a>
+          </p>
+        </template>
+      </KAlert>
+    </div>
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
@@ -8,7 +22,7 @@
         :is-loading="isLoading"
         :empty-state="empty_state"
         :table-data="tableData"
-        :table-data-is-empty="tableDataIsEmpty"
+        :table-data-is-empty="isEmpty"
         :next="next"
         @tableAction="tableAction"
         @loadData="loadData($event)"
@@ -21,12 +35,10 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'proxy-templates'
+              name: 'gateway-routes',
             }"
           >
-            <span class="custom-control-icon">
-              &larr;
-            </span>
+            <span class="custom-control-icon"> &larr; </span>
             View All
           </KButton>
         </template>
@@ -40,7 +52,9 @@
       >
         <template v-slot:tabHeader>
           <div>
-            <h3>Proxy Template: {{ entity.name }}</h3>
+            <h3>
+              Gateway Route: {{ entity.name }}
+            </h3>
           </div>
           <div>
             <EntityURLControl
@@ -50,11 +64,7 @@
           </div>
         </template>
         <template v-slot:overview>
-          <LabelList
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-          >
+          <LabelList>
             <div>
               <ul>
                 <li
@@ -74,14 +84,12 @@
           <PolicyConnections
             :mesh="rawEntity.mesh"
             :policy-name="rawEntity.name"
-            policy-type="proxy-templates"
+            policy-type="gateway-routes"
           />
         </template>
         <template v-slot:yaml>
           <YamlView
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
+            lang="yaml"
             :content="rawEntity"
           />
         </template>
@@ -93,22 +101,22 @@
 <script>
 import { mapGetters } from 'vuex'
 import { getSome, stripTimes } from '@/helpers'
-import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
+import Kuma from '@/services/kuma'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
-import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
 import Tabs from '@/components/Utils/Tabs'
+import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
-  name: 'ProxyTemplates',
+  name: 'GatewayRoutes',
   metaInfo: {
-    title: 'Proxy Templates',
+    title: 'Gateway Routes',
   },
   components: {
     EntityURLControl,
@@ -125,13 +133,9 @@ export default {
       isLoading: true,
       isEmpty: false,
       hasError: false,
-      entityIsLoading: true,
-      entityIsEmpty: false,
-      entityHasError: false,
-      tableDataIsEmpty: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Proxy Templates present.',
+        message: 'There are no Gateway Routes present.',
       },
       tableData: {
         headers: [
@@ -154,6 +158,7 @@ export default {
         },
       ],
       entity: {},
+      rawData: [],
       rawEntity: {},
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
@@ -164,7 +169,7 @@ export default {
       version: 'config/getVersion',
     }),
     docsURL() {
-      return `https://kuma.io/docs/${this.version}/policies/proxy-template/`
+      return `https://kuma.io/docs/${this.version}/policies/gateway-route/`
     },
   },
   watch: {
@@ -179,7 +184,6 @@ export default {
     init() {
       this.loadData()
     },
-
     tableAction(ev) {
       const data = ev
 
@@ -194,9 +198,9 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: Kuma.getProxyTemplate.bind(Kuma),
-          getAllEntities: Kuma.getAllProxyTemplates.bind(Kuma),
-          getAllEntitiesFromMesh: Kuma.getAllProxyTemplatesFromMesh.bind(Kuma),
+          getSingleEntity: Kuma.getGatewayRoute.bind(Kuma),
+          getAllEntities: Kuma.getAllGatewayRoutes.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllGatewayRoutesFromMesh.bind(Kuma),
           mesh,
           query,
           size: this.pageSize,
@@ -209,20 +213,14 @@ export default {
         // set table data
 
         if (data.length) {
-          this.tableData.data = data
-          this.tableDataIsEmpty = false
           this.isEmpty = false
+          this.rawData = data
+          this.tableData.data = data
 
-          const selected = ['type', 'name', 'mesh']
-          const selectedEntity = data[0]
-
-          this.entity = getSome(selectedEntity, selected)
-          this.rawEntity = stripTimes(selectedEntity)
+          this.getEntity({ name: data[0].name })
         } else {
           this.tableData.data = []
-          this.tableDataIsEmpty = true
           this.isEmpty = true
-          this.entityIsEmpty = true
         }
       } catch (error) {
         this.hasError = true
@@ -231,47 +229,14 @@ export default {
         console.error(error)
       } finally {
         this.isLoading = false
-        this.entityIsLoading = false
       }
     },
     getEntity(entity) {
-      this.entityIsLoading = true
-      this.entityIsEmpty = false
-      this.entityHasError = false
+      const selected = ['type', 'name', 'mesh']
+      const item = this.rawData.find((data) => data.name === entity.name)
 
-      const mesh = this.$route.params.mesh
-
-      if (entity) {
-        const entityMesh = mesh === 'all' ? entity.mesh : mesh
-
-        return Kuma.getProxyTemplate({ mesh: entityMesh, name: entity.name })
-          .then((response) => {
-            if (response) {
-              const selected = ['type', 'name', 'mesh']
-
-              this.entity = getSome(response, selected)
-              // this.rawEntity = response
-              this.rawEntity = stripTimes(response)
-            } else {
-              this.entity = {}
-              this.entityIsEmpty = true
-            }
-          })
-          .catch((error) => {
-            this.entityHasError = true
-            console.error(error)
-          })
-          .finally(() => {
-            setTimeout(() => {
-              this.entityIsLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
-          })
-      } else {
-        setTimeout(() => {
-          this.entityIsEmpty = true
-          this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
-      }
+      this.rawEntity = stripTimes(item)
+      this.entity = getSome(item, selected)
     },
   },
 }

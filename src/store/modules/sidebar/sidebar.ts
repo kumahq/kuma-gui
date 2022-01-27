@@ -36,10 +36,13 @@ const state: SidebarInterface = {
         RateLimit: 0,
         Retry: 0,
         Timeout: 0,
+        Gateway: 0,
+        GatewayRoute: 0,
       },
     },
   },
 }
+
 const mutations: MutationTree<SidebarInterface> = {
   SET_GLOBAL_INSIGHTS: (state, globalInsights) => (state.insights.global = globalInsights),
   SET_MESH_INSIGHTS: (state, meshInsight) => (state.insights.mesh = meshInsight),

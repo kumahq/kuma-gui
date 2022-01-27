@@ -1,5 +1,6 @@
 import Kuma from '@/services/kuma'
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
+import { FEATURE_FLAG } from '@/consts'
 import { RootInterface } from '../..'
 import { ConfigInterface } from './config.types'
 
@@ -25,6 +26,16 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   getTagline: state => state.tagline,
   getVersion: state => state.version,
   getConfigurationType: state => state.clientConfig?.store?.type,
+  featureFlags: state => {
+    const featureFlags = []
+
+    if (state.clientConfig?.experimental?.gateway) {
+      featureFlags.push(FEATURE_FLAG.GATEWAY)
+    }
+
+    return featureFlags
+  },
+
   getMulticlusterStatus: (state, getters) => {
     // is Kuma running in Multi-Zone mode?
 

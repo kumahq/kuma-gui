@@ -54,6 +54,12 @@ export const getInitialPolicies = () => ({
   Timeout: {
     total: 0,
   },
+  Gateway: {
+    total: 0,
+  },
+  GatewayRoute: {
+    total: 0,
+  },
 })
 
 const sumPolicies = (curr: any = getInitialPolicies(), next: any = {}) =>

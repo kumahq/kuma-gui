@@ -42,6 +42,8 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
         RateLimit: 0,
         Retry: 0,
         Timeout: 0,
+        Gateway: 0,
+        GatewayRoute: 0,
       },
     },
   )

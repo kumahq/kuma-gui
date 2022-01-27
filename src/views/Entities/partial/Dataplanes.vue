@@ -139,27 +139,29 @@
         </LabelList>
       </template>
       <template v-slot:insights>
-        <KCard border-variant="noBorder">
-          <template v-slot:body>
-            <Accordion :initially-open="0">
-              <AccordionItem
-                v-for="(value, key) in subscriptionsReversed"
-                :key="key"
-              >
-                <template v-slot:accordion-header>
-                  <SubscriptionHeader :details="value" />
-                </template>
+        <StatusInfo :is-empty="subscriptionsReversed.length === 0">
+          <KCard border-variant="noBorder">
+            <template v-slot:body>
+              <Accordion :initially-open="0">
+                <AccordionItem
+                  v-for="(value, key) in subscriptionsReversed"
+                  :key="key"
+                >
+                  <template v-slot:accordion-header>
+                    <SubscriptionHeader :details="value" />
+                  </template>
 
-                <template v-slot:accordion-content>
-                  <SubscriptionDetails
-                    :details="value"
-                    is-discovery-subscription
-                  />
-                </template>
-              </AccordionItem>
-            </Accordion>
-          </template>
-        </KCard>
+                  <template v-slot:accordion-content>
+                    <SubscriptionDetails
+                      :details="value"
+                      is-discovery-subscription
+                    />
+                  </template>
+                </AccordionItem>
+              </Accordion>
+            </template>
+          </KCard>
+        </StatusInfo>
       </template>
       <template v-slot:dpp-policies>
         <DataplanePolicies
@@ -248,6 +250,7 @@ import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 import { getTableData } from '@/utils/tableDataUtils'
 import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies'
+import StatusInfo from '@/components/Utils/StatusInfo'
 import SubscriptionDetails from '../components/SubscriptionDetails'
 import SubscriptionHeader from '../components/SubscriptionHeader'
 
@@ -266,6 +269,7 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     DataplanePolicies,
+    StatusInfo,
   },
   props: {
     nsBackButtonRoute: {
@@ -351,6 +355,7 @@ export default {
         headers: [],
         data: [],
       },
+      subscriptionsReversed: [],
       entity: {},
       rawEntity: {},
       pageSize: PAGE_SIZE_DEFAULT,
