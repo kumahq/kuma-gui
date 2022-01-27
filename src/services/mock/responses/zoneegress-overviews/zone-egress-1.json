@@ -7,7 +7,10 @@
     "zone": "zone-1",
     "networking": {
       "address": "10.60.0.16",
-      "port": 10001
+      "port": 10001,
+      "admin": {
+        "port": 9901
+      }
     }
   },
   "zoneEgressInsight": {
