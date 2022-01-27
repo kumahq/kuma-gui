@@ -101,12 +101,12 @@ class Kuma {
 
   // Get all Zone Egress Insights/Overviews
   public getAllZoneEgressOverviews(params?: any) {
-    return this.client.get('/zoneegresses+insights', { params })
+    return this.client.get('/zoneegress-overviews', { params })
   }
 
   // Get a single Zone Egress Insight/Overview
   public getZoneEgressOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
-    return this.client.get(`/zoneegresses+insights/${name}`, { params })
+    return this.client.get(`/zoneegress-overviews/${name}`, { params })
   }
 
   /**
