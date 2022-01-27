@@ -42,6 +42,12 @@
         },
         "Timeout": {
           "total": 1
+        },
+        "Gateway": {
+          "total": 1
+        },
+        "GatewayRoute": {
+          "total": 1
         }
       },
       "dpVersions": {

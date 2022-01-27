@@ -30,6 +30,12 @@
     },
     "TrafficRoute": {
       "total": 5
+    },
+    "Gateway": {
+      "total": 1
+    },
+    "GatewayRoute": {
+      "total": 1
     }
   },
   "dpVersions": {

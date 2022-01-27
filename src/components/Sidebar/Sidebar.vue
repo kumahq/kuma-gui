@@ -74,7 +74,7 @@ export default {
       toggleWorkspaces: false,
       isHovering: false,
       subnavIsExpanded: true,
-      menu: menu,
+      menu,
     }
   },
 

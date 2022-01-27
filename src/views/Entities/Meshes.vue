@@ -153,6 +153,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
@@ -164,7 +165,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { PAGE_SIZE_DEFAULT, POLICY_MAP } from '@/consts'
+import { PAGE_SIZE_DEFAULT, POLICY_MAP, FEATURE_FLAG } from '@/consts'
 
 export default {
   name: 'Meshes',
@@ -233,6 +234,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      featureFlags: 'config/featureFlags',
+    }),
     counts() {
       const {
         policies: allPolicies,
@@ -293,6 +297,18 @@ export default {
           title: POLICY_MAP.Timeout.title,
           value: policies.Timeout.total,
         },
+        ...this.featureFlags.includes(FEATURE_FLAG.GATEWAY)
+          ? [
+            {
+              title: POLICY_MAP.Gateway.title,
+              value: policies.Gateway.total,
+            },
+            {
+              title: POLICY_MAP.GatewayRoute.title,
+              value: policies.GatewayRoute.total,
+            },
+          ]
+          : [],
       ]
     },
     countCols() {
