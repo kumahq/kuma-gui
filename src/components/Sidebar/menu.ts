@@ -50,7 +50,7 @@ const menu: MenuSection[] = [
               name: 'Meshes',
               link: 'mesh-child',
               pathFlip: true,
-              insightsFieldAccessor: 'global.meshes',
+              insightsFieldAccessor: 'global.Mesh',
             },
             {
               name: 'Zones',
@@ -59,17 +59,17 @@ const menu: MenuSection[] = [
             {
               name: 'Zone CPs',
               link: 'zones',
-              insightsFieldAccessor: 'global.zones',
+              insightsFieldAccessor: 'global.Zone',
             },
             {
               name: 'Zone Ingresses',
               link: 'zoneingresses',
-              insightsFieldAccessor: 'global.zoneIngresses',
+              insightsFieldAccessor: 'global.ZoneEgress',
             },
             {
               name: 'Zone Egresses',
               link: 'zoneegresses',
-              insightsFieldAccessor: 'global.zoneEgresses',
+              insightsFieldAccessor: 'global.ZoneIngress',
             },
             {
               name: 'Services',

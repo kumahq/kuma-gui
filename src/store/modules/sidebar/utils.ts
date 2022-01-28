@@ -1,4 +1,4 @@
-import { MeshInsight } from '@/types'
+import { MeshInsight, GlobalInsights } from '@/types'
 
 export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] }) {
   const meshInsight = rawMeshInsights.items.reduce(
@@ -15,6 +15,10 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
       // Sum policies
 
       for (const [key, policy] of Object.entries(policies)) {
+        if (!acc.policies[key]) {
+          acc.policies[key] = 0
+        }
+
         acc.policies[key] += policy.total || 0
       }
 
@@ -30,23 +34,21 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
         standard: 0,
         gateway: 0,
       },
-      policies: {
-        CircuitBreaker: 0,
-        FaultInjection: 0,
-        HealthCheck: 0,
-        ProxyTemplate: 0,
-        TrafficLog: 0,
-        TrafficPermission: 0,
-        TrafficRoute: 0,
-        TrafficTrace: 0,
-        RateLimit: 0,
-        Retry: 0,
-        Timeout: 0,
-        Gateway: 0,
-        GatewayRoute: 0,
-      },
+      policies: {},
     },
   )
 
   return meshInsight
+}
+
+export function calculateGlobalInsights(globalInsights: GlobalInsights) {
+  return Object.entries(globalInsights.resources).reduce((acc: Record<string, number>, [key, value]) => {
+    if (!acc[key]) {
+      acc[key] = 0
+    }
+
+    acc[key] += value.total || 0
+
+    return acc
+  }, {})
 }

@@ -1,4 +1,4 @@
-import { calculateMeshInsights } from './utils'
+import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 
 describe('sidebar utils', () => {
   describe('calculateMeshInsights', () => {
@@ -12,21 +12,7 @@ describe('sidebar utils', () => {
             "standard": 0,
             "total": 0,
           },
-          "policies": Object {
-            "CircuitBreaker": 0,
-            "FaultInjection": 0,
-            "Gateway": 0,
-            "GatewayRoute": 0,
-            "HealthCheck": 0,
-            "ProxyTemplate": 0,
-            "RateLimit": 0,
-            "Retry": 0,
-            "Timeout": 0,
-            "TrafficLog": 0,
-            "TrafficPermission": 0,
-            "TrafficRoute": 0,
-            "TrafficTrace": 0,
-          },
+          "policies": Object {},
           "services": Object {
             "external": 0,
             "internal": 0,
@@ -171,25 +157,50 @@ describe('sidebar utils', () => {
             "total": 18,
           },
           "policies": Object {
-            "CircuitBreaker": 0,
-            "FaultInjection": 0,
-            "Gateway": 0,
-            "GatewayRoute": 0,
-            "HealthCheck": 0,
-            "ProxyTemplate": 0,
-            "RateLimit": 0,
-            "Retry": 0,
-            "Secret": NaN,
-            "Timeout": 0,
-            "TrafficLog": 0,
+            "Secret": 8,
             "TrafficPermission": 5,
             "TrafficRoute": 7,
-            "TrafficTrace": 0,
           },
           "services": Object {
             "external": 6,
             "internal": 3,
           },
+        }
+      `)
+    })
+  })
+
+  describe('calculateGlobalInsights', () => {
+    it('when no item', async () => {
+      const meshInsight = calculateGlobalInsights({
+        type: 'GlobalInsights',
+        creationTime: '123',
+        resources: {},
+      })
+
+      expect(meshInsight).toMatchInlineSnapshot(`Object {}`)
+    })
+
+    it('when several items', async () => {
+      const meshInsight = calculateGlobalInsights({
+        type: 'GlobalInsights',
+        creationTime: '2018-07-17T16:05:36.995Z',
+        resources: {
+          GlobalSecret: { total: 0 },
+          Mesh: { total: 4 },
+          Zone: { total: 4 },
+          ZoneIngress: { total: 1 },
+          ZoneEgress: { total: 1 },
+        },
+      })
+
+      expect(meshInsight).toMatchInlineSnapshot(`
+        Object {
+          "GlobalSecret": 0,
+          "Mesh": 4,
+          "Zone": 4,
+          "ZoneEgress": 1,
+          "ZoneIngress": 1,
         }
       `)
     })

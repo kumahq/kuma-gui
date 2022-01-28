@@ -12,10 +12,11 @@ describe('sidebar module', () => {
         Object {
           "insights": Object {
             "global": Object {
-              "meshes": 4,
-              "zoneEgresses": 1,
-              "zoneIngresses": 1,
-              "zones": 4,
+              "GlobalSecret": 0,
+              "Mesh": 4,
+              "Zone": 4,
+              "ZoneEgress": 1,
+              "ZoneIngress": 1,
             },
             "mesh": Object {
               "dataplanes": Object {
@@ -24,20 +25,14 @@ describe('sidebar module', () => {
                 "total": 18,
               },
               "policies": Object {
-                "CircuitBreaker": 0,
                 "FaultInjection": 2,
                 "Gateway": 1,
                 "GatewayRoute": 1,
                 "HealthCheck": 7,
-                "ProxyTemplate": 0,
-                "RateLimit": 0,
-                "Retry": 0,
-                "Secret": NaN,
+                "Secret": 8,
                 "Timeout": 1,
-                "TrafficLog": 0,
                 "TrafficPermission": 5,
                 "TrafficRoute": 7,
-                "TrafficTrace": 0,
               },
               "services": Object {
                 "external": 6,

@@ -61,6 +61,10 @@ export interface UnitStatus {
   partiallyDegraded?: number
 }
 
+export interface ResourceStat {
+  total: number
+}
+
 export interface MeshInsight {
   type: 'MeshInsight'
   name: string
@@ -69,13 +73,19 @@ export interface MeshInsight {
   lastSync: string
   dataplanes: UnitStatus
   dataplanesByType: Record<string, UnitStatus>
-  policies: Record<string, UnitStatus>
+  policies: Record<string, ResourceStat>
   dpVersions: Record<string, Record<string, UnitStatus>>
   mTLS: {
     issuedBackends?: Record<string, UnitStatus>
     supportedBackends?: Record<string, UnitStatus>
   }
   services: Record<string, number>
+}
+
+export interface GlobalInsights {
+  type: 'GlobalInsights'
+  creationTime: string
+  resources: Record<string, ResourceStat>
 }
 
 export interface Dataplane {
