@@ -4,7 +4,7 @@ import { fetchAllResources } from '@/helpers'
 
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { RootInterface } from '../..'
-import { calculateMeshInsights } from './utils'
+import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
 
 const state: SidebarInterface = {
@@ -13,7 +13,7 @@ const state: SidebarInterface = {
       meshes: 0,
       zoneCps: 0,
       zoneIngresses: 0,
-      zoneEgresses: 0
+      zoneEgresses: 0,
     },
     mesh: {
       services: {
@@ -84,12 +84,7 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
   async getGlobalInsights({ commit }) {
     const globalInsightsRawData = await Kuma.getGlobalInsights()
 
-    const globalInsights = {
-      meshes: globalInsightsRawData.resources.Mesh.total,
-      zones: globalInsightsRawData.resources.Zone.total,
-      zoneIngresses: globalInsightsRawData.resources.ZoneIngress.total,
-      zoneEgresses: globalInsightsRawData.resources.ZoneEgress.total,
-    }
+    const globalInsights = calculateGlobalInsights(globalInsightsRawData)
 
     commit('SET_GLOBAL_INSIGHTS', globalInsights)
   },
