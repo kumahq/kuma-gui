@@ -278,7 +278,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             >
                               <div>
                                 
-                        Policies applied on outcomming connection on address
+                        Policies applied on outgoing connection to the address
                       
                               </div>
                             </div>

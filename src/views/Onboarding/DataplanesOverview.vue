@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME, OFFLINE } from '@/consts'
 import { getItemStatusFromInsight } from '@/dataplane'
 import Kuma from '@/services/kuma'
 import Loading from '@/components/Loading'
@@ -82,6 +82,7 @@ export default {
         ],
         data: [],
       },
+      timeout: null,
     }
   },
 
@@ -104,8 +105,12 @@ export default {
   created() {
     this.getAllDataplanes()
   },
+  beforeDestroy() {
+    clearTimeout(this.timeout)
+  },
   methods: {
     async getAllDataplanes() {
+      let shouldRefetch = false
       const result = []
 
       try {
@@ -119,6 +124,10 @@ export default {
             getItemStatusFromInsight(response.dataplaneInsight),
           )
 
+          if (status === OFFLINE) {
+            shouldRefetch = true
+          }
+
           result.push({
             status,
             name,
@@ -130,6 +139,12 @@ export default {
       }
 
       this.tableData.data = result
+
+      if (shouldRefetch) {
+        this.timeout = setTimeout(() => {
+          this.getAllDataplanes()
+        }, 1000)
+      }
     },
   },
 }
