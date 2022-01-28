@@ -3,12 +3,7 @@ import { RootInterface } from '../..'
 
 export interface SidebarInterface {
   insights: {
-    global: {
-      meshes: number
-      zoneCps: number
-      zoneIngresses: number
-      zoneEgresses: number
-    }
+    global: Record<string, number>
     mesh: {
       services: {
         internal: number
@@ -19,21 +14,7 @@ export interface SidebarInterface {
         standard: number
         gateway: number
       }
-      policies: {
-        CircuitBreaker: number
-        FaultInjection: number
-        HealthCheck: number
-        ProxyTemplate: number
-        TrafficLog: number
-        TrafficPermission: number
-        TrafficRoute: number
-        TrafficTrace: number
-        RateLimit: number
-        Retry: number
-        Timeout: number
-        Gateway: number
-        GatewayRoute: number
-      }
+      policies: Record<string, number>
     }
   }
 }

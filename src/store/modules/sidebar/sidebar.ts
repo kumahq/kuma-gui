@@ -9,12 +9,7 @@ import { SidebarInterface } from './sidebar.types'
 
 const state: SidebarInterface = {
   insights: {
-    global: {
-      meshes: 0,
-      zoneCps: 0,
-      zoneIngresses: 0,
-      zoneEgresses: 0,
-    },
+    global: {},
     mesh: {
       services: {
         internal: 0,
@@ -25,21 +20,7 @@ const state: SidebarInterface = {
         standard: 0,
         gateway: 0,
       },
-      policies: {
-        CircuitBreaker: 0,
-        FaultInjection: 0,
-        HealthCheck: 0,
-        ProxyTemplate: 0,
-        TrafficLog: 0,
-        TrafficPermission: 0,
-        TrafficRoute: 0,
-        TrafficTrace: 0,
-        RateLimit: 0,
-        Retry: 0,
-        Timeout: 0,
-        Gateway: 0,
-        GatewayRoute: 0,
-      },
+      policies: {},
     },
   },
 }
