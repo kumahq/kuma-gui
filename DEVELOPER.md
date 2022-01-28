@@ -8,36 +8,38 @@ Consult the Table of Contents below to navigate these docs.
 
 ## Table of Contents
 
-* [Developer documentation](#developer-documentation)
-  * [Dependencies](#dependencies)
-      * [The Vue CLI tool](#the-vue-cli-tool)
-  * [Libraries and tools](#libraries-and-tools)
-  * [Folder structure](#folder-structure)
-  * [Getting started](#getting-started)
-      * [Setting up Kuma](#setting-up-kuma)
-        * [Disable anonymous reports](#disable-anonymous-reports)
-      * [Running the GUI](#running-the-gui)
-      * [Building the GUI](#building-the-gui)
-  * [Development](#development)
-      * [Creating a new page view](#creating-a-new-page-view)
-        * [1. Create your view component](#1-create-your-view-component)
-        * [2. Create your REST functions](#2-create-your-rest-functions)
-        * [3. Create your route](#3-create-your-route)
-        * [4. Create your sidebar menu link](#4-create-your-sidebar-menu-link)
-      * [Creating mock data](#creating-mock-data)
-        * [Creating and modifying mocks](#creating-and-modifying-mocks)
-      * [VueX store / State management](#vuex-store--state-management)
-      * [Styles](#styles)
-        * [Variables](#variables)
-        * [Scoped SCSS](#scoped-scss)
-        * [State](#state)
-        * [Tailwind](#tailwind)
+- [Developer documentation](#developer-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [Dependencies](#dependencies)
+    - [The Vue CLI tool](#the-vue-cli-tool)
+  - [Libraries and tools](#libraries-and-tools)
+  - [Folder structure](#folder-structure)
+  - [Getting started](#getting-started)
+    - [Setting up Kuma](#setting-up-kuma)
+      - [Disable anonymous reports](#disable-anonymous-reports)
+    - [Running the GUI](#running-the-gui)
+    - [Building the GUI](#building-the-gui)
+  - [Development](#development)
+    - [Creating a new page view](#creating-a-new-page-view)
+      - [1. Create your view component](#1-create-your-view-component)
+      - [2. Create your REST functions](#2-create-your-rest-functions)
+      - [3. Create your route](#3-create-your-route)
+      - [4. Create your sidebar menu link](#4-create-your-sidebar-menu-link)
+    - [Creating mock data](#creating-mock-data)
+      - [Creating and modifying mocks](#creating-and-modifying-mocks)
+    - [VueX store / State management](#vuex-store--state-management)
+    - [Styles](#styles)
+      - [Variables](#variables)
+      - [Scoped SCSS](#scoped-scss)
+      - [State](#state)
+      - [Tailwind](#tailwind)
+      - [Testing](#testing)
 
 ## Dependencies
 
-* `git`
-* `npm` or `yarn`
-* `vue-cli-service`
+- `git`
+- `npm` or `yarn`
+- `vue-cli-service`
 
 ### The Vue CLI tool
 
@@ -51,11 +53,11 @@ npx vue-cli-service serve
 
 ## Libraries and tools
 
-* [VueX](https://vuex.vuejs.org/) - For state management
-* [Vue Router](https://router.vuejs.org/)
-* [Kongponents](https://kongponents.netlify.app/) - An open source Vue component library created by [Kong](https://konghq.com/)
-* [Axios](https://github.com/axios/axios) - For making promise-based API requests
-* [msw](https://github.com/mswjs/msw) - For creating mock endpoint data (covered further down)
+- [VueX](https://vuex.vuejs.org/) - For state management
+- [Vue Router](https://router.vuejs.org/)
+- [Kongponents](https://kongponents.netlify.app/) - An open source Vue component library created by [Kong](https://konghq.com/)
+- [Axios](https://github.com/axios/axios) - For making promise-based API requests
+- [msw](https://github.com/mswjs/msw) - For creating mock endpoint data (covered further down)
 
 All styles are written as scoped SCSS inside of each component. For all utility and broader use CSS, styles can be written
 in the appropriate place in `src/assets/styles`.
@@ -64,27 +66,23 @@ in the appropriate place in `src/assets/styles`.
 
 The GUI is structured in standard Vue app format, with some unique differences.
 
-* public - Contains our Vue app's index file and all static assets
-* dist - This is where our build files output to
-* tests
-* src
-  * assets - fonts, images, and all of our SCSS files
-  * components - All of our Vue components and skeletons
-    * Global - globally-used components (e.g. header, footer, etc)
-    * Metrics - These are components for displaying metrics. These are primarily used on the Global Overview
-    * Sidebar - The sidebar is comprised of multiple components. They are all located here
-    * Skeletons - These views are comprised of multiple components and help keep things DRY when creating new views
-    * Utils - Have a small component that serves a generic purpose? This is the ideal place for it
-  * mixins
-  * pdk - Kong Manager Plugin Development Kit. A handful of components and tools for helping create dashboards quickly
-  * schemas
-  * services - This is where our REST client and Kuma endpoints reside
-  * store - Where all of our VueX modules and store are located
-  * views - This is where the majority of our app resides. All route views are located here
+- public - Contains our Vue app's index file and all static assets
+- dist - This is where our build files output to
+- tests
+- src
+  - assets - fonts, images, and all of our SCSS files
+  - components - All of our Vue components and skeletons
+    - Utils - Have a small component that serves a generic purpose? This is the ideal place for it
+  - mixins
+  - services - This is where our REST client and Kuma endpoints reside
+  - store - Where all of our VueX modules and store are located
+  - views - This is where the majority of our app resides. All route views are located here
 
 ## Getting started
 
 ### Setting up Kuma
+
+_If you want to use only mocked data then you can skip following paragrpah. But if you want your gui to work on real data from your running Kuma then you can go to [Creating mock data](#creating-mock-data) and follow the steps to disable mock data._
 
 First and foremost, this app depends on [Kuma](https://github.com/kumahq/kuma/) being installed locally and running.
 The app will actively look for the API Kuma exposes and it will not run without it. Once the app finds the API endpoint
@@ -160,48 +158,37 @@ Change the component name and meta info:
 export default {
   name: 'MyNewView',
   metaInfo: {
-    title: 'My New View'
-  }
+    title: 'My New View',
+  },
 }
 ```
 
-Update the endpoints in the `endpoint` const located in the `loadData()` method:
+Update the endpoints in the `getTableData` function located in the `loadData()` method:
 
 ```js
-const mesh = this.$route.params.mesh || null
-const query = this.$route.query.ns || null
-
-const params = {
+const { data, next } = await getTableData({
+  getSingleEntity: Kuma.getCircuitBreaker.bind(Kuma),
+  getAllEntities: Kuma.getAllCircuitBreakers.bind(Kuma),
+  getAllEntitiesFromMesh: Kuma.getAllCircuitBreakersFromMesh.bind(Kuma),
+  mesh,
+  query,
   size: this.pageSize,
-  offset: this.pageOffset
-}
-
-const endpoint = () => {
-  if (mesh === 'all') {
-    return this.$api.getAllCircuitBreakers(params)
-  } else if ((query && query.length) && mesh !== 'all') {
-    return this.$api.getCircuitBreaker(mesh, query, params)
-  }
-
-  return this.$api.getAllCircuitBreakersFromMesh(mesh)
-}
+  offset,
+})
 ```
 
 Here is a quick breakdown of what each of these requests does:
 
-* `getAllCircuitBreakers()` - Fetches all Circuit Breakers for all meshes
-* `getCircuitBreaker()` - Gets a specific Circuit Breaker from a mesh
-* `getAllCircuitBreakersFromMesh()` - Gets all Circuit Breakers for a specific mesh
+- `getAllCircuitBreakers()` - Fetches all Circuit Breakers for all meshes
+- `getCircuitBreaker()` - Gets a specific Circuit Breaker from a mesh
+- `getAllCircuitBreakersFromMesh()` - Gets all Circuit Breakers for a specific mesh
 
 #### 2. Create your REST functions
 
-All REST functions used throughout the app are located in `src/services/kuma.js`. To make the API accessible globally,
-we've defined it as an instance property inside of our `main.js` file, which will import our Kuma service:
+All REST functions used throughout the app are located in `src/services/kuma.ts`. To use it you need to import our `Kuma` service:
 
 ```js
-const kuma = new Kuma()
-
-Vue.prototype.$api = kuma
+import Kuma from '@/services/kuma'
 ```
 
 We won't go into detail about how to create each API function, since this documentation makes the assumption that the reader
@@ -224,12 +211,13 @@ within the `mesh` route, add something like this:
   component: () => import(/* webpackChunkName: "my-new-view" */ '@/views/Entities/MyNewView')
 },
 ```
-Your route will look like this: `http://localhost:8080/#/:mesh/my-new-view`. `:mesh` is a route `param` that is
+
+Your route will look like this: `http://localhost:8080/#/mesh/:mesh/my-new-view`. `:mesh` is a route `param` that is
 replaced with the mesh that the user has selected in the app (this defaults to `all`, which shows data for all Meshes).
 
 #### 4. Create your sidebar menu link
 
-All of the sidebar menu items are located in `src/components/Sidebar/menu.js`. If you are creating a view for a new Service,
+All of the sidebar menu items are located in `src/components/Sidebar/menu.ts`. If you are creating a view for a new Service,
 place your link inside of `items` within `subNav`:
 
 ```js
@@ -237,8 +225,8 @@ subNav: {
   items: [
     {
       name: 'My New View',
-      link: 'my-new-view' // this is the `name` of your route
-    }
+      link: 'my-new-view', // this is the `name` of your route
+    },
   ]
 }
 ```
@@ -252,23 +240,6 @@ If you are instead creating a new title to divide your nav items, you can do thi
 }
 ```
 
-If you have a route that requires the `:mesh` to be inserted at the end of the URL instead of before your route's path,
-you can use the `pathFlip` boolean to enable this:
-
-```js
-{
-  name: 'Meshes',
-  link: 'mesh-child',
-  pathFlip: true
-}
-```
-
-**What does `pathFlip` do?**
-
-By default, the format for URLs is `/default/meshes` -- `default` being the selected Mesh name, and `meshes`
-being the path for our route. But say you wanted the Mesh to be at the end instead (like in the context of the Meshes
-view). Your route would instead be structured like so: `/meshes/default`
-
 ### Creating mock data
 
 For handling mock data, we use [msw](https://github.com/mswjs/msw).
@@ -281,91 +252,20 @@ For handling mock data, we use [msw](https://github.com/mswjs/msw).
 
 #### Creating and modifying mocks
 
-All of our mock data is located in `src/services/mock.js`. We recommend reading the
+All of declaration of files which contain mock data are located in `src/services/mocks.ts`. We recommend reading the
 [documentation](https://mswjs.io/docs/getting-started/mocks) for msw to get an understanding
 on how it works and what it has to offer.
 
-Right now, our mock file is quite large. If you are so inclined and would like to help us organize it better, please feel
-free to [open a PR](https://github.com/kumahq/kuma-gui/pulls) to split it up into more manageable chunks.
-
 ### VueX store / State management
 
-All of our app state management functionality is located in `src/store/index.js`. In the future, we would like to split
-this file up to make it more manageable ([learn more](https://vueschool.io/lessons/split-vuex-store-in-multiple-files)).
-
-One of the main things you'll need when adding a view for a new Policy, is a way to count the number of items within that
-policy. By default, each endpoint served from Kuma includes a `total`. Here is an example:
-
-**Our action:**
-
-```js
-fetchProxyTemplateTotalCount ({ commit }) {
-  // we supply a size of 1 to keep the request lightweight.
-  // by default, each endpoint will return 100 items, but since we simply want to get the total,
-  // we can tell it to just give us 1 item.
-  const params = { size: 1 }
-
-  return api.getAllProxyTemplates(params)
-    .then(response => {
-      const total = response.total
-
-      // once we have our total, we write it to our state with a mutation
-      commit('SET_TOTAL_PROXY_TEMPLATE_COUNT', total)
-    })
-    .catch(error => {
-      console.error(error)
-    })
-},
-```
-
-The above will get the total number of Proxy Templates from the endpoint, and then triggers a mutation to update our state:
-
-**Our mutation:**
-
-```js
-SET_TOTAL_PROXY_TEMPLATE_COUNT: (state, count) => (state.totalProxyTemplateCount = count)
-```
-
-This simply updates the total number of Proxy Templates in the state. If you're already familiar with VueX or state
-management, this is straightforward.
-
-**Our getter:**
-
-We also have getters for grabbing this data with ease:
-
-```js
-getTotalProxyTemplateCount: (state) => state.totalProxyTemplateCount
-```
-
-In your component, you can then use [`mapGetters`](https://vuex.vuejs.org/guide/getters.html#the-mapgetters-helper)
-as a computed value for easily accessing this data:
-
-```js
-import { mapGetters } from 'vuex'
-
-export default {
-  // [...]
-  computed: {
-    ...mapGetters({
-      total: 'getTotalProxyTemplateCount'
-    }),
-  }
-}
-```
-
-```html
-<!-- your component -->
-<div>
-  <h1>Total: {{ total }}</h1>
-</div>
-```
-
-We recommend taking a look at the Overview (`src/views/Overview.vue`) component to get a better understanding of where and
-how these total counts are used.
+All of our app state management functionality is located in `src/store/index.ts`.
+We recommend to ONLY add and handle things related to overall aplication into the store.
+If something is only needed at level of Policy/Resource then please leave it there, instead of putting that data into store.
 
 ### Styles
 
-We try to primarily follow the [BEMCSS](http://getbem.com/introduction/) methodology when writing CSS, but since we are
+Right now we use [tailwind](https://v1.tailwindcss.com/) for most of our css. There is also a lot of CSS which was done using [BEMCSS](http://getbem.com/introduction/) methodology.
+Overall if its possible then try to cover all css with tailwind. If not - then please follow BEM rules, but since we are
 writing mostly scoped styles on all of our Vue components, our naming conventions can be more relaxed. Please make sure
 to name your elements in a clear manner.
 
@@ -421,10 +321,14 @@ When writing styles inside of a component, make sure to include `scoped` to prev
 If you are writing broader styles in a CSS/SCSS file, make sure to leverage BEM. This helps keep things clear and concise:
 
 ```css
-.main-sidebar { }
-.main-sidebar__nav-link { }
-.main-sidebar__nav-link--is-active { }
-.main-sidebar__title { }
+.main-sidebar {
+}
+.main-sidebar__nav-link {
+}
+.main-sidebar__nav-link--is-active {
+}
+.main-sidebar__title {
+}
 ```
 
 #### State
@@ -433,9 +337,12 @@ When handling states in CSS, we like to use human-readable classes to make it ob
 active. This helps when scanning through the codebase, and helps with debugging as well. Here are some examples:
 
 ```css
-.is-expanded { }
-.is-active { }
-.is-fixed { }
+.is-expanded {
+}
+.is-active {
+}
+.is-fixed {
+}
 ```
 
 #### Tailwind
