@@ -96,7 +96,7 @@ import AccordionItem from '@/components/Accordion/AccordionItem'
 
 const POLICY_TYPE_SUBTITLE = {
   inbound: 'Policies applied on incoming connection on address',
-  outbound: 'Policies applied on outcomming connection on address',
+  outbound: 'Policies applied on outgoing connection to the address',
   service: 'Policies applied on outgoing connections to service',
 }
 
