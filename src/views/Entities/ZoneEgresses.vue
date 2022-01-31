@@ -22,7 +22,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'zoneegresses'
+            name: 'zoneegresses'
             }"
           >
             <span class="custom-control-icon">

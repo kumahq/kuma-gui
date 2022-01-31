@@ -3,7 +3,7 @@
   "items": [
     {
       "type": "ZoneEgressOverview",
-      "name": "zone-egress-1",
+      "name": "zoneegress-1",
       "creationTime": "2021-07-13T08:40:59Z",
       "modificationTime": "2021-07-13T08:40:59Z",
       "zoneEgress": {
