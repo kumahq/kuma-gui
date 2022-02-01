@@ -33,7 +33,7 @@
                     <span v-if="item.type === 'inbound' || item.type === 'outbound'">
                       {{ item.type }} {{ item.name }}
                     </span>
-                    <span v-if="item.type === 'service' || item.type === 'dataplane'">
+                    <span v-else-if="item.type === 'service' || item.type === 'dataplane'">
                       {{ item.type }}
                     </span>
 
