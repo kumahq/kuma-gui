@@ -14,7 +14,7 @@ describe('DataplanePolicies.vue', () => {
       routes: [],
     })
 
-    await userEvent.click(await screen.findByText('192.168.0.1:80:81'))
+    await userEvent.click(await screen.findByText('web'))
 
     expect(container).toMatchSnapshot()
   })

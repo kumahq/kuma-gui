@@ -17,11 +17,25 @@
             <template v-slot:accordion-header>
               <div class="flex items-center justify-between">
                 <div>
-                  <p class="text-lg">
-                    {{ item.name }}
+                  <p
+                    v-if="item.type === 'dataplane'"
+                    class="text-lg"
+                  >
+                    Dataplane
+                  </p>
+                  <p
+                    v-if="item.type !== 'dataplane'"
+                    class="text-lg"
+                  >
+                    {{ item.service }}
                   </p>
                   <p class="subtitle">
-                    {{ item.type }}
+                    <span v-if="item.type === 'inbound' || item.type === 'outbound'">
+                      {{ item.type }} {{ item.name }}
+                    </span>
+                    <span v-else-if="item.type === 'service' || item.type === 'dataplane'">
+                      {{ item.type }}
+                    </span>
 
                     <KPop
                       width="300"
@@ -98,6 +112,7 @@ const POLICY_TYPE_SUBTITLE = {
   inbound: 'Policies applied on incoming connection on address',
   outbound: 'Policies applied on outgoing connection to the address',
   service: 'Policies applied on outgoing connections to service',
+  dataplane: 'Policies applied on all incoming and outgoing connections to the selected data plane proxy',
 }
 
 export default {
