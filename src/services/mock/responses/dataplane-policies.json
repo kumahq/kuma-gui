@@ -243,8 +243,8 @@
     },
     {
       "type": "service",
-      "name": "web",
-      "service": "web",
+      "name": "web-api",
+      "service": "web-api",
       "matchedPolicies": {
         "HealthCheck": [
           {
