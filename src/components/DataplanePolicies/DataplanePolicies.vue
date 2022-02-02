@@ -179,6 +179,7 @@ export default {
 
         this.items = items
       } catch (e) {
+        console.error(e)
         this.hasError = true
       } finally {
         this.isLoading = false

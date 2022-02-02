@@ -1,12 +1,11 @@
 import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
 import { server } from '@/jest-setup'
-import userEvent from '@testing-library/user-event'
-import DataplanePolicies from './DataplanePolicies.vue'
+import XdsConfiguration from './XdsConfiguration.vue'
 
-describe('DataplanePolicies.vue', () => {
+describe('XdsConfiguration.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = render(DataplanePolicies, {
+    const { container } = render(XdsConfiguration, {
       props: {
         mesh: 'foo',
         dppName: 'dataplane-test-456',
@@ -14,13 +13,11 @@ describe('DataplanePolicies.vue', () => {
       routes: [],
     })
 
-    await userEvent.click(await screen.findByText('web'))
-
     expect(container).toMatchSnapshot()
   })
 
   it('renders loading', () => {
-    render(DataplanePolicies, {
+    render(XdsConfiguration, {
       props: {
         mesh: 'foo',
         dppName: 'dataplane-test-456',
@@ -35,12 +32,12 @@ describe('DataplanePolicies.vue', () => {
     jest.spyOn(console, 'error').mockImplementation(() => {}); // silence console errors
 
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/xds', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
 
-    render(DataplanePolicies, {
+    render(XdsConfiguration, {
       props: {
         mesh: 'default',
         dppName: 'dataplane-test-456',
@@ -49,23 +46,5 @@ describe('DataplanePolicies.vue', () => {
     })
 
     expect(await screen.findByText(/An error has occurred while trying to load this data./)).toBeInTheDocument()
-  })
-
-  it('renders no item', async () => {
-    server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({ total: 0, items: [] })),
-      ),
-    )
-
-    render(DataplanePolicies, {
-      props: {
-        mesh: 'default',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
-    })
-
-    expect(await screen.findByText(/There is no data to display./)).toBeInTheDocument()
   })
 })

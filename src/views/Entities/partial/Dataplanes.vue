@@ -169,6 +169,12 @@
           :dpp-name="rawEntity.name"
         />
       </template>
+      <template v-slot:xds-configuration>
+        <XdsConfiguration
+          :mesh="rawEntity.mesh"
+          :dpp-name="rawEntity.name"
+        />
+      </template>
       <template v-slot:mtls>
         <LabelList
           :is-loading="entityIsLoading"
@@ -250,6 +256,7 @@ import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 import { getTableData } from '@/utils/tableDataUtils'
 import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies'
+import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
 import StatusInfo from '@/components/Utils/StatusInfo'
 import SubscriptionDetails from '../components/SubscriptionDetails'
 import SubscriptionHeader from '../components/SubscriptionHeader'
@@ -269,6 +276,7 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     DataplanePolicies,
+    XdsConfiguration,
     StatusInfo,
   },
   props: {
@@ -324,6 +332,10 @@ export default {
           {
             hash: '#dpp-policies',
             title: 'Policies',
+          },
+          {
+            hash: '#xds-configuration',
+            title: 'XDS Configuration',
           },
           {
             hash: '#mtls',

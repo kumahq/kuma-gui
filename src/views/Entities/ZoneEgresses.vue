@@ -89,6 +89,11 @@
             </template>
           </KCard>
         </template>
+        <template v-slot:xds-configuration>
+          <XdsConfiguration
+            :zone-egress-name="entity.name"
+          />
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
@@ -105,6 +110,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import Tabs from '@/components/Utils/Tabs'
 import LabelList from '@/components/Utils/LabelList'
+import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
 
 import { getItemStatusFromInsight } from '@/dataplane'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
@@ -129,6 +135,7 @@ export default {
     SubscriptionHeader,
     MultizoneInfo,
     EntityURLControl,
+    XdsConfiguration
   },
 
   metaInfo: {
@@ -160,6 +167,10 @@ export default {
         {
           hash: '#insights',
           title: 'Zone Egress Insights',
+        },
+        {
+          hash: '#xds-configuration',
+          title: 'XDS Configuration',
         },
       ],
       entity: {},

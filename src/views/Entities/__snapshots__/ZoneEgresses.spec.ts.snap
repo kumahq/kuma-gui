@@ -293,6 +293,22 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                   Zone Egress Insights
                 </a>
               </li>
+              <li
+                aria-controls="panel-2"
+                aria-selected="false"
+                class="tab-item"
+                data-v-a38b664a=""
+                id="xds-configuration-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                  data-v-a38b664a=""
+                >
+                  XDS Configuration
+                </a>
+              </li>
             </ul>
             <div
               aria-labelledby="overview-tab"
@@ -385,6 +401,16 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
               class="tab-container"
               data-v-a38b664a=""
               id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="xds-configuration-tab"
+              class="tab-container"
+              data-v-a38b664a=""
+              id="panel-2"
               role="tabpanel"
               tabindex="0"
             >
@@ -627,6 +653,22 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
             Zone Egress Insights
           </a>
         </li>
+        <li
+          aria-controls="panel-2"
+          aria-selected="false"
+          class="tab-item"
+          data-v-a38b664a=""
+          id="xds-configuration-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-a38b664a=""
+          >
+            XDS Configuration
+          </a>
+        </li>
       </ul>
       <div
         aria-labelledby="overview-tab"
@@ -860,6 +902,16 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
             </ul>
           </div>
         </div>
+      </div>
+      <div
+        aria-labelledby="xds-configuration-tab"
+        class="tab-container"
+        data-v-a38b664a=""
+        id="panel-2"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
       </div>
     </div>
      
