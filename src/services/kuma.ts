@@ -491,6 +491,21 @@ class Kuma {
   public getDataplanePolicies({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
     return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/policies`, { params })
   }
+
+  // Get XDS configuration of a data plane proxy
+  public getDataplaneXds({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
+    return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/xds`, { params })
+  }
+
+  // Get XDS configuration of a zone ingress proxy
+  public getZoneIngressXds({ zoneIngressName }: { zoneIngressName: string }, params?: any) {
+    return this.client.get(`/zoneingresses/${zoneIngressName}/xds`, { params })
+  }
+
+  // Get XDS configuration of a zone ingress proxy
+  public getZoneEgressXds({ zoneEgressName }: { zoneEgressName: string }, params?: any) {
+    return this.client.get(`/zoneegresses/${zoneEgressName}/xds`, { params })
+  }
 }
 
 export default new Kuma()

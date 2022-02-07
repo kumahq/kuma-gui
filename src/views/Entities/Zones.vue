@@ -121,7 +121,7 @@
                   </KButton>
                   <template v-slot:content>
                     <div>
-                      <p>Entity copied to clipboard!</p>
+                      <p>Config copied to clipboard!</p>
                     </div>
                   </template>
                 </KPop>

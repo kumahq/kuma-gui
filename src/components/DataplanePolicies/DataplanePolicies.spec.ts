@@ -32,6 +32,8 @@ describe('DataplanePolicies.vue', () => {
   })
 
   it('renders error', async () => {
+    jest.spyOn(console, 'error').mockImplementation(() => {}); // silence console errors
+
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),

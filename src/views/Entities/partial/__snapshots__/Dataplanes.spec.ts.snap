@@ -1902,6 +1902,22 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
               aria-selected="false"
               class="tab-item"
               data-v-a38b664a=""
+              id="xds-configuration-tab"
+              role="tab"
+              tabindex="0"
+            >
+              <a
+                class="tab-link"
+                data-v-a38b664a=""
+              >
+                XDS Configuration
+              </a>
+            </li>
+            <li
+              aria-controls="panel-4"
+              aria-selected="false"
+              class="tab-item"
+              data-v-a38b664a=""
               id="mtls-tab"
               role="tab"
               tabindex="0"
@@ -1914,7 +1930,7 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
               </a>
             </li>
             <li
-              aria-controls="panel-4"
+              aria-controls="panel-5"
               aria-selected="false"
               class="tab-item"
               data-v-a38b664a=""
@@ -2211,7 +2227,7 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
             <!---->
           </div>
           <div
-            aria-labelledby="mtls-tab"
+            aria-labelledby="xds-configuration-tab"
             class="tab-container"
             data-v-a38b664a=""
             id="panel-3"
@@ -2221,10 +2237,20 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
             <!---->
           </div>
           <div
-            aria-labelledby="yaml-tab"
+            aria-labelledby="mtls-tab"
             class="tab-container"
             data-v-a38b664a=""
             id="panel-4"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <!---->
+          </div>
+          <div
+            aria-labelledby="yaml-tab"
+            class="tab-container"
+            data-v-a38b664a=""
+            id="panel-5"
             role="tabpanel"
             tabindex="0"
           >

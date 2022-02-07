@@ -178,6 +178,24 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
     ),
   )
 
+  handlers.push(
+    rest.get(`${apiURL}meshes/:mesh/dataplanes/:dataplaneName/xds`, (req, res, ctx) =>
+      res(ctx.json(requireMockFile('dataplane-xds.json'))),
+    ),
+  )
+
+  handlers.push(
+    rest.get(`${apiURL}zoneingresses/:zoneIngressName/xds`, (req, res, ctx) =>
+      res(ctx.json(requireMockFile('dataplane-xds.json'))),
+    ),
+  )
+
+  handlers.push(
+    rest.get(`${apiURL}zoneegresses/:zoneEgressName/xds`, (req, res, ctx) =>
+      res(ctx.json(requireMockFile('dataplane-xds.json'))),
+    ),
+  )
+
   return handlers
 }
 
