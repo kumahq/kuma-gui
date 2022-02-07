@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/vue'
+import renderWithVuex from '@/testUtils/renderWithVuex';
+import { screen } from '@testing-library/vue'
 import { rest } from 'msw'
 import { server } from '@/jest-setup'
 import XdsConfiguration from './XdsConfiguration.vue'
 
 describe('XdsConfiguration.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = render(XdsConfiguration, {
+    const { container } = renderWithVuex(XdsConfiguration, {
       props: {
         mesh: 'foo',
         dppName: 'dataplane-test-456',
@@ -17,7 +18,7 @@ describe('XdsConfiguration.vue', () => {
   })
 
   it('renders loading', () => {
-    render(XdsConfiguration, {
+    renderWithVuex(XdsConfiguration, {
       props: {
         mesh: 'foo',
         dppName: 'dataplane-test-456',
@@ -37,7 +38,7 @@ describe('XdsConfiguration.vue', () => {
       ),
     )
 
-    render(XdsConfiguration, {
+    renderWithVuex(XdsConfiguration, {
       props: {
         mesh: 'default',
         dppName: 'dataplane-test-456',
