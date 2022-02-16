@@ -200,6 +200,7 @@ export default {
           { label: 'Zone CP Version', key: 'zoneCpVersion' },
           { label: 'Backend', key: 'backend' },
           { label: 'Ingress', key: 'hasIngress' },
+          { label: 'Egress', key: 'hasEgress' },
           { key: 'warnings', hideLabel: true },
         ],
         data: [],
@@ -288,6 +289,7 @@ export default {
         zoneCpVersion,
         backend,
         hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',
+        hasEgress: this.zonesWithEgress.has(name) ? 'Yes' : 'No',
         withWarnings: zoneCpVersion !== this.globalCpVersion,
       }
     },
@@ -300,6 +302,15 @@ export default {
 
       this.zonesWithIngress = zones
     },
+    calculateZonesWithEgress(zoneEgresses) {
+      const zones = new Set()
+
+      zoneEgresses.forEach(({ zoneEgress: { zone } }) => {
+        zones.add(zone)
+      })
+
+      this.zonesWithEgress = zones
+    },
     async loadData(offset = '0') {
       this.isLoading = true
       this.isEmpty = false
@@ -307,7 +318,7 @@ export default {
       const query = this.$route.query.ns || null
 
       try {
-        const [{ data, next }, { items: zoneIngresses }] = await Promise.all([
+        const [{ data, next }, { items: zoneIngresses }, { items: zoneEgresses }] = await Promise.all([
           getTableData({
             getSingleEntity: Kuma.getZoneOverview.bind(Kuma),
             getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
@@ -318,6 +329,9 @@ export default {
           fetchAllResources({
             callEndpoint: Kuma.getAllZoneIngressOverviews.bind(Kuma),
           }),
+          fetchAllResources({
+            callEndpoint: Kuma.getAllZoneEgressOverviews.bind(Kuma),
+          }),
         ])
 
         // set pagination
@@ -326,6 +340,7 @@ export default {
         // set table data
         if (data.length) {
           this.calculateZonesWithIngress(zoneIngresses)
+          this.calculateZonesWithEgress(zoneEgresses)
           this.tableData.data = data.map(this.parseData)
           this.tableDataIsEmpty = false
           this.isEmpty = false
