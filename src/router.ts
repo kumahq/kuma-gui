@@ -306,22 +306,22 @@ export default (store: Store<RootInterface>) => {
                 },
                 // gateways
                 {
-                  path: POLICY_MAP.Gateway.route,
-                  name: POLICY_MAP.Gateway.route,
+                  path: POLICY_MAP.MeshGateway.route,
+                  name: POLICY_MAP.MeshGateway.route,
                   meta: {
-                    title: POLICY_MAP.Gateway.title,
+                    title: POLICY_MAP.MeshGateway.title,
                   },
-                  component: () => import(/* webpackChunkName: "gateways" */ '@/views/Policies/Gateways.vue'),
+                  component: () => import(/* webpackChunkName: "mesh-gateways" */ '@/views/Policies/MeshGateways.vue'),
                 },
                 // gateway routes
                 {
-                  path: POLICY_MAP.GatewayRoute.route,
-                  name: POLICY_MAP.GatewayRoute.route,
+                  path: POLICY_MAP.MeshGatewayRoute.route,
+                  name: POLICY_MAP.MeshGatewayRoute.route,
                   meta: {
-                    title: POLICY_MAP.GatewayRoute.title,
+                    title: POLICY_MAP.MeshGatewayRoute.title,
                   },
                   component: () =>
-                    import(/* webpackChunkName: "gateway-routes" */ '@/views/Policies/GatewayRoutes.vue'),
+                    import(/* webpackChunkName: "mesh-gateway-routes" */ '@/views/Policies/MeshGatewayRoutes.vue'),
                 },
               ],
             },

@@ -2,7 +2,7 @@
   "total": 1,
   "items": [
     {
-      "type": "GatewayRoute",
+      "type": "MeshGatewayRoute",
       "mesh": "default",
       "name": "edge-gateway",
       "creationTime": "2022-01-25T13:58:29.381342+01:00",

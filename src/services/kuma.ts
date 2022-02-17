@@ -377,18 +377,18 @@ class Kuma {
    */
 
   // get all gateway
-  public getAllGateways(params?: any) {
-    return this.client.get('/gateways', { params })
+  public getAllMeshGateways(params?: any) {
+    return this.client.get('/meshgateways', { params })
   }
 
   // get all gateways from mesh
-  public getAllGatewaysFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
-    return this.client.get(`/meshes/${mesh}/gateways`, { params })
+  public getAllMeshGatewaysFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/meshgateways`, { params })
   }
 
-  // get timeout details
-  public getGateway({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
-    return this.client.get(`/meshes/${mesh}/gateways/${name}`, { params })
+  // get gateway details
+  public getMeshGateway({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/meshgateways/${name}`, { params })
   }
 
   /**
@@ -396,18 +396,18 @@ class Kuma {
    */
 
   // get all gateway routes
-  public getAllGatewayRoutes(params?: any) {
-    return this.client.get('/gateway-routes', { params })
+  public getAllMeshGatewayRoutes(params?: any) {
+    return this.client.get('/meshgatewayroutes', { params })
   }
 
   // get all gateway routes from mesh
-  public getAllGatewayRoutesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
-    return this.client.get(`/meshes/${mesh}/gateway-routes`, { params })
+  public getAllMeshGatewayRoutesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/meshgatewayroutes`, { params })
   }
 
   // get timeout details
-  public getGatewayRoute({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
-    return this.client.get(`/meshes/${mesh}/gateway-routes/${name}`, { params })
+  public getMeshGatewayRoute({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+    return this.client.get(`/meshes/${mesh}/meshgatewayroutes/${name}`, { params })
   }
 
   /**

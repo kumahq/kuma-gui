@@ -1,5 +1,5 @@
 {
-  "type": "Gateway",
+  "type": "MeshGateway",
   "mesh": "default",
   "name": "edge-gateway",
   "creationTime": "2022-01-25T13:55:51.798701+01:00",

@@ -54,10 +54,10 @@ export const getInitialPolicies = () => ({
   Timeout: {
     total: 0,
   },
-  Gateway: {
+  MeshGateway: {
     total: 0,
   },
-  GatewayRoute: {
+  MeshGatewayRoute: {
     total: 0,
   },
 })

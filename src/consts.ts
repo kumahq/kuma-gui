@@ -56,13 +56,13 @@ export const POLICY_MAP = {
     title: 'Timeouts',
     route: 'timeouts',
   },
-  Gateway: {
-    title: 'Gateways',
-    route: 'gateways',
+  MeshGateway: {
+    title: 'Mesh Gateways',
+    route: 'mesh-gateways',
   },
-  GatewayRoute: {
-    title: 'Gateway Routes',
-    route: 'gateway-routes',
+  MeshGatewayRoute: {
+    title: 'Mesh Gateway Routes',
+    route: 'mesh-gateway-routes',
   },
 }
 

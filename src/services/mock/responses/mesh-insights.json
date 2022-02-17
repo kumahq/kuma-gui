@@ -43,10 +43,10 @@
         "Timeout": {
           "total": 1
         },
-        "Gateway": {
+        "MeshGateway": {
           "total": 1
         },
-        "GatewayRoute": {
+        "MeshGatewayRoute": {
           "total": 1
         }
       },

@@ -1,5 +1,5 @@
 <template>
-  <div class="gateway-routes relative">
+  <div class="meshgateways relative">
     <DocumentationLink :href="docsURL" />
     <div class="mb-4">
       <KAlert appearance="warning">
@@ -35,7 +35,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'gateway-routes',
+              name: 'meshgateways',
             }"
           >
             <span class="custom-control-icon"> &larr; </span>
@@ -53,7 +53,7 @@
         <template v-slot:tabHeader>
           <div>
             <h3>
-              Gateway Route: {{ entity.name }}
+              MeshGateway: {{ entity.name }}
             </h3>
           </div>
           <div>
@@ -84,7 +84,7 @@
           <PolicyConnections
             :mesh="rawEntity.mesh"
             :policy-name="rawEntity.name"
-            policy-type="gateway-routes"
+            policy-type="meshgateways"
           />
         </template>
         <template v-slot:yaml>
@@ -114,9 +114,9 @@ import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
-  name: 'GatewayRoutes',
+  name: 'MeshGateways',
   metaInfo: {
-    title: 'Gateway Routes',
+    title: 'Mesh Gateways',
   },
   components: {
     EntityURLControl,
@@ -135,7 +135,7 @@ export default {
       hasError: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Gateway Routes present.',
+        message: 'There are no Mesh Gateways present.',
       },
       tableData: {
         headers: [
@@ -169,7 +169,7 @@ export default {
       version: 'config/getVersion',
     }),
     docsURL() {
-      return `https://kuma.io/docs/${this.version}/policies/gateway-route/`
+      return `https://kuma.io/docs/${this.version}/policies/meshgateway/`
     },
   },
   watch: {
@@ -198,9 +198,9 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: Kuma.getGatewayRoute.bind(Kuma),
-          getAllEntities: Kuma.getAllGatewayRoutes.bind(Kuma),
-          getAllEntitiesFromMesh: Kuma.getAllGatewayRoutesFromMesh.bind(Kuma),
+          getSingleEntity: Kuma.getMeshGateway.bind(Kuma),
+          getAllEntities: Kuma.getAllMeshGateways.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllMeshGatewaysFromMesh.bind(Kuma),
           mesh,
           query,
           size: this.pageSize,
