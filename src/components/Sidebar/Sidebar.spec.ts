@@ -11,14 +11,14 @@ describe('Sidebar.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders gateways when flag applied', () => {
+  it('renders mesh gateways when flag applied', () => {
     renderWithVuex(Sidebar, {
       store: { modules: { config: { state: { clientConfig: { experimental: { gateway: true } } } } } },
       routes: [],
     })
 
-    expect(screen.getByTestId('gateways')).toBeInTheDocument()
-    expect(screen.getByTestId('gateway-routes')).toBeInTheDocument()
+    expect(screen.getByTestId('mesh-gateways')).toBeInTheDocument()
+    expect(screen.getByTestId('mesh-gateway-routes')).toBeInTheDocument()
   })
 
   it('refetch data after change of mesh', async () => {

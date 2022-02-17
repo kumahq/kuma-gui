@@ -1,5 +1,5 @@
 <template>
-  <div class="gateway-routes relative">
+  <div class="meshgatewayroutes relative">
     <DocumentationLink :href="docsURL" />
     <div class="mb-4">
       <KAlert appearance="warning">
@@ -35,7 +35,7 @@
             appearance="primary"
             size="small"
             :to="{
-              name: 'gateway-routes',
+              name: 'meshgatewayroutes',
             }"
           >
             <span class="custom-control-icon"> &larr; </span>
@@ -84,7 +84,7 @@
           <PolicyConnections
             :mesh="rawEntity.mesh"
             :policy-name="rawEntity.name"
-            policy-type="gateway-routes"
+            policy-type="meshgatewayroutes"
           />
         </template>
         <template v-slot:yaml>
@@ -169,7 +169,7 @@ export default {
       version: 'config/getVersion',
     }),
     docsURL() {
-      return `https://kuma.io/docs/${this.version}/policies/gateway-route/`
+      return `https://kuma.io/docs/${this.version}/policies/meshgatewayroute/`
     },
   },
   watch: {
@@ -198,9 +198,9 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: Kuma.getGatewayRoute.bind(Kuma),
-          getAllEntities: Kuma.getAllGatewayRoutes.bind(Kuma),
-          getAllEntitiesFromMesh: Kuma.getAllGatewayRoutesFromMesh.bind(Kuma),
+          getSingleEntity: Kuma.getMeshGatewayRoute.bind(Kuma),
+          getAllEntities: Kuma.getAllMeshGatewayRoutes.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllMeshGatewayRoutesFromMesh.bind(Kuma),
           mesh,
           query,
           size: this.pageSize,
