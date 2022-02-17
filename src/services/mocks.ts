@@ -53,7 +53,7 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/meshgateways/edge-gateway',
 
   'meshgatewayroutes',
-  'meshes/default/meshgateway-routes',
+  'meshes/default/meshgatewayroutes',
   'meshes/default/meshgatewayroutes/edge-gateway',
 
   'meshes/default/traffic-traces',

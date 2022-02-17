@@ -114,9 +114,9 @@ import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
-  name: 'GatewayRoutes',
+  name: 'MeshGatewayRoutes',
   metaInfo: {
-    title: 'Gateway Routes',
+    title: 'Mesh Gateway Routes',
   },
   components: {
     EntityURLControl,

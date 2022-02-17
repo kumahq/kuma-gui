@@ -300,12 +300,12 @@ export default {
         ...this.featureFlags.includes(FEATURE_FLAG.GATEWAY)
           ? [
             {
-              title: POLICY_MAP.Gateway.title,
-              value: policies.Gateway.total,
+              title: POLICY_MAP.MeshGateway.title,
+              value: policies.MeshGateway.total,
             },
             {
-              title: POLICY_MAP.GatewayRoute.title,
-              value: policies.GatewayRoute.total,
+              title: POLICY_MAP.MeshGatewayRoute.title,
+              value: policies.MeshGatewayRoute.total,
             },
           ]
           : [],

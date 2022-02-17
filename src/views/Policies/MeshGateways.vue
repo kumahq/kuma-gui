@@ -116,7 +116,7 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 export default {
   name: 'MeshGateways',
   metaInfo: {
-    title: 'MeshGateways',
+    title: 'Mesh Gateways',
   },
   components: {
     EntityURLControl,

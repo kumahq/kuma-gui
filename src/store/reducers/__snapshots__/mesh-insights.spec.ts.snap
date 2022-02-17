@@ -19,13 +19,13 @@ Object {
     "FaultInjection": Object {
       "total": 0,
     },
-    "Gateway": Object {
-      "total": 0,
-    },
-    "GatewayRoute": Object {
-      "total": 0,
-    },
     "HealthCheck": Object {
+      "total": 0,
+    },
+    "MeshGateway": Object {
+      "total": 0,
+    },
+    "MeshGatewayRoute": Object {
       "total": 0,
     },
     "ProxyTemplate": Object {
@@ -97,13 +97,13 @@ Object {
     "FaultInjection": Object {
       "total": 0,
     },
-    "Gateway": Object {
-      "total": 0,
-    },
-    "GatewayRoute": Object {
-      "total": 0,
-    },
     "HealthCheck": Object {
+      "total": 0,
+    },
+    "MeshGateway": Object {
+      "total": 0,
+    },
+    "MeshGatewayRoute": Object {
       "total": 0,
     },
     "ProxyTemplate": Object {
@@ -181,13 +181,13 @@ Object {
     "FaultInjection": Object {
       "total": 0,
     },
-    "Gateway": Object {
-      "total": 0,
-    },
-    "GatewayRoute": Object {
-      "total": 0,
-    },
     "HealthCheck": Object {
+      "total": 0,
+    },
+    "MeshGateway": Object {
+      "total": 0,
+    },
+    "MeshGatewayRoute": Object {
       "total": 0,
     },
     "ProxyTemplate": Object {
@@ -243,13 +243,13 @@ Object {
     "FaultInjection": Object {
       "total": 0,
     },
-    "Gateway": Object {
-      "total": 0,
-    },
-    "GatewayRoute": Object {
-      "total": 0,
-    },
     "HealthCheck": Object {
+      "total": 0,
+    },
+    "MeshGateway": Object {
+      "total": 0,
+    },
+    "MeshGatewayRoute": Object {
       "total": 0,
     },
     "ProxyTemplate": Object {
