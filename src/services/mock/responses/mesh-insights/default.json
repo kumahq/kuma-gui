@@ -31,10 +31,10 @@
     "TrafficRoute": {
       "total": 5
     },
-    "Gateway": {
+    "MeshGateway": {
       "total": 1
     },
-    "GatewayRoute": {
+    "MeshGatewayRoute": {
       "total": 1
     }
   },

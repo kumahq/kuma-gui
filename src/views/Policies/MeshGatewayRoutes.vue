@@ -135,7 +135,7 @@ export default {
       hasError: false,
       empty_state: {
         title: 'No Data',
-        message: 'There are no Gateway Routes present.',
+        message: 'There are no Mesh Gateway Routes present.',
       },
       tableData: {
         headers: [

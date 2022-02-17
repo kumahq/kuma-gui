@@ -26,9 +26,9 @@ describe('sidebar module', () => {
               },
               "policies": Object {
                 "FaultInjection": 2,
-                "Gateway": 1,
-                "GatewayRoute": 1,
                 "HealthCheck": 7,
+                "MeshGateway": 1,
+                "MeshGatewayRoute": 1,
                 "Secret": 8,
                 "Timeout": 1,
                 "TrafficPermission": 5,

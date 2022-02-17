@@ -198,7 +198,7 @@ const menu: MenuSection[] = [
                 link: POLICY_MAP.MeshGateway.route,
                 title: false,
                 parent: 'policies',
-                insightsFieldAccessor: 'mesh.policies.Gateway',
+                insightsFieldAccessor: 'mesh.policies.MeshGateway',
                 featureFlags: [FEATURE_FLAG.GATEWAY],
               },
               {
@@ -206,7 +206,7 @@ const menu: MenuSection[] = [
                 link: POLICY_MAP.MeshGatewayRoute.route,
                 title: false,
                 parent: 'policies',
-                insightsFieldAccessor: 'mesh.policies.GatewayRoute',
+                insightsFieldAccessor: 'mesh.policies.MeshGatewayRoute',
                 featureFlags: [FEATURE_FLAG.GATEWAY],
               },
             ].sort((a, b) => (a.name < b.name ? -1 : 1)),
