@@ -107,6 +107,12 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                     class=""
                     data-v-bfeabd48=""
                   >
+                     Egress 
+                  </th>
+                  <th
+                    class=""
+                    data-v-bfeabd48=""
+                  >
                     <!---->
                   </th>
                 </tr>
@@ -176,6 +182,11 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                     data-v-bfeabd48=""
                   >
                     memory
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    No
                   </td>
                   <td
                     data-v-bfeabd48=""
@@ -291,6 +302,11 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                   <td
                     data-v-bfeabd48=""
                   >
+                    Yes
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
                     <svg
                       class="kong-icon mr-1 kong-icon-warning"
                       data-v-a7c9c1d2=""
@@ -397,6 +413,11 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                   <td
                     data-v-bfeabd48=""
                   >
+                    No
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
                     <svg
                       class="kong-icon mr-1 kong-icon-warning"
                       data-v-a7c9c1d2=""
@@ -494,6 +515,11 @@ exports[`Zones.vue renders snapshot when multizone 1`] = `
                     data-v-bfeabd48=""
                   >
                     
+                  </td>
+                  <td
+                    data-v-bfeabd48=""
+                  >
+                    No
                   </td>
                   <td
                     data-v-bfeabd48=""
