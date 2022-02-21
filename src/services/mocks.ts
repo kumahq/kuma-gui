@@ -132,7 +132,7 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
         ctx.json({
           hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
           tagline: 'Kuma',
-          version: '1.3.0',
+          version: 'v1.5.0',
           instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
           clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
         }),
