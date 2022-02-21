@@ -64,12 +64,12 @@ const menu: MenuSection[] = [
             {
               name: 'Zone Ingresses',
               link: 'zoneingresses',
-              insightsFieldAccessor: 'global.ZoneEgress',
+              insightsFieldAccessor: 'global.ZoneIngress',
             },
             {
               name: 'Zone Egresses',
               link: 'zoneegresses',
-              insightsFieldAccessor: 'global.ZoneIngress',
+              insightsFieldAccessor: 'global.ZoneEgress',
             },
             {
               name: 'Services',
