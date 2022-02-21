@@ -123,7 +123,7 @@ export default {
     },
     statusContent() {
       if (this.guiStatus) {
-        return `${this.tagline} v${this.version}`
+        return `${this.tagline} ${this.version}`
       }
 
       return `Unable to determine ${this.tagline}'s status`
