@@ -87,7 +87,7 @@
   },
   "environment": "universal",
   "experimental": {
-    "gateway": true
+    "meshGateway": true
   },
   "general": {
     "dnsCacheTTL": "10s",

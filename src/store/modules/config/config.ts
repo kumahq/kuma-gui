@@ -29,7 +29,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   featureFlags: state => {
     const featureFlags = []
 
-    if (state.clientConfig?.experimental?.gateway) {
+    if (state.clientConfig?.experimental?.meshGateway) {
       featureFlags.push(FEATURE_FLAG.GATEWAY)
     }
 

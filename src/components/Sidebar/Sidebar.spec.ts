@@ -13,7 +13,7 @@ describe('Sidebar.vue', () => {
 
   it('renders mesh gateways when flag applied', () => {
     renderWithVuex(Sidebar, {
-      store: { modules: { config: { state: { clientConfig: { experimental: { gateway: true } } } } } },
+      store: { modules: { config: { state: { clientConfig: { experimental: { meshGateway: true } } } } } },
       routes: [],
     })
 

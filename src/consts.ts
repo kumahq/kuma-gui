@@ -67,5 +67,5 @@ export const POLICY_MAP = {
 }
 
 export const FEATURE_FLAG = {
-  GATEWAY: 'gateway',
+  GATEWAY: 'meshGateway',
 }

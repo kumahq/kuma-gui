@@ -107,7 +107,7 @@ export interface DpServer {
 }
 
 export interface Experimental {
-  gateway: boolean
+  meshGateway: boolean
 }
 
 export interface General {
