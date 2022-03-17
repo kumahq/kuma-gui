@@ -1,111 +1,104 @@
 <template>
   <div class="zoneegresses">
-    <MultizoneInfo v-if="multicluster === false" />
-
-    <!-- Zone CPs information for when Multicluster is enabled -->
-    <FrameSkeleton v-else>
-      <DataOverview
-        :page-size="pageSize"
-        :has-error="hasError"
-        :is-loading="isLoading"
-        :empty-state="empty_state"
-        :table-data="tableData"
-        :table-data-is-empty="isEmpty"
-        :next="next"
-        @tableAction="tableAction"
-        @loadData="loadData($event)"
-      >
-        <template v-slot:additionalControls>
-          <KButton
-            v-if="$route.query.ns"
-            class="back-button"
-            appearance="primary"
-            size="small"
-            :to="{
+    <DataOverview
+      :page-size="pageSize"
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :empty-state="empty_state"
+      :table-data="tableData"
+      :table-data-is-empty="isEmpty"
+      :next="next"
+      @tableAction="tableAction"
+      @loadData="loadData($event)"
+    >
+      <template v-slot:additionalControls>
+        <KButton
+          v-if="$route.query.ns"
+          class="back-button"
+          appearance="primary"
+          size="small"
+          :to="{
             name: 'zoneegresses'
-            }"
-          >
-            <span class="custom-control-icon">
-              &larr;
-            </span>
-            View All
-          </KButton>
-        </template>
-      </DataOverview>
-      <Tabs
-        v-if="isEmpty === false"
-        :has-error="hasError"
-        :is-loading="isLoading"
-        :tabs="tabs"
-        initial-tab-override="overview"
-      >
-        <template v-slot:tabHeader>
+          }"
+        >
+          <span class="custom-control-icon">
+            &larr;
+          </span>
+          View All
+        </KButton>
+      </template>
+    </DataOverview>
+    <Tabs
+      v-if="isEmpty === false"
+      :has-error="hasError"
+      :is-loading="isLoading"
+      :tabs="tabs"
+      initial-tab-override="overview"
+    >
+      <template v-slot:tabHeader>
+        <div>
+          <h3> Zone Egress: {{ entity.name }}</h3>
+        </div>
+        <div>
+          <EntityURLControl :name="entity.name" />
+        </div>
+      </template>
+      <template v-slot:overview>
+        <LabelList>
           <div>
-            <h3> Zone Egress: {{ entity.name }}</h3>
+            <ul>
+              <li
+                v-for="(value, key) in entity"
+                :key="key"
+              >
+                <h4 v-if="value">
+                  {{ key }}
+                </h4>
+                <p>
+                  {{ value }}
+                </p>
+              </li>
+            </ul>
           </div>
-          <div>
-            <EntityURLControl :name="entity.name" />
-          </div>
-        </template>
-        <template v-slot:overview>
-          <LabelList>
-            <div>
-              <ul>
-                <li
-                  v-for="(value, key) in entity"
-                  :key="key"
-                >
-                  <h4 v-if="value">
-                    {{ key }}
-                  </h4>
-                  <p>
-                    {{ value }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </LabelList>
-        </template>
-        <template v-slot:insights>
-          <KCard border-variant="noBorder">
-            <template v-slot:body>
-              <Accordion :initially-open="0">
-                <AccordionItem
-                  v-for="(value, key) in subscriptionsReversed"
-                  :key="key"
-                >
-                  <template v-slot:accordion-header>
-                    <SubscriptionHeader :details="value" />
-                  </template>
+        </LabelList>
+      </template>
+      <template v-slot:insights>
+        <KCard border-variant="noBorder">
+          <template v-slot:body>
+            <Accordion :initially-open="0">
+              <AccordionItem
+                v-for="(value, key) in subscriptionsReversed"
+                :key="key"
+              >
+                <template v-slot:accordion-header>
+                  <SubscriptionHeader :details="value" />
+                </template>
 
-                  <template v-slot:accordion-content>
-                    <SubscriptionDetails
-                      :details="value"
-                      is-discovery-subscription
-                    />
-                  </template>
-                </AccordionItem>
-              </Accordion>
-            </template>
-          </KCard>
-        </template>
-        <template v-slot:xds-configuration>
-          <XdsConfiguration
-            :zone-egress-name="entity.name"
-          />
-        </template>
-      </Tabs>
-    </FrameSkeleton>
+                <template v-slot:accordion-content>
+                  <SubscriptionDetails
+                    :details="value"
+                    is-discovery-subscription
+                  />
+                </template>
+              </AccordionItem>
+            </Accordion>
+          </template>
+        </KCard>
+      </template>
+      <template v-slot:xds-configuration>
+        <XdsConfiguration
+          :zone-egress-name="entity.name"
+        />
+      </template>
+    </Tabs>
   </div>
 </template>
 
 <script>
 import get from 'lodash/get'
-import { mapGetters } from 'vuex'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getSome } from '@/helpers'
 import Kuma from '@/services/kuma'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import Tabs from '@/components/Utils/Tabs'
@@ -120,12 +113,10 @@ import AccordionItem from '@/components/Accordion/AccordionItem'
 
 import SubscriptionDetails from './components/SubscriptionDetails'
 import SubscriptionHeader from './components/SubscriptionHeader'
-import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
   name: 'ZoneEgresses',
   components: {
-    FrameSkeleton,
     DataOverview,
     Tabs,
     LabelList,
@@ -133,7 +124,6 @@ export default {
     AccordionItem,
     SubscriptionDetails,
     SubscriptionHeader,
-    MultizoneInfo,
     EntityURLControl,
     XdsConfiguration
   },
@@ -180,11 +170,6 @@ export default {
       subscriptionsReversed: [],
     }
   },
-  computed: {
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus',
-    }),
-  },
   watch: {
     $route() {
       this.init()
@@ -195,9 +180,7 @@ export default {
   },
   methods: {
     init() {
-      if (this.multicluster) {
-        this.loadData()
-      }
+      this.loadData()
     },
     tableAction(ev) {
       const data = ev
