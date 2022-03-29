@@ -15,8 +15,13 @@ jest.mock('@/helpers', () => {
 })
 
 describe('ZoneEgresses.vue', () => {
-  it('renders snapshot when no multizone', () => {
-    const { container } = renderWithVuex(ZoneEgresses, { routes: [] })
+  it('renders snapshot when no multizone', async () => {
+    const { container } = renderWithVuex(ZoneEgresses, {
+      routes: [],
+      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
+    })
+
+    await screen.findByText(/ZoneEgressOverview/)
 
     expect(container).toMatchSnapshot()
   })
