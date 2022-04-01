@@ -80,13 +80,6 @@
             </div>
           </LabelList>
         </template>
-        <template v-slot:affected-dpps>
-          <PolicyConnections
-            :mesh="rawEntity.mesh"
-            :policy-name="rawEntity.name"
-            policy-type="meshgatewayroutes"
-          />
-        </template>
         <template v-slot:yaml>
           <YamlView
             lang="yaml"
@@ -107,7 +100,6 @@ import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
-import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
 import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
@@ -125,7 +117,6 @@ export default {
     Tabs,
     YamlView,
     LabelList,
-    PolicyConnections,
     DocumentationLink,
   },
   data() {
@@ -151,7 +142,6 @@ export default {
           hash: '#overview',
           title: 'Overview',
         },
-        { hash: '#affected-dpps', title: 'Affected DPPs' },
         {
           hash: '#yaml',
           title: 'YAML',
