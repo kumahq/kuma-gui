@@ -62,7 +62,7 @@ export default (store: Store<RootInterface>) => {
         },
         // Zone Egresses
         {
-          path: '/zoneegresses',
+          path: '/zone-egresses',
           name: 'zoneegresses',
           meta: {
             title: 'Zone Egresses',
