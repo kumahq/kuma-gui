@@ -117,7 +117,7 @@ export default {
   @apply w-112 absolute left-0 right-0 mx-auto mt-16 opacity-0 z-10;
 
   top: 14.5vw;
-  animation: show 1.5s 7.2s 1 forwards;
+  animation: show 0.75s 3s 1 forwards;
 
   @media screen and (max-width: 1699px) {
     @apply mt-10;

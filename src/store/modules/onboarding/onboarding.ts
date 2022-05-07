@@ -20,7 +20,7 @@ const getters: GetterTree<OnboardingInterface, RootInterface> = {
     const onlyDefaultMesh = meshes.total === 1 && meshes.items[0].name === 'default'
     const noDataplane = totalDataplaneCount === 0
 
-    return noDataplane && onlyDefaultMesh
+    return true
   },
 }
 
