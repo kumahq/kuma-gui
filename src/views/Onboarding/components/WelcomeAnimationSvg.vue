@@ -367,7 +367,7 @@ export default {
       foreignObject {
         div {
           transition: offset-distance var(--duration) ease-in-out,
-            transform calc(0.3 * #{$baseSpeed})s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity calc(0.5 * #{$baseSpeed})s ease-in-out, filter calc(1.5 * #{$baseSpeed})s ease-in-out;
+            transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease-in-out, filter 1.5s ease-in-out;
           &:before {
             animation: pulsing calc(1 * #{$baseSpeed})s ease-in-out 16;
           }
