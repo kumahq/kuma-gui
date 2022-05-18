@@ -393,15 +393,15 @@ export default {
       filter: hue-rotate(0deg) brightness(1) blur(0px);
       @for $i from 1 through 20 {
         &:nth-of-type(#{$i}) {
-          transition: #{(2 - $i/30)*$baseSpeed}s ease-in-out, stroke-dashoffset #{(2 - $i/30)*$baseSpeed}s ease-in-out;
-          transition-delay: #{($i/3)*$baseSpeed}s, #{(($i/3) + 0.125)*$baseSpeed}s;
+          /*transition: #{(2 - $i/30)*$baseSpeed}s ease-in-out, stroke-dashoffset #{(2 - $i/30)*$baseSpeed}s ease-in-out;*/
+          /*transition-delay: #{($i/3)*$baseSpeed}s, #{(($i/3) + 0.125)*$baseSpeed}s;*/
           &.final {
             opacity: 1;
             transition: #{0.75*$baseSpeed}s ease-in-out, stroke-dashoffset #{1.5*$baseSpeed}s ease-in-out;
             transition-delay: #{7*$baseSpeed}s, #{7.15*$baseSpeed}s;
             &.circle {
               transition: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-              transition-delay: #{7*$baseSpeed}s;
+              transition-delay: #{1*$baseSpeed}s;
             }
           }
         }
