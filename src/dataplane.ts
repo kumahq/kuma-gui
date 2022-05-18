@@ -244,54 +244,30 @@ export function getDataplaneType(dataplane: { networking: { gateway?: TODO } } =
   return 'Standard'
 }
 
-export function checkVersionsCompatibility(
-  supportedVersions: { kumaDp?: TODO } = {},
-  kumaDpVersion = '',
-  envoyVersion = '',
-) {
-  const { kumaDp } = supportedVersions
+export function compatibilityKind(version: {kumaDp: TODO, envoy: TODO}) {
+  const { kumaDp = {}, envoy = {} } = version
+  const { version: kumaDpVersion, kumaCpCompatible = true } = kumaDp
+  const { version: envoyVersion, kumaDpCompatible = true } = envoy
 
-  if (!kumaDp) {
-    return { kind: INCOMPATIBLE_WRONG_FORMAT }
-  }
-
-  const versionKeys = Object.keys(kumaDp)
-  let requirements: TODO = kumaDp[kumaDpVersion]
-
-  if (!requirements) {
-    for (let i = 0; i < versionKeys.length; i++) {
-      const currentVersion = versionKeys[i]
-
-      if (satisfies(kumaDpVersion, currentVersion)) {
-        requirements = kumaDp[currentVersion]
-
-        break
-      }
-    }
-  }
-
-  if (!requirements) {
+  if (!kumaCpCompatible) {
     return {
       kind: INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
       payload: { kumaDpVersion },
     }
   }
 
-  if (!requirements.envoy) {
-    return { kind: INCOMPATIBLE_WRONG_FORMAT }
-  }
-
-  const kind = satisfies(envoyVersion, requirements.envoy) ? COMPATIBLE : INCOMPATIBLE_UNSUPPORTED_ENVOY
-
-  const payload = {
-    envoy: envoyVersion,
-    kumaDp: kumaDpVersion,
-    requirements: requirements.envoy,
+  if (!kumaDpCompatible) {
+    return {
+      kind: INCOMPATIBLE_UNSUPPORTED_ENVOY,
+      payload: {
+        envoy: envoyVersion,
+        kumaDp: kumaDpVersion,
+      }
+    }
   }
 
   return {
-    kind,
-    payload,
+    kind: COMPATIBLE
   }
 }
 

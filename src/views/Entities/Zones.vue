@@ -270,12 +270,15 @@ export default {
       const { zoneInsight = {}, name } = entity
       let zoneCpVersion = '-'
       let backend = ''
+      let cpCompat = true
 
       if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
         zoneInsight.subscriptions.forEach((item, index) => {
           if (item.version && item.version.kumaCp) {
             zoneCpVersion = item.version.kumaCp.version
+            const { kumaCpGlobalCompatible = true } = item.version.kumaCp
 
+            cpCompat = kumaCpGlobalCompatible
             if (item.config) {
               backend = JSON.parse(item.config).store.type
             }
@@ -290,7 +293,7 @@ export default {
         backend,
         hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',
         hasEgress: this.zonesWithEgress.has(name) ? 'Yes' : 'No',
-        withWarnings: zoneCpVersion !== this.globalCpVersion,
+        withWarnings: !cpCompat,
       }
     },
     calculateZonesWithIngress(zoneIngresses) {
@@ -389,8 +392,9 @@ export default {
             const { kumaCp = {} } = version
 
             const kumaCpVersion = kumaCp.version || '-'
+            const { kumaCpGlobalCompatible = true } = kumaCp
 
-            if (kumaCpVersion !== this.globalCpVersion) {
+            if (!kumaCpGlobalCompatible) {
               this.warnings.push({
                 kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
                 payload: {

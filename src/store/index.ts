@@ -74,9 +74,6 @@ export default (): Module<RootInterface, RootInterface> => ({
     serviceInsightsFetching: false,
     externalServicesFetching: false,
     zonesInsightsFetching: false,
-    supportedVersionsFetching: false,
-    supportedVersions: {},
-    supportedVersionsFailed: '',
   } as TODO,
   getters: {
     globalLoading: state => state.globalLoading,
@@ -93,9 +90,6 @@ export default (): Module<RootInterface, RootInterface> => ({
       serviceInsightsFetching || externalServicesFetching,
     getChart: ({ overviewCharts }) => (chartName: string) => overviewCharts[chartName],
     getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
-    getSupportedVersions: ({ supportedVersions }) => supportedVersions,
-    getSupportedVersionsFetching: ({ supportedVersionsFetching }) => supportedVersionsFetching,
-    getSupportedVersionsFailed: ({ supportedVersionsFailed }) => supportedVersionsFailed,
   },
   mutations: {
     SET_GLOBAL_LOADING: (state, { globalLoading }) => (state.globalLoading = globalLoading),
@@ -144,12 +138,6 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       state.overviewCharts[chartName].data = data
     },
-    SET_SUPPORTED_VERSIONS_FETCHING: (state, value) => (state.supportedVersionsFetching = value),
-    SET_SUPPORTED_VERSIONS: (state, value) => {
-      state.supportedVersions = value
-      state.supportedVersionsFailed = ''
-    },
-    SET_SUPPORTED_VERSIONS_FAILED: (state, value) => (state.supportedVersionsFailed = value),
   },
   actions: {
     // bootstrap app
@@ -481,18 +469,6 @@ export default (): Module<RootInterface, RootInterface> => ({
       }))
 
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
-    },
-
-    async fetchSupportedVersions({ commit }) {
-      commit('SET_SUPPORTED_VERSIONS_FETCHING', true)
-
-      try {
-        commit('SET_SUPPORTED_VERSIONS', await Kuma.getSupportedVersions())
-      } catch (e) {
-        commit('SET_SUPPORTED_VERSIONS_FAILED', e.toString())
-      }
-
-      commit('SET_SUPPORTED_VERSIONS_FETCHING', false)
     },
   },
 })

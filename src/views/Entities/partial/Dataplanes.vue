@@ -223,14 +223,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { datadogLogs } from '@datadog/browser-logs'
 import { getSome, humanReadableDate, stripTimes } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'
 import {
   checkKumaDpAndZoneVersionsMismatch,
-  checkVersionsCompatibility,
+  compatibilityKind,
   dpTags,
   getDataplane,
   getDataplaneInsight,
@@ -380,8 +380,6 @@ export default {
     ...mapGetters({
       environment: 'config/getEnvironment',
       queryNamespace: 'getItemQueryNamespace',
-      supportedVersions: 'getSupportedVersions',
-      supportedVersionsLoading: 'getSupportedVersionsFetching',
       multicluster: 'config/getMulticlusterStatus',
     }),
     dataplaneWizardRoute() {
@@ -411,11 +409,9 @@ export default {
     },
   },
   beforeMount() {
-    this.fetchSupportedVersions()
     this.loadData()
   },
   methods: {
-    ...mapActions(['fetchSupportedVersions']),
     onCreateClick() {
       datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
     },
@@ -446,8 +442,8 @@ export default {
         headers: this.tableHeaders,
       }
     },
-    checkVersionsCompatibility(kumaDpVersion = '', envoyVersion = '') {
-      return checkVersionsCompatibility(this.supportedVersions, kumaDpVersion, envoyVersion)
+    compatibilityKind(version) {
+      return compatibilityKind(version)
     },
     tableAction(ev) {
       const data = ev
@@ -471,7 +467,7 @@ export default {
        * Iterate through the subscriptions
        */
 
-      const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime } =
+      const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime, version } =
         subscriptions.reduce(
           (acc, curr) => {
             const { status = {}, connectTime, version = {} } = curr
@@ -505,6 +501,7 @@ export default {
               envoyVersion: envoyVersion || acc.envoyVersion,
               selectedTime,
               selectedUpdateTime,
+              version: version || acc.version,
             }
           },
           {
@@ -514,6 +511,7 @@ export default {
             envoyVersion: '-',
             selectedTime: NaN,
             selectedUpdateTime: NaN,
+            version: {}
           },
         )
 
@@ -536,7 +534,7 @@ export default {
         type: getDataplaneType(dataplane),
       }
 
-      const { kind } = this.checkVersionsCompatibility(dpVersion, envoyVersion)
+      const { kind } = this.compatibilityKind(version)
 
       switch (kind) {
         case INCOMPATIBLE_UNSUPPORTED_ENVOY:
@@ -652,7 +650,7 @@ export default {
       const { kumaDp = {}, envoy = {} } = version
 
       if (kumaDp && envoy) {
-        const compatible = this.checkVersionsCompatibility(kumaDp.version, envoy.version)
+        const compatible = this.compatibilityKind(version)
         const { kind } = compatible
 
         if (kind !== COMPATIBLE && kind !== INCOMPATIBLE_WRONG_FORMAT) {
