@@ -462,10 +462,6 @@ class Kuma {
     return this.client.get(`/mesh-insights/${name}`, { params })
   }
 
-  public getSupportedVersions(params?: any) {
-    return this.client.get('/versions', { params })
-  }
-
   /**
    * Global Insights
    */
