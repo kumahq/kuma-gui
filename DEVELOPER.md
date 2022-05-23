@@ -43,7 +43,7 @@ Consult the Table of Contents below to navigate these docs.
 
 ### The Vue CLI tool
 
-`vue-cli-service` is a binary that ships with `@vue/cli-service`. Once you have installed this globally, the binary
+`vue-cli-service` is a binary that ships with `@vue/cli`. Once you have installed this globally, the binary
 is exposed and available directly as `vue-cli-service`. If you would prefer to not install it, you can run the app with
 `npx`, which comes bundled with `npm`:
 

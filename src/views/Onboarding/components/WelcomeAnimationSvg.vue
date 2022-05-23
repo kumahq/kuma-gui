@@ -209,6 +209,7 @@ export default {
   $pathLength3: 937.256;
   $pathLength4: 186;
   $pathLength5: 184;
+  $baseSpeed: 0.5;
 
   $lengths: $pathLength1, $pathLength2, $pathLength3, pathLength4, pathLength5;
 
@@ -238,7 +239,7 @@ export default {
       z-index: 2;
       --end: 100%;
       --start: 0%;
-      --duration: 5s;
+      --duration: #{5*$baseSpeed}s;
       offset-distance: var(--start);
       filter: hue-rotate(180deg) brightness(6) blur(40px);
       will-change: offset-distance, filter;
@@ -274,11 +275,11 @@ export default {
       }
       &:nth-of-type(2),
       &:nth-of-type(15) {
-        --duration: 3s;
+        --duration: calc(3 * #{$baseSpeed})s;
       }
       &:nth-of-type(3),
       &:nth-of-type(16) {
-        --duration: 4s;
+        --duration: calc(4 * #{$baseSpeed});
         --start: 100%;
         --end: 0%;
       }
@@ -288,7 +289,7 @@ export default {
       &:nth-of-type(20),
       &:nth-of-type(4),
       &:nth-of-type(17) {
-        --duration: 2s;
+        --duration: calc(2 * #{$baseSpeed})s;
       }
       &:nth-of-type(9),
       &:nth-of-type(22),
@@ -300,7 +301,7 @@ export default {
       &:nth-of-type(25),
       &:nth-of-type(11),
       &:nth-of-type(24) {
-        --duration: 5s;
+        --duration: calc(5 * #{$baseSpeed})s;
       }
       &:nth-of-type(12),
       &:nth-of-type(25),
@@ -340,7 +341,7 @@ export default {
       stroke-dasharray: 0 0;
       stroke-dashoffset: 0;
       transform: scale(0);
-      transition: 0.2s ease-in-out;
+      transition: #{0.2*$baseSpeed}s ease-in-out;
       transform-origin: 1022px 570px;
     }
 
@@ -368,15 +369,15 @@ export default {
           transition: offset-distance var(--duration) ease-in-out,
             transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease-in-out, filter 1.5s ease-in-out;
           &:before {
-            animation: pulsing 1s ease-in-out 16;
+            animation: pulsing calc(1 * #{$baseSpeed})s ease-in-out 16;
           }
           @for $i from 1 through 26 {
             &:nth-of-type(#{$i}) {
               &:before {
-                animation-delay: #{$i/-16}s;
+                animation-delay: #{($i/-16)*$baseSpeed}s;
               }
-              transition-delay: #{($i/18) + 2}s, #{($i/18) + 2}s, calc(#{($i/18) + 1.85}s + var(--duration)),
-                #{($i/18) + 2}s;
+              transition-delay: #{(($i/18) + 2)*$baseSpeed}s, #{(($i/18) + 2)*$baseSpeed}s, calc(#{(($i/18) + 1.85)*$baseSpeed}s + var(--duration)),
+                #{(($i/18) + 2)*$baseSpeed}s;
               filter: hue-rotate(0deg) brightness(1) blur(0px);
               offset-distance: var(--end);
               opacity: 0;
@@ -392,15 +393,15 @@ export default {
       filter: hue-rotate(0deg) brightness(1) blur(0px);
       @for $i from 1 through 20 {
         &:nth-of-type(#{$i}) {
-          transition: #{2 - $i/30}s ease-in-out, stroke-dashoffset #{2 - $i/30}s ease-in-out;
-          transition-delay: #{$i/3}s, #{($i/3) + 0.125}s;
+          /*transition: #{(2 - $i/30)*$baseSpeed}s ease-in-out, stroke-dashoffset #{(2 - $i/30)*$baseSpeed}s ease-in-out;*/
+          /*transition-delay: #{($i/3)*$baseSpeed}s, #{(($i/3) + 0.125)*$baseSpeed}s;*/
           &.final {
             opacity: 1;
-            transition: 0.75s ease-in-out, stroke-dashoffset 1.5s ease-in-out;
-            transition-delay: 7s, 7.15s;
+            transition: #{0.75*$baseSpeed}s ease-in-out, stroke-dashoffset #{1.5*$baseSpeed}s ease-in-out;
+            transition-delay: #{7*$baseSpeed}s, #{7.15*$baseSpeed}s;
             &.circle {
               transition: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-              transition-delay: 7s;
+              transition-delay: #{1*$baseSpeed}s;
             }
           }
         }
