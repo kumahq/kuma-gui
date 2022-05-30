@@ -86,9 +86,7 @@
     "tlsKeyFile": "/Users/tomasz.wylezek/.kuma/kuma-cp.key"
   },
   "environment": "universal",
-  "experimental": {
-    "meshGateway": true
-  },
+  "experimental": {},
   "general": {
     "dnsCacheTTL": "10s",
     "tlsCertFile": "/Users/tomasz.wylezek/.kuma/kuma-cp.crt",

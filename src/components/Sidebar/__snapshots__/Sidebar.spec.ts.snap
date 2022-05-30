@@ -623,6 +623,66 @@ exports[`Sidebar.vue renders snapshot 1`] = `
       </div>
       <div
         class="nav-item is-menu-item"
+        data-testid="mesh-gateway-routes"
+        parent="policies"
+      >
+        <a
+          aria-current="page"
+          class="router-link-exact-active router-link-active"
+          href="#/"
+        >
+          <!---->
+           
+          <div
+            class="nav-link"
+          >
+            
+        Mesh Gateway Routes
+
+        
+            <span
+              class="amount amount--empty"
+            >
+              
+
+          0
+        
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item is-menu-item"
+        data-testid="mesh-gateways"
+        parent="policies"
+      >
+        <a
+          aria-current="page"
+          class="router-link-exact-active router-link-active"
+          href="#/"
+        >
+          <!---->
+           
+          <div
+            class="nav-link"
+          >
+            
+        Mesh Gateways
+
+        
+            <span
+              class="amount amount--empty"
+            >
+              
+
+          0
+        
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item is-menu-item"
         data-testid="proxy-templates"
         parent="policies"
       >

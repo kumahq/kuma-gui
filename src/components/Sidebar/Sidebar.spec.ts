@@ -11,9 +11,9 @@ describe('Sidebar.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders mesh gateways when flag applied', () => {
+  it('renders mesh gateways', () => {
     renderWithVuex(Sidebar, {
-      store: { modules: { config: { state: { clientConfig: { experimental: { meshGateway: true } } } } } },
+      store: { },
       routes: [],
     })
 

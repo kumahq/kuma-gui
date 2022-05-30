@@ -1,6 +1,6 @@
 import { RawLocation } from 'vue-router'
 import meshIcon from '@/assets/images/icon-service-mesh.svg'
-import { POLICY_MAP, FEATURE_FLAG } from '@/consts'
+import { POLICY_MAP } from '@/consts'
 
 type TODO = any
 type KIconType = 'gearFilled'
@@ -199,7 +199,6 @@ const menu: MenuSection[] = [
                 title: false,
                 parent: 'policies',
                 insightsFieldAccessor: 'mesh.policies.MeshGateway',
-                featureFlags: [FEATURE_FLAG.GATEWAY],
               },
               {
                 name: POLICY_MAP.MeshGatewayRoute.title,
@@ -207,7 +206,6 @@ const menu: MenuSection[] = [
                 title: false,
                 parent: 'policies',
                 insightsFieldAccessor: 'mesh.policies.MeshGatewayRoute',
-                featureFlags: [FEATURE_FLAG.GATEWAY],
               },
             ].sort((a, b) => (a.name < b.name ? -1 : 1)),
           ],
