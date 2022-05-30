@@ -165,7 +165,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { PAGE_SIZE_DEFAULT, POLICY_MAP, FEATURE_FLAG } from '@/consts'
+import { PAGE_SIZE_DEFAULT, POLICY_MAP } from '@/consts'
 
 export default {
   name: 'Meshes',
@@ -297,18 +297,14 @@ export default {
           title: POLICY_MAP.Timeout.title,
           value: policies.Timeout.total,
         },
-        ...this.featureFlags.includes(FEATURE_FLAG.GATEWAY)
-          ? [
-            {
-              title: POLICY_MAP.MeshGateway.title,
-              value: policies.MeshGateway.total,
-            },
-            {
-              title: POLICY_MAP.MeshGatewayRoute.title,
-              value: policies.MeshGatewayRoute.total,
-            },
-          ]
-          : [],
+        {
+          title: POLICY_MAP.MeshGateway.title,
+          value: policies.MeshGateway.total,
+        },
+        {
+          title: POLICY_MAP.MeshGatewayRoute.title,
+          value: policies.MeshGatewayRoute.total,
+        },
       ]
     },
     countCols() {

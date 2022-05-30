@@ -594,6 +594,44 @@ exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
                             </li>
                           </ul>
                         </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Mesh Gateways
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Mesh Gateway Routes
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>

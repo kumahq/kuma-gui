@@ -106,10 +106,6 @@ export interface DpServer {
   tlsKeyFile: string
 }
 
-export interface Experimental {
-  meshGateway: boolean
-}
-
 export interface General {
   dnsCacheTTL: string
   tlsCertFile: string
@@ -348,7 +344,7 @@ export interface ClientConfigInterface {
   dpServer: DpServer
   environment: string
   general: General
-  experimental: Experimental
+  experimental: {}
   guiServer: GuiServer
   metrics: Metrics
   mode: string
