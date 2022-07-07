@@ -94,6 +94,16 @@
             :zone-ingress-name="entity.name"
           />
         </template>
+        <template v-slot:envoy-stats>
+          <EnvoyStats
+            :zone-ingress-name="entity.name"
+          />
+        </template>
+        <template v-slot:envoy-clusters>
+          <EnvoyClusters
+            :zone-ingress-name="entity.name"
+          />
+        </template>
       </Tabs>
     </FrameSkeleton>
   </div>
@@ -118,6 +128,8 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 
+import EnvoyStats from '@/components/EnvoyStats/EnvoyStats'
+import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters'
 import SubscriptionDetails from './components/SubscriptionDetails'
 import SubscriptionHeader from './components/SubscriptionHeader'
 import MultizoneInfo from './components/MultizoneInfo'
@@ -125,6 +137,8 @@ import MultizoneInfo from './components/MultizoneInfo'
 export default {
   name: 'ZoneIngresses',
   components: {
+    EnvoyClusters,
+    EnvoyStats,
     FrameSkeleton,
     DataOverview,
     Tabs,
@@ -171,6 +185,14 @@ export default {
         {
           hash: '#xds-configuration',
           title: 'XDS Configuration',
+        },
+        {
+          hash: '#envoy-stats',
+          title: 'Stats',
+        },
+        {
+          hash: '#envoy-clusters',
+          title: 'Clusters',
         },
       ],
       entity: {},

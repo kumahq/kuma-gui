@@ -90,6 +90,16 @@
           :zone-egress-name="entity.name"
         />
       </template>
+      <template v-slot:envoy-stats>
+        <EnvoyStats
+          :zone-egress-name="entity.name"
+        />
+      </template>
+      <template v-slot:envoy-clusters>
+        <EnvoyClusters
+          :zone-egress-name="entity.name"
+        />
+      </template>
     </Tabs>
   </div>
 </template>
@@ -111,12 +121,16 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 import Accordion from '@/components/Accordion/Accordion'
 import AccordionItem from '@/components/Accordion/AccordionItem'
 
+import EnvoyStats from '@/components/EnvoyStats/EnvoyStats'
+import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters'
 import SubscriptionDetails from './components/SubscriptionDetails'
 import SubscriptionHeader from './components/SubscriptionHeader'
 
 export default {
   name: 'ZoneEgresses',
   components: {
+    EnvoyClusters,
+    EnvoyStats,
     DataOverview,
     Tabs,
     LabelList,
@@ -161,6 +175,14 @@ export default {
         {
           hash: '#xds-configuration',
           title: 'XDS Configuration',
+        },
+        {
+          hash: '#envoy-stats',
+          title: 'Stats',
+        },
+        {
+          hash: '#envoy-clusters',
+          title: 'Clusters',
         },
       ],
       entity: {},

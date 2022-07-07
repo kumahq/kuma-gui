@@ -175,6 +175,18 @@
           :dpp-name="rawEntity.name"
         />
       </template>
+      <template v-slot:envoy-stats>
+        <EnvoyStats
+          :mesh="rawEntity.mesh"
+          :dpp-name="rawEntity.name"
+        />
+      </template>
+      <template v-slot:envoy-clusters>
+        <EnvoyClusters
+          :mesh="rawEntity.mesh"
+          :dpp-name="rawEntity.name"
+        />
+      </template>
       <template v-slot:mtls>
         <LabelList
           :is-loading="entityIsLoading"
@@ -258,12 +270,16 @@ import { getTableData } from '@/utils/tableDataUtils'
 import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies'
 import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
 import StatusInfo from '@/components/Utils/StatusInfo'
+import EnvoyStats from '@/components/EnvoyStats/EnvoyStats'
+import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters'
 import SubscriptionDetails from '../components/SubscriptionDetails'
 import SubscriptionHeader from '../components/SubscriptionHeader'
 
 export default {
   name: 'Dataplanes',
   components: {
+    EnvoyStats,
+    EnvoyClusters,
     Warnings,
     EntityURLControl,
     FrameSkeleton,
@@ -336,6 +352,14 @@ export default {
           {
             hash: '#xds-configuration',
             title: 'XDS Configuration',
+          },
+          {
+            hash: '#envoy-stats',
+            title: 'Stats',
+          },
+          {
+            hash: '#envoy-clusters',
+            title: 'Clusters',
           },
           {
             hash: '#mtls',
