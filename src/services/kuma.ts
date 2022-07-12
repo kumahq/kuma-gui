@@ -532,7 +532,6 @@ class Kuma {
   public getZoneEgressClusters({ zoneEgressName }: { zoneEgressName: string }, params?: any) {
     return this.client.get(`/zoneegresses/${zoneEgressName}/clusters`, { params })
   }
-
 }
 
 export default new Kuma()
