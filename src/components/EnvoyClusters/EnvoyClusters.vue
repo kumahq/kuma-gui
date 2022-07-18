@@ -6,20 +6,20 @@
     <KCard border-variant="noBorder">
       <template v-slot:body>
         <Prism
-          id="xds"
+          id="clusters"
           language="json"
-          :code="xds"
+          :code="clusters"
         />
       </template>
       <template v-slot:actions>
         <KClipboardProvider
-          v-if="xds"
+          v-if="clusters"
           v-slot="{ copyToClipboard }"
         >
           <KPop placement="bottom">
             <KButton
               appearance="primary"
-              @click="() => { copyToClipboard(xds) }"
+              @click="() => { copyToClipboard(clusters) }"
             >
               Copy config to clipboard
             </KButton>
@@ -41,7 +41,7 @@ import StatusInfo from '@/components/Utils/StatusInfo'
 import Prism from 'vue-prismjs'
 
 export default {
-  name: 'XdsConfiguration',
+  name: 'EnvoyClusters',
   components: {
     StatusInfo,
     Prism,
@@ -74,43 +74,43 @@ export default {
 
   watch: {
     dppName() {
-      this.fetchXds()
+      this.fetchClusters()
     },
     zoneIngressName() {
-      this.fetchXds()
+      this.fetchClusters()
     },
     zoneEgressName() {
-      this.fetchXds()
+      this.fetchClusters()
     },
   },
   mounted() {
-    this.fetchXds()
+    this.fetchClusters()
   },
 
   methods: {
-    async fetchXds() {
+    async fetchClusters() {
       this.hasError = false
       this.isLoading = true
 
       try {
-        let xds = {}
+        let clusters = ''
 
         if (this.mesh !== '' && this.dppName !== '') {
-          xds = await Kuma.getDataplaneXds({
+          clusters = await Kuma.getDataplaneClusters({
             mesh: this.mesh,
             dppName: this.dppName,
           })
         } else if (this.zoneIngressName !== '') {
-          xds = await Kuma.getZoneIngressXds({
+          clusters = await Kuma.getZoneIngressClusters({
             zoneIngressName: this.zoneIngressName,
           })
         } else if (this.zoneEgressName !== '') {
-          xds = await Kuma.getZoneEgressXds({
+          clusters = await Kuma.getZoneEgressClusters({
             zoneEgressName: this.zoneEgressName,
           })
         }
 
-        this.xds = JSON.stringify(xds, null, 2)
+        this.clusters = clusters
       } catch (e) {
         console.error(e)
         this.hasError = true
@@ -123,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#xds {
+#clusters {
   max-height: 1000px;
 }
 </style>

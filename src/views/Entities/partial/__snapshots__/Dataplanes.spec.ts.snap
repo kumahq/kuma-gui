@@ -1690,6 +1690,38 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
               aria-selected="false"
               class="tab-item"
               data-v-a38b664a=""
+              id="envoy-stats-tab"
+              role="tab"
+              tabindex="0"
+            >
+              <a
+                class="tab-link"
+                data-v-a38b664a=""
+              >
+                Stats
+              </a>
+            </li>
+            <li
+              aria-controls="panel-5"
+              aria-selected="false"
+              class="tab-item"
+              data-v-a38b664a=""
+              id="envoy-clusters-tab"
+              role="tab"
+              tabindex="0"
+            >
+              <a
+                class="tab-link"
+                data-v-a38b664a=""
+              >
+                Clusters
+              </a>
+            </li>
+            <li
+              aria-controls="panel-6"
+              aria-selected="false"
+              class="tab-item"
+              data-v-a38b664a=""
               id="mtls-tab"
               role="tab"
               tabindex="0"
@@ -1702,7 +1734,7 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
               </a>
             </li>
             <li
-              aria-controls="panel-5"
+              aria-controls="panel-7"
               aria-selected="false"
               class="tab-item"
               data-v-a38b664a=""
@@ -2009,7 +2041,7 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
             <!---->
           </div>
           <div
-            aria-labelledby="mtls-tab"
+            aria-labelledby="envoy-stats-tab"
             class="tab-container"
             data-v-a38b664a=""
             id="panel-4"
@@ -2019,10 +2051,30 @@ exports[`Dataplanes.vue renders snapshot 1`] = `
             <!---->
           </div>
           <div
-            aria-labelledby="yaml-tab"
+            aria-labelledby="envoy-clusters-tab"
             class="tab-container"
             data-v-a38b664a=""
             id="panel-5"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <!---->
+          </div>
+          <div
+            aria-labelledby="mtls-tab"
+            class="tab-container"
+            data-v-a38b664a=""
+            id="panel-6"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <!---->
+          </div>
+          <div
+            aria-labelledby="yaml-tab"
+            class="tab-container"
+            data-v-a38b664a=""
+            id="panel-7"
             role="tabpanel"
             tabindex="0"
           >

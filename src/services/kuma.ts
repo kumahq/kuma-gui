@@ -502,6 +502,36 @@ class Kuma {
   public getZoneEgressXds({ zoneEgressName }: { zoneEgressName: string }, params?: any) {
     return this.client.get(`/zoneegresses/${zoneEgressName}/xds`, { params })
   }
+
+  // Get stats of a data plane proxy
+  public getDataplaneStats({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
+    return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/stats`, { params })
+  }
+
+  // Get stats of a zone ingress proxy
+  public getZoneIngressStats({ zoneIngressName }: { zoneIngressName: string }, params?: any) {
+    return this.client.get(`/zoneingresses/${zoneIngressName}/stats`, { params })
+  }
+
+  // Get stats of a zone ingress proxy
+  public getZoneEgressStats({ zoneEgressName }: { zoneEgressName: string }, params?: any) {
+    return this.client.get(`/zoneegresses/${zoneEgressName}/stats`, { params })
+  }
+
+  // Get clusters of a data plane proxy
+  public getDataplaneClusters({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
+    return this.client.get(`/meshes/${mesh}/dataplanes/${dppName}/clusters`, { params })
+  }
+
+  // Get clusters of a zone ingress proxy
+  public getZoneIngressClusters({ zoneIngressName }: { zoneIngressName: string }, params?: any) {
+    return this.client.get(`/zoneingresses/${zoneIngressName}/clusters`, { params })
+  }
+
+  // Get clusters of a zone ingress proxy
+  public getZoneEgressClusters({ zoneEgressName }: { zoneEgressName: string }, params?: any) {
+    return this.client.get(`/zoneegresses/${zoneEgressName}/clusters`, { params })
+  }
 }
 
 export default new Kuma()

@@ -6,20 +6,20 @@
     <KCard border-variant="noBorder">
       <template v-slot:body>
         <Prism
-          id="xds"
+          id="stats"
           language="json"
-          :code="xds"
+          :code="stats"
         />
       </template>
       <template v-slot:actions>
         <KClipboardProvider
-          v-if="xds"
+          v-if="stats"
           v-slot="{ copyToClipboard }"
         >
           <KPop placement="bottom">
             <KButton
               appearance="primary"
-              @click="() => { copyToClipboard(xds) }"
+              @click="() => { copyToClipboard(stats) }"
             >
               Copy config to clipboard
             </KButton>
@@ -41,7 +41,7 @@ import StatusInfo from '@/components/Utils/StatusInfo'
 import Prism from 'vue-prismjs'
 
 export default {
-  name: 'XdsConfiguration',
+  name: 'EnvoyStats',
   components: {
     StatusInfo,
     Prism,
@@ -74,43 +74,43 @@ export default {
 
   watch: {
     dppName() {
-      this.fetchXds()
+      this.fetchStats()
     },
     zoneIngressName() {
-      this.fetchXds()
+      this.fetchStats()
     },
     zoneEgressName() {
-      this.fetchXds()
+      this.fetchStats()
     },
   },
   mounted() {
-    this.fetchXds()
+    this.fetchStats()
   },
 
   methods: {
-    async fetchXds() {
+    async fetchStats() {
       this.hasError = false
       this.isLoading = true
 
       try {
-        let xds = {}
+        let stats = ''
 
         if (this.mesh !== '' && this.dppName !== '') {
-          xds = await Kuma.getDataplaneXds({
+          stats = await Kuma.getDataplaneStats({
             mesh: this.mesh,
             dppName: this.dppName,
           })
         } else if (this.zoneIngressName !== '') {
-          xds = await Kuma.getZoneIngressXds({
+          stats = await Kuma.getZoneIngressStats({
             zoneIngressName: this.zoneIngressName,
           })
         } else if (this.zoneEgressName !== '') {
-          xds = await Kuma.getZoneEgressXds({
+          stats = await Kuma.getZoneEgressStats({
             zoneEgressName: this.zoneEgressName,
           })
         }
 
-        this.xds = JSON.stringify(xds, null, 2)
+        this.stats = stats
       } catch (e) {
         console.error(e)
         this.hasError = true
@@ -123,7 +123,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#xds {
+#stats {
   max-height: 1000px;
 }
 </style>
