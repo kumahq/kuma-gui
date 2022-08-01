@@ -247,7 +247,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                       tabindex="0"
                                     >
                                       <code
-                                        class=" language-bash"
+                                        class="language-bash"
                                       >
                                         kumactl generate dataplane-token --name
                                         <span
@@ -356,7 +356,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                       tabindex="0"
                                     >
                                       <code
-                                        class=" language-bash"
+                                        class="language-bash"
                                       >
                                         kuma-dp run 
                                         <span

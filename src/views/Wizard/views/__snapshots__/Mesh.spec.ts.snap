@@ -293,7 +293,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       tabindex="0"
                                     >
                                       <code
-                                        class=" language-bash"
+                                        class="language-bash"
                                       >
                                         <span
                                           class="token builtin class-name"
