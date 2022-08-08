@@ -402,10 +402,11 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
+import json2yaml from '@appscode/json2yaml'
+
 import Kuma from '@/services/kuma'
 import { kumaDpServerUrl } from '@/configUrl'
 import { kebabCase } from '@/helpers'
-import json2yaml from '@appscode/json2yaml'
 import FormFragment from '@/views/Wizard/components/FormFragment'
 import Tabs from '@/components/Utils/Tabs'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton'

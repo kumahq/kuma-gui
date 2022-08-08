@@ -1,6 +1,7 @@
+import { satisfies } from 'semver'
+
 import { humanReadableDate } from '@/helpers'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
-import { satisfies } from 'semver'
 import Kuma from '@/services/kuma'
 import { Dataplane, LabelValue, DataplaneInsight, DataplaneOverview, DiscoverySubscription } from '@/types'
 
@@ -211,8 +212,8 @@ export function parseMTLSData(mtls: TODO) {
   // assembled to display date and time (in 24-hour format)
   const assembledExpDate = `
                       ${fixedExpDate.toLocaleDateString(
-                        'en-US',
-                      )} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
+    'en-US',
+  )} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
                     `
 
   return {
@@ -244,7 +245,7 @@ export function getDataplaneType(dataplane: { networking: { gateway?: TODO } } =
   return 'Standard'
 }
 
-export function compatibilityKind(version: {kumaDp: TODO, envoy: TODO}) {
+export function compatibilityKind(version: { kumaDp: TODO, envoy: TODO }) {
   const { kumaDp = {}, envoy = {} } = version
   const { version: kumaDpVersion, kumaCpCompatible = true } = kumaDp
   const { version: envoyVersion, kumaDpCompatible = true } = envoy

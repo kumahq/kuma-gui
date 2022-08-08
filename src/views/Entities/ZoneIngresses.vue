@@ -112,6 +112,10 @@
 <script>
 import get from 'lodash/get'
 import { mapGetters } from 'vuex'
+
+import SubscriptionDetails from './components/SubscriptionDetails'
+import SubscriptionHeader from './components/SubscriptionHeader'
+import MultizoneInfo from './components/MultizoneInfo'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getSome } from '@/helpers'
 import Kuma from '@/services/kuma'
@@ -130,9 +134,6 @@ import AccordionItem from '@/components/Accordion/AccordionItem'
 
 import EnvoyStats from '@/components/EnvoyStats/EnvoyStats'
 import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters'
-import SubscriptionDetails from './components/SubscriptionDetails'
-import SubscriptionHeader from './components/SubscriptionHeader'
-import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
   name: 'ZoneIngresses',

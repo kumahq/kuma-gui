@@ -1,11 +1,12 @@
-import Kuma from '@/services/kuma'
-import { MeshInsight } from '@/types'
-import { fetchAllResources } from '@/helpers'
-
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
+
 import { RootInterface } from '../..'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
+
+import Kuma from '@/services/kuma'
+import { MeshInsight } from '@/types'
+import { fetchAllResources } from '@/helpers'
 
 const state: SidebarInterface = {
   insights: {

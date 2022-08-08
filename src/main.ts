@@ -1,16 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VueMeta from 'vue-meta'
+import axios from 'axios'
+import { datadogLogs } from '@datadog/browser-logs'
+import * as am4core from '@amcharts/amcharts4/core'
+import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
+
 import App from '@/App.vue'
 import Router from '@/router'
-import { datadogLogs } from '@datadog/browser-logs'
-import VueMeta from 'vue-meta'
 import Store from '@/store'
-import axios from 'axios'
 import Kuma from '@/services/kuma'
 
 /** amCharts */
-import * as am4core from '@amcharts/amcharts4/core'
-import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 /** Kongponents */
 import './kongponents'

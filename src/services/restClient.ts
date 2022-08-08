@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { getKumaCpServerUrl } from '@/configUrl'
 import { RestRequest } from 'msw'
+
+import { getKumaCpServerUrl } from '@/configUrl'
+
 export default class RestClient {
   public client: AxiosInstance
 

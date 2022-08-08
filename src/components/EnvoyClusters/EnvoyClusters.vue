@@ -36,9 +36,10 @@
 </template>
 
 <script>
+import Prism from 'vue-prismjs'
+
 import Kuma from '@/services/kuma'
 import StatusInfo from '@/components/Utils/StatusInfo'
-import Prism from 'vue-prismjs'
 
 export default {
   name: 'EnvoyClusters',

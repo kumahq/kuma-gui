@@ -79,9 +79,10 @@
 
 <script>
 import { mapGetters, mapState } from 'vuex'
+
+import NotificationIcon from './NotificationIcon'
 import { getKumaCpServerUrl } from '@/configUrl'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck'
-import NotificationIcon from './NotificationIcon'
 
 export default {
   components: {

@@ -35,11 +35,12 @@
 </template>
 
 <script>
-import { PRODUCT_NAME } from '@/consts'
 import { mapGetters } from 'vuex'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
+
 import ItemStatus from './components/ItemStatus'
 import WelcomeAnimationSvg from './components/WelcomeAnimationSvg'
+import { PRODUCT_NAME } from '@/consts'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 
 export default {
   name: 'Welcome',
