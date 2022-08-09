@@ -527,7 +527,7 @@
           </p>
           <p>
             <a
-              :href="`https://kuma.io/docs/${version}/policies/mesh/${utm}`"
+              :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/mesh/${utm}`"
               target="_blank"
             >
               Learn More
@@ -662,7 +662,7 @@ export default {
   computed: {
     ...mapGetters({
       title: 'config/getTagline',
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
       environment: 'config/getEnvironment',
     }),
 

@@ -7,7 +7,7 @@
     <ul class="list-disc pl-4">
       <li>
         <a
-          :href="`https://kuma.io/docs/${version}/policies/traffic-log/`"
+          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/traffic-log/`"
           target="_blank"
         >
           Traffic Log policy documentation
@@ -23,7 +23,7 @@ export default {
   name: 'LoggingNotification',
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
   },
 }

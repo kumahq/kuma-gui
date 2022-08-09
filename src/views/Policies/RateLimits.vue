@@ -161,10 +161,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
     docsURL() {
-      return `https://kuma.io/docs/${this.version}/policies/rate-limit/`
+      return `https://kuma.io/docs/${this.kumaDocsVersion}/policies/rate-limit/`
     },
   },
   watch: {

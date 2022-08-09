@@ -7,7 +7,7 @@
     <ul class="list-disc pl-4">
       <li>
         <a
-          :href="`https://kuma.io/docs/${version}/policies/traffic-trace/`"
+          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/traffic-trace/`"
           target="_blank"
         >
           Traffic Trace policy documentation
@@ -24,7 +24,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
   },
 }

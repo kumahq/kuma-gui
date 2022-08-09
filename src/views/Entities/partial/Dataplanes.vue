@@ -210,7 +210,7 @@
             <template v-slot:alertMessage>
               This data plane proxy does not yet have mTLS configured &mdash;
               <a
-                :href="`https://kuma.io/docs/${version}/documentation/security/#certificates`"
+                :href="`https://kuma.io/docs/${kumaDocsVersion}/documentation/security/#certificates`"
                 class="external-link"
                 target="_blank"
               >
@@ -415,8 +415,8 @@ export default {
         return { name: 'kubernetes-dataplane' }
       }
     },
-    version() {
-      const storedVersion = this.$store.getters.getVersion
+    kumaDocsVersion() {
+      const storedVersion = this.$store.getters.getKumaDocsVersion
 
       return storedVersion !== null ? storedVersion : 'latest'
     },

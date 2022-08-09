@@ -105,10 +105,10 @@ export default {
       return this.hasZoneIngresses && this.hasZones
     },
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
     documentationLink() {
-      return `https://kuma.io/docs/${this.version}/deployments/multi-zone/#zone-control-plane`
+      return `https://kuma.io/docs/${this.kumaDocsVersion}/deployments/multi-zone/#zone-control-plane`
     },
   },
 

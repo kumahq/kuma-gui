@@ -9,7 +9,7 @@
     <ul class="list-disc pl-4">
       <li>
         <a
-          :href="`https://kuma.io/docs/${version}/security/certificates/`"
+          :href="`https://kuma.io/docs/${kumaDocsVersion}/security/certificates/`"
           target="_blank"
         >
           Secure access across services
@@ -17,7 +17,7 @@
       </li>
       <li>
         <a
-          :href="`https://kuma.io/docs/${version}/policies/mutual-tls/`"
+          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/mutual-tls/`"
           target="_blank"
         >
           Mutual TLS
@@ -25,7 +25,7 @@
       </li>
       <li>
         <a
-          :href="`https://kuma.io/docs/${version}/policies/traffic-permissions/`"
+          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/traffic-permissions/`"
           target="_blank"
         >
           Traffic Permissions policy documentation
@@ -42,7 +42,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
   },
 }

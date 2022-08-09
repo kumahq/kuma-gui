@@ -362,6 +362,7 @@ export interface ConfigInterface {
   status: string | null
   tagline: string | null
   version: string | null
+  kumaDocsVersion: string
 }
 
 export type ConfigType = Module<ConfigInterface, RootInterface>

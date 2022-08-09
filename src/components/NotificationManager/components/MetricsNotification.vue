@@ -7,7 +7,7 @@
     <ul class="list-disc pl-4">
       <li>
         <a
-          :href="`https://kuma.io/docs/${version}/policies/traffic-metrics/`"
+          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/traffic-metrics/`"
           target="_blank"
         >
           Traffic Metrics policy documentation
@@ -23,7 +23,7 @@ export default {
   name: 'MetricsNotification',
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
   },
 }

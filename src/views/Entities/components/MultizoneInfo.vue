@@ -15,7 +15,7 @@
     </template>
     <template v-slot:cta>
       <KButton
-        :to="`https://kuma.io/docs/${version}/documentation/deployments/`"
+        :to="`https://kuma.io/docs/${kumaDocsVersion}/documentation/deployments/`"
         target="_blank"
         appearance="primary"
       >
@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
   },
 }
