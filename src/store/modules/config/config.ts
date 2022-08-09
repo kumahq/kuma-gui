@@ -7,6 +7,7 @@ const state: ConfigInterface = {
   status: null,
   tagline: null,
   version: null,
+  kumaDocsVersion: 'latest',
   clientConfig: null,
 }
 
@@ -15,6 +16,7 @@ const mutations: MutationTree<ConfigInterface> = {
   SET_STATUS: (state, status) => (state.status = status),
   SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
   SET_VERSION: (state, version) => (state.version = version),
+  SET_KUMA_DOCS_VERSION: (state, kumaDocsVersion) => (state.kumaDocsVersion = kumaDocsVersion),
 }
 
 const getters: GetterTree<ConfigInterface, RootInterface> = {
@@ -24,6 +26,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   getMode: state => state.clientConfig?.mode,
   getTagline: state => state.tagline,
   getVersion: state => state.version,
+  getKumaDocsVersion: state => state.kumaDocsVersion,
   getConfigurationType: state => state.clientConfig?.store?.type,
   featureFlags: state => ([]),
 
@@ -74,6 +77,20 @@ const actions: ActionTree<ConfigInterface, RootInterface> = {
       .then(response => {
         commit('SET_TAGLINE', response.tagline)
         commit('SET_VERSION', response.version)
+
+        let kumaDocsVersion = 'latest'
+        if ('basedOnKuma' in response) {
+          const suffixIndex = response.basedOnKuma.indexOf('-preview.')
+          if (suffixIndex !== -1) {
+            const basedOnKumaStripped = response.basedOnKuma.substring(0, suffixIndex)
+
+            kumaDocsVersion = basedOnKumaStripped === '0.0.0' ? 'dev' : basedOnKumaStripped
+          } else {
+            kumaDocsVersion = response.basedOnKuma
+          }
+        }
+
+        commit('SET_KUMA_DOCS_VERSION', kumaDocsVersion)
       })
       .catch(error => {
         console.error(error)

@@ -180,10 +180,10 @@ export default {
   computed: {
     ...mapGetters({
       environment: 'config/getEnvironment',
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
     docsURL() {
-      return `https://kuma.io/docs/${this.version}/policies/traffic-permissions/`
+      return `https://kuma.io/docs/${this.kumaDocsVersion}/policies/traffic-permissions/`
     },
   },
   watch: {

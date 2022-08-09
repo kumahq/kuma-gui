@@ -162,10 +162,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
     docsURL() {
-      return `https://kuma.io/docs/${this.version}/policies/circuit-breaker/`
+      return `https://kuma.io/docs/${this.kumaDocsVersion}/policies/circuit-breaker/`
     },
   },
   watch: {

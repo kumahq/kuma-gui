@@ -69,11 +69,11 @@ exports[`MultiZone.vue renders snapshot 1`] = `
               <a
                 class="external-link-code-block"
                 data-v-0029352b=""
-                href="https://kuma.io/docs/null/deployments/multi-zone/#zone-control-plane"
+                href="https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane"
                 target="_blank"
               >
                 
-          https://kuma.io/docs/null/deployments/multi-zone/#zone-control-plane
+          https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane
         
               </a>
             </div>

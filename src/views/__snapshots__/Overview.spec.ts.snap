@@ -2179,7 +2179,88 @@ exports[`Overview.vue renders basic snapshot 1`] = `
       </div>
        
       <div>
-        <!---->
+        <div
+          class="kong-card card-item border"
+          data-v-0029352b=""
+        >
+          <div
+            class="k-card-header mb-4"
+            data-v-0029352b=""
+          >
+            <div
+              class="k-card-title"
+              data-v-0029352b=""
+            >
+              <h4
+                data-v-0029352b=""
+              >
+                Resources
+              </h4>
+            </div>
+            <div
+              class="k-card-actions"
+              data-v-0029352b=""
+            />
+          </div>
+          <!---->
+          <div
+            class="k-card-body"
+            data-v-0029352b=""
+          >
+            <p
+              data-v-0029352b=""
+            >
+              
+      Join the Kuma community and ask questions:
+    
+            </p>
+             
+            <ul
+              class="resource-list"
+              data-v-0029352b=""
+            >
+              <li
+                data-v-0029352b=""
+              >
+                <a
+                  data-v-0029352b=""
+                  href="https://kuma.io/docs/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                  target="_blank"
+                >
+                  
+          Kuma Documentation
+        
+                </a>
+              </li>
+              <li
+                data-v-0029352b=""
+              >
+                <a
+                  data-v-0029352b=""
+                  href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                  target="_blank"
+                >
+                  
+          Kuma Community Chat
+        
+                </a>
+              </li>
+              <li
+                data-v-0029352b=""
+              >
+                <a
+                  data-v-0029352b=""
+                  href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
+                  target="_blank"
+                >
+                  
+          Kuma GitHub Repository
+        
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>

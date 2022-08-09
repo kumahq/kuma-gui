@@ -1,6 +1,7 @@
 import { rest } from 'msw'
 import { server } from '@/jest-setup'
 import setupStore from '@/testUtils/setupStore'
+import Kuma from '@/services/kuma'
 import config from '.'
 
 describe('config module', () => {
@@ -25,6 +26,10 @@ describe('config module', () => {
   })
 
   describe('actions', () => {
+    beforeEach(() => {
+      jest.restoreAllMocks()
+    })
+
     it('tests getStatus action', async () => {
       server.use(rest.get('http://localhost/', (req, res, ctx) => res(ctx.status(200))))
       const store = setupStore(config)
@@ -32,6 +37,66 @@ describe('config module', () => {
       await store.dispatch('getStatus')
 
       expect(store.getters.getStatus).toBe('OK')
+    })
+
+    it.each([
+      [
+        {
+          tagline: 'Other',
+          version: '0.0.0-preview.abcd1234',
+          basedOnKuma: '0.0.0-preview.abcd1234',
+        },
+        {
+          tagline: 'Other',
+          version: '0.0.0-preview.abcd1234',
+          kumaDocsVersion: 'dev',
+        }
+      ],
+      [
+        {
+          tagline: 'Other',
+          version: '1.6.0-preview.abcd1234',
+          basedOnKuma: '1.6.0-preview.abcd1234',
+        },
+        {
+          tagline: 'Other',
+          version: '1.6.0-preview.abcd1234',
+          kumaDocsVersion: '1.6.0',
+        }
+      ],
+      [
+        {
+          tagline: 'Kuma',
+          version: '1.5.3',
+          basedOnKuma: '1.5.1',
+        },
+        {
+          tagline: 'Kuma',
+          version: '1.5.3',
+          kumaDocsVersion: '1.5.1',
+        }
+      ],
+      [
+        {
+          tagline: 'Kuma',
+          version: '1.5.3',
+        },
+        {
+          tagline: 'Kuma',
+          version: '1.5.3',
+          kumaDocsVersion: 'latest',
+        }
+      ],
+    ])('tests getInfo action', async (getInfoResponse, expectedState) => {
+      jest.spyOn(Kuma, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
+
+      const store = setupStore(config)
+
+      await store.dispatch('getInfo')
+
+      expect(store.state.tagline).toBe(expectedState.tagline)
+      expect(store.state.version).toBe(expectedState.version)
+      expect(store.state.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
     })
   })
 

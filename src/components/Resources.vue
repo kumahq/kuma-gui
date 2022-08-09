@@ -1,6 +1,6 @@
 <template>
   <KCard
-    v-if="version"
+    v-if="resourceLinks.length > 0"
     title="Resources"
   >
     <template v-slot:body>
@@ -34,18 +34,18 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      version: 'config/getVersion',
+      kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
     resourceLinks() {
-      const storedVersion = this.version
-      const versionOutput = storedVersion !== null ? storedVersion : 'latest'
+      const storedVersion = this.kumaDocsVersion
+      const kumaDocsVersion = storedVersion !== null ? storedVersion : 'latest'
 
       const utmSource = process.env.VUE_APP_UTM
 
       if (storedVersion) {
         return [
           {
-            link: `https://kuma.io/docs/${versionOutput}/${utmSource}`,
+            link: `https://kuma.io/docs/${kumaDocsVersion}/${utmSource}`,
             label: `${process.env.VUE_APP_NAMESPACE} Documentation`,
           },
           {
@@ -59,7 +59,7 @@ export default {
         ]
       }
 
-      return false
+      return []
     },
   },
 }
