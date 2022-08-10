@@ -154,10 +154,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { datadogLogs } from '@datadog/browser-logs'
+
 import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
-import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'

@@ -59,12 +59,12 @@
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/eslint-plugin-tslint": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
-    "@vue/cli-plugin-babel": "~4.5.13",
-    "@vue/cli-plugin-e2e-cypress": "~4.5.13",
-    "@vue/cli-plugin-eslint": "~4.5.13",
-    "@vue/cli-plugin-typescript": "~4.5.13",
-    "@vue/cli-plugin-unit-jest": "~4.5.13",
-    "@vue/cli-service": "~4.5.13",
+    "@vue/cli-plugin-babel": "~4.5.19",
+    "@vue/cli-plugin-e2e-cypress": "~4.5.19",
+    "@vue/cli-plugin-eslint": "~4.5.19",
+    "@vue/cli-plugin-typescript": "~4.5.19",
+    "@vue/cli-plugin-unit-jest": "~4.5.19",
+    "@vue/cli-service": "~4.5.19",
     "@vue/eslint-config-typescript": "^5.0.2",
     "@vue/test-utils": "1.0.4",
     "babel-core": "7.0.0-bridge.0",
@@ -86,7 +86,7 @@
     "standard": "^14.3.4",
     "typescript": "~4.1.5",
     "vue-template-compiler": "^2.6.12",
-    "webpack-bundle-analyzer": "^3.8.0"
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "browserslist": [
     "> 1%",

@@ -73,11 +73,12 @@
 </template>
 
 <script>
-import Kuma from '@/services/kuma'
 import { mapGetters } from 'vuex'
+import json2yaml from '@appscode/json2yaml'
+
+import Kuma from '@/services/kuma'
 import { PRODUCT_NAME } from '@/consts'
 import { kumaDpServerUrl } from '@/configUrl'
-import json2yaml from '@appscode/json2yaml'
 import Loading from '@/components/Loading'
 import CodeView from '@/components/Skeletons/CodeView'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'

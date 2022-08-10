@@ -82,9 +82,9 @@
 </template>
 
 <script>
+import KEmptyState from '@kongponents/kemptystate'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
-import KEmptyState from '@kongponents/kemptystate'
 
 export default {
   name: 'Tabs',

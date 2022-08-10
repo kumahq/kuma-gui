@@ -139,9 +139,13 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/helpers'
 import get from 'lodash/get'
 import Prism from 'vue-prismjs'
+
+import SubscriptionDetails from './components/SubscriptionDetails'
+import SubscriptionHeader from './components/SubscriptionHeader'
+import MultizoneInfo from './components/MultizoneInfo'
+import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/helpers'
 import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
@@ -155,10 +159,6 @@ import EntityURLControl from '@/components/Utils/EntityURLControl'
 import LabelList from '@/components/Utils/LabelList'
 import Warnings from '@/views/Entities/components/Warnings'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
-
-import SubscriptionDetails from './components/SubscriptionDetails'
-import SubscriptionHeader from './components/SubscriptionHeader'
-import MultizoneInfo from './components/MultizoneInfo'
 
 export default {
   name: 'Zones',

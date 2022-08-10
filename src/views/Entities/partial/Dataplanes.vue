@@ -236,8 +236,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Kuma from '@/services/kuma'
 import { datadogLogs } from '@datadog/browser-logs'
+
+import SubscriptionDetails from '../components/SubscriptionDetails'
+import SubscriptionHeader from '../components/SubscriptionHeader'
+import Kuma from '@/services/kuma'
 import { getSome, humanReadableDate, stripTimes } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'
 import {
@@ -272,8 +275,6 @@ import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
 import StatusInfo from '@/components/Utils/StatusInfo'
 import EnvoyStats from '@/components/EnvoyStats/EnvoyStats'
 import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters'
-import SubscriptionDetails from '../components/SubscriptionDetails'
-import SubscriptionHeader from '../components/SubscriptionHeader'
 
 export default {
   name: 'Dataplanes',

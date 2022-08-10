@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import { Store } from 'vuex'
 import VueRouter from 'vue-router'
-import { POLICY_MAP } from '@/consts'
+
 import { RootInterface } from './store'
+import { POLICY_MAP } from '@/consts'
 
 Vue.use(VueRouter)
 
@@ -499,7 +500,7 @@ export default (store: Store<RootInterface>) => {
     const showOnboarding = store.getters['onboarding/showOnboarding']
     const isCompleted = store.state.onboarding.isCompleted
 
-    const onboardingRoute = to.meta.onboardingProcess
+    const onboardingRoute = to.meta?.onboardingProcess
 
     // If someone is going to open onboarding page but fulfiled already conditionn related to
     // show onboarding, then redirect user to overview

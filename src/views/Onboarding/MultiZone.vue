@@ -70,8 +70,9 @@
 </template>
 
 <script>
-import Kuma from '@/services/kuma'
 import { mapGetters } from 'vuex'
+
+import Kuma from '@/services/kuma'
 import Loading from '@/components/Loading'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'

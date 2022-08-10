@@ -44,13 +44,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Accordion from '@/components/Accordion/Accordion'
-import AccordionItem from '@/components/Accordion/AccordionItem'
+
 import OnboardingNotification from './OnboardingNotification.vue'
 import LoggingNotification from './LoggingNotification.vue'
 import MetricsNotification from './MetricsNotification.vue'
 import MtlsNotification from './MtlsNotification.vue'
 import TracingNotification from './TracingNotification.vue'
+import Accordion from '@/components/Accordion/Accordion'
+import AccordionItem from '@/components/Accordion/AccordionItem'
 
 export default {
   name: 'SingleMeshNotifications',
