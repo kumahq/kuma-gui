@@ -163,7 +163,7 @@
       >
         <template v-slot:title>
           <div class="card-icon mb-3">
-            <img src="~@/assets/images/icon-empty-table.svg?external">
+            <img src="@/assets/images/icon-empty-table.svg?inline">
           </div>
           <span v-if="emptyState.title">
             {{ emptyState.title }}

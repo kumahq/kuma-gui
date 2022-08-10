@@ -1,11 +1,18 @@
-import renderWithVuex from '@/testUtils/renderWithVuex';
 import { screen } from '@testing-library/vue'
 import { rest } from 'msw'
-import { server } from '@/jest-setup'
+
 import EnvoyClusters from './EnvoyClusters.vue'
+import { server } from '@/jest-setup'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('EnvoyClusters.vue', () => {
   it('renders snapshot', async () => {
+    server.use(
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
+        res(ctx.status(200), ctx.json({})),
+      ),
+    )
+
     const { container } = renderWithVuex(EnvoyClusters, {
       props: {
         mesh: 'foo',
@@ -18,6 +25,12 @@ describe('EnvoyClusters.vue', () => {
   })
 
   it('renders loading', () => {
+    server.use(
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
+        res(ctx.status(200), ctx.json({})),
+      ),
+    )
+
     renderWithVuex(EnvoyClusters, {
       props: {
         mesh: 'foo',
@@ -30,7 +43,7 @@ describe('EnvoyClusters.vue', () => {
   })
 
   it('renders error', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // silence console errors
+    jest.spyOn(console, 'error').mockImplementation(() => { }); // silence console errors
 
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>

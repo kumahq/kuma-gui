@@ -1,8 +1,9 @@
-import renderWithVuex from '@/testUtils/renderWithVuex';
 import { screen } from '@testing-library/vue'
 import { rest } from 'msw'
-import { server } from '@/jest-setup'
+
 import XdsConfiguration from './XdsConfiguration.vue'
+import { server } from '@/jest-setup'
+import renderWithVuex from '@/testUtils/renderWithVuex';
 
 describe('XdsConfiguration.vue', () => {
   it('renders snapshot', async () => {
@@ -30,7 +31,7 @@ describe('XdsConfiguration.vue', () => {
   })
 
   it('renders error', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // silence console errors
+    jest.spyOn(console, 'error').mockImplementation(() => { }); // silence console errors
 
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/xds', (req, res, ctx) =>

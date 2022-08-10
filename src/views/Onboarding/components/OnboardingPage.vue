@@ -83,7 +83,7 @@ export default {
   height: 100vh;
   filter: grayscale(1);
   width: 100vw;
-  background: transparent url('../../../assets/images/onboarding-background.svg?external') no-repeat scroll 0% 0%;
+  background: transparent url('@/assets/images/onboarding-background.svg?inline') no-repeat scroll 0% 0%;
 
   min-width: 1700px;
 

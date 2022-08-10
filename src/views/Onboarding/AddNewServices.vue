@@ -11,7 +11,7 @@
           @clicked="update('demo')"
         >
           <div>
-            <img src="@/assets/images/new-service-demo.svg?external">
+            <img src="@/assets/images/new-service-demo.svg?inline">
             <div class="ml-3">
               <p class="uppercase font-bold tracking-wider">
                 Demo app
@@ -26,7 +26,7 @@
           @clicked="update('manually')"
         >
           <div class="cursor-pointer">
-            <img src="@/assets/images/new-service-manually.svg?external">
+            <img src="@/assets/images/new-service-manually.svg?inline">
             <div class="ml-3">
               <p class="uppercase font-bold tracking-wider">
                 Manually
