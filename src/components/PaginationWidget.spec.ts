@@ -23,7 +23,7 @@ describe('PaginationWidget.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('calls buttons', () => {
+  it('calls buttons', async () => {
     const { emitted } = render(PaginationWidget, {
       props: {
         hasPrevious: true,
@@ -31,8 +31,8 @@ describe('PaginationWidget.vue', () => {
       },
     })
 
-    userEvent.click(screen.getByText(/Previous/))
-    userEvent.click(screen.getByText(/Next/))
+    await userEvent.click(screen.getByText(/Previous/))
+    await userEvent.click(screen.getByText(/Next/))
     expect(emitted()).toMatchSnapshot()
     expect(datadogLogs.logger.info).toMatchSnapshot()
   })

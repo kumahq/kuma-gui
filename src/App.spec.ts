@@ -19,7 +19,8 @@ describe('App.vue', () => {
         ),
       ),
     )
-    server.use(rest.get(' http://localhost/config', (req, res, ctx) => res(ctx.status(200), ctx.json({}))))
+    server.use(rest.get('http://localhost/config', (req, res, ctx) => res(ctx.status(200), ctx.json({}))))
+    server.use(rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.0'))))
 
     renderWithVuex(App, {
       routes: [
@@ -38,6 +39,7 @@ describe('App.vue', () => {
 
   it('fails to renders basic view', async () => {
     server.use(rest.get('http://localhost/', (req, res, ctx) => res(ctx.status(404))))
+    server.use(rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.0'))))
 
     const { container } = renderWithVuex(App)
 

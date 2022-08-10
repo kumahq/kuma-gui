@@ -5,6 +5,7 @@ import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('Mesh.vue', () => {
   const doStep = async (button: any, target: string | string[]) => {
+    const targetNames = Array.isArray(target) ? target : [target]
     // Begin step
 
     expect(button).not.toHaveAttribute('disabled')
@@ -15,12 +16,8 @@ describe('Mesh.vue', () => {
 
     expect(button).toHaveAttribute('disabled')
 
-    if (typeof target === 'string') {
-      await userEvent.type(screen.getByLabelText(target), 'fake-name')
-    } else {
-      const map = target.map(targetName => userEvent.type(screen.getByLabelText(targetName), 'fake-name'))
-
-      await Promise.all(map)
+    for (const targetName of targetNames) {
+      await userEvent.type(screen.getByLabelText(targetName), 'fake-name')
     }
 
     expect(button).not.toHaveAttribute('disabled')

@@ -255,13 +255,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                         >
                                           =
                                         </span>
-                                        testMesh 
+                                        testMesh-4fzzzxtestMesh 
                                         <span
                                           class="token operator"
                                         >
                                           &gt;
                                         </span>
-                                         kuma-token-testMesh
+                                         kuma-token-testMesh-4fzzzxtestMesh
                                       </code>
                                     </pre>
                                   </div>
@@ -389,7 +389,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                         >
                                           "type: Dataplane
 mesh: testMesh
-name: testMesh
+name: testMesh-4fzzzxtestMesh
 networking: 
   address: 12
   inbound: 
@@ -413,7 +413,7 @@ networking:
                                         >
                                           =
                                         </span>
-                                        kuma-token-testMesh
+                                        kuma-token-testMesh-4fzzzxtestMesh
                                       </code>
                                     </pre>
                                   </div>

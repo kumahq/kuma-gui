@@ -10,6 +10,7 @@ import { server } from '@/jest-setup'
 describe('DataplanePolicies.vue', () => {
   it('renders snapshot', async () => {
     const { policies } = await Kuma.getPolicies()
+
     const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
 
     const { container } = renderWithVuex(DataplanePolicies, {
@@ -31,6 +32,12 @@ describe('DataplanePolicies.vue', () => {
   })
 
   it('renders loading', () => {
+    server.use(
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+        res(ctx.status(200), ctx.json({ total: 0, items: [] })),
+      ),
+    )
+
     renderWithVuex(DataplanePolicies, {
       props: {
         mesh: 'foo',

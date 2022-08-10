@@ -82,10 +82,10 @@ describe('AccordionList.vue', () => {
 
     expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
 
-    userEvent.tab()
+    await userEvent.tab()
     expect(screen.queryByText(/Header 1/)).toHaveFocus()
 
-    userEvent.keyboard('[Enter]')
+    await userEvent.keyboard('[Enter]')
 
     expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
   })
