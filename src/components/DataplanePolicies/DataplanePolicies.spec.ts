@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
-import { server } from '@/jest-setup'
 import userEvent from '@testing-library/user-event'
+
 import DataplanePolicies from './DataplanePolicies.vue'
+import { server } from '@/jest-setup'
 
 describe('DataplanePolicies.vue', () => {
   it('renders snapshot', async () => {
@@ -32,7 +33,7 @@ describe('DataplanePolicies.vue', () => {
   })
 
   it('renders error', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // silence console errors
+    jest.spyOn(console, 'error').mockImplementation(() => { }); // silence console errors
 
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>

@@ -1,8 +1,8 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 
-import Kuma from '@/services/kuma'
 import AddNewServicesCode from './AddNewServicesCode.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
+import Kuma from '@/services/kuma'
 
 describe('AddNewServicesCode.vue', () => {
   it('renders snapshot', () => {
@@ -22,7 +22,6 @@ describe('AddNewServicesCode.vue', () => {
   })
 
   it('refetch resources if any not available', async () => {
-    jest.useFakeTimers()
     jest
       .spyOn(Kuma, 'getAllDataplanes')
       .mockReturnValueOnce({
@@ -41,7 +40,9 @@ describe('AddNewServicesCode.vue', () => {
     expect(screen.queryByTestId('loading')).toBeInTheDocument()
     expect(screen.queryByTestId('dpps-disconnected')).toBeInTheDocument()
 
-    jest.runAllTimers()
+    // Advance asynchronous routines by making sure the queue of micro tasks is processed.
+    // TODO: In @vue/test-utils@2, use `flushPromises` instead.
+    await new Promise((resolve) => setTimeout(resolve, 0))
 
     expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
     expect(Kuma.getAllDataplanes).toHaveBeenCalledTimes(2)

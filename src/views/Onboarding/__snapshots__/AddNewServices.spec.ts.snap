@@ -39,7 +39,7 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
             >
               <div>
                 <img
-                  src="@/assets/images/new-service-demo.svg?external"
+                  src="@/assets/images/new-service-demo.svg?inline"
                 />
                  
                 <div
@@ -68,7 +68,7 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
                 class="cursor-pointer"
               >
                 <img
-                  src="@/assets/images/new-service-manually.svg?external"
+                  src="@/assets/images/new-service-manually.svg?inline"
                 />
                  
                 <div

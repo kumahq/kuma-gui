@@ -2,7 +2,7 @@ version: 2.1
 
 reusable:
   docker-images:
-    - &circleci_node_image 'circleci/node:12'
+    - &circleci_node_image 'circleci/node:16'
 
   snippets:
     # filters for the kuma-master workflow

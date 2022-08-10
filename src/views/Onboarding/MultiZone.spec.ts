@@ -1,8 +1,8 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 
-import Kuma from '@/services/kuma'
 import MultiZone from './MultiZone.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
+import Kuma from '@/services/kuma'
 
 describe('MultiZone.vue', () => {
   it('renders snapshot', () => {
@@ -23,7 +23,6 @@ describe('MultiZone.vue', () => {
   })
 
   it('refetch resources if any not available', async () => {
-    jest.useFakeTimers()
     jest
       .spyOn(Kuma, 'getAllZoneIngressOverviews')
       .mockReturnValueOnce({
@@ -43,7 +42,9 @@ describe('MultiZone.vue', () => {
     expect(screen.queryByTestId('loading')).toBeInTheDocument()
     expect(screen.queryByTestId('zone-ingress-disconnected')).toBeInTheDocument()
 
-    jest.runAllTimers()
+    // Advance asynchronous routines by making sure the queue of micro tasks is processed.
+    // TODO: In @vue/test-utils@2, use `flushPromises` instead.
+    await new Promise((resolve) => setTimeout(resolve, 0))
 
     expect(await screen.findByTestId('zone-ingress-connected')).toBeInTheDocument()
     expect(Kuma.getAllZoneIngressOverviews).toHaveBeenCalledTimes(2)
