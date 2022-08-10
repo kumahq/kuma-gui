@@ -142,7 +142,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         Configuration for all {{ productName }} resources is specified in YAML config files. The config files can be stored in an external datastore.
       </template>
     </KPop>
@@ -177,7 +177,7 @@
         />
 
       </g>
-      <template v-slot:content>
+      <template #content>
         In Postgres mode, the {{ productName }} control plane connects to Postgres to fetch the right resources and configure the service mesh.
       </template>
     </KPop>
@@ -211,7 +211,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         You can store the YAML config files for {{ productName }} in a Postgres database. You can work with a managed Postgres offering or manage your own.
       </template>
     </KPop>

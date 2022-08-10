@@ -1,6 +1,6 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 import CreateMesh from './CreateMesh.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('CreateMesh.vue', () => {
   it('renders snapshot', () => {

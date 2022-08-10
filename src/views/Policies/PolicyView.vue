@@ -14,7 +14,7 @@
       class="mb-4"
     >
       <KAlert appearance="warning">
-        <template v-slot:alertMessage>
+        <template #alertMessage>
           <p>
             <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
             <a
@@ -43,7 +43,7 @@
         @loadData="loadData($event)"
       >
         >
-        <template v-slot:additionalControls>
+        <template #additionalControls>
           <KButton
             v-if="$route.query.ns"
             class="back-button"
@@ -57,14 +57,14 @@
         </template>
       </DataOverview>
 
-      <Tabs
+      <TabsWidget
         v-if="isEmpty === false"
         :has-error="hasError"
         :is-loading="isLoading"
         :tabs="tabs"
         initial-tab-override="overview"
       >
-        <template v-slot:tabHeader>
+        <template #tabHeader>
           <div>
             <h3 data-testid="policy-single-entity">
               {{ policy.singularDisplayName }}: {{ entity.name }}
@@ -79,7 +79,7 @@
           </div>
         </template>
 
-        <template v-slot:overview>
+        <template #overview>
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
@@ -101,7 +101,7 @@
           </LabelList>
         </template>
 
-        <template v-slot:affected-dpps>
+        <template #affected-dpps>
           <PolicyConnections
             :mesh="rawEntity.mesh"
             :policy-name="rawEntity.name"
@@ -109,7 +109,7 @@
           />
         </template>
 
-        <template v-slot:yaml>
+        <template #yaml>
           <YamlView
             lang="yaml"
             :has-error="entityHasError"
@@ -118,7 +118,7 @@
             :content="rawEntity"
           />
         </template>
-      </Tabs>
+      </TabsWidget>
     </FrameSkeleton>
   </div>
 </template>
@@ -129,15 +129,15 @@ import { mapGetters, mapState } from 'vuex'
 import { getSome, stripTimes } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
-import DataOverview from '@/components/Skeletons/DataOverview'
+import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
-import EntityURLControl from '@/components/Utils/EntityURLControl'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton.vue'
 import Kuma from '@/services/kuma'
-import LabelList from '@/components/Utils/LabelList'
-import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
-import Tabs from '@/components/Utils/Tabs'
-import YamlView from '@/components/Skeletons/YamlView'
+import LabelList from '@/components/Utils/LabelList.vue'
+import PolicyConnections from '@/components/PolicyConnections/PolicyConnections.vue'
+import TabsWidget from '@/components/Utils/TabsWidget.vue'
+import YamlView from '@/components/Skeletons/YamlView.vue'
 
 export default {
   name: 'PolicyView',
@@ -153,7 +153,7 @@ export default {
     FrameSkeleton,
     LabelList,
     PolicyConnections,
-    Tabs,
+    TabsWidget,
     YamlView,
   },
 

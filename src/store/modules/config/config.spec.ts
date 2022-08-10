@@ -1,8 +1,8 @@
 import { rest } from 'msw'
+import config from '.'
 import { server } from '@/jest-setup'
 import setupStore from '@/testUtils/setupStore'
 import Kuma from '@/services/kuma'
-import config from '.'
 
 describe('config module', () => {
   describe('getters', () => {

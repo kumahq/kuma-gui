@@ -7,7 +7,7 @@ jest.mock('@datadog/browser-logs')
 
 describe('DataOverview.vue', () => {
   beforeEach(() => {
-    ;(datadogLogs.logger.info as jest.MockedFunction<any>).mockClear()
+    (datadogLogs.logger.info as jest.MockedFunction<any>).mockClear()
   })
 
   it('renders basic snapshot', () => {

@@ -11,7 +11,7 @@
       @tableAction="tableAction"
       @loadData="loadData($event)"
     >
-      <template v-slot:additionalControls>
+      <template #additionalControls>
         <KButton
           v-if="$route.query.ns"
           class="back-button"
@@ -28,14 +28,14 @@
         </KButton>
       </template>
     </DataOverview>
-    <Tabs
+    <TabsWidget
       v-if="isEmpty === false"
       :has-error="hasError"
       :is-loading="isLoading"
       :tabs="tabs"
       initial-tab-override="overview"
     >
-      <template v-slot:tabHeader>
+      <template #tabHeader>
         <div>
           <h3> Zone Egress: {{ entity.name }}</h3>
         </div>
@@ -43,7 +43,7 @@
           <EntityURLControl :name="entity.name" />
         </div>
       </template>
-      <template v-slot:overview>
+      <template #overview>
         <LabelList>
           <div>
             <ul>
@@ -62,45 +62,45 @@
           </div>
         </LabelList>
       </template>
-      <template v-slot:insights>
+      <template #insights>
         <KCard border-variant="noBorder">
-          <template v-slot:body>
-            <Accordion :initially-open="0">
+          <template #body>
+            <AccordionList :initially-open="0">
               <AccordionItem
                 v-for="(value, key) in subscriptionsReversed"
                 :key="key"
               >
-                <template v-slot:accordion-header>
+                <template #accordion-header>
                   <SubscriptionHeader :details="value" />
                 </template>
 
-                <template v-slot:accordion-content>
+                <template #accordion-content>
                   <SubscriptionDetails
                     :details="value"
                     is-discovery-subscription
                   />
                 </template>
               </AccordionItem>
-            </Accordion>
+            </AccordionList>
           </template>
         </KCard>
       </template>
-      <template v-slot:xds-configuration>
+      <template #xds-configuration>
         <XdsConfiguration
           :zone-egress-name="entity.name"
         />
       </template>
-      <template v-slot:envoy-stats>
+      <template #envoy-stats>
         <EnvoyStats
           :zone-egress-name="entity.name"
         />
       </template>
-      <template v-slot:envoy-clusters>
+      <template #envoy-clusters>
         <EnvoyClusters
           :zone-egress-name="entity.name"
         />
       </template>
-    </Tabs>
+    </TabsWidget>
   </div>
 </template>
 
@@ -114,18 +114,18 @@ import { getSome } from '@/helpers'
 import Kuma from '@/services/kuma'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
-import Tabs from '@/components/Utils/Tabs'
+import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import LabelList from '@/components/Utils/LabelList'
 import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
 
 import { getItemStatusFromInsight } from '@/dataplane'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
-import Accordion from '@/components/Accordion/Accordion'
-import AccordionItem from '@/components/Accordion/AccordionItem'
+import AccordionList from '@/components/Accordion/AccordionList.vue'
+import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 
-import EnvoyStats from '@/components/EnvoyStats/EnvoyStats'
-import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters'
+import EnvoyStats from '@/components/EnvoyStats/EnvoyStats.vue'
+import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters.vue'
 
 export default {
   name: 'ZoneEgresses',
@@ -133,9 +133,9 @@ export default {
     EnvoyClusters,
     EnvoyStats,
     DataOverview,
-    Tabs,
+    TabsWidget,
     LabelList,
-    Accordion,
+    AccordionList,
     AccordionItem,
     SubscriptionDetails,
     SubscriptionHeader,

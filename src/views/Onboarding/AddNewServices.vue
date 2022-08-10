@@ -5,7 +5,7 @@
     </template>
     <template #content>
       <div class="h-full w-full flex justify-evenly items-center">
-        <Box
+        <ServiceBox
           :active="mode === 'demo'"
           class="cursor-pointer"
           @clicked="update('demo')"
@@ -19,8 +19,8 @@
               <p>Counter application</p>
             </div>
           </div>
-        </Box>
-        <Box
+        </ServiceBox>
+        <ServiceBox
           :active="mode === 'manually'"
           class="cursor-pointer"
           @clicked="update('manually')"
@@ -34,7 +34,7 @@
               <p>After this wizard</p>
             </div>
           </div>
-        </Box>
+        </ServiceBox>
       </div>
     </template>
     <template #navigation>
@@ -48,10 +48,10 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
-import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
-import Box from '@/views/Onboarding/components/Box'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
+import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
+import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
+import ServiceBox from '@/views/Onboarding/components/ServiceBox.vue'
 
 export default {
   name: 'AddNewServices',
@@ -59,7 +59,7 @@ export default {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
-    Box,
+    ServiceBox,
   },
   metaInfo() {
     return {

@@ -144,7 +144,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         Configuration for all {{ productName }} resources is specified in YAML config files. The config files can be stored in an external datastore.
 
       </template>
@@ -179,7 +179,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         In Kubernetes mode, the {{ productName }} control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh.
 
       </template>
@@ -214,7 +214,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         You can store the YAML config files for {{ productName }} in etcd, the native datastore for Kubernetes.
       </template>
     </KPop>

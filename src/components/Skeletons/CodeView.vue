@@ -9,14 +9,14 @@
         :title="title"
         border-variant="noBorder"
       >
-        <template v-slot:body>
+        <template #body>
           <Prism
             class="code-block"
             :language="lang"
             :code="codeContent"
           />
         </template>
-        <template v-slot:actions>
+        <template #actions>
           <KClipboardProvider
             v-if="content"
             v-slot="{ copyToClipboard }"
@@ -28,7 +28,7 @@
               >
                 {{ copyButtonText }}
               </KButton>
-              <template v-slot:content>
+              <template #content>
                 <div>
                   <p>Entity copied to clipboard!</p>
                 </div>
@@ -45,7 +45,7 @@
         v-if="isLoading"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <KIcon
               icon="spinner"
@@ -62,7 +62,7 @@
         v-if="isEmpty && !isLoading"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"
@@ -81,7 +81,7 @@
         v-if="hasError"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"

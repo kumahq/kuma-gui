@@ -1,11 +1,11 @@
 <template>
   <div class="dataplanes">
-    <Dataplanes />
+    <DataplanesView />
   </div>
 </template>
 
 <script>
-import Dataplanes from '@/views/Entities/partial/Dataplanes'
+import DataplanesView from '@/views/Entities/partial/DataplanesView.vue'
 
 export default {
   name: 'AllDataplanes',
@@ -13,7 +13,7 @@ export default {
     title: 'Data plane proxies',
   },
   components: {
-    Dataplanes,
+    DataplanesView,
   },
 }
 </script>

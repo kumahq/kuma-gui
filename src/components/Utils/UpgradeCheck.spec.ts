@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import UpgradeCheck from './UpgradeCheck.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('UpgradeCheck.vue', () => {
   it('renders snapshot', async () => {

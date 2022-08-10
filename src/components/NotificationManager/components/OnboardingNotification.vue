@@ -9,7 +9,7 @@
       is-dismissible
       @closed="closeAlert"
     >
-      <template v-slot:alertMessage>
+      <template #alertMessage>
         <div class="alert-content">
           <div>
             <strong>Welcome to {{ productName }}!</strong> We've detected that you don't have

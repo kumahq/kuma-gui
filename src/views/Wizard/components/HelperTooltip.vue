@@ -4,7 +4,7 @@
     class="help-icon"
   >
     <a>?</a>
-    <template v-slot:content>
+    <template #content>
       <div>
         <slot />
       </div>

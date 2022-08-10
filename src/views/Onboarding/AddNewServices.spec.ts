@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import AddNewServices from './AddNewServices.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('AddNewServices.vue', () => {
   it('renders snapshot', () => {

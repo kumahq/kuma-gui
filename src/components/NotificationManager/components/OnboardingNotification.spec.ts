@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import OnboardingNotification from './OnboardingNotification.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('OnboardingNotification.vue', () => {
   it('renders snapshot', () => {

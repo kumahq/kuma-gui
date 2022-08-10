@@ -7,7 +7,7 @@
           size="small"
           @click="() => { copyToClipboard(shareUrl) }"
         >
-          <template v-slot:icon>
+          <template #icon>
             <KIcon
               view-box="0 0 16 16"
               icon="externalLink"
@@ -15,7 +15,7 @@
           </template>
           {{ copyButtonText }}
         </KButton>
-        <template v-slot:content>
+        <template #content>
           <div>
             <p>{{ confirmationText }}</p>
           </div>
@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script >
+<script>
 export default {
   name: 'EntityURLControl',
   props: {

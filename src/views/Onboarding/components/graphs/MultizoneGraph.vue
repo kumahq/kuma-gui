@@ -227,7 +227,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         The global control plane provides the config for the entire mesh.
         You create and update mesh configurations on the global control plane,
         and the zone control planes fetch the config from the global control plane.
@@ -263,7 +263,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         Each zone in your mesh (Kubernetes cluster, VPC, availability zone, region) includes
         a read-only control plane that syncs with the global control plane to get the configurations the zone needs.
       </template>
@@ -298,7 +298,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         {{ productName }} attaches a data plane proxy sidecar to each service in your mesh.
         This sidecar handles the mesh configuration for the service.
       </template>
@@ -332,7 +332,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         An ingress data plane proxy handles traffic to the zone from outside.
       </template>
     </KPop>

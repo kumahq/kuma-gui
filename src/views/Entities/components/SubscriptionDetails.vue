@@ -50,10 +50,10 @@
       appearance="info"
       class="mt-4"
     >
-      <template v-slot:alertIcon>
+      <template #alertIcon>
         <KIcon icon="portal" />
       </template>
-      <template v-slot:alertMessage>
+      <template #alertMessage>
         There are no subscription statistics for <strong>{{ details.id }}</strong>
       </template>
     </KAlert>

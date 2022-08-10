@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import TracingNotification from './TracingNotification.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('TracingNotification.vue', () => {
   it('renders snapshot', () => {

@@ -57,7 +57,7 @@ export function dpTags(dataplane: Dataplane): LabelValue[] {
     .map(tagPair => tagPair.split('='))
     .map(([key, value]) => ({
       label: key,
-      value: value,
+      value,
     }))
 }
 
@@ -156,9 +156,9 @@ export function getDataplane(dataplaneOverview: DataplaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
   return {
-    name: name,
-    mesh: mesh,
-    type: type,
+    name,
+    mesh,
+    type,
     ...dataplaneOverview.dataplane,
   }
 }
@@ -167,9 +167,9 @@ export function getDataplaneInsight(dataplaneOverview: DataplaneOverview) {
   const { name, mesh, type } = dataplaneOverview
 
   return {
-    name: name,
-    mesh: mesh,
-    type: type,
+    name,
+    mesh,
+    type,
     ...dataplaneOverview.dataplaneInsight,
   }
 }

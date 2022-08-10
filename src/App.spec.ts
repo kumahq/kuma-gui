@@ -1,9 +1,9 @@
 import { screen, waitForElementToBeRemoved } from '@testing-library/vue'
 import { rest } from 'msw'
+import App from './App.vue'
 import { server } from '@/jest-setup'
 import TestComponent from '@/testUtils/TestComponent.vue'
 import renderWithVuex from '@/testUtils/renderWithVuex'
-import App from './App.vue'
 
 describe('App.vue', () => {
   it('renders main view when succesful', async () => {

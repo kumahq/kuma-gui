@@ -5,8 +5,8 @@
     :is-empty="!hasItems"
   >
     <KCard border-variant="noBorder">
-      <template v-slot:body>
-        <Accordion
+      <template #body>
+        <AccordionList
           :initially-open="[]"
           multiple-open
         >
@@ -14,7 +14,7 @@
             v-for="(item, key) in items"
             :key="key"
           >
-            <template v-slot:accordion-header>
+            <template #accordion-header>
               <div class="flex items-center justify-between">
                 <div>
                   <p
@@ -48,7 +48,7 @@
                         class="ml-1"
                         view-box="0 0 16 16"
                       />
-                      <template v-slot:content>
+                      <template #content>
                         <div>
                           {{ POLICY_TYPE_SUBTITLE[item.type] }}
                         </div>
@@ -69,7 +69,7 @@
               </div>
             </template>
 
-            <template v-slot:accordion-content>
+            <template #accordion-content>
               <div class="policy-wrapper">
                 <div
                   v-for="(policyType, policyTypeName) in item.policyTypes"
@@ -96,7 +96,7 @@
               </div>
             </template>
           </AccordionItem>
-        </Accordion>
+        </AccordionList>
       </template>
     </kcard>
   </StatusInfo>
@@ -105,9 +105,9 @@
 <script>
 import { mapState } from 'vuex'
 import Kuma from '@/services/kuma'
-import StatusInfo from '@/components/Utils/StatusInfo'
-import Accordion from '@/components/Accordion/Accordion'
-import AccordionItem from '@/components/Accordion/AccordionItem'
+import StatusInfo from '@/components/Utils/StatusInfo.vue'
+import AccordionList from '@/components/Accordion/AccordionList.vue'
+import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 
 const POLICY_TYPE_SUBTITLE = {
   inbound: 'Policies applied on incoming connection on address',
@@ -120,7 +120,7 @@ export default {
   name: 'DataplanePolicies',
   components: {
     StatusInfo,
-    Accordion,
+    AccordionList,
     AccordionItem,
   },
   props: {

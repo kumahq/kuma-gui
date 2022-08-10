@@ -2,10 +2,10 @@ import { rest } from 'msw'
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
+import DataplanePolicies from './DataplanePolicies.vue'
 import Kuma from '@/services/kuma'
 import renderWithVuex from '@/testUtils/renderWithVuex'
 import { server } from '@/jest-setup'
-import DataplanePolicies from './DataplanePolicies.vue'
 
 describe('DataplanePolicies.vue', () => {
   it('renders snapshot', async () => {

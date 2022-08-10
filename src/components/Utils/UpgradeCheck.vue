@@ -5,7 +5,7 @@
       appearance="warning"
       size="small"
     >
-      <template v-slot:alertMessage>
+      <template #alertMessage>
         <div class="alert-content">
           <div>
             {{ tagline }} update available

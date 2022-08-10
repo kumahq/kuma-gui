@@ -1,6 +1,6 @@
 <template>
   <KEmptyState>
-    <template v-slot:title>
+    <template #title>
       <KIcon
         class="kong-icon--centered"
         icon="dangerCircle"
@@ -8,12 +8,12 @@
       />
       {{ productName }} is running in Standalone mode.
     </template>
-    <template v-slot:message>
+    <template #message>
       <p>
         To access this page, you must be running in <strong>Multi-Zone</strong> mode.
       </p>
     </template>
-    <template v-slot:cta>
+    <template #cta>
       <KButton
         :to="`https://kuma.io/docs/${kumaDocsVersion}/documentation/deployments/`"
         target="_blank"

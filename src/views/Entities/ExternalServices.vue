@@ -1,12 +1,12 @@
 <template>
-  <Services
+  <ServicesView
     route-name="external-services"
     name="External Services"
     :tab-headers="tabHeaders"
   />
 </template>
 <script>
-import Services from '@/views/Entities/partial/Services.vue'
+import ServicesView from '@/views/Entities/partial/ServicesView.vue'
 
 export default {
   name: 'ExternalServices',
@@ -14,7 +14,7 @@ export default {
     title: 'External Services',
   },
   components: {
-    Services,
+    ServicesView,
   },
   data() {
     return {

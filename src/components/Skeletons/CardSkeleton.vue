@@ -1,6 +1,6 @@
 <template>
   <KCard :title="cardTitle">
-    <template v-slot:body>
+    <template #body>
       <slot
         name="cardContent"
         class="skeleton-card__content"

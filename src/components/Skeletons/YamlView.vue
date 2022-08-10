@@ -9,13 +9,13 @@
         :title="yamlTitle"
         border-variant="noBorder"
       >
-        <template v-slot:body>
+        <template #body>
           <KTabs
             :key="environment"
             v-model="activeTab.hash"
             :tabs="tabs"
           >
-            <template v-slot:universal>
+            <template #universal>
               <KClipboardProvider v-slot="{ copyToClipboard }">
                 <KPop placement="bottom">
                   <KButton
@@ -29,7 +29,7 @@
                     Copy Universal YAML
                   </KButton>
 
-                  <template v-slot:content>
+                  <template #content>
                     <div>
                       <p>Entity copied to clipboard!</p>
                     </div>
@@ -42,7 +42,7 @@
                 :code="yamlContent.universal"
               />
             </template>
-            <template v-slot:kubernetes>
+            <template #kubernetes>
               <KClipboardProvider v-slot="{ copyToClipboard }">
                 <KPop placement="bottom">
                   <KButton
@@ -55,7 +55,7 @@
                   >
                     Copy Kubernetes YAML
                   </KButton>
-                  <template v-slot:content>
+                  <template #content>
                     <div>
                       <p>Entity copied to clipboard!</p>
                     </div>
@@ -79,7 +79,7 @@
         v-if="isLoading"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <KIcon
               icon="spinner"
@@ -96,7 +96,7 @@
         v-if="isEmpty && !isLoading"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"
@@ -115,7 +115,7 @@
         v-if="hasError"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <KIcon
               class="kong-icon--centered"
@@ -257,11 +257,11 @@ export default {
 
           newObj.metadata = {
             name: k8sName,
-            namespace: namespace,
+            namespace,
           }
         } else {
           newObj.metadata = {
-            name: name,
+            name,
           }
         }
 

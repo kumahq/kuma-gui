@@ -1,8 +1,8 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import userEvent from '@testing-library/user-event'
 import { screen } from '@testing-library/vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
 import OnboardingNavigation from './OnboardingNavigation.vue'
+import TestComponent from '@/testUtils/TestComponent.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 const routes = [
   {

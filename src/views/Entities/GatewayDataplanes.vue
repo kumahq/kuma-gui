@@ -1,11 +1,11 @@
 <template>
   <div class="gateway-dataplanes">
-    <Dataplanes v-bind="$data" />
+    <DataplanesView v-bind="$data" />
   </div>
 </template>
 
 <script>
-import Dataplanes from '@/views/Entities/partial/Dataplanes'
+import DataplanesView from '@/views/Entities/partial/DataplanesView.vue'
 
 export default {
   name: 'GatewayDataplanes',
@@ -13,7 +13,7 @@ export default {
     title: 'Gateway Data plane proxies',
   },
   components: {
-    Dataplanes,
+    DataplanesView,
   },
   data() {
     return {
