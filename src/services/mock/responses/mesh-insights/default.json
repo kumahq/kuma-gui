@@ -22,20 +22,50 @@
     }
   },
   "policies": {
-    "Secret": {
-      "total": 6
+    "CircuitBreaker": {
+      "total": 2
+    },
+    "FaultInjection": {
+      "total": 2
+    },
+    "HealthCheck": {
+      "total": 4
+    },
+    "MeshGatewayRoute": {
+      "total": 1
+    },
+    "MeshGateway": {
+      "total": 1
+    },
+    "ProxyTemplate": {
+      "total": 1
+    },
+    "RateLimit": {
+      "total": 0
+    },
+    "Retry": {
+      "total": 1
+    },
+    "Timeout": {
+      "total": 1
+    },
+    "TrafficLog": {
+      "total": 1
     },
     "TrafficPermission": {
       "total": 3
     },
     "TrafficRoute": {
-      "total": 5
-    },
-    "MeshGateway": {
       "total": 1
     },
-    "MeshGatewayRoute": {
-      "total": 1
+    "TrafficTrace": {
+      "total": 3
+    },
+    "VirtualOutbound": {
+      "total": 0
+    },
+    "Secret": {
+      "total": 6
     }
   },
   "dpVersions": {

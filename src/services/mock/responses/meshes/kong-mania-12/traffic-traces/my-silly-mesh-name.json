@@ -1,0 +1,15 @@
+{
+  "type": "TrafficTrace",
+  "mesh": "kong-mania-12",
+  "name": "my-silly-mesh-name",
+  "selectors": [
+    {
+      "match": {
+        "service": "*"
+      }
+    }
+  ],
+  "conf": {
+    "backend": "my-zipkin"
+  }
+}

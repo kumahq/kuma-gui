@@ -1,6 +1,6 @@
 {
   "type": "ProxyTemplate",
-  "mesh": "helloworld",
+  "mesh": "hello-world",
   "name": "pt-123",
   "selectors": [
     {
@@ -10,7 +10,9 @@
     }
   ],
   "conf": {
-    "imports": ["default-proxy"],
+    "imports": [
+      "default-proxy"
+    ],
     "resources": [
       {
         "name": "raw-name",

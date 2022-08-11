@@ -54,7 +54,6 @@ module.exports = {
         default: 'array',
       },
     ],
-    '@typescript-eslint/consistent-type-definitions': 'error',
     '@typescript-eslint/explicit-member-accessibility': [
       'error',
       {

@@ -14,7 +14,7 @@
     >
       <div class="top-nav">
         <NavItem
-          v-for="(item, idx) in titleNavItems"
+          v-for="(item, idx) in topMenuItems"
           :key="idx"
           v-bind="item"
           has-custom-icon
@@ -30,7 +30,7 @@
       </div>
       <div class="bottom-nav">
         <NavItem
-          v-for="(item, idx) in bottomNavItems"
+          v-for="(item, idx) in bottomMenuItems"
           :key="idx"
           v-bind="item"
           has-icon
@@ -38,9 +38,9 @@
       </div>
     </div>
     <Subnav
-      v-if="subnavIsExpanded"
-      :title="titleNavItems[0].name"
-      :title-link="titleNavItems[0].link"
+      v-if="subnavIsExpanded && topMenuItems.length > 0"
+      :title="topMenuItems[0].name"
+      :title-link="topMenuItems[0].link"
       :items="topNavItems"
     >
       <template v-slot:top>
@@ -55,7 +55,7 @@ import { mapState, mapActions, mapGetters } from 'vuex'
 import NavItem from '@/components/Sidebar/NavItem'
 import Subnav from '@/components/Sidebar/Subnav'
 import MeshSelector from '@/components/Utils/MeshSelector'
-import menu from '@/components/Sidebar/menu'
+import { getTopMenuItems, getBottomMenuItems } from '@/components/Sidebar/menu'
 
 import { APP_WINDOW } from '@/consts'
 
@@ -74,35 +74,33 @@ export default {
       toggleWorkspaces: false,
       isHovering: false,
       subnavIsExpanded: true,
-      menu,
+      topMenuItems: [],
+      bottomMenuItems: getBottomMenuItems(),
     }
   },
 
   computed: {
     ...mapState({
       selectedMesh: (state) => state.selectedMesh,
+      policies: (state) => state.policies
     }),
+
     ...mapGetters({
       featureFlags: 'config/featureFlags',
     }),
-    titleNavItems() {
-      return this.menu.find((i) => i.position === 'top').items
-    },
 
     topNavItems() {
-      return this.menu
-        .find((i) => i.position === 'top')
-        .items[0].subNav.items.filter((menuItem) => {
+      if (this.topMenuItems.length > 0) {
+        return this.topMenuItems[0].subNav.items.filter((menuItem) => {
           if (!menuItem.featureFlags) {
             return true
           }
 
           return menuItem.featureFlags.every((featureFlag) => this.featureFlags.includes(featureFlag))
         })
-    },
-
-    bottomNavItems() {
-      return this.menu.find((i) => i.position === 'bottom').items
+      } else {
+        return []
+      }
     },
 
     hasSubnav() {
@@ -118,9 +116,13 @@ export default {
     },
 
     selectedMenuItem() {
+      if (this.topMenuItems.length === 0) {
+        return null
+      }
+
       const route = this.$route
 
-      for (const section of this.menu) {
+      for (const section of [...this.topMenuItems, ...this.bottomMenuItems]) {
         for (const item of section.items) {
           const isNotRootLevelMenuItem = route.name !== item.link
           // const urlPath = route.path.split('/')[2]
@@ -153,6 +155,10 @@ export default {
     },
   },
 
+  created() {
+    this.topMenuItems = getTopMenuItems(this.policies)
+  },
+
   mounted() {
     this.sidebarEvent()
   },
@@ -165,9 +171,6 @@ export default {
     ...mapActions({
       getMeshInsights: 'sidebar/getMeshInsights',
     }),
-    getNavItems(menu, position, items) {
-      return menu.find((i) => i.position === position).items
-    },
 
     handleResize() {
       const appWidth = APP_WINDOW.innerWidth

@@ -148,7 +148,7 @@ nav link in the sidebar.
 
 #### 1. Create your view component
 
-The easiest way to do this is to copy an existing view and rename it accordingly. For example, `CircuitBreakers.vue` would
+The easiest way to do this is to copy an existing view and rename it accordingly. For example, `Meshes.vue` would
 be a good starting point. Once you've cloned an existing view and named it appropriately, below are the additional changes
 to be made:
 
@@ -167,21 +167,13 @@ Update the endpoints in the `getTableData` function located in the `loadData()` 
 
 ```js
 const { data, next } = await getTableData({
-  getSingleEntity: Kuma.getCircuitBreaker.bind(Kuma),
-  getAllEntities: Kuma.getAllCircuitBreakers.bind(Kuma),
-  getAllEntitiesFromMesh: Kuma.getAllCircuitBreakersFromMesh.bind(Kuma),
-  mesh,
-  query,
+  getSingleEntity: Kuma.getMesh.bind(Kuma),
+  getAllEntities: Kuma.getAllMeshes.bind(Kuma),
   size: this.pageSize,
   offset,
+  query,
 })
 ```
-
-Here is a quick breakdown of what each of these requests does:
-
-- `getAllCircuitBreakers()` - Fetches all Circuit Breakers for all meshes
-- `getCircuitBreaker()` - Gets a specific Circuit Breaker from a mesh
-- `getAllCircuitBreakersFromMesh()` - Gets all Circuit Breakers for a specific mesh
 
 #### 2. Create your REST functions
 

@@ -1,13 +1,28 @@
 import Vue from 'vue'
 import { Store } from 'vuex'
-import VueRouter from 'vue-router'
+import VueRouter, { RouteConfig } from 'vue-router'
 
 import { RootInterface } from './store'
-import { POLICY_MAP } from '@/consts'
+import { Policy } from '@/types'
 
 Vue.use(VueRouter)
 
-export default (store: Store<RootInterface>) => {
+export function getPolicyRoutes(policies: Policy[]): RouteConfig[] {
+  return policies.map((policy) => ({
+    path: policy.path,
+    name: policy.path,
+    meta: {
+      shouldReRender: true,
+      title: policy.pluralDisplayName,
+    },
+    props: {
+      policyPath: policy.path,
+    },
+    component: () => import(/* webpackChunkName: "policy-view" */ '@/views/Policies/PolicyView.vue'),
+  }))
+}
+
+export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
   const routes = [
     {
       path: '/404',
@@ -200,130 +215,7 @@ export default (store: Store<RootInterface>) => {
                     breadcrumb: 'External Services',
                   },
                 },
-                // traffic permissions
-                {
-                  path: POLICY_MAP.TrafficPermission.route,
-                  name: POLICY_MAP.TrafficPermission.route,
-                  meta: {
-                    title: POLICY_MAP.TrafficPermission.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "traffic-permissions" */ '@/views/Policies/TrafficPermissions.vue'),
-                },
-                // traffic routes
-                {
-                  path: POLICY_MAP.TrafficRoute.route,
-                  name: POLICY_MAP.TrafficRoute.route,
-                  meta: {
-                    title: POLICY_MAP.TrafficRoute.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "traffic-routes" */ '@/views/Policies/TrafficRoutes.vue'),
-                },
-                // traffic logs
-                {
-                  path: POLICY_MAP.TrafficLog.route,
-                  name: POLICY_MAP.TrafficLog.route,
-                  meta: {
-                    title: POLICY_MAP.TrafficLog.title,
-                  },
-                  component: () => import(/* webpackChunkName: "traffic-logs" */ '@/views/Policies/TrafficLogs.vue'),
-                },
-                // traffic traces
-                {
-                  path: POLICY_MAP.TrafficTrace.route,
-                  name: POLICY_MAP.TrafficTrace.route,
-                  meta: {
-                    title: POLICY_MAP.TrafficTrace.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "traffic-traces" */ '@/views/Policies/TrafficTraces.vue'),
-                },
-                // fault injections
-                {
-                  path: POLICY_MAP.FaultInjection.route,
-                  name: POLICY_MAP.FaultInjection.route,
-                  meta: {
-                    title: POLICY_MAP.FaultInjection.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "fault-injections" */ '@/views/Policies/FaultInjections.vue'),
-                },
-                // circuit breakers
-                {
-                  path: POLICY_MAP.CircuitBreaker.route,
-                  name: POLICY_MAP.CircuitBreaker.route,
-                  meta: {
-                    title: POLICY_MAP.CircuitBreaker.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "circuit-breakers" */ '@/views/Policies/CircuitBreakers.vue'),
-                },
-                // health checks
-                {
-                  path: POLICY_MAP.HealthCheck.route,
-                  name: POLICY_MAP.HealthCheck.route,
-                  meta: {
-                    title: POLICY_MAP.HealthCheck.title,
-                  },
-                  component: () => import(/* webpackChunkName: "health-checks" */ '@/views/Policies/HealthChecks.vue'),
-                },
-                // proxy templates
-                {
-                  path: POLICY_MAP.ProxyTemplate.route,
-                  name: POLICY_MAP.ProxyTemplate.route,
-                  meta: {
-                    title: POLICY_MAP.ProxyTemplate.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "proxy-templates" */ '@/views/Policies/ProxyTemplates.vue'),
-                },
-                // rate limits
-                {
-                  path: POLICY_MAP.RateLimit.route,
-                  name: POLICY_MAP.RateLimit.route,
-                  meta: {
-                    title: POLICY_MAP.RateLimit.title,
-                  },
-                  component: () => import(/* webpackChunkName: "rate-limits" */ '@/views/Policies/RateLimits.vue'),
-                },
-                // retries
-                {
-                  path: POLICY_MAP.Retry.route,
-                  name: POLICY_MAP.Retry.route,
-                  meta: {
-                    title: POLICY_MAP.Retry.title,
-                  },
-                  component: () => import(/* webpackChunkName: "retries" */ '@/views/Policies/Retries.vue'),
-                },
-                // timeouts
-                {
-                  path: POLICY_MAP.Timeout.route,
-                  name: POLICY_MAP.Timeout.route,
-                  meta: {
-                    title: POLICY_MAP.Timeout.title,
-                  },
-                  component: () => import(/* webpackChunkName: "timeouts" */ '@/views/Policies/Timeouts.vue'),
-                },
-                // gateways
-                {
-                  path: POLICY_MAP.MeshGateway.route,
-                  name: POLICY_MAP.MeshGateway.route,
-                  meta: {
-                    title: POLICY_MAP.MeshGateway.title,
-                  },
-                  component: () => import(/* webpackChunkName: "mesh-gateways" */ '@/views/Policies/MeshGateways.vue'),
-                },
-                // gateway routes
-                {
-                  path: POLICY_MAP.MeshGatewayRoute.route,
-                  name: POLICY_MAP.MeshGatewayRoute.route,
-                  meta: {
-                    title: POLICY_MAP.MeshGatewayRoute.title,
-                  },
-                  component: () =>
-                    import(/* webpackChunkName: "mesh-gateway-routes" */ '@/views/Policies/MeshGatewayRoutes.vue'),
-                },
+                ...policyRoutes,
               ],
             },
           ],

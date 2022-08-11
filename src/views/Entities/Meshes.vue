@@ -153,12 +153,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
-import { getEmptyInsight, getInitialPolicies } from '@/store/reducers/mesh-insights'
+import { getEmptyInsight } from '@/store/reducers/mesh-insights'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
@@ -166,7 +166,7 @@ import DataOverview from '@/components/Skeletons/DataOverview'
 import Tabs from '@/components/Utils/Tabs'
 import YamlView from '@/components/Skeletons/YamlView'
 import LabelList from '@/components/Utils/LabelList'
-import { PAGE_SIZE_DEFAULT, POLICY_MAP } from '@/consts'
+import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
   name: 'Meshes',
@@ -235,77 +235,25 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      policies: (state) => state.policies,
+    }),
+
     ...mapGetters({
       featureFlags: 'config/featureFlags',
     }),
     counts() {
-      const {
-        policies: allPolicies,
-        dataplanes: { total },
-      } = this.meshInsight
-
-      const policies = {
-        ...getInitialPolicies(),
-        ...allPolicies,
-      }
+      const policies = this.policies.map((policy) => ({
+        title: policy.pluralDisplayName,
+        value: this.meshInsight.policies[policy.name]?.total || 0,
+      }))
 
       return [
         {
           title: 'Data plane proxies',
-          value: total,
+          value: this.meshInsight.dataplanes.total,
         },
-        {
-          title: POLICY_MAP.CircuitBreaker.title,
-          value: policies.CircuitBreaker.total,
-        },
-        {
-          title: POLICY_MAP.FaultInjection.title,
-          value: policies.FaultInjection.total,
-        },
-        {
-          title: POLICY_MAP.HealthCheck.title,
-          value: policies.HealthCheck.total,
-        },
-        {
-          title: POLICY_MAP.ProxyTemplate.title,
-          value: policies.ProxyTemplate.total,
-        },
-        {
-          title: POLICY_MAP.TrafficLog.title,
-          value: policies.TrafficLog.total,
-        },
-        {
-          title: POLICY_MAP.TrafficPermission.title,
-          value: policies.TrafficPermission.total,
-        },
-        {
-          title: POLICY_MAP.TrafficRoute.title,
-          value: policies.TrafficRoute.total,
-        },
-        {
-          title: POLICY_MAP.TrafficTrace.title,
-          value: policies.TrafficTrace.total,
-        },
-        {
-          title: POLICY_MAP.RateLimit.title,
-          value: policies.RateLimit.total,
-        },
-        {
-          title: POLICY_MAP.Retry.title,
-          value: policies.Retry.total,
-        },
-        {
-          title: POLICY_MAP.Timeout.title,
-          value: policies.Timeout.total,
-        },
-        {
-          title: POLICY_MAP.MeshGateway.title,
-          value: policies.MeshGateway.total,
-        },
-        {
-          title: POLICY_MAP.MeshGatewayRoute.title,
-          value: policies.MeshGatewayRoute.total,
-        },
+        ...policies,
       ]
     },
     countCols() {

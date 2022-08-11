@@ -21,13 +21,13 @@
     }
   },
   "policies": {
+    "HealthCheck": {
+      "total": 2
+    },
+    "TrafficTrace": {
+      "total": 1
+    },
     "Secret": {
-      "total": 1
-    },
-    "TrafficPermission": {
-      "total": 1
-    },
-    "TrafficRoute": {
       "total": 1
     }
   },

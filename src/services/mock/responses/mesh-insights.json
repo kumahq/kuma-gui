@@ -8,46 +8,67 @@
       "modificationTime": "2021-01-29T07:29:02.314448+01:00",
       "lastSync": "2021-01-29T06:29:02.314447Z",
       "dataplanes": {
-        "total": 13,
-        "online": 3,
-        "partiallyDegraded": 5
+        "total": 16,
+        "online": 14,
+        "partiallyDegraded": 2
       },
       "dataplanesByType": {
         "standard": {
           "total": 8,
-          "online": 2,
-          "partiallyDegraded": 4
+          "online": 7,
+          "partiallyDegraded": 1
         },
         "gateway": {
-          "total": 5,
-          "online": 1,
+          "total": 8,
+          "online": 7,
           "partiallyDegraded": 1
         }
       },
       "policies": {
-        "Secret": {
-          "total": 6
-        },
-        "TrafficPermission": {
-          "total": 3
-        },
-        "TrafficRoute": {
-          "total": 5
+        "CircuitBreaker": {
+          "total": 2
         },
         "FaultInjection": {
           "total": 2
         },
         "HealthCheck": {
-          "total": 7
+          "total": 4
         },
-        "Timeout": {
+        "MeshGatewayRoute": {
           "total": 1
         },
         "MeshGateway": {
           "total": 1
         },
-        "MeshGatewayRoute": {
+        "ProxyTemplate": {
           "total": 1
+        },
+        "RateLimit": {
+          "total": 0
+        },
+        "Retry": {
+          "total": 1
+        },
+        "Timeout": {
+          "total": 1
+        },
+        "TrafficLog": {
+          "total": 1
+        },
+        "TrafficPermission": {
+          "total": 3
+        },
+        "TrafficRoute": {
+          "total": 1
+        },
+        "TrafficTrace": {
+          "total": 3
+        },
+        "VirtualOutbound": {
+          "total": 0
+        },
+        "Secret": {
+          "total": 6
         }
       },
       "dpVersions": {
@@ -115,14 +136,14 @@
       "modificationTime": "0001-01-01T00:00:00Z",
       "lastSync": "2020-11-17T12:24:11.941534Z",
       "dataplanes": {
-        "total": 1,
-        "partiallyDegraded": 1
+        "total": 0,
+        "partiallyDegraded": 0
       },
       "dataplanesByType": {
         "standard": {
-          "total": 1,
+          "total": 0,
           "online": 0,
-          "partiallyDegraded": 1
+          "partiallyDegraded": 0
         },
         "gateway": {
           "total": 0,
@@ -131,13 +152,16 @@
         }
       },
       "policies": {
+        "HealthCheck": {
+          "total": 1
+        },
+        "ProxyTemplate": {
+          "total": 1
+        },
+        "TrafficTrace": {
+          "total": 1
+        },
         "Secret": {
-          "total": 1
-        },
-        "TrafficPermission": {
-          "total": 1
-        },
-        "TrafficRoute": {
           "total": 1
         }
       },
@@ -195,9 +219,9 @@
         }
       },
       "services": {
-        "total": 2,
-        "internal": 0,
-        "external": 2
+        "total": 1,
+        "internal": 1,
+        "external": 0
       }
     },
     {
@@ -207,14 +231,14 @@
       "modificationTime": "0001-01-01T00:00:00Z",
       "lastSync": "2020-11-17T12:24:11.941534Z",
       "dataplanes": {
-        "total": 4,
-        "partiallyDegraded": 1
+        "total": 0,
+        "partiallyDegraded": 0
       },
       "dataplanesByType": {
         "standard": {
-          "total": 4,
+          "total": 0,
           "online": 0,
-          "partiallyDegraded": 1
+          "partiallyDegraded": 0
         },
         "gateway": {
           "total": 0,
@@ -223,13 +247,13 @@
         }
       },
       "policies": {
+        "HealthCheck": {
+          "total": 2
+        },
+        "TrafficTrace": {
+          "total": 1
+        },
         "Secret": {
-          "total": 1
-        },
-        "TrafficPermission": {
-          "total": 1
-        },
-        "TrafficRoute": {
           "total": 1
         }
       },
@@ -266,9 +290,9 @@
       },
       "mTLS": {},
       "services": {
-        "total": 2,
+        "total": 0,
         "internal": 0,
-        "external": 2
+        "external": 0
       }
     }
   ],

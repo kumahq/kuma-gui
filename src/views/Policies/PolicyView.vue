@@ -1,16 +1,45 @@
 <template>
-  <div class="circuit-breakers relative">
-    <DocumentationLink :href="docsURL" />
+  <div
+    v-if="policy"
+    class="relative"
+    :class="policy.path"
+  >
+    <DocumentationLink
+      :href="docsURL"
+      data-testid="policy-documentation-link"
+    />
+
+    <div
+      v-if="policy.isExperimental"
+      class="mb-4"
+    >
+      <KAlert appearance="warning">
+        <template v-slot:alertMessage>
+          <p>
+            <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
+            <a
+              href="https://github.com/kumahq/kuma/issues/new/choose"
+              target="_blank"
+              rel="noopener noreferrer"
+            >issue</a>
+          </p>
+        </template>
+      </KAlert>
+    </div>
+
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
         :has-error="hasError"
         :is-loading="isLoading"
-        :empty-state="empty_state"
+        :empty-state="{
+          title: 'No Data',
+          message: `There are no ${policy.pluralDisplayName} present.`,
+        }"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :next="next"
-        @tableAction="tableAction"
+        @tableAction="getEntity"
         @loadData="loadData($event)"
       >
         >
@@ -20,15 +49,14 @@
             class="back-button"
             appearance="primary"
             size="small"
-            :to="{
-              name: 'circuit-breakers',
-            }"
+            :to="{ name: policy.path }"
           >
             <span class="custom-control-icon"> &larr; </span>
             View All
           </KButton>
         </template>
       </DataOverview>
+
       <Tabs
         v-if="isEmpty === false"
         :has-error="hasError"
@@ -38,10 +66,11 @@
       >
         <template v-slot:tabHeader>
           <div>
-            <h3>
-              Circuit Breaker: {{ entity.name }}
+            <h3 data-testid="policy-single-entity">
+              {{ policy.singularDisplayName }}: {{ entity.name }}
             </h3>
           </div>
+
           <div>
             <EntityURLControl
               :name="entity.name"
@@ -49,13 +78,14 @@
             />
           </div>
         </template>
+
         <template v-slot:overview>
           <LabelList
             :has-error="entityHasError"
             :is-loading="entityIsLoading"
             :is-empty="entityIsEmpty"
           >
-            <div>
+            <div data-testid="policy-overview-tab">
               <ul>
                 <li
                   v-for="(val, key) in entity"
@@ -70,13 +100,15 @@
             </div>
           </LabelList>
         </template>
+
         <template v-slot:affected-dpps>
           <PolicyConnections
             :mesh="rawEntity.mesh"
             :policy-name="rawEntity.name"
-            policy-type="circuit-breakers"
+            :policy-type="policy.path"
           />
         </template>
+
         <template v-slot:yaml>
           <YamlView
             lang="yaml"
@@ -92,35 +124,46 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
+
 import { getSome, stripTimes } from '@/helpers'
 import { getTableData } from '@/utils/tableDataUtils'
-import Kuma from '@/services/kuma'
+import { PAGE_SIZE_DEFAULT } from '@/consts'
+import DataOverview from '@/components/Skeletons/DataOverview'
+import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import DataOverview from '@/components/Skeletons/DataOverview'
-import Tabs from '@/components/Utils/Tabs'
-import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
-import YamlView from '@/components/Skeletons/YamlView'
+import Kuma from '@/services/kuma'
 import LabelList from '@/components/Utils/LabelList'
-import DocumentationLink from '@/components/DocumentationLink/DocumentationLink.vue'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
+import PolicyConnections from '@/components/PolicyConnections/PolicyConnections'
+import Tabs from '@/components/Utils/Tabs'
+import YamlView from '@/components/Skeletons/YamlView'
 
 export default {
-  name: 'CircuitBreakers',
+  name: 'PolicyView',
+
   metaInfo: {
-    title: 'Circuit Breakers',
+    title: 'Policy View',
   },
+
   components: {
+    DataOverview,
+    DocumentationLink,
     EntityURLControl,
     FrameSkeleton,
-    DataOverview,
-    Tabs,
-    YamlView,
     LabelList,
     PolicyConnections,
-    DocumentationLink,
+    Tabs,
+    YamlView,
   },
+
+  props: {
+    policyPath: {
+      type: String,
+      required: true,
+    },
+  },
+
   data() {
     return {
       isLoading: true,
@@ -130,10 +173,6 @@ export default {
       entityIsEmpty: false,
       entityHasError: false,
       tableDataIsEmpty: false,
-      empty_state: {
-        title: 'No Data',
-        message: 'There are no Circuit Breakers present.',
-      },
       tableData: {
         headers: [
           { key: 'actions', hideLabel: true },
@@ -160,43 +199,53 @@ export default {
       next: null,
     }
   },
+
   computed: {
+    ...mapState({
+      policiesByPath: (state) => state.policiesByPath,
+    }),
+
     ...mapGetters({
       kumaDocsVersion: 'config/getKumaDocsVersion',
     }),
+
+    policy() {
+      return this.policiesByPath[this.policyPath]
+    },
+
     docsURL() {
-      return `https://kuma.io/docs/${this.kumaDocsVersion}/policies/circuit-breaker/`
+      return `https://kuma.io/docs/${this.kumaDocsVersion}/policies/${this.policy.path}/`
     },
   },
+
   watch: {
-    $route(to, from) {
-      this.init()
-    },
-  },
-  beforeMount() {
-    this.init()
-  },
-  methods: {
-    init() {
+    $route() {
       this.loadData()
     },
-    tableAction(ev) {
-      const data = ev
+  },
 
-      // load the data into the tabs
-      this.getEntity(data)
-    },
+  mounted() {
+    this.$options.metaInfo.title = this.policy.pluralDisplayName
+  },
+
+  beforeMount() {
+    this.loadData()
+  },
+
+  methods: {
     async loadData(offset = '0') {
       this.isLoading = true
 
       const query = this.$route.query.ns || null
       const mesh = this.$route.params.mesh || null
+      const path = this.policy.path
 
       try {
         const { data, next } = await getTableData({
-          getSingleEntity: Kuma.getCircuitBreaker.bind(Kuma),
-          getAllEntities: Kuma.getAllCircuitBreakers.bind(Kuma),
-          getAllEntitiesFromMesh: Kuma.getAllCircuitBreakersFromMesh.bind(Kuma),
+          getSingleEntity: Kuma.getSinglePolicyEntity.bind(Kuma),
+          getAllEntities: Kuma.getAllPolicyEntities.bind(Kuma),
+          getAllEntitiesFromMesh: Kuma.getAllPolicyEntitiesFromMesh.bind(Kuma),
+          path,
           mesh,
           query,
           size: this.pageSize,
@@ -234,20 +283,20 @@ export default {
         this.entityIsLoading = false
       }
     },
+
     getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
 
       if (entity) {
-        return Kuma.getCircuitBreaker({ mesh: entity.mesh, name: entity.name })
-          .then((response) => {
-            if (response) {
+        return Kuma.getSinglePolicyEntity({ mesh: entity.mesh, path: this.policy.path, name: entity.name })
+          .then((item) => {
+            if (item) {
               const selected = ['type', 'name', 'mesh']
 
-              this.entity = getSome(response, selected)
-              // this.rawEntity = response
-              this.rawEntity = stripTimes(response)
+              this.entity = getSome(item, selected)
+              this.rawEntity = stripTimes(item)
             } else {
               this.entity = {}
               this.entityIsEmpty = true
@@ -258,11 +307,15 @@ export default {
             console.error(error)
           })
           .finally(() => {
-            this.entityIsLoading = false
+            setTimeout(() => {
+              this.entityIsLoading = false
+            }, process.env.VUE_APP_DATA_TIMEOUT)
           })
       } else {
-        this.entityIsEmpty = true
-        this.entityIsLoading = false
+        setTimeout(() => {
+          this.entityIsEmpty = true
+          this.entityIsLoading = false
+        }, process.env.VUE_APP_DATA_TIMEOUT)
       }
     },
   },

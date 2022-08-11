@@ -16,22 +16,28 @@ const mockFilenameBasePaths: string[] = [
   'mesh-insights/hello-world',
   'mesh-insights/kong-mania-12',
   'dataplanes', // comment to have onboarding without data planes active
-  'health-checks',
-  'proxytemplates',
-  'traffic-logs',
-  'traffic-traces',
-  'traffic-permissions',
-  'traffic-routes',
-  'fault-injections',
-  'service-insights',
-  'external-services',
-  'retries',
-  'circuit-breakers',
   'zones',
   'status/zones',
+  'external-services',
+  'service-insights',
+
+  // Policies
+  'circuit-breakers',
+  'fault-injections',
+  'health-checks',
+  'meshgatewayroutes',
+  'meshgateways',
+  'proxytemplates',
+  'rate-limits',
+  'retries',
+  'timeouts',
+  'traffic-logs',
+  'traffic-permissions',
+  'traffic-routes',
+  'traffic-traces',
+  'virtual-outbounds',
 
   'meshes/default',
-  'meshes/mesh-01',
   'meshes/kong-mania-12',
   'meshes/hello-world',
 
@@ -48,17 +54,18 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/dataplanes/gateway-dp-87qntx',
   'meshes/default/dataplanes/dataplane-test-456',
 
-  'meshgateways',
   'meshes/default/meshgateways',
   'meshes/default/meshgateways/edge-gateway',
 
-  'meshgatewayroutes',
   'meshes/default/meshgatewayroutes',
   'meshes/default/meshgatewayroutes/edge-gateway',
 
   'meshes/default/traffic-traces',
   'meshes/default/traffic-traces/tt-1',
+  'meshes/default/traffic-traces/tt-3',
   'meshes/default/traffic-traces/traffic-trace-02',
+  'meshes/hello-world/traffic-traces/tt-123',
+  'meshes/kong-mania-12/traffic-traces/my-silly-mesh-name',
 
   'meshes/default/health-checks',
   'meshes/default/health-checks/web-to-backend',
@@ -68,6 +75,9 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/health-checks/health-check-0023',
   'meshes/default/health-checks/health-check-12345',
   'meshes/default/health-checks/foo-bar-baz-123',
+  'meshes/hello-world/health-checks/hello-health-check',
+  'meshes/kong-mania-12/health-checks/testing-health-checks',
+  'meshes/kong-mania-12/health-checks/web-to-banana',
 
   'meshes/default/fault-injections',
   'meshes/default/fault-injections/web-to-backend.kuma-system',
@@ -80,9 +90,9 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/retries',
 
   'meshes/default/proxytemplates',
-  'meshes/helloworld/proxytemplates',
   'meshes/default/proxytemplates/pt-1',
-  'meshes/helloworld/proxytemplates/pt-123',
+  'meshes/hello-world/proxytemplates',
+  'meshes/hello-world/proxytemplates/pt-123',
 
   'meshes/default/traffic-logs',
   'meshes/default/traffic-logs/tl-1',
@@ -113,6 +123,7 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/dataplanes+insights/no-subscriptions',
 
   'global-insights',
+  'policies',
 ]
 
 const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
