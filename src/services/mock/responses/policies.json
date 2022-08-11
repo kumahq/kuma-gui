@@ -1,0 +1,116 @@
+{
+  "policies": [
+    {
+      "name": "CircuitBreaker",
+      "pluralDisplayName": "Circuit Breakers",
+      "singularDisplayName": "Circuit Breaker",
+      "readOnly": true,
+      "path": "circuit-breakers",
+      "isExperimental": false
+    },
+    {
+      "name": "FaultInjection",
+      "pluralDisplayName": "Fault Injections",
+      "singularDisplayName": "Fault Injection",
+      "readOnly": true,
+      "path": "fault-injections",
+      "isExperimental": false
+    },
+    {
+      "name": "HealthCheck",
+      "pluralDisplayName": "Health Checks",
+      "singularDisplayName": "Health Check",
+      "readOnly": true,
+      "path": "health-checks",
+      "isExperimental": false
+    },
+    {
+      "name": "MeshGateway",
+      "pluralDisplayName": "Mesh Gateways",
+      "singularDisplayName": "Mesh Gateway",
+      "readOnly": true,
+      "path": "meshgateways",
+      "isExperimental": true
+    },
+    {
+      "name": "MeshGatewayRoute",
+      "pluralDisplayName": "Mesh Gateway Routes",
+      "singularDisplayName": "Mesh Gateway Route",
+      "readOnly": true,
+      "path": "meshgatewayroutes",
+      "isExperimental": true
+    },
+    {
+      "name": "ProxyTemplate",
+      "pluralDisplayName": "Proxy Templates",
+      "singularDisplayName": "Proxy Template",
+      "readOnly": true,
+      "path": "proxytemplates",
+      "isExperimental": false
+    },
+    {
+      "name": "RateLimit",
+      "pluralDisplayName": "Rate Limits",
+      "singularDisplayName": "Rate Limit",
+      "readOnly": true,
+      "path": "rate-limits",
+      "isExperimental": false
+    },
+    {
+      "name": "Retry",
+      "pluralDisplayName": "Retries",
+      "singularDisplayName": "Retry",
+      "readOnly": true,
+      "path": "retries",
+      "isExperimental": false
+    },
+    {
+      "name": "Timeout",
+      "pluralDisplayName": "Timeouts",
+      "singularDisplayName": "Timeout",
+      "readOnly": true,
+      "path": "timeouts",
+      "isExperimental": false
+    },
+    {
+      "name": "TrafficLog",
+      "pluralDisplayName": "Traffic Logs",
+      "singularDisplayName": "Traffic Log",
+      "readOnly": true,
+      "path": "traffic-logs",
+      "isExperimental": false
+    },
+    {
+      "name": "TrafficPermission",
+      "pluralDisplayName": "Traffic Permissions",
+      "singularDisplayName": "Traffic Permission",
+      "readOnly": true,
+      "path": "traffic-permissions",
+      "isExperimental": false
+    },
+    {
+      "name": "TrafficRoute",
+      "pluralDisplayName": "Traffic Routes",
+      "singularDisplayName": "Traffic Route",
+      "readOnly": true,
+      "path": "traffic-routes",
+      "isExperimental": false
+    },
+    {
+      "name": "TrafficTrace",
+      "pluralDisplayName": "Traffic Traces",
+      "singularDisplayName": "Traffic Trace",
+      "readOnly": true,
+      "path": "traffic-traces",
+      "isExperimental": false
+    },
+    {
+      "name": "VirtualOutbounds",
+      "pluralDisplayName": "Virtual Outbounds",
+      "singularDisplayName": "Virtual Outbound",
+      "readOnly": true,
+      "path": "virtual-outbounds",
+      "isExperimental": false
+    }
+  ]
+}

@@ -21,13 +21,16 @@
     }
   },
   "policies": {
+    "HealthCheck": {
+      "total": 1
+    },
+    "ProxyTemplate": {
+      "total": 1
+    },
+    "TrafficTrace": {
+      "total": 1
+    },
     "Secret": {
-      "total": 1
-    },
-    "TrafficPermission": {
-      "total": 1
-    },
-    "TrafficRoute": {
       "total": 1
     }
   },

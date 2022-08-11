@@ -1,0 +1,15 @@
+{
+  "type": "TrafficTrace",
+  "mesh": "default",
+  "name": "tt-3",
+  "selectors": [
+    {
+      "match": {
+        "service": "*"
+      }
+    }
+  ],
+  "conf": {
+    "backend": "my-zipkin"
+  }
+}

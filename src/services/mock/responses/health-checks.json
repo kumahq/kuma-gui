@@ -30,7 +30,7 @@
     },
     {
       "type": "HealthCheck",
-      "mesh": "test-mesh",
+      "mesh": "kong-mania-12",
       "name": "web-to-banana",
       "sources": [
         {
@@ -57,7 +57,7 @@
     },
     {
       "type": "HealthCheck",
-      "mesh": "helloworld",
+      "mesh": "hello-world",
       "name": "hello-health-check",
       "sources": [
         {
@@ -84,7 +84,7 @@
     },
     {
       "type": "HealthCheck",
-      "mesh": "another-test-mesh",
+      "mesh": "kong-mania-12",
       "name": "testing-health-checks",
       "sources": [
         {

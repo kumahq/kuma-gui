@@ -72,21 +72,22 @@
             <template v-slot:accordion-content>
               <div class="policy-wrapper">
                 <div
-                  v-for="(policyGroup, policyType) in item.matchedPolicies"
-                  :key="policyType"
+                  v-for="(policyType, policyTypeName) in item.policyTypes"
+                  :key="`${key}-${policyTypeName}`"
                   class="policy-item"
                 >
                   <h4 class="policy-type">
-                    {{ getPolicyTitle(policyType) }}
+                    {{ policyType.pluralDisplayName }}
                   </h4>
+
                   <ul>
                     <li
-                      v-for="(policy) in policyGroup"
-                      :key="policy.name"
+                      v-for="(policy, policyKey) in policyType.policies"
+                      :key="`${key}-${policyTypeName}-${policyKey}`"
                       class="my-1"
                       data-testid="policy-name"
                     >
-                      <router-link :to="getPolicyLink(policy)">
+                      <router-link :to="policy.route">
                         {{ policy.name }}
                       </router-link>
                     </li>
@@ -102,7 +103,7 @@
 </template>
 
 <script>
-import { POLICY_MAP } from '@/consts'
+import { mapState } from 'vuex'
 import Kuma from '@/services/kuma'
 import StatusInfo from '@/components/Utils/StatusInfo'
 import Accordion from '@/components/Accordion/Accordion'
@@ -135,14 +136,19 @@ export default {
 
   data() {
     return {
+      items: [],
       hasItems: false,
       isLoading: true,
       hasError: false,
-      policies: [],
       searchInput: '',
-      POLICY_MAP,
       POLICY_TYPE_SUBTITLE,
     }
+  },
+
+  computed: {
+    ...mapState({
+      policiesByType: (state) => state.policiesByType,
+    }),
   },
 
   watch: {
@@ -150,21 +156,12 @@ export default {
       this.fetchPolicies()
     },
   },
+
   mounted() {
     this.fetchPolicies()
   },
 
   methods: {
-    getPolicyTitle(policyType) {
-      return POLICY_MAP[policyType]?.title || policyType
-    },
-    getPolicyLink(policy) {
-      return {
-        name: POLICY_MAP[policy.type]?.route,
-        query: { ns: policy.name },
-        params: { mesh: policy.mesh },
-      }
-    },
     async fetchPolicies() {
       this.hasError = false
       this.isLoading = true
@@ -175,14 +172,40 @@ export default {
           dppName: this.dppName,
         })
 
+        this.processItems(items)
         this.hasItems = total > 0
-
         this.items = items
       } catch (e) {
         console.error(e)
         this.hasError = true
       } finally {
         this.isLoading = false
+      }
+    },
+
+    processItems(items) {
+      for (const item of items) {
+        item.policyTypes = {}
+
+        // eslint-disable-next-line guard-for-in
+        for (const policyType in item.matchedPolicies) {
+          const policy = this.policiesByType[policyType]
+
+          const policyEntry = {
+            pluralDisplayName: policy.pluralDisplayName,
+            policies: item.matchedPolicies[policyType],
+          }
+
+          for (const entryPolicy of policyEntry.policies) {
+            entryPolicy.route = {
+              name: policy.path,
+              query: { ns: entryPolicy.name },
+              params: { mesh: entryPolicy.mesh },
+            }
+          }
+
+          item.policyTypes[policyType] = policyEntry
+        }
       }
     },
   },

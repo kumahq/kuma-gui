@@ -1,18 +1,28 @@
-import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
+import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
-import DataplanePolicies from './DataplanePolicies.vue'
+import Kuma from '@/services/kuma'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 import { server } from '@/jest-setup'
+import DataplanePolicies from './DataplanePolicies.vue'
 
 describe('DataplanePolicies.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = render(DataplanePolicies, {
-      props: {
+    const { policies } = await Kuma.getPolicies()
+    const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+
+    const { container } = renderWithVuex(DataplanePolicies, {
+      propsData: {
         mesh: 'foo',
         dppName: 'dataplane-test-456',
       },
       routes: [],
+      store: {
+        state: {
+          policiesByType,
+        },
+      },
     })
 
     await userEvent.click(await screen.findByText('web'))
@@ -21,7 +31,7 @@ describe('DataplanePolicies.vue', () => {
   })
 
   it('renders loading', () => {
-    render(DataplanePolicies, {
+    renderWithVuex(DataplanePolicies, {
       props: {
         mesh: 'foo',
         dppName: 'dataplane-test-456',
@@ -41,7 +51,7 @@ describe('DataplanePolicies.vue', () => {
       ),
     )
 
-    render(DataplanePolicies, {
+    renderWithVuex(DataplanePolicies, {
       props: {
         mesh: 'default',
         dppName: 'dataplane-test-456',
@@ -59,7 +69,7 @@ describe('DataplanePolicies.vue', () => {
       ),
     )
 
-    render(DataplanePolicies, {
+    renderWithVuex(DataplanePolicies, {
       props: {
         mesh: 'default',
         dppName: 'dataplane-test-456',

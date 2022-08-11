@@ -7,7 +7,7 @@ import * as am4core from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import App from '@/App.vue'
-import Router from '@/router'
+import Router, { getPolicyRoutes } from '@/router'
 import Store from '@/store'
 import Kuma from '@/services/kuma'
 
@@ -51,9 +51,13 @@ am4core.useTheme(am4themesAnimated)
  */
 
 /** the app itself */
-function VUE_APP() {
+async function VUE_APP() {
   const store = new Vuex.Store(Store())
-  const router = Router(store)
+
+  // Loads available policies in order to populate the necessary routes.
+  await store.dispatch('fetchPolicies')
+  const policyRoutes = getPolicyRoutes(store.state.policies)
+  const router = Router(store, policyRoutes)
 
   new Vue({
     store,

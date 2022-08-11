@@ -208,37 +208,6 @@ exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
                     Mesh
                   </td>
                 </tr>
-                <tr
-                  data-v-bfeabd48=""
-                >
-                  <td
-                    data-v-bfeabd48=""
-                  >
-                    <a
-                      class="data-table-action-link"
-                      data-v-bfeabd48=""
-                    >
-                      <span
-                        class="action-link__normal-state"
-                        data-v-bfeabd48=""
-                      >
-                        
-              View
-            
-                      </span>
-                    </a>
-                  </td>
-                  <td
-                    data-v-bfeabd48=""
-                  >
-                    mesh-01
-                  </td>
-                  <td
-                    data-v-bfeabd48=""
-                  >
-                    Mesh
-                  </td>
-                </tr>
               </tbody>
             </table>
              
@@ -415,7 +384,7 @@ exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
                               <p
                                 data-v-0029352b=""
                               >
-                                0
+                                2
                               </p>
                             </li>
                             <li
@@ -430,7 +399,7 @@ exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
                               <p
                                 data-v-0029352b=""
                               >
-                                0
+                                2
                               </p>
                             </li>
                           </ul>
@@ -453,153 +422,9 @@ exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
                               <p
                                 data-v-0029352b=""
                               >
-                                0
+                                4
                               </p>
                             </li>
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Proxy Templates
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                0
-                              </p>
-                            </li>
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Traffic Logs
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                0
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div
-                          data-v-0029352b=""
-                        >
-                          <ul
-                            data-v-0029352b=""
-                          >
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Traffic Permissions
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                3
-                              </p>
-                            </li>
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Traffic Routes
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                5
-                              </p>
-                            </li>
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Traffic Traces
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                0
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div
-                          data-v-0029352b=""
-                        >
-                          <ul
-                            data-v-0029352b=""
-                          >
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Rate Limits
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                0
-                              </p>
-                            </li>
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Retries
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                0
-                              </p>
-                            </li>
-                            <li
-                              data-v-0029352b=""
-                            >
-                              <h4
-                                data-v-0029352b=""
-                              >
-                                Timeouts
-                              </h4>
-                               
-                              <p
-                                data-v-0029352b=""
-                              >
-                                0
-                              </p>
-                            </li>
-                          </ul>
-                        </div>
-                        <div
-                          data-v-0029352b=""
-                        >
-                          <ul
-                            data-v-0029352b=""
-                          >
                             <li
                               data-v-0029352b=""
                             >
@@ -628,6 +453,165 @@ exports[`Meshes.vue renders snapshot with Resource tab 1`] = `
                                 data-v-0029352b=""
                               >
                                 1
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Proxy Templates
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Rate Limits
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Retries
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Timeouts
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Logs
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Permissions
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                3
+                              </p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div
+                          data-v-0029352b=""
+                        >
+                          <ul
+                            data-v-0029352b=""
+                          >
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Routes
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                1
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Traffic Traces
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                3
+                              </p>
+                            </li>
+                            <li
+                              data-v-0029352b=""
+                            >
+                              <h4
+                                data-v-0029352b=""
+                              >
+                                Virtual Outbounds
+                              </h4>
+                               
+                              <p
+                                data-v-0029352b=""
+                              >
+                                0
                               </p>
                             </li>
                           </ul>

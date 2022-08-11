@@ -74,6 +74,9 @@ export default (): Module<RootInterface, RootInterface> => ({
     serviceInsightsFetching: false,
     externalServicesFetching: false,
     zonesInsightsFetching: false,
+    policies: [],
+    policiesByPath: {},
+    policiesByType: {},
   } as TODO,
   getters: {
     globalLoading: state => state.globalLoading,
@@ -138,6 +141,9 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       state.overviewCharts[chartName].data = data
     },
+    SET_POLICIES: (state, policies) => (state.policies = policies),
+    SET_POLICIES_BY_PATH: (state, policiesByPath) => (state.policiesByPath = policiesByPath),
+    SET_POLICIES_BY_TYPE: (state, policiesByType) => (state.policiesByType = policiesByType),
   },
   actions: {
     // bootstrap app
@@ -331,6 +337,16 @@ export default (): Module<RootInterface, RootInterface> => ({
       }
 
       commit('SET_ZONES_INSIGHTS_FETCHING', false)
+    },
+
+    async fetchPolicies({ commit }) {
+      const { policies } = await Kuma.getPolicies()
+      const policiesByPath = policies.reduce((obj, policy) => Object.assign(obj, { [policy.path]: policy }), {})
+      const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+
+      commit('SET_POLICIES', policies)
+      commit('SET_POLICIES_BY_PATH', policiesByPath)
+      commit('SET_POLICIES_BY_TYPE', policiesByType)
     },
 
     setChartsFromMeshInsights({ dispatch }) {

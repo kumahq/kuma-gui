@@ -1,7 +1,9 @@
+import userEvent from '@testing-library/user-event'
+import { screen, waitFor } from '@testing-library/vue'
+
 import renderWithVuex from '@/testUtils/renderWithVuex'
 import TestComponent from '@/testUtils/TestComponent.vue'
-import userEvent from '@testing-library/user-event'
-import { screen } from '@testing-library/vue'
+import Kuma from '@/services/kuma'
 import Sidebar from './Sidebar.vue'
 
 describe('Sidebar.vue', () => {
@@ -11,14 +13,22 @@ describe('Sidebar.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('renders mesh gateways', () => {
+  it('renders mesh gateways', async () => {
+    const { policies } = await Kuma.getPolicies()
+
     renderWithVuex(Sidebar, {
-      store: { },
+      store: {
+        state: {
+          policies,
+        }
+      },
       routes: [],
     })
 
-    expect(screen.getByTestId('mesh-gateways')).toBeInTheDocument()
-    expect(screen.getByTestId('mesh-gateway-routes')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByTestId('meshgateways')).toBeInTheDocument()
+      expect(screen.getByTestId('meshgatewayroutes')).toBeInTheDocument()
+    })
   })
 
   it('refetch data after change of mesh', async () => {
@@ -38,10 +48,11 @@ describe('Sidebar.vue', () => {
       },
     })
 
-    await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
+    await waitFor(async () => {
+      await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
+      const node = await screen.findByText(/8/)
 
-    const item = await (await screen.findByText(/8/)).parentNode
-
-    expect(item).toHaveTextContent('Standard 8')
+      expect(node.parentNode).toHaveTextContent('Standard 8')
+    })
   })
 })

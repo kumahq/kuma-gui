@@ -12,7 +12,7 @@
           mode="out-in"
           name="fade"
         >
-          <router-view />
+          <router-view :key="routeKey" />
         </transition>
       </main>
     </div>
@@ -41,6 +41,21 @@ export default {
     ...mapGetters({
       showOnboarding: 'onboarding/showOnboarding',
     }),
+
+    /**
+     * The `router-view`’s `key` attribute value.
+     *
+     * Is always set to `'default'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
+     * However, in some scenarios, we want Vue to re-render a route’s components
+     * (e.g. `src/views/Policies/PolicyView.vue` which is used by some dozen policy routes).
+     */
+    routeKey() {
+      if (this.$route.meta.shouldReRender) {
+        return this.$route.path
+      }
+
+      return 'default'
+    },
   },
 }
 </script>

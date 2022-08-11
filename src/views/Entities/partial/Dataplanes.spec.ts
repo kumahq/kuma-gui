@@ -1,11 +1,15 @@
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+
 import renderWithVuex from '@/testUtils/renderWithVuex'
 import Kuma from '@/services/kuma'
 import Dataplanes from './Dataplanes.vue'
 
 describe('Dataplanes.vue', () => {
   it('renders snapshot', async () => {
+    const { policies } = await Kuma.getPolicies()
+    const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+
     const { container } = renderWithVuex(Dataplanes, {
       mocks: {
         $route: {
@@ -16,6 +20,11 @@ describe('Dataplanes.vue', () => {
         },
       },
       stubs: ['router-link'],
+      store: {
+        state: {
+          policiesByType,
+        },
+      },
     })
 
     await screen.findByText(/DataplaneOverview/)
@@ -25,7 +34,26 @@ describe('Dataplanes.vue', () => {
 
   it('calls getDataplanePolicies only when select the tab', async () => {
     jest.spyOn(Kuma, 'getDataplanePolicies')
-    renderWithVuex(Dataplanes)
+
+    const { policies } = await Kuma.getPolicies()
+    const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+
+    renderWithVuex(Dataplanes, {
+      mocks: {
+        $route: {
+          params: {
+            mesh: 'all',
+          },
+          query: {},
+        },
+      },
+      stubs: ['router-link'],
+      store: {
+        state: {
+          policiesByType,
+        },
+      },
+    })
 
     await screen.findByText(/DPP: backend/)
 

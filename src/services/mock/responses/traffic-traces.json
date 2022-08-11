@@ -3,7 +3,7 @@
   "items": [
     {
       "type": "TrafficTrace",
-      "mesh": "helloworld",
+      "mesh": "hello-world",
       "name": "tt-123",
       "selectors": [
         {
@@ -18,8 +18,8 @@
     },
     {
       "type": "TrafficTrace",
-      "mesh": "my-silly-mesh-name",
-      "name": "tt-tango-bravo-alpha-charlie-12",
+      "mesh": "kong-mania-12",
+      "name": "my-silly-mesh-name",
       "selectors": [
         {
           "match": {

@@ -1,0 +1,15 @@
+{
+  "type": "TrafficTrace",
+  "mesh": "hello-world",
+  "name": "tt-123",
+  "selectors": [
+    {
+      "match": {
+        "service": "*"
+      }
+    }
+  ],
+  "conf": {
+    "backend": "my-zipkin"
+  }
+}

@@ -17,6 +17,7 @@ function getAPICallFunction({
   getSingleEntity,
   getAllEntities,
   getAllEntitiesFromMesh,
+  path,
   mesh,
   query,
   size,
@@ -30,15 +31,15 @@ function getAPICallFunction({
   }
 
   if (getSingleEntity && query) {
-    return getSingleEntity({ mesh, name: query }, params)
+    return getSingleEntity({ mesh, path, name: query }, params)
   }
 
   if (!mesh || mesh === 'all') {
-    return getAllEntities(params)
+    return getAllEntities({ path }, params)
   }
 
   if (getAllEntitiesFromMesh && mesh) {
-    return getAllEntitiesFromMesh({ mesh }, params)
+    return getAllEntitiesFromMesh({ mesh, path }, params)
   }
 
   return Promise.resolve()
@@ -48,6 +49,7 @@ export async function getTableData({
   getSingleEntity,
   getAllEntities,
   getAllEntitiesFromMesh,
+  path,
   mesh,
   query,
   size = PAGE_SIZE_DEFAULT,
@@ -58,6 +60,7 @@ export async function getTableData({
     getSingleEntity,
     getAllEntities,
     getAllEntitiesFromMesh,
+    path,
     mesh,
     query,
     size,
