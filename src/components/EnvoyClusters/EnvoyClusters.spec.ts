@@ -9,7 +9,7 @@ describe('EnvoyClusters.vue', () => {
   it('renders snapshot', async () => {
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({})),
+        res(ctx.status(200), ctx.json('')),
       ),
     )
 
@@ -27,7 +27,7 @@ describe('EnvoyClusters.vue', () => {
   it('renders loading', () => {
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({})),
+        res(ctx.status(200), ctx.json('')),
       ),
     )
 
@@ -47,7 +47,7 @@ describe('EnvoyClusters.vue', () => {
 
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
-        res(ctx.status(500), ctx.json({})),
+        res(ctx.status(500), ctx.json('')),
       ),
     )
 

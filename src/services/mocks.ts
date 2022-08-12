@@ -53,6 +53,7 @@ const mockFilenameBasePaths: string[] = [
   'meshes/default/dataplanes+insights/ingress-dp-test-123',
   'meshes/default/dataplanes/gateway-dp-87qntx',
   'meshes/default/dataplanes/dataplane-test-456',
+  'meshes/default/dataplanes+insights/dataplane-test-456',
 
   'meshes/default/meshgateways',
   'meshes/default/meshgateways/edge-gateway',
@@ -133,9 +134,10 @@ const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestConte
 }
 
 const setupHandlers = (apiURL: string): RestHandler[] => {
-  const handlers = mockFilenameBasePaths.map((path: string) =>
-    rest.get(`${apiURL}${path}`, (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`)))),
-  )
+  const getApiPath = (path: string) => `${apiURL}${path.replace(/\+/g, '\\+').replace(/\?/g, '\\?')}`
+  const handlers = mockFilenameBasePaths.map((path: string) => rest.get(
+    getApiPath(path), (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`)))
+  ))
 
   handlers.push(
     rest.get(apiURL, (req, res, ctx) =>
@@ -151,13 +153,13 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
     ),
   )
 
-  handlers.push(rest.get(/zones\+insights/, regexMatcher))
-  handlers.push(rest.get(/zoneegressoverviews/, regexMatcher))
-  handlers.push(rest.get(/zoneingresses\+insights/, regexMatcher))
-  handlers.push(rest.get(/meshes\/default\/dataplanes\+insights/, regexMatcher))
+  handlers.push(rest.get(getApiPath('zones+insights'), regexMatcher))
+  handlers.push(rest.get(getApiPath('zoneegressoverviews'), regexMatcher))
+  handlers.push(rest.get(getApiPath('zoneingresses+insights'), regexMatcher))
+  handlers.push(rest.get(getApiPath('meshes/default/dataplanes+insights'), regexMatcher))
 
   handlers.push(
-    rest.get(/dataplanes\+insights/, (req, res, ctx) => {
+    rest.get(getApiPath('dataplanes+insights'), (req, res, ctx) => {
       const gateway = req.url.searchParams.get('gateway')
 
       if (gateway === 'false') {
@@ -178,31 +180,31 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
   )
 
   handlers.push(
-    rest.get(`${apiURL}meshes/:mesh/:policyType/:policyName/dataplanes`, (req, res, ctx) =>
+    rest.get(getApiPath('meshes/:mesh/:policyType/:policyName/dataplanes'), (req, res, ctx) =>
       res(ctx.json(requireMockFile('policy-connections.json'))),
     ),
   )
 
   handlers.push(
-    rest.get(`${apiURL}meshes/:mesh/dataplanes/:dataplaneName/policies`, (req, res, ctx) =>
+    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/policies'), (req, res, ctx) =>
       res(ctx.json(requireMockFile('dataplane-policies.json'))),
     ),
   )
 
   handlers.push(
-    rest.get(`${apiURL}meshes/:mesh/dataplanes/:dataplaneName/xds`, (req, res, ctx) =>
+    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/xds'), (req, res, ctx) =>
       res(ctx.json(requireMockFile('dataplane-xds.json'))),
     ),
   )
 
   handlers.push(
-    rest.get(`${apiURL}zoneingresses/:zoneIngressName/xds`, (req, res, ctx) =>
+    rest.get(getApiPath('zoneingresses/:zoneIngressName/xds'), (req, res, ctx) =>
       res(ctx.json(requireMockFile('dataplane-xds.json'))),
     ),
   )
 
   handlers.push(
-    rest.get(`${apiURL}zoneegresses/:zoneEgressName/xds`, (req, res, ctx) =>
+    rest.get(getApiPath('zoneegresses/:zoneEgressName/xds'), (req, res, ctx) =>
       res(ctx.json(requireMockFile('dataplane-xds.json'))),
     ),
   )

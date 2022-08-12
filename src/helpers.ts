@@ -157,7 +157,7 @@ export function humanReadableDate(tdate: string) {
  */
 export function rawReadableDate(date: string) {
   const rawDate = new Date(Date.parse(date))
-  const options = {
+  const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

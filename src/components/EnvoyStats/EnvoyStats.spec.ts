@@ -9,7 +9,7 @@ describe('EnvoyStats.vue', () => {
   it('renders snapshot', async () => {
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({})),
+        res(ctx.status(200), ctx.json('')),
       ),
     )
 
@@ -27,7 +27,7 @@ describe('EnvoyStats.vue', () => {
   it('renders loading', () => {
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({})),
+        res(ctx.status(200), ctx.json('')),
       ),
     )
 
@@ -47,7 +47,7 @@ describe('EnvoyStats.vue', () => {
 
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>
-        res(ctx.status(500), ctx.json({})),
+        res(ctx.status(500), ctx.json('')),
       ),
     )
 

@@ -1,8 +1,13 @@
 import userEvent from '@testing-library/user-event'
+
 import DataplaneUniversal from './DataplaneUniversal.vue'
 import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('DataplaneUniversal.vue', () => {
+  beforeEach(() => {
+    jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789)
+  })
+
   it('passes whole wizzard and render yaml', async () => {
     const { container, getByText, getByDisplayValue, getByLabelText, findByText } = renderWithVuex(DataplaneUniversal, {
       store: {
