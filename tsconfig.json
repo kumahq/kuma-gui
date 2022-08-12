@@ -18,6 +18,6 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx", "src/jest-setup.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/jest-setup.ts"],
   "exclude": ["node_modules"]
 }

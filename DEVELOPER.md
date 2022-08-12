@@ -68,7 +68,6 @@ The GUI is structured in standard Vue app format, with some unique differences.
 
 - public - Contains our Vue app's index file and all static assets
 - dist - This is where our build files output to
-- tests
 - src
   - assets - fonts, images, and all of our SCSS files
   - components - All of our Vue components and skeletons
@@ -356,4 +355,3 @@ All of our needed Tailwind components are included with the `src/assets/styles/t
 For tests we use [vue-testing-library](https://github.com/testing-library/vue-testing-library).
 Overall we should place our tests next to the file which we are testing.
 For example if you have file in `./src/components/HelloWorld.vue` you should create test file in `./src/components/HelloWorld.spec.ts`.
-You can find some examples how we should structure our tests in `./tests/examples/*`.
