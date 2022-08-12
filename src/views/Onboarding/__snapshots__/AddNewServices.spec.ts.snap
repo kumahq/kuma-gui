@@ -97,25 +97,29 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
+          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
+          data-v-6ae23500=""
           href="#/"
           type="button"
         >
+          <!---->
           
     Back
   
+          <!---->
         </a>
          
         <div>
           <button
-            class="k-button skip-button small btn-link"
-            data-v-38fa8ecf=""
+            class="k-button skip-button small rounded btn-link"
+            data-v-6ae23500=""
             type="button"
           >
+            <!---->
             
       Skip Setup
     
+            <!---->
           </button>
            
           <span
@@ -123,14 +127,16 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
           >
             <a
               aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-              data-v-38fa8ecf=""
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+              data-v-6ae23500=""
               href="#/"
               type="button"
             >
+              <!---->
               
         Next
       
+              <!---->
             </a>
           </span>
         </div>

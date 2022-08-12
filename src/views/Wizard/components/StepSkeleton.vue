@@ -48,7 +48,7 @@
       >
         <KButton
           v-show="!indexCanReverse"
-          appearance="secondary"
+          appearance="outline"
           @click="goToPrevStep"
         >
           &lsaquo; Previous

@@ -55,7 +55,7 @@
         >
           <template #cardContent>
             <p>
-              We can create multiple isolated Mesh resources (i.e. per application/team/business unit).
+              We can create multiple isolated Mesh resources (i.e. per application/<wbr>team/<wbr>business unit).
             </p>
           </template>
         </CardSkeleton>

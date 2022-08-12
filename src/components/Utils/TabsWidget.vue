@@ -27,10 +27,10 @@
         <template #warnings-anchor>
           <span class="flex items-center with-warnings">
             <KIcon
-              color="var(--yellow-400)"
               class="mr-1"
               icon="warning"
-              secondary-color="var(--black-75)"
+              color="var(--black-75)"
+              secondary-color="var(--yellow-300)"
               size="16"
             />
             <span>
@@ -67,9 +67,9 @@
             <div class="card-icon mb-3">
               <KIcon
                 class="kong-icon--centered"
-                color="var(--yellow-200)"
                 icon="warning"
-                secondary-color="var(--black-75)"
+                color="var(--black-75)"
+                secondary-color="var(--yellow-300)"
                 size="42"
               />
             </div>
@@ -210,6 +210,6 @@ export default {
 }
 
 .with-warnings {
-  color: var(--yellow-400);
+  color: var(--yellow-500);
 }
 </style>

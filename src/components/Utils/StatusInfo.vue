@@ -8,6 +8,7 @@
     <KEmptyState
       v-if="isLoading"
       cta-is-hidden
+      data-testid="status-info-loading-section"
     >
       <template #title>
         <div class="card-icon mb-3">
@@ -30,9 +31,9 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-200)"
             icon="warning"
-            secondary-color="var(--black-75)"
+            color="var(--black-75)"
+            secondary-color="var(--yellow-300)"
             size="42"
           />
         </div>
@@ -49,9 +50,9 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-200)"
             icon="warning"
-            secondary-color="var(--black-75)"
+            color="var(--black-75)"
+            secondary-color="var(--yellow-300)"
             size="42"
           />
         </div>

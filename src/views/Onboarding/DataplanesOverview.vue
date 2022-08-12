@@ -19,7 +19,7 @@
             <p class="font-bold mb-4">
               Found {{ tableData.data.length }} DPPs:
             </p>
-            <KTable
+            <KTableLegacy
               class="onboarding-dataplane-table"
               :options="tableData"
               is-small
@@ -33,7 +33,7 @@
                   <span class="entity-status__label">{{ rowValue }}</span>
                 </div>
               </template>
-            </KTable>
+            </KTableLegacy>
           </div>
         </div>
       </div>

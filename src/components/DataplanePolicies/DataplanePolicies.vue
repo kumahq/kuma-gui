@@ -44,9 +44,8 @@
                     >
                       <KIcon
                         icon="help"
-                        size="12"
+                        size="16"
                         class="ml-1"
-                        view-box="0 0 16 16"
                       />
                       <template #content>
                         <div>

@@ -6,44 +6,56 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
     class="upgrade-check"
   >
     <div
-      class="k-alert warning small"
-      data-v-14c8a976=""
+      class="k-alert warning small none"
+      data-v-825647a6=""
       role="alert"
     >
       <!---->
       <!---->
-      <span
-        data-v-14c8a976=""
+      <div
+        class="k-alert-msg-text"
+        data-v-825647a6=""
       >
+        <!---->
         <div
-          class="alert-content"
-          data-v-14c8a976=""
+          class="k-alert-msg"
+          data-v-825647a6=""
         >
           <div
-            data-v-14c8a976=""
+            class="alert-content"
+            data-v-825647a6=""
           >
-            
-          Kuma update available
-        
-          </div>
-           
-          <div
-            data-v-14c8a976=""
-          >
-            <a
-              class="k-button warning-button small primary"
-              data-v-14c8a976=""
-              data-v-38fa8ecf=""
-              href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
-              type="button"
+            <div
+              data-v-825647a6=""
             >
               
+          Kuma update available
+        
+            </div>
+             
+            <div
+              data-v-825647a6=""
+            >
+              <a
+                class="k-button warning-button small rounded primary"
+                data-v-6ae23500=""
+                data-v-825647a6=""
+                href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                type="button"
+              >
+                <!---->
+                
             Update
           
-            </a>
+                <!---->
+              </a>
+            </div>
           </div>
         </div>
-      </span>
+        <!---->
+      </div>
+      <!---->
+      <!---->
     </div>
   </div>
 </div>

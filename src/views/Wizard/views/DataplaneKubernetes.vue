@@ -69,7 +69,7 @@
                   </label>
                   <KButton
                     :to="{ name: 'create-mesh' }"
-                    appearance="secondary"
+                    appearance="outline"
                   >
                     Create a new Mesh
                   </KButton>

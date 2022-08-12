@@ -49,53 +49,68 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
               class="w-full sm:w-3/5 lg:w-2/5 p-4"
             >
               <table
-                class="k-table has-hover is-small side-border"
-                data-v-bfeabd48=""
+                class="k-table k-table-legacy has-hover is-small side-border"
+                data-v-1fe39162=""
               >
                 <thead
-                  data-v-bfeabd48=""
+                  data-v-1fe39162=""
                 >
                   <tr
-                    data-v-bfeabd48=""
+                    data-v-1fe39162=""
                   >
                     <th
                       class=""
-                      data-v-bfeabd48=""
+                      data-v-1fe39162=""
                     >
-                       Name 
+                      <span
+                        class=""
+                        data-v-1fe39162=""
+                      >
+                         Name 
+                      </span>
                     </th>
                     <th
                       class=""
-                      data-v-bfeabd48=""
+                      data-v-1fe39162=""
                     >
-                       Services 
+                      <span
+                        class=""
+                        data-v-1fe39162=""
+                      >
+                         Services 
+                      </span>
                     </th>
                     <th
                       class=""
-                      data-v-bfeabd48=""
+                      data-v-1fe39162=""
                     >
-                       DPPs 
+                      <span
+                        class=""
+                        data-v-1fe39162=""
+                      >
+                         DPPs 
+                      </span>
                     </th>
                   </tr>
                 </thead>
                 <tbody
-                  data-v-bfeabd48=""
+                  data-v-1fe39162=""
                 >
                   <tr
-                    data-v-bfeabd48=""
+                    data-v-1fe39162=""
                   >
                     <td
-                      data-v-bfeabd48=""
+                      data-v-1fe39162=""
                     >
                       default
                     </td>
                     <td
-                      data-v-bfeabd48=""
+                      data-v-1fe39162=""
                     >
                       0
                     </td>
                     <td
-                      data-v-bfeabd48=""
+                      data-v-1fe39162=""
                     >
                       0
                     </td>
@@ -120,25 +135,29 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
+          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
+          data-v-6ae23500=""
           href="#/"
           type="button"
         >
+          <!---->
           
     Back
   
+          <!---->
         </a>
          
         <div>
           <button
-            class="k-button skip-button small btn-link"
-            data-v-38fa8ecf=""
+            class="k-button skip-button small rounded btn-link"
+            data-v-6ae23500=""
             type="button"
           >
+            <!---->
             
       Skip Setup
     
+            <!---->
           </button>
            
           <span
@@ -146,14 +165,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           >
             <a
               aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-              data-v-38fa8ecf=""
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+              data-v-6ae23500=""
               href="#/"
               type="button"
             >
+              <!---->
               
         Next
       
+              <!---->
             </a>
           </span>
         </div>

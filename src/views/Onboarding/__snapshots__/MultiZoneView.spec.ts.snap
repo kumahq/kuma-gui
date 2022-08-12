@@ -38,46 +38,56 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
     
           </p>
            
-          <div
+          <section
+            aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+            aria-label="See the documentation for options to install:"
             class="kong-card noBorder"
-            data-v-0029352b=""
+            data-v-3bb7bf60=""
           >
             <div
-              class="k-card-header mb-4"
-              data-v-0029352b=""
+              class="k-card-header d-flex mb-3"
+              data-v-3bb7bf60=""
             >
+              <!---->
               <div
-                class="k-card-title"
-                data-v-0029352b=""
+                class="k-card-title mb-3"
+                data-v-3bb7bf60=""
               >
                 <h4
-                  data-v-0029352b=""
+                  data-v-3bb7bf60=""
                 >
                   See the documentation for options to install:
                 </h4>
               </div>
               <div
                 class="k-card-actions"
-                data-v-0029352b=""
+                data-v-3bb7bf60=""
               />
             </div>
             <!---->
             <div
-              class="k-card-body"
-              data-v-0029352b=""
+              class="k-card-content d-flex"
+              data-v-3bb7bf60=""
             >
-              <a
-                class="external-link-code-block"
-                data-v-0029352b=""
-                href="https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane"
-                target="_blank"
+              <div
+                class="k-card-body"
+                data-v-3bb7bf60=""
+                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
-                
+                <a
+                  class="external-link-code-block"
+                  data-v-3bb7bf60=""
+                  href="https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane"
+                  target="_blank"
+                >
+                  
           https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane
         
-              </a>
+                </a>
+              </div>
+              <!---->
             </div>
-          </div>
+          </section>
            
           <div>
             <p
@@ -135,25 +145,29 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
+          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
+          data-v-6ae23500=""
           href="#/"
           type="button"
         >
+          <!---->
           
     Back
   
+          <!---->
         </a>
          
         <div>
           <button
-            class="k-button skip-button small btn-link"
-            data-v-38fa8ecf=""
+            class="k-button skip-button small rounded btn-link"
+            data-v-6ae23500=""
             type="button"
           >
+            <!---->
             
       Skip Setup
     
+            <!---->
           </button>
            
           <span
@@ -161,15 +175,17 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           >
             <a
               aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-              data-v-38fa8ecf=""
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+              data-v-6ae23500=""
               disabled="disabled"
               href="#/"
               type="button"
             >
+              <!---->
               
         Next
       
+              <!---->
             </a>
           </span>
         </div>

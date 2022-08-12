@@ -2006,261 +2006,315 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
       class="card-wrapper"
     >
       <div>
-        <div
+        <section
+          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          aria-label="Create a virtual Mesh"
           class="kong-card card-item border"
-          data-v-0029352b=""
+          data-v-3bb7bf60=""
         >
           <div
-            class="k-card-header mb-4"
-            data-v-0029352b=""
+            class="k-card-header d-flex mb-3"
+            data-v-3bb7bf60=""
           >
+            <!---->
             <div
-              class="k-card-title"
-              data-v-0029352b=""
+              class="k-card-title mb-3"
+              data-v-3bb7bf60=""
             >
               <h4
-                data-v-0029352b=""
+                data-v-3bb7bf60=""
               >
                 Create a virtual Mesh
               </h4>
             </div>
             <div
               class="k-card-actions"
-              data-v-0029352b=""
+              data-v-3bb7bf60=""
             />
           </div>
           <!---->
           <div
-            class="k-card-body"
-            data-v-0029352b=""
+            class="k-card-content d-flex"
+            data-v-3bb7bf60=""
           >
-            <p
-              data-v-0029352b=""
-            >
-              
-            We can create multiple isolated Mesh resources (i.e. per application/team/business unit).
-          
-            </p>
-             
             <div
-              class="skeleton-card__action mt-4"
-              data-v-0029352b=""
+              class="k-card-body"
+              data-v-3bb7bf60=""
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
-              <a
-                aria-current="page"
-                class="k-button router-link-exact-active router-link-active primary"
-                data-v-0029352b=""
-                data-v-38fa8ecf=""
-                href="#/"
-                type="button"
+              <p
+                data-v-3bb7bf60=""
               >
                 
+            We can create multiple isolated Mesh resources (i.e. per application/
+                <wbr
+                  data-v-3bb7bf60=""
+                />
+                team/
+                <wbr
+                  data-v-3bb7bf60=""
+                />
+                business unit).
+          
+              </p>
+               
+              <div
+                class="skeleton-card__action mt-4"
+                data-v-3bb7bf60=""
+              >
+                <a
+                  aria-current="page"
+                  class="k-button router-link-exact-active router-link-active medium rounded primary"
+                  data-v-3bb7bf60=""
+                  data-v-6ae23500=""
+                  href="#/"
+                  type="button"
+                >
+                  <!---->
+                  
           Create Mesh
         
-              </a>
+                  <!---->
+                </a>
+              </div>
             </div>
+            <!---->
           </div>
-        </div>
+        </section>
       </div>
        
       <div>
-        <div
+        <section
+          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          aria-label="Connect data plane proxies"
           class="kong-card card-item border"
-          data-v-0029352b=""
+          data-v-3bb7bf60=""
         >
           <div
-            class="k-card-header mb-4"
-            data-v-0029352b=""
+            class="k-card-header d-flex mb-3"
+            data-v-3bb7bf60=""
           >
+            <!---->
             <div
-              class="k-card-title"
-              data-v-0029352b=""
+              class="k-card-title mb-3"
+              data-v-3bb7bf60=""
             >
               <h4
-                data-v-0029352b=""
+                data-v-3bb7bf60=""
               >
                 Connect data plane proxies
               </h4>
             </div>
             <div
               class="k-card-actions"
-              data-v-0029352b=""
+              data-v-3bb7bf60=""
             />
           </div>
           <!---->
           <div
-            class="k-card-body"
-            data-v-0029352b=""
+            class="k-card-content d-flex"
+            data-v-3bb7bf60=""
           >
-            <p
-              data-v-0029352b=""
-            >
-              
-            We need a data plane proxy for each replica of our services within a Mesh resource.
-          
-            </p>
-             
             <div
-              class="skeleton-card__action mt-4"
-              data-v-0029352b=""
+              class="k-card-body"
+              data-v-3bb7bf60=""
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
-              <a
-                aria-current="page"
-                class="k-button router-link-exact-active router-link-active primary"
-                data-v-0029352b=""
-                data-v-38fa8ecf=""
-                href="#/"
-                type="button"
+              <p
+                data-v-3bb7bf60=""
               >
                 
+            We need a data plane proxy for each replica of our services within a Mesh resource.
+          
+              </p>
+               
+              <div
+                class="skeleton-card__action mt-4"
+                data-v-3bb7bf60=""
+              >
+                <a
+                  aria-current="page"
+                  class="k-button router-link-exact-active router-link-active medium rounded primary"
+                  data-v-3bb7bf60=""
+                  data-v-6ae23500=""
+                  href="#/"
+                  type="button"
+                >
+                  <!---->
+                  
           Get Started
         
-              </a>
+                  <!---->
+                </a>
+              </div>
             </div>
+            <!---->
           </div>
-        </div>
+        </section>
       </div>
        
       <div>
-        <div
+        <section
+          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          aria-label="Apply null policies"
           class="kong-card card-item border"
-          data-v-0029352b=""
+          data-v-3bb7bf60=""
         >
           <div
-            class="k-card-header mb-4"
-            data-v-0029352b=""
+            class="k-card-header d-flex mb-3"
+            data-v-3bb7bf60=""
           >
+            <!---->
             <div
-              class="k-card-title"
-              data-v-0029352b=""
+              class="k-card-title mb-3"
+              data-v-3bb7bf60=""
             >
               <h4
-                data-v-0029352b=""
+                data-v-3bb7bf60=""
               >
                 Apply null policies
               </h4>
             </div>
             <div
               class="k-card-actions"
-              data-v-0029352b=""
+              data-v-3bb7bf60=""
             />
           </div>
           <!---->
           <div
-            class="k-card-body"
-            data-v-0029352b=""
+            class="k-card-content d-flex"
+            data-v-3bb7bf60=""
           >
-            <p
-              data-v-0029352b=""
-            >
-              
-            We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies.
-          
-            </p>
-             
             <div
-              class="skeleton-card__action mt-4"
-              data-v-0029352b=""
+              class="k-card-body"
+              data-v-3bb7bf60=""
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
-              <a
-                class="k-button primary"
-                data-v-0029352b=""
-                data-v-38fa8ecf=""
-                href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                type="button"
+              <p
+                data-v-3bb7bf60=""
               >
                 
+            We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies.
+          
+              </p>
+               
+              <div
+                class="skeleton-card__action mt-4"
+                data-v-3bb7bf60=""
+              >
+                <a
+                  class="k-button medium rounded primary"
+                  data-v-3bb7bf60=""
+                  data-v-6ae23500=""
+                  href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                  type="button"
+                >
+                  <!---->
+                  
           Explore Policies
         
-              </a>
+                  <!---->
+                </a>
+              </div>
             </div>
+            <!---->
           </div>
-        </div>
+        </section>
       </div>
        
       <div>
-        <div
+        <section
+          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          aria-label="Resources"
           class="kong-card card-item border"
-          data-v-0029352b=""
+          data-v-3bb7bf60=""
         >
           <div
-            class="k-card-header mb-4"
-            data-v-0029352b=""
+            class="k-card-header d-flex mb-3"
+            data-v-3bb7bf60=""
           >
+            <!---->
             <div
-              class="k-card-title"
-              data-v-0029352b=""
+              class="k-card-title mb-3"
+              data-v-3bb7bf60=""
             >
               <h4
-                data-v-0029352b=""
+                data-v-3bb7bf60=""
               >
                 Resources
               </h4>
             </div>
             <div
               class="k-card-actions"
-              data-v-0029352b=""
+              data-v-3bb7bf60=""
             />
           </div>
           <!---->
           <div
-            class="k-card-body"
-            data-v-0029352b=""
+            class="k-card-content d-flex"
+            data-v-3bb7bf60=""
           >
-            <p
-              data-v-0029352b=""
+            <div
+              class="k-card-body"
+              data-v-3bb7bf60=""
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
-              
+              <p
+                data-v-3bb7bf60=""
+              >
+                
       Join the Kuma community and ask questions:
     
-            </p>
-             
-            <ul
-              class="resource-list"
-              data-v-0029352b=""
-            >
-              <li
-                data-v-0029352b=""
+              </p>
+               
+              <ul
+                class="resource-list"
+                data-v-3bb7bf60=""
               >
-                <a
-                  data-v-0029352b=""
-                  href="https://kuma.io/docs/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                  target="_blank"
+                <li
+                  data-v-3bb7bf60=""
                 >
-                  
+                  <a
+                    data-v-3bb7bf60=""
+                    href="https://kuma.io/docs/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                    target="_blank"
+                  >
+                    
           Kuma Documentation
         
-                </a>
-              </li>
-              <li
-                data-v-0029352b=""
-              >
-                <a
-                  data-v-0029352b=""
-                  href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                  target="_blank"
+                  </a>
+                </li>
+                <li
+                  data-v-3bb7bf60=""
                 >
-                  
+                  <a
+                    data-v-3bb7bf60=""
+                    href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                    target="_blank"
+                  >
+                    
           Kuma Community Chat
         
-                </a>
-              </li>
-              <li
-                data-v-0029352b=""
-              >
-                <a
-                  data-v-0029352b=""
-                  href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
-                  target="_blank"
+                  </a>
+                </li>
+                <li
+                  data-v-3bb7bf60=""
                 >
-                  
+                  <a
+                    data-v-3bb7bf60=""
+                    href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
+                    target="_blank"
+                  >
+                    
           Kuma GitHub Repository
         
-                </a>
-              </li>
-            </ul>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <!---->
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>

@@ -53,14 +53,16 @@ exports[`CompletedView.vue renders snapshot 1`] = `
           >
             <a
               aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-              data-v-38fa8ecf=""
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+              data-v-6ae23500=""
               href="#/"
               type="button"
             >
+              <!---->
               
         Completed
       
+              <!---->
             </a>
           </span>
         </div>

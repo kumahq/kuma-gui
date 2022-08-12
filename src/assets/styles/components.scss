@@ -82,6 +82,10 @@
     overflow-y: auto;
   }
 
+  .k-modal-content .k-modal-body.k-modal-body.content-left {
+    margin-right: 0;
+  }
+
   .modal-body, .modal-header, .modal-footer {
     padding: 4px;
   }
@@ -186,4 +190,17 @@
   background: var(--yellow-300);
   top: -8px;
   right: -8px;
+}
+
+// Makes badges bigger
+.k-badge {
+  --KBadgeFontSize: 1.2em;
+  --KBadgePaddingY: var(--spacing-xs);
+  --KBadgePaddingX: var(--spacing-sm);
+}
+
+// Centers icons inside buttons vertically
+.k-button .kong-icon {
+  display: flex;
+  align-items: center;
 }

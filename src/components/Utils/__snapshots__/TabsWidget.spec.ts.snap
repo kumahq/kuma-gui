@@ -13,25 +13,25 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
     >
       <div
         class="k-tabs"
-        data-v-a38b664a=""
+        data-v-93b6f4ca=""
       >
         <ul
           aria-label="ktabs"
-          data-v-a38b664a=""
+          data-v-93b6f4ca=""
           role="tablist"
         >
           <li
             aria-controls="panel-0"
             aria-selected="true"
             class="tab-item active"
-            data-v-a38b664a=""
+            data-v-93b6f4ca=""
             id="universal-tab"
             role="tab"
             tabindex="0"
           >
             <a
               class="tab-link"
-              data-v-a38b664a=""
+              data-v-93b6f4ca=""
             >
               Universal
             </a>
@@ -40,14 +40,14 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
             aria-controls="panel-1"
             aria-selected="false"
             class="tab-item"
-            data-v-a38b664a=""
+            data-v-93b6f4ca=""
             id="kubernetes-tab"
             role="tab"
             tabindex="0"
           >
             <a
               class="tab-link"
-              data-v-a38b664a=""
+              data-v-93b6f4ca=""
             >
               Kubernetes
             </a>
@@ -56,13 +56,13 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
         <div
           aria-labelledby="universal-tab"
           class="tab-container"
-          data-v-a38b664a=""
+          data-v-93b6f4ca=""
           id="panel-0"
           role="tabpanel"
           tabindex="0"
         >
           <div
-            data-v-a38b664a=""
+            data-v-93b6f4ca=""
           >
             Universal
           </div>
@@ -70,7 +70,7 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
         <div
           aria-labelledby="kubernetes-tab"
           class="tab-container"
-          data-v-a38b664a=""
+          data-v-93b6f4ca=""
           id="panel-1"
           role="tabpanel"
           tabindex="0"

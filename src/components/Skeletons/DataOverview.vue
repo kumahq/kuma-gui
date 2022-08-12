@@ -42,7 +42,7 @@
         v-if="!tableDataIsEmpty && tableData"
         class="data-overview-table"
       >
-        <KTable
+        <KTableLegacy
           class="micro-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
           :options="tableDataFiltered"
@@ -143,14 +143,14 @@
             <KIcon
               v-if="row.withWarnings"
               class="mr-1"
-              color="var(--yellow-400)"
               icon="warning"
-              secondary-color="var(--black-75)"
+              color="var(--black-75)"
+              secondary-color="var(--yellow-300)"
               size="20"
             />
             <div v-else />
           </template>
-        </KTable>
+        </KTableLegacy>
 
         <PaginationWidget
           :has-previous="pageOffset > 0"
@@ -219,9 +219,9 @@
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
-            color="var(--yellow-200)"
             icon="warning"
-            secondary-color="var(--black-75)"
+            color="var(--black-75)"
+            secondary-color="var(--yellow-300)"
             size="42"
           />
         </div>
@@ -488,6 +488,6 @@ export default {
 // some reusable styles
 
 .with-warnings {
-  color: var(--yellow-400);
+  color: var(--yellow-500);
 }
 </style>

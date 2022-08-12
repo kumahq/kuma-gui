@@ -58,31 +58,31 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
             <span
               class="circle"
             >
-              <svg
+              <span
                 class="kong-icon kong-icon-check"
-                data-v-a7c9c1d2=""
-                height="10"
-                role="img"
-                viewBox="0 0 14 10"
-                width="10"
+                data-v-429cf642=""
               >
-                <title
-                  data-v-a7c9c1d2=""
+                <svg
+                  fill="none"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  check
-                </title>
-                <g
-                  data-v-a7c9c1d2=""
-                >
+                  
+  
                   <path
-                    clip-rule="evenodd"
-                    d="M4.67966 6.86538L11.2261 0.318978C11.634 -0.0889488 12.2957 -0.0885802 12.6995 0.315182L12.7909 0.40662C13.1967 0.812454 13.1898 1.47741 12.7868 1.88043L5.41865 9.24853C5.01051 9.65667 4.34285 9.65072 3.9479 9.25578L0.728185 6.03606C0.324048 5.63192 0.327503 4.97325 0.731265 4.56949L0.822671 4.47805C1.2285 4.07222 1.89164 4.07735 2.29742 4.48313L4.67966 6.86538Z"
-                    data-v-a7c9c1d2=""
-                    fill="var(--kuma-purple-1)"
-                    fill-rule="evenodd"
+                    d="m14 7-6 6-3-3"
+                    fill="none"
+                    stroke="#A3BBCC"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2.25"
                   />
-                </g>
-              </svg>
+                  
+
+                </svg>
+                
+
+              </span>
             </span>
             
   Run Kuma control plane
@@ -161,13 +161,15 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
            
           <div>
             <button
-              class="k-button skip-button small btn-link"
-              data-v-38fa8ecf=""
+              class="k-button skip-button small rounded btn-link"
+              data-v-6ae23500=""
               type="button"
             >
+              <!---->
               
       Skip Setup
     
+              <!---->
             </button>
              
             <span
@@ -175,14 +177,16 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
             >
               <a
                 aria-current="page"
-                class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-                data-v-38fa8ecf=""
+                class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+                data-v-6ae23500=""
                 href="#/"
                 type="button"
               >
+                <!---->
                 
         Next
       
+                <!---->
               </a>
             </span>
           </div>
