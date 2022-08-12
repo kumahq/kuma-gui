@@ -1,5 +1,5 @@
-import setupStore from '@/testUtils/setupStore'
 import sidebar from '.'
+import setupStore from '@/testUtils/setupStore'
 
 describe('sidebar module', () => {
   describe('actions', () => {

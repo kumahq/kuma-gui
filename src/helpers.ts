@@ -194,7 +194,7 @@ export function getSome(original: TODO, desired: TODO) {
  * @param {String} url
  */
 export function stripUrl(url: string) {
-  const regex = new RegExp(/([^\/]+$)/g)
+  const regex = /([^\/]+$)/g
   const match = url.match(regex)?.[0]
 
   return match
@@ -214,7 +214,7 @@ export function getOffset(url: string) {
     return ''
   }
 
-  const regex = new RegExp(/offset=(\w+)/)
+  const regex = /offset=(\w+)/
   const match = url.match(regex)?.[0].replace('offset=', '')
 
   return match

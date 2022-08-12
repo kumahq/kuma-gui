@@ -38,7 +38,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "shell" */ '@/views/Shell.vue'),
+      component: () => import(/* webpackChunkName: "shell" */ '@/views/AppShell.vue'),
       redirect: {
         name: 'global-overview',
         params: {
@@ -51,7 +51,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
         {
           path: '/diagnostics',
           name: 'diagnostics',
-          component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/Diagnostics.vue'),
+          component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/DiagnosticsView.vue'),
           meta: {
             title: 'Diagnostics',
             breadcrumb: 'Diagnostics',
@@ -65,7 +65,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           meta: {
             title: 'Zones',
           },
-          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/Zones.vue'),
+          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/ZonesView.vue'),
         },
         // Zone Ingresses
         {
@@ -115,7 +115,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                 parent: 'all-meshes',
               },
               params: { mesh: ':mesh' },
-              component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/Meshes.vue'),
+              component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/MeshesView.vue'),
             },
           ],
         },
@@ -160,7 +160,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                   meta: {
                     title: 'Global Overview',
                   },
-                  component: () => import(/* webpackChunkName: "global-overview" */ '@/views/Overview.vue'),
+                  component: () => import(/* webpackChunkName: "global-overview" */ '@/views/OverviewView.vue'),
                 },
                 // all dataplanes
                 {
@@ -235,7 +235,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
             title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`,
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Welcome.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/WelcomeView.vue'),
         },
         {
           path: 'deployment-types',
@@ -259,7 +259,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZone.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZoneView.vue'),
         },
         {
           path: 'create-mesh',
@@ -299,7 +299,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/Completed.vue'),
+          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/CompletedView.vue'),
         },
       ],
     },
@@ -354,7 +354,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
      */
     // mode: 'history',
     base: process.env.BASE_URL,
-    routes: routes,
+    routes,
   })
 
   /**

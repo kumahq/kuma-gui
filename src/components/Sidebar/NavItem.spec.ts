@@ -1,7 +1,7 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
-import TestComponent from '@/testUtils/TestComponent.vue'
 import { screen } from '@testing-library/vue'
 import NavItem from './NavItem.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
+import TestComponent from '@/testUtils/TestComponent.vue'
 
 describe('NavItem.vue', () => {
   const routes = [

@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import DataplaneUniversal from './DataplaneUniversal.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('DataplaneUniversal.vue', () => {
   it('passes whole wizzard and render yaml', async () => {

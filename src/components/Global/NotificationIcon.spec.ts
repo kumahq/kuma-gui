@@ -1,6 +1,6 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 import NotificationIcon from './NotificationIcon.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('NotificationIcon.vue', () => {
   it('renders snapshot', async () => {

@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaginationWidget.vue calls buttons 1`] = `
+Object {
+  "next": Array [
+    Array [],
+  ],
+  "previous": Array [
+    Array [],
+  ],
+}
+`;
+
+exports[`PaginationWidget.vue calls buttons 2`] = `
+[MockFunction] {
+  "calls": Array [
+    Array [
+      "pagination-previous-button-clicked",
+    ],
+    Array [
+      "pagination-next-button-clicked",
+    ],
+  ],
+  "results": Array [
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+    Object {
+      "type": "return",
+      "value": undefined,
+    },
+  ],
+}
+`;
+
+exports[`PaginationWidget.vue renders nothing if no next or prev props provided 1`] = `
+<div>
+  <div
+    class="pagination"
+  >
+    <!---->
+     
+    <!---->
+  </div>
+</div>
+`;
+
+exports[`PaginationWidget.vue renders pagination 1`] = `
+<div>
+  <div
+    class="pagination"
+  >
+    <button
+      class="k-button primary"
+      data-v-38fa8ecf=""
+      type="button"
+    >
+      
+    ‹ Previous
+  
+    </button>
+     
+    <button
+      class="k-button primary"
+      data-v-38fa8ecf=""
+      type="button"
+    >
+      
+    Next ›
+  
+    </button>
+  </div>
+</div>
+`;

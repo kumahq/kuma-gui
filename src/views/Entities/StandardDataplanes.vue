@@ -1,6 +1,6 @@
 <template>
   <div class="standard-dataplanes">
-    <Dataplanes
+    <DataplanesView
       :dataplane-api-params="{ gateway: false }"
       empty-state-msg="There are no Standard data plane proxies present."
     />
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Dataplanes from '@/views/Entities/partial/Dataplanes'
+import DataplanesView from '@/views/Entities/partial/DataplanesView.vue'
 
 export default {
   name: 'StandardDataplanes',
@@ -16,7 +16,7 @@ export default {
     title: 'Standard Data plane proxies',
   },
   components: {
-    Dataplanes,
+    DataplanesView,
   },
 }
 </script>

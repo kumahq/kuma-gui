@@ -3,7 +3,7 @@
     class="global-api-status empty-state--wide-content empty-state--compact"
     cta-is-hidden
   >
-    <template v-slot:title>
+    <template #title>
       <KIcon
         class="kong-icon--centered"
         color="var(--yellow-300)"
@@ -13,7 +13,7 @@
       />
       Unable to reach the API
     </template>
-    <template v-slot:message>
+    <template #message>
       <p>
         Please double check to make sure it is up and running
         <span v-if="url">, and it is reachable at <code>{{ url }}</code></span>

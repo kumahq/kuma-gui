@@ -6,7 +6,7 @@
     target="_blank"
     :to="href"
   >
-    <template v-slot:icon>
+    <template #icon>
       <KIcon
         view-box="0 0 14 14"
         icon="externalLink"
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'Documentation',
+  name: 'DocumentationLink',
   props: {
     href: {
       type: String,

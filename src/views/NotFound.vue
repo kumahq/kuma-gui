@@ -3,7 +3,7 @@
     <GlobalHeader />
     <div class="overview">
       <KEmptyState>
-        <template v-slot:title>
+        <template #title>
           <KIcon
             class="kong-icon--centered"
             color="var(--yellow-200)"
@@ -13,10 +13,10 @@
           />
           Page Not Found
         </template>
-        <template v-slot:message>
+        <template #message>
           The page or entity you were looking for does not exist.
         </template>
-        <template v-slot:cta>
+        <template #cta>
           <KButton
             appearance="primary"
             :to="{
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import GlobalHeader from '@/components/Global/Header'
+import GlobalHeader from '@/components/Global/GlobalHeader.vue'
 export default {
   name: 'NotFound',
   components: { GlobalHeader },

@@ -8,7 +8,7 @@
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
-        <template v-slot:general>
+        <template #general>
           <p>
             Welcome to the wizard for creating a new Mesh resource in {{ productName }}.
             We will be providing you with a few steps that will get you started.
@@ -29,7 +29,7 @@
             title="Mesh Information"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment
                 title="Mesh name"
                 for-attr="mesh-name"
@@ -114,7 +114,7 @@
             </template>
           </KCard>
         </template>
-        <template v-slot:logging>
+        <template #logging>
           <h3>
             Setup Logging
           </h3>
@@ -129,7 +129,7 @@
             title="Logging Configuration"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment title="Logging">
                 <label class="k-input-label mx-2">
                   <input
@@ -225,7 +225,7 @@
             </template>
           </KCard>
         </template>
-        <template v-slot:tracing>
+        <template #tracing>
           <h3>
             Setup Tracing
           </h3>
@@ -240,7 +240,7 @@
             title="Tracing Configuration"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment title="Tracing">
                 <label class="k-input-label mx-2">
                   <input
@@ -329,7 +329,7 @@
             </template>
           </KCard>
         </template>
-        <template v-slot:metrics>
+        <template #metrics>
           <h3>
             Setup Metrics
           </h3>
@@ -342,7 +342,7 @@
             title="Metrics Configuration"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment title="Metrics">
                 <label class="k-input-label mx-2">
                   <input
@@ -427,7 +427,7 @@
             </template>
           </KCard>
         </template>
-        <template v-slot:complete>
+        <template #complete>
           <div v-if="codeOutput">
             <div v-if="hideScannerSiblings === false">
               <h3>
@@ -438,13 +438,13 @@
                 please execute the following command in your shell to create the entity.
                 {{ productName }} will automatically detect when the new entity has been created.
               </p>
-              <Tabs
+              <TabsWidget
                 :loaders="false"
                 :tabs="tabs"
                 :initial-tab-override="environment"
                 @onTabChange="onTabChange"
               >
-                <template v-slot:kubernetes>
+                <template #kubernetes>
                   <CodeView
                     title="Kubernetes"
                     copy-button-text="Copy Command to Clipboard"
@@ -452,7 +452,7 @@
                     :content="codeOutput"
                   />
                 </template>
-                <template v-slot:universal>
+                <template #universal>
                   <CodeView
                     title="Universal"
                     copy-button-text="Copy Command to Clipboard"
@@ -460,9 +460,9 @@
                     :content="codeOutput"
                   />
                 </template>
-              </Tabs>
+              </TabsWidget>
             </div>
-            <Scanner
+            <EntityScanner
               :loader-function="scanForEntity"
               :should-start="true"
               :has-error="scanError"
@@ -470,17 +470,17 @@
               @hideSiblings="hideSiblings"
             >
               <!-- loading -->
-              <template v-slot:loading-title>
+              <template #loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
-              <template v-slot:loading-content>
+              <template #loading-content>
                 <p>We are looking for your mesh.</p>
               </template>
               <!-- complete -->
-              <template v-slot:complete-title>
+              <template #complete-title>
                 <h3>Done!</h3>
               </template>
-              <template v-slot:complete-content>
+              <template #complete-content>
                 <p>
                   Your Mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
                 </p>
@@ -494,19 +494,19 @@
                 </p>
               </template>
               <!-- error -->
-              <template v-slot:error-title>
+              <template #error-title>
                 <h3>Mesh not found</h3>
               </template>
-              <template v-slot:error-content>
+              <template #error-content>
                 <p>We were unable to find your mesh.</p>
               </template>
-            </Scanner>
+            </EntityScanner>
           </div>
           <KAlert
             v-else
             appearance="danger"
           >
-            <template v-slot:alertMessage>
+            <template #alertMessage>
               <p>
                 You haven't filled any data out yet! Please return to the first
                 step and fill out your information.
@@ -516,7 +516,7 @@
         </template>
 
         <!-- sidebar content -->
-        <template v-slot:mesh>
+        <template #mesh>
           <h3>Mesh</h3>
           <p>
             In {{ title }}, a Mesh resource allows you to define an isolated environment
@@ -534,7 +534,7 @@
             </a>
           </p>
         </template>
-        <template v-slot:did-you-know>
+        <template #did-you-know>
           <h3>Did You Know?</h3>
           <p>
             As you know, the GUI is read-only, but it will be providing instructions
@@ -552,11 +552,11 @@ import Kuma from '@/services/kuma'
 import { rejectKeys } from '@/views/Wizard/helpers'
 import { kebabCase } from '@/helpers'
 import FormatForCLI from '@/mixins/FormatForCLI'
-import FormFragment from '@/views/Wizard/components/FormFragment'
-import Tabs from '@/components/Utils/Tabs'
-import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
-import CodeView from '@/components/Skeletons/CodeView'
-import Scanner from '@/views/Wizard/components/Scanner'
+import FormFragment from '@/views/Wizard/components/FormFragment.vue'
+import TabsWidget from '@/components/Utils/TabsWidget.vue'
+import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
+import CodeView from '@/components/Skeletons/CodeView.vue'
+import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
 
 // schema for building code output
 import meshSchema from '@/views/Wizard/schemas/Mesh'
@@ -569,10 +569,10 @@ export default {
   },
   components: {
     FormFragment,
-    Tabs,
+    TabsWidget,
     StepSkeleton,
     CodeView,
-    Scanner,
+    EntityScanner,
   },
   mixins: [FormatForCLI],
   data() {

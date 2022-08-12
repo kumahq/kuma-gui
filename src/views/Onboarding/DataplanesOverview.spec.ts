@@ -1,6 +1,6 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 import DataplanesOverview from './DataplanesOverview.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('DataplanesOverview.vue', () => {
   it('renders snapshot', async () => {

@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import MtlsNotification from './MtlsNotification.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('MtlsNotification.vue', () => {
   it('renders snapshot', () => {

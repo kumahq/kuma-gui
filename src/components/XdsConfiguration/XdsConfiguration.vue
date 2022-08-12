@@ -4,14 +4,14 @@
     :is-loading="isLoading"
   >
     <KCard border-variant="noBorder">
-      <template v-slot:body>
+      <template #body>
         <Prism
           id="xds"
           language="json"
           :code="xds"
         />
       </template>
-      <template v-slot:actions>
+      <template #actions>
         <KClipboardProvider
           v-if="xds"
           v-slot="{ copyToClipboard }"
@@ -23,7 +23,7 @@
             >
               Copy config to clipboard
             </KButton>
-            <template v-slot:content>
+            <template #content>
               <div>
                 <p>Config copied to clipboard!</p>
               </div>

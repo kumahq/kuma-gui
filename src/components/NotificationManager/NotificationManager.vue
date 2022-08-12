@@ -8,7 +8,7 @@
       data-testid="notification-info"
       @closed="closeAlert"
     >
-      <template v-slot:alertMessage>
+      <template #alertMessage>
         <div class="mr-4">
           <span class="mr-2">
             <strong>ProTip:</strong>
@@ -28,7 +28,7 @@
       class="modal"
       :is-visible="isOpen"
     >
-      <template v-slot:header-content>
+      <template #header-content>
         <div
           v-if="isAllMeshesView"
           class="flex items-center"
@@ -60,14 +60,14 @@
           </KBadge>
         </div>
       </template>
-      <template v-slot:body-content>
+      <template #body-content>
         <AllMeshesNotifications
           v-if="isAllMeshesView"
           @meshSelected="changeMesh($event)"
         />
         <SingleMeshNotifications v-else />
       </template>
-      <template v-slot:footer-content>
+      <template #footer-content>
         <KButton
           appearance="secondary"
           @click="closeModal"

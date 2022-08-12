@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import LoggingNotification from './LoggingNotification.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('LoggingNotification.vue', () => {
   it('renders snapshot', () => {

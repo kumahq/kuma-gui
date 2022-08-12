@@ -1,6 +1,6 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 import ConfigurationTypes from './ConfigurationTypes.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('ConfigurationTypes.vue', () => {
   it('renders snapshot', () => {

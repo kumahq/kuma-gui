@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import MetricsNotification from './MetricsNotification.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('MetricsNotification.vue', () => {
   it('renders snapshot', () => {

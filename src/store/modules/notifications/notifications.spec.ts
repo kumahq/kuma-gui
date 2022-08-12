@@ -1,5 +1,5 @@
-import setupStore from '@/testUtils/setupStore'
 import notifications from '.'
+import setupStore from '@/testUtils/setupStore'
 
 describe('notifications module', () => {
   describe('getters', () => {

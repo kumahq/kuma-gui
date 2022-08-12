@@ -1,5 +1,5 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import OnboardingHeading from './OnboardingHeading.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('OnboardingHeading.vue', () => {
   it('renders snapshot', () => {

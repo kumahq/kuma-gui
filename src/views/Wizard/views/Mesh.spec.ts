@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event'
 import { screen } from '@testing-library/vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import Mesh from './Mesh.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('Mesh.vue', () => {
   const doStep = async (button: any, target: string | string[]) => {

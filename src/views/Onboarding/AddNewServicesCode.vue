@@ -29,7 +29,7 @@
           title="And follow the instructions in the README"
           border-variant="noBorder"
         >
-          <template v-slot:body>
+          <template #body>
             <a
               target="_blank"
               class="external-link-code-block"
@@ -58,7 +58,7 @@
           v-if="!hasDPPs"
           class="flex justify-center"
         >
-          <Loading />
+          <LoadingBox />
         </div>
       </div>
     </template>
@@ -79,11 +79,11 @@ import json2yaml from '@appscode/json2yaml'
 import Kuma from '@/services/kuma'
 import { PRODUCT_NAME } from '@/consts'
 import { kumaDpServerUrl } from '@/configUrl'
-import Loading from '@/components/Loading'
-import CodeView from '@/components/Skeletons/CodeView'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
-import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
+import LoadingBox from '@/components/LoadingBox.vue'
+import CodeView from '@/components/Skeletons/CodeView.vue'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
+import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
+import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
 
 const LONG_POOLING_INTERVAL = 1000
 
@@ -94,7 +94,7 @@ export default {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
-    Loading,
+    LoadingBox,
   },
   metaInfo() {
     return {

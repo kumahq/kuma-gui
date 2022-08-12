@@ -11,7 +11,7 @@
         v-if="!tableData.data.length"
         class="justify-center flex my-4"
       >
-        <Loading />
+        <LoadingBox />
       </div>
       <div v-else>
         <div class="flex justify-center mt-10 mb-16 pb-16">
@@ -24,7 +24,7 @@
               :options="tableData"
               is-small
             >
-              <template v-slot:status="{ rowValue }">
+              <template #status="{ rowValue }">
                 <div
                   class="entity-status"
                   :class="{ 'is-offline': rowValue.toLowerCase() === 'offline' || rowValue === false }"
@@ -53,10 +53,10 @@
 import { PRODUCT_NAME, OFFLINE } from '@/consts'
 import { getItemStatusFromInsight } from '@/dataplane'
 import Kuma from '@/services/kuma'
-import Loading from '@/components/Loading'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
-import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
+import LoadingBox from '@/components/LoadingBox.vue'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
+import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
+import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
 
 export default {
   name: 'DataplanesOverview',
@@ -64,7 +64,7 @@ export default {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
-    Loading,
+    LoadingBox,
   },
   metaInfo() {
     return {

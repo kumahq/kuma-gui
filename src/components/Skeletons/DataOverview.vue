@@ -54,7 +54,7 @@
           <!-- Custom slots provided by parent -->
           <template
             v-for="slot in customSlots"
-            v-slot:[slot]="{ rowValue, row }"
+            #[slot]="{ rowValue, row }"
           >
             <slot
               :name="slot"
@@ -64,7 +64,7 @@
           </template>
 
           <!-- status -->
-          <template v-slot:status="{ rowValue }">
+          <template #status="{ rowValue }">
             <div
               class="entity-status"
               :class="{
@@ -77,7 +77,7 @@
             </div>
           </template>
           <!-- tags -->
-          <template v-slot:tags="{ rowValue }">
+          <template #tags="{ rowValue }">
             <EntityTag
               v-for="(tag, key) in rowValue"
               :key="key"
@@ -85,7 +85,7 @@
             />
           </template>
           <!--- total Updates --->
-          <template v-slot:totalUpdates="{ row }">
+          <template #totalUpdates="{ row }">
             <span class="entity-total-updates">
               <span>
                 {{ row.totalUpdates }}
@@ -93,7 +93,7 @@
             </span>
           </template>
           <!--- actions --->
-          <template v-slot:actions="{row}">
+          <template #actions="{row}">
             <a
               class="data-table-action-link"
               :class="{ 'is-active': (selectedRow=== row.name) }"
@@ -116,25 +116,29 @@
             </a>
           </template>
           <!--- dp Version --->
-          <template v-slot:dpVersion="{ row, rowValue }">
-            <div :class="{
+          <template #dpVersion="{ row, rowValue }">
+            <div
+              :class="{
                 'with-warnings': row.unsupportedEnvoyVersion || row.unsupportedKumaDPVersion || row.kumaDpAndKumaCpMismatch,
-              }">
+              }"
+            >
               {{ rowValue }}
             </div>
           </template>
           <!--- envoy Version --->
-          <template v-slot:envoyVersion="{ row, rowValue }">
-            <div :class="{
+          <template #envoyVersion="{ row, rowValue }">
+            <div
+              :class="{
                 'with-warnings': row.unsupportedEnvoyVersion,
-              }">
+              }"
+            >
               {{ rowValue }}
             </div>
           </template>
           <!--- warnings --->
           <template
             v-if="showWarnings"
-            v-slot:warnings="{ row }"
+            #warnings="{ row }"
           >
             <KIcon
               v-if="row.withWarnings"
@@ -148,7 +152,7 @@
           </template>
         </KTable>
 
-        <Pagination
+        <PaginationWidget
           :has-previous="pageOffset > 0"
           :has-next="next"
           @next="goToNextPage"
@@ -161,7 +165,7 @@
         v-if="tableDataIsEmpty && tableData"
         cta-is-hidden
       >
-        <template v-slot:title>
+        <template #title>
           <div class="card-icon mb-3">
             <img src="@/assets/images/icon-empty-table.svg?inline">
           </div>
@@ -174,7 +178,7 @@
         </template>
         <template
           v-if="emptyState.message"
-          v-slot:message
+          #message
         >
           {{ emptyState.message }}
         </template>
@@ -194,7 +198,7 @@
       v-if="isLoading"
       cta-is-hidden
     >
-      <template v-slot:title>
+      <template #title>
         <div class="card-icon mb-3">
           <KIcon
             icon="spinner"
@@ -211,7 +215,7 @@
       v-if="hasError"
       cta-is-hidden
     >
-      <template v-slot:title>
+      <template #title>
         <div class="card-icon mb-3">
           <KIcon
             class="kong-icon--centered"
@@ -229,14 +233,15 @@
 
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
+
 import { datadogLogEvents } from '@/datadogEvents'
-import Pagination from '@/components/Pagination'
+import PaginationWidget from '@/components/PaginationWidget.vue'
 import EntityTag from '@/components/EntityTag/EntityTag.vue'
 
 export default {
   name: 'DataOverview',
   components: {
-    Pagination,
+    PaginationWidget,
     EntityTag,
   },
   props: {

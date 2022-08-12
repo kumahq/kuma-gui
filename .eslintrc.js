@@ -16,7 +16,7 @@ module.exports = {
   extends: ['eslint:recommended', 'plugin:vue/recommended', 'standard', '@vue/typescript'],
 
   // required to lint *.vue files
-  plugins: ['vue', 'eslint-plugin-import', '@typescript-eslint', '@typescript-eslint/tslint'],
+  plugins: ['vue', 'import', '@typescript-eslint'],
 
   rules: {
     'arrow-parens': 0,

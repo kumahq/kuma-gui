@@ -8,7 +8,7 @@
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
-        <template v-slot:general>
+        <template #general>
           <h3>
             Create Kubernetes Dataplane
           </h3>
@@ -36,7 +36,7 @@
             class="my-6"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment
                 title="Choose a Mesh"
                 for-attr="dp-mesh"
@@ -78,7 +78,7 @@
             </template>
           </KCard>
         </template>
-        <template v-slot:scope-settings>
+        <template #scope-settings>
           <h3>
             Setup Dataplane Mode
           </h3>
@@ -91,7 +91,7 @@
             class="my-6"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment
                 all-inline
                 equal-cols
@@ -140,7 +140,7 @@
               class="my-6"
               has-shadow
             >
-              <template v-slot:body>
+              <template #body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -225,7 +225,7 @@
               class="my-6"
               has-shadow
             >
-              <template v-slot:body>
+              <template #body>
                 <FormFragment
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
@@ -312,7 +312,7 @@
               class="my-6"
               has-shadow
             >
-              <template v-slot:body>
+              <template #body>
                 <FormFragment
                   title="Namespace"
                   for-attr="k8s-namespace-selection"
@@ -409,7 +409,7 @@
               class="my-6"
               has-shadow
             >
-              <template v-slot:body>
+              <template #body>
                 <FormFragment
                   all-inline
                   equal-cols
@@ -450,7 +450,7 @@
               class="my-6"
               has-shadow
             >
-              <template v-slot:body>
+              <template #body>
                 <FormFragment
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
@@ -494,7 +494,7 @@
               v-if="validate.k8sIngressBrand === 'other-ingress'"
               appearance="info"
             >
-              <template v-slot:alertMessage>
+              <template #alertMessage>
                 <p>
                   Please go ahead and deploy the Ingress first, then restart this
                   wizard and select &quot;Existing Ingress&quot;.
@@ -503,7 +503,7 @@
             </KAlert>
           </div>
         </template>
-        <template v-slot:complete>
+        <template #complete>
           <div v-if="validate.meshName">
             <div v-if="hideScannerSiblings === false">
               <h3>
@@ -513,12 +513,12 @@
                 You can now execute the following commands to automatically inject
                 the sidecar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
-              <Tabs
+              <TabsWidget
                 :loaders="false"
                 :tabs="tabs"
                 initial-tab-override="kubernetes"
               >
-                <template v-slot:kubernetes>
+                <template #kubernetes>
                   <CodeView
                     title="Kubernetes"
                     copy-button-text="Copy Command to Clipboard"
@@ -526,26 +526,26 @@
                     :content="codeOutput"
                   />
                 </template>
-              </Tabs>
+              </TabsWidget>
             </div>
-            <Scanner
+            <EntityScanner
               :loader-function="scanForEntity"
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
               @hideSiblings="hideSiblings"
             >
-              <template v-slot:loading-title>
+              <template #loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
-              <template v-slot:loading-content>
+              <template #loading-content>
                 <p>We are looking for your dataplane.</p>
               </template>
-              <template v-slot:complete-title>
+              <template #complete-title>
                 <h3>Done!</h3>
               </template>
 
-              <template v-slot:complete-content>
+              <template #complete-content>
                 <p>
                   Your Dataplane
                   <strong v-if="validate.k8sNamespaceSelection">
@@ -566,19 +566,19 @@
                   </KButton>
                 </p>
               </template>
-              <template v-slot:error-title>
+              <template #error-title>
                 <h3>Mesh not found</h3>
               </template>
-              <template v-slot:error-content>
+              <template #error-content>
                 <p>We were unable to find your mesh.</p>
               </template>
-            </Scanner>
+            </EntityScanner>
           </div>
           <KAlert
             v-else
             appearance="danger"
           >
-            <template v-slot:alertMessage>
+            <template #alertMessage>
               <p>
                 Please return to the first step and make sure to select an
                 existing Mesh, or create a new one.
@@ -588,7 +588,7 @@
         </template>
 
         <!-- sidebar content -->
-        <template v-slot:dataplane>
+        <template #dataplane>
           <h3>Dataplane</h3>
           <p>
             In {{ title }}, a Dataplane resource represents a data plane proxy running
@@ -597,7 +597,7 @@
             by {{ title }}.
           </p>
         </template>
-        <template v-slot:example>
+        <template #example>
           <h3>Example</h3>
           <p>
             Below is an example of a Dataplane resource output:
@@ -620,9 +620,9 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
-        <template v-slot:switch>
+        <template #switch>
           <!-- wizard switcher -- based on environment -->
-          <Switcher />
+          <EnvironmentSwitcher />
         </template>
       </StepSkeleton>
     </div>
@@ -634,12 +634,12 @@ import { mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { kebabCase } from '@/helpers'
 import FormatForCLI from '@/mixins/FormatForCLI'
-import FormFragment from '@/views/Wizard/components/FormFragment'
-import Tabs from '@/components/Utils/Tabs'
-import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
-import Switcher from '@/views/Wizard/components/Switcher'
-import CodeView from '@/components/Skeletons/CodeView'
-import Scanner from '@/views/Wizard/components/Scanner'
+import FormFragment from '@/views/Wizard/components/FormFragment.vue'
+import TabsWidget from '@/components/Utils/TabsWidget.vue'
+import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
+import EnvironmentSwitcher from '@/views/Wizard/components/EnvironmentSwitcher.vue'
+import CodeView from '@/components/Skeletons/CodeView.vue'
+import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
 
 // schema for building code output (TBD)
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneKubernetes'
@@ -652,11 +652,11 @@ export default {
   },
   components: {
     FormFragment,
-    Tabs,
+    TabsWidget,
     StepSkeleton,
-    Switcher,
+    EnvironmentSwitcher,
     CodeView,
-    Scanner,
+    EntityScanner,
   },
   mixins: [FormatForCLI],
   data() {

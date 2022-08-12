@@ -1,7 +1,7 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import { screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import NotificationManager from './NotificationManager.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('NotificationManager.vue', () => {
   it('renders snapshot with information that there are actions which user may take', () => {

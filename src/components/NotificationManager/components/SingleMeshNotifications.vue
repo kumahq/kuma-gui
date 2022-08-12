@@ -1,10 +1,10 @@
 <template>
-  <Accordion multiple-open>
+  <AccordionList multiple-open>
     <AccordionItem
       v-for="item in singleMeshNotificationItems"
       :key="item.name"
     >
-      <template v-slot:accordion-header>
+      <template #accordion-header>
         <div class="flex items-center">
           <KIcon
             v-if="item.isCompleted"
@@ -25,21 +25,21 @@
         </div>
       </template>
 
-      <template v-slot:accordion-content>
+      <template #accordion-content>
         <component
           :is="item.component"
           v-if="item.component"
         />
         <template v-else>
           <KCard>
-            <template v-slot:body>
+            <template #body>
               {{ item.content }}
             </template>
           </KCard>
         </template>
       </template>
     </AccordionItem>
-  </Accordion>
+  </AccordionList>
 </template>
 
 <script>
@@ -50,13 +50,13 @@ import LoggingNotification from './LoggingNotification.vue'
 import MetricsNotification from './MetricsNotification.vue'
 import MtlsNotification from './MtlsNotification.vue'
 import TracingNotification from './TracingNotification.vue'
-import Accordion from '@/components/Accordion/Accordion'
-import AccordionItem from '@/components/Accordion/AccordionItem'
+import AccordionList from '@/components/Accordion/AccordionList.vue'
+import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 
 export default {
   name: 'SingleMeshNotifications',
   components: {
-    Accordion,
+    AccordionList,
     AccordionItem,
     OnboardingNotification,
     LoggingNotification,

@@ -8,7 +8,7 @@
         :next-disabled="nextDisabled"
       >
         <!-- step content -->
-        <template v-slot:general>
+        <template #general>
           <h3>
             Create Universal Dataplane
           </h3>
@@ -36,7 +36,7 @@
             class="my-6"
             has-shadow
           >
-            <template v-slot:body>
+            <template #body>
               <FormFragment
                 title="Choose a Mesh"
                 for-attr="dp-mesh"
@@ -79,7 +79,7 @@
             </template>
           </KCard>
         </template>
-        <template v-slot:topology>
+        <template #topology>
           <h3>
             Setup Dataplane Mode
           </h3>
@@ -165,7 +165,7 @@
             </div>
           </FormFragment>
         </template>
-        <template v-slot:networking>
+        <template #networking>
           <h3>
             Networking
           </h3>
@@ -269,7 +269,7 @@
           </FormFragment>
         </template>
 
-        <template v-slot:complete>
+        <template #complete>
           <div v-if="validate.meshName">
             <div v-if="hideScannerSiblings === false">
               <h3>
@@ -280,12 +280,12 @@
                 the Dataplane to successfully authenticate itself with the control plane,
                 and then finally install the Dataplane process (powered by Envoy).
               </p>
-              <Tabs
+              <TabsWidget
                 :loaders="false"
                 :tabs="tabs"
                 initial-tab-override="universal"
               >
-                <template v-slot:universal>
+                <template #universal>
                   <CodeView
                     title="Generate Dataplane Token"
                     copy-button-text="Copy Command to Clipboard"
@@ -299,9 +299,9 @@
                     :content="startDpCodeOutput"
                   />
                 </template>
-              </Tabs>
+              </TabsWidget>
             </div>
-            <Scanner
+            <EntityScanner
               :loader-function="scanForEntity"
               :should-start="true"
               :has-error="scanError"
@@ -309,17 +309,17 @@
               @hideSiblings="hideSiblings"
             >
               <!-- loading -->
-              <template v-slot:loading-title>
+              <template #loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
-              <template v-slot:loading-content>
+              <template #loading-content>
                 <p>We are looking for your dataplane.</p>
               </template>
               <!-- complete -->
-              <template v-slot:complete-title>
+              <template #complete-title>
                 <h3>Done!</h3>
               </template>
-              <template v-slot:complete-content>
+              <template #complete-content>
                 <p>
                   Your Dataplane
                   <strong v-if="validate.univDataplaneId">
@@ -341,19 +341,19 @@
                 </p>
               </template>
               <!-- error -->
-              <template v-slot:error-title>
+              <template #error-title>
                 <h3>Dataplane not found</h3>
               </template>
-              <template v-slot:error-content>
+              <template #error-content>
                 <p>We were unable to find your dataplane.</p>
               </template>
-            </Scanner>
+            </EntityScanner>
           </div>
           <KAlert
             v-else
             appearance="danger"
           >
-            <template v-slot:alertMessage>
+            <template #alertMessage>
               <p>
                 Please return to the first step and make sure to select an
                 existing Mesh, or create a new one.
@@ -363,7 +363,7 @@
         </template>
 
         <!-- sidebar content -->
-        <template v-slot:dataplane>
+        <template #dataplane>
           <h3>Dataplane</h3>
           <p>
             In {{ title }}, a Dataplane resource represents a data plane proxy running
@@ -373,7 +373,7 @@
           </p>
         </template>
 
-        <template v-slot:example>
+        <template #example>
           <h3>Example</h3>
           <p>
             Below is an example of a Dataplane resource output:
@@ -391,9 +391,9 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
-        <template v-slot:switch>
+        <template #switch>
           <!-- wizard switcher -- based on environment -->
-          <Switcher />
+          <EnvironmentSwitcher />
         </template>
       </StepSkeleton>
     </div>
@@ -407,13 +407,13 @@ import json2yaml from '@appscode/json2yaml'
 import Kuma from '@/services/kuma'
 import { kumaDpServerUrl } from '@/configUrl'
 import { kebabCase } from '@/helpers'
-import FormFragment from '@/views/Wizard/components/FormFragment'
-import Tabs from '@/components/Utils/Tabs'
-import StepSkeleton from '@/views/Wizard/components/StepSkeleton'
-import Switcher from '@/views/Wizard/components/Switcher'
-import HelperTooltip from '@/views/Wizard/components/HelperTooltip'
-import CodeView from '@/components/Skeletons/CodeView'
-import Scanner from '@/views/Wizard/components/Scanner'
+import FormFragment from '@/views/Wizard/components/FormFragment.vue'
+import TabsWidget from '@/components/Utils/TabsWidget.vue'
+import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
+import EnvironmentSwitcher from '@/views/Wizard/components/EnvironmentSwitcher.vue'
+import HelperTooltip from '@/views/Wizard/components/HelperTooltip.vue'
+import CodeView from '@/components/Skeletons/CodeView.vue'
+import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
 
 // schema for building code output
 import dataplaneSchema from '@/views/Wizard/schemas/DataplaneUniversal'
@@ -426,12 +426,12 @@ export default {
   },
   components: {
     FormFragment,
-    Tabs,
+    TabsWidget,
     StepSkeleton,
-    Switcher,
+    EnvironmentSwitcher,
     HelperTooltip,
     CodeView,
-    Scanner,
+    EntityScanner,
   },
   data() {
     return {

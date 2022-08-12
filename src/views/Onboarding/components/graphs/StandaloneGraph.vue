@@ -121,7 +121,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         The control plane provides the config for all services in the mesh.
       </template>
     </KPop>
@@ -155,7 +155,7 @@
           fill="#4A4622"
         />
       </g>
-      <template v-slot:content>
+      <template #content>
         {{ productName }} attaches a data plane proxy sidecar to each service in your mesh.
         This sidecar handles the mesh configuration for the service.
       </template>

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import GlobalHeader from '@/components/Global/Header'
+import GlobalHeader from '@/components/Global/GlobalHeader.vue'
 export default {
   name: 'ShellWithHeader',
   components: {

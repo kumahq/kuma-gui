@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
-import { server } from '@/jest-setup'
 import PolicyConnections from './PolicyConnections.vue'
+import { server } from '@/jest-setup'
 
 describe('PolicyConnections.vue', () => {
   it('renders snapshot', async () => {

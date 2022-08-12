@@ -88,7 +88,7 @@
         />
 
       </g>
-      <template v-slot:content>
+      <template #content>
         You can store the YAML config files for {{ productName }} in memory to skip the complexity of setting up a reliable datastore. For testing only. Not for production.
       </template>
     </KPop>
@@ -123,7 +123,7 @@
         />
 
       </g>
-      <template v-slot:content>
+      <template #content>
         Since everything is stored in-memory, if {{ productName }} restarts the configuration will be lost. This mode is only recommended in development/testing mode.
       </template>
     </KPop>

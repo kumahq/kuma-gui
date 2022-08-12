@@ -20,7 +20,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
-import GlobalHeader from '@/components/Global/Header'
+import GlobalHeader from '@/components/Global/GlobalHeader.vue'
 
 import KLoader from '@/components/KLoader'
 import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage'

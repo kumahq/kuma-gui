@@ -1,7 +1,7 @@
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import userEvent from '@testing-library/user-event'
 import { screen } from '@testing-library/vue'
 import DeploymentTypes from './DeploymentTypes.vue'
+import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('DeploymentTypes.vue', () => {
   it('renders snapshot', () => {
