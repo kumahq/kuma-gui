@@ -15,7 +15,7 @@
             class="relative d-inline-block"
           >
             <KBadge
-              class="cursor-pointer transform hover:scale-110"
+              class="cursor-pointer hover:scale-110"
               @click.native="meshSelected(name)"
             >
               {{ name }}

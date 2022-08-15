@@ -185,6 +185,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 .svg {
   --path1: path('M1444 893h252');
   --path2: path('M1529 705h232M1452 603h237');
@@ -374,10 +376,10 @@ export default {
           @for $i from 1 through 26 {
             &:nth-of-type(#{$i}) {
               &:before {
-                animation-delay: #{($i/-16)*$baseSpeed}s;
+                animation-delay: #{math.div($i, -16)*$baseSpeed}s;
               }
-              transition-delay: #{(($i/18) + 2)*$baseSpeed}s, #{(($i/18) + 2)*$baseSpeed}s, calc(#{(($i/18) + 1.85)*$baseSpeed}s + var(--duration)),
-                #{(($i/18) + 2)*$baseSpeed}s;
+              transition-delay: #{(math.div($i, 18) + 2)*$baseSpeed}s, #{(math.div($i, 18) + 2)*$baseSpeed}s, calc(#{(math.div($i, 18) + 1.85)*$baseSpeed}s + var(--duration)),
+                #{(math.div($i, 18) + 2)*$baseSpeed}s;
               filter: hue-rotate(0deg) brightness(1) blur(0px);
               offset-distance: var(--end);
               opacity: 0;
@@ -393,8 +395,6 @@ export default {
       filter: hue-rotate(0deg) brightness(1) blur(0px);
       @for $i from 1 through 20 {
         &:nth-of-type(#{$i}) {
-          /*transition: #{(2 - $i/30)*$baseSpeed}s ease-in-out, stroke-dashoffset #{(2 - $i/30)*$baseSpeed}s ease-in-out;*/
-          /*transition-delay: #{($i/3)*$baseSpeed}s, #{(($i/3) + 0.125)*$baseSpeed}s;*/
           &.final {
             opacity: 1;
             transition: #{0.75*$baseSpeed}s ease-in-out, stroke-dashoffset #{1.5*$baseSpeed}s ease-in-out;

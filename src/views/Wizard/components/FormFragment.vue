@@ -60,6 +60,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+
 $padding: 16px;
 $first-col-width: 30%;
 $last-col-flex: 1 0 0;
@@ -69,7 +71,7 @@ $last-col-flex: 1 0 0;
 }
 
 .form-line {
-  margin: #{$padding / 2} -#{$padding};
+  margin: #{math.div($padding, 2)} - #{$padding};
 
   .code-sample {
     font-family: var(--font-family-mono);

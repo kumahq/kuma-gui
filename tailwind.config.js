@@ -1,5 +1,7 @@
-module.exports = {
-  purge: ['./src/**/*.vue'],
+/** @typedef {import('tailwindcss').Config} Config */
+
+/** @type {Config} */ const config = {
+  content: ['./src/**/*.vue'],
   theme: {
     container: {
       center: true,
@@ -15,7 +17,7 @@ module.exports = {
         104: '26rem',
         112: '28rem',
       },
-      minHeight: theme => ({
+      minHeight: ({ theme }) => ({
         ...theme('spacing'),
       }),
       cursor: {
@@ -23,8 +25,6 @@ module.exports = {
       },
     },
   },
-  future: {
-    removeDeprecatedGapUtilities: true,
-    purgeLayersByDefault: true,
-  },
 }
+
+module.exports = config
