@@ -8,6 +8,7 @@ describe('tableDataUtils', () => {
     params = {
       getSingleEntity: jest.fn().mockResolvedValue({}),
       getAllEntities: jest.fn().mockResolvedValue({}),
+      getAllEntitiesFromPath: jest.fn().mockResolvedValue({}),
       getAllEntitiesFromMesh: jest.fn().mockResolvedValue({}),
       mesh: 'all',
       query: null,

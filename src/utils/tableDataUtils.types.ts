@@ -3,7 +3,10 @@ export interface TableDataParams {
     options: { mesh?: string | null, path?: string, name?: string | null },
     params: { size: number, offset: string | null },
   ) => any
-  getAllEntities: (
+  getAllEntities?: (
+    params: { size: number, offset: string | null }
+  ) => any
+  getAllEntitiesFromPath?: (
     options: { path?: string },
     params: { size: number, offset: string | null }
   ) => any
