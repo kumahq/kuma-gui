@@ -167,14 +167,19 @@ export default {
       this.isLoading = true
 
       try {
-        const { items, total } = await Kuma.getDataplanePolicies({
+        const { items, total, kind } = await Kuma.getDataplanePolicies({
           mesh: this.mesh,
           dppName: this.dppName,
         })
 
-        this.processItems(items)
-        this.hasItems = total > 0
-        this.items = items
+        // TODO: https://github.com/kumahq/kuma-gui/issues/351
+        // Stops processing responses from the dataplane policies endpoint that are in a new format
+        // because this code isn’t able to correctly process mesh gateway dataplanes.
+        if (kind === undefined || kind === 'SidecarDataplane') {
+          this.processItems(items)
+          this.items = items
+          this.hasItems = total > 0
+        }
       } catch (e) {
         console.error(e)
         this.hasError = true
