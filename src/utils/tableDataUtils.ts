@@ -16,6 +16,7 @@ const getItems = (response: { total: number; items: TableItem[] }): TableItem[] 
 function getAPICallFunction({
   getSingleEntity,
   getAllEntities,
+  getAllEntitiesFromPath,
   getAllEntitiesFromMesh,
   path,
   mesh,
@@ -34,8 +35,14 @@ function getAPICallFunction({
     return getSingleEntity({ mesh, path, name: query }, params)
   }
 
-  if (!mesh || mesh === 'all') {
-    return getAllEntities({ path }, params)
+  const isAllEntities = !mesh || mesh === 'all'
+
+  if (getAllEntities && isAllEntities) {
+    return getAllEntities(params)
+  }
+
+  if (getAllEntitiesFromPath && isAllEntities) {
+    return getAllEntitiesFromPath({ path }, params)
   }
 
   if (getAllEntitiesFromMesh && mesh) {
@@ -48,6 +55,7 @@ function getAPICallFunction({
 export async function getTableData({
   getSingleEntity,
   getAllEntities,
+  getAllEntitiesFromPath,
   getAllEntitiesFromMesh,
   path,
   mesh,
@@ -59,6 +67,7 @@ export async function getTableData({
   const response = await getAPICallFunction({
     getSingleEntity,
     getAllEntities,
+    getAllEntitiesFromPath,
     getAllEntitiesFromMesh,
     path,
     mesh,

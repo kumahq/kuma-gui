@@ -243,7 +243,7 @@ export default {
       try {
         const { data, next } = await getTableData({
           getSingleEntity: Kuma.getSinglePolicyEntity.bind(Kuma),
-          getAllEntities: Kuma.getAllPolicyEntities.bind(Kuma),
+          getAllEntitiesFromPath: Kuma.getAllPolicyEntities.bind(Kuma),
           getAllEntitiesFromMesh: Kuma.getAllPolicyEntitiesFromMesh.bind(Kuma),
           path,
           mesh,
