@@ -4,862 +4,919 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
 <div>
   <div>
     <div>
-      <div
+      <section
+        aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         class="kong-card noBorder"
-        data-v-0029352b=""
+        data-v-3bb7bf60=""
       >
         <!---->
         <!---->
         <div
-          class="k-card-body"
-          data-v-0029352b=""
+          class="k-card-content d-flex"
+          data-v-3bb7bf60=""
         >
-          <ul
-            class="accordion"
-            data-v-0029352b=""
+          <div
+            class="k-card-body"
+            data-v-3bb7bf60=""
+            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
-            <li
-              class="relative border-b py-2 active"
+            <ul
+              class="accordion"
+              data-v-3bb7bf60=""
             >
-              <button
-                aria-expanded="true"
-                class="accordion-item-header"
+              <li
+                class="relative border-b py-2 active"
               >
-                <div
-                  class="flex items-center justify-between"
+                <button
+                  aria-expanded="true"
+                  class="accordion-item-header"
                 >
-                  <div>
-                    <!---->
-                     
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <!---->
+                       
+                      <p
+                        class="text-lg"
+                      >
+                        
                   web
                 
-                    </p>
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     inbound 192.168.0.1:80:81
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on incoming connection on address
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   FaultInjection
                 
-                    </div>
-                    <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
-                    >
-                      
+                      </div>
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   TrafficPermission
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <div
-                  class="px-4"
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
                 >
                   <div
-                    class="policy-wrapper"
+                    class="px-4"
                   >
                     <div
-                      class="policy-item"
+                      class="policy-wrapper"
                     >
-                      <h4
-                        class="policy-type"
+                      <div
+                        class="policy-item"
                       >
-                        
+                        <h4
+                          class="policy-type"
+                        >
+                          
                   Fault Injections
                 
-                      </h4>
-                       
-                      <ul>
-                        <li
-                          class="my-1"
-                          data-testid="policy-name"
-                        >
-                          <a
-                            class=""
-                            href="#/?ns=fi1.kuma-system"
+                        </h4>
+                         
+                        <ul>
+                          <li
+                            class="my-1"
+                            data-testid="policy-name"
                           >
-                            
+                            <a
+                              class=""
+                              href="#/?ns=fi1.kuma-system"
+                            >
+                              
                       fi1.kuma-system
                     
-                          </a>
-                        </li>
-                        <li
-                          class="my-1"
-                          data-testid="policy-name"
-                        >
-                          <a
-                            class=""
-                            href="#/?ns=web-to-backend.kuma-system"
+                            </a>
+                          </li>
+                          <li
+                            class="my-1"
+                            data-testid="policy-name"
                           >
-                            
+                            <a
+                              class=""
+                              href="#/?ns=web-to-backend.kuma-system"
+                            >
+                              
                       web-to-backend.kuma-system
                     
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div
-                      class="policy-item"
-                    >
-                      <h4
-                        class="policy-type"
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div
+                        class="policy-item"
                       >
-                        
+                        <h4
+                          class="policy-type"
+                        >
+                          
                   Traffic Permissions
                 
-                      </h4>
-                       
-                      <ul>
-                        <li
-                          class="my-1"
-                          data-testid="policy-name"
-                        >
-                          <a
-                            class=""
-                            href="#/?ns=tp-1"
+                        </h4>
+                         
+                        <ul>
+                          <li
+                            class="my-1"
+                            data-testid="policy-name"
                           >
-                            
+                            <a
+                              class=""
+                              href="#/?ns=tp-1"
+                            >
+                              
                       tp-1
                     
-                          </a>
-                        </li>
-                      </ul>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </transition-stub>
-            </li>
-            <li
-              class="relative border-b py-2"
-            >
-              <button
-                class="accordion-item-header"
+                </transition-stub>
+              </li>
+              <li
+                class="relative border-b py-2"
               >
-                <div
-                  class="flex items-center justify-between"
+                <button
+                  class="accordion-item-header"
                 >
-                  <div>
-                    <!---->
-                     
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <!---->
+                       
+                      <p
+                        class="text-lg"
+                      >
+                        
                   backend
                 
-                    </p>
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     outbound 192.168.0.2:8080
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on outgoing connection to the address
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   Timeout
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
-              </transition-stub>
-            </li>
-            <li
-              class="relative border-b py-2"
-            >
-              <button
-                class="accordion-item-header"
-              >
-                <div
-                  class="flex items-center justify-between"
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
                 >
-                  <div>
-                    <!---->
-                     
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <!---->
+                </transition-stub>
+              </li>
+              <li
+                class="relative border-b py-2"
+              >
+                <button
+                  class="accordion-item-header"
+                >
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <!---->
+                       
+                      <p
+                        class="text-lg"
+                      >
+                        
                   gateway
                 
-                    </p>
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     service
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on outgoing connections to service
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   HealthCheck
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
-              </transition-stub>
-            </li>
-            <li
-              class="relative border-b py-2"
-            >
-              <button
-                class="accordion-item-header"
-              >
-                <div
-                  class="flex items-center justify-between"
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
                 >
-                  <div>
-                    <!---->
-                     
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <!---->
+                </transition-stub>
+              </li>
+              <li
+                class="relative border-b py-2"
+              >
+                <button
+                  class="accordion-item-header"
+                >
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <!---->
+                       
+                      <p
+                        class="text-lg"
+                      >
+                        
                   postgres
                 
-                    </p>
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     service
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on outgoing connections to service
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   HealthCheck
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
-              </transition-stub>
-            </li>
-            <li
-              class="relative border-b py-2"
-            >
-              <button
-                class="accordion-item-header"
-              >
-                <div
-                  class="flex items-center justify-between"
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
                 >
-                  <div>
-                    <!---->
-                     
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <!---->
+                </transition-stub>
+              </li>
+              <li
+                class="relative border-b py-2"
+              >
+                <button
+                  class="accordion-item-header"
+                >
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <!---->
+                       
+                      <p
+                        class="text-lg"
+                      >
+                        
                   redis
                 
-                    </p>
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     service
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on outgoing connections to service
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   HealthCheck
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
-              </transition-stub>
-            </li>
-            <li
-              class="relative border-b py-2"
-            >
-              <button
-                class="accordion-item-header"
-              >
-                <div
-                  class="flex items-center justify-between"
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
                 >
-                  <div>
-                    <!---->
-                     
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <!---->
+                </transition-stub>
+              </li>
+              <li
+                class="relative border-b py-2"
+              >
+                <button
+                  class="accordion-item-header"
+                >
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <!---->
+                       
+                      <p
+                        class="text-lg"
+                      >
+                        
                   web-api
                 
-                    </p>
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     service
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on outgoing connections to service
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   HealthCheck
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
-              </transition-stub>
-            </li>
-            <li
-              class="relative border-b py-2"
-            >
-              <button
-                class="accordion-item-header"
-              >
-                <div
-                  class="flex items-center justify-between"
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
                 >
-                  <div>
-                    <p
-                      class="text-lg"
-                    >
-                      
+                  <!---->
+                </transition-stub>
+              </li>
+              <li
+                class="relative border-b py-2"
+              >
+                <button
+                  class="accordion-item-header"
+                >
+                  <div
+                    class="flex items-center justify-between"
+                  >
+                    <div>
+                      <p
+                        class="text-lg"
+                      >
+                        
                   Dataplane
                 
-                    </p>
-                     
-                    <!---->
-                     
-                    <p
-                      class="subtitle"
-                    >
-                      <span>
-                        
+                      </p>
+                       
+                      <!---->
+                       
+                      <p
+                        class="subtitle"
+                      >
+                        <span>
+                          
                     dataplane
                   
-                      </span>
-                       
-                      <div
-                        data-v-3cb990b6=""
-                      >
-                        <svg
-                          class="kong-icon ml-1 kong-icon-help"
-                          data-v-3cb990b6=""
-                          data-v-a7c9c1d2=""
-                          height="12"
-                          role="img"
-                          viewBox="0 0 16 16"
-                          width="12"
+                        </span>
+                         
+                        <div
+                          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          data-v-6b00e241=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="button"
                         >
-                          <title
-                            data-v-a7c9c1d2=""
+                          <span
+                            class="kong-icon ml-1 kong-icon-help"
+                            data-v-429cf642=""
+                            data-v-6b00e241=""
                           >
-                            help
-                          </title>
-                          <g
-                            data-v-a7c9c1d2=""
-                          >
-                            <path
-                              d="M0 8c0 2.1217.842855 4.1566 2.34315 5.6569C3.84344 15.1571 5.87827 16 8 16c2.1217 0 4.1566-.8429 5.6569-2.3431C15.1571 12.1566 16 10.1217 16 8c0-2.12173-.8429-4.15656-2.3431-5.65685C12.1566.842855 10.1217 0 8 0 5.87827 0 3.84344.842855 2.34315 2.34315.842855 3.84344 0 5.87827 0 8"
-                              data-v-a7c9c1d2=""
-                              fill="#A3BBCC"
-                            />
-                            <path
-                              d="M7.0645 10.0342c0-.63807.0774-1.14617.2324-1.52447.1549-.3782.4375-.7496.8476-1.11422.4147-.36914.6905-.66764.8272-.89551.1367-.23242.2051-.47624.2051-.73144 0-.77019-.3555-1.15528-1.0665-1.15528-.3372 0-.6083.10482-.8134.31446-.2005.20507-.30537.48991-.31448.85449H5c.00911-.87044.28939-1.55176.84082-2.04395C6.39681 3.2461 7.1533 3 8.1103 3c.9662 0 1.7159.2347 2.2491.7041.5332.46485.7998 1.12338.7998 1.97559 0 .38737-.0866.75423-.2598 1.10059-.1732.34179-.4762.72233-.9092 1.14155l-.5537.5264c-.3463.3327-.5446.7223-.5947 1.169l-.0273.41697h-1.75zm-.19829 2.0986c0-.3054.10254-.556.30759-.752.2097-.2005.4763-.3007.7998-.3007.3236 0 .5879.1002.793.3007.2096.196.3145.4466.3145.752 0 .3008-.1026.5491-.3077.7451-.2005.196-.4671.2939-.7998.2939-.3327 0-.6015-.0979-.8066-.2939-.20053-.196-.30079-.4443-.30079-.7451z"
-                              data-v-a7c9c1d2=""
-                              fill="#fff"
-                            />
-                          </g>
-                        </svg>
-                        <transition-stub
-                          data-v-3cb990b6=""
-                          name="fade"
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 300px; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-3cb990b6=""
+                            <svg
+                              fill="none"
+                              height="16"
+                              role="img"
+                              viewBox="0 0 24 24"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <div>
-                                
+                              
+  
+                              <title>
+                                Help
+                              </title>
+                              
+  
+                              <path
+                                d="M12 2a10.01 10.01 0 0 1 0 20 10 10 0 0 1 0-20Zm-.18 12h.79c.23 0 .35-.1.4-.32.05-.21.1-.42.18-.62.15-.32.43-.5.72-.68 1.18-.74 1.87-1.75 1.7-3.2-.12-.91-.55-1.61-1.32-2.1a4.98 4.98 0 0 0-3.91-.3c-1.07.4-1.72 1.13-1.8 2.31-.01.21.1.37.32.38.52.01 1.04.03 1.57.03.25 0 .42-.14.5-.38.14-.51.51-.72 1.01-.77.57-.04 1.08.3 1.2.8.2.75.03 1.42-.56 1.94-.35.31-.73.58-1.1.87-.49.4-.83.9-.87 1.56-.02.31.1.48.42.48h.75Zm-.02 1.56h-.67c-.3 0-.52.22-.52.53v.8c0 .35.22.57.56.57h1.27c.32 0 .53-.2.55-.53a8.8 8.8 0 0 0 0-.85c-.02-.33-.23-.52-.57-.53h-.62Z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <transition-stub
+                            data-v-6b00e241=""
+                            name="fade"
+                          >
+                            <div
+                              class="k-popover"
+                              data-v-6b00e241=""
+                              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                              role="region"
+                              style="width: 300px; max-width: 350px; max-height: auto; display: none;"
+                            >
+                              <!---->
+                              <div
+                                class="k-popover-content"
+                                data-v-6b00e241=""
+                              >
+                                <div>
+                                  
                         Policies applied on all incoming and outgoing connections to the selected data plane proxy
                       
+                                </div>
                               </div>
+                              <!---->
                             </div>
-                          </div>
-                        </transition-stub>
-                      </div>
-                    </p>
-                  </div>
-                   
-                  <div
-                    class="flex flex-wrap justify-end"
-                  >
+                          </transition-stub>
+                        </div>
+                      </p>
+                    </div>
+                     
                     <div
-                      class="k-badge truncate mr-2 mb-2 kbadge-default"
-                      data-v-07ccd633=""
+                      class="flex flex-wrap justify-end"
                     >
-                      
+                      <div
+                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
+                        data-v-48308bb7=""
+                      >
+                        
                   TrafficTrace
                 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
-              </transition-stub>
-            </li>
-          </ul>
+                </button>
+                 
+                <transition-stub
+                  name="accordion"
+                >
+                  <!---->
+                </transition-stub>
+              </li>
+            </ul>
+          </div>
+          <!---->
         </div>
-      </div>
+      </section>
     </div>
      
     <!---->

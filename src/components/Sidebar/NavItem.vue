@@ -23,7 +23,6 @@
             v-if="hasIcon && icon"
             width="18"
             height="18"
-            view-box="0 0 18 18"
             color="var(--SidebarIconColor)"
             :icon="icon"
           />

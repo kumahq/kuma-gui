@@ -46,55 +46,65 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               <div
                 class="code-view-content"
               >
-                <div
+                <section
+                  aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  aria-label="Clone the GitHub repository for the demo application:"
                   class="kong-card noBorder"
-                  data-v-0029352b=""
+                  data-v-3bb7bf60=""
                 >
                   <div
-                    class="k-card-header mb-4"
-                    data-v-0029352b=""
+                    class="k-card-header d-flex mb-3"
+                    data-v-3bb7bf60=""
                   >
+                    <!---->
                     <div
-                      class="k-card-title"
-                      data-v-0029352b=""
+                      class="k-card-title mb-3"
+                      data-v-3bb7bf60=""
                     >
                       <h4
-                        data-v-0029352b=""
+                        data-v-3bb7bf60=""
                       >
                         Clone the GitHub repository for the demo application:
                       </h4>
                     </div>
                     <div
                       class="k-card-actions"
-                      data-v-0029352b=""
+                      data-v-3bb7bf60=""
                     >
                       <div
-                        data-v-0029352b=""
-                        data-v-3cb990b6=""
+                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        data-v-3bb7bf60=""
+                        data-v-6b00e241=""
+                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        role="button"
                       >
                         <button
-                          class="k-button primary"
-                          data-v-38fa8ecf=""
-                          data-v-3cb990b6=""
+                          class="k-button medium rounded primary"
+                          data-v-6ae23500=""
+                          data-v-6b00e241=""
                           type="button"
                         >
+                          <!---->
                           
               Copy Command to Clipboard
             
+                          <!---->
                         </button>
                         <transition-stub
-                          data-v-3cb990b6=""
+                          data-v-6b00e241=""
                           name="fade"
                         >
                           <div
                             class="k-popover"
-                            data-v-3cb990b6=""
-                            style="width: 200px; display: none;"
+                            data-v-6b00e241=""
+                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                            role="region"
+                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                           >
                             <!---->
                             <div
                               class="k-popover-content"
-                              data-v-3cb990b6=""
+                              data-v-6b00e241=""
                             >
                               <div>
                                 <p>
@@ -102,6 +112,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                                 </p>
                               </div>
                             </div>
+                            <!---->
                           </div>
                         </transition-stub>
                       </div>
@@ -109,19 +120,26 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   </div>
                   <!---->
                   <div
-                    class="k-card-body"
-                    data-v-0029352b=""
+                    class="k-card-content d-flex"
+                    data-v-3bb7bf60=""
                   >
-                    <pre
-                      class="code-block"
-                      data-v-0029352b=""
+                    <div
+                      class="k-card-body"
+                      data-v-3bb7bf60=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     >
-                      <code
-                        class="language-bash"
-                      />
-                    </pre>
+                      <pre
+                        class="code-block"
+                        data-v-3bb7bf60=""
+                      >
+                        <code
+                          class="language-bash"
+                        />
+                      </pre>
+                    </div>
+                    <!---->
                   </div>
-                </div>
+                </section>
               </div>
                
               <div>
@@ -133,46 +151,56 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               </div>
             </div>
              
-            <div
+            <section
+              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              aria-label="And follow the instructions in the README"
               class="kong-card noBorder"
-              data-v-0029352b=""
+              data-v-3bb7bf60=""
             >
               <div
-                class="k-card-header mb-4"
-                data-v-0029352b=""
+                class="k-card-header d-flex mb-3"
+                data-v-3bb7bf60=""
               >
+                <!---->
                 <div
-                  class="k-card-title"
-                  data-v-0029352b=""
+                  class="k-card-title mb-3"
+                  data-v-3bb7bf60=""
                 >
                   <h4
-                    data-v-0029352b=""
+                    data-v-3bb7bf60=""
                   >
                     And follow the instructions in the README
                   </h4>
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-0029352b=""
+                  data-v-3bb7bf60=""
                 />
               </div>
               <!---->
               <div
-                class="k-card-body"
-                data-v-0029352b=""
+                class="k-card-content d-flex"
+                data-v-3bb7bf60=""
               >
-                <a
-                  class="external-link-code-block"
-                  data-v-0029352b=""
-                  href="https://github.com/kumahq/kuma-counter-demo/blob/master/README.md"
-                  target="_blank"
+                <div
+                  class="k-card-body"
+                  data-v-3bb7bf60=""
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
-                  
+                  <a
+                    class="external-link-code-block"
+                    data-v-3bb7bf60=""
+                    href="https://github.com/kumahq/kuma-counter-demo/blob/master/README.md"
+                    target="_blank"
+                  >
+                    
             https://github.com/kumahq/kuma-counter-demo/blob/master/README.md
           
-                </a>
+                  </a>
+                </div>
+                <!---->
               </div>
-            </div>
+            </section>
           </div>
            
           <div>
@@ -217,25 +245,29 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
+          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
+          data-v-6ae23500=""
           href="#/"
           type="button"
         >
+          <!---->
           
     Back
   
+          <!---->
         </a>
          
         <div>
           <button
-            class="k-button skip-button small btn-link"
-            data-v-38fa8ecf=""
+            class="k-button skip-button small rounded btn-link"
+            data-v-6ae23500=""
             type="button"
           >
+            <!---->
             
       Skip Setup
     
+            <!---->
           </button>
            
           <span
@@ -243,15 +275,17 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
           >
             <a
               aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-              data-v-38fa8ecf=""
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+              data-v-6ae23500=""
               disabled="disabled"
               href="#/"
               type="button"
             >
+              <!---->
               
         Next
       
+              <!---->
             </a>
           </span>
         </div>

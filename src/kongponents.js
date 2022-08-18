@@ -8,7 +8,7 @@ import KButton from '@kongponents/kbutton'
 import KCard from '@kongponents/kcard'
 import KEmptyState from '@kongponents/kemptystate'
 import KIcon from '@kongponents/kicon'
-import KTable from '@kongponents/ktable'
+import KTableLegacy from '@kongponents/ktablelegacy'
 import KClipboardProvider from '@kongponents/kclipboardprovider'
 import Krumbs from '@kongponents/krumbs'
 import KRadio from '@kongponents/kradio'
@@ -23,7 +23,7 @@ Vue.component('KCard', KCard)
 Vue.component('KEmptyState', KEmptyState)
 Vue.component('KIcon', KIcon)
 Vue.component('KModal', KModal)
-Vue.component('KTable', KTable)
+Vue.component('KTableLegacy', KTableLegacy)
 Vue.component('KClipboardProvider', KClipboardProvider)
 Vue.component('KKrumbs', Krumbs)
 Vue.component('KPop', KPop)

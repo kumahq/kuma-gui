@@ -6,25 +6,29 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
     class="mt-4 flex items-center flex-col sm:flex-row justify-between"
   >
     <a
-      class="k-button navigation-button navigation-button--back primary"
-      data-v-38fa8ecf=""
+      class="k-button navigation-button navigation-button--back medium rounded primary"
+      data-v-6ae23500=""
       href="#/foo"
       type="button"
     >
+      <!---->
       
     Back
   
+      <!---->
     </a>
      
     <div>
       <button
-        class="k-button skip-button small btn-link"
-        data-v-38fa8ecf=""
+        class="k-button skip-button small rounded btn-link"
+        data-v-6ae23500=""
         type="button"
       >
+        <!---->
         
       Skip Setup
     
+        <!---->
       </button>
        
       <span
@@ -32,14 +36,16 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
+          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+          data-v-6ae23500=""
           href="#/"
           type="button"
         >
+          <!---->
           
         Next
       
+          <!---->
         </a>
       </span>
     </div>

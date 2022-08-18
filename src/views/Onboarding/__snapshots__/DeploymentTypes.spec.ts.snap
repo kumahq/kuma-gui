@@ -155,20 +155,23 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
               />
                
               <g
-                data-v-3cb990b6=""
+                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                data-v-6b00e241=""
+                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                role="button"
               >
                 <g
                   class="cursor-help animate-pulse"
-                  data-v-3cb990b6=""
+                  data-v-6b00e241=""
                 >
                   <g
-                    data-v-3cb990b6=""
+                    data-v-6b00e241=""
                     filter="url(#filter3_d_159_853)"
                   >
                     <circle
                       cx="542"
                       cy="56"
-                      data-v-3cb990b6=""
+                      data-v-6b00e241=""
                       fill="url(#paint0_linear_159_853)"
                       r="27"
                     />
@@ -176,7 +179,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     <circle
                       cx="542"
                       cy="56"
-                      data-v-3cb990b6=""
+                      data-v-6b00e241=""
                       r="25"
                       stroke="white"
                       stroke-width="4"
@@ -185,56 +188,67 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                    
                   <path
                     d="M539.761 60.5791C539.761 59.0296 539.949 57.7956 540.325 56.877C540.701 55.9583 541.388 55.0563 542.384 54.1709C543.391 53.2744 544.061 52.5495 544.393 51.9961C544.725 51.4316 544.891 50.8395 544.891 50.2197C544.891 48.3493 544.027 47.4141 542.301 47.4141C541.482 47.4141 540.823 47.6686 540.325 48.1777C539.838 48.6758 539.584 49.3675 539.562 50.2529H534.747C534.769 48.139 535.45 46.4844 536.789 45.2891C538.139 44.0938 539.977 43.4961 542.301 43.4961C544.647 43.4961 546.468 44.0661 547.763 45.2061C549.058 46.335 549.705 47.9342 549.705 50.0039C549.705 50.9447 549.495 51.8356 549.074 52.6768C548.654 53.5068 547.918 54.431 546.866 55.4492L545.521 56.7275C544.68 57.5355 544.199 58.4818 544.077 59.5664L544.011 60.5791H539.761ZM539.279 65.6758C539.279 64.9342 539.528 64.3255 540.026 63.8496C540.535 63.3626 541.183 63.1191 541.969 63.1191C542.755 63.1191 543.396 63.3626 543.895 63.8496C544.404 64.3255 544.658 64.9342 544.658 65.6758C544.658 66.4062 544.409 67.0094 543.911 67.4854C543.424 67.9613 542.777 68.1992 541.969 68.1992C541.161 68.1992 540.508 67.9613 540.01 67.4854C539.523 67.0094 539.279 66.4062 539.279 65.6758Z"
-                    data-v-3cb990b6=""
+                    data-v-6b00e241=""
                     fill="#4A4622"
                   />
                 </g>
                 <div
-                  data-v-3cb990b6=""
-                  name="fade"
+                  data-v-6b00e241=""
                 >
                   <foreignobject
-                    data-v-3cb990b6=""
+                    data-v-6b00e241=""
                   >
                     <div
                       class="k-popover"
-                      data-v-3cb990b6=""
-                      style="width: 200px; display: none;"
+                      data-v-6b00e241=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="region"
+                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
-                        class="k-popover-title"
-                        data-v-3cb990b6=""
+                        class="k-popover-header d-flex"
+                        data-v-6b00e241=""
                       >
-                        Kuma
+                        <div
+                          class="k-popover-title"
+                          data-v-6b00e241=""
+                        >
+                          Kuma
+                        </div>
+                        <!---->
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-3cb990b6=""
+                        data-v-6b00e241=""
                       >
                         
       The control plane provides the config for all services in the mesh.
     
                       </div>
+                      <!---->
                     </div>
                   </foreignobject>
                 </div>
               </g>
                
               <g
-                data-v-3cb990b6=""
+                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                data-v-6b00e241=""
+                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                role="button"
               >
                 <g
                   class="cursor-help animate-pulse"
-                  data-v-3cb990b6=""
+                  data-v-6b00e241=""
                 >
                   <g
-                    data-v-3cb990b6=""
+                    data-v-6b00e241=""
                     filter="url(#filter4_d_159_853)"
                   >
                     <circle
                       cx="636"
                       cy="230"
-                      data-v-3cb990b6=""
+                      data-v-6b00e241=""
                       fill="url(#paint1_linear_159_853)"
                       r="27"
                     />
@@ -242,7 +256,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     <circle
                       cx="636"
                       cy="230"
-                      data-v-3cb990b6=""
+                      data-v-6b00e241=""
                       r="25"
                       stroke="white"
                       stroke-width="4"
@@ -251,37 +265,45 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                    
                   <path
                     d="M633.761 234.579C633.761 233.03 633.949 231.796 634.325 230.877C634.701 229.958 635.388 229.056 636.384 228.171C637.391 227.274 638.061 226.549 638.393 225.996C638.725 225.432 638.891 224.839 638.891 224.22C638.891 222.349 638.027 221.414 636.301 221.414C635.482 221.414 634.823 221.669 634.325 222.178C633.838 222.676 633.584 223.367 633.562 224.253H628.747C628.769 222.139 629.45 220.484 630.789 219.289C632.139 218.094 633.977 217.496 636.301 217.496C638.647 217.496 640.468 218.066 641.763 219.206C643.058 220.335 643.705 221.934 643.705 224.004C643.705 224.945 643.495 225.836 643.074 226.677C642.654 227.507 641.918 228.431 640.866 229.449L639.521 230.727C638.68 231.535 638.199 232.482 638.077 233.566L638.011 234.579H633.761ZM633.279 239.676C633.279 238.934 633.528 238.325 634.026 237.85C634.535 237.363 635.183 237.119 635.969 237.119C636.755 237.119 637.396 237.363 637.895 237.85C638.404 238.325 638.658 238.934 638.658 239.676C638.658 240.406 638.409 241.009 637.911 241.485C637.424 241.961 636.777 242.199 635.969 242.199C635.161 242.199 634.508 241.961 634.01 241.485C633.523 241.009 633.279 240.406 633.279 239.676Z"
-                    data-v-3cb990b6=""
+                    data-v-6b00e241=""
                     fill="#4A4622"
                   />
                 </g>
                 <div
-                  data-v-3cb990b6=""
-                  name="fade"
+                  data-v-6b00e241=""
                 >
                   <foreignobject
-                    data-v-3cb990b6=""
+                    data-v-6b00e241=""
                   >
                     <div
                       class="k-popover"
-                      data-v-3cb990b6=""
-                      style="width: 200px; display: none;"
+                      data-v-6b00e241=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="region"
+                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
-                        class="k-popover-title"
-                        data-v-3cb990b6=""
+                        class="k-popover-header d-flex"
+                        data-v-6b00e241=""
                       >
-                        Data Plane Proxy (DPP)
+                        <div
+                          class="k-popover-title"
+                          data-v-6b00e241=""
+                        >
+                          Data Plane Proxy (DPP)
+                        </div>
+                        <!---->
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-3cb990b6=""
+                        data-v-6b00e241=""
                       >
                         
       Kuma attaches a data plane proxy sidecar to each service in your mesh.
       This sidecar handles the mesh configuration for the service.
     
                       </div>
+                      <!---->
                     </div>
                   </foreignobject>
                 </div>
@@ -671,45 +693,33 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
             class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto"
           >
             <label
-              class="k-radio d-inline-block"
-              data-v-b7148f78=""
-              name="mode"
+              class="k-radio"
+              data-v-44ad7c2a=""
             >
               <input
-                class="k-input float-left"
-                data-v-b7148f78=""
+                class="k-input"
+                data-v-44ad7c2a=""
                 name="mode"
                 type="radio"
               />
-              <span
-                class="float-left"
-                data-v-b7148f78=""
-              >
-                
+              
         Standalone deployment
       
-              </span>
             </label>
              
             <label
-              class="k-radio d-inline-block"
-              data-v-b7148f78=""
-              name="mode"
+              class="k-radio"
+              data-v-44ad7c2a=""
             >
               <input
-                class="k-input float-left"
-                data-v-b7148f78=""
+                class="k-input"
+                data-v-44ad7c2a=""
                 name="mode"
                 type="radio"
               />
-              <span
-                class="float-left"
-                data-v-b7148f78=""
-              >
-                
+              
         Multi-zone deployment
       
-              </span>
             </label>
           </div>
         </div>
@@ -720,25 +730,29 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
       >
         <a
           aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active primary"
-          data-v-38fa8ecf=""
+          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
+          data-v-6ae23500=""
           href="#/"
           type="button"
         >
+          <!---->
           
     Back
   
+          <!---->
         </a>
          
         <div>
           <button
-            class="k-button skip-button small btn-link"
-            data-v-38fa8ecf=""
+            class="k-button skip-button small rounded btn-link"
+            data-v-6ae23500=""
             type="button"
           >
+            <!---->
             
       Skip Setup
     
+            <!---->
           </button>
            
           <span
@@ -746,14 +760,16 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
           >
             <a
               aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active primary"
-              data-v-38fa8ecf=""
+              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
+              data-v-6ae23500=""
               href="#/"
               type="button"
             >
+              <!---->
               
         Next
       
+              <!---->
             </a>
           </span>
         </div>

@@ -177,6 +177,7 @@ export default {
     a {
       color: #000 !important;
       text-decoration: none;
+      font-weight: 400;
     }
   }
 

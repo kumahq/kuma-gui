@@ -6,7 +6,7 @@
     <KAlert
       appearance="success"
       class="dismissible"
-      is-dismissible
+      dismiss-type="icon"
       @closed="closeAlert"
     >
       <template #alertMessage>

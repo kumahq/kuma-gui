@@ -1,16 +1,13 @@
 <template>
   <KButton
     class="docs-link"
-    appearance="secondary"
+    appearance="outline"
     size="small"
     target="_blank"
     :to="href"
   >
     <template #icon>
-      <KIcon
-        view-box="0 0 14 14"
-        icon="externalLink"
-      />
+      <KIcon icon="externalLink" />
     </template>
     Documentation
   </KButton>

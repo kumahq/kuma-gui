@@ -3,15 +3,12 @@
     <KClipboardProvider v-slot="{ copyToClipboard }">
       <KPop placement="bottom">
         <KButton
-          appearance="secondary"
+          appearance="outline"
           size="small"
           @click="() => { copyToClipboard(shareUrl) }"
         >
           <template #icon>
-            <KIcon
-              view-box="0 0 16 16"
-              icon="externalLink"
-            />
+            <KIcon icon="externalLink" />
           </template>
           {{ copyButtonText }}
         </KButton>

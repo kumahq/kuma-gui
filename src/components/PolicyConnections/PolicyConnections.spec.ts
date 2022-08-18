@@ -49,7 +49,7 @@ describe('PolicyConnections.vue', () => {
       routes: [{ name: 'dataplanes', path: '/' }],
     })
 
-    expect(screen.getByText('spinner')).toBeInTheDocument()
+    expect(screen.getByTestId('label-list-loading-section')).toBeInTheDocument()
   })
 
   it('renders error', async () => {

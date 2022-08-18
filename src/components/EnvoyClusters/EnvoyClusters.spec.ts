@@ -39,7 +39,7 @@ describe('EnvoyClusters.vue', () => {
       routes: [],
     })
 
-    expect(screen.getByText('spinner')).toBeInTheDocument()
+    expect(screen.getByTestId('status-info-loading-section')).toBeInTheDocument()
   })
 
   it('renders error', async () => {

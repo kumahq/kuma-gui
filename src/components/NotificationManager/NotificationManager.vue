@@ -4,7 +4,7 @@
       v-if="shouldRenderAlert"
       class="mb-4"
       appearance="info"
-      is-dismissible
+      dismiss-type="icon"
       data-testid="notification-info"
       @closed="closeAlert"
     >
@@ -15,7 +15,7 @@
             You might want to adjust your {{ isAllMeshesView ? 'meshes' : 'mesh' }} configuration
           </span>
           <KButton
-            appearance="outline-primary"
+            appearance="outline"
             @click="openModal"
           >
             Check your {{ isAllMeshesView ? 'meshes' : 'mesh' }}!
@@ -27,6 +27,8 @@
     <KModal
       class="modal"
       :is-visible="isOpen"
+      title="Notifications"
+      text-align="left"
     >
       <template #header-content>
         <div
@@ -41,23 +43,25 @@
           /> Notifications
         </div>
         <div v-else>
-          <span v-if="hasAnyAction">
-            Some of these features are not enabled for
-            <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
-            mesh. Consider implementing them.
+          <div>
+            <span v-if="hasAnyAction">
+              Some of these features are not enabled for
+              <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
+              mesh. Consider implementing them.
 
-          </span>
-          <span v-else> Looks like
-            <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
-            isn't missing any features. Well done!
-          </span>
-          <KBadge
-            class="cursor-pointer"
-            role="button"
-            @click.native="changeMesh('all')"
+            </span>
+            <span v-else> Looks like
+              <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
+              isn't missing any features. Well done!
+            </span>
+          </div>
+          <KButton
+            class="mt-4"
+            appearance="outline"
+            @click="changeMesh('all')"
           >
             &lsaquo; Back to all
-          </KBadge>
+          </KButton>
         </div>
       </template>
       <template #body-content>
@@ -69,7 +73,7 @@
       </template>
       <template #footer-content>
         <KButton
-          appearance="secondary"
+          appearance="outline"
           @click="closeModal"
         >
           Close

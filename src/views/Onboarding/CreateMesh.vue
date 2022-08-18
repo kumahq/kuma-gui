@@ -10,7 +10,7 @@
 
       <div class="flex justify-center mt-10 mb-12 pb-12">
         <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
-          <KTable
+          <KTableLegacy
             :options="tableData"
             is-small
           />

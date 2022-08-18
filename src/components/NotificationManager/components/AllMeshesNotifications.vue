@@ -8,14 +8,14 @@
         <p>
           Check the following meshes for suggestions to adjust the configuration
         </p>
-        <div class="pt-4">
+        <div class="pt-4 flex space-x-4">
           <span
             v-for="(value, name) in meshNotificationItemMapWithAction"
             :key="name"
-            class="relative"
+            class="relative d-inline-block"
           >
             <KBadge
-              class="ml-2 cursor-pointer transform hover:scale-110"
+              class="cursor-pointer transform hover:scale-110"
               @click.native="meshSelected(name)"
             >
               {{ name }}

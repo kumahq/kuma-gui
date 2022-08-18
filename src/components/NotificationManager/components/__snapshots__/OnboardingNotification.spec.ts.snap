@@ -6,83 +6,104 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
     class="onboarding-check"
   >
     <div
-      class="k-alert dismissible success"
-      data-v-14c8a976=""
+      class="k-alert dismissible success icon"
+      data-v-825647a6=""
       role="alert"
     >
-      <button
-        aria-label="Close"
-        class="close"
-        data-v-14c8a976=""
-        type="button"
-      >
-        <svg
-          class="kong-icon kong-icon-close"
-          data-v-14c8a976=""
-          data-v-7d3d19ac=""
-          height="12"
-          role="img"
-          viewBox="0 0 12 12"
-          width="12"
-        >
-          <title
-            data-v-7d3d19ac=""
-          >
-            close
-          </title>
-          <g
-            data-v-7d3d19ac=""
-          >
-            <path
-              d="M0 1l1-1h.5L6 4.49993896 10.5 0h.5l1 1v.5L7.5 6l4.5 4.5v.5l-1 1h-.5L6 7.5 1.5 12H1l-1-1v-.5L4.5 6 0 1.5z"
-              data-v-7d3d19ac=""
-              fill="#000"
-              fill-opacity=".25"
-              fill-rule="evenodd"
-            />
-          </g>
-        </svg>
-      </button>
       <!---->
-      <span
-        data-v-14c8a976=""
+      <!---->
+      <div
+        class="k-alert-msg-text"
+        data-v-825647a6=""
       >
+        <!---->
         <div
-          class="alert-content"
-          data-v-14c8a976=""
+          class="k-alert-msg"
+          data-v-825647a6=""
         >
           <div
-            data-v-14c8a976=""
+            class="alert-content"
+            data-v-825647a6=""
           >
-            <strong
-              data-v-14c8a976=""
+            <div
+              data-v-825647a6=""
             >
-              Welcome to Kuma!
-            </strong>
-             We've detected that you don't have
+              <strong
+                data-v-825647a6=""
+              >
+                Welcome to Kuma!
+              </strong>
+               We've detected that you don't have
           any data plane proxies running yet. We've created an onboarding process to
           help you!
         
-          </div>
-           
-          <div
-            data-v-14c8a976=""
-          >
-            <a
-              aria-current="page"
-              class="k-button action-button router-link-exact-active router-link-active small primary"
-              data-v-14c8a976=""
-              data-v-38fa8ecf=""
-              href="#/"
-              type="button"
+            </div>
+             
+            <div
+              data-v-825647a6=""
             >
-              
+              <a
+                aria-current="page"
+                class="k-button action-button router-link-exact-active router-link-active small rounded primary"
+                data-v-6ae23500=""
+                data-v-825647a6=""
+                href="#/"
+                type="button"
+              >
+                <!---->
+                
             Get Started
           
-            </a>
+                <!---->
+              </a>
+            </div>
           </div>
         </div>
-      </span>
+        <!---->
+      </div>
+      <button
+        aria-label="Close"
+        class="close"
+        data-v-825647a6=""
+        type="button"
+      >
+        <span
+          class="kong-icon kong-icon-close success"
+          data-v-419e27ea=""
+          data-v-825647a6=""
+        >
+          <svg
+            fill="none"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            
+  
+            <title>
+              Close
+            </title>
+            
+  
+            <path
+              d="M16 4 3 17m13 0L3 4"
+              stroke="#A3BBCC"
+              stroke-linecap="round"
+              stroke-width="2"
+            />
+            
+
+          </svg>
+          
+
+        </span>
+      </button>
+      <div
+        class="k-alert-action success"
+        data-v-825647a6=""
+      >
+        <!---->
+        <!---->
+      </div>
     </div>
   </div>
 </div>

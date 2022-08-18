@@ -52,23 +52,27 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     class="pagination"
   >
     <button
-      class="k-button primary"
-      data-v-38fa8ecf=""
+      class="k-button medium rounded primary"
+      data-v-6ae23500=""
       type="button"
     >
+      <!---->
       
     ‹ Previous
   
+      <!---->
     </button>
      
     <button
-      class="k-button primary"
-      data-v-38fa8ecf=""
+      class="k-button medium rounded primary"
+      data-v-6ae23500=""
       type="button"
     >
+      <!---->
       
     Next ›
   
+      <!---->
     </button>
   </div>
 </div>
