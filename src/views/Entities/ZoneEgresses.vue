@@ -1,106 +1,108 @@
 <template>
   <div class="zoneegresses">
-    <DataOverview
-      :page-size="pageSize"
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :empty-state="empty_state"
-      :table-data="tableData"
-      :table-data-is-empty="isEmpty"
-      :next="next"
-      @tableAction="tableAction"
-      @loadData="loadData($event)"
-    >
-      <template #additionalControls>
-        <KButton
-          v-if="$route.query.ns"
-          class="back-button"
-          appearance="primary"
-          size="small"
-          :to="{
-            name: 'zoneegresses'
-          }"
-        >
-          <span class="custom-control-icon">
-            &larr;
-          </span>
-          View All
-        </KButton>
-      </template>
-    </DataOverview>
-    <TabsWidget
-      v-if="isEmpty === false"
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :tabs="tabs"
-      initial-tab-override="overview"
-    >
-      <template #tabHeader>
-        <div>
-          <h3> Zone Egress: {{ entity.name }}</h3>
-        </div>
-        <div>
-          <EntityURLControl :name="entity.name" />
-        </div>
-      </template>
-      <template #overview>
-        <LabelList>
+    <FrameSkeleton>
+      <DataOverview
+        :page-size="pageSize"
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :empty-state="empty_state"
+        :table-data="tableData"
+        :table-data-is-empty="isEmpty"
+        :next="next"
+        @tableAction="tableAction"
+        @loadData="loadData($event)"
+      >
+        <template #additionalControls>
+          <KButton
+            v-if="$route.query.ns"
+            class="back-button"
+            appearance="primary"
+            size="small"
+            :to="{
+              name: 'zoneegresses'
+            }"
+          >
+            <span class="custom-control-icon">
+              &larr;
+            </span>
+            View All
+          </KButton>
+        </template>
+      </DataOverview>
+      <TabsWidget
+        v-if="isEmpty === false"
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :tabs="tabs"
+        initial-tab-override="overview"
+      >
+        <template #tabHeader>
           <div>
-            <ul>
-              <li
-                v-for="(value, key) in entity"
-                :key="key"
-              >
-                <h4 v-if="value">
-                  {{ key }}
-                </h4>
-                <p>
-                  {{ value }}
-                </p>
-              </li>
-            </ul>
+            <h3> Zone Egress: {{ entity.name }}</h3>
           </div>
-        </LabelList>
-      </template>
-      <template #insights>
-        <KCard border-variant="noBorder">
-          <template #body>
-            <AccordionList :initially-open="0">
-              <AccordionItem
-                v-for="(value, key) in subscriptionsReversed"
-                :key="key"
-              >
-                <template #accordion-header>
-                  <SubscriptionHeader :details="value" />
-                </template>
+          <div>
+            <EntityURLControl :name="entity.name" />
+          </div>
+        </template>
+        <template #overview>
+          <LabelList>
+            <div>
+              <ul>
+                <li
+                  v-for="(value, key) in entity"
+                  :key="key"
+                >
+                  <h4 v-if="value">
+                    {{ key }}
+                  </h4>
+                  <p>
+                    {{ value }}
+                  </p>
+                </li>
+              </ul>
+            </div>
+          </LabelList>
+        </template>
+        <template #insights>
+          <KCard border-variant="noBorder">
+            <template #body>
+              <AccordionList :initially-open="0">
+                <AccordionItem
+                  v-for="(value, key) in subscriptionsReversed"
+                  :key="key"
+                >
+                  <template #accordion-header>
+                    <SubscriptionHeader :details="value" />
+                  </template>
 
-                <template #accordion-content>
-                  <SubscriptionDetails
-                    :details="value"
-                    is-discovery-subscription
-                  />
-                </template>
-              </AccordionItem>
-            </AccordionList>
-          </template>
-        </KCard>
-      </template>
-      <template #xds-configuration>
-        <XdsConfiguration
-          :zone-egress-name="entity.name"
-        />
-      </template>
-      <template #envoy-stats>
-        <EnvoyStats
-          :zone-egress-name="entity.name"
-        />
-      </template>
-      <template #envoy-clusters>
-        <EnvoyClusters
-          :zone-egress-name="entity.name"
-        />
-      </template>
-    </TabsWidget>
+                  <template #accordion-content>
+                    <SubscriptionDetails
+                      :details="value"
+                      is-discovery-subscription
+                    />
+                  </template>
+                </AccordionItem>
+              </AccordionList>
+            </template>
+          </KCard>
+        </template>
+        <template #xds-configuration>
+          <XdsConfiguration
+            :zone-egress-name="entity.name"
+          />
+        </template>
+        <template #envoy-stats>
+          <EnvoyStats
+            :zone-egress-name="entity.name"
+          />
+        </template>
+        <template #envoy-clusters>
+          <EnvoyClusters
+            :zone-egress-name="entity.name"
+          />
+        </template>
+      </TabsWidget>
+    </FrameSkeleton>
   </div>
 </template>
 
@@ -114,6 +116,7 @@ import { getSome } from '@/helpers'
 import Kuma from '@/services/kuma'
 import DataOverview from '@/components/Skeletons/DataOverview'
 import EntityURLControl from '@/components/Utils/EntityURLControl'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import LabelList from '@/components/Utils/LabelList'
 import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
@@ -132,6 +135,7 @@ export default {
   components: {
     EnvoyClusters,
     EnvoyStats,
+    FrameSkeleton,
     DataOverview,
     TabsWidget,
     LabelList,
