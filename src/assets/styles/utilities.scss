@@ -67,12 +67,6 @@
 
 /* New for Kuma */
 
-.k-button {
-  font-weight: normal !important;
-  display: flex;
-  align-items: center;
-}
-
 .capitalize {
   display: inline-block;
   text-transform: capitalize;
@@ -166,7 +160,7 @@ code.inline {
 }
 
 code.block {
-  @apply block my-4 rounded-md overflow-auto p-4 text-sm;
+  @apply my-4 rounded-md overflow-auto p-4 text-sm;
 
   background-color: var(--gray-1);
   border: 1px solid var(--gray-4);

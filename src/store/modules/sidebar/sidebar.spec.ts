@@ -20,9 +20,9 @@ describe('sidebar module', () => {
             },
             "mesh": Object {
               "dataplanes": Object {
-                "gateway": 8,
-                "standard": 8,
-                "total": 16,
+                "gateway": 1,
+                "standard": 7,
+                "total": 8,
               },
               "policies": Object {
                 "CircuitBreaker": 2,

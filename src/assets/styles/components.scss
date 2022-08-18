@@ -199,6 +199,11 @@
   --KBadgePaddingX: var(--spacing-sm);
 }
 
+// Make sure buttons don’t have duplicate outlines
+.k-button.outline {
+  outline: none;
+}
+
 // Centers icons inside buttons vertically
 .k-button .kong-icon {
   display: flex;

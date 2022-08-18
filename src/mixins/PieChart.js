@@ -1,7 +1,8 @@
 // TODO: Typescript
 
-import * as am4core from '@amcharts/amcharts4/core'
-import * as am4charts from '@amcharts/amcharts4/charts'
+import { createFromConfig } from '@amcharts/amcharts4/core'
+import { PieChart } from '@amcharts/amcharts4/charts'
+
 import { applyPropsToObject } from '@/helpers'
 
 const TitleLabelClassName = 'DonutChart--titleLabel'
@@ -368,7 +369,7 @@ export default {
       }
     },
     createChart() {
-      this.chart = am4core.createFromConfig(this.defaultConfig, this.$refs.chart, am4charts.PieChart)
+      this.chart = createFromConfig(this.defaultConfig, this.$refs.chart, PieChart)
 
       if (this.saveChart) {
         window.chart = this.chart

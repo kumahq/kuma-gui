@@ -1,15 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueMeta from 'vue-meta'
-import axios from 'axios'
-import { datadogLogs } from '@datadog/browser-logs'
-import * as am4core from '@amcharts/amcharts4/core'
+import { addLicense, useTheme } from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import App from '@/App.vue'
 import Router, { getPolicyRoutes } from '@/router'
 import Store from '@/store'
-import Kuma from '@/services/kuma'
 
 /** amCharts */
 
@@ -44,7 +41,7 @@ Vue.use(VueMeta)
 
 Vue.config.productionTip = false
 
-am4core.useTheme(am4themesAnimated)
+useTheme(am4themesAnimated)
 
 /**
  * APP SETUP
@@ -69,5 +66,5 @@ async function VUE_APP() {
 VUE_APP()
 
 if (process.env.VUE_APP_AMCHARTS_LICENSE) {
-  am4core.addLicense(process.env.VUE_APP_AMCHARTS_LICENSE)
+  addLicense(process.env.VUE_APP_AMCHARTS_LICENSE)
 }

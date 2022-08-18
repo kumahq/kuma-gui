@@ -98,7 +98,7 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
                     class="relative d-inline-block"
                   >
                     <div
-                      class="k-badge truncate cursor-pointer transform hover:scale-110 kbadge-default kbadge-rounded"
+                      class="k-badge truncate cursor-pointer hover:scale-110 kbadge-default kbadge-rounded"
                       data-v-48308bb7=""
                     >
                       

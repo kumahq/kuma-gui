@@ -264,32 +264,6 @@ export default {
   }
 }
 
-@responsive {
-  .h-200p {
-    height: 200px;
-  }
-
-  .h-400p {
-    height: 400px;
-  }
-
-  .h-540p {
-    height: 540px;
-  }
-
-  .flex-1 {
-    flex: 1 1 0;
-  }
-
-  .flex-1\/2 {
-    flex: 1 1 50%;
-  }
-
-  .flex-1\/3 {
-    flex: 1 1 33%;
-  }
-}
-
 // v-deep is a deep selector which is equivalent of ">>>" as sass loader is not
 //  able to properly parse ">>>"
 // ref:
