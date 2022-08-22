@@ -10,8 +10,10 @@
 
       <div class="flex justify-center mt-10 mb-12 pb-12">
         <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
-          <KTableLegacy
-            :options="tableData"
+          <KTable
+            :fetcher="() => tableData"
+            :headers="tableHeaders"
+            disable-pagination
             is-small
           />
         </div>
@@ -54,12 +56,13 @@ export default {
   data() {
     return {
       productName: PRODUCT_NAME,
+      tableHeaders: [
+        { label: 'Name', key: 'name' },
+        { label: 'Services', key: 'servicesAmount' },
+        { label: 'DPPs', key: 'dppsAmount' },
+      ],
       tableData: {
-        headers: [
-          { label: 'Name', key: 'name' },
-          { label: 'Services', key: 'servicesAmount' },
-          { label: 'DPPs', key: 'dppsAmount' },
-        ],
+        total: 1,
         data: [{ name: 'default', servicesAmount: 0, dppsAmount: 0 }],
       },
     }

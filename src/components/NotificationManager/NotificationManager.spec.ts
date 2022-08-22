@@ -1,15 +1,48 @@
-import { screen } from '@testing-library/vue'
+import { createStore } from 'vuex'
+import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+import { KAlert, KBadge, KButton, KCard, KIcon, KModal } from '@kong/kongponents'
+
 import NotificationManager from './NotificationManager.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
+import notificationsModule from '@/store/modules/notifications/notifications'
+
+function renderComponent({ meshes, selectedMesh = 'all' }: { meshes: any, selectedMesh?: string }) {
+  const store = createStore({
+    modules: {
+      onboarding: {
+        namespaced: true,
+        getters: {
+          showOnboarding: () => false,
+        },
+      },
+      notifications: notificationsModule as any,
+    },
+    state: {
+      meshes,
+      selectedMesh,
+    },
+  })
+
+  return render(NotificationManager, {
+    global: {
+      plugins: [store],
+      components: {
+        KAlert,
+        KBadge,
+        KButton,
+        KCard,
+        KIcon,
+        KModal,
+      }
+    },
+  })
+}
 
 describe('NotificationManager.vue', () => {
   it('renders snapshot with information that there are actions which user may take', () => {
-    const { container } = renderWithVuex(NotificationManager, {
-      store: {
-        state: {
-          meshes: { items: [{ logging: {}, tracing: {}, metrics: {} }] },
-        },
+    const { container } = renderComponent({
+      meshes: {
+        items: [{ logging: {}, tracing: {}, metrics: {} }],
       },
     })
 
@@ -17,11 +50,9 @@ describe('NotificationManager.vue', () => {
   })
 
   it("doesn't render notification info ", () => {
-    renderWithVuex(NotificationManager, {
-      store: {
-        state: {
-          meshes: { items: [{ mtls: {}, logging: {}, tracing: {}, metrics: {} }] },
-        },
+    renderComponent({
+      meshes: {
+        items: [],
       },
     })
 
@@ -29,11 +60,9 @@ describe('NotificationManager.vue', () => {
   })
 
   it("doesn't render notification info after it's closed", async () => {
-    renderWithVuex(NotificationManager, {
-      store: {
-        state: {
-          meshes: { items: [{}] },
-        },
+    renderComponent({
+      meshes: {
+        items: [{}],
       },
     })
 
@@ -43,31 +72,28 @@ describe('NotificationManager.vue', () => {
   })
 
   it('renders all meshes notification modal', async () => {
-    renderWithVuex(NotificationManager, {
-      store: {
-        state: {
-          meshes: { items: [{ name: 'test-mesh' }] },
-        },
+    renderComponent({
+      meshes: {
+        items: [{ name: 'test-mesh' }],
       },
+      selectedMesh: 'all',
     })
 
     await userEvent.click(screen.getByText(/Check your meshes!/))
 
-    expect(screen.getByRole('dialog')).toMatchSnapshot()
+    expect(screen.queryByRole('dialog')).toMatchSnapshot()
   })
 
   it('renders single mesh notification modal', async () => {
-    renderWithVuex(NotificationManager, {
-      store: {
-        state: {
-          selectedMesh: 'test-mesh',
-          meshes: { items: [{ name: 'test-mesh' }] },
-        },
+    renderComponent({
+      meshes: {
+        items: [{ name: 'test-mesh' }],
       },
+      selectedMesh: 'test-mesh',
     })
 
     await userEvent.click(screen.getByText(/Check your mesh!/))
 
-    expect(screen.getByRole('dialog')).toMatchSnapshot()
+    expect(screen.queryByRole('dialog')).toMatchSnapshot()
   })
 })

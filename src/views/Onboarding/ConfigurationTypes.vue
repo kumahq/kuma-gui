@@ -7,25 +7,25 @@
       <div class="h-full w-full flex items-center justify-center mb-10">
         <component :is="currentGraph" />
       </div>
-      <div class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto">
+      <div class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto configuration-type-radio-buttons">
         <KRadio
           v-model="mode"
           name="deployment"
-          value="kubernetes"
+          selected-value="kubernetes"
         >
           Kubernetes
         </KRadio>
         <KRadio
           v-model="mode"
           name="deployment"
-          value="postgres"
+          selected-value="postgres"
         >
           Postgres
         </KRadio>
         <KRadio
           v-model="mode"
           name="deployment"
-          value="memory"
+          selected-value="memory"
         >
           Memory
         </KRadio>
@@ -94,3 +94,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.configuration-type-radio-buttons {
+  --KRadioPrimary: var(--OnboardingRadio);
+  color: var(--OnboardingRadio);
+}
+
+.configuration-type-radio-buttons .k-radio {
+  cursor: pointer;
+}
+</style>

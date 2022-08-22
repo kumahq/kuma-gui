@@ -6,8 +6,8 @@ exports[`NotificationIcon.vue renders snapshot 1`] = `
     class="relative cursor-pointer"
   >
     <span
-      class="kong-icon ml-1 kong-icon-notificationBell"
-      data-v-429cf642=""
+      class="ml-1 kong-icon-notificationBell kong-icon"
+      data-v-637de6fa=""
     >
       <svg
         fill="none"
@@ -31,8 +31,7 @@ exports[`NotificationIcon.vue renders snapshot 1`] = `
       
 
     </span>
-     
-    <!---->
+    <!--v-if-->
   </div>
 </div>
 `;

@@ -43,6 +43,7 @@
           <div>
             <h3> Zone Ingress: {{ entity.name }}</h3>
           </div>
+
           <div>
             <EntityURLControl :name="entity.name" />
           </div>
@@ -153,9 +154,6 @@ export default {
     XdsConfiguration
   },
 
-  metaInfo: {
-    title: 'ZoneIngresses',
-  },
   data() {
     return {
       isLoading: true,

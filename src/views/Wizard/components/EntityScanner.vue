@@ -95,6 +95,9 @@ export default {
       default: false,
     },
   },
+
+  emits: ['hideSiblings'],
+
   data() {
     return {
       i: 0,
@@ -116,7 +119,7 @@ export default {
       this.runScanner()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.intervalId)
   },
   methods: {

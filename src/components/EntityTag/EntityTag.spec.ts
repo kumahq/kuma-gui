@@ -1,4 +1,5 @@
 import { render } from '@testing-library/vue'
+
 import EntityTag from './EntityTag.vue'
 
 describe('EntityTag.vue', () => {

@@ -268,7 +268,7 @@ export default {
 //  able to properly parse ">>>"
 // ref:
 //  https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors
-::v-deep .pie-chart-label {
+:deep(.pie-chart-label) {
   @apply tracking-widest uppercase;
 }
 </style>

@@ -108,8 +108,8 @@
             "online": 2
           },
           "ca-1": {
-            "total": 4,
-            "online": 4
+            "total": 0,
+            "online": 0
           }
         },
         "supportedBackends": {

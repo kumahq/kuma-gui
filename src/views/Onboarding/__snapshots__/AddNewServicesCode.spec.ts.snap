@@ -9,36 +9,31 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
       <div
         class="onboarding-container__header"
       >
+        
         <div
           class="relative"
         >
           <h1
             class="onboarding-title"
           >
-            
-    Add services
-  
+            Add services
           </h1>
-           
-          <!---->
+          <!--v-if-->
         </div>
+        
       </div>
-       
       <div
         class="onboarding-container__content"
       >
         <div
           class="w-full"
         >
+          
           <p
             class="text-center mb-12"
           >
-            
-      The demo application includes two services: a Redis backend to store a counter value,
-      and a frontend web UI to show and increment the counter.
-    
+             The demo application includes two services: a Redis backend to store a counter value, and a frontend web UI to show and increment the counter. 
           </p>
-           
           <div>
             <div
               class="code-view"
@@ -49,54 +44,60 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 <section
                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   aria-label="Clone the GitHub repository for the demo application:"
-                  class="kong-card noBorder"
-                  data-v-3bb7bf60=""
+                  class="noBorder kong-card"
+                  data-v-5adb63fa=""
                 >
                   <div
                     class="k-card-header d-flex mb-3"
-                    data-v-3bb7bf60=""
+                    data-v-5adb63fa=""
                   >
                     <!---->
                     <div
                       class="k-card-title mb-3"
-                      data-v-3bb7bf60=""
+                      data-v-5adb63fa=""
                     >
                       <h4
-                        data-v-3bb7bf60=""
+                        data-v-5adb63fa=""
                       >
+                        
                         Clone the GitHub repository for the demo application:
+                        
                       </h4>
                     </div>
                     <div
                       class="k-card-actions"
-                      data-v-3bb7bf60=""
+                      data-v-5adb63fa=""
                     >
+                      
+                      
                       <div
                         aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                        data-v-3bb7bf60=""
-                        data-v-6b00e241=""
+                        aria-expanded="false"
+                        data-v-9bbde9b2=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                         role="button"
                       >
+                        
                         <button
-                          class="k-button medium rounded primary"
-                          data-v-6ae23500=""
-                          data-v-6b00e241=""
+                          class="medium rounded primary k-button"
+                          data-v-29036f3a=""
                           type="button"
                         >
+                          
                           <!---->
                           
-              Copy Command to Clipboard
-            
+                          
+                          Copy Command to Clipboard
+                          
                           <!---->
                         </button>
+                        
                         <transition-stub
-                          data-v-6b00e241=""
-                          name="fade"
+                          data-v-9bbde9b2=""
                         >
                           <div
                             class="k-popover"
-                            data-v-6b00e241=""
+                            data-v-9bbde9b2=""
                             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                             role="region"
                             style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -104,112 +105,118 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                             <!---->
                             <div
                               class="k-popover-content"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                             >
+                              
                               <div>
                                 <p>
                                   Entity copied to clipboard!
                                 </p>
                               </div>
+                              
                             </div>
                             <!---->
                           </div>
                         </transition-stub>
                       </div>
+                      
+                      
                     </div>
                   </div>
                   <!---->
                   <div
                     class="k-card-content d-flex"
-                    data-v-3bb7bf60=""
+                    data-v-5adb63fa=""
                   >
                     <div
                       class="k-card-body"
-                      data-v-3bb7bf60=""
+                      data-v-5adb63fa=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     >
+                      
                       <pre
-                        class="code-block"
-                        data-v-3bb7bf60=""
+                        class="code-block language-bash"
+                        data-testid="code-block"
                       >
-                        <code
-                          class="language-bash"
-                        />
+                        <code>
+                          https://github.com/kumahq/kuma-counter-demo/
+                        </code>
                       </pre>
+                      
                     </div>
                     <!---->
                   </div>
                 </section>
               </div>
-               
               <div>
-                <!---->
-                 
-                <!---->
-                 
-                <!---->
+                <!-- loading state -->
+                <!--v-if-->
+                <!-- no data to load -->
+                <!--v-if-->
+                <!-- error -->
+                <!--v-if-->
               </div>
             </div>
-             
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="And follow the instructions in the README"
-              class="kong-card noBorder"
-              data-v-3bb7bf60=""
+              class="noBorder kong-card"
+              data-v-5adb63fa=""
             >
               <div
                 class="k-card-header d-flex mb-3"
-                data-v-3bb7bf60=""
+                data-v-5adb63fa=""
               >
                 <!---->
                 <div
                   class="k-card-title mb-3"
-                  data-v-3bb7bf60=""
+                  data-v-5adb63fa=""
                 >
                   <h4
-                    data-v-3bb7bf60=""
+                    data-v-5adb63fa=""
                   >
+                    
                     And follow the instructions in the README
+                    
                   </h4>
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-3bb7bf60=""
-                />
+                  data-v-5adb63fa=""
+                >
+                  
+                  
+                </div>
               </div>
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-3bb7bf60=""
+                data-v-5adb63fa=""
               >
                 <div
                   class="k-card-body"
-                  data-v-3bb7bf60=""
+                  data-v-5adb63fa=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
+                  
                   <a
                     class="external-link-code-block"
-                    data-v-3bb7bf60=""
                     href="https://github.com/kumahq/kuma-counter-demo/blob/master/README.md"
                     target="_blank"
                   >
-                    
-            https://github.com/kumahq/kuma-counter-demo/blob/master/README.md
-          
+                    https://github.com/kumahq/kuma-counter-demo/blob/master/README.md
                   </a>
+                  
                 </div>
                 <!---->
               </div>
             </section>
           </div>
-           
           <div>
             <p
               class="text-center my-4"
             >
-              
-        DPPs status:
-        
+               DPPs status: 
               <span
                 class="text-red-500"
                 data-testid="dpps-disconnected"
@@ -217,7 +224,6 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 Disconeccted
               </span>
             </p>
-             
             <div
               class="flex justify-center"
             >
@@ -226,72 +232,69 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 data-testid="loading"
               >
                 <div />
-                 
                 <div />
-                 
                 <div />
-                 
                 <div />
-                 
                 <div />
               </div>
             </div>
           </div>
+          
         </div>
       </div>
-       
+      
       <div
         class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
         <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
-          data-v-6ae23500=""
-          href="#/"
+          class="medium rounded primary k-button navigation-button navigation-button--back"
+          data-v-29036f3a=""
           type="button"
         >
+          
           <!---->
           
-    Back
-  
+          
+           Back 
+          
           <!---->
         </a>
-         
         <div>
           <button
-            class="k-button skip-button small rounded btn-link"
-            data-v-6ae23500=""
+            class="small rounded btn-link k-button skip-button"
+            data-v-29036f3a=""
             type="button"
           >
+            
             <!---->
             
-      Skip Setup
-    
+            
+             Skip Setup 
+            
             <!---->
           </button>
-           
           <span
             class="inline-block cursor-not-allowed"
           >
             <a
-              aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
-              data-v-6ae23500=""
-              disabled="disabled"
-              href="#/"
+              class="medium rounded primary k-button navigation-button navigation-button--next"
+              data-v-29036f3a=""
+              disabled="true"
               type="button"
             >
+              
               <!---->
               
-        Next
-      
+              
+              Next
+              
               <!---->
             </a>
           </span>
         </div>
       </div>
+      
     </div>
-     
     <div
       class="background-image"
     />

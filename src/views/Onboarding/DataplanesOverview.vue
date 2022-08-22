@@ -19,9 +19,11 @@
             <p class="font-bold mb-4">
               Found {{ tableData.data.length }} DPPs:
             </p>
-            <KTableLegacy
+            <KTable
               class="onboarding-dataplane-table"
-              :options="tableData"
+              :fetcher="() => tableData"
+              :headers="tableHeaders"
+              disable-pagination
               is-small
             >
               <template #status="{ rowValue }">
@@ -33,7 +35,7 @@
                   <span class="entity-status__label">{{ rowValue }}</span>
                 </div>
               </template>
-            </KTableLegacy>
+            </KTable>
           </div>
         </div>
       </div>
@@ -74,12 +76,13 @@ export default {
   data() {
     return {
       productName: PRODUCT_NAME,
+      tableHeaders: [
+        { label: 'Mesh', key: 'mesh' },
+        { label: 'Name', key: 'name' },
+        { label: 'Status', key: 'status' },
+      ],
       tableData: {
-        headers: [
-          { label: 'Mesh', key: 'mesh' },
-          { label: 'Name', key: 'name' },
-          { label: 'Status', key: 'status' },
-        ],
+        total: 0,
         data: [],
       },
       timeout: null,
@@ -105,7 +108,7 @@ export default {
   created() {
     this.getAllDataplanes()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearTimeout(this.timeout)
   },
   methods: {
@@ -139,6 +142,7 @@ export default {
       }
 
       this.tableData.data = result
+      this.tableData.total = this.tableData.data.length
 
       if (shouldRefetch) {
         this.timeout = setTimeout(() => {

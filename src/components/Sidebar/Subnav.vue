@@ -50,6 +50,9 @@ export default {
       default: '',
     },
   },
+
+  emits: ['toggled'],
+
   data() {
     return {
       isCollapsed: false,

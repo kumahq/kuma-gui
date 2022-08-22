@@ -1,13 +1,9 @@
-import Vue from 'vue'
-import { Store } from 'vuex'
-import VueRouter, { RouteConfig } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
-import { RootInterface } from './store'
-import { Policy } from '@/types'
+import { store } from '../store/store'
+import { Policy } from '../types'
 
-Vue.use(VueRouter)
-
-export function getPolicyRoutes(policies: Policy[]): RouteConfig[] {
+function getPolicyRoutes(policies: Policy[]): RouteRecordRaw[] {
   return policies.map((policy) => ({
     path: policy.path,
     name: policy.path,
@@ -22,14 +18,18 @@ export function getPolicyRoutes(policies: Policy[]): RouteConfig[] {
   }))
 }
 
-export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
+export async function setupRouter() {
+  // Loads available policies in order to populate the necessary routes.
+  await store.dispatch('fetchPolicies')
+  const policyRoutes = getPolicyRoutes(store.state.policies)
+
   const routes = [
     {
       path: '/404',
       name: 'not-found',
-      alias: '*',
+      alias: '/:pathMatch(.*)*',
       meta: {
-        title: 'Page not found',
+        title: 'Item not found',
         excludeAsBreadcrumb: true,
       },
       component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound.vue'),
@@ -72,7 +72,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           path: '/zone-ingresses',
           name: 'zoneingresses',
           meta: {
-            title: 'Zone Ingresses',
+            title: 'Zone ingresses',
           },
           component: () => import(/* webpackChunkName: "zoneingresses" */ '@/views/Entities/ZoneIngresses.vue'),
         },
@@ -81,7 +81,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           path: '/zoneegresses',
           name: 'zoneegresses',
           meta: {
-            title: 'Zone Egresses',
+            title: 'Zone egresses',
           },
           component: () => import(/* webpackChunkName: "zoneegresses" */ '@/views/Entities/ZoneEgresses.vue'),
         },
@@ -95,26 +95,20 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
             breadcrumb: 'Meshes',
             parent: 'global-overview',
           },
-          params: { mesh: ':mesh' },
           redirect: {
             name: 'mesh-child',
             params: {
               mesh: 'all',
             },
           },
-          component: {
-            // Inline declaration of a component that renders our <router-view>
-            render: (c: typeof Vue.prototype.$createElement) => c('router-view'),
-          },
           children: [
             {
               path: ':mesh',
               name: 'mesh-child',
               meta: {
-                title: 'Mesh Overview',
+                title: 'Meshes',
                 parent: 'all-meshes',
               },
-              params: { mesh: ':mesh' },
               component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/MeshesView.vue'),
             },
           ],
@@ -126,16 +120,11 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
             title: 'Mesh',
             breadcrumb: 'Mesh',
           },
-          params: { mesh: ':mesh' },
           redirect: {
             name: 'global-overview',
             params: {
               mesh: 'all',
             },
-          },
-          component: {
-            // Inline declaration of a component that renders our <router-view>
-            render: (c: typeof Vue.prototype.$createElement) => c('router-view'),
           },
           children: [
             {
@@ -146,17 +135,12 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                 breadcrumb: 'Meshes',
                 parent: 'all-meshes',
               },
-              params: { mesh: ':mesh' },
-              component: {
-                // Inline declaration of a component that renders our <router-view>
-                render: (c: typeof Vue.prototype.$createElement) => c('router-view'),
-              },
               children: [
                 // overview
                 {
                   path: 'overview',
                   name: 'global-overview',
-                  alias: '/',
+                  // alias: '/',
                   meta: {
                     title: 'Global Overview',
                   },
@@ -167,7 +151,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                   path: 'dataplanes',
                   name: 'dataplanes',
                   meta: {
-                    title: 'Data Plane Proxies',
+                    title: 'Data plane proxies',
                   },
                   component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes.vue'),
                 },
@@ -178,8 +162,8 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                   component: () =>
                     import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes.vue'),
                   meta: {
-                    title: 'Standard Data Plane Proxies',
-                    breadcrumb: 'Standard Data Plane Proxies',
+                    title: 'Standard data plane proxies',
+                    breadcrumb: 'Standard data plane proxies',
                   },
                 },
                 // gateway dataplanes
@@ -189,8 +173,8 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                   component: () =>
                     import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes.vue'),
                   meta: {
-                    title: 'Gateway Data Plane Proxies',
-                    breadcrumb: 'Gateway Data Plane Proxies',
+                    title: 'Gateway data plane proxies',
+                    breadcrumb: 'Gateway data plane proxies',
                   },
                 },
                 // internal services
@@ -200,7 +184,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                   component: () =>
                     import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices.vue'),
                   meta: {
-                    title: 'Internal Services',
+                    title: 'Internal services',
                     breadcrumb: 'Internal Services',
                   },
                 },
@@ -211,7 +195,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
                   component: () =>
                     import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/ExternalServices.vue'),
                   meta: {
-                    title: 'External Services',
+                    title: 'External services',
                     breadcrumb: 'External Services',
                   },
                 },
@@ -323,7 +307,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           path: 'kubernetes-dataplane',
           name: 'kubernetes-dataplane',
           meta: {
-            title: 'Create a new Kubernetes Dataplane',
+            title: 'Create a new Dataplane on Kubernetes',
             wizardProcess: true,
             hideStatus: true,
           },
@@ -336,7 +320,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
           path: 'universal-dataplane',
           name: 'universal-dataplane',
           meta: {
-            title: 'Create a new Universal Dataplane',
+            title: 'Create a new Dataplane on Universal',
             wizardProcess: true,
             hideStatus: true,
           },
@@ -346,14 +330,9 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
       ],
     },
   ]
-  const router = new VueRouter({
-    /**
-     * Defaulting to hash mode since this runs within Kuma itself
-     * and it's easier to avoid having to do advanced server config
-     * simply for hash-free URLs.
-     */
-    // mode: 'history',
-    base: process.env.BASE_URL,
+
+  const router = createRouter({
+    history: createWebHashHistory(process.env.BASE_URL),
     routes,
   })
 
@@ -390,7 +369,7 @@ export default (store: Store<RootInterface>, policyRoutes: RouteConfig[]) => {
     }
 
     const showOnboarding = store.getters['onboarding/showOnboarding']
-    const isCompleted = store.state.onboarding.isCompleted
+    const isCompleted = store.state.onboarding?.isCompleted
 
     const onboardingRoute = to.meta?.onboardingProcess
 

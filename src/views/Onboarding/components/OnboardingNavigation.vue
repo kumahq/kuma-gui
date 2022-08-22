@@ -6,8 +6,11 @@
       class="navigation-button navigation-button--back"
       :to="{
         name: previousStep,
+        params: {
+          mesh: 'all',
+        },
       }"
-      @click.native="changeStep(previousStep)"
+      @click="changeStep(previousStep)"
     >
       Back
     </KButton>
@@ -17,7 +20,7 @@
         class="skip-button"
         appearance="btn-link"
         size="small"
-        @click.native="skipOnboarding"
+        @click="skipOnboarding"
       >
         Skip Setup
       </KButton>
@@ -28,8 +31,11 @@
           appearance="primary"
           :to="{
             name: nextStep,
+            params: {
+              mesh: 'all',
+            },
           }"
-          @click.native="lastStep ? skipOnboarding() : changeStep(nextStep)"
+          @click="lastStep ? skipOnboarding() : changeStep(nextStep)"
         >
           {{ nextStepTitle }}
         </KButton>

@@ -102,7 +102,7 @@
             border-variant="noBorder"
           >
             <template #body>
-              <Prism
+              <CodeBlock
                 language="json"
                 :code="codeOutput"
               />
@@ -140,11 +140,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import get from 'lodash/get'
-import Prism from 'vue-prismjs'
 
 import SubscriptionDetails from './components/SubscriptionDetails.vue'
 import SubscriptionHeader from './components/SubscriptionHeader.vue'
 import MultizoneInfo from './components/MultizoneInfo.vue'
+import CodeBlock from '@/components/CodeBlock.vue'
 import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/helpers'
 import Kuma from '@/services/kuma'
 import { getTableData } from '@/utils/tableDataUtils'
@@ -170,15 +170,13 @@ export default {
     TabsWidget,
     LabelList,
     WarningsWidget,
-    Prism,
+    CodeBlock,
     SubscriptionDetails,
     SubscriptionHeader,
     MultizoneInfo,
     EntityURLControl,
   },
-  metaInfo: {
-    title: 'Zones',
-  },
+
   data() {
     return {
       isLoading: true,

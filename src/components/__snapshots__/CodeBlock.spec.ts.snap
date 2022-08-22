@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CodeBlock matches snapshot 1`] = `
+<pre class="code-block language-json" data-testid="code-block"><code><span class="token punctuation">{</span>
+          <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"value"</span>
+        <span class="token punctuation">}</span></code></pre>
+`;
+
+exports[`CodeBlock renders plaintext on unknown language 1`] = `<pre class="code-block language-python" data-testid="code-block"><code>print("Hello, world!")</code></pre>`;

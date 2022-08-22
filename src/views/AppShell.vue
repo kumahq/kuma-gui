@@ -1,19 +1,28 @@
 <template>
   <div>
     <GlobalHeader />
+
     <div class="main-content-container">
       <AppSidebar />
 
       <main class="main-content">
         <NotificationManager />
+
         <OnboardingNotification v-if="showOnboarding" />
+
         <BreadcrumbsMenu />
-        <transition
-          mode="out-in"
-          name="fade"
+
+        <router-view
+          :key="routeKey"
+          v-slot="{ Component }"
         >
-          <router-view :key="routeKey" />
-        </transition>
+          <transition
+            mode="out-in"
+            name="fade"
+          >
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </main>
     </div>
   </div>

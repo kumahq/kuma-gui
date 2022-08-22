@@ -16,7 +16,7 @@
           >
             <KBadge
               class="cursor-pointer hover:scale-110"
-              @click.native="meshSelected(name)"
+              @click="meshSelected(name)"
             >
               {{ name }}
             </KBadge>
@@ -58,6 +58,9 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'AllMeshesNotifications',
+
+  emits: ['meshSelected'],
+
   data() {
     return {
       url: `https://kuma.io/enterprise/${process.env.VUE_APP_UTM}`,

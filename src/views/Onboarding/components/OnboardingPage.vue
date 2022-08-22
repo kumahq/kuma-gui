@@ -68,12 +68,6 @@ export default {
   }
 }
 
-.k-radio {
-  --KRadioPrimary: var(--OnboardingRadio);
-  color: var(--OnboardingRadio);
-  cursor: pointer;
-}
-
 .background-image {
   position: fixed;
   top: 0;

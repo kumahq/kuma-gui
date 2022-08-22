@@ -5,22 +5,24 @@ exports[`EntityURLControl.vue renders snapshot 1`] = `
   <div
     data-testid="entity-url-control"
   >
+    
     <div
       aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-      data-v-6b00e241=""
+      aria-expanded="false"
+      data-v-9bbde9b2=""
       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       role="button"
     >
+      
       <button
-        class="k-button small rounded outline"
-        data-v-6ae23500=""
-        data-v-6b00e241=""
+        class="small rounded outline k-button"
+        data-v-29036f3a=""
         type="button"
       >
+        
         <span
-          class="kong-icon kong-icon-externalLink"
-          data-v-429cf642=""
-          data-v-6ae23500=""
+          class="kong-icon-externalLink kong-icon"
+          data-v-637de6fa=""
         >
           <svg
             height="12"
@@ -47,17 +49,18 @@ exports[`EntityURLControl.vue renders snapshot 1`] = `
 
         </span>
         
-        Copy URL
-      
+        
+         Copy URL
+        
         <!---->
       </button>
+      
       <transition-stub
-        data-v-6b00e241=""
-        name="fade"
+        data-v-9bbde9b2=""
       >
         <div
           class="k-popover"
-          data-v-6b00e241=""
+          data-v-9bbde9b2=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="region"
           style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -65,18 +68,21 @@ exports[`EntityURLControl.vue renders snapshot 1`] = `
           <!---->
           <div
             class="k-popover-content"
-            data-v-6b00e241=""
+            data-v-9bbde9b2=""
           >
+            
             <div>
               <p>
                 URL copied to clipboard!
               </p>
             </div>
+            
           </div>
           <!---->
         </div>
       </transition-stub>
     </div>
+    
   </div>
 </div>
 `;

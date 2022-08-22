@@ -13,54 +13,48 @@ exports[`App.vue fails to renders basic view 1`] = `
           class="py-1 md:py-0 flex justify-between items-center"
         >
           <a
-            aria-current="page"
-            class="logo router-link-exact-active router-link-active"
-            href="#/"
+            class="logo"
           >
             <img
               alt="Kuma Logo"
-              src="@/assets/images/product-logo.png?external"
             />
           </a>
-           
           <div
             class="my-0 mx-6 upgrade-check-wrapper"
           >
             <div
               class="upgrade-check"
             >
-              <!---->
+              <!--v-if-->
             </div>
           </div>
         </div>
-         
         <div
           class="flex justify-between items-center"
         >
-          <!---->
+          <!--v-if-->
         </div>
       </header>
-       
       <main
         class="main-content"
       >
         <section
           class="empty-state-wrapper global-api-status empty-state--wide-content empty-state--compact"
-          data-v-25517d95=""
+          data-v-5b55eb64=""
         >
           <div
             class="empty-state-title"
-            data-v-25517d95=""
+            data-v-5b55eb64=""
           >
             <!---->
             <div
               class="k-empty-state-title-header mt-4 mb-4"
-              data-v-25517d95=""
+              data-v-5b55eb64=""
             >
+              
               <span
-                class="kong-icon kong-icon--centered kong-icon-warning"
-                data-v-25517d95=""
-                data-v-429cf642=""
+                class="kong-icon--centered kong-icon-warning kong-icon"
+                data-v-637de6fa=""
               >
                 <svg
                   height="64"
@@ -126,42 +120,37 @@ exports[`App.vue fails to renders basic view 1`] = `
                 
 
               </span>
+               Unable to reach the API 
               
-    Unable to reach the API
-  
             </div>
           </div>
           <div
             class="empty-state-content"
-            data-v-25517d95=""
+            data-v-5b55eb64=""
           >
             <div
               class="k-empty-state-message mb-6"
-              data-v-25517d95=""
+              data-v-5b55eb64=""
             >
-              <p
-                data-v-25517d95=""
-              >
-                
-      Please double check to make sure it is up and running
-      
-                <span
-                  data-v-25517d95=""
-                >
+              
+              <p>
+                 Please double check to make sure it is up and running 
+                <span>
                   , and it is reachable at 
-                  <code
-                    data-v-25517d95=""
-                  >
+                  <code>
                     /
                   </code>
                 </span>
               </p>
+              
             </div>
             <div
               class="k-empty-state-cta"
-              data-v-25517d95=""
+              data-v-5b55eb64=""
             >
+              
               <!---->
+              
             </div>
           </div>
         </section>

@@ -6,56 +6,56 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
     class="upgrade-check"
   >
     <div
-      class="k-alert warning small none"
-      data-v-825647a6=""
+      class="warning small alert none k-alert"
+      data-v-53188520=""
       role="alert"
     >
       <!---->
-      <!---->
       <div
-        class="k-alert-msg-text"
-        data-v-825647a6=""
+        class="warning k-alert-action ml-3"
+        data-v-53188520=""
       >
         <!---->
-        <div
-          class="k-alert-msg"
-          data-v-825647a6=""
-        >
-          <div
-            class="alert-content"
-            data-v-825647a6=""
-          >
-            <div
-              data-v-825647a6=""
-            >
-              
-          Kuma update available
-        
-            </div>
-             
-            <div
-              data-v-825647a6=""
-            >
-              <a
-                class="k-button warning-button small rounded primary"
-                data-v-6ae23500=""
-                data-v-825647a6=""
-                href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                type="button"
-              >
-                <!---->
-                
-            Update
-          
-                <!---->
-              </a>
-            </div>
-          </div>
-        </div>
         <!---->
       </div>
       <!---->
       <!---->
+      <div
+        class="k-alert-msg-text"
+        data-v-53188520=""
+      >
+        <div
+          class="k-alert-msg"
+          data-v-53188520=""
+        >
+          
+          <div
+            class="alert-content"
+          >
+            <div>
+              Kuma update available 
+            </div>
+            <div>
+              <a
+                class="small rounded primary k-button warning-button"
+                data-v-29036f3a=""
+                href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                type="button"
+              >
+                
+                <!---->
+                
+                
+                 Update 
+                
+                <!---->
+              </a>
+            </div>
+          </div>
+          
+        </div>
+        <!---->
+      </div>
     </div>
   </div>
 </div>

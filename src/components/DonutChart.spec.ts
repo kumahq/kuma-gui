@@ -4,7 +4,7 @@ import DonutChart from './DonutChart.vue'
 describe('DonutChart.vue', () => {
   it('renders chart', async () => {
     render(DonutChart, {
-      propsData: {
+      props: {
         data: [
           {
             value: 1,

@@ -1,10 +1,28 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+import { KIcon, KTabs } from '@kong/kongponents'
+
 import TabsWidget from './TabsWidget.vue'
 
+function renderComponent(props: any) {
+  return render(TabsWidget, {
+    global: {
+      components: {
+        KIcon,
+        KTabs,
+      },
+    },
+    props,
+    slots: {
+      universal: '<div>Universal</div>',
+      kubernetes: '<div>Kubernetes</div>',
+    },
+  })
+}
+
 describe('TabsWidget.vue', () => {
-  const options = {
-    props: {
+  it('renders basic snapshot', () => {
+    const { container } = renderComponent({
       tabs: [
         {
           hash: '#universal',
@@ -15,21 +33,24 @@ describe('TabsWidget.vue', () => {
           title: 'Kubernetes',
         },
       ],
-    },
-    slots: {
-      universal: '<div>Universal</div>',
-      kubernetes: '<div>Kubernetes</div>',
-    },
-  }
-
-  it('renders basic snapshot', () => {
-    const { container } = render(TabsWidget, options)
+    })
 
     expect(container).toMatchSnapshot()
   })
 
   it('switches tabs on click', async () => {
-    render(TabsWidget, options)
+    renderComponent({
+      tabs: [
+        {
+          hash: '#universal',
+          title: 'Universal',
+        },
+        {
+          hash: '#kubernetes',
+          title: 'Kubernetes',
+        },
+      ],
+    })
 
     await userEvent.click(screen.getByText('Kubernetes'))
 
@@ -37,7 +58,19 @@ describe('TabsWidget.vue', () => {
   })
 
   it('renders with initally selected tab', () => {
-    render(TabsWidget, { ...options, props: { ...options.props, initialTabOverride: 'kubernetes' } })
+    renderComponent({
+      tabs: [
+        {
+          hash: '#universal',
+          title: 'Universal',
+        },
+        {
+          hash: '#kubernetes',
+          title: 'Kubernetes',
+        },
+      ],
+      initialTabOverride: 'kubernetes',
+    })
 
     expect(screen.getAllByText(/Kubernetes/).length).toBe(2)
   })

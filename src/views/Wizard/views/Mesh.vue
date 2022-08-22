@@ -564,9 +564,7 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'MeshWizard',
-  metaInfo: {
-    title: 'Create a new Mesh',
-  },
+
   components: {
     FormFragment,
     TabsWidget,

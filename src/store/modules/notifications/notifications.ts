@@ -1,10 +1,10 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { RootInterface } from '../..'
+import { State } from '../../index'
 import { NotificationsInterface, NotificationItem, MeshNotificationItem } from './notifications.types'
 import { Mesh } from '@/types'
 
-const state: NotificationsInterface = {
+const initialNotificationsState: NotificationsInterface = {
   isOpen: false,
 }
 
@@ -13,9 +13,9 @@ const mutations: MutationTree<NotificationsInterface> = {
   CLOSE_MODAL: state => (state.isOpen = false),
 }
 
-const getters: GetterTree<NotificationsInterface, RootInterface> = {
-  meshNotificationItemMap(state, getters, rootState, rootGetters) {
-    const meshList = rootGetters.getMeshList?.items || []
+const getters: GetterTree<NotificationsInterface, State> = {
+  meshNotificationItemMap(_state, _getters, rootState) {
+    const meshList = rootState.meshes?.items || []
 
     const aggregatedList = meshList.reduce((meshAggregator: Record<string, MeshNotificationItem>, mesh: Mesh) => {
       meshAggregator[mesh.name] = {
@@ -31,7 +31,7 @@ const getters: GetterTree<NotificationsInterface, RootInterface> = {
     return aggregatedList
   },
 
-  meshNotificationItemMapWithAction(state, getters, rootState, rootGetters) {
+  meshNotificationItemMapWithAction(_state, getters) {
     const meshMap = getters.meshNotificationItemMap
 
     return Object.entries<MeshNotificationItem>(meshMap).reduce(
@@ -48,7 +48,7 @@ const getters: GetterTree<NotificationsInterface, RootInterface> = {
     )
   },
 
-  singleMeshNotificationItems(state, getters, rootState, rootGetters): NotificationItem[] {
+  singleMeshNotificationItems(_state, getters, rootState): NotificationItem[] {
     const selectedMesh = rootState.selectedMesh
 
     if (selectedMesh === 'all') {
@@ -85,12 +85,12 @@ const getters: GetterTree<NotificationsInterface, RootInterface> = {
     return items
   },
 
-  amountOfActions(state, getters) {
+  amountOfActions(_state, getters) {
     return Object.keys(getters.meshNotificationItemMapWithAction).length
   },
 }
 
-const actions: ActionTree<NotificationsInterface, RootInterface> = {
+const actions: ActionTree<NotificationsInterface, State> = {
   openModal({ commit }) {
     commit('OPEN_MODAL')
   },
@@ -100,10 +100,12 @@ const actions: ActionTree<NotificationsInterface, RootInterface> = {
   },
 }
 
-export default {
+const notificationsModule = {
   namespaced: true,
-  state,
+  state: initialNotificationsState,
   getters,
   mutations,
   actions,
 }
+
+export default notificationsModule

@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import KCard from '@kongponents/kcard'
-import KButton from '@kongponents/kbutton'
+import { KButton, KCard } from '@kong/kongponents'
 
 export default {
   name: 'CardSkeleton',

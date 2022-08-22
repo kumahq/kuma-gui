@@ -1,6 +1,3 @@
-import { Module } from 'vuex'
-import { RootInterface } from '../..'
-
 export interface AccessScope {
   groups: String[]
   users: String[]
@@ -364,5 +361,3 @@ export interface ConfigInterface {
   version: string | null
   kumaDocsVersion: string
 }
-
-export type ConfigType = Module<ConfigInterface, RootInterface>

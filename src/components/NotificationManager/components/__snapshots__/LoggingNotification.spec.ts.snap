@@ -8,11 +8,8 @@ exports[`LoggingNotification.vue renders snapshot 1`] = `
     <p
       class="mb-4"
     >
-      
-    A traffic log policy lets you collect access logs for every data plane proxy in your service mesh.
-  
+       A traffic log policy lets you collect access logs for every data plane proxy in your service mesh. 
     </p>
-     
     <ul
       class="list-disc pl-4"
     >
@@ -21,9 +18,7 @@ exports[`LoggingNotification.vue renders snapshot 1`] = `
           href="https://kuma.io/docs/1.2.0/policies/traffic-log/"
           target="_blank"
         >
-          
-        Traffic Log policy documentation
-      
+           Traffic Log policy documentation 
         </a>
       </li>
     </ul>

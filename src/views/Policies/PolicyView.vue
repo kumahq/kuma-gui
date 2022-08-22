@@ -142,10 +142,6 @@ import YamlView from '@/components/Skeletons/YamlView.vue'
 export default {
   name: 'PolicyView',
 
-  metaInfo: {
-    title: 'Policy View',
-  },
-
   components: {
     DataOverview,
     DocumentationLink,
@@ -222,10 +218,6 @@ export default {
     $route() {
       this.loadData()
     },
-  },
-
-  mounted() {
-    this.$options.metaInfo.title = this.policy.pluralDisplayName
   },
 
   beforeMount() {

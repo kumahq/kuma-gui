@@ -58,11 +58,11 @@
 
                 <div class="flex flex-wrap justify-end">
                   <KBadge
-                    v-for="(_, key) in item.matchedPolicies"
-                    :key="key"
+                    v-for="(_, policyTypeName) in item.matchedPolicies"
+                    :key="`${key}-${policyTypeName}`"
                     class="mr-2 mb-2"
                   >
-                    {{ key }}
+                    {{ policyTypeName }}
                   </KBadge>
                 </div>
               </div>

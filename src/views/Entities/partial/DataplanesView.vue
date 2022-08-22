@@ -18,7 +18,7 @@
           appearance="primary"
           size="small"
           :to="dataplaneWizardRoute"
-          @click.native="onCreateClick"
+          @click="onCreateClick"
         >
           <span class="custom-control-icon">
             +

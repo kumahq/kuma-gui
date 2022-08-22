@@ -1,16 +1,42 @@
-import { screen } from '@testing-library/vue'
+import { createStore } from 'vuex'
+import { flushPromises, RouterLinkStub } from '@vue/test-utils'
+import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import DataplanesView from './DataplanesView.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import Kuma from '@/services/kuma'
 
-describe('DataplanesView.vue', () => {
-  it('renders snapshot', async () => {
-    const { policies } = await Kuma.getPolicies()
-    const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+async function renderComponent() {
+  const { policies } = await Kuma.getPolicies()
+  const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+  const store = createStore({
+    modules: {
+      config: {
+        namespaced: true,
+        state: {
+          tagline: 'Kuma',
+          clientConfig: {
+            mode: 'global',
+            environment: 'universal',
+          },
+        },
+        getters: {
+          getTagline: (state) => state.tagline,
+          getEnvironment: (state) => state.clientConfig?.environment,
+          getMulticlusterStatus: () => false,
+        },
+      },
+    },
+    state: {
+      policiesByType,
+    },
+  })
 
-    const { container } = renderWithVuex(DataplanesView, {
+  return render(DataplanesView, {
+    global: {
+      plugins: [store],
+      components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
       mocks: {
         $route: {
           params: {
@@ -19,13 +45,18 @@ describe('DataplanesView.vue', () => {
           query: {},
         },
       },
-      stubs: ['router-link'],
-      store: {
-        state: {
-          policiesByType,
-        },
+      stubs: {
+        'router-link': RouterLinkStub,
       },
-    })
+    },
+  })
+}
+
+describe('DataplanesView.vue', () => {
+  it('renders snapshot', async () => {
+    const { container } = await renderComponent()
+
+    await flushPromises()
 
     await screen.findByText(/DataplaneOverview/)
 
@@ -35,25 +66,7 @@ describe('DataplanesView.vue', () => {
   it('calls getDataplanePolicies only when select the tab', async () => {
     jest.spyOn(Kuma, 'getDataplanePolicies')
 
-    const { policies } = await Kuma.getPolicies()
-    const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
-
-    renderWithVuex(DataplanesView, {
-      mocks: {
-        $route: {
-          params: {
-            mesh: 'all',
-          },
-          query: {},
-        },
-      },
-      stubs: ['router-link'],
-      store: {
-        state: {
-          policiesByType,
-        },
-      },
-    })
+    await renderComponent()
 
     await screen.findByText(/DPP: backend/)
 

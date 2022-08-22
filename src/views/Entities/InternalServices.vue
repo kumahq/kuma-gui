@@ -10,12 +10,11 @@ import ServicesView from '@/views/Entities/partial/ServicesView.vue'
 
 export default {
   name: 'InternalServices',
-  metaInfo: {
-    title: 'Internal Services',
-  },
+
   components: {
     ServicesView,
   },
+
   data() {
     return {
       tabHeaders: [

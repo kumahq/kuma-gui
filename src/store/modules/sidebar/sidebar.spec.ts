@@ -1,14 +1,16 @@
-import sidebar from '.'
-import setupStore from '@/testUtils/setupStore'
+import { createStore } from 'vuex'
+
+import { storeConfig, State } from '../../index'
 
 describe('sidebar module', () => {
   describe('actions', () => {
     it('tests getInsights action', async () => {
-      const store = setupStore({ ...sidebar }, { selectedMesh: 'all' })
+      const store = createStore<State>(storeConfig)
 
-      await store.dispatch('getInsights')
+      await store.dispatch('sidebar/getInsights')
 
-      expect(store.state).toMatchInlineSnapshot(`
+      expect(store.state.selectedMesh).toBe('all')
+      expect(store.state.sidebar).toMatchInlineSnapshot(`
         Object {
           "insights": Object {
             "global": Object {
@@ -47,7 +49,6 @@ describe('sidebar module', () => {
               },
             },
           },
-          "selectedMesh": "all",
         }
       `)
     })

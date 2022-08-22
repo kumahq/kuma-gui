@@ -1,30 +1,40 @@
-import { screen } from '@testing-library/vue'
+import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
+import { KButton, KClipboardProvider, KCard, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import XdsConfiguration from './XdsConfiguration.vue'
 import { server } from '@/jest-setup'
-import renderWithVuex from '@/testUtils/renderWithVuex';
+
+function renderComponent(props = {}) {
+  return render(XdsConfiguration, {
+    global: {
+      components: {
+        KButton,
+        KClipboardProvider,
+        KCard,
+        KEmptyState,
+        KIcon,
+        KPop,
+      },
+    },
+    props,
+  })
+}
 
 describe('XdsConfiguration.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = renderWithVuex(XdsConfiguration, {
-      props: {
-        mesh: 'foo',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
+    const { container } = renderComponent({
+      mesh: 'foo',
+      dppName: 'dataplane-test-456',
     })
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders loading', () => {
-    renderWithVuex(XdsConfiguration, {
-      props: {
-        mesh: 'foo',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
+    renderComponent({
+      mesh: 'foo',
+      dppName: 'dataplane-test-456',
     })
 
     expect(screen.getByTestId('status-info-loading-section')).toBeInTheDocument()
@@ -39,12 +49,9 @@ describe('XdsConfiguration.vue', () => {
       ),
     )
 
-    renderWithVuex(XdsConfiguration, {
-      props: {
-        mesh: 'default',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
+    renderComponent({
+      mesh: 'default',
+      dppName: 'dataplane-test-456',
     })
 
     expect(await screen.findByText(/An error has occurred while trying to load this data./)).toBeInTheDocument()

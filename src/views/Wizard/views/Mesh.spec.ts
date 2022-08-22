@@ -1,7 +1,67 @@
+import { createStore } from 'vuex'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import userEvent from '@testing-library/user-event'
-import { screen } from '@testing-library/vue'
+import { render, screen } from '@testing-library/vue'
+import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
+
 import Mesh from './Mesh.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
+import TestComponent from '@/testUtils/TestComponent.vue'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: TestComponent,
+    },
+    {
+      path: '/create-mesh',
+      name: 'create-mesh',
+      component: TestComponent,
+    },
+  ],
+})
+
+function renderComponent() {
+  const store = createStore({
+    modules: {
+      config: {
+        namespaced: true,
+        state: {
+          tagline: 'Kuma',
+          kumaDocsVersion: '1.2.0',
+          clientConfig: {
+            mode: 'global',
+            environment: 'universal',
+          },
+        },
+        getters: {
+          getTagline: (state) => state.tagline,
+          getKumaDocsVersion: (state) => state.kumaDocsVersion,
+          getEnvironment: (state) => state.clientConfig?.environment,
+          getMulticlusterStatus: () => false,
+        },
+      },
+    },
+  })
+
+  return render(Mesh, {
+    global: {
+      plugins: [router, store],
+      components: {
+        KAlert,
+        KButton,
+        KCard,
+        KClipboardProvider,
+        KEmptyState,
+        KIcon,
+        KPop,
+        KTabs,
+      },
+    },
+  })
+}
 
 describe('Mesh.vue', () => {
   const doStep = async (button: any, target: string | string[]) => {
@@ -26,14 +86,7 @@ describe('Mesh.vue', () => {
   }
 
   it('passes whole wizzard and render yaml', async () => {
-    const { container } = renderWithVuex(Mesh, {
-      store: {
-        modules: {
-          config: { state: { tagline: 'Kuma', clientConfig: { environment: 'universal' } } },
-        },
-      },
-      routes: [],
-    })
+    const { container } = renderComponent()
 
     const nextButton = screen.getByText(/Next ›/i).closest('button')
 
@@ -58,7 +111,7 @@ describe('Mesh.vue', () => {
 
     await doStep(nextButton, 'Backend name:')
 
-    await screen.findByText(/kumactl apply -f/)
+    await screen.findByText(/kumactl apply/)
 
     expect(container).toMatchSnapshot()
   })

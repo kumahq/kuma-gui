@@ -243,8 +243,11 @@ export default {
     },
   },
   watch: {
-    data(newData) {
-      this.applyData(newData)
+    data: {
+      handler(newData) {
+        this.applyData(newData)
+      },
+      deep: true,
     },
     isLoading(isLoading) {
       if (isLoading) {
@@ -256,7 +259,7 @@ export default {
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.chart?.dispose()
   },
   mounted() {
@@ -289,8 +292,8 @@ export default {
           const defaultItem = route || chart.url ? { ...item, fillOpacity: 0.7 } : item
 
           if (route) {
-            const { href, resolved } = this.$router.resolve(route)
-            const { title } = resolved.meta
+            const { href, meta } = this.$router.resolve(route)
+            const { title } = meta
 
             return {
               url: href,

@@ -1,10 +1,28 @@
+import { createStore } from 'vuex'
+import { render } from '@testing-library/vue'
+
 import MetricsNotification from './MetricsNotification.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('MetricsNotification.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(MetricsNotification, {
-      store: { modules: { config: { state: { kumaDocsVersion: '1.2.0' } } } },
+    const store = createStore({
+      modules: {
+        config: {
+          namespaced: true,
+          state: {
+            kumaDocsVersion: '1.2.0',
+          },
+          getters: {
+            getKumaDocsVersion: (state) => state.kumaDocsVersion,
+          },
+        },
+      },
+    })
+
+    const { container } = render(MetricsNotification, {
+      global: {
+        plugins: [store],
+      },
     })
 
     expect(container).toMatchSnapshot()

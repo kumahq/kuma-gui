@@ -1,6 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { RootInterface } from '../..'
+import { State } from '../../index'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
 
@@ -8,7 +8,7 @@ import Kuma from '@/services/kuma'
 import { MeshInsight } from '@/types'
 import { fetchAllResources } from '@/helpers'
 
-const state: SidebarInterface = {
+const initialSidebarState: SidebarInterface = {
   insights: {
     global: {},
     mesh: {
@@ -31,9 +31,9 @@ const mutations: MutationTree<SidebarInterface> = {
   SET_MESH_INSIGHTS: (state, meshInsight) => (state.insights.mesh = meshInsight),
 }
 
-const getters: GetterTree<SidebarInterface, RootInterface> = {}
+const getters: GetterTree<SidebarInterface, State> = {}
 
-const actions: ActionTree<SidebarInterface, RootInterface> = {
+const actions: ActionTree<SidebarInterface, State> = {
   getInsights({ dispatch }) {
     return Promise.all([dispatch('getGlobalInsights'), dispatch('getMeshInsights')])
   },
@@ -72,10 +72,12 @@ const actions: ActionTree<SidebarInterface, RootInterface> = {
   },
 }
 
-export default {
+const sidebarModule = {
   namespaced: true,
-  state,
+  state: initialSidebarState,
   getters,
   mutations,
   actions,
 }
+
+export default sidebarModule

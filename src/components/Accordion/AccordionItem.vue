@@ -1,5 +1,8 @@
 <template>
-  <li :class="accordionItemClasses">
+  <li
+    class="accordion-item"
+    :class="accordionItemClasses"
+  >
     <button
       class="accordion-item-header"
       :aria-expanded="visible"
@@ -83,6 +86,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
 .accordion-enter-active,
 .accordion-leave-active {
   will-change: height, opacity;

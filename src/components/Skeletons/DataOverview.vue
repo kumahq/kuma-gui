@@ -42,12 +42,12 @@
         v-if="!tableDataIsEmpty && tableData"
         class="data-overview-table"
       >
-        <KTableLegacy
+        <KTable
           class="micro-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
-          :options="tableDataFiltered"
-          :has-side-border="false"
-          has-hover
+          :fetcher="() => tableDataFiltered"
+          :headers="tableHeaders"
+          disable-pagination
           is-clickable
           @row:click="tableRowHandler"
         >
@@ -76,6 +76,7 @@
               <span class="entity-status__label">{{ rowValue }}</span>
             </div>
           </template>
+
           <!-- tags -->
           <template #tags="{ rowValue }">
             <EntityTag
@@ -84,6 +85,7 @@
               :tag="tag"
             />
           </template>
+
           <!--- total Updates --->
           <template #totalUpdates="{ row }">
             <span class="entity-total-updates">
@@ -92,6 +94,7 @@
               </span>
             </span>
           </template>
+
           <!--- actions --->
           <template #actions="{row}">
             <a
@@ -115,6 +118,7 @@
               </span>
             </a>
           </template>
+
           <!--- dp Version --->
           <template #dpVersion="{ row, rowValue }">
             <div
@@ -125,6 +129,7 @@
               {{ rowValue }}
             </div>
           </template>
+
           <!--- envoy Version --->
           <template #envoyVersion="{ row, rowValue }">
             <div
@@ -135,6 +140,7 @@
               {{ rowValue }}
             </div>
           </template>
+
           <!--- warnings --->
           <template
             v-if="showWarnings"
@@ -150,7 +156,7 @@
             />
             <div v-else />
           </template>
-        </KTableLegacy>
+        </KTable>
 
         <PaginationWidget
           :has-previous="pageOffset > 0"
@@ -286,6 +292,9 @@ export default {
       default: false,
     },
   },
+
+  emits: ['tableAction', 'refresh', 'loadData'],
+
   data() {
     return {
       selectedRow: '',
@@ -294,21 +303,27 @@ export default {
   },
   computed: {
     customSlots() {
-      return this.tableData.headers.map(({ key }) => key).filter((key) => this.$scopedSlots[key])
+      return this.tableData.headers
+        .map(({ key }) => key)
+        .filter((key) => this.$slots[key])
     },
     isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
-    tableDataFiltered() {
-      const data = this.tableData.data
-      const headers = this.tableData.headers
-      const newData = { headers, data: [...data] }
 
+    tableHeaders() {
       if (!this.showWarnings) {
-        newData.headers = newData.headers.filter(({ key }) => key !== 'warnings')
+        return this.tableData.headers.filter(({ key }) => key !== 'warnings')
+      } else {
+        return this.tableData.headers
       }
+    },
 
-      return newData
+    tableDataFiltered() {
+      return {
+        data: this.tableData.data,
+        total: this.tableData.data.length,
+      }
     },
   },
   watch: {

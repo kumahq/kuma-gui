@@ -1,27 +1,33 @@
+import { createStore } from 'vuex'
 import { rest } from 'msw'
-import config from '.'
+
+import { storeConfig, State } from '../../index'
 import { server } from '@/jest-setup'
-import setupStore from '@/testUtils/setupStore'
 import Kuma from '@/services/kuma'
+
+const store = createStore<State>(storeConfig)
 
 describe('config module', () => {
   describe('getters', () => {
     it('tests getStatus getter', () => {
-      const store = setupStore(config, { status: 'foo' })
+      // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+      store.state.config.status = 'foo'
 
-      expect(store.getters.getStatus).toBe('foo')
+      expect(store.getters['config/getStatus']).toBe('foo')
     })
 
     it('tests getMulticlusterStatus getter when global mode', () => {
-      const store = setupStore(config, { clientConfig: { mode: 'global' } })
+      // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+      store.state.config.clientConfig = { mode: 'global' }
 
-      expect(store.getters.getMulticlusterStatus).toBe(true)
+      expect(store.getters['config/getMulticlusterStatus']).toBe(true)
     })
 
     it('tests getMulticlusterStatus getter when standalone', () => {
-      const store = setupStore(config, { clientConfig: { mode: 'standalone' } })
+      // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+      store.state.config.clientConfig = { mode: 'standalone' }
 
-      expect(store.getters.getMulticlusterStatus).toBe(false)
+      expect(store.getters['config/getMulticlusterStatus']).toBe(false)
     })
   })
 
@@ -32,11 +38,10 @@ describe('config module', () => {
 
     it('tests getStatus action', async () => {
       server.use(rest.get('http://localhost/', (req, res, ctx) => res(ctx.status(200))))
-      const store = setupStore(config)
 
-      await store.dispatch('getStatus')
+      await store.dispatch('config/getStatus')
 
-      expect(store.getters.getStatus).toBe('OK')
+      expect(store.getters['config/getStatus']).toBe('OK')
     })
 
     it.each([
@@ -90,25 +95,21 @@ describe('config module', () => {
     ])('tests getInfo action', async (getInfoResponse, expectedState) => {
       jest.spyOn(Kuma, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
 
-      const store = setupStore(config)
+      await store.dispatch('config/getInfo')
 
-      await store.dispatch('getInfo')
-
-      expect(store.state.tagline).toBe(expectedState.tagline)
-      expect(store.state.version).toBe(expectedState.version)
-      expect(store.state.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
+      expect(store.state.config?.tagline).toBe(expectedState.tagline)
+      expect(store.state.config?.version).toBe(expectedState.version)
+      expect(store.state.config?.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
     })
   })
 
   describe('mutations', () => {
     it('tests SET_CONFIG_DATA mutation', () => {
-      const store = setupStore(config)
-
       const userConfig = { foo: 'bar' }
 
-      store.commit('SET_CONFIG_DATA', userConfig)
+      store.commit('config/SET_CONFIG_DATA', userConfig)
 
-      expect(store.getters.getConfig).toBe(userConfig)
+      expect(store.getters['config/getConfig']).toEqual(userConfig)
     })
   })
 })

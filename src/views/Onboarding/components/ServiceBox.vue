@@ -11,12 +11,15 @@
 <script>
 export default {
   name: 'ServiceBox',
+
   props: {
     active: {
       type: Boolean,
       default: false,
     },
   },
+
+  emits: ['clicked'],
 
   computed: {
     classes() {

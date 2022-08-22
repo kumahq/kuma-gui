@@ -23,20 +23,15 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import GlobalHeader from '@/components/Global/GlobalHeader.vue'
 
 import KLoader from '@/components/KLoader'
-import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage'
+import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage.vue'
+
 export default {
   components: {
     GlobalHeader,
     KLoader,
     ApiErrorMessage,
   },
-  metaInfo: {
-    title: 'Home',
-    titleTemplate: `%s | ${process.env.VUE_APP_NAMESPACE}`,
-    htmlAttrs: {
-      lang: 'en',
-    },
-  },
+
   data() {
     return { loading: true, timeout: null }
   },
@@ -54,11 +49,17 @@ export default {
         this.loading = loading
       }, 200)
     },
+
+    '$route.meta': function (routeMeta) {
+      const siteTitle = `${process.env.VUE_APP_NAMESPACE} Manager`
+
+      document.title = routeMeta?.title ? `${routeMeta.title} | ${siteTitle}` : siteTitle
+    },
   },
   beforeMount() {
     this.bootstrap()
   },
-  destroyed() {
+  unmounted() {
     clearTimeout(this.timeout)
   },
   methods: {

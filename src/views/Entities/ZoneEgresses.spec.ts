@@ -1,7 +1,10 @@
-import { screen } from '@testing-library/vue'
+import { createStore } from 'vuex'
+import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
+
+import { flushPromises } from '@vue/test-utils'
 import ZoneEgresses from './ZoneEgresses.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 
 jest.mock('@/helpers', () => {
   const originalModule = jest.requireActual('@/helpers')
@@ -14,12 +17,38 @@ jest.mock('@/helpers', () => {
   }
 })
 
+function renderComponent() {
+  const store = createStore({
+    modules: {
+      config: {
+        namespaced: true,
+        state: {
+          clientConfig: {
+            mode: 'global',
+          },
+        },
+      },
+    },
+  })
+
+  return render(ZoneEgresses, {
+    global: {
+      plugins: [store],
+      components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
+      mocks: {
+        $route: {
+          query: {},
+        },
+      },
+    },
+  })
+}
+
 describe('ZoneEgresses.vue', () => {
   it('renders snapshot when no multizone', async () => {
-    const { container } = renderWithVuex(ZoneEgresses, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
+    const { container } = renderComponent()
+
+    await flushPromises()
 
     await screen.findByText(/ZoneEgressOverview/)
 
@@ -27,10 +56,9 @@ describe('ZoneEgresses.vue', () => {
   })
 
   it('renders snapshot when multizone', async () => {
-    const { container } = renderWithVuex(ZoneEgresses, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
+    const { container } = renderComponent()
+
+    await flushPromises()
 
     await screen.findByText(/ZoneEgressOverview/)
 
@@ -38,10 +66,7 @@ describe('ZoneEgresses.vue', () => {
   })
 
   it('renders zoneegress insights', async () => {
-    renderWithVuex(ZoneEgresses, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
+    renderComponent()
 
     await screen.findByText(/ZoneEgressOverview/)
 

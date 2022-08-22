@@ -5,10 +5,7 @@ exports[`KLoader.vue renders snapshot at the beginning 1`] = `
   <div
     class="loading-container"
   >
-    <img
-      src="../assets/images/kuma-loader-v1.gif?external"
-    />
-     
+    <img />
     <div
       class="progress"
     >

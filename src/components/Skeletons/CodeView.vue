@@ -10,8 +10,7 @@
         border-variant="noBorder"
       >
         <template #body>
-          <Prism
-            class="code-block"
+          <CodeBlock
             :language="lang"
             :code="codeContent"
           />
@@ -99,13 +98,15 @@
 </template>
 
 <script>
-import Prism from 'vue-prismjs'
+import CodeBlock from '../CodeBlock.vue'
 
 export default {
   name: 'CodeView',
+
   components: {
-    Prism,
+    CodeBlock,
   },
+
   props: {
     lang: {
       type: String,
@@ -154,12 +155,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.code-block {
-  border-radius: 3px;
-  background-color:  var(--code-background);
-  font-size: var(--type-sm);
-}
-
 .empty-state-title {
   .card-icon {
     text-align: center;

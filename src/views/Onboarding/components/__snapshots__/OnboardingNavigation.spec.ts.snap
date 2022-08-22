@@ -6,45 +6,46 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
     class="mt-4 flex items-center flex-col sm:flex-row justify-between"
   >
     <a
-      class="k-button navigation-button navigation-button--back medium rounded primary"
-      data-v-6ae23500=""
-      href="#/foo"
+      class="medium rounded primary k-button navigation-button navigation-button--back"
+      data-v-29036f3a=""
       type="button"
     >
+      
       <!---->
       
-    Back
-  
+      
+       Back 
+      
       <!---->
     </a>
-     
     <div>
       <button
-        class="k-button skip-button small rounded btn-link"
-        data-v-6ae23500=""
+        class="small rounded btn-link k-button skip-button"
+        data-v-29036f3a=""
         type="button"
       >
+        
         <!---->
         
-      Skip Setup
-    
+        
+         Skip Setup 
+        
         <!---->
       </button>
-       
       <span
         class="inline-block"
       >
         <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
-          data-v-6ae23500=""
-          href="#/"
+          class="medium rounded primary k-button navigation-button navigation-button--next"
+          data-v-29036f3a=""
           type="button"
         >
+          
           <!---->
           
-        Next
-      
+          
+          Next
+          
           <!---->
         </a>
       </span>

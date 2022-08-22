@@ -1,6 +1,3 @@
-import { Module } from 'vuex'
-import { RootInterface } from '../..'
-
 export interface NotificationsInterface {
   isOpen: boolean
 }
@@ -18,5 +15,3 @@ export interface MeshNotificationItem {
   hasMtls: boolean
   hasMetrics: boolean
 }
-
-export type NotificationsType = Module<NotificationsInterface, RootInterface>

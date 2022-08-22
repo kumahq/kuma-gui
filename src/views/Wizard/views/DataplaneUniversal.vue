@@ -421,9 +421,7 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'DataplaneWizardUniversal',
-  metaInfo: {
-    title: 'Create a new Dataplane on Universal',
-  },
+
   components: {
     FormFragment,
     TabsWidget,

@@ -18,7 +18,7 @@
             appearance="primary"
             size="small"
             :to="{ path: '/wizard/mesh' }"
-            @click.native="onCreateClick"
+            @click="onCreateClick"
           >
             <span class="custom-control-icon">
               +
@@ -61,7 +61,7 @@
                     {{ key }}
                   </h4>
                   <p v-if="key === 'creationTime' || key === 'modificationTime'">
-                    {{ value | readableDate }} <em>({{ value | rawDate }})</em>
+                    {{ readableDate(value) }} <em>({{ rawDate(value) }})</em>
                   </p>
                   <p v-else>
                     {{ value }}
@@ -141,7 +141,7 @@
                   :key="key"
                 >
                   <h4>{{ item.title }}</h4>
-                  <p>{{ item.value | formatValue }}</p>
+                  <p>{{ formatValue(item.value) }}</p>
                 </li>
               </ul>
             </div>
@@ -170,9 +170,7 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
   name: 'MeshesView',
-  metaInfo: {
-    title: 'Meshes',
-  },
+
   components: {
     FrameSkeleton,
     DataOverview,
@@ -180,17 +178,7 @@ export default {
     YamlView,
     LabelList,
   },
-  filters: {
-    formatValue(value) {
-      return value ? value.toLocaleString('en').toString() : 0
-    },
-    readableDate(value) {
-      return humanReadableDate(value)
-    },
-    rawDate(value) {
-      return rawReadableDate(value)
-    },
-  },
+
   data() {
     return {
       isLoading: true,
@@ -444,6 +432,18 @@ export default {
           this.entityIsLoading = false
         }, process.env.VUE_APP_DATA_TIMEOUT)
       }
+    },
+
+    formatValue(value) {
+      return value ? value.toLocaleString('en').toString() : 0
+    },
+
+    readableDate(value) {
+      return humanReadableDate(value)
+    },
+
+    rawDate(value) {
+      return rawReadableDate(value)
     },
   },
 }

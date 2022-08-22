@@ -1,83 +1,97 @@
-import Vue from 'vue'
-import Vuex, { Module } from 'vuex'
+import { StoreOptions } from 'vuex'
 
-import config from '@/store/modules/config'
-import notifications from '@/store/modules/notifications'
-import sidebar from '@/store/modules/sidebar'
+import { ConfigInterface } from './modules/config/config.types'
+import { NotificationsInterface } from './modules/notifications/notifications.types'
+import { OnboardingInterface } from './modules/onboarding/onboarding.types'
+import { SidebarInterface } from './modules/sidebar/sidebar.types'
 import { getItemStatusFromInsight } from '@/dataplane'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
-import onboarding from '@/store/modules/onboarding'
+import config from '@/store/modules/config/config'
+import notifications from '@/store/modules/notifications/notifications'
+import onboarding from '@/store/modules/onboarding/onboarding'
+import sidebar from '@/store/modules/sidebar/sidebar'
 
 import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import Kuma from '@/services/kuma'
+import { Mesh, Policy, ResourceResponse } from '@/types'
 
 type TODO = any
 
-Vue.use(Vuex)
+const initialState = {
+  menu: null,
+  globalLoading: true,
+  meshes: {
+    total: 0,
+    items: [],
+    next: null,
+  } as ResourceResponse<Mesh>,
+  selectedMesh: 'all', // shows all meshes on initial load
+  totalDataplaneCount: 0,
+  version: '',
+  itemQueryNamespace: 'item',
+  totalClusters: 0,
+  serviceSummary: {
+    total: 0,
+    internal: {
+      total: 0,
+      online: 0,
+      offline: 0,
+      partiallyDegraded: 0,
+    },
+    external: {
+      total: 0,
+    },
+  },
+  overviewCharts: {
+    dataplanes: {
+      data: [],
+    },
+    services: {
+      data: [],
+    },
+    zones: {
+      data: [],
+    },
+    zonesCPVersions: {
+      data: [],
+    },
+    kumaDPVersions: {
+      data: [],
+    },
+    envoyVersions: {
+      data: [],
+    },
+  } as Record<string, { data: any[] }>,
+  meshInsight: getEmptyInsight(),
+  meshInsightsFetching: false,
+  serviceInsightsFetching: false,
+  externalServicesFetching: false,
+  zonesInsightsFetching: false,
+  policies: [] as Policy[],
+  policiesByPath: {},
+  policiesByType: {},
+}
 
-export type RootInterface = any
+export type State = typeof initialState & {
+  /**
+   * Explicitly adds the types for all modules here
+   * because the created store for some reason doesn’t have module types at all.
+   */
+  config?: ConfigInterface
+  sidebar?: SidebarInterface
+  notifications?: NotificationsInterface
+  onboarding?: OnboardingInterface
+}
 
-export default (): Module<RootInterface, RootInterface> => ({
+export const storeConfig: StoreOptions<State> = {
   modules: {
     sidebar,
     config,
     notifications,
     onboarding,
   },
-  state: {
-    menu: null,
-    globalLoading: true,
-    meshes: {},
-    selectedMesh: 'all', // shows all meshes on initial load
-    totalDataplaneCount: 0,
-
-    version: '',
-    itemQueryNamespace: 'item',
-    totalClusters: 0,
-
-    // NEW
-    serviceSummary: {
-      total: 0,
-      internal: {
-        total: 0,
-        online: 0,
-        offline: 0,
-        partiallyDegraded: 0,
-      },
-      external: {
-        total: 0,
-      },
-    },
-    overviewCharts: {
-      dataplanes: {
-        data: [],
-      },
-      services: {
-        data: [],
-      },
-      zones: {
-        data: [],
-      },
-      zonesCPVersions: {
-        data: [],
-      },
-      kumaDPVersions: {
-        data: [],
-      },
-      envoyVersions: {
-        data: [],
-      },
-    },
-    meshInsight: getEmptyInsight(),
-    meshInsightsFetching: false,
-    serviceInsightsFetching: false,
-    externalServicesFetching: false,
-    zonesInsightsFetching: false,
-    policies: [],
-    policiesByPath: {},
-    policiesByType: {},
-  } as TODO,
+  state: initialState,
   getters: {
     globalLoading: state => state.globalLoading,
     getMeshList: state => state.meshes,
@@ -96,7 +110,7 @@ export default (): Module<RootInterface, RootInterface> => ({
   },
   mutations: {
     SET_GLOBAL_LOADING: (state, { globalLoading }) => (state.globalLoading = globalLoading),
-    FETCH_ALL_MESHES: (state, meshes) => (state.meshes = meshes),
+    SET_MESHES: (state, meshes) => (state.meshes = meshes),
     SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
     SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
     SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
@@ -110,9 +124,9 @@ export default (): Module<RootInterface, RootInterface> => ({
         [status]: acc[status] + 1,
       })
 
-      const initialState = { online: 0, partially_degraded: 0, offline: 0 }
+      const initialItemsState = { online: 0, partially_degraded: 0, offline: 0 }
 
-      const { online, offline, partially_degraded: partiallyDegraded } = items.reduce(reducer, initialState)
+      const { online, offline, partially_degraded: partiallyDegraded } = items.reduce(reducer, initialItemsState)
 
       const total = online + offline + partiallyDegraded
 
@@ -136,7 +150,7 @@ export default (): Module<RootInterface, RootInterface> => ({
     SET_MESH_INSIGHTS_FETCHING: (state, value) => (state.meshInsightsFetching = value),
     SET_SERVICE_INSIGHTS_FETCHING: (state, value) => (state.serviceInsightsFetching = value),
     SET_EXTERNAL_SERVICES_FETCHING: (state, value) => (state.externalServicesFetching = value),
-    SET_OVERVIEW_CHART_DATA: (state, value) => {
+    SET_OVERVIEW_CHART_DATA: (state, value: { chartName: string, data: any }) => {
       const { chartName, data } = value
 
       state.overviewCharts[chartName].data = data
@@ -186,7 +200,7 @@ export default (): Module<RootInterface, RootInterface> => ({
 
       return Kuma.getAllMeshes(params)
         .then(response => {
-          commit('FETCH_ALL_MESHES', response)
+          commit('SET_MESHES', response)
         })
         .catch(error => {
           console.error(error)
@@ -355,7 +369,7 @@ export default (): Module<RootInterface, RootInterface> => ({
       dispatch('setOverviewEnvoyVersionsChartData')
     },
 
-    setOverviewZonesChartData({ state, commit }, { items = [] }) {
+    setOverviewZonesChartData({ commit }, { items = [] }) {
       const total = items.length
 
       let online = 0
@@ -412,8 +426,9 @@ export default (): Module<RootInterface, RootInterface> => ({
     },
 
     setOverviewDataplanesChartData({ state, commit }) {
-      const { dataplanes = {} } = state.meshInsight
-      const { total, online, partiallyDegraded = 0 } = dataplanes
+      const total = state.meshInsight.dataplanes.total
+      const online = state.meshInsight.dataplanes.online
+      const partiallyDegraded = state.meshInsight.dataplanes.partiallyDegraded || 0
 
       const data = []
 
@@ -441,7 +456,7 @@ export default (): Module<RootInterface, RootInterface> => ({
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'dataplanes', data })
     },
 
-    setOverviewZonesCPVersionsChartData({ state, commit }, { items }) {
+    setOverviewZonesCPVersionsChartData({ commit }, { items }) {
       const chartData = items.reduce((acc: TODO, curr: TODO) => {
         const { subscriptions } = curr.zoneInsight
 
@@ -487,4 +502,4 @@ export default (): Module<RootInterface, RootInterface> => ({
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
     },
   },
-})
+}

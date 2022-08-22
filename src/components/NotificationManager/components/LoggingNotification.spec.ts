@@ -1,10 +1,28 @@
+import { createStore } from 'vuex'
+import { render } from '@testing-library/vue'
+
 import LoggingNotification from './LoggingNotification.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('LoggingNotification.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(LoggingNotification, {
-      store: { modules: { config: { state: { kumaDocsVersion: '1.2.0' } } } },
+    const store = createStore({
+      modules: {
+        config: {
+          namespaced: true,
+          state: {
+            kumaDocsVersion: '1.2.0',
+          },
+          getters: {
+            getKumaDocsVersion: (state) => state.kumaDocsVersion,
+          },
+        },
+      },
+    })
+
+    const { container } = render(LoggingNotification, {
+      global: {
+        plugins: [store],
+      },
     })
 
     expect(container).toMatchSnapshot()

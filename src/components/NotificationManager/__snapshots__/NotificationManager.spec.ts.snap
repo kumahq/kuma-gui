@@ -5,37 +5,36 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
   aria-label="Notifications"
   aria-modal="true"
   class="k-modal modal"
-  data-v-8c25a41e=""
+  data-v-67a512cb=""
   role="dialog"
 >
   <div
     class="k-modal-backdrop modal-backdrop"
-    data-v-8c25a41e=""
+    data-v-67a512cb=""
   >
     <div
       class="k-modal-dialog modal-dialog"
-      data-v-8c25a41e=""
+      data-v-67a512cb=""
     >
       <!---->
       <div
         class="k-modal-content modal-content"
-        data-v-8c25a41e=""
+        data-v-67a512cb=""
       >
         <!---->
         <div
           aria-level="2"
-          class="k-modal-header modal-header header-left mb-5"
-          data-v-8c25a41e=""
+          class="header-left mb-5 k-modal-header modal-header"
+          data-v-67a512cb=""
           role="heading"
         >
+          
           <div
             class="flex items-center"
-            data-v-8c25a41e=""
           >
             <span
-              class="kong-icon mr-2 kong-icon-notificationBell"
-              data-v-429cf642=""
-              data-v-8c25a41e=""
+              class="mr-2 kong-icon-notificationBell kong-icon"
+              data-v-637de6fa=""
             >
               <svg
                 fill="var(--yellow-300)"
@@ -62,89 +61,78 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
               
 
             </span>
-             Notifications
-      
+             Notifications 
           </div>
+          
         </div>
         <div
-          class="k-modal-body modal-body content-left"
-          data-v-8c25a41e=""
+          class="content-left k-modal-body modal-body"
+          data-v-67a512cb=""
         >
-          <div
-            data-v-8c25a41e=""
-          >
+          
+          <div>
             <div
               class="py-4"
             >
               <h3
                 class="font-bold mb-4"
               >
-                
-      Meshes
-    
+                 Meshes 
               </h3>
-               
               <div>
                 <p>
-                  
-        Check the following meshes for suggestions to adjust the configuration
-      
+                   Check the following meshes for suggestions to adjust the configuration 
                 </p>
-                 
                 <div
                   class="pt-4 flex space-x-4"
                 >
+                  
                   <span
                     class="relative d-inline-block"
                   >
                     <div
-                      class="k-badge truncate cursor-pointer hover:scale-110 kbadge-default kbadge-rounded"
-                      data-v-48308bb7=""
+                      class="k-badge-default k-badge-rounded k-badge truncate cursor-pointer hover:scale-110"
+                      data-v-17d30312=""
                     >
                       
-            test-mesh
-          
+                      test-mesh
+                      
                     </div>
-                     
                     <span
                       class="notification-amount"
                     >
                       4
                     </span>
                   </span>
+                  
                 </div>
               </div>
             </div>
-             
             <div
               class="py-4"
             >
               <h3
                 class="font-bold mb-4"
               >
-                
-      Enterprise
-    
+                 Enterprise 
               </h3>
-               
               <p>
-                
-      Kuma’s ecosystem has created enterprise offerings to do more with the product, including advanced integrations and support.
-    
+                 Kuma’s ecosystem has created enterprise offerings to do more with the product, including advanced integrations and support. 
               </p>
-               
               <a
-                class="k-button enterprise-button medium rounded primary"
-                data-v-6ae23500=""
+                class="medium rounded primary k-button enterprise-button"
+                data-v-29036f3a=""
                 href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
                 target="_blank"
                 type="button"
               >
+                
                 <!---->
+                
+                
                 <span
-                  class="kong-icon kong-icon-organizations"
-                  data-v-429cf642=""
-                  data-v-6ae23500=""
+                  class="kong-icon-organizations kong-icon"
+                  data-v-637de6fa=""
                 >
                   <svg
                     fill="white"
@@ -171,31 +159,33 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
                   
 
                 </span>
+                 Kuma Enterprise Offerings 
                 
-
-      Kuma Enterprise Offerings
-    
                 <!---->
               </a>
             </div>
           </div>
+          
         </div>
         <div
           class="k-modal-footer modal-footer d-flex"
-          data-v-8c25a41e=""
+          data-v-67a512cb=""
         >
+          
           <button
-            class="k-button medium rounded outline"
-            data-v-6ae23500=""
-            data-v-8c25a41e=""
+            class="medium rounded outline k-button"
+            data-v-29036f3a=""
             type="button"
           >
+            
             <!---->
             
-        Close
-      
+            
+             Close 
+            
             <!---->
           </button>
+          
         </div>
       </div>
     </div>
@@ -208,88 +198,83 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
   aria-label="Notifications"
   aria-modal="true"
   class="k-modal modal"
-  data-v-8c25a41e=""
+  data-v-67a512cb=""
   role="dialog"
 >
   <div
     class="k-modal-backdrop modal-backdrop"
-    data-v-8c25a41e=""
+    data-v-67a512cb=""
   >
     <div
       class="k-modal-dialog modal-dialog"
-      data-v-8c25a41e=""
+      data-v-67a512cb=""
     >
       <!---->
       <div
         class="k-modal-content modal-content"
-        data-v-8c25a41e=""
+        data-v-67a512cb=""
       >
         <!---->
         <div
           aria-level="2"
-          class="k-modal-header modal-header header-left mb-5"
-          data-v-8c25a41e=""
+          class="header-left mb-5 k-modal-header modal-header"
+          data-v-67a512cb=""
           role="heading"
         >
-          <div
-            data-v-8c25a41e=""
-          >
-            <div
-              data-v-8c25a41e=""
-            >
-              <span
-                data-v-8c25a41e=""
-              >
-                
-            Some of these features are not enabled for
-            
+          
+          <div>
+            <div>
+              <span>
+                 Some of these features are not enabled for 
                 <span
                   class="text-xl tracking-wide"
-                  data-v-8c25a41e=""
                 >
                    "test-mesh"
                 </span>
-                
-            mesh. Consider implementing them.
-
-          
+                 mesh. Consider implementing them. 
               </span>
             </div>
-             
             <button
-              class="k-button mt-4 medium rounded outline"
-              data-v-6ae23500=""
-              data-v-8c25a41e=""
+              class="medium rounded outline k-button mt-4"
+              data-v-29036f3a=""
               type="button"
             >
+              
               <!---->
               
-          ‹ Back to all
-        
+              
+               ‹ Back to all 
+              
               <!---->
             </button>
           </div>
+          
         </div>
         <div
-          class="k-modal-body modal-body content-left"
-          data-v-8c25a41e=""
+          class="content-left k-modal-body modal-body"
+          data-v-67a512cb=""
         >
+          
           <ul
             class="accordion"
-            data-v-8c25a41e=""
           >
+            
+            
             <li
-              class="relative border-b py-2"
+              class="accordion-item relative border-b py-2"
             >
               <button
+                aria-expanded="false"
                 class="accordion-item-header"
               >
+                <!-- This slot will display header -->
+                
                 <div
                   class="flex items-center"
                 >
                   <span
-                    class="kong-icon mr-4 kong-icon-warning"
-                    data-v-429cf642=""
+                    class="mr-4 kong-icon-warning kong-icon"
+                    data-v-637de6fa=""
                   >
                     <svg
                       height="20"
@@ -355,31 +340,31 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     
 
                   </span>
-                   
                   <strong>
                     Observability, Metrics & Service Map
                   </strong>
                 </div>
+                
               </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
+              <transition-stub>
+                <!--v-if-->
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2"
+              class="accordion-item relative border-b py-2"
             >
               <button
+                aria-expanded="false"
                 class="accordion-item-header"
               >
+                <!-- This slot will display header -->
+                
                 <div
                   class="flex items-center"
                 >
                   <span
-                    class="kong-icon mr-4 kong-icon-warning"
-                    data-v-429cf642=""
+                    class="mr-4 kong-icon-warning kong-icon"
+                    data-v-637de6fa=""
                   >
                     <svg
                       height="20"
@@ -445,31 +430,31 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     
 
                   </span>
-                   
                   <strong>
                     Logging
                   </strong>
                 </div>
+                
               </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
+              <transition-stub>
+                <!--v-if-->
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2"
+              class="accordion-item relative border-b py-2"
             >
               <button
+                aria-expanded="false"
                 class="accordion-item-header"
               >
+                <!-- This slot will display header -->
+                
                 <div
                   class="flex items-center"
                 >
                   <span
-                    class="kong-icon mr-4 kong-icon-warning"
-                    data-v-429cf642=""
+                    class="mr-4 kong-icon-warning kong-icon"
+                    data-v-637de6fa=""
                   >
                     <svg
                       height="20"
@@ -535,31 +520,31 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     
 
                   </span>
-                   
                   <strong>
                     Zero-trust security
                   </strong>
                 </div>
+                
               </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
+              <transition-stub>
+                <!--v-if-->
               </transition-stub>
             </li>
             <li
-              class="relative border-b py-2"
+              class="accordion-item relative border-b py-2"
             >
               <button
+                aria-expanded="false"
                 class="accordion-item-header"
               >
+                <!-- This slot will display header -->
+                
                 <div
                   class="flex items-center"
                 >
                   <span
-                    class="kong-icon mr-4 kong-icon-warning"
-                    data-v-429cf642=""
+                    class="mr-4 kong-icon-warning kong-icon"
+                    data-v-637de6fa=""
                   >
                     <svg
                       height="20"
@@ -625,37 +610,40 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                     
 
                   </span>
-                   
                   <strong>
                     Tracing
                   </strong>
                 </div>
+                
               </button>
-               
-              <transition-stub
-                name="accordion"
-              >
-                <!---->
+              <transition-stub>
+                <!--v-if-->
               </transition-stub>
             </li>
+            
+            
           </ul>
+          
         </div>
         <div
           class="k-modal-footer modal-footer d-flex"
-          data-v-8c25a41e=""
+          data-v-67a512cb=""
         >
+          
           <button
-            class="k-button medium rounded outline"
-            data-v-6ae23500=""
-            data-v-8c25a41e=""
+            class="medium rounded outline k-button"
+            data-v-29036f3a=""
             type="button"
           >
+            
             <!---->
             
-        Close
-      
+            
+             Close 
+            
             <!---->
           </button>
+          
         </div>
       </div>
     </div>
@@ -667,66 +655,21 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
 <div>
   <div>
     <div
-      class="k-alert mb-4 info icon"
+      class="info alert icon k-alert mb-4"
       data-testid="notification-info"
-      data-v-825647a6=""
+      data-v-53188520=""
       role="alert"
     >
-      <!---->
-      <!---->
-      <div
-        class="k-alert-msg-text"
-        data-v-825647a6=""
-      >
-        <!---->
-        <div
-          class="k-alert-msg"
-          data-v-825647a6=""
-        >
-          <div
-            class="mr-4"
-            data-v-825647a6=""
-          >
-            <span
-              class="mr-2"
-              data-v-825647a6=""
-            >
-              <strong
-                data-v-825647a6=""
-              >
-                ProTip:
-              </strong>
-              
-          You might want to adjust your meshes configuration
-        
-            </span>
-             
-            <button
-              class="k-button medium rounded outline"
-              data-v-6ae23500=""
-              data-v-825647a6=""
-              type="button"
-            >
-              <!---->
-              
-          Check your meshes!
-        
-              <!---->
-            </button>
-          </div>
-        </div>
-        <!---->
-      </div>
       <button
         aria-label="Close"
         class="close"
-        data-v-825647a6=""
+        data-v-53188520=""
         type="button"
       >
         <span
-          class="kong-icon kong-icon-close info"
-          data-v-419e27ea=""
-          data-v-825647a6=""
+          class="info kong-icon-close kong-icon"
+          data-v-53188520=""
+          data-v-637de6fa=""
         >
           <svg
             fill="none"
@@ -754,14 +697,53 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
         </span>
       </button>
       <div
-        class="k-alert-action info"
-        data-v-825647a6=""
+        class="info k-alert-action ml-3"
+        data-v-53188520=""
       >
         <!---->
         <!---->
       </div>
+      <!---->
+      <!---->
+      <div
+        class="k-alert-msg-text has-dismiss-icon"
+        data-v-53188520=""
+      >
+        <div
+          class="k-alert-msg"
+          data-v-53188520=""
+        >
+          
+          <div
+            class="mr-4"
+          >
+            <span
+              class="mr-2"
+            >
+              <strong>
+                ProTip:
+              </strong>
+               You might want to adjust your meshes configuration 
+            </span>
+            <button
+              class="medium rounded outline k-button"
+              data-v-29036f3a=""
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Check your meshes! 
+              
+              <!---->
+            </button>
+          </div>
+          
+        </div>
+        <!---->
+      </div>
     </div>
-     
     <!---->
   </div>
 </div>

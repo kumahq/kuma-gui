@@ -9,66 +9,62 @@ exports[`CompletedView.vue renders snapshot 1`] = `
       <div
         class="onboarding-container__header"
       >
+        
         <div
           class="relative"
         >
           <h1
             class="onboarding-title"
           >
-            
-    Go to the dashboard
-  
+            Go to the dashboard
           </h1>
-           
-          <!---->
+          <!--v-if-->
         </div>
+        
       </div>
-       
       <div
         class="onboarding-container__content"
       >
         <div
           class="w-full"
         >
+          
           <div
             class="flex justify-center"
           >
-            <img
-              src="@/assets/images/kuma_gui.png?external"
-            />
+            <img />
           </div>
+          
         </div>
       </div>
-       
+      
       <div
         class="mt-4 flex items-center flex-col sm:flex-row justify-center"
       >
-        <!---->
-         
+        <!--v-if-->
         <div>
-          <!---->
-           
+          <!--v-if-->
           <span
             class="inline-block"
           >
             <a
-              aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
-              data-v-6ae23500=""
-              href="#/"
+              class="medium rounded primary k-button navigation-button navigation-button--next"
+              data-v-29036f3a=""
               type="button"
             >
+              
               <!---->
               
-        Completed
-      
+              
+              Completed
+              
               <!---->
             </a>
           </span>
         </div>
       </div>
+      
     </div>
-     
     <div
       class="background-image"
     />

@@ -5,40 +5,44 @@ exports[`AccordionList.vue renders snapshot at the beginning 1`] = `
   <ul
     class="accordion"
   >
+    
+    
     <li
-      class="relative border-b py-2"
+      class="accordion-item relative border-b py-2"
     >
       <button
+        aria-expanded="false"
         class="accordion-item-header"
       >
+        <!-- This slot will display header -->
         
-        Header 1
-      
+         Header 1 
+        
       </button>
-       
-      <transition-stub
-        name="accordion"
-      >
-        <!---->
+      <transition-stub>
+        <!--v-if-->
       </transition-stub>
     </li>
+    
+    
     <li
-      class="relative border-b py-2"
+      class="accordion-item relative border-b py-2"
     >
       <button
+        aria-expanded="false"
         class="accordion-item-header"
       >
+        <!-- This slot will display header -->
         
-        Header 2
-      
+         Header 2 
+        
       </button>
-       
-      <transition-stub
-        name="accordion"
-      >
-        <!---->
+      <transition-stub>
+        <!--v-if-->
       </transition-stub>
     </li>
+    
+    
   </ul>
 </div>
 `;

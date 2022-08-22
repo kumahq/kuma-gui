@@ -6,71 +6,20 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
     class="onboarding-check"
   >
     <div
-      class="k-alert dismissible success icon"
-      data-v-825647a6=""
+      class="success alert icon k-alert dismissible"
+      data-v-53188520=""
       role="alert"
     >
-      <!---->
-      <!---->
-      <div
-        class="k-alert-msg-text"
-        data-v-825647a6=""
-      >
-        <!---->
-        <div
-          class="k-alert-msg"
-          data-v-825647a6=""
-        >
-          <div
-            class="alert-content"
-            data-v-825647a6=""
-          >
-            <div
-              data-v-825647a6=""
-            >
-              <strong
-                data-v-825647a6=""
-              >
-                Welcome to Kuma!
-              </strong>
-               We've detected that you don't have
-          any data plane proxies running yet. We've created an onboarding process to
-          help you!
-        
-            </div>
-             
-            <div
-              data-v-825647a6=""
-            >
-              <a
-                aria-current="page"
-                class="k-button action-button router-link-exact-active router-link-active small rounded primary"
-                data-v-6ae23500=""
-                data-v-825647a6=""
-                href="#/"
-                type="button"
-              >
-                <!---->
-                
-            Get Started
-          
-                <!---->
-              </a>
-            </div>
-          </div>
-        </div>
-        <!---->
-      </div>
       <button
         aria-label="Close"
         class="close"
-        data-v-825647a6=""
+        data-v-53188520=""
         type="button"
       >
         <span
-          class="kong-icon kong-icon-close success"
-          data-v-419e27ea=""
-          data-v-825647a6=""
+          class="success kong-icon-close kong-icon"
+          data-v-53188520=""
+          data-v-637de6fa=""
         >
           <svg
             fill="none"
@@ -98,10 +47,51 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
         </span>
       </button>
       <div
-        class="k-alert-action success"
-        data-v-825647a6=""
+        class="success k-alert-action ml-3"
+        data-v-53188520=""
       >
         <!---->
+        <!---->
+      </div>
+      <!---->
+      <!---->
+      <div
+        class="k-alert-msg-text has-dismiss-icon"
+        data-v-53188520=""
+      >
+        <div
+          class="k-alert-msg"
+          data-v-53188520=""
+        >
+          
+          <div
+            class="alert-content"
+          >
+            <div>
+              <strong>
+                Welcome to Kuma!
+              </strong>
+               We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you! 
+            </div>
+            <div>
+              <router-link
+                class="small rounded primary k-button action-button"
+                data-v-29036f3a=""
+                to="[object Object]"
+                type="button"
+              >
+                
+                <!---->
+                
+                
+                 Get Started 
+                
+                <!---->
+              </router-link>
+            </div>
+          </div>
+          
+        </div>
         <!---->
       </div>
     </div>
