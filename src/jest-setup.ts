@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
 
+// Polyfills `window.fetch` for Jest because it’s run in a Node environment where fetch isn’t available.
+import 'isomorphic-fetch'
+
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { server as setupServer } from '@/services/mocks'
 

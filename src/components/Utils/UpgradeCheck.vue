@@ -27,16 +27,16 @@
 </template>
 
 <script>
-import axios from 'axios'
 import compare from 'semver-compare'
 import { mapGetters } from 'vuex'
+
+import Kuma from '@/services/kuma'
 
 export default {
   name: 'UpgradeCheck',
   data() {
     return {
       url: `${process.env.VUE_APP_INSTALL_URL}${process.env.VUE_APP_UTM}`,
-      latestVerSrc: process.env.VUE_APP_VERSION_URL,
       latestVer: null,
       showNotice: false,
     }
@@ -51,47 +51,38 @@ export default {
     this.checkVersion()
   },
   methods: {
-    checkVersion() {
-      axios
-        .get(this.latestVerSrc)
-        .then((response) => {
-          const status = response.status
-          const data = response.data
+    async checkVersion() {
+      try {
+        this.latestVer = await Kuma.getLatestVersion()
+      } catch (error) {
+        this.showNotice = false
 
-          if (status === 200 && data && data.length > 0) {
-            this.latestVer = data
-          }
-        })
-        .catch((error) => {
-          this.showNotice = false
+        console.error(error)
+      } finally {
+        if (this.latestVer) {
+          // compare the latest version to the currently running version
+          // but only if we were able to set the latest version in the first place.
+          const comparison = compare(this.latestVer, this.currentVer || '')
 
-          console.error(error)
-        })
-        .finally(() => {
-          if (this.latestVer) {
-            // compare the latest version to the currently running version
-            // but only if we were able to set the latest version in the first place.
-            const comparison = compare(this.latestVer, this.currentVer || '')
-
-            if (comparison === 1) {
-              this.showNotice = true
-            } else {
-              this.showNotice = false
-            }
+          if (comparison === 1) {
+            this.showNotice = true
           } else {
-            const timespan = 3 // months
-            const today = new Date()
-            const refDate = new Date('2020-06-03 12:00:00')
-            const later = new Date(refDate.getFullYear(), refDate.getMonth() + timespan, refDate.getDate())
-
-            // compare dates and handle the notice accordingly
-            if (today.getTime() >= later.getTime()) {
-              this.showNotice = true
-            } else {
-              this.showNotice = false
-            }
+            this.showNotice = false
           }
-        })
+        } else {
+          const timespan = 3 // months
+          const today = new Date()
+          const refDate = new Date('2020-06-03 12:00:00')
+          const later = new Date(refDate.getFullYear(), refDate.getMonth() + timespan, refDate.getDate())
+
+          // compare dates and handle the notice accordingly
+          if (today.getTime() >= later.getTime()) {
+            this.showNotice = true
+          } else {
+            this.showNotice = false
+          }
+        }
+      }
     },
   },
 }
