@@ -1,5 +1,6 @@
+import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
-import Vue from 'vue'
+
 import KLoader from './KLoader.vue'
 
 jest.useFakeTimers()
@@ -16,7 +17,7 @@ describe('KLoader.vue', () => {
 
     jest.advanceTimersByTime(2500)
 
-    await Vue.nextTick()
+    await flushPromises()
 
     expect(screen.getByRole('progressbar')).toHaveAttribute('style', 'width: 100%;')
   })

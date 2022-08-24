@@ -647,9 +647,7 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'DataplaneWizardKubernetes',
-  metaInfo: {
-    title: 'Create a new Dataplane on Kubernetes',
-  },
+
   components: {
     FormFragment,
     TabsWidget,

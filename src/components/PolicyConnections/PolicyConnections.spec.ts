@@ -1,18 +1,34 @@
+import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
+import { KCard, KEmptyState, KIcon } from '@kong/kongponents'
+
 import PolicyConnections from './PolicyConnections.vue'
 import { server } from '@/jest-setup'
 
+function renderComponent(props = {}) {
+  return render(PolicyConnections, {
+    global: {
+      components: {
+        KCard,
+        KEmptyState,
+        KIcon,
+      },
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
+    },
+    props,
+  })
+}
+
 describe('PolicyConnections.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = render(PolicyConnections, {
-      props: {
-        mesh: 'foo',
-        policyType: 'foo',
-        policyName: 'foo',
-      },
-      routes: [{ name: 'dataplanes', path: '/' }],
+    const { container } = renderComponent({
+      mesh: 'foo',
+      policyType: 'foo',
+      policyName: 'foo',
     })
 
     await screen.findByText('frontend')
@@ -21,13 +37,10 @@ describe('PolicyConnections.vue', () => {
   })
 
   it('filters result', async () => {
-    render(PolicyConnections, {
-      props: {
-        mesh: 'foo',
-        policyType: 'foo',
-        policyName: 'foo',
-      },
-      routes: [{ name: 'dataplanes', path: '/' }],
+    renderComponent({
+      mesh: 'foo',
+      policyType: 'foo',
+      policyName: 'foo',
     })
 
     await screen.findByText('frontend')
@@ -40,13 +53,10 @@ describe('PolicyConnections.vue', () => {
   })
 
   it('renders loading', () => {
-    render(PolicyConnections, {
-      props: {
-        mesh: 'foo',
-        policyType: 'foo',
-        policyName: 'foo',
-      },
-      routes: [{ name: 'dataplanes', path: '/' }],
+    renderComponent({
+      mesh: 'foo',
+      policyType: 'foo',
+      policyName: 'foo',
     })
 
     expect(screen.getByTestId('label-list-loading-section')).toBeInTheDocument()
@@ -59,13 +69,10 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    render(PolicyConnections, {
-      props: {
-        mesh: 'foo',
-        policyType: 'foo',
-        policyName: 'foo',
-      },
-      routes: [{ name: 'dataplanes', path: '/' }],
+    renderComponent({
+      mesh: 'foo',
+      policyType: 'foo',
+      policyName: 'foo',
     })
 
     expect(await screen.findByText(/An error has occurred while trying to load this data./)).toBeInTheDocument()
@@ -78,13 +85,10 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    render(PolicyConnections, {
-      props: {
-        mesh: 'foo',
-        policyType: 'foo',
-        policyName: 'foo',
-      },
-      routes: [{ name: 'dataplanes', path: '/' }],
+    renderComponent({
+      mesh: 'foo',
+      policyType: 'foo',
+      policyName: 'foo',
     })
 
     expect(await screen.findByText(/There is no data to display./)).toBeInTheDocument()

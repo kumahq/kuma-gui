@@ -9,9 +9,7 @@ import DataplanesView from '@/views/Entities/partial/DataplanesView.vue'
 
 export default {
   name: 'AllDataplanes',
-  metaInfo: {
-    title: 'Data plane proxies',
-  },
+
   components: {
     DataplanesView,
   },

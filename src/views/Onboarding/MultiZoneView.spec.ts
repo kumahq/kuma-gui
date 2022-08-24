@@ -1,20 +1,35 @@
-import { screen } from '@testing-library/vue'
+import { createStore } from 'vuex'
+import { flushPromises } from '@vue/test-utils'
+import { render, screen } from '@testing-library/vue'
+import { KButton, KCard } from '@kong/kongponents'
 
 import MultiZoneView from './MultiZoneView.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import Kuma from '@/services/kuma'
+import { storeConfig } from '@/store/index'
+
+const store = createStore(storeConfig)
+
+function renderComponent() {
+  return render(MultiZoneView, {
+    global: {
+      plugins: [store],
+      components: {
+        KButton,
+        KCard,
+      },
+    },
+  })
+}
 
 describe('MultiZoneView.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(MultiZoneView)
+    const { container } = renderComponent()
 
     expect(container).toMatchSnapshot()
   })
 
   it('detects resources on call and allow to proceed', async () => {
-    renderWithVuex(MultiZoneView, {
-      routes: [],
-    })
+    renderComponent()
 
     expect(await screen.findByTestId('zone-connected')).toBeInTheDocument()
     expect(await screen.findByTestId('zone-ingress-connected')).toBeInTheDocument()
@@ -25,26 +40,20 @@ describe('MultiZoneView.vue', () => {
   it('refetch resources if any not available', async () => {
     jest
       .spyOn(Kuma, 'getAllZoneIngressOverviews')
-      .mockReturnValueOnce({
-        // @ts-ignore
+      .mockResolvedValueOnce({
         total: 0,
       })
-      .mockReturnValueOnce({
-        // @ts-ignore
+      .mockResolvedValueOnce({
         total: 1,
       })
 
-    renderWithVuex(MultiZoneView, {
-      routes: [],
-    })
+    renderComponent()
 
     expect(await screen.findByTestId('zone-connected')).toBeInTheDocument()
     expect(screen.queryByTestId('loading')).toBeInTheDocument()
     expect(screen.queryByTestId('zone-ingress-disconnected')).toBeInTheDocument()
 
-    // Advance asynchronous routines by making sure the queue of micro tasks is processed.
-    // TODO: In @vue/test-utils@2, use `flushPromises` instead.
-    await new Promise((resolve) => setTimeout(resolve, 0))
+    await flushPromises()
 
     expect(await screen.findByTestId('zone-ingress-connected')).toBeInTheDocument()
     expect(Kuma.getAllZoneIngressOverviews).toHaveBeenCalledTimes(2)

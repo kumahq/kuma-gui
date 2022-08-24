@@ -109,8 +109,12 @@ echo "export KUMA_REPORTS_ENABLED=false" >> ~/.profile
 
 Now that you've got Kuma itself setup and running, it's time to get the GUI running in development mode from this repository:
 
-```
-yarn serve
+```sh
+# To run the app with mocked Kuma APIs
+yarn run serve
+
+# To run the app with the actual Kuma APIs
+yarn run serve:with-api
 ```
 
 You can now access the GUI at `http://localhost:8080` 🎉 🚀
@@ -151,14 +155,11 @@ The easiest way to do this is to copy an existing view and rename it accordingly
 be a good starting point. Once you've cloned an existing view and named it appropriately, below are the additional changes
 to be made:
 
-Change the component name and meta info:
+Change the component name:
 
 ```js
 export default {
   name: 'MyNewView',
-  metaInfo: {
-    title: 'My New View',
-  },
 }
 ```
 
@@ -237,9 +238,8 @@ For handling mock data, we use [msw](https://github.com/mswjs/msw).
 
 **NOTE: Mocking is enabled by default.** If you need to disable this in order to see only data coming from Kuma itself:
 
-1. Stop the app with `ctrl+c`
-2. change `VUE_APP_MOCK_API_ENABLED` to `false` in `.env.development`
-3. Restart the app
+1. If the app is running, stop it (with `ctrl+c`).
+2. Run `yarn run serve:with-api` (instead of `yarn run serve`).
 
 #### Creating and modifying mocks
 

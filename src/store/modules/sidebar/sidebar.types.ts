@@ -1,6 +1,3 @@
-import { Module } from 'vuex'
-import { RootInterface } from '../..'
-
 export interface SidebarInterface {
   insights: {
     global: Record<string, number>
@@ -18,5 +15,3 @@ export interface SidebarInterface {
     }
   }
 }
-
-export type SidebarType = Module<SidebarInterface, RootInterface>

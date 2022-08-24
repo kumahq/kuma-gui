@@ -9,140 +9,131 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
       <div
         class="onboarding-container__header"
       >
+        
         <div
           class="relative"
         >
           <h1
             class="onboarding-title"
           >
-            
-    Add services
-  
+            Add services
           </h1>
-           
-          <!---->
+          <!--v-if-->
         </div>
+        
       </div>
-       
       <div
         class="onboarding-container__content"
       >
         <div
           class="w-full"
         >
+          
           <div
             class="h-full w-full flex justify-evenly items-center"
           >
             <div
-              class="cursor-pointer box box--active"
+              class="box box--active cursor-pointer"
               data-testid="box"
             >
+              
               <div>
-                <img
-                  src="@/assets/images/new-service-demo.svg?inline"
-                />
-                 
+                <img />
                 <div
                   class="ml-3"
                 >
                   <p
                     class="uppercase font-bold tracking-wider"
                   >
-                    
-              Demo app
-            
+                     Demo app 
                   </p>
-                   
                   <p>
                     Counter application
                   </p>
                 </div>
               </div>
+              
             </div>
-             
             <div
-              class="cursor-pointer box"
+              class="box cursor-pointer"
               data-testid="box"
             >
+              
               <div
                 class="cursor-pointer"
               >
-                <img
-                  src="@/assets/images/new-service-manually.svg?inline"
-                />
-                 
+                <img />
                 <div
                   class="ml-3"
                 >
                   <p
                     class="uppercase font-bold tracking-wider"
                   >
-                    
-              Manually
-            
+                     Manually 
                   </p>
-                   
                   <p>
                     After this wizard
                   </p>
                 </div>
               </div>
+              
             </div>
           </div>
+          
         </div>
       </div>
-       
+      
       <div
         class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
         <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
-          data-v-6ae23500=""
-          href="#/"
+          class="medium rounded primary k-button navigation-button navigation-button--back"
+          data-v-29036f3a=""
           type="button"
         >
+          
           <!---->
           
-    Back
-  
+          
+           Back 
+          
           <!---->
         </a>
-         
         <div>
           <button
-            class="k-button skip-button small rounded btn-link"
-            data-v-6ae23500=""
+            class="small rounded btn-link k-button skip-button"
+            data-v-29036f3a=""
             type="button"
           >
+            
             <!---->
             
-      Skip Setup
-    
+            
+             Skip Setup 
+            
             <!---->
           </button>
-           
           <span
             class="inline-block"
           >
             <a
-              aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
-              data-v-6ae23500=""
-              href="#/"
+              class="medium rounded primary k-button navigation-button navigation-button--next"
+              data-v-29036f3a=""
               type="button"
             >
+              
               <!---->
               
-        Next
-      
+              
+              Next
+              
               <!---->
             </a>
           </span>
         </div>
       </div>
+      
     </div>
-     
     <div
       class="background-image"
     />

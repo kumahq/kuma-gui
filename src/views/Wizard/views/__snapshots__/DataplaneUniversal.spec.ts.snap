@@ -22,59 +22,53 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
               class="wizard-steps__indicator__controls"
               role="tablist"
             >
+              
               <li
                 aria-controls="wizard-steps__content__item--0"
                 aria-selected="false"
-                class="wizard-steps__indicator__item is-complete"
+                class="is-complete wizard-steps__indicator__item"
               >
                 <span>
-                  
-            General
-          
+                  General
                 </span>
               </li>
               <li
                 aria-controls="wizard-steps__content__item--1"
                 aria-selected="false"
-                class="wizard-steps__indicator__item is-complete"
+                class="is-complete wizard-steps__indicator__item"
               >
                 <span>
-                  
-            Topology
-          
+                  Topology
                 </span>
               </li>
               <li
                 aria-controls="wizard-steps__content__item--2"
                 aria-selected="false"
-                class="wizard-steps__indicator__item is-complete"
+                class="is-complete wizard-steps__indicator__item"
               >
                 <span>
-                  
-            Networking
-          
+                  Networking
                 </span>
               </li>
               <li
                 aria-controls="wizard-steps__content__item--3"
                 aria-selected="true"
-                class="wizard-steps__indicator__item is-complete"
+                class="is-complete wizard-steps__indicator__item"
               >
                 <span>
-                  
-            Install
-          
+                  Install
                 </span>
               </li>
+              
             </ul>
           </header>
-           
           <div
             class="wizard-steps__content"
           >
             <form
               autocomplete="off"
             >
+              
               <div
                 aria-labelledby="wizard-steps__content__item--0"
                 class="wizard-steps__content__item"
@@ -82,7 +76,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                 role="tabpanel"
                 tabindex="0"
               >
-                <!---->
+                <!--v-if-->
               </div>
               <div
                 aria-labelledby="wizard-steps__content__item--1"
@@ -91,7 +85,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                 role="tabpanel"
                 tabindex="0"
               >
-                <!---->
+                <!--v-if-->
               </div>
               <div
                 aria-labelledby="wizard-steps__content__item--2"
@@ -100,7 +94,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                 role="tabpanel"
                 tabindex="0"
               >
-                <!---->
+                <!--v-if-->
               </div>
               <div
                 aria-labelledby="wizard-steps__content__item--3"
@@ -109,68 +103,66 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                 role="tabpanel"
                 tabindex="0"
               >
+                
                 <div>
                   <div>
                     <h3>
-                      
-                Auto-Inject DPP
-              
+                       Auto-Inject DPP 
                     </h3>
-                     
                     <p>
-                      
-                It's time to first generate the credentials so that  will allow
-                the Dataplane to successfully authenticate itself with the control plane,
-                and then finally install the Dataplane process (powered by Envoy).
-              
+                       It's time to first generate the credentials so that Kuma will allow the Dataplane to successfully authenticate itself with the control plane, and then finally install the Dataplane process (powered by Envoy). 
                     </p>
-                     
                     <div
                       class="tab-container"
                       data-testid="tab-container"
                     >
-                      <!---->
-                       
+                      <!--v-if-->
                       <div
                         class="tab__content-container"
                       >
                         <div
                           class="k-tabs"
-                          data-v-93b6f4ca=""
+                          data-v-6bcd6661=""
                         >
                           <ul
                             aria-label="ktabs"
-                            data-v-93b6f4ca=""
+                            data-v-6bcd6661=""
                             role="tablist"
                           >
+                            
                             <li
                               aria-controls="panel-0"
                               aria-selected="true"
-                              class="tab-item active"
-                              data-v-93b6f4ca=""
+                              class="active tab-item"
+                              data-v-6bcd6661=""
                               id="universal-tab"
                               role="tab"
                               tabindex="0"
                             >
                               <a
                                 class="tab-link"
-                                data-v-93b6f4ca=""
+                                data-v-6bcd6661=""
                               >
+                                
                                 Universal
+                                
                               </a>
                             </li>
+                            
                           </ul>
+                          
                           <div
                             aria-labelledby="universal-tab"
                             class="tab-container"
-                            data-v-93b6f4ca=""
+                            data-v-6bcd6661=""
                             id="panel-0"
                             role="tabpanel"
                             tabindex="0"
                           >
+                            
+                            
                             <div
                               class="code-view"
-                              data-v-93b6f4ca=""
                             >
                               <div
                                 class="code-view-content"
@@ -178,54 +170,60 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                 <section
                                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                   aria-label="Generate Dataplane Token"
-                                  class="kong-card noBorder"
-                                  data-v-3bb7bf60=""
+                                  class="noBorder kong-card"
+                                  data-v-5adb63fa=""
                                 >
                                   <div
                                     class="k-card-header d-flex mb-3"
-                                    data-v-3bb7bf60=""
+                                    data-v-5adb63fa=""
                                   >
                                     <!---->
                                     <div
                                       class="k-card-title mb-3"
-                                      data-v-3bb7bf60=""
+                                      data-v-5adb63fa=""
                                     >
                                       <h4
-                                        data-v-3bb7bf60=""
+                                        data-v-5adb63fa=""
                                       >
+                                        
                                         Generate Dataplane Token
+                                        
                                       </h4>
                                     </div>
                                     <div
                                       class="k-card-actions"
-                                      data-v-3bb7bf60=""
+                                      data-v-5adb63fa=""
                                     >
+                                      
+                                      
                                       <div
                                         aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                        data-v-3bb7bf60=""
-                                        data-v-6b00e241=""
+                                        aria-expanded="false"
+                                        data-v-9bbde9b2=""
                                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                         role="button"
                                       >
+                                        
                                         <button
-                                          class="k-button medium rounded primary"
-                                          data-v-6ae23500=""
-                                          data-v-6b00e241=""
+                                          class="medium rounded primary k-button"
+                                          data-v-29036f3a=""
                                           type="button"
                                         >
+                                          
                                           <!---->
                                           
-              Copy Command to Clipboard
-            
+                                          
+                                          Copy Command to Clipboard
+                                          
                                           <!---->
                                         </button>
+                                        
                                         <transition-stub
-                                          data-v-6b00e241=""
-                                          name="fade"
+                                          data-v-9bbde9b2=""
                                         >
                                           <div
                                             class="k-popover"
-                                            data-v-6b00e241=""
+                                            data-v-9bbde9b2=""
                                             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                             role="region"
                                             style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -233,39 +231,46 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                             <!---->
                                             <div
                                               class="k-popover-content"
-                                              data-v-6b00e241=""
+                                              data-v-9bbde9b2=""
                                             >
+                                              
                                               <div>
                                                 <p>
                                                   Entity copied to clipboard!
                                                 </p>
                                               </div>
+                                              
                                             </div>
                                             <!---->
                                           </div>
                                         </transition-stub>
                                       </div>
+                                      
+                                      
                                     </div>
                                   </div>
                                   <!---->
                                   <div
                                     class="k-card-content d-flex"
-                                    data-v-3bb7bf60=""
+                                    data-v-5adb63fa=""
                                   >
                                     <div
                                       class="k-card-body"
-                                      data-v-3bb7bf60=""
+                                      data-v-5adb63fa=""
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
+                                      
                                       <pre
                                         class="code-block language-bash"
-                                        data-v-3bb7bf60=""
-                                        tabindex="0"
+                                        data-testid="code-block"
                                       >
-                                        <code
-                                          class="language-bash"
-                                        >
-                                          kumactl generate dataplane-token --name
+                                        <code>
+                                          kumactl generate dataplane-token 
+                                          <span
+                                            class="token parameter variable"
+                                          >
+                                            --name
+                                          </span>
                                           <span
                                             class="token operator"
                                           >
@@ -280,24 +285,23 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                            kuma-token-testMesh-4fzzzxtestMesh
                                         </code>
                                       </pre>
+                                      
                                     </div>
                                     <!---->
                                   </div>
                                 </section>
                               </div>
-                               
                               <div>
-                                <!---->
-                                 
-                                <!---->
-                                 
-                                <!---->
+                                <!-- loading state -->
+                                <!--v-if-->
+                                <!-- no data to load -->
+                                <!--v-if-->
+                                <!-- error -->
+                                <!--v-if-->
                               </div>
                             </div>
-                             
                             <div
                               class="code-view"
-                              data-v-93b6f4ca=""
                             >
                               <div
                                 class="code-view-content"
@@ -305,54 +309,60 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                 <section
                                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                   aria-label="Start Dataplane Process"
-                                  class="kong-card noBorder"
-                                  data-v-3bb7bf60=""
+                                  class="noBorder kong-card"
+                                  data-v-5adb63fa=""
                                 >
                                   <div
                                     class="k-card-header d-flex mb-3"
-                                    data-v-3bb7bf60=""
+                                    data-v-5adb63fa=""
                                   >
                                     <!---->
                                     <div
                                       class="k-card-title mb-3"
-                                      data-v-3bb7bf60=""
+                                      data-v-5adb63fa=""
                                     >
                                       <h4
-                                        data-v-3bb7bf60=""
+                                        data-v-5adb63fa=""
                                       >
+                                        
                                         Start Dataplane Process
+                                        
                                       </h4>
                                     </div>
                                     <div
                                       class="k-card-actions"
-                                      data-v-3bb7bf60=""
+                                      data-v-5adb63fa=""
                                     >
+                                      
+                                      
                                       <div
                                         aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                        data-v-3bb7bf60=""
-                                        data-v-6b00e241=""
+                                        aria-expanded="false"
+                                        data-v-9bbde9b2=""
                                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                         role="button"
                                       >
+                                        
                                         <button
-                                          class="k-button medium rounded primary"
-                                          data-v-6ae23500=""
-                                          data-v-6b00e241=""
+                                          class="medium rounded primary k-button"
+                                          data-v-29036f3a=""
                                           type="button"
                                         >
+                                          
                                           <!---->
                                           
-              Copy Command to Clipboard
-            
+                                          
+                                          Copy Command to Clipboard
+                                          
                                           <!---->
                                         </button>
+                                        
                                         <transition-stub
-                                          data-v-6b00e241=""
-                                          name="fade"
+                                          data-v-9bbde9b2=""
                                         >
                                           <div
                                             class="k-popover"
-                                            data-v-6b00e241=""
+                                            data-v-9bbde9b2=""
                                             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                             role="region"
                                             style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -360,38 +370,40 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                             <!---->
                                             <div
                                               class="k-popover-content"
-                                              data-v-6b00e241=""
+                                              data-v-9bbde9b2=""
                                             >
+                                              
                                               <div>
                                                 <p>
                                                   Entity copied to clipboard!
                                                 </p>
                                               </div>
+                                              
                                             </div>
                                             <!---->
                                           </div>
                                         </transition-stub>
                                       </div>
+                                      
+                                      
                                     </div>
                                   </div>
                                   <!---->
                                   <div
                                     class="k-card-content d-flex"
-                                    data-v-3bb7bf60=""
+                                    data-v-5adb63fa=""
                                   >
                                     <div
                                       class="k-card-body"
-                                      data-v-3bb7bf60=""
+                                      data-v-5adb63fa=""
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
+                                      
                                       <pre
                                         class="code-block language-bash"
-                                        data-v-3bb7bf60=""
-                                        tabindex="0"
+                                        data-testid="code-block"
                                       >
-                                        <code
-                                          class="language-bash"
-                                        >
+                                        <code>
                                           kuma-dp run 
                                           <span
                                             class="token punctuation"
@@ -412,7 +424,12 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                             \\
                                           </span>
                                           
-      --dataplane
+      
+                                          <span
+                                            class="token parameter variable"
+                                          >
+                                            --dataplane
+                                          </span>
                                           <span
                                             class="token operator"
                                           >
@@ -450,55 +467,57 @@ networking:
                                           kuma-token-testMesh-4fzzzxtestMesh
                                         </code>
                                       </pre>
+                                      
                                     </div>
                                     <!---->
                                   </div>
                                 </section>
                               </div>
-                               
                               <div>
-                                <!---->
-                                 
-                                <!---->
-                                 
-                                <!---->
+                                <!-- loading state -->
+                                <!--v-if-->
+                                <!-- no data to load -->
+                                <!--v-if-->
+                                <!-- error -->
+                                <!--v-if-->
                               </div>
                             </div>
+                            
+                            
                           </div>
+                          
                         </div>
-                         
-                        <!---->
+                        <!--v-if-->
                       </div>
                     </div>
                   </div>
-                   
                   <div
                     class="scanner"
                   >
                     <div
                       class="scanner-content"
                     >
+                      <!-- loading state -->
                       <section
                         class="empty-state-wrapper"
-                        data-v-25517d95=""
+                        data-v-5b55eb64=""
                       >
                         <div
                           class="empty-state-title"
-                          data-v-25517d95=""
+                          data-v-5b55eb64=""
                         >
                           <!---->
                           <div
                             class="k-empty-state-title-header mt-4 mb-4"
-                            data-v-25517d95=""
+                            data-v-5b55eb64=""
                           >
+                            
                             <div
                               class="card-icon mb-3"
-                              data-v-25517d95=""
                             >
                               <span
-                                class="kong-icon kong-icon-spinner"
-                                data-v-25517d95=""
-                                data-v-429cf642=""
+                                class="kong-icon-spinner kong-icon"
+                                data-v-637de6fa=""
                               >
                                 <svg
                                   fill="rgba(0, 0, 0, 0.1)"
@@ -536,115 +555,113 @@ networking:
 
                               </span>
                             </div>
-                             
-                            <!---->
-                             
-                            <h3
-                              data-v-25517d95=""
-                            >
+                            <!--v-if-->
+                            
+                            <h3>
                               Searching…
                             </h3>
-                             
-                            <!---->
+                            
+                            <!--v-if-->
+                            
                           </div>
                         </div>
                         <div
                           class="empty-state-content"
-                          data-v-25517d95=""
+                          data-v-5b55eb64=""
                         >
                           <div
                             class="k-empty-state-message mb-6"
-                            data-v-25517d95=""
+                            data-v-5b55eb64=""
                           >
-                            <p
-                              data-v-25517d95=""
-                            >
+                            
+                            
+                            <p>
                               We are looking for your dataplane.
                             </p>
-                             
-                            <!---->
+                            
+                            <!--v-if-->
+                            
                           </div>
                           <div
                             class="k-empty-state-cta"
-                            data-v-25517d95=""
+                            data-v-5b55eb64=""
                           >
+                            
                             <!---->
+                            
                           </div>
                         </div>
                       </section>
                     </div>
                   </div>
                 </div>
+                
               </div>
+              
             </form>
           </div>
-           
           <footer
             class="wizard-steps__footer"
           >
             <button
-              class="k-button medium rounded outline"
-              data-v-6ae23500=""
+              class="medium rounded outline k-button"
+              data-v-29036f3a=""
               style=""
               type="button"
             >
+              
               <!---->
               
-        ‹ Previous
-      
+              
+               ‹ Previous 
+              
               <!---->
             </button>
-             
             <button
-              class="k-button medium rounded primary"
-              data-v-6ae23500=""
+              class="medium rounded primary k-button"
+              data-v-29036f3a=""
               style="display: none;"
               type="button"
             >
+              
               <!---->
               
-        Next ›
-      
+              
+               Next › 
+              
               <!---->
             </button>
           </footer>
         </div>
-         
         <aside
           class="wizard-steps__sidebar"
         >
           <div
             class="wizard-steps__sidebar__content"
           >
+            
             <div
               class="wizard-steps__sidebar__item wizard-steps__sidebar__item--0"
             >
+              
               <h3>
                 Dataplane
               </h3>
-               
               <p>
-                
-            In , a Dataplane resource represents a data plane proxy running
-            alongside one of your services. Data plane proxies can be added in any Mesh
-            that you may have created, and in Kubernetes, they will be auto-injected
-            by .
-          
+                 In Kuma, a Dataplane resource represents a data plane proxy running alongside one of your services. Data plane proxies can be added in any Mesh that you may have created, and in Kubernetes, they will be auto-injected by Kuma. 
               </p>
+              
             </div>
             <div
               class="wizard-steps__sidebar__item wizard-steps__sidebar__item--1"
             >
+              
               <h3>
                 Example
               </h3>
-               
               <p>
-                
-            Below is an example of a Dataplane resource output:
-          
+                 Below is an example of a Dataplane resource output: 
               </p>
-               
               <code
                 class="block"
               >
@@ -661,29 +678,32 @@ networking:
       kuma.io/service: echo
                 </pre>
               </code>
+              
             </div>
             <div
               class="wizard-steps__sidebar__item wizard-steps__sidebar__item--2"
             >
+              
+              <!-- wizard switcher -- based on environment -->
               <div
                 class="wizard-switcher"
               >
                 <section
-                  class="empty-state-wrapper my-6 wizard-empty-state is-error"
-                  data-v-25517d95=""
+                  class="is-error empty-state-wrapper my-6 wizard-empty-state"
+                  data-v-5b55eb64=""
                 >
                   <div
                     class="empty-state-title"
-                    data-v-25517d95=""
+                    data-v-5b55eb64=""
                   >
                     <div
-                      class="k-empty-state-icon card-icon mb-3 warning-icon"
-                      data-v-25517d95=""
+                      class="warning-icon k-empty-state-icon card-icon mb-3"
+                      data-v-5b55eb64=""
                     >
                       <span
-                        class="kong-icon kong-icon-warning"
-                        data-v-25517d95=""
-                        data-v-419e27ea=""
+                        class="kong-icon-warning kong-icon"
+                        data-v-5b55eb64=""
+                        data-v-637de6fa=""
                       >
                         <svg
                           height="50"
@@ -752,27 +772,37 @@ networking:
                     </div>
                     <div
                       class="k-empty-state-title-header mt-4 mb-4"
-                      data-v-25517d95=""
-                    />
+                      data-v-5b55eb64=""
+                    >
+                      
+                      
+                    </div>
                   </div>
                   <div
                     class="empty-state-content"
-                    data-v-25517d95=""
+                    data-v-5b55eb64=""
                   >
                     <div
                       class="k-empty-state-message mb-6"
-                      data-v-25517d95=""
-                    />
+                      data-v-5b55eb64=""
+                    >
+                      
+                      
+                    </div>
                     <div
                       class="k-empty-state-cta"
-                      data-v-25517d95=""
+                      data-v-5b55eb64=""
                     >
+                      
                       <!---->
+                      
                     </div>
                   </div>
                 </section>
               </div>
+              
             </div>
+            
           </div>
         </aside>
       </div>

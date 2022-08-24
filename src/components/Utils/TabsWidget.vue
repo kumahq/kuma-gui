@@ -82,8 +82,9 @@
 </template>
 
 <script>
-import KEmptyState from '@kongponents/kemptystate'
+import { KEmptyState } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
+
 import { datadogLogEvents } from '@/datadogEvents'
 
 export default {
@@ -121,6 +122,9 @@ export default {
       default: null,
     },
   },
+
+  emits: ['onTabChange'],
+
   data() {
     return {
       tabState: this.initialTabOverride && `#${this.initialTabOverride}`,
@@ -162,7 +166,7 @@ export default {
 <style lang="scss" scoped>
 .tab-container {
   --tab-container-margin: var(--spacing-lg) 0 0 0;
-  --tab-header-margin: 0 -10px var(--spacing-md) -10px;
+  --tab-header-margin: 0 0 var(--spacing-md) 0;
   --tab-header-padding: 0 var(--spacing-md);
   --tab-header-title-font-size: var(--type-md);
   --tab-header-title-font-weight: 500;
@@ -202,6 +206,10 @@ export default {
   > h3 {
     padding: 0 10px;
   }
+}
+
+.tab__header > :not(:first-child) {
+  margin-left: var(--spacing-md);
 }
 
 .tab__content-container {

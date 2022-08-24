@@ -1,10 +1,10 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { RootInterface } from '../..'
+import { State } from '../../index'
 import { ConfigInterface } from './config.types'
 import Kuma from '@/services/kuma'
 
-const state: ConfigInterface = {
+const initialConfigState: ConfigInterface = {
   status: null,
   tagline: null,
   version: null,
@@ -20,7 +20,7 @@ const mutations: MutationTree<ConfigInterface> = {
   SET_KUMA_DOCS_VERSION: (state, kumaDocsVersion) => (state.kumaDocsVersion = kumaDocsVersion),
 }
 
-const getters: GetterTree<ConfigInterface, RootInterface> = {
+const getters: GetterTree<ConfigInterface, State> = {
   getStatus: state => state.status,
   getConfig: state => state.clientConfig,
   getEnvironment: state => state.clientConfig?.environment,
@@ -29,9 +29,9 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   getVersion: state => state.version,
   getKumaDocsVersion: state => state.kumaDocsVersion,
   getConfigurationType: state => state.clientConfig?.store?.type,
-  featureFlags: state => ([]),
+  featureFlags: () => ([]),
 
-  getMulticlusterStatus: (state, getters) => {
+  getMulticlusterStatus: (_state, getters) => {
     // is Kuma running in Multi-Zone mode?
 
     let status
@@ -51,7 +51,7 @@ const getters: GetterTree<ConfigInterface, RootInterface> = {
   },
 }
 
-const actions: ActionTree<ConfigInterface, RootInterface> = {
+const actions: ActionTree<ConfigInterface, State> = {
   bootstrapConfig({ dispatch }) {
     const infoPromise = dispatch('getInfo')
     const configPromise = dispatch('getConfig')
@@ -99,10 +99,12 @@ const actions: ActionTree<ConfigInterface, RootInterface> = {
   },
 }
 
-export default {
+const configModule = {
   namespaced: true,
-  state,
+  state: initialConfigState,
   getters,
   mutations,
   actions,
 }
+
+export default configModule

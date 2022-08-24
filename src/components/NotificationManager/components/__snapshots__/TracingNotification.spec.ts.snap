@@ -8,11 +8,8 @@ exports[`TracingNotification.vue renders snapshot 1`] = `
     <p
       class="mb-4"
     >
-      
-    A traffic trace policy lets you enable tracing logs and a third-party tracing solution to send them to.
-  
+       A traffic trace policy lets you enable tracing logs and a third-party tracing solution to send them to. 
     </p>
-     
     <ul
       class="list-disc pl-4"
     >
@@ -21,9 +18,7 @@ exports[`TracingNotification.vue renders snapshot 1`] = `
           href="https://kuma.io/docs/1.2.0/policies/traffic-trace/"
           target="_blank"
         >
-          
-        Traffic Trace policy documentation
-      
+           Traffic Trace policy documentation 
         </a>
       </li>
     </ul>

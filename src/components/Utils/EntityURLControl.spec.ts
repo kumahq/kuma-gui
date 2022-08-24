@@ -1,56 +1,51 @@
 import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { KButton, KClipboardProvider, KIcon, KPop } from '@kong/kongponents'
+
 import EntityURLControl from './EntityURLControl.vue'
 
-describe('EntityURLControl.vue', () => {
-  it('renders snapshot', () => {
-    const { container } = render(EntityURLControl, {
+function renderComponent(props: any, mesh = 'default') {
+  return render(EntityURLControl, {
+    global: {
+      components: {
+        KButton,
+        KClipboardProvider,
+        KIcon,
+        KPop,
+      },
       mocks: {
         $route: {
           params: {
-            mesh: 'default',
+            mesh,
           },
         },
       },
-      props: {
-        name: 'foo',
-      },
+    },
+    props,
+  })
+}
+
+describe('EntityURLControl.vue', () => {
+  it('renders snapshot', () => {
+    const { container } = renderComponent({
+      name: 'foo',
     })
 
     expect(container).toMatchSnapshot()
   })
 
   it('display custom message', () => {
-    render(EntityURLControl, {
-      mocks: {
-        $route: {
-          params: {
-            mesh: 'default',
-          },
-        },
-      },
-      props: {
-        name: 'foo',
-        copyButtonText: 'copy',
-      },
+    renderComponent({
+      name: 'foo',
+      copyButtonText: 'copy',
     })
 
     expect(screen.getByText('copy')).toBeInTheDocument()
   })
 
   it('render for mesh all', () => {
-    render(EntityURLControl, {
-      mocks: {
-        $route: {
-          params: {
-            mesh: 'all',
-          },
-        },
-      },
-      props: {
-        name: 'foo',
-      },
-    })
+    renderComponent({
+      name: 'foo',
+    }, 'all')
 
     expect(screen.queryByTestId('entity-url-control')).toBeInTheDocument()
   })

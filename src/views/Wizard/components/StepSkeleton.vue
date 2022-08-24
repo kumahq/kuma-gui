@@ -79,10 +79,7 @@
 </template>
 
 <script>
-import updateQuery from '@/views/Wizard/mixins/updateQuery'
-
 export default {
-  mixins: [updateQuery],
   props: {
     steps: {
       type: Array,
@@ -102,6 +99,9 @@ export default {
       default: true,
     },
   },
+
+  emits: ['goToNextStep', 'goToStep', 'goToPrevStep'],
+
   data() {
     return {
       start: 0,
@@ -152,6 +152,28 @@ export default {
       this.start--
       this.updateQuery('step', this.start)
       this.$emit('goToPrevStep', this.step)
+    },
+    updateQuery(query, value) {
+      const router = this.$router
+      const route = this.$route
+
+      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
+      if (!route.query) {
+        // if the URL contains no current queries, simply add the query and value
+        router
+          .push({
+            query: {
+              [query]: value,
+            },
+          })
+          .catch(() => { })
+      } else {
+        router
+          .push({
+            query: Object.assign({}, route.query, { [query]: value }),
+          })
+          .catch(() => { })
+      }
     },
     setStartingStep() {
       const query = this.$route.query.step
@@ -219,6 +241,51 @@ export default {
     font-style: italic;
   }
 }
+
+.wizard-steps__content {
+  p,
+  h2,
+  h3,
+  h4 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  h2 {
+    font-size: var(--type-xxl);
+  }
+
+  h3 {
+    font-size: var(--type-xl);
+  }
+
+  h4 {
+    font-size: var(--type-lg);
+  }
+}
+
+.wizard-steps__sidebar__item {
+  &:not(:last-of-type) {
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
+    border-bottom: 1px solid #e6e7e8;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-size: var(--type-lg);
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+
+  p {
+    &:not(:last-of-type) {
+      margin-bottom: var(--spacing-sm);
+    }
+  }
+}
 </style>
 
 <style lang="scss" scoped>
@@ -279,30 +346,6 @@ $bp-max-width: 1219px;
 
 .wizard-steps__sidebar__content {
   padding: 32px;
-}
-
-.wizard-steps__sidebar__item {
-  &:not(:last-of-type) {
-    margin-bottom: var(--spacing-xl);
-    padding-bottom: var(--spacing-xl);
-    border-bottom: 1px solid #e6e7e8;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: var(--type-lg);
-    margin: 0 0 var(--spacing-sm) 0;
-  }
-
-  p {
-    &:not(:last-of-type) {
-      margin-bottom: var(--spacing-sm);
-    }
-  }
 }
 
 .wizard-steps__indicator {
@@ -372,27 +415,6 @@ $bp-max-width: 1219px;
 
 .wizard-steps__content__item {
   outline: 0 !important;
-}
-
-.wizard-steps__content {
-  p,
-  h2,
-  h3,
-  h4 {
-    margin-bottom: var(--spacing-md);
-  }
-
-  h2 {
-    font-size: var(--type-xxl);
-  }
-
-  h3 {
-    font-size: var(--type-xl);
-  }
-
-  h4 {
-    font-size: var(--type-lg);
-  }
 }
 
 .wizard-steps__footer {

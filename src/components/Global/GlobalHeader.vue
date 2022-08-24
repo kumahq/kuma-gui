@@ -139,7 +139,7 @@ export default {
 
     document.body.style.paddingTop = 'var(--topbar-height)'
   },
-  destroyed() {
+  unmounted() {
     document.body.style.paddingTop = this.initialBodyPaddingTop
   },
 }

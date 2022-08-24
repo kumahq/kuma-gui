@@ -6,83 +6,92 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
     class="tab-container"
     data-testid="tab-container"
   >
-    <!---->
-     
+    <!--v-if-->
     <div
       class="tab__content-container"
     >
       <div
         class="k-tabs"
-        data-v-93b6f4ca=""
+        data-v-6bcd6661=""
       >
         <ul
           aria-label="ktabs"
-          data-v-93b6f4ca=""
+          data-v-6bcd6661=""
           role="tablist"
         >
+          
           <li
             aria-controls="panel-0"
             aria-selected="true"
-            class="tab-item active"
-            data-v-93b6f4ca=""
+            class="active tab-item"
+            data-v-6bcd6661=""
             id="universal-tab"
             role="tab"
             tabindex="0"
           >
             <a
               class="tab-link"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
             >
+              
               Universal
+              
             </a>
           </li>
           <li
             aria-controls="panel-1"
             aria-selected="false"
             class="tab-item"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="kubernetes-tab"
             role="tab"
             tabindex="0"
           >
             <a
               class="tab-link"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
             >
+              
               Kubernetes
+              
             </a>
           </li>
+          
         </ul>
+        
         <div
           aria-labelledby="universal-tab"
           class="tab-container"
-          data-v-93b6f4ca=""
+          data-v-6bcd6661=""
           id="panel-0"
           role="tabpanel"
           tabindex="0"
         >
-          <div
-            data-v-93b6f4ca=""
-          >
+          
+          
+          <div>
             Universal
           </div>
+          
+          
         </div>
         <div
           aria-labelledby="kubernetes-tab"
           class="tab-container"
-          data-v-93b6f4ca=""
+          data-v-6bcd6661=""
           id="panel-1"
           role="tabpanel"
           tabindex="0"
         >
           <!---->
         </div>
+        
       </div>
-       
       <div>
-        <!---->
-         
-        <!---->
+        <!-- loading state -->
+        <!--v-if-->
+        <!-- error has occurred -->
+        <!--v-if-->
       </div>
     </div>
   </div>

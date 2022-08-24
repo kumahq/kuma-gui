@@ -8,11 +8,8 @@ exports[`MetricsNotification.vue renders snapshot 1`] = `
     <p
       class="mb-4"
     >
-      
-    A traffic metrics policy lets you collect key data for observability of your service mesh.
-  
+       A traffic metrics policy lets you collect key data for observability of your service mesh. 
     </p>
-     
     <ul
       class="list-disc pl-4"
     >
@@ -21,9 +18,7 @@ exports[`MetricsNotification.vue renders snapshot 1`] = `
           href="https://kuma.io/docs/1.2.0/policies/traffic-metrics/"
           target="_blank"
         >
-          
-        Traffic Metrics policy documentation
-      
+           Traffic Metrics policy documentation 
         </a>
       </li>
     </ul>

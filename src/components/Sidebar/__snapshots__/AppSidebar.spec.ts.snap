@@ -12,54 +12,55 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
       <div
         class="top-nav"
       >
+        
         <div
-          class="nav-item is-menu-item"
+          class="is-menu-item nav-item"
           data-testid="home"
           iconcustom=""
           subnav="[object Object]"
         >
-          <a
-            aria-current="page"
-            class="router-link-exact-active router-link-active"
-            href="#/"
-          >
+          <a>
             <div
               class="nav-icon"
             >
-              <!---->
+              
+              <!--v-if-->
+              
             </div>
-             
+            <!-- nav title separator -->
+            
+            <!-- nav link -->
             <div
               class="nav-link"
             >
               
-        Service Mesh
-
-        
-              <!---->
+              Service Mesh 
+              <!--v-if-->
+              
             </div>
+            
           </a>
         </div>
+        
       </div>
-       
       <div
         class="bottom-nav"
       >
+        
         <div
-          class="nav-item is-menu-item"
+          class="is-menu-item nav-item"
           data-testid="diagnostics"
         >
-          <a
-            aria-current="page"
-            class="router-link-exact-active router-link-active"
-            href="#/"
-          >
+          <a>
             <div
               class="nav-icon"
             >
+              
               <span
-                class="kong-icon kong-icon-gearFilled"
-                data-v-429cf642=""
+                class="kong-icon-gearFilled kong-icon"
+                data-v-637de6fa=""
+                height="18"
+                width="18"
               >
                 <svg
                   height="16"
@@ -85,28 +86,32 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
                 
 
               </span>
+              
             </div>
-             
+            <!-- nav title separator -->
+            
+            <!-- nav link -->
             <div
               class="nav-link"
             >
               
-        Diagnostics
-
-        
-              <!---->
+              Diagnostics 
+              <!--v-if-->
+              
             </div>
+            
           </a>
         </div>
+        
       </div>
     </div>
-     
     <div
       class="secondary-nav"
     >
       <div
         class="mt-3"
       >
+        
         <div
           class="px-4 pb-4"
         >
@@ -114,11 +119,8 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             <h3
               class="menu-title uppercase"
             >
-              
-      Filter by Mesh:
-    
+               Filter by Mesh: 
             </h3>
-             
             <select
               class="mesh-selector"
               id="mesh-selector"
@@ -127,414 +129,345 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               <option
                 value="all"
               >
-                
-        All Meshes
-      
+                 All Meshes 
               </option>
-               
+              
+              
             </select>
           </div>
         </div>
+        
       </div>
-       
+      <!-- &lt;div
+      class="arrow"
+      @click="handleToggle"
+    /&gt; -->
       <div
         class="subnav-title"
       >
         <span
           class="text-uppercase"
         >
-          <a
-            aria-current="page"
-            class="router-link-exact-active router-link-active"
-            href="#/"
-          >
-            
-          Service Mesh
-        
+          
+          <a>
+            Service Mesh
           </a>
+          
         </span>
       </div>
-        
+      
+      
+      
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="global-overview"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Overview
-
-        
-            <!---->
+            Overview 
+            <!--v-if-->
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="mesh-child"
         pathflip="true"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Meshes
-
-        
+            Meshes 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title"
+        class="is-menu-item is-title nav-item"
         data-testid=""
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
           <div
             class="title-text"
           >
             <span
               class="text-uppercase"
             >
-              
-        Zones
-      
+              Zones
             </span>
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="zones"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Zone CPs
-
-        
+            Zone CPs 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="zoneingresses"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Zone Ingresses
-
-        
+            Zone Ingresses 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="zoneegresses"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Zone Egresses
-
-        
+            Zone Egresses 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title"
+        class="is-menu-item is-title nav-item"
         data-testid=""
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
           <div
             class="title-text"
           >
             <span
               class="text-uppercase"
             >
-              
-        Services
-      
+              Services
             </span>
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="internal-services"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Internal
-
-        
+            Internal 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="external-services"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        External
-
-        
+            External 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title"
+        class="is-menu-item is-title nav-item"
         data-testid=""
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
           <div
             class="title-text"
           >
             <span
               class="text-uppercase"
             >
-              
-        Data plane proxies
-      
+              Data plane proxies
             </span>
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item"
+        class="is-menu-item nav-item"
         data-testid="dataplanes"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        All
-
-        
+            All 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-nested"
+        class="is-menu-item is-nested nav-item"
         data-testid="standard-dataplanes"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Standard
-
-        
+            Standard 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-nested"
+        class="is-menu-item is-nested nav-item"
         data-testid="gateway-dataplanes"
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
+          
+          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-        Gateway
-
-        
+            Gateway 
             <span
               class="amount amount--empty"
             >
-              
-
-          0
-        
+              0
             </span>
+            
           </div>
+          
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title"
+        class="is-menu-item is-title nav-item"
         data-testid=""
       >
-        <a
-          aria-current="page"
-          class="router-link-exact-active router-link-active"
-          href="#/"
-        >
-          <!---->
-           
+        <a>
+          <!--v-if-->
+          <!-- nav title separator -->
           <div
             class="title-text"
           >
             <span
               class="text-uppercase"
             >
-              
-        Policies
-      
+              Policies
             </span>
           </div>
         </a>
       </div>
+      
     </div>
   </aside>
 </div>

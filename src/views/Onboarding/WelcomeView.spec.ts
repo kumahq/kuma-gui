@@ -1,22 +1,54 @@
+import { createStore } from 'vuex'
+import { RouterLinkStub } from '@vue/test-utils'
+import { render } from '@testing-library/vue'
+import { KButton, KIcon } from '@kong/kongponents'
+
 import WelcomeView from './WelcomeView.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
+
+function renderComponent(environment: string) {
+  const store = createStore({
+    modules: {
+      config: {
+        namespaced: true,
+        state: {
+          tagline: 'Kuma',
+          clientConfig: {
+            mode: 'global',
+            environment,
+          },
+        },
+        getters: {
+          getTagline: (state) => state.tagline,
+          getEnvironment: (state) => state.clientConfig?.environment,
+          getMulticlusterStatus: () => false,
+        },
+      },
+    },
+  })
+
+  return render(WelcomeView, {
+    global: {
+      plugins: [store],
+      components: {
+        KButton,
+        KIcon,
+      },
+      stubs: {
+        routerLink: RouterLinkStub,
+      },
+    }
+  })
+}
 
 describe('WelcomeView.vue', () => {
-  const customStore = {
-    modules: { config: { state: { tagline: 'Kuma', clientConfig: { environment: 'universal' } } } },
-  }
-
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(WelcomeView, { store: customStore, routes: [] })
+    const { container } = renderComponent('universal')
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders Kubernetess', () => {
-    const { getByText } = renderWithVuex(WelcomeView, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global', environment: 'kubernetess' } } } } },
-    })
+    const { getByText } = renderComponent('kubernetess')
 
     expect(getByText(/Kubernetess/)).toBeInTheDocument()
   })

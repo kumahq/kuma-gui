@@ -2,8 +2,159 @@
 
 exports[`PaginationWidget.vue calls buttons 1`] = `
 Object {
+  "click": Array [
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "focusin": Array [
+    Array [
+      FocusEvent {
+        "isTrusted": true,
+      },
+    ],
+    Array [
+      FocusEvent {
+        "isTrusted": true,
+      },
+    ],
+  ],
+  "focusout": Array [
+    Array [
+      FocusEvent {
+        "isTrusted": true,
+      },
+    ],
+  ],
+  "mousedown": Array [
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "mouseenter": Array [
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "mousemove": Array [
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "mouseover": Array [
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "mouseup": Array [
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
   "next": Array [
     Array [],
+  ],
+  "pointerdown": Array [
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerenter": Array [
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointermove": Array [
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerover": Array [
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerup": Array [
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    Array [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
   ],
   "previous": Array [
     Array [],
@@ -39,9 +190,8 @@ exports[`PaginationWidget.vue renders nothing if no next or prev props provided 
   <div
     class="pagination"
   >
-    <!---->
-     
-    <!---->
+    <!--v-if-->
+    <!--v-if-->
   </div>
 </div>
 `;
@@ -52,26 +202,29 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     class="pagination"
   >
     <button
-      class="k-button medium rounded primary"
-      data-v-6ae23500=""
+      class="medium rounded primary k-button"
+      data-v-29036f3a=""
       type="button"
     >
+      
       <!---->
       
-    ‹ Previous
-  
+      
+       ‹ Previous 
+      
       <!---->
     </button>
-     
     <button
-      class="k-button medium rounded primary"
-      data-v-6ae23500=""
+      class="medium rounded primary k-button"
+      data-v-29036f3a=""
       type="button"
     >
+      
       <!---->
       
-    Next ›
-  
+      
+       Next › 
+      
       <!---->
     </button>
   </div>

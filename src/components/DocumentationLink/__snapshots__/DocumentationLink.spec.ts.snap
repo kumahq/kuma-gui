@@ -3,16 +3,16 @@
 exports[`DocumentationLink.vue renders snapshot 1`] = `
 <div>
   <a
-    class="k-button docs-link small rounded outline"
-    data-v-6ae23500=""
+    class="small rounded outline k-button docs-link"
+    data-v-29036f3a=""
     href="https://kuma.io/docs/1.3.2/policies/timeout/"
     target="_blank"
     type="button"
   >
+    
     <span
-      class="kong-icon kong-icon-externalLink"
-      data-v-429cf642=""
-      data-v-6ae23500=""
+      class="kong-icon-externalLink kong-icon"
+      data-v-637de6fa=""
     >
       <svg
         height="12"
@@ -39,8 +39,9 @@ exports[`DocumentationLink.vue renders snapshot 1`] = `
 
     </span>
     
-  Documentation
-
+    
+     Documentation 
+    
     <!---->
   </a>
 </div>

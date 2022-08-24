@@ -117,7 +117,7 @@ export default {
     this.getZoneIngresses()
     this.getZones()
   },
-  destroyed() {
+  unmounted() {
     clearTimeout(this.zoneTimeout)
     clearTimeout(this.zoneIngressTimeout)
   },

@@ -9,178 +9,210 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       <div
         class="onboarding-container__header"
       >
+        
         <div
           class="relative"
         >
           <h1
             class="onboarding-title"
           >
-            
-    Create the mesh
-  
+            Create the mesh
           </h1>
-           
-          <!---->
+          <!--v-if-->
         </div>
+        
       </div>
-       
       <div
         class="onboarding-container__content"
       >
         <div
           class="w-full"
         >
+          
           <p
             class="text-center mb-4"
           >
-            
-      When you install, Kuma creates a 
+             When you install, Kuma creates a 
             <i>
               default
             </i>
-             mesh, but you can add as many meshes as you need.
-    
+             mesh, but you can add as many meshes as you need. 
           </p>
-           
           <div
             class="flex justify-center mt-10 mb-12 pb-12"
           >
             <div
               class="w-full sm:w-3/5 lg:w-2/5 p-4"
             >
-              <table
-                class="k-table k-table-legacy has-hover is-small side-border"
-                data-v-1fe39162=""
+              <div
+                data-v-77421f6a=""
+                is-small=""
               >
-                <thead
-                  data-v-1fe39162=""
+                <section
+                  class="k-table-wrapper"
+                  data-v-77421f6a=""
                 >
-                  <tr
-                    data-v-1fe39162=""
+                  <table
+                    class="has-hover k-table"
+                    data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    data-v-77421f6a=""
                   >
-                    <th
+                    <thead
                       class=""
-                      data-v-1fe39162=""
+                      data-v-77421f6a=""
                     >
-                      <span
+                      <tr
                         class=""
-                        data-v-1fe39162=""
+                        data-v-77421f6a=""
                       >
-                         Name 
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                      data-v-1fe39162=""
+                        
+                        <th
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          <span
+                            class="d-flex align-items-center"
+                            data-v-77421f6a=""
+                          >
+                            
+                            <span
+                              class=""
+                              data-v-77421f6a=""
+                            >
+                              Name
+                            </span>
+                            
+                            <!---->
+                          </span>
+                        </th>
+                        <th
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          <span
+                            class="d-flex align-items-center"
+                            data-v-77421f6a=""
+                          >
+                            
+                            <span
+                              class=""
+                              data-v-77421f6a=""
+                            >
+                              Services
+                            </span>
+                            
+                            <!---->
+                          </span>
+                        </th>
+                        <th
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          <span
+                            class="d-flex align-items-center"
+                            data-v-77421f6a=""
+                          >
+                            
+                            <span
+                              class=""
+                              data-v-77421f6a=""
+                            >
+                              DPPs
+                            </span>
+                            
+                            <!---->
+                          </span>
+                        </th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody
+                      data-v-77421f6a=""
                     >
-                      <span
-                        class=""
-                        data-v-1fe39162=""
+                      
+                      <tr
+                        data-v-77421f6a=""
                       >
-                         Services 
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                      data-v-1fe39162=""
-                    >
-                      <span
-                        class=""
-                        data-v-1fe39162=""
-                      >
-                         DPPs 
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody
-                  data-v-1fe39162=""
-                >
-                  <tr
-                    data-v-1fe39162=""
-                  >
-                    <td
-                      data-v-1fe39162=""
-                    >
-                      default
-                    </td>
-                    <td
-                      data-v-1fe39162=""
-                    >
-                      0
-                    </td>
-                    <td
-                      data-v-1fe39162=""
-                    >
-                      0
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                        
+                        <td
+                          data-v-77421f6a=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-77421f6a=""
+                        >
+                          
+                          0
+                          
+                        </td>
+                        <td
+                          data-v-77421f6a=""
+                        >
+                          
+                          0
+                          
+                        </td>
+                        
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  <!---->
+                </section>
+              </div>
             </div>
           </div>
-           
           <p
             class="text-center"
           >
-            
-      This mesh is empty. Next, you add services and their data plane proxies.
-    
+             This mesh is empty. Next, you add services and their data plane proxies. 
           </p>
+          
         </div>
       </div>
-       
+      
       <div
         class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
         <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
-          data-v-6ae23500=""
-          href="#/"
+          class="medium rounded primary k-button navigation-button navigation-button--back"
+          data-v-29036f3a=""
           type="button"
         >
-          <!---->
-          
-    Back
-  
-          <!---->
+          onboarding-multi-zone
         </a>
-         
         <div>
           <button
-            class="k-button skip-button small rounded btn-link"
-            data-v-6ae23500=""
+            class="small rounded btn-link k-button skip-button"
+            data-v-29036f3a=""
             type="button"
           >
+            
             <!---->
             
-      Skip Setup
-    
+            
+             Skip Setup 
+            
             <!---->
           </button>
-           
           <span
             class="inline-block"
           >
             <a
-              aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
-              data-v-6ae23500=""
-              href="#/"
+              class="medium rounded primary k-button navigation-button navigation-button--next"
+              data-v-29036f3a=""
               type="button"
             >
-              <!---->
-              
-        Next
-      
-              <!---->
+              onboarding-add-services
             </a>
           </span>
         </div>
       </div>
+      
     </div>
-     
     <div
       class="background-image"
     />

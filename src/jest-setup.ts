@@ -1,14 +1,15 @@
 import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
+
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { server as setupServer } from '@/services/mocks'
 
-import './kongponents'
-
-class SVGPathElement extends HTMLElement { }
-
-// @ts-ignore
-window.SVGPathElement = SVGPathElement
+/**
+ * amcharts need SVGPathElement defined for our tests to work.
+ *
+ * See: https://github.com/amcharts/amcharts4/issues/1387
+ */
+Object.defineProperty(window, 'SVGPathElement', { value: class extends HTMLElement { } })
 
 /**
  * Kongponents v6 uses a call to `crypto.getRandomValues` which isn’t implemented in jsdom by default.
@@ -35,6 +36,7 @@ expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
   'aria-describedby',
   'aria-labelledby',
   'aria-controls',
+  'data-tableid',
 ]))
 
 const server = setupServer('http://localhost/')

@@ -24,7 +24,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: 'Install dependencies'
           command: 'yarn install --frozen-lockfile'
@@ -33,14 +33,14 @@ jobs:
           command: 'yarn run lint'
       - run:
           name: 'Run tests'
-          command: 'yarn test:unit'
+          command: 'yarn run test:unit:ci'
           environment:
             NODE_OPTIONS: --max_old_space_size=4096
       - run:
           name: 'Build'
           command: 'yarn build'
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
 

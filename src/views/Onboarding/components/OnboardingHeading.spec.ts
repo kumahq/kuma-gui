@@ -1,9 +1,10 @@
+import { render } from '@testing-library/vue'
+
 import OnboardingHeading from './OnboardingHeading.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 
 describe('OnboardingHeading.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(OnboardingHeading, {
+    const { container } = render(OnboardingHeading, {
       props: {
         title: 'title',
         description: 'description',

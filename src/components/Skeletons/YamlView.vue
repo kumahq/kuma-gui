@@ -36,8 +36,7 @@
                   </template>
                 </KPop>
               </KClipboardProvider>
-              <Prism
-                class="code-block"
+              <CodeBlock
                 language="yaml"
                 :code="yamlContent.universal"
               />
@@ -62,8 +61,7 @@
                   </template>
                 </KPop>
               </KClipboardProvider>
-              <Prism
-                class="code-block"
+              <CodeBlock
                 language="yaml"
                 :code="yamlContent.kubernetes"
               />
@@ -134,13 +132,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Prism from 'vue-prismjs'
 import json2yaml from '@appscode/json2yaml'
+
+import CodeBlock from '../CodeBlock.vue'
 
 export default {
   name: 'YamlView',
   components: {
-    Prism,
+    CodeBlock,
   },
   props: {
     title: {
@@ -291,12 +290,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.code-block {
-  border-radius: 3px;
-  background-color: var(--code-background);
-  font-size: var(--type-sm);
-}
-
 .empty-state-title {
   .card-icon {
     text-align: center;

@@ -111,24 +111,24 @@ export default {
       startDpCode: `kuma-dp run \\
       --cp-address=${kumaDpServerUrl()} \\
       --dataplane=${`"${json2yaml({
-        type: 'Dataplane',
-        mesh: 'default',
-        name: 'example',
-        networking: {
-          address: 'localhost',
-          inbound: [
-            {
-              port: 7777,
-              servicePort: 7777,
-              serviceAddress: '127.0.0.1',
-              tags: {
-                'kuma.io/service': 'example',
-                'kuma.io/protocol': 'tcp',
-              },
-            },
-          ],
+    type: 'Dataplane',
+    mesh: 'default',
+    name: 'example',
+    networking: {
+      address: 'localhost',
+      inbound: [
+        {
+          port: 7777,
+          servicePort: 7777,
+          serviceAddress: '127.0.0.1',
+          tags: {
+            'kuma.io/service': 'example',
+            'kuma.io/protocol': 'tcp',
+          },
         },
-      })}"`} \\
+      ],
+    },
+  })}"`} \\
       --dataplane-token-file=kuma-token-example`,
       hasDPPs: false,
       DPPsTimeout: null,
@@ -145,7 +145,7 @@ export default {
   created() {
     this.getDPPs()
   },
-  destroyed() {
+  unmounted() {
     clearTimeout(this.DPPsTimeout)
   },
 

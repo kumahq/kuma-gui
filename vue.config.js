@@ -1,14 +1,11 @@
+/** @typedef {import('@vue/cli-service').ProjectOptions} Config */
+
 const webpack = require('webpack')
 
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-
-module.exports = {
+/** @type {Config} */ const config = {
   publicPath: './',
   runtimeCompiler: true,
   productionSourceMap: false,
-  css: {
-    sourceMap: false,
-  },
   configureWebpack: {
     module: {
       rules: [
@@ -57,6 +54,18 @@ module.exports = {
         zlib: require.resolve('browserify-zlib'),
       },
     },
+    externals: function ({ request }, callback) {
+      /**
+       * Externalize some amcharts dependencies that ended up uselessly increasing the bundle size.
+       *
+       * See: https://www.amcharts.com/docs/v4/getting-started/integrations/using-webpack/#Large_file_sizes
+       */
+      if (request && /xlsx|canvg|pdfmake/.test(request)) {
+        return callback(null, `commonjs ${request}`)
+      }
+
+      callback()
+    },
   },
   chainWebpack: (config) => {
     config.output.chunkFilename('js/[name].js?t=[chunkhash:8]')
@@ -81,3 +90,5 @@ module.exports = {
     svgRule.delete('generator')
   },
 }
+
+module.exports = config

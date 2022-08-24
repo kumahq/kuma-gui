@@ -26,6 +26,7 @@ import { datadogLogEvents } from '@/datadogEvents'
 
 export default {
   name: 'PaginationWidget',
+
   props: {
     hasPrevious: {
       type: Boolean,
@@ -36,6 +37,9 @@ export default {
       default: false,
     },
   },
+
+  emits: ['next', 'previous'],
+
   methods: {
     onNextButtonClick() {
       this.$emit('next')

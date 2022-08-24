@@ -4,66 +4,65 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
 <div>
   <div>
     <div>
+      
       <section
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-        class="kong-card noBorder"
-        data-v-3bb7bf60=""
+        class="noBorder kong-card"
+        data-v-5adb63fa=""
       >
         <!---->
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-3bb7bf60=""
+          data-v-5adb63fa=""
         >
           <div
             class="k-card-body"
-            data-v-3bb7bf60=""
+            data-v-5adb63fa=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
+            
             <ul
               class="accordion"
-              data-v-3bb7bf60=""
             >
+              
+              
               <li
-                class="relative border-b py-2 active"
+                class="accordion-item relative border-b py-2 active"
               >
                 <button
                   aria-expanded="true"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
                     <div>
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="text-lg"
                       >
-                        
-                  web
-                
+                        web
                       </p>
-                       
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    inbound 192.168.0.1:80:81
-                  
+                          inbound 192.168.0.1:80:81
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -90,13 +89,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -104,13 +103,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on incoming connection on address
-                      
+                                  Policies applied on incoming connection on address
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -118,77 +117,68 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  FaultInjection
-                
+                        FaultInjection
+                        
                       </div>
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  TrafficPermission
-                
+                        TrafficPermission
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
+                <transition-stub>
                   <div
                     class="px-4"
                   >
+                    <!-- This slot will display whole content -->
+                    
                     <div
                       class="policy-wrapper"
                     >
+                      
                       <div
                         class="policy-item"
                       >
                         <h4
                           class="policy-type"
                         >
-                          
-                  Fault Injections
-                
+                          Fault Injections
                         </h4>
-                         
                         <ul>
+                          
                           <li
                             class="my-1"
                             data-testid="policy-name"
                           >
-                            <a
-                              class=""
-                              href="#/?ns=fi1.kuma-system"
-                            >
-                              
-                      fi1.kuma-system
-                    
+                            <a>
+                              fi1.kuma-system
                             </a>
                           </li>
                           <li
                             class="my-1"
                             data-testid="policy-name"
                           >
-                            <a
-                              class=""
-                              href="#/?ns=web-to-backend.kuma-system"
-                            >
-                              
-                      web-to-backend.kuma-system
-                    
+                            <a>
+                              web-to-backend.kuma-system
                             </a>
                           </li>
+                          
                         </ul>
                       </div>
                       <div
@@ -197,70 +187,63 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         <h4
                           class="policy-type"
                         >
-                          
-                  Traffic Permissions
-                
+                          Traffic Permissions
                         </h4>
-                         
                         <ul>
+                          
                           <li
                             class="my-1"
                             data-testid="policy-name"
                           >
-                            <a
-                              class=""
-                              href="#/?ns=tp-1"
-                            >
-                              
-                      tp-1
-                    
+                            <a>
+                              tp-1
                             </a>
                           </li>
+                          
                         </ul>
                       </div>
+                      
                     </div>
+                    
                   </div>
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2"
+                class="accordion-item relative border-b py-2"
               >
                 <button
+                  aria-expanded="false"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
                     <div>
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="text-lg"
                       >
-                        
-                  backend
-                
+                        backend
                       </p>
-                       
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    outbound 192.168.0.2:8080
-                  
+                          outbound 192.168.0.2:8080
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -287,13 +270,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -301,13 +284,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on outgoing connection to the address
-                      
+                                  Policies applied on outgoing connection to the address
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -315,67 +298,63 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  Timeout
-                
+                        Timeout
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
-                  <!---->
+                <transition-stub>
+                  <!--v-if-->
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2"
+                class="accordion-item relative border-b py-2"
               >
                 <button
+                  aria-expanded="false"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
                     <div>
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="text-lg"
                       >
-                        
-                  gateway
-                
+                        gateway
                       </p>
-                       
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    service
-                  
+                          service
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -402,13 +381,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -416,13 +395,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on outgoing connections to service
-                      
+                                  Policies applied on outgoing connections to service
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -430,67 +409,63 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  HealthCheck
-                
+                        HealthCheck
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
-                  <!---->
+                <transition-stub>
+                  <!--v-if-->
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2"
+                class="accordion-item relative border-b py-2"
               >
                 <button
+                  aria-expanded="false"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
                     <div>
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="text-lg"
                       >
-                        
-                  postgres
-                
+                        postgres
                       </p>
-                       
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    service
-                  
+                          service
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -517,13 +492,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -531,13 +506,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on outgoing connections to service
-                      
+                                  Policies applied on outgoing connections to service
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -545,67 +520,63 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  HealthCheck
-                
+                        HealthCheck
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
-                  <!---->
+                <transition-stub>
+                  <!--v-if-->
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2"
+                class="accordion-item relative border-b py-2"
               >
                 <button
+                  aria-expanded="false"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
                     <div>
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="text-lg"
                       >
-                        
-                  redis
-                
+                        redis
                       </p>
-                       
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    service
-                  
+                          service
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -632,13 +603,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -646,13 +617,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on outgoing connections to service
-                      
+                                  Policies applied on outgoing connections to service
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -660,67 +631,63 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  HealthCheck
-                
+                        HealthCheck
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
-                  <!---->
+                <transition-stub>
+                  <!--v-if-->
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2"
+                class="accordion-item relative border-b py-2"
               >
                 <button
+                  aria-expanded="false"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
                     <div>
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="text-lg"
                       >
-                        
-                  web-api
-                
+                        web-api
                       </p>
-                       
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    service
-                  
+                          service
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -747,13 +714,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -761,13 +728,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on outgoing connections to service
-                      
+                                  Policies applied on outgoing connections to service
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -775,34 +742,36 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  HealthCheck
-                
+                        HealthCheck
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
-                  <!---->
+                <transition-stub>
+                  <!--v-if-->
                 </transition-stub>
               </li>
               <li
-                class="relative border-b py-2"
+                class="accordion-item relative border-b py-2"
               >
                 <button
+                  aria-expanded="false"
                   class="accordion-item-header"
                 >
+                  <!-- This slot will display header -->
+                  
                   <div
                     class="flex items-center justify-between"
                   >
@@ -810,32 +779,26 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <p
                         class="text-lg"
                       >
-                        
-                  Dataplane
-                
+                         Dataplane 
                       </p>
-                       
-                      <!---->
-                       
+                      <!--v-if-->
                       <p
                         class="subtitle"
                       >
                         <span>
-                          
-                    dataplane
-                  
+                          dataplane
                         </span>
-                         
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          data-v-6b00e241=""
+                          aria-expanded="false"
+                          data-v-9bbde9b2=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
+                          
                           <span
-                            class="kong-icon ml-1 kong-icon-help"
-                            data-v-429cf642=""
-                            data-v-6b00e241=""
+                            class="ml-1 kong-icon-help kong-icon"
+                            data-v-637de6fa=""
                           >
                             <svg
                               fill="none"
@@ -862,13 +825,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                             
 
                           </span>
+                          
                           <transition-stub
-                            data-v-6b00e241=""
-                            name="fade"
+                            data-v-9bbde9b2=""
                           >
                             <div
                               class="k-popover"
-                              data-v-6b00e241=""
+                              data-v-9bbde9b2=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -876,13 +839,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-6b00e241=""
+                                data-v-9bbde9b2=""
                               >
+                                
                                 <div>
-                                  
-                        Policies applied on all incoming and outgoing connections to the selected data plane proxy
-                      
+                                  Policies applied on all incoming and outgoing connections to the selected data plane proxy
                                 </div>
+                                
                               </div>
                               <!---->
                             </div>
@@ -890,40 +853,43 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </div>
                       </p>
                     </div>
-                     
                     <div
                       class="flex flex-wrap justify-end"
                     >
+                      
                       <div
-                        class="k-badge truncate mr-2 mb-2 kbadge-default kbadge-rounded"
-                        data-v-48308bb7=""
+                        class="k-badge-default k-badge-rounded k-badge truncate mr-2 mb-2"
+                        data-v-17d30312=""
                       >
                         
-                  TrafficTrace
-                
+                        TrafficTrace
+                        
                       </div>
+                      
                     </div>
                   </div>
+                  
                 </button>
-                 
-                <transition-stub
-                  name="accordion"
-                >
-                  <!---->
+                <transition-stub>
+                  <!--v-if-->
                 </transition-stub>
               </li>
+              
+              
             </ul>
+            
           </div>
           <!---->
         </div>
       </section>
+      
     </div>
-     
-    <!---->
-     
-    <!---->
-     
-    <!---->
+    <!-- loading state -->
+    <!--v-if-->
+    <!-- no data to load -->
+    <!--v-if-->
+    <!-- error -->
+    <!--v-if-->
   </div>
 </div>
 `;

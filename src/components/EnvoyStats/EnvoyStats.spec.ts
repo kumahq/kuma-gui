@@ -1,9 +1,25 @@
-import { screen } from '@testing-library/vue'
+import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
+import { KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import EnvoyStats from './EnvoyStats.vue'
 import { server } from '@/jest-setup'
-import renderWithVuex from '@/testUtils/renderWithVuex';
+
+function renderComponent(props = {}) {
+  return render(EnvoyStats, {
+    global: {
+      components: {
+        KButton,
+        KCard,
+        KClipboardProvider,
+        KEmptyState,
+        KIcon,
+        KPop,
+      },
+    },
+    props,
+  })
+}
 
 describe('EnvoyStats.vue', () => {
   it('renders snapshot', async () => {
@@ -13,12 +29,9 @@ describe('EnvoyStats.vue', () => {
       ),
     )
 
-    const { container } = renderWithVuex(EnvoyStats, {
-      props: {
-        mesh: 'foo',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
+    const { container } = renderComponent({
+      mesh: 'foo',
+      dppName: 'dataplane-test-456',
     })
 
     expect(container).toMatchSnapshot()
@@ -31,12 +44,9 @@ describe('EnvoyStats.vue', () => {
       ),
     )
 
-    renderWithVuex(EnvoyStats, {
-      props: {
-        mesh: 'foo',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
+    renderComponent({
+      mesh: 'foo',
+      dppName: 'dataplane-test-456',
     })
 
     expect(screen.getByTestId('status-info-loading-section')).toBeInTheDocument()
@@ -51,12 +61,9 @@ describe('EnvoyStats.vue', () => {
       ),
     )
 
-    renderWithVuex(EnvoyStats, {
-      props: {
-        mesh: 'default',
-        dppName: 'dataplane-test-456',
-      },
-      routes: [],
+    renderComponent({
+      mesh: 'default',
+      dppName: 'dataplane-test-456',
     })
 
     expect(await screen.findByText(/An error has occurred while trying to load this data./)).toBeInTheDocument()

@@ -9,93 +9,90 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       <div
         class="onboarding-container__header"
       >
+        
         <div
           class="relative"
         >
           <h1
             class="onboarding-title"
           >
-            
-    Add zones
-  
+            Add zones
           </h1>
-           
-          <!---->
+          <!--v-if-->
         </div>
+        
       </div>
-       
       <div
         class="onboarding-container__content"
       >
         <div
           class="w-full"
         >
+          
           <p
             class="text-center mb-4"
           >
-            
-      A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
-    
+             A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately. 
           </p>
-           
           <section
             aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             aria-label="See the documentation for options to install:"
-            class="kong-card noBorder"
-            data-v-3bb7bf60=""
+            class="noBorder kong-card"
+            data-v-5adb63fa=""
           >
             <div
               class="k-card-header d-flex mb-3"
-              data-v-3bb7bf60=""
+              data-v-5adb63fa=""
             >
               <!---->
               <div
                 class="k-card-title mb-3"
-                data-v-3bb7bf60=""
+                data-v-5adb63fa=""
               >
                 <h4
-                  data-v-3bb7bf60=""
+                  data-v-5adb63fa=""
                 >
+                  
                   See the documentation for options to install:
+                  
                 </h4>
               </div>
               <div
                 class="k-card-actions"
-                data-v-3bb7bf60=""
-              />
+                data-v-5adb63fa=""
+              >
+                
+                
+              </div>
             </div>
             <!---->
             <div
               class="k-card-content d-flex"
-              data-v-3bb7bf60=""
+              data-v-5adb63fa=""
             >
               <div
                 class="k-card-body"
-                data-v-3bb7bf60=""
+                data-v-5adb63fa=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
+                
                 <a
                   class="external-link-code-block"
-                  data-v-3bb7bf60=""
                   href="https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane"
                   target="_blank"
                 >
-                  
-          https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane
-        
+                  https://kuma.io/docs/latest/deployments/multi-zone/#zone-control-plane
                 </a>
+                
               </div>
               <!---->
             </div>
           </section>
-           
           <div>
             <p
               class="text-center my-4"
             >
-              
-        Zone status:
-        
+               Zone status: 
               <span
                 class="text-red-500"
                 data-testid="zone-disconnected"
@@ -103,13 +100,10 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
                 Disconnected
               </span>
             </p>
-             
             <p
               class="text-center mt-4 mb-10"
             >
-              
-        Zone ingress status:
-        
+               Zone ingress status: 
               <span
                 class="text-red-500"
                 data-testid="zone-ingress-disconnected"
@@ -117,7 +111,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
                 Disconnected
               </span>
             </p>
-             
             <div
               class="flex justify-center"
             >
@@ -126,72 +119,71 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
                 data-testid="loading"
               >
                 <div />
-                 
                 <div />
-                 
                 <div />
-                 
                 <div />
-                 
                 <div />
               </div>
             </div>
           </div>
+          
         </div>
       </div>
-       
+      
       <div
         class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
-        <a
-          aria-current="page"
-          class="k-button navigation-button navigation-button--back router-link-exact-active router-link-active medium rounded primary"
-          data-v-6ae23500=""
-          href="#/"
+        <router-link
+          class="medium rounded primary k-button navigation-button navigation-button--back"
+          data-v-29036f3a=""
+          to="[object Object]"
           type="button"
         >
+          
           <!---->
           
-    Back
-  
+          
+           Back 
+          
           <!---->
-        </a>
-         
+        </router-link>
         <div>
           <button
-            class="k-button skip-button small rounded btn-link"
-            data-v-6ae23500=""
+            class="small rounded btn-link k-button skip-button"
+            data-v-29036f3a=""
             type="button"
           >
+            
             <!---->
             
-      Skip Setup
-    
+            
+             Skip Setup 
+            
             <!---->
           </button>
-           
           <span
             class="inline-block cursor-not-allowed"
           >
-            <a
-              aria-current="page"
-              class="k-button navigation-button navigation-button--next router-link-exact-active router-link-active medium rounded primary"
-              data-v-6ae23500=""
-              disabled="disabled"
-              href="#/"
+            <router-link
+              class="medium rounded primary k-button navigation-button navigation-button--next"
+              data-v-29036f3a=""
+              disabled="true"
+              to="[object Object]"
               type="button"
             >
+              
               <!---->
               
-        Next
-      
+              
+              Next
+              
               <!---->
-            </a>
+            </router-link>
           </span>
         </div>
       </div>
+      
     </div>
-     
     <div
       class="background-image"
     />

@@ -51,7 +51,7 @@ export default {
         name: this.$route.name,
         params: { mesh: this.mesh },
         query: { ns: this.name },
-      }).resolved
+      })
 
       return `${urlRoot}${fullPath}`
     },

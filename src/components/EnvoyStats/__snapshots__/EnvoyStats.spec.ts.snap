@@ -3,30 +3,29 @@
 exports[`EnvoyStats.vue renders snapshot 1`] = `
 <div>
   <div>
-    <!---->
-     
+    <!--v-if-->
+    <!-- loading state -->
     <section
       class="empty-state-wrapper"
       data-testid="status-info-loading-section"
-      data-v-25517d95=""
+      data-v-5b55eb64=""
     >
       <div
         class="empty-state-title"
-        data-v-25517d95=""
+        data-v-5b55eb64=""
       >
         <!---->
         <div
           class="k-empty-state-title-header mt-4 mb-4"
-          data-v-25517d95=""
+          data-v-5b55eb64=""
         >
+          
           <div
             class="card-icon mb-3"
-            data-v-25517d95=""
           >
             <span
-              class="kong-icon kong-icon-spinner"
-              data-v-25517d95=""
-              data-v-429cf642=""
+              class="kong-icon-spinner kong-icon"
+              data-v-637de6fa=""
             >
               <svg
                 fill="none"
@@ -61,31 +60,35 @@ exports[`EnvoyStats.vue renders snapshot 1`] = `
 
             </span>
           </div>
+           Data Loading... 
           
-      Data Loading...
-    
         </div>
       </div>
       <div
         class="empty-state-content"
-        data-v-25517d95=""
+        data-v-5b55eb64=""
       >
         <div
           class="k-empty-state-message mb-6"
-          data-v-25517d95=""
-        />
+          data-v-5b55eb64=""
+        >
+          
+          
+        </div>
         <div
           class="k-empty-state-cta"
-          data-v-25517d95=""
+          data-v-5b55eb64=""
         >
+          
           <!---->
+          
         </div>
       </div>
     </section>
-     
-    <!---->
-     
-    <!---->
+    <!-- no data to load -->
+    <!--v-if-->
+    <!-- error -->
+    <!--v-if-->
   </div>
 </div>
 `;

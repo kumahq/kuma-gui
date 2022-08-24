@@ -1,9 +1,8 @@
 import { datadogLogs } from '@datadog/browser-logs'
+
 import Kuma from '@/services/kuma'
 
-/** Initiate Datadog */
-
-async function setupDatadog() {
+export async function setupDatadog() {
   const config = await Kuma.getConfig()
 
   if (config.reports.enabled) {
@@ -17,5 +16,3 @@ async function setupDatadog() {
     })
   }
 }
-
-export default setupDatadog

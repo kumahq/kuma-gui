@@ -5,7 +5,7 @@
   >
     <KCard border-variant="noBorder">
       <template #body>
-        <Prism
+        <CodeBlock
           id="stats"
           language="json"
           :code="stats"
@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import Prism from 'vue-prismjs'
-
+import CodeBlock from '../CodeBlock.vue'
 import Kuma from '@/services/kuma'
 import StatusInfo from '@/components/Utils/StatusInfo'
 
@@ -45,7 +44,7 @@ export default {
   name: 'EnvoyStats',
   components: {
     StatusInfo,
-    Prism,
+    CodeBlock,
   },
   props: {
     mesh: {

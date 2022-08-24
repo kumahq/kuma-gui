@@ -1,5 +1,5 @@
 import RestClient from '@/services/restClient'
-import { Policy } from '@/types'
+import { Mesh, Policy, ResourceResponse } from '@/types'
 
 const defaultOptions = {
   name: '',
@@ -19,6 +19,10 @@ class Kuma {
 
   public constructor() {
     this.client = new RestClient()
+  }
+
+  public get url() {
+    return this.client.url
   }
 
   /**
@@ -118,7 +122,7 @@ class Kuma {
    */
 
   // get a list of all meshes
-  public getAllMeshes(params?: any) {
+  public getAllMeshes(params?: any): Promise<ResourceResponse<Mesh>> {
     return this.client.get('/meshes', { params })
   }
 
@@ -231,6 +235,9 @@ class Kuma {
 
   // Get a list of all policies
   public getPolicies(): Promise<{ policies: Policy[] }> {
+    // TODO: https://github.com/kumahq/kuma-gui/issues/363
+    // TL;DR: Using `fetch` here allows using Kuma GUI in Firefox during development.
+    // return fetch(`${this.client.url}policies`).then((response) => response.json())
     return this.client.get('/policies')
   }
 

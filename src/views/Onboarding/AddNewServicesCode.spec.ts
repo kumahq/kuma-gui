@@ -1,20 +1,42 @@
-import { screen } from '@testing-library/vue'
+import { createStore } from 'vuex'
+import { flushPromises, RouterLinkStub } from '@vue/test-utils'
+import { render, screen } from '@testing-library/vue'
+import { KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 import Kuma from '@/services/kuma'
+import { storeConfig } from '@/store/index'
+
+const store = createStore(storeConfig)
+
+function renderComponent() {
+  return render(AddNewServicesCode, {
+    global: {
+      plugins: [store],
+      components: {
+        KButton,
+        KCard,
+        KClipboardProvider,
+        KEmptyState,
+        KIcon,
+        KPop,
+      },
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
+    },
+  })
+}
 
 describe('AddNewServicesCode.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(AddNewServicesCode)
+    const { container } = renderComponent()
 
     expect(container).toMatchSnapshot()
   })
 
   it('detects resources on call and allow to proceed', async () => {
-    renderWithVuex(AddNewServicesCode, {
-      routes: [],
-    })
+    renderComponent()
 
     expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
     expect(screen.queryByText(/Next/)).toBeInTheDocument()
@@ -24,25 +46,19 @@ describe('AddNewServicesCode.vue', () => {
   it('refetch resources if any not available', async () => {
     jest
       .spyOn(Kuma, 'getAllDataplanes')
-      .mockReturnValueOnce({
-        // @ts-ignore
+      .mockResolvedValueOnce({
         total: 0,
       })
-      .mockReturnValueOnce({
-        // @ts-ignore
+      .mockResolvedValueOnce({
         total: 1,
       })
 
-    renderWithVuex(AddNewServicesCode, {
-      routes: [],
-    })
+    renderComponent()
 
     expect(screen.queryByTestId('loading')).toBeInTheDocument()
     expect(screen.queryByTestId('dpps-disconnected')).toBeInTheDocument()
 
-    // Advance asynchronous routines by making sure the queue of micro tasks is processed.
-    // TODO: In @vue/test-utils@2, use `flushPromises` instead.
-    await new Promise((resolve) => setTimeout(resolve, 0))
+    await flushPromises()
 
     expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
     expect(Kuma.getAllDataplanes).toHaveBeenCalledTimes(2)

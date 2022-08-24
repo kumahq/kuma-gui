@@ -9,12 +9,11 @@ import DataplanesView from '@/views/Entities/partial/DataplanesView.vue'
 
 export default {
   name: 'GatewayDataplanes',
-  metaInfo: {
-    title: 'Gateway Data plane proxies',
-  },
+
   components: {
     DataplanesView,
   },
+
   data() {
     return {
       dataplaneApiParams: {

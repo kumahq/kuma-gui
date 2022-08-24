@@ -1,7 +1,9 @@
-import { screen } from '@testing-library/vue'
+import { createStore } from 'vuex'
+import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
+
 import ZonesView from './ZonesView.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
 
 jest.mock('@/helpers', () => {
   const originalModule = jest.requireActual('@/helpers')
@@ -14,18 +16,46 @@ jest.mock('@/helpers', () => {
   }
 })
 
+function renderComponent() {
+  const store = createStore({
+    modules: {
+      config: {
+        namespaced: true,
+        state: {
+          clientConfig: {
+            mode: 'global',
+          },
+        },
+        getters: {
+          getVersion: () => undefined,
+          getMulticlusterStatus: () => true,
+        },
+      },
+    },
+  })
+
+  return render(ZonesView, {
+    global: {
+      plugins: [store],
+      components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
+      mocks: {
+        $route: {
+          query: {},
+        },
+      },
+    },
+  })
+}
+
 describe('ZonesView.vue', () => {
   it('renders snapshot when no multizone', () => {
-    const { container } = renderWithVuex(ZonesView)
+    const { container } = renderComponent()
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders snapshot when multizone', async () => {
-    const { container } = renderWithVuex(ZonesView, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
+    const { container } = renderComponent()
 
     await screen.findByText(/cluster-1/)
     await screen.findByText(/dpToken/)
@@ -34,10 +64,7 @@ describe('ZonesView.vue', () => {
   })
 
   it('renders config of multizone', async () => {
-    renderWithVuex(ZonesView, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
+    renderComponent()
 
     await screen.findByText(/dpToken/)
 
@@ -46,10 +73,7 @@ describe('ZonesView.vue', () => {
   })
 
   it('renders zone insights', async () => {
-    renderWithVuex(ZonesView, {
-      routes: [],
-      store: { modules: { config: { state: { clientConfig: { mode: 'global' } } } } },
-    })
+    renderComponent()
 
     await screen.findByText(/dpToken/)
 

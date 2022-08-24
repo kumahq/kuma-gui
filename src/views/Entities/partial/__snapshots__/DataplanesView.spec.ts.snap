@@ -5,1617 +5,1689 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
   <div
     class="component-frame"
   >
+    
     <div
       class="data-overview"
       data-testid="data-overview"
     >
+      <!-- controls -->
       <div
         class="data-table-controls mb-2"
       >
-        <router-link-stub
-          class="k-button add-dp-button small rounded primary"
-          data-v-6ae23500=""
-          to="[object Object]"
+        
+        <a
+          class="small rounded primary k-button add-dp-button"
+          data-v-29036f3a=""
           type="button"
         >
+          
           <!---->
+          
+          
           <span
             class="custom-control-icon"
           >
-            
-          +
-        
+             + 
           </span>
+           Create data plane proxy 
           
-        Create data plane proxy
-      
           <!---->
-        </router-link-stub>
-         
-        <!---->
-         
+        </a>
+        <!--v-if-->
+        
         <button
-          class="k-button ml-2 refresh-button small rounded primary"
-          data-v-6ae23500=""
+          class="small rounded primary k-button ml-2 refresh-button"
+          data-v-29036f3a=""
           type="button"
         >
+          
           <!---->
+          
+          
           <div
             class="refresh-icon"
-            data-v-6ae23500=""
           >
             <svg
-              data-v-6ae23500=""
               viewBox="0 0 36 36"
               xmlns="http://www.w3.org/2000/svg"
             >
               <g
-                data-v-6ae23500=""
                 fill="#fff"
                 fill-rule="nonzero"
               >
                 <path
                   d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
-                  data-v-6ae23500=""
                 />
               </g>
             </svg>
           </div>
-           
-          <span
-            data-v-6ae23500=""
-          >
+          <span>
             Refresh
           </span>
+          
           <!---->
         </button>
       </div>
-       
       <div
         class="data-overview-content"
       >
+        <!-- data -->
         <div
           class="data-overview-table"
         >
-          <table
-            class="k-table k-table-legacy micro-table has-hover is-clickable"
-            data-v-1fe39162=""
+          <div
+            class="micro-table"
+            data-v-77421f6a=""
+            is-clickable=""
           >
-            <thead
-              data-v-1fe39162=""
+            <section
+              class="k-table-wrapper"
+              data-v-77421f6a=""
             >
-              <tr
-                data-v-1fe39162=""
+              <table
+                class="has-hover is-clickable k-table"
+                data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                data-v-77421f6a=""
               >
-                <th
+                <thead
                   class=""
-                  data-v-1fe39162=""
+                  data-v-77421f6a=""
                 >
-                  <span
-                    class="sr-only"
-                    data-v-1fe39162=""
-                  >
-                     actions 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
+                  <tr
                     class=""
-                    data-v-1fe39162=""
+                    data-v-77421f6a=""
                   >
-                     Status 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Name 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Mesh 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Type 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Tags 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Last Connected 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Last Updated 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Total Updates 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Kuma DP version 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                     Envoy version 
-                  </span>
-                </th>
-                <th
-                  class=""
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="sr-only"
-                    data-v-1fe39162=""
-                  >
-                     warnings 
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody
-              data-v-1fe39162=""
-            >
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link is-active"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__active-state"
-                      data-v-1fe39162=""
+                    
+                    <th
+                      class=""
+                      data-v-77421f6a=""
                     >
-                      
-              ✓
-              
                       <span
-                        class="sr-only"
-                        data-v-1fe39162=""
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
                       >
                         
-                Selected
-              
+                        <span
+                          class="sr-only"
+                          data-v-77421f6a=""
+                        >
+                          actions
+                        </span>
+                        
+                        <!---->
                       </span>
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
                     >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  backend
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-protocol"
-                    >
-                      
-    kuma.io/protocol
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--http"
-                    >
-                      
-    http
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--backend"
-                    >
-                      
-    backend
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/17/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/17/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              10
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.0.7
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.16.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  cluster-1.backend-02
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--backend"
-                    >
-                      
-    backend
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-zone"
-                    >
-                      
-    kuma.io/zone
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--cluster-1"
-                    >
-                      
-    cluster-1
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--version"
-                    >
-                      
-    version
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--2"
-                    >
-                      
-    2
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              2
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.0.0-rc2-211-g823fe8ce
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.16.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  cluster-1.backend-03
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--backend"
-                    >
-                      
-    backend
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-zone"
-                    >
-                      
-    kuma.io/zone
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--cluster-1"
-                    >
-                      
-    cluster-1
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--version"
-                    >
-                      
-    version
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--1"
-                    >
-                      
-    1
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              2
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.0.0-rc2-211-g823fe8ce
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.16.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  cluster-1.gateway-01
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Gateway / BUILTIN
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--gateway"
-                    >
-                      
-    gateway
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-zone"
-                    >
-                      
-    kuma.io/zone
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--cluster-1"
-                    >
-                      
-    cluster-1
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              4
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.0.0-rc2-211-g823fe8ce
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.16.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  cluster-1.ingress-02
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--ingress"
-                    >
-                      
-    ingress
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-zone"
-                    >
-                      
-    kuma.io/zone
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--cluster-1"
-                    >
-                      
-    cluster-1
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/19/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              6
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.0.0-rc2-211-g823fe8ce
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.16.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  db
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-protocol"
-                    >
-                      
-    kuma.io/protocol
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--http"
-                    >
-                      
-    http
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--db"
-                    >
-                      
-    db
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/17/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/17/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              3
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            unknown
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.15.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Online
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  frontend
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-protocol"
-                    >
-                      
-    kuma.io/protocol
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--http"
-                    >
-                      
-    http
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--frontend"
-                    >
-                      
-    frontend
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/17/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  on 2/17/2021
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              3
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="with-warnings"
-                    data-v-1fe39162=""
-                  >
-                    
-            1.0.6
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
-                    
-            1.15.2
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="kong-icon mr-1 kong-icon-warning"
-                    data-v-1fe39162=""
-                    data-v-429cf642=""
-                  >
-                    <svg
-                      height="20"
-                      role="img"
-                      version="1.1"
-                      viewBox="0 0 48 42"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
-                    >
-                      
-  
-                      <title>
-                        Warning
-                      </title>
-                      
-  
-                      <g
-                        fill="var(--black-75)"
-                        fill-rule="evenodd"
-                        id="Page-1"
-                        stroke="none"
-                        stroke-width="1"
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
                       >
                         
-    
-                        <g
-                          id="icn-warning-64x"
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Status
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Name
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Mesh
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Type
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Tags
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Last Connected
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Last Updated
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Total Updates
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Kuma DP version
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-77421f6a=""
+                        >
+                          Envoy version
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-77421f6a=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-77421f6a=""
+                      >
+                        
+                        <span
+                          class="sr-only"
+                          data-v-77421f6a=""
+                        >
+                          warnings
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody
+                  data-v-77421f6a=""
+                >
+                  
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link is-active"
+                      >
+                        <span
+                          class="action-link__active-state"
+                        >
+                           ✓ 
+                          <span
+                            class="sr-only"
+                          >
+                             Selected 
+                          </span>
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      backend
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-protocol"
+                        >
+                          kuma.io/protocol
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--http"
+                        >
+                          http
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--backend"
+                        >
+                          backend
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/17/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/17/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          10
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.16.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      cluster-1.backend-02
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--backend"
+                        >
+                          backend
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-zone"
+                        >
+                          kuma.io/zone
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--cluster-1"
+                        >
+                          cluster-1
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--version"
+                        >
+                          version
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--2"
+                        >
+                          2
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          2
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.16.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      cluster-1.backend-03
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--backend"
+                        >
+                          backend
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-zone"
+                        >
+                          kuma.io/zone
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--cluster-1"
+                        >
+                          cluster-1
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--version"
+                        >
+                          version
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--1"
+                        >
+                          1
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          2
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.16.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      cluster-1.gateway-01
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Gateway / BUILTIN
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--gateway"
+                        >
+                          gateway
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-zone"
+                        >
+                          kuma.io/zone
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--cluster-1"
+                        >
+                          cluster-1
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          4
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.16.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      cluster-1.ingress-02
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--ingress"
+                        >
+                          ingress
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-zone"
+                        >
+                          kuma.io/zone
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--cluster-1"
+                        >
+                          cluster-1
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/19/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          6
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.16.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      db
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-protocol"
+                        >
+                          kuma.io/protocol
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--http"
+                        >
+                          http
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--db"
+                        >
+                          db
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/17/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/17/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          3
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        unknown
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.15.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      frontend
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-protocol"
+                        >
+                          kuma.io/protocol
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--http"
+                        >
+                          http
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--frontend"
+                        >
+                          frontend
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/17/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      on 2/17/2021
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          3
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="with-warnings"
+                      >
+                        1.0.6
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.15.2
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="mr-1 kong-icon-warning kong-icon"
+                        data-v-637de6fa=""
+                      >
+                        <svg
+                          height="20"
+                          role="img"
+                          version="1.1"
+                          viewBox="0 0 48 42"
+                          width="20"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
                         >
                           
-      
-                          <path
-                            d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+  
+                          <title>
+                            Warning
+                          </title>
+                          
+  
+                          <g
                             fill="var(--black-75)"
-                            fill-rule="nonzero"
-                            id="Triangle"
-                          />
-                          
-      
-                          <path
-                            d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                            fill="var(--yellow-300)"
-                            fill-rule="nonzero"
-                            id="Path"
-                            type="secondary"
-                          />
-                          
-      
-                          <path
-                            d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                            fill="var(--black-75)"
-                            id="!"
-                          />
-                          
+                            fill-rule="evenodd"
+                            id="Page-1"
+                            stroke="none"
+                            stroke-width="1"
+                          >
+                            
     
-                        </g>
+                            <g
+                              id="icn-warning-64x"
+                            >
+                              
+      
+                              <path
+                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                fill="var(--black-75)"
+                                fill-rule="nonzero"
+                                id="Triangle"
+                              />
+                              
+      
+                              <path
+                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                fill="var(--yellow-300)"
+                                fill-rule="nonzero"
+                                id="Path"
+                                type="secondary"
+                              />
+                              
+      
+                              <path
+                                d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                fill="var(--black-75)"
+                                id="!"
+                              />
+                              
+    
+                            </g>
+                            
+  
+                          </g>
+                          
+
+                        </svg>
                         
-  
-                      </g>
-                      
 
-                    </svg>
+                      </span>
+                      
+                    </td>
                     
-
-                  </span>
-                </td>
-              </tr>
-              <tr
-                data-v-1fe39162=""
-              >
-                <td
-                  data-v-1fe39162=""
-                >
-                  <a
-                    class="data-table-action-link"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="action-link__normal-state"
-                      data-v-1fe39162=""
-                    >
-                      
-              View
-            
-                    </span>
-                  </a>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class="entity-status is-offline"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-status__dot"
-                      data-v-1fe39162=""
-                    />
-                     
-                    <span
-                      class="entity-status__label"
-                      data-v-1fe39162=""
-                    >
-                      Offline
-                    </span>
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  no-subscriptions
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  default
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  Standard
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-protocol"
-                    >
-                      
-    kuma.io/protocol
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--http"
-                    >
-                      
-    http
-  
-                    </span>
-                  </span>
-                  <span
-                    class="entity-tag"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      class="entity-tag__label entity-tag__label--kuma-io-service"
-                    >
-                      
-    kuma.io/service
-  
-                    </span>
-                     
-                    <span
-                      class="entity-tag__value entity-tag__value--no-subscriptions"
-                    >
-                      
-    no-subscriptions
-  
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  never
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  never
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <span
-                    class="entity-total-updates"
-                    data-v-1fe39162=""
-                  >
-                    <span
-                      data-v-1fe39162=""
-                    >
-                      
-              0
-            
-                    </span>
-                  </span>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
+                  </tr>
+                  <tr
+                    data-v-77421f6a=""
+                    role="link"
+                    tabindex="0"
                   >
                     
-            -
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    class=""
-                    data-v-1fe39162=""
-                  >
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <a
+                        class="data-table-action-link"
+                      >
+                        <span
+                          class="action-link__normal-state"
+                        >
+                           View 
+                        </span>
+                      </a>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class="entity-status is-offline"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Offline
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      no-subscriptions
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      default
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-protocol"
+                        >
+                          kuma.io/protocol
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--http"
+                        >
+                          http
+                        </span>
+                      </span>
+                      <span
+                        class="entity-tag"
+                      >
+                        <span
+                          class="entity-tag__label entity-tag__label--kuma-io-service"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="entity-tag__value entity-tag__value--no-subscriptions"
+                        >
+                          no-subscriptions
+                        </span>
+                      </span>
+                      
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      never
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      never
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <span
+                        class="entity-total-updates"
+                      >
+                        <span>
+                          0
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        -
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        -
+                      </div>
+                      
+                    </td>
+                    <td
+                      data-v-77421f6a=""
+                    >
+                      
+                      <div />
+                      
+                    </td>
                     
-            -
-          
-                  </div>
-                </td>
-                <td
-                  data-v-1fe39162=""
-                >
-                  <div
-                    data-v-1fe39162=""
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-           
+                  </tr>
+                  
+                </tbody>
+              </table>
+              <!---->
+            </section>
+          </div>
           <div
             class="pagination"
           >
-            <!---->
-             
-            <!---->
+            <!--v-if-->
+            <!--v-if-->
           </div>
         </div>
-         
-        <!---->
-         
-        <!---->
+        <!-- empty state if no items are found -->
+        <!--v-if-->
+        <!-- additional page content -->
+        <!--v-if-->
       </div>
-       
-      <!---->
-       
-      <!---->
+      <!-- loading state -->
+      <!--v-if-->
+      <!-- error has occurred -->
+      <!--v-if-->
     </div>
-     
     <div
       class="tab-container"
       data-testid="tab-container"
@@ -1623,34 +1695,34 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
       <header
         class="tab__header"
       >
+        
         <div>
           <h3>
-            
-          DPP: backend
-        
+             DPP: backend
           </h3>
         </div>
-         
         <div>
           <div
             data-testid="entity-url-control"
           >
+            
             <div
               aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-6b00e241=""
+              aria-expanded="false"
+              data-v-9bbde9b2=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="button"
             >
+              
               <button
-                class="k-button small rounded outline"
-                data-v-6ae23500=""
-                data-v-6b00e241=""
+                class="small rounded outline k-button"
+                data-v-29036f3a=""
                 type="button"
               >
+                
                 <span
-                  class="kong-icon kong-icon-externalLink"
-                  data-v-429cf642=""
-                  data-v-6ae23500=""
+                  class="kong-icon-externalLink kong-icon"
+                  data-v-637de6fa=""
                 >
                   <svg
                     height="12"
@@ -1678,17 +1750,18 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
 
                 </span>
                 
-        Copy URL
-      
+                
+                 Copy URL
+                
                 <!---->
               </button>
+              
               <transition-stub
-                data-v-6b00e241=""
-                name="fade"
+                data-v-9bbde9b2=""
               >
                 <div
                   class="k-popover"
-                  data-v-6b00e241=""
+                  data-v-9bbde9b2=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="region"
                   style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -1696,435 +1769,366 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
                   <!---->
                   <div
                     class="k-popover-content"
-                    data-v-6b00e241=""
+                    data-v-9bbde9b2=""
                   >
+                    
                     <div>
                       <p>
                         URL copied to clipboard!
                       </p>
                     </div>
+                    
                   </div>
                   <!---->
                 </div>
               </transition-stub>
             </div>
+            
           </div>
         </div>
+        
       </header>
-       
       <div
         class="tab__content-container"
       >
         <div
           class="k-tabs"
-          data-v-93b6f4ca=""
+          data-v-6bcd6661=""
         >
           <ul
             aria-label="ktabs"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             role="tablist"
           >
+            
             <li
               aria-controls="panel-0"
               aria-selected="true"
-              class="tab-item active"
-              data-v-93b6f4ca=""
+              class="active tab-item"
+              data-v-6bcd6661=""
               id="overview-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 Overview
+                
               </a>
             </li>
             <li
               aria-controls="panel-1"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="insights-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 DPP Insights
+                
               </a>
             </li>
             <li
               aria-controls="panel-2"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="dpp-policies-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 Policies
+                
               </a>
             </li>
             <li
               aria-controls="panel-3"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="xds-configuration-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 XDS Configuration
+                
               </a>
             </li>
             <li
               aria-controls="panel-4"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="envoy-stats-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 Stats
+                
               </a>
             </li>
             <li
               aria-controls="panel-5"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="envoy-clusters-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 Clusters
+                
               </a>
             </li>
             <li
               aria-controls="panel-6"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="mtls-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 Certificate Insights
+                
               </a>
             </li>
             <li
               aria-controls="panel-7"
               aria-selected="false"
               class="tab-item"
-              data-v-93b6f4ca=""
+              data-v-6bcd6661=""
               id="yaml-tab"
               role="tab"
               tabindex="0"
             >
               <a
                 class="tab-link"
-                data-v-93b6f4ca=""
+                data-v-6bcd6661=""
               >
+                
                 YAML
+                
               </a>
             </li>
+            
           </ul>
+          
           <div
             aria-labelledby="overview-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-0"
             role="tabpanel"
             tabindex="0"
           >
-            <div
-              data-v-93b6f4ca=""
-            >
+            
+            
+            <div>
               <div
                 class="label-list-content"
               >
                 <section
                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  class="kong-card noBorder"
-                  data-v-3bb7bf60=""
+                  class="noBorder kong-card"
+                  data-v-5adb63fa=""
                 >
                   <!---->
                   <!---->
                   <div
                     class="k-card-content d-flex"
-                    data-v-3bb7bf60=""
+                    data-v-5adb63fa=""
                   >
                     <div
                       class="k-card-body"
-                      data-v-3bb7bf60=""
+                      data-v-5adb63fa=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     >
+                      
                       <div
                         class="label-list__col-wrapper multi-col"
-                        data-v-3bb7bf60=""
                       >
-                        <div
-                          data-v-3bb7bf60=""
-                        >
-                          <ul
-                            data-v-3bb7bf60=""
-                          >
-                            <li
-                              data-v-3bb7bf60=""
-                            >
-                              <div
-                                data-v-3bb7bf60=""
-                              >
-                                <h4
-                                  data-v-3bb7bf60=""
-                                >
+                        
+                        <!-- basic information -->
+                        <div>
+                          <ul>
+                            
+                            <li>
+                              <div>
+                                <h4>
                                   type
                                 </h4>
-                                
-                DataplaneOverview
-              
+                                 DataplaneOverview
                               </div>
                             </li>
-                            <li
-                              data-v-3bb7bf60=""
-                            >
-                              <div
-                                data-v-3bb7bf60=""
-                              >
-                                <h4
-                                  data-v-3bb7bf60=""
-                                >
+                            <li>
+                              <div>
+                                <h4>
                                   name
                                 </h4>
-                                
-                backend
-              
+                                 backend
                               </div>
                             </li>
-                            <li
-                              data-v-3bb7bf60=""
-                            >
-                              <div
-                                data-v-3bb7bf60=""
-                              >
-                                <h4
-                                  data-v-3bb7bf60=""
-                                >
+                            <li>
+                              <div>
+                                <h4>
                                   mesh
                                 </h4>
-                                
-                default
-              
+                                 default
                               </div>
                             </li>
-                            <li
-                              data-v-3bb7bf60=""
-                            >
-                              <div
-                                data-v-3bb7bf60=""
-                              >
-                                <h4
-                                  data-v-3bb7bf60=""
-                                >
+                            <li>
+                              <div>
+                                <h4>
                                   status
                                 </h4>
-                                 
                                 <div
                                   class="entity-status"
-                                  data-v-3bb7bf60=""
                                 >
                                   <span
                                     class="entity-status__label"
-                                    data-v-3bb7bf60=""
                                   >
                                     Online
                                   </span>
                                 </div>
-                                 
                                 <div
                                   class="reason-list"
-                                  data-v-3bb7bf60=""
                                 >
-                                  <ul
-                                    data-v-3bb7bf60=""
-                                  />
+                                  <ul>
+                                    
+                                    
+                                  </ul>
                                 </div>
                               </div>
                             </li>
+                            
                           </ul>
                         </div>
-                         
-                        <div
-                          data-v-3bb7bf60=""
-                        >
-                          <h4
-                            data-v-3bb7bf60=""
-                          >
+                        <!-- tag information -->
+                        <div>
+                          <h4>
                             Tags
                           </h4>
-                           
-                          <p
-                            data-v-3bb7bf60=""
-                          >
+                          <p>
+                            
                             <span
                               class="tag-cols"
-                              data-v-3bb7bf60=""
                             >
-                              <span
-                                data-v-3bb7bf60=""
-                              >
-                                
-                kuma.io/protocol:
-              
+                              <span>
+                                kuma.io/protocol: 
                               </span>
-                               
-                              <span
-                                data-v-3bb7bf60=""
-                              >
-                                
-                http
-              
+                              <span>
+                                http
                               </span>
                             </span>
                             <span
                               class="tag-cols"
-                              data-v-3bb7bf60=""
                             >
-                              <span
-                                data-v-3bb7bf60=""
-                              >
-                                
-                kuma.io/service:
-              
+                              <span>
+                                kuma.io/service: 
                               </span>
-                               
-                              <span
-                                data-v-3bb7bf60=""
-                              >
-                                
-                backend
-              
+                              <span>
+                                backend
                               </span>
                             </span>
+                            
                           </p>
-                           
-                          <div
-                            data-v-3bb7bf60=""
-                          >
-                            <h4
-                              data-v-3bb7bf60=""
-                            >
+                          <div>
+                            <h4>
                               Versions
                             </h4>
-                             
-                            <p
-                              data-v-3bb7bf60=""
-                            >
+                            <p>
+                              
                               <span
                                 class="tag-cols"
-                                data-v-3bb7bf60=""
                               >
-                                <span
-                                  data-v-3bb7bf60=""
-                                >
-                                  
-                  envoy:
-                
+                                <span>
+                                  envoy: 
                                 </span>
-                                 
-                                <span
-                                  data-v-3bb7bf60=""
-                                >
-                                  
-                  1.16.2
-                
+                                <span>
+                                  1.16.2
                                 </span>
                               </span>
                               <span
                                 class="tag-cols"
-                                data-v-3bb7bf60=""
                               >
-                                <span
-                                  data-v-3bb7bf60=""
-                                >
-                                  
-                  kumaDp:
-                
+                                <span>
+                                  kumaDp: 
                                 </span>
-                                 
-                                <span
-                                  data-v-3bb7bf60=""
-                                >
-                                  
-                  1.0.7
-                
+                                <span>
+                                  1.0.7
                                 </span>
                               </span>
                               <span
                                 class="tag-cols"
-                                data-v-3bb7bf60=""
                               >
-                                <span
-                                  data-v-3bb7bf60=""
-                                >
-                                  
-                  coredns:
-                
+                                <span>
+                                  coredns: 
                                 </span>
-                                 
-                                <span
-                                  data-v-3bb7bf60=""
-                                >
-                                  
-                  1.8.3
-                
+                                <span>
+                                  1.8.3
                                 </span>
                               </span>
+                              
                             </p>
                           </div>
                         </div>
+                        
                       </div>
+                      
                     </div>
                     <!---->
                   </div>
                 </section>
               </div>
-               
-              <!---->
-               
-              <!---->
-               
-              <!---->
+              <!-- loading state -->
+              <!--v-if-->
+              <!-- no data to load -->
+              <!--v-if-->
+              <!-- error -->
+              <!--v-if-->
             </div>
+            
+            
           </div>
           <div
             aria-labelledby="insights-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-1"
             role="tabpanel"
             tabindex="0"
@@ -2134,7 +2138,7 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
           <div
             aria-labelledby="dpp-policies-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-2"
             role="tabpanel"
             tabindex="0"
@@ -2144,7 +2148,7 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
           <div
             aria-labelledby="xds-configuration-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-3"
             role="tabpanel"
             tabindex="0"
@@ -2154,7 +2158,7 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
           <div
             aria-labelledby="envoy-stats-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-4"
             role="tabpanel"
             tabindex="0"
@@ -2164,7 +2168,7 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
           <div
             aria-labelledby="envoy-clusters-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-5"
             role="tabpanel"
             tabindex="0"
@@ -2174,7 +2178,7 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
           <div
             aria-labelledby="mtls-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-6"
             role="tabpanel"
             tabindex="0"
@@ -2184,22 +2188,24 @@ exports[`DataplanesView.vue renders snapshot 1`] = `
           <div
             aria-labelledby="yaml-tab"
             class="tab-container"
-            data-v-93b6f4ca=""
+            data-v-6bcd6661=""
             id="panel-7"
             role="tabpanel"
             tabindex="0"
           >
             <!---->
           </div>
+          
         </div>
-         
         <div>
-          <!---->
-           
-          <!---->
+          <!-- loading state -->
+          <!--v-if-->
+          <!-- error has occurred -->
+          <!--v-if-->
         </div>
       </div>
     </div>
+    
   </div>
 </div>
 `;

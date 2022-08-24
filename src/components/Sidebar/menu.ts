@@ -1,4 +1,4 @@
-import { RawLocation } from 'vue-router'
+import { RouteLocation } from 'vue-router'
 import meshIcon from '@/assets/images/icon-service-mesh.svg'
 import { Policy } from '@/types'
 
@@ -7,7 +7,7 @@ type KIconType = 'gearFilled'
 
 export interface MenuNavItem {
   name: string
-  link?: RawLocation
+  link?: RouteLocation
   subNav?: MenuNavItem[]
   title?: boolean
   nested?: boolean

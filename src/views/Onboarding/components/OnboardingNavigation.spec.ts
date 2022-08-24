@@ -1,134 +1,99 @@
+import { createStore } from 'vuex'
+import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
-import { screen } from '@testing-library/vue'
+import { render, screen } from '@testing-library/vue'
+import { KButton } from '@kong/kongponents'
+
 import OnboardingNavigation from './OnboardingNavigation.vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
+import { storeConfig } from '@/store/index'
 
-const routes = [
-  {
-    path: '/',
-    name: 'default',
-    component: TestComponent,
-  },
-  {
-    path: '/foo',
-    name: 'foo',
-    component: TestComponent,
-  },
-]
+const store = createStore(storeConfig)
 
-const props = {
-  nextStep: 'default',
+function renderComponent(props: any) {
+  return render(OnboardingNavigation, {
+    props,
+    global: {
+      plugins: [store],
+      components: {
+        KButton,
+      },
+      stubs: {
+        'router-link': RouterLinkStub
+      },
+      mocks: {
+        $router: {
+          push: () => undefined,
+        },
+      },
+    },
+  })
 }
 
 describe('OnboardingNavigation.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderWithVuex(OnboardingNavigation, {
-      props: {
-        ...props,
-        previousStep: 'foo',
-      },
-      routes,
+    const { container } = renderComponent({
+      previousStep: 'foo',
+      nextStep: 'default',
     })
 
     expect(container).toMatchSnapshot()
   })
 
   it('displays different next step title', () => {
-    renderWithVuex(OnboardingNavigation, {
-      props: {
-        ...props,
-        nextStepTitle: 'nextStepTitle',
-      },
-      routes,
+    renderComponent({
+      previousStep: 'foo',
+      nextStep: 'default',
+      nextStepTitle: 'nextStepTitle',
     })
 
     expect(screen.getByText(/nextStepTitle/)).toBeInTheDocument()
   })
 
   it('display disabled next button', () => {
-    renderWithVuex(OnboardingNavigation, {
-      props: {
-        ...props,
-        shouldAllowNext: false,
-      },
-      routes,
+    renderComponent({
+      previousStep: 'foo',
+      nextStep: 'default',
+      shouldAllowNext: false,
     })
 
     expect(screen.getByText(/Next/).closest('a')).toHaveAttribute('disabled')
   })
 
-  it("doesn't display previous step", () => {
-    renderWithVuex(OnboardingNavigation, {
-      props: {
-        ...props,
-      },
-      routes,
+  it('doesn\'t display previous step', () => {
+    renderComponent({
+      nextStep: 'default',
     })
 
     expect(screen.queryByText(/Back/)).not.toBeInTheDocument()
   })
 
   it('changes step to previous', async () => {
-    let globalRouter
-    let globalVuex
+    renderComponent({
+      previousStep: 'foo',
+      nextStep: 'default',
+    })
 
-    renderWithVuex(
-      OnboardingNavigation,
-      {
-        props: {
-          ...props,
-          previousStep: 'foo',
-        },
-        routes,
-        slots: {
-          selector: '<div>Selector</div>',
-        },
-      },
-      (vueInstance, vuexStore, router) => {
-        globalRouter = router
-        globalVuex = vuexStore
-      },
-    )
+    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+    expect(store.state.onboarding.step).toBe('onboarding-welcome')
 
     await userEvent.click(screen.getByText(/Back/))
 
-    // @ts-ignore
-    expect(globalRouter.history.current.name).toBe('foo')
-    // @ts-ignore
-    expect(globalVuex.state.onboarding.step).toBe('foo')
+    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+    expect(store.state.onboarding.step).toBe('foo')
   })
 
   it('calls skip onboarding', async () => {
-    let globalRouter
-    let globalVuex
+    renderComponent({
+      previousStep: 'foo',
+      nextStep: 'default',
+    })
 
-    renderWithVuex(
-      OnboardingNavigation,
-      {
-        props: {
-          ...props,
-          previousStep: 'foo',
-        },
-        routes: [
-          {
-            path: '/',
-            name: 'default',
-            component: TestComponent,
-          },
-        ],
-      },
-      (vueInstance, vuexStore, router) => {
-        globalRouter = router
-        globalVuex = vuexStore
-      },
-    )
+    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+    expect(store.state.onboarding.isCompleted).toBe(false)
 
     await userEvent.click(screen.getByText(/Skip Setup/))
 
-    // @ts-ignore
-    expect(globalRouter.history.current.name).toBe('global-overview')
-    // @ts-ignore
-    expect(globalVuex.state.onboarding.isCompleted).toBe(true)
+    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
+    expect(store.state.onboarding.isCompleted).toBe(true)
   })
 })

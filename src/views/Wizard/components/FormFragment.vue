@@ -64,7 +64,6 @@ export default {
 
 $padding: 16px;
 $first-col-width: 30%;
-$last-col-flex: 1 0 0;
 
 .form-line-wrapper {
   overflow: hidden;
@@ -98,7 +97,7 @@ $last-col-flex: 1 0 0;
     .is-shifted-right {
       display: block;
 
-      > * {
+      > :slotted(*) {
         display: flex;
         width: 70%;
         flex: none !important;
@@ -115,7 +114,7 @@ $last-col-flex: 1 0 0;
       align-items: center;
       margin: 0 -16px;
 
-      > * {
+      > :slotted(*) {
         flex: 1 0 0;
         margin: 0 8px;
       }
@@ -131,7 +130,7 @@ $last-col-flex: 1 0 0;
         text-align: left;
       }
 
-      input + span {
+      :slotted(input + span) {
         margin-left: 8px;
       }
     }

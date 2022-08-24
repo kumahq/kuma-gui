@@ -1,23 +1,28 @@
 <template>
-  <KKrumbs
-    v-if="!hideBreadcrumbs"
+  <KBreadcrumbs
+    v-if="routes.length > 0 && !hideBreadcrumbs"
     :items="routes"
   />
 </template>
 
 <script>
+import { KBreadcrumbs } from '@kong/kongponents'
+
 import { isValidUuid } from '@/helpers'
 
 export default {
   name: 'BreadcrumbsMenu',
+
+  components: {
+    KBreadcrumbs,
+  },
+
   computed: {
     pageMesh() {
       return this.$route.params.mesh
     },
 
     routes() {
-      // const { query } = this.$router.currentRoute
-
       const items = []
 
       this.$route.matched.forEach((r) => {
@@ -80,43 +85,36 @@ export default {
       return { key, to, title, text }
     },
 
-    isCurrentRoute(r) {
-      return (r.name && r.name === this.$router.currentRoute.name) || r.redirect === this.$router.currentRoute.name
+    isCurrentRoute(route) {
+      return (route.name && route.name === this.$route.name) || route.redirect === this.$route.name
     },
 
     calculateRouteFromQuery(q) {
       const { entity_id: entityId, entity_type: entityType } = q
 
       if (entityId && entityType) {
-        const resolvedTo = this.$router.resolve({
+        const resolvedRouteLocation = this.$router.resolve({
           name: `show-${entityType.split('_')[0]}`,
           params: { id: entityId.split(',')[0] },
-        }).normalizedTo
-
-        const normalized = {
-          ...resolvedTo,
-          meta: {
-            ...resolvedTo.meta,
-          },
-        }
+        })
 
         // if there is an entity in the query params, then use it as the
         // breadcrumb comma separated list with label being the second argument
         // e.g. ?entity_id=uuid,name&entity_type=
-        let breadcrumb = normalized.params.id.split('-')[0]
+        let breadcrumb = resolvedRouteLocation.params.id.split('-')[0]
         if (entityId.split(',').length > 1 && entityId.split(',')[1]) {
           breadcrumb = entityId.split(',')[1]
         }
 
-        normalized.meta.breadcrumb = breadcrumb
+        resolvedRouteLocation.meta.breadcrumb = breadcrumb
 
         return [
           {
             ...this.getBreadcrumbItem(
-              normalized.name,
-              normalized,
-              this.calculateRouteTitle(normalized),
-              this.calculateRouteText(normalized),
+              resolvedRouteLocation.name,
+              resolvedRouteLocation,
+              this.calculateRouteTitle(resolvedRouteLocation),
+              this.calculateRouteText(resolvedRouteLocation),
             ),
           },
         ]
@@ -127,7 +125,9 @@ export default {
       // TODO: support child routes that are children of :id to support routes
       // like /workspaces/:id/services/:id/update
       if (route.path && route.path.indexOf(':mesh') > -1) {
-        const params = this.$router.currentRoute.params
+        const params = this.$route.params
+
+        console.log(params)
 
         return (
           (params && params.mesh && isValidUuid(params.mesh) ? params.mesh.split('-')[0].trim() : params.mesh) ||
@@ -147,7 +147,7 @@ export default {
     calculateRouteTitle(route) {
       return (
         (route.params && route.params.mesh) ||
-        (route.path.indexOf(':mesh') > -1 && this.$router.currentRoute.params && this.$router.currentRoute.params.mesh)
+        (route.path.indexOf(':mesh') > -1 && this.$route.params && this.$route.params.mesh)
       )
     },
 

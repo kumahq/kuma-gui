@@ -9,104 +9,79 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
       >
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          class="kong-card noBorder"
-          data-v-3bb7bf60=""
+          class="noBorder kong-card"
+          data-v-5adb63fa=""
         >
           <!---->
           <!---->
           <div
             class="k-card-content d-flex"
-            data-v-3bb7bf60=""
+            data-v-5adb63fa=""
           >
             <div
               class="k-card-body"
-              data-v-3bb7bf60=""
+              data-v-5adb63fa=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
+              
               <div
                 class="label-list__col-wrapper multi-col"
-                data-v-3bb7bf60=""
               >
-                <ul
-                  data-v-3bb7bf60=""
-                >
-                  <li
-                    data-v-3bb7bf60=""
-                  >
-                    <h4
-                      data-v-3bb7bf60=""
-                    >
+                
+                <ul>
+                  <li>
+                    <h4>
                       Dataplanes
                     </h4>
-                     
                     <input
                       class="k-input mb-4"
-                      data-v-3bb7bf60=""
                       id="dataplane-search"
                       placeholder="Filter by name"
-                      required="required"
+                      required=""
                       type="text"
                     />
-                     
+                    
                     <p
                       class="my-1"
                       data-testid="dataplane-name"
-                      data-v-3bb7bf60=""
                     >
-                      <a
-                        class=""
-                        data-v-3bb7bf60=""
-                        href="#/?ns=backend"
-                      >
-                        
-            backend
-          
+                      <a>
+                        backend
                       </a>
                     </p>
                     <p
                       class="my-1"
                       data-testid="dataplane-name"
-                      data-v-3bb7bf60=""
                     >
-                      <a
-                        class=""
-                        data-v-3bb7bf60=""
-                        href="#/?ns=db"
-                      >
-                        
-            db
-          
+                      <a>
+                        db
                       </a>
                     </p>
                     <p
                       class="my-1"
                       data-testid="dataplane-name"
-                      data-v-3bb7bf60=""
                     >
-                      <a
-                        class=""
-                        data-v-3bb7bf60=""
-                        href="#/?ns=frontend"
-                      >
-                        
-            frontend
-          
+                      <a>
+                        frontend
                       </a>
                     </p>
+                    
                   </li>
                 </ul>
+                
               </div>
+              
             </div>
             <!---->
           </div>
         </section>
       </div>
-       
-      <!---->
-       
-      <!---->
-       
-      <!---->
+      <!-- loading state -->
+      <!--v-if-->
+      <!-- no data to load -->
+      <!--v-if-->
+      <!-- error -->
+      <!--v-if-->
     </div>
   </div>
 </div>

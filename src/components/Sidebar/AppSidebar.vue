@@ -18,7 +18,7 @@
           :key="idx"
           v-bind="item"
           has-custom-icon
-          @click.native="toggleSubnav"
+          @click="toggleSubnav"
         >
           <template
             v-if="item.iconCustom && !item.icon"
@@ -163,7 +163,7 @@ export default {
     this.sidebarEvent()
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     // window.removeEventListener('resize', this.handleResize)
   },
 

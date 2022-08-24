@@ -13,12 +13,14 @@ module.exports = {
     es6: true,
   },
 
-  extends: ['eslint:recommended', 'plugin:vue/recommended', 'standard', '@vue/typescript'],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript'],
 
   // required to lint *.vue files
   plugins: ['vue', 'import', '@typescript-eslint'],
 
   rules: {
+    indent: 'off',
+    '@typescript-eslint/indent': ['error', 2],
     'arrow-parens': 0,
     'generator-star-spacing': 0,
     'object-property-newline': 'error',

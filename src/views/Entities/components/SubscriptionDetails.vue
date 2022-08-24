@@ -15,11 +15,11 @@
         </li>
         <li v-if="details.connectTime">
           <strong>Last Connected:</strong>&nbsp;
-          {{ details.connectTime | readableDate }}
+          {{ readableDate(details.connectTime) }}
         </li>
         <li v-if="details.disconnectTime">
           <strong>Last Disconnected:</strong>&nbsp;
-          {{ details.disconnectTime | readableDate }}
+          {{ readableDate(details.disconnectTime) }}
         </li>
       </ul>
     </div>
@@ -31,15 +31,15 @@
           :key="label"
         >
           <h6 class="overview-tertiary-title">
-            {{ label | humanReadable }}:
+            {{ humanReadable(label) }}:
           </h6>
           <ul>
             <li
               v-for="(k, v) in item"
               :key="v"
             >
-              <strong>{{ v | humanReadable }}:</strong>&nbsp;
-              <span class="mono">{{ k | formatValue | formatError }}</span>
+              <strong>{{ humanReadable(v) }}:</strong>&nbsp;
+              <span class="mono">{{ formatError(formatValue(k)) }}</span>
             </li>
           </ul>
         </li>
@@ -65,24 +65,7 @@ import { humanReadableDate, camelCaseToWords } from '@/helpers'
 
 export default {
   name: 'SubscriptionDetails',
-  filters: {
-    formatValue(value) {
-      return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
-    },
-    readableDate(value) {
-      return humanReadableDate(value)
-    },
-    humanReadable(value) {
-      return camelCaseToWords(value)
-    },
-    formatError(value) {
-      if (value === '--') {
-        return 'error calculating'
-      }
 
-      return value
-    },
-  },
   props: {
     details: {
       type: Object,
@@ -93,6 +76,7 @@ export default {
       default: false,
     },
   },
+
   computed: {
     detailsIterator() {
       if (this.isDiscoverySubscription) {
@@ -102,6 +86,28 @@ export default {
       }
 
       return this.details.status?.stat
+    },
+  },
+
+  methods: {
+    formatValue(value) {
+      return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
+    },
+
+    readableDate(value) {
+      return humanReadableDate(value)
+    },
+
+    humanReadable(value) {
+      return camelCaseToWords(value)
+    },
+
+    formatError(value) {
+      if (value === '--') {
+        return 'error calculating'
+      }
+
+      return value
     },
   },
 }

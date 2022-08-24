@@ -1,27 +1,27 @@
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
-import { createLocalVue, mount } from '@vue/test-utils'
+import { createStore } from 'vuex'
+import { flushPromises, mount } from '@vue/test-utils'
+import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import PolicyView from './PolicyView.vue'
-import Store from '@/store/index'
-
-const localVue = createLocalVue()
-
-localVue.use(VueRouter)
-localVue.use(Vuex)
-
-const router = new VueRouter()
+import { storeConfig } from '@/store/index'
 
 async function createWrapper(props = {}) {
-  const store = new Vuex.Store(Store())
+  const store = createStore(storeConfig)
 
   await store.dispatch('fetchPolicies')
 
   return mount(PolicyView, {
-    localVue,
-    router,
-    store,
-    propsData: props,
+    props,
+    global: {
+      plugins: [store],
+      components: { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
+      mocks: {
+        $route: {
+          query: {},
+          params: {},
+        },
+      },
+    }
   })
 }
 
@@ -29,12 +29,7 @@ describe('PolicyView', () => {
   test('renders default view correctly', async () => {
     const wrapper = await createWrapper({ policyPath: 'circuit-breakers' })
 
-    // For some magical reason, this exact arrangement is necessary to wait for the component to completely load. Yikes.
-    // TODO: In @vue/test-utils@2, use `await flushPromises()` instead.
-    await wrapper.vm.$nextTick()
-    await wrapper.vm.$nextTick()
-    await wrapper.vm.$nextTick()
-    await new Promise((resolve) => setTimeout(resolve, 0))
+    await flushPromises()
 
     const documentationLink = wrapper.find('[data-testid="policy-documentation-link"]')
 

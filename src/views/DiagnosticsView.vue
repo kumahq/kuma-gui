@@ -6,8 +6,7 @@
         border-variant="noBorder"
       >
         <template #body>
-          <Prism
-            class="code-block"
+          <CodeBlock
             language="json"
             :code="codeOutput"
           />
@@ -63,18 +62,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Prism from 'vue-prismjs'
 
+import CodeBlock from '@/components/CodeBlock.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton.vue'
 
 export default {
   name: 'DiagnosticsView',
-  metaInfo: {
-    title: 'Diagnostics',
-  },
+
   components: {
     FrameSkeleton,
-    Prism,
+    CodeBlock,
   },
   data() {
     return {

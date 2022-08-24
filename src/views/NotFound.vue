@@ -36,12 +36,14 @@
 
 <script>
 import GlobalHeader from '@/components/Global/GlobalHeader.vue'
+
 export default {
   name: 'NotFound',
-  components: { GlobalHeader },
-  metaInfo: {
-    title: 'Item Not Found',
+
+  components: {
+    GlobalHeader,
   },
+
   computed: {
     currentMesh() {
       const meshFromState = this.$store.state.selectedMesh

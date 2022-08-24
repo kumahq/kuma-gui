@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+
 import AccordionList from './AccordionList.vue'
 import AccordionItem from './AccordionItem.vue'
 
@@ -7,34 +8,33 @@ const options = {
   slots: {
     default: [
       `
-    <AccordionItem>
-      <template slot="accordion-header">
-        Header 1
-      </template>
+        <AccordionItem>
+          <template #accordion-header>
+            Header 1
+          </template>
 
-      <template slot="accordion-content">
-        Content 1
-      </template>
-
-    </AccordionItem>
-    `,
+          <template #accordion-content>
+            Content 1
+          </template>
+        </AccordionItem>
+      `,
       `
-    <AccordionItem>
-      <template slot="accordion-header">
-        Header 2
-      </template>
+        <AccordionItem>
+          <template #accordion-header>
+            Header 2
+          </template>
 
-      <template slot="accordion-content">
-        Content 2
-      </template>
-
-    </AccordionItem>
-    `,
+          <template #accordion-content>
+            Content 2
+          </template>
+        </AccordionItem>
+      `,
     ],
   },
-  stubs: {
-    // used to register custom components
-    AccordionItem,
+  global: {
+    stubs: {
+      AccordionItem,
+    },
   },
 }
 

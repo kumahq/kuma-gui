@@ -1,36 +1,79 @@
-import { screen, waitForElementToBeRemoved } from '@testing-library/vue'
-import { rest } from 'msw'
+import { createStore } from 'vuex'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import { RouterLinkStub } from '@vue/test-utils'
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
+import { KAlert, KBadge, KButton, KEmptyState, KIcon, KPop } from '@kong/kongponents'
+
 import App from './App.vue'
-import { server } from '@/jest-setup'
 import TestComponent from '@/testUtils/TestComponent.vue'
-import renderWithVuex from '@/testUtils/renderWithVuex'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: TestComponent,
+    },
+  ],
+})
+
+function renderComponent({ status = 'OK', tagline = 'Kuma' }: { status?: string, tagline?: string }) {
+  const store = createStore({
+    modules: {
+      config: {
+        namespaced: true,
+        state: {
+          status: null,
+          tagline: null,
+          version: null,
+        },
+        getters: {
+          getStatus: (state) => {
+            state.status = status
+
+            return state.status
+          },
+          getTagline: (state) => {
+            state.tagline = tagline
+
+            return state.tagline
+          },
+          getVersion: (state) => state.version,
+        },
+      },
+    },
+    state: {
+      globalLoading: true,
+    },
+    actions: {
+      bootstrap: ({ state }) => {
+        state.globalLoading = false
+      },
+    },
+  })
+
+  return render(App, {
+    global: {
+      plugins: [router, store],
+      components: {
+        KAlert,
+        KBadge,
+        KButton,
+        KEmptyState,
+        KIcon,
+        KPop,
+      },
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
+    },
+  })
+}
 
 describe('App.vue', () => {
   it('renders main view when succesful', async () => {
-    server.use(
-      rest.get('http://localhost/', (req, res, ctx) =>
-        res(
-          ctx.status(200),
-          ctx.json({
-            hostname: 'hostname',
-            tagline: 'Kuma',
-            version: '1.2.0-129-g2e3ace03',
-          }),
-        ),
-      ),
-    )
-    server.use(rest.get('http://localhost/config', (req, res, ctx) => res(ctx.status(200), ctx.json({}))))
-    server.use(rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.0'))))
-
-    renderWithVuex(App, {
-      routes: [
-        {
-          path: '/',
-          name: 'default',
-          component: TestComponent,
-        },
-      ],
-    })
+    renderComponent({ status: 'OK' })
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 
@@ -38,10 +81,7 @@ describe('App.vue', () => {
   })
 
   it('fails to renders basic view', async () => {
-    server.use(rest.get('http://localhost/', (req, res, ctx) => res(ctx.status(404))))
-    server.use(rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.0'))))
-
-    const { container } = renderWithVuex(App)
+    const { container } = renderComponent({ status: 'ERROR' })
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 

@@ -12,7 +12,7 @@
   >
     <router-link
       :to="routerLink"
-      @click.native="onNavItemClick"
+      @click="onNavItemClick"
     >
       <div
         v-if="hasIcon || hasCustomIcon"

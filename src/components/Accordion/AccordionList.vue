@@ -38,11 +38,3 @@ export default {
   },
 }
 </script>
-
-<style lang="scss" scoped>
-.accordion {
-  & > li:last-child {
-    border-bottom: none;
-  }
-}
-</style>

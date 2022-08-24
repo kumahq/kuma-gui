@@ -147,9 +147,6 @@ export default {
     XdsConfiguration
   },
 
-  metaInfo: {
-    title: 'ZoneEgresses',
-  },
   data() {
     return {
       isLoading: true,
