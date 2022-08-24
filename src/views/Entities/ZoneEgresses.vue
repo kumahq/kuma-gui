@@ -9,8 +9,8 @@
         :table-data="tableData"
         :table-data-is-empty="isEmpty"
         :next="next"
-        @tableAction="tableAction"
-        @loadData="loadData($event)"
+        @table-action="tableAction"
+        @load-data="loadData($event)"
       >
         <template #additionalControls>
           <KButton
@@ -144,7 +144,7 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     EntityURLControl,
-    XdsConfiguration
+    XdsConfiguration,
   },
 
   data() {

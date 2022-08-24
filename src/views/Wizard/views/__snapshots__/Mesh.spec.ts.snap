@@ -306,6 +306,8 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
                                       
+                                      
+                                      <!-- eslint-disable vue/no-v-html -->
                                       <pre
                                         class="code-block language-bash"
                                         data-testid="code-block"
@@ -367,6 +369,8 @@ metrics:
                                            -
                                         </code>
                                       </pre>
+                                      <!-- eslint-enable vue/no-v-html -->
+                                      
                                       
                                     </div>
                                     <!---->

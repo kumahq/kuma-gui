@@ -24,6 +24,7 @@
             v-if="item.iconCustom && !item.icon"
             #item-icon
           >
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <div v-html="item.iconCustom" />
           </template>
         </NavItem>
@@ -82,7 +83,7 @@ export default {
   computed: {
     ...mapState({
       selectedMesh: (state) => state.selectedMesh,
-      policies: (state) => state.policies
+      policies: (state) => state.policies,
     }),
 
     ...mapGetters({

@@ -1,15 +1,17 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <pre
     class="code-block"
     :class="`language-${language}`"
     data-testid="code-block"
   ><code v-html="highlightedCode" /></pre>
+  <!-- eslint-enable vue/no-v-html -->
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { highlightCode } from '@/utils/highlight-code';
+import { highlightCode } from '@/utils/highlight-code'
 
 const props = defineProps<{
   language: string

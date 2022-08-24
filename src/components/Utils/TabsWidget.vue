@@ -123,7 +123,7 @@ export default {
     },
   },
 
-  emits: ['onTabChange'],
+  emits: ['on-tab-change'],
 
   data() {
     return {
@@ -151,7 +151,7 @@ export default {
           newTab,
         },
       })
-      this.$emit('onTabChange', newTab)
+      this.$emit('on-tab-change', newTab)
     },
   },
 }

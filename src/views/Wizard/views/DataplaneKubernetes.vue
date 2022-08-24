@@ -533,7 +533,7 @@
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
-              @hideSiblings="hideSiblings"
+              @hide-siblings="hideSiblings"
             >
               <template #loading-title>
                 <h3>Searching&hellip;</h3>

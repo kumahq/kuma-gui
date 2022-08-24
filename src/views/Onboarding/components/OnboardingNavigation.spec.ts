@@ -18,7 +18,7 @@ function renderComponent(props: any) {
         KButton,
       },
       stubs: {
-        'router-link': RouterLinkStub
+        'router-link': RouterLinkStub,
       },
       mocks: {
         $router: {

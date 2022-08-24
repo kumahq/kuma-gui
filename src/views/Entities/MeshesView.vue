@@ -9,8 +9,8 @@
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :next="next"
-        @tableAction="tableAction"
-        @loadData="loadData($event)"
+        @table-action="tableAction"
+        @load-data="loadData($event)"
       >
         <template #additionalControls>
           <KButton

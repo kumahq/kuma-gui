@@ -96,7 +96,7 @@ export default {
     },
   },
 
-  emits: ['hideSiblings'],
+  emits: ['hide-siblings'],
 
   data() {
     return {
@@ -141,7 +141,7 @@ export default {
           this.isRunning = false
           this.isComplete = true
 
-          this.$emit('hideSiblings', true)
+          this.$emit('hide-siblings', true)
         }
       }, this.interval)
     },

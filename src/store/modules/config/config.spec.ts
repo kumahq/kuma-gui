@@ -55,7 +55,7 @@ describe('config module', () => {
           tagline: 'Other',
           version: '0.0.0-preview.abcd1234',
           kumaDocsVersion: 'dev',
-        }
+        },
       ],
       [
         {
@@ -67,7 +67,7 @@ describe('config module', () => {
           tagline: 'Other',
           version: '1.6.0-preview.abcd1234',
           kumaDocsVersion: '1.6.0',
-        }
+        },
       ],
       [
         {
@@ -79,7 +79,7 @@ describe('config module', () => {
           tagline: 'Kuma',
           version: '1.5.3',
           kumaDocsVersion: '1.5.1',
-        }
+        },
       ],
       [
         {
@@ -90,7 +90,7 @@ describe('config module', () => {
           tagline: 'Kuma',
           version: '1.5.3',
           kumaDocsVersion: 'latest',
-        }
+        },
       ],
     ])('tests getInfo action', async (getInfoResponse, expectedState) => {
       jest.spyOn(Kuma, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))

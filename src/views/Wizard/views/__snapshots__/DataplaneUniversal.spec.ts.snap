@@ -260,6 +260,8 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
                                       
+                                      
+                                      <!-- eslint-disable vue/no-v-html -->
                                       <pre
                                         class="code-block language-bash"
                                         data-testid="code-block"
@@ -285,6 +287,8 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                            kuma-token-testMesh-4fzzzxtestMesh
                                         </code>
                                       </pre>
+                                      <!-- eslint-enable vue/no-v-html -->
+                                      
                                       
                                     </div>
                                     <!---->
@@ -399,6 +403,8 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
                                       
+                                      
+                                      <!-- eslint-disable vue/no-v-html -->
                                       <pre
                                         class="code-block language-bash"
                                         data-testid="code-block"
@@ -467,6 +473,8 @@ networking:
                                           kuma-token-testMesh-4fzzzxtestMesh
                                         </code>
                                       </pre>
+                                      <!-- eslint-enable vue/no-v-html -->
+                                      
                                       
                                     </div>
                                     <!---->

@@ -29,7 +29,7 @@ describe('MeshesView.vue', () => {
         stubs: {
           'router-link': RouterLinkStub,
         },
-      }
+      },
     })
 
     await screen.findByText(/Mesh: default/)

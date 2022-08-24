@@ -306,7 +306,7 @@
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
-              @hideSiblings="hideSiblings"
+              @hide-siblings="hideSiblings"
             >
               <!-- loading -->
               <template #loading-title>

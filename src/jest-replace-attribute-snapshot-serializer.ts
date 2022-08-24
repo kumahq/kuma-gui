@@ -10,7 +10,7 @@ const processedValues = new Set()
 
 export function replaceAttributesSnapshotSerializer(
   attributes: string[],
-  uuid = DEFAULT_UUID
+  uuid = DEFAULT_UUID,
 ): jest.SnapshotSerializerPlugin {
   return {
     /**

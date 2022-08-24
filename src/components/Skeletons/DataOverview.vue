@@ -293,7 +293,7 @@ export default {
     },
   },
 
-  emits: ['tableAction', 'refresh', 'loadData'],
+  emits: ['table-action', 'refresh', 'load-data'],
 
   data() {
     return {
@@ -336,22 +336,22 @@ export default {
   methods: {
     tableRowHandler(e, row, type) {
       this.selectedRow = row.name
-      this.$emit('tableAction', row)
+      this.$emit('table-action', row)
     },
     onRefreshButtonClick() {
       this.$emit('refresh')
-      this.$emit('loadData', this.pageOffset)
+      this.$emit('load-data', this.pageOffset)
       datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
     },
     goToPreviousPage() {
       this.pageOffset -= this.pageSize
 
-      this.$emit('loadData', this.pageOffset)
+      this.$emit('load-data', this.pageOffset)
     },
     goToNextPage() {
       this.pageOffset += this.pageSize
 
-      this.$emit('loadData', this.pageOffset)
+      this.$emit('load-data', this.pageOffset)
     },
   },
 }

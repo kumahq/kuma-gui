@@ -35,7 +35,7 @@ function renderComponent() {
       plugins: [router, store],
       components: {
         KIcon,
-      }
+      },
     },
   })
 }

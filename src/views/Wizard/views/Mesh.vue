@@ -442,7 +442,7 @@
                 :loaders="false"
                 :tabs="tabs"
                 :initial-tab-override="environment"
-                @onTabChange="onTabChange"
+                @on-tab-change="onTabChange"
               >
                 <template #kubernetes>
                   <CodeView
@@ -467,7 +467,7 @@
               :should-start="true"
               :has-error="scanError"
               :can-complete="scanFound"
-              @hideSiblings="hideSiblings"
+              @hide-siblings="hideSiblings"
             >
               <!-- loading -->
               <template #loading-title>
