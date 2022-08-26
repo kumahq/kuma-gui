@@ -1,0 +1,41 @@
+name: main
+
+on: push
+
+jobs:
+  test:
+    # Skip this job if the head commit’s message contains the string “[skip ci]”.
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        # https://github.com/actions/checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Cache node_modules and dist
+        # https://github.com/actions/cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            dist
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn run lint
+
+      - name: Test
+        run: yarn run test:unit
+
+      - name: Build
+        run: yarn run build
