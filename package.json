@@ -129,8 +129,5 @@
   },
   "msw": {
     "workerDirectory": "public"
-  },
-  "resolutions": {
-    "tough-cookie": "4.0.0"
   }
 }
