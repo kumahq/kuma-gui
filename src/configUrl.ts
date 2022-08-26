@@ -3,6 +3,12 @@
  */
 
 export function getKumaCpServerUrl(): string {
+  // Uses an absolute URL during testing
+  // because the Node fetch polyfill we’re using requires it.
+  if (process.env.NODE_ENV === 'test') {
+    return 'http://localhost/'
+  }
+
   if (process.env.NODE_ENV === 'development') {
     return process.env.VUE_APP_KUMA_CONFIG?.replace('/config', '/') || ''
   } else {
