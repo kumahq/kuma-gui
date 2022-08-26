@@ -67,7 +67,7 @@
       <template #body-content>
         <AllMeshesNotifications
           v-if="isAllMeshesView"
-          @meshSelected="changeMesh($event)"
+          @mesh-selected="changeMesh($event)"
         />
         <SingleMeshNotifications v-else />
       </template>

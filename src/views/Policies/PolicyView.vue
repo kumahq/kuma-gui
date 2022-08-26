@@ -39,8 +39,8 @@
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :next="next"
-        @tableAction="getEntity"
-        @loadData="loadData($event)"
+        @table-action="getEntity"
+        @load-data="loadData($event)"
       >
         >
         <template #additionalControls>

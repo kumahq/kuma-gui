@@ -191,7 +191,6 @@ export default {
       for (const item of items) {
         item.policyTypes = {}
 
-        // eslint-disable-next-line guard-for-in
         for (const policyType in item.matchedPolicies) {
           const policy = this.policiesByType[policyType]
 

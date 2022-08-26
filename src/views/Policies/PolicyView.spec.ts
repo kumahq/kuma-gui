@@ -21,7 +21,7 @@ async function createWrapper(props = {}) {
           params: {},
         },
       },
-    }
+    },
   })
 }
 

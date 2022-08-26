@@ -357,7 +357,6 @@ export async function setupRouter() {
    */
 
   router.beforeEach(async (to, from, next) => {
-    // eslint-disable-next-line no-unmodified-loop-condition
     // This below is to make sure the inital calls have been fulfilled and it does not try to
     // access any route before it will be resolved
     while (store.getters.globalLoading) {

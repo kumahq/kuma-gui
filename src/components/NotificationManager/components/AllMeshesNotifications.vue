@@ -59,7 +59,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: 'AllMeshesNotifications',
 
-  emits: ['meshSelected'],
+  emits: ['mesh-selected'],
 
   data() {
     return {
@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     meshSelected(name) {
-      this.$emit('meshSelected', name)
+      this.$emit('mesh-selected', name)
     },
     calculateActions(meshActions) {
       const allActions = Object.values(meshActions)

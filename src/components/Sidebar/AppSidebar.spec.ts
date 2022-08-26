@@ -27,7 +27,7 @@ function renderComponent() {
     global: {
       plugins: [router, store],
       stubs: {
-        'router-link': RouterLinkStub
+        'router-link': RouterLinkStub,
       },
       components: {
         KAlert,

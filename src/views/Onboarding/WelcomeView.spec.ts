@@ -36,7 +36,7 @@ function renderComponent(environment: string) {
       stubs: {
         routerLink: RouterLinkStub,
       },
-    }
+    },
   })
 }
 

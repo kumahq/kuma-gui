@@ -9,8 +9,8 @@
       :table-data-is-empty="tableDataIsEmpty"
       :show-warnings="tableData.data.some((item) => item.withWarnings)"
       :next="next"
-      @tableAction="tableAction"
-      @loadData="loadData($event)"
+      @table-action="tableAction"
+      @load-data="loadData($event)"
     >
       <template #additionalControls>
         <KButton
@@ -536,7 +536,7 @@ export default {
             envoyVersion: '-',
             selectedTime: NaN,
             selectedUpdateTime: NaN,
-            version: {}
+            version: {},
           },
         )
 

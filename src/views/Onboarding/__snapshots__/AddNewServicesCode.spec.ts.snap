@@ -134,6 +134,8 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     >
                       
+                      
+                      <!-- eslint-disable vue/no-v-html -->
                       <pre
                         class="code-block language-bash"
                         data-testid="code-block"
@@ -142,6 +144,8 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                           https://github.com/kumahq/kuma-counter-demo/
                         </code>
                       </pre>
+                      <!-- eslint-enable vue/no-v-html -->
+                      
                       
                     </div>
                     <!---->

@@ -263,12 +263,12 @@ export function compatibilityKind(version: { kumaDp: TODO, envoy: TODO }) {
       payload: {
         envoy: envoyVersion,
         kumaDp: kumaDpVersion,
-      }
+      },
     }
   }
 
   return {
-    kind: COMPATIBLE
+    kind: COMPATIBLE,
   }
 }
 

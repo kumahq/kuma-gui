@@ -53,7 +53,7 @@ describe('EnvoyStats.vue', () => {
   })
 
   it('renders error', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => { }); // silence console errors
+    jest.spyOn(console, 'error').mockImplementation(() => { }) // silence console errors
 
     server.use(
       rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>

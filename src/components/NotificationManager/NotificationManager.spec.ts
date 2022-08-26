@@ -33,7 +33,7 @@ function renderComponent({ meshes, selectedMesh = 'all' }: { meshes: any, select
         KCard,
         KIcon,
         KModal,
-      }
+      },
     },
   })
 }

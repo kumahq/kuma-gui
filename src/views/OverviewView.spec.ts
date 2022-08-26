@@ -44,7 +44,7 @@ describe('OverviewView.vue', () => {
         components: {
           KCard,
         },
-      }
+      },
     })
 
     expect(wrapper.element).toMatchSnapshot()

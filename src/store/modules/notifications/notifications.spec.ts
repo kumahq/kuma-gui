@@ -13,7 +13,7 @@ describe('notifications module', () => {
           creationTime: '0001-01-01T00:00:00Z',
           modificationTime: '0001-01-01T00:00:00Z',
           type: 'Mesh',
-        }
+        },
       ]
       store.state.selectedMesh = 'web-to-backend.kuma-system'
 

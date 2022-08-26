@@ -136,7 +136,7 @@ const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestConte
 const setupHandlers = (apiURL: string): RestHandler[] => {
   const getApiPath = (path: string) => `${apiURL}${path.replace(/\+/g, '\\+').replace(/\?/g, '\\?')}`
   const handlers = mockFilenameBasePaths.map((path: string) => rest.get(
-    getApiPath(path), (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`)))
+    getApiPath(path), (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`))),
   ))
 
   handlers.push(

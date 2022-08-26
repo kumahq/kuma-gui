@@ -194,7 +194,7 @@ export function getSome(original: TODO, desired: TODO) {
  * @param {String} url
  */
 export function stripUrl(url: string) {
-  const regex = /([^\/]+$)/g
+  const regex = /([^/]+$)/g
   const match = url.match(regex)?.[0]
 
   return match

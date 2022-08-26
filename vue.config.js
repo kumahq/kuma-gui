@@ -31,7 +31,7 @@ const webpack = require('webpack')
     plugins: [
       new webpack.ProvidePlugin({
         process: 'process/browser',
-      })
+      }),
     ],
     resolve: {
       fallback: {

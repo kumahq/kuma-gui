@@ -77,7 +77,6 @@ export default {
   },
   computed: {
     defaultConfig() {
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
       const self = this
 
       return {
