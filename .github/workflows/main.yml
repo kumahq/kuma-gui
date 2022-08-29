@@ -1,12 +1,16 @@
-name: main
+name: tests-and-build
 
-on: push
+on:
+  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 jobs:
+  # Runs the project’s linter, unit test, and build scripts.
   test:
     # Skip this job if the head commit’s message contains the string “[skip ci]”.
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    name: Test
+    name: Tests & build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,6 +26,7 @@ jobs:
       - name: Cache node_modules and dist
         # https://github.com/actions/cache
         uses: actions/cache@v3
+        id: cache
         with:
           path: |
             **/node_modules
@@ -29,6 +34,7 @@ jobs:
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
       - name: Lint
