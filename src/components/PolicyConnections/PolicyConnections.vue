@@ -23,7 +23,17 @@
             class="my-1"
             data-testid="dataplane-name"
           >
-            <router-link :to="{ name: 'dataplanes', query: {ns: dataplane.dataplane.name}, params: {mesh: dataplane.dataplane.mesh} }">
+            <router-link
+              :to="{
+                name: 'dataplanes',
+                query: {
+                  ns: dataplane.dataplane.name,
+                },
+                params: {
+                  mesh: dataplane.dataplane.mesh,
+                },
+              }"
+            >
               {{ dataplane.dataplane.name }}
             </router-link>
           </p>
