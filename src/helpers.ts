@@ -8,15 +8,6 @@ type TODO = any
 
 export const uuidRegEx = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
 
-/**
- * Test if a string is a valid uuid
- * @param {String} str - the string to test
- * @returns {boolean}
- */
-export function isValidUuid(str: string) {
-  return str.length === 36 && new RegExp(`^${uuidRegEx}$`).test(str)
-}
-
 export function forEach(array: any[], callback: (...args: any) => void, scope: any) {
   for (let i = 0; i < array.length; i++) {
     callback.call(scope, i, array[i])

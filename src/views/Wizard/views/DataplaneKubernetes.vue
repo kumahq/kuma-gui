@@ -721,21 +721,6 @@ export default {
       meshes: 'getMeshList',
     }),
 
-    dataplaneUrl() {
-      const fields = this.validate
-
-      if (fields.meshName && fields.k8sNamespaceSelection) {
-        return {
-          name: 'dataplanes',
-          params: {
-            mesh: fields.meshName,
-          },
-        }
-      }
-
-      return false
-    },
-
     // Our generated code output
     codeOutput() {
       const schema = Object.assign({}, this.schema)
