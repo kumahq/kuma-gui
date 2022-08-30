@@ -109,6 +109,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    usesMeshParam: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -139,31 +144,23 @@ export default {
       return value
     },
     routerLink() {
-      const params = {
-        mesh: this.selectedMesh,
+      const targetRoute = {}
+
+      if (this.link) {
+        targetRoute.name = this.link
+      } else if (this.title) {
+        targetRoute.name = null
+      } else {
+        targetRoute.name = this.$route.name
       }
 
-      const link = () => {
-        if (this.link) {
-          return {
-            name: this.link,
-            params,
-          }
-        }
-
-        if (this.title) {
-          return {
-            name: null,
-          }
-        }
-
-        return {
-          name: this.$route.name,
-          params,
-        }
+      // Sets `mesh` params only if route actually has `mesh` param defined.
+      // See: https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+      if (this.usesMeshParam) {
+        targetRoute.params = { mesh: this.selectedMesh }
       }
 
-      return link()
+      return targetRoute
     },
     isActive() {
       const navItemRouteName = this.link

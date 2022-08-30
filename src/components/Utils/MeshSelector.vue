@@ -59,7 +59,7 @@ export default {
 
       this.$router.push({
         name: this.$route.name,
-        params: { mesh },
+        params: 'mesh' in this.$route.params ? { mesh } : undefined,
       })
     },
   },

@@ -4,11 +4,11 @@ exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
 <div>
   <div
     class="is-menu-item nav-item"
-    data-testid="default"
+    data-testid="dataplanes"
   >
     <a
       class=""
-      href="#/all/default"
+      href="#/mesh/all/dataplanes"
     >
       <!--v-if-->
       <!-- nav title separator -->
@@ -18,7 +18,7 @@ exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
         class="nav-link"
       >
         
-        Default 
+        All 
         <span
           class="amount amount--empty"
         >

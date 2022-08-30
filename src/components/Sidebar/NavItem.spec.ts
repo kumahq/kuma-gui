@@ -16,8 +16,8 @@ const router = createRouter({
       component: TestComponent,
     },
     {
-      path: '/:mesh/default',
-      name: 'default',
+      path: '/mesh/:mesh/dataplanes',
+      name: 'dataplanes',
       component: TestComponent,
     },
   ],
@@ -27,8 +27,10 @@ const store = createStore(storeConfig)
 function renderComponent() {
   return render(NavItem, {
     props: {
-      name: 'Default',
-      link: 'default',
+      name: 'All',
+      link: 'dataplanes',
+      title: false,
+      usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
     },
     global: {

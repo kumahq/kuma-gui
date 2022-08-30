@@ -37,6 +37,7 @@ export function getTopMenuItems(policies: Policy[]) {
     name: policy.pluralDisplayName,
     link: policy.path,
     title: false,
+    usesMeshParam: true,
     parent: 'policies',
     insightsFieldAccessor: `mesh.policies.${policy.name}`,
   }))
@@ -53,11 +54,13 @@ export function getTopMenuItems(policies: Policy[]) {
           {
             name: 'Overview',
             link: 'global-overview',
+            usesMeshParam: true,
           },
           {
             name: 'Meshes',
             link: 'mesh-child',
             pathFlip: true,
+            usesMeshParam: true,
             insightsFieldAccessor: 'global.Mesh',
           },
           {
@@ -87,12 +90,14 @@ export function getTopMenuItems(policies: Policy[]) {
             name: 'Internal',
             link: 'internal-services',
             title: false,
+            usesMeshParam: true,
             insightsFieldAccessor: 'mesh.services.internal',
           },
           {
             name: 'External',
             link: 'external-services',
             title: false,
+            usesMeshParam: true,
             insightsFieldAccessor: 'mesh.services.external',
           },
           {
@@ -103,6 +108,7 @@ export function getTopMenuItems(policies: Policy[]) {
             name: 'All',
             link: 'dataplanes',
             title: false,
+            usesMeshParam: true,
             insightsFieldAccessor: 'mesh.dataplanes.total',
           },
           {
@@ -110,6 +116,7 @@ export function getTopMenuItems(policies: Policy[]) {
             link: 'standard-dataplanes',
             title: false,
             nested: true,
+            usesMeshParam: true,
             insightsFieldAccessor: 'mesh.dataplanes.standard',
           },
           {
@@ -117,6 +124,7 @@ export function getTopMenuItems(policies: Policy[]) {
             link: 'gateway-dataplanes',
             title: false,
             nested: true,
+            usesMeshParam: true,
             insightsFieldAccessor: 'mesh.dataplanes.gateway',
           },
           {
