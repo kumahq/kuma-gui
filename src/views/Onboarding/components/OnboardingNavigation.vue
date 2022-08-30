@@ -4,12 +4,7 @@
       v-if="previousStep"
       appearance="primary"
       class="navigation-button navigation-button--back"
-      :to="{
-        name: previousStep,
-        params: {
-          mesh: 'all',
-        },
-      }"
+      :to="{ name: previousStep }"
       @click="changeStep(previousStep)"
     >
       Back
@@ -29,12 +24,7 @@
           :disabled="!shouldAllowNext"
           class="navigation-button navigation-button--next"
           appearance="primary"
-          :to="{
-            name: nextStep,
-            params: {
-              mesh: 'all',
-            },
-          }"
+          :to="{ name: nextStep }"
           @click="lastStep ? skipOnboarding() : changeStep(nextStep)"
         >
           {{ nextStepTitle }}
