@@ -52,20 +52,15 @@ export default {
   },
   methods: {
     changeMesh(event) {
-      const val = event.target.value
+      const mesh = event.target.value
 
       // update the selected mesh in the store
-      this.$store.dispatch('updateSelectedMesh', val)
+      this.$store.dispatch('updateSelectedMesh', mesh)
 
-      // push the update mesh param to the route
-      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
-      this.$router
-        .push({
-          params: {
-            mesh: val,
-          },
-        })
-        .catch(() => {})
+      this.$router.push({
+        name: this.$route.name,
+        params: { mesh },
+      })
     },
   },
 }
