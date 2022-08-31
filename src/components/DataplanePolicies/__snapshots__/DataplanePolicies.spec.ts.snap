@@ -2,7 +2,9 @@
 
 exports[`DataplanePolicies.vue renders snapshot 1`] = `
 <div>
-  <div>
+  <div
+    class="status-info"
+  >
     <div>
       
       <section
@@ -884,12 +886,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       </section>
       
     </div>
-    <!-- loading state -->
-    <!--v-if-->
-    <!-- no data to load -->
-    <!--v-if-->
-    <!-- error -->
-    <!--v-if-->
   </div>
 </div>
 `;

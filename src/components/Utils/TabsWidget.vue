@@ -73,7 +73,14 @@
                 size="42"
               />
             </div>
-            An error has occurred while trying to load this data.
+
+            <template v-if="shouldShowApiError">
+              {{ error.message }}
+            </template>
+
+            <template v-else>
+              An error has occurred while trying to load this data.
+            </template>
           </template>
         </KEmptyState>
       </div>
@@ -86,6 +93,7 @@ import { KEmptyState } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import { datadogLogEvents } from '@/datadogEvents'
+import { ApiError } from '@/services/ApiError'
 
 export default {
   name: 'TabsWidget',
@@ -108,6 +116,11 @@ export default {
     hasError: {
       type: Boolean,
       default: false,
+    },
+    error: {
+      type: Object,
+      required: false,
+      default: null,
     },
     tabs: {
       type: Array,
@@ -135,12 +148,17 @@ export default {
     tabsSlots() {
       return this.tabs.map((tab) => tab.hash.replace('#', ''))
     },
+
     isReady() {
       if (this.loaders !== false) {
         return !this.isEmpty && !this.hasError && !this.isLoading
       } else {
         return true
       }
+    },
+
+    shouldShowApiError() {
+      return this.error instanceof ApiError
     },
   },
 

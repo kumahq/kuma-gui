@@ -163,30 +163,38 @@
           </KCard>
         </StatusInfo>
       </template>
+
       <template #dpp-policies>
         <DataplanePolicies
           :mesh="rawEntity.mesh"
           :dpp-name="rawEntity.name"
         />
       </template>
+
       <template #xds-configuration>
-        <XdsConfiguration
+        <EnvoyData
+          data-path="xds"
           :mesh="rawEntity.mesh"
           :dpp-name="rawEntity.name"
         />
       </template>
+
       <template #envoy-stats>
-        <EnvoyStats
+        <EnvoyData
+          data-path="stats"
           :mesh="rawEntity.mesh"
           :dpp-name="rawEntity.name"
         />
       </template>
+
       <template #envoy-clusters>
-        <EnvoyClusters
+        <EnvoyData
+          data-path="clusters"
           :mesh="rawEntity.mesh"
           :dpp-name="rawEntity.name"
         />
       </template>
+
       <template #mtls>
         <LabelList
           :is-loading="entityIsLoading"
@@ -271,16 +279,13 @@ import AccordionList from '@/components/Accordion/AccordionList.vue'
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 import { getTableData } from '@/utils/tableDataUtils'
 import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies.vue'
-import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration.vue'
 import StatusInfo from '@/components/Utils/StatusInfo.vue'
-import EnvoyStats from '@/components/EnvoyStats/EnvoyStats.vue'
-import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters.vue'
+import EnvoyData from '@/components/EnvoyData/EnvoyData.vue'
 
 export default {
   name: 'DataplanesView',
   components: {
-    EnvoyStats,
-    EnvoyClusters,
+    EnvoyData,
     WarningsWidget,
     EntityURLControl,
     FrameSkeleton,
@@ -293,7 +298,6 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     DataplanePolicies,
-    XdsConfiguration,
     StatusInfo,
   },
   props: {

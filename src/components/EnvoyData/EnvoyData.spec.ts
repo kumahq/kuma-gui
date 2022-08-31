@@ -1,30 +1,22 @@
 import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
-import { KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
-import EnvoyStats from './EnvoyStats.vue'
+import EnvoyData from './EnvoyData.vue'
 import { server } from '@/jest-setup'
 
 function renderComponent(props = {}) {
-  return render(EnvoyStats, {
-    global: {
-      components: {
-        KButton,
-        KCard,
-        KClipboardProvider,
-        KEmptyState,
-        KIcon,
-        KPop,
-      },
+  return render(EnvoyData, {
+    props: {
+      dataPath: 'clusters',
+      ...props,
     },
-    props,
   })
 }
 
-describe('EnvoyStats.vue', () => {
+describe('EnvoyData.vue', () => {
   it('renders snapshot', async () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
       ),
     )
@@ -39,7 +31,7 @@ describe('EnvoyStats.vue', () => {
 
   it('renders loading', () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
       ),
     )
@@ -53,10 +45,8 @@ describe('EnvoyStats.vue', () => {
   })
 
   it('renders error', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => { }) // silence console errors
-
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/stats', (req, res, ctx) =>
+      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(500), ctx.json('')),
       ),
     )

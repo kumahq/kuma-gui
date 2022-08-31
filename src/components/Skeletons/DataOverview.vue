@@ -231,7 +231,14 @@
             size="42"
           />
         </div>
-        An error has occurred while trying to load this data.
+
+        <template v-if="shouldShowApiError">
+          {{ error.message }}
+        </template>
+
+        <template v-else>
+          An error has occurred while trying to load this data.
+        </template>
       </template>
     </KEmptyState>
   </div>
@@ -243,6 +250,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 import PaginationWidget from '@/components/PaginationWidget.vue'
 import EntityTag from '@/components/EntityTag/EntityTag.vue'
+import { ApiError } from '@/services/ApiError'
 
 export default {
   name: 'DataOverview',
@@ -262,6 +270,11 @@ export default {
     hasError: {
       type: Boolean,
       default: false,
+    },
+    error: {
+      type: Object,
+      required: false,
+      default: null,
     },
     isEmpty: {
       type: Boolean,
@@ -307,6 +320,7 @@ export default {
         .map(({ key }) => key)
         .filter((key) => this.$slots[key])
     },
+
     isReady() {
       return !this.isEmpty && !this.hasError && !this.isLoading
     },
@@ -324,6 +338,10 @@ export default {
         data: this.tableData.data,
         total: this.tableData.data.length,
       }
+    },
+
+    shouldShowApiError() {
+      return this.error instanceof ApiError
     },
   },
   watch: {
