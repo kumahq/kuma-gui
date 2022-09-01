@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`XdsConfiguration.vue renders snapshot 1`] = `
+exports[`EnvoyData.vue renders snapshot 1`] = `
 <div>
-  <div>
-    <!--v-if-->
-    <!-- loading state -->
+  <div
+    class="status-info"
+  >
     <section
       class="empty-state-wrapper"
       data-testid="status-info-loading-section"
@@ -85,10 +85,6 @@ exports[`XdsConfiguration.vue renders snapshot 1`] = `
         </div>
       </div>
     </section>
-    <!-- no data to load -->
-    <!--v-if-->
-    <!-- error -->
-    <!--v-if-->
   </div>
 </div>
 `;

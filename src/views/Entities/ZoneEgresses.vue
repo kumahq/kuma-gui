@@ -86,18 +86,24 @@
             </template>
           </KCard>
         </template>
+
         <template #xds-configuration>
-          <XdsConfiguration
+          <EnvoyData
+            data-path="xds"
             :zone-egress-name="entity.name"
           />
         </template>
+
         <template #envoy-stats>
-          <EnvoyStats
+          <EnvoyData
+            data-path="stats"
             :zone-egress-name="entity.name"
           />
         </template>
+
         <template #envoy-clusters>
-          <EnvoyClusters
+          <EnvoyData
+            data-path="clusters"
             :zone-egress-name="entity.name"
           />
         </template>
@@ -119,7 +125,6 @@ import EntityURLControl from '@/components/Utils/EntityURLControl'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import LabelList from '@/components/Utils/LabelList'
-import XdsConfiguration from '@/components/XdsConfiguration/XdsConfiguration'
 
 import { getItemStatusFromInsight } from '@/dataplane'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
@@ -127,14 +132,12 @@ import { PAGE_SIZE_DEFAULT } from '@/consts'
 import AccordionList from '@/components/Accordion/AccordionList.vue'
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 
-import EnvoyStats from '@/components/EnvoyStats/EnvoyStats.vue'
-import EnvoyClusters from '@/components/EnvoyClusters/EnvoyClusters.vue'
+import EnvoyData from '@/components/EnvoyData/EnvoyData.vue'
 
 export default {
   name: 'ZoneEgresses',
   components: {
-    EnvoyClusters,
-    EnvoyStats,
+    EnvoyData,
     FrameSkeleton,
     DataOverview,
     TabsWidget,
@@ -144,7 +147,6 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     EntityURLControl,
-    XdsConfiguration,
   },
 
   data() {

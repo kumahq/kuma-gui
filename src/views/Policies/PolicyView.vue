@@ -30,7 +30,8 @@
     <FrameSkeleton>
       <DataOverview
         :page-size="pageSize"
-        :has-error="hasError"
+        :has-error="error !== null"
+        :error="error"
         :is-loading="isLoading"
         :empty-state="{
           title: 'No Data',
@@ -59,7 +60,8 @@
 
       <TabsWidget
         v-if="isEmpty === false"
-        :has-error="hasError"
+        :has-error="error !== null"
+        :error="error"
         :is-loading="isLoading"
         :tabs="tabs"
         initial-tab-override="overview"
@@ -164,7 +166,7 @@ export default {
     return {
       isLoading: true,
       isEmpty: false,
-      hasError: false,
+      error: null,
       entityIsLoading: true,
       entityIsEmpty: false,
       entityHasError: false,
@@ -219,11 +221,11 @@ export default {
       // Ensures basic state is reset when switching meshes using the mesh selector.
       this.isLoading = true
       this.isEmpty = false
-      this.hasError = false
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
       this.tableDataIsEmpty = false
+      this.error = null
 
       this.loadData()
     },
@@ -236,6 +238,7 @@ export default {
   methods: {
     async loadData(offset = '0') {
       this.isLoading = true
+      this.error = null
 
       const query = this.$route.query.ns || null
       const mesh = this.$route.params.mesh || null
@@ -275,10 +278,8 @@ export default {
           this.entityIsEmpty = true
         }
       } catch (error) {
-        this.hasError = true
+        this.error = error
         this.isEmpty = true
-
-        console.error(error)
       } finally {
         this.isLoading = false
         this.entityIsLoading = false

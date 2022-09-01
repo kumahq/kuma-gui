@@ -89,7 +89,6 @@
                   </p>
                   <KBadge
                     v-else
-                    size="small"
                     appearance="danger"
                   >
                     Disabled
@@ -98,16 +97,12 @@
                 <li>
                   <h4>Locality Aware Loadbalancing</h4>
                   <p v-if="entity.localityEnabled">
-                    <KBadge
-                      size="small"
-                      appearance="success"
-                    >
+                    <KBadge appearance="success">
                       Enabled
                     </KBadge>
                   </p>
                   <KBadge
                     v-else
-                    size="small"
                     appearance="danger"
                   >
                     Disabled

@@ -210,6 +210,16 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
     ),
   )
 
+  // Basic test for API errors to easily test how errors with title, details, and causes are used in the UI.
+  handlers.push(
+    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/stats'), (_req, res, ctx) =>
+      res(
+        ctx.status(403),
+        ctx.json(requireMockFile('permission-error.json')),
+      ),
+    ),
+  )
+
   return handlers
 }
 

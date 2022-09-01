@@ -1,7 +1,8 @@
 <template>
   <StatusInfo
-    :has-error="hasError"
+    :has-error="error !== null"
     :is-loading="isLoading"
+    :error="error"
     :is-empty="!hasItems"
   >
     <KCard border-variant="noBorder">
@@ -138,7 +139,7 @@ export default {
       items: [],
       hasItems: false,
       isLoading: true,
-      hasError: false,
+      error: null,
       searchInput: '',
       POLICY_TYPE_SUBTITLE,
     }
@@ -162,7 +163,7 @@ export default {
 
   methods: {
     async fetchPolicies() {
-      this.hasError = false
+      this.error = null
       this.isLoading = true
 
       try {
@@ -179,9 +180,8 @@ export default {
           this.items = items
           this.hasItems = total > 0
         }
-      } catch (e) {
-        console.error(e)
-        this.hasError = true
+      } catch (error) {
+        this.error = error
       } finally {
         this.isLoading = false
       }

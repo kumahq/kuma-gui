@@ -1,28 +1,31 @@
 <template>
   <StatusInfo
-    :has-error="hasError"
+    :has-error="error !== null"
     :is-loading="isLoading"
+    :error="error"
   >
     <KCard border-variant="noBorder">
       <template #body>
         <CodeBlock
-          id="stats"
+          class="panel-code-block"
           language="json"
-          :code="stats"
+          :code="content"
         />
       </template>
+
       <template #actions>
         <KClipboardProvider
-          v-if="stats"
+          v-if="content"
           v-slot="{ copyToClipboard }"
         >
           <KPop placement="bottom">
             <KButton
               appearance="primary"
-              @click="() => { copyToClipboard(stats) }"
+              @click="copyToClipboard(content)"
             >
               Copy config to clipboard
             </KButton>
+
             <template #content>
               <div>
                 <p>Config copied to clipboard!</p>
@@ -31,36 +34,56 @@
           </KPop>
         </KClipboardProvider>
       </template>
-    </kcard>
+    </KCard>
   </StatusInfo>
 </template>
 
 <script>
+import { KButton, KCard, KClipboardProvider, KPop } from '@kong/kongponents'
+
 import CodeBlock from '../CodeBlock.vue'
 import Kuma from '@/services/kuma'
 import StatusInfo from '@/components/Utils/StatusInfo'
 
 export default {
-  name: 'EnvoyStats',
+  name: 'EnvoyData',
+
   components: {
-    StatusInfo,
     CodeBlock,
+    KButton,
+    KCard,
+    KClipboardProvider,
+    KPop,
+    StatusInfo,
   },
+
   props: {
+    dataPath: {
+      type: String,
+      required: true,
+    },
+
     mesh: {
       type: String,
+      required: false,
       default: '',
     },
+
     dppName: {
       type: String,
+      required: false,
       default: '',
     },
+
     zoneIngressName: {
       type: String,
+      required: false,
       default: '',
     },
+
     zoneEgressName: {
       type: String,
+      required: false,
       default: '',
     },
   },
@@ -68,52 +91,57 @@ export default {
   data() {
     return {
       isLoading: true,
-      hasError: false,
+      error: null,
     }
   },
 
   watch: {
     dppName() {
-      this.fetchStats()
+      this.fetchContent()
     },
+
     zoneIngressName() {
-      this.fetchStats()
+      this.fetchContent()
     },
+
     zoneEgressName() {
-      this.fetchStats()
+      this.fetchContent()
     },
   },
+
   mounted() {
-    this.fetchStats()
+    this.fetchContent()
   },
 
   methods: {
-    async fetchStats() {
-      this.hasError = false
+    async fetchContent() {
+      this.error = null
       this.isLoading = true
 
       try {
-        let stats = ''
+        let content = ''
 
         if (this.mesh !== '' && this.dppName !== '') {
-          stats = await Kuma.getDataplaneStats({
+          content = await Kuma.getDataplaneData({
+            dataPath: this.dataPath,
             mesh: this.mesh,
             dppName: this.dppName,
           })
         } else if (this.zoneIngressName !== '') {
-          stats = await Kuma.getZoneIngressStats({
+          content = await Kuma.getZoneIngressData({
+            dataPath: this.dataPath,
             zoneIngressName: this.zoneIngressName,
           })
         } else if (this.zoneEgressName !== '') {
-          stats = await Kuma.getZoneEgressStats({
+          content = await Kuma.getZoneEgressData({
+            dataPath: this.dataPath,
             zoneEgressName: this.zoneEgressName,
           })
         }
 
-        this.stats = stats
-      } catch (e) {
-        console.error(e)
-        this.hasError = true
+        this.content = typeof content === 'string' ? content : JSON.stringify(content, null, 2)
+      } catch (error) {
+        this.error = error
       } finally {
         this.isLoading = false
       }
@@ -123,7 +151,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#stats {
+.panel-code-block {
   max-height: 1000px;
 }
 </style>
