@@ -1,0 +1,92 @@
+name: create-gui-pr
+
+# Ensures that we only run one workflow per branch at a time.
+# Already running workflows will be cancelled.
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+on:
+  push:
+    branches:
+      master
+
+env:
+  HOST_REPOSITORY: kumahq/kuma
+  HOST_DIST_DIRECTORY: "app/kuma-ui/pkg/resources/data"
+
+jobs:
+  # Creates a pull request in the main application to update its GUI.
+  create-gui-pr:
+    name: Create “update GUI” PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub App token
+        # https://github.com/tibdex/github-app-token
+        # Note: Specifically references https://github.com/tibdex/github-app-token/commit/f717b5ecd4534d3c4df4ce9b5c1c2214f0f7cd06 (v1.6.0) to ensure that this exact version of the workflow action is used. This is a security precaution as automatically opting into newer versions of the action could leak or get the app token stolen.
+        uses: tibdex/github-app-token@f717b5ecd4534d3c4df4ce9b5c1c2214f0f7cd06
+        id: generate-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
+
+      - name: Check-out GUI
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Cache node_modules and dist
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            **/node_modules
+            dist
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Build dist
+        run: yarn run build
+
+      - name: Check-out main application
+        uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          repository: ${{ env.HOST_REPOSITORY }}
+          path: main-application
+
+      - name: Copy dist into main application
+        run: |
+          cd main-application
+          rm -rf ${{ env.HOST_DIST_DIRECTORY }}
+          cp -r ../dist/ ${{ env.HOST_DIST_DIRECTORY }}
+
+      - name: Create pull request
+        # https://github.com/peter-evans/create-pull-request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
+          token: ${{ steps.generate-token.outputs.token }}
+          path: main-application
+          commit-message: |
+            chore(gui): updates GUI
+
+            Updates GUI.
+          committer: GitHub <noreply@github.com>
+          author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          signoff: true
+          branch: chore/update-gui-${{ steps.date.outputs.date }}
+          delete-branch: true
+          title: "chore(gui): updates GUI (${{ steps.date.outputs.date }})"
+          body: "Update GUI."
+          draft: false
