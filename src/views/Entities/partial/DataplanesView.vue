@@ -430,6 +430,14 @@ export default {
   },
   watch: {
     $route() {
+      // Ensures basic state is reset when switching meshes using the mesh selector.
+      this.isLoading = true
+      this.isEmpty = false
+      this.hasError = false
+      this.entityIsLoading = true
+      this.entityIsEmpty = false
+      this.tableDataIsEmpty = false
+
       this.loadData()
     },
   },

@@ -160,19 +160,15 @@ export default {
       // explanation of hack https://github.com/vuejs/vue-router/issues/2872
       if (!route.query) {
         // if the URL contains no current queries, simply add the query and value
-        router
-          .push({
-            query: {
-              [query]: value,
-            },
-          })
-          .catch(() => { })
+        router.push({
+          query: {
+            [query]: value,
+          },
+        })
       } else {
-        router
-          .push({
-            query: Object.assign({}, route.query, { [query]: value }),
-          })
-          .catch(() => { })
+        router.push({
+          query: Object.assign({}, route.query, { [query]: value }),
+        })
       }
     },
     setStartingStep() {

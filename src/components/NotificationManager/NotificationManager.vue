@@ -137,14 +137,10 @@ export default {
     changeMesh(mesh) {
       this.updateSelectedMesh(mesh)
 
-      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
-      this.$router
-        .push({
-          params: {
-            mesh,
-          },
-        })
-        .catch(() => {})
+      this.$router.push({
+        name: this.$route.name,
+        params: { mesh },
+      })
     },
   },
 }

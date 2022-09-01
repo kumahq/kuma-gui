@@ -8,8 +8,6 @@
 <script>
 import { KBreadcrumbs } from '@kong/kongponents'
 
-import { isValidUuid } from '@/helpers'
-
 export default {
   name: 'BreadcrumbsMenu',
 
@@ -81,74 +79,8 @@ export default {
   },
 
   methods: {
-    getBreadcrumbItem(key, to, title, text) {
-      return { key, to, title, text }
-    },
-
     isCurrentRoute(route) {
       return (route.name && route.name === this.$route.name) || route.redirect === this.$route.name
-    },
-
-    calculateRouteFromQuery(q) {
-      const { entity_id: entityId, entity_type: entityType } = q
-
-      if (entityId && entityType) {
-        const resolvedRouteLocation = this.$router.resolve({
-          name: `show-${entityType.split('_')[0]}`,
-          params: { id: entityId.split(',')[0] },
-        })
-
-        // if there is an entity in the query params, then use it as the
-        // breadcrumb comma separated list with label being the second argument
-        // e.g. ?entity_id=uuid,name&entity_type=
-        let breadcrumb = resolvedRouteLocation.params.id.split('-')[0]
-        if (entityId.split(',').length > 1 && entityId.split(',')[1]) {
-          breadcrumb = entityId.split(',')[1]
-        }
-
-        resolvedRouteLocation.meta.breadcrumb = breadcrumb
-
-        return [
-          {
-            ...this.getBreadcrumbItem(
-              resolvedRouteLocation.name,
-              resolvedRouteLocation,
-              this.calculateRouteTitle(resolvedRouteLocation),
-              this.calculateRouteText(resolvedRouteLocation),
-            ),
-          },
-        ]
-      }
-    },
-
-    calculateRouteText(route) {
-      // TODO: support child routes that are children of :id to support routes
-      // like /workspaces/:id/services/:id/update
-      if (route.path && route.path.indexOf(':mesh') > -1) {
-        const params = this.$route.params
-
-        console.log(params)
-
-        return (
-          (params && params.mesh && isValidUuid(params.mesh) ? params.mesh.split('-')[0].trim() : params.mesh) ||
-          route.meta.breadcrumb ||
-          route.meta.title
-        )
-      }
-
-      return (
-        (route.meta && (route.meta.breadcrumb || route.meta.title)) ||
-        route.name ||
-        route.meta.breadcrumb ||
-        route.meta.title
-      )
-    },
-
-    calculateRouteTitle(route) {
-      return (
-        (route.params && route.params.mesh) ||
-        (route.path.indexOf(':mesh') > -1 && this.$route.params && this.$route.params.mesh)
-      )
     },
 
     calculateRouteTextAdvanced(route) {
