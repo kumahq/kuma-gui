@@ -1,4 +1,4 @@
-name: create-gui-pr
+name: Update kuma with latest kuma-gui
 
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
@@ -18,7 +18,7 @@ env:
 jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
-    name: Create “update GUI” PR
+    name: Create PR to update kuma-gui
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub App token
@@ -29,10 +29,6 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
 
       - name: Check-out GUI
         uses: actions/checkout@v3
@@ -79,14 +75,14 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
           path: main-application
           commit-message: |
-            chore(gui): updates GUI
+            chore(deps): bump kuma-gui to ${{ github.sha }}
 
-            Updates GUI.
+            Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: true
-          branch: chore/update-gui-${{ steps.date.outputs.date }}
+          branch: chore/update-gui-${{ github.sha }}
           delete-branch: true
-          title: "chore(gui): updates GUI (${{ steps.date.outputs.date }})"
-          body: "Update GUI."
+          title: "chore(deps): bump kuma-gui"
+          body: "Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}"
           draft: false
