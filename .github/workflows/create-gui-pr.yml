@@ -81,8 +81,11 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: true
-          branch: chore/update-gui-${{ github.sha }}
+          branch: chore/update-gui
           delete-branch: true
           title: "chore(deps): bump kuma-gui"
-          body: "Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}"
+          body: |
+            Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
+
+            [skip ci]
           draft: false
