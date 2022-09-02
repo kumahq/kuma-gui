@@ -11,7 +11,6 @@ Consult the Table of Contents below to navigate these docs.
 - [Developer documentation](#developer-documentation)
   - [Table of Contents](#table-of-contents)
   - [Dependencies](#dependencies)
-    - [The Vue CLI tool](#the-vue-cli-tool)
   - [Libraries and tools](#libraries-and-tools)
   - [Folder structure](#folder-structure)
   - [Getting started](#getting-started)
@@ -38,18 +37,7 @@ Consult the Table of Contents below to navigate these docs.
 ## Dependencies
 
 - `git`
-- `npm` or `yarn`
-- `vue-cli-service`
-
-### The Vue CLI tool
-
-`vue-cli-service` is a binary that ships with `@vue/cli`. Once you have installed this globally, the binary
-is exposed and available directly as `vue-cli-service`. If you would prefer to not install it, you can run the app with
-`npx`, which comes bundled with `npm`:
-
-```sh
-npx vue-cli-service serve
-```
+- `yarn`
 
 ## Libraries and tools
 
@@ -91,9 +79,7 @@ The [Kuma installation page](https://kuma.io/install/latest/) will help you get 
 Once you have Kuma running, its API is accessible at `http://localhost:5681/`. If you would like to test it, Meshes
 can be found at `http://localhost:5681/meshes`. Kuma creates a `default` Mesh out-of-box.
 
-In production, the GUI is served from `http://localhost:5681/gui/`. In both production and development modes, its API and
-config endpoint URLs are derived from the env variable `VUE_APP_KUMA_CONFIG` -- which is found in both `.env.production`
-and `.env.development`.
+In production, the GUI is served from `http://localhost:5681/gui/`.
 
 #### Disable anonymous reports
 
@@ -110,10 +96,10 @@ Now that you've got Kuma itself setup and running, it's time to get the GUI runn
 
 ```sh
 # To run the app with mocked Kuma APIs
-yarn run serve
+yarn run dev
 
 # To run the app with the actual Kuma APIs
-yarn run serve:with-api
+yarn run dev:with-api
 ```
 
 You can now access the GUI at `http://localhost:8080` 🎉 🚀
@@ -199,7 +185,7 @@ within the `mesh` route, add something like this:
     title: 'My New View',
     breadcrumb: 'My New View'
   },
-  component: () => import(/* webpackChunkName: "my-new-view" */ '@/views/Entities/MyNewView')
+  component: () => import('@/views/Entities/MyNewView.vue')
 },
 ```
 

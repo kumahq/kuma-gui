@@ -16,7 +16,7 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <div
           class="is-menu-item nav-item"
           data-testid="home"
-          iconcustom=""
+          iconcustom="[object Object]"
           subnav="[object Object]"
         >
           <a>
@@ -24,7 +24,10 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               class="nav-icon"
             >
               
-              <!--v-if-->
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div>
+                [object Object]
+              </div>
               
             </div>
             <!-- nav title separator -->

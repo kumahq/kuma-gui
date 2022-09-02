@@ -1,30 +1,9 @@
-/**
- * determines the config URL based on environment
- */
-
-export function getKumaCpServerUrl(): string {
-  // Uses an absolute URL during testing
-  // because the Node fetch polyfill we’re using requires it.
-  if (process.env.NODE_ENV === 'test') {
-    return 'http://localhost/'
-  }
-
-  if (process.env.NODE_ENV === 'development') {
-    return process.env.VUE_APP_KUMA_CONFIG?.replace('/config', '/') || ''
-  } else {
-    const href = window.location.href
-
-    return `${href.substring(0, href.indexOf('/gui'))}/`
-  }
-}
-
 export function kumaDpServerUrl(): string {
-  const url = window.location
-  const envConfig = String(process.env.VUE_APP_KUMA_DP_SERVER_URL)
+  const dpServerUrl = String(import.meta.env.VITE_KUMA_DP_SERVER_URL)
 
-  if (process.env.NODE_ENV === 'development') {
-    return envConfig
+  if (import.meta.env.PROD) {
+    return dpServerUrl.replace('localhost', window.location.hostname)
+  } else {
+    return dpServerUrl
   }
-
-  return envConfig.replace('localhost', url.hostname)
 }

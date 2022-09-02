@@ -43,7 +43,7 @@ import { KButton, KCard, KClipboardProvider, KPop } from '@kong/kongponents'
 
 import CodeBlock from '../CodeBlock.vue'
 import Kuma from '@/services/kuma'
-import StatusInfo from '@/components/Utils/StatusInfo'
+import StatusInfo from '@/components/Utils/StatusInfo.vue'
 
 export default {
   name: 'EnvoyData',

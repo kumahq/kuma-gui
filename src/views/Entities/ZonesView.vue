@@ -380,7 +380,7 @@ export default {
       const timeout = setTimeout(() => {
         this.entityIsEmpty = true
         this.entityIsLoading = false
-      }, process.env.VUE_APP_DATA_TIMEOUT)
+      }, import.meta.env.VITE_DATA_TIMEOUT)
 
       if (entity) {
         this.entityIsEmpty = false

@@ -156,11 +156,11 @@ import { getTableData } from '@/utils/tableDataUtils'
 import { getEmptyInsight } from '@/store/reducers/mesh-insights'
 import { datadogLogEvents } from '@/datadogEvents'
 import { getSome, humanReadableDate, rawReadableDate, stripTimes } from '@/helpers'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
-import DataOverview from '@/components/Skeletons/DataOverview'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton.vue'
+import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
-import YamlView from '@/components/Skeletons/YamlView'
-import LabelList from '@/components/Utils/LabelList'
+import YamlView from '@/components/Skeletons/YamlView.vue'
+import LabelList from '@/components/Utils/LabelList.vue'
 import { PAGE_SIZE_DEFAULT } from '@/consts'
 
 export default {
@@ -428,13 +428,13 @@ export default {
           .finally(() => {
             setTimeout(() => {
               this.entityIsLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
+            }, import.meta.env.VITE_DATA_TIMEOUT)
           })
       } else {
         setTimeout(() => {
           this.entityIsEmpty = true
           this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
+        }, import.meta.env.VITE_DATA_TIMEOUT)
       }
     },
 

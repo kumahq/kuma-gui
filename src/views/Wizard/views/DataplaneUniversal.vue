@@ -664,7 +664,7 @@ export default {
 
       Kuma.getDataplaneFromMesh({ mesh: meshName, name: univDataplaneId })
         .then((response) => {
-          if (response && response.name.length > 0) {
+          if (response?.name?.length > 0) {
             this.isRunning = true
             this.scanFound = true
           } else {

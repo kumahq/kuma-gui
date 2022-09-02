@@ -3,19 +3,21 @@
 select {
   appearance: none;
   border-radius: 3px;
-  border: 1px solid rgba(23,130,207,0.35);
+  border: 1px solid rgba(23, 130, 207, 0.35);
   font-size: 16px;
   color: #1155CB;
   line-height: 20px;
   padding: 10px 16px 10px 13px;
 
   background-color: #fff;
-  background-image: url("@/assets/images/chevron-down.svg?inline");
+  background-image: url("@/assets/images/chevron-down.svg?url");
   background-position: calc(100% - 13px) 50%;
   background-repeat: no-repeat;
 }
 
-.k-button, button, [type="button"] {
+.k-button,
+button,
+[type="button"] {
   transition: none !important;
 }
 
@@ -119,7 +121,7 @@ select {
   border: 1px solid #ff8280;
 }
 
-.vue-form-generator .form-group.hide-label > label {
+.vue-form-generator .form-group.hide-label>label {
   display: none;
 }
 
@@ -140,7 +142,7 @@ select {
   font-size: 14px;
   font-style: italic;
   font-weight: normal;
-  color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, .5);
 }
 
 .form-group.required>label:after {
@@ -154,7 +156,7 @@ select {
 }
 
 .form-group.optional>label:after,
-.form-group.semi-optional>label:after{
+.form-group.semi-optional>label:after {
   position: absolute;
   display: block;
   top: 0;
@@ -162,7 +164,7 @@ select {
   font-size: 14px;
   font-style: italic;
   font-weight: normal;
-  color: rgba(0,0,0,.5);
+  color: rgba(0, 0, 0, .5);
 }
 
 .form-group.optional>label:after {
@@ -196,14 +198,14 @@ select {
 
 .vue-form-generator span.help .helpText:before,
 .vue-form-generator span.help .helpText:after {
-	position: absolute;
+  position: absolute;
   top: 100%;
-	left: 50%;
-	height: 0;
-	width: 0;
-	border: solid transparent;
-	pointer-events: none;
-	content: " ";
+  left: 50%;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  content: " ";
 }
 
 .vue-form-generator span.help .helpText:before {
@@ -213,9 +215,9 @@ select {
 }
 
 .vue-form-generator span.help .helpText:after {
-	border-top-color: #fff;
-	border-width: 12px;
-	margin-left: -12px;
+  border-top-color: #fff;
+  border-width: 12px;
+  margin-left: -12px;
 }
 
 .hint {
@@ -232,6 +234,7 @@ select {
   padding-left: 1.5rem;
   width: 100%;
 }
+
 .option-field .form-group:last-child {
   margin-bottom: 0;
 }
@@ -241,6 +244,7 @@ select {
 .custom-control-indicator {
   background-color: rgba(0, 0, 0, 0.12);
 }
+
 .custom-control-input:checked~.custom-control-indicator {
   background-color: #3295FC;
 }
@@ -339,8 +343,7 @@ select {
 }
 
 .form-group.required input[type="checkbox"],
-.form-group [required="required"]
-{
+.form-group [required="required"] {
   box-shadow: none;
 }
 
@@ -363,21 +366,25 @@ select {
 .vue-form-generator .field-switch .field-wrap input[type="checkbox"] {
   position: absolute;
 }
+
 .vue-form-generator .field-switch .field-wrap label {
   width: 42px;
   height: 20px;
   margin: 0;
 }
+
 .vue-form-generator .field-switch input:checked~.label {
   background: #2196F3;
   box-shadow: none;
 }
+
 .vue-form-generator .field-switch .label {
   background: #ccc;
 }
+
 .vue-form-generator .field-switch .label:before,
 .vue-form-generator .field-switch .label:after {
-  color: rgba(0,0,0,.7);
+  color: rgba(0, 0, 0, .7);
   text-shadow: none;
   margin-left: 42px;
   font-size: 14px;
@@ -387,13 +394,16 @@ select {
   font-family: 'Roboto';
   width: max-content;
 }
+
 .vue-form-generator .field-switch .handle {
   width: 17px;
   height: 17px;
 }
+
 .vue-form-generator .field-switch input:checked~.handle {
   left: calc(100% - 18px);
 }
+
 .vue-form-generator .field-switch .handle:before {
   background: none;
   box-shadow: none;

@@ -311,13 +311,13 @@ export default {
           .finally(() => {
             setTimeout(() => {
               this.entityIsLoading = false
-            }, process.env.VUE_APP_DATA_TIMEOUT)
+            }, import.meta.env.VITE_DATA_TIMEOUT)
           })
       } else {
         setTimeout(() => {
           this.entityIsEmpty = true
           this.entityIsLoading = false
-        }, process.env.VUE_APP_DATA_TIMEOUT)
+        }, import.meta.env.VITE_DATA_TIMEOUT)
       }
     },
   },

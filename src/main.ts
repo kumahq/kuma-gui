@@ -23,19 +23,21 @@ import '@/assets/styles/inputs.scss'
 import '@/assets/styles/components.scss'
 import '@/assets/styles/transitions.scss'
 
-if (process.env.NODE_ENV === 'production') {
+if (import.meta.env.PROD) {
   setupDatadog()
 }
 
 useTheme(am4themesAnimated)
 
 async function initializeVue() {
-  if (process.env.VUE_APP_MOCK_API_ENABLED === 'true') {
+  document.title = import.meta.env.VITE_NAMESPACE + ' Manager'
+
+  if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
     // The combination of reading the environment variable and using dynamic import
     // ensures that msw isn’t actually bundled with the production application.
-    const { setupMocks } = await import('./services/setup-mocks')
+    const { setupMockWorker } = await import('./services/setupMockWorker')
 
-    setupMocks(Kuma.url)
+    setupMockWorker(Kuma.url)
   }
 
   const app = createApp(App)
@@ -53,6 +55,6 @@ async function initializeVue() {
 
 initializeVue()
 
-if (process.env.VUE_APP_AMCHARTS_LICENSE) {
-  addLicense(process.env.VUE_APP_AMCHARTS_LICENSE)
+if (import.meta.env.VITE_AMCHARTS_LICENSE) {
+  addLicense(import.meta.env.VITE_AMCHARTS_LICENSE)
 }

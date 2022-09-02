@@ -42,11 +42,11 @@
 <script>
 import { mapGetters } from 'vuex'
 import { PRODUCT_NAME } from '@/consts'
-import MultizoneGraph from '@/views/Onboarding/components/graphs/MultizoneGraph'
-import StandaloneGraph from '@/views/Onboarding/components/graphs/StandaloneGraph'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
-import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
+import MultizoneGraph from '@/views/Onboarding/components/graphs/MultizoneGraph.vue'
+import StandaloneGraph from '@/views/Onboarding/components/graphs/StandaloneGraph.vue'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
+import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
+import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
 
 export default {
   name: 'DeploymentTypes',

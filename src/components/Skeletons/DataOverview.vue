@@ -173,7 +173,7 @@
       >
         <template #title>
           <div class="card-icon mb-3">
-            <img src="@/assets/images/icon-empty-table.svg?inline">
+            <img src="@/assets/images/icon-empty-table.svg?url">
           </div>
           <span v-if="emptyState.title">
             {{ emptyState.title }}

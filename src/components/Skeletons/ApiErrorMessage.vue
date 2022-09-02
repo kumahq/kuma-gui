@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import { getKumaCpServerUrl } from '@/configUrl'
+import Kuma from '@/services/kuma'
 
 export default {
   computed: {
     url() {
-      return getKumaCpServerUrl()
+      return Kuma.url
     },
   },
 }

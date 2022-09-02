@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // name: null,
   // type: 'Mesh', // or `kind` for Kubernetes
   mtls: {

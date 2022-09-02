@@ -10,6 +10,10 @@
     browser: true,
     es6: true,
   },
+  ignorePatterns: [
+    'node_modules',
+    'dist',
+  ],
   plugins: ['vue', 'import', '@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript'],
   rules: {

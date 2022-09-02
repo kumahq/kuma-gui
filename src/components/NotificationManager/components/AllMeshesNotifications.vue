@@ -63,7 +63,7 @@ export default {
 
   data() {
     return {
-      url: `https://kuma.io/enterprise/${process.env.VUE_APP_UTM}`,
+      url: `https://kuma.io/enterprise/${import.meta.env.VITE_UTM}`,
     }
   },
   computed: {

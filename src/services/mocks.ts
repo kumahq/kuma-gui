@@ -1,146 +1,140 @@
-import { rest, RestRequest, ResponseComposition, RestContext, RestHandler, setupWorker } from 'msw'
-import { setupServer } from 'msw/node'
+import { rest, RestHandler } from 'msw'
 
-const MOCK_FILES_ROOT_PATH: string = './mock/responses'
+async function loadMockFile(importFn: () => Promise<any>) {
+  const fileModule = await importFn()
 
-const requireMockFile = (filename: string) => require(`${MOCK_FILES_ROOT_PATH}/${filename}`)
-
-const mockFilenameBasePaths: string[] = [
-  // all of matches which contain "+" in url could be matched only by
-  // RegEx as some of other examples below.
-  'config',
-  'versions',
-  'meshes',
-  'mesh-insights',
-  'mesh-insights/default',
-  'mesh-insights/hello-world',
-  'mesh-insights/kong-mania-12',
-  'dataplanes', // comment to have onboarding without data planes active
-  'zones',
-  'status/zones',
-  'external-services',
-  'service-insights',
-
-  // Policies
-  'circuit-breakers',
-  'fault-injections',
-  'health-checks',
-  'meshgatewayroutes',
-  'meshgateways',
-  'proxytemplates',
-  'rate-limits',
-  'retries',
-  'timeouts',
-  'traffic-logs',
-  'traffic-permissions',
-  'traffic-routes',
-  'traffic-traces',
-  'virtual-outbounds',
-
-  'meshes/default',
-  'meshes/kong-mania-12',
-  'meshes/hello-world',
-
-  'meshes/default/service-insights',
-
-  'meshes/default/external-services',
-  'meshes/default/external-services/httpbin',
-  'meshes/default/external-services/httpbin2',
-
-  'meshes/default/dataplanes',
-  'meshes/default/dataplanes/test-dp-02',
-  'meshes/default/dataplanes/ingress-dp-test-123',
-  'meshes/default/dataplanes+insights/ingress-dp-test-123',
-  'meshes/default/dataplanes/gateway-dp-87qntx',
-  'meshes/default/dataplanes/dataplane-test-456',
-  'meshes/default/dataplanes+insights/dataplane-test-456',
-
-  'meshes/default/meshgateways',
-  'meshes/default/meshgateways/edge-gateway',
-
-  'meshes/default/meshgatewayroutes',
-  'meshes/default/meshgatewayroutes/edge-gateway',
-
-  'meshes/default/traffic-traces',
-  'meshes/default/traffic-traces/tt-1',
-  'meshes/default/traffic-traces/tt-3',
-  'meshes/default/traffic-traces/traffic-trace-02',
-  'meshes/hello-world/traffic-traces/tt-123',
-  'meshes/kong-mania-12/traffic-traces/my-silly-mesh-name',
-
-  'meshes/default/health-checks',
-  'meshes/default/health-checks/web-to-backend',
-  'meshes/default/health-checks/web-to-banana',
-  'meshes/default/health-checks/hello-health-check',
-  'meshes/default/health-checks/testing-health-checks',
-  'meshes/default/health-checks/health-check-0023',
-  'meshes/default/health-checks/health-check-12345',
-  'meshes/default/health-checks/foo-bar-baz-123',
-  'meshes/hello-world/health-checks/hello-health-check',
-  'meshes/kong-mania-12/health-checks/testing-health-checks',
-  'meshes/kong-mania-12/health-checks/web-to-banana',
-
-  'meshes/default/fault-injections',
-  'meshes/default/fault-injections/web-to-backend.kuma-system',
-  'meshes/default/fault-injections/fi1.kuma-system',
-
-  'meshes/default/traffic-routes',
-
-  'meshes/default/timeouts',
-
-  'meshes/default/retries',
-
-  'meshes/default/proxytemplates',
-  'meshes/default/proxytemplates/pt-1',
-  'meshes/hello-world/proxytemplates',
-  'meshes/hello-world/proxytemplates/pt-123',
-
-  'meshes/default/traffic-logs',
-  'meshes/default/traffic-logs/tl-1',
-  'meshes/default/traffic-logs/tl-123',
-
-  'meshes/default/traffic-permissions',
-  'meshes/default/traffic-permissions/tp-1',
-  'meshes/default/traffic-permissions/tp-1234',
-  'meshes/default/traffic-permissions/tp-alpha-tango-donut',
-
-  'meshes/default/circuit-breakers',
-  'meshes/default/circuit-breakers/cb1',
-  'meshes/default/circuit-breakers/cb2',
-  'meshes/alpha-tango-mesh/circuit-breakers',
-
-  'zones+insights',
-  'zones+insights/zone-1',
-  'zones+insights/zone-2',
-  'zones+insights/zone-3',
-  'zones+insights/cluster-1',
-  'meshes/default/dataplanes+insights/cluster-1.backend-02',
-  'meshes/default/dataplanes+insights/cluster-1.backend-03',
-  'meshes/default/dataplanes+insights/cluster-1.ingress-02',
-  'meshes/default/dataplanes+insights/cluster-1.gateway-01',
-  'meshes/default/dataplanes+insights/backend',
-  'meshes/default/dataplanes+insights/frontend',
-  'meshes/default/dataplanes+insights/db',
-  'meshes/default/dataplanes+insights/no-subscriptions',
-
-  'global-insights',
-  'policies',
-]
-
-const regexMatcher = (req: RestRequest, res: ResponseComposition, ctx: RestContext) => {
-  const pathname = req.url.pathname.substring(1)
-
-  return res(ctx.json(requireMockFile(`${pathname}.json`)))
+  return fileModule.default
 }
 
-const setupHandlers = (apiURL: string): RestHandler[] => {
-  const getApiPath = (path: string) => `${apiURL}${path.replace(/\+/g, '\\+').replace(/\?/g, '\\?')}`
-  const handlers = mockFilenameBasePaths.map((path: string) => rest.get(
-    getApiPath(path), (req, res, ctx) => res(ctx.json(requireMockFile(`${path}.json`))),
+const mockFileImports: Array<[string, () => Promise<any>]> = [
+  ['config', () => import('./mock/responses/config.json')],
+  ['versions', () => import('./mock/responses/versions.json')],
+  ['policies', () => import('./mock/responses/policies.json')],
+  ['status/zones', () => import('./mock/responses/status/zones.json')],
+  ['global-insights', () => import('./mock/responses/global-insights.json')],
+  ['external-services', () => import('./mock/responses/external-services.json')],
+  // comment to have onboarding without data planes active
+  ['dataplanes', () => import('./mock/responses/dataplanes.json')],
+  ['service-insights', () => import('./mock/responses/service-insights.json')],
+
+  ['zones', () => import('./mock/responses/zones.json')],
+  ['zones+insights', () => import('./mock/responses/zones+insights.json')],
+  ['zones+insights/zone-1', () => import('./mock/responses/zones+insights/zone-1.json')],
+  ['zones+insights/zone-2', () => import('./mock/responses/zones+insights/zone-2.json')],
+  ['zones+insights/zone-3', () => import('./mock/responses/zones+insights/zone-3.json')],
+  ['zones+insights/cluster-1', () => import('./mock/responses/zones+insights/cluster-1.json')],
+  ['zoneingresses/:zoneIngressName/xds', () => import('./mock/responses/dataplane-xds.json')],
+  ['zoneingresses+insights', () => import('./mock/responses/zoneingresses+insights.json')],
+  ['zoneegresses/:zoneEgressName/xds', () => import('./mock/responses/dataplane-xds.json')],
+  ['zoneegressoverviews', () => import('./mock/responses/zoneegressoverviews.json')],
+
+  ['mesh-insights', () => import('./mock/responses/mesh-insights.json')],
+  ['mesh-insights/default', () => import('./mock/responses/mesh-insights/default.json')],
+  ['mesh-insights/hello-world', () => import('./mock/responses/mesh-insights/hello-world.json')],
+  ['mesh-insights/kong-mania-12', () => import('./mock/responses/mesh-insights/kong-mania-12.json')],
+
+  ['meshes', () => import('./mock/responses/meshes.json')],
+  ['meshes/:mesh/:policyType/:policyName/dataplanes', () => import('./mock/responses/policy-connections.json')],
+  ['meshes/:mesh/dataplanes/:dataplaneName/policies', () => import('./mock/responses/dataplane-policies.json')],
+  ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock/responses/dataplane-xds.json')],
+  ['meshes/default', () => import('./mock/responses/meshes/default.json')],
+  ['meshes/default/circuit-breakers', () => import('./mock/responses/meshes/default/circuit-breakers.json')],
+  ['meshes/default/circuit-breakers/cb1', () => import('./mock/responses/meshes/default/circuit-breakers/cb1.json')],
+  ['meshes/default/circuit-breakers/cb2', () => import('./mock/responses/meshes/default/circuit-breakers/cb2.json')],
+  ['meshes/default/dataplanes', () => import('./mock/responses/meshes/default/dataplanes.json')],
+  ['meshes/default/dataplanes/dataplane-test-456', () => import('./mock/responses/meshes/default/dataplanes/dataplane-test-456.json')],
+  ['meshes/default/dataplanes/gateway-dp-87qntx', () => import('./mock/responses/meshes/default/dataplanes/gateway-dp-87qntx.json')],
+  ['meshes/default/dataplanes/ingress-dp-test-123', () => import('./mock/responses/meshes/default/dataplanes/ingress-dp-test-123.json')],
+  ['meshes/default/dataplanes/test-dp-02', () => import('./mock/responses/meshes/default/dataplanes/test-dp-02.json')],
+  ['meshes/default/dataplanes+insights', () => import('./mock/responses/meshes/default/dataplanes+insights.json')],
+  ['meshes/default/dataplanes+insights/backend', () => import('./mock/responses/meshes/default/dataplanes+insights/backend.json')],
+  ['meshes/default/dataplanes+insights/cluster-1.backend-02', () => import('./mock/responses/meshes/default/dataplanes+insights/cluster-1.backend-02.json')],
+  ['meshes/default/dataplanes+insights/cluster-1.backend-03', () => import('./mock/responses/meshes/default/dataplanes+insights/cluster-1.backend-03.json')],
+  ['meshes/default/dataplanes+insights/cluster-1.gateway-01', () => import('./mock/responses/meshes/default/dataplanes+insights/cluster-1.gateway-01.json')],
+  ['meshes/default/dataplanes+insights/cluster-1.ingress-02', () => import('./mock/responses/meshes/default/dataplanes+insights/cluster-1.ingress-02.json')],
+  ['meshes/default/dataplanes+insights/dataplane-test-456', () => import('./mock/responses/meshes/default/dataplanes+insights/dataplane-test-456.json')],
+  ['meshes/default/dataplanes+insights/db', () => import('./mock/responses/meshes/default/dataplanes+insights/db.json')],
+  ['meshes/default/dataplanes+insights/frontend', () => import('./mock/responses/meshes/default/dataplanes+insights/frontend.json')],
+  ['meshes/default/dataplanes+insights/ingress-dp-test-123', () => import('./mock/responses/meshes/default/dataplanes+insights/ingress-dp-test-123.json')],
+  ['meshes/default/dataplanes+insights/no-subscriptions', () => import('./mock/responses/meshes/default/dataplanes+insights/no-subscriptions.json')],
+  ['meshes/default/external-services', () => import('./mock/responses/meshes/default/external-services.json')],
+  ['meshes/default/external-services/httpbin', () => import('./mock/responses/meshes/default/external-services/httpbin.json')],
+  ['meshes/default/external-services/httpbin2', () => import('./mock/responses/meshes/default/external-services/httpbin2.json')],
+  ['meshes/default/fault-injections', () => import('./mock/responses/meshes/default/fault-injections.json')],
+  ['meshes/default/fault-injections/fi1.kuma-system', () => import('./mock/responses/meshes/default/fault-injections/fi1.kuma-system.json')],
+  ['meshes/default/fault-injections/web-to-backend.kuma-system', () => import('./mock/responses/meshes/default/fault-injections/web-to-backend.kuma-system.json')],
+  ['meshes/default/health-checks', () => import('./mock/responses/meshes/default/health-checks.json')],
+  ['meshes/default/health-checks/foo-bar-baz-123', () => import('./mock/responses/meshes/default/health-checks/foo-bar-baz-123.json')],
+  ['meshes/default/health-checks/health-check-0023', () => import('./mock/responses/meshes/default/health-checks/health-check-0023.json')],
+  ['meshes/default/health-checks/health-check-12345', () => import('./mock/responses/meshes/default/health-checks/health-check-12345.json')],
+  ['meshes/default/health-checks/hello-health-check', () => import('./mock/responses/meshes/default/health-checks/hello-health-check.json')],
+  ['meshes/default/health-checks/testing-health-checks', () => import('./mock/responses/meshes/default/health-checks/testing-health-checks.json')],
+  ['meshes/default/health-checks/web-to-backend', () => import('./mock/responses/meshes/default/health-checks/web-to-backend.json')],
+  ['meshes/default/health-checks/web-to-banana', () => import('./mock/responses/meshes/default/health-checks/web-to-banana.json')],
+  ['meshes/default/meshgatewayroutes', () => import('./mock/responses/meshes/default/meshgatewayroutes.json')],
+  ['meshes/default/meshgatewayroutes/edge-gateway', () => import('./mock/responses/meshes/default/meshgatewayroutes/edge-gateway.json')],
+  ['meshes/default/meshgateways', () => import('./mock/responses/meshes/default/meshgateways.json')],
+  ['meshes/default/meshgateways/edge-gateway', () => import('./mock/responses/meshes/default/meshgateways/edge-gateway.json')],
+  ['meshes/default/proxytemplates', () => import('./mock/responses/meshes/default/proxytemplates.json')],
+  ['meshes/default/proxytemplates/pt-1', () => import('./mock/responses/meshes/default/proxytemplates/pt-1.json')],
+  ['meshes/default/retries', () => import('./mock/responses/meshes/default/retries.json')],
+  ['meshes/default/service-insights', () => import('./mock/responses/meshes/default/service-insights.json')],
+  ['meshes/default/timeouts', () => import('./mock/responses/meshes/default/timeouts.json')],
+  ['meshes/default/traffic-logs', () => import('./mock/responses/meshes/default/traffic-logs.json')],
+  ['meshes/default/traffic-logs/tl-1', () => import('./mock/responses/meshes/default/traffic-logs/tl-1.json')],
+  ['meshes/default/traffic-logs/tl-123', () => import('./mock/responses/meshes/default/traffic-logs/tl-123.json')],
+  ['meshes/default/traffic-permissions', () => import('./mock/responses/meshes/default/traffic-permissions.json')],
+  ['meshes/default/traffic-permissions/tp-1', () => import('./mock/responses/meshes/default/traffic-permissions/tp-1.json')],
+  ['meshes/default/traffic-permissions/tp-1234', () => import('./mock/responses/meshes/default/traffic-permissions/tp-1234.json')],
+  ['meshes/default/traffic-permissions/tp-alpha-tango-donut', () => import('./mock/responses/meshes/default/traffic-permissions/tp-alpha-tango-donut.json')],
+  ['meshes/default/traffic-routes', () => import('./mock/responses/meshes/default/traffic-routes.json')],
+  ['meshes/default/traffic-traces', () => import('./mock/responses/meshes/default/traffic-traces.json')],
+  ['meshes/default/traffic-traces/traffic-trace-02', () => import('./mock/responses/meshes/default/traffic-traces/traffic-trace-02.json')],
+  ['meshes/default/traffic-traces/tt-1', () => import('./mock/responses/meshes/default/traffic-traces/tt-1.json')],
+  ['meshes/default/traffic-traces/tt-3', () => import('./mock/responses/meshes/default/traffic-traces/tt-3.json')],
+
+  ['meshes/hello-world', () => import('./mock/responses/meshes/hello-world.json')],
+  ['meshes/hello-world/health-checks/hello-health-check', () => import('./mock/responses/meshes/hello-world/health-checks/hello-health-check.json')],
+  ['meshes/hello-world/proxytemplates', () => import('./mock/responses/meshes/hello-world/proxytemplates.json')],
+  ['meshes/hello-world/proxytemplates/pt-123', () => import('./mock/responses/meshes/hello-world/proxytemplates/pt-123.json')],
+  ['meshes/hello-world/traffic-traces/tt-123', () => import('./mock/responses/meshes/hello-world/traffic-traces/tt-123.json')],
+
+  ['meshes/kong-mania-12', () => import('./mock/responses/meshes/kong-mania-12.json')],
+  ['meshes/kong-mania-12/health-checks/testing-health-checks', () => import('./mock/responses/meshes/kong-mania-12/health-checks/testing-health-checks.json')],
+  ['meshes/kong-mania-12/health-checks/web-to-banana', () => import('./mock/responses/meshes/kong-mania-12/health-checks/web-to-banana.json')],
+  ['meshes/kong-mania-12/traffic-traces/my-silly-mesh-name', () => import('./mock/responses/meshes/kong-mania-12/traffic-traces/my-silly-mesh-name.json')],
+
+  // Policies
+  ['circuit-breakers', () => import('./mock/responses/circuit-breakers.json')],
+  ['fault-injections', () => import('./mock/responses/fault-injections.json')],
+  ['health-checks', () => import('./mock/responses/health-checks.json')],
+  ['meshgatewayroutes', () => import('./mock/responses/meshgatewayroutes.json')],
+  ['meshgateways', () => import('./mock/responses/meshgateways.json')],
+  ['proxytemplates', () => import('./mock/responses/proxytemplates.json')],
+  ['rate-limits', () => import('./mock/responses/rate-limits.json')],
+  ['retries', () => import('./mock/responses/retries.json')],
+  ['timeouts', () => import('./mock/responses/timeouts.json')],
+  ['traffic-logs', () => import('./mock/responses/traffic-logs.json')],
+  ['traffic-permissions', () => import('./mock/responses/traffic-permissions.json')],
+  ['traffic-routes', () => import('./mock/responses/traffic-routes.json')],
+  ['traffic-traces', () => import('./mock/responses/traffic-traces.json')],
+  ['virtual-outbounds', () => import('./mock/responses/virtual-outbounds.json')],
+]
+
+export const setupHandlers = (apiURL: string): RestHandler[] => {
+  const getApiPath = function (path: string) {
+    const escapedPath = path.replace(/\+/g, '\\+').replace(/\?/g, '\\?')
+
+    return `${apiURL}${escapedPath}`
+  }
+
+  const handlers = mockFileImports.map(([path, importFn]: [string, () => Promise<any>]) => rest.get(
+    getApiPath(path),
+    async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))),
   ))
 
   handlers.push(
-    rest.get(apiURL, (req, res, ctx) =>
+    rest.get(apiURL, (_req, res, ctx) =>
       res(
         ctx.json({
           hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
@@ -154,68 +148,45 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
     ),
   )
 
-  handlers.push(rest.get(getApiPath('zones+insights'), regexMatcher))
-  handlers.push(rest.get(getApiPath('zoneegressoverviews'), regexMatcher))
-  handlers.push(rest.get(getApiPath('zoneingresses+insights'), regexMatcher))
-  handlers.push(rest.get(getApiPath('meshes/default/dataplanes+insights'), regexMatcher))
-
   handlers.push(
-    rest.get(getApiPath('dataplanes+insights'), (req, res, ctx) => {
+    rest.get(getApiPath('dataplanes+insights'), async (req, res, ctx) => {
       const gateway = req.url.searchParams.get('gateway')
 
       if (gateway === 'false') {
         // standard
-        return res(ctx.json(requireMockFile('dataplanes+insights__only_standard.json')))
+        return res(
+          ctx.json(
+            await loadMockFile(() => import('./mock/responses/dataplanes+insights__only_standard.json')),
+          ),
+        )
       }
 
       if (gateway === 'true') {
         // gateway
-        return res(ctx.json(requireMockFile('dataplanes+insights__only-gateways.json')))
+        return res(
+          ctx.json(
+            await loadMockFile(() => import('./mock/responses/dataplanes+insights__only-gateways.json')),
+          ),
+        )
       }
 
       if (!gateway) {
         // all
-        return res(ctx.json(requireMockFile('dataplanes+insights.json')))
+        return res(
+          ctx.json(
+            await loadMockFile(() => import('./mock/responses/dataplanes+insights.json')),
+          ),
+        )
       }
     }),
   )
 
-  handlers.push(
-    rest.get(getApiPath('meshes/:mesh/:policyType/:policyName/dataplanes'), (req, res, ctx) =>
-      res(ctx.json(requireMockFile('policy-connections.json'))),
-    ),
-  )
-
-  handlers.push(
-    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/policies'), (req, res, ctx) =>
-      res(ctx.json(requireMockFile('dataplane-policies.json'))),
-    ),
-  )
-
-  handlers.push(
-    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/xds'), (req, res, ctx) =>
-      res(ctx.json(requireMockFile('dataplane-xds.json'))),
-    ),
-  )
-
-  handlers.push(
-    rest.get(getApiPath('zoneingresses/:zoneIngressName/xds'), (req, res, ctx) =>
-      res(ctx.json(requireMockFile('dataplane-xds.json'))),
-    ),
-  )
-
-  handlers.push(
-    rest.get(getApiPath('zoneegresses/:zoneEgressName/xds'), (req, res, ctx) =>
-      res(ctx.json(requireMockFile('dataplane-xds.json'))),
-    ),
-  )
-
   // Basic test for API errors to easily test how errors with title, details, and causes are used in the UI.
   handlers.push(
-    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/stats'), (_req, res, ctx) =>
+    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/stats'), async (_req, res, ctx) =>
       res(
         ctx.status(403),
-        ctx.json(requireMockFile('permission-error.json')),
+        ctx.json(await loadMockFile(() => import('./mock/responses/permission-error.json'))),
       ),
     ),
   )
@@ -223,12 +194,6 @@ const setupHandlers = (apiURL: string): RestHandler[] => {
   return handlers
 }
 
-const worker = (apiURL: string) => setupWorker(...setupHandlers(apiURL))
-
-const additionalTestHandlers: RestHandler[] = [
-  rest.get('https://kuma.io/latest_version/', (req, res, ctx) => res(ctx.status(200), ctx.text('1.2.2'))),
+export const additionalTestHandlers: RestHandler[] = [
+  rest.get('https://kuma.io/latest_version/', (_req, res, ctx) => res(ctx.status(200), ctx.text('1.2.2'))),
 ]
-
-const server = (apiURL: string) => setupServer(...setupHandlers(apiURL), ...additionalTestHandlers)
-
-export { worker, server }

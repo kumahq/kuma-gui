@@ -6,79 +6,6 @@ import { ZoneOverview, ResourceResponse } from '@/types'
 
 type TODO = any
 
-export const uuidRegEx = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
-
-export function forEach(array: any[], callback: (...args: any) => void, scope: any) {
-  for (let i = 0; i < array.length; i++) {
-    callback.call(scope, i, array[i])
-  }
-}
-
-export function getPluginIcon(pluginName: string) {
-  let icon
-
-  try {
-    icon = require(`./assets/images/plugin-icons/${pluginName}.png`)
-  } catch (_) {
-    icon = require('./assets/images/plugin-icons/missing.png')
-  }
-
-  return icon
-}
-
-/**
- * Formats a unix timestamp into a formatted date string
- * @param {Number} timestamp a unix timestamp in seconds
- * @returns a date string with format YYYY-MM-DD HH:mm:ss ZZ
- */
-export function formatDate(timestamp: number) {
-  const date = new Date(timestamp * 1000)
-  const day = date
-    .getDate()
-    .toString()
-    .padStart(2, '0')
-  const month = (date.getMonth() + 1).toString().padStart(2, '0')
-  const year = date.getFullYear()
-  const time = date.toTimeString().split(' ')
-
-  return `${year}-${month}-${day} ${time[0]} ${time[1].substring(3, time[1].length)}`
-}
-
-/**
- * Compares two objects
- * @param {Object} Object A
- * @param {Object} Object B
- * @return {Boolean}
- */
-export function compareObjects(a: Object, b: Object) {
-  return JSON.stringify(a) === JSON.stringify(b)
-}
-
-/**
- * A method to easily check if an object is empty or not
- * @param {Object} Object to check
- * @return {Boolean}
- */
-export function isObjectEmpty(obj: Object) {
-  return Object.keys(obj).length === 0
-}
-
-/**
- * checks "target" children is included in the array "src"
- * if the "target" is an array
- * then recursively search into it
- * @param {Array} src
- * @param {Array} target
- * @returns {Boolean}
- */
-export function deepIncludes(src: any[], target: any[]): boolean {
-  if (!(src instanceof Array)) throw new Error('Params[0] needs to be an Array')
-
-  if (target instanceof Array) return target.some(arr => deepIncludes(src, arr))
-
-  return src.includes(target)
-}
-
 /**
  * =============================================================================
  * Kuma Helpers
@@ -176,42 +103,6 @@ export function getSome(original: TODO, desired: TODO) {
 }
 
 /**
- * stripUrl
- *
- * Returns all of a URL after the last slash so that it does not
- * include the root of the URL that we don't need (e.g. when fetching from
- * an API).
- *
- * @param {String} url
- */
-export function stripUrl(url: string) {
-  const regex = /([^/]+$)/g
-  const match = url.match(regex)?.[0]
-
-  return match
-}
-
-/**
- * getOffset
- *
- * Returns the offset from an API query so that it can be used
- * for things like next and prev controls in pagination.
- *
- * @param {String} url The URL you want to find `offset` in and
- * simply return the value for.
- */
-export function getOffset(url: string) {
-  if (!url) {
-    return ''
-  }
-
-  const regex = /offset=(\w+)/
-  const match = url.match(regex)?.[0].replace('offset=', '')
-
-  return match
-}
-
-/**
  * stripTimes
  *
  * Strips the time values from the objects returned from
@@ -224,24 +115,6 @@ export function stripTimes(content: TODO) {
   const { creationTime, modificationTime, ...noTimes } = content
 
   return noTimes
-}
-
-/**
- * cleanTag
- *
- * This function will take native Kuma tags and format
- * them for things like CSS class usage.
- */
-export function cleanTag(tag: string) {
-  /**
-   * this takes something like `kuma.io/service` and turns it into
-   * `kuma-io-service`.
-   */
-
-  return tag
-    .toLowerCase()
-    .replace('.', '-')
-    .replace('/', '-')
 }
 
 /**
@@ -277,16 +150,6 @@ export function kebabCase(value: string) {
   }
 
   return newValue
-}
-
-export function filterResourceByMesh(resources: { mesh: string }[]) {
-  return (wantMesh: undefined | 'all') => {
-    if (!wantMesh || wantMesh === 'all') {
-      return resources
-    }
-
-    return resources.filter(({ mesh }) => mesh === wantMesh)
-  }
 }
 
 export function applyPropsToObject(props: TODO = {}, object: TODO = {}) {
@@ -348,21 +211,4 @@ export function getZoneDpServerAuthType(zone: ZoneOverview): string {
   }
 
   return DISABLED
-}
-
-export default {
-  forEach,
-  getPluginIcon,
-  formatDate,
-  deepIncludes,
-  humanReadableDate,
-  rawReadableDate,
-  getSome,
-  stripUrl,
-  getOffset,
-  stripTimes,
-  cleanTag,
-  camelCaseToWords,
-  kebabCase,
-  getZoneDpServerAuthType,
 }

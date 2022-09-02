@@ -5,7 +5,7 @@
     </template>
     <template #content>
       <div class="flex justify-center">
-        <img src="@/assets/images/kuma_gui.png?external">
+        <img src="@/assets/images/kuma_gui.png">
       </div>
     </template>
 
@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
-import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
+import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
+import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
 
 export default {
   name: 'CompletedView',

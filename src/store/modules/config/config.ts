@@ -36,7 +36,7 @@ const getters: GetterTree<ConfigInterface, State> = {
 
     let status
 
-    if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_FAKE_MULTIZONE === 'true') {
+    if (import.meta.env.DEV && import.meta.env.VITE_FAKE_MULTIZONE === 'true') {
       status = true
 
       console.warn(

@@ -36,7 +36,7 @@ export default {
   name: 'UpgradeCheck',
   data() {
     return {
-      url: `${process.env.VUE_APP_INSTALL_URL}${process.env.VUE_APP_UTM}`,
+      url: `${import.meta.env.VITE_INSTALL_URL}${import.meta.env.VITE_UTM}`,
       latestVer: null,
       showNotice: false,
     }

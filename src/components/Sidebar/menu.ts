@@ -1,5 +1,6 @@
 import { RouteLocation } from 'vue-router'
-import meshIcon from '@/assets/images/icon-service-mesh.svg'
+
+import meshIcon from '@/assets/images/icon-service-mesh.svg?raw'
 import { Policy } from '@/types'
 
 type TODO = any

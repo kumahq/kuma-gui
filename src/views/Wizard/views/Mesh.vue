@@ -654,7 +654,7 @@ export default {
         meshMetricsDataplanePath: '/metrics',
       },
       vmsg: [],
-      utm: process.env.VUE_APP_UTM,
+      utm: import.meta.env.VITE_UTM,
     }
   },
   computed: {

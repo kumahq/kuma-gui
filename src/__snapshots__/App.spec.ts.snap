@@ -138,7 +138,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                 <span>
                   , and it is reachable at 
                   <code>
-                    http://localhost/
+                    http://localhost:5681/
                   </code>
                 </span>
               </p>

@@ -14,7 +14,7 @@ function getPolicyRoutes(policies: Policy[]): RouteRecordRaw[] {
     props: {
       policyPath: policy.path,
     },
-    component: () => import(/* webpackChunkName: "policy-view" */ '@/views/Policies/PolicyView.vue'),
+    component: () => import('@/views/Policies/PolicyView.vue'),
   }))
 }
 
@@ -32,13 +32,13 @@ export async function setupRouter() {
         title: 'Item not found',
         excludeAsBreadcrumb: true,
       },
-      component: () => import(/* webpackChunkName: "not-found" */ '@/views/NotFound.vue'),
+      component: () => import('@/views/NotFound.vue'),
     },
     // Home - a landing place that resets things
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "shell" */ '@/views/AppShell.vue'),
+      component: () => import('@/views/AppShell.vue'),
       redirect: {
         name: 'global-overview',
         params: {
@@ -51,7 +51,7 @@ export async function setupRouter() {
         {
           path: '/diagnostics',
           name: 'diagnostics',
-          component: () => import(/* webpackChunkName: "diagnostics" */ '@/views/DiagnosticsView.vue'),
+          component: () => import('@/views/DiagnosticsView.vue'),
           meta: {
             title: 'Diagnostics',
             breadcrumb: 'Diagnostics',
@@ -65,7 +65,7 @@ export async function setupRouter() {
           meta: {
             title: 'Zones',
           },
-          component: () => import(/* webpackChunkName: "zones" */ '@/views/Entities/ZonesView.vue'),
+          component: () => import('@/views/Entities/ZonesView.vue'),
         },
         // Zone Ingresses
         {
@@ -74,7 +74,7 @@ export async function setupRouter() {
           meta: {
             title: 'Zone ingresses',
           },
-          component: () => import(/* webpackChunkName: "zoneingresses" */ '@/views/Entities/ZoneIngresses.vue'),
+          component: () => import('@/views/Entities/ZoneIngresses.vue'),
         },
         // Zone Egresses
         {
@@ -83,7 +83,7 @@ export async function setupRouter() {
           meta: {
             title: 'Zone egresses',
           },
-          component: () => import(/* webpackChunkName: "zoneegresses" */ '@/views/Entities/ZoneEgresses.vue'),
+          component: () => import('@/views/Entities/ZoneEgresses.vue'),
         },
         // all Meshes
         {
@@ -109,7 +109,7 @@ export async function setupRouter() {
                 title: 'Meshes',
                 parent: 'all-meshes',
               },
-              component: () => import(/* webpackChunkName: "meshes" */ '@/views/Entities/MeshesView.vue'),
+              component: () => import('@/views/Entities/MeshesView.vue'),
             },
           ],
         },
@@ -144,7 +144,7 @@ export async function setupRouter() {
                   meta: {
                     title: 'Global Overview',
                   },
-                  component: () => import(/* webpackChunkName: "global-overview" */ '@/views/OverviewView.vue'),
+                  component: () => import('@/views/OverviewView.vue'),
                 },
                 // all dataplanes
                 {
@@ -153,14 +153,13 @@ export async function setupRouter() {
                   meta: {
                     title: 'Data plane proxies',
                   },
-                  component: () => import(/* webpackChunkName: "dataplanes" */ '@/views/Entities/AllDataplanes.vue'),
+                  component: () => import('@/views/Entities/AllDataplanes.vue'),
                 },
                 // standard dataplanes
                 {
                   path: 'standard-dataplanes',
                   name: 'standard-dataplanes',
-                  component: () =>
-                    import(/* webpackChunkName: "dataplanes-standard" */ '@/views/Entities/StandardDataplanes.vue'),
+                  component: () => import('@/views/Entities/StandardDataplanes.vue'),
                   meta: {
                     title: 'Standard data plane proxies',
                     breadcrumb: 'Standard data plane proxies',
@@ -170,8 +169,7 @@ export async function setupRouter() {
                 {
                   path: 'gateway-dataplanes',
                   name: 'gateway-dataplanes',
-                  component: () =>
-                    import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/GatewayDataplanes.vue'),
+                  component: () => import('@/views/Entities/GatewayDataplanes.vue'),
                   meta: {
                     title: 'Gateway data plane proxies',
                     breadcrumb: 'Gateway data plane proxies',
@@ -181,8 +179,7 @@ export async function setupRouter() {
                 {
                   path: 'internal-services',
                   name: 'internal-services',
-                  component: () =>
-                    import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/InternalServices.vue'),
+                  component: () => import('@/views/Entities/InternalServices.vue'),
                   meta: {
                     title: 'Internal services',
                     breadcrumb: 'Internal Services',
@@ -192,8 +189,7 @@ export async function setupRouter() {
                 {
                   path: 'external-services',
                   name: 'external-services',
-                  component: () =>
-                    import(/* webpackChunkName: "dataplanes-gateway" */ '@/views/Entities/ExternalServices.vue'),
+                  component: () => import('@/views/Entities/ExternalServices.vue'),
                   meta: {
                     title: 'External services',
                     breadcrumb: 'External Services',
@@ -210,16 +206,16 @@ export async function setupRouter() {
     {
       path: '/onboarding',
       redirect: { name: 'onboarding-welcome' },
-      component: () => import(/* webpackChunkName: "shell" */ '@/views/ShellEmpty.vue'),
+      component: () => import('@/views/ShellEmpty.vue'),
       children: [
         {
           path: 'welcome',
           name: 'onboarding-welcome',
           meta: {
-            title: `Welcome to ${process.env.VUE_APP_NAMESPACE}!`,
+            title: `Welcome to ${import.meta.env.VITE_NAMESPACE}!`,
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/WelcomeView.vue'),
+          component: () => import('@/views/Onboarding/WelcomeView.vue'),
         },
         {
           path: 'deployment-types',
@@ -227,7 +223,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DeploymentTypes.vue'),
+          component: () => import('@/views/Onboarding/DeploymentTypes.vue'),
         },
         {
           path: 'configuration-types',
@@ -235,7 +231,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/ConfigurationTypes.vue'),
+          component: () => import('@/views/Onboarding/ConfigurationTypes.vue'),
         },
         {
           path: 'multi-zone',
@@ -243,7 +239,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/MultiZoneView.vue'),
+          component: () => import('@/views/Onboarding/MultiZoneView.vue'),
         },
         {
           path: 'create-mesh',
@@ -251,7 +247,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/CreateMesh.vue'),
+          component: () => import('@/views/Onboarding/CreateMesh.vue'),
         },
         {
           path: 'add-services',
@@ -259,7 +255,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddNewServices.vue'),
+          component: () => import('@/views/Onboarding/AddNewServices.vue'),
         },
         {
           path: 'add-services-code',
@@ -267,7 +263,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/AddNewServicesCode.vue'),
+          component: () => import('@/views/Onboarding/AddNewServicesCode.vue'),
         },
         {
           path: 'dataplanes-overview',
@@ -275,7 +271,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/DataplanesOverview.vue'),
+          component: () => import('@/views/Onboarding/DataplanesOverview.vue'),
         },
         {
           path: 'completed',
@@ -283,7 +279,7 @@ export async function setupRouter() {
           meta: {
             onboardingProcess: true,
           },
-          component: () => import(/* webpackChunkName: "onboarding" */ '@/views/Onboarding/CompletedView.vue'),
+          component: () => import('@/views/Onboarding/CompletedView.vue'),
         },
       ],
     },
@@ -291,7 +287,7 @@ export async function setupRouter() {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import(/* webpackChunkName: "shell" */ '@/views/ShellWithHeader.vue'),
+      component: () => import('@/views/ShellWithHeader.vue'),
       children: [
         {
           path: 'mesh',
@@ -301,7 +297,7 @@ export async function setupRouter() {
             wizardProcess: true,
             hideStatus: true,
           },
-          component: () => import(/* webpackChunkName: "wizard-mesh" */ '@/views/Wizard/views/Mesh.vue'),
+          component: () => import('@/views/Wizard/views/Mesh.vue'),
         },
         {
           path: 'kubernetes-dataplane',
@@ -311,10 +307,7 @@ export async function setupRouter() {
             wizardProcess: true,
             hideStatus: true,
           },
-          component: () =>
-            import(
-              /* webpackChunkName: "wizard-dataplane-kubernetes" */ '@/views/Wizard/views/DataplaneKubernetes.vue'
-            ),
+          component: () => import('@/views/Wizard/views/DataplaneKubernetes.vue'),
         },
         {
           path: 'universal-dataplane',
@@ -324,15 +317,14 @@ export async function setupRouter() {
             wizardProcess: true,
             hideStatus: true,
           },
-          component: () =>
-            import(/* webpackChunkName: "wizard-dataplane-universal" */ '@/views/Wizard/views/DataplaneUniversal.vue'),
+          component: () => import('@/views/Wizard/views/DataplaneUniversal.vue'),
         },
       ],
     },
   ]
 
   const router = createRouter({
-    history: createWebHashHistory(process.env.BASE_URL),
+    history: createWebHashHistory(import.meta.env.BASE_URL),
     routes,
   })
 

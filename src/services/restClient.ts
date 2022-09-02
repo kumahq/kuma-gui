@@ -1,11 +1,14 @@
 import { makeRequest } from './makeRequest'
-import { getKumaCpServerUrl } from '@/configUrl'
 
 export default class RestClient {
   public url: string
 
   public constructor() {
-    this.url = getKumaCpServerUrl()
+    if (import.meta.env.PROD) {
+      this.url = window.location.origin + '/'
+    } else {
+      this.url = import.meta.env.VITE_KUMA_API_SERVER_URL
+    }
   }
 
   public async get(path: string, options?: RequestInit & { params?: any }) {

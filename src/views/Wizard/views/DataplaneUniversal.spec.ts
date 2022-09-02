@@ -32,7 +32,7 @@ describe('DataplaneUniversal.vue', () => {
 
   it('passes whole wizzard and render yaml', async () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ name: 'hi' })),
       ),
     )

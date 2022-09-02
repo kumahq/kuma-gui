@@ -11,7 +11,7 @@
         class="logo"
       >
         <img
-          src="@/assets/images/product-logo.png?external"
+          src="@/assets/images/product-logo.png"
           :alt="`${tagline} Logo`"
         >
       </router-link>
@@ -80,9 +80,9 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 
-import NotificationIcon from './NotificationIcon'
-import { getKumaCpServerUrl } from '@/configUrl'
-import UpgradeCheck from '@/components/Utils/UpgradeCheck'
+import NotificationIcon from './NotificationIcon.vue'
+import Kuma from '@/services/kuma'
+import UpgradeCheck from '@/components/Utils/UpgradeCheck.vue'
 
 export default {
   name: 'GlobalHeader',
@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       shortVersion: '',
-      apiUrl: getKumaCpServerUrl(),
+      apiUrl: Kuma.url,
       initialBodyPaddingTop: '',
     }
   },
@@ -121,7 +121,7 @@ export default {
       return !this.$route.meta.hideStatus && this.status === 'OK'
     },
     showEnterprise() {
-      return process.env.VUE_APP_SHOW_ENTERPRISE_BUTTON === 'true'
+      return import.meta.env.VITE_SHOW_ENTERPRISE_BUTTON === 'true'
     },
     statusContent() {
       if (this.guiStatus) {

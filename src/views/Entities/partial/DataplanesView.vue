@@ -246,8 +246,8 @@
 import { mapGetters } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
 
-import SubscriptionDetails from '../components/SubscriptionDetails'
-import SubscriptionHeader from '../components/SubscriptionHeader'
+import SubscriptionDetails from '../components/SubscriptionDetails.vue'
+import SubscriptionHeader from '../components/SubscriptionHeader.vue'
 import Kuma from '@/services/kuma'
 import { getSome, humanReadableDate, stripTimes } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'

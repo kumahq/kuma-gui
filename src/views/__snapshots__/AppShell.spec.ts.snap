@@ -100,7 +100,7 @@ exports[`AppShell.vue renders component with route 1`] = `
             <div
               class="is-active is-menu-item nav-item"
               data-testid="home"
-              iconcustom=""
+              iconcustom="[object Object]"
               subnav="[object Object]"
             >
               <a>
@@ -108,7 +108,10 @@ exports[`AppShell.vue renders component with route 1`] = `
                   class="nav-icon"
                 >
                   
-                  <!--v-if-->
+                  <!-- eslint-disable-next-line vue/no-v-html -->
+                  <div>
+                    [object Object]
+                  </div>
                   
                 </div>
                 <!-- nav title separator -->

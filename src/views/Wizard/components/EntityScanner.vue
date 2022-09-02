@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import IconSuccess from '@/components/Utils/IconSuccess'
+import IconSuccess from '@/components/Utils/IconSuccess.vue'
 
 export default {
   name: 'EntityScanner',

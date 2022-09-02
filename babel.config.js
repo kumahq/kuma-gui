@@ -1,6 +1,10 @@
-module.exports = {
-  presets: ['@vue/cli-plugin-babel/preset'],
+/** @typedef {import('@babel/core').TransformOptions} Config */
+
+/** @type {Config} */ const config = {
+  presets: ['@babel/preset-env'],
   plugins: [
+    // Required to run tests against code containing `import.meta.env` references.
+    'babel-plugin-transform-vite-meta-env',
     [
       'prismjs',
       {
@@ -12,3 +16,5 @@ module.exports = {
     ],
   ],
 }
+
+module.exports = config
