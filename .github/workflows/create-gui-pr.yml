@@ -1,4 +1,4 @@
-name: Update kuma with latest kuma-gui
+name: Update kuma-gui in kuma
 
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
@@ -18,7 +18,7 @@ env:
 jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
-    name: Create PR to update kuma-gui
+    name: Create PR
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub App token
