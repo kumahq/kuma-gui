@@ -88,4 +88,6 @@ jobs:
             Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
 
             [skip ci]
+
+            > Changelog: skip
           draft: false
