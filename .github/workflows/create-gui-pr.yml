@@ -78,6 +78,8 @@ jobs:
             chore(deps): bump kuma-gui to ${{ github.sha }}
 
             Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
+
+            [skip ci]
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: true
@@ -86,8 +88,6 @@ jobs:
           title: "chore(deps): bump kuma-gui"
           body: |
             Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
-
-            [skip ci]
 
             > Changelog: skip
           draft: false
