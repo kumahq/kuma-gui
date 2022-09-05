@@ -173,7 +173,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                             class=""
                             data-v-77421f6a=""
                           >
-                            Backend
+                            Storage type
                           </span>
                           
                           <!---->
