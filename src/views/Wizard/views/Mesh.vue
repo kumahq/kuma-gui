@@ -770,12 +770,12 @@ export default {
       if (hasTracing) {
         const tracingObj = schemaNew.tracing
 
-        tracingObj.backends[0].conf = {}
-
         tracingObj.defaultBackend = newData.meshTracingBackend
         tracingObj.backends[0].type = newData.meshTracingType || 'zipkin'
         tracingObj.backends[0].name = newData.meshTracingBackend
-        tracingObj.backends[0].conf.sampling = newData.meshTracingSampling || 100
+        tracingObj.backends[0].sampling = newData.meshTracingSampling || 100
+
+        tracingObj.backends[0].conf = {}
         tracingObj.backends[0].conf.url = newData.meshTracingZipkinURL
       }
 
