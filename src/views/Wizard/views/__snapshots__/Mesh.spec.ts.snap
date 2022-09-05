@@ -335,8 +335,8 @@ tracing:
   backends: 
     - name: fake-name
       type: zipkin
+      sampling: 99.9
       conf: 
-        sampling: 99.9
         url: fake-name
 logging: 
   backends: 
