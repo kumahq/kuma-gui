@@ -196,7 +196,7 @@ export default {
           { label: 'Status', key: 'status' },
           { label: 'Name', key: 'name' },
           { label: 'Zone CP Version', key: 'zoneCpVersion' },
-          { label: 'Backend', key: 'backend' },
+          { label: 'Storage type', key: 'storeType' },
           { label: 'Ingress', key: 'hasIngress' },
           { label: 'Egress', key: 'hasEgress' },
           { key: 'warnings', hideLabel: true },
@@ -276,7 +276,7 @@ export default {
     parseData(entity) {
       const { zoneInsight = {}, name } = entity
       let zoneCpVersion = '-'
-      let backend = ''
+      let storeType = ''
       let cpCompat = true
 
       if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
@@ -287,7 +287,7 @@ export default {
 
             cpCompat = kumaCpGlobalCompatible
             if (item.config) {
-              backend = JSON.parse(item.config).store.type
+              storeType = JSON.parse(item.config).store.type
             }
           }
         })
@@ -297,7 +297,7 @@ export default {
         ...entity,
         status: getItemStatusFromInsight(zoneInsight).status,
         zoneCpVersion,
-        backend,
+        storeType,
         hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',
         hasEgress: this.zonesWithEgress.has(name) ? 'Yes' : 'No',
         withWarnings: !cpCompat,
