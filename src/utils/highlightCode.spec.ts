@@ -1,4 +1,4 @@
-import { highlightCode } from './highlight-code'
+import { highlightCode } from './highlightCode'
 
 describe('highlightCode', () => {
   test.each([

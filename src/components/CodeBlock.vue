@@ -11,14 +11,19 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { highlightCode } from '@/utils/highlight-code'
+import { highlightCode } from '@/utils/highlightCode'
+import { reformatYaml } from '@/utils/reformatYaml'
 
 const props = defineProps<{
   language: string
   code: string
 }>()
 
-const highlightedCode = computed(() => highlightCode(props.code, props.language))
+const highlightedCode = computed(() => {
+  const reformattedCode = props.language === 'yaml' ? reformatYaml(props.code) : props.code
+
+  return highlightCode(reformattedCode, props.language)
+})
 </script>
 
 <style lang="scss" scoped>
