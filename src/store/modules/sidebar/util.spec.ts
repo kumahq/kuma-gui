@@ -178,7 +178,7 @@ describe('sidebar utils', () => {
         resources: {},
       })
 
-      expect(meshInsight).toMatchInlineSnapshot('Object {}', `{}`)
+      expect(meshInsight).toMatchInlineSnapshot('{}')
     })
 
     it('when several items', async () => {
