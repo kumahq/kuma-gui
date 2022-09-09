@@ -181,9 +181,7 @@ export default {
       this.start = 0
 
       // go to first step in the UI
-      if (process.env.NODE_ENV === 'production') {
-        this.goToStep(0)
-      }
+      this.goToStep(0)
 
       // clear the form data from localStorage
       localStorage.removeItem('storedFormData')

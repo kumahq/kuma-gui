@@ -37,7 +37,7 @@ describe('config module', () => {
     })
 
     it('tests getStatus action', async () => {
-      server.use(rest.get('http://localhost/', (req, res, ctx) => res(ctx.status(200))))
+      server.use(rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL, (req, res, ctx) => res(ctx.status(200))))
 
       await store.dispatch('config/getStatus')
 

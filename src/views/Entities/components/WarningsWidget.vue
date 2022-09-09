@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import WarningDefault from '@/views/Entities/components/WarningDefault'
-import WarningEnvoyIncompatible from '@/views/Entities/components/WarningEnvoyIncompatible'
-import WarningZoneAndKumaDPVersionsIncompatible from '@/views/Entities/components/WarningZoneAndKumaDPVersionsIncompatible'
-import WarningUnsupportedKumaDPVersion from '@/views/Entities/components/WarningUnsupportedKumaDPVersion'
-import WarningZoneAndGlobalCPSVersionsIncompatible from '@/views/Entities/components/WarningZoneAndGlobalCPSVersionsIncompatible'
+import WarningDefault from '@/views/Entities/components/WarningDefault.vue'
+import WarningEnvoyIncompatible from '@/views/Entities/components/WarningEnvoyIncompatible.vue'
+import WarningZoneAndKumaDPVersionsIncompatible from '@/views/Entities/components/WarningZoneAndKumaDPVersionsIncompatible.vue'
+import WarningUnsupportedKumaDPVersion from '@/views/Entities/components/WarningUnsupportedKumaDPVersion.vue'
+import WarningZoneAndGlobalCPSVersionsIncompatible from '@/views/Entities/components/WarningZoneAndGlobalCPSVersionsIncompatible.vue'
 
 import {
   INCOMPATIBLE_UNSUPPORTED_ENVOY,

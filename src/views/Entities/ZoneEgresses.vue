@@ -115,16 +115,16 @@
 <script>
 import get from 'lodash/get'
 
-import SubscriptionDetails from './components/SubscriptionDetails'
-import SubscriptionHeader from './components/SubscriptionHeader'
+import SubscriptionDetails from './components/SubscriptionDetails.vue'
+import SubscriptionHeader from './components/SubscriptionHeader.vue'
 import { getTableData } from '@/utils/tableDataUtils'
 import { getSome } from '@/helpers'
 import Kuma from '@/services/kuma'
-import DataOverview from '@/components/Skeletons/DataOverview'
-import EntityURLControl from '@/components/Utils/EntityURLControl'
-import FrameSkeleton from '@/components/Skeletons/FrameSkeleton'
+import DataOverview from '@/components/Skeletons/DataOverview.vue'
+import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
+import FrameSkeleton from '@/components/Skeletons/FrameSkeleton.vue'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
-import LabelList from '@/components/Utils/LabelList'
+import LabelList from '@/components/Utils/LabelList.vue'
 
 import { getItemStatusFromInsight } from '@/dataplane'
 import { PAGE_SIZE_DEFAULT } from '@/consts'

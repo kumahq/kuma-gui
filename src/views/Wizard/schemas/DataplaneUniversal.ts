@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   type: 'Dataplane',
   mesh: null,
   name: null,

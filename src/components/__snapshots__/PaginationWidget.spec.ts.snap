@@ -1,183 +1,183 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PaginationWidget.vue calls buttons 1`] = `
-Object {
-  "click": Array [
-    Array [
+{
+  "click": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "focusin": Array [
-    Array [
+  "focusin": [
+    [
       FocusEvent {
         "isTrusted": true,
       },
     ],
-    Array [
-      FocusEvent {
-        "isTrusted": true,
-      },
-    ],
-  ],
-  "focusout": Array [
-    Array [
+    [
       FocusEvent {
         "isTrusted": true,
       },
     ],
   ],
-  "mousedown": Array [
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
-      MouseEvent {
-        "isTrusted": false,
+  "focusout": [
+    [
+      FocusEvent {
+        "isTrusted": true,
       },
     ],
   ],
-  "mouseenter": Array [
-    Array [
+  "mousedown": [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "mousemove": Array [
-    Array [
+  "mouseenter": [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-  ],
-  "mouseover": Array [
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "mouseup": Array [
-    Array [
+  "mousemove": [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "next": Array [
-    Array [],
-  ],
-  "pointerdown": Array [
-    Array [
-      PointerEvent {
+  "mouseover": [
+    [
+      MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      PointerEvent {
-        "isTrusted": false,
-      },
-    ],
-  ],
-  "pointerenter": Array [
-    Array [
-      PointerEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
-      PointerEvent {
+    [
+      MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "pointermove": Array [
-    Array [
-      PointerEvent {
+  "mouseup": [
+    [
+      MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      PointerEvent {
+    [
+      MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "pointerover": Array [
-    Array [
+  "next": [
+    [],
+  ],
+  "pointerdown": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "pointerup": Array [
-    Array [
+  "pointerenter": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "previous": Array [
-    Array [],
+  "pointermove": [
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerover": [
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerup": [
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "previous": [
+    [],
   ],
 }
 `;
 
 exports[`PaginationWidget.vue calls buttons 2`] = `
 [MockFunction] {
-  "calls": Array [
-    Array [
+  "calls": [
+    [
       "pagination-previous-button-clicked",
     ],
-    Array [
+    [
       "pagination-next-button-clicked",
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
       "value": undefined,
     },
-    Object {
+    {
       "type": "return",
       "value": undefined,
     },

@@ -42,21 +42,21 @@ export default {
       const storedVersion = this.kumaDocsVersion
       const kumaDocsVersion = storedVersion !== null ? storedVersion : 'latest'
 
-      const utmSource = process.env.VUE_APP_UTM
+      const utmSource = import.meta.env.VITE_UTM
 
       if (storedVersion) {
         return [
           {
             link: `https://kuma.io/docs/${kumaDocsVersion}/${utmSource}`,
-            label: `${process.env.VUE_APP_NAMESPACE} Documentation`,
+            label: `${import.meta.env.VITE_NAMESPACE} Documentation`,
           },
           {
             link: `https://kuma-mesh.slack.com/${utmSource}`,
-            label: `${process.env.VUE_APP_NAMESPACE} Community Chat`,
+            label: `${import.meta.env.VITE_NAMESPACE} Community Chat`,
           },
           {
             link: `https://github.com/kumahq/kuma${utmSource}`,
-            label: `${process.env.VUE_APP_NAMESPACE} GitHub Repository`,
+            label: `${import.meta.env.VITE_NAMESPACE} GitHub Repository`,
           },
         ]
       }

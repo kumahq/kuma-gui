@@ -1,6 +1,6 @@
 <template>
   <div class="loading-container">
-    <img src="@/assets/images/kuma-loader-v1.gif?external">
+    <img src="@/assets/images/kuma-loader-v1.gif">
     <div class="progress">
       <div
         :style="{ width: `${progress}%` }"

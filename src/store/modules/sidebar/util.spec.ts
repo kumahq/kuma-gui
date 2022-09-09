@@ -6,19 +6,19 @@ describe('sidebar utils', () => {
       const meshInsight = calculateMeshInsights({ items: [] })
 
       expect(meshInsight).toMatchInlineSnapshot(`
-        Object {
-          "dataplanes": Object {
-            "gateway": 0,
-            "standard": 0,
-            "total": 0,
-          },
-          "policies": Object {},
-          "services": Object {
-            "external": 0,
-            "internal": 0,
-          },
-        }
-      `)
+{
+  "dataplanes": {
+    "gateway": 0,
+    "standard": 0,
+    "total": 0,
+  },
+  "policies": {},
+  "services": {
+    "external": 0,
+    "internal": 0,
+  },
+}
+`)
     })
     it('when several items', async () => {
       const meshInsight = calculateMeshInsights({
@@ -150,23 +150,23 @@ describe('sidebar utils', () => {
       })
 
       expect(meshInsight).toMatchInlineSnapshot(`
-        Object {
-          "dataplanes": Object {
-            "gateway": 5,
-            "standard": 5,
-            "total": 18,
-          },
-          "policies": Object {
-            "Secret": 8,
-            "TrafficPermission": 5,
-            "TrafficRoute": 7,
-          },
-          "services": Object {
-            "external": 6,
-            "internal": 3,
-          },
-        }
-      `)
+{
+  "dataplanes": {
+    "gateway": 5,
+    "standard": 5,
+    "total": 18,
+  },
+  "policies": {
+    "Secret": 8,
+    "TrafficPermission": 5,
+    "TrafficRoute": 7,
+  },
+  "services": {
+    "external": 6,
+    "internal": 3,
+  },
+}
+`)
     })
   })
 
@@ -178,7 +178,7 @@ describe('sidebar utils', () => {
         resources: {},
       })
 
-      expect(meshInsight).toMatchInlineSnapshot('Object {}')
+      expect(meshInsight).toMatchInlineSnapshot('{}')
     })
 
     it('when several items', async () => {
@@ -195,14 +195,14 @@ describe('sidebar utils', () => {
       })
 
       expect(meshInsight).toMatchInlineSnapshot(`
-        Object {
-          "GlobalSecret": 0,
-          "Mesh": 4,
-          "Zone": 4,
-          "ZoneEgress": 1,
-          "ZoneIngress": 1,
-        }
-      `)
+{
+  "GlobalSecret": 0,
+  "Mesh": 4,
+  "Zone": 4,
+  "ZoneEgress": 1,
+  "ZoneIngress": 1,
+}
+`)
     })
   })
 })

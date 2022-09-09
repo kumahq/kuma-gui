@@ -1,55 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
-Object {
-  "dataplanes": Object {
+{
+  "dataplanes": {
     "online": 0,
     "partiallyDegraded": 0,
     "total": 0,
   },
-  "dpVersions": Object {
-    "envoy": Object {},
-    "kumaDp": Object {},
+  "dpVersions": {
+    "envoy": {},
+    "kumaDp": {},
   },
   "meshesTotal": 0,
-  "policies": Object {
-    "CircuitBreaker": Object {
+  "policies": {
+    "CircuitBreaker": {
       "total": 0,
     },
-    "FaultInjection": Object {
+    "FaultInjection": {
       "total": 0,
     },
-    "HealthCheck": Object {
+    "HealthCheck": {
       "total": 0,
     },
-    "MeshGateway": Object {
+    "MeshGateway": {
       "total": 0,
     },
-    "MeshGatewayRoute": Object {
+    "MeshGatewayRoute": {
       "total": 0,
     },
-    "ProxyTemplate": Object {
+    "ProxyTemplate": {
       "total": 0,
     },
-    "RateLimit": Object {
+    "RateLimit": {
       "total": 0,
     },
-    "Retry": Object {
+    "Retry": {
       "total": 0,
     },
-    "Timeout": Object {
+    "Timeout": {
       "total": 0,
     },
-    "TrafficLog": Object {
+    "TrafficLog": {
       "total": 0,
     },
-    "TrafficPermission": Object {
+    "TrafficPermission": {
       "total": 0,
     },
-    "TrafficRoute": Object {
+    "TrafficRoute": {
       "total": 0,
     },
-    "TrafficTrace": Object {
+    "TrafficTrace": {
       "total": 0,
     },
   },
@@ -57,32 +57,32 @@ Object {
 `;
 
 exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] = `
-Object {
-  "dataplanes": Object {
+{
+  "dataplanes": {
     "online": 6,
     "partiallyDegraded": 10,
     "total": 26,
   },
-  "dpVersions": Object {
-    "envoy": Object {
-      "1.16.1": Object {
+  "dpVersions": {
+    "envoy": {
+      "1.16.1": {
         "online": 1,
         "partiallyDegraded": 0,
         "total": 8,
       },
-      "1.16.2": Object {
+      "1.16.2": {
         "online": 1,
         "partiallyDegraded": 0,
         "total": 4,
       },
     },
-    "kumaDp": Object {
-      "1.0.4": Object {
+    "kumaDp": {
+      "1.0.4": {
         "online": 4,
         "partiallyDegraded": 0,
         "total": 6,
       },
-      "1.0.5": Object {
+      "1.0.5": {
         "online": 2,
         "partiallyDegraded": 0,
         "total": 2,
@@ -90,50 +90,50 @@ Object {
     },
   },
   "meshesTotal": 5,
-  "policies": Object {
-    "CircuitBreaker": Object {
+  "policies": {
+    "CircuitBreaker": {
       "total": 0,
     },
-    "FaultInjection": Object {
+    "FaultInjection": {
       "total": 0,
     },
-    "HealthCheck": Object {
+    "HealthCheck": {
       "total": 0,
     },
-    "MeshGateway": Object {
+    "MeshGateway": {
       "total": 0,
     },
-    "MeshGatewayRoute": Object {
+    "MeshGatewayRoute": {
       "total": 0,
     },
-    "ProxyTemplate": Object {
+    "ProxyTemplate": {
       "total": 0,
     },
-    "RateLimit": Object {
+    "RateLimit": {
       "total": 0,
     },
-    "Retry": Object {
+    "Retry": {
       "total": 0,
     },
-    "Secret": Object {
+    "Secret": {
       "total": 12,
     },
-    "ServiceInsight": Object {
+    "ServiceInsight": {
       "total": 22,
     },
-    "Timeout": Object {
+    "Timeout": {
       "total": 0,
     },
-    "TrafficLog": Object {
+    "TrafficLog": {
       "total": 0,
     },
-    "TrafficPermission": Object {
+    "TrafficPermission": {
       "total": 6,
     },
-    "TrafficRoute": Object {
+    "TrafficRoute": {
       "total": 10,
     },
-    "TrafficTrace": Object {
+    "TrafficTrace": {
       "total": 0,
     },
   },
@@ -141,32 +141,32 @@ Object {
 `;
 
 exports[`mesh-insights calls parseInsightReducer with mesh insights 1`] = `
-Object {
-  "dataplanes": Object {
+{
+  "dataplanes": {
     "online": 3,
     "partiallyDegraded": 5,
     "total": 13,
   },
-  "dpVersions": Object {
-    "envoy": Object {
-      "1.16.1": Object {
+  "dpVersions": {
+    "envoy": {
+      "1.16.1": {
         "online": 1,
         "partiallyDegraded": 0,
         "total": 8,
       },
-      "1.16.2": Object {
+      "1.16.2": {
         "online": 1,
         "partiallyDegraded": 0,
         "total": 4,
       },
     },
-    "kumaDp": Object {
-      "1.0.4": Object {
+    "kumaDp": {
+      "1.0.4": {
         "online": 2,
         "partiallyDegraded": 0,
         "total": 3,
       },
-      "1.0.5": Object {
+      "1.0.5": {
         "online": 1,
         "partiallyDegraded": 0,
         "total": 1,
@@ -174,50 +174,50 @@ Object {
     },
   },
   "meshesTotal": 1,
-  "policies": Object {
-    "CircuitBreaker": Object {
+  "policies": {
+    "CircuitBreaker": {
       "total": 0,
     },
-    "FaultInjection": Object {
+    "FaultInjection": {
       "total": 0,
     },
-    "HealthCheck": Object {
+    "HealthCheck": {
       "total": 0,
     },
-    "MeshGateway": Object {
+    "MeshGateway": {
       "total": 0,
     },
-    "MeshGatewayRoute": Object {
+    "MeshGatewayRoute": {
       "total": 0,
     },
-    "ProxyTemplate": Object {
+    "ProxyTemplate": {
       "total": 0,
     },
-    "RateLimit": Object {
+    "RateLimit": {
       "total": 0,
     },
-    "Retry": Object {
+    "Retry": {
       "total": 0,
     },
-    "Secret": Object {
+    "Secret": {
       "total": 6,
     },
-    "ServiceInsight": Object {
+    "ServiceInsight": {
       "total": 11,
     },
-    "Timeout": Object {
+    "Timeout": {
       "total": 0,
     },
-    "TrafficLog": Object {
+    "TrafficLog": {
       "total": 0,
     },
-    "TrafficPermission": Object {
+    "TrafficPermission": {
       "total": 3,
     },
-    "TrafficRoute": Object {
+    "TrafficRoute": {
       "total": 5,
     },
-    "TrafficTrace": Object {
+    "TrafficTrace": {
       "total": 0,
     },
   },
@@ -225,55 +225,55 @@ Object {
 `;
 
 exports[`mesh-insights calls parseInsightReducer without any data 1`] = `
-Object {
-  "dataplanes": Object {
+{
+  "dataplanes": {
     "online": 0,
     "partiallyDegraded": 0,
     "total": 0,
   },
-  "dpVersions": Object {
-    "envoy": Object {},
-    "kumaDp": Object {},
+  "dpVersions": {
+    "envoy": {},
+    "kumaDp": {},
   },
   "meshesTotal": 1,
-  "policies": Object {
-    "CircuitBreaker": Object {
+  "policies": {
+    "CircuitBreaker": {
       "total": 0,
     },
-    "FaultInjection": Object {
+    "FaultInjection": {
       "total": 0,
     },
-    "HealthCheck": Object {
+    "HealthCheck": {
       "total": 0,
     },
-    "MeshGateway": Object {
+    "MeshGateway": {
       "total": 0,
     },
-    "MeshGatewayRoute": Object {
+    "MeshGatewayRoute": {
       "total": 0,
     },
-    "ProxyTemplate": Object {
+    "ProxyTemplate": {
       "total": 0,
     },
-    "RateLimit": Object {
+    "RateLimit": {
       "total": 0,
     },
-    "Retry": Object {
+    "Retry": {
       "total": 0,
     },
-    "Timeout": Object {
+    "Timeout": {
       "total": 0,
     },
-    "TrafficLog": Object {
+    "TrafficLog": {
       "total": 0,
     },
-    "TrafficPermission": Object {
+    "TrafficPermission": {
       "total": 0,
     },
-    "TrafficRoute": Object {
+    "TrafficRoute": {
       "total": 0,
     },
-    "TrafficTrace": Object {
+    "TrafficTrace": {
       "total": 0,
     },
   },

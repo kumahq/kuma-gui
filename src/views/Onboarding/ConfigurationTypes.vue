@@ -43,12 +43,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import { PRODUCT_NAME } from '@/consts'
-import KubernetesGraph from '@/views/Onboarding/components/graphs/KubernetesGraph'
-import PostgresGraph from '@/views/Onboarding/components/graphs/PostgresGraph'
-import MemoryGraph from '@/views/Onboarding/components/graphs/MemoryGraph'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
-import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading'
-import OnboardingPage from '@/views/Onboarding/components/OnboardingPage'
+import KubernetesGraph from '@/views/Onboarding/components/graphs/KubernetesGraph.vue'
+import PostgresGraph from '@/views/Onboarding/components/graphs/PostgresGraph.vue'
+import MemoryGraph from '@/views/Onboarding/components/graphs/MemoryGraph.vue'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
+import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
+import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
 
 export default {
   name: 'ConfigurationTypes',

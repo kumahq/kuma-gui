@@ -5,7 +5,9 @@ exports[`KLoader.vue renders snapshot at the beginning 1`] = `
   <div
     class="loading-container"
   >
-    <img />
+    <img
+      src=""
+    />
     <div
       class="progress"
     >

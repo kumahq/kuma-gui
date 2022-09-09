@@ -135,7 +135,7 @@ export default {
       getChart: 'getChart',
     }),
     cardActionPoliciesRoute() {
-      return `https://kuma.io/policies/${process.env.VUE_APP_UTM}`
+      return `https://kuma.io/policies/${import.meta.env.VITE_UTM}`
     },
     dataplanesChart() {
       return this.getChart('dataplanes')

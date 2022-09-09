@@ -22,7 +22,7 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import GlobalHeader from '@/components/Global/GlobalHeader.vue'
 
-import KLoader from '@/components/KLoader'
+import KLoader from '@/components/KLoader.vue'
 import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage.vue'
 
 export default {
@@ -51,7 +51,7 @@ export default {
     },
 
     '$route.meta': function (routeMeta) {
-      const siteTitle = `${process.env.VUE_APP_NAMESPACE} Manager`
+      const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
 
       document.title = routeMeta?.title ? `${routeMeta.title} | ${siteTitle}` : siteTitle
     },

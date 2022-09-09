@@ -18,29 +18,29 @@ describe('notifications module', () => {
       store.state.selectedMesh = 'web-to-backend.kuma-system'
 
       expect(store.getters['notifications/singleMeshNotificationItems']).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "component": "MetricsNotification",
-            "isCompleted": false,
-            "name": "Observability, Metrics & Service Map",
-          },
-          Object {
-            "component": "LoggingNotification",
-            "isCompleted": false,
-            "name": "Logging",
-          },
-          Object {
-            "component": "MtlsNotification",
-            "isCompleted": false,
-            "name": "Zero-trust security",
-          },
-          Object {
-            "component": "TracingNotification",
-            "isCompleted": false,
-            "name": "Tracing",
-          },
-        ]
-      `)
+[
+  {
+    "component": "MetricsNotification",
+    "isCompleted": false,
+    "name": "Observability, Metrics & Service Map",
+  },
+  {
+    "component": "LoggingNotification",
+    "isCompleted": false,
+    "name": "Logging",
+  },
+  {
+    "component": "MtlsNotification",
+    "isCompleted": false,
+    "name": "Zero-trust security",
+  },
+  {
+    "component": "TracingNotification",
+    "isCompleted": false,
+    "name": "Tracing",
+  },
+]
+`)
     })
 
     it('tests meshNotificationItemMapWithAction getter', () => {
@@ -65,15 +65,15 @@ describe('notifications module', () => {
       ]
 
       expect(store.getters['notifications/meshNotificationItemMapWithAction']).toMatchInlineSnapshot(`
-        Object {
-          "test": Object {
-            "hasLogging": false,
-            "hasMetrics": false,
-            "hasMtls": true,
-            "hasTracing": false,
-          },
-        }
-      `)
+{
+  "test": {
+    "hasLogging": false,
+    "hasMetrics": false,
+    "hasMtls": true,
+    "hasTracing": false,
+  },
+}
+`)
     })
 
     it('tests amountOfActions getter', () => {

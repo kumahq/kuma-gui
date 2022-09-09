@@ -45,7 +45,7 @@
 
 <script>
 import Kuma from '@/services/kuma'
-import LabelList from '@/components/Utils/LabelList'
+import LabelList from '@/components/Utils/LabelList.vue'
 
 export default {
   name: 'PolicyConnections',

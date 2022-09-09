@@ -4,8 +4,15 @@ import '@testing-library/jest-dom'
 // Polyfills `window.fetch` for Jest because it’s run in a Node environment where fetch isn’t available.
 import 'isomorphic-fetch'
 
+import dotenv from 'dotenv'
+
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
-import { server as setupServer } from '@/services/mocks'
+import { setupMockServer } from '@/services/setupMockServer'
+
+/**
+ * Ensures the tests run with the project’s environment variables being available.
+ */
+dotenv.config()
 
 /**
  * amcharts need SVGPathElement defined for our tests to work.
@@ -42,7 +49,7 @@ expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
   'data-tableid',
 ]))
 
-const server = setupServer('http://localhost/')
+const server = setupMockServer(import.meta.env.VITE_KUMA_API_SERVER_URL)
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen())

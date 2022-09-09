@@ -16,7 +16,7 @@ function renderComponent(props = {}) {
 describe('EnvoyData.vue', () => {
   it('renders snapshot', async () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
       ),
     )
@@ -31,7 +31,7 @@ describe('EnvoyData.vue', () => {
 
   it('renders loading', () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
       ),
     )
@@ -46,7 +46,7 @@ describe('EnvoyData.vue', () => {
 
   it('renders error', async () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(500), ctx.json('')),
       ),
     )

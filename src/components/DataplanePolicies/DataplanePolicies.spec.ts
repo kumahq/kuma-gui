@@ -51,7 +51,7 @@ describe('DataplanePolicies.vue', () => {
 
   it('renders loading', async () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )
@@ -68,7 +68,7 @@ describe('DataplanePolicies.vue', () => {
     jest.spyOn(console, 'error').mockImplementation(() => { }) // silence console errors
 
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
@@ -83,7 +83,7 @@ describe('DataplanePolicies.vue', () => {
 
   it('renders no item', async () => {
     server.use(
-      rest.get('http://localhost/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )

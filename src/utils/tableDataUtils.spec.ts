@@ -59,24 +59,24 @@ describe('tableDataUtils', () => {
       })
 
       expect(response).toMatchInlineSnapshot(`
-        Object {
-          "data": Array [],
-          "next": false,
-        }
-      `)
+{
+  "data": [],
+  "next": false,
+}
+`)
     })
 
     it('without data', async () => {
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
-        Object {
-          "data": Array [
-            Object {},
-          ],
-          "next": false,
-        }
-      `)
+{
+  "data": [
+    {},
+  ],
+  "next": false,
+}
+`)
     })
 
     it('with single data', async () => {
@@ -84,16 +84,16 @@ describe('tableDataUtils', () => {
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
-        Object {
-          "data": Array [
-            Object {
-              "mesh": "foo",
-              "name": "bar",
-            },
-          ],
-          "next": false,
-        }
-      `)
+{
+  "data": [
+    {
+      "mesh": "foo",
+      "name": "bar",
+    },
+  ],
+  "next": false,
+}
+`)
     })
 
     it('with multiple data', async () => {
@@ -108,20 +108,20 @@ describe('tableDataUtils', () => {
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
-        Object {
-          "data": Array [
-            Object {
-              "mesh": "foo",
-              "name": "bar",
-            },
-            Object {
-              "mesh": "bar",
-              "name": "foo",
-            },
-          ],
-          "next": true,
-        }
-      `)
+{
+  "data": [
+    {
+      "mesh": "foo",
+      "name": "bar",
+    },
+    {
+      "mesh": "bar",
+      "name": "foo",
+    },
+  ],
+  "next": true,
+}
+`)
     })
 
     it('with empty array of items', async () => {
@@ -133,11 +133,11 @@ describe('tableDataUtils', () => {
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
-        Object {
-          "data": Array [],
-          "next": false,
-        }
-      `)
+{
+  "data": [],
+  "next": false,
+}
+`)
     })
   })
 })

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import NavItem from '@/components/Sidebar/NavItem'
+import NavItem from '@/components/Sidebar/NavItem.vue'
 
 export default {
   name: 'SubNav',

@@ -38,7 +38,9 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
             >
               
               <div>
-                <img />
+                <img
+                  src="[object Object]"
+                />
                 <div
                   class="ml-3"
                 >
@@ -62,7 +64,9 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
               <div
                 class="cursor-pointer"
               >
-                <img />
+                <img
+                  src="[object Object]"
+                />
                 <div
                   class="ml-3"
                 >

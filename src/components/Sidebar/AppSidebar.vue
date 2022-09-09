@@ -53,9 +53,9 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-import NavItem from '@/components/Sidebar/NavItem'
-import Subnav from '@/components/Sidebar/Subnav'
-import MeshSelector from '@/components/Utils/MeshSelector'
+import NavItem from '@/components/Sidebar/NavItem.vue'
+import Subnav from '@/components/Sidebar/Subnav.vue'
+import MeshSelector from '@/components/Utils/MeshSelector.vue'
 import { getTopMenuItems, getBottomMenuItems } from '@/components/Sidebar/menu'
 
 import { APP_WINDOW } from '@/consts'

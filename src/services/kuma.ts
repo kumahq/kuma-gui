@@ -46,7 +46,7 @@ class Kuma {
   }
 
   public async getLatestVersion(): Promise<string> {
-    const url = String(process.env.VUE_APP_VERSION_URL)
+    const url = String(import.meta.env.VITE_VERSION_URL)
 
     return this.client.get(url)
   }

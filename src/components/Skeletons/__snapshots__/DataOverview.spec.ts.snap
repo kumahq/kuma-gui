@@ -1,188 +1,188 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DataOverview.vue refresh page on second page 1`] = `
-Object {
-  "click": Array [
-    Array [
+{
+  "click": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "focusin": Array [
-    Array [
+  "focusin": [
+    [
       FocusEvent {
         "isTrusted": true,
       },
     ],
-    Array [
-      FocusEvent {
-        "isTrusted": true,
-      },
-    ],
-  ],
-  "focusout": Array [
-    Array [
+    [
       FocusEvent {
         "isTrusted": true,
       },
     ],
   ],
-  "load-data": Array [
-    Array [
+  "focusout": [
+    [
+      FocusEvent {
+        "isTrusted": true,
+      },
+    ],
+  ],
+  "load-data": [
+    [
       12,
     ],
-    Array [
+    [
       12,
     ],
   ],
-  "mousedown": Array [
-    Array [
+  "mousedown": [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-  ],
-  "mouseenter": Array [
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "mousemove": Array [
-    Array [
+  "mouseenter": [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-  ],
-  "mouseover": Array [
-    Array [
-      MouseEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "mouseup": Array [
-    Array [
+  "mousemove": [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       MouseEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "pointerdown": Array [
-    Array [
+  "mouseover": [
+    [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "mouseup": [
+    [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      MouseEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerdown": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "pointerenter": Array [
-    Array [
+  "pointerenter": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      PointerEvent {
-        "isTrusted": false,
-      },
-    ],
-  ],
-  "pointermove": Array [
-    Array [
-      PointerEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "pointerover": Array [
-    Array [
+  "pointermove": [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
-    Array [
-      PointerEvent {
-        "isTrusted": false,
-      },
-    ],
-  ],
-  "pointerup": Array [
-    Array [
-      PointerEvent {
-        "isTrusted": false,
-      },
-    ],
-    Array [
+    [
       PointerEvent {
         "isTrusted": false,
       },
     ],
   ],
-  "refresh": Array [
-    Array [],
+  "pointerover": [
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "pointerup": [
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+    [
+      PointerEvent {
+        "isTrusted": false,
+      },
+    ],
+  ],
+  "refresh": [
+    [],
   ],
 }
 `;
 
 exports[`DataOverview.vue refresh page on second page 2`] = `
 [MockFunction] {
-  "calls": Array [
-    Array [
+  "calls": [
+    [
       "pagination-next-button-clicked",
     ],
-    Array [
+    [
       "table-refresh-button-clicked",
     ],
   ],
-  "results": Array [
-    Object {
+  "results": [
+    {
       "type": "return",
       "value": undefined,
     },
-    Object {
+    {
       "type": "return",
       "value": undefined,
     },

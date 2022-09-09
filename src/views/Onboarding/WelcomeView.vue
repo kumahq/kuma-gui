@@ -37,10 +37,10 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ItemStatus from './components/ItemStatus'
-import WelcomeAnimationSvg from './components/WelcomeAnimationSvg'
+import ItemStatus from './components/ItemStatus.vue'
+import WelcomeAnimationSvg from './components/WelcomeAnimationSvg.vue'
 import { PRODUCT_NAME } from '@/consts'
-import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation'
+import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
 
 export default {
   name: 'WelcomeView',

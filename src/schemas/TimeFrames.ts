@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   options: [
     {
       text: 'Last 5 Minutes',
