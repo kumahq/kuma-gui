@@ -1,13 +1,6 @@
 /** @typedef {import('jest').Config} Config */
 
 /** @type {Config} */ const config = {
-  globals: {
-    'ts-jest': {
-      // To test Vue/TypeScript files using Jest, we need to use ESM and the Babel configuration.
-      useESM: true,
-      babelConfig: true,
-    },
-  },
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     // Workaround for the “ReferenceError: Vue is not defined” introduced by @testing-library.
@@ -22,7 +15,14 @@
   ],
   transform: {
     '^.+\\.vue$': '@vue/vue3-jest',
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        // To test Vue/TypeScript files using Jest, we need to use ESM and the Babel configuration.
+        useESM: true,
+        babelConfig: true,
+      },
+    ],
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svg(\\?(url|raw))?$': 'jest-transform-stub',
     '^.+\\.(css|png|gif)?$': 'jest-transform-stub',
