@@ -38,19 +38,19 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             aria-label="See the documentation for options to install:"
             class="noBorder kong-card"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <div
               class="k-card-header d-flex mb-3"
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
             >
               <!---->
               <div
                 class="k-card-title mb-3"
-                data-v-5adb63fa=""
+                data-v-52c90d54=""
               >
                 <h4
-                  data-v-5adb63fa=""
+                  data-v-52c90d54=""
                 >
                   
                   See the documentation for options to install:
@@ -59,7 +59,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
               </div>
               <div
                 class="k-card-actions"
-                data-v-5adb63fa=""
+                data-v-52c90d54=""
               >
                 
                 
@@ -68,11 +68,11 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             <!---->
             <div
               class="k-card-content d-flex"
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
             >
               <div
                 class="k-card-body"
-                data-v-5adb63fa=""
+                data-v-52c90d54=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
                 
@@ -135,7 +135,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       >
         <router-link
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-29036f3a=""
+          data-v-6bcbf05d=""
           to="[object Object]"
           type="button"
         >
@@ -150,7 +150,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-29036f3a=""
+            data-v-6bcbf05d=""
             type="button"
           >
             
@@ -166,7 +166,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           >
             <router-link
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-29036f3a=""
+              data-v-6bcbf05d=""
               disabled="true"
               to="[object Object]"
               type="button"

@@ -1,7 +1,13 @@
 <template>
   <div class="code-view">
+    <LoadingBlock v-if="isLoading" />
+
+    <ErrorBlock v-else-if="hasError" />
+
+    <EmptyBlock v-else-if="isEmpty" />
+
     <div
-      v-if="isReady"
+      v-else
       class="code-view-content"
     >
       <KCard
@@ -12,7 +18,7 @@
         <template #body>
           <CodeBlock
             :language="lang"
-            :code="codeContent"
+            :code="content"
           />
         </template>
         <template #actions>
@@ -23,10 +29,11 @@
             <KPop placement="bottom">
               <KButton
                 appearance="primary"
-                @click="() => { copyToClipboard(codeContent) }"
+                @click="() => { copyToClipboard(content) }"
               >
                 {{ copyButtonText }}
               </KButton>
+
               <template #content>
                 <div>
                   <p>Entity copied to clipboard!</p>
@@ -37,74 +44,29 @@
         </template>
       </KCard>
     </div>
-
-    <div v-if="loaders === true">
-      <!-- loading state -->
-      <KEmptyState
-        v-if="isLoading"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              icon="spinner"
-              color="rgba(0, 0, 0, 0.1)"
-              size="42"
-            />
-          </div>
-          Data Loading...
-        </template>
-      </KEmptyState>
-
-      <!-- no data to load -->
-      <KEmptyState
-        v-if="isEmpty && !isLoading"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              class="kong-icon--centered"
-              icon="warning"
-              color="var(--black-75)"
-              secondary-color="var(--yellow-300)"
-              size="42"
-            />
-          </div>
-          There is no data to display.
-        </template>
-      </KEmptyState>
-
-      <!-- error -->
-      <KEmptyState
-        v-if="hasError"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              class="kong-icon--centered"
-              icon="warning"
-              color="var(--black-75)"
-              secondary-color="var(--yellow-300)"
-              size="42"
-            />
-          </div>
-          An error has occurred while trying to load this data.
-        </template>
-      </KEmptyState>
-    </div>
   </div>
 </template>
 
 <script>
+import { KButton, KCard, KClipboardProvider, KPop } from '@kong/kongponents'
+
 import CodeBlock from '../CodeBlock.vue'
+import EmptyBlock from '../EmptyBlock.vue'
+import ErrorBlock from '../ErrorBlock.vue'
+import LoadingBlock from '../LoadingBlock.vue'
 
 export default {
   name: 'CodeView',
 
   components: {
     CodeBlock,
+    EmptyBlock,
+    ErrorBlock,
+    LoadingBlock,
+    KButton,
+    KCard,
+    KClipboardProvider,
+    KPop,
   },
 
   props: {
@@ -112,59 +74,49 @@ export default {
       type: String,
       required: true,
     },
+
     copyButtonText: {
       type: String,
       default: 'Copy to Clipboard',
     },
+
     title: {
       type: String,
       default: null,
     },
+
     content: {
       type: String,
       default: null,
     },
-    loaders: {
-      type: Boolean,
-      default: true,
-    },
+
     isLoading: {
       type: Boolean,
       default: false,
     },
+
     hasError: {
       type: Boolean,
       default: false,
     },
+
     isEmpty: {
       type: Boolean,
       default: false,
-    },
-  },
-  computed: {
-    isReady() {
-      return !this.isEmpty && !this.hasError && !this.isLoading
-    },
-    codeContent() {
-      const content = this.content
-
-      return content
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.empty-state-title {
-  .card-icon {
-    text-align: center;
+.empty-state-title .card-icon {
+  text-align: center;
 
-    img,
-    svg {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  img,
+  svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 </style>

@@ -4,7 +4,7 @@ import { makeRequest } from './makeRequest'
 describe('makeRequest', () => {
   test.each([
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('{"items":[{"key":"value"}]}', {
           status: 200,
           statusText: 'Super duper!',
@@ -28,7 +28,7 @@ describe('makeRequest', () => {
       },
     ],
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('{"items":[{"key":"value"}]}', {
           status: 200,
           statusText: 'Super duper!',
@@ -52,7 +52,7 @@ describe('makeRequest', () => {
       },
     ],
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('OK', {
           status: 200,
           statusText: 'Super duper!',
@@ -80,13 +80,13 @@ describe('makeRequest', () => {
 
   test.each([
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         return Promise.reject(new Error('A most terrible error'))
       },
       new Error('A most terrible error'),
     ],
     [
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         // We specifically want to test this edge case.
         // eslint-disable-next-line prefer-promise-reject-errors
         return Promise.reject('Now that’s just great')
@@ -102,7 +102,7 @@ describe('makeRequest', () => {
   test.each([
     [
       'minimal error response format',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('{"code":"great_misfortune","details":"A most terrible error"}', {
           status: 400,
           statusText: 'Oh no!',
@@ -121,7 +121,7 @@ describe('makeRequest', () => {
     ],
     [
       'complete error response format',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('{"code":"great_misfortune","title":"Validation error","details":"A most terrible error"}', {
           status: 400,
           statusText: 'Oh no!',
@@ -141,7 +141,7 @@ describe('makeRequest', () => {
     ],
     [
       'complete error response format with causes',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response(
           `
             {
@@ -182,7 +182,7 @@ describe('makeRequest', () => {
     ],
     [
       'unknown error response format',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('{"items":[]}', {
           status: 400,
           headers: {
@@ -199,7 +199,7 @@ describe('makeRequest', () => {
     ],
     [
       'plain text response',
-      function (_input: RequestInfo | URL, _init?: RequestInit) {
+      function (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> {
         const response = new Response('Not found!', { status: 404 })
 
         return Promise.resolve(response)

@@ -5,9 +5,9 @@ select {
   border-radius: 3px;
   border: 1px solid rgba(23, 130, 207, 0.35);
   font-size: 16px;
-  color: #1155CB;
+  color: var(--blue-4);
   line-height: 20px;
-  padding: 10px 16px 10px 13px;
+  padding: 10px 30px 10px 13px;
 
   background-color: #fff;
   background-image: url("@/assets/images/chevron-down.svg?url");

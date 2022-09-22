@@ -23,8 +23,8 @@ describe('sidebar module', () => {
     "mesh": {
       "dataplanes": {
         "gateway": 1,
-        "standard": 7,
-        "total": 8,
+        "standard": 9,
+        "total": 10,
       },
       "policies": {
         "CircuitBreaker": 2,

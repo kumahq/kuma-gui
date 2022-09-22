@@ -41,65 +41,35 @@
       </KTabs>
 
       <div v-if="loaders === true">
-        <!-- loading state -->
-        <KEmptyState
-          v-if="isLoading"
-          cta-is-hidden
-        >
-          <template #title>
-            <div class="card-icon mb-3">
-              <KIcon
-                icon="spinner"
-                color="rgba(0, 0, 0, 0.1)"
-                size="42"
-              />
-            </div>
-            Data Loading...
-          </template>
-        </KEmptyState>
+        <LoadingBlock v-if="isLoading" />
 
-        <!-- error has occurred -->
-        <KEmptyState
-          v-if="hasError"
-          cta-is-hidden
-        >
-          <template #title>
-            <div class="card-icon mb-3">
-              <KIcon
-                class="kong-icon--centered"
-                icon="warning"
-                color="var(--black-75)"
-                secondary-color="var(--yellow-300)"
-                size="42"
-              />
-            </div>
-
-            <template v-if="shouldShowApiError">
-              {{ error.message }}
-            </template>
-
-            <template v-else>
-              An error has occurred while trying to load this data.
-            </template>
-          </template>
-        </KEmptyState>
+        <ErrorBlock
+          v-else-if="hasError"
+          :error="error"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { KEmptyState } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
+import { KIcon, KTabs } from '@kong/kongponents'
 
 import { datadogLogEvents } from '@/datadogEvents'
-import { ApiError } from '@/services/ApiError'
+import ErrorBlock from '@/components/ErrorBlock.vue'
+import LoadingBlock from '@/components/LoadingBlock.vue'
 
 export default {
   name: 'TabsWidget',
+
   components: {
-    KEmptyState,
+    ErrorBlock,
+    LoadingBlock,
+    KIcon,
+    KTabs,
   },
+
   props: {
     loaders: {
       type: Boolean,
@@ -155,10 +125,6 @@ export default {
       } else {
         return true
       }
-    },
-
-    shouldShowApiError() {
-      return this.error instanceof ApiError
     },
   },
 

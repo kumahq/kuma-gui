@@ -1,0 +1,19 @@
+{
+  "type": "Dataplane",
+  "mesh": "default",
+  "name": "cluster-1.ingress-02",
+  "creationTime": "2021-02-19T06:38:49.548705Z",
+  "modificationTime": "2021-02-19T07:39:23.218956+01:00",
+  "networking": {
+    "address": "127.0.0.1",
+    "inbound": [
+      {
+        "port": 20000,
+        "tags": {
+          "kuma.io/service": "ingress",
+          "kuma.io/zone": "cluster-1"
+        }
+      }
+    ]
+  }
+}

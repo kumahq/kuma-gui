@@ -1,3 +1,5 @@
 declare module '@appscode/json2yaml' {
-  export default (content: Object) => string
+  declare function json2yaml(content: Object): string
+
+  export default json2yaml
 }

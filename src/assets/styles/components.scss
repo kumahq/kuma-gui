@@ -8,13 +8,6 @@
   color: var(--green-400);
 }
 
-.entity-total-updates {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  pointer-events: auto !important;
-}
-
 .entity-status.is-offline {
   color: var(--red-600);
 }
@@ -59,11 +52,6 @@
 
 /* KEmptyState */
 
-.empty-state-content p {
-  width: 100%;
-  max-width: var(--KEmptyStateContentWidth) !important;
-}
-
 .empty-state-wrapper {
   padding: 2rem 0 !important;
 }
@@ -86,7 +74,9 @@
     margin-right: 0;
   }
 
-  .modal-body, .modal-header, .modal-footer {
+  .modal-body,
+  .modal-header,
+  .modal-footer {
     padding: 4px;
   }
 }
@@ -126,11 +116,13 @@
 }
 
 .custom-control-icon {
-  display: inline-block;
-  margin-right: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 1rem;
+  width: 1rem;
+  margin-right: var(--spacing-xs);
   font-size: var(--type-lg);
-  line-height: 0;
-  max-height: 18px;
 }
 
 .external-link-btn {
@@ -166,16 +158,6 @@
 
   font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
   background-color: var(--code-background);
-}
-
-.main-content {
-  padding: 44px;
-  transition: var(--transitionTiming) margin var(--transition);
-}
-
-.main-content-container {
-  max-width: var(--global-content-max-width);
-  margin: 0 auto;
 }
 
 .welcome {
@@ -215,4 +197,25 @@
 // Allows wrapping of table cells
 .k-table.k-table tbody td {
   white-space: normal;
+}
+
+// The *wrapping* element of the dropdown for some reason is a fake button with role=button and “cursor: pointer” so this needs to be reset for the dropdown list.
+.k-dropdown-popover {
+  cursor: initial;
+}
+
+.component-frame {
+  border: 1px solid var(--gray-4);
+  border-radius: 3px;
+}
+
+.card-icon {
+  text-align: center;
+
+  img,
+  svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

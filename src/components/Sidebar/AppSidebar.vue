@@ -1,24 +1,13 @@
 <template>
-  <aside
-    id="the-sidebar"
-    class="has-subnav"
-    :class="[
-      { 'is-collapsed': isCollapsed },
-      { 'subnav-expanded': subnavIsExpanded },
-    ]"
-  >
-    <div
-      ref="sidebarControl"
-      class="main-nav"
-      :class="{ 'is-hovering': isHovering || subnavIsExpanded === false }"
-    >
-      <div class="top-nav">
+  <aside class="app-sidebar">
+    <div class="main-nav">
+      <div class="main-nav__top">
         <NavItem
-          v-for="(item, idx) in topMenuItems"
-          :key="idx"
+          v-for="(item, key) in topMenuItems"
+          :key="key"
           v-bind="item"
           has-custom-icon
-          @click="toggleSubnav"
+          :is-secondary="false"
         >
           <template
             v-if="item.iconCustom && !item.icon"
@@ -29,17 +18,21 @@
           </template>
         </NavItem>
       </div>
-      <div class="bottom-nav">
+
+      <div class="main-nav__bottom">
         <NavItem
-          v-for="(item, idx) in bottomMenuItems"
-          :key="idx"
+          v-for="(item, key) in bottomMenuItems"
+          :key="key"
           v-bind="item"
           has-icon
+          :is-secondary="false"
         />
       </div>
     </div>
+
     <Subnav
-      v-if="subnavIsExpanded && topMenuItems.length > 0"
+      v-if="topMenuItems.length > 0"
+      class="app-sidebar__secondary"
       :title="topMenuItems[0].name"
       :title-link="topMenuItems[0].link"
       :items="topNavItems"
@@ -53,15 +46,15 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+
 import NavItem from '@/components/Sidebar/NavItem.vue'
 import Subnav from '@/components/Sidebar/Subnav.vue'
 import MeshSelector from '@/components/Utils/MeshSelector.vue'
 import { getTopMenuItems, getBottomMenuItems } from '@/components/Sidebar/menu'
 
-import { APP_WINDOW } from '@/consts'
-
 export default {
   name: 'AppSidebar',
+
   components: {
     MeshSelector,
     NavItem,
@@ -70,11 +63,6 @@ export default {
 
   data() {
     return {
-      isCollapsed: false,
-      sidebarSavedState: null,
-      toggleWorkspaces: false,
-      isHovering: false,
-      subnavIsExpanded: true,
       topMenuItems: [],
       bottomMenuItems: getBottomMenuItems(),
     }
@@ -104,14 +92,6 @@ export default {
       }
     },
 
-    hasSubnav() {
-      return Boolean(this.selectedMenuItem?.subNav?.items?.length)
-    },
-
-    lastMenuList() {
-      return Object.keys(this.menuList.sections).length - 1
-    },
-
     meshList() {
       return this.$store.state.meshes
     },
@@ -121,22 +101,9 @@ export default {
         return null
       }
 
-      const route = this.$route
-
       for (const section of [...this.topMenuItems, ...this.bottomMenuItems]) {
         for (const item of section.items) {
-          const isNotRootLevelMenuItem = route.name !== item.link
-          // const urlPath = route.path.split('/')[2]
-          // const matchesUrlPath = urlPath === item.link
-
-          // const conditions = matchesUrlPath &&
-          //   isNotRootLevelMenuItem &&
-          //   item.subNav &&
-          //   !route.meta.hideSubnav
-
-          const conditions = isNotRootLevelMenuItem && !route.meta.hideSubnav
-
-          if (conditions) {
+          if (this.$route.name !== item.link && !this.$route.meta.hideSubnav) {
             return item
           }
         }
@@ -151,7 +118,7 @@ export default {
   },
 
   watch: {
-    selectedMesh(vaue) {
+    selectedMesh() {
       this.getMeshInsights()
     },
   },
@@ -160,157 +127,44 @@ export default {
     this.topMenuItems = getTopMenuItems(this.policies)
   },
 
-  mounted() {
-    this.sidebarEvent()
-  },
-
-  beforeUnmount() {
-    // window.removeEventListener('resize', this.handleResize)
-  },
-
   methods: {
     ...mapActions({
       getMeshInsights: 'sidebar/getMeshInsights',
     }),
-
-    handleResize() {
-      const appWidth = APP_WINDOW.innerWidth
-
-      if (appWidth <= 900) {
-        this.isCollapsed = true
-        this.subnavIsExpanded = false
-        this.isHovering = false
-      }
-
-      if (appWidth >= 900) {
-        this.isCollapsed = false
-        this.isHovering = true
-      }
-    },
-
-    toggleSubnav() {
-      /**
-       * we want to make sure that when the user clicks one of the
-       * parent items, the subnav is expanded and kept that way.
-       * this reduces the amount of clicks for the user and keeps the
-       * subnav items accessible.
-       */
-      // this.subnavIsExpanded = !this.subnavIsExpanded
-      this.subnavIsExpanded = true
-      this.isCollapsed = true
-
-      localStorage.setItem('sidebarCollapsed', this.subnavIsExpanded)
-    },
-
-    sidebarEvent() {
-      // determine if the user is on a touch or non-touch device
-      // and then use the proper events accordingly.
-      const hasTouch = this.touchDevice
-      const el = this.$refs.sidebarControl
-
-      // if the route instructs the sidebar to be expanded, handle it
-      if (this.$route.params.expandSidebar && this.$route.params.expandSidebar === true) {
-        this.subnavIsExpanded = true
-        localStorage.setItem('sidebarCollapsed', true)
-      }
-
-      if (hasTouch) {
-        el.addEventListener('touchstart', () => {
-          this.isHovering = true
-        })
-
-        el.addEventListener('touchend', () => {
-          this.isHovering = false
-        })
-      } else {
-        el.addEventListener('mouseover', () => {
-          this.isHovering = true
-        })
-
-        el.addEventListener('mouseout', () => {
-          this.isHovering = false
-        })
-
-        el.addEventListener('click', () => {
-          this.isHovering = false
-        })
-      }
-    },
   },
 }
 </script>
 
-<style lang="scss">
-#the-sidebar {
+<style lang="scss" scoped>
+.app-sidebar {
+  width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
   position: fixed;
-  z-index: 10;
+  z-index: 3;
   top: var(--topbar-height);
   left: 0;
+  bottom: 0;
   display: flex;
-  height: calc(100vh - 3rem);
-  color: var(--blue-700);
+}
 
-  .nav-icon {
-    svg:not([class]) {
-      display: block;
-      margin: 0;
-      width: 18px;
-      height: 18px;
+.app-sidebar__secondary {
+  flex-grow: 1;
+}
 
-      circle {
-        fill: var(--SidebarIconColor);
-      }
+.main-nav {
+  width: var(--sidebarCollapsedWidth);
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem 0 2rem;
+  background-color: var(--sidebarBackground);
+  transition: var(--transitionTiming) width var(--transition);
+}
 
-      path {
-        stroke: var(--SidebarIconColor);
-      }
-    }
-  }
-
-  &.has-subnav {
-    width: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
-
-    &.subnav-expanded {
-      .main-nav.is-hovering {
-        box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
-      }
-    }
-
-    .main-nav {
-      width: var(--sidebarCollapsedWidth);
-      z-index: 1100;
-
-      &.is-hovering {
-        width: var(--subnavWidth);
-        cursor: pointer;
-      }
-    }
-  }
-
-  .main-nav {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: var(--sidebarOpenWidth);
-    padding: 1.5rem 0 2rem;
-    background-color: var(--sidebarBackground);
-    transition: var(--transitionTiming) width var(--transition);
-
-    .top-nav {
-      margin-bottom: auto;
-    }
-  }
-
-  & + .main-content {
-    margin-left: var(--sidebarOpenWidth);
-  }
-
-  &.subnav-expanded + .main-content {
-    margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
-  }
-
-  .no-pointer-events {
-    pointer-events: none;
-  }
+.main-nav:hover {
+  width: var(--sidebarOpenWidth);
+  cursor: pointer;
+  box-shadow: 0 20px 25px -5px var(--black-10), 0 10px 10px -5px var(--black-10);
 }
 </style>

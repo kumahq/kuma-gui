@@ -1,4 +1,4 @@
-type TODO = any
+export type TODO = any
 
 export interface KDSSubscription {
   config: string
@@ -88,21 +88,10 @@ export interface GlobalInsights {
   resources: Record<string, ResourceStat>
 }
 
-export interface Dataplane {
-  networking: {
-    inbound: {
-      port: number
-      tags: Record<string, string>
-      health?: { ready: boolean }
-    }[]
-    gateway: TODO
-  }
-}
-
 export interface DiscoveryServiceStats {
-  responsesSent?: number
-  responsesAcknowledged?: number
-  responsesRejected?: number
+  responsesSent?: string
+  responsesAcknowledged?: string
+  responsesRejected?: string
 }
 
 export interface KumaDpVersion {
@@ -110,11 +99,13 @@ export interface KumaDpVersion {
   gitTag: string
   gitCommit: string
   buildDate: string
+  kumaCpCompatible?: boolean
 }
 
 export interface EnvoyVersion {
   version: string
   build: string
+  kumaDpCompatible?: boolean
 }
 
 export interface DiscoverySubscriptionStatus {
@@ -144,7 +135,7 @@ export interface DiscoverySubscription {
   version: Version
 }
 
-export interface DataplaneInsight {
+export interface DataPlaneInsight {
   mTLS?: {
     certificateExpirationTime: string
     lastCertificateRegeneration: string
@@ -155,12 +146,46 @@ export interface DataplaneInsight {
   subscriptions: DiscoverySubscription[]
 }
 
-export interface DataplaneOverview {
+export type DataPlaneNetworking = {
+  address: string
+  inbound?: {
+    port: number
+    servicePort: number
+    serviceAddress: string
+    tags: Record<string, string>
+    health?: {
+      ready: boolean
+    }
+  }[]
+  outbound?: {
+    port: number
+    tags: Record<string, string>
+  }[]
+  gateway?: {
+    tags: Record<string, string>
+    type?: 'builtin' | 'provided' | undefined
+  },
+}
+
+export interface DataPlane {
+  type: 'Dataplane'
   name: string
   mesh: string
-  type: string
-  dataplane: Dataplane
-  dataplaneInsight: DataplaneInsight
+  creationTime: string
+  modificationTime: string
+  networking: DataPlaneNetworking
+}
+
+export interface DataPlaneOverview {
+  type: 'DataplaneOverview'
+  name: string
+  mesh: string
+  creationTime: string
+  modificationTime: string
+  dataplane: {
+    networking: DataPlaneNetworking
+  }
+  dataplaneInsight: DataPlaneInsight
 }
 
 export interface LabelValue {
@@ -194,4 +219,29 @@ export type Policy = {
   isExperimental: boolean
 
   readOnly: boolean
+}
+
+export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
+
+export type DataPlaneEntityMtls = {
+  certificateExpirationTime: {
+    label: 'Expiration Time'
+    value: string
+  }
+  lastCertificateRegeneration: {
+    label: 'Last Generated'
+    value: string
+  }
+  certificateRegenerations: {
+    label: 'Regenerations'
+    value: number
+  }
+}
+
+export type Compatibility = {
+  kind: 'COMPATIBLE' | 'INCOMPATIBLE_UNSUPPORTED_KUMA_DP' | 'INCOMPATIBLE_UNSUPPORTED_ENVOY' | 'INCOMPATIBLE_WRONG_FORMAT' | 'INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS'
+  payload?: {
+    kumaDp: string
+    envoy?: string
+  }
 }

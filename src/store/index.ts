@@ -411,6 +411,7 @@ export const storeConfig: StoreOptions<State> = {
           category: 'Internal',
           value: internal.total,
           minSizeForLabel: 0.16,
+          route: { name: 'internal-services' },
         })
       }
 
@@ -419,6 +420,7 @@ export const storeConfig: StoreOptions<State> = {
           category: 'External',
           value: external.total,
           minSizeForLabel: 0.16,
+          route: { name: 'external-services' },
         })
       }
 

@@ -2,13 +2,20 @@
   "type": "Dataplane",
   "mesh": "default",
   "name": "ingress-dp-test-123",
-  "creationTime": "2020-06-02T09:33:09.208372-04:00",
-  "modificationTime": "2020-06-02T09:33:09.208372-04:00",
+  "creationTime": "2021-02-19T06:39:07.741335Z",
+  "modificationTime": "2021-02-19T06:39:07.741335Z",
   "networking": {
-    "address": "192.168.64.8",
+    "address": "10.0.0.1",
     "inbound": [
       {
-        "port": 10001
+        "port": 10000,
+        "servicePort": 9000,
+        "tags": {
+          "env": "dev",
+          "kuma.io/service": "kuma-example-backend",
+          "tag01": "value01",
+          "reallyLongTagLabelHere": "a-really-long-tag-value-here"
+        }
       }
     ]
   }

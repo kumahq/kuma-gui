@@ -16,8 +16,8 @@ const router = createRouter({
       component: TestComponent,
     },
     {
-      path: '/mesh/:mesh/dataplanes',
-      name: 'dataplanes',
+      path: '/mesh/:mesh/data-planes',
+      name: 'data-plane-list-view',
       component: TestComponent,
     },
   ],
@@ -28,7 +28,7 @@ function renderComponent() {
   return render(NavItem, {
     props: {
       name: 'All',
-      link: 'dataplanes',
+      link: 'data-plane-list-view',
       title: false,
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',

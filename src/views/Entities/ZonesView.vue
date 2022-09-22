@@ -21,7 +21,6 @@
             v-if="$route.query.ns"
             class="back-button"
             appearance="primary"
-            size="small"
             :to="{
               name: 'zones'
             }"
@@ -280,7 +279,7 @@ export default {
       let cpCompat = true
 
       if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
-        zoneInsight.subscriptions.forEach((item, index) => {
+        zoneInsight.subscriptions.forEach((item) => {
           if (item.version && item.version.kumaCp) {
             zoneCpVersion = item.version.kumaCp.version
             const { kumaCpGlobalCompatible = true } = item.version.kumaCp

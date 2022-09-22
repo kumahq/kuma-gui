@@ -684,7 +684,7 @@ export default {
       this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
 
       this.$router.push({
-        name: 'dataplanes',
+        name: 'data-plane-list-view',
         params: {
           mesh: this.validate.meshName,
         },

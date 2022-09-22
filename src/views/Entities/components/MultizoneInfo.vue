@@ -3,10 +3,11 @@
     <template #title>
       <KIcon
         class="kong-icon--centered"
-        icon="dangerCircle"
+        icon="dangerCircleOutline"
         size="42"
       />
-      {{ productName }} is running in Standalone mode.
+
+      <p>{{ productName }} is running in Standalone mode.</p>
     </template>
     <template #message>
       <p>

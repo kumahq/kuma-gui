@@ -3,18 +3,17 @@
     class="data-overview"
     data-testid="data-overview"
   >
-    <!-- controls -->
     <div class="data-table-controls mb-2">
       <slot name="additionalControls" />
+
       <KButton
-        class="ml-2 refresh-button"
+        class="refresh-button"
         appearance="primary"
-        size="small"
         :disabled="isLoading"
         @click="onRefreshButtonClick"
       >
-        <div
-          class="refresh-icon"
+        <span
+          class="refresh-icon custom-control-icon"
           :class="{ 'is-spinning': isLoading }"
         >
           <svg
@@ -28,13 +27,22 @@
               <path d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z" />
             </g>
           </svg>
-        </div>
+        </span>
         <span>Refresh</span>
       </KButton>
     </div>
 
+    <LoadingBlock v-if="isLoading" />
+
+    <ErrorBlock
+      v-else-if="hasError"
+      :error="error"
+    />
+
+    <EmptyBlock v-else-if="isEmpty" />
+
     <div
-      v-if="isReady"
+      v-else
       class="data-overview-content"
     >
       <!-- data -->
@@ -43,12 +51,15 @@
         class="data-overview-table"
       >
         <KTable
-          class="micro-table"
-          :class="{ 'data-table-is-hidden' : tableDataIsEmpty, 'has-border': tableHasBorder }"
-          :fetcher="() => tableDataFiltered"
+          :key="tableRecompuationKey"
+          :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
+          :fetcher="tableDataFetcher"
           :headers="tableHeaders"
+          :cell-attrs="getCellAttributes"
+          :row-attrs="getRowAttributes"
           disable-pagination
           is-clickable
+          data-testid="data-overview-table"
           @row:click="tableRowHandler"
         >
           <!-- Custom slots provided by parent -->
@@ -77,39 +88,55 @@
             </div>
           </template>
 
-          <!-- tags -->
-          <template #tags="{ rowValue }">
-            <EntityTag
-              v-for="(tag, key) in rowValue"
-              :key="key"
-              :tag="tag"
-            />
+          <template #name="{ row, rowValue }">
+            <KButton
+              v-if="row.nameRoute"
+              appearance="btn-link"
+              :to="row.nameRoute"
+            >
+              {{ rowValue }}
+            </KButton>
+
+            <template v-else>
+              {{ rowValue }}
+            </template>
+          </template>
+
+          <template #mesh="{ row, rowValue }">
+            <KButton
+              v-if="row.meshRoute"
+              appearance="btn-link"
+              :to="row.meshRoute"
+            >
+              {{ rowValue }}
+            </KButton>
+
+            <template v-else>
+              {{ rowValue }}
+            </template>
           </template>
 
           <!--- total Updates --->
           <template #totalUpdates="{ row }">
-            <span class="entity-total-updates">
-              <span>
-                {{ row.totalUpdates }}
-              </span>
+            <span>
+              {{ row.totalUpdates }}
             </span>
           </template>
 
-          <!--- actions --->
-          <template #actions="{row}">
+          <template #selected="{row}">
             <a
               class="data-table-action-link"
-              :class="{ 'is-active': (selectedRow=== row.name) }"
+              :class="{ 'is-active': selectedRow === row.name }"
             >
               <span
                 v-if="selectedRow === row.name"
                 class="action-link__active-state"
               >
-                &#x2713;
-                <span class="sr-only">
-                  Selected
-                </span>
+                ✓
+
+                <span class="sr-only">Selected</span>
               </span>
+
               <span
                 v-else
                 class="action-link__normal-state"
@@ -154,12 +181,32 @@
               secondary-color="var(--yellow-300)"
               size="20"
             />
-            <div v-else />
+          </template>
+
+          <template
+            v-if="showDetails"
+            #details="{ row }"
+          >
+            <KButton
+              class="detail-link"
+              appearance="btn-link"
+              :to="row.nameRoute"
+            >
+              <template #icon>
+                <KIcon
+                  :icon="row.warnings.length > 0 ? 'warning' : 'info'"
+                  :color="row.warnings.length > 0 ? 'var(--black-75)' : 'var(--blue-500)'"
+                  :secondary-color="row.warnings.length > 0 ? 'var(--yellow-300)' : null"
+                  size="20"
+                />
+              </template>
+              Details
+            </KButton>
           </template>
         </KTable>
 
         <PaginationWidget
-          :has-previous="pageOffset > 0"
+          :has-previous="internalPageOffset > 0"
           :has-next="next"
           @next="goToNextPage"
           @previous="goToPreviousPage"
@@ -198,111 +245,102 @@
         <slot name="content" />
       </div>
     </div>
-
-    <!-- loading state -->
-    <KEmptyState
-      v-if="isLoading"
-      cta-is-hidden
-    >
-      <template #title>
-        <div class="card-icon mb-3">
-          <KIcon
-            icon="spinner"
-            color="rgba(0, 0, 0, 0.25)"
-            size="42"
-          />
-        </div>
-        Data Loading&hellip;
-      </template>
-    </KEmptyState>
-
-    <!-- error has occurred -->
-    <KEmptyState
-      v-if="hasError"
-      cta-is-hidden
-    >
-      <template #title>
-        <div class="card-icon mb-3">
-          <KIcon
-            class="kong-icon--centered"
-            icon="warning"
-            color="var(--black-75)"
-            secondary-color="var(--yellow-300)"
-            size="42"
-          />
-        </div>
-
-        <template v-if="shouldShowApiError">
-          {{ error.message }}
-        </template>
-
-        <template v-else>
-          An error has occurred while trying to load this data.
-        </template>
-      </template>
-    </KEmptyState>
   </div>
 </template>
 
 <script>
+import { KButton, KEmptyState, KIcon, KTable } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import { datadogLogEvents } from '@/datadogEvents'
 import PaginationWidget from '@/components/PaginationWidget.vue'
-import EntityTag from '@/components/EntityTag/EntityTag.vue'
-import { ApiError } from '@/services/ApiError'
+import EmptyBlock from '@/components/EmptyBlock.vue'
+import ErrorBlock from '@/components/ErrorBlock.vue'
+import LoadingBlock from '@/components/LoadingBlock.vue'
 
 export default {
   name: 'DataOverview',
+
   components: {
     PaginationWidget,
-    EntityTag,
+    EmptyBlock,
+    ErrorBlock,
+    LoadingBlock,
+    KButton,
+    KEmptyState,
+    KIcon,
+    KTable,
   },
+
   props: {
+    selectedEntityName: {
+      type: String,
+      required: false,
+      default: '',
+    },
+
     pageSize: {
       type: Number,
       default: 12,
     },
+
     isLoading: {
       type: Boolean,
       default: false,
     },
+
     hasError: {
       type: Boolean,
       default: false,
     },
+
     error: {
       type: Object,
       required: false,
       default: null,
     },
+
     isEmpty: {
       type: Boolean,
       default: false,
     },
+
     emptyState: {
       type: Object,
       default: null,
     },
+
     tableData: {
       type: Object,
       default: null,
     },
-    tableHasBorder: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+
     tableDataIsEmpty: {
       type: Boolean,
       default: false,
     },
+
     showWarnings: {
       type: Boolean,
+      required: false,
+      default: false,
     },
+
+    showDetails: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+
     next: {
       type: Boolean,
       default: false,
+    },
+
+    pageOffset: {
+      type: Number,
+      required: false,
+      default: 0,
     },
   },
 
@@ -311,18 +349,15 @@ export default {
   data() {
     return {
       selectedRow: '',
-      pageOffset: 0,
+      internalPageOffset: 0,
     }
   },
+
   computed: {
     customSlots() {
       return this.tableData.headers
         .map(({ key }) => key)
         .filter((key) => this.$slots[key])
-    },
-
-    isReady() {
-      return !this.isEmpty && !this.hasError && !this.isLoading
     },
 
     tableHeaders() {
@@ -333,82 +368,79 @@ export default {
       }
     },
 
-    tableDataFiltered() {
+    /**
+     * Just changing the table data/headers doesn’t cause the table component to re-render, so by updating its `key` prop when this happens, we force a re-render. This is necessary to get the column visibility toggles and similar operations to work in the data planes list view.
+     *
+     * @returns {string}
+     */
+    tableRecompuationKey() {
+      return `${this.tableData.data.length}-${this.tableHeaders.length}`
+    },
+  },
+
+  watch: {
+    isLoading(val) {
+      if (!val && this.tableData.data.length > 0) {
+        this.selectedRow = this.selectedEntityName || this.tableData.data[0].name
+      }
+    },
+  },
+
+  created() {
+    this.internalPageOffset = this.pageOffset
+  },
+
+  methods: {
+    /**
+     * @returns {{ data: object[], total: number }}
+     */
+    tableDataFetcher() {
       return {
         data: this.tableData.data,
         total: this.tableData.data.length,
       }
     },
 
-    shouldShowApiError() {
-      return this.error instanceof ApiError
-    },
-  },
-  watch: {
-    isLoading(val) {
-      if (!val && this.tableData.data.length > 0) {
-        this.selectedRow = this.tableData.data[0].name
-      }
-    },
-  },
-  methods: {
-    tableRowHandler(e, row, type) {
+    tableRowHandler(_e, row) {
       this.selectedRow = row.name
       this.$emit('table-action', row)
     },
+
     onRefreshButtonClick() {
       this.$emit('refresh')
-      this.$emit('load-data', this.pageOffset)
+      this.$emit('load-data', this.internalPageOffset)
       datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
     },
+
     goToPreviousPage() {
-      this.pageOffset -= this.pageSize
-
-      this.$emit('load-data', this.pageOffset)
+      this.internalPageOffset = this.pageOffset - this.pageSize
+      this.$emit('load-data', this.pageOffset - this.pageSize)
     },
-    goToNextPage() {
-      this.pageOffset += this.pageSize
 
-      this.$emit('load-data', this.pageOffset)
+    goToNextPage() {
+      this.internalPageOffset = this.pageOffset + this.pageSize
+      this.$emit('load-data', this.pageOffset + this.pageSize)
+    },
+
+    getCellAttributes({ headerKey }) {
+      const className = ['warnings'].includes(headerKey) ? 'text-center' : ['details'].includes(headerKey) ? 'text-right' : ''
+
+      return { class: className }
+    },
+
+    getRowAttributes({ name }) {
+      const entityName = this.selectedEntityName || this.tableData.data[0].name
+      const className = name === entityName ? 'is-selected' : ''
+
+      return { class: className }
     },
   },
 }
 </script>
 
-<style lang="scss">
-.empty-state-title {
-  .card-icon {
-    text-align: center;
-
-    img,
-    svg {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-}
-
-.refresh-button {
-  max-height: 27px;
-}
-
+<style lang="scss" scoped>
 .refresh-icon {
-  --i: 18px;
-  width: var(--i);
-  height: var(--i);
-  margin-right: 5px;
-
-  svg {
-    display: block;
-
-    g {
-      transform-box: fill-box;
-      transform-origin: 50% 50%;
-    }
-  }
-
-  &.is-spinning svg g {
+  &.is-spinning g {
     animation: spin 1.2s infinite linear;
   }
 
@@ -416,6 +448,7 @@ export default {
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(1turn);
     }
@@ -423,104 +456,51 @@ export default {
 }
 
 .data-table-controls {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 }
 
-.data-overview-table {
-  // this accounts for super long table widths
-  overflow-x: auto;
-
-  @media (max-width: 1110px) {
-    overflow-x: scroll;
-    touch-action: pan-x;
-  }
+.with-warnings {
+  color: var(--yellow-500);
 }
 
-.micro-table.micro-table {
-  --dp-table-font-size: 14px;
-  --dp-table-padding: 10px;
-
-  th,
-  td {
-    padding: var(--dp-table-padding);
-  }
-
-  /**
-    This fixes an issue where clicking on something inside of a row doesn't trigger the row click event
-    This is hacky and not recommended if you have other items inside of your table cells that you
-    want to have their own click actions.
-   */
-  th > *,
-  td > * {
-    pointer-events: none;
-  }
+.entity-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xxs);
 }
 
+.data-table-action-link {
+  padding: 0;
+}
+
+.action-link__active-state {
+  --size: 18px;
+
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  border-radius: 50%;
+  background-color: var(--logo-green);
+  margin: 0 0 0 var(--spacing-xxs);
+  color: #fff;
+  font-size: 13px;
+  text-align: center;
+}
+</style>
+
+<style lang="scss">
 .k-table {
-  font-size: var(--dp-table-font-size);
-
-  tr {
-    cursor: pointer;
+  tr.is-selected {
+    background-color: var(--grey-100);
   }
 
   th {
     background-color: var(--gray-7);
   }
-
-  thead {
-    border-top: 0 !important;
-    border-bottom-width: 1px !important;
-  }
-
-  tbody {
-    td {
-      vertical-align: top;
-    }
-  }
-
-  &.has-border {
-    border: 1px solid var(--gray-4);
-    border-bottom: 0;
-  }
-
-  .data-table-action-link {
-    display: block;
-    padding: var(--spacing-sm);
-    overflow: hidden;
-    padding: 0;
-    text-decoration: none !important;
-    pointer-events: none;
-    color: var(--DataOverviewTableLinkColor) !important;
-
-    &.is-active {
-      text-decoration: none !important;
-    }
-  }
-
-  .action-link__active-state {
-    --size: 18px;
-
-    display: block;
-    width: var(--size);
-    height: var(--size);
-    line-height: var(--size);
-    border-radius: 50%;
-    background-color: var(--logo-green);
-    margin: 0 0 0 5px;
-    color: #fff;
-    font-size: 13px;
-    text-align: center;
-
-    &:before {
-      display: block;
-    }
-  }
-}
-
-// some reusable styles
-
-.with-warnings {
-  color: var(--yellow-500);
 }
 </style>

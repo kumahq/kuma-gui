@@ -17,9 +17,9 @@ export function setupMockWorker(url: string): void {
     onUnhandledRequest(req: MockedRequest) {
       // Ignores warnings about unhandled requests.
       if (
+        req.url.pathname.startsWith('/node_modules') ||
         req.url.pathname.startsWith('/src/assets') ||
-        req.url.href.endsWith('.json?import') ||
-        req.url.href.match(/\.(vue|ts|js)(\?.*)?$/)
+        req.url.href.match(/\.(vue|ts|js|json)(\?.*)?$/)
       ) {
         return
       }

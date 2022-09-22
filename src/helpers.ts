@@ -7,20 +7,12 @@ import { ZoneOverview, ResourceResponse } from '@/types'
 type TODO = any
 
 /**
- * =============================================================================
- * Kuma Helpers
- * =============================================================================
+ * Outputs a friendly human-readable timeframe between now and the date string entered.
  */
-
-/**
- * Outputs a friendly human-readable timeframe between now and the date string entered
- * @param {String} tdate
- */
-export function humanReadableDate(tdate: string) {
+export function humanReadableDate(tdate: string): string {
   const systemDate = new Date(Date.parse(tdate))
-  const userDate = new Date()
 
-  const diff = Math.floor((+userDate - +systemDate) / 1000)
+  const diff = Math.floor((Date.now() - systemDate.getTime()) / 1000)
 
   if (diff <= 1) {
     return 'just now'
@@ -66,8 +58,7 @@ export function humanReadableDate(tdate: string) {
     return '1 week ago'
   }
 
-  // return 'on ' + systemDate
-  return `on ${systemDate.toLocaleDateString()}`
+  return systemDate.toLocaleDateString()
 }
 
 /**
@@ -108,11 +99,11 @@ export function getSome(original: TODO, desired: TODO) {
  * Strips the time values from the objects returned from
  * various endpoints, in a non-destructive manner.
  *
- * @param {Object} content The Object you want to remove the
+ * @param object The Object you want to remove the
  * date/time strings from.
  */
-export function stripTimes(content: TODO) {
-  const { creationTime, modificationTime, ...noTimes } = content
+export function stripTimes<T extends { creationTime?: any, modificationTime?: any, [key: string]: any }>(object: T): Omit<T, 'creationTime' | 'modificationTime'> {
+  const { creationTime, modificationTime, ...noTimes } = object
 
   return noTimes
 }

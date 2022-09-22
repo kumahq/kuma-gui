@@ -11,7 +11,8 @@
             secondary-color="var(--yellow-300)"
             size="64"
           />
-          Page Not Found
+
+          <p>Page Not Found</p>
         </template>
         <template #message>
           The page or entity you were looking for does not exist.

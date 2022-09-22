@@ -20,7 +20,7 @@
         :class="chartClass"
         :title="{ singular: 'DP PROXY', plural: 'DP PROXIES' }"
         :data="dataplanesChart.data"
-        :url="{ name: 'dataplanes' }"
+        :url="{ name: 'data-plane-list-view' }"
         :is-loading="areMeshInsightsLoading"
       />
       <VersionsDonutChart
@@ -28,6 +28,7 @@
         :class="chartClass"
         title="ZONE CP"
         :data="zonesCPVersionsChart.data"
+        :url="{ name: 'zones' }"
         :is-loading="areZonesInsightsLoading"
       />
       <VersionsDonutChart
@@ -230,19 +231,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.empty-state-title {
-  .card-icon {
-    text-align: center;
-
-    img,
-    svg {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-}
-
 .card-wrapper {
   display: grid;
 

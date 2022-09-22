@@ -1,35 +1,65 @@
 {
-  "total": 2,
+  "total": 10,
   "items": [
     {
-      "mesh": "default",
-      "name": "gateway-dp-87qntx",
       "type": "Dataplane",
-      "networking": {
-        "address": "10.0.0.1",
-        "gateway": {
-          "tags": {
-            "kuma.io/service": "kong"
-          }
-        },
-        "outbound": {
-          "port": "33033",
-          "service": "backend"
-        }
-      }
+      "mesh": "default",
+      "name": "backend",
+      "networking": {}
     },
     {
-      "mesh": "default",
-      "name": "test-dp-02",
       "type": "Dataplane",
-      "networking": {
-        "address": "192.168.64.8",
-        "inbound": [
-          {
-            "port": 10001
-          }
-        ]
-      }
+      "mesh": "default",
+      "name": "frontend",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "db",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "no-subscriptions",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.backend-02",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.backend-03",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.gateway-01",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.ingress-02",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "dataplane-test-456",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "ingress-dp-test-123",
+      "networking": {}
     }
   ],
   "next": null

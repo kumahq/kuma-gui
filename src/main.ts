@@ -9,9 +9,8 @@ import { storeKey, store } from './store/store'
 import { setupDatadog } from './datadog'
 import Kuma from './services/kuma'
 
-// TODO: Use `import '@kong/kongponents/dist/style.css'` instead.
-// This is currently not possible because Kongponents doesn’t declare the specifier in the package.json’s exports field.
-import '../node_modules/@kong/kongponents/dist/style.css'
+import '@kong/kongponents/dist/style.css'
+import '@kong/kongponents/dist/_variables.scss'
 
 import '@/assets/styles/third-party/tailwind.css'
 import '@/assets/styles/variables.scss'

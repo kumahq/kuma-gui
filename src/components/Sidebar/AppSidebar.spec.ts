@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
-import { render, screen, waitFor } from '@testing-library/vue'
+import { render, screen } from '@testing-library/vue'
 import { KAlert, KIcon } from '@kong/kongponents'
 
 import AppSidebar from './AppSidebar.vue'
@@ -50,14 +50,13 @@ describe('AppSidebar.vue', () => {
     store.state.policies = policies
     renderComponent()
 
-    await waitFor(() => {
-      expect(screen.getByTestId('meshgateways')).toBeInTheDocument()
-      expect(screen.getByTestId('meshgatewayroutes')).toBeInTheDocument()
-    })
+    expect(screen.getByTestId('meshgateways')).toBeInTheDocument()
+    expect(screen.getByTestId('meshgatewayroutes')).toBeInTheDocument()
   })
 
   it('refetch data after change of mesh', async () => {
     store.state.selectedMesh = 'all'
+    store.state.meshes.total = 1
     store.state.meshes.items = [
       {
         name: 'default',
@@ -69,11 +68,9 @@ describe('AppSidebar.vue', () => {
 
     renderComponent()
 
-    await waitFor(async () => {
-      await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
-      const node = await screen.findByText(/8/)
+    await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
+    const node = await screen.findByText(/10/)
 
-      expect(node.parentNode).toHaveTextContent('Standard 8')
-    })
+    expect(node.parentNode).toHaveTextContent('Data planes 10')
   })
 })

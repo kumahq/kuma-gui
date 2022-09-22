@@ -1,13 +1,16 @@
 <template>
   <div>
+    <LoadingBlock v-if="isLoading" />
+
+    <ErrorBlock v-else-if="hasError" />
+
+    <EmptyBlock v-else-if="isEmpty" />
+
     <div
-      v-if="isReady"
+      v-else
       class="label-list-content"
     >
-      <KCard
-        v-if="!isLoading && !isEmpty"
-        border-variant="noBorder"
-      >
+      <KCard border-variant="noBorder">
         <template #body>
           <div class="label-list__col-wrapper multi-col">
             <slot />
@@ -15,93 +18,50 @@
         </template>
       </KCard>
     </div>
-
-    <!-- loading state -->
-    <KEmptyState
-      v-if="isLoading"
-      cta-is-hidden
-      data-testid="label-list-loading-section"
-    >
-      <template #title>
-        <div class="card-icon mb-3">
-          <KIcon
-            icon="spinner"
-            color="rgba(0, 0, 0, 0.1)"
-            size="42"
-          />
-        </div>
-        Data Loading...
-      </template>
-    </KEmptyState>
-
-    <!-- no data to load -->
-    <KEmptyState
-      v-if="isEmpty && !isLoading"
-      cta-is-hidden
-    >
-      <template #title>
-        <div class="card-icon mb-3">
-          <KIcon
-            class="kong-icon--centered"
-            icon="warning"
-            color="var(--black-75)"
-            secondary-color="var(--yellow-300)"
-            size="42"
-          />
-        </div>
-        There is no data to display.
-      </template>
-    </KEmptyState>
-
-    <!-- error -->
-    <KEmptyState
-      v-if="hasError"
-      cta-is-hidden
-    >
-      <template #title>
-        <div class="card-icon mb-3">
-          <KIcon
-            class="kong-icon--centered"
-            icon="warning"
-            color="var(--black-75)"
-            secondary-color="var(--yellow-300)"
-            size="42"
-          />
-        </div>
-        An error has occurred while trying to load this data.
-      </template>
-    </KEmptyState>
   </div>
 </template>
 
 <script>
+import { KCard } from '@kong/kongponents'
+
+import EmptyBlock from '../EmptyBlock.vue'
+import ErrorBlock from '../ErrorBlock.vue'
+import LoadingBlock from '../LoadingBlock.vue'
+
 export default {
   name: 'LabelList',
+
+  components: {
+    EmptyBlock,
+    ErrorBlock,
+    LoadingBlock,
+    KCard,
+  },
+
   props: {
     items: {
       type: Object,
       default: null,
     },
+
     title: {
       type: String,
       default: null,
     },
+
     isLoading: {
       type: Boolean,
       default: false,
     },
+
     hasError: {
       type: Boolean,
       default: false,
     },
+
     isEmpty: {
       type: Boolean,
       default: false,
-    },
-  },
-  computed: {
-    isReady() {
-      return !this.isEmpty && !this.hasError && !this.isLoading
     },
   },
 }

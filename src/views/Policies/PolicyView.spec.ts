@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { flushPromises, mount } from '@vue/test-utils'
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import PolicyView from './PolicyView.vue'
@@ -14,6 +14,9 @@ async function createWrapper(props = {}) {
     props,
     global: {
       plugins: [store],
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
       components: { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
       mocks: {
         $route: {

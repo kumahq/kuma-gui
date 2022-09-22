@@ -1,9 +1,9 @@
+import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import { datadogLogs } from '@datadog/browser-logs'
 import userEvent from '@testing-library/user-event'
 import { KButton, KEmptyState, KIcon, KTable } from '@kong/kongponents'
 
-import { flushPromises } from '@vue/test-utils'
 import DataOverview from './DataOverview.vue'
 
 jest.mock('@datadog/browser-logs')
@@ -16,6 +16,9 @@ function renderComponent(props = {}) {
         KEmptyState,
         KIcon,
         KTable,
+      },
+      stubs: {
+        'router-link': RouterLinkStub,
       },
     },
     props,
@@ -119,7 +122,6 @@ describe('DataOverview.vue', () => {
         headers: [
           { key: 'actions', hideLabel: true },
           { label: 'Status', key: 'status' },
-          { label: 'Tags', key: 'tags' },
           { label: 'Total Updates', key: 'totalUpdates' },
           { label: 'Kuma DP version', key: 'dpVersion' },
           { label: 'Envoy version', key: 'envoyVersion' },
@@ -128,24 +130,6 @@ describe('DataOverview.vue', () => {
         data: [
           {
             status: 'offline',
-            tags: [
-              {
-                label: 'env',
-                value: 'dev',
-              },
-              {
-                label: 'kuma.io/service',
-                value: 'kuma-example-backend',
-              },
-              {
-                label: 'tag01',
-                value: 'value01',
-              },
-              {
-                label: 'reallyLongTagLabelHere',
-                value: 'a-really-long-tag-value-here',
-              },
-            ],
             totalUpdates: 1,
             dpVersion: 'foo',
             envoyVersion: '1.2',

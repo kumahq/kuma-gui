@@ -19,6 +19,10 @@
   rules: {
     indent: 'off',
     '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/no-unused-vars': ['warn', {
+      argsIgnorePattern: '^_',
+      ignoreRestSiblings: true,
+    }],
     'comma-dangle': ['error', 'always-multiline'],
     'space-before-function-paren': ['error', {
       anonymous: 'always',

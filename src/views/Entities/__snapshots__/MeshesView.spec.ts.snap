@@ -13,14 +13,13 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
         class="data-overview"
         data-testid="data-overview"
       >
-        <!-- controls -->
         <div
           class="data-table-controls mb-2"
         >
           
           <a
-            class="small rounded primary k-button add-mesh-button"
-            data-v-29036f3a=""
+            class="medium rounded primary k-button add-mesh-button"
+            data-v-6bcbf05d=""
             type="button"
           >
             
@@ -38,16 +37,16 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
           </a>
           
           <button
-            class="small rounded primary k-button ml-2 refresh-button"
-            data-v-29036f3a=""
+            class="medium rounded primary k-button refresh-button"
+            data-v-6bcbf05d=""
             type="button"
           >
             
             <!---->
             
             
-            <div
-              class="refresh-icon"
+            <span
+              class="refresh-icon custom-control-icon"
             >
               <svg
                 viewBox="0 0 36 36"
@@ -62,7 +61,7 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                   />
                 </g>
               </svg>
-            </div>
+            </span>
             <span>
               Refresh
             </span>
@@ -78,40 +77,41 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
             class="data-overview-table"
           >
             <div
-              class="micro-table"
-              data-v-77421f6a=""
+              class=""
+              data-testid="data-overview-table"
+              data-v-54b66ee0=""
               is-clickable=""
             >
               <section
                 class="k-table-wrapper"
-                data-v-77421f6a=""
+                data-v-54b66ee0=""
               >
                 <table
                   class="has-hover is-clickable k-table"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-77421f6a=""
+                  data-v-54b66ee0=""
                 >
                   <thead
                     class=""
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     <tr
                       class=""
-                      data-v-77421f6a=""
+                      data-v-54b66ee0=""
                     >
                       
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class="sr-only"
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             actions
                           </span>
@@ -121,16 +121,16 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class=""
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             Name
                           </span>
@@ -140,16 +140,16 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class=""
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             Type
                           </span>
@@ -161,44 +161,37 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     
                     <tr
-                      data-v-77421f6a=""
+                      class="is-selected"
+                      data-v-54b66ee0=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
-                        <a
-                          class="data-table-action-link is-active"
-                        >
-                          <span
-                            class="action-link__active-state"
-                          >
-                             ✓ 
-                            <span
-                              class="sr-only"
-                            >
-                               Selected 
-                            </span>
-                          </span>
-                        </a>
+                        
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
+                        
                         
                         default
                         
+                        
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
                         Mesh
@@ -207,35 +200,33 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                       
                     </tr>
                     <tr
-                      data-v-77421f6a=""
+                      class=""
+                      data-v-54b66ee0=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
-                        <a
-                          class="data-table-action-link"
-                        >
-                          <span
-                            class="action-link__normal-state"
-                          >
-                             View 
-                          </span>
-                        </a>
+                        
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
+                        
                         
                         hello-world
                         
+                        
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
                         Mesh
@@ -244,35 +235,33 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                       
                     </tr>
                     <tr
-                      data-v-77421f6a=""
+                      class=""
+                      data-v-54b66ee0=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
-                        <a
-                          class="data-table-action-link"
-                        >
-                          <span
-                            class="action-link__normal-state"
-                          >
-                             View 
-                          </span>
-                        </a>
+                        
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
+                        
                         
                         kong-mania-12
                         
+                        
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
                         Mesh
@@ -292,7 +281,7 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
               <!--v-if-->
               <button
                 class="medium rounded primary k-button"
-                data-v-29036f3a=""
+                data-v-6bcbf05d=""
                 type="button"
               >
                 
@@ -310,10 +299,6 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
           <!-- additional page content -->
           <!--v-if-->
         </div>
-        <!-- loading state -->
-        <!--v-if-->
-        <!-- error has occurred -->
-        <!--v-if-->
       </div>
       <div
         class="tab-container"
@@ -427,17 +412,17 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                   <section
                     aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     class="noBorder kong-card"
-                    data-v-5adb63fa=""
+                    data-v-52c90d54=""
                   >
                     <!---->
                     <!---->
                     <div
                       class="k-card-content d-flex"
-                      data-v-5adb63fa=""
+                      data-v-52c90d54=""
                     >
                       <div
                         class="k-card-body"
-                        data-v-5adb63fa=""
+                        data-v-52c90d54=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       >
                         
@@ -454,7 +439,7 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                                   Data plane proxies
                                 </h4>
                                 <p>
-                                  13
+                                  10
                                 </p>
                               </li>
                               <li>
@@ -605,12 +590,6 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                     </div>
                   </section>
                 </div>
-                <!-- loading state -->
-                <!--v-if-->
-                <!-- no data to load -->
-                <!--v-if-->
-                <!-- error -->
-                <!--v-if-->
               </div>
               
               
@@ -628,9 +607,6 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
             
           </div>
           <div>
-            <!-- loading state -->
-            <!--v-if-->
-            <!-- error has occurred -->
             <!--v-if-->
           </div>
         </div>

@@ -1,5 +1,5 @@
 {
-  "total": 8,
+  "total": 10,
   "items": [
     {
       "type": "DataplaneOverview",
@@ -568,7 +568,131 @@
           }
         ]
       }
+    },
+    {
+      "type": "DataplaneOverview",
+      "mesh": "default",
+      "name": "dataplane-test-456",
+      "creationTime": "2020-06-29T09:27:46.05334-04:00",
+      "modificationTime": "2020-06-29T09:27:46.05334-04:00",
+      "dataplane": {
+        "networking": {
+          "address": "192.168.64.8",
+          "inbound": [
+            {
+              "port": 10001,
+              "servicePort": 9000,
+              "tags": {
+                "env": "dev",
+                "kuma.io/service": "kuma-example-backend",
+                "tag01": "value01",
+                "reallyLongTagLabelHere": "a-really-long-tag-value-here"
+              }
+            }
+          ]
+        }
+      },
+      "dataplaneInsight": {
+        "subscriptions": [
+          {
+            "id": "426fe0d8-f667-11e9-b081-acde48001122",
+            "controlPlaneInstanceId": "06070748-f667-11e9-b081-acde48001122",
+            "connectTime": "2019-10-24T14:04:56.820350Z",
+            "status": {
+              "lastUpdateTime": "2019-10-24T14:04:57.832482Z",
+              "total": {
+                "responsesSent": "3",
+                "responsesAcknowledged": "3"
+              },
+              "cds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "eds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "lds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "rds": {}
+            }
+          }
+        ],
+        "mTLS": {
+          "certificateExpirationTime": "2021-08-20T09:45:51Z",
+          "lastCertificateRegeneration": "2021-08-20T08:45:51.869135Z",
+          "certificateRegenerations": 4,
+          "issuedBackend": "ca-2",
+          "supportedBackends": [
+            "ca-2",
+            "ca-1"
+          ]
+        }
+      }
+    },
+    {
+      "type": "DataplaneOverview",
+      "mesh": "default",
+      "name": "ingress-dp-test-123",
+      "dataplane": {
+        "networking": {
+          "address": "10.0.0.1",
+          "inbound": [
+            {
+              "port": 10000,
+              "servicePort": 9000,
+              "tags": {
+                "env": "dev",
+                "kuma.io/service": "kuma-example-backend",
+                "tag01": "value01",
+                "reallyLongTagLabelHere": "a-really-long-tag-value-here"
+              }
+            }
+          ]
+        }
+      },
+      "dataplaneInsight": {
+        "subscriptions": [
+          {
+            "id": "426fe0d8-f667-11e9-b081-acde48001122",
+            "controlPlaneInstanceId": "06070748-f667-11e9-b081-acde48001122",
+            "connectTime": "2019-10-24T14:04:56.820350Z",
+            "status": {
+              "lastUpdateTime": "2019-10-24T14:04:57.832482Z",
+              "total": {
+                "responsesSent": "3",
+                "responsesAcknowledged": "3"
+              },
+              "cds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "eds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "lds": {
+                "responsesSent": "1",
+                "responsesAcknowledged": "1"
+              },
+              "rds": {}
+            }
+          }
+        ],
+        "mTLS": {
+          "certificateExpirationTime": "2020-05-11T16:53:55Z",
+          "lastCertificateRegeneration": "2020-05-11T16:53:40.862241Z",
+          "certificateRegenerations": 2,
+          "issuedBackend": "ca-2",
+          "supportedBackends": [
+            "ca-2",
+            "ca-1"
+          ]
+        }
+      }
     }
   ],
-  "next": null
+  "next": "http://localhost:5681/meshes/default/dataplanes+insights?offset=24&size=24"
 }

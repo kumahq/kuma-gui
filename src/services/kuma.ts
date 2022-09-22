@@ -1,5 +1,11 @@
 import RestClient from '@/services/restClient'
-import { Mesh, Policy, ResourceResponse } from '@/types'
+import {
+  DataPlane,
+  DataPlaneOverview,
+  Mesh,
+  Policy,
+  ResourceResponse,
+} from '@/types'
 
 const defaultOptions = {
   name: '',
@@ -151,7 +157,7 @@ class Kuma {
   }
 
   // get a single dataplane
-  public getDataplaneFromMesh({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getDataplaneFromMesh({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<DataPlane> {
     return this.client.get(`meshes/${mesh}/dataplanes/${name}`, { params })
   }
 
@@ -170,7 +176,7 @@ class Kuma {
   }
 
   // get a specific dataplane overview from its associated mesh
-  public getDataplaneOverviewFromMesh({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getDataplaneOverviewFromMesh({ mesh, name }: Required<ApiDefaultOptions>, params?: any): Promise<DataPlaneOverview> {
     return this.client.get(`meshes/${mesh}/dataplanes+insights/${name}`, { params })
   }
 

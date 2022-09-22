@@ -1,23 +1,65 @@
 {
-  "total": 3,
+  "total": 10,
   "items": [
     {
+      "type": "Dataplane",
       "mesh": "default",
-      "name": "dataplane-test-456",
-      "networking": {},
-      "type": "Dataplane"
+      "name": "backend",
+      "networking": {}
     },
     {
+      "type": "Dataplane",
       "mesh": "default",
-      "name": "ingress-dp-test-123",
-      "networking": {},
-      "type": "Dataplane"
+      "name": "frontend",
+      "networking": {}
     },
     {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "db",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
       "mesh": "default",
       "name": "no-subscriptions",
-      "networking": {},
-      "type": "Dataplane"
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.backend-02",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.backend-03",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.gateway-01",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "cluster-1.ingress-02",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "dataplane-test-456",
+      "networking": {}
+    },
+    {
+      "type": "Dataplane",
+      "mesh": "default",
+      "name": "ingress-dp-test-123",
+      "networking": {}
     }
   ],
   "next": null

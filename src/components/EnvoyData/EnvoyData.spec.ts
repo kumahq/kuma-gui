@@ -41,7 +41,7 @@ describe('EnvoyData.vue', () => {
       dppName: 'dataplane-test-456',
     })
 
-    expect(screen.getByTestId('status-info-loading-section')).toBeInTheDocument()
+    expect(screen.getByTestId('loading-block')).toBeInTheDocument()
   })
 
   it('renders error', async () => {

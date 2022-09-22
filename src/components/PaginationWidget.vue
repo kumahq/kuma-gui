@@ -22,10 +22,16 @@
 
 <script>
 import { datadogLogs } from '@datadog/browser-logs'
+import { KButton } from '@kong/kongponents'
+
 import { datadogLogEvents } from '@/datadogEvents'
 
 export default {
   name: 'PaginationWidget',
+
+  components: {
+    KButton,
+  },
 
   props: {
     hasPrevious: {

@@ -1,8 +1,18 @@
 /* Base */
+html,
+body,
+#app {
+  height: 100%;
+}
+
 body {
+  padding-top: var(--topbar-height, initial);
   font-family: var(--base-font-family);
 }
 
-button, [type=button], [type=reset], [type=submit] {
+button,
+[type=button],
+[type=reset],
+[type=submit] {
   -webkit-appearance: none;
 }

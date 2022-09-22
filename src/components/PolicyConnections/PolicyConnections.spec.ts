@@ -59,7 +59,7 @@ describe('PolicyConnections.vue', () => {
       policyName: 'foo',
     })
 
-    expect(screen.getByTestId('label-list-loading-section')).toBeInTheDocument()
+    expect(screen.getByTestId('loading-block')).toBeInTheDocument()
   })
 
   it('renders error', async () => {

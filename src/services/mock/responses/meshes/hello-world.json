@@ -7,7 +7,7 @@
     "backends": [
       {
         "name": "ca-1",
-        "type": "builtin"
+        "type": "BUILTIN"
       },
       {
         "name": "ca-2",

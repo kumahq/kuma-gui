@@ -45,39 +45,39 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
               class="w-full sm:w-3/5 lg:w-2/5 p-4"
             >
               <div
-                data-v-77421f6a=""
+                data-v-54b66ee0=""
                 is-small=""
               >
                 <section
                   class="k-table-wrapper"
-                  data-v-77421f6a=""
+                  data-v-54b66ee0=""
                 >
                   <table
                     class="has-hover k-table"
                     data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     <thead
                       class=""
-                      data-v-77421f6a=""
+                      data-v-54b66ee0=""
                     >
                       <tr
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         
                         <th
                           class=""
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             
                             <span
                               class=""
-                              data-v-77421f6a=""
+                              data-v-54b66ee0=""
                             >
                               Name
                             </span>
@@ -87,16 +87,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                         </th>
                         <th
                           class=""
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             
                             <span
                               class=""
-                              data-v-77421f6a=""
+                              data-v-54b66ee0=""
                             >
                               Services
                             </span>
@@ -106,16 +106,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                         </th>
                         <th
                           class=""
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             
                             <span
                               class=""
-                              data-v-77421f6a=""
+                              data-v-54b66ee0=""
                             >
                               DPPs
                             </span>
@@ -127,29 +127,29 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                       </tr>
                     </thead>
                     <tbody
-                      data-v-77421f6a=""
+                      data-v-54b66ee0=""
                     >
                       
                       <tr
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         
                         <td
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           default
                           
                         </td>
                         <td
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           0
                           
                         </td>
                         <td
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           0
@@ -179,7 +179,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       >
         <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-29036f3a=""
+          data-v-6bcbf05d=""
           type="button"
         >
           onboarding-multi-zone
@@ -187,7 +187,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-29036f3a=""
+            data-v-6bcbf05d=""
             type="button"
           >
             
@@ -203,7 +203,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-29036f3a=""
+              data-v-6bcbf05d=""
               type="button"
             >
               onboarding-add-services

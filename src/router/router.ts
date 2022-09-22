@@ -23,7 +23,7 @@ export async function setupRouter() {
   await store.dispatch('fetchPolicies')
   const policyRoutes = getPolicyRoutes(store.state.policies)
 
-  const routes = [
+  const routes: readonly RouteRecordRaw[] = [
     {
       path: '/404',
       name: 'not-found',
@@ -38,7 +38,6 @@ export async function setupRouter() {
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/AppShell.vue'),
       redirect: {
         name: 'global-overview',
         params: {
@@ -136,46 +135,45 @@ export async function setupRouter() {
                 parent: 'all-meshes',
               },
               children: [
-                // overview
                 {
                   path: 'overview',
                   name: 'global-overview',
-                  // alias: '/',
                   meta: {
                     title: 'Global Overview',
                   },
                   component: () => import('@/views/OverviewView.vue'),
                 },
-                // all dataplanes
                 {
-                  path: 'dataplanes',
-                  name: 'dataplanes',
-                  meta: {
-                    title: 'Data plane proxies',
-                  },
-                  component: () => import('@/views/Entities/AllDataplanes.vue'),
+                  path: 'data-planes',
+                  children: [
+                    {
+                      path: '',
+                      name: 'data-plane-list-view',
+                      meta: {
+                        title: 'Data planes',
+                      },
+                      props(route) {
+                        const offsets = Array.isArray(route.query.offset) ? route.query.offset : [route.query.offset]
+                        const offset = parseInt(offsets[offsets.length - 1] ?? '0') || 0
+
+                        return {
+                          name: route.query.name,
+                          offset,
+                        }
+                      },
+                      component: () => import('@/data-planes/views/DataPlaneListView.vue'),
+                    },
+                    {
+                      path: ':dataPlane',
+                      name: 'data-plane-detail-view',
+                      meta: {
+                        title: 'Data plane',
+                        parent: 'data-plane-list-view',
+                      },
+                      component: () => import('@/data-planes/views/DataPlaneDetailView.vue'),
+                    },
+                  ],
                 },
-                // standard dataplanes
-                {
-                  path: 'standard-dataplanes',
-                  name: 'standard-dataplanes',
-                  component: () => import('@/views/Entities/StandardDataplanes.vue'),
-                  meta: {
-                    title: 'Standard data plane proxies',
-                    breadcrumb: 'Standard data plane proxies',
-                  },
-                },
-                // gateway dataplanes
-                {
-                  path: 'gateway-dataplanes',
-                  name: 'gateway-dataplanes',
-                  component: () => import('@/views/Entities/GatewayDataplanes.vue'),
-                  meta: {
-                    title: 'Gateway data plane proxies',
-                    breadcrumb: 'Gateway data plane proxies',
-                  },
-                },
-                // internal services
                 {
                   path: 'internal-services',
                   name: 'internal-services',
@@ -185,7 +183,6 @@ export async function setupRouter() {
                     breadcrumb: 'Internal Services',
                   },
                 },
-                // external services
                 {
                   path: 'external-services',
                   name: 'external-services',
