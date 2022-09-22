@@ -294,9 +294,7 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
               </button>
             </div>
           </div>
-          <!-- empty state if no items are found -->
           <!--v-if-->
-          <!-- additional page content -->
           <!--v-if-->
         </div>
       </div>

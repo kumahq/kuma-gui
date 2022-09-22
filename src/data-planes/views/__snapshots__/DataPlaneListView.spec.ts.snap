@@ -752,7 +752,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      backend
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        backend
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -912,7 +924,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      backend
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        backend
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -1072,7 +1096,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      backend
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        backend
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -1232,7 +1268,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      gateway
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        gateway
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -1392,7 +1440,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      ingress
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        ingress
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -1552,7 +1612,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      kuma-example-backend
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        kuma-example-backend
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -1712,7 +1784,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      db
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        db
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -1872,7 +1956,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      frontend
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        frontend
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -2071,7 +2167,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      kuma-example-backend
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        kuma-example-backend
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -2231,7 +2339,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      no-subscriptions
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        no-subscriptions
+                        
+                        <!---->
+                      </a>
                       
                     </td>
                     <td
@@ -2337,9 +2457,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
             </button>
           </div>
         </div>
-        <!-- empty state if no items are found -->
         <!--v-if-->
-        <!-- additional page content -->
         <!--v-if-->
       </div>
     </div>

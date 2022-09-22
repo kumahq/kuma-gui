@@ -1,6 +1,6 @@
 import { DISABLED } from '@/consts'
 import { getZoneDpServerAuthType, fetchAllResources } from '@/helpers'
-import { ZoneOverview, AllResourceResponse } from '@/types'
+import { ZoneOverview } from '@/types'
 
 describe('helpers', () => {
   describe('getZoneDpServerAuthType', () => {
@@ -76,7 +76,7 @@ describe('helpers', () => {
           total: 501,
         })
 
-      const response = (await fetchAllResources({ callEndpoint: request })) as AllResourceResponse
+      const response = (await fetchAllResources({ callEndpoint: request }))
 
       expect(response.items.length).toBe(501)
       expect(response.items[0]).toBe('')

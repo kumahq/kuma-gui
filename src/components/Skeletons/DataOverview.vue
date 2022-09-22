@@ -116,6 +116,20 @@
             </template>
           </template>
 
+          <template #service="{ row, rowValue }">
+            <KButton
+              v-if="row.serviceInsightRoute"
+              appearance="btn-link"
+              :to="row.serviceInsightRoute"
+            >
+              {{ rowValue }}
+            </KButton>
+
+            <template v-else>
+              {{ rowValue }}
+            </template>
+          </template>
+
           <!--- total Updates --->
           <template #totalUpdates="{ row }">
             <span>
@@ -213,31 +227,29 @@
         />
       </div>
 
-      <!-- empty state if no items are found -->
-      <KEmptyState
-        v-if="tableDataIsEmpty && tableData"
-        cta-is-hidden
-      >
+      <EmptyBlock v-if="tableDataIsEmpty && tableData">
         <template #title>
           <div class="card-icon mb-3">
             <img src="@/assets/images/icon-empty-table.svg?url">
           </div>
-          <span v-if="emptyState.title">
+
+          <p v-if="emptyState.title">
             {{ emptyState.title }}
-          </span>
-          <span v-else>
-            No Items Found
-          </span>
+          </p>
+
+          <p v-else>
+            No items found
+          </p>
         </template>
+
         <template
           v-if="emptyState.message"
           #message
         >
           {{ emptyState.message }}
         </template>
-      </KEmptyState>
+      </EmptyBlock>
 
-      <!-- additional page content -->
       <div
         v-if="$slots.content"
         class="data-overview-content mt-6"
@@ -249,7 +261,7 @@
 </template>
 
 <script>
-import { KButton, KEmptyState, KIcon, KTable } from '@kong/kongponents'
+import { KButton, KIcon, KTable } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import { datadogLogEvents } from '@/datadogEvents'
@@ -267,7 +279,6 @@ export default {
     ErrorBlock,
     LoadingBlock,
     KButton,
-    KEmptyState,
     KIcon,
     KTable,
   },
@@ -295,7 +306,7 @@ export default {
     },
 
     error: {
-      type: Object,
+      type: Error,
       required: false,
       default: null,
     },

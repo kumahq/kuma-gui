@@ -89,14 +89,14 @@ export function getTopMenuItems(policies: Policy[]) {
           },
           {
             name: 'Internal',
-            link: 'internal-services',
+            link: 'service-insight-list-view',
             title: false,
             usesMeshParam: true,
             insightsFieldAccessor: 'mesh.services.internal',
           },
           {
             name: 'External',
-            link: 'external-services',
+            link: 'external-service-list-view',
             title: false,
             usesMeshParam: true,
             insightsFieldAccessor: 'mesh.services.external',

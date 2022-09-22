@@ -50,6 +50,9 @@ describe('config module', () => {
           tagline: 'Other',
           version: '0.0.0-preview.abcd1234',
           basedOnKuma: '0.0.0-preview.abcd1234',
+          hostname: '',
+          instanceId: '',
+          clusterId: '',
         },
         {
           tagline: 'Other',
@@ -62,6 +65,9 @@ describe('config module', () => {
           tagline: 'Other',
           version: '1.6.0-preview.abcd1234',
           basedOnKuma: '1.6.0-preview.abcd1234',
+          hostname: '',
+          instanceId: '',
+          clusterId: '',
         },
         {
           tagline: 'Other',
@@ -74,6 +80,9 @@ describe('config module', () => {
           tagline: 'Kuma',
           version: '1.5.3',
           basedOnKuma: '1.5.1',
+          hostname: '',
+          instanceId: '',
+          clusterId: '',
         },
         {
           tagline: 'Kuma',
@@ -85,6 +94,9 @@ describe('config module', () => {
         {
           tagline: 'Kuma',
           version: '1.5.3',
+          hostname: '',
+          instanceId: '',
+          clusterId: '',
         },
         {
           tagline: 'Kuma',

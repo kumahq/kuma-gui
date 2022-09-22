@@ -176,21 +176,49 @@ export async function setupRouter() {
                 },
                 {
                   path: 'internal-services',
-                  name: 'internal-services',
-                  component: () => import('@/views/Entities/InternalServices.vue'),
-                  meta: {
-                    title: 'Internal services',
-                    breadcrumb: 'Internal Services',
-                  },
+                  children: [
+                    {
+                      path: '',
+                      name: 'service-insight-list-view',
+                      meta: {
+                        title: 'Internal services',
+                        breadcrumb: 'Internal services',
+                      },
+                      component: () => import('@/app/services/views/ServiceInsightListView.vue'),
+                    },
+                    {
+                      path: ':service',
+                      name: 'service-insight-detail-view',
+                      meta: {
+                        title: 'Internal service',
+                        parent: 'service-insight-list-view',
+                      },
+                      component: () => import('@/app/services/views/ServiceInsightDetailView.vue'),
+                    },
+                  ],
                 },
                 {
                   path: 'external-services',
-                  name: 'external-services',
-                  component: () => import('@/views/Entities/ExternalServices.vue'),
-                  meta: {
-                    title: 'External services',
-                    breadcrumb: 'External Services',
-                  },
+                  children: [
+                    {
+                      path: '',
+                      name: 'external-service-list-view',
+                      meta: {
+                        title: 'External services',
+                        breadcrumb: 'External services',
+                      },
+                      component: () => import('@/app/services/views/ExternalServiceListView.vue'),
+                    },
+                    {
+                      path: ':service',
+                      name: 'external-service-detail-view',
+                      meta: {
+                        title: 'External service',
+                        parent: 'external-service-list-view',
+                      },
+                      component: () => import('@/app/services/views/ExternalServiceDetailView.vue'),
+                    },
+                  ],
                 },
                 ...policyRoutes,
               ],

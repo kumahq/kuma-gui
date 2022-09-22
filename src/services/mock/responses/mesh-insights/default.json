@@ -121,8 +121,8 @@
     }
   },
   "services": {
-    "total": 3,
-    "internal": 2,
-    "external": 1
+    "total": 5,
+    "internal": 3,
+    "external": 2
   }
 }

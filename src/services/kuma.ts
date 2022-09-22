@@ -1,11 +1,18 @@
 import RestClient from '@/services/restClient'
+import { ApiListResponse } from '@/api'
 import {
   DataPlane,
   DataPlaneOverview,
+  ExternalService,
+  Info,
   Mesh,
+  MeshInsight,
   Policy,
-  ResourceResponse,
+  ServiceInsight,
+  Zone,
+  ZoneOverview,
 } from '@/types'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
 
 const defaultOptions = {
   name: '',
@@ -35,11 +42,11 @@ class Kuma {
    * Info / Config
    */
 
-  public getInfo() {
+  public getInfo(): Promise<Info> {
     return this.client.get('')
   }
 
-  public async getStatus() {
+  public async getStatus(): Promise<'OK' | null> {
     let statusCode
 
     try {
@@ -57,15 +64,8 @@ class Kuma {
     return this.client.get(url)
   }
 
-  public getConfig() {
+  public getConfig(): Promise<ClientConfigInterface> {
     return this.client.get('config')
-  }
-
-  /**
-   * Custom query
-   */
-  public query(model: string, params?: any) {
-    return this.client.get(model, { params })
   }
 
   /**
@@ -73,17 +73,17 @@ class Kuma {
    */
 
   // Zone status
-  public getZonesStatus(params?: any) {
+  public getZonesStatus(params?: any): Promise<unknown> {
     return this.client.get('status/zones', { params })
   }
 
   // Zones
-  public getZones(params?: any) {
+  public getZones(params?: any): Promise<ApiListResponse<Zone>> {
     return this.client.get('zones', { params })
   }
 
   // Zones
-  public getZone({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getZone({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<Zone> {
     return this.client.get(`zones/${name}`, { params })
   }
 
@@ -92,12 +92,12 @@ class Kuma {
    */
 
   // Get all Zone Insights/Overviews
-  public getAllZoneOverviews(params?: any) {
+  public getAllZoneOverviews(params?: any): Promise<ApiListResponse<ZoneOverview>> {
     return this.client.get('zones+insights', { params })
   }
 
   // Get a single Zone Insight/Overview
-  public getZoneOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getZoneOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ZoneOverview> {
     return this.client.get(`zones+insights/${name}`, { params })
   }
 
@@ -134,12 +134,12 @@ class Kuma {
    */
 
   // get a list of all meshes
-  public getAllMeshes(params?: any): Promise<ResourceResponse<Mesh>> {
+  public getAllMeshes(params?: any): Promise<ApiListResponse<Mesh>> {
     return this.client.get('meshes', { params })
   }
 
   // get a single mesh
-  public getMesh({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getMesh({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<Mesh> {
     return this.client.get(`meshes/${name}`, { params })
   }
 
@@ -166,12 +166,12 @@ class Kuma {
    */
 
   // get all dataplane overviews
-  public getAllDataplaneOverviews(params?: any) {
+  public getAllDataplaneOverviews(params?: any): Promise<ApiListResponse<DataPlaneOverview>> {
     return this.client.get('dataplanes+insights', { params })
   }
 
   // get all dataplane overviews from a specific mesh
-  public getAllDataplaneOverviewsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getAllDataplaneOverviewsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<DataPlaneOverview>> {
     return this.client.get(`meshes/${mesh}/dataplanes+insights`, { params })
   }
 
@@ -185,17 +185,17 @@ class Kuma {
    */
 
   // get all external services
-  public getAllExternalServices(params?: any) {
+  public getAllExternalServices(params?: any): Promise<ApiListResponse<ExternalService>> {
     return this.client.get('external-services', { params })
   }
 
   // get all external services from mesh
-  public getAllExternalServicesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getAllExternalServicesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<ExternalService>> {
     return this.client.get(`meshes/${mesh}/external-services`, { params })
   }
 
   // get external service details
-  public getExternalService({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getExternalService({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ExternalService> {
     return this.client.get(`meshes/${mesh}/external-services/${name}`, { params })
   }
 
@@ -204,17 +204,17 @@ class Kuma {
    */
 
   // get all services
-  public getAllServiceInsights(params?: any) {
+  public getAllServiceInsights(params?: any): Promise<ApiListResponse<ServiceInsight>> {
     return this.client.get('service-insights', { params })
   }
 
   // get all services from mesh
-  public getAllServiceInsightsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getAllServiceInsightsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<ServiceInsight>> {
     return this.client.get(`meshes/${mesh}/service-insights`, { params })
   }
 
   // get service details
-  public getServiceInsight({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getServiceInsight({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ServiceInsight> {
     return this.client.get(`meshes/${mesh}/service-insights/${name}`, { params })
   }
 
@@ -223,12 +223,12 @@ class Kuma {
    */
 
   // Get all Mesh Insights
-  public getAllMeshInsights(params?: any) {
+  public getAllMeshInsights(params?: any): Promise<ApiListResponse<MeshInsight>> {
     return this.client.get('mesh-insights', { params })
   }
 
   // Get a single Mesh Insight
-  public getMeshInsights({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
+  public getMeshInsights({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<MeshInsight> {
     return this.client.get(`mesh-insights/${name}`, { params })
   }
 

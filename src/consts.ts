@@ -11,3 +11,18 @@ export const DISABLED = 'Disabled'
 export const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
 
 export const FEATURE_FLAG = {}
+
+export const STATUS = {
+  partially_degraded: {
+    title: 'Partially degraded',
+    appearance: 'warning',
+  },
+  offline: {
+    title: 'Offline',
+    appearance: 'danger',
+  },
+  online: {
+    title: 'Online',
+    appearance: 'success',
+  },
+}

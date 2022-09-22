@@ -81,6 +81,7 @@ export default {
   computed: {
     ...mapState({
       globalLoading: (state) => state.globalLoading,
+      pageTitle: (state) => state.pageTitle,
     }),
 
     ...mapGetters({
@@ -115,10 +116,12 @@ export default {
       }, 200)
     },
 
-    '$route.meta': function (routeMeta) {
-      const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
+    '$route.meta.title': function (pageTitle) {
+      this.setDocumentTitle(pageTitle)
+    },
 
-      document.title = routeMeta?.title ? `${routeMeta.title} | ${siteTitle}` : siteTitle
+    pageTitle(pageTitle) {
+      this.setDocumentTitle(pageTitle)
     },
   },
 
@@ -132,6 +135,15 @@ export default {
 
   methods: {
     ...mapActions(['bootstrap']),
+
+    /**
+     * @param {string | undefined} title
+     */
+    setDocumentTitle(title) {
+      const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
+
+      document.title = title ? `${title} | ${siteTitle}` : siteTitle
+    },
   },
 }
 </script>
