@@ -1,28 +1,29 @@
 <template>
   <div class="local-cps">
     <FrameSkeleton class="py-2 px-4">
+      <LoadingBlock v-if="code === null" />
+
       <KCard
-        v-if="config"
+        v-else
         border-variant="noBorder"
       >
         <template #body>
           <CodeBlock
             language="json"
-            :code="codeOutput"
+            :code="code"
           />
         </template>
+
         <template #actions>
-          <KClipboardProvider
-            v-if="codeOutput"
-            v-slot="{ copyToClipboard }"
-          >
+          <KClipboardProvider v-slot="{ copyToClipboard }">
             <KPop placement="bottom">
               <KButton
                 appearance="primary"
-                @click="() => { copyToClipboard(codeOutput) }"
+                @click="copyToClipboard(code)"
               >
                 Copy config to clipboard
               </KButton>
+
               <template #content>
                 <div>
                   <p>Config copied to clipboard!</p>
@@ -32,91 +33,29 @@
           </KClipboardProvider>
         </template>
       </KCard>
-
-      <!-- loading / error handling -->
-      <KEmptyState
-        v-if="!config"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              v-if="icon"
-              class="kong-icon--centered"
-              :color="iconColor"
-              :icon="icon"
-              size="42"
-            />
-          </div>
-          <span v-if="isLoading">
-            Data Loading...
-          </span>
-          <span v-else-if="hasError">
-            An error has occurred while trying to load this data.
-          </span>
-        </template>
-      </KEmptyState>
     </FrameSkeleton>
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { KButton, KCard, KClipboardProvider, KPop } from '@kong/kongponents'
 
+import { storeKey } from '@/store/store'
 import CodeBlock from '@/components/CodeBlock.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton.vue'
+import LoadingBlock from '@/components/LoadingBlock.vue'
 
-export default {
-  name: 'DiagnosticsView',
+const store = useStore(storeKey)
 
-  components: {
-    FrameSkeleton,
-    CodeBlock,
-  },
-  data() {
-    return {
-      isLoading: true,
-      hasError: false,
-    }
-  },
-  computed: {
-    ...mapGetters({
-      config: 'config/getConfig',
-    }),
-    icon() {
-      if (this.isLoading) {
-        return 'spinner'
-      } else if (this.hasError) {
-        return 'warning'
-      }
+const code = computed(() => {
+  const config = store.getters['config/getConfig']
 
-      return false
-    },
-    iconColor() {
-      if (this.hasError) {
-        return 'var(--yellow-300)'
-      }
-
-      return '#ccc'
-    },
-    codeOutput() {
-      const code = this.config
-
-      return JSON.stringify(code, null, 2)
-    },
-  },
-}
-</script>
-
-<style lang="scss" scoped>
-.card-icon {
-  text-align: center;
-
-  img,
-  svg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  if (config) {
+    return JSON.stringify(config, null, 2)
+  } else {
+    return null
   }
-}
-</style>
+})
+</script>

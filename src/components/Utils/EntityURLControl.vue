@@ -23,8 +23,18 @@
 </template>
 
 <script>
+import { KClipboardProvider, KPop, KButton, KIcon } from '@kong/kongponents'
+
 export default {
   name: 'EntityURLControl',
+
+  components: {
+    KClipboardProvider,
+    KPop,
+    KButton,
+    KIcon,
+  },
+
   props: {
     name: {
       type: String,

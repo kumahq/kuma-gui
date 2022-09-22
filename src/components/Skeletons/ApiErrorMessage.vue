@@ -11,12 +11,13 @@
         secondary-color="var(--yellow-300)"
         size="64"
       />
-      Unable to reach the API
+
+      <p>Unable to reach the API</p>
     </template>
+
     <template #message>
       <p>
-        Please double check to make sure it is up and running
-        <span v-if="url">, and it is reachable at <code>{{ url }}</code></span>
+        Please double check to make sure it is up and running <span v-if="url">, and it is reachable at <code>{{ url }}</code></span>
       </p>
     </template>
   </KEmptyState>

@@ -1,7 +1,7 @@
 export interface TableDataParams {
   getSingleEntity?: (
     options: { mesh?: string | null, path?: string, name?: string | null },
-    params: { size: number, offset: string | null },
+    params?: { size: number, offset: string | null },
   ) => any
   getAllEntities?: (
     params: { size: number, offset: string | null }

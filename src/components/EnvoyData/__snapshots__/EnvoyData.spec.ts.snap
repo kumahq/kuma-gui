@@ -7,7 +7,7 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
   >
     <section
       class="empty-state-wrapper"
-      data-testid="status-info-loading-section"
+      data-testid="loading-block"
       data-v-5b55eb64=""
     >
       <div
@@ -60,7 +60,11 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
 
             </span>
           </div>
-           Data Loading... 
+          
+          <p>
+            Loading data …
+          </p>
+          
           
         </div>
       </div>

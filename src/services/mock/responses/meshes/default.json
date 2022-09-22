@@ -25,7 +25,7 @@
       },
       {
         "name": "ca-2",
-        "type": "builtin"
+        "type": "BUILTIN"
       }
     ]
   }

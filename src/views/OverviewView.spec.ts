@@ -23,8 +23,8 @@ describe('OverviewView.vue', () => {
           component: TestComponent,
         },
         {
-          path: '/dataplanes',
-          name: 'dataplanes',
+          path: '/data-planes',
+          name: 'data-plane-list-view',
           component: TestComponent,
         },
       ],

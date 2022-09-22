@@ -171,19 +171,19 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                   aria-label="Generate Dataplane Token"
                                   class="noBorder kong-card"
-                                  data-v-5adb63fa=""
+                                  data-v-52c90d54=""
                                 >
                                   <div
                                     class="k-card-header d-flex mb-3"
-                                    data-v-5adb63fa=""
+                                    data-v-52c90d54=""
                                   >
                                     <!---->
                                     <div
                                       class="k-card-title mb-3"
-                                      data-v-5adb63fa=""
+                                      data-v-52c90d54=""
                                     >
                                       <h4
-                                        data-v-5adb63fa=""
+                                        data-v-52c90d54=""
                                       >
                                         
                                         Generate Dataplane Token
@@ -192,7 +192,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                     </div>
                                     <div
                                       class="k-card-actions"
-                                      data-v-5adb63fa=""
+                                      data-v-52c90d54=""
                                     >
                                       
                                       
@@ -206,7 +206,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                         
                                         <button
                                           class="medium rounded primary k-button"
-                                          data-v-29036f3a=""
+                                          data-v-6bcbf05d=""
                                           type="button"
                                         >
                                           
@@ -252,11 +252,11 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                   <!---->
                                   <div
                                     class="k-card-content d-flex"
-                                    data-v-5adb63fa=""
+                                    data-v-52c90d54=""
                                   >
                                     <div
                                       class="k-card-body"
-                                      data-v-5adb63fa=""
+                                      data-v-52c90d54=""
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
                                       
@@ -295,14 +295,6 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                   </div>
                                 </section>
                               </div>
-                              <div>
-                                <!-- loading state -->
-                                <!--v-if-->
-                                <!-- no data to load -->
-                                <!--v-if-->
-                                <!-- error -->
-                                <!--v-if-->
-                              </div>
                             </div>
                             <div
                               class="code-view"
@@ -314,19 +306,19 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                   aria-label="Start Dataplane Process"
                                   class="noBorder kong-card"
-                                  data-v-5adb63fa=""
+                                  data-v-52c90d54=""
                                 >
                                   <div
                                     class="k-card-header d-flex mb-3"
-                                    data-v-5adb63fa=""
+                                    data-v-52c90d54=""
                                   >
                                     <!---->
                                     <div
                                       class="k-card-title mb-3"
-                                      data-v-5adb63fa=""
+                                      data-v-52c90d54=""
                                     >
                                       <h4
-                                        data-v-5adb63fa=""
+                                        data-v-52c90d54=""
                                       >
                                         
                                         Start Dataplane Process
@@ -335,7 +327,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                     </div>
                                     <div
                                       class="k-card-actions"
-                                      data-v-5adb63fa=""
+                                      data-v-52c90d54=""
                                     >
                                       
                                       
@@ -349,7 +341,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                         
                                         <button
                                           class="medium rounded primary k-button"
-                                          data-v-29036f3a=""
+                                          data-v-6bcbf05d=""
                                           type="button"
                                         >
                                           
@@ -395,11 +387,11 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                                   <!---->
                                   <div
                                     class="k-card-content d-flex"
-                                    data-v-5adb63fa=""
+                                    data-v-52c90d54=""
                                   >
                                     <div
                                       class="k-card-body"
-                                      data-v-5adb63fa=""
+                                      data-v-52c90d54=""
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                     >
                                       
@@ -480,14 +472,6 @@ networking:
                                     <!---->
                                   </div>
                                 </section>
-                              </div>
-                              <div>
-                                <!-- loading state -->
-                                <!--v-if-->
-                                <!-- no data to load -->
-                                <!--v-if-->
-                                <!-- error -->
-                                <!--v-if-->
                               </div>
                             </div>
                             
@@ -613,7 +597,7 @@ networking:
           >
             <button
               class="medium rounded outline k-button"
-              data-v-29036f3a=""
+              data-v-6bcbf05d=""
               style=""
               type="button"
             >
@@ -627,7 +611,7 @@ networking:
             </button>
             <button
               class="medium rounded primary k-button"
-              data-v-29036f3a=""
+              data-v-6bcbf05d=""
               style="display: none;"
               type="button"
             >

@@ -6,12 +6,12 @@ exports[`EntityTag.vue renders basic snapshot 1`] = `
     class="entity-tag"
   >
     <span
-      class="entity-tag__label entity-tag__label--kuma-io-service"
+      class="entity-tag__label entity-tag__label--is-kuma-io-label"
     >
       kuma.io/service
     </span>
     <span
-      class="entity-tag__value entity-tag__value--backend"
+      class="entity-tag__value"
     >
       backend
     </span>

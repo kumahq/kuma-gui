@@ -652,7 +652,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
       >
         <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-29036f3a=""
+          data-v-6bcbf05d=""
           type="button"
         >
           
@@ -666,7 +666,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-29036f3a=""
+            data-v-6bcbf05d=""
             type="button"
           >
             
@@ -682,7 +682,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-29036f3a=""
+              data-v-6bcbf05d=""
               type="button"
             >
               

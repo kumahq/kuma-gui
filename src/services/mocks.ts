@@ -42,10 +42,16 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/circuit-breakers/cb1', () => import('./mock/responses/meshes/default/circuit-breakers/cb1.json')],
   ['meshes/default/circuit-breakers/cb2', () => import('./mock/responses/meshes/default/circuit-breakers/cb2.json')],
   ['meshes/default/dataplanes', () => import('./mock/responses/meshes/default/dataplanes.json')],
+  ['meshes/default/dataplanes/backend', () => import('./mock/responses/meshes/default/dataplanes/backend.json')],
+  ['meshes/default/dataplanes/cluster-1.backend-02', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.backend-02.json')],
+  ['meshes/default/dataplanes/cluster-1.backend-03', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.backend-03.json')],
+  ['meshes/default/dataplanes/cluster-1.gateway-01', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.gateway-01.json')],
+  ['meshes/default/dataplanes/cluster-1.ingress-02', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.ingress-02.json')],
   ['meshes/default/dataplanes/dataplane-test-456', () => import('./mock/responses/meshes/default/dataplanes/dataplane-test-456.json')],
-  ['meshes/default/dataplanes/gateway-dp-87qntx', () => import('./mock/responses/meshes/default/dataplanes/gateway-dp-87qntx.json')],
+  ['meshes/default/dataplanes/db', () => import('./mock/responses/meshes/default/dataplanes/db.json')],
+  ['meshes/default/dataplanes/frontend', () => import('./mock/responses/meshes/default/dataplanes/frontend.json')],
   ['meshes/default/dataplanes/ingress-dp-test-123', () => import('./mock/responses/meshes/default/dataplanes/ingress-dp-test-123.json')],
-  ['meshes/default/dataplanes/test-dp-02', () => import('./mock/responses/meshes/default/dataplanes/test-dp-02.json')],
+  ['meshes/default/dataplanes/no-subscriptions', () => import('./mock/responses/meshes/default/dataplanes/no-subscriptions.json')],
   ['meshes/default/dataplanes+insights', () => import('./mock/responses/meshes/default/dataplanes+insights.json')],
   ['meshes/default/dataplanes+insights/backend', () => import('./mock/responses/meshes/default/dataplanes+insights/backend.json')],
   ['meshes/default/dataplanes+insights/cluster-1.backend-02', () => import('./mock/responses/meshes/default/dataplanes+insights/cluster-1.backend-02.json')],
@@ -94,12 +100,16 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/traffic-traces/tt-3', () => import('./mock/responses/meshes/default/traffic-traces/tt-3.json')],
 
   ['meshes/hello-world', () => import('./mock/responses/meshes/hello-world.json')],
+  ['meshes/hello-world/dataplanes', () => import('./mock/responses/meshes/hello-world/dataplanes.json')],
+  ['meshes/hello-world/dataplanes+insights', () => import('./mock/responses/meshes/hello-world/dataplanes+insights.json')],
   ['meshes/hello-world/health-checks/hello-health-check', () => import('./mock/responses/meshes/hello-world/health-checks/hello-health-check.json')],
   ['meshes/hello-world/proxytemplates', () => import('./mock/responses/meshes/hello-world/proxytemplates.json')],
   ['meshes/hello-world/proxytemplates/pt-123', () => import('./mock/responses/meshes/hello-world/proxytemplates/pt-123.json')],
   ['meshes/hello-world/traffic-traces/tt-123', () => import('./mock/responses/meshes/hello-world/traffic-traces/tt-123.json')],
 
   ['meshes/kong-mania-12', () => import('./mock/responses/meshes/kong-mania-12.json')],
+  ['meshes/kong-mania-12/dataplanes', () => import('./mock/responses/meshes/kong-mania-12/dataplanes.json')],
+  ['meshes/kong-mania-12/dataplanes+insights', () => import('./mock/responses/meshes/kong-mania-12/dataplanes+insights.json')],
   ['meshes/kong-mania-12/health-checks/testing-health-checks', () => import('./mock/responses/meshes/kong-mania-12/health-checks/testing-health-checks.json')],
   ['meshes/kong-mania-12/health-checks/web-to-banana', () => import('./mock/responses/meshes/kong-mania-12/health-checks/web-to-banana.json')],
   ['meshes/kong-mania-12/traffic-traces/my-silly-mesh-name', () => import('./mock/responses/meshes/kong-mania-12/traffic-traces/my-silly-mesh-name.json')],
@@ -152,32 +162,23 @@ export const setupHandlers = (apiURL: string): RestHandler[] => {
     rest.get(getApiPath('dataplanes+insights'), async (req, res, ctx) => {
       const gateway = req.url.searchParams.get('gateway')
 
+      let data
       if (gateway === 'false') {
-        // standard
-        return res(
-          ctx.json(
-            await loadMockFile(() => import('./mock/responses/dataplanes+insights__only_standard.json')),
-          ),
-        )
+        data = await loadMockFile(() => import('./mock/responses/dataplanes+insights__only-standard.json'))
+      } else if (gateway === 'true') {
+        data = await loadMockFile(() => import('./mock/responses/dataplanes+insights__only-gateways.json'))
+      } else {
+        const offset = req.url.searchParams.get('offset')
+        const hasPositiveOffset = offset !== null && parseInt(offset) > 0
+
+        if (hasPositiveOffset) {
+          data = await loadMockFile(() => import('./mock/responses/dataplanes+insights-page-2.json'))
+        } else {
+          data = await loadMockFile(() => import('./mock/responses/dataplanes+insights.json'))
+        }
       }
 
-      if (gateway === 'true') {
-        // gateway
-        return res(
-          ctx.json(
-            await loadMockFile(() => import('./mock/responses/dataplanes+insights__only-gateways.json')),
-          ),
-        )
-      }
-
-      if (!gateway) {
-        // all
-        return res(
-          ctx.json(
-            await loadMockFile(() => import('./mock/responses/dataplanes+insights.json')),
-          ),
-        )
-      }
+      return res(ctx.json(data))
     }),
   )
 

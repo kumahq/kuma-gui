@@ -203,7 +203,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
   >
     <button
       class="medium rounded primary k-button"
-      data-v-29036f3a=""
+      data-v-6bcbf05d=""
       type="button"
     >
       
@@ -216,7 +216,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     </button>
     <button
       class="medium rounded primary k-button"
-      data-v-29036f3a=""
+      data-v-6bcbf05d=""
       type="button"
     >
       

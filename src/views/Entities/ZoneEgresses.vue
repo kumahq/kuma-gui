@@ -17,7 +17,6 @@
             v-if="$route.query.ns"
             class="back-button"
             appearance="primary"
-            size="small"
             :to="{
               name: 'zoneegresses'
             }"

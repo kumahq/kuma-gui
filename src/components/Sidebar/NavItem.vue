@@ -1,13 +1,15 @@
 <template>
   <div
+    class="nav-item"
     :class="[
       { 'is-active': isActive },
       { 'is-menu-item': isMenuItem },
       { 'is-disabled': isDisabled },
       { 'is-title': title },
-      { 'is-nested': nested }
+      { 'is-nested': nested },
+      { 'nav-item--is-primary': !isSecondary },
+      { 'nav-item--is-secondary': isSecondary },
     ]"
-    class="nav-item"
     :data-testid="link"
   >
     <router-link
@@ -21,14 +23,12 @@
         <slot name="item-icon">
           <KIcon
             v-if="hasIcon && icon"
-            width="18"
-            height="18"
             color="var(--SidebarIconColor)"
             :icon="icon"
           />
         </slot>
       </div>
-      <!-- nav title separator -->
+
       <div
         v-if="title"
         class="title-text"
@@ -37,7 +37,7 @@
           {{ name }}
         </span>
       </div>
-      <!-- nav link -->
+
       <div
         v-else
         class="nav-link"
@@ -113,6 +113,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    isSecondary: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   data() {
@@ -206,11 +211,6 @@ export default {
     padding: 8px 20px;
   }
 
-  .nav-icon {
-    display: flex;
-    padding-right: 20px;
-  }
-
   .title-text {
     display: flex;
     align-items: center;
@@ -241,44 +241,60 @@ export default {
     font-size: var(--type-sm);
 
     a {
-      padding: 5px 15px;
+      padding: var(--spacing-xxs) var(--spacing-md);
     }
   }
+}
+.nav-item--is-primary.is-active::before {
+  content: '';
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--SidebarIconColor);
+}
+
+.nav-item--is-secondary {
+  margin: 0 0 var(--spacing-xxs) var(--subnavHorizontalMargin);
+  border-radius: 5px;
+
+  &:hover {
+    background: var(--SidebarLinkBGColor);
+  }
+
+  &.is-active {
+    font-weight: 500;
+    background-color: var(--SidebarLinkBGColor);
+  }
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  color: var(--SidebarIconColor);
+  padding-right: var(--spacing-lg);
 }
 
 .amount {
-  @apply absolute text-xs font-normal top-0 bottom-0 m-auto rounded w-6 h-5 flex justify-center items-center border border-white;
-
-  background-color: var(--gray-2);
+  position: absolute;
+  top: 0;
   right: 8px;
-
-  &--empty {
-    background-color: var(--gray-4);
-  }
+  bottom: 0;
+  width: 1.5rem;
+  height: 1.25rem;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 400;
+  background-color: var(--gray-2);
 }
-</style>
 
-<style lang="scss">
-// Only add left border to main nav item
-.main-nav .nav-item {
-  position: relative;
-
-  &:hover:not(.is-active) {
-    color: var(--SidebarIconColor);
-
-    svg[class] path {
-      fill: var(--SidebarIconColor);
-    }
-  }
-
-  &.is-active:before {
-    position: absolute;
-    display: block;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background-color: var(--SidebarIconColor);
-    content: '';
-  }
+.amount--empty {
+  background-color: var(--gray-4);
 }
 </style>

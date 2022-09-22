@@ -4,7 +4,7 @@ exports[`DocumentationLink.vue renders snapshot 1`] = `
 <div>
   <a
     class="small rounded outline k-button docs-link"
-    data-v-29036f3a=""
+    data-v-6bcbf05d=""
     href="https://kuma.io/docs/1.3.2/policies/timeout/"
     target="_blank"
     type="button"

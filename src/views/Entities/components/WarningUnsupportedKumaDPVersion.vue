@@ -1,6 +1,6 @@
 <template>
   <span>
-    Unsupported version of Kuma DP (<strong>{{ payload.kumaDpVersion }}</strong>)
+    Unsupported version of Kuma DP (<strong>{{ payload.kumaDp }}</strong>)
   </span>
 </template>
 

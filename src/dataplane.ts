@@ -1,70 +1,80 @@
-import { satisfies } from 'semver'
-
 import { humanReadableDate } from '@/helpers'
 import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
 import Kuma from '@/services/kuma'
-import { Dataplane, LabelValue, DataplaneInsight, DataplaneOverview, DiscoverySubscription } from '@/types'
-
-/*
-dpTags takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
-It flattens common tags so we don't display them twice.
-
-Takes a Dataplane received from backend and construct the list of tags in form of array of objects with label and value.
-It flattens common tags so we don't display them twice.
-@example
-
-type: Dataplane
-mesh: default
-name: cluster-1.ingress-01
-networking:
-  inbound:
-    - port: 1234
-      tags:
-        kuma.io/service: backend
-        version: 1
-    - port: 1235
-      tags:
-        kuma.io/service: backend-api
-        version: 1
-
-Will produce:
-[
-  { label: 'kuma.io/service', value: 'backend'},
-  { label: 'kuma.io/service', value: 'backend-api'},
-  { label: 'version', value: '1'},
-]
- */
+import {
+  Compatibility,
+  DataPlaneEntityMtls,
+  DataPlaneInsight,
+  DataPlaneNetworking,
+  DataPlaneOverview,
+  DataPlaneStatus,
+  DiscoverySubscription,
+  LabelValue,
+  Version,
+} from '@/types'
 
 type TODO = any
 
-export function dpTags(dataplane: Dataplane): LabelValue[] {
-  let tags: TODO[] = []
+/**
+ * Takes a data plane and constructs the list of tags. It removes duplicate tags so we don't display them twice. Note that tags are only considered a duplicate if both their key and their value are the same.
+ *
+ * **Example**:
+ *
+ * Data plane:
+ *
+ * ```yaml
+ * type: Dataplane
+ * mesh: default
+ * name: cluster-1.ingress-01
+ * networking:
+ *   inbound:
+ *     - port: 1234
+ *       tags:
+ *         kuma.io/service: backend
+ *         version: 1
+ *     - port: 1235
+ *       tags:
+ *         kuma.io/service: backend-api
+ *         version: 1
+ * ```
+ *
+ * Output:
+ *
+ * ```js
+ * [
+ *   { label: 'kuma.io/service', value: 'backend'},
+ *   { label: 'kuma.io/service', value: 'backend-api'},
+ *   { label: 'version', value: '1'},
+ * ]
+ * ```
+ */
+export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelValue[] {
+  let tags: string[] = []
 
-  const inbounds = dataplane.networking.inbound || null
-  if (inbounds) {
-    tags = inbounds.flatMap(inbound => Object.entries(inbound.tags)).map(([key, value]) => `${key}=${value}`)
+  if (dataplane.networking.inbound) {
+    tags = dataplane.networking.inbound
+      .flatMap((inbound) => Object.entries(inbound.tags))
+      .map(([key, value]) => `${key}=${value}`)
   }
 
-  // gateway data plane has no inbounds, but has tags embedded in gateway branch
-  const gateway = dataplane.networking.gateway || null
-  if (gateway) {
-    tags = Object.entries(gateway.tags).map(([key, value]) => `${key}=${value}`)
+  if (dataplane.networking.gateway) {
+    // gateway data plane has no inbounds, but has tags embedded in gateway branch
+    tags = Object.entries(dataplane.networking.gateway.tags).map(([key, value]) => `${key}=${value}`)
   }
 
-  tags = Array.from(new Set(tags)) // remove duplicates
+  const uniqueTags = Array.from(new Set(tags))
 
-  return tags
-    .map(tagPair => tagPair.split('='))
-    .map(([key, value]) => ({
-      label: key,
-      value,
-    }))
+  uniqueTags.sort((tagPairA, tagPairB) => tagPairA.localeCompare(tagPairB))
+
+  return uniqueTags
+    .map((tagPair) => tagPair.split('='))
+    .map(([label, value]) => ({ label, value }))
 }
 
 /*
 getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
  */
-export function getStatus(dataplane: Dataplane, dataplaneInsight: DataplaneInsight = { subscriptions: [] }) {
+export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight = { subscriptions: [] }): { status: DataPlaneStatus, reason: string[] } {
   const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
 
   const errors = inbounds
@@ -102,7 +112,7 @@ export function getStatus(dataplane: Dataplane, dataplaneInsight: DataplaneInsig
 getStatus takes DataplaneInsight and returns map of versions
  */
 
-export function getVersions(dataplaneInsight: DataplaneInsight): Record<string, string> | null {
+export function getVersions(dataplaneInsight: DataPlaneInsight): Record<string, string> | null {
   if (!dataplaneInsight.subscriptions?.length) {
     return null
   }
@@ -152,28 +162,6 @@ export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLI
   }
 }
 
-export function getDataplane(dataplaneOverview: DataplaneOverview) {
-  const { name, mesh, type } = dataplaneOverview
-
-  return {
-    name,
-    mesh,
-    type,
-    ...dataplaneOverview.dataplane,
-  }
-}
-
-export function getDataplaneInsight(dataplaneOverview: DataplaneOverview) {
-  const { name, mesh, type } = dataplaneOverview
-
-  return {
-    name,
-    mesh,
-    type,
-    ...dataplaneOverview.dataplaneInsight,
-  }
-}
-
 export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpVersion: string) {
   const tag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
@@ -191,7 +179,7 @@ export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpV
           compatible: dpVersion === kumaCp.version,
           payload: {
             zoneVersion: kumaCp.version,
-            kumaDpVersion: dpVersion,
+            kumaDp: dpVersion,
           },
         }
       }
@@ -205,16 +193,18 @@ export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpV
   return { compatible: true }
 }
 
-export function parseMTLSData(mtls: TODO) {
-  const rawExpDate = new Date(mtls.certificateExpirationTime)
+export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {
+  const { mTLS } = dataPlaneOverview.dataplaneInsight
+
+  if (mTLS === undefined) {
+    return null
+  }
+
+  const rawExpDate = new Date(mTLS.certificateExpirationTime)
   // this prevents any weird date shifting
   const fixedExpDate = new Date(rawExpDate.getTime() + rawExpDate.getTimezoneOffset() * 60000)
   // assembled to display date and time (in 24-hour format)
-  const assembledExpDate = `
-                      ${fixedExpDate.toLocaleDateString(
-    'en-US',
-  )} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}
-                    `
+  const assembledExpDate = `${fixedExpDate.toLocaleDateString('en-US')} ${fixedExpDate.getHours()}:${fixedExpDate.getMinutes()}:${fixedExpDate.getSeconds()}`
 
   return {
     certificateExpirationTime: {
@@ -223,46 +213,48 @@ export function parseMTLSData(mtls: TODO) {
     },
     lastCertificateRegeneration: {
       label: 'Last Generated',
-      value: humanReadableDate(mtls.lastCertificateRegeneration),
+      value: humanReadableDate(mTLS.lastCertificateRegeneration),
     },
     certificateRegenerations: {
       label: 'Regenerations',
-      value: mtls.certificateRegenerations,
+      value: mTLS.certificateRegenerations,
     },
   }
 }
 
-export function getDataplaneType(dataplane: { networking: { gateway?: TODO } } = { networking: {} }) {
-  const { networking = {} } = dataplane
-  const { gateway } = networking
+/**
+ * @returns `'Standard' | 'Gateway' | 'Gateway (builtin)' | 'Gateway (provided)'`
+ */
+export function getDataplaneType(dataplane: { networking: DataPlaneNetworking }): string {
+  const { gateway } = dataplane.networking
 
   if (gateway) {
-    const type = gateway?.type ? ` / ${gateway.type}` : ''
-
-    return `Gateway${type}`
+    return 'Gateway' + (gateway.type !== undefined ? ` (${gateway.type})` : '')
+  } else {
+    return 'Standard'
   }
-
-  return 'Standard'
 }
 
-export function compatibilityKind(version: { kumaDp: TODO, envoy: TODO }) {
-  const { kumaDp = {}, envoy = {} } = version
-  const { version: kumaDpVersion, kumaCpCompatible = true } = kumaDp
-  const { version: envoyVersion, kumaDpCompatible = true } = envoy
+export function compatibilityKind(version: Version): Compatibility {
+  const isKumaCpCompatible = version.kumaDp?.kumaCpCompatible ?? true
 
-  if (!kumaCpCompatible) {
+  if (!isKumaCpCompatible) {
     return {
       kind: INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
-      payload: { kumaDpVersion },
+      payload: {
+        kumaDp: version.kumaDp.version,
+      },
     }
   }
 
-  if (!kumaDpCompatible) {
+  const isKumaDpCompatible = version.envoy?.kumaDpCompatible ?? true
+
+  if (!isKumaDpCompatible) {
     return {
       kind: INCOMPATIBLE_UNSUPPORTED_ENVOY,
       payload: {
-        envoy: envoyVersion,
-        kumaDp: kumaDpVersion,
+        envoy: version.envoy.version,
+        kumaDp: version.kumaDp.version,
       },
     }
   }

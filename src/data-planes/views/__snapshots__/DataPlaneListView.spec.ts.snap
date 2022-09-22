@@ -1,0 +1,3011 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataPlaneListView.vue matches snapshot 1`] = `
+<div
+  class="data-planes-container"
+>
+  <div
+    class="data-planes-content component-frame"
+  >
+    <div
+      class="data-overview"
+      data-testid="data-overview"
+    >
+      <div
+        class="data-table-controls mb-2"
+      >
+        
+        <div>
+          <label
+            class="mr-2"
+            for="data-planes-type-filter"
+          >
+             Type: 
+          </label>
+          <select
+            data-testid="data-planes-type-filter"
+            id="data-planes-type-filter"
+          >
+            
+            <option
+              value="All"
+            >
+              All
+            </option>
+            <option
+              value="Standard"
+            >
+              Standard
+            </option>
+            <option
+              value="Gateway (builtin)"
+            >
+              Gateway (builtin)
+            </option>
+            <option
+              value="Gateway (provided)"
+            >
+              Gateway (provided)
+            </option>
+            
+          </select>
+        </div>
+        <div
+          class="k-dropdown k-dropdown-menu"
+          data-v-55adadaa=""
+        >
+          
+          <div
+            aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+            aria-expanded="false"
+            data-testid="k-dropdown-menu-popover"
+            data-v-55adadaa=""
+            data-v-9bbde9b2=""
+            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+            role="button"
+          >
+            
+            <div
+              class="k-dropdown-trigger dropdown-trigger"
+              data-testid="k-dropdown-trigger"
+              data-v-55adadaa=""
+              label=""
+              test-mode="false"
+            >
+              
+              <div
+                data-v-55adadaa=""
+              >
+                <button
+                  class="medium rounded outline k-button k-dropdown-btn"
+                  data-testid="k-dropdown-btn"
+                  data-v-55adadaa=""
+                  data-v-6bcbf05d=""
+                  type="button"
+                >
+                  
+                  <span
+                    class="k-button-icon kong-icon-cogwheel kong-icon"
+                    data-v-637de6fa=""
+                    data-v-6bcbf05d=""
+                  >
+                    <svg
+                      fill="var(--KButtonOutlineColor, var(--blue-500, color(blue-500)))"
+                      height="16"
+                      role="img"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      
+  
+                      <title>
+                        Settings
+                      </title>
+                      
+  
+                      <path
+                        d="m18.417 4.27-2.695-2.694c-.404.223-.821.452-1.239.68-.445.243-.883.492-1.32.735-.169.094-.337.027-.398-.155-.27-.903-.545-1.805-.815-2.701-.013-.047-.027-.095-.047-.135h-3.82a239.015 239.015 0 0 0-.774 2.83c-.054.195-.222.269-.398.168-.815-.452-1.63-.903-2.438-1.354-.074-.04-.128-.074-.216.006-.875.863-1.758 1.718-2.64 2.574-.014.013-.02.027-.04.047.275.498.558 1.003.835 1.509.195.357.397.714.592 1.07.095.176.04.317-.148.371-.91.276-1.812.546-2.721.822A.792.792 0 0 0 0 8.09v3.82l1.819.505c.33.094.66.182.99.27.243.067.303.195.182.417-.451.808-.896 1.617-1.347 2.425-.02.04-.04.08-.054.101l2.782 2.782c.202-.114.438-.242.673-.37l1.866-1.038c.203-.114.337-.053.398.169.242.896.492 1.785.74 2.68.014.048.028.095.048.149h3.82l.404-1.34c.155-.506.303-1.011.451-1.516.06-.189.195-.25.37-.148.816.451 1.63.902 2.439 1.354.047.027.101.053.088.006.437-.404.882-.795 1.306-1.212.458-.445.89-.916 1.348-1.368.094-.094.08-.155.027-.256-.452-.808-.903-1.616-1.348-2.425-.1-.175-.027-.343.169-.397.896-.243 1.785-.492 2.68-.741.048-.014.095-.027.149-.047V8.09c-.445-.134-.89-.27-1.34-.404-.506-.155-1.011-.303-1.516-.451a.248.248 0 0 1-.148-.37c.451-.816.902-1.63 1.354-2.44.02-.06.047-.114.067-.154Zm-3.59 5.686c.013 2.64-2.109 4.77-4.777 4.796-2.68.02-4.796-2.081-4.802-4.782a4.78 4.78 0 0 1 4.782-4.803c2.62 0 4.783 2.155 4.796 4.79Z"
+                        fill="var(--KButtonOutlineColor, var(--blue-500, color(blue-500)))"
+                      />
+                      
+
+                    </svg>
+                    
+
+                  </span>
+                  
+                  
+                  Columns
+                  
+                  <!---->
+                </button>
+              </div>
+              
+            </div>
+            
+            <transition-stub
+              data-v-9bbde9b2=""
+            >
+              <div
+                class="k-dropdown-popover mt-1 undefined hide-caret k-popover"
+                data-v-9bbde9b2=""
+                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                role="region"
+                style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+              >
+                <!---->
+                <div
+                  class="k-popover-content"
+                  data-v-9bbde9b2=""
+                >
+                  
+                  <ul
+                    class="k-dropdown-list dropdown-list"
+                    data-testid="k-dropdown-list"
+                    data-v-55adadaa=""
+                  >
+                    
+                    <div>
+                      
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Status"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-0"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-0"
+                              type="checkbox"
+                            />
+                             Status
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Mesh"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-1"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-1"
+                              type="checkbox"
+                            />
+                             Mesh
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Type"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-2"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-2"
+                              type="checkbox"
+                            />
+                             Type
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Service"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-3"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-3"
+                              type="checkbox"
+                            />
+                             Service
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Protocol"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-4"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-4"
+                              type="checkbox"
+                            />
+                             Protocol
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Last-Connected"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-5"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-5"
+                              type="checkbox"
+                            />
+                             Last Connected
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Last-Updated"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-6"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-6"
+                              type="checkbox"
+                            />
+                             Last Updated
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Total-Updates"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-7"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-7"
+                              type="checkbox"
+                            />
+                             Total Updates
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Kuma-DP version"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-8"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-8"
+                              type="checkbox"
+                            />
+                             Kuma DP version
+                          </label>
+                          
+                        </div>
+                      </li>
+                      <li
+                        class="k-dropdown-item w-100 table-header-selector-item"
+                        data-testid="k-dropdown-item-Envoy-version"
+                        data-v-e92e37f2=""
+                      >
+                        <div
+                          class="k-dropdown-item-trigger"
+                          data-testid="k-dropdown-item-trigger"
+                          data-v-e92e37f2=""
+                        >
+                          
+                          <label
+                            class="k-checkbox table-header-selector-item-checkbox"
+                            for="data-plane-table-header-checkbox-9"
+                          >
+                            <input
+                              class="k-input"
+                              id="data-plane-table-header-checkbox-9"
+                              type="checkbox"
+                            />
+                             Envoy version
+                          </label>
+                          
+                        </div>
+                      </li>
+                      
+                    </div>
+                    
+                  </ul>
+                  
+                </div>
+                <!---->
+              </div>
+            </transition-stub>
+          </div>
+          
+        </div>
+        <a
+          class="medium rounded primary k-button add-dp-button"
+          data-testid="data-plane-create-data-plane-button"
+          data-v-6bcbf05d=""
+          type="button"
+        >
+          
+          <!---->
+          
+          
+          <span
+            class="custom-control-icon"
+          >
+             + 
+          </span>
+           Create data plane proxy 
+          
+          <!---->
+        </a>
+        <!--v-if-->
+        
+        <button
+          class="medium rounded primary k-button refresh-button"
+          data-v-6bcbf05d=""
+          type="button"
+        >
+          
+          <!---->
+          
+          
+          <span
+            class="refresh-icon custom-control-icon"
+          >
+            <svg
+              viewBox="0 0 36 36"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                fill="#fff"
+                fill-rule="nonzero"
+              >
+                <path
+                  d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
+                />
+              </g>
+            </svg>
+          </span>
+          <span>
+            Refresh
+          </span>
+          
+          <!---->
+        </button>
+      </div>
+      <div
+        class="data-overview-content"
+      >
+        <!-- data -->
+        <div
+          class="data-overview-table"
+        >
+          <div
+            class=""
+            data-testid="data-overview-table"
+            data-v-54b66ee0=""
+            is-clickable=""
+          >
+            <section
+              class="k-table-wrapper"
+              data-v-54b66ee0=""
+            >
+              <table
+                class="has-hover is-clickable k-table"
+                data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                data-v-54b66ee0=""
+              >
+                <thead
+                  class=""
+                  data-v-54b66ee0=""
+                >
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                  >
+                    
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Status
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Name
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Mesh
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Type
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Service
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Protocol
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Last Updated
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class=""
+                          data-v-54b66ee0=""
+                        >
+                          Kuma DP version
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                        data-v-54b66ee0=""
+                      >
+                        
+                        <span
+                          class="sr-only"
+                          data-v-54b66ee0=""
+                        >
+                          Details
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody
+                  data-v-54b66ee0=""
+                >
+                  
+                  <tr
+                    class="is-selected"
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        backend
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      backend
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/17/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        cluster-1.backend-02
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      backend
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/19/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        cluster-1.backend-03
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      backend
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/19/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        cluster-1.gateway-01
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Gateway (BUILTIN)
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      gateway
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/19/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        cluster-1.ingress-02
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      ingress
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/19/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        dataplane-test-456
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      kuma-example-backend
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      10/24/2019
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        —
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        db
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      db
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/17/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        unknown
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        frontend
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      frontend
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      2/17/2021
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="with-warnings"
+                      >
+                        1.0.6
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-warning kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            version="1.1"
+                            viewBox="0 0 48 42"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                          >
+                            
+  
+                            <title>
+                              Warning
+                            </title>
+                            
+  
+                            <g
+                              fill="var(--black-75)"
+                              fill-rule="evenodd"
+                              id="Page-1"
+                              stroke="none"
+                              stroke-width="1"
+                            >
+                              
+    
+                              <g
+                                id="icn-warning-64x"
+                              >
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                  fill="var(--black-75)"
+                                  fill-rule="nonzero"
+                                  id="Triangle"
+                                />
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                  fill="var(--yellow-300)"
+                                  fill-rule="nonzero"
+                                  id="Path"
+                                  type="secondary"
+                                />
+                                
+      
+                                <path
+                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                  fill="var(--black-75)"
+                                  id="!"
+                                />
+                                
+    
+                              </g>
+                              
+  
+                            </g>
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        ingress-dp-test-123
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      kuma-example-backend
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      10/24/2019
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        —
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    data-v-54b66ee0=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class="entity-status is-offline"
+                      >
+                        <span
+                          class="entity-status__dot"
+                        />
+                        <span
+                          class="entity-status__label"
+                        >
+                          Offline
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        no-subscriptions
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        default
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      Standard
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      no-subscriptions
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        —
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                      data-v-54b66ee0=""
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        data-v-6bcbf05d=""
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  
+                </tbody>
+              </table>
+              <!---->
+            </section>
+          </div>
+          <div
+            class="pagination"
+          >
+            <!--v-if-->
+            <button
+              class="medium rounded primary k-button"
+              data-v-6bcbf05d=""
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Next › 
+              
+              <!---->
+            </button>
+          </div>
+        </div>
+        <!-- empty state if no items are found -->
+        <!--v-if-->
+        <!-- additional page content -->
+        <!--v-if-->
+      </div>
+    </div>
+  </div>
+  <div
+    class="data-planes-sidebar component-frame"
+  >
+    <div
+      class="entity-summary entity-section-list"
+    >
+      <section>
+        <h3
+          class="entity-title"
+        >
+          <span
+            class="kutil-sr-only"
+          >
+            Data plane:
+          </span>
+          <a>
+            backend
+          </a>
+          <div
+            class="status status--success"
+            data-testid="data-plane-status-badge"
+          >
+            online
+          </div>
+        </h3>
+        <div
+          class="definition"
+        >
+          <span>
+            Mesh:
+          </span>
+          <span>
+            default
+          </span>
+        </div>
+      </section>
+      <section>
+        <h4>
+          Tags
+        </h4>
+        <div
+          class="entity-tag-list"
+        >
+          
+          <span
+            class="entity-tag"
+          >
+            <span
+              class="entity-tag__label entity-tag__label--is-kuma-io-label"
+            >
+              kuma.io/protocol
+            </span>
+            <span
+              class="entity-tag__value"
+            >
+              http
+            </span>
+          </span>
+          <span
+            class="entity-tag"
+          >
+            <span
+              class="entity-tag__label entity-tag__label--is-kuma-io-label"
+            >
+              kuma.io/service
+            </span>
+            <span
+              class="entity-tag__value"
+            >
+              backend
+            </span>
+          </span>
+          
+        </div>
+      </section>
+      <section>
+        <h4>
+          Dependencies
+        </h4>
+        
+        <div
+          class="definition"
+        >
+          <span>
+            envoy:
+          </span>
+          <span>
+            1.16.2
+          </span>
+        </div>
+        <div
+          class="definition"
+        >
+          <span>
+            kumaDp:
+          </span>
+          <span>
+            1.0.7
+          </span>
+        </div>
+        <div
+          class="definition"
+        >
+          <span>
+            coredns:
+          </span>
+          <span>
+            1.8.3
+          </span>
+        </div>
+        
+        <!--v-if-->
+      </section>
+      
+      <section>
+        <h4>
+          Insights
+        </h4>
+        <div
+          class="entity-section-list"
+        >
+          
+          <div>
+            <div
+              class="definition"
+              data-testid="data-plane-connect-time-0"
+            >
+              <span>
+                Connect time:
+              </span>
+              <span>
+                February 17, 2021 @ 7:33:36
+              </span>
+            </div>
+            <div
+              class="definition"
+              data-testid="data-plane-disconnect-time-0"
+            >
+              <span>
+                Disconnect time:
+              </span>
+              <span>
+                —
+              </span>
+            </div>
+            <div
+              class="definition"
+            >
+              <span>
+                Control plane instance ID:
+              </span>
+              <span>
+                foo
+              </span>
+            </div>
+            <details>
+              <summary>
+                 Responses (acknowledged / sent) 
+              </summary>
+              
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-0-0"
+              >
+                <span>
+                  CDS:
+                </span>
+                <span>
+                  1 / 1
+                </span>
+              </div>
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-0-1"
+              >
+                <span>
+                  EDS:
+                </span>
+                <span>
+                  2 / 2
+                </span>
+              </div>
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-0-2"
+              >
+                <span>
+                  LDS:
+                </span>
+                <span>
+                  2 / 2
+                </span>
+              </div>
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-0-3"
+              >
+                <span>
+                  RDS:
+                </span>
+                <span>
+                  0 / 0
+                </span>
+              </div>
+              
+            </details>
+          </div>
+          <div>
+            <div
+              class="definition"
+              data-testid="data-plane-connect-time-1"
+            >
+              <span>
+                Connect time:
+              </span>
+              <span>
+                February 17, 2021 @ 7:33:36
+              </span>
+            </div>
+            <div
+              class="definition"
+              data-testid="data-plane-disconnect-time-1"
+            >
+              <span>
+                Disconnect time:
+              </span>
+              <span>
+                February 17, 2021 @ 7:33:36
+              </span>
+            </div>
+            <div
+              class="definition"
+            >
+              <span>
+                Control plane instance ID:
+              </span>
+              <span>
+                foo
+              </span>
+            </div>
+            <details>
+              <summary>
+                 Responses (acknowledged / sent) 
+              </summary>
+              
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-1-0"
+              >
+                <span>
+                  CDS:
+                </span>
+                <span>
+                  1 / 1
+                </span>
+              </div>
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-1-1"
+              >
+                <span>
+                  EDS:
+                </span>
+                <span>
+                  2 / 2
+                </span>
+              </div>
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-1-2"
+              >
+                <span>
+                  LDS:
+                </span>
+                <span>
+                  2 / 2
+                </span>
+              </div>
+              <div
+                class="definition"
+                data-testid="data-plane-subscription-status-1-3"
+              >
+                <span>
+                  RDS:
+                </span>
+                <span>
+                  0 / 0
+                </span>
+              </div>
+              
+            </details>
+          </div>
+          
+        </div>
+      </section>
+      <section>
+        <div
+          class="yaml-view"
+        >
+          <div
+            class="yaml-view-content"
+          >
+            <div
+              class="k-tabs"
+              data-v-6bcd6661=""
+            >
+              <ul
+                aria-label="ktabs"
+                data-v-6bcd6661=""
+                role="tablist"
+              >
+                
+                <li
+                  aria-controls="panel-0"
+                  aria-selected="true"
+                  class="active tab-item"
+                  data-v-6bcd6661=""
+                  id="universal-tab"
+                  role="tab"
+                  tabindex="0"
+                >
+                  <a
+                    class="tab-link"
+                    data-v-6bcd6661=""
+                  >
+                    
+                    Universal
+                    
+                  </a>
+                </li>
+                <li
+                  aria-controls="panel-1"
+                  aria-selected="false"
+                  class="tab-item"
+                  data-v-6bcd6661=""
+                  id="kubernetes-tab"
+                  role="tab"
+                  tabindex="0"
+                >
+                  <a
+                    class="tab-link"
+                    data-v-6bcd6661=""
+                  >
+                    
+                    Kubernetes
+                    
+                  </a>
+                </li>
+                
+              </ul>
+              
+              <div
+                aria-labelledby="universal-tab"
+                class="tab-container"
+                data-v-6bcd6661=""
+                id="panel-0"
+                role="tabpanel"
+                tabindex="0"
+              >
+                
+                
+                <div
+                  aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  aria-expanded="false"
+                  data-v-9bbde9b2=""
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  role="button"
+                >
+                  
+                  <button
+                    class="small rounded primary k-button copy-button"
+                    data-v-6bcbf05d=""
+                    type="button"
+                  >
+                    
+                    <!---->
+                    
+                    
+                     Copy Universal YAML 
+                    
+                    <!---->
+                  </button>
+                  
+                  <transition-stub
+                    data-v-9bbde9b2=""
+                  >
+                    <div
+                      class="k-popover"
+                      data-v-9bbde9b2=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="region"
+                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                    >
+                      <!---->
+                      <div
+                        class="k-popover-content"
+                        data-v-9bbde9b2=""
+                      >
+                        
+                        <div>
+                          <p>
+                            Entity copied to clipboard!
+                          </p>
+                        </div>
+                        
+                      </div>
+                      <!---->
+                    </div>
+                  </transition-stub>
+                </div>
+                
+                
+                <!-- eslint-disable vue/no-v-html -->
+                <pre
+                  class="code-block language-yaml"
+                  data-testid="code-block"
+                >
+                  <code>
+                    <span
+                      class="token key atrule"
+                    >
+                      type
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     Dataplane
+
+                    <span
+                      class="token key atrule"
+                    >
+                      name
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     backend
+
+                    <span
+                      class="token key atrule"
+                    >
+                      mesh
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     default
+
+                    <span
+                      class="token key atrule"
+                    >
+                      networking
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+  
+                    <span
+                      class="token key atrule"
+                    >
+                      address
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     127.0.0.1
+  
+                    <span
+                      class="token key atrule"
+                    >
+                      inbound
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+    
+                    <span
+                      class="token punctuation"
+                    >
+                      -
+                    </span>
+                     
+                    <span
+                      class="token key atrule"
+                    >
+                      port
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+                    <span
+                      class="token number"
+                    >
+                      7776
+                    </span>
+                    
+      
+                    <span
+                      class="token key atrule"
+                    >
+                      servicePort
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+                    <span
+                      class="token number"
+                    >
+                      7777
+                    </span>
+                    
+      
+                    <span
+                      class="token key atrule"
+                    >
+                      serviceAddress
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     127.0.0.1
+      
+                    <span
+                      class="token key atrule"
+                    >
+                      tags
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+        
+                    <span
+                      class="token key atrule"
+                    >
+                      kuma.io/protocol
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     http
+        
+                    <span
+                      class="token key atrule"
+                    >
+                      kuma.io/service
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     backend
+  
+                    <span
+                      class="token key atrule"
+                    >
+                      outbound
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+    
+                    <span
+                      class="token punctuation"
+                    >
+                      -
+                    </span>
+                     
+                    <span
+                      class="token key atrule"
+                    >
+                      port
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+                    <span
+                      class="token number"
+                    >
+                      10001
+                    </span>
+                    
+      
+                    <span
+                      class="token key atrule"
+                    >
+                      tags
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+        
+                    <span
+                      class="token key atrule"
+                    >
+                      kuma.io/service
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     frontend
+                  </code>
+                </pre>
+                <!-- eslint-enable vue/no-v-html -->
+                
+                
+              </div>
+              <div
+                aria-labelledby="kubernetes-tab"
+                class="tab-container"
+                data-v-6bcd6661=""
+                id="panel-1"
+                role="tabpanel"
+                tabindex="0"
+              >
+                <!---->
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    </div>
+  </div>
+</div>
+`;

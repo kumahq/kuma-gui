@@ -8,16 +8,16 @@ type ApiErrorConstructorOptions = {
   message: string,
   code?: string | null,
   statusCode: number,
-  causes?: ApiErrorCause[] | null
+  causes?: ApiErrorCause[]
 }
 
 export class ApiError extends Error {
   title: string | null
   code: string | null
-  causes: ApiErrorCause[] | null
+  causes: ApiErrorCause[]
   statusCode: number
 
-  constructor({ title = null, message, code = null, statusCode, causes = null }: ApiErrorConstructorOptions) {
+  constructor({ title = null, message, code = null, statusCode, causes = [] }: ApiErrorConstructorOptions) {
     super(message)
 
     this.name = 'ApiError'

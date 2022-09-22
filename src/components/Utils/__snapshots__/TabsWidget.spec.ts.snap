@@ -88,9 +88,6 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
         
       </div>
       <div>
-        <!-- loading state -->
-        <!--v-if-->
-        <!-- error has occurred -->
         <!--v-if-->
       </div>
     </div>

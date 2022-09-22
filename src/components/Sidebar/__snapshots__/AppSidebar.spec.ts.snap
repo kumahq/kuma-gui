@@ -3,18 +3,17 @@
 exports[`AppSidebar.vue renders snapshot 1`] = `
 <div>
   <aside
-    class="has-subnav subnav-expanded"
-    id="the-sidebar"
+    class="app-sidebar"
   >
     <div
       class="main-nav"
     >
       <div
-        class="top-nav"
+        class="main-nav__top"
       >
         
         <div
-          class="is-menu-item nav-item"
+          class="nav-item is-menu-item nav-item--is-primary"
           data-testid="home"
           iconcustom="[object Object]"
           subnav="[object Object]"
@@ -30,9 +29,6 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               </div>
               
             </div>
-            <!-- nav title separator -->
-            
-            <!-- nav link -->
             <div
               class="nav-link"
             >
@@ -41,17 +37,16 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               <!--v-if-->
               
             </div>
-            
           </a>
         </div>
         
       </div>
       <div
-        class="bottom-nav"
+        class="main-nav__bottom"
       >
         
         <div
-          class="is-menu-item nav-item"
+          class="nav-item is-menu-item nav-item--is-primary"
           data-testid="diagnostics"
         >
           <a>
@@ -62,8 +57,6 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               <span
                 class="kong-icon-gearFilled kong-icon"
                 data-v-637de6fa=""
-                height="18"
-                width="18"
               >
                 <svg
                   height="16"
@@ -91,9 +84,6 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               </span>
               
             </div>
-            <!-- nav title separator -->
-            
-            <!-- nav link -->
             <div
               class="nav-link"
             >
@@ -102,14 +92,13 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
               <!--v-if-->
               
             </div>
-            
           </a>
         </div>
         
       </div>
     </div>
     <div
-      class="secondary-nav"
+      class="secondary-nav app-sidebar__secondary"
     >
       <div
         class="mt-3"
@@ -141,10 +130,6 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         </div>
         
       </div>
-      <!-- &lt;div
-      class="arrow"
-      @click="handleToggle"
-    /&gt; -->
       <div
         class="subnav-title"
       >
@@ -162,14 +147,11 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
       
       
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="global-overview"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -178,19 +160,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             <!--v-if-->
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="mesh-child"
         pathflip="true"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -203,16 +181,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item is-title nav-item"
+        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
         data-testid=""
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
           <div
             class="title-text"
           >
@@ -225,14 +201,11 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="zones"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -245,18 +218,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="zoneingresses"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -269,18 +238,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="zoneegresses"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -293,16 +258,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item is-title nav-item"
+        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
         data-testid=""
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
           <div
             class="title-text"
           >
@@ -315,14 +278,11 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="internal-services"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -335,18 +295,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
         data-testid="external-services"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
@@ -359,16 +315,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item is-title nav-item"
+        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
         data-testid=""
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
           <div
             class="title-text"
           >
@@ -381,19 +335,16 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         </a>
       </div>
       <div
-        class="is-menu-item nav-item"
-        data-testid="dataplanes"
+        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        data-testid="data-plane-list-view"
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
           <div
             class="nav-link"
           >
             
-            All 
+            Data planes 
             <span
               class="amount amount--empty"
             >
@@ -401,64 +352,14 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </span>
             
           </div>
-          
         </a>
       </div>
       <div
-        class="is-menu-item is-nested nav-item"
-        data-testid="standard-dataplanes"
-      >
-        <a>
-          <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
-          <div
-            class="nav-link"
-          >
-            
-            Standard 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-            
-          </div>
-          
-        </a>
-      </div>
-      <div
-        class="is-menu-item is-nested nav-item"
-        data-testid="gateway-dataplanes"
-      >
-        <a>
-          <!--v-if-->
-          <!-- nav title separator -->
-          
-          <!-- nav link -->
-          <div
-            class="nav-link"
-          >
-            
-            Gateway 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-            
-          </div>
-          
-        </a>
-      </div>
-      <div
-        class="is-menu-item is-title nav-item"
+        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
         data-testid=""
       >
         <a>
           <!--v-if-->
-          <!-- nav title separator -->
           <div
             class="title-text"
           >

@@ -16,7 +16,6 @@
           <KButton
             class="add-mesh-button"
             appearance="primary"
-            size="small"
             :to="{ path: '/wizard/mesh' }"
             @click="onCreateClick"
           >

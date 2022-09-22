@@ -1115,6 +1115,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
               <g
                 clip-path="url("#id-270")"
                 role="region"
+                style="cursor: pointer;"
               >
                 <g>
                   <g>
@@ -2003,19 +2004,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Create a virtual Mesh"
         class="border kong-card card-item"
-        data-v-5adb63fa=""
+        data-v-52c90d54=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <h4
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
             >
               
               Create a virtual Mesh
@@ -2024,7 +2025,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             
             
@@ -2033,11 +2034,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <div
             class="k-card-body"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -2056,7 +2057,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
               
               <a
                 class="medium rounded primary k-button"
-                data-v-29036f3a=""
+                data-v-6bcbf05d=""
                 type="button"
               >
                 
@@ -2080,19 +2081,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Connect data plane proxies"
         class="border kong-card card-item"
-        data-v-5adb63fa=""
+        data-v-52c90d54=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <h4
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
             >
               
               Connect data plane proxies
@@ -2101,7 +2102,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             
             
@@ -2110,11 +2111,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <div
             class="k-card-body"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -2129,7 +2130,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
               
               <a
                 class="medium rounded primary k-button"
-                data-v-29036f3a=""
+                data-v-6bcbf05d=""
                 type="button"
               >
                 
@@ -2153,19 +2154,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Apply null policies"
         class="border kong-card card-item"
-        data-v-5adb63fa=""
+        data-v-52c90d54=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <h4
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
             >
               
               Apply null policies
@@ -2174,7 +2175,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             
             
@@ -2183,11 +2184,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <div
             class="k-card-body"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -2202,7 +2203,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
               
               <a
                 class="medium rounded primary k-button"
-                data-v-29036f3a=""
+                data-v-6bcbf05d=""
                 href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
                 type="button"
               >
@@ -2227,19 +2228,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Resources"
         class="border kong-card card-item"
-        data-v-5adb63fa=""
+        data-v-52c90d54=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <h4
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
             >
               
               Resources
@@ -2248,7 +2249,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             
             
@@ -2257,11 +2258,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <div
             class="k-card-body"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             

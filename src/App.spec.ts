@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
-import { KAlert, KBadge, KButton, KEmptyState, KIcon, KPop } from '@kong/kongponents'
+import { KAlert, KBadge, KButton, KEmptyState, KIcon, KModal, KPop } from '@kong/kongponents'
 
 import App from './App.vue'
 import TestComponent from '@/testUtils/TestComponent.vue'
@@ -25,8 +25,12 @@ function renderComponent({ status = 'OK', tagline = 'Kuma' }: { status?: string,
         namespaced: true,
         state: {
           status: null,
-          tagline: null,
+          tagline: 'Kuma',
           version: null,
+          clientConfig: {
+            mode: 'global',
+            environment: 'universal',
+          },
         },
         getters: {
           getStatus: (state) => {
@@ -40,10 +44,32 @@ function renderComponent({ status = 'OK', tagline = 'Kuma' }: { status?: string,
             return state.tagline
           },
           getVersion: (state) => state.version,
+          getEnvironment: (state) => state.clientConfig?.environment,
+          getMulticlusterStatus: () => true,
+        },
+      },
+      onboarding: {
+        namespaced: true,
+        getters: {
+          showOnboarding: () => false,
+        },
+      },
+      sidebar: {
+        namespaced: true,
+        state: {
+          insights: {},
+        },
+      },
+      notifications: {
+        namespaced: true,
+        getters: {
+          amountOfActions: () => undefined,
         },
       },
     },
     state: {
+      policies: [],
+      meshes: [{}],
       globalLoading: true,
     },
     actions: {
@@ -56,16 +82,17 @@ function renderComponent({ status = 'OK', tagline = 'Kuma' }: { status?: string,
   return render(App, {
     global: {
       plugins: [router, store],
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
       components: {
         KAlert,
         KBadge,
         KButton,
         KEmptyState,
         KIcon,
+        KModal,
         KPop,
-      },
-      stubs: {
-        'router-link': RouterLinkStub,
       },
     },
   })

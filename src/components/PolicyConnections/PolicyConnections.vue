@@ -25,7 +25,7 @@
           >
             <router-link
               :to="{
-                name: 'dataplanes',
+                name: 'data-plane-list-view',
                 query: {
                   ns: dataplane.dataplane.name,
                 },

@@ -1,0 +1,503 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataPlaneDetails matches snapshot 1`] = `
+<div
+  class="tab-container"
+  data-testid="tab-container"
+>
+  <header
+    class="tab__header"
+  >
+    
+    <div>
+      <h3>
+         DPP: backend
+      </h3>
+    </div>
+    <div>
+      <div
+        data-testid="entity-url-control"
+      >
+        
+        <div
+          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          aria-expanded="false"
+          data-v-9bbde9b2=""
+          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          role="button"
+        >
+          
+          <button
+            class="small rounded outline k-button"
+            data-v-6bcbf05d=""
+            type="button"
+          >
+            
+            <span
+              class="kong-icon-externalLink kong-icon"
+              data-v-637de6fa=""
+            >
+              <svg
+                height="12"
+                viewBox="0 0 12 12"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <title>
+                  External Link
+                </title>
+                
+  
+                <path
+                  d="M8.24308 1.5C7.83269 1.5 7.5 1.16710138 7.5.75c0-.41421356.33823-.75.74308-.75h3.00568C11.6666 0 12 .336341 12 .75123866v3.00567786C12 4.1673102 11.6671 4.5 11.25 4.5c-.41421 0-.75-.3382314-.75-.74308348V2.625L6.53246 6.59254c-.28982.2898217-.76955.2953689-1.06202.0029022l-.06588-.0658844c-.29098-.2909742-.29117-.7679483.0029-1.0620178L9.375 1.5H8.24308zm-6.74753 0C.67089 1.5 0 2.1695784 0 2.99554521v7.50890959C0 11.3291147.66958 12 1.49555 12h7.5089C9.82911 12 10.5 11.3304216 10.5 10.5044548V6.75H9v3.75H1.5V3h3.75V1.5H1.49555z"
+                  fill="#A3BBCC"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+            
+            
+             Copy URL
+            
+            <!---->
+          </button>
+          
+          <transition-stub
+            data-v-9bbde9b2=""
+          >
+            <div
+              class="k-popover"
+              data-v-9bbde9b2=""
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              role="region"
+              style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+            >
+              <!---->
+              <div
+                class="k-popover-content"
+                data-v-9bbde9b2=""
+              >
+                
+                <div>
+                  <p>
+                    URL copied to clipboard!
+                  </p>
+                </div>
+                
+              </div>
+              <!---->
+            </div>
+          </transition-stub>
+        </div>
+        
+      </div>
+    </div>
+    
+  </header>
+  <div
+    class="tab__content-container"
+  >
+    <div
+      class="k-tabs"
+      data-v-6bcd6661=""
+    >
+      <ul
+        aria-label="ktabs"
+        data-v-6bcd6661=""
+        role="tablist"
+      >
+        
+        <li
+          aria-controls="panel-0"
+          aria-selected="true"
+          class="active tab-item"
+          data-v-6bcd6661=""
+          id="overview-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            Overview
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-1"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="insights-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            DPP Insights
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-2"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="dpp-policies-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            Policies
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-3"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="xds-configuration-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            XDS Configuration
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-4"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="envoy-stats-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            Stats
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-5"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="envoy-clusters-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            Clusters
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-6"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="mtls-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            Certificate Insights
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-7"
+          aria-selected="false"
+          class="tab-item"
+          data-v-6bcd6661=""
+          id="yaml-tab"
+          role="tab"
+          tabindex="0"
+        >
+          <a
+            class="tab-link"
+            data-v-6bcd6661=""
+          >
+            
+            YAML
+            
+          </a>
+        </li>
+        
+      </ul>
+      
+      <div
+        aria-labelledby="overview-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-0"
+        role="tabpanel"
+        tabindex="0"
+      >
+        
+        
+        <div>
+          <div
+            class="label-list-content"
+          >
+            <section
+              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              class="noBorder kong-card"
+              data-v-52c90d54=""
+            >
+              <!---->
+              <!---->
+              <div
+                class="k-card-content d-flex"
+                data-v-52c90d54=""
+              >
+                <div
+                  class="k-card-body"
+                  data-v-52c90d54=""
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                >
+                  
+                  <div
+                    class="label-list__col-wrapper multi-col"
+                  >
+                    
+                    <div>
+                      <ul>
+                        
+                        <li>
+                          <h4>
+                            type
+                          </h4>
+                          <div>
+                            Dataplane
+                          </div>
+                        </li>
+                        <li>
+                          <h4>
+                            name
+                          </h4>
+                          <div>
+                            backend
+                          </div>
+                        </li>
+                        <li>
+                          <h4>
+                            mesh
+                          </h4>
+                          <div>
+                            default
+                          </div>
+                        </li>
+                        <li>
+                          <h4>
+                            status
+                          </h4>
+                          <div>
+                            <div
+                              class="entity-status"
+                            >
+                              <span
+                                class="entity-status__label"
+                              >
+                                Online
+                              </span>
+                            </div>
+                            
+                            
+                          </div>
+                        </li>
+                        
+                      </ul>
+                    </div>
+                    <div>
+                      <h4>
+                        Tags
+                      </h4>
+                      <p>
+                        
+                        <span
+                          class="tag-cols"
+                        >
+                          <span>
+                            kuma.io/protocol: 
+                          </span>
+                          <span>
+                            http
+                          </span>
+                        </span>
+                        <span
+                          class="tag-cols"
+                        >
+                          <span>
+                            kuma.io/service: 
+                          </span>
+                          <span>
+                            backend
+                          </span>
+                        </span>
+                        
+                      </p>
+                      
+                      <h4>
+                        Versions
+                      </h4>
+                      <p>
+                        
+                        <span
+                          class="tag-cols"
+                        >
+                          <span>
+                            envoy: 
+                          </span>
+                          <span>
+                            1.16.2
+                          </span>
+                        </span>
+                        <span
+                          class="tag-cols"
+                        >
+                          <span>
+                            kumaDp: 
+                          </span>
+                          <span>
+                            1.0.7
+                          </span>
+                        </span>
+                        <span
+                          class="tag-cols"
+                        >
+                          <span>
+                            coredns: 
+                          </span>
+                          <span>
+                            1.8.3
+                          </span>
+                        </span>
+                        
+                      </p>
+                      
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+                <!---->
+              </div>
+            </section>
+          </div>
+        </div>
+        
+        
+      </div>
+      <div
+        aria-labelledby="insights-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-1"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="dpp-policies-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-2"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="xds-configuration-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-3"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="envoy-stats-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-4"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="envoy-clusters-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-5"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="mtls-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-6"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      <div
+        aria-labelledby="yaml-tab"
+        class="tab-container"
+        data-v-6bcd6661=""
+        id="panel-7"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      
+    </div>
+    <div>
+      <!--v-if-->
+    </div>
+  </div>
+</div>
+`;

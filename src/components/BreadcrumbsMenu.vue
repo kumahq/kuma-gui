@@ -27,7 +27,8 @@ export default {
         const key = r.redirect !== undefined && r.redirect.name !== undefined ? r.redirect.name : r.name
 
         /** this adds the mesh name and url to the breadcrumb chain */
-        if (this.isCurrentRoute(r) && this.pageMesh) {
+        const isCurrentRoute = this.isCurrentRoute(r)
+        if (isCurrentRoute && this.pageMesh) {
           items.push({
             key: this.pageMesh,
             to: { path: `/meshes/${this.pageMesh}` },
@@ -36,14 +37,16 @@ export default {
           })
         }
 
-        if (this.isCurrentRoute(r) && r.meta.parent && r.meta.parent !== 'undefined') {
+        if (isCurrentRoute && r.meta.parent && r.meta.parent !== 'undefined') {
+          const parentRoute = this.$router.resolve({ name: r.meta.parent })
+
           items.push({
             key: r.meta.parent,
-            to: { name: r.meta.parent },
-            title: r.meta.title,
-            text: r.meta.breadcrumb || r.meta.title,
+            to: { name: parentRoute.name },
+            title: parentRoute.meta.title,
+            text: r.meta.breadcrumb || parentRoute.meta.title,
           })
-        } else if (this.isCurrentRoute(r) && !r.meta.excludeAsBreadcrumb) {
+        } else if (isCurrentRoute && !r.meta.excludeAsBreadcrumb) {
           items.push({
             key,
             to: { name: key },

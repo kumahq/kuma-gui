@@ -53,7 +53,7 @@ function createApiError(response: Response, data: any): ApiError {
   let title = null
   let message = 'An error has occurred while trying to load this data.'
   let code = null
-  let causes = null
+  let causes = []
 
   if (typeof data === 'string' && data.length > 0) {
     message = data

@@ -28,7 +28,7 @@
           },
           {
             "name": "ca-2",
-            "type": "builtin"
+            "type": "BUILTIN"
           }
         ]
       }
@@ -42,7 +42,7 @@
         "backends": [
           {
             "name": "ca-1",
-            "type": "builtin"
+            "type": "BUILTIN"
           },
           {
             "name": "ca-2",

@@ -10,17 +10,17 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           class="noBorder kong-card"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <!---->
           <!---->
           <div
             class="k-card-content d-flex"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <div
               class="k-card-body"
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
@@ -76,12 +76,6 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
           </div>
         </section>
       </div>
-      <!-- loading state -->
-      <!--v-if-->
-      <!-- no data to load -->
-      <!--v-if-->
-      <!-- error -->
-      <!--v-if-->
     </div>
   </div>
 </div>

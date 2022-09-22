@@ -6,19 +6,61 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
     class="onboarding-check"
   >
     <div
-      class="success alert icon k-alert dismissible"
-      data-v-53188520=""
+      class="success icon k-alert dismissible"
+      data-v-1910ef98=""
       role="alert"
     >
+      <!---->
+      <!---->
+      <div
+        class="k-alert-msg-text has-dismiss-icon"
+        data-v-1910ef98=""
+      >
+        <!---->
+        <div
+          class="k-alert-msg"
+          data-v-1910ef98=""
+        >
+          
+          <div
+            class="alert-content"
+          >
+            <div>
+              <strong>
+                Welcome to Kuma!
+              </strong>
+               We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you! 
+            </div>
+            <div>
+              <router-link
+                class="small rounded primary k-button action-button"
+                data-v-6bcbf05d=""
+                to="[object Object]"
+                type="button"
+              >
+                
+                <!---->
+                
+                
+                 Get Started 
+                
+                <!---->
+              </router-link>
+            </div>
+          </div>
+          
+        </div>
+        <!---->
+      </div>
       <button
         aria-label="Close"
         class="close"
-        data-v-53188520=""
+        data-v-1910ef98=""
         type="button"
       >
         <span
           class="success kong-icon-close kong-icon"
-          data-v-53188520=""
+          data-v-1910ef98=""
           data-v-637de6fa=""
         >
           <svg
@@ -47,51 +89,10 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
         </span>
       </button>
       <div
-        class="success k-alert-action ml-3"
-        data-v-53188520=""
+        class="success k-alert-action"
+        data-v-1910ef98=""
       >
         <!---->
-        <!---->
-      </div>
-      <!---->
-      <!---->
-      <div
-        class="k-alert-msg-text has-dismiss-icon"
-        data-v-53188520=""
-      >
-        <div
-          class="k-alert-msg"
-          data-v-53188520=""
-        >
-          
-          <div
-            class="alert-content"
-          >
-            <div>
-              <strong>
-                Welcome to Kuma!
-              </strong>
-               We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you! 
-            </div>
-            <div>
-              <router-link
-                class="small rounded primary k-button action-button"
-                data-v-29036f3a=""
-                to="[object Object]"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                 Get Started 
-                
-                <!---->
-              </router-link>
-            </div>
-          </div>
-          
-        </div>
         <!---->
       </div>
     </div>

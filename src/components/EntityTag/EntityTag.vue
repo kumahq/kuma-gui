@@ -2,96 +2,65 @@
   <span class="entity-tag">
     <span
       class="entity-tag__label"
-      :class="`entity-tag__label--${cleanTagLabel(tag.label)}`"
+      :class="{ 'entity-tag__label--is-kuma-io-label': isKumaIoLabel }"
     >
       {{ tag.label }}
     </span>
-    <span
-      class="entity-tag__value"
-      :class="`entity-tag__value--${tag.value}`"
-    >
+
+    <span class="entity-tag__value">
       {{ tag.value }}
     </span>
   </span>
 </template>
 
-<script>
-export default {
-  name: 'EntityTag',
-  props: {
-    tag: {
-      type: Object,
-      required: true,
-    },
+<script lang="ts" setup>
+import { computed, PropType } from 'vue'
+
+import { LabelValue } from '@/types'
+
+const props = defineProps({
+  tag: {
+    type: Object as PropType<LabelValue>,
+    required: true,
   },
-  methods: {
-    cleanTagLabel(val) {
-      return val.toLowerCase().replace('.', '-').replace('/', '-')
-    },
-  },
-}
+})
+
+const isKumaIoLabel = computed(() => props.tag.label.toLowerCase().includes('kuma.io/'))
 </script>
 
 <style lang="scss" scoped>
+$border-radius: 5px;
+
 .entity-tag {
+  display: inline-flex;
+  align-items: stretch;
   font-size: var(--type-xs);
-  background-color: #fff;
-  font-family: var(--font-family-mono);
+  border-radius: $border-radius;
+}
 
-  &:not(:last-of-type) {
-    margin-right: 0.5rem;
-    margin-bottom: 0.25rem;
-  }
-
-  @media (max-width: 1136px) {
-    display: flex;
-    flex-direction: column;
-    font-size: 11px;
-
-    .entity-tag__label {
-      border-radius: 5px 5px 0 0;
-    }
-
-    .entity-tag__value {
-      border-radius: 0 0 5px 5px;
-    }
-  }
-
-  @media (min-width: 1137px) {
-    display: inline-flex;
-    align-tags: stretch;
-  }
+.entity-tag__label,
+.entity-tag__value {
+  border: 1px solid transparent;
+  padding: 0.1em 0.5em;
 }
 
 .entity-tag__label {
-  --color: var(--blue-1);
-
-  position: relative;
-  background-color: var(--color);
+  border-right: none;
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
   color: #fff;
-  text-transform: uppercase;
-  border-radius: 5px 0 0 5px;
-  padding: 0.15rem 0.5rem;
-  // box-shadow: inset 0 0 0 1px var(--color);
-  box-shadow: inset 0 0 0 1px var(--color);
+  background-color: var(--blue-1);
 }
 
-// this gives kuma-specific native tag a different color
-// to differentiate them from user-created tag.
-span[class*='kuma-io-'] {
-  --color: var(--brand-color-6);
-
-  background-color: var(--color);
-  box-shadow: inset 0 0 0 1px var(--color);
+.entity-tag__label--is-kuma-io-label {
+  background-color: var(--brand-color-6);
 }
 
 .entity-tag__value {
-  background-color: #fff;
-  border-radius: 0 5px 5px 0;
-  padding: 0.15rem 0.5rem 0.15rem 0.75rem;
-  color: #000;
-  font-weight: 500;
-  box-shadow: inset 0 0 0 1px #ccc;
-  // box-shadow: inset 0 0 0 1px currentColor;
+  border-color: var(--grey-400);
+  border-left: none;
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  background-color: var(--white);
 }
 </style>

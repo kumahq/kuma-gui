@@ -1,9 +1,9 @@
 import { createStore } from 'vuex'
+import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
-import { flushPromises } from '@vue/test-utils'
 import ZoneEgresses from './ZoneEgresses.vue'
 
 jest.mock('@/helpers', () => {
@@ -34,6 +34,9 @@ function renderComponent() {
   return render(ZoneEgresses, {
     global: {
       plugins: [store],
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
       components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
       mocks: {
         $route: {

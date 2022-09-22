@@ -104,6 +104,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import { KCard, KPop, KIcon, KBadge } from '@kong/kongponents'
+
 import Kuma from '@/services/kuma'
 import StatusInfo from '@/components/Utils/StatusInfo.vue'
 import AccordionList from '@/components/Accordion/AccordionList.vue'
@@ -122,6 +124,10 @@ export default {
     StatusInfo,
     AccordionList,
     AccordionItem,
+    KCard,
+    KPop,
+    KIcon,
+    KBadge,
   },
   props: {
     mesh: {

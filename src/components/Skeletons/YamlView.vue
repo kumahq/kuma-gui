@@ -1,172 +1,126 @@
 <template>
   <div class="yaml-view">
+    <LoadingBlock v-if="isLoading" />
+
+    <ErrorBlock v-else-if="hasError" />
+
+    <EmptyBlock v-else-if="isEmpty" />
+
     <div
-      v-if="isReady"
+      v-else
       class="yaml-view-content"
     >
-      <KCard
-        v-if="!isLoading && !isEmpty"
-        :title="yamlTitle"
-        border-variant="noBorder"
+      <KTabs
+        :key="environment"
+        v-model="activeTab.hash"
+        :tabs="tabs"
       >
-        <template #body>
-          <KTabs
-            :key="environment"
-            v-model="activeTab.hash"
-            :tabs="tabs"
-          >
-            <template #universal>
-              <KClipboardProvider v-slot="{ copyToClipboard }">
-                <KPop placement="bottom">
-                  <KButton
-                    class="copy-button"
-                    appearance="primary"
-                    size="small"
-                    @click="() => {
-                      copyToClipboard(yamlContent.universal)
-                    }"
-                  >
-                    Copy Universal YAML
-                  </KButton>
+        <template #universal>
+          <KClipboardProvider v-slot="{ copyToClipboard }">
+            <KPop placement="bottom">
+              <KButton
+                class="copy-button"
+                appearance="primary"
+                size="small"
+                @click="() => {
+                  copyToClipboard(yamlContent.universal)
+                }"
+              >
+                Copy Universal YAML
+              </KButton>
 
-                  <template #content>
-                    <div>
-                      <p>Entity copied to clipboard!</p>
-                    </div>
-                  </template>
-                </KPop>
-              </KClipboardProvider>
-              <CodeBlock
-                language="yaml"
-                :code="yamlContent.universal"
-              />
-            </template>
-            <template #kubernetes>
-              <KClipboardProvider v-slot="{ copyToClipboard }">
-                <KPop placement="bottom">
-                  <KButton
-                    class="copy-button"
-                    appearance="primary"
-                    size="small"
-                    @click="() => {
-                      copyToClipboard(yamlContent.kubernetes)
-                    }"
-                  >
-                    Copy Kubernetes YAML
-                  </KButton>
-                  <template #content>
-                    <div>
-                      <p>Entity copied to clipboard!</p>
-                    </div>
-                  </template>
-                </KPop>
-              </KClipboardProvider>
-              <CodeBlock
-                language="yaml"
-                :code="yamlContent.kubernetes"
-              />
-            </template>
-          </KTabs>
-        </template>
-      </KCard>
-    </div>
+              <template #content>
+                <div>
+                  <p>Entity copied to clipboard!</p>
+                </div>
+              </template>
+            </KPop>
+          </KClipboardProvider>
 
-    <div v-if="loaders === true">
-      <!-- loading state -->
-      <KEmptyState
-        v-if="isLoading"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              icon="spinner"
-              color="rgba(0, 0, 0, 0.1)"
-              size="42"
-            />
-          </div>
-          Data Loading...
+          <CodeBlock
+            language="yaml"
+            :code="yamlContent.universal"
+          />
         </template>
-      </KEmptyState>
 
-      <!-- no data to load -->
-      <KEmptyState
-        v-if="isEmpty && !isLoading"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              class="kong-icon--centered"
-              icon="warning"
-              color="var(--black-75)"
-              secondary-color="var(--yellow-300)"
-              size="42"
-            />
-          </div>
-          There is no data to display.
-        </template>
-      </KEmptyState>
+        <template #kubernetes>
+          <KClipboardProvider v-slot="{ copyToClipboard }">
+            <KPop placement="bottom">
+              <KButton
+                class="copy-button"
+                appearance="primary"
+                size="small"
+                @click="() => {
+                  copyToClipboard(yamlContent.kubernetes)
+                }"
+              >
+                Copy Kubernetes YAML
+              </KButton>
 
-      <!-- error -->
-      <KEmptyState
-        v-if="hasError"
-        cta-is-hidden
-      >
-        <template #title>
-          <div class="card-icon mb-3">
-            <KIcon
-              class="kong-icon--centered"
-              icon="warning"
-              color="var(--black-75)"
-              secondary-color="var(--yellow-300)"
-              size="42"
-            />
-          </div>
-          An error has occurred while trying to load this data.
+              <template #content>
+                <div>
+                  <p>Entity copied to clipboard!</p>
+                </div>
+              </template>
+            </KPop>
+          </KClipboardProvider>
+
+          <CodeBlock
+            language="yaml"
+            :code="yamlContent.kubernetes"
+          />
         </template>
-      </KEmptyState>
+      </KTabs>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { KButton, KClipboardProvider, KPop, KTabs } from '@kong/kongponents'
 import json2yaml from '@appscode/json2yaml'
 
 import CodeBlock from '../CodeBlock.vue'
+import EmptyBlock from '../EmptyBlock.vue'
+import ErrorBlock from '../ErrorBlock.vue'
+import LoadingBlock from '../LoadingBlock.vue'
 
 export default {
   name: 'YamlView',
+
   components: {
     CodeBlock,
+    EmptyBlock,
+    ErrorBlock,
+    LoadingBlock,
+    KButton,
+    KClipboardProvider,
+    KPop,
+    KTabs,
   },
+
   props: {
-    title: {
-      type: String,
-      default: null,
-    },
     content: {
       type: Object,
       default: null,
     },
-    loaders: {
-      type: Boolean,
-      default: true,
-    },
+
     isLoading: {
       type: Boolean,
       default: false,
     },
+
     hasError: {
       type: Boolean,
       default: false,
     },
+
     isEmpty: {
       type: Boolean,
       default: false,
     },
   },
+
   data() {
     return {
       tabs: [
@@ -174,6 +128,7 @@ export default {
           hash: '#universal',
           title: 'Universal',
         },
+
         {
           hash: '#kubernetes',
           title: 'Kubernetes',
@@ -181,13 +136,12 @@ export default {
       ],
     }
   },
+
   computed: {
     ...mapGetters({
       environment: 'config/getEnvironment',
     }),
-    isReady() {
-      return !this.isEmpty && !this.hasError && !this.isLoading
-    },
+
     activeTab: {
       get() {
         const env = this.environment
@@ -197,6 +151,7 @@ export default {
           nohash: env,
         }
       },
+
       set(newTab) {
         return {
           hash: `#${newTab}`,
@@ -204,17 +159,7 @@ export default {
         }
       },
     },
-    yamlTitle() {
-      if (this.title) {
-        return this.title
-      }
 
-      if (this.content?.name) {
-        return `Entity Overview for ${this.content.name}`
-      }
-
-      return 'Entity Overview'
-    },
     yamlContent() {
       const content = this.content
 
@@ -290,16 +235,18 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.empty-state-title {
-  .card-icon {
-    text-align: center;
+.yaml-view-content {
+  padding: var(--spacing-md);
+}
 
-    img,
-    svg {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+.empty-state-title .card-icon {
+  text-align: center;
+
+  img,
+  svg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

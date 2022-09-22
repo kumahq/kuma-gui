@@ -1,4 +1,5 @@
 import { createStore } from 'vuex'
+import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
@@ -37,6 +38,9 @@ function renderComponent() {
   return render(ZonesView, {
     global: {
       plugins: [store],
+      stubs: {
+        'router-link': RouterLinkStub,
+      },
       components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
       mocks: {
         $route: {

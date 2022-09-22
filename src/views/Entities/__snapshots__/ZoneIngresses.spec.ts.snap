@@ -15,23 +15,22 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
         class="data-overview"
         data-testid="data-overview"
       >
-        <!-- controls -->
         <div
           class="data-table-controls mb-2"
         >
           
           
           <button
-            class="small rounded primary k-button ml-2 refresh-button"
-            data-v-29036f3a=""
+            class="medium rounded primary k-button refresh-button"
+            data-v-6bcbf05d=""
             type="button"
           >
             
             <!---->
             
             
-            <div
-              class="refresh-icon"
+            <span
+              class="refresh-icon custom-control-icon"
             >
               <svg
                 viewBox="0 0 36 36"
@@ -46,7 +45,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                   />
                 </g>
               </svg>
-            </div>
+            </span>
             <span>
               Refresh
             </span>
@@ -62,40 +61,41 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
             class="data-overview-table"
           >
             <div
-              class="micro-table"
-              data-v-77421f6a=""
+              class=""
+              data-testid="data-overview-table"
+              data-v-54b66ee0=""
               is-clickable=""
             >
               <section
                 class="k-table-wrapper"
-                data-v-77421f6a=""
+                data-v-54b66ee0=""
               >
                 <table
                   class="has-hover is-clickable k-table"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-77421f6a=""
+                  data-v-54b66ee0=""
                 >
                   <thead
                     class=""
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     <tr
                       class=""
-                      data-v-77421f6a=""
+                      data-v-54b66ee0=""
                     >
                       
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class="sr-only"
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             actions
                           </span>
@@ -105,16 +105,16 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class=""
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             Status
                           </span>
@@ -124,16 +124,16 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class=""
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             Name
                           </span>
@@ -145,37 +145,27 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     
                     <tr
-                      data-v-77421f6a=""
+                      class="is-selected"
+                      data-v-54b66ee0=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
-                        <a
-                          class="data-table-action-link is-active"
-                        >
-                          <span
-                            class="action-link__active-state"
-                          >
-                             ✓ 
-                            <span
-                              class="sr-only"
-                            >
-                               Selected 
-                            </span>
-                          </span>
-                        </a>
+                        
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
                         <div
@@ -193,10 +183,13 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
+                        
                         zone-ingress-1
+                        
                         
                       </td>
                       
@@ -219,10 +212,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
           <!-- additional page content -->
           <!--v-if-->
         </div>
-        <!-- loading state -->
-        <!--v-if-->
-        <!-- error has occurred -->
-        <!--v-if-->
       </div>
       <div
         class="tab-container"
@@ -252,7 +241,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                 
                 <button
                   class="small rounded outline k-button"
-                  data-v-29036f3a=""
+                  data-v-6bcbf05d=""
                   type="button"
                 >
                   
@@ -447,17 +436,17 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                   <section
                     aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     class="noBorder kong-card"
-                    data-v-5adb63fa=""
+                    data-v-52c90d54=""
                   >
                     <!---->
                     <!---->
                     <div
                       class="k-card-content d-flex"
-                      data-v-5adb63fa=""
+                      data-v-52c90d54=""
                     >
                       <div
                         class="k-card-body"
-                        data-v-5adb63fa=""
+                        data-v-52c90d54=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       >
                         
@@ -495,12 +484,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                     </div>
                   </section>
                 </div>
-                <!-- loading state -->
-                <!--v-if-->
-                <!-- no data to load -->
-                <!--v-if-->
-                <!-- error -->
-                <!--v-if-->
               </div>
               
               
@@ -548,9 +531,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
             
           </div>
           <div>
-            <!-- loading state -->
-            <!--v-if-->
-            <!-- error has occurred -->
             <!--v-if-->
           </div>
         </div>
@@ -577,23 +557,22 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
         class="data-overview"
         data-testid="data-overview"
       >
-        <!-- controls -->
         <div
           class="data-table-controls mb-2"
         >
           
           
           <button
-            class="small rounded primary k-button ml-2 refresh-button"
-            data-v-29036f3a=""
+            class="medium rounded primary k-button refresh-button"
+            data-v-6bcbf05d=""
             type="button"
           >
             
             <!---->
             
             
-            <div
-              class="refresh-icon"
+            <span
+              class="refresh-icon custom-control-icon"
             >
               <svg
                 viewBox="0 0 36 36"
@@ -608,7 +587,7 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                   />
                 </g>
               </svg>
-            </div>
+            </span>
             <span>
               Refresh
             </span>
@@ -624,40 +603,41 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
             class="data-overview-table"
           >
             <div
-              class="micro-table"
-              data-v-77421f6a=""
+              class=""
+              data-testid="data-overview-table"
+              data-v-54b66ee0=""
               is-clickable=""
             >
               <section
                 class="k-table-wrapper"
-                data-v-77421f6a=""
+                data-v-54b66ee0=""
               >
                 <table
                   class="has-hover is-clickable k-table"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-77421f6a=""
+                  data-v-54b66ee0=""
                 >
                   <thead
                     class=""
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     <tr
                       class=""
-                      data-v-77421f6a=""
+                      data-v-54b66ee0=""
                     >
                       
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class="sr-only"
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             actions
                           </span>
@@ -667,16 +647,16 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class=""
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             Status
                           </span>
@@ -686,16 +666,16 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-77421f6a=""
+                        data-v-54b66ee0=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-77421f6a=""
+                          data-v-54b66ee0=""
                         >
                           
                           <span
                             class=""
-                            data-v-77421f6a=""
+                            data-v-54b66ee0=""
                           >
                             Name
                           </span>
@@ -707,37 +687,27 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    data-v-77421f6a=""
+                    data-v-54b66ee0=""
                   >
                     
                     <tr
-                      data-v-77421f6a=""
+                      class="is-selected"
+                      data-v-54b66ee0=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
-                        <a
-                          class="data-table-action-link is-active"
-                        >
-                          <span
-                            class="action-link__active-state"
-                          >
-                             ✓ 
-                            <span
-                              class="sr-only"
-                            >
-                               Selected 
-                            </span>
-                          </span>
-                        </a>
+                        
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
                         <div
@@ -755,10 +725,13 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                         
                       </td>
                       <td
-                        data-v-77421f6a=""
+                        class=""
+                        data-v-54b66ee0=""
                       >
                         
+                        
                         zone-ingress-1
+                        
                         
                       </td>
                       
@@ -781,10 +754,6 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
           <!-- additional page content -->
           <!--v-if-->
         </div>
-        <!-- loading state -->
-        <!--v-if-->
-        <!-- error has occurred -->
-        <!--v-if-->
       </div>
       <div
         class="tab-container"
@@ -814,7 +783,7 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                 
                 <button
                   class="small rounded outline k-button"
-                  data-v-29036f3a=""
+                  data-v-6bcbf05d=""
                   type="button"
                 >
                   
@@ -1009,17 +978,17 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                   <section
                     aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     class="noBorder kong-card"
-                    data-v-5adb63fa=""
+                    data-v-52c90d54=""
                   >
                     <!---->
                     <!---->
                     <div
                       class="k-card-content d-flex"
-                      data-v-5adb63fa=""
+                      data-v-52c90d54=""
                     >
                       <div
                         class="k-card-body"
-                        data-v-5adb63fa=""
+                        data-v-52c90d54=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       >
                         
@@ -1057,12 +1026,6 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                     </div>
                   </section>
                 </div>
-                <!-- loading state -->
-                <!--v-if-->
-                <!-- no data to load -->
-                <!--v-if-->
-                <!-- error -->
-                <!--v-if-->
               </div>
               
               
@@ -1110,9 +1073,6 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
             
           </div>
           <div>
-            <!-- loading state -->
-            <!--v-if-->
-            <!-- error has occurred -->
             <!--v-if-->
           </div>
         </div>
@@ -1153,7 +1113,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
           
           <button
             class="small rounded outline k-button"
-            data-v-29036f3a=""
+            data-v-6bcbf05d=""
             type="button"
           >
             
@@ -1354,17 +1314,17 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           class="noBorder kong-card"
-          data-v-5adb63fa=""
+          data-v-52c90d54=""
         >
           <!---->
           <!---->
           <div
             class="k-card-content d-flex"
-            data-v-5adb63fa=""
+            data-v-52c90d54=""
           >
             <div
               class="k-card-body"
-              data-v-5adb63fa=""
+              data-v-52c90d54=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
@@ -1596,9 +1556,6 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
       
     </div>
     <div>
-      <!-- loading state -->
-      <!--v-if-->
-      <!-- error has occurred -->
       <!--v-if-->
     </div>
   </div>
