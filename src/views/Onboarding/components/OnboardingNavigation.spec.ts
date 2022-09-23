@@ -73,12 +73,10 @@ describe('OnboardingNavigation.vue', () => {
       nextStep: 'default',
     })
 
-    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
     expect(store.state.onboarding.step).toBe('onboarding-welcome')
 
     await userEvent.click(screen.getByText(/Back/))
 
-    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
     expect(store.state.onboarding.step).toBe('foo')
   })
 
@@ -88,12 +86,10 @@ describe('OnboardingNavigation.vue', () => {
       nextStep: 'default',
     })
 
-    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
     expect(store.state.onboarding.isCompleted).toBe(false)
 
     await userEvent.click(screen.getByText(/Skip Setup/))
 
-    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
     expect(store.state.onboarding.isCompleted).toBe(true)
   })
 })

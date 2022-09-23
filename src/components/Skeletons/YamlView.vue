@@ -235,10 +235,6 @@ export default {
 </style>
 
 <style lang="scss" scoped>
-.yaml-view-content {
-  padding: var(--spacing-md);
-}
-
 .empty-state-title .card-icon {
   text-align: center;
 

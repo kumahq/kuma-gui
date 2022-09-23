@@ -33,6 +33,11 @@ import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import ServiceDetails from './ServiceDetails.vue'
 import { ExternalService, ServiceInsight } from '@/types.js'
 
+const PUBLIC_LABEL = {
+  ServiceInsight: 'internal services',
+  ExternalService: 'external services',
+}
+
 const route = useRoute()
 
 const props = defineProps({
@@ -47,19 +52,15 @@ const props = defineProps({
   },
 })
 
-const PUBLIC_LABEL = {
-  ServiceInsight: 'internal services',
-  ExternalService: 'external services',
+const emptyState = {
+  title: 'No Data',
+  message: `There are no ${PUBLIC_LABEL[props.type]} present.`,
 }
 
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
 const nextUrl = ref<string | null>(null)
-const activeEntity = ref<{ type: string, name: string, mesh: string } | null>(null)
-const emptyState = {
-  title: 'No Data',
-  message: `There are no ${PUBLIC_LABEL[props.type]} present.`,
-}
+const activeEntity = ref<{ type: 'ServiceInsight' | 'ExternalService', name: string, mesh: string } | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers: props.tabHeaders,
   data: [],
@@ -165,7 +166,7 @@ async function loadData(offset: number): Promise<void> {
   }
 }
 
-function setActiveEntity(entity: { type: string, name: string, mesh: string }): void {
+function setActiveEntity(entity: { type: 'ServiceInsight' | 'ExternalService', name: string, mesh: string }): void {
   activeEntity.value = entity
 }
 </script>

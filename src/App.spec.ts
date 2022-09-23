@@ -1,9 +1,9 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
-import { KAlert, KBadge, KButton, KEmptyState, KIcon, KModal, KPop } from '@kong/kongponents'
+import { KAlert, KBadge, KButton, KIcon, KModal, KPop } from '@kong/kongponents'
 
+import { store, storeKey } from '@/store/store'
 import App from './App.vue'
 import TestComponent from '@/testUtils/TestComponent.vue'
 
@@ -18,70 +18,12 @@ const router = createRouter({
   ],
 })
 
-function renderComponent({ status = 'OK', tagline = 'Kuma' }: { status?: string, tagline?: string }) {
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          status: null,
-          tagline: 'Kuma',
-          version: null,
-          clientConfig: {
-            mode: 'global',
-            environment: 'universal',
-          },
-        },
-        getters: {
-          getStatus: (state) => {
-            state.status = status
-
-            return state.status
-          },
-          getTagline: (state) => {
-            state.tagline = tagline
-
-            return state.tagline
-          },
-          getVersion: (state) => state.version,
-          getEnvironment: (state) => state.clientConfig?.environment,
-          getMulticlusterStatus: () => true,
-        },
-      },
-      onboarding: {
-        namespaced: true,
-        getters: {
-          showOnboarding: () => false,
-        },
-      },
-      sidebar: {
-        namespaced: true,
-        state: {
-          insights: {},
-        },
-      },
-      notifications: {
-        namespaced: true,
-        getters: {
-          amountOfActions: () => undefined,
-        },
-      },
-    },
-    state: {
-      policies: [],
-      meshes: [{}],
-      globalLoading: true,
-    },
-    actions: {
-      bootstrap: ({ state }) => {
-        state.globalLoading = false
-      },
-    },
-  })
+function renderComponent({ status = 'OK' }: { status?: string }) {
+  store.state.config.status = status
 
   return render(App, {
     global: {
-      plugins: [router, store],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },
@@ -89,7 +31,6 @@ function renderComponent({ status = 'OK', tagline = 'Kuma' }: { status?: string,
         KAlert,
         KBadge,
         KButton,
-        KEmptyState,
         KIcon,
         KModal,
         KPop,

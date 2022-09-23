@@ -20,10 +20,9 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 import { DataPlane, DataPlaneOverview } from '@/types'
-import { storeKey } from '@/store/store'
+import { useStore } from '@/store/store'
 import Kuma from '@/services/kuma'
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
 import EmptyBlock from '@/components/EmptyBlock.vue'
@@ -31,7 +30,7 @@ import ErrorBlock from '@/components/ErrorBlock.vue'
 import LoadingBlock from '@/components/LoadingBlock.vue'
 
 const route = useRoute()
-const store = useStore(storeKey)
+const store = useStore()
 
 const dataPlane = ref<DataPlane | null>(null)
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)

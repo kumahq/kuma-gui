@@ -27,7 +27,8 @@
       "dom.iterable",
       "scripthost"
     ],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "jsx": "preserve"
   },
   "include": [
     "src/**/*.ts",

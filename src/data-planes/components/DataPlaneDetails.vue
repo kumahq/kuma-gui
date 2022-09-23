@@ -190,7 +190,9 @@
     </template>
 
     <template #yaml>
-      <YamlView :content="rawDataPlane" />
+      <div class="config-wrapper">
+        <YamlView :content="rawDataPlane" />
+      </div>
     </template>
 
     <template #warnings>
@@ -201,7 +203,6 @@
 
 <script lang="ts" setup>
 import { computed, ref, PropType } from 'vue'
-import { useStore } from 'vuex'
 import { KCard, KAlert } from '@kong/kongponents'
 
 import {
@@ -222,7 +223,7 @@ import {
 } from '@/dataplane'
 import { PRODUCT_NAME } from '@/consts'
 import { stripTimes } from '@/helpers'
-import { storeKey } from '@/store/store'
+import { useStore } from '@/store/store'
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 import AccordionList from '@/components/Accordion/AccordionList.vue'
 import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies.vue'
@@ -236,7 +237,7 @@ import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import WarningsWidget from '@/views/Entities/components/WarningsWidget.vue'
 import YamlView from '@/components/Skeletons/YamlView.vue'
 
-const store = useStore(storeKey)
+const store = useStore()
 
 const props = defineProps({
   dataPlane: {
@@ -365,5 +366,9 @@ setWarnings()
 
 .reason .entity-status__dot {
   background-color: var(--black-85);
+}
+
+.config-wrapper {
+  padding: var(--spacing-md);
 }
 </style>

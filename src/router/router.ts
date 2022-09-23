@@ -385,7 +385,7 @@ export async function setupRouter() {
     }
 
     const showOnboarding = store.getters['onboarding/showOnboarding']
-    const isCompleted = store.state.onboarding?.isCompleted
+    const isCompleted = store.state.onboarding.isCompleted
 
     const onboardingRoute = to.meta?.onboardingProcess
 

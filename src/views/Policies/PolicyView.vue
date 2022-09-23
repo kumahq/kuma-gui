@@ -111,13 +111,15 @@
         </template>
 
         <template #yaml>
-          <YamlView
-            lang="yaml"
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="rawEntity"
-          />
+          <div class="config-wrapper">
+            <YamlView
+              lang="yaml"
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+              :content="rawEntity"
+            />
+          </div>
         </template>
       </TabsWidget>
     </FrameSkeleton>
@@ -322,3 +324,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.config-wrapper {
+  padding: var(--spacing-md);
+}
+</style>

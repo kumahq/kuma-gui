@@ -62,7 +62,7 @@
         </div>
 
         <div class="app-status app-status--desktop">
-          <div class="flex items-center justify-center text-sm">
+          <div class="app-status-list text-sm">
             <strong> {{ statusContent }} on {{ env }}</strong>
 
             <KBadge
@@ -79,6 +79,16 @@
             </KBadge>
 
             <NotificationIcon />
+
+            <router-link :to="{ name: 'diagnostics' }">
+              <KIcon
+                icon="gearFilled"
+                color="currentColor"
+                title="Diagnostics"
+              />
+
+              <span class="kutil-sr-only">Diagnostics</span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -205,21 +215,15 @@ export default {
   }
 }
 
-@media screen and (min-width: 990px) {
-  .status-badge {
-    margin-left: var(--spacing-sm);
-  }
-}
-
-@media screen and (max-width: 989px) {
-  .status-badge {
-    margin-top: var(--spacing-sm);
-  }
-}
-
 @media screen and (max-width: 599px) {
   .upgrade-check-wrapper {
     display: none;
   }
+}
+
+.app-status-list {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 </style>

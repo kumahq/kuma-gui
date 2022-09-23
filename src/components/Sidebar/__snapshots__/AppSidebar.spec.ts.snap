@@ -2,108 +2,15 @@
 
 exports[`AppSidebar.vue renders snapshot 1`] = `
 <div>
-  <aside
-    class="app-sidebar"
+  <div
+    class="app-sidebar-wrapper"
   >
-    <div
-      class="main-nav"
-    >
-      <div
-        class="main-nav__top"
-      >
-        
-        <div
-          class="nav-item is-menu-item nav-item--is-primary"
-          data-testid="home"
-          iconcustom="[object Object]"
-          subnav="[object Object]"
-        >
-          <a>
-            <div
-              class="nav-icon"
-            >
-              
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <div>
-                [object Object]
-              </div>
-              
-            </div>
-            <div
-              class="nav-link"
-            >
-              
-              Service Mesh 
-              <!--v-if-->
-              
-            </div>
-          </a>
-        </div>
-        
-      </div>
-      <div
-        class="main-nav__bottom"
-      >
-        
-        <div
-          class="nav-item is-menu-item nav-item--is-primary"
-          data-testid="diagnostics"
-        >
-          <a>
-            <div
-              class="nav-icon"
-            >
-              
-              <span
-                class="kong-icon-gearFilled kong-icon"
-                data-v-637de6fa=""
-              >
-                <svg
-                  height="16"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  
-  
-                  <title>
-                    Settings
-                  </title>
-                  
-  
-                  <path
-                    d="M8.63962039 0c.2152152 0 .40628463.13771505.47434165.34188612l.63997656 1.91853291c.3708976.11319954.7265407.26136452 1.0630881.4406537l1.8103874-.9038671c.1924944-.09624716.4249801-.05851992.5771602.09366021l.9045599.90455983c.1521801.15218013.1899073.38466585.0936602.57716018l-.904073 1.81000104c.1795192.33691975.3278441.69298066.44112 1.06432821l1.9182725.63912286C15.862285 6.95409498 16 7.14516441 16 7.36037961v1.27924078c0 .2152152-.137715.40628463-.3418861.47434165l-1.918532.63997355c-.1132072.37092351-.2613848.72659041-.4406907 1.06315871l.9039032 1.8103198c.0962471.1924944.0585199.4249801-.0936602.5771602l-.9045599.9045599c-.1521801.1521801-.3846658.1899073-.5771602.0936602l-1.8103171-.9039046c-.3365681.179306-.692235.3274837-1.0631584.4406912l-.63997656 1.9185329C9.04590502 15.862285 8.85483559 16 8.63962039 16H7.36037961c-.2152152 0-.40628463-.137715-.47434165-.3418861L6.2460614 13.739581c-.3708976-.1131996-.72654071-.2613646-1.06308807-.4406537l-1.81038748.9038671c-.19249433.0962471-.42498005.0585199-.57716018-.0936602l-.90455983-.9045599c-.15218013-.1521801-.18990737-.3846658-.09366021-.5771602l.90407299-1.810001c-.17951921-.3369197-.32784407-.6929806-.44112007-1.0643282L.34188612 9.11396204C.13771505 9.04590502 0 8.85483559 0 8.63962039V7.36037961c0-.2152152.13771505-.40628463.34188612-.47434165l1.918532-.63997355c.11320723-.37092352.26138479-.72659044.44069063-1.06315869l-.90390312-1.81031987c-.09624716-.19249433-.05851992-.42498005.09366021-.57716018l.90455983-.90455983c.15218013-.15218013.38466585-.18990737.57716018-.09366021l1.81031714.90390458c.33656815-.17930601.69223497-.32748375 1.06315841-.44069118L6.88603796.34188612C6.95409498.13771505 7.14516441 0 7.36037961 0h1.27924078zM8 6c-1.1045695 0-2 .8954305-2 2s.8954305 2 2 2 2-.8954305 2-2-.8954305-2-2-2z"
-                    fill="#A3BBCC"
-                    fill-rule="evenodd"
-                  />
-                  
-
-                </svg>
-                
-
-              </span>
-              
-            </div>
-            <div
-              class="nav-link"
-            >
-              
-              Diagnostics 
-              <!--v-if-->
-              
-            </div>
-          </a>
-        </div>
-        
-      </div>
-    </div>
-    <div
-      class="secondary-nav app-sidebar__secondary"
+    <aside
+      class="app-sidebar"
     >
       <div
         class="mt-3"
       >
-        
         <div
           class="px-4 pb-4"
         >
@@ -128,251 +35,559 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
             </select>
           </div>
         </div>
-        
       </div>
+      
       <div
-        class="subnav-title"
+        class="nav-item"
+        data-testid=""
       >
-        <span
-          class="text-uppercase"
+        <div
+          class="nav-item__title"
         >
-          
-          <a>
-            Service Mesh
-          </a>
-          
-        </span>
+          <span
+            class="text-uppercase"
+          >
+            Service mesh
+          </span>
+        </div>
       </div>
-      
-      
-      
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="global-overview"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Overview 
             <!--v-if-->
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="mesh-child"
-        pathflip="true"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Meshes 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
+        class="nav-item"
         data-testid=""
       >
-        <a>
-          <!--v-if-->
-          <div
-            class="title-text"
+        <div
+          class="nav-item__title"
+        >
+          <span
+            class="text-uppercase"
           >
-            <span
-              class="text-uppercase"
-            >
-              Zones
-            </span>
-          </div>
-        </a>
+            Zones
+          </span>
+        </div>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="zones"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Zone CPs 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="zoneingresses"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Zone Ingresses 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="zoneegresses"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Zone Egresses 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
+        class="nav-item"
         data-testid=""
       >
-        <a>
-          <!--v-if-->
-          <div
-            class="title-text"
+        <div
+          class="nav-item__title"
+        >
+          <span
+            class="text-uppercase"
           >
-            <span
-              class="text-uppercase"
-            >
-              Services
-            </span>
-          </div>
-        </a>
+            Services
+          </span>
+        </div>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="service-insight-list-view"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Internal 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="external-service-list-view"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             External 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
+        class="nav-item"
         data-testid=""
       >
-        <a>
-          <!--v-if-->
-          <div
-            class="title-text"
+        <div
+          class="nav-item__title"
+        >
+          <span
+            class="text-uppercase"
           >
-            <span
-              class="text-uppercase"
-            >
-              Data plane proxies
-            </span>
-          </div>
-        </a>
+            Data plane proxies
+          </span>
+        </div>
       </div>
       <div
-        class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
+        class="nav-item nav-item--is-link"
         data-testid="data-plane-list-view"
       >
-        <a>
+        <a
+          class="nav-item__link"
+        >
           <!--v-if-->
-          <div
-            class="nav-link"
-          >
-            
+          <div>
             Data planes 
             <span
               class="amount amount--empty"
             >
               0
             </span>
-            
           </div>
         </a>
       </div>
       <div
-        class="nav-item is-menu-item is-title nav-item--is-secondary secondary-nav-item"
+        class="nav-item"
         data-testid=""
       >
-        <a>
-          <!--v-if-->
-          <div
-            class="title-text"
+        <div
+          class="nav-item__title"
+        >
+          <span
+            class="text-uppercase"
           >
+            Policies
+          </span>
+        </div>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="circuit-breakers"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Circuit Breakers 
             <span
-              class="text-uppercase"
+              class="amount amount--empty"
             >
-              Policies
+              0
             </span>
           </div>
         </a>
       </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="fault-injections"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Fault Injections 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="health-checks"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Health Checks 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="meshgatewayroutes"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Mesh Gateway Routes 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="meshgateways"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Mesh Gateways 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="proxytemplates"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Proxy Templates 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="rate-limits"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Rate Limits 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="retries"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Retries 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="timeouts"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Timeouts 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="traffic-logs"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Traffic Logs 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="traffic-permissions"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Traffic Permissions 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="traffic-routes"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Traffic Routes 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="traffic-traces"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Traffic Traces 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="virtual-outbounds"
+        parent="policies"
+        title="false"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <!--v-if-->
+          <div>
+            Virtual Outbounds 
+            <span
+              class="amount amount--empty"
+            >
+              0
+            </span>
+          </div>
+        </a>
+      </div>
+      <div
+        class="nav-item"
+        data-testid=""
+      >
+        <div
+          class="nav-item__title"
+        >
+          <span
+            class="text-uppercase"
+          >
+            Miscellaneous
+          </span>
+        </div>
+      </div>
+      <div
+        class="nav-item nav-item--is-link"
+        data-testid="diagnostics"
+      >
+        <a
+          class="nav-item__link"
+        >
+          <div
+            class="nav-item__icon"
+          >
+            <span
+              class="kong-icon-gearFilled kong-icon"
+              data-v-637de6fa=""
+            >
+              <svg
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                <title>
+                  Settings
+                </title>
+                
+  
+                <path
+                  d="M8.63962039 0c.2152152 0 .40628463.13771505.47434165.34188612l.63997656 1.91853291c.3708976.11319954.7265407.26136452 1.0630881.4406537l1.8103874-.9038671c.1924944-.09624716.4249801-.05851992.5771602.09366021l.9045599.90455983c.1521801.15218013.1899073.38466585.0936602.57716018l-.904073 1.81000104c.1795192.33691975.3278441.69298066.44112 1.06432821l1.9182725.63912286C15.862285 6.95409498 16 7.14516441 16 7.36037961v1.27924078c0 .2152152-.137715.40628463-.3418861.47434165l-1.918532.63997355c-.1132072.37092351-.2613848.72659041-.4406907 1.06315871l.9039032 1.8103198c.0962471.1924944.0585199.4249801-.0936602.5771602l-.9045599.9045599c-.1521801.1521801-.3846658.1899073-.5771602.0936602l-1.8103171-.9039046c-.3365681.179306-.692235.3274837-1.0631584.4406912l-.63997656 1.9185329C9.04590502 15.862285 8.85483559 16 8.63962039 16H7.36037961c-.2152152 0-.40628463-.137715-.47434165-.3418861L6.2460614 13.739581c-.3708976-.1131996-.72654071-.2613646-1.06308807-.4406537l-1.81038748.9038671c-.19249433.0962471-.42498005.0585199-.57716018-.0936602l-.90455983-.9045599c-.15218013-.1521801-.18990737-.3846658-.09366021-.5771602l.90407299-1.810001c-.17951921-.3369197-.32784407-.6929806-.44112007-1.0643282L.34188612 9.11396204C.13771505 9.04590502 0 8.85483559 0 8.63962039V7.36037961c0-.2152152.13771505-.40628463.34188612-.47434165l1.918532-.63997355c.11320723-.37092352.26138479-.72659044.44069063-1.06315869l-.90390312-1.81031987c-.09624716-.19249433-.05851992-.42498005.09366021-.57716018l.90455983-.90455983c.15218013-.15218013.38466585-.18990737.57716018-.09366021l1.81031714.90390458c.33656815-.17930601.69223497-.32748375 1.06315841-.44069118L6.88603796.34188612C6.95409498.13771505 7.14516441 0 7.36037961 0h1.27924078zM8 6c-1.1045695 0-2 .8954305-2 2s.8954305 2 2 2 2-.8954305 2-2-.8954305-2-2-2z"
+                  fill="#A3BBCC"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+          </div>
+          <div>
+            Diagnostics 
+            <!--v-if-->
+          </div>
+        </a>
+      </div>
       
-    </div>
-  </aside>
+    </aside>
+  </div>
 </div>
 `;

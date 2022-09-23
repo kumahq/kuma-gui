@@ -39,15 +39,14 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
 import { KButton, KCard, KClipboardProvider, KPop } from '@kong/kongponents'
 
-import { storeKey } from '@/store/store'
+import { useStore } from '@/store/store'
 import CodeBlock from '@/components/CodeBlock.vue'
 import FrameSkeleton from '@/components/Skeletons/FrameSkeleton.vue'
 import LoadingBlock from '@/components/LoadingBlock.vue'
 
-const store = useStore(storeKey)
+const store = useStore()
 
 const code = computed(() => {
   const config = store.getters['config/getConfig']

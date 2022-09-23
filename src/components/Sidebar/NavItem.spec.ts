@@ -1,11 +1,10 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { render, screen } from '@testing-library/vue'
 import { KIcon } from '@kong/kongponents'
 
 import NavItem from './NavItem.vue'
 import TestComponent from '@/testUtils/TestComponent.vue'
-import { storeConfig } from '@/store/index'
+import { store, storeKey } from '@/store/store'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -22,19 +21,17 @@ const router = createRouter({
     },
   ],
 })
-const store = createStore(storeConfig)
 
 function renderComponent() {
   return render(NavItem, {
     props: {
       name: 'All',
       link: 'data-plane-list-view',
-      title: false,
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
     },
     global: {
-      plugins: [router, store],
+      plugins: [router, [store, storeKey]],
       components: {
         KIcon,
       },
@@ -54,7 +51,6 @@ describe('NavItem.vue', () => {
     [20, '20'],
     [200, '99+'],
   ])('renders amount of items', (numberOfDataplanes, expectedText) => {
-    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
     store.state.sidebar.insights.mesh.dataplanes.total = numberOfDataplanes
 
     renderComponent()

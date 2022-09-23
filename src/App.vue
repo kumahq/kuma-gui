@@ -6,16 +6,11 @@
     <KLoader />
   </div>
 
-  <div
-    v-else
-    class="app"
-  >
+  <template v-else>
     <GlobalHeader />
 
     <div class="app-content-container">
-      <ApiErrorMessage v-if="status !== 'OK'" />
-
-      <AppSidebar class="app-sidebar" />
+      <AppSidebar />
 
       <main
         class="app-main-content"
@@ -24,6 +19,8 @@
           'app-main-content--narrow': !isWideContent,
         }"
       >
+        <ApiErrorMessage v-if="status !== 'OK'" />
+
         <NotificationManager />
 
         <OnboardingNotification v-if="showOnboarding" />
@@ -33,7 +30,6 @@
         <router-view
           :key="routeKey"
           v-slot="{ Component }"
-          class="app-main-content__view"
         >
           <transition
             mode="out-in"
@@ -44,7 +40,7 @@
         </router-view>
       </main>
     </div>
-  </div>
+  </template>
 </template>
 
 <script>
@@ -162,20 +158,14 @@ export default {
   justify-content: center;
 }
 
-.app {
-  height: 100%;
-}
-
 .app-content-container {
-  flex-grow: 1;
-  margin-left: calc(var(--sidebarCollapsedWidth) + var(--subnavWidth));
+  display: grid;
+  grid-template-columns: var(--subnavWidth) 1fr;
 }
 
 .app-main-content {
   padding: var(--spacing-lg);
-  transition: var(--transitionTiming) margin var(--transition);
-  display: flex;
-  flex-direction: column;
+  transition: 0.1s margin cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .app-main-content--narrow {
@@ -183,9 +173,5 @@ export default {
   max-width: var(--global-content-max-width);
   margin-right: auto;
   margin-left: auto;
-}
-
-.app-main-content--wide .app-main-content__view {
-  flex-grow: 1;
 }
 </style>

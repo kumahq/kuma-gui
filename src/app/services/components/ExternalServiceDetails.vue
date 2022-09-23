@@ -33,7 +33,7 @@
             >
               <h4>{{ prop }}</h4>
 
-              <template v-if="prop === 'tags'">
+              <template v-if="prop === 'tags' && typeof value !== 'string'">
                 <div class="entity-tag-list">
                   <EntityTag
                     v-for="(tag, index) in value"
@@ -53,7 +53,9 @@
     </template>
 
     <template #yaml>
-      <YamlView :content="rawExternalService" />
+      <div class="config-wrapper">
+        <YamlView :content="rawExternalService" />
+      </div>
     </template>
   </TabsWidget>
 </template>
@@ -105,5 +107,9 @@ const rawExternalService = computed(() => stripTimes(props.externalService))
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xxs);
+}
+
+.config-wrapper {
+  padding: var(--spacing-md);
 }
 </style>

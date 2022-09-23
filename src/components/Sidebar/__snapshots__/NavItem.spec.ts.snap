@@ -3,25 +3,21 @@
 exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
 <div>
   <div
-    class="nav-item is-menu-item nav-item--is-secondary"
+    class="nav-item nav-item--is-link"
     data-testid="data-plane-list-view"
   >
     <a
-      class=""
+      class="nav-item__link"
       href="#/mesh/all/data-planes"
     >
       <!--v-if-->
-      <div
-        class="nav-link"
-      >
-        
+      <div>
         All 
         <span
           class="amount amount--empty"
         >
           0
         </span>
-        
       </div>
     </a>
   </div>
