@@ -89,13 +89,12 @@
           </template>
 
           <template #name="{ row, rowValue }">
-            <KButton
+            <router-link
               v-if="row.nameRoute"
-              appearance="btn-link"
               :to="row.nameRoute"
             >
               {{ rowValue }}
-            </KButton>
+            </router-link>
 
             <template v-else>
               {{ rowValue }}
@@ -103,13 +102,12 @@
           </template>
 
           <template #mesh="{ row, rowValue }">
-            <KButton
+            <router-link
               v-if="row.meshRoute"
-              appearance="btn-link"
               :to="row.meshRoute"
             >
               {{ rowValue }}
-            </KButton>
+            </router-link>
 
             <template v-else>
               {{ rowValue }}
@@ -117,13 +115,12 @@
           </template>
 
           <template #service="{ row, rowValue }">
-            <KButton
+            <router-link
               v-if="row.serviceInsightRoute"
-              appearance="btn-link"
               :to="row.serviceInsightRoute"
             >
               {{ rowValue }}
-            </KButton>
+            </router-link>
 
             <template v-else>
               {{ rowValue }}

@@ -704,18 +704,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         backend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -724,18 +714,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -752,18 +732,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         backend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -876,18 +846,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         cluster-1.backend-02
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -896,18 +856,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -924,18 +874,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         backend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1048,18 +988,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         cluster-1.backend-03
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1068,18 +998,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1096,18 +1016,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         backend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1220,18 +1130,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         cluster-1.gateway-01
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1240,18 +1140,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1268,18 +1158,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         gateway
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1392,18 +1272,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         cluster-1.ingress-02
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1412,18 +1282,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1440,18 +1300,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         ingress
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1564,18 +1414,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         dataplane-test-456
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1584,18 +1424,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1612,18 +1442,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         kuma-example-backend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1736,18 +1556,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         db
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1756,18 +1566,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1784,18 +1584,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         db
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1908,18 +1698,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         frontend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1928,18 +1708,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -1956,18 +1726,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         frontend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -2119,18 +1879,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         ingress-dp-test-123
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -2139,18 +1889,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -2167,18 +1907,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         kuma-example-backend
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -2291,18 +2021,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         no-subscriptions
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -2311,18 +2031,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         default
-                        
-                        <!---->
                       </a>
                       
                     </td>
@@ -2339,18 +2049,8 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-54b66ee0=""
                     >
                       
-                      <a
-                        class="medium rounded btn-link k-button"
-                        data-v-6bcbf05d=""
-                        type="button"
-                      >
-                        
-                        <!---->
-                        
-                        
+                      <a>
                         no-subscriptions
-                        
-                        <!---->
                       </a>
                       
                     </td>
