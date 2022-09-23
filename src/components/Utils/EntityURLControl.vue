@@ -52,16 +52,25 @@ export default {
       type: String,
       default: '',
     },
+    route: {
+      type: Object,
+      required: false,
+      default: null,
+    },
   },
   computed: {
     shareUrl() {
       const urlRoot = `${window.location.href.replace(window.location.hash, '')}#`
 
-      const { fullPath } = this.$router.resolve({
-        name: this.$route.name,
-        params: { mesh: this.mesh },
-        query: { ns: this.name },
-      })
+      const route = this.route !== null
+        ? this.route
+        : {
+          name: this.$route.name,
+          params: { mesh: this.mesh },
+          query: { ns: this.name },
+        }
+
+      const { fullPath } = this.$router.resolve(route)
 
       return `${urlRoot}${fullPath}`
     },

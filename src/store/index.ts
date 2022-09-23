@@ -14,18 +14,20 @@ import sidebar from '@/store/modules/sidebar/sidebar'
 import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import Kuma from '@/services/kuma'
-import { Mesh, Policy, ResourceResponse } from '@/types'
+import { ApiListResponse } from '@/api'
+import { Mesh, Policy } from '@/types'
 
 type TODO = any
 
 const initialState = {
   menu: null,
   globalLoading: true,
+  pageTitle: '',
   meshes: {
     total: 0,
     items: [],
     next: null,
-  } as ResourceResponse<Mesh>,
+  } as ApiListResponse<Mesh>,
   selectedMesh: 'all', // shows all meshes on initial load
   totalDataplaneCount: 0,
   version: '',
@@ -110,6 +112,7 @@ export const storeConfig: StoreOptions<State> = {
   },
   mutations: {
     SET_GLOBAL_LOADING: (state, { globalLoading }) => (state.globalLoading = globalLoading),
+    SET_PAGE_TITLE: (state, pageTitle) => (state.pageTitle = pageTitle),
     SET_MESHES: (state, meshes) => (state.meshes = meshes),
     SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
     SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
@@ -190,6 +193,10 @@ export const storeConfig: StoreOptions<State> = {
       }
 
       commit('SET_GLOBAL_LOADING', { globalLoading: false })
+    },
+
+    updatePageTitle({ commit }, pageTitle: string) {
+      commit('SET_PAGE_TITLE', pageTitle)
     },
 
     // fetch all of the meshes from the Kuma
@@ -411,7 +418,7 @@ export const storeConfig: StoreOptions<State> = {
           category: 'Internal',
           value: internal.total,
           minSizeForLabel: 0.16,
-          route: { name: 'internal-services' },
+          route: { name: 'service-insight-list-view' },
         })
       }
 
@@ -420,7 +427,7 @@ export const storeConfig: StoreOptions<State> = {
           category: 'External',
           value: external.total,
           minSizeForLabel: 0.16,
-          route: { name: 'external-services' },
+          route: { name: 'external-service-list-view' },
         })
       }
 

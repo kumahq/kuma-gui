@@ -144,7 +144,7 @@ export default {
 
     activeTab: {
       get() {
-        const env = this.environment
+        const env = this.environment ? this.environment : this.tabs[0].hash.substring(1)
 
         return {
           hash: `#${env}`,

@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 import { State } from '../../index'
-import { ConfigInterface } from './config.types'
+import { ConfigInterface, ClientConfigInterface } from './config.types'
 import Kuma from '@/services/kuma'
 
 const initialConfigState: ConfigInterface = {
@@ -13,11 +13,11 @@ const initialConfigState: ConfigInterface = {
 }
 
 const mutations: MutationTree<ConfigInterface> = {
-  SET_CONFIG_DATA: (state, config) => (state.clientConfig = config),
-  SET_STATUS: (state, status) => (state.status = status),
-  SET_TAGLINE: (state, tagline) => (state.tagline = tagline),
-  SET_VERSION: (state, version) => (state.version = version),
-  SET_KUMA_DOCS_VERSION: (state, kumaDocsVersion) => (state.kumaDocsVersion = kumaDocsVersion),
+  SET_CONFIG_DATA: (state, config: ClientConfigInterface) => (state.clientConfig = config),
+  SET_STATUS: (state, status: 'OK' | null) => (state.status = status),
+  SET_TAGLINE: (state, tagline: string) => (state.tagline = tagline),
+  SET_VERSION: (state, version: string) => (state.version = version),
+  SET_KUMA_DOCS_VERSION: (state, kumaDocsVersion: string) => (state.kumaDocsVersion = kumaDocsVersion),
 }
 
 const getters: GetterTree<ConfigInterface, State> = {
@@ -80,7 +80,7 @@ const actions: ActionTree<ConfigInterface, State> = {
         commit('SET_VERSION', response.version)
 
         let kumaDocsVersion = 'latest'
-        if ('basedOnKuma' in response) {
+        if (response.basedOnKuma) {
           const suffixIndex = response.basedOnKuma.indexOf('-preview.')
           if (suffixIndex !== -1) {
             const basedOnKumaStripped = response.basedOnKuma.substring(0, suffixIndex)

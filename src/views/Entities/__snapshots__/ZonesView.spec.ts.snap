@@ -734,9 +734,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
               <!--v-if-->
             </div>
           </div>
-          <!-- empty state if no items are found -->
           <!--v-if-->
-          <!-- additional page content -->
           <!--v-if-->
         </div>
       </div>

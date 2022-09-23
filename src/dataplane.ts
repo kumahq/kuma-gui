@@ -168,8 +168,7 @@ export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpV
   if (tag) {
     try {
       const response = (await Kuma.getZoneOverview({ name: tag.value })) || {}
-      const { zoneInsight = {} } = response
-      const { subscriptions = [] } = zoneInsight
+      const { subscriptions = [] } = response.zoneInsight
 
       if (subscriptions.length) {
         const { version = {} } = subscriptions[subscriptions.length - 1]

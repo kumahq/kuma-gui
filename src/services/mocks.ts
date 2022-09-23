@@ -63,6 +63,9 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/dataplanes+insights/frontend', () => import('./mock/responses/meshes/default/dataplanes+insights/frontend.json')],
   ['meshes/default/dataplanes+insights/ingress-dp-test-123', () => import('./mock/responses/meshes/default/dataplanes+insights/ingress-dp-test-123.json')],
   ['meshes/default/dataplanes+insights/no-subscriptions', () => import('./mock/responses/meshes/default/dataplanes+insights/no-subscriptions.json')],
+  ['meshes/default/service-insights/backend', () => import('./mock/responses/meshes/default/service-insights/backend.json')],
+  ['meshes/default/service-insights/ingress', () => import('./mock/responses/meshes/default/service-insights/ingress.json')],
+  ['meshes/default/service-insights/redis', () => import('./mock/responses/meshes/default/service-insights/redis.json')],
   ['meshes/default/external-services', () => import('./mock/responses/meshes/default/external-services.json')],
   ['meshes/default/external-services/httpbin', () => import('./mock/responses/meshes/default/external-services/httpbin.json')],
   ['meshes/default/external-services/httpbin2', () => import('./mock/responses/meshes/default/external-services/httpbin2.json')],
@@ -105,13 +108,18 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/hello-world/health-checks/hello-health-check', () => import('./mock/responses/meshes/hello-world/health-checks/hello-health-check.json')],
   ['meshes/hello-world/proxytemplates', () => import('./mock/responses/meshes/hello-world/proxytemplates.json')],
   ['meshes/hello-world/proxytemplates/pt-123', () => import('./mock/responses/meshes/hello-world/proxytemplates/pt-123.json')],
+  ['meshes/hello-world/external-services', () => import('./mock/responses/meshes/hello-world/external-services.json')],
+  ['meshes/hello-world/service-insights', () => import('./mock/responses/meshes/hello-world/service-insights.json')],
+  ['meshes/hello-world/service-insights/frontend', () => import('./mock/responses/meshes/hello-world/service-insights/frontend.json')],
   ['meshes/hello-world/traffic-traces/tt-123', () => import('./mock/responses/meshes/hello-world/traffic-traces/tt-123.json')],
 
   ['meshes/kong-mania-12', () => import('./mock/responses/meshes/kong-mania-12.json')],
   ['meshes/kong-mania-12/dataplanes', () => import('./mock/responses/meshes/kong-mania-12/dataplanes.json')],
   ['meshes/kong-mania-12/dataplanes+insights', () => import('./mock/responses/meshes/kong-mania-12/dataplanes+insights.json')],
+  ['meshes/kong-mania-12/external-services', () => import('./mock/responses/meshes/kong-mania-12/external-services.json')],
   ['meshes/kong-mania-12/health-checks/testing-health-checks', () => import('./mock/responses/meshes/kong-mania-12/health-checks/testing-health-checks.json')],
   ['meshes/kong-mania-12/health-checks/web-to-banana', () => import('./mock/responses/meshes/kong-mania-12/health-checks/web-to-banana.json')],
+  ['meshes/kong-mania-12/service-insights', () => import('./mock/responses/meshes/kong-mania-12/service-insights.json')],
   ['meshes/kong-mania-12/traffic-traces/my-silly-mesh-name', () => import('./mock/responses/meshes/kong-mania-12/traffic-traces/my-silly-mesh-name.json')],
 
   // Policies

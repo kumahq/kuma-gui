@@ -613,9 +613,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
           <!--v-if-->
         </div>
       </div>
-      <!-- empty state if no items are found -->
       <!--v-if-->
-      <!-- additional page content -->
       <!--v-if-->
     </div>
   </div>
@@ -688,9 +686,7 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
           <!--v-if-->
         </div>
       </div>
-      <!-- empty state if no items are found -->
       <!--v-if-->
-      <!-- additional page content -->
       <!--v-if-->
     </div>
   </div>

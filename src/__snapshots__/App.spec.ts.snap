@@ -434,7 +434,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           </div>
           <div
             class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
-            data-testid="internal-services"
+            data-testid="service-insight-list-view"
           >
             <a>
               <!--v-if-->
@@ -454,7 +454,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           </div>
           <div
             class="nav-item is-menu-item nav-item--is-secondary secondary-nav-item"
-            data-testid="external-services"
+            data-testid="external-service-list-view"
           >
             <a>
               <!--v-if-->

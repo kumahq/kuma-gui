@@ -1,5 +1,14 @@
 export type TODO = any
 
+export type Info = {
+  hostname: string
+  tagline: string
+  version: string
+  basedOnKuma?: string
+  instanceId: string
+  clusterId: string
+}
+
 export interface KDSSubscription {
   config: string
   id: string
@@ -10,48 +19,8 @@ export interface KDSSubscription {
   version: any
 }
 
-export interface Zone {
-  type: 'Zone'
-  name: string
-  creationTime: string
-  modificationTime: string
-  enabled: boolean
-}
-
 export interface ZoneInsight {
   subscriptions: KDSSubscription[]
-}
-
-export interface ZoneOverview {
-  type: 'ZoneOverview'
-  mesh: string
-  name: string
-  creationTime: string
-  modificationTime: string
-  zone: Zone
-  zoneInsight: ZoneInsight
-}
-
-export interface ResourceResponse<T = {}> {
-  total: number
-  items: T[]
-  next: boolean | null
-}
-
-export interface AllResourceResponse<T = {}> {
-  items: T[]
-  total: number
-}
-
-export interface Mesh {
-  creationTime: string
-  modificationTime: string
-  name: string
-  type: 'Mesh'
-  mtls?: Object
-  logging?: Object
-  tracing?: Object
-  metrics?: Object
 }
 
 export interface UnitStatus {
@@ -63,23 +32,6 @@ export interface UnitStatus {
 
 export interface ResourceStat {
   total: number
-}
-
-export interface MeshInsight {
-  type: 'MeshInsight'
-  name: string
-  creationTime: string
-  modificationTime: string
-  lastSync: string
-  dataplanes: UnitStatus
-  dataplanesByType: Record<string, UnitStatus>
-  policies: Record<string, ResourceStat>
-  dpVersions: Record<string, Record<string, UnitStatus>>
-  mTLS: {
-    issuedBackends?: Record<string, UnitStatus>
-    supportedBackends?: Record<string, UnitStatus>
-  }
-  services: Record<string, number>
 }
 
 export interface GlobalInsights {
@@ -167,32 +119,6 @@ export type DataPlaneNetworking = {
   },
 }
 
-export interface DataPlane {
-  type: 'Dataplane'
-  name: string
-  mesh: string
-  creationTime: string
-  modificationTime: string
-  networking: DataPlaneNetworking
-}
-
-export interface DataPlaneOverview {
-  type: 'DataplaneOverview'
-  name: string
-  mesh: string
-  creationTime: string
-  modificationTime: string
-  dataplane: {
-    networking: DataPlaneNetworking
-  }
-  dataplaneInsight: DataPlaneInsight
-}
-
-export interface LabelValue {
-  label: string
-  value: string
-}
-
 /**
  * An available policy as returned via the `/policies` endpoint.
  */
@@ -244,4 +170,124 @@ export type Compatibility = {
     kumaDp: string
     envoy?: string
   }
+}
+
+export interface LabelValue {
+  label: string
+  value: string
+}
+
+export interface Entity {
+  type: string
+  name: string
+  creationTime: string
+  modificationTime: string
+}
+
+export interface MeshEntity extends Entity {
+  mesh: string
+}
+
+/**
+ * Entity as returned via the `/meshes/:mesh/dataplanes/:dataPlane` endpoint.
+ */
+export interface DataPlane extends MeshEntity {
+  type: 'Dataplane'
+  networking: DataPlaneNetworking
+}
+
+/**
+ * Overview entity as returned via the `/meshes/:mesh/dataplanes+insights/:dataPlane` endpoint.
+ */
+export interface DataPlaneOverview extends MeshEntity {
+  type: 'DataplaneOverview'
+  dataplane: {
+    networking: DataPlaneNetworking
+  }
+  dataplaneInsight: DataPlaneInsight
+}
+
+/**
+ * Entity as returned via the `/meshes/:mesh/service-insights/:service` endpoint.
+ */
+export interface ServiceInsight extends MeshEntity {
+  type: 'ServiceInsight'
+  status: 'online' | 'offline' | 'partially_degraded'
+  dataplanes: {
+    total: number
+    online: number
+    offline: number
+  }
+}
+
+/**
+ * Entity of type `ExternalService` as returned via the `/meshes/:mesh/external-service/:service` endpoint.
+ */
+export interface ExternalService extends MeshEntity {
+  type: 'ExternalService'
+  networking: {
+    address: string
+    tls: {
+      enabled: boolean
+      allowRenegotiation: boolean
+      caCert?: {
+        secret?: string
+        inline?: string
+      }
+      clientCert?: {
+        secret?: string
+        inline?: string
+      }
+      clientKey?: {
+        secret?: string
+        inline?: string
+      }
+    }
+  }
+  tags: Record<string, string>
+}
+
+/**
+ * Entity as returned via the `/zones/:zone` endpoint.
+ */
+export interface Zone extends Entity {
+  type: 'Zone'
+  enabled: boolean
+}
+
+/**
+ * Overview entity as returned via the `/zones+insights/:zone` endpoint.
+ */
+export interface ZoneOverview extends MeshEntity {
+  type: 'ZoneOverview'
+  zone: Zone
+  zoneInsight: ZoneInsight
+}
+
+/**
+ * Entity as returned via the `/meshes/:mesh` endpoint.
+ */
+export interface Mesh extends Entity {
+  type: 'Mesh'
+  mtls?: Object
+  logging?: Object
+  tracing?: Object
+  metrics?: Object
+}
+
+/**
+ * Overview entity as returned via the `/meshes-insights/:mesh` endpoint.
+ */
+export interface MeshInsight extends Entity {
+  type: 'MeshInsight'
+  lastSync: string
+  dataplanes: UnitStatus
+  dataplanesByType: Record<string, UnitStatus>
+  policies: Record<string, ResourceStat>
+  dpVersions: Record<string, Record<string, UnitStatus>>
+  mTLS: {
+    issuedBackends?: Record<string, UnitStatus>
+    supportedBackends?: Record<string, UnitStatus>
+  }
+  services: Record<string, number>
 }

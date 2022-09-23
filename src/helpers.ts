@@ -2,7 +2,8 @@ import isPlainObject from 'lodash/isPlainObject'
 import get from 'lodash/get'
 
 import { DISABLED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
-import { ZoneOverview, ResourceResponse } from '@/types'
+import { ApiListResponse } from '@/api'
+import { ZoneOverview } from '@/types'
 
 type TODO = any
 
@@ -80,7 +81,7 @@ export function rawReadableDate(date: string) {
 /**
  * Takes an object or array and only returns the keys and
  * values you want based on the `items` value.
- * @param {Object, Array} original
+ * @param {Object | Array} original
  * @param {Object} desired
  */
 export function getSome(original: TODO, desired: TODO) {
@@ -156,7 +157,7 @@ export function applyPropsToObject(props: TODO = {}, object: TODO = {}) {
 export async function fetchAllResources<T = Object>({
   callEndpoint,
 }: {
-  callEndpoint: (params: Object) => Promise<ResourceResponse<T>>
+  callEndpoint: (params: Object) => Promise<ApiListResponse<T>>
 }): Promise<{ items: T[]; total: number }> {
   try {
     let allTotal = null

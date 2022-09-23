@@ -344,9 +344,20 @@ export default {
         'kuma.io/zone',
       ]
       const tags = dpTags(dataplane).filter((tag) => importantDataPlaneTagLabels.includes(tag.label))
-      const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value ?? '—'
-      const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value ?? '—'
-      const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value ?? '—'
+      const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value
+      const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
+      const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+
+      let serviceInsightRoute
+      if (service !== undefined) {
+        serviceInsightRoute = {
+          name: 'service-insight-detail-view',
+          params: {
+            mesh,
+            service,
+          },
+        }
+      }
 
       const { status } = getStatus(dataplane, dataplaneInsight)
 
@@ -408,9 +419,10 @@ export default {
         nameRoute,
         mesh,
         meshRoute,
-        zone,
-        service,
-        protocol,
+        zone: zone ?? '—',
+        service: service ?? '—',
+        serviceInsightRoute,
+        protocol: protocol ?? '—',
         status,
         totalUpdates,
         totalRejectedUpdates,

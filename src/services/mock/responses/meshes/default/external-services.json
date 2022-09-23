@@ -11,13 +11,13 @@
         "address": "httpbin.org:80",
         "tls": {
           "enabled": true,
+          "allowRenegotiation": false,
           "clientCert": {
             "secret": "clientCert"
           },
           "clientKey": {
             "secret": "clientKey"
-          },
-          "allowRenegotiation": false
+          }
         }
       },
       "tags": {

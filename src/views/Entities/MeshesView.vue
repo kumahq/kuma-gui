@@ -147,7 +147,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import Kuma from '@/services/kuma'
@@ -221,9 +221,6 @@ export default {
       policies: (state) => state.policies,
     }),
 
-    ...mapGetters({
-      featureFlags: 'config/featureFlags',
-    }),
     counts() {
       const policies = this.policies.map((policy) => ({
         title: policy.pluralDisplayName,

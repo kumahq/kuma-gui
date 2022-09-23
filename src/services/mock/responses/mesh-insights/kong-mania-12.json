@@ -64,8 +64,8 @@
   },
   "mTLS": {},
   "services": {
-    "total": 2,
+    "total": 0,
     "internal": 0,
-    "external": 2
+    "external": 0
   }
 }
