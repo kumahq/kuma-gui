@@ -158,7 +158,7 @@ export async function setupRouter() {
                           offset,
                         }
                       },
-                      component: () => import('@/data-planes/views/DataPlaneListView.vue'),
+                      component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
                     },
                     {
                       path: ':dataPlane',
@@ -168,7 +168,7 @@ export async function setupRouter() {
                         parent: 'data-plane-list-view',
                         breadcrumbTitleParam: 'dataPlane',
                       },
-                      component: () => import('@/data-planes/views/DataPlaneDetailView.vue'),
+                      component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
                     },
                   ],
                 },

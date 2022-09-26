@@ -4,7 +4,7 @@ import { rest } from 'msw'
 import { storeConfig, State } from '../../index'
 import { server } from '@/jest-setup'
 import Kuma from '@/services/kuma'
-import { ClientConfigInterface } from './config.types.js'
+import { ClientConfigInterface } from './config.types'
 
 const store = createStore<State>(storeConfig)
 

@@ -140,7 +140,7 @@ import {
 import { PRODUCT_NAME, KUMA_ZONE_TAG_NAME } from '@/consts'
 import { getTableData } from '@/utils/tableDataUtils'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
-import DataPlaneEntitySummary from '@/data-planes/components/DataPlaneEntitySummary.vue'
+import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
 import EmptyBlock from '@/components/EmptyBlock.vue'
 
 export default {

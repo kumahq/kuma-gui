@@ -1,5 +1,13 @@
 export type TODO = any
 
+export type TableHeader = {
+  key: string
+  label: string
+  sortable?: boolean
+  hideLabel?: boolean
+  useSortHandlerFn?: boolean
+}
+
 export type Info = {
   hostname: string
   tagline: string

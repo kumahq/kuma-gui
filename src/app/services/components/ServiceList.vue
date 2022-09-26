@@ -27,12 +27,11 @@
 import { ref, watch, PropType } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { TableHeader } from '@/data-planes/constants'
 import Kuma from '@/services/kuma'
 import { STATUS } from '@/consts'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import ServiceDetails from './ServiceDetails.vue'
-import { ExternalService, ServiceInsight } from '@/types.js'
+import { ExternalService, ServiceInsight, TableHeader } from '@/types'
 
 const PUBLIC_LABEL = {
   ServiceInsight: 'internal services',

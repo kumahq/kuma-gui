@@ -1,10 +1,4 @@
-export type TableHeader = {
-  key: string
-  label: string
-  sortable?: boolean
-  hideLabel?: boolean
-  useSortHandlerFn?: boolean
-}
+import { TableHeader } from '@/types'
 
 export type ColumnDropdownItem = {
   tableHeaderKey: string
