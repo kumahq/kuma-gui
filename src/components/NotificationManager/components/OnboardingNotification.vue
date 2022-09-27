@@ -12,9 +12,7 @@
       <template #alertMessage>
         <div class="alert-content">
           <div>
-            <strong>Welcome to {{ productName }}!</strong> We've detected that you don't have
-            any data plane proxies running yet. We've created an onboarding process to
-            help you!
+            <strong>Welcome to {{ PRODUCT_NAME }}!</strong> We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
           </div>
           <div>
             <KButton
@@ -32,22 +30,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { KAlert, KButton } from '@kong/kongponents'
+
 import { PRODUCT_NAME } from '@/consts'
 
-export default {
-  name: 'OnboardingNotification',
-  data() {
-    return {
-      alertClosed: false,
-      productName: PRODUCT_NAME,
-    }
-  },
-  methods: {
-    closeAlert() {
-      this.alertClosed = true
-    },
-  },
+const alertClosed = ref(false)
+
+function closeAlert() {
+  alertClosed.value = true
 }
 </script>
 
@@ -55,6 +47,7 @@ export default {
 .onboarding-check {
   margin: 0 0 var(--spacing-xl) 0;
 }
+
 .alert-content {
   @media screen and (min-width: 700px) {
     display: flex;
@@ -68,12 +61,14 @@ export default {
       min-width: 150px;
     }
   }
+
   @media screen and (max-width: 699px) {
     > *:last-of-type {
       margin-top: 10px;
     }
   }
 }
+
 .action-button.action-button {
   text-decoration: none;
 }

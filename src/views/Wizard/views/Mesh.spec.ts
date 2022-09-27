@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/vue'
 import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
 
 import Mesh from './Mesh.vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -13,12 +12,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
     {
       path: '/create-mesh',
       name: 'create-mesh',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })

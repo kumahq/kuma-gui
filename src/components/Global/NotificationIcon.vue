@@ -8,6 +8,7 @@
       color="var(--yellow-300)"
       icon="notificationBell"
     />
+
     <span
       v-if="amountOfActions > 0"
       data-testid="notification-amount"
@@ -16,21 +17,18 @@
   </button>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { KIcon } from '@kong/kongponents'
 
-export default {
-  name: 'NotificationIcon',
-  computed: {
-    ...mapGetters({
-      amountOfActions: 'notifications/amountOfActions',
-    }),
-  },
-  methods: {
-    ...mapActions({
-      openModal: 'notifications/openModal',
-    }),
-  },
+import { useStore } from '@/store/store'
+
+const store = useStore()
+
+const amountOfActions = computed(() => store.getters['notifications/amountOfActions'])
+
+function openModal() {
+  store.dispatch('notifications/openModal')
 }
 </script>
 

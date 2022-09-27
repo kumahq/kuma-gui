@@ -1,38 +1,31 @@
-import { createStore } from 'vuex'
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
-import { KAlert, KBadge, KButton, KCard, KIcon, KModal } from '@kong/kongponents'
+import { createRouter, createWebHashHistory } from 'vue-router'
+import { mount } from '@vue/test-utils'
+import { KIcon } from '@kong/kongponents'
 
+import { store, storeKey } from '@/store/store'
 import NotificationManager from './NotificationManager.vue'
-import notificationsModule from '@/store/modules/notifications/notifications'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
 
 function renderComponent({ meshes, selectedMesh = 'all' }: { meshes: any, selectedMesh?: string }) {
-  const store = createStore({
-    modules: {
-      onboarding: {
-        namespaced: true,
-        getters: {
-          showOnboarding: () => false,
-        },
-      },
-      notifications: notificationsModule as any,
-    },
-    state: {
-      meshes,
-      selectedMesh,
-    },
-  })
+  store.state.meshes = meshes
+  store.state.selectedMesh = selectedMesh
 
-  return render(NotificationManager, {
+  return mount(NotificationManager, {
     global: {
-      plugins: [store],
+      plugins: [router, [store, storeKey]],
       components: {
-        KAlert,
-        KBadge,
-        KButton,
-        KCard,
+        // TODO: Remove this once https://github.com/Kong/kongponents/pull/806 is merged and published and the library updated.
         KIcon,
-        KModal,
       },
     },
   })
@@ -40,60 +33,63 @@ function renderComponent({ meshes, selectedMesh = 'all' }: { meshes: any, select
 
 describe('NotificationManager.vue', () => {
   it('renders snapshot with information that there are actions which user may take', () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       meshes: {
         items: [{ logging: {}, tracing: {}, metrics: {} }],
       },
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
-  it("doesn't render notification info ", () => {
-    renderComponent({
+  it("doesn't render notification info", () => {
+    const wrapper = renderComponent({
       meshes: {
         items: [],
       },
     })
 
-    expect(screen.queryByTestId('notification-info')).not.toBeInTheDocument()
+    expect(wrapper.find('[data-testid="notification-info"]').exists()).toBe(false)
   })
 
   it("doesn't render notification info after it's closed", async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       meshes: {
         items: [{}],
       },
     })
 
-    await userEvent.click(screen.getByLabelText('Close'))
-
-    expect(screen.queryByTestId('notification-info')).not.toBeInTheDocument()
+    await wrapper.find('[data-testid="notification-info"] [aria-label="Close"]').trigger('click')
+    expect(wrapper.find('[data-testid="notification-info"]').exists()).toBe(false)
   })
 
   it('renders all meshes notification modal', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       meshes: {
         items: [{ name: 'test-mesh' }],
       },
       selectedMesh: 'all',
     })
 
-    await userEvent.click(screen.getByText(/Check your meshes!/))
+    const openModalButton = wrapper.find('[data-testid="open-modal-button"]')
+    expect(openModalButton.html()).toContain('Check your meshes!')
+    await openModalButton.trigger('click')
 
-    expect(screen.queryByRole('dialog')).toMatchSnapshot()
+    expect(wrapper.find('[data-testid="notification-modal"]').element).toMatchSnapshot()
   })
 
   it('renders single mesh notification modal', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       meshes: {
         items: [{ name: 'test-mesh' }],
       },
       selectedMesh: 'test-mesh',
     })
 
-    await userEvent.click(screen.getByText(/Check your mesh!/))
+    const openModalButton = wrapper.find('[data-testid="open-modal-button"]')
+    expect(openModalButton.html()).toContain('Check your mesh!')
+    await openModalButton.trigger('click')
 
-    expect(screen.queryByRole('dialog')).toMatchSnapshot()
+    expect(wrapper.find('[data-testid="notification-modal"]').element).toMatchSnapshot()
   })
 })

@@ -58,11 +58,8 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
+          Overview 
           <!--v-if-->
-          <div>
-            Overview 
-            <!--v-if-->
-          </div>
         </a>
       </div>
       <div
@@ -72,15 +69,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Meshes 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Meshes 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -104,15 +98,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Zone CPs 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Zone CPs 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -122,15 +113,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Zone Ingresses 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Zone Ingresses 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -140,15 +128,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Zone Egresses 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Zone Egresses 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -172,15 +157,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Internal 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Internal 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -190,15 +172,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            External 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          External 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -222,15 +201,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Data planes 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Data planes 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -256,15 +232,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Circuit Breakers 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Circuit Breakers 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -276,15 +249,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Fault Injections 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Fault Injections 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -296,15 +266,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Health Checks 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Health Checks 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -316,15 +283,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Mesh Gateway Routes 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Mesh Gateway Routes 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -336,15 +300,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Mesh Gateways 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Mesh Gateways 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -356,15 +317,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Proxy Templates 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Proxy Templates 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -376,15 +334,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Rate Limits 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Rate Limits 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -396,15 +351,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Retries 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Retries 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -416,15 +368,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Timeouts 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Timeouts 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -436,15 +385,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Traffic Logs 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Traffic Logs 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -456,15 +402,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Traffic Permissions 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Traffic Permissions 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -476,15 +419,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Traffic Routes 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Traffic Routes 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -496,15 +436,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Traffic Traces 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
+          Traffic Traces 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
         </a>
       </div>
       <div
@@ -516,74 +453,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         <a
           class="nav-item__link"
         >
-          <!--v-if-->
-          <div>
-            Virtual Outbounds 
-            <span
-              class="amount amount--empty"
-            >
-              0
-            </span>
-          </div>
-        </a>
-      </div>
-      <div
-        class="nav-item"
-        data-testid=""
-      >
-        <div
-          class="nav-item__title"
-        >
+          Virtual Outbounds 
           <span
-            class="text-uppercase"
+            class="amount amount--empty"
           >
-            Miscellaneous
+            0
           </span>
-        </div>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
-        data-testid="diagnostics"
-      >
-        <a
-          class="nav-item__link"
-        >
-          <div
-            class="nav-item__icon"
-          >
-            <span
-              class="kong-icon-gearFilled kong-icon"
-              data-v-637de6fa=""
-            >
-              <svg
-                height="16"
-                viewBox="0 0 16 16"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                
-  
-                <title>
-                  Settings
-                </title>
-                
-  
-                <path
-                  d="M8.63962039 0c.2152152 0 .40628463.13771505.47434165.34188612l.63997656 1.91853291c.3708976.11319954.7265407.26136452 1.0630881.4406537l1.8103874-.9038671c.1924944-.09624716.4249801-.05851992.5771602.09366021l.9045599.90455983c.1521801.15218013.1899073.38466585.0936602.57716018l-.904073 1.81000104c.1795192.33691975.3278441.69298066.44112 1.06432821l1.9182725.63912286C15.862285 6.95409498 16 7.14516441 16 7.36037961v1.27924078c0 .2152152-.137715.40628463-.3418861.47434165l-1.918532.63997355c-.1132072.37092351-.2613848.72659041-.4406907 1.06315871l.9039032 1.8103198c.0962471.1924944.0585199.4249801-.0936602.5771602l-.9045599.9045599c-.1521801.1521801-.3846658.1899073-.5771602.0936602l-1.8103171-.9039046c-.3365681.179306-.692235.3274837-1.0631584.4406912l-.63997656 1.9185329C9.04590502 15.862285 8.85483559 16 8.63962039 16H7.36037961c-.2152152 0-.40628463-.137715-.47434165-.3418861L6.2460614 13.739581c-.3708976-.1131996-.72654071-.2613646-1.06308807-.4406537l-1.81038748.9038671c-.19249433.0962471-.42498005.0585199-.57716018-.0936602l-.90455983-.9045599c-.15218013-.1521801-.18990737-.3846658-.09366021-.5771602l.90407299-1.810001c-.17951921-.3369197-.32784407-.6929806-.44112007-1.0643282L.34188612 9.11396204C.13771505 9.04590502 0 8.85483559 0 8.63962039V7.36037961c0-.2152152.13771505-.40628463.34188612-.47434165l1.918532-.63997355c.11320723-.37092352.26138479-.72659044.44069063-1.06315869l-.90390312-1.81031987c-.09624716-.19249433-.05851992-.42498005.09366021-.57716018l.90455983-.90455983c.15218013-.15218013.38466585-.18990737.57716018-.09366021l1.81031714.90390458c.33656815-.17930601.69223497-.32748375 1.06315841-.44069118L6.88603796.34188612C6.95409498.13771505 7.14516441 0 7.36037961 0h1.27924078zM8 6c-1.1045695 0-2 .8954305-2 2s.8954305 2 2 2 2-.8954305 2-2-.8954305-2-2-2z"
-                  fill="#A3BBCC"
-                  fill-rule="evenodd"
-                />
-                
-
-              </svg>
-              
-
-            </span>
-          </div>
-          <div>
-            Diagnostics 
-            <!--v-if-->
-          </div>
         </a>
       </div>
       

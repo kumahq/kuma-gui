@@ -1,9 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { render, screen } from '@testing-library/vue'
-import { KIcon } from '@kong/kongponents'
+import { mount } from '@vue/test-utils'
 
 import NavItem from './NavItem.vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
 import { store, storeKey } from '@/store/store'
 
 const router = createRouter({
@@ -12,18 +10,18 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
     {
       path: '/mesh/:mesh/data-planes',
       name: 'data-plane-list-view',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })
 
 function renderComponent() {
-  return render(NavItem, {
+  return mount(NavItem, {
     props: {
       name: 'All',
       link: 'data-plane-list-view',
@@ -32,18 +30,15 @@ function renderComponent() {
     },
     global: {
       plugins: [router, [store, storeKey]],
-      components: {
-        KIcon,
-      },
     },
   })
 }
 
 describe('NavItem.vue', () => {
   it('renders snapshot with link to selected mesh', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it.each([
@@ -53,8 +48,8 @@ describe('NavItem.vue', () => {
   ])('renders amount of items', (numberOfDataplanes, expectedText) => {
     store.state.sidebar.insights.mesh.dataplanes.total = numberOfDataplanes
 
-    renderComponent()
+    const wrapper = renderComponent()
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument()
+    expect(wrapper.html()).toContain(expectedText)
   })
 })

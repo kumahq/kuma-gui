@@ -33,15 +33,6 @@ describe('EntityURLControl.vue', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('display custom message', () => {
-    renderComponent({
-      name: 'foo',
-      copyButtonText: 'copy',
-    })
-
-    expect(screen.getByText('copy')).toBeInTheDocument()
-  })
-
   it('render for mesh all', () => {
     renderComponent({
       name: 'foo',

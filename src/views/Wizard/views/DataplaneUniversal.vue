@@ -275,31 +275,26 @@
               <h3>
                 Auto-Inject DPP
               </h3>
+
               <p>
                 It's time to first generate the credentials so that {{ title }} will allow
                 the Dataplane to successfully authenticate itself with the control plane,
                 and then finally install the Dataplane process (powered by Envoy).
               </p>
-              <TabsWidget
-                :loaders="false"
-                :tabs="tabs"
-                initial-tab-override="universal"
-              >
-                <template #universal>
-                  <CodeView
-                    title="Generate Dataplane Token"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="generateDpTokenCodeOutput"
-                  />
-                  <CodeView
-                    title="Start Dataplane Process"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="startDpCodeOutput"
-                  />
-                </template>
-              </TabsWidget>
+
+              <h4>Generate Dataplane Token</h4>
+
+              <CodeBlock
+                language="bash"
+                :code="generateDpTokenCodeOutput"
+              />
+
+              <h4>Start Dataplane Process</h4>
+
+              <CodeBlock
+                language="bash"
+                :code="startDpCodeOutput"
+              />
             </div>
             <EntityScanner
               :loader-function="scanForEntity"
@@ -407,12 +402,11 @@ import json2yaml from '@appscode/json2yaml'
 import Kuma from '@/services/kuma'
 import { kumaDpServerUrl } from '@/configUrl'
 import { kebabCase } from '@/helpers'
+import CodeBlock from '@/components/CodeBlock.vue'
 import FormFragment from '@/views/Wizard/components/FormFragment.vue'
-import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
 import EnvironmentSwitcher from '@/views/Wizard/components/EnvironmentSwitcher.vue'
 import HelperTooltip from '@/views/Wizard/components/HelperTooltip.vue'
-import CodeView from '@/components/Skeletons/CodeView.vue'
 import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
 
 // schema for building code output
@@ -423,12 +417,11 @@ export default {
   name: 'DataplaneWizardUniversal',
 
   components: {
+    CodeBlock,
     FormFragment,
-    TabsWidget,
     StepSkeleton,
     EnvironmentSwitcher,
     HelperTooltip,
-    CodeView,
     EntityScanner,
   },
   data() {

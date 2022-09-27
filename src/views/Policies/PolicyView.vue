@@ -4,11 +4,6 @@
     class="relative"
     :class="policy.path"
   >
-    <DocumentationLink
-      :href="docsURL"
-      data-testid="policy-documentation-link"
-    />
-
     <div
       v-if="policy.isExperimental"
       class="mb-4"
@@ -45,6 +40,11 @@
       >
         >
         <template #additionalControls>
+          <DocumentationLink
+            :href="docsURL"
+            data-testid="policy-documentation-link"
+          />
+
           <KButton
             v-if="$route.query.ns"
             class="back-button"

@@ -1,11 +1,10 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
-import { KAlert, KBadge, KButton, KIcon, KModal, KPop } from '@kong/kongponents'
+import { KIcon } from '@kong/kongponents'
 
 import { store, storeKey } from '@/store/store'
 import App from './App.vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -13,7 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })
@@ -28,12 +27,8 @@ function renderComponent({ status = 'OK' }: { status?: string }) {
         'router-link': RouterLinkStub,
       },
       components: {
-        KAlert,
-        KBadge,
-        KButton,
+        // TODO: Remove this once https://github.com/Kong/kongponents/pull/806 is merged and published and the library updated.
         KIcon,
-        KModal,
-        KPop,
       },
     },
   })

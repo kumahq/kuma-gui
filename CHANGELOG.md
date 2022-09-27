@@ -34,7 +34,7 @@ the GUI has moved to `:5681/gui/`.
   * Now displaying a tag next to the status in the top bar that lets the user know when Kuma is running in Multicluster mode
   * Expanded and improved tag handling for all Dataplane views to cover Inbound, Ingress, and Gateway tags
   * Added a new column to the Dataplanes tables that denotes the type of Dataplane (Standard, Ingress, Gateway)
-  * Added functionality that detects when Kuma has been upgraded by storing the Kuma version in the browser's Local Storage. It will attempt to reload the page so that the user is viewing the latest GUI if the running version is prior to the version found at [https://kuma.io/latest_version](https://kuma.io/latest_version)
+  * Added functionality that detects when Kuma has been upgraded by storing the Kuma version in the browser's local storage. It will attempt to reload the page so that the user is viewing the latest GUI if the running version is prior to the version found at [https://kuma.io/latest_version](https://kuma.io/latest_version)
 
 ### Issues resolved
 

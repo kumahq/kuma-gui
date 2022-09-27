@@ -1,44 +1,26 @@
-import { createStore } from 'vuex'
-import { render, screen } from '@testing-library/vue'
-import { KIcon } from '@kong/kongponents'
+import { mount } from '@vue/test-utils'
 
 import NotificationIcon from './NotificationIcon.vue'
+import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  const store = createStore({
-    modules: {
-      notifications: {
-        namespaced: true,
-        getters: {
-          amountOfActions: () => undefined,
-        },
-      },
-    },
-    state: {
-      meshes: { items: [{ mtls: {}, logging: {}, tracing: {}, metrics: {} }] },
-    },
-  })
-
-  return render(NotificationIcon, {
+  return mount(NotificationIcon, {
     global: {
-      plugins: [store],
-      components: {
-        KIcon,
-      },
+      plugins: [[store, storeKey]],
     },
   })
 }
 
 describe('NotificationIcon.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders icon without notification number', async () => {
-    renderComponent()
+    const wrapper = renderComponent()
 
-    expect(screen.queryByTestId('notification-amount')).not.toBeInTheDocument()
+    expect(wrapper.find('[data-testid="notification-amount"]').exists()).toBe(false)
   })
 })

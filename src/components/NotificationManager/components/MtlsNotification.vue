@@ -35,15 +35,11 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-export default {
-  name: 'MtlsNotification',
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useStore } from '@/store/store'
 
-  computed: {
-    ...mapGetters({
-      kumaDocsVersion: 'config/getKumaDocsVersion',
-    }),
-  },
-}
+const store = useStore()
+
+const kumaDocsVersion = computed(() => store.getters['config/getKumaDocsVersion'])
 </script>

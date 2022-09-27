@@ -6,7 +6,6 @@ import userEvent from '@testing-library/user-event'
 import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
 import { server } from '@/jest-setup'
 
 const router = createRouter({
@@ -15,12 +14,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
     {
       path: '/create-mesh',
       name: 'create-mesh',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })

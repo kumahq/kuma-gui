@@ -112,331 +112,161 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                     <p>
                        It's time to first generate the credentials so that Kuma will allow the Dataplane to successfully authenticate itself with the control plane, and then finally install the Dataplane process (powered by Envoy). 
                     </p>
+                    <h4>
+                      Generate Dataplane Token
+                    </h4>
                     <div
-                      class="tab-container"
-                      data-testid="tab-container"
+                      class="code-block"
                     >
-                      <!--v-if-->
-                      <div
-                        class="tab__content-container"
+                      <!-- eslint-disable vue/no-v-html -->
+                      <pre
+                        class="code-block__code language-bash"
+                        data-testid="code-block"
                       >
-                        <div
-                          class="k-tabs"
-                          data-v-6bcd6661=""
+                        <code>
+                          kumactl generate dataplane-token 
+                          <span
+                            class="token parameter variable"
+                          >
+                            --name
+                          </span>
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          testMesh-4fzzzxtestMesh 
+                          <span
+                            class="token operator"
+                          >
+                            &gt;
+                          </span>
+                           kuma-token-testMesh-4fzzzxtestMesh
+                        </code>
+                      </pre>
+                      <!-- eslint-enable vue/no-v-html -->
+                      
+                      <div
+                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        aria-expanded="false"
+                        data-v-9bbde9b2=""
+                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        role="button"
+                      >
+                        
+                        <button
+                          class="code-block__copy-button"
+                          type="button"
                         >
-                          <ul
-                            aria-label="ktabs"
-                            data-v-6bcd6661=""
-                            role="tablist"
+                          <span
+                            class="kong-icon-copy kong-icon"
+                            data-v-637de6fa=""
                           >
-                            
-                            <li
-                              aria-controls="panel-0"
-                              aria-selected="true"
-                              class="active tab-item"
-                              data-v-6bcd6661=""
-                              id="universal-tab"
-                              role="tab"
-                              tabindex="0"
+                            <svg
+                              height="24"
+                              role="img"
+                              viewBox="0 0 32 32"
+                              width="24"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <a
-                                class="tab-link"
-                                data-v-6bcd6661=""
-                              >
-                                
-                                Universal
-                                
-                              </a>
-                            </li>
+                              
+  
+                              <title>
+                                Copy
+                              </title>
+                              
+  
+                              <path
+                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                fill="var(--blue-500)"
+                              />
+                              
+
+                            </svg>
                             
-                          </ul>
-                          
+
+                          </span>
+                          <span
+                            class="kutil-sr-only"
+                          >
+                            Copy
+                          </span>
+                        </button>
+                        
+                        <transition-stub
+                          data-v-9bbde9b2=""
+                        >
                           <div
-                            aria-labelledby="universal-tab"
-                            class="tab-container"
-                            data-v-6bcd6661=""
-                            id="panel-0"
-                            role="tabpanel"
-                            tabindex="0"
+                            class="k-popover"
+                            data-v-9bbde9b2=""
+                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                            role="region"
+                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                           >
-                            
-                            
+                            <!---->
                             <div
-                              class="code-view"
+                              class="k-popover-content"
+                              data-v-9bbde9b2=""
                             >
-                              <div
-                                class="code-view-content"
-                              >
-                                <section
-                                  aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                  aria-label="Generate Dataplane Token"
-                                  class="noBorder kong-card"
-                                  data-v-52c90d54=""
-                                >
-                                  <div
-                                    class="k-card-header d-flex mb-3"
-                                    data-v-52c90d54=""
-                                  >
-                                    <!---->
-                                    <div
-                                      class="k-card-title mb-3"
-                                      data-v-52c90d54=""
-                                    >
-                                      <h4
-                                        data-v-52c90d54=""
-                                      >
-                                        
-                                        Generate Dataplane Token
-                                        
-                                      </h4>
-                                    </div>
-                                    <div
-                                      class="k-card-actions"
-                                      data-v-52c90d54=""
-                                    >
-                                      
-                                      
-                                      <div
-                                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                        aria-expanded="false"
-                                        data-v-9bbde9b2=""
-                                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                        role="button"
-                                      >
-                                        
-                                        <button
-                                          class="medium rounded primary k-button"
-                                          data-v-6bcbf05d=""
-                                          type="button"
-                                        >
-                                          
-                                          <!---->
-                                          
-                                          
-                                          Copy Command to Clipboard
-                                          
-                                          <!---->
-                                        </button>
-                                        
-                                        <transition-stub
-                                          data-v-9bbde9b2=""
-                                        >
-                                          <div
-                                            class="k-popover"
-                                            data-v-9bbde9b2=""
-                                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                            role="region"
-                                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
-                                          >
-                                            <!---->
-                                            <div
-                                              class="k-popover-content"
-                                              data-v-9bbde9b2=""
-                                            >
-                                              
-                                              <div>
-                                                <p>
-                                                  Entity copied to clipboard!
-                                                </p>
-                                              </div>
-                                              
-                                            </div>
-                                            <!---->
-                                          </div>
-                                        </transition-stub>
-                                      </div>
-                                      
-                                      
-                                    </div>
-                                  </div>
-                                  <!---->
-                                  <div
-                                    class="k-card-content d-flex"
-                                    data-v-52c90d54=""
-                                  >
-                                    <div
-                                      class="k-card-body"
-                                      data-v-52c90d54=""
-                                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                    >
-                                      
-                                      
-                                      <!-- eslint-disable vue/no-v-html -->
-                                      <pre
-                                        class="code-block language-bash"
-                                        data-testid="code-block"
-                                      >
-                                        <code>
-                                          kumactl generate dataplane-token 
-                                          <span
-                                            class="token parameter variable"
-                                          >
-                                            --name
-                                          </span>
-                                          <span
-                                            class="token operator"
-                                          >
-                                            =
-                                          </span>
-                                          testMesh-4fzzzxtestMesh 
-                                          <span
-                                            class="token operator"
-                                          >
-                                            &gt;
-                                          </span>
-                                           kuma-token-testMesh-4fzzzxtestMesh
-                                        </code>
-                                      </pre>
-                                      <!-- eslint-enable vue/no-v-html -->
-                                      
-                                      
-                                    </div>
-                                    <!---->
-                                  </div>
-                                </section>
-                              </div>
+                              
+                              <p>
+                                Code copied to clipboard
+                              </p>
+                              
                             </div>
-                            <div
-                              class="code-view"
-                            >
-                              <div
-                                class="code-view-content"
-                              >
-                                <section
-                                  aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                  aria-label="Start Dataplane Process"
-                                  class="noBorder kong-card"
-                                  data-v-52c90d54=""
-                                >
-                                  <div
-                                    class="k-card-header d-flex mb-3"
-                                    data-v-52c90d54=""
-                                  >
-                                    <!---->
-                                    <div
-                                      class="k-card-title mb-3"
-                                      data-v-52c90d54=""
-                                    >
-                                      <h4
-                                        data-v-52c90d54=""
-                                      >
-                                        
-                                        Start Dataplane Process
-                                        
-                                      </h4>
-                                    </div>
-                                    <div
-                                      class="k-card-actions"
-                                      data-v-52c90d54=""
-                                    >
-                                      
-                                      
-                                      <div
-                                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                        aria-expanded="false"
-                                        data-v-9bbde9b2=""
-                                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                        role="button"
-                                      >
-                                        
-                                        <button
-                                          class="medium rounded primary k-button"
-                                          data-v-6bcbf05d=""
-                                          type="button"
-                                        >
-                                          
-                                          <!---->
-                                          
-                                          
-                                          Copy Command to Clipboard
-                                          
-                                          <!---->
-                                        </button>
-                                        
-                                        <transition-stub
-                                          data-v-9bbde9b2=""
-                                        >
-                                          <div
-                                            class="k-popover"
-                                            data-v-9bbde9b2=""
-                                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                            role="region"
-                                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
-                                          >
-                                            <!---->
-                                            <div
-                                              class="k-popover-content"
-                                              data-v-9bbde9b2=""
-                                            >
-                                              
-                                              <div>
-                                                <p>
-                                                  Entity copied to clipboard!
-                                                </p>
-                                              </div>
-                                              
-                                            </div>
-                                            <!---->
-                                          </div>
-                                        </transition-stub>
-                                      </div>
-                                      
-                                      
-                                    </div>
-                                  </div>
-                                  <!---->
-                                  <div
-                                    class="k-card-content d-flex"
-                                    data-v-52c90d54=""
-                                  >
-                                    <div
-                                      class="k-card-body"
-                                      data-v-52c90d54=""
-                                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                    >
-                                      
-                                      
-                                      <!-- eslint-disable vue/no-v-html -->
-                                      <pre
-                                        class="code-block language-bash"
-                                        data-testid="code-block"
-                                      >
-                                        <code>
-                                          kuma-dp run 
-                                          <span
-                                            class="token punctuation"
-                                          >
-                                            \\
-                                          </span>
-                                          
+                            <!---->
+                          </div>
+                        </transition-stub>
+                      </div>
+                      
+                    </div>
+                    <h4>
+                      Start Dataplane Process
+                    </h4>
+                    <div
+                      class="code-block"
+                    >
+                      <!-- eslint-disable vue/no-v-html -->
+                      <pre
+                        class="code-block__code language-bash"
+                        data-testid="code-block"
+                      >
+                        <code>
+                          kuma-dp run 
+                          <span
+                            class="token punctuation"
+                          >
+                            \\
+                          </span>
+                          
       --cp-address
-                                          <span
-                                            class="token operator"
-                                          >
-                                            =
-                                          </span>
-                                          https://localhost:5678/ 
-                                          <span
-                                            class="token punctuation"
-                                          >
-                                            \\
-                                          </span>
-                                          
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          https://localhost:5678/ 
+                          <span
+                            class="token punctuation"
+                          >
+                            \\
+                          </span>
+                          
       
-                                          <span
-                                            class="token parameter variable"
-                                          >
-                                            --dataplane
-                                          </span>
-                                          <span
-                                            class="token operator"
-                                          >
-                                            =
-                                          </span>
-                                          <span
-                                            class="token string"
-                                          >
-                                            "type: Dataplane
+                          <span
+                            class="token parameter variable"
+                          >
+                            --dataplane
+                          </span>
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          <span
+                            class="token string"
+                          >
+                            "type: Dataplane
 mesh: testMesh
 name: testMesh-4fzzzxtestMesh
 networking: 
@@ -448,39 +278,98 @@ networking:
       tags: 
         kuma.io/service: testMesh
         kuma.io/protocol: tcp"
-                                          </span>
-                                           
-                                          <span
-                                            class="token punctuation"
-                                          >
-                                            \\
-                                          </span>
-                                          
-      --dataplane-token-file
-                                          <span
-                                            class="token operator"
-                                          >
-                                            =
-                                          </span>
-                                          kuma-token-testMesh-4fzzzxtestMesh
-                                        </code>
-                                      </pre>
-                                      <!-- eslint-enable vue/no-v-html -->
-                                      
-                                      
-                                    </div>
-                                    <!---->
-                                  </div>
-                                </section>
-                              </div>
-                            </div>
-                            
-                            
-                          </div>
+                          </span>
+                           
+                          <span
+                            class="token punctuation"
+                          >
+                            \\
+                          </span>
                           
-                        </div>
-                        <!--v-if-->
+      --dataplane-token-file
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          kuma-token-testMesh-4fzzzxtestMesh
+                        </code>
+                      </pre>
+                      <!-- eslint-enable vue/no-v-html -->
+                      
+                      <div
+                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        aria-expanded="false"
+                        data-v-9bbde9b2=""
+                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        role="button"
+                      >
+                        
+                        <button
+                          class="code-block__copy-button"
+                          type="button"
+                        >
+                          <span
+                            class="kong-icon-copy kong-icon"
+                            data-v-637de6fa=""
+                          >
+                            <svg
+                              height="24"
+                              role="img"
+                              viewBox="0 0 32 32"
+                              width="24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Copy
+                              </title>
+                              
+  
+                              <path
+                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                fill="var(--blue-500)"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <span
+                            class="kutil-sr-only"
+                          >
+                            Copy
+                          </span>
+                        </button>
+                        
+                        <transition-stub
+                          data-v-9bbde9b2=""
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-9bbde9b2=""
+                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                            role="region"
+                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-9bbde9b2=""
+                            >
+                              
+                              <p>
+                                Code copied to clipboard
+                              </p>
+                              
+                            </div>
+                            <!---->
+                          </div>
+                        </transition-stub>
                       </div>
+                      
                     </div>
                   </div>
                   <div

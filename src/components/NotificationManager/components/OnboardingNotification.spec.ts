@@ -1,35 +1,16 @@
-import { createStore } from 'vuex'
-import { render } from '@testing-library/vue'
-import { KAlert, KButton } from '@kong/kongponents'
+import { mount } from '@vue/test-utils'
 
+import { store, storeKey } from '@/store/store'
 import OnboardingNotification from './OnboardingNotification.vue'
 
 describe('OnboardingNotification.vue', () => {
   it('renders snapshot', () => {
-    const store = createStore({
-      modules: {
-        config: {
-          namespaced: true,
-          state: {
-            kumaDocsVersion: '1.2.0',
-          },
-          getters: {
-            getKumaDocsVersion: (state) => state.kumaDocsVersion,
-          },
-        },
-      },
-    })
-
-    const { container } = render(OnboardingNotification, {
+    const wrapper = mount(OnboardingNotification, {
       global: {
-        plugins: [store],
-        components: {
-          KAlert,
-          KButton,
-        },
+        plugins: [[store, storeKey]],
       },
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

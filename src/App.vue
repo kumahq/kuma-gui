@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="loading"
+    v-if="isLoading"
     class="full-screen"
   >
     <KLoader />
@@ -19,11 +19,11 @@
           'app-main-content--narrow': !isWideContent,
         }"
       >
-        <ApiErrorMessage v-if="status !== 'OK'" />
+        <ApiErrorMessage v-if="store.state.config.status !== 'OK'" />
 
         <NotificationManager />
 
-        <OnboardingNotification v-if="showOnboarding" />
+        <OnboardingNotification v-if="store.getters['onboarding/showOnboarding']" />
 
         <BreadcrumbsMenu />
 
@@ -35,7 +35,12 @@
             mode="out-in"
             name="fade"
           >
-            <component :is="Component" />
+            <div
+              :key="(route.name as string)"
+              class="transition-root"
+            >
+              <component :is="Component" />
+            </div>
           </transition>
         </router-view>
       </main>
@@ -43,9 +48,11 @@
   </template>
 </template>
 
-<script>
-import { mapState, mapGetters, mapActions } from 'vuex'
+<script lang="ts" setup>
+import { onBeforeMount, onUnmounted, computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
+import { useStore } from '@/store/store'
 import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage.vue'
 import AppSidebar from '@/components/Sidebar/AppSidebar.vue'
 import BreadcrumbsMenu from '@/components/BreadcrumbsMenu.vue'
@@ -54,93 +61,51 @@ import KLoader from '@/components/KLoader.vue'
 import NotificationManager from '@/components/NotificationManager/NotificationManager.vue'
 import OnboardingNotification from '@/components/NotificationManager/components/OnboardingNotification.vue'
 
-export default {
-  name: 'App',
+const store = useStore()
+const route = useRoute()
 
-  components: {
-    ApiErrorMessage,
-    AppSidebar,
-    BreadcrumbsMenu,
-    GlobalHeader,
-    KLoader,
-    NotificationManager,
-    OnboardingNotification,
-  },
+const isLoading = ref(true)
+const timeout = ref<number | null>(null)
 
-  data() {
-    return {
-      loading: true,
-      timeout: null,
-    }
-  },
+/**
+ * The `router-view`’s `key` attribute value.
+ *
+ * Is always set to `'default'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
+ * However, in some scenarios, we want Vue to re-render a route’s components
+ * (e.g. `src/views/Policies/PolicyView.vue` which is used by some dozen policy routes).
+ */
+const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'default')
 
-  computed: {
-    ...mapState({
-      globalLoading: (state) => state.globalLoading,
-      pageTitle: (state) => state.pageTitle,
-    }),
+const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view'].includes(route.name))
 
-    ...mapGetters({
-      showOnboarding: 'onboarding/showOnboarding',
-      status: 'config/getStatus',
-    }),
+watch(() => store.state.globalLoading, function (globalLoading) {
+  timeout.value = window.setTimeout(() => {
+    isLoading.value = globalLoading
+  }, 200)
+})
 
-    /**
-     * The `router-view`’s `key` attribute value.
-     *
-     * Is always set to `'default'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
-     * However, in some scenarios, we want Vue to re-render a route’s components
-     * (e.g. `src/views/Policies/PolicyView.vue` which is used by some dozen policy routes).
-     */
-    routeKey() {
-      if (this.$route.meta.shouldReRender) {
-        return this.$route.path
-      }
+watch(() => route.meta.title, function (pageTitle) {
+  setDocumentTitle(pageTitle)
+})
 
-      return 'default'
-    },
+watch(() => store.state.pageTitle, function (pageTitle) {
+  setDocumentTitle(pageTitle)
+})
 
-    isWideContent() {
-      return ['data-plane-list-view'].includes(this.$route.name)
-    },
-  },
+onBeforeMount(function () {
+  store.dispatch('bootstrap')
+})
 
-  watch: {
-    globalLoading: function (loading) {
-      this.timeout = setTimeout(() => {
-        this.loading = loading
-      }, 200)
-    },
+onUnmounted(function () {
+  if (typeof timeout.value === 'number') {
+    window.clearTimeout(timeout.value)
+  }
+})
 
-    '$route.meta.title': function (pageTitle) {
-      this.setDocumentTitle(pageTitle)
-    },
+function setDocumentTitle(title: string | undefined): void {
+  const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
 
-    pageTitle(pageTitle) {
-      this.setDocumentTitle(pageTitle)
-    },
-  },
-
-  beforeMount() {
-    this.bootstrap()
-  },
-
-  unmounted() {
-    clearTimeout(this.timeout)
-  },
-
-  methods: {
-    ...mapActions(['bootstrap']),
-
-    /**
-     * @param {string | undefined} title
-     */
-    setDocumentTitle(title) {
-      const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
-
-      document.title = title ? `${title} | ${siteTitle}` : siteTitle
-    },
-  },
+  document.title = title ? `${title} | ${siteTitle}` : siteTitle
 }
 </script>
 
@@ -165,7 +130,6 @@ export default {
 
 .app-main-content {
   padding: var(--spacing-lg);
-  transition: 0.1s margin cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .app-main-content--narrow {

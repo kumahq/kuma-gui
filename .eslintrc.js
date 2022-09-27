@@ -18,6 +18,7 @@
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript'],
   rules: {
     indent: 'off',
+    'func-call-spacing': 'off',
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/no-unused-vars': ['warn', {
       argsIgnorePattern: '^_',

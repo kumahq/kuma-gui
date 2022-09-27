@@ -4,18 +4,15 @@
       <KPop placement="bottom">
         <KButton
           appearance="outline"
+          icon="copy"
           size="small"
           @click="() => { copyToClipboard(shareUrl) }"
         >
-          <template #icon>
-            <KIcon icon="externalLink" />
-          </template>
-          {{ copyButtonText }}
+          Copy URL
         </KButton>
+
         <template #content>
-          <div>
-            <p>{{ confirmationText }}</p>
-          </div>
+          <p>URL copied to clipboard!</p>
         </template>
       </KPop>
     </KClipboardProvider>
@@ -23,7 +20,7 @@
 </template>
 
 <script>
-import { KClipboardProvider, KPop, KButton, KIcon } from '@kong/kongponents'
+import { KClipboardProvider, KPop, KButton } from '@kong/kongponents'
 
 export default {
   name: 'EntityURLControl',
@@ -32,21 +29,12 @@ export default {
     KClipboardProvider,
     KPop,
     KButton,
-    KIcon,
   },
 
   props: {
     name: {
       type: String,
       default: '',
-    },
-    copyButtonText: {
-      type: String,
-      default: 'Copy URL',
-    },
-    confirmationText: {
-      type: String,
-      default: 'URL copied to clipboard!',
     },
     mesh: {
       type: String,

@@ -35,123 +35,95 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
              The demo application includes two services: a Redis backend to store a counter value, and a frontend web UI to show and increment the counter. 
           </p>
           <div>
+            <p>
+              Clone the GitHub repository for the demo application:
+            </p>
             <div
-              class="code-view"
+              class="code-block"
             >
-              <div
-                class="code-view-content"
+              <!-- eslint-disable vue/no-v-html -->
+              <pre
+                class="code-block__code language-bash"
+                data-testid="code-block"
               >
-                <section
-                  aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  aria-label="Clone the GitHub repository for the demo application:"
-                  class="noBorder kong-card"
-                  data-v-52c90d54=""
+                <code>
+                  https://github.com/kumahq/kuma-counter-demo/
+                </code>
+              </pre>
+              <!-- eslint-enable vue/no-v-html -->
+              
+              <div
+                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                aria-expanded="false"
+                data-v-9bbde9b2=""
+                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                role="button"
+              >
+                
+                <button
+                  class="code-block__copy-button"
+                  type="button"
+                >
+                  <span
+                    class="kong-icon-copy kong-icon"
+                    data-v-637de6fa=""
+                  >
+                    <svg
+                      height="16"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      
+  
+                      <title>
+                        Copy
+                      </title>
+                      
+  
+                      <path
+                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                        fill="#A3BBCC"
+                      />
+                      
+
+                    </svg>
+                    
+
+                  </span>
+                  <span
+                    class="kutil-sr-only"
+                  >
+                    Copy
+                  </span>
+                </button>
+                
+                <transition-stub
+                  data-v-9bbde9b2=""
                 >
                   <div
-                    class="k-card-header d-flex mb-3"
-                    data-v-52c90d54=""
+                    class="k-popover"
+                    data-v-9bbde9b2=""
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    role="region"
+                    style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                   >
                     <!---->
                     <div
-                      class="k-card-title mb-3"
-                      data-v-52c90d54=""
-                    >
-                      <h4
-                        data-v-52c90d54=""
-                      >
-                        
-                        Clone the GitHub repository for the demo application:
-                        
-                      </h4>
-                    </div>
-                    <div
-                      class="k-card-actions"
-                      data-v-52c90d54=""
+                      class="k-popover-content"
+                      data-v-9bbde9b2=""
                     >
                       
-                      
-                      <div
-                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                        aria-expanded="false"
-                        data-v-9bbde9b2=""
-                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                        role="button"
-                      >
-                        
-                        <button
-                          class="medium rounded primary k-button"
-                          data-v-6bcbf05d=""
-                          type="button"
-                        >
-                          
-                          <!---->
-                          
-                          
-                          Copy Command to Clipboard
-                          
-                          <!---->
-                        </button>
-                        
-                        <transition-stub
-                          data-v-9bbde9b2=""
-                        >
-                          <div
-                            class="k-popover"
-                            data-v-9bbde9b2=""
-                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                            role="region"
-                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
-                          >
-                            <!---->
-                            <div
-                              class="k-popover-content"
-                              data-v-9bbde9b2=""
-                            >
-                              
-                              <div>
-                                <p>
-                                  Entity copied to clipboard!
-                                </p>
-                              </div>
-                              
-                            </div>
-                            <!---->
-                          </div>
-                        </transition-stub>
-                      </div>
-                      
-                      
-                    </div>
-                  </div>
-                  <!---->
-                  <div
-                    class="k-card-content d-flex"
-                    data-v-52c90d54=""
-                  >
-                    <div
-                      class="k-card-body"
-                      data-v-52c90d54=""
-                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                    >
-                      
-                      
-                      <!-- eslint-disable vue/no-v-html -->
-                      <pre
-                        class="code-block language-bash"
-                        data-testid="code-block"
-                      >
-                        <code>
-                          https://github.com/kumahq/kuma-counter-demo/
-                        </code>
-                      </pre>
-                      <!-- eslint-enable vue/no-v-html -->
-                      
+                      <p>
+                        Code copied to clipboard
+                      </p>
                       
                     </div>
                     <!---->
                   </div>
-                </section>
+                </transition-stub>
               </div>
+              
             </div>
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"

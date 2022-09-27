@@ -33,6 +33,11 @@ watch(() => store.state.selectedMesh, () => {
 </script>
 
 <style lang="scss" scoped>
+// This wrapping element is necessary. It ensures that the sidebar can participate in a grid or flex container.
+.app-sidebar-wrapper {
+  position: static;
+}
+
 .app-sidebar {
   width: var(--subnavWidth);
   position: fixed;
@@ -43,5 +48,6 @@ watch(() => store.state.selectedMesh, () => {
   overflow-y: auto;
   padding-right: var(--spacing-xs);
   border-right: 1px solid var(--black-10);
+  background-color: var(--white);
 }
 </style>

@@ -17,14 +17,11 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-export default {
-  name: 'LoggingNotification',
-  computed: {
-    ...mapGetters({
-      kumaDocsVersion: 'config/getKumaDocsVersion',
-    }),
-  },
-}
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useStore } from '@/store/store'
+
+const store = useStore()
+
+const kumaDocsVersion = computed(() => store.getters['config/getKumaDocsVersion'])
 </script>

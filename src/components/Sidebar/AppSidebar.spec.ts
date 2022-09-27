@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/vue'
 
 import AppSidebar from './AppSidebar.vue'
 import { store, storeKey } from '@/store/store'
-import TestComponent from '@/testUtils/TestComponent.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -13,7 +12,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })

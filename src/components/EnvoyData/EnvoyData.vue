@@ -1,46 +1,19 @@
 <template>
   <StatusInfo
+    class="envoy-data"
     :has-error="error !== null"
     :is-loading="isLoading"
     :error="error"
   >
-    <KCard border-variant="noBorder">
-      <template #body>
-        <CodeBlock
-          class="panel-code-block"
-          language="json"
-          :code="content"
-        />
-      </template>
-
-      <template #actions>
-        <KClipboardProvider
-          v-if="content"
-          v-slot="{ copyToClipboard }"
-        >
-          <KPop placement="bottom">
-            <KButton
-              appearance="primary"
-              @click="copyToClipboard(content)"
-            >
-              Copy config to clipboard
-            </KButton>
-
-            <template #content>
-              <div>
-                <p>Config copied to clipboard!</p>
-              </div>
-            </template>
-          </KPop>
-        </KClipboardProvider>
-      </template>
-    </KCard>
+    <CodeBlock
+      class="panel-code-block"
+      language="json"
+      :code="content"
+    />
   </StatusInfo>
 </template>
 
 <script>
-import { KButton, KCard, KClipboardProvider, KPop } from '@kong/kongponents'
-
 import CodeBlock from '../CodeBlock.vue'
 import Kuma from '@/services/kuma'
 import StatusInfo from '@/components/Utils/StatusInfo.vue'
@@ -50,10 +23,6 @@ export default {
 
   components: {
     CodeBlock,
-    KButton,
-    KCard,
-    KClipboardProvider,
-    KPop,
     StatusInfo,
   },
 
@@ -150,8 +119,25 @@ export default {
 }
 </script>
 
+<style lang="scss">
+.code-container .k-card-body {
+  position: relative;
+}
+</style>
+
 <style lang="scss" scoped>
+.envoy-data {
+  padding: var(--spacing-md);
+}
+
 .panel-code-block {
   max-height: 1000px;
+}
+
+.copy-button {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  display: block;
 }
 </style>

@@ -79,6 +79,8 @@
 </template>
 
 <script>
+import { Storage } from '@/utils/Storage'
+
 export default {
   props: {
     steps: {
@@ -183,8 +185,8 @@ export default {
       // go to first step in the UI
       this.goToStep(0)
 
-      // clear the form data from localStorage
-      localStorage.removeItem('storedFormData')
+      // clear the form data from local storage
+      Storage.remove('storedFormData')
       // reset all input values so the browser can't pre-fill them
       const fields = this.$refs.wizardForm.querySelectorAll('input[type="text"]')
 
@@ -240,7 +242,8 @@ export default {
   p,
   h2,
   h3,
-  h4 {
+  h4,
+  .code-block {
     margin-bottom: var(--spacing-md);
   }
 

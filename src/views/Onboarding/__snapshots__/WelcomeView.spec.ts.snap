@@ -2,9 +2,7 @@
 
 exports[`WelcomeView.vue renders snapshot 1`] = `
 <div>
-  <div
-    class="screen"
-  >
+  <div>
     <div
       class="welcome-container"
     >
@@ -171,7 +169,7 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
       </div>
     </div>
     <svg
-      class="svg"
+      class="background svg"
       longer="false"
       viewBox="0 0 1920 1080"
       xmlns="http://www.w3.org/2000/svg"

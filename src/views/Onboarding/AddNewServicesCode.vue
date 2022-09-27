@@ -9,20 +9,21 @@
         and a frontend web UI to show and increment the counter.
       </p>
 
-      <CodeView
-        v-if="isKubernetes"
-        title="To run execute the following command:"
-        copy-button-text="Copy Command to Clipboard"
-        lang="bash"
-        :content="k8sRunCommand"
-      />
+      <template v-if="isKubernetes">
+        <p>To run execute the following command:</p>
+
+        <CodeBlock
+          language="bash"
+          :code="k8sRunCommand"
+        />
+      </template>
 
       <div v-else>
-        <CodeView
-          title="Clone the GitHub repository for the demo application:"
-          copy-button-text="Copy Command to Clipboard"
-          lang="bash"
-          :content="githubLink"
+        <p>Clone the GitHub repository for the demo application:</p>
+
+        <CodeBlock
+          language="bash"
+          :code="githubLink"
         />
 
         <KCard
@@ -75,12 +76,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import json2yaml from '@appscode/json2yaml'
+import { KCard } from '@kong/kongponents'
 
 import Kuma from '@/services/kuma'
 import { PRODUCT_NAME } from '@/consts'
 import { kumaDpServerUrl } from '@/configUrl'
+import CodeBlock from '@/components/CodeBlock.vue'
 import LoadingBox from '@/components/LoadingBox.vue'
-import CodeView from '@/components/Skeletons/CodeView.vue'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
@@ -90,11 +92,12 @@ const LONG_POOLING_INTERVAL = 1000
 export default {
   name: 'AddNewServicesCode',
   components: {
-    CodeView,
+    CodeBlock,
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
     LoadingBox,
+    KCard,
   },
   metaInfo() {
     return {

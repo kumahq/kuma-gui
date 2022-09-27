@@ -3,7 +3,7 @@
 exports[`EnvoyData.vue renders snapshot 1`] = `
 <div>
   <div
-    class="status-info"
+    class="status-info envoy-data"
   >
     <section
       class="empty-state-wrapper"
