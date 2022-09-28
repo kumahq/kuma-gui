@@ -4,28 +4,28 @@ import { rest } from 'msw'
 import { storeConfig, State } from '../../index'
 import { server } from '@/jest-setup'
 import Kuma from '@/services/kuma'
+import { ClientConfigInterface } from './config.types.js'
 
 const store = createStore<State>(storeConfig)
 
 describe('config module', () => {
   describe('getters', () => {
     it('tests getStatus getter', () => {
-      // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
       store.state.config.status = 'foo'
 
       expect(store.getters['config/getStatus']).toBe('foo')
     })
 
     it('tests getMulticlusterStatus getter when global mode', () => {
-      // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
-      store.state.config.clientConfig = { mode: 'global' }
+      store.state.config.clientConfig = {} as ClientConfigInterface
+      store.state.config.clientConfig.mode = 'global'
 
       expect(store.getters['config/getMulticlusterStatus']).toBe(true)
     })
 
     it('tests getMulticlusterStatus getter when standalone', () => {
-      // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
-      store.state.config.clientConfig = { mode: 'standalone' }
+      store.state.config.clientConfig = {} as ClientConfigInterface
+      store.state.config.clientConfig.mode = 'standalone'
 
       expect(store.getters['config/getMulticlusterStatus']).toBe(false)
     })
@@ -109,9 +109,9 @@ describe('config module', () => {
 
       await store.dispatch('config/getInfo')
 
-      expect(store.state.config?.tagline).toBe(expectedState.tagline)
-      expect(store.state.config?.version).toBe(expectedState.version)
-      expect(store.state.config?.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
+      expect(store.state.config.tagline).toBe(expectedState.tagline)
+      expect(store.state.config.version).toBe(expectedState.version)
+      expect(store.state.config.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
     })
   })
 

@@ -5,7 +5,6 @@ import { KCard } from '@kong/kongponents'
 
 import OverviewView from './OverviewView.vue'
 import { storeConfig } from '@/store/index'
-import TestComponent from '@/testUtils/TestComponent.vue'
 
 describe('OverviewView.vue', () => {
   it('renders basic snapshot', () => {
@@ -15,17 +14,17 @@ describe('OverviewView.vue', () => {
         {
           path: '/',
           name: 'home',
-          component: TestComponent,
+          component: { template: 'TestComponent' },
         },
         {
           path: '/zones',
           name: 'zones',
-          component: TestComponent,
+          component: { template: 'TestComponent' },
         },
         {
           path: '/data-planes',
           name: 'data-plane-list-view',
-          component: TestComponent,
+          component: { template: 'TestComponent' },
         },
       ],
     })

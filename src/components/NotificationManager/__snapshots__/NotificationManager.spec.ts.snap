@@ -5,6 +5,7 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
   aria-label="Notifications"
   aria-modal="true"
   class="k-modal modal"
+  data-testid="notification-modal"
   data-v-67a512cb=""
   role="dialog"
 >
@@ -174,6 +175,7 @@ exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
           
           <button
             class="medium rounded outline k-button"
+            data-testid="close-modal-button"
             data-v-6bcbf05d=""
             type="button"
           >
@@ -198,6 +200,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
   aria-label="Notifications"
   aria-modal="true"
   class="k-modal modal"
+  data-testid="notification-modal"
   data-v-67a512cb=""
   role="dialog"
 >
@@ -229,7 +232,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 <span
                   class="text-xl tracking-wide"
                 >
-                   "test-mesh"
+                  "test-mesh"
                 </span>
                  mesh. Consider implementing them. 
               </span>
@@ -632,6 +635,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
           
           <button
             class="medium rounded outline k-button"
+            data-testid="close-modal-button"
             data-v-6bcbf05d=""
             type="button"
           >
@@ -653,99 +657,98 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
 
 exports[`NotificationManager.vue renders snapshot with information that there are actions which user may take 1`] = `
 <div>
-  <div>
+  <div
+    class="info icon k-alert mb-4"
+    data-testid="notification-info"
+    data-v-1910ef98=""
+    role="alert"
+  >
+    <!---->
+    <!---->
     <div
-      class="info icon k-alert mb-4"
-      data-testid="notification-info"
+      class="k-alert-msg-text has-dismiss-icon"
       data-v-1910ef98=""
-      role="alert"
+    >
+      <!---->
+      <div
+        class="k-alert-msg"
+        data-v-1910ef98=""
+      >
+        
+        <div
+          class="mr-4"
+        >
+          <span
+            class="mr-2"
+          >
+            <strong>
+              ProTip:
+            </strong>
+             You might want to adjust your meshes configuration 
+          </span>
+          <button
+            class="medium rounded outline k-button"
+            data-testid="open-modal-button"
+            data-v-6bcbf05d=""
+            type="button"
+          >
+            
+            <!---->
+            
+            
+             Check your meshes! 
+            
+            <!---->
+          </button>
+        </div>
+        
+      </div>
+      <!---->
+    </div>
+    <button
+      aria-label="Close"
+      class="close"
+      data-v-1910ef98=""
+      type="button"
+    >
+      <span
+        class="info kong-icon-close kong-icon"
+        data-v-1910ef98=""
+        data-v-637de6fa=""
+      >
+        <svg
+          fill="none"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          
+  
+          <title>
+            Close
+          </title>
+          
+  
+          <path
+            d="M16 4 3 17m13 0L3 4"
+            stroke="#A3BBCC"
+            stroke-linecap="round"
+            stroke-width="2"
+          />
+          
+
+        </svg>
+        
+
+      </span>
+    </button>
+    <div
+      class="info k-alert-action"
+      data-v-1910ef98=""
     >
       <!---->
       <!---->
-      <div
-        class="k-alert-msg-text has-dismiss-icon"
-        data-v-1910ef98=""
-      >
-        <!---->
-        <div
-          class="k-alert-msg"
-          data-v-1910ef98=""
-        >
-          
-          <div
-            class="mr-4"
-          >
-            <span
-              class="mr-2"
-            >
-              <strong>
-                ProTip:
-              </strong>
-               You might want to adjust your meshes configuration 
-            </span>
-            <button
-              class="medium rounded outline k-button"
-              data-v-6bcbf05d=""
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Check your meshes! 
-              
-              <!---->
-            </button>
-          </div>
-          
-        </div>
-        <!---->
-      </div>
-      <button
-        aria-label="Close"
-        class="close"
-        data-v-1910ef98=""
-        type="button"
-      >
-        <span
-          class="info kong-icon-close kong-icon"
-          data-v-1910ef98=""
-          data-v-637de6fa=""
-        >
-          <svg
-            fill="none"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            
-  
-            <title>
-              Close
-            </title>
-            
-  
-            <path
-              d="M16 4 3 17m13 0L3 4"
-              stroke="#A3BBCC"
-              stroke-linecap="round"
-              stroke-width="2"
-            />
-            
-
-          </svg>
-          
-
-        </span>
-      </button>
-      <div
-        class="info k-alert-action"
-        data-v-1910ef98=""
-      >
-        <!---->
-        <!---->
-      </div>
     </div>
-    <!---->
   </div>
+  <!---->
 </div>
 `;

@@ -16,27 +16,6 @@
         :tabs="tabs"
       >
         <template #universal>
-          <KClipboardProvider v-slot="{ copyToClipboard }">
-            <KPop placement="bottom">
-              <KButton
-                class="copy-button"
-                appearance="primary"
-                size="small"
-                @click="() => {
-                  copyToClipboard(yamlContent.universal)
-                }"
-              >
-                Copy Universal YAML
-              </KButton>
-
-              <template #content>
-                <div>
-                  <p>Entity copied to clipboard!</p>
-                </div>
-              </template>
-            </KPop>
-          </KClipboardProvider>
-
           <CodeBlock
             language="yaml"
             :code="yamlContent.universal"
@@ -44,27 +23,6 @@
         </template>
 
         <template #kubernetes>
-          <KClipboardProvider v-slot="{ copyToClipboard }">
-            <KPop placement="bottom">
-              <KButton
-                class="copy-button"
-                appearance="primary"
-                size="small"
-                @click="() => {
-                  copyToClipboard(yamlContent.kubernetes)
-                }"
-              >
-                Copy Kubernetes YAML
-              </KButton>
-
-              <template #content>
-                <div>
-                  <p>Entity copied to clipboard!</p>
-                </div>
-              </template>
-            </KPop>
-          </KClipboardProvider>
-
           <CodeBlock
             language="yaml"
             :code="yamlContent.kubernetes"
@@ -77,7 +35,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { KButton, KClipboardProvider, KPop, KTabs } from '@kong/kongponents'
+import { KTabs } from '@kong/kongponents'
 import json2yaml from '@appscode/json2yaml'
 
 import CodeBlock from '../CodeBlock.vue'
@@ -93,9 +51,6 @@ export default {
     EmptyBlock,
     ErrorBlock,
     LoadingBlock,
-    KButton,
-    KClipboardProvider,
-    KPop,
     KTabs,
   },
 
@@ -228,17 +183,7 @@ export default {
 }
 </script>
 
-<style>
-.yaml-view-content .k-tabs .tab-container {
-  position: relative !important;
-}
-</style>
-
 <style lang="scss" scoped>
-.yaml-view-content {
-  padding: var(--spacing-md);
-}
-
 .empty-state-title .card-icon {
   text-align: center;
 
@@ -249,19 +194,6 @@ export default {
     margin-right: auto;
   }
 }
-
-.copy-button {
-  position: absolute;
-  top: var(--spacing-xs);
-  right: var(--spacing-xs);
-  display: block;
-  margin: 0 0 var(--spacing-md) auto;
-
-  &:after {
-    display: none;
-  }
-}
-
 .env-name {
   text-transform: capitalize;
 }

@@ -1,7 +1,7 @@
 <template>
   <AccordionList multiple-open>
     <AccordionItem
-      v-for="item in singleMeshNotificationItems"
+      v-for="item in store.getters['notifications/singleMeshNotificationItems']"
       :key="item.name"
     >
       <template #accordion-header>
@@ -27,47 +27,37 @@
 
       <template #accordion-content>
         <component
-          :is="item.component"
+          :is="componentMap[item.component]"
           v-if="item.component"
         />
-        <template v-else>
-          <KCard>
-            <template #body>
-              {{ item.content }}
-            </template>
-          </KCard>
-        </template>
+
+        <KCard v-else>
+          <template #body>
+            {{ item.content }}
+          </template>
+        </KCard>
       </template>
     </AccordionItem>
   </AccordionList>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { KCard, KIcon } from '@kong/kongponents'
 
-import OnboardingNotification from './OnboardingNotification.vue'
+import { useStore } from '@/store/store'
+import AccordionList from '@/components/Accordion/AccordionList.vue'
+import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 import LoggingNotification from './LoggingNotification.vue'
 import MetricsNotification from './MetricsNotification.vue'
 import MtlsNotification from './MtlsNotification.vue'
 import TracingNotification from './TracingNotification.vue'
-import AccordionList from '@/components/Accordion/AccordionList.vue'
-import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 
-export default {
-  name: 'SingleMeshNotifications',
-  components: {
-    AccordionList,
-    AccordionItem,
-    OnboardingNotification,
-    LoggingNotification,
-    MetricsNotification,
-    MtlsNotification,
-    TracingNotification,
-  },
-  computed: {
-    ...mapGetters({
-      singleMeshNotificationItems: 'notifications/singleMeshNotificationItems',
-    }),
-  },
+const store = useStore()
+
+const componentMap: Record<string, any> = {
+  LoggingNotification,
+  MetricsNotification,
+  MtlsNotification,
+  TracingNotification,
 }
 </script>

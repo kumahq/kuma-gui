@@ -1,100 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OnboardingNotification.vue renders snapshot 1`] = `
-<div>
+<div
+  class="onboarding-check"
+>
   <div
-    class="onboarding-check"
+    class="success icon k-alert dismissible"
+    data-v-1910ef98=""
+    role="alert"
   >
+    <!---->
+    <!---->
     <div
-      class="success icon k-alert dismissible"
+      class="k-alert-msg-text has-dismiss-icon"
       data-v-1910ef98=""
-      role="alert"
+    >
+      <!---->
+      <div
+        class="k-alert-msg"
+        data-v-1910ef98=""
+      >
+        
+        <div
+          class="alert-content"
+        >
+          <div>
+            <strong>
+              Welcome to Kuma!
+            </strong>
+             We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you! 
+          </div>
+          <div>
+            <router-link
+              class="small rounded primary k-button action-button"
+              data-v-6bcbf05d=""
+              to="[object Object]"
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Get Started 
+              
+              <!---->
+            </router-link>
+          </div>
+        </div>
+        
+      </div>
+      <!---->
+    </div>
+    <button
+      aria-label="Close"
+      class="close"
+      data-v-1910ef98=""
+      type="button"
+    >
+      <span
+        class="success kong-icon-close kong-icon"
+        data-v-1910ef98=""
+        data-v-637de6fa=""
+      >
+        <svg
+          fill="none"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          
+  
+          <title>
+            Close
+          </title>
+          
+  
+          <path
+            d="M16 4 3 17m13 0L3 4"
+            stroke="#A3BBCC"
+            stroke-linecap="round"
+            stroke-width="2"
+          />
+          
+
+        </svg>
+        
+
+      </span>
+    </button>
+    <div
+      class="success k-alert-action"
+      data-v-1910ef98=""
     >
       <!---->
       <!---->
-      <div
-        class="k-alert-msg-text has-dismiss-icon"
-        data-v-1910ef98=""
-      >
-        <!---->
-        <div
-          class="k-alert-msg"
-          data-v-1910ef98=""
-        >
-          
-          <div
-            class="alert-content"
-          >
-            <div>
-              <strong>
-                Welcome to Kuma!
-              </strong>
-               We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you! 
-            </div>
-            <div>
-              <router-link
-                class="small rounded primary k-button action-button"
-                data-v-6bcbf05d=""
-                to="[object Object]"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                 Get Started 
-                
-                <!---->
-              </router-link>
-            </div>
-          </div>
-          
-        </div>
-        <!---->
-      </div>
-      <button
-        aria-label="Close"
-        class="close"
-        data-v-1910ef98=""
-        type="button"
-      >
-        <span
-          class="success kong-icon-close kong-icon"
-          data-v-1910ef98=""
-          data-v-637de6fa=""
-        >
-          <svg
-            fill="none"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            
-  
-            <title>
-              Close
-            </title>
-            
-  
-            <path
-              d="M16 4 3 17m13 0L3 4"
-              stroke="#A3BBCC"
-              stroke-linecap="round"
-              stroke-width="2"
-            />
-            
-
-          </svg>
-          
-
-        </span>
-      </button>
-      <div
-        class="success k-alert-action"
-        data-v-1910ef98=""
-      >
-        <!---->
-        <!---->
-      </div>
     </div>
   </div>
 </div>

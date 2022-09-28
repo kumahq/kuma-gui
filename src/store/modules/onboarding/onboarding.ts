@@ -1,10 +1,11 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { State } from '../../index'
 import { OnboardingInterface } from './onboarding.types'
+import { Storage } from '@/utils/Storage'
 
 const initialOnboardingState: OnboardingInterface = {
-  isCompleted: localStorage.getItem('onboarding/isCompleted') === 'true',
-  step: localStorage.getItem('onboarding/step') || 'onboarding-welcome',
+  isCompleted: Storage.get('onboardingIsCompleted') === 'true',
+  step: Storage.get('onboardingStep') || 'onboarding-welcome',
   mode: 'demo',
 }
 
@@ -34,13 +35,13 @@ const actions: ActionTree<OnboardingInterface, State> = {
     dispatch('sidebar/getInsights', null, { root: true })
 
     commit('SET_IS_COMPLETED', true)
-    localStorage.setItem('onboarding/isCompleted', 'true')
+    Storage.set('onboardingIsCompleted', 'true')
   },
 
   // change step in onboarding
   changeStep({ commit }, step) {
     commit('SET_STEP', step)
-    localStorage.setItem('onboarding/step', step)
+    Storage.set('onboardingStep', step)
   },
 }
 

@@ -1,11 +1,8 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { render, screen } from '@testing-library/vue'
-import { KIcon } from '@kong/kongponents'
+import { mount } from '@vue/test-utils'
 
 import NavItem from './NavItem.vue'
-import TestComponent from '@/testUtils/TestComponent.vue'
-import { storeConfig } from '@/store/index'
+import { store, storeKey } from '@/store/store'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -13,40 +10,35 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
     {
       path: '/mesh/:mesh/data-planes',
       name: 'data-plane-list-view',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })
-const store = createStore(storeConfig)
 
 function renderComponent() {
-  return render(NavItem, {
+  return mount(NavItem, {
     props: {
       name: 'All',
       link: 'data-plane-list-view',
-      title: false,
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
     },
     global: {
-      plugins: [router, store],
-      components: {
-        KIcon,
-      },
+      plugins: [router, [store, storeKey]],
     },
   })
 }
 
 describe('NavItem.vue', () => {
   it('renders snapshot with link to selected mesh', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it.each([
@@ -54,11 +46,10 @@ describe('NavItem.vue', () => {
     [20, '20'],
     [200, '99+'],
   ])('renders amount of items', (numberOfDataplanes, expectedText) => {
-    // @ts-expect-error because Vuex `createStore`’s return value is missing module state from its type.
     store.state.sidebar.insights.mesh.dataplanes.total = numberOfDataplanes
 
-    renderComponent()
+    const wrapper = renderComponent()
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument()
+    expect(wrapper.html()).toContain(expectedText)
   })
 })

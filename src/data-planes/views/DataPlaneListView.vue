@@ -531,7 +531,6 @@ export default {
 
 <style lang="scss" scoped>
 .data-planes-container {
-  height: 100%;
   display: flex;
   // Allows the contained flex items to wrap when their size needs can’t be satisfied any longer.
   flex-wrap: wrap;

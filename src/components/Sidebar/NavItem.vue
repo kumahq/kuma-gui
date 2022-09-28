@@ -2,195 +2,143 @@
   <div
     class="nav-item"
     :class="[
-      { 'is-active': isActive },
-      { 'is-menu-item': isMenuItem },
-      { 'is-disabled': isDisabled },
-      { 'is-title': title },
-      { 'is-nested': nested },
-      { 'nav-item--is-primary': !isSecondary },
-      { 'nav-item--is-secondary': isSecondary },
+      { 'nav-item--is-active': isActive },
+      { 'nav-item--is-link': targetRoute !== null },
     ]"
     :data-testid="link"
   >
     <router-link
-      :to="routerLink"
+      v-if="targetRoute !== null"
+      class="nav-item__link"
+      :to="targetRoute"
       @click="onNavItemClick"
     >
-      <div
-        v-if="hasIcon || hasCustomIcon"
-        class="nav-icon"
+      {{ name }}
+
+      <span
+        v-if="amount"
+        class="amount"
+        :class="{ 'amount--empty': amount === '0' }"
       >
-        <slot name="item-icon">
-          <KIcon
-            v-if="hasIcon && icon"
-            color="var(--SidebarIconColor)"
-            :icon="icon"
-          />
-        </slot>
-      </div>
-
-      <div
-        v-if="title"
-        class="title-text"
-      >
-        <span class="text-uppercase">
-          {{ name }}
-        </span>
-      </div>
-
-      <div
-        v-else
-        class="nav-link"
-      >
-        <slot name="item-link">
-          {{ name }}
-
-          <span
-            v-if="insightsFieldAccessor"
-            :class="insightsClassess"
-          >
-
-            {{ amount }}
-          </span>
-        </slot>
-      </div>
+        {{ amount }}
+      </span>
     </router-link>
+
+    <div
+      v-else
+      class="nav-item__title"
+    >
+      <span class="text-uppercase">
+        {{ name }}
+      </span>
+    </div>
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute, useRouter, RouteLocationNamedRaw } from 'vue-router'
 import get from 'lodash/get'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 
-export default {
-  name: 'NavItem',
-  props: {
-    link: {
-      type: String,
-      default: '',
-      required: false,
-    },
-    insightsFieldAccessor: {
-      type: String,
-      default: '',
-      required: false,
-    },
-    name: {
-      type: String,
-      default: '',
-    },
-    icon: {
-      type: String,
-      default: '',
-    },
-    hasIcon: {
-      type: Boolean,
-      default: false,
-    },
-    hasCustomIcon: {
-      type: Boolean,
-      default: false,
-    },
-    isMenuItem: {
-      type: Boolean,
-      default: true,
-    },
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
-    title: {
-      type: Boolean,
-      default: false,
-    },
-    nested: {
-      type: Boolean,
-      default: false,
-    },
-    usesMeshParam: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    isSecondary: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
+import { useStore } from '@/store/store'
+
+const route = useRoute()
+const router = useRouter()
+const store = useStore()
+
+const props = defineProps({
+  link: {
+    type: String,
+    required: false,
+    default: '',
   },
-  data() {
-    return {
-      meshPath: null,
+
+  insightsFieldAccessor: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  name: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  usesMeshParam: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+})
+
+const amount = computed(() => {
+  if (props.insightsFieldAccessor) {
+    const value = get(store.state.sidebar.insights, props.insightsFieldAccessor, 0)
+    return value > 99 ? '99+' : String(value)
+  } else {
+    return ''
+  }
+})
+
+const targetRoute = computed<RouteLocationNamedRaw | null>(() => {
+  if (props.link === '') {
+    return null
+  }
+
+  const targetRoute: RouteLocationNamedRaw = {
+    name: props.link,
+  }
+
+  // Sets `mesh` params only if route actually has `mesh` param defined.
+  // See: https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
+  if (props.usesMeshParam) {
+    targetRoute.params = {
+      mesh: store.state.selectedMesh,
     }
-  },
-  computed: {
-    ...mapState({
-      selectedMesh: (state) => state.selectedMesh,
-      insights: (state) => state.sidebar.insights,
-    }),
+  }
 
-    insightsClassess() {
-      return [
-        'amount',
-        {
-          'amount--empty': this.amount === 0,
-        },
-      ]
-    },
-    amount() {
-      const value = get(this.insights, this.insightsFieldAccessor, 0)
+  return targetRoute
+})
 
-      if (value > 99) {
-        return '99+'
+const isActive = computed(() => {
+  if (targetRoute.value === null) {
+    return false
+  }
+
+  if (props.link === route.name) {
+    return true
+  }
+
+  const currentRouteSubpath = route.path.split('/')[2]
+  if (currentRouteSubpath === targetRoute.value.name) {
+    return true
+  }
+
+  if (route.meta.parent) {
+    try {
+      const parentRoute = router.resolve({ name: route.meta.parent })
+
+      if (parentRoute.name === props.link) {
+        return true
       }
-
-      return value
-    },
-    routerLink() {
-      const targetRoute = {}
-
-      if (this.link) {
-        targetRoute.name = this.link
-      } else if (this.title) {
-        targetRoute.name = null
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('No match for')) {
+        // Unfortunately, `router.resolve` throws instead of returning `null` when a route can’t be resolved so we ignore this particular error because we don’t care about non-existing routes here.
+        console.warn(error)
       } else {
-        targetRoute.name = this.$route.name
+        throw error
       }
+    }
+  }
 
-      // Sets `mesh` params only if route actually has `mesh` param defined.
-      // See: https://github.com/vuejs/router/blob/main/packages/router/CHANGELOG.md#414-2022-08-22
-      if (this.usesMeshParam) {
-        targetRoute.params = { mesh: this.selectedMesh }
-      }
+  return props.link && route.matched.some((r) => props.link === r.name || props.link === r.redirect)
+})
 
-      return targetRoute
-    },
-    isActive() {
-      const navItemRouteName = this.link
-      const currentRoute = this.$route
-      const currentRouteSubpath = this.$route.path.split('/')[2]
-
-      if (navItemRouteName === currentRoute.name) {
-        return true
-      }
-
-      if (currentRouteSubpath === this.routerLink.name) {
-        return true
-      }
-
-      return (
-        navItemRouteName &&
-        currentRoute.matched.some((r) => navItemRouteName === r.name || navItemRouteName === r.redirect)
-      )
-    },
-  },
-  methods: {
-    onNavItemClick() {
-      datadogLogs.logger.info(datadogLogEvents.SIDEBAR_ITEM_CLICKED, { data: this.routerLink })
-    },
-  },
+function onNavItemClick() {
+  datadogLogs.logger.info(datadogLogEvents.SIDEBAR_ITEM_CLICKED, { data: targetRoute.value })
 }
 </script>
 
@@ -198,82 +146,38 @@ export default {
 .nav-item {
   position: relative;
   display: flex;
-  margin-bottom: 12px;
   white-space: nowrap;
   overflow: hidden;
-
-  a {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    color: var(--SidebarLinkColor);
-    text-decoration: none;
-    padding: 8px 20px;
-  }
-
-  .title-text {
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-    font-size: var(--type-sm);
-    color: var(--SidebarTitleColor);
-  }
-
-  &.is-disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-
-  &.is-title {
-    a {
-      padding-left: 0;
-      padding-right: 0;
-      pointer-events: none;
-    }
-
-    &:hover {
-      background: none;
-    }
-  }
-
-  &.is-nested {
-    margin-left: var(--spacing-lg);
-    font-size: var(--type-sm);
-
-    a {
-      padding: var(--spacing-xxs) var(--spacing-md);
-    }
-  }
-}
-.nav-item--is-primary.is-active::before {
-  content: '';
-  position: absolute;
-  display: block;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: var(--SidebarIconColor);
-}
-
-.nav-item--is-secondary {
-  margin: 0 0 var(--spacing-xxs) var(--subnavHorizontalMargin);
+  margin-left: var(--spacing-xs);
+  margin-bottom: var(--spacing-xxs);
   border-radius: 5px;
-
-  &:hover {
-    background: var(--SidebarLinkBGColor);
-  }
-
-  &.is-active {
-    font-weight: 500;
-    background-color: var(--SidebarLinkBGColor);
-  }
 }
 
-.nav-icon {
+.nav-item--is-active {
+  font-weight: 500;
+  background-color: var(--SidebarLinkBGColor);
+}
+
+.nav-item--is-link:hover {
+  background: var(--SidebarLinkBGColor);
+}
+
+.nav-item__title {
+  margin-left: var(--spacing-xs);
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  font-weight: 500;
+  font-size: var(--type-sm);
+  color: var(--SidebarTitleColor);
+}
+
+.nav-item__link {
   display: flex;
+  width: 100%;
   align-items: center;
-  color: var(--SidebarIconColor);
-  padding-right: var(--spacing-lg);
+  padding: var(--spacing-xs) var(--spacing-md);
+  text-decoration: none;
+  color: var(--SidebarLinkColor);
 }
 
 .amount {

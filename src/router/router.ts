@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 import { store } from '../store/store'
 import { Policy } from '../types'
+import { Storage } from '../utils/Storage'
 
 function getPolicyRoutes(policies: Policy[]): RouteRecordRaw[] {
   return policies.map((policy) => ({
@@ -312,7 +313,6 @@ export async function setupRouter() {
       // Entity Wizard
       path: '/wizard',
       name: 'wizard',
-      component: () => import('@/views/ShellWithHeader.vue'),
       children: [
         {
           path: 'mesh',
@@ -369,7 +369,7 @@ export async function setupRouter() {
   })
   /**
    * If the user hasn't gone through the setup/onboarding process yet, this
-   * sends them through it. Once completed, a localStorage value is set to true
+   * sends them through it. Once completed, a local storage value is set to true
    * so that they're not sent through it again.
    */
 
@@ -385,24 +385,24 @@ export async function setupRouter() {
     }
 
     const showOnboarding = store.getters['onboarding/showOnboarding']
-    const isCompleted = store.state.onboarding?.isCompleted
-
+    const isCompleted = store.state.onboarding.isCompleted
     const onboardingRoute = to.meta?.onboardingProcess
 
-    // If someone is going to open onboarding page but fulfiled already conditionn related to
-    // show onboarding, then redirect user to overview
-    if (onboardingRoute && !showOnboarding) {
+    // Redirects user to home page if they try to navigate to an onboarding route while having already completed onboarding.
+    if (!showOnboarding && onboardingRoute) {
       next({ name: 'global-overview' })
-      // if someone never had onboarding and do not fulfiled condition to skip it
-      // and try to access some other page than onboarding ones
-      // then redirect into first onboarding page
-    } else if (!onboardingRoute && showOnboarding && !isCompleted) {
-      const name = localStorage.getItem('onboarding/step') || 'onboarding-welcome'
+      return
+    }
+
+    // Redirects user to the appropriate onboarding page if they navigate to a non-onboarding route while not having previously completed onboarding.
+    if (showOnboarding && !onboardingRoute && !isCompleted) {
+      const name = Storage.get('onboardingStep') || 'onboarding-welcome'
 
       next({ name })
-    } else {
-      next()
+      return
     }
+
+    next()
   })
 
   return router

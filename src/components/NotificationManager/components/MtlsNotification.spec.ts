@@ -1,30 +1,16 @@
-import { createStore } from 'vuex'
-import { render } from '@testing-library/vue'
+import { mount } from '@vue/test-utils'
 
+import { store, storeKey } from '@/store/store'
 import MtlsNotification from './MtlsNotification.vue'
 
 describe('MtlsNotification.vue', () => {
   it('renders snapshot', () => {
-    const store = createStore({
-      modules: {
-        config: {
-          namespaced: true,
-          state: {
-            kumaDocsVersion: '1.2.0',
-          },
-          getters: {
-            getKumaDocsVersion: (state) => state.kumaDocsVersion,
-          },
-        },
-      },
-    })
-
-    const { container } = render(MtlsNotification, {
+    const wrapper = mount(MtlsNotification, {
       global: {
-        plugins: [store],
+        plugins: [[store, storeKey]],
       },
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

@@ -1,5 +1,5 @@
 <template>
-  <div class="screen">
+  <div>
     <div class="welcome-container">
       <div class="content">
         <h1 class="welcome-title">
@@ -26,10 +26,12 @@
           />
         </ul>
       </div>
+
       <div class="welcome-navigation">
         <OnboardingNavigation next-step="onboarding-deployment-types" />
       </div>
     </div>
+
     <WelcomeAnimationSvg :longer="multicluster" />
   </div>
 </template>
@@ -115,27 +117,13 @@ export default {
 
 <style lang="scss" scoped>
 .welcome-container {
-  @apply w-112 absolute left-0 right-0 mx-auto mt-16 opacity-0 z-10;
-
-  top: 14.5vw;
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28rem;
   animation: show 0.75s 0s 1 forwards;
-
-  @media screen and (max-width: 1699px) {
-    @apply mt-10;
-
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  @media screen and (min-width: 1700px) and (max-width: 1850px) {
-    top: 12.5vw;
-  }
-}
-
-.content {
-  @media screen and (min-width: 1700px) {
-    min-height: 23vw;
-  }
 }
 
 .welcome-title {
@@ -160,51 +148,6 @@ export default {
   @media screen and (max-width: 1699px) {
     @apply text-xl mb-3;
   }
-}
-
-.welcome-navigation {
-  @apply relative;
-
-  top: -5px;
-
-  @media screen and (min-width: 1700px) {
-    top: -20px;
-  }
-
-  @media screen and (min-width: 1750px) {
-    top: -10px;
-  }
-
-  @media screen and (min-width: 1800px) {
-    top: 0;
-  }
-
-  @media screen and (min-width: 1850px) {
-    top: -10px;
-  }
-
-  @media screen and (min-width: 1900px) {
-    top: 0px;
-  }
-
-  @media screen and (min-width: 1950px) {
-    top: 10px;
-  }
-
-  @media screen and (min-width: 2050px) {
-    top: 20px;
-  }
-}
-
-.screen {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  overflow: scroll;
-  color: var(--kuma-purple-1);
 }
 
 @keyframes show {

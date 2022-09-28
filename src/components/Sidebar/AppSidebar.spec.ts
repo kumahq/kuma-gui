@@ -1,14 +1,10 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
-import { KAlert, KIcon } from '@kong/kongponents'
 
 import AppSidebar from './AppSidebar.vue'
-import { storeConfig } from '@/store/index'
-import Kuma from '@/services/kuma'
-import TestComponent from '@/testUtils/TestComponent.vue'
+import { store, storeKey } from '@/store/store'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -16,39 +12,33 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: TestComponent,
+      component: { template: 'TestComponent' },
     },
   ],
 })
-const store = createStore(storeConfig)
 
-function renderComponent() {
+async function renderComponent() {
+  await store.dispatch('fetchPolicies')
+
   return render(AppSidebar, {
     global: {
-      plugins: [router, store],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
-      },
-      components: {
-        KAlert,
-        KIcon,
       },
     },
   })
 }
 
 describe('AppSidebar.vue', () => {
-  it('renders snapshot', () => {
-    const { container } = renderComponent()
+  it('renders snapshot', async () => {
+    const { container } = await renderComponent()
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders mesh gateways', async () => {
-    const { policies } = await Kuma.getPolicies()
-
-    store.state.policies = policies
-    renderComponent()
+    await renderComponent()
 
     expect(screen.getByTestId('meshgateways')).toBeInTheDocument()
     expect(screen.getByTestId('meshgatewayroutes')).toBeInTheDocument()
@@ -66,7 +56,7 @@ describe('AppSidebar.vue', () => {
       },
     ]
 
-    renderComponent()
+    await renderComponent()
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
     const node = await screen.findByText(/10/)

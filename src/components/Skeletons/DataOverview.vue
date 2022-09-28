@@ -303,7 +303,7 @@ export default {
     },
 
     error: {
-      type: Error,
+      type: [Error, null],
       required: false,
       default: null,
     },

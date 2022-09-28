@@ -33,7 +33,7 @@
             >
               <h4>{{ prop }}</h4>
 
-              <template v-if="prop === 'status'">
+              <template v-if="prop === 'status' && typeof value !== 'string'">
                 <div
                   class="entity-status"
                   :class="{
@@ -55,7 +55,9 @@
     </template>
 
     <template #yaml>
-      <YamlView :content="rawServiceInsight" />
+      <div class="config-wrapper">
+        <YamlView :content="rawServiceInsight" />
+      </div>
     </template>
   </TabsWidget>
 </template>
@@ -103,3 +105,9 @@ const processedServiceInsight = computed(() => {
 
 const rawServiceInsight = computed(() => stripTimes(props.serviceInsight))
 </script>
+
+<style lang="scss" scoped>
+.config-wrapper {
+  padding: var(--spacing-md);
+}
+</style>

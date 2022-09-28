@@ -445,19 +445,15 @@
                 @on-tab-change="onTabChange"
               >
                 <template #kubernetes>
-                  <CodeView
-                    title="Kubernetes"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
+                  <CodeBlock
+                    language="bash"
+                    :code="codeOutput"
                   />
                 </template>
                 <template #universal>
-                  <CodeView
-                    title="Universal"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
+                  <CodeBlock
+                    language="bash"
+                    :code="codeOutput"
                   />
                 </template>
               </TabsWidget>
@@ -551,11 +547,11 @@ import { mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { rejectKeys } from '@/views/Wizard/helpers'
 import { kebabCase } from '@/helpers'
+import CodeBlock from '@/components/CodeBlock.vue'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment.vue'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
-import CodeView from '@/components/Skeletons/CodeView.vue'
 import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
 
 // schema for building code output
@@ -566,10 +562,10 @@ export default {
   name: 'MeshWizard',
 
   components: {
+    CodeBlock,
     FormFragment,
     TabsWidget,
     StepSkeleton,
-    CodeView,
     EntityScanner,
   },
   mixins: [FormatForCLI],

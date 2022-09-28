@@ -1,5 +1,6 @@
 <template>
   <svg
+    class="background"
     :class="svgClasses"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1920 1080"
@@ -418,5 +419,13 @@ export default {
       }
     }
   }
+}
+.background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 </style>

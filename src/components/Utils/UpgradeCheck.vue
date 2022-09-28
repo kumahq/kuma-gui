@@ -29,11 +29,18 @@
 <script>
 import compare from 'semver-compare'
 import { mapGetters } from 'vuex'
+import { KAlert, KButton } from '@kong/kongponents'
 
 import Kuma from '@/services/kuma'
 
 export default {
   name: 'UpgradeCheck',
+
+  components: {
+    KAlert,
+    KButton,
+  },
+
   data() {
     return {
       url: `${import.meta.env.VITE_INSTALL_URL}${import.meta.env.VITE_UTM}`,
@@ -41,15 +48,18 @@ export default {
       showNotice: false,
     }
   },
+
   computed: {
     ...mapGetters({
       currentVer: 'config/getVersion',
       tagline: 'config/getTagline',
     }),
   },
+
   beforeMount() {
     this.checkVersion()
   },
+
   methods: {
     async checkVersion() {
       try {

@@ -15,6 +15,7 @@ import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import Kuma from '@/services/kuma'
 import { ApiListResponse } from '@/api'
+import { Storage } from '@/utils/Storage'
 import { Mesh, Policy } from '@/types'
 
 type TODO = any
@@ -80,10 +81,10 @@ export type State = typeof initialState & {
    * Explicitly adds the types for all modules here
    * because the created store for some reason doesn’t have module types at all.
    */
-  config?: ConfigInterface
-  sidebar?: SidebarInterface
-  notifications?: NotificationsInterface
-  onboarding?: OnboardingInterface
+  config: ConfigInterface
+  sidebar: SidebarInterface
+  notifications: NotificationsInterface
+  onboarding: OnboardingInterface
 }
 
 export const storeConfig: StoreOptions<State> = {
@@ -93,7 +94,8 @@ export const storeConfig: StoreOptions<State> = {
     notifications,
     onboarding,
   },
-  state: initialState,
+  // Note: *Technically*, `initialState` here doesn’t hold all properties from `State`. All module state is missing. However, the module state MUST NOT be made optional in `State` as otherwise, it will be considered as optional when accessing, for example, `store.state.config.status`.
+  state: initialState as State,
   getters: {
     globalLoading: state => state.globalLoading,
     getMeshList: state => state.meshes,
@@ -166,13 +168,15 @@ export const storeConfig: StoreOptions<State> = {
     // bootstrap app
 
     async bootstrap({ commit, dispatch, getters }) {
+      commit('SET_GLOBAL_LOADING', { globalLoading: true })
+
       // check the Kuma status before we do anything else
       await dispatch('config/getStatus')
 
       // only dispatch these actions if the Kuma is online
       if (getters['config/getStatus'] === 'OK') {
-        // get mesh from localStorage or default one from vuex
-        const mesh = localStorage.getItem('selectedMesh')
+        // get mesh from local storage or default one from vuex
+        const mesh = Storage.get('selectedMesh')
 
         if (mesh) {
           dispatch('updateSelectedMesh', mesh)
@@ -216,7 +220,7 @@ export const storeConfig: StoreOptions<State> = {
 
     // update the selected mesh
     updateSelectedMesh({ commit }, mesh) {
-      localStorage.setItem('selectedMesh', mesh)
+      Storage.set('selectedMesh', mesh)
       commit('SET_SELECTED_MESH', mesh)
     },
 

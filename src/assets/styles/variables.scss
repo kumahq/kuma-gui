@@ -72,13 +72,7 @@
   --sidebar-bg-color: var(--gray-6);
 
   // New sidebar requirements
-  --subnavWidth: 260px;
-  --sidebarCollapsedWidth: 55px;
-  --sidebarOpenWidth: 180px;
-  --subnavHorizontalMargin: 1rem;
-  --sidebarBackground: var(--white);
-  --transition: cubic-bezier(1.0, 0.5, 0.8, 1.0);
-  --transitionTiming: 0.1s; // 100ms
+  --subnavWidth: 280px;
 
   // ==================================================================
   // Theming
@@ -107,10 +101,6 @@
   --core-theme-color-dark: #{darken($base-theme-color, $adjuster-3)};
   --core-theme-color-darker: #{darken($base-theme-color, $adjuster-4)};
 
-  // Code background
-
-  --code-background: rgba(150, 58, 133, 0.05);
-
   // Buttons, Forms
   // These are overrides of existing Kongponent variables.
   --KButtonPrimaryBase: var(--core-theme-color);
@@ -118,6 +108,8 @@
   --KButtonPrimaryActive: var(--core-theme-color-light);
   --KRadioPrimary: var(--core-theme-color);
   --KInputFocus: var(--core-theme-color);
+  --KPopPaddingX: var(--spacing-md);
+  --KPopPaddingY: var(--spacing-md);
 
   // Sidebar
   --SidebarIconColor: var(--core-theme-color);

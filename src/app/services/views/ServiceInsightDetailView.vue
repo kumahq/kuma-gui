@@ -1,20 +1,19 @@
 <template>
   <ServiceDetails
     type="ServiceInsight"
-    :name="route.params.service"
-    :mesh="route.params.mesh"
+    :name="(route.params.service as string)"
+    :mesh="(route.params.mesh as string)"
   />
 </template>
 
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 import ServiceDetails from '../components/ServiceDetails.vue'
-import { storeKey } from '@/store/store'
+import { useStore } from '@/store/store'
 
 const route = useRoute()
-const store = useStore(storeKey)
+const store = useStore()
 
 store.dispatch('updatePageTitle', route.params.service)
 </script>

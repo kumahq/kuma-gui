@@ -56,7 +56,7 @@ describe('CodeBlock', () => {
 
     const codeBlock = wrapper.find('[data-testid="code-block"]')
 
-    expect(codeBlock.classes()).toEqual(['code-block', expectedClassName])
+    expect(codeBlock.classes()).toEqual(['code-block__code', expectedClassName])
   })
 
   test('renders plaintext on unknown language', () => {

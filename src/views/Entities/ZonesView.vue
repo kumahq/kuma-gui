@@ -106,28 +106,9 @@
                 :code="codeOutput"
               />
             </template>
-            <template #actions>
-              <KClipboardProvider
-                v-if="codeOutput"
-                v-slot="{ copyToClipboard }"
-              >
-                <KPop placement="bottom">
-                  <KButton
-                    appearance="primary"
-                    @click="() => { copyToClipboard(codeOutput) }"
-                  >
-                    Copy config to clipboard
-                  </KButton>
-                  <template #content>
-                    <div>
-                      <p>Config copied to clipboard!</p>
-                    </div>
-                  </template>
-                </KPop>
-              </KClipboardProvider>
-            </template>
           </KCard>
         </template>
+
         <template #warnings>
           <WarningsWidget :warnings="warnings" />
         </template>

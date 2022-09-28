@@ -5,14 +5,14 @@
         :to="{
           name: 'global-overview',
           params: {
-            mesh: selectedMesh
+            mesh: store.state.selectedMesh
           }
         }"
         class="logo"
       >
         <img
           src="@/assets/images/product-logo.png"
-          :alt="`${tagline} Logo`"
+          :alt="`${store.state.config.tagline} Logo`"
         >
       </router-link>
 
@@ -47,7 +47,7 @@
 
                 <p>
                   <KBadge appearance="success">
-                    <span v-if="multicluster">
+                    <span v-if="isMulticluster">
                       Multi-Zone
                     </span>
 
@@ -62,14 +62,14 @@
         </div>
 
         <div class="app-status app-status--desktop">
-          <div class="flex items-center justify-center text-sm">
+          <div class="app-status-list text-sm">
             <strong> {{ statusContent }} on {{ env }}</strong>
 
             <KBadge
               appearance="success"
               class="status-badge"
             >
-              <span v-if="multicluster">
+              <span v-if="isMulticluster">
                 Multi-Zone
               </span>
 
@@ -79,6 +79,16 @@
             </KBadge>
 
             <NotificationIcon />
+
+            <router-link :to="{ name: 'diagnostics' }">
+              <KIcon
+                icon="gearFilled"
+                color="currentColor"
+                title="Diagnostics"
+              />
+
+              <span class="kutil-sr-only">Diagnostics</span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -86,69 +96,42 @@
   </header>
 </template>
 
-<script>
-import { mapGetters, mapState } from 'vuex'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { KBadge, KButton, KPop } from '@kong/kongponents'
 
+import { useStore } from '@/store/store'
 import NotificationIcon from './NotificationIcon.vue'
 import Kuma from '@/services/kuma'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck.vue'
 
-export default {
-  name: 'GlobalHeader',
+const route = useRoute()
+const store = useStore()
 
-  components: {
-    UpgradeCheck,
-    NotificationIcon,
-  },
+const env = computed(() => {
+  const environment = store.getters['config/getEnvironment']
 
-  data() {
-    return {
-      shortVersion: '',
-      apiUrl: Kuma.url,
-      initialBodyPaddingTop: '',
-    }
-  },
+  if (environment) {
+    return `${environment.charAt(0).toUpperCase()}${environment.slice(1)}`
+  } else {
+    return ''
+  }
+})
 
-  computed: {
-    ...mapState({
-      selectedMesh: (state) => state.selectedMesh,
-    }),
+const showStatus = computed(() => {
+  return !route.meta.hideStatus && store.state.config.status === 'OK'
+})
 
-    ...mapGetters({
-      // this checks the status of the API itself
-      status: 'config/getStatus',
-      environment: 'config/getEnvironment',
-      // the status of multicluster
-      multicluster: 'config/getMulticlusterStatus',
-      tagline: 'config/getTagline',
-      version: 'config/getVersion',
-    }),
+const statusContent = computed(() => {
+  if (env.value !== '' && Kuma.url !== '') {
+    return `${store.state.config.tagline} ${store.state.config.version}`
+  } else {
+    return `Unable to determine ${store.state.config.tagline}'s status`
+  }
+})
 
-    env() {
-      if (this.environment) {
-        return `${this.environment.charAt(0).toUpperCase()}${this.environment.slice(1)}`
-      }
-
-      return ''
-    },
-
-    showStatus() {
-      return !this.$route.meta.hideStatus && this.status === 'OK'
-    },
-
-    statusContent() {
-      if (this.guiStatus) {
-        return `${this.tagline} ${this.version}`
-      }
-
-      return `Unable to determine ${this.tagline}'s status`
-    },
-
-    guiStatus() {
-      return Boolean(this.env && this.apiUrl)
-    },
-  },
-}
+const isMulticluster = computed(() => store.getters['config/getMulticlusterStatus'])
 </script>
 
 <style lang="scss" scoped>
@@ -205,21 +188,15 @@ export default {
   }
 }
 
-@media screen and (min-width: 990px) {
-  .status-badge {
-    margin-left: var(--spacing-sm);
-  }
-}
-
-@media screen and (max-width: 989px) {
-  .status-badge {
-    margin-top: var(--spacing-sm);
-  }
-}
-
 @media screen and (max-width: 599px) {
   .upgrade-check-wrapper {
     display: none;
   }
+}
+
+.app-status-list {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 </style>

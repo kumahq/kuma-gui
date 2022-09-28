@@ -54,37 +54,34 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-export default {
-  name: 'AllMeshesNotifications',
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { KBadge, KButton, KIcon } from '@kong/kongponents'
 
-  emits: ['mesh-selected'],
+import { useStore } from '@/store/store'
+import { MeshNotificationItem } from '@/store/modules/notifications/notifications.types'
 
-  data() {
-    return {
-      url: `https://kuma.io/enterprise/${import.meta.env.VITE_UTM}`,
-    }
-  },
-  computed: {
-    ...mapGetters({
-      meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
-    }),
-    hasMeshesWithAction() {
-      return Object.keys(this.meshNotificationItemMapWithAction).length > 0
-    },
-  },
-  methods: {
-    meshSelected(name) {
-      this.$emit('mesh-selected', name)
-    },
-    calculateActions(meshActions) {
-      const allActions = Object.values(meshActions)
-      const availableActions = allActions.filter(Boolean)
+const store = useStore()
 
-      return allActions.length - availableActions.length
-    },
-  },
+const emit = defineEmits<{
+  (event: 'mesh-selected', mesh: string): void
+}>()
+
+const url = `https://kuma.io/enterprise/${import.meta.env.VITE_UTM}`
+
+const meshNotificationItemMapWithAction = computed<Record<string, MeshNotificationItem>>(() => store.getters['notifications/meshNotificationItemMapWithAction'])
+
+const hasMeshesWithAction = computed(() => Object.keys(meshNotificationItemMapWithAction.value).length > 0)
+
+function meshSelected(mesh: string) {
+  emit('mesh-selected', mesh)
+}
+
+function calculateActions(notificationItem: MeshNotificationItem) {
+  const allActions = Object.values(notificationItem)
+  const availableActions = allActions.filter(Boolean)
+
+  return allActions.length - availableActions.length
 }
 </script>
 

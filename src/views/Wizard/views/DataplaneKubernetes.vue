@@ -509,24 +509,18 @@
               <h3>
                 Auto-Inject DPP
               </h3>
+
               <p>
                 You can now execute the following commands to automatically inject
                 the sidecar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
-              <TabsWidget
-                :loaders="false"
-                :tabs="tabs"
-                initial-tab-override="kubernetes"
-              >
-                <template #kubernetes>
-                  <CodeView
-                    title="Kubernetes"
-                    copy-button-text="Copy Command to Clipboard"
-                    lang="bash"
-                    :content="codeOutput"
-                  />
-                </template>
-              </TabsWidget>
+
+              <h4>Kubernetes</h4>
+
+              <CodeBlock
+                language="bash"
+                :code="codeOutput"
+              />
             </div>
             <EntityScanner
               :loader-function="scanForEntity"
@@ -633,12 +627,11 @@ networking:
 import { mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { kebabCase } from '@/helpers'
+import CodeBlock from '@/components/CodeBlock.vue'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment.vue'
-import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
 import EnvironmentSwitcher from '@/views/Wizard/components/EnvironmentSwitcher.vue'
-import CodeView from '@/components/Skeletons/CodeView.vue'
 import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
 
 // schema for building code output (TBD)
@@ -649,11 +642,10 @@ export default {
   name: 'DataplaneWizardKubernetes',
 
   components: {
+    CodeBlock,
     FormFragment,
-    TabsWidget,
     StepSkeleton,
     EnvironmentSwitcher,
-    CodeView,
     EntityScanner,
   },
   mixins: [FormatForCLI],

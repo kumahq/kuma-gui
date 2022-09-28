@@ -1,29 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
-<div>
-  <div
-    class="nav-item is-menu-item nav-item--is-secondary"
-    data-testid="data-plane-list-view"
+<div
+  class="nav-item nav-item--is-link"
+  data-testid="data-plane-list-view"
+>
+  <a
+    class="nav-item__link"
+    href="#/mesh/all/data-planes"
   >
-    <a
-      class=""
-      href="#/mesh/all/data-planes"
+    All 
+    <span
+      class="amount amount--empty"
     >
-      <!--v-if-->
-      <div
-        class="nav-link"
-      >
-        
-        All 
-        <span
-          class="amount amount--empty"
-        >
-          0
-        </span>
-        
-      </div>
-    </a>
-  </div>
+      0
+    </span>
+  </a>
 </div>
 `;

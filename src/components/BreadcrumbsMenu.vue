@@ -87,17 +87,14 @@ export default {
     },
 
     calculateRouteTextAdvanced(route) {
-      const params = route.params
-
-      const { expandSidebar, ...cleanParams } = params
-
-      const isMesh = route.name === 'mesh-overview'
+      const { expandSidebar, ...cleanParams } = route.params
       const newParams = Object.assign({}, cleanParams, { mesh: null })
 
-      if (isMesh) {
-        return params.mesh
+      if (route.name === 'mesh-overview') {
+        return route.params.mesh
       } else {
-        return Object.values(newParams).filter((x) => x)[0]
+        const value = Object.values(newParams).filter((x) => x !== null)[0]
+        return Array.isArray(value) ? value[0] : value
       }
     },
   },

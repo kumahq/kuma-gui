@@ -1,15 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CodeBlock matches snapshot 1`] = `
-<!-- eslint-disable vue/no-v-html -->
-<pre class="code-block language-json" data-testid="code-block"><code><span class="token punctuation">{</span>
+<div class="code-block">
+  <!-- eslint-disable vue/no-v-html --><pre class="code-block__code language-json" data-testid="code-block"><code><span class="token punctuation">{</span>
           <span class="token property">"key"</span><span class="token operator">:</span> <span class="token string">"value"</span>
-        <span class="token punctuation">}</span></code></pre>
-<!-- eslint-enable vue/no-v-html -->
+        <span class="token punctuation">}</span></code></pre><!-- eslint-enable vue/no-v-html -->
+  <k-clipboard-provider-stub></k-clipboard-provider-stub>
+</div>
 `;
 
 exports[`CodeBlock renders plaintext on unknown language 1`] = `
-<!-- eslint-disable vue/no-v-html -->
-<pre class="code-block language-python" data-testid="code-block"><code>print("Hello, world!")</code></pre>
-<!-- eslint-enable vue/no-v-html -->
+<div class="code-block">
+  <!-- eslint-disable vue/no-v-html --><pre class="code-block__code language-python" data-testid="code-block"><code>print("Hello, world!")</code></pre><!-- eslint-enable vue/no-v-html -->
+  <k-clipboard-provider-stub></k-clipboard-provider-stub>
+</div>
 `;

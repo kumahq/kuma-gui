@@ -4,11 +4,6 @@
     class="relative"
     :class="policy.path"
   >
-    <DocumentationLink
-      :href="docsURL"
-      data-testid="policy-documentation-link"
-    />
-
     <div
       v-if="policy.isExperimental"
       class="mb-4"
@@ -45,6 +40,11 @@
       >
         >
         <template #additionalControls>
+          <DocumentationLink
+            :href="docsURL"
+            data-testid="policy-documentation-link"
+          />
+
           <KButton
             v-if="$route.query.ns"
             class="back-button"
@@ -111,13 +111,15 @@
         </template>
 
         <template #yaml>
-          <YamlView
-            lang="yaml"
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="rawEntity"
-          />
+          <div class="config-wrapper">
+            <YamlView
+              lang="yaml"
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+              :content="rawEntity"
+            />
+          </div>
         </template>
       </TabsWidget>
     </FrameSkeleton>
@@ -322,3 +324,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.config-wrapper {
+  padding: var(--spacing-md);
+}
+</style>

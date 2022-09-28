@@ -36,9 +36,13 @@
 
 <script>
 import { mapState } from 'vuex'
+import { KAlert } from '@kong/kongponents'
 
 export default {
   name: 'MeshSelector',
+  components: {
+    KAlert,
+  },
   props: {
     items: {
       type: Object,

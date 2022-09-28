@@ -112,12 +112,14 @@
           </LabelList>
         </template>
         <template #yaml>
-          <YamlView
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="rawEntity"
-          />
+          <div class="config-wrapper">
+            <YamlView
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+              :content="rawEntity"
+            />
+          </div>
         </template>
         <template #resources>
           <LabelList
@@ -452,5 +454,9 @@ export default {
 <style lang="scss" scoped>
 .add-mesh-button {
   background-color: var(--logo-green) !important;
+}
+
+.config-wrapper {
+  padding: var(--spacing-md);
 }
 </style>

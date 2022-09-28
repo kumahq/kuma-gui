@@ -12,10 +12,13 @@
         <div class="mr-4">
           <span class="mr-2">
             <strong>ProTip:</strong>
+
             You might want to adjust your {{ isAllMeshesView ? 'meshes' : 'mesh' }} configuration
           </span>
+
           <KButton
             appearance="outline"
+            data-testid="open-modal-button"
             @click="openModal"
           >
             Check your {{ isAllMeshesView ? 'meshes' : 'mesh' }}!
@@ -26,9 +29,10 @@
 
     <KModal
       class="modal"
-      :is-visible="isOpen"
+      :is-visible="store.state.notifications.isOpen"
       title="Notifications"
       text-align="left"
+      data-testid="notification-modal"
     >
       <template #header-content>
         <div
@@ -40,40 +44,45 @@
             icon="notificationBell"
             size="24"
             class="mr-2"
-          /> Notifications
+          />
+
+          Notifications
         </div>
+
         <div v-else>
           <div>
             <span v-if="hasAnyAction">
-              Some of these features are not enabled for
-              <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
-              mesh. Consider implementing them.
-
+              Some of these features are not enabled for <span class="text-xl tracking-wide">"{{ store.state.selectedMesh }}"</span> mesh. Consider implementing them.
             </span>
+
             <span v-else> Looks like
-              <span class="text-xl tracking-wide"> "{{ selectedMesh }}"</span>
-              isn't missing any features. Well done!
+              <span class="text-xl tracking-wide">"{{ store.state.selectedMesh }}"</span> isn't missing any features. Well done!
             </span>
           </div>
+
           <KButton
             class="mt-4"
             appearance="outline"
             @click="changeMesh('all')"
           >
-            &lsaquo; Back to all
+            ‹ Back to all
           </KButton>
         </div>
       </template>
+
       <template #body-content>
         <AllMeshesNotifications
           v-if="isAllMeshesView"
-          @mesh-selected="changeMesh($event)"
+          @mesh-selected="changeMesh"
         />
+
         <SingleMeshNotifications v-else />
       </template>
+
       <template #footer-content>
         <KButton
           appearance="outline"
+          data-testid="close-modal-button"
           @click="closeModal"
         >
           Close
@@ -83,66 +92,48 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions, mapState } from 'vuex'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { KAlert, KButton, KIcon, KModal } from '@kong/kongponents'
 
+import { useStore } from '@/store/store'
 import AllMeshesNotifications from './components/AllMeshesNotifications.vue'
 import SingleMeshNotifications from './components/SingleMeshNotifications.vue'
 
-export default {
-  name: 'NotificationManager',
-  components: {
-    AllMeshesNotifications,
-    SingleMeshNotifications,
-  },
-  data() {
-    return {
-      alertClosed: false,
-    }
-  },
-  computed: {
-    ...mapState({
-      isOpen: (state) => state.notifications.isOpen,
-      selectedMesh: (state) => state.selectedMesh,
-    }),
+const route = useRoute()
+const router = useRouter()
+const store = useStore()
 
-    ...mapGetters({
-      amountOfActions: 'notifications/amountOfActions',
-      showOnboarding: 'onboarding/showOnboarding',
-      meshNotificationItemMapWithAction: 'notifications/meshNotificationItemMapWithAction',
-    }),
+const alertClosed = ref(false)
 
-    isAllMeshesView() {
-      return this.selectedMesh === 'all'
-    },
+const isAllMeshesView = computed(() => store.state.selectedMesh === 'all')
 
-    shouldRenderAlert() {
-      return !this.alertClosed && !this.showOnboarding && this.amountOfActions > 0
-    },
+const shouldRenderAlert = computed(() => !alertClosed.value && !store.getters['onboarding/showOnboarding'] && store.getters['notifications/amountOfActions'] > 0)
 
-    hasAnyAction() {
-      return this.meshNotificationItemMapWithAction[this.selectedMesh]
-    },
-  },
-  methods: {
-    ...mapActions({
-      openModal: 'notifications/openModal',
-      closeModal: 'notifications/closeModal',
-      updateSelectedMesh: 'updateSelectedMesh',
-    }),
-    closeAlert() {
-      this.alertClosed = true
-    },
+const hasAnyAction = computed(() => store.getters['notifications/meshNotificationItemMapWithAction'][store.state.selectedMesh])
 
-    changeMesh(mesh) {
-      this.updateSelectedMesh(mesh)
+function closeAlert(): void {
+  alertClosed.value = true
+}
 
-      this.$router.push({
-        name: this.$route.name,
-        params: { mesh },
-      })
-    },
-  },
+function changeMesh(mesh: string): void {
+  store.dispatch('updateSelectedMesh', mesh)
+
+  if (route.name) {
+    router.push({
+      name: route.name,
+      params: { mesh },
+    })
+  }
+}
+
+function openModal(): void {
+  store.dispatch('notifications/openModal')
+}
+
+function closeModal(): void {
+  store.dispatch('notifications/closeModal')
 }
 </script>
 
