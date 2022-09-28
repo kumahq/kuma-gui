@@ -58,23 +58,25 @@
         </div>
 
         <div>
-          <h4>Tags</h4>
+          <template v-if="dataPlaneTags.length > 0">
+            <h4>Tags</h4>
 
-          <p>
-            <span
-              v-for="(tag, index) in dataPlaneTags"
-              :key="index"
-              class="tag-cols"
-            >
-              <span>
-                {{ tag.label }}:
-              </span>
+            <p>
+              <span
+                v-for="(tag, index) in dataPlaneTags"
+                :key="index"
+                class="tag-cols"
+              >
+                <span>
+                  {{ tag.label }}:
+                </span>
 
-              <span>
-                {{ tag.value }}
+                <span>
+                  {{ tag.value }}
+                </span>
               </span>
-            </span>
-          </p>
+            </p>
+          </template>
 
           <template v-if="dataPlaneVersions">
             <h4>Versions</h4>
@@ -97,6 +99,10 @@
           </template>
         </div>
       </LabelList>
+
+      <div class="config-wrapper">
+        <YamlView :content="rawDataPlane" />
+      </div>
     </template>
 
     <template #insights>
@@ -189,12 +195,6 @@
       </LabelList>
     </template>
 
-    <template #yaml>
-      <div class="config-wrapper">
-        <YamlView :content="rawDataPlane" />
-      </div>
-    </template>
-
     <template #warnings>
       <WarningsWidget :warnings="warnings" />
     </template>
@@ -281,10 +281,6 @@ const tabs = [
     title: 'Certificate Insights',
   },
   {
-    hash: '#yaml',
-    title: 'YAML',
-  },
-  {
     hash: '#warnings',
     title: 'Warnings',
   },
@@ -325,11 +321,13 @@ const kumaDocsVersion = computed(() => {
 const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)
 
 async function setWarnings() {
-  if (props.dataPlaneOverview.dataplaneInsight.subscriptions.length === 0) {
+  const subscriptions = props.dataPlaneOverview.dataplaneInsight.subscriptions
+
+  if (subscriptions.length === 0 || !('version' in subscriptions[0])) {
     return
   }
 
-  const version = props.dataPlaneOverview.dataplaneInsight.subscriptions[0].version
+  const version = subscriptions[0].version
 
   if (version.kumaDp && version.envoy) {
     const compatibility = compatibilityKind(version)
@@ -369,6 +367,8 @@ setWarnings()
 }
 
 .config-wrapper {
-  padding: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
 }
 </style>

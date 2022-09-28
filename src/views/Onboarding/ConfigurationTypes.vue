@@ -60,11 +60,6 @@ export default {
     OnboardingHeading,
     OnboardingPage,
   },
-  metaInfo() {
-    return {
-      title: 'Configuration Types',
-    }
-  },
   data() {
     return { mode: 'kubernetes', productName: PRODUCT_NAME }
   },

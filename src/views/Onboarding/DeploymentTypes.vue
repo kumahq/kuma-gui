@@ -57,11 +57,6 @@ export default {
     OnboardingHeading,
     OnboardingPage,
   },
-  metaInfo() {
-    return {
-      title: 'Deployment Types',
-    }
-  },
   data() {
     return { mode: 'standalone', productName: PRODUCT_NAME }
   },

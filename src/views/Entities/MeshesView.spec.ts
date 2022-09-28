@@ -1,23 +1,18 @@
-import { createStore } from 'vuex'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import MeshesView from './MeshesView.vue'
-import Kuma from '@/services/kuma'
+import { store, storeKey } from '@/store/store'
 
 describe('MeshesView.vue', () => {
   it('renders snapshot with Resource tab', async () => {
-    const { policies } = await Kuma.getPolicies()
-    const store = createStore({
-      state: {
-        policies,
-      },
-    })
+    await store.dispatch('fetchPolicies')
+
     const { container } = render(MeshesView, {
       global: {
-        plugins: [store],
+        plugins: [[store, storeKey]],
         components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
         mocks: {
           $route: {

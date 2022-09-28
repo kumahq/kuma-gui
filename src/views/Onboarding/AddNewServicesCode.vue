@@ -99,11 +99,6 @@ export default {
     LoadingBox,
     KCard,
   },
-  metaInfo() {
-    return {
-      title: 'Add new services',
-    }
-  },
   data() {
     return {
       productName: PRODUCT_NAME,

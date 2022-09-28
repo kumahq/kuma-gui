@@ -362,24 +362,6 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
                   
                 </a>
               </li>
-              <li
-                aria-controls="panel-2"
-                aria-selected="false"
-                class="tab-item"
-                data-v-6bcd6661=""
-                id="yaml-tab"
-                role="tab"
-                tabindex="0"
-              >
-                <a
-                  class="tab-link"
-                  data-v-6bcd6661=""
-                >
-                  
-                  YAML
-                  
-                </a>
-              </li>
               
             </ul>
             
@@ -591,16 +573,6 @@ exports[`MeshesView.vue renders snapshot with Resource tab 1`] = `
               </div>
               
               
-            </div>
-            <div
-              aria-labelledby="yaml-tab"
-              class="tab-container"
-              data-v-6bcd6661=""
-              id="panel-2"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <!---->
             </div>
             
           </div>

@@ -17,9 +17,12 @@
   plugins: ['vue', 'import', '@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript'],
   rules: {
+    // Turns off some non-TypeScript rules in favor of their specific TypeScript rules to avoid false negatives:
     indent: 'off',
-    'func-call-spacing': 'off',
     '@typescript-eslint/indent': ['error', 2],
+    'func-call-spacing': 'off',
+    '@typescript-eslint/func-call-spacing': 'error',
+
     '@typescript-eslint/no-unused-vars': ['warn', {
       argsIgnorePattern: '^_',
       ignoreRestSiblings: true,

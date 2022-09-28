@@ -33,7 +33,7 @@
     <section v-if="dataPlaneTags.length > 0">
       <h4>Tags</h4>
 
-      <div class="entity-tag-list">
+      <div class="tag-list">
         <EntityTag
           v-for="(tag, index) in dataPlaneTags"
           :key="index"
@@ -137,6 +137,7 @@ import { computed, PropType } from 'vue'
 import { KIcon } from '@kong/kongponents'
 
 import { DataPlaneOverview, DataPlaneStatus } from '@/types'
+import { STATUS } from '@/consts'
 import { rawReadableDate } from '@/helpers'
 import EntityTag from '@/components/EntityTag/EntityTag.vue'
 import YamlView from '@/components/Skeletons/YamlView.vue'
@@ -149,10 +150,10 @@ const props = defineProps({
   },
 })
 
-const BADGE_APPEARANCE_MAP: Record<DataPlaneStatus, string> = {
-  Online: 'success',
-  Offline: 'danger',
-  'Partially degraded': 'warning',
+const STATUS_KEYWORD: Record<DataPlaneStatus, string> = {
+  'Partially degraded': 'partially_degraded',
+  Offline: 'offline',
+  Online: 'online',
 }
 
 const dataPlane = computed(() => {
@@ -202,10 +203,7 @@ const subscriptionWrappers = computed(() => {
 const status = computed(() => {
   const { status: title } = getStatus(props.dataPlaneOverview.dataplane, props.dataPlaneOverview.dataplaneInsight)
 
-  return {
-    title,
-    appearance: BADGE_APPEARANCE_MAP[title],
-  }
+  return STATUS[STATUS_KEYWORD[title]]
 })
 
 const dependencies = computed(() => {
@@ -291,7 +289,7 @@ h5 {
   gap: var(--spacing-md);
 }
 
-.entity-tag-list {
+.tag-list {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xxs);

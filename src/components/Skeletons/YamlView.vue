@@ -12,7 +12,7 @@
     >
       <KTabs
         :key="environment"
-        v-model="activeTab.hash"
+        v-model="activeTabHash"
         :tabs="tabs"
       >
         <template #universal>
@@ -33,154 +33,104 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import { KTabs } from '@kong/kongponents'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 import json2yaml from '@appscode/json2yaml'
+import { KTabs } from '@kong/kongponents'
 
+import { useStore } from '@/store/store'
 import CodeBlock from '../CodeBlock.vue'
 import EmptyBlock from '../EmptyBlock.vue'
 import ErrorBlock from '../ErrorBlock.vue'
 import LoadingBlock from '../LoadingBlock.vue'
 
-export default {
-  name: 'YamlView',
+const store = useStore()
 
-  components: {
-    CodeBlock,
-    EmptyBlock,
-    ErrorBlock,
-    LoadingBlock,
-    KTabs,
+const props = defineProps({
+  content: {
+    type: Object,
+    required: false,
+    default: null,
   },
 
-  props: {
-    content: {
-      type: Object,
-      default: null,
-    },
-
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-
-    isEmpty: {
-      type: Boolean,
-      default: false,
-    },
+  isLoading: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  data() {
-    return {
-      tabs: [
-        {
-          hash: '#universal',
-          title: 'Universal',
-        },
-
-        {
-          hash: '#kubernetes',
-          title: 'Kubernetes',
-        },
-      ],
-    }
+  hasError: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  computed: {
-    ...mapGetters({
-      environment: 'config/getEnvironment',
-    }),
-
-    activeTab: {
-      get() {
-        const env = this.environment ? this.environment : this.tabs[0].hash.substring(1)
-
-        return {
-          hash: `#${env}`,
-          nohash: env,
-        }
-      },
-
-      set(newTab) {
-        return {
-          hash: `#${newTab}`,
-          nohash: newTab,
-        }
-      },
-    },
-
-    yamlContent() {
-      const content = this.content
-
-      const kubernetes = () => {
-        const newObj = {}
-        const sourceObj = Object.assign({}, this.content)
-        const { name, mesh, type } = sourceObj
-
-        // all other parts of the Kubernetes object have to be placed under `spec`
-        const spec = () => {
-          const src = Object.assign({}, this.content)
-
-          // remove the `type`, `mesh` and `name` because we don't need them here
-          delete src.type
-          delete src.mesh
-          delete src.name
-
-          // only return something if there are additional values
-          if (src && Object.entries(src).length > 0) {
-            return src
-          }
-
-          return false
-        }
-
-        // assemble the main part of our object
-        newObj.apiVersion = 'kuma.io/v1alpha1'
-        newObj.kind = type
-        if (mesh !== undefined) {
-          // mesh is not defined on global scoped objects
-          newObj.mesh = sourceObj.mesh
-        }
-
-        if (name?.includes('.')) {
-          // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
-          const parts = name.split('.')
-          const namespace = parts.pop()
-          const k8sName = parts.join('.') // on multi-zone when dataplanes from zone are synced to global the format is 'name.<zone-ns>.<global-ns>' so the name is `name.<zone-ns>`
-
-          newObj.metadata = {
-            name: k8sName,
-            namespace,
-          }
-        } else {
-          newObj.metadata = {
-            name,
-          }
-        }
-
-        // if there are additional values, place them under `spec` accordingly
-        if (spec()) {
-          newObj.spec = spec()
-        }
-
-        return newObj
-      }
-
-      const items = {
-        universal: json2yaml(content),
-        kubernetes: json2yaml(kubernetes()),
-      }
-
-      return items
-    },
+  isEmpty: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
+})
+
+const tabs = [
+  {
+    hash: '#universal',
+    title: 'Universal',
+  },
+  {
+    hash: '#kubernetes',
+    title: 'Kubernetes',
+  },
+]
+
+const activeTabHash = ref(tabs[0].hash)
+
+const environment = store.getters['config/getEnvironment'] as string | undefined
+if (typeof environment === 'string') {
+  activeTabHash.value = '#' + environment
 }
+
+const yamlContent = computed(() => {
+  const kubernetesObj: any = {}
+
+  // assemble the main part of our object
+  kubernetesObj.apiVersion = 'kuma.io/v1alpha1'
+  kubernetesObj.kind = props.content.type
+
+  if (props.content.mesh !== undefined) {
+    // mesh is not defined on global scoped objects
+    kubernetesObj.mesh = props.content.mesh
+  }
+
+  if (props.content.name?.includes('.')) {
+    // if name from Kuma has '.' it means it's k8s name joined with a namespace by dot
+    const parts = props.content.name.split('.')
+    const namespace = parts.pop()
+    // on multi-zone when dataplanes from zone are synced to global the format is 'name.<zone-ns>.<global-ns>' so the name is `name.<zone-ns>`
+    const k8sName = parts.join('.')
+
+    kubernetesObj.metadata = {
+      name: k8sName,
+      namespace,
+    }
+  } else {
+    kubernetesObj.metadata = { name: props.content.name }
+  }
+
+  // if there are additional values, place them under `spec` accordingly
+  // remove the `type`, `mesh` and `name` because we don't need them here
+  const { type, name, mesh, ...spec } = props.content
+  if (Object.keys(spec).length > 0) {
+    kubernetesObj.spec = spec
+  }
+
+  const items = {
+    universal: json2yaml(props.content),
+    kubernetes: json2yaml(kubernetesObj),
+  }
+
+  return items
+})
 </script>
 
 <style lang="scss" scoped>

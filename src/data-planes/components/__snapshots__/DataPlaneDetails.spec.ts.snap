@@ -237,24 +237,6 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
             
           </a>
         </li>
-        <li
-          aria-controls="panel-7"
-          aria-selected="false"
-          class="tab-item"
-          data-v-6bcd6661=""
-          id="yaml-tab"
-          role="tab"
-          tabindex="0"
-        >
-          <a
-            class="tab-link"
-            data-v-6bcd6661=""
-          >
-            
-            YAML
-            
-          </a>
-        </li>
         
       </ul>
       
@@ -342,6 +324,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       </ul>
                     </div>
                     <div>
+                      
                       <h4>
                         Tags
                       </h4>
@@ -369,6 +352,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         
                       </p>
+                      
                       
                       <h4>
                         Versions
@@ -416,6 +400,397 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                 <!---->
               </div>
             </section>
+          </div>
+        </div>
+        <div
+          class="config-wrapper"
+        >
+          <div
+            class="yaml-view"
+          >
+            <div
+              class="yaml-view-content"
+            >
+              <div
+                class="k-tabs"
+                data-v-6bcd6661=""
+              >
+                <ul
+                  aria-label="ktabs"
+                  data-v-6bcd6661=""
+                  role="tablist"
+                >
+                  
+                  <li
+                    aria-controls="panel-0"
+                    aria-selected="true"
+                    class="active tab-item"
+                    data-v-6bcd6661=""
+                    id="universal-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <a
+                      class="tab-link"
+                      data-v-6bcd6661=""
+                    >
+                      
+                      Universal
+                      
+                    </a>
+                  </li>
+                  <li
+                    aria-controls="panel-1"
+                    aria-selected="false"
+                    class="tab-item"
+                    data-v-6bcd6661=""
+                    id="kubernetes-tab"
+                    role="tab"
+                    tabindex="0"
+                  >
+                    <a
+                      class="tab-link"
+                      data-v-6bcd6661=""
+                    >
+                      
+                      Kubernetes
+                      
+                    </a>
+                  </li>
+                  
+                </ul>
+                
+                <div
+                  aria-labelledby="universal-tab"
+                  class="tab-container"
+                  data-v-6bcd6661=""
+                  id="panel-0"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  
+                  <div
+                    class="code-block"
+                  >
+                    <!-- eslint-disable vue/no-v-html -->
+                    <pre
+                      class="code-block__code language-yaml"
+                      data-testid="code-block"
+                    >
+                      <code>
+                        <span
+                          class="token key atrule"
+                        >
+                          type
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         Dataplane
+
+                        <span
+                          class="token key atrule"
+                        >
+                          mesh
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         default
+
+                        <span
+                          class="token key atrule"
+                        >
+                          name
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         backend
+
+                        <span
+                          class="token key atrule"
+                        >
+                          networking
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+  
+                        <span
+                          class="token key atrule"
+                        >
+                          address
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         127.0.0.1
+  
+                        <span
+                          class="token key atrule"
+                        >
+                          inbound
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+    
+                        <span
+                          class="token punctuation"
+                        >
+                          -
+                        </span>
+                         
+                        <span
+                          class="token key atrule"
+                        >
+                          port
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+                        <span
+                          class="token number"
+                        >
+                          7776
+                        </span>
+                        
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          servicePort
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+                        <span
+                          class="token number"
+                        >
+                          7777
+                        </span>
+                        
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          serviceAddress
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         127.0.0.1
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          tags
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+        
+                        <span
+                          class="token key atrule"
+                        >
+                          kuma.io/protocol
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         http
+        
+                        <span
+                          class="token key atrule"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         backend
+  
+                        <span
+                          class="token key atrule"
+                        >
+                          outbound
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+    
+                        <span
+                          class="token punctuation"
+                        >
+                          -
+                        </span>
+                         
+                        <span
+                          class="token key atrule"
+                        >
+                          port
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+                        <span
+                          class="token number"
+                        >
+                          10001
+                        </span>
+                        
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          tags
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+        
+                        <span
+                          class="token key atrule"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         frontend
+                      </code>
+                    </pre>
+                    <!-- eslint-enable vue/no-v-html -->
+                    
+                    <div
+                      aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      aria-expanded="false"
+                      data-v-9bbde9b2=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="button"
+                    >
+                      
+                      <button
+                        class="code-block__copy-button"
+                        type="button"
+                      >
+                        <span
+                          class="kong-icon-copy kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            height="16"
+                            viewBox="0 0 32 32"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Copy
+                            </title>
+                            
+  
+                            <path
+                              d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                              fill="#A3BBCC"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        <span
+                          class="kutil-sr-only"
+                        >
+                          Copy
+                        </span>
+                      </button>
+                      
+                      <transition-stub
+                        data-v-9bbde9b2=""
+                      >
+                        <div
+                          class="k-popover"
+                          data-v-9bbde9b2=""
+                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                          role="region"
+                          style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                        >
+                          <!---->
+                          <div
+                            class="k-popover-content"
+                            data-v-9bbde9b2=""
+                          >
+                            
+                            <p>
+                              Code copied to clipboard
+                            </p>
+                            
+                          </div>
+                          <!---->
+                        </div>
+                      </transition-stub>
+                    </div>
+                    
+                  </div>
+                  
+                </div>
+                <div
+                  aria-labelledby="kubernetes-tab"
+                  class="tab-container"
+                  data-v-6bcd6661=""
+                  id="panel-1"
+                  role="tabpanel"
+                  tabindex="0"
+                >
+                  <!---->
+                </div>
+                
+              </div>
+            </div>
           </div>
         </div>
         
@@ -476,16 +851,6 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
         class="tab-container"
         data-v-6bcd6661=""
         id="panel-6"
-        role="tabpanel"
-        tabindex="0"
-      >
-        <!---->
-      </div>
-      <div
-        aria-labelledby="yaml-tab"
-        class="tab-container"
-        data-v-6bcd6661=""
-        id="panel-7"
         role="tabpanel"
         tabindex="0"
       >

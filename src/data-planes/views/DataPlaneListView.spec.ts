@@ -1,47 +1,26 @@
-import { createStore } from 'vuex'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import Kuma from '@/services/kuma'
+import { store, storeKey } from '@/store/store'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
 
 async function renderComponent() {
-  const { policies } = await Kuma.getPolicies()
-  const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
-
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          tagline: 'Kuma',
-          clientConfig: {
-            mode: 'global',
-            environment: 'universal',
-          },
-        },
-        getters: {
-          getTagline: (state) => state.tagline,
-          getEnvironment: (state) => state.clientConfig?.environment,
-          getMulticlusterStatus: () => false,
-        },
-      },
-    },
-    state: {
-      policiesByType,
-    },
-  })
+  await store.dispatch('fetchPolicies')
 
   const wrapper = mount(DataPlaneListView, {
     global: {
-      plugins: [store],
-      mocks: {
-        $route: {
-          params: {
-            mesh: 'all',
-          },
-          query: {},
-        },
-      },
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },

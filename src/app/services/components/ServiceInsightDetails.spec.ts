@@ -1,3 +1,4 @@
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 
 import ServiceInsightDetails from './ServiceInsightDetails.vue'
@@ -6,6 +7,17 @@ import { createServiceInsight } from '@/test-data/createServiceInsight'
 
 const serviceInsight = createServiceInsight()
 
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
+
 function renderComponent(props = {}) {
   return mount(ServiceInsightDetails, {
     props: {
@@ -13,7 +25,7 @@ function renderComponent(props = {}) {
       ...props,
     },
     global: {
-      plugins: [[store, storeKey]],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },
@@ -26,10 +38,6 @@ describe('ServiceInsightDetails', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.html()).toContain('Total: 2 (online: 1)')
-
-    const yamlTab = wrapper.find('#yaml-tab')
-    await yamlTab.trigger('click')
-
     expect(wrapper.html()).toContain('status')
     expect(wrapper.html()).toContain('partially_degraded')
   })

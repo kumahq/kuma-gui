@@ -47,11 +47,6 @@ export default {
     OnboardingHeading,
     OnboardingPage,
   },
-  metaInfo() {
-    return {
-      title: 'Create the Mesh',
-    }
-  },
 
   data() {
     return {

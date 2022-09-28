@@ -12,7 +12,7 @@ export const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
 
 export const FEATURE_FLAG = {}
 
-export const STATUS = {
+export const STATUS: Record<string, { title: string, appearance: string }> = {
   partially_degraded: {
     title: 'Partially degraded',
     appearance: 'warning',

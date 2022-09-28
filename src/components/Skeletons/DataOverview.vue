@@ -475,12 +475,6 @@ export default {
   color: var(--yellow-500);
 }
 
-.entity-tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xxs);
-}
-
 .data-table-action-link {
   padding: 0;
 }

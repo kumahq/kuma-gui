@@ -1,104 +1,70 @@
 <template>
   <KBreadcrumbs
-    v-if="routes.length > 0 && !hideBreadcrumbs"
-    :items="routes"
+    v-if="breadcrumbItems.length > 0 && !route.query.hide_breadcrumb"
+    :items="breadcrumbItems"
   />
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute, useRouter, RouteLocation, RouteRecordName } from 'vue-router'
 import { KBreadcrumbs } from '@kong/kongponents'
 
-export default {
-  name: 'BreadcrumbsMenu',
+const route = useRoute()
+const router = useRouter()
 
-  components: {
-    KBreadcrumbs,
-  },
+type BreadcrumbItem = {
+  to: RouteLocation | string
+  text?: string
+  title?: string
+  icon?: string
+  key?: string
+  maxWidth?: string
+}
 
-  computed: {
-    pageMesh() {
-      return this.$route.params.mesh
-    },
+const breadcrumbItems = computed(() => {
+  const items: Map<RouteRecordName, BreadcrumbItem> = new Map()
 
-    routes() {
-      const items = []
+  for (const matchedRoute of route.matched) {
+    // Ignores the de-facto home page.
+    if (matchedRoute.name === 'global-overview' || matchedRoute.meta.parent === 'global-overview') {
+      continue
+    }
 
-      this.$route.matched.forEach((r) => {
-        const key = r.redirect !== undefined && r.redirect.name !== undefined ? r.redirect.name : r.name
+    // Adds any explicit parent routes of the matched chain.
+    if (matchedRoute.meta.parent !== undefined) {
+      const parentRoute = router.resolve({ name: matchedRoute.meta.parent })
 
-        /** this adds the mesh name and url to the breadcrumb chain */
-        const isCurrentRoute = this.isCurrentRoute(r)
-        if (isCurrentRoute && this.pageMesh) {
-          items.push({
-            key: this.pageMesh,
-            to: { path: `/meshes/${this.pageMesh}` },
-            title: `Mesh Overview for ${this.pageMesh}`,
-            text: this.pageMesh,
-          })
-        }
-
-        if (isCurrentRoute && r.meta.parent && r.meta.parent !== 'undefined') {
-          const parentRoute = this.$router.resolve({ name: r.meta.parent })
-
-          items.push({
-            key: r.meta.parent,
-            to: { name: parentRoute.name },
-            title: parentRoute.meta.title,
-            text: r.meta.breadcrumb || parentRoute.meta.title,
-          })
-        } else if (isCurrentRoute && !r.meta.excludeAsBreadcrumb) {
-          items.push({
-            key,
-            to: { name: key },
-            title: r.meta.title,
-            text: r.meta.breadcrumb || r.meta.title,
-          })
-        } else if (r.meta.parent && r.meta.parent !== 'undefined') {
-          items.push({
-            key: r.meta.parent,
-            to: { name: r.meta.parent },
-            title: r.meta.title,
-            text: r.meta.breadcrumb || r.meta.title,
-          })
-        }
-      })
-
-      // the current page the user is on
-      const currentRouteText = this.calculateRouteTextAdvanced(this.$route)
-
-      if (currentRouteText) {
-        items.push({
-          title: currentRouteText,
-          text: currentRouteText,
+      if (parentRoute.name) {
+        items.set(parentRoute.name, {
+          to: parentRoute,
+          key: parentRoute.name as string,
+          title: parentRoute.meta.title,
+          text: parentRoute.meta.title,
         })
       }
+    }
 
-      return items
-    },
+    // Adds current route.
+    const isCurrentRoute = matchedRoute.name === route.name || matchedRoute.redirect === route.name
+    if (isCurrentRoute && matchedRoute.meta.breadcrumbExclude !== true && route.name) {
+      let title = route.meta.title as string
 
-    hideBreadcrumbs() {
-      return this.$route.query.hide_breadcrumb
-    },
-  },
-
-  methods: {
-    isCurrentRoute(route) {
-      return (route.name && route.name === this.$route.name) || route.redirect === this.$route.name
-    },
-
-    calculateRouteTextAdvanced(route) {
-      const { expandSidebar, ...cleanParams } = route.params
-      const newParams = Object.assign({}, cleanParams, { mesh: null })
-
-      if (route.name === 'mesh-overview') {
-        return route.params.mesh
-      } else {
-        const value = Object.values(newParams).filter((x) => x !== null)[0]
-        return Array.isArray(value) ? value[0] : value
+      if (route.meta.breadcrumbTitleParam && route.params[route.meta.breadcrumbTitleParam]) {
+        title = route.params[route.meta.breadcrumbTitleParam] as string
       }
-    },
-  },
-}
+
+      items.set(route.name, {
+        to: route,
+        key: route.name as string,
+        title,
+        text: title,
+      })
+    }
+  }
+
+  return Array.from(items.values())
+})
 </script>
 
 <style lang="scss">
