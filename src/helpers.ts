@@ -1,9 +1,7 @@
-import isPlainObject from 'lodash/isPlainObject'
-import get from 'lodash/get'
-
 import { DISABLED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
 import { ApiListResponse } from '@/api'
 import { ZoneOverview } from '@/types'
+import { get } from '@/utils/get'
 
 type TODO = any
 
@@ -144,16 +142,6 @@ export function kebabCase(value: string) {
   return newValue
 }
 
-export function applyPropsToObject(props: TODO = {}, object: TODO = {}) {
-  Object.entries(props).forEach(([key, value]) => {
-    if (isPlainObject(value)) {
-      return applyPropsToObject(value, object[key])
-    }
-
-    object[key] = value
-  })
-}
-
 export async function fetchAllResources<T = Object>({
   callEndpoint,
 }: {
@@ -194,7 +182,7 @@ export async function fetchAllResources<T = Object>({
 }
 
 export function getZoneDpServerAuthType(zone: ZoneOverview): string {
-  const subscriptionsLength = get(zone, 'zoneInsight.subscriptions.length', 0)
+  const subscriptionsLength = zone?.zoneInsight?.subscriptions.length ?? 0
 
   if (subscriptionsLength && zone.zoneInsight.subscriptions[subscriptionsLength - 1].config) {
     const parsedConfig = JSON.parse(zone.zoneInsight.subscriptions[subscriptionsLength - 1].config)

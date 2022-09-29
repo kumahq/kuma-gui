@@ -116,7 +116,6 @@
 </template>
 
 <script>
-import get from 'lodash/get'
 import { mapGetters } from 'vuex'
 
 import SubscriptionDetails from './components/SubscriptionDetails.vue'
@@ -279,7 +278,7 @@ export default {
       const selected = ['type', 'name']
       const item = this.rawData.find((data) => data.name === entity.name)
 
-      const subscriptions = get(item, 'zoneIngressInsight.subscriptions', [])
+      const subscriptions = item?.zoneIngressInsight?.subscriptions ?? []
 
       this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
