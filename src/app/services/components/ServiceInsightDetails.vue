@@ -1,77 +1,52 @@
 <template>
-  <TabsWidget
-    :tabs="tabs"
-    initial-tab-override="overview"
-  >
-    <template #tabHeader>
-      <div>
-        <h3>
-          Service: {{ processedServiceInsight.name }}
-        </h3>
+  <div class="entity-summary entity-section-list">
+    <h3 class="entity-title">
+      <span class="kutil-sr-only">Service:</span>
+
+      <router-link :to="serviceInsightRoute">
+        {{ serviceInsight.name }}
+      </router-link>
+
+      <div
+        :class="`status status--${status.appearance}`"
+        data-testid="data-plane-status-badge"
+      >
+        {{ status.title.toLowerCase() }}
       </div>
 
-      <div>
-        <EntityURLControl
-          :route="{
-            name: 'service-insight-detail-view',
-            params: {
-              service: processedServiceInsight.name,
-              mesh: processedServiceInsight.mesh,
-            }
-          }"
-        />
+      <EntityURLControl
+        v-if="route.name !== serviceInsightRoute.name"
+        :route="serviceInsightRoute"
+      />
+    </h3>
+
+    <section>
+      <div class="definition">
+        <span>Mesh:</span>
+        <span>{{ serviceInsight.mesh }}</span>
       </div>
-    </template>
 
-    <template #overview>
-      <LabelList>
-        <div>
-          <ul>
-            <li
-              v-for="(value, prop) in processedServiceInsight"
-              :key="prop"
-            >
-              <h4>{{ prop }}</h4>
-
-              <template v-if="prop === 'status' && typeof value !== 'string'">
-                <div
-                  class="entity-status"
-                  :class="{
-                    'is-offline': value.name === 'offline',
-                    'is-degraded': value.name === 'partially_degraded',
-                  }"
-                >
-                  <span class="entity-status__label">{{ value.title }}</span>
-                </div>
-              </template>
-
-              <template v-else>
-                {{ value }}
-              </template>
-            </li>
-          </ul>
-        </div>
-      </LabelList>
-    </template>
-
-    <template #yaml>
-      <div class="config-wrapper">
-        <YamlView :content="rawServiceInsight" />
+      <div class="definition">
+        <span>Data planes:</span>
+        <span>Total: {{ props.serviceInsight.dataplanes.total }} (online: {{ props.serviceInsight.dataplanes.online }})</span>
       </div>
-    </template>
-  </TabsWidget>
+    </section>
+
+    <YamlView :content="rawServiceInsight" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
+import { useRoute } from 'vue-router'
 
 import { ServiceInsight } from '@/types'
 import { stripTimes } from '@/helpers'
 import { STATUS } from '@/consts'
 import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
-import LabelList from '@/components/Utils/LabelList.vue'
-import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import YamlView from '@/components/Skeletons/YamlView.vue'
+
+const route = useRoute()
 
 const props = defineProps({
   serviceInsight: {
@@ -80,34 +55,58 @@ const props = defineProps({
   },
 })
 
-const tabs = [
-  {
-    hash: '#overview',
-    title: 'Overview',
+const serviceInsightRoute = computed(() => ({
+  name: 'service-insight-detail-view',
+  params: {
+    service: props.serviceInsight.name,
+    mesh: props.serviceInsight.mesh,
   },
-  {
-    hash: '#yaml',
-    title: 'YAML',
-  },
-]
-
-const processedServiceInsight = computed(() => {
-  const { name, mesh } = props.serviceInsight
-  const status = {
-    title: STATUS[props.serviceInsight.status].title,
-    name: props.serviceInsight.status,
-  }
-  const { total, online } = props.serviceInsight.dataplanes
-  const dataPlanes = `Total: ${total} (online: ${online})`
-
-  return { name, mesh, status, dataPlanes }
-})
-
+}))
+const status = computed(() => STATUS[props.serviceInsight.status])
 const rawServiceInsight = computed(() => stripTimes(props.serviceInsight))
 </script>
 
 <style lang="scss" scoped>
-.config-wrapper {
-  padding: var(--spacing-md);
+h3 {
+  margin-bottom: var(--spacing-xs);
+  font-size: 1.4em;
+}
+
+.entity-section-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md) var(--spacing-xl);
+}
+
+.entity-title {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.definition {
+  display: grid;
+  grid-template-columns: 10ch 1fr;
+  grid-gap: var(--spacing-md);
+}
+
+.status::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--spacing-xs);
+  border: 4px solid currentColor;
+  border-radius: 50%;
+}
+
+.status--success {
+  color: var(--green-400);
+}
+
+.status--warning {
+  color: var(--yellow-500);
+}
+
+.status--danger {
+  color:  var(--red-600);
 }
 </style>

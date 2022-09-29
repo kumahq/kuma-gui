@@ -1,27 +1,10 @@
-import { createStore } from 'vuex'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'
+import { store, storeKey } from '@/store/store'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 
 const dataPlaneOverview = createDataPlaneOverview()
-
-const store = createStore({
-  modules: {
-    config: {
-      namespaced: true,
-      state: {
-        clientConfig: {
-          mode: 'global',
-          environment: 'universal',
-        },
-      },
-      getters: {
-        getEnvironment: (state) => state.clientConfig?.environment,
-      },
-    },
-  },
-})
 
 function renderComponent(props = {}) {
   return mount(DataPlaneEntitySummary, {
@@ -30,7 +13,7 @@ function renderComponent(props = {}) {
       ...props,
     },
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },

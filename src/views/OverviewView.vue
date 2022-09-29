@@ -106,11 +106,6 @@ import { PRODUCT_NAME } from '@/consts'
 
 export default {
   name: 'OverviewView',
-  metaInfo() {
-    return {
-      title: this.$route.meta.title,
-    }
-  },
   components: {
     DonutChart,
     VersionsDonutChart,
@@ -155,12 +150,6 @@ export default {
     },
     envoyVersionsChart() {
       return this.getChart('envoyVersions')
-    },
-    pageTitle() {
-      const metaTitle = this.$route.meta.title
-      const mesh = this.selectedMesh
-
-      return mesh === 'all' ? `${metaTitle} for all Meshes` : `${metaTitle} for ${mesh}`
     },
     zonesForChart() {
       return this.multicluster ? this.$store.state.totalClusters : 1

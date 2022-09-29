@@ -110,8 +110,7 @@
               </ul>
             </div>
           </LabelList>
-        </template>
-        <template #yaml>
+
           <div class="config-wrapper">
             <YamlView
               :has-error="entityHasError"
@@ -121,6 +120,7 @@
             />
           </div>
         </template>
+
         <template #resources>
           <LabelList
             :has-error="entityHasError"
@@ -204,10 +204,6 @@ export default {
         {
           hash: '#resources',
           title: 'Resources',
-        },
-        {
-          hash: '#yaml',
-          title: 'YAML',
         },
       ],
       entity: {},
@@ -457,6 +453,8 @@ export default {
 }
 
 .config-wrapper {
-  padding: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
 }
 </style>

@@ -1,3 +1,4 @@
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 
 import ExternalServiceDetails from './ExternalServiceDetails.vue'
@@ -6,6 +7,17 @@ import { createExternalService } from '@/test-data/createExternalService'
 
 const externalService = createExternalService()
 
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
+
 function renderComponent(props = {}) {
   return mount(ExternalServiceDetails, {
     props: {
@@ -13,7 +25,7 @@ function renderComponent(props = {}) {
       ...props,
     },
     global: {
-      plugins: [[store, storeKey]],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },
@@ -26,10 +38,6 @@ describe('ExternalServiceDetails', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.html()).toContain('httpbin.org:80')
-
-    const yamlTab = wrapper.find('#yaml-tab')
-    await yamlTab.trigger('click')
-
     expect(wrapper.html()).toContain('kuma.io/service')
     expect(wrapper.html()).toContain('httpbin')
   })

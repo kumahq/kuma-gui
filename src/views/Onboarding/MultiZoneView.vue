@@ -88,11 +88,6 @@ export default {
     OnboardingPage,
     LoadingBox,
   },
-  metaInfo() {
-    return {
-      title: 'Multizone',
-    }
-  },
   data() {
     return {
       hasZones: false,

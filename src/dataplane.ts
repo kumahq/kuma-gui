@@ -53,6 +53,7 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
 
   if (dataplane.networking.inbound) {
     tags = dataplane.networking.inbound
+      .filter((inbound) => 'tags' in inbound)
       .flatMap((inbound) => Object.entries(inbound.tags))
       .map(([key, value]) => `${key}=${value}`)
   }
@@ -112,25 +113,28 @@ export function getStatus(dataplane: { networking: DataPlaneNetworking }, datapl
 getStatus takes DataplaneInsight and returns map of versions
  */
 
-export function getVersions(dataplaneInsight: DataPlaneInsight): Record<string, string> | null {
-  if (!dataplaneInsight.subscriptions?.length) {
+export function getVersions(dataPlaneInsight: DataPlaneInsight): Record<string, string> | null {
+  if (dataPlaneInsight.subscriptions.length === 0) {
     return null
   }
 
   const versions: Record<string, string> = {}
 
-  const lastSubscription: DiscoverySubscription =
-    dataplaneInsight.subscriptions[dataplaneInsight.subscriptions.length - 1]
+  const lastSubscription: DiscoverySubscription = dataPlaneInsight.subscriptions[dataPlaneInsight.subscriptions.length - 1]
 
-  if (lastSubscription.version?.envoy) {
+  if (lastSubscription.version === undefined) {
+    return null
+  }
+
+  if (lastSubscription.version.envoy) {
     versions.envoy = lastSubscription.version.envoy.version
   }
 
-  if (lastSubscription.version?.kumaDp) {
+  if (lastSubscription.version.kumaDp) {
     versions.kumaDp = lastSubscription.version.kumaDp.version
   }
 
-  if (lastSubscription.version?.dependencies) {
+  if (lastSubscription.version.dependencies) {
     Object.entries(lastSubscription.version.dependencies).forEach(([key, value]) => {
       versions[key] = value
     })

@@ -15,6 +15,7 @@
 
     <ServiceDetails
       v-if="activeEntity !== null"
+      class="service-details"
       :type="activeEntity.type"
       :name="activeEntity.name"
       :mesh="activeEntity.mesh"
@@ -170,3 +171,9 @@ function setActiveEntity(entity: { type: 'ServiceInsight' | 'ExternalService', n
   activeEntity.value = entity
 }
 </script>
+
+<style lang="scss" scoped>
+.service-details {
+  padding: var(--spacing-md);
+}
+</style>

@@ -32,9 +32,7 @@ exports[`CompletedView.vue renders snapshot 1`] = `
           <div
             class="flex justify-center"
           >
-            <img
-              src=""
-            />
+            <img />
           </div>
           
         </div>

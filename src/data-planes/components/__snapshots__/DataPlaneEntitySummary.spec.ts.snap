@@ -39,7 +39,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
       Tags
     </h4>
     <div
-      class="entity-tag-list"
+      class="tag-list"
     >
       
       <span

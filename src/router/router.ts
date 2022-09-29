@@ -31,7 +31,6 @@ export async function setupRouter() {
       alias: '/:pathMatch(.*)*',
       meta: {
         title: 'Item not found',
-        excludeAsBreadcrumb: true,
       },
       component: () => import('@/views/NotFound.vue'),
     },
@@ -54,7 +53,6 @@ export async function setupRouter() {
           component: () => import('@/views/DiagnosticsView.vue'),
           meta: {
             title: 'Diagnostics',
-            breadcrumb: 'Diagnostics',
             hideSubnav: true,
           },
         },
@@ -92,7 +90,6 @@ export async function setupRouter() {
           name: 'all-meshes',
           meta: {
             title: 'Meshes',
-            breadcrumb: 'Meshes',
             parent: 'global-overview',
           },
           redirect: {
@@ -108,6 +105,7 @@ export async function setupRouter() {
               meta: {
                 title: 'Meshes',
                 parent: 'all-meshes',
+                breadcrumbTitleParam: 'mesh',
               },
               component: () => import('@/views/Entities/MeshesView.vue'),
             },
@@ -118,7 +116,6 @@ export async function setupRouter() {
           name: 'mesh-individual',
           meta: {
             title: 'Mesh',
-            breadcrumb: 'Mesh',
           },
           redirect: {
             name: 'global-overview',
@@ -132,7 +129,6 @@ export async function setupRouter() {
               name: 'mesh',
               meta: {
                 title: 'Meshes',
-                breadcrumb: 'Meshes',
                 parent: 'all-meshes',
               },
               children: [
@@ -170,6 +166,7 @@ export async function setupRouter() {
                       meta: {
                         title: 'Data plane',
                         parent: 'data-plane-list-view',
+                        breadcrumbTitleParam: 'dataPlane',
                       },
                       component: () => import('@/data-planes/views/DataPlaneDetailView.vue'),
                     },
@@ -183,7 +180,6 @@ export async function setupRouter() {
                       name: 'service-insight-list-view',
                       meta: {
                         title: 'Internal services',
-                        breadcrumb: 'Internal services',
                       },
                       component: () => import('@/app/services/views/ServiceInsightListView.vue'),
                     },
@@ -193,6 +189,7 @@ export async function setupRouter() {
                       meta: {
                         title: 'Internal service',
                         parent: 'service-insight-list-view',
+                        breadcrumbTitleParam: 'service',
                       },
                       component: () => import('@/app/services/views/ServiceInsightDetailView.vue'),
                     },
@@ -206,7 +203,6 @@ export async function setupRouter() {
                       name: 'external-service-list-view',
                       meta: {
                         title: 'External services',
-                        breadcrumb: 'External services',
                       },
                       component: () => import('@/app/services/views/ExternalServiceListView.vue'),
                     },
@@ -216,6 +212,7 @@ export async function setupRouter() {
                       meta: {
                         title: 'External service',
                         parent: 'external-service-list-view',
+                        breadcrumbTitleParam: 'service',
                       },
                       component: () => import('@/app/services/views/ExternalServiceDetailView.vue'),
                     },
@@ -247,6 +244,7 @@ export async function setupRouter() {
           path: 'deployment-types',
           name: 'onboarding-deployment-types',
           meta: {
+            title: 'Deployment Types',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/DeploymentTypes.vue'),
@@ -255,6 +253,7 @@ export async function setupRouter() {
           path: 'configuration-types',
           name: 'onboarding-configuration-types',
           meta: {
+            title: 'Configuration Types',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/ConfigurationTypes.vue'),
@@ -263,6 +262,7 @@ export async function setupRouter() {
           path: 'multi-zone',
           name: 'onboarding-multi-zone',
           meta: {
+            title: 'Multizone',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/MultiZoneView.vue'),
@@ -271,6 +271,7 @@ export async function setupRouter() {
           path: 'create-mesh',
           name: 'onboarding-create-mesh',
           meta: {
+            title: 'Create the Mesh',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/CreateMesh.vue'),
@@ -279,6 +280,7 @@ export async function setupRouter() {
           path: 'add-services',
           name: 'onboarding-add-services',
           meta: {
+            title: 'Add new services',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/AddNewServices.vue'),
@@ -287,6 +289,7 @@ export async function setupRouter() {
           path: 'add-services-code',
           name: 'onboarding-add-services-code',
           meta: {
+            title: 'Add new services',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/AddNewServicesCode.vue'),
@@ -295,6 +298,7 @@ export async function setupRouter() {
           path: 'dataplanes-overview',
           name: 'onboarding-dataplanes-overview',
           meta: {
+            title: 'Data planes overview',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/DataplanesOverview.vue'),
@@ -303,6 +307,7 @@ export async function setupRouter() {
           path: 'completed',
           name: 'onboarding-completed',
           meta: {
+            title: 'Completed',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/CompletedView.vue'),
@@ -386,7 +391,7 @@ export async function setupRouter() {
 
     const showOnboarding = store.getters['onboarding/showOnboarding']
     const isCompleted = store.state.onboarding.isCompleted
-    const onboardingRoute = to.meta?.onboardingProcess
+    const onboardingRoute = to.meta.onboardingProcess
 
     // Redirects user to home page if they try to navigate to an onboarding route while having already completed onboarding.
     if (!showOnboarding && onboardingRoute) {

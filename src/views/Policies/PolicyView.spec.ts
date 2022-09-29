@@ -1,29 +1,32 @@
-import { createStore } from 'vuex'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import PolicyView from './PolicyView.vue'
-import { storeConfig } from '@/store/index'
+import { store, storeKey } from '@/store/store'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
 
 async function createWrapper(props = {}) {
-  const store = createStore(storeConfig)
-
   await store.dispatch('fetchPolicies')
 
   return mount(PolicyView, {
     props,
     global: {
-      plugins: [store],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },
       components: { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
-      mocks: {
-        $route: {
-          query: {},
-          params: {},
-        },
-      },
     },
   })
 }

@@ -52,11 +52,6 @@ export default {
     WelcomeAnimationSvg,
   },
 
-  metaInfo() {
-    return {
-      title: `Welcome to ${PRODUCT_NAME}!`,
-    }
-  },
   data() {
     return {
       productName: PRODUCT_NAME,

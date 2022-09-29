@@ -1,5 +1,6 @@
 <template>
   <ServiceDetails
+    class="service-details component-frame"
     type="ExternalService"
     :name="(route.params.service as string)"
     :mesh="(route.params.mesh as string)"
@@ -17,3 +18,9 @@ const store = useStore()
 
 store.dispatch('updatePageTitle', route.params.service)
 </script>
+
+<style lang="scss" scoped>
+.service-details {
+  padding: var(--spacing-md);
+}
+</style>

@@ -1,24 +1,22 @@
 <template>
-  <div class="component-frame">
-    <LoadingBlock v-if="isLoading" />
+  <LoadingBlock v-if="isLoading" />
 
-    <ErrorBlock
-      v-else-if="error !== null"
-      :error="error"
-    />
+  <ErrorBlock
+    v-else-if="error !== null"
+    :error="error"
+  />
 
-    <ServiceInsightDetails
-      v-else-if="serviceInsight !== null"
-      :service-insight="serviceInsight"
-    />
+  <ServiceInsightDetails
+    v-else-if="serviceInsight !== null"
+    :service-insight="serviceInsight"
+  />
 
-    <ExternalServiceDetails
-      v-else-if="externalService !== null"
-      :external-service="externalService"
-    />
+  <ExternalServiceDetails
+    v-else-if="externalService !== null"
+    :external-service="externalService"
+  />
 
-    <EmptyBlock v-else />
-  </div>
+  <EmptyBlock v-else />
 </template>
 
 <script lang="ts" setup>

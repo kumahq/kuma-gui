@@ -100,6 +100,15 @@
               </ul>
             </div>
           </LabelList>
+
+          <div class="config-wrapper">
+            <YamlView
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+              :content="rawEntity"
+            />
+          </div>
         </template>
 
         <template #affected-dpps>
@@ -108,18 +117,6 @@
             :policy-name="rawEntity.name"
             :policy-type="policy.path"
           />
-        </template>
-
-        <template #yaml>
-          <div class="config-wrapper">
-            <YamlView
-              lang="yaml"
-              :has-error="entityHasError"
-              :is-loading="entityIsLoading"
-              :is-empty="entityIsEmpty"
-              :content="rawEntity"
-            />
-          </div>
         </template>
       </TabsWidget>
     </FrameSkeleton>
@@ -186,10 +183,9 @@ export default {
           hash: '#overview',
           title: 'Overview',
         },
-        { hash: '#affected-dpps', title: 'Affected DPPs' },
         {
-          hash: '#yaml',
-          title: 'YAML',
+          hash: '#affected-dpps',
+          title: 'Affected DPPs',
         },
       ],
       entity: {},
@@ -263,6 +259,21 @@ export default {
         // set table data
 
         if (data.length) {
+          for (const policy of data) {
+            if (!policy.mesh) {
+              continue
+            }
+
+            const meshRoute = {
+              name: 'mesh-child',
+              params: {
+                mesh: policy.mesh,
+              },
+            }
+
+            policy.meshRoute = meshRoute
+          }
+
           this.tableData.data = data
           this.tableDataIsEmpty = false
           this.isEmpty = false
@@ -327,6 +338,8 @@ export default {
 
 <style lang="scss" scoped>
 .config-wrapper {
-  padding: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
 }
 </style>
