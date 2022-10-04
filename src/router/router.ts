@@ -395,7 +395,12 @@ export async function setupRouter() {
 
     // Redirects user to home page if they try to navigate to an onboarding route while having already completed onboarding.
     if (!showOnboarding && onboardingRoute) {
-      next({ name: 'global-overview' })
+      next({
+        name: 'global-overview',
+        params: {
+          mesh: store.state.selectedMesh,
+        },
+      })
       return
     }
 
