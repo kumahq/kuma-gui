@@ -33,19 +33,39 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { KClipboardProvider, KIcon, KPop } from '@kong/kongponents'
 
 import { highlightCode } from '@/utils/highlightCode'
 import { reformatYaml } from '@/utils/reformatYaml'
 
-const props = defineProps<{
-  language: string
-  code: string
-}>()
+const props = defineProps({
+  language: {
+    type: String,
+    required: true,
+  },
+
+  code: {
+    type: String,
+    required: true,
+  },
+
+  codeMaxHeight: {
+    type: String,
+    required: false,
+    default: null,
+  },
+})
 
 const reformattedCode = computed(() => props.language === 'yaml' ? reformatYaml(props.code) : props.code)
 const highlightedCode = computed(() => highlightCode(reformattedCode.value, props.language))
+
+onMounted(function () {
+  const preElement = document.querySelector('.code-block pre')
+  if (preElement instanceof HTMLElement && props.codeMaxHeight !== null) {
+    preElement.style.setProperty('--code-max-height', props.codeMaxHeight)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -66,5 +86,9 @@ const highlightedCode = computed(() => highlightCode(reformattedCode.value, prop
   top: var(--spacing-md);
   right: var(--spacing-md);
   display: block;
+}
+
+.code-block pre {
+  max-height: var(--code-max-height, none);
 }
 </style>

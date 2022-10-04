@@ -126,7 +126,10 @@
       </section>
 
       <section>
-        <YamlView :content="dataPlane" />
+        <YamlView
+          :content="dataPlane"
+          code-max-height="250px"
+        />
       </section>
     </template>
   </div>

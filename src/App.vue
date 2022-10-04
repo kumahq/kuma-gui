@@ -9,7 +9,14 @@
   <template v-else>
     <GlobalHeader />
 
-    <div class="app-content-container">
+    <div v-if="store.getters['onboarding/showOnboarding']">
+      <router-view />
+    </div>
+
+    <div
+      v-else
+      class="app-content-container"
+    >
       <AppSidebar />
 
       <main
