@@ -19,6 +19,7 @@
           <CodeBlock
             language="yaml"
             :code="yamlContent.universal"
+            :code-max-height="codeMaxHeight"
           />
         </template>
 
@@ -26,6 +27,7 @@
           <CodeBlock
             language="yaml"
             :code="yamlContent.kubernetes"
+            :code-max-height="codeMaxHeight"
           />
         </template>
       </KTabs>
@@ -69,6 +71,12 @@ const props = defineProps({
     type: Boolean,
     required: false,
     default: false,
+  },
+
+  codeMaxHeight: {
+    type: String,
+    required: false,
+    default: null,
   },
 })
 

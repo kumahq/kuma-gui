@@ -807,7 +807,11 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 </button>
                 
                 <transition-stub
+                  appear="false"
+                  css="true"
                   data-v-9bbde9b2=""
+                  name="fade"
+                  persisted="false"
                 >
                   <div
                     class="k-popover"
@@ -1432,7 +1436,11 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           </button>
           
           <transition-stub
+            appear="false"
+            css="true"
             data-v-9bbde9b2=""
+            name="fade"
+            persisted="false"
           >
             <div
               class="k-popover"
@@ -1686,7 +1694,12 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                     </h4>
                     
                   </button>
-                  <transition-stub>
+                  <transition-stub
+                    appear="false"
+                    css="true"
+                    name="accordion"
+                    persisted="false"
+                  >
                     <div
                       class="px-4"
                     >
@@ -2221,7 +2234,12 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                     </h4>
                     
                   </button>
-                  <transition-stub>
+                  <transition-stub
+                    appear="false"
+                    css="true"
+                    name="accordion"
+                    persisted="false"
+                  >
                     <!--v-if-->
                   </transition-stub>
                 </li>

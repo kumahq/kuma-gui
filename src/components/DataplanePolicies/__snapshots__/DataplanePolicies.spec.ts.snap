@@ -93,7 +93,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -144,7 +148,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <div
                     class="px-4"
                   >
@@ -274,7 +283,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -317,7 +330,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <!--v-if-->
                 </transition-stub>
               </li>
@@ -385,7 +403,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -428,7 +450,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <!--v-if-->
                 </transition-stub>
               </li>
@@ -496,7 +523,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -539,7 +570,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <!--v-if-->
                 </transition-stub>
               </li>
@@ -607,7 +643,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -650,7 +690,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <!--v-if-->
                 </transition-stub>
               </li>
@@ -718,7 +763,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -761,7 +810,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <!--v-if-->
                 </transition-stub>
               </li>
@@ -829,7 +883,11 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           </span>
                           
                           <transition-stub
+                            appear="false"
+                            css="true"
                             data-v-9bbde9b2=""
+                            name="fade"
+                            persisted="false"
                           >
                             <div
                               class="k-popover"
@@ -872,7 +930,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   </div>
                   
                 </button>
-                <transition-stub>
+                <transition-stub
+                  appear="false"
+                  css="true"
+                  name="accordion"
+                  persisted="false"
+                >
                   <!--v-if-->
                 </transition-stub>
               </li>

@@ -125,7 +125,11 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
             </div>
             
             <transition-stub
+              appear="false"
+              css="true"
               data-v-9bbde9b2=""
+              name="fade"
+              persisted="false"
             >
               <div
                 class="k-dropdown-popover mt-1 undefined hide-caret k-popover"
@@ -2804,7 +2808,11 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </button>
                     
                     <transition-stub
+                      appear="false"
+                      css="true"
                       data-v-9bbde9b2=""
+                      name="fade"
+                      persisted="false"
                     >
                       <div
                         class="k-popover"

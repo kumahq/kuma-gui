@@ -194,7 +194,11 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         </button>
                         
                         <transition-stub
+                          appear="false"
+                          css="true"
                           data-v-9bbde9b2=""
+                          name="fade"
+                          persisted="false"
                         >
                           <div
                             class="k-popover"
@@ -345,7 +349,11 @@ networking:
                         </button>
                         
                         <transition-stub
+                          appear="false"
+                          css="true"
                           data-v-9bbde9b2=""
+                          name="fade"
+                          persisted="false"
                         >
                           <div
                             class="k-popover"

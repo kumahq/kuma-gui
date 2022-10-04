@@ -3,8 +3,6 @@
 import { createFromConfig } from '@amcharts/amcharts4/core'
 import { PieChart } from '@amcharts/amcharts4/charts'
 
-import { applyPropsToObject } from '@/helpers'
-
 const TitleLabelClassName = 'DonutChart--titleLabel'
 const SubTitleLabelClassName = 'DonutChart--sumLabel'
 const defaultLabelsColor = 'rgba(41, 11, 83, 0.75)'
@@ -393,11 +391,15 @@ export default {
       }
 
       if (this.titleProps && this.titleLabel) {
-        applyPropsToObject(this.titleProps, this.titleLabel)
+        for (const prop in this.titleProps) {
+          this.titleLabel[prop] = this.titleProps[prop]
+        }
       }
 
       if (this.subTitleProps && this.subTitleLabel) {
-        applyPropsToObject(this.subTitleProps, this.subTitleLabel)
+        for (const prop in this.subTitleProps) {
+          this.subTitleLabel[prop] = this.subTitleProps[prop]
+        }
       }
 
       return this.chart

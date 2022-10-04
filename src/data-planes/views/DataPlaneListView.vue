@@ -551,12 +551,14 @@ export default {
   // Let’s the element take up all available space. Applies when the content and the sidebar wrap.
   flex-grow: 1;
   min-inline-size: 0;
-
-  // Makes sidebar stick to the viewport while taking into account the height of the fixed top bar.
-  position: sticky;
   background-color: var(--white);
-  top: calc(var(--topbar-height) + var(--spacing-lg));
-  bottom: var(--spacing-lg);
+
+  @media (min-width: 1600px) {
+    // Makes sidebar stick to the viewport while taking into account the height of the fixed top bar.
+    position: sticky;
+    top: calc(var(--topbar-height) + var(--spacing-lg));
+    bottom: var(--spacing-lg);
+  }
 }
 
 .add-dp-button.add-dp-button {

@@ -58,7 +58,11 @@ exports[`App.vue fails to renders basic view 1`] = `
             </button>
             
             <transition-stub
+              appear="false"
+              css="true"
               data-v-9bbde9b2=""
+              name="fade"
+              persisted="false"
             >
               <div
                 class="k-popover"
@@ -596,7 +600,13 @@ exports[`App.vue fails to renders basic view 1`] = `
         </li>
         
       </ul>
-      <transition-stub>
+      <transition-stub
+        appear="false"
+        css="true"
+        mode="out-in"
+        name="fade"
+        persisted="false"
+      >
         <div
           class="transition-root"
         >

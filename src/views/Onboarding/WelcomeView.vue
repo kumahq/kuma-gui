@@ -119,6 +119,7 @@ export default {
   transform: translate(-50%, -50%);
   width: 28rem;
   animation: show 0.75s 0s 1 forwards;
+  background-color: var(--white);
 }
 
 .welcome-title {

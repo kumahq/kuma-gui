@@ -119,7 +119,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import get from 'lodash/get'
 
 import SubscriptionDetails from './components/SubscriptionDetails.vue'
 import SubscriptionHeader from './components/SubscriptionHeader.vue'
@@ -369,7 +368,7 @@ export default {
         try {
           // get the Zone details from the Zone Insights endpoint
           const response = await Kuma.getZoneOverview({ name: entity.name })
-          const subscriptions = get(response, 'zoneInsight.subscriptions', [])
+          const subscriptions = response.zoneInsight?.subscriptions ?? []
 
           this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
           this.subscriptionsReversed = Array.from(subscriptions).reverse()

@@ -38,11 +38,11 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRoute, useRouter, RouteLocationNamedRaw } from 'vue-router'
-import get from 'lodash/get'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
 
 import { useStore } from '@/store/store'
+import { get } from '@/utils/get'
 
 const route = useRoute()
 const router = useRouter()

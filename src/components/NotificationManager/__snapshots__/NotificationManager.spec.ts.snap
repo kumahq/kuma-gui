@@ -349,7 +349,12 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 </div>
                 
               </button>
-              <transition-stub>
+              <transition-stub
+                appear="false"
+                css="true"
+                name="accordion"
+                persisted="false"
+              >
                 <!--v-if-->
               </transition-stub>
             </li>
@@ -439,7 +444,12 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 </div>
                 
               </button>
-              <transition-stub>
+              <transition-stub
+                appear="false"
+                css="true"
+                name="accordion"
+                persisted="false"
+              >
                 <!--v-if-->
               </transition-stub>
             </li>
@@ -529,7 +539,12 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 </div>
                 
               </button>
-              <transition-stub>
+              <transition-stub
+                appear="false"
+                css="true"
+                name="accordion"
+                persisted="false"
+              >
                 <!--v-if-->
               </transition-stub>
             </li>
@@ -619,7 +634,12 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 </div>
                 
               </button>
-              <transition-stub>
+              <transition-stub
+                appear="false"
+                css="true"
+                name="accordion"
+                persisted="false"
+              >
                 <!--v-if-->
               </transition-stub>
             </li>
