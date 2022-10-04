@@ -280,7 +280,11 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                 </button>
                 
                 <transition-stub
+                  appear="false"
+                  css="true"
                   data-v-9bbde9b2=""
+                  name="fade"
+                  persisted="false"
                 >
                   <div
                     class="k-popover"
@@ -818,7 +822,11 @@ exports[`ZoneIngresses.vue renders snapshot when no multizone 1`] = `
                 </button>
                 
                 <transition-stub
+                  appear="false"
+                  css="true"
                   data-v-9bbde9b2=""
+                  name="fade"
+                  persisted="false"
                 >
                   <div
                     class="k-popover"
@@ -1146,7 +1154,11 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
           </button>
           
           <transition-stub
+            appear="false"
+            css="true"
             data-v-9bbde9b2=""
+            name="fade"
+            persisted="false"
           >
             <div
               class="k-popover"
@@ -1344,7 +1356,12 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                     </h4>
                     
                   </button>
-                  <transition-stub>
+                  <transition-stub
+                    appear="false"
+                    css="true"
+                    name="accordion"
+                    persisted="false"
+                  >
                     <div
                       class="px-4"
                     >
