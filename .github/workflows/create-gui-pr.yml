@@ -75,19 +75,16 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
           path: main-application
           commit-message: |
-            chore(deps): bump kuma-gui to ${{ github.sha }}
+            chore(deps): bump ${{ github.repository }} to ${{ github.sha }}
 
-            Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
-
-            [skip ci]
+            Bumps ${{ github.repository }} to version [${{ github.ref_name }}@${{ github.sha }}](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: true
           branch: chore/update-gui
           delete-branch: true
-          title: "chore(deps): bump kuma-gui"
+          title: "chore(deps): bump ${{ github.repository }} to ${{ github.sha }}"
+          labels: ci/skip-test
           body: |
-            Bumps kuma-gui to version ${{ github.ref_name }}@${{ github.sha }}
-
-            > Changelog: skip
+            Bumps ${{ github.repository }} to version  [${{ github.ref_name }}@${{ github.sha }}](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
           draft: false
