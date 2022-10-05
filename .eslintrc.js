@@ -17,16 +17,6 @@
   plugins: ['vue', 'import', '@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript'],
   rules: {
-    // Turns off some non-TypeScript rules in favor of their specific TypeScript rules to avoid false negatives:
-    indent: 'off',
-    '@typescript-eslint/indent': ['error', 2],
-    'func-call-spacing': 'off',
-    '@typescript-eslint/func-call-spacing': 'error',
-
-    '@typescript-eslint/no-unused-vars': ['warn', {
-      argsIgnorePattern: '^_',
-      ignoreRestSiblings: true,
-    }],
     'comma-dangle': ['error', 'always-multiline'],
     'space-before-function-paren': ['error', {
       anonymous: 'always',
@@ -34,6 +24,27 @@
       asyncArrow: 'always',
     }],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.vue'],
+      rules: {
+        // Avoids false errors like “'NodeListOf' is not defined”.
+        'no-undef': 'off',
+        // Turns off some non-TypeScript rules in favor of their specific TypeScript rules to avoid false negatives:
+        indent: 'off',
+        '@typescript-eslint/indent': ['error', 2],
+
+        'func-call-spacing': 'off',
+        '@typescript-eslint/func-call-spacing': 'error',
+
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': ['warn', {
+          argsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        }],
+      },
+    },
+  ],
 }
 
 module.exports = config

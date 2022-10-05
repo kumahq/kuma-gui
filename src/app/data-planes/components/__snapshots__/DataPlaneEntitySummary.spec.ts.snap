@@ -360,314 +360,99 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
             
             <div
               class="code-block"
+              tabindex="0"
             >
-              <!-- eslint-disable vue/no-v-html -->
-              <pre
-                class="code-block__code language-yaml"
-                data-testid="code-block"
-              >
-                <code>
-                  <span
-                    class="token key atrule"
-                  >
-                    type
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   Dataplane
-
-                  <span
-                    class="token key atrule"
-                  >
-                    name
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   backend
-
-                  <span
-                    class="token key atrule"
-                  >
-                    mesh
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   default
-
-                  <span
-                    class="token key atrule"
-                  >
-                    networking
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-  
-                  <span
-                    class="token key atrule"
-                  >
-                    address
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   127.0.0.1
-  
-                  <span
-                    class="token key atrule"
-                  >
-                    inbound
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-    
-                  <span
-                    class="token punctuation"
-                  >
-                    -
-                  </span>
-                   
-                  <span
-                    class="token key atrule"
-                  >
-                    port
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-                  <span
-                    class="token number"
-                  >
-                    7776
-                  </span>
-                  
-      
-                  <span
-                    class="token key atrule"
-                  >
-                    servicePort
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-                  <span
-                    class="token number"
-                  >
-                    7777
-                  </span>
-                  
-      
-                  <span
-                    class="token key atrule"
-                  >
-                    serviceAddress
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   127.0.0.1
-      
-                  <span
-                    class="token key atrule"
-                  >
-                    tags
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-        
-                  <span
-                    class="token key atrule"
-                  >
-                    kuma.io/protocol
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   http
-        
-                  <span
-                    class="token key atrule"
-                  >
-                    kuma.io/service
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   backend
-  
-                  <span
-                    class="token key atrule"
-                  >
-                    outbound
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-    
-                  <span
-                    class="token punctuation"
-                  >
-                    -
-                  </span>
-                   
-                  <span
-                    class="token key atrule"
-                  >
-                    port
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-                  <span
-                    class="token number"
-                  >
-                    10001
-                  </span>
-                  
-      
-                  <span
-                    class="token key atrule"
-                  >
-                    tags
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   
-        
-                  <span
-                    class="token key atrule"
-                  >
-                    kuma.io/service
-                  </span>
-                  <span
-                    class="token punctuation"
-                  >
-                    :
-                  </span>
-                   frontend
-                </code>
-              </pre>
-              <!-- eslint-enable vue/no-v-html -->
-              
+              <!--v-if-->
               <div
-                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
-                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                role="button"
+                class="code-block__content"
               >
-                
-                <button
-                  class="code-block__copy-button"
-                  type="button"
+                <!-- eslint-disable vue/no-v-html -->
+                <pre
+                  class="highlighted-code-block"
+                  data-testid="highlighted-code-block"
+                  style="--code-max-height: 250px;"
                 >
-                  <span
-                    class="kong-icon-copy kong-icon"
-                    data-v-637de6fa=""
-                  >
-                    <svg
-                      height="16"
-                      viewBox="0 0 32 32"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      
-  
-                      <title>
-                        Copy
-                      </title>
-                      
-  
-                      <path
-                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                        fill="#A3BBCC"
-                      />
-                      
-
-                    </svg>
-                    
-
-                  </span>
-                  <span
-                    class="kutil-sr-only"
-                  >
-                    Copy
-                  </span>
-                </button>
+                  <code />
+                </pre>
+                <!-- eslint-enable vue/no-v-html -->
                 
-                <transition-stub
-                  appear="false"
-                  css="true"
+                <div
+                  aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  aria-expanded="false"
                   data-v-9bbde9b2=""
-                  name="fade"
-                  persisted="false"
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  role="button"
                 >
-                  <div
-                    class="k-popover"
-                    data-v-9bbde9b2=""
-                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                    role="region"
-                    style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                  
+                  <button
+                    class="code-block__copy-button"
+                    type="button"
                   >
-                    <!---->
-                    <div
-                      class="k-popover-content"
-                      data-v-9bbde9b2=""
+                    <span
+                      class="kong-icon-copy kong-icon"
+                      data-v-637de6fa=""
                     >
+                      <svg
+                        height="16"
+                        viewBox="0 0 32 32"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        
+  
+                        <title>
+                          Copy
+                        </title>
+                        
+  
+                        <path
+                          d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                          fill="#A3BBCC"
+                        />
+                        
+
+                      </svg>
                       
-                      <p>
-                        Code copied to clipboard
-                      </p>
-                      
+
+                    </span>
+                    <span
+                      class="kutil-sr-only"
+                    >
+                      Copy
+                    </span>
+                  </button>
+                  
+                  <transition-stub
+                    appear="false"
+                    css="true"
+                    data-v-9bbde9b2=""
+                    name="fade"
+                    persisted="false"
+                  >
+                    <div
+                      class="k-popover"
+                      data-v-9bbde9b2=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="region"
+                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                    >
+                      <!---->
+                      <div
+                        class="k-popover-content"
+                        data-v-9bbde9b2=""
+                      >
+                        
+                        <p>
+                          Code copied to clipboard
+                        </p>
+                        
+                      </div>
+                      <!---->
                     </div>
-                    <!---->
-                  </div>
-                </transition-stub>
+                  </transition-stub>
+                </div>
+                
               </div>
-              
             </div>
             
           </div>

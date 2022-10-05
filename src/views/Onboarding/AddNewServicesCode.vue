@@ -13,6 +13,7 @@
         <p>To run execute the following command:</p>
 
         <CodeBlock
+          id="code-block-kubernetes-command"
           language="bash"
           :code="k8sRunCommand"
         />
@@ -22,6 +23,7 @@
         <p>Clone the GitHub repository for the demo application:</p>
 
         <CodeBlock
+          id="code-block-clone-command"
           language="bash"
           :code="githubLink"
         />

@@ -127,6 +127,7 @@
 
       <section>
         <YamlView
+          id="code-block-data-plane-summary"
           :content="dataPlane"
           code-max-height="250px"
         />

@@ -8,8 +8,11 @@
     >
       <template #body>
         <CodeBlock
+          id="code-block-diagnostics"
           language="json"
           :code="code"
+          is-searchable
+          query-key="diagnostics"
         />
       </template>
     </KCard>

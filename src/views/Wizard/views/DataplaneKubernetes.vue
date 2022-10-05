@@ -518,6 +518,7 @@
               <h4>Kubernetes</h4>
 
               <CodeBlock
+                id="code-block-kubernetes-command"
                 language="bash"
                 :code="codeOutput"
               />

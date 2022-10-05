@@ -209,23 +209,31 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                             
                             <div
                               class="code-block"
+                              tabindex="0"
                             >
-                              <!-- eslint-disable vue/no-v-html -->
-                              <pre
-                                class="code-block__code language-bash"
-                                data-testid="code-block"
+                              <!--v-if-->
+                              <div
+                                class="code-block__content"
                               >
-                                <code>
-                                  <span
-                                    class="token builtin class-name"
+                                <!-- eslint-disable vue/no-v-html -->
+                                <pre
+                                  class="highlighted-code-block line-numbers language-bash"
+                                  data-testid="highlighted-code-block"
+                                  tabindex="0"
+                                >
+                                  <code
+                                    class="language-bash"
                                   >
-                                    echo
-                                  </span>
-                                   
-                                  <span
-                                    class="token string"
-                                  >
-                                    "type: Mesh
+                                    <span
+                                      class="token builtin class-name"
+                                    >
+                                      echo
+                                    </span>
+                                     
+                                    <span
+                                      class="token string"
+                                    >
+                                      "type: Mesh
 name: default
 mtls: 
   enabledBackend: fake-name
@@ -256,101 +264,200 @@ metrics:
       conf: 
         port: 5670
         path: /metrics"
-                                  </span>
-                                   
-                                  <span
-                                    class="token operator"
-                                  >
-                                    |
-                                  </span>
-                                   kumactl apply 
-                                  <span
-                                    class="token parameter variable"
-                                  >
-                                    -f
-                                  </span>
-                                   -
-                                </code>
-                              </pre>
-                              <!-- eslint-enable vue/no-v-html -->
-                              
-                              <div
-                                aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                aria-expanded="false"
-                                data-v-9bbde9b2=""
-                                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                role="button"
-                              >
-                                
-                                <button
-                                  class="code-block__copy-button"
-                                  type="button"
-                                >
-                                  <span
-                                    class="kong-icon-copy kong-icon"
-                                    data-v-637de6fa=""
-                                  >
-                                    <svg
-                                      height="24"
-                                      role="img"
-                                      viewBox="0 0 32 32"
-                                      width="24"
-                                      xmlns="http://www.w3.org/2000/svg"
+                                    </span>
+                                     
+                                    <span
+                                      class="token operator"
                                     >
-                                      
-  
-                                      <title>
-                                        Copy
-                                      </title>
-                                      
-  
-                                      <path
-                                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                        fill="var(--blue-500)"
+                                      |
+                                    </span>
+                                     kumactl apply 
+                                    <span
+                                      class="token parameter variable"
+                                    >
+                                      -f
+                                    </span>
+                                     -
+                                    <span
+                                      aria-hidden="true"
+                                      class="line-numbers-rows"
+                                    >
+                                      <span
+                                        data-line="1"
                                       />
-                                      
-
-                                    </svg>
-                                    
-
-                                  </span>
-                                  <span
-                                    class="kutil-sr-only"
-                                  >
-                                    Copy
-                                  </span>
-                                </button>
+                                      <span
+                                        data-line="2"
+                                      />
+                                      <span
+                                        data-line="3"
+                                      />
+                                      <span
+                                        data-line="4"
+                                      />
+                                      <span
+                                        data-line="5"
+                                      />
+                                      <span
+                                        data-line="6"
+                                      />
+                                      <span
+                                        data-line="7"
+                                      />
+                                      <span
+                                        data-line="8"
+                                      />
+                                      <span
+                                        data-line="9"
+                                      />
+                                      <span
+                                        data-line="10"
+                                      />
+                                      <span
+                                        data-line="11"
+                                      />
+                                      <span
+                                        data-line="12"
+                                      />
+                                      <span
+                                        data-line="13"
+                                      />
+                                      <span
+                                        data-line="14"
+                                      />
+                                      <span
+                                        data-line="15"
+                                      />
+                                      <span
+                                        data-line="16"
+                                      />
+                                      <span
+                                        data-line="17"
+                                      />
+                                      <span
+                                        data-line="18"
+                                      />
+                                      <span
+                                        data-line="19"
+                                      />
+                                      <span
+                                        data-line="20"
+                                      />
+                                      <span
+                                        data-line="21"
+                                      />
+                                      <span
+                                        data-line="22"
+                                      />
+                                      <span
+                                        data-line="23"
+                                      />
+                                      <span
+                                        data-line="24"
+                                      />
+                                      <span
+                                        data-line="25"
+                                      />
+                                      <span
+                                        data-line="26"
+                                      />
+                                      <span
+                                        data-line="27"
+                                      />
+                                      <span
+                                        data-line="28"
+                                      />
+                                      <span
+                                        data-line="29"
+                                      />
+                                      <span
+                                        data-line="30"
+                                      />
+                                      <span
+                                        data-line="31"
+                                      />
+                                    </span>
+                                  </code>
+                                </pre>
+                                <!-- eslint-enable vue/no-v-html -->
                                 
-                                <transition-stub
-                                  appear="false"
-                                  css="true"
+                                <div
+                                  aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                  aria-expanded="false"
                                   data-v-9bbde9b2=""
-                                  name="fade"
-                                  persisted="false"
+                                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                  role="button"
                                 >
-                                  <div
-                                    class="k-popover"
-                                    data-v-9bbde9b2=""
-                                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                    role="region"
-                                    style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                                  
+                                  <button
+                                    class="code-block__copy-button"
+                                    type="button"
                                   >
-                                    <!---->
-                                    <div
-                                      class="k-popover-content"
-                                      data-v-9bbde9b2=""
+                                    <span
+                                      class="kong-icon-copy kong-icon"
+                                      data-v-637de6fa=""
                                     >
+                                      <svg
+                                        height="24"
+                                        role="img"
+                                        viewBox="0 0 32 32"
+                                        width="24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        
+  
+                                        <title>
+                                          Copy
+                                        </title>
+                                        
+  
+                                        <path
+                                          d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                          fill="var(--blue-500)"
+                                        />
+                                        
+
+                                      </svg>
                                       
-                                      <p>
-                                        Code copied to clipboard
-                                      </p>
-                                      
+
+                                    </span>
+                                    <span
+                                      class="kutil-sr-only"
+                                    >
+                                      Copy
+                                    </span>
+                                  </button>
+                                  
+                                  <transition-stub
+                                    appear="false"
+                                    css="true"
+                                    data-v-9bbde9b2=""
+                                    name="fade"
+                                    persisted="false"
+                                  >
+                                    <div
+                                      class="k-popover"
+                                      data-v-9bbde9b2=""
+                                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                                      role="region"
+                                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                                    >
+                                      <!---->
+                                      <div
+                                        class="k-popover-content"
+                                        data-v-9bbde9b2=""
+                                      >
+                                        
+                                        <p>
+                                          Code copied to clipboard
+                                        </p>
+                                        
+                                      </div>
+                                      <!---->
                                     </div>
-                                    <!---->
-                                  </div>
-                                </transition-stub>
+                                  </transition-stub>
+                                </div>
+                                
                               </div>
-                              
                             </div>
                             
                             

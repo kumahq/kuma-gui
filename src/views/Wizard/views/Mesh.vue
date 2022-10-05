@@ -446,12 +446,14 @@
               >
                 <template #kubernetes>
                   <CodeBlock
+                    id="code-block-kubernetes-command"
                     language="bash"
                     :code="codeOutput"
                   />
                 </template>
                 <template #universal>
                   <CodeBlock
+                    id="code-block-universal-command"
                     language="bash"
                     :code="codeOutput"
                   />

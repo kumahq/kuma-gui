@@ -5,15 +5,8 @@
   plugins: [
     // Required to run tests against code containing `import.meta.env` references.
     'babel-plugin-transform-vite-meta-env',
-    [
-      'prismjs',
-      {
-        languages: ['bash', 'json', 'yaml'],
-        plugins: ['line-numbers'],
-        theme: 'default',
-        css: true,
-      },
-    ],
+    // Required to run tests against code containing `import.meta.url` references.
+    'babel-plugin-transform-import-meta',
   ],
 }
 

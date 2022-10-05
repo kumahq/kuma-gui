@@ -6,9 +6,11 @@
     :error="error"
   >
     <CodeBlock
-      class="panel-code-block"
+      :id="`code-block-${dataPath}`"
       language="json"
       :code="content"
+      is-searchable
+      :query-key="queryKey ?? `code-block-${dataPath}`"
     />
   </StatusInfo>
 </template>
@@ -30,6 +32,12 @@ export default {
     dataPath: {
       type: String,
       required: true,
+    },
+
+    queryKey: {
+      type: String,
+      required: false,
+      default: null,
     },
 
     mesh: {
@@ -128,10 +136,6 @@ export default {
 <style lang="scss" scoped>
 .envoy-data {
   padding: var(--spacing-md);
-}
-
-.panel-code-block {
-  max-height: 1000px;
 }
 
 .copy-button {

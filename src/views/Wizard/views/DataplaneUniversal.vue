@@ -285,6 +285,7 @@
               <h4>Generate Dataplane Token</h4>
 
               <CodeBlock
+                id="code-block-generate-token-command"
                 language="bash"
                 :code="generateDpTokenCodeOutput"
               />
@@ -292,6 +293,7 @@
               <h4>Start Dataplane Process</h4>
 
               <CodeBlock
+                id="code-block-stard-dp-command"
                 language="bash"
                 :code="startDpCodeOutput"
               />

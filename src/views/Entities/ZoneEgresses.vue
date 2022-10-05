@@ -90,6 +90,7 @@
           <EnvoyData
             data-path="xds"
             :zone-egress-name="entity.name"
+            query-key="envoy-data-zone-egress"
           />
         </template>
 
@@ -97,6 +98,7 @@
           <EnvoyData
             data-path="stats"
             :zone-egress-name="entity.name"
+            query-key="envoy-data-zone-egress"
           />
         </template>
 
@@ -104,6 +106,7 @@
           <EnvoyData
             data-path="clusters"
             :zone-egress-name="entity.name"
+            query-key="envoy-data-zone-egress"
           />
         </template>
       </TabsWidget>

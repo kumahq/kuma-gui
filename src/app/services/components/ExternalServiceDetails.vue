@@ -42,7 +42,11 @@
       </div>
     </section>
 
-    <YamlView :content="rawExternalService" />
+    <YamlView
+      id="code-block-external-service"
+      :content="rawExternalService"
+      is-searchable
+    />
   </div>
 </template>
 
