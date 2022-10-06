@@ -221,8 +221,9 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/dataplane'
-import { PRODUCT_NAME } from '@/consts'
+import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/consts'
 import { stripTimes } from '@/helpers'
+import Kuma from '@/services/kuma'
 import { useStore } from '@/store/store'
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 import AccordionList from '@/components/Accordion/AccordionList.vue'
@@ -341,7 +342,15 @@ async function setWarnings() {
 
   if (isMulticluster) {
     const tags = dpTags(props.dataPlane)
-    const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(tags, version.kumaDp.version)
+    const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
+
+    if (zoneTag === undefined) {
+      return
+    }
+
+    const zoneOverview = await Kuma.getZoneOverview({ name: zoneTag.value })
+
+    const { compatible, payload } = checkKumaDpAndZoneVersionsMismatch(version.kumaDp.version, zoneOverview)
 
     if (!compatible) {
       warnings.value.push({

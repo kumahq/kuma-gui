@@ -114,6 +114,8 @@
 
 <script>
 /** @typedef {import('../constants').ColumnDropdownItem} ColumnDropdownItem */
+/** @typedef {import('@/types').DataplaneOverview} DataplaneOverview */
+/** @typedef {import('@/types').ZoneOverview} ZoneOverview */
 
 import { mapGetters } from 'vuex'
 import { datadogLogs } from '@datadog/browser-logs'
@@ -136,7 +138,7 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/dataplane'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME, KUMA_ZONE_TAG_NAME } from '@/consts'
 import { getTableData } from '@/utils/tableDataUtils'
 import DataOverview from '@/components/Skeletons/DataOverview.vue'
 import DataPlaneEntitySummary from '@/data-planes/components/DataPlaneEntitySummary.vue'
@@ -316,7 +318,11 @@ export default {
       }
     },
 
-    async parseData(response) {
+    /**
+     * @param {DataplaneOverview} response
+     * @param {ZoneOverview[]} zoneOverviews
+     */
+    parseData(response, zoneOverviews = []) {
       const { dataplane = {}, dataplaneInsight = {} } = response
       const { name = '', mesh = '' } = response
       const { subscriptions = [] } = dataplaneInsight
@@ -453,11 +459,19 @@ export default {
       }
 
       if (this.multicluster) {
-        const { compatible } = await checkKumaDpAndZoneVersionsMismatch(tags, dpVersion)
+        const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
-        if (!compatible) {
-          item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
-          item.kumaDpAndKumaCpMismatch = true
+        if (zoneTag) {
+          const zoneOverview = zoneOverviews.find((zoneOverview) => zoneOverview.name === zoneTag.value)
+
+          if (zoneOverview) {
+            const { compatible } = checkKumaDpAndZoneVersionsMismatch(dpVersion, zoneOverview)
+
+            if (!compatible) {
+              item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
+              item.kumaDpAndKumaCpMismatch = true
+            }
+          }
         }
       }
 
@@ -495,7 +509,8 @@ export default {
           this.rawData = data
           this.selectDataPlaneOverview(this.name ?? data[0].name)
 
-          const final = await Promise.all(data.map((item) => this.parseData(item)))
+          const { items: zoneOverviews } = await Kuma.getAllZoneOverviews()
+          const final = await Promise.all(data.map((item) => this.parseData(item, zoneOverviews)))
 
           this.tableData.data = final
           this.tableDataIsEmpty = false

@@ -1,6 +1,5 @@
 import { humanReadableDate } from '@/helpers'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
-import Kuma from '@/services/kuma'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
 import {
   Compatibility,
   DataPlaneEntityMtls,
@@ -11,6 +10,7 @@ import {
   DiscoverySubscription,
   LabelValue,
   Version,
+  ZoneOverview,
 } from '@/types'
 
 type TODO = any
@@ -166,34 +166,22 @@ export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLI
   }
 }
 
-export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpVersion: string) {
-  const tag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
+export function checkKumaDpAndZoneVersionsMismatch(dpVersion: string, zoneOverview: ZoneOverview): { compatible: boolean, payload?: { zoneVersion: string, kumaDp: string } } {
+  const subscriptions = zoneOverview.zoneInsight.subscriptions ?? []
 
-  if (tag) {
-    try {
-      const response = (await Kuma.getZoneOverview({ name: tag.value })) || {}
-      const { subscriptions = [] } = response.zoneInsight
-
-      if (subscriptions.length) {
-        const { version = {} } = subscriptions[subscriptions.length - 1]
-        const { kumaCp = {} } = version
-
-        return {
-          compatible: dpVersion === kumaCp.version,
-          payload: {
-            zoneVersion: kumaCp.version,
-            kumaDp: dpVersion,
-          },
-        }
-      }
-
-      return { compatible: true }
-    } catch (e) {
-      console.error(e)
-    }
+  if (subscriptions.length === 0) {
+    return { compatible: true }
   }
 
-  return { compatible: true }
+  const lastSubscription = subscriptions[subscriptions.length - 1]
+
+  return {
+    compatible: dpVersion === lastSubscription.version.kumaCp.version,
+    payload: {
+      zoneVersion: lastSubscription.version.kumaCp.version,
+      kumaDp: dpVersion,
+    },
+  }
 }
 
 export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {
