@@ -128,7 +128,6 @@ import Kuma from '@/services/kuma'
 import { humanReadableDate } from '@/helpers'
 import { datadogLogEvents } from '@/datadogEvents'
 import {
-  checkKumaDpAndZoneVersionsMismatch,
   compatibilityKind,
   dpTags,
   getDataplaneType,
@@ -320,9 +319,8 @@ export default {
 
     /**
      * @param {DataplaneOverview} response
-     * @param {ZoneOverview[]} zoneOverviews
      */
-    parseData(response, zoneOverviews = []) {
+    parseData(response) {
       const { dataplane = {}, dataplaneInsight = {} } = response
       const { name = '', mesh = '' } = response
       const { subscriptions = [] } = dataplaneInsight
@@ -461,17 +459,9 @@ export default {
       if (this.multicluster) {
         const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
-        if (zoneTag) {
-          const zoneOverview = zoneOverviews.find((zoneOverview) => zoneOverview.name === zoneTag.value)
-
-          if (zoneOverview) {
-            const { compatible } = checkKumaDpAndZoneVersionsMismatch(dpVersion, zoneOverview)
-
-            if (!compatible) {
-              item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
-              item.kumaDpAndKumaCpMismatch = true
-            }
-          }
+        if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
+          item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
+          item.kumaDpAndKumaCpMismatch = true
         }
       }
 
@@ -509,8 +499,7 @@ export default {
           this.rawData = data
           this.selectDataPlaneOverview(this.name ?? data[0].name)
 
-          const { items: zoneOverviews } = await Kuma.getAllZoneOverviews()
-          const final = await Promise.all(data.map((item) => this.parseData(item, zoneOverviews)))
+          const final = await Promise.all(data.map((item) => this.parseData(item)))
 
           this.tableData.data = final
           this.tableDataIsEmpty = false

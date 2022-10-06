@@ -10,7 +10,6 @@ import {
   DiscoverySubscription,
   LabelValue,
   Version,
-  ZoneOverview,
 } from '@/types'
 
 type TODO = any
@@ -163,24 +162,6 @@ export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLI
 
   return {
     status: status(),
-  }
-}
-
-export function checkKumaDpAndZoneVersionsMismatch(dpVersion: string, zoneOverview: ZoneOverview): { compatible: boolean, payload?: { zoneVersion: string, kumaDp: string } } {
-  const subscriptions = zoneOverview.zoneInsight.subscriptions ?? []
-
-  if (subscriptions.length === 0) {
-    return { compatible: true }
-  }
-
-  const lastSubscription = subscriptions[subscriptions.length - 1]
-
-  return {
-    compatible: dpVersion === lastSubscription.version.kumaCp.version,
-    payload: {
-      zoneVersion: lastSubscription.version.kumaCp.version,
-      kumaDp: dpVersion,
-    },
   }
 }
 

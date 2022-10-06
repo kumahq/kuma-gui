@@ -1,18 +1,14 @@
 <template>
   <span>
-    There is mismatch between versions of Kuma DP (<strong>{{ payload.kumaDp }}</strong>)
-    and the Zone CP (<strong>{{ payload.zoneVersion }}</strong>)
+    There is a mismatch between versions of Kuma DP (<strong>{{ payload.kumaDp }}</strong>) and the Zone CP.
   </span>
 </template>
 
-<script>
-export default {
-  name: 'WarningZoneAndKumaDPVersionsIncompatible',
-  props: {
-    payload: {
-      type: Object,
-      required: true,
-    },
+<script lang="ts" setup>
+defineProps({
+  payload: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
