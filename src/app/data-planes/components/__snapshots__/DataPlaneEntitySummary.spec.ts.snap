@@ -1,0 +1,476 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataPlaneEntitySummary matches snapshot 1`] = `
+<div
+  class="entity-summary entity-section-list"
+>
+  <section>
+    <h3
+      class="entity-title"
+    >
+      <span
+        class="kutil-sr-only"
+      >
+        Data plane:
+      </span>
+      <a>
+        backend
+      </a>
+      <div
+        class="status status--success"
+        data-testid="data-plane-status-badge"
+      >
+        online
+      </div>
+    </h3>
+    <div
+      class="definition"
+    >
+      <span>
+        Mesh:
+      </span>
+      <span>
+        default
+      </span>
+    </div>
+  </section>
+  <section>
+    <h4>
+      Tags
+    </h4>
+    <div
+      class="tag-list"
+    >
+      
+      <span
+        class="entity-tag"
+      >
+        <span
+          class="entity-tag__label entity-tag__label--is-kuma-io-label"
+        >
+          kuma.io/protocol
+        </span>
+        <span
+          class="entity-tag__value"
+        >
+          http
+        </span>
+      </span>
+      <span
+        class="entity-tag"
+      >
+        <span
+          class="entity-tag__label entity-tag__label--is-kuma-io-label"
+        >
+          kuma.io/service
+        </span>
+        <span
+          class="entity-tag__value"
+        >
+          backend
+        </span>
+      </span>
+      
+    </div>
+  </section>
+  <section>
+    <h4>
+      Dependencies
+    </h4>
+    
+    <div
+      class="definition"
+    >
+      <span>
+        envoy:
+      </span>
+      <span>
+        1.16.2
+      </span>
+    </div>
+    <div
+      class="definition"
+    >
+      <span>
+        kumaDp:
+      </span>
+      <span>
+        1.0.7
+      </span>
+    </div>
+    <div
+      class="definition"
+    >
+      <span>
+        coredns:
+      </span>
+      <span>
+        1.8.3
+      </span>
+    </div>
+    
+    <!--v-if-->
+  </section>
+  
+  <section>
+    <h4>
+      Insights
+    </h4>
+    <div
+      class="entity-section-list"
+    >
+      
+      <div>
+        <div
+          class="definition"
+          data-testid="data-plane-connect-time-0"
+        >
+          <span>
+            Connect time:
+          </span>
+          <span>
+            February 17, 2021 @ 7:33:36
+          </span>
+        </div>
+        <div
+          class="definition"
+          data-testid="data-plane-disconnect-time-0"
+        >
+          <span>
+            Disconnect time:
+          </span>
+          <span>
+            —
+          </span>
+        </div>
+        <div
+          class="definition"
+        >
+          <span>
+            Control plane instance ID:
+          </span>
+          <span>
+            foo
+          </span>
+        </div>
+        <details>
+          <summary>
+             Responses (acknowledged / sent) 
+          </summary>
+          
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-0-0"
+          >
+            <span>
+              CDS:
+            </span>
+            <span>
+              1 / 1
+            </span>
+          </div>
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-0-1"
+          >
+            <span>
+              EDS:
+            </span>
+            <span>
+              2 / 2
+            </span>
+          </div>
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-0-2"
+          >
+            <span>
+              LDS:
+            </span>
+            <span>
+              2 / 2
+            </span>
+          </div>
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-0-3"
+          >
+            <span>
+              RDS:
+            </span>
+            <span>
+              0 / 0
+            </span>
+          </div>
+          
+        </details>
+      </div>
+      <div>
+        <div
+          class="definition"
+          data-testid="data-plane-connect-time-1"
+        >
+          <span>
+            Connect time:
+          </span>
+          <span>
+            February 17, 2021 @ 7:33:36
+          </span>
+        </div>
+        <div
+          class="definition"
+          data-testid="data-plane-disconnect-time-1"
+        >
+          <span>
+            Disconnect time:
+          </span>
+          <span>
+            February 17, 2021 @ 7:33:36
+          </span>
+        </div>
+        <div
+          class="definition"
+        >
+          <span>
+            Control plane instance ID:
+          </span>
+          <span>
+            foo
+          </span>
+        </div>
+        <details>
+          <summary>
+             Responses (acknowledged / sent) 
+          </summary>
+          
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-1-0"
+          >
+            <span>
+              CDS:
+            </span>
+            <span>
+              1 / 1
+            </span>
+          </div>
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-1-1"
+          >
+            <span>
+              EDS:
+            </span>
+            <span>
+              2 / 2
+            </span>
+          </div>
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-1-2"
+          >
+            <span>
+              LDS:
+            </span>
+            <span>
+              2 / 2
+            </span>
+          </div>
+          <div
+            class="definition"
+            data-testid="data-plane-subscription-status-1-3"
+          >
+            <span>
+              RDS:
+            </span>
+            <span>
+              0 / 0
+            </span>
+          </div>
+          
+        </details>
+      </div>
+      
+    </div>
+  </section>
+  <section>
+    <div
+      class="yaml-view"
+    >
+      <div
+        class="yaml-view-content"
+      >
+        <div
+          class="k-tabs"
+          data-v-6bcd6661=""
+        >
+          <ul
+            aria-label="ktabs"
+            data-v-6bcd6661=""
+            role="tablist"
+          >
+            
+            <li
+              aria-controls="panel-0"
+              aria-selected="true"
+              class="active tab-item"
+              data-v-6bcd6661=""
+              id="universal-tab"
+              role="tab"
+              tabindex="0"
+            >
+              <a
+                class="tab-link"
+                data-v-6bcd6661=""
+              >
+                
+                Universal
+                
+              </a>
+            </li>
+            <li
+              aria-controls="panel-1"
+              aria-selected="false"
+              class="tab-item"
+              data-v-6bcd6661=""
+              id="kubernetes-tab"
+              role="tab"
+              tabindex="0"
+            >
+              <a
+                class="tab-link"
+                data-v-6bcd6661=""
+              >
+                
+                Kubernetes
+                
+              </a>
+            </li>
+            
+          </ul>
+          
+          <div
+            aria-labelledby="universal-tab"
+            class="tab-container"
+            data-v-6bcd6661=""
+            id="panel-0"
+            role="tabpanel"
+            tabindex="0"
+          >
+            
+            <div
+              class="code-block"
+              tabindex="0"
+            >
+              <!--v-if-->
+              <div
+                class="code-block__content"
+              >
+                <!-- eslint-disable vue/no-v-html -->
+                <pre
+                  class="highlighted-code-block"
+                  data-testid="highlighted-code-block"
+                  style="--code-max-height: 250px;"
+                >
+                  <code />
+                </pre>
+                <!-- eslint-enable vue/no-v-html -->
+                
+                <div
+                  aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  aria-expanded="false"
+                  data-v-9bbde9b2=""
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  role="button"
+                >
+                  
+                  <button
+                    class="code-block__copy-button"
+                    type="button"
+                  >
+                    <span
+                      class="kong-icon-copy kong-icon"
+                      data-v-637de6fa=""
+                    >
+                      <svg
+                        height="16"
+                        viewBox="0 0 32 32"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        
+  
+                        <title>
+                          Copy
+                        </title>
+                        
+  
+                        <path
+                          d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                          fill="#A3BBCC"
+                        />
+                        
+
+                      </svg>
+                      
+
+                    </span>
+                    <span
+                      class="kutil-sr-only"
+                    >
+                      Copy
+                    </span>
+                  </button>
+                  
+                  <transition-stub
+                    appear="false"
+                    css="true"
+                    data-v-9bbde9b2=""
+                    name="fade"
+                    persisted="false"
+                  >
+                    <div
+                      class="k-popover"
+                      data-v-9bbde9b2=""
+                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      role="region"
+                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                    >
+                      <!---->
+                      <div
+                        class="k-popover-content"
+                        data-v-9bbde9b2=""
+                      >
+                        
+                        <p>
+                          Code copied to clipboard
+                        </p>
+                        
+                      </div>
+                      <!---->
+                    </div>
+                  </transition-stub>
+                </div>
+                
+              </div>
+            </div>
+            
+          </div>
+          <div
+            aria-labelledby="kubernetes-tab"
+            class="tab-container"
+            data-v-6bcd6661=""
+            id="panel-1"
+            role="tabpanel"
+            tabindex="0"
+          >
+            <!---->
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</div>
+`;

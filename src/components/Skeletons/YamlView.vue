@@ -17,16 +17,22 @@
       >
         <template #universal>
           <CodeBlock
+            :id="id"
             language="yaml"
             :code="yamlContent.universal"
+            :is-searchable="isSearchable"
+            :query-key="id"
             :code-max-height="codeMaxHeight"
           />
         </template>
 
         <template #kubernetes>
           <CodeBlock
+            :id="id"
             language="yaml"
             :code="yamlContent.kubernetes"
+            :is-searchable="isSearchable"
+            :query-key="id"
             :code-max-height="codeMaxHeight"
           />
         </template>
@@ -49,6 +55,11 @@ import LoadingBlock from '../LoadingBlock.vue'
 const store = useStore()
 
 const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+  },
+
   content: {
     type: Object,
     required: false,
@@ -77,6 +88,12 @@ const props = defineProps({
     type: String,
     required: false,
     default: null,
+  },
+
+  isSearchable: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 })
 

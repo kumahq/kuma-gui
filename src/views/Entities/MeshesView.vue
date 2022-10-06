@@ -113,6 +113,7 @@
 
           <div class="config-wrapper">
             <YamlView
+              id="code-block-mesh"
               :has-error="entityHasError"
               :is-loading="entityIsLoading"
               :is-empty="entityIsEmpty"

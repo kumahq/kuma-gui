@@ -475,270 +475,91 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                   
                   <div
                     class="code-block"
+                    tabindex="0"
                   >
-                    <!-- eslint-disable vue/no-v-html -->
-                    <pre
-                      class="code-block__code language-yaml"
-                      data-testid="code-block"
-                    >
-                      <code>
-                        <span
-                          class="token key atrule"
-                        >
-                          type
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         Dataplane
-
-                        <span
-                          class="token key atrule"
-                        >
-                          mesh
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         default
-
-                        <span
-                          class="token key atrule"
-                        >
-                          name
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         backend
-
-                        <span
-                          class="token key atrule"
-                        >
-                          networking
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-  
-                        <span
-                          class="token key atrule"
-                        >
-                          address
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         127.0.0.1
-  
-                        <span
-                          class="token key atrule"
-                        >
-                          inbound
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-    
-                        <span
-                          class="token punctuation"
-                        >
-                          -
-                        </span>
-                         
-                        <span
-                          class="token key atrule"
-                        >
-                          port
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-                        <span
-                          class="token number"
-                        >
-                          7776
-                        </span>
-                        
-      
-                        <span
-                          class="token key atrule"
-                        >
-                          servicePort
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-                        <span
-                          class="token number"
-                        >
-                          7777
-                        </span>
-                        
-      
-                        <span
-                          class="token key atrule"
-                        >
-                          serviceAddress
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         127.0.0.1
-      
-                        <span
-                          class="token key atrule"
-                        >
-                          tags
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-        
-                        <span
-                          class="token key atrule"
-                        >
-                          kuma.io/protocol
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         http
-        
-                        <span
-                          class="token key atrule"
-                        >
-                          kuma.io/service
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         backend
-  
-                        <span
-                          class="token key atrule"
-                        >
-                          outbound
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-    
-                        <span
-                          class="token punctuation"
-                        >
-                          -
-                        </span>
-                         
-                        <span
-                          class="token key atrule"
-                        >
-                          port
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-                        <span
-                          class="token number"
-                        >
-                          10001
-                        </span>
-                        
-      
-                        <span
-                          class="token key atrule"
-                        >
-                          tags
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         
-        
-                        <span
-                          class="token key atrule"
-                        >
-                          kuma.io/service
-                        </span>
-                        <span
-                          class="token punctuation"
-                        >
-                          :
-                        </span>
-                         frontend
-                      </code>
-                    </pre>
-                    <!-- eslint-enable vue/no-v-html -->
-                    
                     <div
-                      aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                      aria-expanded="false"
-                      data-v-9bbde9b2=""
-                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                      role="button"
+                      class="code-block__actions"
                     >
-                      
+                      <!--v-if-->
+                      <!--v-if-->
+                      <label
+                        class="k-input-label code-search"
+                        data-v-3472eb06=""
+                        for="code-block-data-plane-search-input"
+                      >
+                        
+                        <span
+                          class="kutil-sr-only"
+                        >
+                          Highlight
+                        </span>
+                        <div
+                          class="k-input-wrapper"
+                          data-v-3018ca1a=""
+                        >
+                          <input
+                            class="k-input-medium form-control k-input"
+                            data-testid="search-input"
+                            data-v-3018ca1a=""
+                            id="code-block-data-plane-search-input"
+                            type="text"
+                          />
+                          <!---->
+                          <!---->
+                        </div>
+                        
+                      </label>
                       <button
-                        class="code-block__copy-button"
+                        aria-pressed="false"
+                        class="small outline k-button regexp-mode-button"
+                        data-testid="regexp-mode-button"
+                        data-v-6bcbf05d=""
+                        title="Use regular expression (Alt+R)"
                         type="button"
                       >
+                        
+                        <!---->
+                        
+                        
                         <span
-                          class="kong-icon-copy kong-icon"
+                          class="kutil-sr-only"
+                        >
+                          RegExp mode enabled
+                        </span>
+                         .* 
+                        
+                        <!---->
+                      </button>
+                      <button
+                        aria-pressed="false"
+                        class="small outline k-button filter-mode-button"
+                        data-testid="filter-mode-button"
+                        data-v-6bcbf05d=""
+                        title="Filter results (Alt+F)"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="button-icon kong-icon-filter kong-icon"
                           data-v-637de6fa=""
                         >
                           <svg
-                            height="16"
-                            viewBox="0 0 32 32"
-                            width="16"
+                            height="11"
+                            viewBox="0 0 14 11"
+                            width="14"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
                             <title>
-                              Copy
+                              Filter
                             </title>
                             
   
                             <path
-                              d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                              d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
                               fill="#A3BBCC"
+                              fill-rule="evenodd"
                             />
                             
 
@@ -746,43 +567,204 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
 
                         </span>
+                        
+                        
                         <span
                           class="kutil-sr-only"
                         >
-                          Copy
+                          Filter mode enabled
                         </span>
+                        
+                        <!---->
                       </button>
-                      
-                      <transition-stub
-                        appear="false"
-                        css="true"
-                        data-v-9bbde9b2=""
-                        name="fade"
-                        persisted="false"
+                      <button
+                        class="small outline k-button previous-match-button"
+                        data-testid="previous-match-button"
+                        data-v-6bcbf05d=""
+                        disabled=""
+                        title="Previous match (Shift+Enter)"
+                        type="button"
                       >
-                        <div
-                          class="k-popover"
-                          data-v-9bbde9b2=""
-                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          role="region"
-                          style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                        
+                        <span
+                          class="button-icon kong-icon-chevronUp kong-icon"
+                          data-v-637de6fa=""
                         >
-                          <!---->
-                          <div
-                            class="k-popover-content"
-                            data-v-9bbde9b2=""
+                          <svg
+                            fill="none"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
                             
-                            <p>
-                              Code copied to clipboard
-                            </p>
+  
+                            <title>
+                              Collapse
+                            </title>
                             
-                          </div>
-                          <!---->
-                        </div>
-                      </transition-stub>
+  
+                            <path
+                              d="M15 12 9.8 7l-5.2 5"
+                              fill="none"
+                              stroke="#A3BBCC"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                        <span
+                          class="kutil-sr-only"
+                        >
+                          Previous match
+                        </span>
+                        
+                        <!---->
+                      </button>
+                      <button
+                        class="small outline k-button next-match-button"
+                        data-testid="next-match-button"
+                        data-v-6bcbf05d=""
+                        disabled=""
+                        title="Next match (Enter)"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="button-icon kong-icon-chevronDown kong-icon"
+                          data-v-637de6fa=""
+                        >
+                          <svg
+                            fill="none"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Expand
+                            </title>
+                            
+  
+                            <path
+                              d="m4.6 7 5.2 5L15 7"
+                              fill="none"
+                              stroke="#A3BBCC"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                        <span
+                          class="kutil-sr-only"
+                        >
+                          Next match
+                        </span>
+                        
+                        <!---->
+                      </button>
                     </div>
-                    
+                    <div
+                      class="code-block__content"
+                    >
+                      <!-- eslint-disable vue/no-v-html -->
+                      <pre
+                        class="highlighted-code-block"
+                        data-testid="highlighted-code-block"
+                      >
+                        <code />
+                      </pre>
+                      <!-- eslint-enable vue/no-v-html -->
+                      
+                      <div
+                        aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        aria-expanded="false"
+                        data-v-9bbde9b2=""
+                        id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                        role="button"
+                      >
+                        
+                        <button
+                          class="code-block__copy-button"
+                          type="button"
+                        >
+                          <span
+                            class="kong-icon-copy kong-icon"
+                            data-v-637de6fa=""
+                          >
+                            <svg
+                              height="16"
+                              viewBox="0 0 32 32"
+                              width="16"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Copy
+                              </title>
+                              
+  
+                              <path
+                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                fill="#A3BBCC"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          <span
+                            class="kutil-sr-only"
+                          >
+                            Copy
+                          </span>
+                        </button>
+                        
+                        <transition-stub
+                          appear="false"
+                          css="true"
+                          data-v-9bbde9b2=""
+                          name="fade"
+                          persisted="false"
+                        >
+                          <div
+                            class="k-popover"
+                            data-v-9bbde9b2=""
+                            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                            role="region"
+                            style="width: 200px; max-width: 350px; max-height: auto; display: none;"
+                          >
+                            <!---->
+                            <div
+                              class="k-popover-content"
+                              data-v-9bbde9b2=""
+                            >
+                              
+                              <p>
+                                Code copied to clipboard
+                              </p>
+                              
+                            </div>
+                            <!---->
+                          </div>
+                        </transition-stub>
+                      </div>
+                      
+                    </div>
                   </div>
                   
                 </div>

@@ -103,10 +103,12 @@
 
           <div class="config-wrapper">
             <YamlView
+              id="code-block-policy"
               :has-error="entityHasError"
               :is-loading="entityIsLoading"
               :is-empty="entityIsEmpty"
               :content="rawEntity"
+              is-searchable
             />
           </div>
         </template>

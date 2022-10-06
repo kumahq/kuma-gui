@@ -101,7 +101,11 @@
       </LabelList>
 
       <div class="config-wrapper">
-        <YamlView :content="rawDataPlane" />
+        <YamlView
+          id="code-block-data-plane"
+          :content="rawDataPlane"
+          is-searchable
+        />
       </div>
     </template>
 
@@ -143,6 +147,7 @@
         data-path="xds"
         :mesh="dataPlane.mesh"
         :dpp-name="dataPlane.name"
+        query-key="envoy-data-data-plane"
       />
     </template>
 
@@ -151,6 +156,7 @@
         data-path="stats"
         :mesh="dataPlane.mesh"
         :dpp-name="dataPlane.name"
+        query-key="envoy-data-data-plane"
       />
     </template>
 
@@ -159,6 +165,7 @@
         data-path="clusters"
         :mesh="dataPlane.mesh"
         :dpp-name="dataPlane.name"
+        query-key="envoy-data-data-plane"
       />
     </template>
 

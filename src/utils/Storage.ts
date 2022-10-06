@@ -3,7 +3,8 @@ type StorageKeyValues =
   'onboardingStep' |
   'onboardingIsCompleted' |
   'storedFormData' |
-  'selectedMesh'
+  'selectedMesh' |
+  'codeBlockQueries'
 
 /**
  * Utility object for accessing `window.localStorage`.

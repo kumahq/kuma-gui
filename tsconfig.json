@@ -24,8 +24,7 @@
     "lib": [
       "esnext",
       "dom",
-      "dom.iterable",
-      "scripthost"
+      "dom.iterable"
     ],
     "resolveJsonModule": true,
     "jsx": "preserve"

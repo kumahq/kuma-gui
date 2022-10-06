@@ -102,8 +102,11 @@
           >
             <template #body>
               <CodeBlock
+                id="code-block-zone-config"
                 language="json"
                 :code="codeOutput"
+                is-searchable
+                query-key="zone-config"
               />
             </template>
           </KCard>

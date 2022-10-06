@@ -32,7 +32,11 @@
       </div>
     </section>
 
-    <YamlView :content="rawServiceInsight" />
+    <YamlView
+      id="code-block-service-insight"
+      :content="rawServiceInsight"
+      is-searchable
+    />
   </div>
 </template>
 

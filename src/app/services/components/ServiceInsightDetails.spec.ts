@@ -20,6 +20,7 @@ const router = createRouter({
 
 function renderComponent(props = {}) {
   return mount(ServiceInsightDetails, {
+    attachTo: document.body,
     props: {
       serviceInsight,
       ...props,
@@ -34,8 +35,21 @@ function renderComponent(props = {}) {
 }
 
 describe('ServiceInsightDetails', () => {
+  beforeEach(() => {
+    // The code block component uses debouncing which involves running timers.
+    jest.useFakeTimers()
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+    // Clears `document.body` because we mount the component using `attachTo: document.body`.
+    document.body.innerHTML = ''
+  })
+
   test('shows correct content', async () => {
     const wrapper = renderComponent()
+
+    jest.runAllTimers()
 
     expect(wrapper.html()).toContain('Total: 2 (online: 1)')
     expect(wrapper.html()).toContain('status')
