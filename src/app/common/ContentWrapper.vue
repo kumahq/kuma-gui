@@ -42,10 +42,13 @@ const slots = useSlots()
   // Lets the element take up all available space. Applies when the content and the sidebar are wrapped onto separate lines.
   flex-grow: 1;
   min-inline-size: 0;
-  // Makes sidebar stick to the viewport while taking the height of the fixed top bar into account.
-  position: sticky;
-  top: calc(var(--topbar-height) + var(--spacing-lg));
-  bottom: var(--spacing-lg);
   background-color: var(--white);
+
+  @media (min-height: 1200px) and (min-width: 1400px) {
+    // Makes sidebar stick to the viewport while taking the height of the fixed top bar into account.
+    position: sticky;
+    top: calc(var(--topbar-height) + var(--spacing-lg));
+    bottom: 0;
+  }
 }
 </style>
