@@ -1,18 +1,18 @@
 <template>
-  <div class="data-planes-container">
-    <div class="data-planes-content component-frame">
+  <ContentWrapper>
+    <template #content>
       <DataOverview
         :selected-entity-name="dataPlaneOverview?.name"
-        :page-size="pageSize"
+        :page-size="PAGE_SIZE"
         :has-error="hasError"
         :is-loading="isLoading"
         :empty-state="getEmptyState()"
         :table-data="filteredTableData"
         :table-data-is-empty="tableDataIsEmpty"
         show-details
-        :next="next"
+        :next="nextUrl !== null"
         :page-offset="pageOffset"
-        @table-action="($event) => selectDataPlaneOverview($event.name)"
+        @table-action="($event: any) => selectDataPlaneOverview($event.name)"
         @load-data="loadData($event)"
       >
         <template #additionalControls>
@@ -30,7 +30,7 @@
               data-testid="data-planes-type-filter"
             >
               <option
-                v-for="(dataPlaneType, key) in $options.dataPlaneTypes"
+                v-for="(dataPlaneType, key) in dataPlaneTypes"
                 :key="key"
                 :value="dataPlaneType"
               >
@@ -47,7 +47,7 @@
             <template #items>
               <div @click="stopPropagatingClickEvent">
                 <KDropdownItem
-                  v-for="(item, index) in columnsDropdownItems"
+                  v-for="(item, index) in filteredColumnsDropdownItems"
                   :key="index"
                   class="table-header-selector-item"
                   :item="item"
@@ -88,7 +88,7 @@
           <KButton
             v-if="$route.query.ns"
             appearance="primary"
-            :to="$options.nsBackButtonRoute"
+            :to="{ name: 'data-plane-list-view' }"
             data-testid="data-plane-ns-back-button"
           >
             <span class="custom-control-icon">
@@ -99,29 +99,35 @@
           </KButton>
         </template>
       </DataOverview>
-    </div>
+    </template>
 
-    <div class="data-planes-sidebar component-frame">
+    <template #sidebar>
       <DataPlaneEntitySummary
         v-if="dataPlaneOverview !== null"
         :data-plane-overview="dataPlaneOverview"
       />
 
       <EmptyBlock v-else />
-    </div>
-  </div>
+    </template>
+  </ContentWrapper>
 </template>
 
-<script>
+<script lang="ts" setup>
 /** @typedef {import('../constants').ColumnDropdownItem} ColumnDropdownItem */
 /** @typedef {import('@/types').DataplaneOverview} DataplaneOverview */
 /** @typedef {import('@/types').ZoneOverview} ZoneOverview */
 
-import { mapGetters } from 'vuex'
+import { computed, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 
+import ContentWrapper from '@/app/common/ContentWrapper.vue'
+import DataOverview from '@/components/Skeletons/DataOverview.vue'
+import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
+import EmptyBlock from '@/components/EmptyBlock.vue'
 import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders } from '../constants'
+import { useStore } from '@/store/store'
 import { Storage } from '@/utils/Storage'
 import { patchQueryParam } from '@/utils/patchQueryParam'
 import Kuma from '@/services/kuma'
@@ -137,434 +143,346 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/dataplane'
-import { PRODUCT_NAME, KUMA_ZONE_TAG_NAME } from '@/consts'
-import { getTableData } from '@/utils/tableDataUtils'
-import DataOverview from '@/components/Skeletons/DataOverview.vue'
-import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
-import EmptyBlock from '@/components/EmptyBlock.vue'
+import { DataPlaneOverview, TableHeader } from '@/types'
+import { ApiListResponse } from '@/api'
+import { KUMA_ZONE_TAG_NAME } from '@/consts'
 
-export default {
-  name: 'DataPlaneListView',
+const PAGE_SIZE = 50
+const dataPlaneTypes = [
+  'All',
+  'Standard',
+  'Gateway (builtin)',
+  'Gateway (provided)',
+]
 
-  dataPlaneTypes: [
-    'All',
-    'Standard',
-    'Gateway (builtin)',
-    'Gateway (provided)',
-  ],
-  emptyStateMsg: 'There are no data plane proxies present.',
-  nsBackButtonRoute: { name: 'data-plane-list-view' },
-  dataplaneApiParams: {},
+const route = useRoute()
+const store = useStore()
 
-  components: {
-    DataOverview,
-    DataPlaneEntitySummary,
-    KButton,
-    KDropdownItem,
-    KDropdownMenu,
-    EmptyBlock,
+const props = defineProps({
+  name: {
+    type: String,
+    required: false,
+    default: null,
   },
 
-  props: {
-    name: {
-      type: String,
-      required: false,
-      default: null,
-    },
-
-    offset: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
+  offset: {
+    type: Number,
+    required: false,
+    default: 0,
   },
+})
 
-  data() {
-    return {
-      visibleTableHeaderKeys: defaultVisibleTableHeaderKeys,
-      productName: PRODUCT_NAME,
-      isLoading: true,
-      isEmpty: false,
-      hasError: false,
-      tableDataIsEmpty: false,
-      tableData: {
-        headers: [],
-        data: [],
-      },
-      pageSize: 50,
-      next: null,
-      shownTLSTab: false,
-      rawData: null,
-      filteredDataPlaneType: 'All',
-      pageOffset: this.offset,
-      dataPlaneOverview: null,
+const visibleTableHeaderKeys = ref(defaultVisibleTableHeaderKeys)
+const isLoading = ref(true)
+const isEmpty = ref(false)
+const hasError = ref(false)
+const tableDataIsEmpty = ref(false)
+const tableData = ref<{ headers: TableHeader[], data: any }>({
+  headers: [],
+  data: [],
+})
+const rawData = ref<DataPlaneOverview[]>([])
+const nextUrl = ref<string | null>(null)
+const filteredDataPlaneType = ref('All')
+const pageOffset = ref(props.offset)
+const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
+
+const environment = computed(() => store.getters['config/getEnvironment'])
+const multicluster = computed(() => store.getters['config/getMulticlusterStatus'])
+const dataplaneWizardRoute = computed(() => {
+  // we change the route to the Dataplane
+  // wizard based on environment.
+  if (environment.value === 'universal') {
+    return { name: 'universal-dataplane' }
+  } else {
+    return { name: 'kubernetes-dataplane' }
+  }
+})
+const filteredTableData = computed(() => {
+  const data = tableData.value.data.filter((row: any) => {
+    if (filteredDataPlaneType.value === 'All') {
+      return true
+    } else {
+      return row.type.toLowerCase() === filteredDataPlaneType.value.toLowerCase()
     }
-  },
+  })
+  const headers = getDataPlaneTableHeaders(multicluster.value, visibleTableHeaderKeys.value)
 
-  computed: {
-    ...mapGetters({
-      environment: 'config/getEnvironment',
-      queryNamespace: 'getItemQueryNamespace',
-      multicluster: 'config/getMulticlusterStatus',
-    }),
-
-    dataplaneWizardRoute() {
-      // we change the route to the Dataplane
-      // wizard based on environment.
-      if (this.environment === 'universal') {
-        return { name: 'universal-dataplane' }
-      } else {
-        return { name: 'kubernetes-dataplane' }
-      }
-    },
-
-    filteredTableData() {
-      const data = this.tableData.data.filter((row) => {
-        if (this.filteredDataPlaneType === 'All') {
-          return true
-        } else {
-          return row.type.toLowerCase() === this.filteredDataPlaneType.toLowerCase()
-        }
-      })
-      const headers = getDataPlaneTableHeaders(this.multicluster, this.visibleTableHeaderKeys)
+  return {
+    data,
+    headers,
+  }
+})
+/**
+ * @type {ColumnDropdownItem[]}
+ */
+const filteredColumnsDropdownItems = computed(() => {
+  return columnsDropdownItems
+    .filter((item) => multicluster.value ? true : item.tableHeaderKey !== 'zone')
+    .map((item) => {
+      const isChecked = visibleTableHeaderKeys.value.includes(item.tableHeaderKey)
 
       return {
-        data,
-        headers,
+        ...item,
+        isChecked,
       }
+    })
+})
+
+watch(() => route.params.mesh, function () {
+  // Don’t trigger a load when the user is navigating to another route.
+  if (route.name !== 'data-plane-list-view') {
+    return
+  }
+
+  // Ensures basic state is reset when switching meshes using the mesh selector.
+  isLoading.value = true
+  isEmpty.value = false
+  hasError.value = false
+  tableDataIsEmpty.value = false
+
+  loadData(0)
+})
+
+const storedVisibleTableHeaderKeys = Storage.get('dpVisibleTableHeaderKeys')
+if (Array.isArray(storedVisibleTableHeaderKeys)) {
+  visibleTableHeaderKeys.value = storedVisibleTableHeaderKeys
+}
+
+loadData(props.offset)
+
+/**
+ * Ensures that the dropdown menu isn’t toggled whenever a checkbox is checked/unchecked.
+ */
+function stopPropagatingClickEvent(event: Event) {
+  event.stopPropagation()
+}
+
+function updateVisibleTableHeaders(event: Event, tableHeaderKey: string): void {
+  const input = event.target as HTMLInputElement
+  const index = visibleTableHeaderKeys.value.findIndex((key) => key === tableHeaderKey)
+
+  if (input.checked && index === -1) {
+    visibleTableHeaderKeys.value.push(tableHeaderKey)
+  } else if (!input.checked && index > -1) {
+    visibleTableHeaderKeys.value.splice(index, 1)
+  }
+
+  Storage.set('dpVisibleTableHeaderKeys', Array.from(new Set(visibleTableHeaderKeys.value)))
+}
+
+function onCreateClick() {
+  datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
+}
+
+function getEmptyState() {
+  return {
+    title: 'No Data',
+    message: 'There are no data plane proxies present.',
+  }
+}
+
+async function parseData(dataPlaneOverview: DataPlaneOverview) {
+  const mesh = dataPlaneOverview.mesh
+  const name = dataPlaneOverview.name
+
+  const nameRoute = {
+    name: 'data-plane-detail-view',
+    params: {
+      mesh,
+      dataPlane: name,
     },
-
-    /**
-     * @returns {ColumnDropdownItem[]}
-     */
-    columnsDropdownItems() {
-      return columnsDropdownItems
-        .filter((item) => this.multicluster ? true : item.tableHeaderKey !== 'zone')
-        .map((item) => {
-          const isChecked = this.visibleTableHeaderKeys.includes(item.tableHeaderKey)
-
-          return {
-            ...item,
-            isChecked,
-          }
-        })
+  }
+  const meshRoute = {
+    name: 'mesh-child',
+    params: {
+      mesh,
     },
-  },
+  }
 
-  watch: {
-    '$route.params.mesh': function () {
-      // Don’t trigger a load when the user is navigating to another route.
-      if (this.$route.name !== 'data-plane-list-view') {
-        return
-      }
-
-      // Ensures basic state is reset when switching meshes using the mesh selector.
-      this.isLoading = true
-      this.isEmpty = false
-      this.hasError = false
-      this.tableDataIsEmpty = false
-
-      this.loadData(0)
-    },
-  },
-
-  created() {
-    const visibleTableHeaderKeys = Storage.get('dpVisibleTableHeaderKeys')
-    if (Array.isArray(visibleTableHeaderKeys)) {
-      this.visibleTableHeaderKeys = visibleTableHeaderKeys
-    }
-  },
-
-  beforeMount() {
-    this.loadData(this.offset)
-  },
-
-  methods: {
-    /**
-     * Ensures that the dropdown menu isn’t toggled whenever a checkbox is checked/unchecked.
-     *
-     * @param {Event} event
-     */
-    stopPropagatingClickEvent(event) {
-      event.stopPropagation()
-    },
-
-    /**
-     * @param {Event} event
-     * @param {string} tableHeaderKey
-     */
-    updateVisibleTableHeaders(event, tableHeaderKey) {
-      const input = /** @type {HTMLInputElement} */ (event.target)
-      const index = this.visibleTableHeaderKeys.findIndex((key) => key === tableHeaderKey)
-
-      if (input.checked && index === -1) {
-        this.visibleTableHeaderKeys.push(tableHeaderKey)
-      } else if (!input.checked && index > -1) {
-        this.visibleTableHeaderKeys.splice(index, 1)
-      }
-
-      Storage.set('dpVisibleTableHeaderKeys', Array.from(new Set(this.visibleTableHeaderKeys)))
-    },
-
-    onCreateClick() {
-      datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
-    },
-
-    getEmptyState() {
-      return {
-        title: 'No Data',
-        message: this.$options.emptyStateMsg,
-      }
-    },
-
-    /**
-     * @param {DataplaneOverview} response
-     */
-    parseData(response) {
-      const { dataplane = {}, dataplaneInsight = {} } = response
-      const { name = '', mesh = '' } = response
-      const { subscriptions = [] } = dataplaneInsight
-
-      const nameRoute = {
-        name: 'data-plane-detail-view',
-        params: {
-          mesh,
-          dataPlane: name,
-        },
-      }
-      const meshRoute = {
-        name: 'mesh-child',
-        params: {
-          mesh,
-        },
-      }
-
-      /**
+  /**
        * Handle our tag collections based on the dataplane type.
        */
-      const importantDataPlaneTagLabels = [
-        'kuma.io/protocol',
-        'kuma.io/service',
-        'kuma.io/zone',
-      ]
-      const tags = dpTags(dataplane).filter((tag) => importantDataPlaneTagLabels.includes(tag.label))
-      const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value
-      const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
-      const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+  const importantDataPlaneTagLabels = [
+    'kuma.io/protocol',
+    'kuma.io/service',
+    'kuma.io/zone',
+  ]
+  const tags = dpTags(dataPlaneOverview.dataplane).filter((tag) => importantDataPlaneTagLabels.includes(tag.label))
+  const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value
+  const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
+  const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
 
-      let serviceInsightRoute
-      if (service !== undefined) {
-        serviceInsightRoute = {
-          name: 'service-insight-detail-view',
-          params: {
-            mesh,
-            service,
-          },
-        }
-      }
-
-      const { status } = getStatus(dataplane, dataplaneInsight)
-
-      /**
-       * Iterate through the subscriptions
-       */
-
-      const { totalUpdates, totalRejectedUpdates, dpVersion, envoyVersion, selectedTime, selectedUpdateTime, version } =
-        subscriptions.reduce(
-          (acc, curr) => {
-            const { status = {}, connectTime, version = {} } = curr
-            const { total = {}, lastUpdateTime } = status
-            const { responsesSent = '0', responsesRejected = '0' } = total
-            const { kumaDp = {}, envoy = {} } = version
-            const { version: dpVersion } = kumaDp
-            const { version: envoyVersion } = envoy
-
-            let { selectedTime, selectedUpdateTime } = acc
-
-            const connectDate = Date.parse(connectTime)
-            const lastUpdateDate = Date.parse(lastUpdateTime)
-
-            if (connectDate) {
-              if (!selectedTime || connectDate > selectedTime) {
-                selectedTime = connectDate
-              }
-            }
-
-            if (lastUpdateDate) {
-              if (!selectedUpdateTime || lastUpdateDate > selectedUpdateTime) {
-                selectedUpdateTime = lastUpdateDate
-              }
-            }
-
-            return {
-              totalUpdates: acc.totalUpdates + parseInt(responsesSent, 10),
-              totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(responsesRejected, 10),
-              dpVersion: dpVersion || acc.dpVersion,
-              envoyVersion: envoyVersion || acc.envoyVersion,
-              selectedTime,
-              selectedUpdateTime,
-              version: version || acc.version,
-            }
-          },
-          {
-            totalUpdates: 0,
-            totalRejectedUpdates: 0,
-            dpVersion: '—',
-            envoyVersion: '—',
-            selectedTime: NaN,
-            selectedUpdateTime: NaN,
-            version: {},
-          },
-        )
-
-      // assemble the table data
-      const item = {
-        name,
-        nameRoute,
+  let serviceInsightRoute
+  if (service !== undefined) {
+    serviceInsightRoute = {
+      name: 'service-insight-detail-view',
+      params: {
         mesh,
-        meshRoute,
-        zone: zone ?? '—',
-        service: service ?? '—',
-        serviceInsightRoute,
-        protocol: protocol ?? '—',
-        status,
-        totalUpdates,
-        totalRejectedUpdates,
-        dpVersion,
-        envoyVersion,
-        warnings: [],
-        unsupportedEnvoyVersion: false,
-        unsupportedKumaDPVersion: false,
-        kumaDpAndKumaCpMismatch: false,
-        lastUpdated: selectedUpdateTime ? humanReadableDate(new Date(selectedUpdateTime).toUTCString()) : '—',
-        lastConnected: selectedTime ? humanReadableDate(new Date(selectedTime).toUTCString()) : '—',
-        type: getDataplaneType(dataplane),
-      }
+        service,
+      },
+    }
+  }
 
-      const { kind } = compatibilityKind(version)
+  const { status } = getStatus(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
 
-      if (kind !== COMPATIBLE) {
-        item.warnings.push(kind)
-      }
+  const initialData: any = {
+    totalUpdates: 0,
+    totalRejectedUpdates: 0,
+    dpVersion: null,
+    envoyVersion: null,
+    selectedTime: NaN,
+    selectedUpdateTime: NaN,
+    version: null,
+  }
 
-      switch (kind) {
-        case INCOMPATIBLE_UNSUPPORTED_ENVOY:
-          item.unsupportedEnvoyVersion = true
-          break
-        case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
-          item.unsupportedKumaDPVersion = true
-          break
-      }
-
-      if (this.multicluster) {
-        const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
-
-        if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
-          item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
-          item.kumaDpAndKumaCpMismatch = true
+  const summary = dataPlaneOverview.dataplaneInsight.subscriptions.reduce(
+    (acc, subscription) => {
+      if (subscription.connectTime) {
+        const connectDate = Date.parse(subscription.connectTime)
+        if (!acc.selectedTime || connectDate > acc.selectedTime) {
+          acc.selectedTime = connectDate
         }
       }
 
-      return item
+      const lastUpdateDate = Date.parse(subscription.status.lastUpdateTime)
+      if (lastUpdateDate) {
+        if (!acc.selectedUpdateTime || lastUpdateDate > acc.selectedUpdateTime) {
+          acc.selectedUpdateTime = lastUpdateDate
+        }
+      }
+
+      return {
+        totalUpdates: acc.totalUpdates + parseInt(subscription.status.total.responsesSent ?? '0', 10),
+        totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(subscription.status.total.responsesRejected ?? '0', 10),
+        dpVersion: subscription.version?.kumaDp.version || acc.dpVersion,
+        envoyVersion: subscription.version?.envoy.version || acc.envoyVersion,
+        selectedTime: acc.selectedTime,
+        selectedUpdateTime: acc.selectedUpdateTime,
+        version: subscription.version || acc.version,
+      }
     },
+    initialData,
+  )
 
-    /**
-     * @param {number} offset
-     */
-    async loadData(offset) {
-      this.isLoading = true
+  // assemble the table data
+  const item = {
+    name,
+    nameRoute,
+    mesh,
+    meshRoute,
+    zone: zone ?? '—',
+    service: service ?? '—',
+    serviceInsightRoute,
+    protocol: protocol ?? '—',
+    status,
+    totalUpdates: summary.totalUpdates,
+    totalRejectedUpdates: summary.totalRejectedUpdates,
+    dpVersion: summary.dpVersion ?? '—',
+    envoyVersion: summary.envoyVersion ?? '—',
+    warnings: [] as string[],
+    unsupportedEnvoyVersion: false,
+    unsupportedKumaDPVersion: false,
+    kumaDpAndKumaCpMismatch: false,
+    lastUpdated: summary.selectedUpdateTime ? humanReadableDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
+    lastConnected: summary.selectedTime ? humanReadableDate(new Date(summary.selectedTime).toUTCString()) : '—',
+    type: getDataplaneType(dataPlaneOverview.dataplane),
+  }
 
-      this.pageOffset = offset
+  if (summary.version) {
+    const { kind } = compatibilityKind(summary.version)
 
-      // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-      patchQueryParam('offset', offset > 0 ? offset : null)
+    if (kind !== COMPATIBLE) {
+      item.warnings.push(kind)
+    }
 
-      const mesh = this.$route.params.mesh || null
-      const query = this.$route.query.ns || null
+    switch (kind) {
+      case INCOMPATIBLE_UNSUPPORTED_ENVOY:
+        item.unsupportedEnvoyVersion = true
+        break
+      case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
+        item.unsupportedKumaDPVersion = true
+        break
+    }
+  }
 
-      try {
-        const { data, next } = await getTableData({
-          getSingleEntity: Kuma.getDataplaneOverviewFromMesh.bind(Kuma),
-          getAllEntities: Kuma.getAllDataplaneOverviews.bind(Kuma),
-          getAllEntitiesFromMesh: Kuma.getAllDataplaneOverviewsFromMesh.bind(Kuma),
-          size: this.pageSize,
-          offset,
-          mesh,
-          query,
-          params: { ...this.$options.dataplaneApiParams },
-        })
+  if (multicluster.value && summary.dpVersion) {
+    const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
-        if (data.length > 0) {
-          this.next = next
-          this.rawData = data
-          this.selectDataPlaneOverview(this.name ?? data[0].name)
+    if (zoneTag && typeof summary.version.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
+      item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
+      item.kumaDpAndKumaCpMismatch = true
+    }
+  }
 
-          const final = await Promise.all(data.map((item) => this.parseData(item)))
+  return item
+}
 
-          this.tableData.data = final
-          this.tableDataIsEmpty = false
-          this.isEmpty = false
+async function loadData(offset: number): Promise<void> {
+  isLoading.value = true
+
+  pageOffset.value = offset
+
+  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+  patchQueryParam('offset', offset > 0 ? offset : null)
+  const mesh = route.params.mesh as string || null
+
+  try {
+    const { items, next } = await fetchDataPlaneOverviews(mesh, PAGE_SIZE, offset)
+
+    if (items.length > 0) {
+      items.sort(function (overviewA, overviewB) {
+        if (overviewA.name === overviewB.name) {
+          return overviewA.mesh > overviewB.mesh ? 1 : -1
         } else {
-          this.selectDataPlaneOverview(null)
-          this.tableData.data = []
-          this.tableDataIsEmpty = true
-          this.isEmpty = true
+          return overviewA.name.localeCompare(overviewB.name)
         }
-      } catch (e) {
-        this.hasError = true
-        this.isEmpty = true
+      })
+      nextUrl.value = next
+      rawData.value = items
+      selectDataPlaneOverview(props.name ?? items[0].name)
 
-        console.error(e)
-      } finally {
-        this.isLoading = false
-      }
-    },
+      const final = await Promise.all(rawData.value.map((item) => parseData(item)))
 
-    async selectDataPlaneOverview(name) {
-      if (name) {
-        this.dataPlaneOverview = this.rawData.find((data) => data.name === name) ?? this.rawData[0]
-        patchQueryParam('name', this.dataPlaneOverview.name)
-      } else {
-        this.dataPlaneOverview = null
-        patchQueryParam('name', null)
-      }
-    },
-  },
+      tableData.value.data = final
+      tableDataIsEmpty.value = false
+      isEmpty.value = false
+    } else {
+      selectDataPlaneOverview(null)
+      tableData.value.data = []
+      tableDataIsEmpty.value = true
+      isEmpty.value = true
+    }
+  } catch (err) {
+    hasError.value = true
+    isEmpty.value = true
+
+    console.error(err)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+function fetchDataPlaneOverviews(mesh: string | null, size: number, offset: number): Promise<ApiListResponse<DataPlaneOverview>> {
+  if (mesh === 'all' || mesh === null) {
+    return Kuma.getAllDataplaneOverviews({ size, offset })
+  } else {
+    return Kuma.getAllDataplaneOverviewsFromMesh({ mesh })
+  }
+}
+
+function selectDataPlaneOverview(name: string | null): void {
+  if (name && rawData.value.length > 0) {
+    dataPlaneOverview.value = rawData.value.find((data) => data.name === name) ?? rawData.value[0]
+    patchQueryParam('name', dataPlaneOverview.value.name)
+  } else {
+    dataPlaneOverview.value = null
+    patchQueryParam('name', null)
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.data-planes-container {
-  display: flex;
-  // Allows the contained flex items to wrap when their size needs can’t be satisfied any longer.
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: var(--spacing-lg);
-}
-
-.data-planes-content {
-  flex-basis: 0;
-  flex-grow: 999;
-  // Sets the minimum size of the content element. Effectively, this behaves as a trigger for the flex items to wrap. Once this element can would take up less space that this size, the items will wrap because this element’s sizing requirements are no longer met.
-  min-inline-size: 66.666%;
-}
-
-.data-planes-sidebar {
-  // Ensures this element always takes up a minimum size but never more than 100%.
-  flex-basis: min(60ch, 100%);
-  // Let’s the element take up all available space. Applies when the content and the sidebar wrap.
-  flex-grow: 1;
-  min-inline-size: 0;
-  background-color: var(--white);
-
-  @media (min-width: 1600px) {
-    // Makes sidebar stick to the viewport while taking into account the height of the fixed top bar.
-    position: sticky;
-    top: calc(var(--topbar-height) + var(--spacing-lg));
-    bottom: var(--spacing-lg);
-  }
-}
-
 .add-dp-button.add-dp-button {
   background-color: var(--logo-green);
 }

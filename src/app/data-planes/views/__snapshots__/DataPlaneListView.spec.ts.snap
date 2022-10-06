@@ -2,11 +2,12 @@
 
 exports[`DataPlaneListView.vue matches snapshot 1`] = `
 <div
-  class="data-planes-container"
+  class="content-wrapper"
 >
   <div
-    class="data-planes-content component-frame"
+    class="content-wrapper__content component-frame"
   >
+    
     <div
       class="data-overview"
       data-testid="data-overview"
@@ -2165,10 +2166,12 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
         <!--v-if-->
       </div>
     </div>
+    
   </div>
   <div
-    class="data-planes-sidebar component-frame"
+    class="content-wrapper__sidebar component-frame"
   >
+    
     <div
       class="entity-summary entity-section-list"
     >
@@ -2642,6 +2645,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
       </section>
       
     </div>
+    
   </div>
 </div>
 `;
