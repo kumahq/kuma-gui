@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NavItem.vue renders snapshot with link to selected mesh 1`] = `
+exports[`AppNavItem.vue renders snapshot with link to selected mesh 1`] = `
 <div
   class="nav-item nav-item--is-link"
   data-testid="data-plane-list-view"

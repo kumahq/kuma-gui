@@ -14,6 +14,7 @@
           <div>
             <strong>Welcome to {{ PRODUCT_NAME }}!</strong> We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you!
           </div>
+
           <div>
             <KButton
               appearance="primary"
@@ -21,7 +22,7 @@
               class="action-button"
               :to="{ name: 'onboarding-welcome' }"
             >
-              Get Started
+              Get started
             </KButton>
           </div>
         </div>

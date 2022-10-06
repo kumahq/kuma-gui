@@ -254,10 +254,125 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                       >
                         <!-- eslint-disable vue/no-v-html -->
                         <pre
-                          class="highlighted-code-block"
+                          class="highlighted-code-block line-numbers language-bash"
                           data-testid="highlighted-code-block"
+                          tabindex="0"
                         >
-                          <code />
+                          <code
+                            class="language-bash"
+                          >
+                            kuma-dp run 
+                            <span
+                              class="token punctuation"
+                            >
+                              \\
+                            </span>
+                            
+      --cp-address
+                            <span
+                              class="token operator"
+                            >
+                              =
+                            </span>
+                            https://localhost:5678/ 
+                            <span
+                              class="token punctuation"
+                            >
+                              \\
+                            </span>
+                            
+      
+                            <span
+                              class="token parameter variable"
+                            >
+                              --dataplane
+                            </span>
+                            <span
+                              class="token operator"
+                            >
+                              =
+                            </span>
+                            <span
+                              class="token string"
+                            >
+                              "type: Dataplane
+mesh: testMesh
+name: testMesh-4fzzzxtestMesh
+networking: 
+  address: 12
+  inbound: 
+    - port: 1
+      servicePort: 1
+      serviceAddress: 127.0.0.1
+      tags: 
+        kuma.io/service: testMesh
+        kuma.io/protocol: tcp"
+                            </span>
+                             
+                            <span
+                              class="token punctuation"
+                            >
+                              \\
+                            </span>
+                            
+      --dataplane-token-file
+                            <span
+                              class="token operator"
+                            >
+                              =
+                            </span>
+                            kuma-token-testMesh-4fzzzxtestMesh
+                            <span
+                              aria-hidden="true"
+                              class="line-numbers-rows"
+                            >
+                              <span
+                                data-line="1"
+                              />
+                              <span
+                                data-line="2"
+                              />
+                              <span
+                                data-line="3"
+                              />
+                              <span
+                                data-line="4"
+                              />
+                              <span
+                                data-line="5"
+                              />
+                              <span
+                                data-line="6"
+                              />
+                              <span
+                                data-line="7"
+                              />
+                              <span
+                                data-line="8"
+                              />
+                              <span
+                                data-line="9"
+                              />
+                              <span
+                                data-line="10"
+                              />
+                              <span
+                                data-line="11"
+                              />
+                              <span
+                                data-line="12"
+                              />
+                              <span
+                                data-line="13"
+                              />
+                              <span
+                                data-line="14"
+                              />
+                              <span
+                                data-line="15"
+                              />
+                            </span>
+                          </code>
                         </pre>
                         <!-- eslint-enable vue/no-v-html -->
                         

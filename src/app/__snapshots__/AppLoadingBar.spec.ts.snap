@@ -1,13 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`KLoader.vue renders snapshot at the beginning 1`] = `
+exports[`AppLoadingBar renders snapshot at the beginning 1`] = `
 <div>
   <div
     class="loading-container"
   >
-    <img
-      src=""
-    />
+    <img />
     <div
       class="progress"
     >

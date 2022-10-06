@@ -1,6 +1,7 @@
 <template>
   <div class="loading-container">
     <img src="@/assets/images/kuma-loader-v1.gif">
+
     <div class="progress">
       <div
         :style="{ width: `${progress}%` }"
@@ -11,30 +12,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      timer: null,
-      progress: 10,
+<script lang="ts" setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+let timer: number
+const progress = ref<number>(10)
+
+onMounted(function () {
+  timer = window.setInterval(() => {
+    if (progress.value >= 100) {
+      window.clearInterval(timer)
+      progress.value = 100
     }
-  },
 
-  mounted() {
-    this.timer = setInterval(() => {
-      if (this.progress >= 100) {
-        clearInterval(this.timer)
-        this.progress = 100
-      }
+    progress.value = Math.min(progress.value + Math.ceil(Math.random() * 30), 100)
+  }, 150)
+})
 
-      this.progress = Math.min(this.progress + Math.ceil(Math.random(10) * 30), 100)
-    }, 150)
-  },
-
-  unmounted() {
-    clearInterval(this.timer)
-  },
-}
+onUnmounted(function () {
+  window.clearInterval(timer)
+})
 </script>
 
 <style lang="scss" scoped>

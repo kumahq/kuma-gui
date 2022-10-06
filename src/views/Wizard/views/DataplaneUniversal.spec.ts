@@ -1,3 +1,4 @@
+import { flushPromises } from '@vue/test-utils'
 import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { rest } from 'msw'
@@ -108,7 +109,16 @@ describe('DataplaneUniversal.vue', () => {
     await userEvent.type(getByLabelText('Data Plane Port:'), '1')
     await userEvent.click(getByText('Next ›'))
 
-    await findByText(/kumactl/)
+    expect(getByText('Auto-Inject DPP')).toBeInTheDocument()
+
+    // Well this is annoying. Since the code blocks have some timer-based mechanisms (necessary debouncing), we need to wait some ticks. However, we can’t use fake timers here because they seem to conflict with testing library.
+    await flushPromises()
+    await flushPromises()
+    await flushPromises()
+    await flushPromises()
+    const codeBlocks = container.querySelectorAll('.code-block')
+    expect(codeBlocks[0]?.innerHTML).toContain('kumactl')
+    expect(codeBlocks[1]?.innerHTML).toContain('kuma-dp')
 
     expect(container).toMatchSnapshot()
   })
