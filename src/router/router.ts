@@ -15,7 +15,7 @@ function getPolicyRoutes(policies: Policy[]): RouteRecordRaw[] {
     props: {
       policyPath: policy.path,
     },
-    component: () => import('@/views/Policies/PolicyView.vue'),
+    component: () => import('@/app/policies/PolicyView.vue'),
   }))
 }
 

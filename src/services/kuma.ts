@@ -8,6 +8,7 @@ import {
   Mesh,
   MeshInsight,
   Policy,
+  PolicyEntity,
   ServiceInsight,
   Zone,
   ZoneOverview,
@@ -283,15 +284,15 @@ class Kuma {
    * Policies
    */
 
-  public getAllPolicyEntities({ path }: ApiDefaultPolicyOptions = defaultOptions, params?: any) {
+  public getAllPolicyEntities({ path }: ApiDefaultPolicyOptions = defaultOptions, params?: any): Promise<ApiListResponse<PolicyEntity>> {
     return this.client.get(path, { params })
   }
 
-  public getAllPolicyEntitiesFromMesh({ mesh, path }: ApiDefaultPolicyOptions = defaultOptions, params?: any) {
+  public getAllPolicyEntitiesFromMesh({ mesh, path }: ApiDefaultPolicyOptions = defaultOptions, params?: any): Promise<ApiListResponse<PolicyEntity>> {
     return this.client.get(`meshes/${mesh}/${path}`, { params })
   }
 
-  public getSinglePolicyEntity({ mesh, path, name }: ApiDefaultPolicyOptions = defaultOptions, params?: any) {
+  public getSinglePolicyEntity({ mesh, path, name }: ApiDefaultPolicyOptions = defaultOptions, params?: any): Promise<PolicyEntity> {
     return this.client.get(`meshes/${mesh}/${path}/${name}`, { params })
   }
 }

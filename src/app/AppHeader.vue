@@ -102,8 +102,8 @@ import { useRoute } from 'vue-router'
 import { KBadge, KButton, KPop } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import NotificationIcon from './NotificationIcon.vue'
 import Kuma from '@/services/kuma'
+import NotificationIcon from '@/components/Global/NotificationIcon.vue'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck.vue'
 
 const route = useRoute()

@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { mount } from '@vue/test-utils'
 
-import NavItem from './NavItem.vue'
+import AppNavItem from './AppNavItem.vue'
 import { store, storeKey } from '@/store/store'
 
 const router = createRouter({
@@ -21,7 +21,7 @@ const router = createRouter({
 })
 
 function renderComponent() {
-  return mount(NavItem, {
+  return mount(AppNavItem, {
     props: {
       name: 'All',
       link: 'data-plane-list-view',
@@ -34,7 +34,7 @@ function renderComponent() {
   })
 }
 
-describe('NavItem.vue', () => {
+describe('AppNavItem.vue', () => {
   it('renders snapshot with link to selected mesh', () => {
     const wrapper = renderComponent()
 

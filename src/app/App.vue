@@ -3,13 +3,13 @@
     v-if="isLoading"
     class="full-screen"
   >
-    <KLoader />
+    <AppLoadingBar />
   </div>
 
   <template v-else>
-    <GlobalHeader />
+    <AppHeader />
 
-    <div v-if="store.getters['onboarding/showOnboarding']">
+    <div v-if="shouldShowOnboarding">
       <router-view />
     </div>
 
@@ -26,13 +26,13 @@
           'app-main-content--narrow': !isWideContent,
         }"
       >
-        <ApiErrorMessage v-if="store.state.config.status !== 'OK'" />
+        <AppErrorMessage v-if="store.state.config.status !== 'OK'" />
 
         <NotificationManager />
 
-        <OnboardingNotification v-if="store.getters['onboarding/showOnboarding']" />
+        <AppOnboardingNotification v-if="shouldShowOnboarding" />
 
-        <BreadcrumbsMenu />
+        <AppBreadcrumbs />
 
         <router-view
           :key="routeKey"
@@ -60,13 +60,13 @@ import { onBeforeMount, onUnmounted, computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useStore } from '@/store/store'
-import ApiErrorMessage from '@/components/Skeletons/ApiErrorMessage.vue'
-import AppSidebar from '@/components/Sidebar/AppSidebar.vue'
-import BreadcrumbsMenu from '@/components/BreadcrumbsMenu.vue'
-import GlobalHeader from '@/components/Global/GlobalHeader.vue'
-import KLoader from '@/components/KLoader.vue'
+import AppBreadcrumbs from './AppBreadcrumbs.vue'
+import AppErrorMessage from './AppErrorMessage.vue'
+import AppHeader from './AppHeader.vue'
+import AppLoadingBar from './AppLoadingBar.vue'
+import AppOnboardingNotification from './AppOnboardingNotification.vue'
+import AppSidebar from './AppSidebar.vue'
 import NotificationManager from '@/components/NotificationManager/NotificationManager.vue'
-import OnboardingNotification from '@/components/NotificationManager/components/OnboardingNotification.vue'
 
 const store = useStore()
 const route = useRoute()
@@ -79,10 +79,10 @@ const timeout = ref<number | null>(null)
  *
  * Is always set to `'default'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
  * However, in some scenarios, we want Vue to re-render a route’s components
- * (e.g. `src/views/Policies/PolicyView.vue` which is used by some dozen policy routes).
+ * (e.g. `src/app/policies/PolicyView.vue` which is used by some dozen policy routes).
  */
 const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'default')
-
+const shouldShowOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
 const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view'].includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {

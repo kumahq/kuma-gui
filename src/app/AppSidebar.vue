@@ -2,10 +2,10 @@
   <div class="app-sidebar-wrapper">
     <aside class="app-sidebar">
       <div class="mt-3">
-        <MeshSelector :items="meshList" />
+        <AppMeshSelector :items="meshList" />
       </div>
 
-      <NavItem
+      <AppNavItem
         v-for="(item, index) in navItems"
         :key="index"
         v-bind="item"
@@ -18,9 +18,9 @@
 import { computed, watch } from 'vue'
 
 import { useStore } from '@/store/store'
-import MeshSelector from '@/components/Utils/MeshSelector.vue'
-import NavItem from '@/components/Sidebar/NavItem.vue'
-import { getNavItems } from '@/components/Sidebar/menu'
+import AppMeshSelector from './AppMeshSelector.vue'
+import AppNavItem from './AppNavItem.vue'
+import { getNavItems } from './getNavItems'
 
 const store = useStore()
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OnboardingNotification.vue renders snapshot 1`] = `
+exports[`AppOnboardingNotification renders snapshot 1`] = `
 <div
   class="onboarding-check"
 >
@@ -41,7 +41,7 @@ exports[`OnboardingNotification.vue renders snapshot 1`] = `
               <!---->
               
               
-               Get Started 
+               Get started 
               
               <!---->
             </router-link>

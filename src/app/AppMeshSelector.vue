@@ -4,6 +4,7 @@
       <h3 class="menu-title uppercase">
         Filter by Mesh:
       </h3>
+
       <select
         id="mesh-selector"
         class="mesh-selector"
@@ -12,20 +13,22 @@
       >
         <option
           value="all"
-          :selected="'all' === selectedMesh"
+          :selected="'all' === store.state.selectedMesh"
         >
           All Meshes
         </option>
+
         <option
           v-for="item in items.items"
           :key="item.name"
           :value="item.name"
-          :selected="item.name === selectedMesh"
+          :selected="item.name === store.state.selectedMesh"
         >
           {{ item.name }}
         </option>
       </select>
     </div>
+
     <KAlert
       v-else
       appearance="danger"
@@ -34,39 +37,33 @@
   </div>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script lang="ts" setup>
+import { useRoute, useRouter } from 'vue-router'
 import { KAlert } from '@kong/kongponents'
 
-export default {
-  name: 'MeshSelector',
-  components: {
-    KAlert,
-  },
-  props: {
-    items: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapState({
-      selectedMesh: (state) => state.selectedMesh,
-    }),
-  },
-  methods: {
-    changeMesh(event) {
-      const mesh = event.target.value
+import { useStore } from '@/store/store'
 
-      // update the selected mesh in the store
-      this.$store.dispatch('updateSelectedMesh', mesh)
+const route = useRoute()
+const router = useRouter()
+const store = useStore()
 
-      this.$router.push({
-        name: this.$route.name,
-        params: 'mesh' in this.$route.params ? { mesh } : undefined,
-      })
-    },
+defineProps({
+  items: {
+    type: Object,
+    required: true,
   },
+})
+
+function changeMesh(event: Event): void {
+  const select = event.target as HTMLSelectElement
+  const mesh = select.value
+
+  store.dispatch('updateSelectedMesh', mesh)
+
+  router.push({
+    name: route.name as string,
+    params: 'mesh' in route.params ? { mesh } : undefined,
+  })
 }
 </script>
 

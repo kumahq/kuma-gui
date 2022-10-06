@@ -299,3 +299,5 @@ export interface MeshInsight extends Entity {
   }
   services: Record<string, number>
 }
+
+export interface PolicyEntity extends MeshEntity {}

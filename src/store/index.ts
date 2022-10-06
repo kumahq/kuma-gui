@@ -72,8 +72,8 @@ const initialState = {
   externalServicesFetching: false,
   zonesInsightsFetching: false,
   policies: [] as Policy[],
-  policiesByPath: {},
-  policiesByType: {},
+  policiesByPath: {} as Record<string, Policy>,
+  policiesByType: {} as Record<string, Policy>,
 }
 
 export type State = typeof initialState & {

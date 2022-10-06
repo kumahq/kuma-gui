@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils'
 
 import { store, storeKey } from '@/store/store'
-import OnboardingNotification from './OnboardingNotification.vue'
+import AppOnboardingNotification from './AppOnboardingNotification.vue'
 
-describe('OnboardingNotification.vue', () => {
+describe('AppOnboardingNotification', () => {
   it('renders snapshot', () => {
-    const wrapper = mount(OnboardingNotification, {
+    const wrapper = mount(AppOnboardingNotification, {
       global: {
         plugins: [[store, storeKey]],
       },
