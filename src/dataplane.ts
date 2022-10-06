@@ -1,6 +1,5 @@
 import { humanReadableDate } from '@/helpers'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, KUMA_ZONE_TAG_NAME } from '@/consts'
-import Kuma from '@/services/kuma'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
 import {
   Compatibility,
   DataPlaneEntityMtls,
@@ -164,36 +163,6 @@ export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLI
   return {
     status: status(),
   }
-}
-
-export async function checkKumaDpAndZoneVersionsMismatch(tags: LabelValue[], dpVersion: string) {
-  const tag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
-
-  if (tag) {
-    try {
-      const response = (await Kuma.getZoneOverview({ name: tag.value })) || {}
-      const { subscriptions = [] } = response.zoneInsight
-
-      if (subscriptions.length) {
-        const { version = {} } = subscriptions[subscriptions.length - 1]
-        const { kumaCp = {} } = version
-
-        return {
-          compatible: dpVersion === kumaCp.version,
-          payload: {
-            zoneVersion: kumaCp.version,
-            kumaDp: dpVersion,
-          },
-        }
-      }
-
-      return { compatible: true }
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  return { compatible: true }
 }
 
 export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {

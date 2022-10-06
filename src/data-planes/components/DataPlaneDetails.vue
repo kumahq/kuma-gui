@@ -211,7 +211,6 @@ import {
   DataPlaneOverview,
 } from '@/types'
 import {
-  checkKumaDpAndZoneVersionsMismatch,
   compatibilityKind,
   COMPATIBLE,
   dpTags,
@@ -221,7 +220,7 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/dataplane'
-import { PRODUCT_NAME } from '@/consts'
+import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/consts'
 import { stripTimes } from '@/helpers'
 import { useStore } from '@/store/store'
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
@@ -320,7 +319,7 @@ const kumaDocsVersion = computed(() => {
 
 const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)
 
-async function setWarnings() {
+function setWarnings() {
   const subscriptions = props.dataPlaneOverview.dataplaneInsight.subscriptions
 
   if (subscriptions.length === 0 || !('version' in subscriptions[0])) {
@@ -341,12 +340,14 @@ async function setWarnings() {
 
   if (isMulticluster) {
     const tags = dpTags(props.dataPlane)
-    const { compatible, payload } = await checkKumaDpAndZoneVersionsMismatch(tags, version.kumaDp.version)
+    const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
-    if (!compatible) {
+    if (zoneTag && typeof version.kumaDp.kumaCpCompatible === 'boolean' && !version.kumaDp.kumaCpCompatible) {
       warnings.value.push({
         kind: INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
-        payload,
+        payload: {
+          kumaDp: version.kumaDp.version,
+        },
       })
     }
   }

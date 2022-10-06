@@ -5,14 +5,11 @@
   </span>
 </template>
 
-<script>
-export default {
-  name: 'WarningZoneAndGlobalCPSVersionsIncompatible',
-  props: {
-    payload: {
-      type: Object,
-      required: true,
-    },
+<script lang="ts" setup>
+defineProps({
+  payload: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
