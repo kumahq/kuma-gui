@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
 
-// Polyfills `window.fetch` for Jest because it’s run in a Node environment where fetch isn’t available.
+// Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
 
 import dotenv from 'dotenv'

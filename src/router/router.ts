@@ -379,7 +379,7 @@ export async function setupRouter() {
    */
 
   router.beforeEach(async (to, from, next) => {
-    // This below is to make sure the inital calls have been fulfilled and it does not try to
+    // This below is to make sure the initial calls have been fulfilled and it does not try to
     // access any route before it will be resolved
     while (store.getters.globalLoading) {
       await new Promise(resolve => {
@@ -389,30 +389,26 @@ export async function setupRouter() {
       })
     }
 
-    const showOnboarding = store.getters['onboarding/showOnboarding']
-    const isCompleted = store.state.onboarding.isCompleted
-    const onboardingRoute = to.meta.onboardingProcess
+    const isOnboardingCompleted = store.state.onboarding.isCompleted
+    const isOnboardingRoute = to.meta.onboardingProcess
+    const shouldSuggestOnboarding = store.getters['onboarding/showOnboarding']
 
-    // Redirects user to home page if they try to navigate to an onboarding route while having already completed onboarding.
-    if (!showOnboarding && onboardingRoute) {
+    if (isOnboardingCompleted && isOnboardingRoute && !shouldSuggestOnboarding) {
+      // Redirects user to home page if they try to navigate to an onboarding route while having already completed onboarding. An exception is made when we suggest onboarding for users who don’t have data plane proxies, yet (we show an alert suggesting it and allow going to the onboarding again).
       next({
         name: 'global-overview',
         params: {
           mesh: store.state.selectedMesh,
         },
       })
-      return
-    }
-
-    // Redirects user to the appropriate onboarding page if they navigate to a non-onboarding route while not having previously completed onboarding.
-    if (showOnboarding && !onboardingRoute && !isCompleted) {
+    } else if (!isOnboardingCompleted && !isOnboardingRoute && shouldSuggestOnboarding) {
+      // Redirects user to the appropriate onboarding page if they navigate to a non-onboarding route while not having previously completed onboarding.
       const name = Storage.get('onboardingStep') || 'onboarding-welcome'
 
       next({ name })
-      return
+    } else {
+      next()
     }
-
-    next()
   })
 
   return router

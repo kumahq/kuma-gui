@@ -2004,19 +2004,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Create a virtual Mesh"
         class="border kong-card card-item"
-        data-v-52c90d54=""
+        data-v-1f0d90ac=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             <h4
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               
               Create a virtual Mesh
@@ -2025,7 +2025,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             
             
@@ -2034,11 +2034,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <div
             class="k-card-body"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -2081,19 +2081,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Connect data plane proxies"
         class="border kong-card card-item"
-        data-v-52c90d54=""
+        data-v-1f0d90ac=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             <h4
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               
               Connect data plane proxies
@@ -2102,7 +2102,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             
             
@@ -2111,11 +2111,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <div
             class="k-card-body"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -2154,19 +2154,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Apply null policies"
         class="border kong-card card-item"
-        data-v-52c90d54=""
+        data-v-1f0d90ac=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             <h4
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               
               Apply null policies
@@ -2175,7 +2175,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             
             
@@ -2184,11 +2184,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <div
             class="k-card-body"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -2228,19 +2228,19 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         aria-label="Resources"
         class="border kong-card card-item"
-        data-v-52c90d54=""
+        data-v-1f0d90ac=""
       >
         <div
           class="k-card-header d-flex mb-3"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <!---->
           <div
             class="k-card-title mb-3"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             <h4
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               
               Resources
@@ -2249,7 +2249,7 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
           </div>
           <div
             class="k-card-actions"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             
             
@@ -2258,11 +2258,11 @@ exports[`OverviewView.vue renders basic snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <div
             class="k-card-body"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             

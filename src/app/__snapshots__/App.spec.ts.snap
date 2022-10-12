@@ -37,8 +37,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <div
             aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-            aria-expanded="false"
-            data-v-9bbde9b2=""
+            data-v-814c880a=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             role="button"
           >
@@ -60,13 +59,13 @@ exports[`App.vue fails to renders basic view 1`] = `
             <transition-stub
               appear="false"
               css="true"
-              data-v-9bbde9b2=""
+              data-v-814c880a=""
               name="fade"
               persisted="false"
             >
               <div
                 class="k-popover"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="region"
                 style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -74,7 +73,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                 <!---->
                 <div
                   class="k-popover-content"
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                 >
                   
                   <div>
@@ -130,7 +129,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             >
               <span
                 class="kong-icon-notificationBell kong-icon"
-                data-v-637de6fa=""
+                data-v-71cfcfc4=""
               >
                 <svg
                   fill="var(--yellow-300)"
@@ -167,7 +166,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <a>
               <span
                 class="kong-icon-gearFilled kong-icon"
-                data-v-637de6fa=""
+                data-v-71cfcfc4=""
               >
                 <svg
                   height="16"
@@ -509,7 +508,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <span
               class="info kong-icon-close kong-icon"
               data-v-1910ef98=""
-              data-v-637de6fa=""
+              data-v-71cfcfc4=""
             >
               <svg
                 fill="info"
@@ -568,7 +567,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           </a>
           <span
             class="kong-icon-chevronRight kong-icon"
-            data-v-637de6fa=""
+            data-v-71cfcfc4=""
             data-v-a87af1c0=""
           >
             <svg

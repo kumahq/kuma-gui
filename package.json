@@ -18,7 +18,7 @@
     "@amcharts/amcharts4": "^4.10.27",
     "@appscode/json2yaml": "^0.1.2",
     "@datadog/browser-logs": "^4.19.0",
-    "@kong/kongponents": "8.0.0-beta.15",
+    "@kong/kongponents": "8.0.0-beta.36",
     "prismjs": "^1.29.0",
     "semver": "^7.3.7",
     "semver-compare": "^1.0.0",
@@ -77,8 +77,7 @@
     "last 2 versions"
   ],
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=8.0.0",
+    "node": ">=18.0.0",
     "yarn": "^1.22.0"
   },
   "msw": {

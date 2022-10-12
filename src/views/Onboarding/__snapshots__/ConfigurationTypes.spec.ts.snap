@@ -162,8 +162,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -195,25 +194,25 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                 >
                   <foreignobject
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                   >
                     <div
                       class="k-popover"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                         >
                           
                           Yaml
@@ -223,7 +222,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         
                          Configuration for all Kuma resources is specified in YAML config files. The config files can be stored in an external datastore. 
@@ -236,8 +235,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -269,25 +267,25 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                 >
                   <foreignobject
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                   >
                     <div
                       class="k-popover"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                         >
                           
                           Kuma
@@ -297,7 +295,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         
                          In Kubernetes mode, the Kuma control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh. 
@@ -310,8 +308,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -343,25 +340,25 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                 >
                   <foreignobject
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                   >
                     <div
                       class="k-popover"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                         >
                           
                           Kubernetes
@@ -371,7 +368,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         
                          You can store the YAML config files for Kuma in etcd, the native datastore for Kubernetes. 

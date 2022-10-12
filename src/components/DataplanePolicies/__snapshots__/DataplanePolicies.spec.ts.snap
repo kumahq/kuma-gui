@@ -10,17 +10,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       <section
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         class="noBorder kong-card"
-        data-v-52c90d54=""
+        data-v-1f0d90ac=""
       >
         <!---->
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <div
             class="k-card-body"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             
@@ -56,15 +56,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -95,13 +94,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -109,7 +108,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>
@@ -246,15 +245,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -285,13 +283,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -299,7 +297,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>
@@ -366,15 +364,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -405,13 +402,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -419,7 +416,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>
@@ -486,15 +483,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -525,13 +521,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -539,7 +535,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>
@@ -606,15 +602,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -645,13 +640,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -659,7 +654,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>
@@ -726,15 +721,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -765,13 +759,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -779,7 +773,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>
@@ -846,15 +840,14 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         </span>
                         <div
                           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          aria-expanded="false"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                           role="button"
                         >
                           
                           <span
                             class="ml-1 kong-icon-help kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               fill="none"
@@ -885,13 +878,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <transition-stub
                             appear="false"
                             css="true"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             name="fade"
                             persisted="false"
                           >
                             <div
                               class="k-popover"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                               role="region"
                               style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -899,7 +892,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                               <!---->
                               <div
                                 class="k-popover-content"
-                                data-v-9bbde9b2=""
+                                data-v-814c880a=""
                               >
                                 
                                 <div>

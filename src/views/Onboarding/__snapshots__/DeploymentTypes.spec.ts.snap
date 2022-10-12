@@ -137,8 +137,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
               />
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -170,25 +169,25 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                 >
                   <foreignobject
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                   >
                     <div
                       class="k-popover"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                         >
                           
                           Kuma
@@ -198,7 +197,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         
                          The control plane provides the config for all services in the mesh. 
@@ -211,8 +210,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -244,25 +242,25 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                 >
                   <foreignobject
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                   >
                     <div
                       class="k-popover"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                         >
                           
                           Data Plane Proxy (DPP)
@@ -272,7 +270,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         
                         Kuma attaches a data plane proxy sidecar to each service in your mesh. This sidecar handles the mesh configuration for the service. 
