@@ -45,39 +45,39 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
               class="w-full sm:w-3/5 lg:w-2/5 p-4"
             >
               <div
-                data-v-54b66ee0=""
+                data-v-222fefa6=""
                 is-small=""
               >
                 <section
                   class="k-table-wrapper"
-                  data-v-54b66ee0=""
+                  data-v-222fefa6=""
                 >
                   <table
                     class="has-hover k-table"
                     data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <thead
                       class=""
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       <tr
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         <th
                           class=""
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             
                             <span
                               class=""
-                              data-v-54b66ee0=""
+                              data-v-222fefa6=""
                             >
                               Name
                             </span>
@@ -87,16 +87,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                         </th>
                         <th
                           class=""
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             
                             <span
                               class=""
-                              data-v-54b66ee0=""
+                              data-v-222fefa6=""
                             >
                               Services
                             </span>
@@ -106,16 +106,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                         </th>
                         <th
                           class=""
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             
                             <span
                               class=""
-                              data-v-54b66ee0=""
+                              data-v-222fefa6=""
                             >
                               DPPs
                             </span>
@@ -127,29 +127,29 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                       </tr>
                     </thead>
                     <tbody
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <tr
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         <td
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           default
                           
                         </td>
                         <td
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           0
                           
                         </td>
                         <td
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           0

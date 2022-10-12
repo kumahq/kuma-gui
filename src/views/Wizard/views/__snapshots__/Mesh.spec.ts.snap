@@ -140,11 +140,11 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                       >
                         <div
                           class="k-tabs"
-                          data-v-6bcd6661=""
+                          data-v-b0b5f6ae=""
                         >
                           <ul
-                            aria-label="ktabs"
-                            data-v-6bcd6661=""
+                            aria-label="Tabs"
+                            data-v-b0b5f6ae=""
                             role="tablist"
                           >
                             
@@ -152,14 +152,14 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                               aria-controls="panel-0"
                               aria-selected="false"
                               class="tab-item"
-                              data-v-6bcd6661=""
+                              data-v-b0b5f6ae=""
                               id="kubernetes-tab"
                               role="tab"
                               tabindex="0"
                             >
                               <a
                                 class="tab-link"
-                                data-v-6bcd6661=""
+                                data-v-b0b5f6ae=""
                               >
                                 
                                 Kubernetes
@@ -170,14 +170,14 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                               aria-controls="panel-1"
                               aria-selected="true"
                               class="active tab-item"
-                              data-v-6bcd6661=""
+                              data-v-b0b5f6ae=""
                               id="universal-tab"
                               role="tab"
                               tabindex="0"
                             >
                               <a
                                 class="tab-link"
-                                data-v-6bcd6661=""
+                                data-v-b0b5f6ae=""
                               >
                                 
                                 Universal
@@ -190,7 +190,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                           <div
                             aria-labelledby="kubernetes-tab"
                             class="tab-container"
-                            data-v-6bcd6661=""
+                            data-v-b0b5f6ae=""
                             id="panel-0"
                             role="tabpanel"
                             tabindex="0"
@@ -200,7 +200,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                           <div
                             aria-labelledby="universal-tab"
                             class="tab-container"
-                            data-v-6bcd6661=""
+                            data-v-b0b5f6ae=""
                             id="panel-1"
                             role="tabpanel"
                             tabindex="0"
@@ -382,8 +382,7 @@ metrics:
                                 
                                 <div
                                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                                  aria-expanded="false"
-                                  data-v-9bbde9b2=""
+                                  data-v-814c880a=""
                                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                   role="button"
                                 >
@@ -394,7 +393,7 @@ metrics:
                                   >
                                     <span
                                       class="kong-icon-copy kong-icon"
-                                      data-v-637de6fa=""
+                                      data-v-71cfcfc4=""
                                     >
                                       <svg
                                         height="24"
@@ -430,13 +429,13 @@ metrics:
                                   <transition-stub
                                     appear="false"
                                     css="true"
-                                    data-v-9bbde9b2=""
+                                    data-v-814c880a=""
                                     name="fade"
                                     persisted="false"
                                   >
                                     <div
                                       class="k-popover"
-                                      data-v-9bbde9b2=""
+                                      data-v-814c880a=""
                                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                                       role="region"
                                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -444,7 +443,7 @@ metrics:
                                       <!---->
                                       <div
                                         class="k-popover-content"
-                                        data-v-9bbde9b2=""
+                                        data-v-814c880a=""
                                       >
                                         
                                         <p>
@@ -494,7 +493,7 @@ metrics:
                             >
                               <span
                                 class="kong-icon-spinner kong-icon"
-                                data-v-637de6fa=""
+                                data-v-71cfcfc4=""
                               >
                                 <svg
                                   fill="rgba(0, 0, 0, 0.1)"

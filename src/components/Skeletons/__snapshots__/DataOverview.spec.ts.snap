@@ -194,29 +194,29 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
 <table
   class="has-hover is-clickable k-table"
   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-  data-v-54b66ee0=""
+  data-v-222fefa6=""
 >
   <thead
     class=""
-    data-v-54b66ee0=""
+    data-v-222fefa6=""
   >
     <tr
       class=""
-      data-v-54b66ee0=""
+      data-v-222fefa6=""
     >
       
       <th
         class=""
-        data-v-54b66ee0=""
+        data-v-222fefa6=""
       >
         <span
           class="d-flex align-items-center"
-          data-v-54b66ee0=""
+          data-v-222fefa6=""
         >
           
           <span
             class="sr-only"
-            data-v-54b66ee0=""
+            data-v-222fefa6=""
           >
             custom
           </span>
@@ -228,19 +228,19 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
     </tr>
   </thead>
   <tbody
-    data-v-54b66ee0=""
+    data-v-222fefa6=""
   >
     
     <tr
       class="is-selected"
-      data-v-54b66ee0=""
+      data-v-222fefa6=""
       role="link"
       tabindex="0"
     >
       
       <td
         class=""
-        data-v-54b66ee0=""
+        data-v-222fefa6=""
       >
         
         
@@ -313,39 +313,39 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
         <div
           class=""
           data-testid="data-overview-table"
-          data-v-54b66ee0=""
+          data-v-222fefa6=""
           is-clickable=""
         >
           <section
             class="k-table-wrapper"
-            data-v-54b66ee0=""
+            data-v-222fefa6=""
           >
             <table
               class="has-hover is-clickable k-table"
               data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-54b66ee0=""
+              data-v-222fefa6=""
             >
               <thead
                 class=""
-                data-v-54b66ee0=""
+                data-v-222fefa6=""
               >
                 <tr
                   class=""
-                  data-v-54b66ee0=""
+                  data-v-222fefa6=""
                 >
                   
                   <th
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <span
                       class="d-flex align-items-center"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <span
                         class="sr-only"
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         actions
                       </span>
@@ -355,16 +355,16 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </th>
                   <th
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <span
                       class="d-flex align-items-center"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <span
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         Status
                       </span>
@@ -374,16 +374,16 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </th>
                   <th
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <span
                       class="d-flex align-items-center"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <span
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         Total Updates
                       </span>
@@ -393,16 +393,16 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </th>
                   <th
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <span
                       class="d-flex align-items-center"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <span
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         Kuma DP version
                       </span>
@@ -412,16 +412,16 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </th>
                   <th
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <span
                       class="d-flex align-items-center"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <span
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         Envoy version
                       </span>
@@ -431,16 +431,16 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </th>
                   <th
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <span
                       class="d-flex align-items-center"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <span
                         class="sr-only"
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         warnings
                       </span>
@@ -452,19 +452,19 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                 </tr>
               </thead>
               <tbody
-                data-v-54b66ee0=""
+                data-v-222fefa6=""
               >
                 
                 <tr
                   class="is-selected"
-                  data-v-54b66ee0=""
+                  data-v-222fefa6=""
                   role="link"
                   tabindex="0"
                 >
                   
                   <td
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     
@@ -472,7 +472,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </td>
                   <td
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <div
@@ -491,7 +491,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </td>
                   <td
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <span>
@@ -501,7 +501,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </td>
                   <td
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <div
@@ -513,7 +513,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </td>
                   <td
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <div
@@ -525,12 +525,12 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   </td>
                   <td
                     class="text-center"
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <span
                       class="mr-1 kong-icon-warning kong-icon"
-                      data-v-637de6fa=""
+                      data-v-71cfcfc4=""
                     >
                       <svg
                         height="20"
@@ -674,7 +674,7 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
         <div
           class=""
           data-testid="data-overview-table"
-          data-v-54b66ee0=""
+          data-v-222fefa6=""
           is-clickable=""
         >
           <!---->

@@ -61,39 +61,39 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
             <div
               class=""
               data-testid="data-overview-table"
-              data-v-54b66ee0=""
+              data-v-222fefa6=""
               is-clickable=""
             >
               <section
                 class="k-table-wrapper"
-                data-v-54b66ee0=""
+                data-v-222fefa6=""
               >
                 <table
                   class="has-hover is-clickable k-table"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-54b66ee0=""
+                  data-v-222fefa6=""
                 >
                   <thead
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <tr
                       class=""
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <th
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           <span
                             class="sr-only"
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             actions
                           </span>
@@ -103,16 +103,16 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           <span
                             class=""
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             Status
                           </span>
@@ -122,16 +122,16 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           <span
                             class=""
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             Name
                           </span>
@@ -143,19 +143,19 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <tr
                       class="is-selected"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         
@@ -163,7 +163,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                       </td>
                       <td
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         <div
@@ -182,7 +182,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                       </td>
                       <td
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         
@@ -229,8 +229,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -243,8 +242,8 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                   
                   <span
                     class="k-button-icon kong-icon-copy kong-icon"
-                    data-v-637de6fa=""
                     data-v-6bcbf05d=""
+                    data-v-71cfcfc4=""
                   >
                     <svg
                       height="16"
@@ -280,13 +279,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -294,7 +293,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                     >
                       
                       <p>
@@ -316,11 +315,11 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
         >
           <div
             class="k-tabs"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             <ul
-              aria-label="ktabs"
-              data-v-6bcd6661=""
+              aria-label="Tabs"
+              data-v-b0b5f6ae=""
               role="tablist"
             >
               
@@ -328,14 +327,14 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 aria-controls="panel-0"
                 aria-selected="true"
                 class="active tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="overview-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Overview
@@ -346,14 +345,14 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 aria-controls="panel-1"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="insights-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Zone Egress Insights
@@ -364,14 +363,14 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 aria-controls="panel-2"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="xds-configuration-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   XDS Configuration
@@ -382,14 +381,14 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 aria-controls="panel-3"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="envoy-stats-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Stats
@@ -400,14 +399,14 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 aria-controls="panel-4"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="envoy-clusters-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Clusters
@@ -420,7 +419,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
             <div
               aria-labelledby="overview-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-0"
               role="tabpanel"
               tabindex="0"
@@ -434,17 +433,17 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                   <section
                     aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     class="noBorder kong-card"
-                    data-v-52c90d54=""
+                    data-v-1f0d90ac=""
                   >
                     <!---->
                     <!---->
                     <div
                       class="k-card-content d-flex"
-                      data-v-52c90d54=""
+                      data-v-1f0d90ac=""
                     >
                       <div
                         class="k-card-body"
-                        data-v-52c90d54=""
+                        data-v-1f0d90ac=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       >
                         
@@ -489,7 +488,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
             <div
               aria-labelledby="insights-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-1"
               role="tabpanel"
               tabindex="0"
@@ -499,7 +498,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
             <div
               aria-labelledby="xds-configuration-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-2"
               role="tabpanel"
               tabindex="0"
@@ -509,7 +508,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
             <div
               aria-labelledby="envoy-stats-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-3"
               role="tabpanel"
               tabindex="0"
@@ -519,7 +518,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
             <div
               aria-labelledby="envoy-clusters-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-4"
               role="tabpanel"
               tabindex="0"
@@ -600,39 +599,39 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
             <div
               class=""
               data-testid="data-overview-table"
-              data-v-54b66ee0=""
+              data-v-222fefa6=""
               is-clickable=""
             >
               <section
                 class="k-table-wrapper"
-                data-v-54b66ee0=""
+                data-v-222fefa6=""
               >
                 <table
                   class="has-hover is-clickable k-table"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-54b66ee0=""
+                  data-v-222fefa6=""
                 >
                   <thead
                     class=""
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     <tr
                       class=""
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                     >
                       
                       <th
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           <span
                             class="sr-only"
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             actions
                           </span>
@@ -642,16 +641,16 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           <span
                             class=""
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             Status
                           </span>
@@ -661,16 +660,16 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-54b66ee0=""
+                          data-v-222fefa6=""
                         >
                           
                           <span
                             class=""
-                            data-v-54b66ee0=""
+                            data-v-222fefa6=""
                           >
                             Name
                           </span>
@@ -682,19 +681,19 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    data-v-54b66ee0=""
+                    data-v-222fefa6=""
                   >
                     
                     <tr
                       class="is-selected"
-                      data-v-54b66ee0=""
+                      data-v-222fefa6=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         
@@ -702,7 +701,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                       </td>
                       <td
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         <div
@@ -721,7 +720,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                       </td>
                       <td
                         class=""
-                        data-v-54b66ee0=""
+                        data-v-222fefa6=""
                       >
                         
                         
@@ -768,8 +767,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                aria-expanded="false"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -782,8 +780,8 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                   
                   <span
                     class="k-button-icon kong-icon-copy kong-icon"
-                    data-v-637de6fa=""
                     data-v-6bcbf05d=""
+                    data-v-71cfcfc4=""
                   >
                     <svg
                       height="16"
@@ -819,13 +817,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -833,7 +831,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                     >
                       
                       <p>
@@ -855,11 +853,11 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
         >
           <div
             class="k-tabs"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             <ul
-              aria-label="ktabs"
-              data-v-6bcd6661=""
+              aria-label="Tabs"
+              data-v-b0b5f6ae=""
               role="tablist"
             >
               
@@ -867,14 +865,14 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 aria-controls="panel-0"
                 aria-selected="true"
                 class="active tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="overview-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Overview
@@ -885,14 +883,14 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 aria-controls="panel-1"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="insights-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Zone Egress Insights
@@ -903,14 +901,14 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 aria-controls="panel-2"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="xds-configuration-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   XDS Configuration
@@ -921,14 +919,14 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 aria-controls="panel-3"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="envoy-stats-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Stats
@@ -939,14 +937,14 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 aria-controls="panel-4"
                 aria-selected="false"
                 class="tab-item"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
                 id="envoy-clusters-tab"
                 role="tab"
                 tabindex="0"
               >
                 <a
                   class="tab-link"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                 >
                   
                   Clusters
@@ -959,7 +957,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
             <div
               aria-labelledby="overview-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-0"
               role="tabpanel"
               tabindex="0"
@@ -973,17 +971,17 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                   <section
                     aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     class="noBorder kong-card"
-                    data-v-52c90d54=""
+                    data-v-1f0d90ac=""
                   >
                     <!---->
                     <!---->
                     <div
                       class="k-card-content d-flex"
-                      data-v-52c90d54=""
+                      data-v-1f0d90ac=""
                     >
                       <div
                         class="k-card-body"
-                        data-v-52c90d54=""
+                        data-v-1f0d90ac=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       >
                         
@@ -1028,7 +1026,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
             <div
               aria-labelledby="insights-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-1"
               role="tabpanel"
               tabindex="0"
@@ -1038,7 +1036,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
             <div
               aria-labelledby="xds-configuration-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-2"
               role="tabpanel"
               tabindex="0"
@@ -1048,7 +1046,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
             <div
               aria-labelledby="envoy-stats-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-3"
               role="tabpanel"
               tabindex="0"
@@ -1058,7 +1056,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
             <div
               aria-labelledby="envoy-clusters-tab"
               class="tab-container"
-              data-v-6bcd6661=""
+              data-v-b0b5f6ae=""
               id="panel-4"
               role="tabpanel"
               tabindex="0"
@@ -1099,8 +1097,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
         
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          aria-expanded="false"
-          data-v-9bbde9b2=""
+          data-v-814c880a=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
@@ -1113,8 +1110,8 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
             
             <span
               class="k-button-icon kong-icon-copy kong-icon"
-              data-v-637de6fa=""
               data-v-6bcbf05d=""
+              data-v-71cfcfc4=""
             >
               <svg
                 height="16"
@@ -1150,13 +1147,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-9bbde9b2=""
+            data-v-814c880a=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-9bbde9b2=""
+              data-v-814c880a=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -1164,7 +1161,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
               >
                 
                 <p>
@@ -1186,11 +1183,11 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
   >
     <div
       class="k-tabs"
-      data-v-6bcd6661=""
+      data-v-b0b5f6ae=""
     >
       <ul
-        aria-label="ktabs"
-        data-v-6bcd6661=""
+        aria-label="Tabs"
+        data-v-b0b5f6ae=""
         role="tablist"
       >
         
@@ -1198,14 +1195,14 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           aria-controls="panel-0"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="overview-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Overview
@@ -1216,14 +1213,14 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           aria-controls="panel-1"
           aria-selected="true"
           class="active tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="insights-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Zone Egress Insights
@@ -1234,14 +1231,14 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           aria-controls="panel-2"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="xds-configuration-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             XDS Configuration
@@ -1252,14 +1249,14 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           aria-controls="panel-3"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="envoy-stats-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Stats
@@ -1270,14 +1267,14 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           aria-controls="panel-4"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="envoy-clusters-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Clusters
@@ -1290,7 +1287,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
       <div
         aria-labelledby="overview-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-0"
         role="tabpanel"
         tabindex="0"
@@ -1300,7 +1297,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
       <div
         aria-labelledby="insights-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-1"
         role="tabpanel"
         tabindex="0"
@@ -1310,17 +1307,17 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           class="noBorder kong-card"
-          data-v-52c90d54=""
+          data-v-1f0d90ac=""
         >
           <!---->
           <!---->
           <div
             class="k-card-content d-flex"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             <div
               class="k-card-body"
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
@@ -1527,7 +1524,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
       <div
         aria-labelledby="xds-configuration-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-2"
         role="tabpanel"
         tabindex="0"
@@ -1537,7 +1534,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
       <div
         aria-labelledby="envoy-stats-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-3"
         role="tabpanel"
         tabindex="0"
@@ -1547,7 +1544,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
       <div
         aria-labelledby="envoy-clusters-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-4"
         role="tabpanel"
         tabindex="0"

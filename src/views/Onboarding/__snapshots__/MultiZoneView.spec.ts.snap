@@ -38,19 +38,19 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             aria-label="See the documentation for options to install:"
             class="noBorder kong-card"
-            data-v-52c90d54=""
+            data-v-1f0d90ac=""
           >
             <div
               class="k-card-header d-flex mb-3"
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               <!---->
               <div
                 class="k-card-title mb-3"
-                data-v-52c90d54=""
+                data-v-1f0d90ac=""
               >
                 <h4
-                  data-v-52c90d54=""
+                  data-v-1f0d90ac=""
                 >
                   
                   See the documentation for options to install:
@@ -59,7 +59,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
               </div>
               <div
                 class="k-card-actions"
-                data-v-52c90d54=""
+                data-v-1f0d90ac=""
               >
                 
                 
@@ -68,11 +68,11 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             <!---->
             <div
               class="k-card-content d-flex"
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-body"
-                data-v-52c90d54=""
+                data-v-1f0d90ac=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
                 

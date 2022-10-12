@@ -57,8 +57,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  aria-expanded="false"
-                  data-v-9bbde9b2=""
+                  data-v-814c880a=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -69,7 +68,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   >
                     <span
                       class="kong-icon-copy kong-icon"
-                      data-v-637de6fa=""
+                      data-v-71cfcfc4=""
                     >
                       <svg
                         height="16"
@@ -104,13 +103,13 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-9bbde9b2=""
+                    data-v-814c880a=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-9bbde9b2=""
+                      data-v-814c880a=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -118,7 +117,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                       >
                         
                         <p>
@@ -137,19 +136,19 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="And follow the instructions in the README"
               class="noBorder kong-card"
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
-                data-v-52c90d54=""
+                data-v-1f0d90ac=""
               >
                 <!---->
                 <div
                   class="k-card-title mb-3"
-                  data-v-52c90d54=""
+                  data-v-1f0d90ac=""
                 >
                   <h4
-                    data-v-52c90d54=""
+                    data-v-1f0d90ac=""
                   >
                     
                     And follow the instructions in the README
@@ -158,7 +157,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-52c90d54=""
+                  data-v-1f0d90ac=""
                 >
                   
                   
@@ -167,11 +166,11 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-52c90d54=""
+                data-v-1f0d90ac=""
               >
                 <div
                   class="k-card-body"
-                  data-v-52c90d54=""
+                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   

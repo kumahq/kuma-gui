@@ -21,8 +21,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
         
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          aria-expanded="false"
-          data-v-9bbde9b2=""
+          data-v-814c880a=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
@@ -35,8 +34,8 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
             
             <span
               class="k-button-icon kong-icon-copy kong-icon"
-              data-v-637de6fa=""
               data-v-6bcbf05d=""
+              data-v-71cfcfc4=""
             >
               <svg
                 height="16"
@@ -71,13 +70,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-9bbde9b2=""
+            data-v-814c880a=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-9bbde9b2=""
+              data-v-814c880a=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -85,7 +84,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-9bbde9b2=""
+                data-v-814c880a=""
               >
                 
                 <p>
@@ -107,11 +106,11 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
   >
     <div
       class="k-tabs"
-      data-v-6bcd6661=""
+      data-v-b0b5f6ae=""
     >
       <ul
-        aria-label="ktabs"
-        data-v-6bcd6661=""
+        aria-label="Tabs"
+        data-v-b0b5f6ae=""
         role="tablist"
       >
         
@@ -119,14 +118,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-0"
           aria-selected="true"
           class="active tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="overview-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Overview
@@ -137,14 +136,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-1"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="insights-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             DPP Insights
@@ -155,14 +154,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-2"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="dpp-policies-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Policies
@@ -173,14 +172,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-3"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="xds-configuration-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             XDS Configuration
@@ -191,14 +190,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-4"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="envoy-stats-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Stats
@@ -209,14 +208,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-5"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="envoy-clusters-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Clusters
@@ -227,14 +226,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           aria-controls="panel-6"
           aria-selected="false"
           class="tab-item"
-          data-v-6bcd6661=""
+          data-v-b0b5f6ae=""
           id="mtls-tab"
           role="tab"
           tabindex="0"
         >
           <a
             class="tab-link"
-            data-v-6bcd6661=""
+            data-v-b0b5f6ae=""
           >
             
             Certificate Insights
@@ -247,7 +246,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="overview-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-0"
         role="tabpanel"
         tabindex="0"
@@ -261,17 +260,17 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               class="noBorder kong-card"
-              data-v-52c90d54=""
+              data-v-1f0d90ac=""
             >
               <!---->
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-52c90d54=""
+                data-v-1f0d90ac=""
               >
                 <div
                   class="k-card-body"
-                  data-v-52c90d54=""
+                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -417,11 +416,11 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
             >
               <div
                 class="k-tabs"
-                data-v-6bcd6661=""
+                data-v-b0b5f6ae=""
               >
                 <ul
-                  aria-label="ktabs"
-                  data-v-6bcd6661=""
+                  aria-label="Tabs"
+                  data-v-b0b5f6ae=""
                   role="tablist"
                 >
                   
@@ -429,14 +428,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                     aria-controls="panel-0"
                     aria-selected="true"
                     class="active tab-item"
-                    data-v-6bcd6661=""
+                    data-v-b0b5f6ae=""
                     id="universal-tab"
                     role="tab"
                     tabindex="0"
                   >
                     <a
                       class="tab-link"
-                      data-v-6bcd6661=""
+                      data-v-b0b5f6ae=""
                     >
                       
                       Universal
@@ -447,14 +446,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                     aria-controls="panel-1"
                     aria-selected="false"
                     class="tab-item"
-                    data-v-6bcd6661=""
+                    data-v-b0b5f6ae=""
                     id="kubernetes-tab"
                     role="tab"
                     tabindex="0"
                   >
                     <a
                       class="tab-link"
-                      data-v-6bcd6661=""
+                      data-v-b0b5f6ae=""
                     >
                       
                       Kubernetes
@@ -467,7 +466,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                 <div
                   aria-labelledby="universal-tab"
                   class="tab-container"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                   id="panel-0"
                   role="tabpanel"
                   tabindex="0"
@@ -484,7 +483,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       <!--v-if-->
                       <label
                         class="k-input-label code-search"
-                        data-v-3472eb06=""
+                        data-v-625cddb9=""
                         for="code-block-data-plane-search-input"
                       >
                         
@@ -541,7 +540,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         
                         <span
                           class="button-icon kong-icon-filter kong-icon"
-                          data-v-637de6fa=""
+                          data-v-71cfcfc4=""
                         >
                           <svg
                             height="11"
@@ -588,7 +587,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         
                         <span
                           class="button-icon kong-icon-chevronUp kong-icon"
-                          data-v-637de6fa=""
+                          data-v-71cfcfc4=""
                         >
                           <svg
                             fill="none"
@@ -637,7 +636,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         
                         <span
                           class="button-icon kong-icon-chevronDown kong-icon"
-                          data-v-637de6fa=""
+                          data-v-71cfcfc4=""
                         >
                           <svg
                             fill="none"
@@ -690,8 +689,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       
                       <div
                         aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                        aria-expanded="false"
-                        data-v-9bbde9b2=""
+                        data-v-814c880a=""
                         id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                         role="button"
                       >
@@ -702,7 +700,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           <span
                             class="kong-icon-copy kong-icon"
-                            data-v-637de6fa=""
+                            data-v-71cfcfc4=""
                           >
                             <svg
                               height="16"
@@ -737,13 +735,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         <transition-stub
                           appear="false"
                           css="true"
-                          data-v-9bbde9b2=""
+                          data-v-814c880a=""
                           name="fade"
                           persisted="false"
                         >
                           <div
                             class="k-popover"
-                            data-v-9bbde9b2=""
+                            data-v-814c880a=""
                             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                             role="region"
                             style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -751,7 +749,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             <!---->
                             <div
                               class="k-popover-content"
-                              data-v-9bbde9b2=""
+                              data-v-814c880a=""
                             >
                               
                               <p>
@@ -771,7 +769,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                 <div
                   aria-labelledby="kubernetes-tab"
                   class="tab-container"
-                  data-v-6bcd6661=""
+                  data-v-b0b5f6ae=""
                   id="panel-1"
                   role="tabpanel"
                   tabindex="0"
@@ -789,7 +787,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="insights-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-1"
         role="tabpanel"
         tabindex="0"
@@ -799,7 +797,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="dpp-policies-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-2"
         role="tabpanel"
         tabindex="0"
@@ -809,7 +807,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="xds-configuration-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-3"
         role="tabpanel"
         tabindex="0"
@@ -819,7 +817,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="envoy-stats-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-4"
         role="tabpanel"
         tabindex="0"
@@ -829,7 +827,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="envoy-clusters-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-5"
         role="tabpanel"
         tabindex="0"
@@ -839,7 +837,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       <div
         aria-labelledby="mtls-tab"
         class="tab-container"
-        data-v-6bcd6661=""
+        data-v-b0b5f6ae=""
         id="panel-6"
         role="tabpanel"
         tabindex="0"

@@ -68,8 +68,7 @@ exports[`CodeBlock matches snapshot 1`] = `
     
     <div
       aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-      aria-expanded="false"
-      data-v-9bbde9b2=""
+      data-v-814c880a=""
       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       role="button"
     >
@@ -80,7 +79,7 @@ exports[`CodeBlock matches snapshot 1`] = `
       >
         <span
           class="kong-icon-copy kong-icon"
-          data-v-637de6fa=""
+          data-v-71cfcfc4=""
         >
           <svg
             height="16"
@@ -115,13 +114,13 @@ exports[`CodeBlock matches snapshot 1`] = `
       <transition-stub
         appear="false"
         css="true"
-        data-v-9bbde9b2=""
+        data-v-814c880a=""
         name="fade"
         persisted="false"
       >
         <div
           class="k-popover"
-          data-v-9bbde9b2=""
+          data-v-814c880a=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="region"
           style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -129,7 +128,7 @@ exports[`CodeBlock matches snapshot 1`] = `
           <!---->
           <div
             class="k-popover-content"
-            data-v-9bbde9b2=""
+            data-v-814c880a=""
           >
             
             <p>
