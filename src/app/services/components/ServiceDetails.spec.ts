@@ -25,7 +25,7 @@ describe('ServiceDetails', () => {
     [serviceInsight, 'ServiceInsightDetails'],
   ])('shows correct content when loading a ServiceInsight entity', async (entity, detailsComponentName) => {
     const wrapper = renderComponent({
-      type: entity.type,
+      serviceType: entity.type === 'ExternalService' ? 'external' : 'internal',
       name: entity.name,
       mesh: entity.mesh,
     })

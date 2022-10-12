@@ -152,27 +152,12 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
       </div>
       <div
         class="nav-item nav-item--is-link"
-        data-testid="service-insight-list-view"
+        data-testid="service-list-view"
       >
         <a
           class="nav-item__link"
         >
-          Internal 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
-        data-testid="external-service-list-view"
-      >
-        <a
-          class="nav-item__link"
-        >
-          External 
+          Services 
           <span
             class="amount amount--empty"
           >

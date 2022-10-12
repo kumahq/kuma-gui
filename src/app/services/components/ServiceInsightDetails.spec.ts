@@ -51,8 +51,10 @@ describe('ServiceInsightDetails', () => {
 
     jest.runAllTimers()
 
-    expect(wrapper.html()).toContain('Total: 2 (online: 1)')
-    expect(wrapper.html()).toContain('status')
-    expect(wrapper.html()).toContain('partially_degraded')
+    const html = wrapper.html()
+    expect(html).toContain('partially degraded')
+    expect(html).toContain('Data planes (online / total)')
+    expect(html).toContain('1 / 2')
+    expect(html).toContain('status')
   })
 })

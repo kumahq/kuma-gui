@@ -57,16 +57,10 @@ export function getNavItems(policies: Policy[]): NavItem[] {
       name: 'Services',
     },
     {
-      name: 'Internal',
-      link: 'service-insight-list-view',
+      name: 'Services',
+      link: 'service-list-view',
+      insightsFieldAccessor: 'mesh.services.total',
       usesMeshParam: true,
-      insightsFieldAccessor: 'mesh.services.internal',
-    },
-    {
-      name: 'External',
-      link: 'external-service-list-view',
-      usesMeshParam: true,
-      insightsFieldAccessor: 'mesh.services.external',
     },
     {
       name: 'Data plane proxies',

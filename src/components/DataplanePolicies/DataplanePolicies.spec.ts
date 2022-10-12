@@ -78,7 +78,7 @@ describe('DataplanePolicies.vue', () => {
       dppName: 'dataplane-test-456',
     })
 
-    expect(await screen.findByText(/An error has occurred while trying to load this data./)).toBeInTheDocument()
+    expect((await screen.findAllByText(/An error has occurred while trying to load this data./))[0]).toBeInTheDocument()
   })
 
   it('renders no item', async () => {

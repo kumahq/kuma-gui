@@ -65,7 +65,7 @@ describe('DataplaneUniversal.vue', () => {
       },
     })
 
-    const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal, {
+    const { container, getByText, getByDisplayValue, getByLabelText } = render(DataplaneUniversal, {
       global: {
         plugins: [router, store],
         components: {
@@ -108,7 +108,6 @@ describe('DataplaneUniversal.vue', () => {
     await userEvent.type(getByLabelText('Data Plane IP Address:'), '12')
     await userEvent.type(getByLabelText('Data Plane Port:'), '1')
     await userEvent.click(getByText('Next ›'))
-
     expect(getByText('Auto-Inject DPP')).toBeInTheDocument()
 
     // Well this is annoying. Since the code blocks have some timer-based mechanisms (necessary debouncing), we need to wait some ticks. However, we can’t use fake timers here because they seem to conflict with testing library.

@@ -1,22 +1,24 @@
 <template>
-  <LoadingBlock v-if="isLoading" />
+  <div class="service-details">
+    <LoadingBlock v-if="isLoading" />
 
-  <ErrorBlock
-    v-else-if="error !== null"
-    :error="error"
-  />
+    <ErrorBlock
+      v-else-if="error !== null"
+      :error="error"
+    />
 
-  <ServiceInsightDetails
-    v-else-if="serviceInsight !== null"
-    :service-insight="serviceInsight"
-  />
+    <ServiceInsightDetails
+      v-else-if="serviceInsight !== null"
+      :service-insight="serviceInsight"
+    />
 
-  <ExternalServiceDetails
-    v-else-if="externalService !== null"
-    :external-service="externalService"
-  />
+    <ExternalServiceDetails
+      v-else-if="externalService !== null"
+      :external-service="externalService"
+    />
 
-  <EmptyBlock v-else />
+    <EmptyBlock v-else />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -31,9 +33,10 @@ import ErrorBlock from '@/components/ErrorBlock.vue'
 import LoadingBlock from '@/components/LoadingBlock.vue'
 
 const props = defineProps({
-  type: {
-    type: String as PropType<'ServiceInsight' | 'ExternalService'>,
-    required: true,
+  serviceType: {
+    type: String as PropType<'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'>,
+    required: false,
+    default: 'internal',
   },
 
   name: {
@@ -72,10 +75,10 @@ async function loadEntity() {
   const name = props.name
 
   try {
-    if (props.type === 'ServiceInsight') {
-      serviceInsight.value = await Kuma.getServiceInsight({ mesh, name })
-    } else {
+    if (props.serviceType === 'external') {
       externalService.value = await Kuma.getExternalService({ mesh, name })
+    } else {
+      serviceInsight.value = await Kuma.getServiceInsight({ mesh, name })
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -88,3 +91,9 @@ async function loadEntity() {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.service-details {
+  padding: var(--spacing-md);
+}
+</style>

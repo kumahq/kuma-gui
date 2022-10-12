@@ -6,6 +6,7 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
       // Sum services
       acc.services.internal += services.internal || 0
       acc.services.external += services.external || 0
+      acc.services.total += services.total || 0
 
       // Sum dataplanes
       acc.dataplanes.total += dataplanes.total || 0
@@ -26,6 +27,7 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
     },
     {
       services: {
+        total: 0,
         internal: 0,
         external: 0,
       },

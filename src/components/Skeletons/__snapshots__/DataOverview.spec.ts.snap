@@ -478,12 +478,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                     <div
                       class="entity-status is-offline"
                     >
-                      <span
-                        class="entity-status__dot"
-                      />
-                      <span
-                        class="entity-status__label"
-                      >
+                      <span>
                         offline
                       </span>
                     </div>

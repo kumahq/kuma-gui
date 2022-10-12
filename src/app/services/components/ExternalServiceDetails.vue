@@ -25,8 +25,8 @@
       </div>
 
       <div class="definition">
-        <span>TLD:</span>
-        <span>{{ props.externalService.networking.tls.enabled ? 'Enabled' : 'Disabled' }}</span>
+        <span>TLS:</span>
+        <span>{{ props.externalService.networking.tls?.enabled ? 'Enabled' : 'Disabled' }}</span>
       </div>
     </section>
 

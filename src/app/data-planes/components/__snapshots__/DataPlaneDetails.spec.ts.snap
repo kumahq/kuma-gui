@@ -311,11 +311,9 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </h4>
                           <div>
                             <div
-                              class="entity-status"
+                              class="entity-status is-online"
                             >
-                              <span
-                                class="entity-status__label"
-                              >
+                              <span>
                                 Online
                               </span>
                             </div>

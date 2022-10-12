@@ -32,11 +32,13 @@
                 <div
                   class="entity-status"
                   :class="{
-                    'is-offline': value.status.toString().toLowerCase() === 'offline',
-                    'is-degraded': value.status.toString().toLowerCase() === 'partially degraded',
+                    'is-offline': value.status.toLowerCase() === 'offline',
+                    'is-online': value.status.toLowerCase() === 'online',
+                    'is-degraded': value.status.toLowerCase() === 'partially degraded',
+                    'is-not-available': value.status.toLowerCase() === 'not available',
                   }"
                 >
-                  <span class="entity-status__label">{{ value.status }}</span>
+                  <span>{{ value.status }}</span>
                 </div>
 
                 <div
@@ -44,8 +46,6 @@
                   :key="index"
                   class="reason"
                 >
-                  <span class="entity-status__dot" />
-
                   {{ reason }}
                 </div>
               </div>
@@ -335,7 +335,7 @@ function setWarnings() {
 
   const version = subscriptions[0].version
 
-  if (version.kumaDp && version.envoy) {
+  if (version && version.kumaDp && version.envoy) {
     const compatibility = compatibilityKind(version)
 
     if (compatibility.kind !== COMPATIBLE && compatibility.kind !== INCOMPATIBLE_WRONG_FORMAT) {
@@ -345,7 +345,7 @@ function setWarnings() {
 
   const isMulticluster = store.getters['config/getMulticlusterStatus']
 
-  if (isMulticluster) {
+  if (isMulticluster && version) {
     const tags = dpTags(props.dataPlane)
     const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
@@ -368,10 +368,6 @@ setWarnings()
   margin-left: var(--spacing-md);
   margin-bottom: var(--spacing-xxs);
   margin-top: var(--spacing-xxs);
-}
-
-.reason .entity-status__dot {
-  background-color: var(--black-85);
 }
 
 .config-wrapper {

@@ -8,6 +8,7 @@
       </router-link>
 
       <div
+        v-if="status !== null"
         :class="`status status--${status.appearance}`"
         data-testid="data-plane-status-badge"
       >
@@ -27,8 +28,22 @@
       </div>
 
       <div class="definition">
-        <span>Data planes:</span>
-        <span>Total: {{ props.serviceInsight.dataplanes.total }} (online: {{ props.serviceInsight.dataplanes.online }})</span>
+        <span>Address:</span>
+        <span>
+          <template v-if="serviceInsight.addressPort">
+            {{ serviceInsight.addressPort }}
+          </template>
+
+          <template v-else>—</template>
+        </span>
+      </div>
+
+      <div
+        v-if="dataPlaneStatus !== null"
+        class="definition"
+      >
+        <span>Data planes (online / total):</span>
+        <span>{{ dataPlaneStatus }}</span>
       </div>
     </section>
 
@@ -60,13 +75,14 @@ const props = defineProps({
 })
 
 const serviceInsightRoute = computed(() => ({
-  name: 'service-insight-detail-view',
+  name: props.serviceInsight.serviceType === 'external' ? 'external-service-detail-view' : 'service-insight-detail-view',
   params: {
     service: props.serviceInsight.name,
     mesh: props.serviceInsight.mesh,
   },
 }))
-const status = computed(() => STATUS[props.serviceInsight.status])
+const status = computed(() => props.serviceInsight.status ? STATUS[props.serviceInsight.status] : null)
+const dataPlaneStatus = computed(() => props.serviceInsight.dataplanes ? `${props.serviceInsight.dataplanes.online ?? 0} / ${props.serviceInsight.dataplanes.total}` : null)
 const rawServiceInsight = computed(() => stripTimes(props.serviceInsight))
 </script>
 
@@ -89,7 +105,7 @@ h3 {
 
 .definition {
   display: grid;
-  grid-template-columns: 10ch 1fr;
+  grid-template-columns: 22ch 1fr;
   grid-gap: var(--spacing-md);
 }
 

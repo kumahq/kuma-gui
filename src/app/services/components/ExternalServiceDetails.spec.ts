@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 
 import ExternalServiceDetails from './ExternalServiceDetails.vue'
 import { store, storeKey } from '@/store/store'
@@ -19,7 +19,7 @@ const router = createRouter({
 })
 
 function renderComponent(props = {}) {
-  return mount(ExternalServiceDetails, {
+  return shallowMount(ExternalServiceDetails, {
     props: {
       externalService,
       ...props,
@@ -37,8 +37,8 @@ describe('ExternalServiceDetails', () => {
   test('shows correct content', async () => {
     const wrapper = renderComponent()
 
-    expect(wrapper.html()).toContain('httpbin.org:80')
-    expect(wrapper.html()).toContain('kuma.io/service')
-    expect(wrapper.html()).toContain('httpbin')
+    const html = wrapper.html()
+    expect(html).toContain('httpbin.org:80')
+    expect(html).toContain('Enabled')
   })
 })

@@ -13,6 +13,7 @@ const initialSidebarState: SidebarInterface = {
     global: {},
     mesh: {
       services: {
+        total: 0,
         internal: 0,
         external: 0,
       },
