@@ -9,7 +9,7 @@
   <template v-else>
     <AppHeader />
 
-    <div v-if="shouldShowOnboarding">
+    <div v-if="route.meta.onboardingProcess">
       <router-view />
     </div>
 
@@ -30,7 +30,7 @@
 
         <NotificationManager />
 
-        <AppOnboardingNotification v-if="shouldShowOnboarding" />
+        <AppOnboardingNotification v-if="shouldSuggestOnboarding" />
 
         <AppBreadcrumbs />
 
@@ -82,7 +82,7 @@ const timeout = ref<number | null>(null)
  * (e.g. `src/app/policies/PolicyView.vue` which is used by some dozen policy routes).
  */
 const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'default')
-const shouldShowOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
+const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
 const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view'].includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {
