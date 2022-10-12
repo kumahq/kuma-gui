@@ -72,7 +72,7 @@ describe('config module', () => {
         {
           tagline: 'Other',
           version: '1.6.0-preview.abcd1234',
-          kumaDocsVersion: '1.6.0',
+          kumaDocsVersion: '1.6.x',
         },
       ],
       [
@@ -87,7 +87,7 @@ describe('config module', () => {
         {
           tagline: 'Kuma',
           version: '1.5.3',
-          kumaDocsVersion: '1.5.1',
+          kumaDocsVersion: '1.5.x',
         },
       ],
       [

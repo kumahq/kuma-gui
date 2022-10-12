@@ -84,9 +84,10 @@ const actions: ActionTree<ConfigInterface, State> = {
           if (suffixIndex !== -1) {
             const basedOnKumaStripped = response.basedOnKuma.substring(0, suffixIndex)
 
-            kumaDocsVersion = basedOnKumaStripped === '0.0.0' ? 'dev' : basedOnKumaStripped
+            kumaDocsVersion = basedOnKumaStripped === '0.0.0' ? 'dev' : basedOnKumaStripped.replace(/\.\d+$/, '.x')
           } else {
-            kumaDocsVersion = response.basedOnKuma
+            // Replaces the patch version number with `x` because that’s the URL path segment used on the documentation website.
+            kumaDocsVersion = response.basedOnKuma.replace(/\.\d+$/, '.x')
           }
         }
 
