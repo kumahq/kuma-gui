@@ -173,22 +173,22 @@ export async function setupRouter() {
                   ],
                 },
                 {
-                  path: 'internal-services',
+                  path: 'services',
                   children: [
                     {
                       path: '',
-                      name: 'service-insight-list-view',
+                      name: 'service-list-view',
                       meta: {
-                        title: 'Internal services',
+                        title: 'Services',
                       },
-                      component: () => import('@/app/services/views/ServiceInsightListView.vue'),
+                      component: () => import('@/app/services/views/ServiceListView.vue'),
                     },
                     {
                       path: ':service',
                       name: 'service-insight-detail-view',
                       meta: {
                         title: 'Internal service',
-                        parent: 'service-insight-list-view',
+                        parent: 'service-list-view',
                         breadcrumbTitleParam: 'service',
                       },
                       component: () => import('@/app/services/views/ServiceInsightDetailView.vue'),
@@ -199,19 +199,11 @@ export async function setupRouter() {
                   path: 'external-services',
                   children: [
                     {
-                      path: '',
-                      name: 'external-service-list-view',
-                      meta: {
-                        title: 'External services',
-                      },
-                      component: () => import('@/app/services/views/ExternalServiceListView.vue'),
-                    },
-                    {
                       path: ':service',
                       name: 'external-service-detail-view',
                       meta: {
                         title: 'External service',
-                        parent: 'external-service-list-view',
+                        parent: 'service-list-view',
                         breadcrumbTitleParam: 'service',
                       },
                       component: () => import('@/app/services/views/ExternalServiceDetailView.vue'),

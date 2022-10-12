@@ -372,31 +372,16 @@ exports[`App.vue fails to renders basic view 1`] = `
         </div>
         <div
           class="nav-item nav-item--is-link"
-          data-testid="service-insight-list-view"
+          data-testid="service-list-view"
         >
           <a
             class="nav-item__link"
           >
-            Internal 
+            Services 
             <span
               class="amount"
             >
-              4
-            </span>
-          </a>
-        </div>
-        <div
-          class="nav-item nav-item--is-link"
-          data-testid="external-service-list-view"
-        >
-          <a
-            class="nav-item__link"
-          >
-            External 
-            <span
-              class="amount"
-            >
-              2
+              6
             </span>
           </a>
         </div>

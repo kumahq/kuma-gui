@@ -3,6 +3,7 @@ export interface SidebarInterface {
     global: Record<string, number>
     mesh: {
       services: {
+        total: number
         internal: number
         external: number
       }

@@ -12,23 +12,19 @@
           />
         </div>
 
-        <p>
-          <template v-if="error instanceof ApiError">
-            {{ error.message }}
-          </template>
-
-          <template v-else>
-            An error has occurred while trying to load this data.
-          </template>
-        </p>
+        <p>An error has occurred while trying to load this data.</p>
       </template>
 
       <template
-        v-if="causes.length > 0"
+        v-if="isErrorObject || causes.length > 0"
         #message
       >
         <details>
           <summary>Details</summary>
+
+          <p v-if="isErrorObject">
+            {{ error.message }}
+          </p>
 
           <ul>
             <li
@@ -74,6 +70,7 @@ const props = defineProps({
   },
 })
 
+const isErrorObject = computed(() => props.error instanceof Error)
 const causes = computed(() => props.error instanceof ApiError ? props.error.causes : [])
 </script>
 

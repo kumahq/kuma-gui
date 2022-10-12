@@ -689,14 +689,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -831,14 +826,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -973,14 +963,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -1115,14 +1100,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -1257,14 +1237,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -1399,14 +1374,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -1541,14 +1511,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -1683,14 +1648,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -1864,14 +1824,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="entity-status"
+                        class="entity-status is-online"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Online
                         </span>
                       </div>
@@ -2008,12 +1963,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <div
                         class="entity-status is-offline"
                       >
-                        <span
-                          class="entity-status__dot"
-                        />
-                        <span
-                          class="entity-status__label"
-                        >
+                        <span>
                           Offline
                         </span>
                       </div>

@@ -46,6 +46,7 @@ describe('sidebar module', () => {
       "services": {
         "external": 2,
         "internal": 4,
+        "total": 6,
       },
     },
   },

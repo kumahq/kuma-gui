@@ -83,7 +83,7 @@ const timeout = ref<number | null>(null)
  */
 const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'default')
 const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
-const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view'].includes(route.name))
+const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view', 'service-list-view'].includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   timeout.value = window.setTimeout(() => {

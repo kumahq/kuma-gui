@@ -29,10 +29,14 @@
               <template #status="{ rowValue }">
                 <div
                   class="entity-status"
-                  :class="{ 'is-offline': rowValue.toLowerCase() === 'offline' || rowValue === false }"
+                  :class="{
+                    'is-offline': rowValue.toLowerCase() === 'offline' || rowValue === false,
+                    'is-online': rowValue.toLowerCase() === 'online',
+                    'is-degraded': rowValue.toLowerCase() === 'partially degraded',
+                    'is-not-available': rowValue.toLowerCase() === 'not available',
+                  }"
                 >
-                  <span class="entity-status__dot" />
-                  <span class="entity-status__label">{{ rowValue }}</span>
+                  <span>{{ rowValue }}</span>
                 </div>
               </template>
             </KTable>

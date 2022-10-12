@@ -16,6 +16,7 @@ describe('sidebar utils', () => {
   "services": {
     "external": 0,
     "internal": 0,
+    "total": 0,
   },
 }
 `)
@@ -164,6 +165,7 @@ describe('sidebar utils', () => {
   "services": {
     "external": 6,
     "internal": 3,
+    "total": 9,
   },
 }
 `)

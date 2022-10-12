@@ -167,14 +167,9 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                       >
                         
                         <div
-                          class="entity-status"
+                          class="entity-status is-online"
                         >
-                          <span
-                            class="entity-status__dot"
-                          />
-                          <span
-                            class="entity-status__label"
-                          >
+                          <span>
                             Online
                           </span>
                         </div>
@@ -705,14 +700,9 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                       >
                         
                         <div
-                          class="entity-status"
+                          class="entity-status is-online"
                         >
-                          <span
-                            class="entity-status__dot"
-                          />
-                          <span
-                            class="entity-status__label"
-                          >
+                          <span>
                             Online
                           </span>
                         </div>

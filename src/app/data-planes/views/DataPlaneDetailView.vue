@@ -37,20 +37,16 @@ const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
 
-// TODO: Support this being `{ gateway: false }` for showing only standard data planes.
-const dataPlaneApiParams = {}
-
 async function loadData() {
   error.value = null
   isLoading.value = true
 
   const mesh = route.params.mesh as string
-  const dataPlaneName = route.params.dataPlane as string
-  const params = dataPlaneApiParams
+  const name = route.params.dataPlane as string
 
   try {
-    dataPlane.value = await Kuma.getDataplaneFromMesh({ mesh, name: dataPlaneName }, params)
-    dataPlaneOverview.value = await Kuma.getDataplaneOverviewFromMesh({ mesh, name: dataPlaneName }, params)
+    dataPlane.value = await Kuma.getDataplaneFromMesh({ mesh, name })
+    dataPlaneOverview.value = await Kuma.getDataplaneOverviewFromMesh({ mesh, name })
   } catch (err) {
     dataPlane.value = null
 

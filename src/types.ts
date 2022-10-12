@@ -92,7 +92,7 @@ export interface DiscoverySubscription {
   disconnectTime?: string
   status: DiscoverySubscriptionStatus
   generation?: number
-  version: Version
+  version?: Version
 }
 
 export interface DataPlaneInsight {
@@ -220,11 +220,13 @@ export interface DataPlaneOverview extends MeshEntity {
  */
 export interface ServiceInsight extends MeshEntity {
   type: 'ServiceInsight'
-  status: 'online' | 'offline' | 'partially_degraded'
-  dataplanes: {
+  serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
+  addressPort?: string
+  status?: 'online' | 'offline' | 'partially_degraded'
+  dataplanes?: {
     total: number
-    online: number
-    offline: number
+    online?: number
+    offline?: number
   }
 }
 
@@ -235,7 +237,7 @@ export interface ExternalService extends MeshEntity {
   type: 'ExternalService'
   networking: {
     address: string
-    tls: {
+    tls?: {
       enabled: boolean
       allowRenegotiation: boolean
       caCert?: {

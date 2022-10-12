@@ -422,7 +422,7 @@ export const storeConfig: StoreOptions<State> = {
           category: 'Internal',
           value: internal.total,
           minSizeForLabel: 0.16,
-          route: { name: 'service-insight-list-view' },
+          route: { name: 'service-list-view' },
         })
       }
 
@@ -431,7 +431,7 @@ export const storeConfig: StoreOptions<State> = {
           category: 'External',
           value: external.total,
           minSizeForLabel: 0.16,
-          route: { name: 'external-service-list-view' },
+          route: { name: 'service-list-view' },
         })
       }
 
@@ -440,8 +440,8 @@ export const storeConfig: StoreOptions<State> = {
 
     setOverviewDataplanesChartData({ state, commit }) {
       const total = state.meshInsight.dataplanes.total
-      const online = state.meshInsight.dataplanes.online
-      const partiallyDegraded = state.meshInsight.dataplanes.partiallyDegraded || 0
+      const online = state.meshInsight.dataplanes.online ?? 0
+      const partiallyDegraded = state.meshInsight.dataplanes.partiallyDegraded ?? 0
 
       const data = []
 

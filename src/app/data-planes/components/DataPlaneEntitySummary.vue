@@ -227,20 +227,23 @@ const warnings = computed(() => {
     return []
   }
 
-  const warnings = []
   const latestSubscription = subscriptions[subscriptions.length - 1]
 
+  if (!latestSubscription.version) {
+    return []
+  }
+
+  const warnings = []
   const envoy = latestSubscription.version.envoy
   const kumaDp = latestSubscription.version.kumaDp
-
   const isKumaDpCompatible = envoy.kumaDpCompatible !== undefined ? envoy.kumaDpCompatible : true
-  const isKumaCpCompatible = kumaDp.kumaCpCompatible !== undefined ? kumaDp.kumaCpCompatible : true
 
   if (!isKumaDpCompatible) {
     const warning = `Envoy ${envoy.version} is not supported by Kuma DP ${kumaDp.version}.`
     warnings.push(warning)
   }
 
+  const isKumaCpCompatible = kumaDp.kumaCpCompatible !== undefined ? kumaDp.kumaCpCompatible : true
   if (!isKumaCpCompatible) {
     const warning = `Kuma DP ${kumaDp.version} is not supported by this Kuma control plane.`
     warnings.push(warning)
