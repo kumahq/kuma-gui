@@ -38,6 +38,8 @@ function openModal() {
 
   position: relative;
   padding-right: var(--amount-offset);
+  display: inline-flex;
+  align-items: center;
 }
 
 .notification-icon__amount {

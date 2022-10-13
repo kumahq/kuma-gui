@@ -1,4 +1,4 @@
-import RestClient from '@/services/restClient'
+import { RestClient } from '@/services/RestClient'
 import { ApiListResponse } from '@/api'
 import {
   DataPlane,
@@ -7,7 +7,7 @@ import {
   Info,
   Mesh,
   MeshInsight,
-  Policy,
+  PolicyDefinition,
   PolicyEntity,
   ServiceInsight,
   Zone,
@@ -40,8 +40,13 @@ class Kuma {
   }
 
   /**
-   * Info / Config
+   * Sets the API base path for all network requests.
+   *
+   * URLs for requests will be constructed in the form `${origin}/${basePath}/${path}`.
    */
+  public setBasePath(basePath: string) {
+    this.client.basePath = basePath
+  }
 
   public getInfo(): Promise<Info> {
     return this.client.get('')
@@ -70,219 +75,136 @@ class Kuma {
   }
 
   /**
-   * Zones
+   * Retrieves a list of known policy definitions.
    */
-
-  // Zone status
-  public getZonesStatus(params?: any): Promise<unknown> {
-    return this.client.get('status/zones', { params })
+  public getPolicyDefinitions(): Promise<{ policies: PolicyDefinition[] }> {
+    return this.client.get('policies')
   }
 
-  // Zones
+  public getGlobalInsights() {
+    return this.client.get('global-insights')
+  }
+
   public getZones(params?: any): Promise<ApiListResponse<Zone>> {
     return this.client.get('zones', { params })
   }
 
-  // Zones
   public getZone({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<Zone> {
     return this.client.get(`zones/${name}`, { params })
   }
 
-  /**
-   * Zone Insights
-   */
-
-  // Get all Zone Insights/Overviews
   public getAllZoneOverviews(params?: any): Promise<ApiListResponse<ZoneOverview>> {
     return this.client.get('zones+insights', { params })
   }
 
-  // Get a single Zone Insight/Overview
   public getZoneOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ZoneOverview> {
     return this.client.get(`zones+insights/${name}`, { params })
   }
 
   /**
-   * Zone Ingress Insights
+   * Fetches additional data like xDS configuration, envoy stats, or envoy clusters.
    */
+  public getZoneIngressData({ dataPath, zoneIngressName }: { dataPath: 'xds' | 'stats' | 'clusters', zoneIngressName: string }, params?: any) {
+    return this.client.get(`zoneingresses/${zoneIngressName}/${dataPath}`, { params })
+  }
 
-  // Get all Zone Ingress Insights/Overviews
   public getAllZoneIngressOverviews(params?: any) {
     return this.client.get('zoneingresses+insights', { params })
   }
 
-  // Get a single Zone Ingress Insight/Overview
   public getZoneIngressOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
     return this.client.get(`zoneingresses+insights/${name}`, { params })
   }
 
   /**
-   * Zone Egress Insights
+   * Fetches additional data like xDS configuration, envoy stats, or envoy clusters.
    */
+  public getZoneEgressData({ dataPath, zoneEgressName }: { dataPath: 'xds' | 'stats' | 'clusters', zoneEgressName: string }, params?: any) {
+    return this.client.get(`zoneegresses/${zoneEgressName}/${dataPath}`, { params })
+  }
 
-  // Get all Zone Egress Insights/Overviews
   public getAllZoneEgressOverviews(params?: any) {
     return this.client.get('zoneegressoverviews', { params })
   }
 
-  // Get a single Zone Egress Insight/Overview
   public getZoneEgressOverview({ name }: ApiDefaultOptions = defaultOptions, params?: any) {
     return this.client.get(`zoneegressoverviews/${name}`, { params })
   }
 
-  /**
-   * Meshes
-   */
-
-  // get a list of all meshes
   public getAllMeshes(params?: any): Promise<ApiListResponse<Mesh>> {
     return this.client.get('meshes', { params })
   }
 
-  // get a single mesh
   public getMesh({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<Mesh> {
     return this.client.get(`meshes/${name}`, { params })
   }
 
-  /**
-   * Dataplanes
-   */
+  public getAllMeshInsights(params?: any): Promise<ApiListResponse<MeshInsight>> {
+    return this.client.get('mesh-insights', { params })
+  }
+
+  public getMeshInsights({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<MeshInsight> {
+    return this.client.get(`mesh-insights/${name}`, { params })
+  }
 
   public getAllDataplanes(params?: any) {
     return this.client.get('dataplanes', { params })
   }
 
-  // get a list of all dataplanes
-  public getAllDataplanesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any) {
-    return this.client.get(`meshes/${mesh}/dataplanes`, { params })
-  }
-
-  // get a single dataplane
   public getDataplaneFromMesh({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<DataPlane> {
     return this.client.get(`meshes/${mesh}/dataplanes/${name}`, { params })
   }
 
-  /**
-   * Dataplane Overviews
-   */
-
-  // get all dataplane overviews
   public getAllDataplaneOverviews(params?: any): Promise<ApiListResponse<DataPlaneOverview>> {
     return this.client.get('dataplanes+insights', { params })
   }
 
-  // get all dataplane overviews from a specific mesh
   public getAllDataplaneOverviewsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<DataPlaneOverview>> {
     return this.client.get(`meshes/${mesh}/dataplanes+insights`, { params })
   }
 
-  // get a specific dataplane overview from its associated mesh
   public getDataplaneOverviewFromMesh({ mesh, name }: Required<ApiDefaultOptions>, params?: any): Promise<DataPlaneOverview> {
     return this.client.get(`meshes/${mesh}/dataplanes+insights/${name}`, { params })
   }
 
-  /**
-   * External Services
-   */
-
-  // get all external services
-  public getAllExternalServices(params?: any): Promise<ApiListResponse<ExternalService>> {
-    return this.client.get('external-services', { params })
-  }
-
-  // get all external services from mesh
-  public getAllExternalServicesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<ExternalService>> {
-    return this.client.get(`meshes/${mesh}/external-services`, { params })
-  }
-
-  // get external service details
-  public getExternalService({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ExternalService> {
-    return this.client.get(`meshes/${mesh}/external-services/${name}`, { params })
-  }
-
-  /**
-   * Service Insights
-   */
-
-  // get all services
-  public getAllServiceInsights(params?: any): Promise<ApiListResponse<ServiceInsight>> {
-    return this.client.get('service-insights', { params })
-  }
-
-  // get all services from mesh
-  public getAllServiceInsightsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<ServiceInsight>> {
-    return this.client.get(`meshes/${mesh}/service-insights`, { params })
-  }
-
-  // get service details
-  public getServiceInsight({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ServiceInsight> {
-    return this.client.get(`meshes/${mesh}/service-insights/${name}`, { params })
-  }
-
-  /**
-   * Mesh Insights
-   */
-
-  // Get all Mesh Insights
-  public getAllMeshInsights(params?: any): Promise<ApiListResponse<MeshInsight>> {
-    return this.client.get('mesh-insights', { params })
-  }
-
-  // Get a single Mesh Insight
-  public getMeshInsights({ name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<MeshInsight> {
-    return this.client.get(`mesh-insights/${name}`, { params })
-  }
-
-  /**
-   * Global Insights
-   */
-
-  // Get global insights
-  public getGlobalInsights() {
-    return this.client.get('global-insights')
-  }
-
-  /**
-   * Inspection API
-   */
-
-  // Get a list of all policies
-  public getPolicies(): Promise<{ policies: Policy[] }> {
-    return this.client.get('policies')
-  }
-
-  // Get policy dpps connections
-  public getPolicyConnections(
-    { mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string },
-    params?: any,
-  ) {
-    return this.client.get(`meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
-  }
-
-  // Get policy dpps connections
   public getDataplanePolicies({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
     return this.client.get(`meshes/${mesh}/dataplanes/${dppName}/policies`, { params })
   }
 
   /**
-   * Fetch additional data like xDS configuration, envoy stats, or envoy clusters.
+   * Fetches additional data like xDS configuration, envoy stats, or envoy clusters.
    */
-
   public getDataplaneData({ dataPath, mesh, dppName }: { dataPath: 'xds' | 'stats' | 'clusters', mesh: string; dppName: string }, params?: any) {
     return this.client.get(`meshes/${mesh}/dataplanes/${dppName}/${dataPath}`, { params })
   }
 
-  public getZoneIngressData({ dataPath, zoneIngressName }: { dataPath: 'xds' | 'stats' | 'clusters', zoneIngressName: string }, params?: any) {
-    return this.client.get(`zoneingresses/${zoneIngressName}/${dataPath}`, { params })
+  public getAllServiceInsights(params?: any): Promise<ApiListResponse<ServiceInsight>> {
+    return this.client.get('service-insights', { params })
   }
 
-  public getZoneEgressData({ dataPath, zoneEgressName }: { dataPath: 'xds' | 'stats' | 'clusters', zoneEgressName: string }, params?: any) {
-    return this.client.get(`zoneegresses/${zoneEgressName}/${dataPath}`, { params })
+  public getAllServiceInsightsFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<ServiceInsight>> {
+    return this.client.get(`meshes/${mesh}/service-insights`, { params })
   }
 
-  /**
-   * Policies
-   */
+  public getServiceInsight({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ServiceInsight> {
+    return this.client.get(`meshes/${mesh}/service-insights/${name}`, { params })
+  }
+
+  public getAllExternalServices(params?: any): Promise<ApiListResponse<ExternalService>> {
+    return this.client.get('external-services', { params })
+  }
+
+  public getAllExternalServicesFromMesh({ mesh }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ApiListResponse<ExternalService>> {
+    return this.client.get(`meshes/${mesh}/external-services`, { params })
+  }
+
+  public getExternalService({ mesh, name }: ApiDefaultOptions = defaultOptions, params?: any): Promise<ExternalService> {
+    return this.client.get(`meshes/${mesh}/external-services/${name}`, { params })
+  }
+
+  public getPolicyConnections({ mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string }, params?: any) {
+    return this.client.get(`meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
+  }
 
   public getAllPolicyEntities({ path }: ApiDefaultPolicyOptions = defaultOptions, params?: any): Promise<ApiListResponse<PolicyEntity>> {
     return this.client.get(path, { params })

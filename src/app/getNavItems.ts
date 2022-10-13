@@ -1,78 +1,85 @@
-import { Policy } from '@/types'
+import { PolicyDefinition } from '@/types'
 
 interface NavItem {
   name: string
-  link?: string
-  parent?: string
+  categoryTier?: 'primary' | 'secondary'
+  routeName?: string
   usesMeshParam?: boolean
   insightsFieldAccessor?: string
+  isMeshSelector?: boolean
+  shouldOffsetFromFollowingItems?: boolean
 }
 
-export function getNavItems(policies: Policy[]): NavItem[] {
+export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boolean): NavItem[] {
   const policyItems: NavItem[] = policies.map((policy) => ({
     name: policy.pluralDisplayName,
-    link: policy.path,
+    routeName: policy.path,
     title: false,
     usesMeshParam: true,
-    parent: 'policies',
     insightsFieldAccessor: `mesh.policies.${policy.name}`,
   }))
 
   policyItems.sort((policyItemA, policyItemB) => (policyItemA.name < policyItemB.name ? -1 : 1))
 
+  const zoneItems: NavItem[] = !isMultizoneMode
+    ? []
+    : [
+      {
+        name: 'Zones',
+        categoryTier: 'primary',
+      },
+      {
+        name: 'Zone CPs',
+        routeName: 'zones',
+        insightsFieldAccessor: 'global.Zone',
+      },
+      {
+        name: 'Zone Ingresses',
+        routeName: 'zoneingresses',
+        insightsFieldAccessor: 'global.ZoneIngress',
+      },
+      {
+        name: 'Zone Egresses',
+        routeName: 'zoneegresses',
+        insightsFieldAccessor: 'global.ZoneEgress',
+      },
+    ]
+
   return [
     {
-      name: 'Service mesh',
+      name: 'Home',
+      routeName: 'home',
+      shouldOffsetFromFollowingItems: true,
+    },
+    ...zoneItems,
+    {
+      name: 'Mesh',
+      categoryTier: 'primary',
+    },
+    {
+      name: 'Mesh selector',
+      isMeshSelector: true,
     },
     {
       name: 'Overview',
-      link: 'global-overview',
+      routeName: 'mesh-detail-view',
       usesMeshParam: true,
     },
     {
-      name: 'Meshes',
-      link: 'mesh-child',
-      usesMeshParam: true,
-      insightsFieldAccessor: 'global.Mesh',
-    },
-    {
-      name: 'Zones',
-    },
-    {
-      name: 'Zone CPs',
-      link: 'zones',
-      insightsFieldAccessor: 'global.Zone',
-    },
-    {
-      name: 'Zone Ingresses',
-      link: 'zoneingresses',
-      insightsFieldAccessor: 'global.ZoneIngress',
-    },
-    {
-      name: 'Zone Egresses',
-      link: 'zoneegresses',
-      insightsFieldAccessor: 'global.ZoneEgress',
-    },
-    {
       name: 'Services',
-    },
-    {
-      name: 'Services',
-      link: 'service-list-view',
+      routeName: 'service-list-view',
       insightsFieldAccessor: 'mesh.services.total',
       usesMeshParam: true,
     },
     {
-      name: 'Data plane proxies',
-    },
-    {
-      name: 'Data planes',
-      link: 'data-plane-list-view',
+      name: 'Data Plane Proxies',
+      routeName: 'data-plane-list-view',
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
     },
     {
       name: 'Policies',
+      categoryTier: 'secondary',
     },
     ...policyItems,
   ]

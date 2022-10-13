@@ -3,7 +3,7 @@ import { DataPlaneOverview } from '@/types'
 export function createDataPlaneOverview(): DataPlaneOverview {
   return {
     type: 'DataplaneOverview',
-    mesh: 'default',
+    mesh: 'test-mesh',
     name: 'backend',
     creationTime: '2021-02-17T08:33:36.442044+01:00',
     modificationTime: '2021-02-17T08:33:36.442044+01:00',

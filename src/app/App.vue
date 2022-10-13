@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="isLoading"
-    class="full-screen"
-  >
-    <AppLoadingBar />
-  </div>
+  <AppLoadingBar v-if="isLoading" />
 
   <template v-else>
     <AppHeader />
@@ -26,9 +21,9 @@
           'app-main-content--narrow': !isWideContent,
         }"
       >
-        <AppErrorMessage v-if="store.state.config.status !== 'OK'" />
+        <AppErrorMessage v-if="shouldShowAppError" />
 
-        <NotificationManager />
+        <NotificationManager v-if="shouldShowNotificationManager" />
 
         <AppOnboardingNotification v-if="shouldSuggestOnboarding" />
 
@@ -56,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, onUnmounted, computed, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useStore } from '@/store/store'
@@ -72,23 +67,22 @@ const store = useStore()
 const route = useRoute()
 
 const isLoading = ref(true)
-const timeout = ref<number | null>(null)
 
 /**
  * The `router-view`’s `key` attribute value.
  *
- * Is always set to `'default'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
+ * Is always set to `'NONE'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
  * However, in some scenarios, we want Vue to re-render a route’s components
  * (e.g. `src/app/policies/PolicyView.vue` which is used by some dozen policy routes).
  */
-const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'default')
+const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'NONE')
+const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
+const shouldShowNotificationManager = computed(() => !shouldSuggestOnboarding.value && store.getters['notifications/amountOfActions'] > 0)
 const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view', 'service-list-view'].includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {
-  timeout.value = window.setTimeout(() => {
-    isLoading.value = globalLoading
-  }, 200)
+  isLoading.value = globalLoading
 })
 
 watch(() => route.meta.title, function (pageTitle) {
@@ -99,15 +93,7 @@ watch(() => store.state.pageTitle, function (pageTitle) {
   setDocumentTitle(pageTitle)
 })
 
-onBeforeMount(function () {
-  store.dispatch('bootstrap')
-})
-
-onUnmounted(function () {
-  if (typeof timeout.value === 'number') {
-    window.clearTimeout(timeout.value)
-  }
-})
+store.dispatch('bootstrap')
 
 function setDocumentTitle(title: string | undefined): void {
   const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
@@ -117,19 +103,6 @@ function setDocumentTitle(title: string | undefined): void {
 </script>
 
 <style lang="scss" scoped>
-.full-screen {
-  background: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 50000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .app-content-container {
   display: grid;
   grid-template-columns: var(--subnavWidth) 1fr;

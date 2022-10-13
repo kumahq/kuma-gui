@@ -302,7 +302,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             mesh
                           </h4>
                           <div>
-                            default
+                            test-mesh
                           </div>
                         </li>
                         <li>

@@ -33,7 +33,7 @@ describe('OnboardingNavigation.vue', () => {
   it('renders snapshot', () => {
     const { container } = renderComponent({
       previousStep: 'foo',
-      nextStep: 'default',
+      nextStep: 'bar',
     })
 
     expect(container).toMatchSnapshot()
@@ -42,7 +42,7 @@ describe('OnboardingNavigation.vue', () => {
   it('displays different next step title', () => {
     renderComponent({
       previousStep: 'foo',
-      nextStep: 'default',
+      nextStep: 'bar',
       nextStepTitle: 'nextStepTitle',
     })
 
@@ -52,7 +52,7 @@ describe('OnboardingNavigation.vue', () => {
   it('display disabled next button', () => {
     renderComponent({
       previousStep: 'foo',
-      nextStep: 'default',
+      nextStep: 'bar',
       shouldAllowNext: false,
     })
 
@@ -61,7 +61,7 @@ describe('OnboardingNavigation.vue', () => {
 
   it('doesn\'t display previous step', () => {
     renderComponent({
-      nextStep: 'default',
+      nextStep: 'bar',
     })
 
     expect(screen.queryByText(/Back/)).not.toBeInTheDocument()
@@ -70,7 +70,7 @@ describe('OnboardingNavigation.vue', () => {
   it('changes step to previous', async () => {
     renderComponent({
       previousStep: 'foo',
-      nextStep: 'default',
+      nextStep: 'bar',
     })
 
     expect(store.state.onboarding.step).toBe('onboarding-welcome')
@@ -83,7 +83,7 @@ describe('OnboardingNavigation.vue', () => {
   it('calls skip onboarding', async () => {
     renderComponent({
       previousStep: 'foo',
-      nextStep: 'default',
+      nextStep: 'bar',
     })
 
     expect(store.state.onboarding.isCompleted).toBe(false)

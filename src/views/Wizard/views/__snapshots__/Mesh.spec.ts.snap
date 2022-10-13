@@ -252,7 +252,55 @@ tracing:
 logging: 
   backends: 
     - name: fake-name
-      format: '{ start_time: ''%START_TIME%'', source: ''%KUMA_SOURCE_SERVICE%'', destination: ''%KUMA_DESTINATION_SERVICE%'', source_address: ''%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%'', destination_address: ''%UPSTREAM_HOST%'', duration_millis: ''%DURATION%'', bytes_received: ''%BYTES_RECEIVED%'', bytes_sent: ''%BYTES_SENT%'' }'
+      format: '{ start_time: "
+                                    </span>
+                                    %START_TIME%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", source: "
+                                    </span>
+                                    %KUMA_SOURCE_SERVICE%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", destination: "
+                                    </span>
+                                    %KUMA_DESTINATION_SERVICE%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", source_address: "
+                                    </span>
+                                    %KUMA_SOURCE_ADDRESS_WITHOUT_PORT%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", destination_address: "
+                                    </span>
+                                    %UPSTREAM_HOST%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", duration_millis: "
+                                    </span>
+                                    %DURATION%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", bytes_received: "
+                                    </span>
+                                    %BYTES_RECEIVED%
+                                    <span
+                                      class="token string"
+                                    >
+                                      ", bytes_sent: "
+                                    </span>
+                                    %BYTES_SENT%
+                                    <span
+                                      class="token string"
+                                    >
+                                      " }'
       type: tcp
       conf: 
         address: '127.0.0.1:5000'

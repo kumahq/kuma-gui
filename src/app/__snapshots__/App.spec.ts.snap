@@ -4,20 +4,19 @@ exports[`App.vue fails to renders basic view 1`] = `
 <div>
   
   <header
-    class="main-header px-4 py-1 flex justify-between items-center"
+    class="app-header"
   >
     <div
-      class="py-1 md:py-0 flex justify-between items-center"
+      class="horizontal-list"
     >
-      <a
-        class="logo"
-      >
+      <a>
         <img
           alt="Kuma Logo"
+          class="logo-image"
         />
       </a>
       <div
-        class="my-0 mx-6 upgrade-check-wrapper"
+        class="upgrade-check-wrapper"
       >
         <div
           class="upgrade-check"
@@ -27,181 +26,159 @@ exports[`App.vue fails to renders basic view 1`] = `
       </div>
     </div>
     <div
-      class="flex justify-between items-center"
+      class="horizontal-list"
     >
       <div
-        class="py-1 md:py-0 md:px-4"
+        class="app-status app-status--mobile"
       >
         <div
-          class="app-status app-status--mobile"
+          aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          data-v-814c880a=""
+          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          role="button"
         >
-          <div
-            aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          
+          <button
+            class="medium rounded outline k-button"
+            data-v-6bcbf05d=""
+            type="button"
+          >
+            
+            <!---->
+            
+            
+             Info 
+            
+            <!---->
+          </button>
+          
+          <transition-stub
+            appear="false"
+            css="true"
             data-v-814c880a=""
-            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-            role="button"
+            name="fade"
+            persisted="false"
           >
-            
-            <button
-              class="small rounded primary k-button kpop-control"
-              data-v-6bcbf05d=""
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Info 
-              
-              <!---->
-            </button>
-            
-            <transition-stub
-              appear="false"
-              css="true"
-              data-v-814c880a=""
-              name="fade"
-              persisted="false"
-            >
-              <div
-                class="k-popover"
-                data-v-814c880a=""
-                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                role="region"
-                style="width: 300px; max-width: 350px; max-height: auto; display: none;"
-              >
-                <!---->
-                <div
-                  class="k-popover-content"
-                  data-v-814c880a=""
-                >
-                  
-                  <div>
-                    <p>
-                      Kuma 1.7.1 on 
-                      <strong>
-                        Universal
-                      </strong>
-                    </p>
-                    <p>
-                      <div
-                        class="k-badge-success k-badge-rounded k-badge truncate"
-                        data-v-17d30312=""
-                        style=""
-                      >
-                        
-                        <span>
-                           Standalone 
-                        </span>
-                        
-                      </div>
-                    </p>
-                  </div>
-                  
-                </div>
-                <!---->
-              </div>
-            </transition-stub>
-          </div>
-        </div>
-        <div
-          class="app-status app-status--desktop"
-        >
-          <div
-            class="app-status-list text-sm"
-          >
-            <strong>
-              Kuma 1.7.1 on Universal
-            </strong>
             <div
-              class="k-badge-success k-badge-rounded k-badge truncate status-badge"
-              data-v-17d30312=""
+              class="k-popover"
+              data-v-814c880a=""
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              role="region"
+              style="width: 280px; max-width: 350px; max-height: auto; display: none;"
             >
-              
-              <span>
-                 Standalone 
-              </span>
-              
+              <!---->
+              <div
+                class="k-popover-content"
+                data-v-814c880a=""
+              >
+                
+                <p>
+                  Kuma 
+                  <b>
+                    1.7.1
+                  </b>
+                   on 
+                  <b>
+                    Universal
+                  </b>
+                   (Standalone) 
+                </p>
+                
+              </div>
+              <!---->
             </div>
-            <button
-              class="notification-icon cursor-pointer"
-              type="button"
-            >
-              <span
-                class="kong-icon-notificationBell kong-icon"
-                data-v-71cfcfc4=""
-              >
-                <svg
-                  fill="var(--yellow-300)"
-                  height="24"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  
-  
-                  <title>
-                    Notifications
-                  </title>
-                  
-  
-                  <path
-                    d="M8.5 19.5a3.8 3.8 0 0 0 3.5 3c1.32 0 3-.97 3.5-3h-7ZM20.42 14.8a.4.4 0 0 0-.11-.26l-1.98-1.97a.5.5 0 0 1-.17-.4v-3.1a5.95 5.95 0 0 0-3.08-5.36c-.3-.18-.63-.31-.95-.46a7.8 7.8 0 0 0-3.96 0l-.2.1c-.93.36-1.73.92-2.4 1.69a5.74 5.74 0 0 0-1.43 3.62c-.03 1.17-.01 2.35-.01 3.52a.5.5 0 0 1-.17.4L4 14.53a.48.48 0 0 0-.13.3V18H20.4l.01-.17c.02-1.01.02-2.02.01-3.03Z"
-                    fill="var(--yellow-300)"
-                  />
-                  
-
-                </svg>
-                
-
-              </span>
-              <span
-                class="notification-icon__amount"
-                data-testid="notification-amount"
-              >
-                3
-              </span>
-            </button>
-            <a>
-              <span
-                class="kong-icon-gearFilled kong-icon"
-                data-v-71cfcfc4=""
-              >
-                <svg
-                  height="16"
-                  role="img"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  
-  
-                  <title>
-                    Diagnostics
-                  </title>
-                  
-  
-                  <path
-                    d="M8.63962039 0c.2152152 0 .40628463.13771505.47434165.34188612l.63997656 1.91853291c.3708976.11319954.7265407.26136452 1.0630881.4406537l1.8103874-.9038671c.1924944-.09624716.4249801-.05851992.5771602.09366021l.9045599.90455983c.1521801.15218013.1899073.38466585.0936602.57716018l-.904073 1.81000104c.1795192.33691975.3278441.69298066.44112 1.06432821l1.9182725.63912286C15.862285 6.95409498 16 7.14516441 16 7.36037961v1.27924078c0 .2152152-.137715.40628463-.3418861.47434165l-1.918532.63997355c-.1132072.37092351-.2613848.72659041-.4406907 1.06315871l.9039032 1.8103198c.0962471.1924944.0585199.4249801-.0936602.5771602l-.9045599.9045599c-.1521801.1521801-.3846658.1899073-.5771602.0936602l-1.8103171-.9039046c-.3365681.179306-.692235.3274837-1.0631584.4406912l-.63997656 1.9185329C9.04590502 15.862285 8.85483559 16 8.63962039 16H7.36037961c-.2152152 0-.40628463-.137715-.47434165-.3418861L6.2460614 13.739581c-.3708976-.1131996-.72654071-.2613646-1.06308807-.4406537l-1.81038748.9038671c-.19249433.0962471-.42498005.0585199-.57716018-.0936602l-.90455983-.9045599c-.15218013-.1521801-.18990737-.3846658-.09366021-.5771602l.90407299-1.810001c-.17951921-.3369197-.32784407-.6929806-.44112007-1.0643282L.34188612 9.11396204C.13771505 9.04590502 0 8.85483559 0 8.63962039V7.36037961c0-.2152152.13771505-.40628463.34188612-.47434165l1.918532-.63997355c.11320723-.37092352.26138479-.72659044.44069063-1.06315869l-.90390312-1.81031987c-.09624716-.19249433-.05851992-.42498005.09366021-.57716018l.90455983-.90455983c.15218013-.15218013.38466585-.18990737.57716018-.09366021l1.81031714.90390458c.33656815-.17930601.69223497-.32748375 1.06315841-.44069118L6.88603796.34188612C6.95409498.13771505 7.14516441 0 7.36037961 0h1.27924078zM8 6c-1.1045695 0-2 .8954305-2 2s.8954305 2 2 2 2-.8954305 2-2-.8954305-2-2-2z"
-                    fill="currentColor"
-                    fill-rule="evenodd"
-                  />
-                  
-
-                </svg>
-                
-
-              </span>
-              <span
-                class="kutil-sr-only"
-              >
-                Diagnostics
-              </span>
-            </a>
-          </div>
+          </transition-stub>
         </div>
       </div>
+      <p
+        class="app-status app-status--desktop"
+      >
+        Kuma 
+        <b>
+          1.7.1
+        </b>
+         on 
+        <b>
+          Universal
+        </b>
+         (Standalone) 
+      </p>
+      <button
+        class="notification-icon cursor-pointer"
+        type="button"
+      >
+        <span
+          class="kong-icon-notificationBell kong-icon"
+          data-v-71cfcfc4=""
+        >
+          <svg
+            fill="var(--yellow-300)"
+            height="24"
+            role="img"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            
+  
+            <title>
+              Notifications
+            </title>
+            
+  
+            <path
+              d="M8.5 19.5a3.8 3.8 0 0 0 3.5 3c1.32 0 3-.97 3.5-3h-7ZM20.42 14.8a.4.4 0 0 0-.11-.26l-1.98-1.97a.5.5 0 0 1-.17-.4v-3.1a5.95 5.95 0 0 0-3.08-5.36c-.3-.18-.63-.31-.95-.46a7.8 7.8 0 0 0-3.96 0l-.2.1c-.93.36-1.73.92-2.4 1.69a5.74 5.74 0 0 0-1.43 3.62c-.03 1.17-.01 2.35-.01 3.52a.5.5 0 0 1-.17.4L4 14.53a.48.48 0 0 0-.13.3V18H20.4l.01-.17c.02-1.01.02-2.02.01-3.03Z"
+              fill="var(--yellow-300)"
+            />
+            
+
+          </svg>
+          
+
+        </span>
+        <span
+          class="notification-icon__amount"
+          data-testid="notification-amount"
+        >
+          4
+        </span>
+      </button>
+      <a>
+        <span
+          class="kong-icon-gearFilled kong-icon"
+          data-v-71cfcfc4=""
+        >
+          <svg
+            height="16"
+            role="img"
+            viewBox="0 0 16 16"
+            width="16"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            
+  
+            <title>
+              Diagnostics
+            </title>
+            
+  
+            <path
+              d="M8.63962039 0c.2152152 0 .40628463.13771505.47434165.34188612l.63997656 1.91853291c.3708976.11319954.7265407.26136452 1.0630881.4406537l1.8103874-.9038671c.1924944-.09624716.4249801-.05851992.5771602.09366021l.9045599.90455983c.1521801.15218013.1899073.38466585.0936602.57716018l-.904073 1.81000104c.1795192.33691975.3278441.69298066.44112 1.06432821l1.9182725.63912286C15.862285 6.95409498 16 7.14516441 16 7.36037961v1.27924078c0 .2152152-.137715.40628463-.3418861.47434165l-1.918532.63997355c-.1132072.37092351-.2613848.72659041-.4406907 1.06315871l.9039032 1.8103198c.0962471.1924944.0585199.4249801-.0936602.5771602l-.9045599.9045599c-.1521801.1521801-.3846658.1899073-.5771602.0936602l-1.8103171-.9039046c-.3365681.179306-.692235.3274837-1.0631584.4406912l-.63997656 1.9185329C9.04590502 15.862285 8.85483559 16 8.63962039 16H7.36037961c-.2152152 0-.40628463-.137715-.47434165-.3418861L6.2460614 13.739581c-.3708976-.1131996-.72654071-.2613646-1.06308807-.4406537l-1.81038748.9038671c-.19249433.0962471-.42498005.0585199-.57716018-.0936602l-.90455983-.9045599c-.15218013-.1521801-.18990737-.3846658-.09366021-.5771602l.90407299-1.810001c-.17951921-.3369197-.32784407-.6929806-.44112007-1.0643282L.34188612 9.11396204C.13771505 9.04590502 0 8.85483559 0 8.63962039V7.36037961c0-.2152152.13771505-.40628463.34188612-.47434165l1.918532-.63997355c.11320723-.37092352.26138479-.72659044.44069063-1.06315869l-.90390312-1.81031987c-.09624716-.19249433-.05851992-.42498005.09366021-.57716018l.90455983-.90455983c.15218013-.15218013.38466585-.18990737.57716018-.09366021l1.81031714.90390458c.33656815-.17930601.69223497-.32748375 1.06315841-.44069118L6.88603796.34188612C6.95409498.13771505 7.14516441 0 7.36037961 0h1.27924078zM8 6c-1.1045695 0-2 .8954305-2 2s.8954305 2 2 2 2-.8954305 2-2-.8954305-2-2-2z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            />
+            
+
+          </svg>
+          
+
+        </span>
+        <span
+          class="kutil-sr-only"
+        >
+          Diagnostics
+        </span>
+      </a>
     </div>
   </header>
   <div
@@ -213,200 +190,116 @@ exports[`App.vue fails to renders basic view 1`] = `
       <aside
         class="app-sidebar"
       >
-        <div
-          class="mt-3"
-        >
-          <div
-            class="px-4 pb-4"
-          >
-            <div>
-              <h3
-                class="menu-title uppercase"
-              >
-                 Filter by Mesh: 
-              </h3>
-              <select
-                class="mesh-selector"
-                id="mesh-selector"
-                name="mesh-selector"
-              >
-                <option
-                  value="all"
-                >
-                   All Meshes 
-                </option>
-                
-                <option
-                  value="default"
-                >
-                  default
-                </option>
-                <option
-                  value="hello-world"
-                >
-                  hello-world
-                </option>
-                <option
-                  value="kong-mania-12"
-                >
-                  kong-mania-12
-                </option>
-                
-              </select>
-            </div>
-          </div>
-        </div>
+        
         
         <div
-          class="nav-item"
+          class="nav-item nav-item--has-bottom-offset"
+          data-testid="home"
+        >
+          <a
+            class="nav-link nav-link--is-active"
+          >
+            Home 
+            <!--v-if-->
+          </a>
+        </div>
+        
+        
+        <div
+          class="nav-item nav-item--is-category nav-item--is-primary-category"
           data-testid=""
         >
           <div
-            class="nav-item__title"
+            class="nav-category"
           >
-            <span
-              class="text-uppercase"
-            >
-              Service mesh
-            </span>
+            Mesh
           </div>
         </div>
+        
+        
+        
         <div
-          class="nav-item nav-item--is-link"
-          data-testid="global-overview"
+          class="mesh-selector-container"
+        >
+          <label
+            for="mesh-selector"
+          >
+            <span
+              class="kutil-sr-only"
+            >
+               Filter by mesh: 
+            </span>
+            <select
+              class="mesh-selector"
+              id="mesh-selector"
+              name="mesh-selector"
+            >
+              
+              <option
+                value="default"
+              >
+                default
+              </option>
+              <option
+                value="a-test"
+              >
+                a-test
+              </option>
+              <option
+                value="hello-world"
+              >
+                hello-world
+              </option>
+              <option
+                value="kong-mania-12"
+              >
+                kong-mania-12
+              </option>
+              
+            </select>
+          </label>
+        </div>
+        
+        
+        
+        <div
+          class="nav-item"
+          data-testid="mesh-detail-view"
         >
           <a
-            class="nav-item__link"
+            class="nav-link"
           >
             Overview 
             <!--v-if-->
           </a>
         </div>
-        <div
-          class="nav-item nav-item--is-link"
-          data-testid="mesh-child"
-        >
-          <a
-            class="nav-item__link"
-          >
-            Meshes 
-            <span
-              class="amount"
-            >
-              3
-            </span>
-          </a>
-        </div>
+        
+        
         <div
           class="nav-item"
-          data-testid=""
-        >
-          <div
-            class="nav-item__title"
-          >
-            <span
-              class="text-uppercase"
-            >
-              Zones
-            </span>
-          </div>
-        </div>
-        <div
-          class="nav-item nav-item--is-link"
-          data-testid="zones"
-        >
-          <a
-            class="nav-item__link"
-          >
-            Zone CPs 
-            <span
-              class="amount"
-            >
-              4
-            </span>
-          </a>
-        </div>
-        <div
-          class="nav-item nav-item--is-link"
-          data-testid="zoneingresses"
-        >
-          <a
-            class="nav-item__link"
-          >
-            Zone Ingresses 
-            <span
-              class="amount"
-            >
-              1
-            </span>
-          </a>
-        </div>
-        <div
-          class="nav-item nav-item--is-link"
-          data-testid="zoneegresses"
-        >
-          <a
-            class="nav-item__link"
-          >
-            Zone Egresses 
-            <span
-              class="amount"
-            >
-              1
-            </span>
-          </a>
-        </div>
-        <div
-          class="nav-item"
-          data-testid=""
-        >
-          <div
-            class="nav-item__title"
-          >
-            <span
-              class="text-uppercase"
-            >
-              Services
-            </span>
-          </div>
-        </div>
-        <div
-          class="nav-item nav-item--is-link"
           data-testid="service-list-view"
         >
           <a
-            class="nav-item__link"
+            class="nav-link"
           >
             Services 
             <span
               class="amount"
             >
-              6
+              5
             </span>
           </a>
         </div>
+        
+        
         <div
           class="nav-item"
-          data-testid=""
-        >
-          <div
-            class="nav-item__title"
-          >
-            <span
-              class="text-uppercase"
-            >
-              Data plane proxies
-            </span>
-          </div>
-        </div>
-        <div
-          class="nav-item nav-item--is-link"
           data-testid="data-plane-list-view"
         >
           <a
-            class="nav-item__link"
+            class="nav-link"
           >
-            Data planes 
+            Data Plane Proxies 
             <span
               class="amount"
             >
@@ -414,20 +307,19 @@ exports[`App.vue fails to renders basic view 1`] = `
             </span>
           </a>
         </div>
+        
+        
         <div
-          class="nav-item"
+          class="nav-item nav-item--is-category nav-item--is-secondary-category"
           data-testid=""
         >
           <div
-            class="nav-item__title"
+            class="nav-category"
           >
-            <span
-              class="text-uppercase"
-            >
-              Policies
-            </span>
+            Policies
           </div>
         </div>
+        
         
       </aside>
     </div>
@@ -461,9 +353,9 @@ exports[`App.vue fails to renders basic view 1`] = `
                   class="mr-2"
                 >
                   <strong>
-                    ProTip:
+                    Pro tip:
                   </strong>
-                   You might want to adjust your meshes configuration 
+                   You might want to adjust your mesh configuration 
                 </span>
                 <button
                   class="medium rounded outline k-button"
@@ -475,7 +367,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   <!---->
                   
                   
-                   Check your meshes! 
+                   Check your mesh! 
                   
                   <!---->
                 </button>
@@ -534,56 +426,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         <!---->
       </div>
       <!--v-if-->
-      <ul
-        class="k-breadcrumbs"
-        data-v-a87af1c0=""
-      >
-        
-        <li
-          class="k-breadcrumbs-item truncate"
-          data-v-a87af1c0=""
-        >
-          <a
-            class="no-underline"
-            data-v-a87af1c0=""
-          >
-            <!---->
-            <!---->
-          </a>
-          <span
-            class="kong-icon-chevronRight kong-icon"
-            data-v-71cfcfc4=""
-            data-v-a87af1c0=""
-          >
-            <svg
-              fill="var(--grey-500)"
-              height="15"
-              role="img"
-              viewBox="0 0 20 20"
-              width="15"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              
-  
-              
-  
-              <path
-                d="m7.3 14.7 5-5.2-5-5.2"
-                fill="none"
-                stroke="var(--grey-500)"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-              />
-              
-
-            </svg>
-            
-
-          </span>
-        </li>
-        
-      </ul>
+      <!--v-if-->
       <transition-stub
         appear="false"
         css="true"

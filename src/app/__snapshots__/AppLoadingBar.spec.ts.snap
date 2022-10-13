@@ -3,17 +3,21 @@
 exports[`AppLoadingBar renders snapshot at the beginning 1`] = `
 <div>
   <div
-    class="loading-container"
+    class="full-screen"
   >
-    <img />
     <div
-      class="progress"
+      class="loading-container"
     >
+      <img />
       <div
-        class="progress-bar"
-        role="progressbar"
-        style="width: 10%;"
-      />
+        class="progress"
+      >
+        <div
+          class="progress-bar"
+          role="progressbar"
+          style="width: 10%;"
+        />
+      </div>
     </div>
   </div>
 </div>

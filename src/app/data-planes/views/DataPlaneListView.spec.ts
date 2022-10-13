@@ -10,12 +10,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: { template: 'TestComponent' },
+      component: { template: '<TestComponent>' },
     },
   ],
 })
 
 async function renderComponent() {
+  router.currentRoute.value.name = 'home'
+  router.currentRoute.value.params.mesh = 'default'
   await store.dispatch('fetchPolicies')
 
   const wrapper = mount(DataPlaneListView, {

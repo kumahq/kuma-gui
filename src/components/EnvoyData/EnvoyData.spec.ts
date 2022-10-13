@@ -52,7 +52,7 @@ describe('EnvoyData.vue', () => {
     )
 
     renderComponent({
-      mesh: 'default',
+      mesh: 'test-mesh',
       dppName: 'dataplane-test-456',
     })
 

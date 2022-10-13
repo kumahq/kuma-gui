@@ -6,6 +6,7 @@
         :sidebar-content="sidebarContent"
         :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
+        @go-to-step="updateStoredData"
       >
         <!-- step content -->
         <template #general>
@@ -30,7 +31,27 @@
             has-shadow
           >
             <template #body>
+              <KAlert
+                v-if="hasStoredMeshData"
+                class="reset-mesh-data-alert"
+                appearance="info"
+              >
+                <template #alertMessage>
+                  Want to start with an empty slate?
+                </template>
+
+                <template #actionButtons>
+                  <KButton
+                    apperance="outline"
+                    @click="resetMeshData"
+                  >
+                    Reset to defaults
+                  </KButton>
+                </template>
+              </KAlert>
+
               <FormFragment
+                class="mt-4"
                 title="Mesh name"
                 for-attr="mesh-name"
               >
@@ -50,7 +71,10 @@
                 />
               </FormFragment>
 
-              <FormFragment title="Mutual TLS">
+              <FormFragment
+                class="mt-4"
+                title="Mutual TLS"
+              >
                 <label class="k-input-label mx-2">
                   <input
                     ref="mtlsDisabled"
@@ -77,6 +101,7 @@
 
               <FormFragment
                 v-if="validate.mtlsEnabled === 'enabled'"
+                class="mt-4"
                 title="Certificate name"
                 for-attr="certificate-name"
               >
@@ -91,6 +116,7 @@
 
               <FormFragment
                 v-if="validate.mtlsEnabled === 'enabled'"
+                class="mt-4"
                 title="Certificate Authority"
                 for-attr="certificate-authority"
               >
@@ -156,6 +182,7 @@
               </FormFragment>
               <FormFragment
                 v-if="validate.loggingEnabled === 'enabled'"
+                class="mt-4"
                 title="Backend name"
                 for-attr="backend-name"
               >
@@ -168,7 +195,10 @@
                 >
               </FormFragment>
               <div v-if="validate.loggingEnabled === 'enabled'">
-                <FormFragment title="Type">
+                <FormFragment
+                  class="mt-4"
+                  title="Type"
+                >
                   <select
                     id="logging-type"
                     ref="loggingTypeSelect"
@@ -187,6 +217,7 @@
                 <!-- if the format type is File -->
                 <FormFragment
                   v-if="validate.loggingType === 'file'"
+                  class="mt-4"
                   title="Path"
                   for-attr="backend-address"
                 >
@@ -200,6 +231,7 @@
                 <!-- if the format type is TCP -->
                 <FormFragment
                   v-if="validate.loggingType === 'tcp'"
+                  class="mt-4"
                   title="Address"
                   for-attr="backend-address"
                 >
@@ -211,6 +243,7 @@
                   >
                 </FormFragment>
                 <FormFragment
+                  class="mt-4"
                   title="Format"
                   for-attr="backend-format"
                 >
@@ -268,6 +301,7 @@
 
               <FormFragment
                 v-if="validate.tracingEnabled === 'enabled'"
+                class="mt-4"
                 title="Backend name"
                 for-attr="tracing-backend-name"
               >
@@ -282,6 +316,7 @@
 
               <FormFragment
                 v-if="validate.tracingEnabled === 'enabled'"
+                class="mt-4"
                 title="Type"
                 for-attr="tracing-type"
               >
@@ -299,6 +334,7 @@
 
               <FormFragment
                 v-if="validate.tracingEnabled === 'enabled'"
+                class="mt-4"
                 title="Sampling"
                 for-attr="tracing-sampling"
               >
@@ -315,6 +351,7 @@
 
               <FormFragment
                 v-if="validate.tracingEnabled === 'enabled'"
+                class="mt-4"
                 title="URL"
                 for-attr="tracing-zipkin-url"
               >
@@ -369,6 +406,7 @@
               </FormFragment>
               <FormFragment
                 v-if="validate.metricsEnabled === 'enabled'"
+                class="mt-4"
                 title="Backend name"
                 for-attr="metrics-name"
               >
@@ -382,6 +420,7 @@
               </FormFragment>
               <FormFragment
                 v-if="validate.metricsEnabled === 'enabled'"
+                class="mt-4"
                 title="Type"
                 for-attr="metrics-type"
               >
@@ -398,6 +437,7 @@
               </FormFragment>
               <FormFragment
                 v-if="validate.metricsEnabled === 'enabled'"
+                class="mt-4"
                 title="Dataplane port"
                 for-attr="metrics-dataplane-port"
               >
@@ -414,6 +454,7 @@
               </FormFragment>
               <FormFragment
                 v-if="validate.metricsEnabled === 'enabled'"
+                class="mt-4"
                 title="Dataplane path"
                 for-attr="metrics-dataplane-path"
               >
@@ -480,14 +521,14 @@
               </template>
               <template #complete-content>
                 <p>
-                  Your Mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
+                  Your mesh <strong v-if="validate.meshName">{{ validate.meshName }}</strong> was found!
                 </p>
                 <p>
                   <KButton
                     appearance="primary"
-                    :to="{ name: 'all-meshes' }"
+                    :to="{ name: 'mesh-detail-view', params: { mesh: validate.meshName } }"
                   >
-                    See Meshes
+                    Go to mesh {{ validate.meshName }}
                   </KButton>
                 </p>
               </template>
@@ -546,6 +587,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 import Kuma from '@/services/kuma'
 import { rejectKeys } from '@/views/Wizard/helpers'
 import { kebabCase } from '@/helpers'
@@ -555,10 +597,36 @@ import FormFragment from '@/views/Wizard/components/FormFragment.vue'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'
 import EntityScanner from '@/views/Wizard/components/EntityScanner.vue'
+import { ClientStorage } from '@/utils/ClientStorage'
 
 // schema for building code output
 import meshSchema from '@/views/Wizard/schemas/Mesh'
 import { PRODUCT_NAME } from '@/consts'
+
+function getInitialMeshData() {
+  return {
+    meshName: '',
+    meshCAName: '',
+    meshLoggingBackend: '',
+    meshTracingBackend: '',
+    meshMetricsName: '',
+    meshTracingZipkinURL: '',
+    mtlsEnabled: 'disabled',
+    meshCA: 'builtin',
+    loggingEnabled: 'disabled',
+    loggingType: 'tcp',
+    meshLoggingPath: '/',
+    meshLoggingAddress: '127.0.0.1:5000',
+    meshLoggingBackendFormat: '{ start_time: "%START_TIME%", source: "%KUMA_SOURCE_SERVICE%", destination: "%KUMA_DESTINATION_SERVICE%", source_address: "%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%", destination_address: "%UPSTREAM_HOST%", duration_millis: "%DURATION%", bytes_received: "%BYTES_RECEIVED%", bytes_sent: "%BYTES_SENT%" }',
+    tracingEnabled: 'disabled',
+    meshTracingType: 'zipkin',
+    meshTracingSampling: 99.9,
+    metricsEnabled: 'disabled',
+    meshMetricsType: 'prometheus',
+    meshMetricsDataplanePort: 5670,
+    meshMetricsDataplanePath: '/metrics',
+  }
+}
 
 export default {
   name: 'MeshWizard',
@@ -573,6 +641,7 @@ export default {
   mixins: [FormatForCLI],
   data() {
     return {
+      hasStoredMeshData: false,
       productName: PRODUCT_NAME,
       selectedTab: '',
       schema: meshSchema,
@@ -628,29 +697,7 @@ export default {
       hideScannerSiblings: false,
       scanError: false,
       isComplete: false,
-      validate: {
-        meshName: '',
-        meshCAName: '',
-        meshLoggingBackend: '',
-        meshTracingBackend: '',
-        meshMetricsName: '',
-        meshTracingZipkinURL: '',
-        mtlsEnabled: 'disabled',
-        meshCA: 'builtin',
-        loggingEnabled: 'disabled',
-        loggingType: 'tcp',
-        meshLoggingPath: '/',
-        meshLoggingAddress: '127.0.0.1:5000',
-        meshLoggingBackendFormat:
-          "{ start_time: '%START_TIME%', source: '%KUMA_SOURCE_SERVICE%', destination: '%KUMA_DESTINATION_SERVICE%', source_address: '%KUMA_SOURCE_ADDRESS_WITHOUT_PORT%', destination_address: '%UPSTREAM_HOST%', duration_millis: '%DURATION%', bytes_received: '%BYTES_RECEIVED%', bytes_sent: '%BYTES_SENT%' }",
-        tracingEnabled: 'disabled',
-        meshTracingType: 'zipkin',
-        meshTracingSampling: 99.9,
-        metricsEnabled: 'disabled',
-        meshMetricsType: 'prometheus',
-        meshMetricsDataplanePort: 5670,
-        meshMetricsDataplanePath: '/metrics',
-      },
+      validate: getInitialMeshData(),
       vmsg: [],
       utm: import.meta.env.VITE_UTM,
     }
@@ -806,7 +853,10 @@ export default {
           metadata: {
             name: newData.meshName,
           },
-          spec: schemaClean,
+        }
+
+        if (Object.keys(schemaClean).length > 0) {
+          meshYaml.spec = schemaClean
         }
       } else {
         // Universal
@@ -886,7 +936,27 @@ export default {
       this.validate.meshMetricsName = kebabCase(value)
     },
   },
+
+  created() {
+    const storedMesh = ClientStorage.get('createMeshData')
+    if (storedMesh !== null) {
+      this.validate = storedMesh
+      this.hasStoredMeshData = true
+    }
+  },
+
   methods: {
+    updateStoredData() {
+      ClientStorage.set('createMeshData', this.validate)
+      this.hasStoredMeshData = true
+    },
+
+    resetMeshData() {
+      ClientStorage.remove('createMeshData')
+      this.hasStoredMeshData = false
+      this.validate = getInitialMeshData()
+    },
+
     onTabChange(newTab) {
       this.selectedTab = newTab
     },

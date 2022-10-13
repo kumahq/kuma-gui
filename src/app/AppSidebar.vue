@@ -1,15 +1,22 @@
 <template>
   <div class="app-sidebar-wrapper">
     <aside class="app-sidebar">
-      <div class="mt-3">
-        <AppMeshSelector :items="meshList" />
-      </div>
-
-      <AppNavItem
+      <template
         v-for="(item, index) in navItems"
         :key="index"
-        v-bind="item"
-      />
+      >
+        <template v-if="item.isMeshSelector">
+          <AppMeshSelector
+            v-if="meshes.length > 0"
+            :meshes="meshes"
+          />
+        </template>
+
+        <AppNavItem
+          v-else
+          v-bind="item"
+        />
+      </template>
     </aside>
   </div>
 </template>
@@ -24,8 +31,8 @@ import { getNavItems } from './getNavItems'
 
 const store = useStore()
 
-const navItems = computed(() => getNavItems(store.state.policies))
-const meshList = computed(() => store.state.meshes)
+const navItems = computed(() => getNavItems(store.state.policies, store.getters['config/getMulticlusterStatus']))
+const meshes = computed(() => store.state.meshes.items)
 
 watch(() => store.state.selectedMesh, () => {
   store.dispatch('sidebar/getMeshInsights')
@@ -46,6 +53,7 @@ watch(() => store.state.selectedMesh, () => {
   bottom: 0;
   left: 0;
   overflow-y: auto;
+  padding-top: var(--spacing-xs);
   padding-right: var(--spacing-xs);
   border-right: 1px solid var(--black-10);
   background-color: var(--white);

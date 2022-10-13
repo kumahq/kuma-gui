@@ -42,7 +42,7 @@
         v-if="dataPlaneStatus !== null"
         class="definition"
       >
-        <span>Data planes (online / total):</span>
+        <span>DP proxies (online / total):</span>
         <span>{{ dataPlaneStatus }}</span>
       </div>
     </section>

@@ -53,7 +53,7 @@ describe('ServiceInsightDetails', () => {
 
     const html = wrapper.html()
     expect(html).toContain('partially degraded')
-    expect(html).toContain('Data planes (online / total)')
+    expect(html).toContain('DP proxies (online / total)')
     expect(html).toContain('1 / 2')
     expect(html).toContain('status')
   })

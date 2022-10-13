@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, NavigationGuard, RouteRecordRaw } from 'vue-router'
 
-import { store } from '../store/store'
-import { Policy } from '../types'
-import { Storage } from '../utils/Storage'
+import { store } from '@/store/store'
+import { PolicyDefinition } from '@/types'
+import { ClientStorage } from '@/utils/ClientStorage'
 
-function getPolicyRoutes(policies: Policy[]): RouteRecordRaw[] {
+function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   return policies.map((policy) => ({
     path: policy.path,
     name: policy.path,
@@ -34,193 +34,135 @@ export async function setupRouter() {
       },
       component: () => import('@/views/NotFound.vue'),
     },
-    // Home - a landing place that resets things
     {
       path: '/',
       name: 'home',
-      redirect: {
-        name: 'global-overview',
-        params: {
-          mesh: 'all',
-        },
+      meta: {
+        title: 'Overview',
       },
+      component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
+    },
+    {
+      path: '/diagnostics',
+      name: 'diagnostics',
+      meta: {
+        title: 'Diagnostics',
+      },
+      component: () => import('@/app/diagnostics/DiagnosticsView.vue'),
+    },
+    {
+      path: '/zones',
+      name: 'zones',
+      meta: {
+        title: 'Zones',
+      },
+      component: () => import('@/views/Entities/ZonesView.vue'),
+    },
+    {
+      path: '/zone-ingresses',
+      name: 'zoneingresses',
+      meta: {
+        title: 'Zone ingresses',
+      },
+      component: () => import('@/views/Entities/ZoneIngresses.vue'),
+    },
+    {
+      path: '/zoneegresses',
+      name: 'zoneegresses',
+      meta: {
+        title: 'Zone egresses',
+      },
+      component: () => import('@/views/Entities/ZoneEgresses.vue'),
+    },
+    {
+      path: '/mesh/:mesh',
       children: [
-        // App
-        // diagnostics
         {
-          path: '/diagnostics',
-          name: 'diagnostics',
-          component: () => import('@/views/DiagnosticsView.vue'),
+          path: '',
+          name: 'mesh-detail-view',
           meta: {
-            title: 'Diagnostics',
-            hideSubnav: true,
+            title: 'Mesh overview',
           },
+          component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
         },
-        // Zones
         {
-          path: '/zones',
-          name: 'zones',
-          meta: {
-            title: 'Zones',
-          },
-          component: () => import('@/views/Entities/ZonesView.vue'),
-        },
-        // Zone Ingresses
-        {
-          path: '/zone-ingresses',
-          name: 'zoneingresses',
-          meta: {
-            title: 'Zone ingresses',
-          },
-          component: () => import('@/views/Entities/ZoneIngresses.vue'),
-        },
-        // Zone Egresses
-        {
-          path: '/zoneegresses',
-          name: 'zoneegresses',
-          meta: {
-            title: 'Zone egresses',
-          },
-          component: () => import('@/views/Entities/ZoneEgresses.vue'),
-        },
-        // all Meshes
-        {
-          // TODO - talk if we want to have separate mesh view there
-          path: '/meshes',
-          name: 'all-meshes',
-          meta: {
-            title: 'Meshes',
-            parent: 'global-overview',
-          },
-          redirect: {
-            name: 'mesh-child',
-            params: {
-              mesh: 'all',
-            },
-          },
+          path: 'data-planes',
           children: [
             {
-              path: ':mesh',
-              name: 'mesh-child',
+              path: '',
+              name: 'data-plane-list-view',
               meta: {
-                title: 'Meshes',
-                parent: 'all-meshes',
-                breadcrumbTitleParam: 'mesh',
+                title: 'Data plane proxies',
               },
-              component: () => import('@/views/Entities/MeshesView.vue'),
-            },
-          ],
-        },
-        {
-          path: '/mesh',
-          name: 'mesh-individual',
-          meta: {
-            title: 'Mesh',
-          },
-          redirect: {
-            name: 'global-overview',
-            params: {
-              mesh: 'all',
-            },
-          },
-          children: [
-            {
-              path: ':mesh',
-              name: 'mesh',
-              meta: {
-                title: 'Meshes',
-                parent: 'all-meshes',
-              },
-              children: [
-                {
-                  path: 'overview',
-                  name: 'global-overview',
-                  meta: {
-                    title: 'Global Overview',
-                  },
-                  component: () => import('@/views/OverviewView.vue'),
-                },
-                {
-                  path: 'data-planes',
-                  children: [
-                    {
-                      path: '',
-                      name: 'data-plane-list-view',
-                      meta: {
-                        title: 'Data planes',
-                      },
-                      props(route) {
-                        const offsets = Array.isArray(route.query.offset) ? route.query.offset : [route.query.offset]
-                        const offset = parseInt(offsets[offsets.length - 1] ?? '0') || 0
+              props(route) {
+                const offsets = Array.isArray(route.query.offset) ? route.query.offset : [route.query.offset]
+                const offset = parseInt(offsets[offsets.length - 1] ?? '0') || 0
 
-                        return {
-                          name: route.query.name,
-                          offset,
-                        }
-                      },
-                      component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
-                    },
-                    {
-                      path: ':dataPlane',
-                      name: 'data-plane-detail-view',
-                      meta: {
-                        title: 'Data plane',
-                        parent: 'data-plane-list-view',
-                        breadcrumbTitleParam: 'dataPlane',
-                      },
-                      component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
-                    },
-                  ],
-                },
-                {
-                  path: 'services',
-                  children: [
-                    {
-                      path: '',
-                      name: 'service-list-view',
-                      meta: {
-                        title: 'Services',
-                      },
-                      component: () => import('@/app/services/views/ServiceListView.vue'),
-                    },
-                    {
-                      path: ':service',
-                      name: 'service-insight-detail-view',
-                      meta: {
-                        title: 'Internal service',
-                        parent: 'service-list-view',
-                        breadcrumbTitleParam: 'service',
-                      },
-                      component: () => import('@/app/services/views/ServiceInsightDetailView.vue'),
-                    },
-                  ],
-                },
-                {
-                  path: 'external-services',
-                  children: [
-                    {
-                      path: ':service',
-                      name: 'external-service-detail-view',
-                      meta: {
-                        title: 'External service',
-                        parent: 'service-list-view',
-                        breadcrumbTitleParam: 'service',
-                      },
-                      component: () => import('@/app/services/views/ExternalServiceDetailView.vue'),
-                    },
-                  ],
-                },
-                ...policyRoutes,
-              ],
+                return {
+                  name: route.query.name,
+                  offset,
+                }
+              },
+              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+            },
+            {
+              path: ':dataPlane',
+              name: 'data-plane-detail-view',
+              meta: {
+                title: 'Data plane proxy',
+                parent: 'data-plane-list-view',
+                breadcrumbTitleParam: 'dataPlane',
+              },
+              component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
             },
           ],
         },
+        {
+          path: 'services',
+          children: [
+            {
+              path: '',
+              name: 'service-list-view',
+              meta: {
+                title: 'Services',
+              },
+              component: () => import('@/app/services/views/ServiceListView.vue'),
+            },
+            {
+              path: ':service',
+              name: 'service-insight-detail-view',
+              meta: {
+                title: 'Internal service',
+                parent: 'service-list-view',
+                breadcrumbTitleParam: 'service',
+              },
+              component: () => import('@/app/services/views/ServiceInsightDetailView.vue'),
+            },
+          ],
+        },
+        {
+          path: 'external-services',
+          children: [
+            {
+              path: ':service',
+              name: 'external-service-detail-view',
+              meta: {
+                title: 'External service',
+                parent: 'service-list-view',
+                breadcrumbTitleParam: 'service',
+              },
+              component: () => import('@/app/services/views/ExternalServiceDetailView.vue'),
+            },
+          ],
+        },
+        ...policyRoutes,
       ],
     },
-    // Onboarding
     {
       path: '/onboarding',
-      redirect: { name: 'onboarding-welcome' },
+      redirect: {
+        name: 'onboarding-welcome',
+      },
       component: () => import('@/views/ShellEmpty.vue'),
       children: [
         {
@@ -290,7 +232,7 @@ export async function setupRouter() {
           path: 'dataplanes-overview',
           name: 'onboarding-dataplanes-overview',
           meta: {
-            title: 'Data planes overview',
+            title: 'Data plane overview',
             onboardingProcess: true,
           },
           component: () => import('@/views/Onboarding/DataplanesOverview.vue'),
@@ -307,7 +249,6 @@ export async function setupRouter() {
       ],
     },
     {
-      // Entity Wizard
       path: '/wizard',
       name: 'wizard',
       children: [
@@ -315,9 +256,8 @@ export async function setupRouter() {
           path: 'mesh',
           name: 'create-mesh',
           meta: {
-            title: 'Create a new Mesh',
+            title: 'Create a new mesh',
             wizardProcess: true,
-            hideStatus: true,
           },
           component: () => import('@/views/Wizard/views/Mesh.vue'),
         },
@@ -325,9 +265,8 @@ export async function setupRouter() {
           path: 'kubernetes-dataplane',
           name: 'kubernetes-dataplane',
           meta: {
-            title: 'Create a new Dataplane on Kubernetes',
+            title: 'Create a new data plane proxy on Kubernetes',
             wizardProcess: true,
-            hideStatus: true,
           },
           component: () => import('@/views/Wizard/views/DataplaneKubernetes.vue'),
         },
@@ -335,9 +274,8 @@ export async function setupRouter() {
           path: 'universal-dataplane',
           name: 'universal-dataplane',
           meta: {
-            title: 'Create a new Dataplane on Universal',
+            title: 'Create a new data plane proxy on Universal',
             wizardProcess: true,
-            hideStatus: true,
           },
           component: () => import('@/views/Wizard/views/DataplaneUniversal.vue'),
         },
@@ -350,58 +288,38 @@ export async function setupRouter() {
     routes,
   })
 
-  /**
-   * If users change page make sure it updates selected mesh
-   */
-  router.beforeEach((to, from, next) => {
-    const mesh = store.state.selectedMesh
-
-    const ongoingMesh = to.params.mesh
-
-    if (ongoingMesh && mesh !== ongoingMesh) {
-      store.dispatch('updateSelectedMesh', ongoingMesh)
-    }
-
-    next()
-  })
-  /**
-   * If the user hasn't gone through the setup/onboarding process yet, this
-   * sends them through it. Once completed, a local storage value is set to true
-   * so that they're not sent through it again.
-   */
-
-  router.beforeEach(async (to, from, next) => {
-    // This below is to make sure the initial calls have been fulfilled and it does not try to
-    // access any route before it will be resolved
-    while (store.getters.globalLoading) {
-      await new Promise(resolve => {
-        setTimeout(() => {
-          resolve(null)
-        }, 20)
-      })
-    }
-
-    const isOnboardingCompleted = store.state.onboarding.isCompleted
-    const isOnboardingRoute = to.meta.onboardingProcess
-    const shouldSuggestOnboarding = store.getters['onboarding/showOnboarding']
-
-    if (isOnboardingCompleted && isOnboardingRoute && !shouldSuggestOnboarding) {
-      // Redirects user to home page if they try to navigate to an onboarding route while having already completed onboarding. An exception is made when we suggest onboarding for users who don’t have data plane proxies, yet (we show an alert suggesting it and allow going to the onboarding again).
-      next({
-        name: 'global-overview',
-        params: {
-          mesh: store.state.selectedMesh,
-        },
-      })
-    } else if (!isOnboardingCompleted && !isOnboardingRoute && shouldSuggestOnboarding) {
-      // Redirects user to the appropriate onboarding page if they navigate to a non-onboarding route while not having previously completed onboarding.
-      const name = Storage.get('onboardingStep') || 'onboarding-welcome'
-
-      next({ name })
-    } else {
-      next()
-    }
-  })
+  router.beforeEach(updateSelectedMeshGuard)
+  router.beforeEach(onboardingRouteGuard)
 
   return router
+}
+
+/**
+ * Updates `state.selectedMesh` when navigating to a page associated to a different mesh.
+ */
+const updateSelectedMeshGuard: NavigationGuard = function (to, _from, next) {
+  if (to.params.mesh && to.params.mesh !== store.state.selectedMesh) {
+    store.dispatch('updateSelectedMesh', to.params.mesh)
+  }
+
+  next()
+}
+
+/**
+ * Redirects the user to the appropriate onboarding view if they haven’t completed it, yet.
+ *
+ * Redirects the user to the home view if they’re navigating to an onboarding route while having already completed onboarding. An exception is made when we suggest onboarding for users who don’t have data plane proxies, yet (we show an alert suggesting it and allow going to the onboarding again).
+ */
+const onboardingRouteGuard: NavigationGuard = function (to, _from, next) {
+  const isOnboardingCompleted = store.state.onboarding.isCompleted
+  const isOnboardingRoute = to.meta.onboardingProcess
+  const shouldSuggestOnboarding = store.getters['onboarding/showOnboarding']
+
+  if (isOnboardingCompleted && isOnboardingRoute && !shouldSuggestOnboarding) {
+    next({ name: 'home' })
+  } else if (!isOnboardingCompleted && !isOnboardingRoute && shouldSuggestOnboarding) {
+    next({ name: ClientStorage.get('onboardingStep') ?? 'onboarding-welcome' })
+  } else {
+    next()
+  }
 }

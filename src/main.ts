@@ -28,6 +28,11 @@ if (import.meta.env.PROD) {
 
 useTheme(am4themesAnimated)
 
+/**
+ * Initializes and mounts the Vue application.
+ *
+ * This is a good place to run operations that should ideally be initiated or completed before the Vue application instance exists.
+ */
 async function initializeVue() {
   document.title = import.meta.env.VITE_NAMESPACE + ' Manager'
 

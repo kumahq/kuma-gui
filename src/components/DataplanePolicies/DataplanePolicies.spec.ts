@@ -10,7 +10,7 @@ import Kuma from '@/services/kuma'
 import { server } from '@/jest-setup'
 
 async function renderComponent(props = {}) {
-  const { policies } = await Kuma.getPolicies()
+  const { policies } = await Kuma.getPolicyDefinitions()
 
   const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
   const store = createStore({

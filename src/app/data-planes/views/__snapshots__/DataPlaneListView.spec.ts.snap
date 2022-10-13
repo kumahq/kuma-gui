@@ -2130,7 +2130,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
           <span
             class="kutil-sr-only"
           >
-            Data plane:
+            Data plane proxy:
           </span>
           <a>
             backend

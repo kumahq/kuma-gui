@@ -35,13 +35,11 @@ function getAPICallFunction({
     return getSingleEntity({ mesh, path, name: query }, params)
   }
 
-  const isAllEntities = !mesh || mesh === 'all'
-
-  if (getAllEntities && isAllEntities) {
+  if (getAllEntities && !mesh) {
     return getAllEntities(params)
   }
 
-  if (getAllEntitiesFromPath && isAllEntities) {
+  if (getAllEntitiesFromPath && !mesh) {
     return getAllEntitiesFromPath({ path }, params)
   }
 

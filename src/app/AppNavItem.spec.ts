@@ -24,7 +24,7 @@ function renderComponent() {
   return mount(AppNavItem, {
     props: {
       name: 'All',
-      link: 'data-plane-list-view',
+      routeName: 'data-plane-list-view',
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
     },
