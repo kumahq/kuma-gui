@@ -18,9 +18,12 @@
 import { computed, watch } from 'vue'
 
 import { useStore } from '@/store/store'
+import { poll } from '@/utils/poll'
 import AppMeshSelector from './AppMeshSelector.vue'
 import AppNavItem from './AppNavItem.vue'
 import { getNavItems } from './getNavItems'
+
+const POLLING_INTERVAL_IN_SECONDS = 10
 
 const store = useStore()
 
@@ -30,6 +33,12 @@ const meshList = computed(() => store.state.meshes)
 watch(() => store.state.selectedMesh, () => {
   store.dispatch('sidebar/getMeshInsights')
 })
+
+poll(fetchInsights, POLLING_INTERVAL_IN_SECONDS * 1000)
+
+function fetchInsights() {
+  return store.dispatch('sidebar/getInsights')
+}
 </script>
 
 <style lang="scss" scoped>
