@@ -8,154 +8,57 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
     <aside
       class="app-sidebar"
     >
-      <div
-        class="mt-3"
-      >
-        <div
-          class="px-4 pb-4"
-        >
-          <div>
-            <h3
-              class="menu-title uppercase"
-            >
-               Filter by Mesh: 
-            </h3>
-            <select
-              class="mesh-selector"
-              id="mesh-selector"
-              name="mesh-selector"
-            >
-              <option
-                value="all"
-              >
-                 All Meshes 
-              </option>
-              
-              
-            </select>
-          </div>
-        </div>
-      </div>
+      
       
       <div
-        class="nav-item"
+        class="nav-item nav-item--has-bottom-offset"
+        data-testid="home"
+      >
+        <a
+          class="nav-link"
+        >
+          Home 
+          <!--v-if-->
+        </a>
+      </div>
+      
+      
+      <div
+        class="nav-item nav-item--is-category nav-item--is-primary-category"
         data-testid=""
       >
         <div
-          class="nav-item__title"
+          class="nav-category"
         >
-          <span
-            class="text-uppercase"
-          >
-            Service mesh
-          </span>
+          Mesh
         </div>
       </div>
+      
+      
+      
+      <!--v-if-->
+      
+      
+      
       <div
-        class="nav-item nav-item--is-link"
-        data-testid="global-overview"
+        class="nav-item"
+        data-testid="mesh-detail-view"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Overview 
           <!--v-if-->
         </a>
       </div>
-      <div
-        class="nav-item nav-item--is-link"
-        data-testid="mesh-child"
-      >
-        <a
-          class="nav-item__link"
-        >
-          Meshes 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
+      
+      
       <div
         class="nav-item"
-        data-testid=""
-      >
-        <div
-          class="nav-item__title"
-        >
-          <span
-            class="text-uppercase"
-          >
-            Zones
-          </span>
-        </div>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
-        data-testid="zones"
-      >
-        <a
-          class="nav-item__link"
-        >
-          Zone CPs 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
-        data-testid="zoneingresses"
-      >
-        <a
-          class="nav-item__link"
-        >
-          Zone Ingresses 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
-        data-testid="zoneegresses"
-      >
-        <a
-          class="nav-item__link"
-        >
-          Zone Egresses 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      <div
-        class="nav-item"
-        data-testid=""
-      >
-        <div
-          class="nav-item__title"
-        >
-          <span
-            class="text-uppercase"
-          >
-            Services
-          </span>
-        </div>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
         data-testid="service-list-view"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Services 
           <span
@@ -165,28 +68,16 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
         class="nav-item"
-        data-testid=""
-      >
-        <div
-          class="nav-item__title"
-        >
-          <span
-            class="text-uppercase"
-          >
-            Data plane proxies
-          </span>
-        </div>
-      </div>
-      <div
-        class="nav-item nav-item--is-link"
         data-testid="data-plane-list-view"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
-          Data planes 
+          Data Plane Proxies 
           <span
             class="amount amount--empty"
           >
@@ -194,28 +85,27 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item"
+        class="nav-item nav-item--is-category nav-item--is-secondary-category"
         data-testid=""
       >
         <div
-          class="nav-item__title"
+          class="nav-category"
         >
-          <span
-            class="text-uppercase"
-          >
-            Policies
-          </span>
+          Policies
         </div>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="circuit-breakers"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Circuit Breakers 
           <span
@@ -225,14 +115,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="fault-injections"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Fault Injections 
           <span
@@ -242,14 +133,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="health-checks"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Health Checks 
           <span
@@ -259,14 +151,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="meshgatewayroutes"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Mesh Gateway Routes 
           <span
@@ -276,14 +169,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="meshgateways"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Mesh Gateways 
           <span
@@ -293,14 +187,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="proxytemplates"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Proxy Templates 
           <span
@@ -310,14 +205,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="rate-limits"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Rate Limits 
           <span
@@ -327,14 +223,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="retries"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Retries 
           <span
@@ -344,14 +241,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="timeouts"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Timeouts 
           <span
@@ -361,14 +259,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="traffic-logs"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Traffic Logs 
           <span
@@ -378,14 +277,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="traffic-permissions"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Traffic Permissions 
           <span
@@ -395,14 +295,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="traffic-routes"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Traffic Routes 
           <span
@@ -412,14 +313,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="traffic-traces"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Traffic Traces 
           <span
@@ -429,14 +331,15 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
+      
       <div
-        class="nav-item nav-item--is-link"
+        class="nav-item"
         data-testid="virtual-outbounds"
-        parent="policies"
         title="false"
       >
         <a
-          class="nav-item__link"
+          class="nav-link"
         >
           Virtual Outbounds 
           <span
@@ -446,6 +349,7 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           </span>
         </a>
       </div>
+      
       
     </aside>
   </div>

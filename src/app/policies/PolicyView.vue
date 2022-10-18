@@ -219,7 +219,7 @@ async function loadData(offset: number = 0): Promise<void> {
   error.value = null
 
   const name = route.query.ns as string || null
-  const mesh = route.params.mesh as string || null
+  const mesh = route.params.mesh as string
   const path = policy.value.path
 
   try {
@@ -229,14 +229,6 @@ async function loadData(offset: number = 0): Promise<void> {
       const item = await Kuma.getSinglePolicyEntity({ mesh, path, name })
       items = [item]
       nextUrl.value = null
-    } else if (mesh === null || mesh === 'all') {
-      const params = {
-        size: PAGE_SIZE_DEFAULT,
-        offset,
-      }
-      const response = await Kuma.getAllPolicyEntities({ path }, params)
-      items = response.items
-      nextUrl.value = response.next
     } else {
       const params = {
         size: PAGE_SIZE_DEFAULT,
@@ -281,7 +273,7 @@ function processEntity(entity: PolicyEntity): any {
   const processedEntity: any = entity
 
   const meshRoute = {
-    name: 'mesh-child',
+    name: 'mesh-detail-view',
     params: {
       mesh: entity.mesh,
     },

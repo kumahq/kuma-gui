@@ -58,7 +58,13 @@ export default {
       ],
       tableData: {
         total: 1,
-        data: [{ name: 'default', servicesAmount: 0, dppsAmount: 0 }],
+        data: [
+          {
+            name: 'default',
+            servicesAmount: 0,
+            dppsAmount: 0,
+          },
+        ],
       },
     }
   },

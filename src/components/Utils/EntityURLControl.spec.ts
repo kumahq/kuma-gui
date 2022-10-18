@@ -3,7 +3,7 @@ import { KButton, KClipboardProvider, KIcon, KPop } from '@kong/kongponents'
 
 import EntityURLControl from './EntityURLControl.vue'
 
-function renderComponent(props: any, mesh = 'default') {
+function renderComponent(props: any) {
   return render(EntityURLControl, {
     global: {
       components: {
@@ -15,7 +15,7 @@ function renderComponent(props: any, mesh = 'default') {
       mocks: {
         $route: {
           params: {
-            mesh,
+            mesh: 'test-mesh',
           },
         },
       },
@@ -36,7 +36,7 @@ describe('EntityURLControl.vue', () => {
   it('render for mesh all', () => {
     renderComponent({
       name: 'foo',
-    }, 'all')
+    })
 
     expect(screen.queryByTestId('entity-url-control')).toBeInTheDocument()
   })

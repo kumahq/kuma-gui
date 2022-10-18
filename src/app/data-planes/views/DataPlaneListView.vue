@@ -61,7 +61,7 @@
                       :checked="item.isChecked"
                       type="checkbox"
                       class="k-input"
-                      @change="(event) => updateVisibleTableHeaders(event, item.tableHeaderKey)"
+                      @change="(event: Event) => updateVisibleTableHeaders(event, item.tableHeaderKey)"
                     >
 
                     {{ item.label }}
@@ -86,7 +86,7 @@
           </KButton>
 
           <KButton
-            v-if="$route.query.ns"
+            v-if="route.query.ns"
             appearance="primary"
             :to="{ name: 'data-plane-list-view' }"
             data-testid="data-plane-ns-back-button"
@@ -128,7 +128,7 @@ import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntity
 import EmptyBlock from '@/components/EmptyBlock.vue'
 import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders } from '../constants'
 import { useStore } from '@/store/store'
-import { Storage } from '@/utils/Storage'
+import { ClientStorage } from '@/utils/ClientStorage'
 import { patchQueryParam } from '@/utils/patchQueryParam'
 import Kuma from '@/services/kuma'
 import { humanReadableDate } from '@/helpers'
@@ -144,7 +144,6 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/dataplane'
 import { DataPlaneOverview, TableHeader } from '@/types'
-import { ApiListResponse } from '@/api'
 import { KUMA_ZONE_TAG_NAME } from '@/consts'
 
 const PAGE_SIZE = 50
@@ -244,7 +243,7 @@ watch(() => route.params.mesh, function () {
   loadData(0)
 })
 
-const storedVisibleTableHeaderKeys = Storage.get('dpVisibleTableHeaderKeys')
+const storedVisibleTableHeaderKeys = ClientStorage.get('dpVisibleTableHeaderKeys')
 if (Array.isArray(storedVisibleTableHeaderKeys)) {
   visibleTableHeaderKeys.value = storedVisibleTableHeaderKeys
 }
@@ -254,7 +253,7 @@ loadData(props.offset)
 /**
  * Ensures that the dropdown menu isn’t toggled whenever a checkbox is checked/unchecked.
  */
-function stopPropagatingClickEvent(event: Event) {
+function stopPropagatingClickEvent(event: MouseEvent): void {
   event.stopPropagation()
 }
 
@@ -268,7 +267,7 @@ function updateVisibleTableHeaders(event: Event, tableHeaderKey: string): void {
     visibleTableHeaderKeys.value.splice(index, 1)
   }
 
-  Storage.set('dpVisibleTableHeaderKeys', Array.from(new Set(visibleTableHeaderKeys.value)))
+  ClientStorage.set('dpVisibleTableHeaderKeys', Array.from(new Set(visibleTableHeaderKeys.value)))
 }
 
 function onCreateClick() {
@@ -294,7 +293,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     },
   }
   const meshRoute = {
-    name: 'mesh-child',
+    name: 'mesh-detail-view',
     params: {
       mesh,
     },
@@ -425,10 +424,11 @@ async function loadData(offset: number): Promise<void> {
 
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
   patchQueryParam('offset', offset > 0 ? offset : null)
-  const mesh = route.params.mesh as string || null
+  const mesh = route.params.mesh as string
+  const size = PAGE_SIZE
 
   try {
-    const { items, next } = await fetchDataPlaneOverviews(mesh, PAGE_SIZE, offset)
+    const { items, next } = await Kuma.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset })
 
     if (items.length > 0) {
       items.sort(function (overviewA, overviewB) {
@@ -460,14 +460,6 @@ async function loadData(offset: number): Promise<void> {
     console.error(err)
   } finally {
     isLoading.value = false
-  }
-}
-
-function fetchDataPlaneOverviews(mesh: string | null, size: number, offset: number): Promise<ApiListResponse<DataPlaneOverview>> {
-  if (mesh === 'all' || mesh === null) {
-    return Kuma.getAllDataplaneOverviews({ size, offset })
-  } else {
-    return Kuma.getAllDataplaneOverviewsFromMesh({ mesh })
   }
 }
 

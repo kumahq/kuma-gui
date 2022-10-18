@@ -12,7 +12,7 @@
 
     <template #navigation>
       <OnboardingNavigation
-        next-step="global-overview"
+        next-step="home"
         next-step-title="Completed"
         last-step
         :show-skip="false"

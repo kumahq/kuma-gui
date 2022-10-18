@@ -2,7 +2,7 @@
   <div class="entity-summary entity-section-list">
     <section>
       <h3 class="entity-title">
-        <span class="kutil-sr-only">Data plane:</span>
+        <span class="kutil-sr-only">Data plane proxy:</span>
 
         <router-link
           :to="{

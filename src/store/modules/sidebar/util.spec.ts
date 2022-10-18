@@ -26,7 +26,7 @@ describe('sidebar utils', () => {
         items: [
           {
             type: 'MeshInsight',
-            name: 'default',
+            name: 'test-mesh',
             creationTime: '2021-01-29T07:10:02.339031+01:00',
             modificationTime: '2021-01-29T07:29:02.314448+01:00',
             lastSync: '2021-01-29T06:29:02.314447Z',

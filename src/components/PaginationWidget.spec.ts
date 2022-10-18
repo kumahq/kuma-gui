@@ -35,14 +35,13 @@ describe('PaginationWidget.vue', () => {
   })
 
   it('calls buttons', async () => {
-    const { emitted } = renderComponent({
+    renderComponent({
       hasPrevious: true,
       hasNext: true,
     })
 
     await userEvent.click(screen.getByText(/Previous/))
     await userEvent.click(screen.getByText(/Next/))
-    expect(emitted()).toMatchSnapshot()
     expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 })

@@ -49,13 +49,11 @@ const getters: GetterTree<NotificationsInterface, State> = {
   },
 
   singleMeshNotificationItems(_state, getters, rootState): NotificationItem[] {
-    const selectedMesh = rootState.selectedMesh
-
-    if (selectedMesh === 'all') {
+    if (rootState.selectedMesh === null) {
       return []
     }
 
-    const meshItem: MeshNotificationItem = getters.meshNotificationItemMap[selectedMesh]
+    const meshItem: MeshNotificationItem = getters.meshNotificationItemMap[rootState.selectedMesh]
 
     const items: NotificationItem[] = [
       {

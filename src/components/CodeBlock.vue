@@ -179,7 +179,7 @@ import { KButton, KClipboardProvider, KIcon, KInput, KLabel, KPop } from '@kong/
 import { debounce } from '@/utils/debounce'
 import { highlightElement, highlightLines, AvailableLanguages } from '@/utils/highlightElement'
 import { reformatYaml } from '@/utils/reformatYaml'
-import { Storage } from '@/utils/Storage'
+import { ClientStorage } from '@/utils/ClientStorage'
 
 // Debouncing the search handler ensures that we don’t trigger several searches while the user is still typing.
 const debouncedHandleSearchInputValue = debounce(handleSearchInputValue, 150)
@@ -312,14 +312,14 @@ onBeforeUnmount(function () {
 query.value = getStoredQuery()
 
 function getStoredQuery(): string {
-  const queries = Storage.get('codeBlockQueries')
+  const queries = ClientStorage.get('codeBlockQueries')
   const queryKey = props.queryKey ?? props.id
 
   return queries?.[queryKey] ? queries[queryKey] : ''
 }
 
 function setStoredQuery(queryValue: string): void {
-  const queries = Storage.get('codeBlockQueries') ?? {}
+  const queries = ClientStorage.get('codeBlockQueries') ?? {}
   const queryKey = props.queryKey ?? props.id
 
   if (queryValue === '') {
@@ -328,7 +328,7 @@ function setStoredQuery(queryValue: string): void {
     queries[queryKey] = queryValue
   }
 
-  Storage.set('codeBlockQueries', queries)
+  ClientStorage.set('codeBlockQueries', queries)
 }
 
 /**

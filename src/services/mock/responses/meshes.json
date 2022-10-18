@@ -1,5 +1,5 @@
 {
-  "total": 3,
+  "total": 4,
   "items": [
     {
       "name": "default",
@@ -32,6 +32,12 @@
           }
         ]
       }
+    },
+    {
+      "name": "a-test",
+      "type": "Mesh",
+      "creationTime": "2020-06-19T12:18:02.097986-04:00",
+      "modificationTime": "2020-06-19T12:18:02.097986-04:00"
     },
     {
       "type": "Mesh",

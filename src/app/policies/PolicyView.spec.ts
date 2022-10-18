@@ -17,6 +17,8 @@ const router = createRouter({
 })
 
 async function createWrapper(props = {}) {
+  router.currentRoute.value.name = 'home'
+  router.currentRoute.value.params.mesh = 'default'
   await store.dispatch('fetchPolicies')
 
   return mount(PolicyView, {

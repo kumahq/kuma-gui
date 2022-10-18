@@ -1,15 +1,17 @@
 <template>
   <div
     class="nav-item"
-    :class="[
-      { 'nav-item--is-active': isActive },
-      { 'nav-item--is-link': targetRoute !== null },
-    ]"
-    :data-testid="link"
+    :class="{
+      'nav-item--is-category': targetRoute === null,
+      'nav-item--has-bottom-offset': props.shouldOffsetFromFollowingItems,
+      [`nav-item--is-${props.categoryTier}-category`]: props.categoryTier !== null,
+    }"
+    :data-testid="props.routeName"
   >
     <router-link
       v-if="targetRoute !== null"
-      class="nav-item__link"
+      class="nav-link"
+      :class="{ 'nav-link--is-active': isActive }"
       :to="targetRoute"
       @click="onNavItemClick"
     >
@@ -26,17 +28,15 @@
 
     <div
       v-else
-      class="nav-item__title"
+      class="nav-category"
     >
-      <span class="text-uppercase">
-        {{ name }}
-      </span>
+      {{ name }}
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, PropType } from 'vue'
 import { useRoute, useRouter, RouteLocationNamedRaw } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
 import { datadogLogEvents } from '@/datadogEvents'
@@ -44,15 +44,32 @@ import { datadogLogEvents } from '@/datadogEvents'
 import { useStore } from '@/store/store'
 import { get } from '@/utils/get'
 
-const route = useRoute()
+const currentRoute = useRoute()
 const router = useRouter()
 const store = useStore()
 
 const props = defineProps({
-  link: {
+  name: {
+    type: String,
+    required: true,
+  },
+
+  routeName: {
     type: String,
     required: false,
     default: '',
+  },
+
+  usesMeshParam: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  categoryTier: {
+    type: String as PropType<'primary' | 'secondary'>,
+    required: false,
+    default: null,
   },
 
   insightsFieldAccessor: {
@@ -61,13 +78,7 @@ const props = defineProps({
     default: '',
   },
 
-  name: {
-    type: String,
-    required: false,
-    default: '',
-  },
-
-  usesMeshParam: {
+  shouldOffsetFromFollowingItems: {
     type: Boolean,
     required: false,
     default: false,
@@ -84,12 +95,12 @@ const amount = computed(() => {
 })
 
 const targetRoute = computed<RouteLocationNamedRaw | null>(() => {
-  if (props.link === '') {
+  if (props.routeName === '') {
     return null
   }
 
   const targetRoute: RouteLocationNamedRaw = {
-    name: props.link,
+    name: props.routeName,
   }
 
   // Sets `mesh` params only if route actually has `mesh` param defined.
@@ -108,20 +119,20 @@ const isActive = computed(() => {
     return false
   }
 
-  if (props.link === route.name) {
+  if (props.routeName === currentRoute.name) {
     return true
   }
 
-  const currentRouteSubpath = route.path.split('/')[2]
+  const currentRouteSubpath = currentRoute.path.split('/')[2]
   if (currentRouteSubpath === targetRoute.value.name) {
     return true
   }
 
-  if (route.meta.parent) {
+  if (currentRoute.meta.parent) {
     try {
-      const parentRoute = router.resolve({ name: route.meta.parent })
+      const parentRoute = router.resolve({ name: currentRoute.meta.parent })
 
-      if (parentRoute.name === props.link) {
+      if (parentRoute.name === props.routeName) {
         return true
       }
     } catch (error) {
@@ -134,7 +145,7 @@ const isActive = computed(() => {
     }
   }
 
-  return props.link && route.matched.some((r) => props.link === r.name || props.link === r.redirect)
+  return props.routeName && currentRoute.matched.some((route) => props.routeName === route.name || props.routeName === route.redirect)
 })
 
 function onNavItemClick() {
@@ -145,39 +156,55 @@ function onNavItemClick() {
 <style lang="scss" scoped>
 .nav-item {
   position: relative;
-  display: flex;
-  white-space: nowrap;
-  overflow: hidden;
   margin-left: var(--spacing-xs);
-  margin-bottom: var(--spacing-xxs);
-  border-radius: 5px;
 }
 
-.nav-item--is-active {
-  font-weight: 500;
-  background-color: var(--SidebarLinkBGColor);
+.nav-item:not(:first-child) {
+  margin-top: var(--spacing-xxs);
 }
 
-.nav-item--is-link:hover {
-  background: var(--SidebarLinkBGColor);
+.nav-item--is-primary-category {
+  font-size: var(--type-md);
+  text-transform: uppercase;
 }
 
-.nav-item__title {
-  margin-left: var(--spacing-xs);
-  padding-top: var(--spacing-xs);
+.nav-item--is-primary-category ~ .nav-item--is-primary-category {
+  margin-top: var(--spacing-md);
+}
+
+.nav-item--is-secondary-category {
+  margin-left: var(--spacing-md);
+}
+
+.nav-item--has-bottom-offset {
+  margin-bottom: var(--spacing-xl);
   padding-bottom: var(--spacing-xs);
-  font-weight: 500;
-  font-size: var(--type-sm);
-  color: var(--SidebarTitleColor);
+  border-bottom: 1px solid var(--grey-300);
 }
 
-.nav-item__link {
+.nav-link {
   display: flex;
   width: 100%;
   align-items: center;
   padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: 5px;
   text-decoration: none;
-  color: var(--SidebarLinkColor);
+  color: currentColor;
+}
+
+.nav-link:hover,
+.nav-link--is-active {
+  background-color: var(--grey-300);
+}
+
+.nav-link--is-active {
+  font-weight: 500;
+}
+
+.nav-category {
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  font-weight: 500;
 }
 
 .amount {
@@ -191,14 +218,14 @@ function onNavItemClick() {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #fff;
+  border: 1px solid var(--white);
   border-radius: 0.25rem;
   font-size: 0.75rem;
   font-weight: 400;
-  background-color: var(--gray-2);
+  background-color: var(--purple-100);
 }
 
 .amount--empty {
-  background-color: var(--gray-4);
+  background-color: var(--grey-200);
 }
 </style>

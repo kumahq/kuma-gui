@@ -1,7 +1,7 @@
 <template>
   <div>
     <KAlert
-      v-if="shouldRenderAlert"
+      v-if="isShowingAlert"
       class="mb-4"
       appearance="info"
       dismiss-type="icon"
@@ -11,9 +11,9 @@
       <template #alertMessage>
         <div class="mr-4">
           <span class="mr-2">
-            <strong>ProTip:</strong>
+            <strong>Pro tip:</strong>
 
-            You might want to adjust your {{ isAllMeshesView ? 'meshes' : 'mesh' }} configuration
+            You might want to adjust your mesh configuration
           </span>
 
           <KButton
@@ -21,7 +21,7 @@
             data-testid="open-modal-button"
             @click="openModal"
           >
-            Check your {{ isAllMeshesView ? 'meshes' : 'mesh' }}!
+            Check your mesh!
           </KButton>
         </div>
       </template>
@@ -35,48 +35,21 @@
       data-testid="notification-modal"
     >
       <template #header-content>
-        <div
-          v-if="isAllMeshesView"
-          class="flex items-center"
-        >
-          <KIcon
-            color="var(--yellow-300)"
-            icon="notificationBell"
-            size="24"
-            class="mr-2"
-          />
-
-          Notifications
-        </div>
-
-        <div v-else>
+        <div>
           <div>
             <span v-if="hasAnyAction">
               Some of these features are not enabled for <span class="text-xl tracking-wide">"{{ store.state.selectedMesh }}"</span> mesh. Consider implementing them.
             </span>
 
-            <span v-else> Looks like
-              <span class="text-xl tracking-wide">"{{ store.state.selectedMesh }}"</span> isn't missing any features. Well done!
+            <span v-else>
+              Looks like <span class="text-xl tracking-wide">"{{ store.state.selectedMesh }}"</span> isn't missing any features. Well done!
             </span>
           </div>
-
-          <KButton
-            class="mt-4"
-            appearance="outline"
-            @click="changeMesh('all')"
-          >
-            ‹ Back to all
-          </KButton>
         </div>
       </template>
 
       <template #body-content>
-        <AllMeshesNotifications
-          v-if="isAllMeshesView"
-          @mesh-selected="changeMesh"
-        />
-
-        <SingleMeshNotifications v-else />
+        <SingleMeshNotifications />
       </template>
 
       <template #footer-content>
@@ -94,38 +67,25 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { KAlert, KButton, KIcon, KModal } from '@kong/kongponents'
+import { KAlert, KButton, KModal } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import AllMeshesNotifications from './components/AllMeshesNotifications.vue'
 import SingleMeshNotifications from './components/SingleMeshNotifications.vue'
 
-const route = useRoute()
-const router = useRouter()
 const store = useStore()
 
-const alertClosed = ref(false)
+const isShowingAlert = ref(true)
 
-const isAllMeshesView = computed(() => store.state.selectedMesh === 'all')
-
-const shouldRenderAlert = computed(() => !alertClosed.value && !store.getters['onboarding/showOnboarding'] && store.getters['notifications/amountOfActions'] > 0)
-
-const hasAnyAction = computed(() => store.getters['notifications/meshNotificationItemMapWithAction'][store.state.selectedMesh])
+const hasAnyAction = computed(() => {
+  if (store.state.selectedMesh) {
+    return store.getters['notifications/meshNotificationItemMapWithAction'][store.state.selectedMesh]
+  } else {
+    return false
+  }
+})
 
 function closeAlert(): void {
-  alertClosed.value = true
-}
-
-function changeMesh(mesh: string): void {
-  store.dispatch('updateSelectedMesh', mesh)
-
-  if (route.name) {
-    router.push({
-      name: route.name,
-      params: { mesh },
-    })
-  }
+  isShowingAlert.value = false
 }
 
 function openModal(): void {

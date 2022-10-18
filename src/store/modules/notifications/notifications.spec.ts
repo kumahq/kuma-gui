@@ -46,7 +46,7 @@ describe('notifications module', () => {
     it('tests meshNotificationItemMapWithAction getter', () => {
       store.state.meshes.items = [
         {
-          name: 'default',
+          name: 'test-1',
           creationTime: '0001-01-01T00:00:00Z',
           modificationTime: '0001-01-01T00:00:00Z',
           type: 'Mesh',
@@ -56,7 +56,7 @@ describe('notifications module', () => {
           metrics: {},
         },
         {
-          name: 'test',
+          name: 'test-2',
           creationTime: '0001-01-01T00:00:00Z',
           modificationTime: '0001-01-01T00:00:00Z',
           type: 'Mesh',
@@ -66,7 +66,7 @@ describe('notifications module', () => {
 
       expect(store.getters['notifications/meshNotificationItemMapWithAction']).toMatchInlineSnapshot(`
 {
-  "test": {
+  "test-2": {
     "hasLogging": false,
     "hasMetrics": false,
     "hasMtls": true,
@@ -79,14 +79,14 @@ describe('notifications module', () => {
     it('tests amountOfActions getter', () => {
       store.state.meshes.items = [
         {
-          name: 'default',
+          name: 'test-1',
           creationTime: '0001-01-01T00:00:00Z',
           modificationTime: '0001-01-01T00:00:00Z',
           type: 'Mesh',
           logging: {},
         },
         {
-          name: 'test',
+          name: 'test-2',
           creationTime: '0001-01-01T00:00:00Z',
           modificationTime: '0001-01-01T00:00:00Z',
           type: 'Mesh',

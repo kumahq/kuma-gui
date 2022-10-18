@@ -61,7 +61,6 @@
 
   // Top bar
   --topbar-height: 60px;
-  --logo-max-height: 36px;
 
   // Content areas
   --global-content-max-width: 100rem;
@@ -110,12 +109,6 @@
   --KInputFocus: var(--core-theme-color);
   --KPopPaddingX: var(--spacing-md);
   --KPopPaddingY: var(--spacing-md);
-
-  // Sidebar
-  --SidebarIconColor: var(--core-theme-color);
-  --SidebarLinkColor: var(--core-theme-color-darker);
-  --SidebarLinkBGColor: var(--core-theme-color-lighter);
-  --SidebarTitleColor: var(--core-theme-color-light);
 
   // Links
   --LinkColorBase: var(--core-theme-color);

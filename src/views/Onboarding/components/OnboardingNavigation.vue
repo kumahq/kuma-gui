@@ -36,6 +36,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+
 export default {
   name: 'OnboardingNavigation',
   props: {
@@ -81,12 +82,7 @@ export default {
 
     skipOnboarding() {
       this.completeOnboarding()
-      this.$router.push({
-        name: 'global-overview',
-        params: {
-          mesh: 'all',
-        },
-      })
+      this.$router.push({ name: 'home' })
     },
   },
 }

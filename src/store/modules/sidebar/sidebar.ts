@@ -6,7 +6,6 @@ import { SidebarInterface } from './sidebar.types'
 
 import Kuma from '@/services/kuma'
 import { MeshInsight } from '@/types'
-import { fetchAllResources } from '@/helpers'
 
 const initialSidebarState: SidebarInterface = {
   insights: {
@@ -40,21 +39,16 @@ const actions: ActionTree<SidebarInterface, State> = {
   },
 
   async getMeshInsights({ commit, rootState }) {
-    const selectedMesh = rootState.selectedMesh
+    if (rootState.selectedMesh === null) {
+      return
+    }
 
-    let meshInsightsRawData: { items: MeshInsight[]; total: number }
+    let meshInsightsRawData: { items: MeshInsight[], total: number }
     let meshInsights
 
     try {
-      if (selectedMesh === 'all') {
-        const params = {
-          callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
-        }
-
-        meshInsightsRawData = await fetchAllResources<MeshInsight>(params)
-      } else {
-        meshInsightsRawData = { items: [await Kuma.getMeshInsights({ name: selectedMesh })], total: 1 }
-      }
+      const response = await Kuma.getMeshInsights({ name: rootState.selectedMesh })
+      meshInsightsRawData = { items: [response], total: 1 }
 
       meshInsights = calculateMeshInsights(meshInsightsRawData)
     } catch {

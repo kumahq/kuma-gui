@@ -128,9 +128,9 @@ export type DataPlaneNetworking = {
 }
 
 /**
- * An available policy as returned via the `/policies` endpoint.
+ * A policy definition as returned via the `/policies` endpoint.
  */
-export type Policy = {
+export type PolicyDefinition = {
   /**
    * The policies internal name (e.g. “CircuitBreaker”).
    */
@@ -279,10 +279,11 @@ export interface ZoneOverview extends MeshEntity {
  */
 export interface Mesh extends Entity {
   type: 'Mesh'
-  mtls?: Object
-  logging?: Object
-  tracing?: Object
-  metrics?: Object
+  mtls?: any
+  logging?: any
+  tracing?: any
+  metrics?: any
+  routing?: any
 }
 
 /**

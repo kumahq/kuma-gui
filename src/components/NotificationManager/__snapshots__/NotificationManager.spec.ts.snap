@@ -1,200 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NotificationManager.vue renders all meshes notification modal 1`] = `
-<div
-  aria-label="Notifications"
-  aria-modal="true"
-  class="k-modal modal"
-  data-testid="notification-modal"
-  data-v-442f114b=""
-  role="dialog"
->
-  <div
-    class="k-modal-backdrop modal-backdrop"
-    data-v-442f114b=""
-  >
-    <div
-      class="k-modal-dialog modal-dialog"
-      data-v-442f114b=""
-    >
-      <!---->
-      <div
-        class="k-modal-content modal-content"
-        data-v-442f114b=""
-      >
-        <!---->
-        <div
-          aria-level="2"
-          class="header-left mb-5 k-modal-header modal-header"
-          data-v-442f114b=""
-          role="heading"
-        >
-          
-          <div
-            class="flex items-center"
-          >
-            <span
-              class="mr-2 kong-icon-notificationBell kong-icon"
-              data-v-71cfcfc4=""
-            >
-              <svg
-                fill="var(--yellow-300)"
-                height="24"
-                role="img"
-                viewBox="0 0 24 24"
-                width="24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                
-  
-                <title>
-                  Notifications
-                </title>
-                
-  
-                <path
-                  d="M8.5 19.5a3.8 3.8 0 0 0 3.5 3c1.32 0 3-.97 3.5-3h-7ZM20.42 14.8a.4.4 0 0 0-.11-.26l-1.98-1.97a.5.5 0 0 1-.17-.4v-3.1a5.95 5.95 0 0 0-3.08-5.36c-.3-.18-.63-.31-.95-.46a7.8 7.8 0 0 0-3.96 0l-.2.1c-.93.36-1.73.92-2.4 1.69a5.74 5.74 0 0 0-1.43 3.62c-.03 1.17-.01 2.35-.01 3.52a.5.5 0 0 1-.17.4L4 14.53a.48.48 0 0 0-.13.3V18H20.4l.01-.17c.02-1.01.02-2.02.01-3.03Z"
-                  fill="var(--yellow-300)"
-                />
-                
-
-              </svg>
-              
-
-            </span>
-             Notifications 
-          </div>
-          
-        </div>
-        <div
-          class="content-left k-modal-body modal-body"
-          data-v-442f114b=""
-        >
-          
-          <div>
-            <div
-              class="py-4"
-            >
-              <h3
-                class="font-bold mb-4"
-              >
-                 Meshes 
-              </h3>
-              <div>
-                <p>
-                   Check the following meshes for suggestions to adjust the configuration 
-                </p>
-                <div
-                  class="pt-4 flex space-x-4"
-                >
-                  
-                  <span
-                    class="relative d-inline-block"
-                  >
-                    <div
-                      class="k-badge-default k-badge-rounded k-badge truncate cursor-pointer hover:scale-110"
-                      data-v-17d30312=""
-                    >
-                      
-                      test-mesh
-                      
-                    </div>
-                    <span
-                      class="notification-amount"
-                    >
-                      4
-                    </span>
-                  </span>
-                  
-                </div>
-              </div>
-            </div>
-            <div
-              class="py-4"
-            >
-              <h3
-                class="font-bold mb-4"
-              >
-                 Enterprise 
-              </h3>
-              <p>
-                 Kuma’s ecosystem has created enterprise offerings to do more with the product, including advanced integrations and support. 
-              </p>
-              <a
-                class="medium rounded primary k-button enterprise-button"
-                data-v-6bcbf05d=""
-                href="https://kuma.io/enterprise/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                target="_blank"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                <span
-                  class="kong-icon-organizations kong-icon"
-                  data-v-71cfcfc4=""
-                >
-                  <svg
-                    fill="white"
-                    height="24"
-                    role="img"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    
-  
-                    <title>
-                      Organization
-                    </title>
-                    
-  
-                    <path
-                      d="M16.191 10.947H12.82l2.122 1.977v5.11l4.777.018v-4.019l-3.528-3.086ZM4.11 10.107 0 13.194v4.838h12.99v-4.838l-3.848-3.087H4.11ZM6.476 8.216c1.74 0 3.151-1.403 3.151-3.134a3.143 3.143 0 0 0-3.15-3.135 3.143 3.143 0 0 0-3.151 3.135 3.143 3.143 0 0 0 3.15 3.134ZM13.333 9.526a2.85 2.85 0 0 0 2.857-2.842 2.85 2.85 0 0 0-2.857-2.842 2.85 2.85 0 0 0-2.857 2.842 2.85 2.85 0 0 0 2.857 2.842Z"
-                      fill="white"
-                    />
-                    
-
-                  </svg>
-                  
-
-                </span>
-                 Kuma Enterprise Offerings 
-                
-                <!---->
-              </a>
-            </div>
-          </div>
-          
-        </div>
-        <div
-          class="k-modal-footer modal-footer d-flex"
-          data-v-442f114b=""
-        >
-          
-          <button
-            class="medium rounded outline k-button"
-            data-testid="close-modal-button"
-            data-v-6bcbf05d=""
-            type="button"
-          >
-            
-            <!---->
-            
-            
-             Close 
-            
-            <!---->
-          </button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
 <div
   aria-label="Notifications"
@@ -237,19 +42,6 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                  mesh. Consider implementing them. 
               </span>
             </div>
-            <button
-              class="medium rounded outline k-button mt-4"
-              data-v-6bcbf05d=""
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               ‹ Back to all 
-              
-              <!---->
-            </button>
           </div>
           
         </div>
@@ -702,9 +494,9 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
             class="mr-2"
           >
             <strong>
-              ProTip:
+              Pro tip:
             </strong>
-             You might want to adjust your meshes configuration 
+             You might want to adjust your mesh configuration 
           </span>
           <button
             class="medium rounded outline k-button"
@@ -716,7 +508,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
             <!---->
             
             
-             Check your meshes! 
+             Check your mesh! 
             
             <!---->
           </button>

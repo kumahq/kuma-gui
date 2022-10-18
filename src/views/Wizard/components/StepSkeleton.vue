@@ -79,8 +79,6 @@
 </template>
 
 <script>
-import { Storage } from '@/utils/Storage'
-
 export default {
   props: {
     steps: {
@@ -102,7 +100,7 @@ export default {
     },
   },
 
-  emits: ['goToNextStep', 'goToStep', 'goToPrevStep'],
+  emits: ['goToStep'],
 
   data() {
     return {
@@ -125,35 +123,22 @@ export default {
       return this.start <= 0
     },
   },
-  watch: {
-    '$route.query.step'(val = 0) {
-      if (this.start !== val) {
-        this.start = val
-        this.$emit('goToNextStep', val)
-      }
-    },
-  },
+
   mounted() {
-    // this clears out any old stored data upon starting the wizard
-    this.resetProcess()
     // this sets the starting step upon load
     this.setStartingStep()
   },
+
   methods: {
-    goToStep(index) {
-      this.start = index
-      this.updateQuery('step', index)
-      this.$emit('goToStep', this.step)
-    },
     goToNextStep() {
       this.start++
       this.updateQuery('step', this.start)
-      this.$emit('goToNextStep', this.step)
+      this.$emit('goToStep', this.step)
     },
     goToPrevStep() {
       this.start--
       this.updateQuery('step', this.start)
-      this.$emit('goToPrevStep', this.step)
+      this.$emit('goToStep', this.step)
     },
     updateQuery(query, value) {
       const router = this.$router
@@ -177,22 +162,6 @@ export default {
       const query = this.$route.query.step
 
       this.start = query || 0
-    },
-    resetProcess() {
-      // revert back to the first step
-      this.start = 0
-
-      // go to first step in the UI
-      this.goToStep(0)
-
-      // clear the form data from local storage
-      Storage.remove('storedFormData')
-      // reset all input values so the browser can't pre-fill them
-      const fields = this.$refs.wizardForm.querySelectorAll('input[type="text"]')
-
-      fields.forEach((r) => {
-        r.setAttribute('value', '')
-      })
     },
   },
 }

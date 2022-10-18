@@ -1,6 +1,6 @@
 <template>
   <KBreadcrumbs
-    v-if="breadcrumbItems.length > 0 && !route.query.hide_breadcrumb"
+    v-if="breadcrumbItems.length > 0"
     :items="breadcrumbItems"
   />
 </template>
@@ -27,7 +27,7 @@ const breadcrumbItems = computed(() => {
 
   for (const matchedRoute of route.matched) {
     // Ignores the de-facto home page.
-    if (matchedRoute.name === 'global-overview' || matchedRoute.meta.parent === 'global-overview') {
+    if (matchedRoute.name === 'home' || matchedRoute.meta.parent === 'home') {
       continue
     }
 

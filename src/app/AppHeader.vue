@@ -1,202 +1,126 @@
 <template>
-  <header class="main-header px-4 py-1 flex justify-between items-center">
-    <div class="py-1 md:py-0 flex justify-between items-center">
-      <router-link
-        :to="{
-          name: 'global-overview',
-          params: {
-            mesh: store.state.selectedMesh
-          }
-        }"
-        class="logo"
-      >
+  <header class="app-header">
+    <div class="horizontal-list">
+      <router-link :to="{ name: 'home' }">
         <img
+          class="logo-image"
           src="@/assets/images/product-logo.png"
           :alt="`${store.state.config.tagline} Logo`"
         >
       </router-link>
 
-      <div class="my-0 mx-6 upgrade-check-wrapper">
+      <div class="upgrade-check-wrapper">
         <UpgradeCheck />
       </div>
     </div>
 
-    <div class="flex justify-between items-center">
-      <div
-        v-if="showStatus"
-        class="py-1 md:py-0 md:px-4"
-      >
-        <div class="app-status app-status--mobile">
-          <KPop
-            width="300"
-            placement="bottomEnd"
-          >
-            <KButton
-              class="kpop-control"
-              appearance="primary"
-              size="small"
-            >
-              Info
-            </KButton>
+    <div
+      v-if="store.state.config.status === 'OK'"
+      class="horizontal-list"
+    >
+      <div class="app-status app-status--mobile">
+        <KPop width="280">
+          <KButton appearance="outline">
+            Info
+          </KButton>
 
-            <template #content>
-              <div>
-                <p>
-                  {{ statusContent }} on <strong>{{ env }}</strong>
-                </p>
-
-                <p>
-                  <KBadge appearance="success">
-                    <span v-if="isMulticluster">
-                      Multi-Zone
-                    </span>
-
-                    <span v-else>
-                      Standalone
-                    </span>
-                  </KBadge>
-                </p>
-              </div>
-            </template>
-          </KPop>
-        </div>
-
-        <div class="app-status app-status--desktop">
-          <div class="app-status-list text-sm">
-            <strong> {{ statusContent }} on {{ env }}</strong>
-
-            <KBadge
-              appearance="success"
-              class="status-badge"
-            >
-              <span v-if="isMulticluster">
-                Multi-Zone
-              </span>
-
-              <span v-else>
-                Standalone
-              </span>
-            </KBadge>
-
-            <NotificationIcon />
-
-            <router-link :to="{ name: 'diagnostics' }">
-              <KIcon
-                icon="gearFilled"
-                color="currentColor"
-                title="Diagnostics"
-              />
-
-              <span class="kutil-sr-only">Diagnostics</span>
-            </router-link>
-          </div>
-        </div>
+          <template #content>
+            <p>
+              {{ store.state.config.tagline }} <b>{{ store.state.config.version }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
+            </p>
+          </template>
+        </KPop>
       </div>
+
+      <p class="app-status app-status--desktop">
+        {{ store.state.config.tagline }} <b>{{ store.state.config.version }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
+      </p>
+
+      <NotificationIcon />
+
+      <router-link :to="{ name: 'diagnostics' }">
+        <KIcon
+          icon="gearFilled"
+          color="currentColor"
+          title="Diagnostics"
+        />
+
+        <span class="kutil-sr-only">Diagnostics</span>
+      </router-link>
     </div>
   </header>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { KBadge, KButton, KPop } from '@kong/kongponents'
+import { KButton, KIcon, KPop } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import Kuma from '@/services/kuma'
 import NotificationIcon from '@/components/Global/NotificationIcon.vue'
 import UpgradeCheck from '@/components/Utils/UpgradeCheck.vue'
 
-const route = useRoute()
 const store = useStore()
 
-const env = computed(() => {
+const environmentName = computed(() => {
   const environment = store.getters['config/getEnvironment']
 
   if (environment) {
-    return `${environment.charAt(0).toUpperCase()}${environment.slice(1)}`
+    return environment.charAt(0).toUpperCase() + environment.substring(1)
   } else {
-    return ''
+    return 'Universal'
   }
 })
 
-const showStatus = computed(() => {
-  return !route.meta.hideStatus && store.state.config.status === 'OK'
-})
-
-const statusContent = computed(() => {
-  if (env.value !== '' && Kuma.url !== '') {
-    return `${store.state.config.tagline} ${store.state.config.version}`
-  } else {
-    return `Unable to determine ${store.state.config.tagline}'s status`
-  }
-})
-
-const isMulticluster = computed(() => store.getters['config/getMulticlusterStatus'])
+const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Multi-Zone' : 'Standalone')
 </script>
 
 <style lang="scss" scoped>
-.main-header {
+.app-header {
   position: fixed;
   z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
   height: var(--topbar-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: var(--spacing-lg);
+  padding-left: var(--spacing-lg);
   border-bottom: 1px solid var(--black-10);
-  background-color: #fff;
+  background-color: var(--white);
 }
 
-.logo img {
-  max-height: var(--logo-max-height);
+.logo-image {
+  max-height: 36px;
 }
 
-.app-status {
+.horizontal-list {
   display: flex;
   align-items: center;
+  gap: var(--spacing-lg);
+}
 
-  .kpop-control {
-    max-height: 27px;
+.app-status--desktop {
+  color: var(--gray-3);
+  display: none;
 
-    &:after {
-      display: none;
-    }
-  }
-
-  &--desktop {
-    letter-spacing: 0.025em;
-    color: var(--gray-3);
-  }
-
-  @media screen and (min-width: 1024px) {
-    &--desktop {
-      display: block;
-    }
-
-    &--mobile {
-      display: none;
-    }
-  }
-
-  @media screen and (max-width: 1023px) {
-    &--desktop {
-      display: none;
-    }
-
-    &--mobile {
-      display: block;
-    }
+  @media screen and (min-width: 900px) {
+    display: block;
   }
 }
 
-@media screen and (max-width: 599px) {
-  .upgrade-check-wrapper {
+.app-status--mobile {
+  display: block;
+
+  @media screen and (min-width: 900px) {
     display: none;
   }
 }
 
-.app-status-list {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
+.upgrade-check-wrapper {
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 }
 </style>

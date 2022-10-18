@@ -36,7 +36,6 @@ import ServiceDetails from '../components/ServiceDetails.vue'
 import Kuma from '@/services/kuma'
 import { STATUS } from '@/consts'
 import { ServiceInsight, TableHeader } from '@/types'
-import { ApiListResponse } from '@/api'
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },
@@ -44,7 +43,7 @@ const headers: TableHeader[] = [
   { label: 'Type', key: 'serviceType' },
   { label: 'Address', key: 'address' },
   { label: 'Status', key: 'status' },
-  { label: 'Data planes (online / total)', key: 'dataPlanesStatus' },
+  { label: 'DP proxies (online / total)', key: 'dpProxiesStatus' },
 ]
 const PAGE_SIZE = 50
 
@@ -65,6 +64,11 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
 })
 
 watch(() => route.params.mesh, function () {
+  // Don’t trigger a load when the user is navigating to another route.
+  if (route.name !== 'service-list-view') {
+    return
+  }
+
   loadData(0)
 })
 
@@ -74,10 +78,11 @@ async function loadData(offset: number): Promise<void> {
   isLoading.value = true
   error.value = null
 
-  const mesh = route.params.mesh as string || null
+  const mesh = route.params.mesh as string
+  const size = PAGE_SIZE
 
   try {
-    const { items = [], next } = await fetchServiceInsights(mesh, PAGE_SIZE, offset)
+    const { items = [], next } = await Kuma.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
     nextUrl.value = next
 
     items.sort((itemA, itemB) => {
@@ -110,18 +115,10 @@ async function loadData(offset: number): Promise<void> {
   }
 }
 
-async function fetchServiceInsights(mesh: string | null, size: number, offset: number): Promise<ApiListResponse<ServiceInsight>> {
-  if (mesh === 'all' || mesh === null) {
-    return Kuma.getAllServiceInsights({ size, offset })
-  } else {
-    return Kuma.getAllServiceInsightsFromMesh({ mesh })
-  }
-}
-
 type ProcessedServiceInsight = Pick<ServiceInsight, 'name' | 'mesh' | 'serviceType' | 'addressPort'> & {
   nameRoute: RouteLocationRaw
   meshRoute: RouteLocationRaw
-  dataPlanesStatus: string
+  dpProxiesStatus: string
   status: string
 }
 
@@ -134,16 +131,16 @@ function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
     },
   }
   const meshRoute = {
-    name: 'mesh-child',
+    name: 'mesh-detail-view',
     params: {
       mesh: serviceInsight.mesh,
     },
   }
 
-  let dataPlanesStatus = '—'
+  let dpProxiesStatus = '—'
   if (serviceInsight.dataplanes) {
     const { online = 0, total = 0 } = serviceInsight.dataplanes
-    dataPlanesStatus = `${online} / ${total}`
+    dpProxiesStatus = `${online} / ${total}`
   }
 
   let status = '—'
@@ -158,7 +155,7 @@ function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
     serviceType,
     nameRoute,
     meshRoute,
-    dataPlanesStatus,
+    dpProxiesStatus,
     status,
   }
 }
