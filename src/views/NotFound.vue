@@ -20,12 +20,7 @@
       <template #cta>
         <KButton
           appearance="primary"
-          :to="{
-            name: 'global-overview',
-            params: {
-              mesh: store.state.selectedMesh
-            }
-          }"
+          :to="{ name: 'home' }"
         >
           Go Home
         </KButton>
@@ -33,9 +28,3 @@
     </KEmptyState>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useStore } from '@/store/store'
-
-const store = useStore()
-</script>

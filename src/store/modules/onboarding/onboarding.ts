@@ -1,11 +1,11 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { State } from '../../index'
 import { OnboardingInterface } from './onboarding.types'
-import { Storage } from '@/utils/Storage'
+import { ClientStorage } from '@/utils/ClientStorage'
 
 const initialOnboardingState: OnboardingInterface = {
-  isCompleted: Storage.get('onboardingIsCompleted') === 'true',
-  step: Storage.get('onboardingStep') || 'onboarding-welcome',
+  isCompleted: ClientStorage.get('onboardingIsCompleted') === 'true',
+  step: ClientStorage.get('onboardingStep') || 'onboarding-welcome',
   mode: 'demo',
 }
 
@@ -18,10 +18,9 @@ const mutations: MutationTree<OnboardingInterface> = {
 const getters: GetterTree<OnboardingInterface, State> = {
   getMode: state => state.mode,
   showOnboarding: (_state, _getters, rootState) => {
-    const onlyDefaultMesh = rootState.meshes.items.length === 1 && rootState.meshes.items[0].name === 'default'
-    const noDataplane = rootState.totalDataplaneCount === 0
+    const hasOnlyDefaultMesh = rootState.meshes.items.length === 1 && rootState.meshes.items[0].name === 'default'
 
-    return noDataplane && onlyDefaultMesh
+    return rootState.totalDataplaneCount === 0 && hasOnlyDefaultMesh
   },
 }
 
@@ -35,13 +34,14 @@ const actions: ActionTree<OnboardingInterface, State> = {
     dispatch('sidebar/getInsights', null, { root: true })
 
     commit('SET_IS_COMPLETED', true)
-    Storage.set('onboardingIsCompleted', 'true')
+    ClientStorage.set('onboardingIsCompleted', 'true')
+    ClientStorage.remove('onboardingStep')
   },
 
   // change step in onboarding
   changeStep({ commit }, step) {
     commit('SET_STEP', step)
-    Storage.set('onboardingStep', step)
+    ClientStorage.set('onboardingStep', step)
   },
 }
 

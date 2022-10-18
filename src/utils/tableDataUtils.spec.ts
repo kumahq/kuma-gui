@@ -10,7 +10,6 @@ describe('tableDataUtils', () => {
       getAllEntities: jest.fn().mockResolvedValue({}),
       getAllEntitiesFromPath: jest.fn().mockResolvedValue({}),
       getAllEntitiesFromMesh: jest.fn().mockResolvedValue({}),
-      mesh: 'all',
       query: null,
       size: 10,
       offset: null,
@@ -31,19 +30,13 @@ describe('tableDataUtils', () => {
     })
 
     it('calls getAllEntitiesFromMesh', () => {
-      getTableData({ ...params, mesh: 'default' })
+      getTableData({ ...params, mesh: 'test-mesh' })
 
       expect(params.getAllEntitiesFromMesh).toHaveBeenCalled()
     })
 
     it('calls getSingleEntity', () => {
-      getTableData({ ...params, query: 'foo', mesh: 'default' })
-
-      expect(params.getSingleEntity).toHaveBeenCalled()
-    })
-
-    it('calls getSingleEntity with mesh all', () => {
-      getTableData({ ...params, query: 'foo', mesh: 'all' })
+      getTableData({ ...params, query: 'foo', mesh: 'test-mesh' })
 
       expect(params.getSingleEntity).toHaveBeenCalled()
     })
@@ -53,7 +46,7 @@ describe('tableDataUtils', () => {
     it('when no corresponding function provided', async () => {
       const response = await getTableData({
         ...params,
-        mesh: 'default',
+        mesh: 'test-mesh',
         getSingleEntity: undefined,
         getAllEntitiesFromMesh: undefined,
       })

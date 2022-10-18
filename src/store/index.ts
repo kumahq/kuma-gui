@@ -15,12 +15,57 @@ import { fetchAllResources } from '@/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import Kuma from '@/services/kuma'
 import { ApiListResponse } from '@/api'
-import { Storage } from '@/utils/Storage'
-import { Mesh, Policy } from '@/types'
+import { ClientStorage } from '@/utils/ClientStorage'
+import { Mesh, PolicyDefinition } from '@/types'
 
 type TODO = any
 
-const initialState = {
+interface BareRootState {
+  menu: null
+  globalLoading: boolean
+  pageTitle: string
+  meshes: ApiListResponse<Mesh>
+  selectedMesh: string | null
+  totalDataplaneCount: number
+  version: string
+  itemQueryNamespace: string
+  totalClusters: number
+  serviceSummary: {
+    total: number
+    internal: {
+      total: number
+      online: number
+      offline: number
+      partiallyDegraded: number
+    }
+    external: {
+      total: number
+    }
+  }
+  overviewCharts: Record<string, { data: any[] }>
+  meshInsight: {
+    meshesTotal: number
+    dataplanes: {
+      online: number
+      partiallyDegraded: number
+      total: number
+    }
+    policies: Record<string, { total: number }>
+    dpVersions: {
+      kumaDp: Record<string, { total: number, online: number }>
+      envoy: Record<string, { total: number, online: number }>
+    }
+  }
+  meshInsightsFetching: boolean
+  serviceInsightsFetching: boolean
+  externalServicesFetching: boolean
+  zonesInsightsFetching: boolean
+  policies: PolicyDefinition[]
+  policiesByPath: Record<string, PolicyDefinition>
+  policiesByType: Record<string, PolicyDefinition>
+}
+
+const initialState: BareRootState = {
   menu: null,
   globalLoading: true,
   pageTitle: '',
@@ -28,8 +73,8 @@ const initialState = {
     total: 0,
     items: [],
     next: null,
-  } as ApiListResponse<Mesh>,
-  selectedMesh: 'all', // shows all meshes on initial load
+  },
+  selectedMesh: 'default',
   totalDataplaneCount: 0,
   version: '',
   itemQueryNamespace: 'item',
@@ -50,6 +95,9 @@ const initialState = {
     dataplanes: {
       data: [],
     },
+    meshes: {
+      data: [],
+    },
     services: {
       data: [],
     },
@@ -65,18 +113,18 @@ const initialState = {
     envoyVersions: {
       data: [],
     },
-  } as Record<string, { data: any[] }>,
+  },
   meshInsight: getEmptyInsight(),
   meshInsightsFetching: false,
   serviceInsightsFetching: false,
   externalServicesFetching: false,
   zonesInsightsFetching: false,
-  policies: [] as Policy[],
-  policiesByPath: {} as Record<string, Policy>,
-  policiesByType: {} as Record<string, Policy>,
+  policies: [],
+  policiesByPath: {},
+  policiesByType: {},
 }
 
-export type State = typeof initialState & {
+export interface State extends BareRootState {
   /**
    * Explicitly adds the types for all modules here
    * because the created store for some reason doesn’t have module types at all.
@@ -165,9 +213,7 @@ export const storeConfig: StoreOptions<State> = {
     SET_POLICIES_BY_TYPE: (state, policiesByType) => (state.policiesByType = policiesByType),
   },
   actions: {
-    // bootstrap app
-
-    async bootstrap({ commit, dispatch, getters }) {
+    async bootstrap({ commit, dispatch, getters, state }) {
       commit('SET_GLOBAL_LOADING', { globalLoading: true })
 
       // check the Kuma status before we do anything else
@@ -175,25 +221,25 @@ export const storeConfig: StoreOptions<State> = {
 
       // only dispatch these actions if the Kuma is online
       if (getters['config/getStatus'] === 'OK') {
-        // get mesh from local storage or default one from vuex
-        const mesh = Storage.get('selectedMesh')
+        const storedMesh = ClientStorage.get('selectedMesh')
 
-        if (mesh) {
-          dispatch('updateSelectedMesh', mesh)
-        } else {
-          dispatch('updateSelectedMesh', 'all')
+        // Sets selected mesh from client storage. Ignores “all” mesh because it’s being deprecated.
+        if (storedMesh && storedMesh !== 'all') {
+          dispatch('updateSelectedMesh', storedMesh)
         }
 
-        // fetch the mesh list
-        const meshPromise = dispatch('fetchMeshList')
-        // fetch the dataplanes
-        const dataplanePromise = dispatch('fetchDataplaneTotalCount')
-        // bootstrap config data
-        const configPromise = dispatch('config/bootstrapConfig')
+        await Promise.all([
+          dispatch('fetchMeshList'),
+          dispatch('fetchDataplaneTotalCount'),
+          dispatch('config/bootstrapConfig'),
+          dispatch('sidebar/getInsights'),
+        ])
 
-        const sidebarInsightsPromise = dispatch('sidebar/getInsights')
-
-        await Promise.all([meshPromise, dataplanePromise, configPromise, sidebarInsightsPromise])
+        // Updates the selected mesh if one wasn’t read earlier.
+        const newStoredMesh = ClientStorage.get('selectedMesh')
+        if ((newStoredMesh === null || newStoredMesh === 'all') && state.meshes.items.length > 0) {
+          dispatch('updateSelectedMesh', state.meshes.items[0].name)
+        }
       }
 
       commit('SET_GLOBAL_LOADING', { globalLoading: false })
@@ -204,23 +250,34 @@ export const storeConfig: StoreOptions<State> = {
     },
 
     // fetch all of the meshes from the Kuma
-    fetchMeshList({ commit }) {
+    async fetchMeshList({ commit }) {
       const params = {
         size: PAGE_REQUEST_SIZE_DEFAULT,
       }
 
-      return Kuma.getAllMeshes(params)
-        .then(response => {
-          commit('SET_MESHES', response)
+      try {
+        const response = await Kuma.getAllMeshes(params)
+
+        response.items.sort((meshA, meshB) => {
+          // Prioritizes the mesh named “default”.
+          if (meshA.name === 'default') {
+            return -1
+          } else if (meshB.name === 'default') {
+            return 1
+          }
+
+          return meshA.name.localeCompare(meshB.name)
         })
-        .catch(error => {
-          console.error(error)
-        })
+
+        commit('SET_MESHES', response)
+      } catch (error) {
+        console.error(error)
+      }
     },
 
     // update the selected mesh
     updateSelectedMesh({ commit }, mesh) {
-      Storage.set('selectedMesh', mesh)
+      ClientStorage.set('selectedMesh', mesh)
       commit('SET_SELECTED_MESH', mesh)
     },
 
@@ -254,20 +311,33 @@ export const storeConfig: StoreOptions<State> = {
 
     // NEW
 
-    async fetchMeshInsights({ commit, dispatch }, mesh = 'all') {
+    async fetchMeshInsights({ commit, dispatch }, mesh: string | undefined) {
       commit('SET_MESH_INSIGHTS_FETCHING', true)
 
       try {
-        if (mesh === 'all') {
+        if (mesh === undefined) {
           const params = {
             callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
           }
 
-          commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', await fetchAllResources(params))
+          const response = await fetchAllResources(params)
+
+          const meshesData = [
+            {
+              category: 'Mesh',
+              value: response.items.length,
+              tooltipDisabled: true,
+              labelDisabled: true,
+            },
+          ]
+
+          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: meshesData })
+          commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', response)
         } else {
           commit('SET_MESH_INSIGHT', await Kuma.getMeshInsights({ name: mesh }))
         }
-      } catch (e) {
+      } catch {
+        commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: [] })
         commit('SET_MESH_INSIGHT', getEmptyInsight())
       } finally {
         dispatch('setChartsFromMeshInsights')
@@ -276,45 +346,45 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_MESH_INSIGHTS_FETCHING', false)
     },
 
-    async fetchServiceInsights({ commit }, mesh = 'all') {
+    async fetchServiceInsights({ commit }, mesh: string | undefined) {
       commit('SET_SERVICE_INSIGHTS_FETCHING', true)
 
       try {
         const params = {
           callEndpoint:
-            mesh === 'all'
+            mesh === undefined
               ? Kuma.getAllServiceInsights.bind(Kuma)
               : Kuma.getAllServiceInsightsFromMesh.bind(Kuma, { mesh }),
         }
 
         commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
-      } catch (e) {
+      } catch {
         commit('SET_INTERNAL_SERVICE_SUMMARY')
       }
 
       commit('SET_SERVICE_INSIGHTS_FETCHING', false)
     },
 
-    async fetchExternalServices({ commit }, mesh = 'all') {
+    async fetchExternalServices({ commit }, mesh: string | undefined) {
       commit('SET_EXTERNAL_SERVICES_FETCHING', true)
 
       try {
         const params = {
           callEndpoint:
-            mesh === 'all'
+            mesh === undefined
               ? Kuma.getAllExternalServices.bind(Kuma)
               : Kuma.getAllExternalServicesFromMesh.bind(Kuma, { mesh }),
         }
 
         commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
-      } catch (e) {
+      } catch {
         commit('SET_EXTERNAL_SERVICE_SUMMARY')
       }
 
       commit('SET_EXTERNAL_SERVICES_FETCHING', false)
     },
 
-    async fetchServices({ dispatch }, mesh = 'all') {
+    async fetchServices({ dispatch }, mesh: string | undefined) {
       const externalServices = dispatch('fetchExternalServices', mesh)
       const serviceInsights = dispatch('fetchServiceInsights', mesh)
 
@@ -356,7 +426,7 @@ export const storeConfig: StoreOptions<State> = {
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: zonesData })
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: versionsData })
         }
-      } catch (e) {
+      } catch {
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zones', data: [] })
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: [] })
       }
@@ -365,7 +435,7 @@ export const storeConfig: StoreOptions<State> = {
     },
 
     async fetchPolicies({ commit }) {
-      const { policies } = await Kuma.getPolicies()
+      const { policies } = await Kuma.getPolicyDefinitions()
       const policiesByPath = policies.reduce((obj, policy) => Object.assign(obj, { [policy.path]: policy }), {})
       const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
 
@@ -422,7 +492,12 @@ export const storeConfig: StoreOptions<State> = {
           category: 'Internal',
           value: internal.total,
           minSizeForLabel: 0.16,
-          route: { name: 'service-list-view' },
+          route: {
+            name: 'service-list-view',
+            params: {
+              mesh: state.selectedMesh,
+            },
+          },
         })
       }
 
@@ -431,7 +506,12 @@ export const storeConfig: StoreOptions<State> = {
           category: 'External',
           value: external.total,
           minSizeForLabel: 0.16,
-          route: { name: 'service-list-view' },
+          route: {
+            name: 'service-list-view',
+            params: {
+              mesh: state.selectedMesh,
+            },
+          },
         })
       }
 

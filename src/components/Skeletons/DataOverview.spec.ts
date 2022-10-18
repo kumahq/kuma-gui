@@ -95,7 +95,7 @@ describe('DataOverview.vue', () => {
   })
 
   it('refresh page on second page', async () => {
-    const { emitted } = renderComponent({
+    renderComponent({
       next: true,
       tableData: {
         headers: [],
@@ -111,7 +111,6 @@ describe('DataOverview.vue', () => {
     await userEvent.click(next)
     await userEvent.click(refresh)
 
-    expect(emitted()).toMatchSnapshot()
     expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 

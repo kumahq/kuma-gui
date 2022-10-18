@@ -2,27 +2,42 @@ type StorageKeyValues =
   'dpVisibleTableHeaderKeys' |
   'onboardingStep' |
   'onboardingIsCompleted' |
-  'storedFormData' |
+  'createMeshData' |
   'selectedMesh' |
   'codeBlockQueries'
 
 /**
- * Utility object for accessing `window.localStorage`.
+ * Utility object for accessing `window.localStorage` or `window.sessionStorage`.
  *
  * Automatically serializes/deserializes values to/from JSON strings.
  *
- * Wraps local storage calls in try-catch blocks because those methods can through when the local storage of the user runs out of physical space or strict cookie protection schemes are engaged.
+ * Wraps client storage calls in try-catch blocks because those methods can throw when the client storage of the user runs out of physical space or strict cookie protection schemes are engaged.
+ *
+ * **Usage**:
+ *
+ * ```javascript
+ * const ClientSessionStorage = new BaseStorage(window.sessionStorage)
+ *
+ * ClientSessionStorage.set('key', { key: 'value' })
+ * ClientSessionStorage.get('key') // { key: 'value' }
+ * ```
  */
-export const Storage = {
+class BaseStorage {
+  storageAdapter: Storage
+
+  constructor(storageAdapter: Storage) {
+    this.storageAdapter = storageAdapter
+  }
+
   /**
    * Retrieves an item. Tries to parse the item as JSON before returning it. The item is returned as-is (i.e. as a string) if that fails. Returns `null` if no item for `storageKey` was found.
    */
   get(storageKey: StorageKeyValues): any {
     let item: string | null
 
-    // Guards local storage access because it can throw when it’s full or strict cookie protection rules are in place.
+    // Guards storage access because it can throw when it’s full or strict cookie protection rules are in place.
     try {
-      item = window.localStorage.getItem(storageKey)
+      item = this.storageAdapter.getItem(storageKey)
     } catch {
       return null
     }
@@ -38,7 +53,7 @@ export const Storage = {
     } catch {
       return item
     }
-  },
+  }
 
   /**
    * Stores an item. Objects (and arrays) are turned into strings using `JSON.stringify`.
@@ -47,13 +62,23 @@ export const Storage = {
     try {
       const stringifiedValue = typeof value === 'string' ? value : JSON.stringify(value)
 
-      window.localStorage.setItem(storageKey, stringifiedValue)
+      this.storageAdapter.setItem(storageKey, stringifiedValue)
     } catch {}
-  },
+  }
+
+  has(storageKey: StorageKeyValues): boolean {
+    try {
+      return this.storageAdapter.getItem(storageKey) !== null
+    } catch {
+      return false
+    }
+  }
 
   remove(storageKey: StorageKeyValues): void {
     try {
-      window.localStorage.removeItem(storageKey)
+      this.storageAdapter.removeItem(storageKey)
     } catch {}
-  },
+  }
 }
+
+export const ClientStorage = new BaseStorage(window.localStorage)

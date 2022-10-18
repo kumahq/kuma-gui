@@ -39,6 +39,9 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
+      - name: Lint lock file
+        run: npm run lint:lockfile
+
       - name: Lint
         run: yarn run lint
 

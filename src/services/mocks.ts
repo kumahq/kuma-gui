@@ -1,9 +1,20 @@
 import { rest, RestHandler } from 'msw'
 
-async function loadMockFile(importFn: () => Promise<any>) {
+import { Info } from '@/types'
+
+async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
   const fileModule = await importFn()
 
   return fileModule.default
+}
+
+const BASE_INFO: Info = {
+  hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
+  tagline: 'Kuma',
+  version: '1.7.1',
+  basedOnKuma: '1.7.1',
+  instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
+  clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
 }
 
 const mockFileImports: Array<[string, () => Promise<any>]> = [
@@ -139,32 +150,20 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['virtual-outbounds', () => import('./mock/responses/virtual-outbounds.json')],
 ]
 
-export const setupHandlers = (apiURL: string): RestHandler[] => {
-  const getApiPath = function (path: string) {
-    const escapedPath = path.replace(/\+/g, '\\+').replace(/\?/g, '\\?')
+export function setupHandlers(url: string): RestHandler[] {
+  const origin = url.replace(/\/+$/, '')
 
-    return `${apiURL}${escapedPath}`
+  function getApiPath(path: string = '') {
+    const escapedPath = path.replace(/\+/g, '\\+').replace(/\?/g, '\\?').replace(/^\/+/, '')
+
+    return [origin, escapedPath].filter((segment) => segment !== '').join('/')
   }
 
-  const handlers = mockFileImports.map(([path, importFn]: [string, () => Promise<any>]) => rest.get(
-    getApiPath(path),
-    async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))),
-  ))
+  const handlers = mockFileImports.map(([path, importFn]) => {
+    return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
+  })
 
-  handlers.push(
-    rest.get(apiURL, (_req, res, ctx) =>
-      res(
-        ctx.json({
-          hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
-          tagline: 'Kuma',
-          version: '1.7.1',
-          basedOnKuma: '1.7.1',
-          instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
-          clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
-        }),
-      ),
-    ),
-  )
+  handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(BASE_INFO))))
 
   handlers.push(
     rest.get(getApiPath('dataplanes+insights'), async (req, res, ctx) => {

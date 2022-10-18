@@ -9,7 +9,6 @@ describe('sidebar module', () => {
 
       await store.dispatch('sidebar/getInsights')
 
-      expect(store.state.selectedMesh).toBe('all')
       expect(store.state.sidebar).toMatchInlineSnapshot(`
 {
   "insights": {
@@ -29,24 +28,24 @@ describe('sidebar module', () => {
       "policies": {
         "CircuitBreaker": 2,
         "FaultInjection": 2,
-        "HealthCheck": 7,
+        "HealthCheck": 4,
         "MeshGateway": 1,
         "MeshGatewayRoute": 1,
-        "ProxyTemplate": 2,
+        "ProxyTemplate": 1,
         "RateLimit": 0,
         "Retry": 1,
-        "Secret": 8,
+        "Secret": 6,
         "Timeout": 1,
         "TrafficLog": 1,
         "TrafficPermission": 3,
         "TrafficRoute": 1,
-        "TrafficTrace": 5,
+        "TrafficTrace": 3,
         "VirtualOutbound": 0,
       },
       "services": {
         "external": 2,
-        "internal": 4,
-        "total": 6,
+        "internal": 3,
+        "total": 5,
       },
     },
   },

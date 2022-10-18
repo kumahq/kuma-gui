@@ -11,7 +11,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
       <span
         class="kutil-sr-only"
       >
-        Data plane:
+        Data plane proxy:
       </span>
       <a>
         backend
@@ -30,7 +30,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
         Mesh:
       </span>
       <span>
-        default
+        test-mesh
       </span>
     </div>
   </section>

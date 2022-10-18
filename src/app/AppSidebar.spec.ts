@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'home',
       component: { template: 'TestComponent' },
     },
+    {
+      path: '/mesh/:mesh',
+      name: 'mesh-detail-view',
+      component: { template: 'TestComponent' },
+    },
   ],
 })
 
@@ -45,7 +50,7 @@ describe('AppSidebar.vue', () => {
   })
 
   it('refetch data after change of mesh', async () => {
-    store.state.selectedMesh = 'all'
+    store.state.selectedMesh = 'hello-world'
     store.state.meshes.total = 1
     store.state.meshes.items = [
       {
@@ -61,6 +66,6 @@ describe('AppSidebar.vue', () => {
     await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
     const node = await screen.findByText(/10/)
 
-    expect(node.parentNode).toHaveTextContent('Data planes 10')
+    expect(node.parentNode).toHaveTextContent('Data Plane Proxies 10')
   })
 })

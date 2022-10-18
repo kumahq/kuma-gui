@@ -3,7 +3,7 @@ import { ExternalService } from '@/types'
 export function createExternalService(): ExternalService {
   return {
     type: 'ExternalService',
-    mesh: 'default',
+    mesh: 'test-mesh',
     name: 'httpbin',
     creationTime: '2021-02-02T10:59:26.640498+01:00',
     modificationTime: '2021-02-02T10:59:26.640498+01:00',

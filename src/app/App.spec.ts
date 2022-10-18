@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
-import { KIcon } from '@kong/kongponents'
 
 import { store, storeKey } from '@/store/store'
 import App from './App.vue'
@@ -17,7 +16,7 @@ const router = createRouter({
   ],
 })
 
-function renderComponent({ status = 'OK' }: { status?: string }) {
+function renderComponent(status: string) {
   store.state.config.status = status
 
   return render(App, {
@@ -26,17 +25,13 @@ function renderComponent({ status = 'OK' }: { status?: string }) {
       stubs: {
         'router-link': RouterLinkStub,
       },
-      components: {
-        // TODO: Remove this once https://github.com/Kong/kongponents/pull/806 is merged and published and the library updated.
-        KIcon,
-      },
     },
   })
 }
 
 describe('App.vue', () => {
-  it('renders main view when succesful', async () => {
-    renderComponent({ status: 'OK' })
+  it('renders main view when successful', async () => {
+    renderComponent('OK')
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 
@@ -44,7 +39,7 @@ describe('App.vue', () => {
   })
 
   it('fails to renders basic view', async () => {
-    const { container } = renderComponent({ status: 'ERROR' })
+    const { container } = renderComponent('ERROR')
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 

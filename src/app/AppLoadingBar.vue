@@ -1,13 +1,15 @@
 <template>
-  <div class="loading-container">
-    <img src="@/assets/images/kuma-loader-v1.gif">
+  <div class="full-screen">
+    <div class="loading-container">
+      <img src="@/assets/images/kuma-loader-v1.gif">
 
-    <div class="progress">
-      <div
-        :style="{ width: `${progress}%` }"
-        class="progress-bar"
-        role="progressbar"
-      />
+      <div class="progress">
+        <div
+          :style="{ width: `${progress}%` }"
+          class="progress-bar"
+          role="progressbar"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -35,6 +37,19 @@ onUnmounted(function () {
 </script>
 
 <style lang="scss" scoped>
+.full-screen {
+  background: var(--white);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 50000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .loading-container {
   display: flex;
   max-width: 350px;

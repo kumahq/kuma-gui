@@ -339,7 +339,7 @@ export interface ClientConfigInterface {
   diagnostics: Diagnostics
   dnsServer: DnsServer
   dpServer: DpServer
-  environment: string
+  environment: 'universal' | 'kubernetes'
   general: General
   experimental: {}
   guiServer: GuiServer

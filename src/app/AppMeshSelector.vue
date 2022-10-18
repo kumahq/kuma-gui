@@ -1,9 +1,9 @@
 <template>
-  <div class="px-4 pb-4">
-    <div v-if="items">
-      <h3 class="menu-title uppercase">
-        Filter by Mesh:
-      </h3>
+  <div class="mesh-selector-container">
+    <label for="mesh-selector">
+      <span class="kutil-sr-only">
+        Filter by mesh:
+      </span>
 
       <select
         id="mesh-selector"
@@ -12,47 +12,37 @@
         @change="changeMesh"
       >
         <option
-          value="all"
-          :selected="'all' === store.state.selectedMesh"
+          v-for="mesh in props.meshes"
+          :key="mesh.name"
+          :value="mesh.name"
+          :selected="mesh.name === selectedMesh"
         >
-          All Meshes
-        </option>
-
-        <option
-          v-for="item in items.items"
-          :key="item.name"
-          :value="item.name"
-          :selected="item.name === store.state.selectedMesh"
-        >
-          {{ item.name }}
+          {{ mesh.name }}
         </option>
       </select>
-    </div>
-
-    <KAlert
-      v-else
-      appearance="danger"
-      alert-message="No meshes found!"
-    />
+    </label>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { computed, PropType } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { KAlert } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
+import { Mesh } from '@/types'
 
 const route = useRoute()
 const router = useRouter()
 const store = useStore()
 
-defineProps({
-  items: {
-    type: Object,
+const props = defineProps({
+  meshes: {
+    type: Array as PropType<Mesh[]>,
     required: true,
   },
 })
+
+const selectedMesh = computed(() => store.state.selectedMesh === null ? props.meshes[0].name : store.state.selectedMesh)
 
 function changeMesh(event: Event): void {
   const select = event.target as HTMLSelectElement
@@ -60,14 +50,18 @@ function changeMesh(event: Event): void {
 
   store.dispatch('updateSelectedMesh', mesh)
 
-  router.push({
-    name: route.name as string,
-    params: 'mesh' in route.params ? { mesh } : undefined,
-  })
+  const name = 'mesh' in route.params ? route.name as string : 'mesh-detail-view'
+
+  router.push({ name, params: { mesh } })
 }
 </script>
 
 <style lang="scss" scoped>
+.mesh-selector-container {
+  margin-left: var(--spacing-xs);
+  margin-top: var(--spacing-xxs);
+}
+
 .mesh-selector {
   display: block;
   width: 100%;

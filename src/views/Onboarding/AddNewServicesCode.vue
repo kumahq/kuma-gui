@@ -91,6 +91,26 @@ import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'
 
 const LONG_POOLING_INTERVAL = 1000
 
+const START_DP_CODE_DATAPLANE = {
+  type: 'Dataplane',
+  mesh: 'default',
+  name: 'example',
+  networking: {
+    address: 'localhost',
+    inbound: [
+      {
+        port: 7777,
+        servicePort: 7777,
+        serviceAddress: '127.0.0.1',
+        tags: {
+          'kuma.io/service': 'example',
+          'kuma.io/protocol': 'tcp',
+        },
+      },
+    ],
+  },
+}
+
 export default {
   name: 'AddNewServicesCode',
   components: {
@@ -109,27 +129,9 @@ export default {
       k8sRunCommand: 'kubectl apply -f https://bit.ly/3Kh2Try',
       generateDpTokenCode: 'kumactl generate dataplane-token --name=redis > kuma-token-redis',
       startDpCode: `kuma-dp run \\
-      --cp-address=${kumaDpServerUrl()} \\
-      --dataplane=${`"${json2yaml({
-    type: 'Dataplane',
-    mesh: 'default',
-    name: 'example',
-    networking: {
-      address: 'localhost',
-      inbound: [
-        {
-          port: 7777,
-          servicePort: 7777,
-          serviceAddress: '127.0.0.1',
-          tags: {
-            'kuma.io/service': 'example',
-            'kuma.io/protocol': 'tcp',
-          },
-        },
-      ],
-    },
-  })}"`} \\
-      --dataplane-token-file=kuma-token-example`,
+  --cp-address=${kumaDpServerUrl()} \\
+  --dataplane=${`"${json2yaml(START_DP_CODE_DATAPLANE)}"`} \\
+  --dataplane-token-file=kuma-token-example`,
       hasDPPs: false,
       DPPsTimeout: null,
     }
