@@ -22,12 +22,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, watch } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 
 import { useStore } from '@/store/store'
+import { poll } from '@/utils/poll'
 import AppMeshSelector from './AppMeshSelector.vue'
 import AppNavItem from './AppNavItem.vue'
 import { getNavItems } from './getNavItems'
+
+const POLLING_INTERVAL_IN_SECONDS = 2
 
 const store = useStore()
 
@@ -37,6 +40,33 @@ const meshes = computed(() => store.state.meshes.items)
 watch(() => store.state.selectedMesh, () => {
   store.dispatch('sidebar/getMeshInsights')
 })
+
+let shouldStopPolling = false
+
+onMounted(function () {
+  window.addEventListener('blur', setShouldStopPolling)
+  window.addEventListener('focus', startPolling)
+})
+
+onUnmounted(function () {
+  window.removeEventListener('blur', setShouldStopPolling)
+  window.removeEventListener('focus', startPolling)
+})
+
+startPolling()
+
+function setShouldStopPolling() {
+  shouldStopPolling = true
+}
+
+function startPolling() {
+  shouldStopPolling = false
+  poll(fetchInsights, POLLING_INTERVAL_IN_SECONDS * 1000, () => shouldStopPolling)
+}
+
+function fetchInsights() {
+  return store.dispatch('sidebar/getInsights')
+}
 </script>
 
 <style lang="scss" scoped>
