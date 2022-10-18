@@ -65,7 +65,6 @@ function startPolling() {
 }
 
 function fetchInsights() {
-  console.log('POLL!')
   return store.dispatch('sidebar/getInsights')
 }
 </script>
