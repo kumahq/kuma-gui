@@ -258,16 +258,18 @@ export const storeConfig: StoreOptions<State> = {
       try {
         const response = await Kuma.getAllMeshes(params)
 
-        response.items.sort((meshA, meshB) => {
-          // Prioritizes the mesh named “default”.
-          if (meshA.name === 'default') {
-            return -1
-          } else if (meshB.name === 'default') {
-            return 1
-          }
+        if (Array.isArray(response.items)) {
+          response.items.sort((meshA, meshB) => {
+            // Prioritizes the mesh named “default”.
+            if (meshA.name === 'default') {
+              return -1
+            } else if (meshB.name === 'default') {
+              return 1
+            }
 
-          return meshA.name.localeCompare(meshB.name)
-        })
+            return meshA.name.localeCompare(meshB.name)
+          })
+        }
 
         commit('SET_MESHES', response)
       } catch (error) {

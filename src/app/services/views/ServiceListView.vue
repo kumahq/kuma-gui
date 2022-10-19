@@ -85,17 +85,16 @@ async function loadData(offset: number): Promise<void> {
     const { items = [], next } = await Kuma.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
     nextUrl.value = next
 
-    items.sort((itemA, itemB) => {
-      if (itemA.name > itemB.name) {
-        return 1
-      } else if (itemA.name < itemB.name) {
-        return -1
-      } else {
-        return itemA.mesh.localeCompare(itemB.mesh)
-      }
-    })
-
-    if (items.length > 0) {
+    if (Array.isArray(items) && items.length > 0) {
+      items.sort((itemA, itemB) => {
+        if (itemA.name > itemB.name) {
+          return 1
+        } else if (itemA.name < itemB.name) {
+          return -1
+        } else {
+          return itemA.mesh.localeCompare(itemB.mesh)
+        }
+      })
       setActiveServiceInsight(items[0])
       tableData.value.data = items.map((item) => processItem(item))
     } else {

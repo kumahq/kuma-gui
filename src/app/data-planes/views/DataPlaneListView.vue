@@ -430,7 +430,7 @@ async function loadData(offset: number): Promise<void> {
   try {
     const { items, next } = await Kuma.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset })
 
-    if (items.length > 0) {
+    if (Array.isArray(items) && items.length > 0) {
       items.sort(function (overviewA, overviewB) {
         if (overviewA.name === overviewB.name) {
           return overviewA.mesh > overviewB.mesh ? 1 : -1
