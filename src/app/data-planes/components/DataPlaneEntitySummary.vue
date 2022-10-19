@@ -144,7 +144,7 @@ import { DataPlaneOverview, DataPlaneStatus } from '@/types'
 import { STATUS } from '@/consts'
 import { rawReadableDate } from '@/helpers'
 import EntityTag from '@/components/EntityTag/EntityTag.vue'
-import YamlView from '@/components/Skeletons/YamlView.vue'
+import YamlView from '@/app/common/YamlView.vue'
 import { dpTags, getStatus, getVersions } from '@/dataplane'
 
 const props = defineProps({

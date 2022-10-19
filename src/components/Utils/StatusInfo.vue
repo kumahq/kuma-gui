@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import EmptyBlock from '../EmptyBlock.vue'
-import ErrorBlock from '@/components/ErrorBlock.vue'
-import LoadingBlock from '@/components/LoadingBlock.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { ApiError } from '@/services/ApiError'
 
 defineProps({

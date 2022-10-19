@@ -24,8 +24,8 @@ import { computed } from 'vue'
 import { KCard } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import CodeBlock from '@/components/CodeBlock.vue'
-import LoadingBlock from '@/components/LoadingBlock.vue'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 const store = useStore()
 

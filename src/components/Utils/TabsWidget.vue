@@ -57,8 +57,8 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { KIcon, KTabs } from '@kong/kongponents'
 
 import { datadogLogEvents } from '@/datadogEvents'
-import ErrorBlock from '@/components/ErrorBlock.vue'
-import LoadingBlock from '@/components/LoadingBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 export default {
   name: 'TabsWidget',

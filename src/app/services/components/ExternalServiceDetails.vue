@@ -58,7 +58,7 @@ import { ExternalService } from '@/types'
 import { stripTimes } from '@/helpers'
 import EntityTag from '@/components/EntityTag/EntityTag.vue'
 import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
-import YamlView from '@/components/Skeletons/YamlView.vue'
+import YamlView from '@/app/common/YamlView.vue'
 
 const route = useRoute()
 

@@ -241,7 +241,7 @@ import SubscriptionDetails from '@/views/Entities/components/SubscriptionDetails
 import SubscriptionHeader from '@/views/Entities/components/SubscriptionHeader.vue'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
 import WarningsWidget from '@/views/Entities/components/WarningsWidget.vue'
-import YamlView from '@/components/Skeletons/YamlView.vue'
+import YamlView from '@/app/common/YamlView.vue'
 
 const store = useStore()
 
