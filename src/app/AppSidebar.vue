@@ -30,7 +30,7 @@ import AppMeshSelector from './AppMeshSelector.vue'
 import AppNavItem from './AppNavItem.vue'
 import { getNavItems } from './getNavItems'
 
-const POLLING_INTERVAL_IN_SECONDS = 2
+const POLLING_INTERVAL_IN_SECONDS = 10
 
 const store = useStore()
 
