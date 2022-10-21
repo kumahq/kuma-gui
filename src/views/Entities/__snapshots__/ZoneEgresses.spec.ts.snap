@@ -1317,13 +1317,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                 
                 
                 <li
-                  class="accordion-item relative border-b py-2 active"
+                  class="accordion-item relative border-b active"
                 >
                   <button
                     aria-expanded="true"
                     class="accordion-item-header"
+                    type="button"
                   >
-                    <!-- This slot will display header -->
                     
                     <h4
                       class="text-lg font-medium"
@@ -1346,7 +1346,6 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                     <div
                       class="px-4"
                     >
-                      <!-- This slot will display whole content -->
                       
                       <div>
                         <div>

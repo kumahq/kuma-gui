@@ -136,10 +136,7 @@
     </template>
 
     <template #dpp-policies>
-      <DataplanePolicies
-        :mesh="dataPlane.mesh"
-        :dpp-name="dataPlane.name"
-      />
+      <DataplanePolicies :data-plane="dataPlane" />
     </template>
 
     <template #xds-configuration>
@@ -230,9 +227,9 @@ import {
 import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/consts'
 import { stripTimes } from '@/helpers'
 import { useStore } from '@/store/store'
+import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/components/Accordion/AccordionItem.vue'
 import AccordionList from '@/components/Accordion/AccordionList.vue'
-import DataplanePolicies from '@/components/DataplanePolicies/DataplanePolicies.vue'
 import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
 import EnvoyData from '@/components/EnvoyData/EnvoyData.vue'
 import LabelList from '@/components/Utils/LabelList.vue'

@@ -4,49 +4,52 @@ import userEvent from '@testing-library/user-event'
 import AccordionList from './AccordionList.vue'
 import AccordionItem from './AccordionItem.vue'
 
-const options = {
-  slots: {
-    default: [
-      `
-        <AccordionItem>
-          <template #accordion-header>
-            Header 1
-          </template>
-
-          <template #accordion-content>
-            Content 1
-          </template>
-        </AccordionItem>
-      `,
-      `
-        <AccordionItem>
-          <template #accordion-header>
-            Header 2
-          </template>
-
-          <template #accordion-content>
-            Content 2
-          </template>
-        </AccordionItem>
-      `,
-    ],
-  },
-  global: {
-    stubs: {
-      AccordionItem,
+function renderComponent(props = {}) {
+  return render(AccordionList, {
+    global: {
+      stubs: {
+        AccordionItem,
+      },
     },
-  },
+    slots: {
+      default: [
+        `
+          <AccordionItem>
+            <template #accordion-header>
+              Header 1
+            </template>
+
+            <template #accordion-content>
+              Content 1
+            </template>
+          </AccordionItem>
+        `,
+        `
+          <AccordionItem>
+            <template #accordion-header>
+              Header 2
+            </template>
+
+            <template #accordion-content>
+              Content 2
+            </template>
+          </AccordionItem>
+        `,
+      ],
+    },
+    props,
+  })
 }
 
 describe('AccordionList.vue', () => {
   it('renders snapshot at the beginning', () => {
-    const { container } = render(AccordionList, options)
+    const { container } = renderComponent()
 
     expect(container).toMatchSnapshot()
   })
 
   it('renders with opened second panel and switch opened panel on click', async () => {
-    render(AccordionList, { ...options, props: { initiallyOpen: 1 } })
+    renderComponent({ initiallyOpen: 1 })
 
     expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
     expect(screen.getByText(/Content 2/)).toHaveStyle('display: block')
@@ -58,14 +61,17 @@ describe('AccordionList.vue', () => {
   })
 
   it('renders initally two opened accordion', async () => {
-    render(AccordionList, { ...options, props: { initiallyOpen: [0, 1], multipleOpen: true } })
+    renderComponent({
+      initiallyOpen: [0, 1],
+      multipleOpen: true,
+    })
 
     expect(screen.getByText(/Content 1/)).toHaveStyle('display: block')
     expect(screen.getByText(/Content 2/)).toHaveStyle('display: block')
   })
 
   it('renders initally two closed accordions and open it', async () => {
-    render(AccordionList, { ...options, props: { multipleOpen: true } })
+    renderComponent({ multipleOpen: true })
 
     expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
     expect(screen.queryByText(/Content 2/)).not.toBeInTheDocument()
@@ -78,7 +84,7 @@ describe('AccordionList.vue', () => {
   })
 
   it('checks keyboard accessebility', async () => {
-    render(AccordionList, { ...options, props: { multipleOpen: true } })
+    renderComponent({ multipleOpen: true })
 
     expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
 

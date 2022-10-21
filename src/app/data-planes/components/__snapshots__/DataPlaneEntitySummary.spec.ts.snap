@@ -38,40 +38,40 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
     <h4>
       Tags
     </h4>
-    <div
+    <span
       class="tag-list"
     >
       
       <span
-        class="entity-tag"
+        class="tag"
       >
         <span
-          class="entity-tag__label entity-tag__label--is-kuma-io-label"
+          class="tag__label tag__label--is-kuma-io-label"
         >
           kuma.io/protocol
         </span>
         <span
-          class="entity-tag__value"
+          class="tag__value"
         >
           http
         </span>
       </span>
       <span
-        class="entity-tag"
+        class="tag"
       >
         <span
-          class="entity-tag__label entity-tag__label--is-kuma-io-label"
+          class="tag__label tag__label--is-kuma-io-label"
         >
           kuma.io/service
         </span>
         <span
-          class="entity-tag__value"
+          class="tag__value"
         >
           backend
         </span>
       </span>
       
-    </div>
+    </span>
   </section>
   <section>
     <h4>

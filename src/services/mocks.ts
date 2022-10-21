@@ -45,9 +45,6 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['mesh-insights/kong-mania-12', () => import('./mock/responses/mesh-insights/kong-mania-12.json')],
 
   ['meshes', () => import('./mock/responses/meshes.json')],
-  ['meshes/:mesh/:policyType/:policyName/dataplanes', () => import('./mock/responses/policy-connections.json')],
-  ['meshes/:mesh/dataplanes/:dataplaneName/policies', () => import('./mock/responses/dataplane-policies.json')],
-  ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock/responses/dataplane-xds.json')],
   ['meshes/default', () => import('./mock/responses/meshes/default.json')],
   ['meshes/default/circuit-breakers', () => import('./mock/responses/meshes/default/circuit-breakers.json')],
   ['meshes/default/circuit-breakers/cb1', () => import('./mock/responses/meshes/default/circuit-breakers/cb1.json')],
@@ -57,6 +54,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/dataplanes/cluster-1.backend-02', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.backend-02.json')],
   ['meshes/default/dataplanes/cluster-1.backend-03', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.backend-03.json')],
   ['meshes/default/dataplanes/cluster-1.gateway-01', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.gateway-01.json')],
+  ['meshes/default/dataplanes/cluster-1.gateway-01/policies', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.gateway-01/policies.json')],
   ['meshes/default/dataplanes/cluster-1.ingress-02', () => import('./mock/responses/meshes/default/dataplanes/cluster-1.ingress-02.json')],
   ['meshes/default/dataplanes/dataplane-test-456', () => import('./mock/responses/meshes/default/dataplanes/dataplane-test-456.json')],
   ['meshes/default/dataplanes/db', () => import('./mock/responses/meshes/default/dataplanes/db.json')],
@@ -148,6 +146,11 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['traffic-routes', () => import('./mock/responses/traffic-routes.json')],
   ['traffic-traces', () => import('./mock/responses/traffic-traces.json')],
   ['virtual-outbounds', () => import('./mock/responses/virtual-outbounds.json')],
+
+  // Define routes with dynamic segments last so they don’t match before more specific routes.
+  ['meshes/:mesh/:policyType/:policyName/dataplanes', () => import('./mock/responses/policy-connections.json')],
+  ['meshes/:mesh/dataplanes/:dataplaneName/policies', () => import('./mock/responses/dataplane-policies.json')],
+  ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock/responses/dataplane-xds.json')],
 ]
 
 export function setupHandlers(url: string): RestHandler[] {

@@ -1,3 +1,5 @@
+import { RouteLocationRaw } from 'vue-router'
+
 export type TODO = any
 
 export type TableHeader = {
@@ -213,6 +215,89 @@ export interface DataPlaneOverview extends MeshEntity {
     networking: DataPlaneNetworking
   }
   dataplaneInsight: DataPlaneInsight
+}
+
+export interface PolicyType extends MeshEntity {
+  sources?: Array<{ match: Record<string, string> }>
+  destinations?: Array<{ match: Record<string, string> }>
+  selectors?: Array<{ match: Record<string, string> }>
+  conf?: any
+}
+
+export interface SidecarDataplane {
+  type: string
+  service: string
+  name: string
+  matchedPolicies: Record<string, PolicyType[]>
+}
+
+export type MeshGatewayDataplaneDestination = {
+  tags: {
+    'kuma.io/service': string
+  }
+  policies: Record<string, PolicyType>
+}
+
+export type MeshGatewayDataplaneRoute = {
+  route: string
+  destinations: MeshGatewayDataplaneDestination[]
+}
+
+export type MeshGatewayDataplaneHost = {
+  hostName: string
+  routes: MeshGatewayDataplaneRoute[]
+}
+
+export type MeshGatewayDataplaneListener = {
+  port: number
+  protocol: string
+  hosts: MeshGatewayDataplaneHost[]
+}
+
+export interface MeshGatewayDataplane {
+  kind: 'MeshGatewayDataplane'
+  gateway: {
+    mesh: string
+    name: string
+  }
+  listeners: MeshGatewayDataplaneListener[]
+  policies?: Record<string, PolicyType>
+}
+
+export type SidecarDataplaneMatchedPolicy = {
+  name: string
+  pluralName: string
+  policies: Array<{
+    name: string
+    route: RouteLocationRaw
+  }>
+}
+
+export type SidecarDataplanePolicy = {
+  name: string
+  type: string
+  service: string
+  matchedPolicies: SidecarDataplaneMatchedPolicy[]
+}
+
+export type MeshGatewayRoutePolicy = {
+  type: string
+  name: string
+  route: RouteLocationRaw
+}
+
+export type MeshGatewayRouteEntry = {
+  route: RouteLocationRaw
+  routeName: string
+  service: string
+  policies: MeshGatewayRoutePolicy[]
+}
+
+export type MeshGatewayListenerEntry = {
+  protocol: string
+  port: number
+  hostName: string
+  routeEntries: MeshGatewayRouteEntry[]
 }
 
 /**

@@ -12,3 +12,9 @@ export type ApiListResponse<ResourceType> = {
   total: number
   next: string | null
 }
+
+export type ApiKindListResponse<ResourceType> = {
+  items: ResourceType[]
+  total: number
+  kind: string
+}

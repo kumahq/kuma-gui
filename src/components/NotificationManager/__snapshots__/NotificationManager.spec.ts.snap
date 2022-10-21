@@ -56,13 +56,13 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
             
             
             <li
-              class="accordion-item relative border-b py-2"
+              class="accordion-item relative border-b"
             >
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                type="button"
               >
-                <!-- This slot will display header -->
                 
                 <div
                   class="flex items-center"
@@ -151,13 +151,13 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="accordion-item relative border-b py-2"
+              class="accordion-item relative border-b"
             >
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                type="button"
               >
-                <!-- This slot will display header -->
                 
                 <div
                   class="flex items-center"
@@ -246,13 +246,13 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="accordion-item relative border-b py-2"
+              class="accordion-item relative border-b"
             >
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                type="button"
               >
-                <!-- This slot will display header -->
                 
                 <div
                   class="flex items-center"
@@ -341,13 +341,13 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="accordion-item relative border-b py-2"
+              class="accordion-item relative border-b"
             >
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                type="button"
               >
-                <!-- This slot will display header -->
                 
                 <div
                   class="flex items-center"

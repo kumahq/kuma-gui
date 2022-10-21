@@ -1,15 +1,17 @@
 import { RestClient } from '@/services/RestClient'
-import { ApiListResponse } from '@/api'
+import { ApiListResponse, ApiKindListResponse } from '@/api'
 import {
   DataPlane,
   DataPlaneOverview,
   ExternalService,
   Info,
   Mesh,
+  MeshGatewayDataplane,
   MeshInsight,
   PolicyDefinition,
   PolicyEntity,
   ServiceInsight,
+  SidecarDataplane,
   Zone,
   ZoneOverview,
 } from '@/types'
@@ -167,8 +169,12 @@ class Kuma {
     return this.client.get(`meshes/${mesh}/dataplanes+insights/${name}`, { params })
   }
 
-  public getDataplanePolicies({ mesh, dppName }: { mesh: string; dppName: string }, params?: any) {
-    return this.client.get(`meshes/${mesh}/dataplanes/${dppName}/policies`, { params })
+  public getSidecarDataplanePolicies({ mesh, name }: { mesh: string; name: string }, params?: any): Promise<ApiKindListResponse<SidecarDataplane>> {
+    return this.client.get(`meshes/${mesh}/dataplanes/${name}/policies`, { params })
+  }
+
+  public getMeshGatewayDataplane({ mesh, name }: { mesh: string; name: string }, params?: any): Promise<MeshGatewayDataplane> {
+    return this.client.get(`meshes/${mesh}/dataplanes/${name}/policies`, { params })
   }
 
   /**

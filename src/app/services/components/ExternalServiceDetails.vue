@@ -33,13 +33,7 @@
     <section v-if="tags.length > 0">
       <h4>Tags</h4>
 
-      <div class="tag-list">
-        <EntityTag
-          v-for="(tag, index) in tags"
-          :key="index"
-          :tag="tag"
-        />
-      </div>
+      <TagList :tags="tags" />
     </section>
 
     <YamlView
@@ -56,7 +50,7 @@ import { useRoute } from 'vue-router'
 
 import { ExternalService } from '@/types'
 import { stripTimes } from '@/helpers'
-import EntityTag from '@/components/EntityTag/EntityTag.vue'
+import TagList from '@/app/common/TagList.vue'
 import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
 import YamlView from '@/app/common/YamlView.vue'
 
@@ -108,12 +102,6 @@ h4 {
   display: grid;
   grid-template-columns: 10ch 1fr;
   grid-gap: var(--spacing-md);
-}
-
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xxs);
 }
 
 .status::before {
