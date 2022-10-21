@@ -78,20 +78,14 @@ describe('highlightElement', () => {
     const preElement = document.createElement('pre')
     const codeElement = document.createElement('code')
     preElement.appendChild(codeElement)
-    codeElement.innerHTML = code
 
-    highlightElement(preElement, codeElement, language)
+    highlightElement(preElement, codeElement, code, language)
 
-    expect(preElement.classList.contains('line-numbers')).toBe(true)
     expect(preElement.classList.contains(`language-${language}`)).toBe(true)
     expect(codeElement.classList.contains(`language-${language}`)).toBe(true)
 
     // Verifies that the Prism syntax highlighting is working
     const token = codeElement.querySelector(expectedSelector)
     expect(token instanceof HTMLElement).toBe(true)
-
-    // Verifies that the Prism line number plugin is working
-    const lineNumberWrapper = codeElement.querySelector('.line-numbers-rows')
-    expect(lineNumberWrapper instanceof HTMLElement).toBe(true)
   })
 })

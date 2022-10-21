@@ -20,7 +20,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
           
           <button
             class="medium rounded primary k-button refresh-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -224,20 +224,20 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
                 
                 <button
                   class="small rounded outline k-button"
-                  data-v-6bcbf05d=""
+                  data-v-6f773baa=""
                   type="button"
                 >
                   
                   <span
                     class="k-button-icon kong-icon-copy kong-icon"
-                    data-v-6bcbf05d=""
+                    data-v-6f773baa=""
                     data-v-71cfcfc4=""
                   >
                     <svg
@@ -274,13 +274,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -288,7 +288,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                     >
                       
                       <p>
@@ -553,7 +553,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
           
           <button
             class="medium rounded primary k-button refresh-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -757,20 +757,20 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
                 
                 <button
                   class="small rounded outline k-button"
-                  data-v-6bcbf05d=""
+                  data-v-6f773baa=""
                   type="button"
                 >
                   
                   <span
                     class="k-button-icon kong-icon-copy kong-icon"
-                    data-v-6bcbf05d=""
+                    data-v-6f773baa=""
                     data-v-71cfcfc4=""
                   >
                     <svg
@@ -807,13 +807,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -821,7 +821,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                     >
                       
                       <p>
@@ -1087,20 +1087,20 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
         
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          data-v-814c880a=""
+          data-v-86245c6c=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
           
           <button
             class="small rounded outline k-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
             <span
               class="k-button-icon kong-icon-copy kong-icon"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               data-v-71cfcfc4=""
             >
               <svg
@@ -1137,13 +1137,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-814c880a=""
+            data-v-86245c6c=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-814c880a=""
+              data-v-86245c6c=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -1151,7 +1151,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-814c880a=""
+                data-v-86245c6c=""
               >
                 
                 <p>

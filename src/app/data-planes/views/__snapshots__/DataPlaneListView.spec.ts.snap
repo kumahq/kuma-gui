@@ -59,7 +59,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
           <div
             aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             data-testid="k-dropdown-menu-popover"
-            data-v-814c880a=""
+            data-v-86245c6c=""
             data-v-886117c8=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             role="button"
@@ -78,14 +78,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                 <button
                   class="medium rounded outline k-button k-dropdown-btn"
                   data-testid="k-dropdown-btn"
-                  data-v-6bcbf05d=""
+                  data-v-6f773baa=""
                   data-v-886117c8=""
                   type="button"
                 >
                   
                   <span
                     class="k-button-icon kong-icon-cogwheel kong-icon"
-                    data-v-6bcbf05d=""
+                    data-v-6f773baa=""
                     data-v-71cfcfc4=""
                   >
                     <svg
@@ -126,13 +126,13 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
             <transition-stub
               appear="false"
               css="true"
-              data-v-814c880a=""
+              data-v-86245c6c=""
               name="fade"
               persisted="false"
             >
               <div
                 class="k-dropdown-popover mt-1 undefined hide-caret k-popover"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="region"
                 style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -140,7 +140,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                 <!---->
                 <div
                   class="k-popover-content"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                 >
                   
                   <ul
@@ -416,7 +416,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
         <a
           class="medium rounded primary k-button add-dp-button"
           data-testid="data-plane-create-data-plane-button"
-          data-v-6bcbf05d=""
+          data-v-6f773baa=""
           type="button"
         >
           
@@ -436,7 +436,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
         
         <button
           class="medium rounded primary k-button refresh-button"
-          data-v-6bcbf05d=""
+          data-v-6f773baa=""
           type="button"
         >
           
@@ -770,7 +770,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -907,7 +907,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1044,7 +1044,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1181,7 +1181,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1318,7 +1318,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1455,7 +1455,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1592,7 +1592,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1729,7 +1729,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -1905,7 +1905,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -2042,7 +2042,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        data-v-6bcbf05d=""
+                        data-v-6f773baa=""
                         type="button"
                       >
                         
@@ -2097,7 +2097,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
             <!--v-if-->
             <button
               class="medium rounded primary k-button"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               type="button"
             >
               
@@ -2478,99 +2478,568 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
               >
                 
                 <div
-                  class="code-block"
+                  class="k-code-block code-block"
+                  data-testid="k-code-block"
+                  data-v-254017d9=""
+                  id="code-block-data-plane-summary"
+                  style="--maxLineNumberWidth: 2ch; --KCodeBlockMaxHeight: 250px;"
                   tabindex="0"
                 >
-                  <!--v-if-->
+                  <!---->
                   <div
-                    class="code-block__content"
+                    class="k-code-block-content"
+                    data-v-254017d9=""
                   >
-                    <!-- eslint-disable vue/no-v-html -->
                     <pre
-                      class="highlighted-code-block"
-                      data-testid="highlighted-code-block"
-                      style="--code-max-height: 250px;"
+                      class="k-highlighted-code-block language-yaml"
+                      data-testid="k-code-block-highlighted-code-block"
+                      data-v-254017d9=""
+                      tabindex="0"
                     >
-                      <code />
-                    </pre>
-                    <!-- eslint-enable vue/no-v-html -->
-                    
-                    <div
-                      aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                      data-v-814c880a=""
-                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                      role="button"
-                    >
-                      
-                      <button
-                        class="code-block__copy-button"
-                        type="button"
+                      <span
+                        class="k-line-number-rows"
+                        data-v-254017d9=""
+                      >
+                        
+        
+                        
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L1"
+                          >
+                            1
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L2"
+                          >
+                            2
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L3"
+                          >
+                            3
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L4"
+                          >
+                            4
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L5"
+                          >
+                            5
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L6"
+                          >
+                            6
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L7"
+                          >
+                            7
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L8"
+                          >
+                            8
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L9"
+                          >
+                            9
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L10"
+                          >
+                            10
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L11"
+                          >
+                            11
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L12"
+                          >
+                            12
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L13"
+                          >
+                            13
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L14"
+                          >
+                            14
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L15"
+                          >
+                            15
+                          </a>
+                          
+        
+                        </span>
+                        <span
+                          class="k-line"
+                          data-v-254017d9=""
+                        >
+                          
+          
+                          <a
+                            class="k-line-anchor"
+                            data-v-254017d9=""
+                            id="code-block-data-plane-summary-L16"
+                          >
+                            16
+                          </a>
+                          
+        
+                        </span>
+                        
+                        
+      
+                      </span>
+                      <code
+                        class="language-yaml"
+                        data-v-254017d9=""
                       >
                         <span
-                          class="kong-icon-copy kong-icon"
-                          data-v-71cfcfc4=""
+                          class="token key atrule"
                         >
-                          <svg
-                            height="24"
-                            role="img"
-                            viewBox="0 0 32 32"
-                            width="24"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Copy
-                            </title>
-                            
-  
-                            <path
-                              d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                              fill="var(--blue-500)"
-                            />
-                            
+                          type
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         Dataplane
 
-                          </svg>
+                        <span
+                          class="token key atrule"
+                        >
+                          name
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         backend
+
+                        <span
+                          class="token key atrule"
+                        >
+                          mesh
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         default
+
+                        <span
+                          class="token key atrule"
+                        >
+                          networking
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+  
+                        <span
+                          class="token key atrule"
+                        >
+                          address
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         127.0.0.1
+  
+                        <span
+                          class="token key atrule"
+                        >
+                          inbound
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+    
+                        <span
+                          class="token punctuation"
+                        >
+                          -
+                        </span>
+                         
+                        <span
+                          class="token key atrule"
+                        >
+                          port
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+                        <span
+                          class="token number"
+                        >
+                          7776
+                        </span>
+                        
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          servicePort
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+                        <span
+                          class="token number"
+                        >
+                          7777
+                        </span>
+                        
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          serviceAddress
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         127.0.0.1
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          tags
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+        
+                        <span
+                          class="token key atrule"
+                        >
+                          kuma.io/protocol
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         http
+        
+                        <span
+                          class="token key atrule"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         backend
+  
+                        <span
+                          class="token key atrule"
+                        >
+                          outbound
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+    
+                        <span
+                          class="token punctuation"
+                        >
+                          -
+                        </span>
+                         
+                        <span
+                          class="token key atrule"
+                        >
+                          port
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+                        <span
+                          class="token number"
+                        >
+                          10001
+                        </span>
+                        
+      
+                        <span
+                          class="token key atrule"
+                        >
+                          tags
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         
+        
+                        <span
+                          class="token key atrule"
+                        >
+                          kuma.io/service
+                        </span>
+                        <span
+                          class="token punctuation"
+                        >
+                          :
+                        </span>
+                         frontend
+                      </code>
+                    </pre>
+                    <button
+                      class="small outline k-button k-code-block-copy-button"
+                      data-testid="k-code-block-copy-button"
+                      data-v-254017d9=""
+                      data-v-6f773baa=""
+                      title="Copy (Alt+C)"
+                      type="button"
+                    >
+                      
+                      <!---->
+                      
+                      
+                      <span
+                        class="kong-icon-copy kong-icon"
+                        data-v-254017d9=""
+                        data-v-71cfcfc4=""
+                      >
+                        <svg
+                          height="16"
+                          role="img"
+                          viewBox="0 0 32 32"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          
+  
+                          <title>
+                            Copy (Alt+C)
+                          </title>
+                          
+  
+                          <path
+                            d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                            fill="currentColor"
+                          />
                           
 
-                        </span>
-                        <span
-                          class="kutil-sr-only"
-                        >
-                          Copy
-                        </span>
-                      </button>
-                      
-                      <transition-stub
-                        appear="false"
-                        css="true"
-                        data-v-814c880a=""
-                        name="fade"
-                        persisted="false"
+                        </svg>
+                        
+
+                      </span>
+                      <span
+                        class="k-visually-hidden"
+                        data-v-254017d9=""
                       >
-                        <div
-                          class="k-popover"
-                          data-v-814c880a=""
-                          id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                          role="region"
-                          style="width: 200px; max-width: 350px; max-height: auto; display: none;"
-                        >
-                          <!---->
-                          <div
-                            class="k-popover-content"
-                            data-v-814c880a=""
-                          >
-                            
-                            <p>
-                              Code copied to clipboard
-                            </p>
-                            
-                          </div>
-                          <!---->
-                        </div>
-                      </transition-stub>
-                    </div>
-                    
+                        Copy
+                      </span>
+                      
+                      <!---->
+                    </button>
                   </div>
                 </div>
                 

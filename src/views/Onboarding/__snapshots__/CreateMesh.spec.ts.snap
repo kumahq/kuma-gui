@@ -179,7 +179,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       >
         <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-6bcbf05d=""
+          data-v-6f773baa=""
           type="button"
         >
           onboarding-multi-zone
@@ -187,7 +187,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -203,7 +203,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               type="button"
             >
               onboarding-add-services

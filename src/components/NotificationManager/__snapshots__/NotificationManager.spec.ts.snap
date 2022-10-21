@@ -448,7 +448,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
           <button
             class="medium rounded outline k-button"
             data-testid="close-modal-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -501,7 +501,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
           <button
             class="medium rounded outline k-button"
             data-testid="open-modal-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             

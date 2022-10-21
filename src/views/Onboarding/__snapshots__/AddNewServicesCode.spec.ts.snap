@@ -39,97 +39,107 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               Clone the GitHub repository for the demo application:
             </p>
             <div
-              class="code-block"
+              class="k-code-block code-block"
+              data-testid="k-code-block"
+              data-v-254017d9=""
+              id="code-block-clone-command"
+              style="--maxLineNumberWidth: 1ch;"
               tabindex="0"
             >
-              <!--v-if-->
+              <!---->
               <div
-                class="code-block__content"
+                class="k-code-block-content"
+                data-v-254017d9=""
               >
-                <!-- eslint-disable vue/no-v-html -->
                 <pre
-                  class="highlighted-code-block"
-                  data-testid="highlighted-code-block"
+                  class="k-highlighted-code-block language-bash"
+                  data-testid="k-code-block-highlighted-code-block"
+                  data-v-254017d9=""
+                  tabindex="0"
                 >
-                  <code />
+                  <span
+                    class="k-line-number-rows"
+                    data-v-254017d9=""
+                  >
+                    
+        
+                    
+                    <span
+                      class="k-line"
+                      data-v-254017d9=""
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        data-v-254017d9=""
+                        id="code-block-clone-command-L1"
+                      >
+                        1
+                      </a>
+                      
+        
+                    </span>
+                    
+                    
+      
+                  </span>
+                  <code
+                    class="language-bash"
+                    data-v-254017d9=""
+                  >
+                    https://github.com/kumahq/kuma-counter-demo/
+                  </code>
                 </pre>
-                <!-- eslint-enable vue/no-v-html -->
-                
-                <div
-                  aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  role="button"
+                <button
+                  class="small outline k-button k-code-block-copy-button"
+                  data-testid="k-code-block-copy-button"
+                  data-v-254017d9=""
+                  data-v-6f773baa=""
+                  title="Copy (Alt+C)"
+                  type="button"
                 >
                   
-                  <button
-                    class="code-block__copy-button"
-                    type="button"
+                  <!---->
+                  
+                  
+                  <span
+                    class="kong-icon-copy kong-icon"
+                    data-v-254017d9=""
+                    data-v-71cfcfc4=""
                   >
-                    <span
-                      class="kong-icon-copy kong-icon"
-                      data-v-71cfcfc4=""
+                    <svg
+                      height="16"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        height="16"
-                        viewBox="0 0 32 32"
-                        width="16"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        
+                      
   
-                        <title>
-                          Copy
-                        </title>
-                        
+                      <title>
+                        Copy
+                      </title>
+                      
   
-                        <path
-                          d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                          fill="#A3BBCC"
-                        />
-                        
-
-                      </svg>
+                      <path
+                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                        fill="#A3BBCC"
+                      />
                       
 
-                    </span>
-                    <span
-                      class="kutil-sr-only"
-                    >
-                      Copy
-                    </span>
-                  </button>
-                  
-                  <transition-stub
-                    appear="false"
-                    css="true"
-                    data-v-814c880a=""
-                    name="fade"
-                    persisted="false"
+                    </svg>
+                    
+
+                  </span>
+                  <span
+                    class="k-visually-hidden"
+                    data-v-254017d9=""
                   >
-                    <div
-                      class="k-popover"
-                      data-v-814c880a=""
-                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                      role="region"
-                      style="width: 200px; max-width: 350px; max-height: auto; display: none;"
-                    >
-                      <!---->
-                      <div
-                        class="k-popover-content"
-                        data-v-814c880a=""
-                      >
-                        
-                        <p>
-                          Code copied to clipboard
-                        </p>
-                        
-                      </div>
-                      <!---->
-                    </div>
-                  </transition-stub>
-                </div>
-                
+                    Copy
+                  </span>
+                  
+                  <!---->
+                </button>
               </div>
             </div>
             <section
@@ -223,7 +233,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
       >
         <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-6bcbf05d=""
+          data-v-6f773baa=""
           type="button"
         >
           
@@ -237,7 +247,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -253,7 +263,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               disabled="true"
               type="button"
             >

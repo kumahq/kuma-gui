@@ -41,7 +41,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
   >
     <button
       class="medium rounded primary k-button"
-      data-v-6bcbf05d=""
+      data-v-6f773baa=""
       type="button"
     >
       
@@ -54,7 +54,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     </button>
     <button
       class="medium rounded primary k-button"
-      data-v-6bcbf05d=""
+      data-v-6f773baa=""
       type="button"
     >
       
