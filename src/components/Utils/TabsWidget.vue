@@ -3,141 +3,119 @@
     class="tab-container"
     data-testid="tab-container"
   >
-    <header
-      v-if="$slots.tabHeader && isReady"
-      class="tab__header"
-    >
-      <slot name="tabHeader" />
-    </header>
+    <LoadingBlock v-if="isLoading" />
 
-    <div class="tab__content-container">
-      <KTabs
-        v-if="isReady"
-        v-model="tabState"
-        :tabs="tabs"
-        @changed="hash => switchTab(hash)"
+    <ErrorBlock
+      v-else-if="error !== null"
+      :error="error"
+    />
+
+    <template v-else>
+      <header
+        v-if="$slots.tabHeader"
+        class="tab__header"
       >
-        <template
-          v-for="tab in tabsSlots"
-          #[tab]
+        <slot name="tabHeader" />
+      </header>
+
+      <div class="tab__content-container">
+        <KTabs
+          v-model="tabState"
+          :tabs="tabs"
+          @changed="hash => switchTab(hash)"
         >
-          <slot :name="tab" />
-        </template>
+          <template
+            v-for="tab in tabsSlots"
+            #[tab]
+          >
+            <slot :name="tab" />
+          </template>
 
-        <template #warnings-anchor>
-          <span class="flex items-center with-warnings">
-            <KIcon
-              class="mr-1"
-              icon="warning"
-              color="var(--black-75)"
-              secondary-color="var(--yellow-300)"
-              size="16"
-            />
-            <span>
-              Warnings
+          <template #warnings-anchor>
+            <span class="flex items-center with-warnings">
+              <KIcon
+                class="mr-1"
+                icon="warning"
+                color="var(--black-75)"
+                secondary-color="var(--yellow-300)"
+                size="16"
+              />
+
+              <span>Warnings</span>
             </span>
-          </span>
-        </template>
-      </KTabs>
-
-      <div v-if="loaders === true">
-        <LoadingBlock v-if="isLoading" />
-
-        <ErrorBlock
-          v-else-if="hasError"
-          :error="error"
-        />
+          </template>
+        </KTabs>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
 import { KIcon, KTabs } from '@kong/kongponents'
 
 import { datadogLogEvents } from '@/datadogEvents'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { computed, PropType, ref } from 'vue'
 
-export default {
-  name: 'TabsWidget',
-
-  components: {
-    ErrorBlock,
-    LoadingBlock,
-    KIcon,
-    KTabs,
+const props = defineProps({
+  tabs: {
+    type: Array as PropType<Array<{ hash: string, title: string }>>,
+    required: true,
   },
 
-  props: {
-    loaders: {
-      type: Boolean,
-      default: true,
-    },
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-    isEmpty: {
-      type: Boolean,
-      default: false,
-    },
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-    error: {
-      type: Object,
-      required: false,
-      default: null,
-    },
-    tabs: {
-      type: Array,
-      required: true,
-    },
-    hasBorder: {
-      type: Boolean,
-      default: false,
-    },
-    initialTabOverride: {
-      type: String,
-      default: null,
-    },
+  isLoading: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  emits: ['on-tab-change'],
-
-  data() {
-    return {
-      tabState: this.initialTabOverride && `#${this.initialTabOverride}`,
-    }
+  isEmpty: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  computed: {
-    tabsSlots() {
-      return this.tabs.map((tab) => tab.hash.replace('#', ''))
-    },
-
-    isReady() {
-      if (this.loaders !== false) {
-        return !this.isEmpty && !this.hasError && !this.isLoading
-      } else {
-        return true
-      }
-    },
+  hasError: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  methods: {
-    switchTab(newTab) {
-      datadogLogs.logger.info(datadogLogEvents.TABS_TAB_CHANGE, {
-        data: {
-          newTab,
-        },
-      })
-      this.$emit('on-tab-change', newTab)
-    },
+  error: {
+    type: [Error, null] as PropType<Error | null>,
+    required: false,
+    default: null,
   },
+
+  hasBorder: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  initialTabOverride: {
+    type: String,
+    required: false,
+    default: null,
+  },
+})
+
+const emit = defineEmits(['on-tab-change'])
+
+const tabState = ref(props.initialTabOverride && `#${props.initialTabOverride}`)
+
+const tabsSlots = computed(() => props.tabs.map((tab) => tab.hash.replace('#', '')))
+
+function switchTab(newTab: string): void {
+  datadogLogs.logger.info(datadogLogEvents.TABS_TAB_CHANGE, {
+    data: {
+      newTab,
+    },
+  })
+
+  emit('on-tab-change', newTab)
 }
 </script>
 

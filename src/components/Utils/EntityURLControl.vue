@@ -19,49 +19,45 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { KClipboardProvider, KPop, KButton } from '@kong/kongponents'
 
-export default {
-  name: 'EntityURLControl',
+const route = useRoute()
+const router = useRouter()
 
-  components: {
-    KClipboardProvider,
-    KPop,
-    KButton,
+const props = defineProps({
+  name: {
+    type: String,
+    required: false,
+    default: '',
   },
 
-  props: {
-    name: {
-      type: String,
-      default: '',
-    },
-    mesh: {
-      type: String,
-      default: '',
-    },
-    route: {
-      type: Object,
-      required: false,
-      default: null,
-    },
+  mesh: {
+    type: String,
+    required: false,
+    default: '',
   },
-  computed: {
-    shareUrl() {
-      const urlRoot = `${window.location.href.replace(window.location.hash, '')}#`
 
-      const route = this.route !== null
-        ? this.route
-        : {
-          name: this.$route.name,
-          params: { mesh: this.mesh },
-          query: { ns: this.name },
-        }
-
-      const { fullPath } = this.$router.resolve(route)
-
-      return `${urlRoot}${fullPath}`
-    },
+  route: {
+    type: Object,
+    required: false,
+    default: null,
   },
-}
+})
+
+const shareUrl = computed(() => {
+  const urlRoot = `${window.location.href.replace(window.location.hash, '')}#`
+  const shareRoute = props.route !== null
+    ? props.route
+    : {
+      name: route.name,
+      params: { mesh: props.mesh },
+      query: { ns: props.name },
+    }
+  const resolvedRoute = router.resolve(shareRoute)
+
+  return `${urlRoot}${resolvedRoute.fullPath}`
+})
 </script>

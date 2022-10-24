@@ -12,11 +12,17 @@
   font-size: var(--type-xl);
 }
 
-a:link, a:visited {
-  color: var(--LinkColorBase);
+a[href] {
   text-decoration: underline;
 }
 
-a:hover, a:active, a:focus {
+a:link,
+a:visited {
+  color: var(--LinkColorBase);
+}
+
+a:hover,
+a:active,
+a:focus {
   color: var(--LinkColorHover);
 }

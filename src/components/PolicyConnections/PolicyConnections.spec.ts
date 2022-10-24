@@ -2,7 +2,6 @@ import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
-import { KCard, KEmptyState, KIcon } from '@kong/kongponents'
 
 import PolicyConnections from './PolicyConnections.vue'
 import { server } from '@/jest-setup'
@@ -10,11 +9,6 @@ import { server } from '@/jest-setup'
 function renderComponent(props = {}) {
   return render(PolicyConnections, {
     global: {
-      components: {
-        KCard,
-        KEmptyState,
-        KIcon,
-      },
       stubs: {
         'router-link': RouterLinkStub,
       },

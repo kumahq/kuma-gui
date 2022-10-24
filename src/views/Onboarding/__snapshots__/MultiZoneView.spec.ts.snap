@@ -135,7 +135,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       >
         <router-link
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-6bcbf05d=""
+          data-v-6f773baa=""
           to="[object Object]"
           type="button"
         >
@@ -150,7 +150,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -166,7 +166,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           >
             <router-link
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               disabled="true"
               to="[object Object]"
               type="button"

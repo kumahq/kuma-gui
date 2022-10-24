@@ -33,7 +33,7 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
           <div>
             <router-link
               class="small rounded primary k-button action-button"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               to="[object Object]"
               type="button"
             >

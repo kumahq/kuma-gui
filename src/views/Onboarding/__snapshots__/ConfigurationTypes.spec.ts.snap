@@ -162,7 +162,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -194,25 +194,25 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                 >
                   <foreignobject
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-814c880a=""
+                          data-v-86245c6c=""
                         >
                           
                           Yaml
@@ -222,7 +222,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                          Configuration for all Kuma resources is specified in YAML config files. The config files can be stored in an external datastore. 
@@ -235,7 +235,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -267,25 +267,25 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                 >
                   <foreignobject
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-814c880a=""
+                          data-v-86245c6c=""
                         >
                           
                           Kuma
@@ -295,7 +295,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                          In Kubernetes mode, the Kuma control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh. 
@@ -308,7 +308,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               <g
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -340,25 +340,25 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                 </g>
                 
                 <div
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                 >
                   <foreignobject
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                     >
                       <div
                         class="k-popover-header d-flex"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         <div
                           class="k-popover-title"
-                          data-v-814c880a=""
+                          data-v-86245c6c=""
                         >
                           
                           Kubernetes
@@ -368,7 +368,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                       </div>
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                          You can store the YAML config files for Kuma in etcd, the native datastore for Kubernetes. 
@@ -916,11 +916,11 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           >
             <label
               class="k-radio"
-              data-v-5a01184a=""
+              data-v-37af04dc=""
             >
               <input
                 class="k-input"
-                data-v-5a01184a=""
+                data-v-37af04dc=""
                 name="deployment"
                 type="radio"
               />
@@ -930,11 +930,11 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             </label>
             <label
               class="k-radio"
-              data-v-5a01184a=""
+              data-v-37af04dc=""
             >
               <input
                 class="k-input"
-                data-v-5a01184a=""
+                data-v-37af04dc=""
                 name="deployment"
                 type="radio"
               />
@@ -944,11 +944,11 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             </label>
             <label
               class="k-radio"
-              data-v-5a01184a=""
+              data-v-37af04dc=""
             >
               <input
                 class="k-input"
-                data-v-5a01184a=""
+                data-v-37af04dc=""
                 name="deployment"
                 type="radio"
               />
@@ -966,7 +966,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
       >
         <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
-          data-v-6bcbf05d=""
+          data-v-6f773baa=""
           type="button"
         >
           onboarding-deployment-types
@@ -974,7 +974,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -990,7 +990,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               type="button"
             >
               onboarding-create-mesh

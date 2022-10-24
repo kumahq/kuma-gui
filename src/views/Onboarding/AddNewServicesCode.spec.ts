@@ -1,18 +1,15 @@
-import { createStore } from 'vuex'
 import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import { KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
 import Kuma from '@/services/kuma'
-import { storeConfig } from '@/store/index'
-
-const store = createStore(storeConfig)
+import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
   return render(AddNewServicesCode, {
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
         KCard,

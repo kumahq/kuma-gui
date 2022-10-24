@@ -22,7 +22,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
           
           <button
             class="medium rounded primary k-button refresh-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
@@ -722,6 +722,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
         class="tab-container"
         data-testid="tab-container"
       >
+        
         <header
           class="tab__header"
         >
@@ -738,20 +739,20 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-814c880a=""
+                data-v-86245c6c=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
                 
                 <button
                   class="small rounded outline k-button"
-                  data-v-6bcbf05d=""
+                  data-v-6f773baa=""
                   type="button"
                 >
                   
                   <span
                     class="k-button-icon kong-icon-copy kong-icon"
-                    data-v-6bcbf05d=""
+                    data-v-6f773baa=""
                     data-v-71cfcfc4=""
                   >
                     <svg
@@ -788,13 +789,13 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -802,7 +803,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                     >
                       
                       <p>
@@ -972,7 +973,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
 
                     </span>
                     <span>
-                       Warnings 
+                      Warnings
                     </span>
                   </span>
                   
@@ -1090,10 +1091,8 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
             </div>
             
           </div>
-          <div>
-            <!--v-if-->
-          </div>
         </div>
+        
       </div>
       
     </div>
@@ -1107,240 +1106,98 @@ exports[`ZonesView.vue renders snapshot when no multizone 1`] = `
   <div
     class="zones"
   >
-    
-    <!-- Zone CPs information for when Multicluster is enabled -->
-    <div
-      class="component-frame"
+    <section
+      class="empty-state-wrapper"
+      data-v-5b55eb64=""
     >
-      
       <div
-        class="data-overview"
-        data-testid="data-overview"
+        class="empty-state-title"
+        data-v-5b55eb64=""
       >
+        <!---->
         <div
-          class="data-table-controls mb-2"
+          class="k-empty-state-title-header mt-4 mb-4"
+          data-v-5b55eb64=""
         >
           
+          <span
+            class="kong-icon--centered kong-icon-dangerCircleOutline kong-icon"
+            data-v-71cfcfc4=""
+          >
+            <svg
+              fill="none"
+              height="16"
+              viewBox="0 0 17 17"
+              width="16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              
+  
+              <title>
+                Danger
+              </title>
+              
+  
+              <path
+                clip-rule="evenodd"
+                d="M16.5 8a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0zm-7-3.5A.5.5 0 018 4h1a.5.5 0 01.5.5v4A.5.5 0 019 9H8a.5.5 0 01-.5-.5v-4zM8 10a.5.5 0 00-.5.5v1a.5.5 0 00.5.5h1a.5.5 0 00.5-.5v-1A.5.5 0 009 10H8z"
+                fill="#A3BBCC"
+                fill-rule="evenodd"
+              />
+              
+
+            </svg>
+            
+
+          </span>
+          <p>
+            Kuma is running in Standalone mode.
+          </p>
           
-          <button
-            class="medium rounded primary k-button refresh-button"
-            data-v-6bcbf05d=""
-            disabled=""
+        </div>
+      </div>
+      <div
+        class="empty-state-content"
+        data-v-5b55eb64=""
+      >
+        <div
+          class="k-empty-state-message mb-6"
+          data-v-5b55eb64=""
+        >
+          
+          <p>
+             To access this page, you must be running in 
+            <strong>
+              Multi-Zone
+            </strong>
+             mode. 
+          </p>
+          
+        </div>
+        <div
+          class="k-empty-state-cta"
+          data-v-5b55eb64=""
+        >
+          
+          <a
+            class="medium rounded primary k-button"
+            data-v-6f773baa=""
+            href="https://kuma.io/docs/latest/documentation/deployments/"
+            target="_blank"
             type="button"
           >
             
             <!---->
             
             
-            <span
-              class="refresh-icon custom-control-icon is-spinning"
-            >
-              <svg
-                viewBox="0 0 36 36"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g
-                  fill="#fff"
-                  fill-rule="nonzero"
-                >
-                  <path
-                    d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
-                  />
-                </g>
-              </svg>
-            </span>
-            <span>
-              Refresh
-            </span>
+             Learn More 
             
             <!---->
-          </button>
-        </div>
-        <section
-          class="empty-state-wrapper"
-          data-testid="loading-block"
-          data-v-5b55eb64=""
-        >
-          <div
-            class="empty-state-title"
-            data-v-5b55eb64=""
-          >
-            <!---->
-            <div
-              class="k-empty-state-title-header mt-4 mb-4"
-              data-v-5b55eb64=""
-            >
-              
-              <div
-                class="card-icon mb-3"
-              >
-                <span
-                  class="kong-icon-spinner kong-icon"
-                  data-v-71cfcfc4=""
-                >
-                  <svg
-                    fill="none"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    
-  
-                    <title>
-                      Loading
-                    </title>
-                    
-  
-                    <g>
-                      
-    
-                      <path
-                        d="M5 10a5 5 0 1 0 5-5"
-                        fill="none"
-                        stroke="#A3BBCC"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                      />
-                      
-  
-                    </g>
-                    
-
-                  </svg>
-                  
-
-                </span>
-              </div>
-              
-              <p>
-                Loading data …
-              </p>
-              
-              
-            </div>
-          </div>
-          <div
-            class="empty-state-content"
-            data-v-5b55eb64=""
-          >
-            <div
-              class="k-empty-state-message mb-6"
-              data-v-5b55eb64=""
-            >
-              
-              
-            </div>
-            <div
-              class="k-empty-state-cta"
-              data-v-5b55eb64=""
-            >
-              
-              <!---->
-              
-            </div>
-          </div>
-        </section>
-      </div>
-      <div
-        class="tab-container"
-        data-testid="tab-container"
-      >
-        <!--v-if-->
-        <div
-          class="tab__content-container"
-        >
-          <!--v-if-->
-          <div>
-            <section
-              class="empty-state-wrapper"
-              data-testid="loading-block"
-              data-v-5b55eb64=""
-            >
-              <div
-                class="empty-state-title"
-                data-v-5b55eb64=""
-              >
-                <!---->
-                <div
-                  class="k-empty-state-title-header mt-4 mb-4"
-                  data-v-5b55eb64=""
-                >
-                  
-                  <div
-                    class="card-icon mb-3"
-                  >
-                    <span
-                      class="kong-icon-spinner kong-icon"
-                      data-v-71cfcfc4=""
-                    >
-                      <svg
-                        fill="none"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        
-  
-                        <title>
-                          Loading
-                        </title>
-                        
-  
-                        <g>
-                          
-    
-                          <path
-                            d="M5 10a5 5 0 1 0 5-5"
-                            fill="none"
-                            stroke="#A3BBCC"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                          />
-                          
-  
-                        </g>
-                        
-
-                      </svg>
-                      
-
-                    </span>
-                  </div>
-                  
-                  <p>
-                    Loading data …
-                  </p>
-                  
-                  
-                </div>
-              </div>
-              <div
-                class="empty-state-content"
-                data-v-5b55eb64=""
-              >
-                <div
-                  class="k-empty-state-message mb-6"
-                  data-v-5b55eb64=""
-                >
-                  
-                  
-                </div>
-                <div
-                  class="k-empty-state-cta"
-                  data-v-5b55eb64=""
-                >
-                  
-                  <!---->
-                  
-                </div>
-              </div>
-            </section>
-          </div>
+          </a>
+          
         </div>
       </div>
-      
-    </div>
-    
+    </section>
   </div>
 </div>
 `;
@@ -1350,6 +1207,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
   class="tab-container"
   data-testid="tab-container"
 >
+  
   <header
     class="tab__header"
   >
@@ -1366,20 +1224,20 @@ exports[`ZonesView.vue renders zone insights 1`] = `
         
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          data-v-814c880a=""
+          data-v-86245c6c=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
           
           <button
             class="small rounded outline k-button"
-            data-v-6bcbf05d=""
+            data-v-6f773baa=""
             type="button"
           >
             
             <span
               class="k-button-icon kong-icon-copy kong-icon"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               data-v-71cfcfc4=""
             >
               <svg
@@ -1416,13 +1274,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-814c880a=""
+            data-v-86245c6c=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-814c880a=""
+              data-v-86245c6c=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -1430,7 +1288,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-814c880a=""
+                data-v-86245c6c=""
               >
                 
                 <p>
@@ -1600,7 +1458,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
 
               </span>
               <span>
-                 Warnings 
+                Warnings
               </span>
             </span>
             
@@ -2253,9 +2111,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
       </div>
       
     </div>
-    <div>
-      <!--v-if-->
-    </div>
   </div>
+  
 </div>
 `;

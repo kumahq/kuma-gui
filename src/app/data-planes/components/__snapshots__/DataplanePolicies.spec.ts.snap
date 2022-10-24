@@ -36,7 +36,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -74,13 +74,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -88,7 +88,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on incoming connection on address
@@ -216,7 +216,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -254,13 +254,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -268,7 +268,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on outgoing connection to the address
@@ -333,7 +333,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -371,13 +371,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -385,7 +385,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on outgoing connections to service
@@ -450,7 +450,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -488,13 +488,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -502,7 +502,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on outgoing connections to service
@@ -567,7 +567,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -605,13 +605,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -619,7 +619,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on outgoing connections to service
@@ -684,7 +684,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -722,13 +722,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -736,7 +736,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on outgoing connections to service
@@ -801,7 +801,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 
                 <div
                   aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-814c880a=""
+                  data-v-86245c6c=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   role="button"
                 >
@@ -839,13 +839,13 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                   <transition-stub
                     appear="false"
                     css="true"
-                    data-v-814c880a=""
+                    data-v-86245c6c=""
                     name="fade"
                     persisted="false"
                   >
                     <div
                       class="k-popover"
-                      data-v-814c880a=""
+                      data-v-86245c6c=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                       role="region"
                       style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -853,7 +853,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       <!---->
                       <div
                         class="k-popover-content"
-                        data-v-814c880a=""
+                        data-v-86245c6c=""
                       >
                         
                         Policies applied on all incoming and outgoing connections to the selected data plane proxy

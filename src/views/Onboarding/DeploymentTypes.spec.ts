@@ -1,35 +1,15 @@
-import { createStore } from 'vuex'
 import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 import { KButton, KPop, KRadio } from '@kong/kongponents'
 
 import DeploymentTypes from './DeploymentTypes.vue'
+import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          clientConfig: {
-            mode: 'global',
-            store: {
-              type: 'memory',
-            },
-          },
-        },
-        getters: {
-          getConfigurationType: (state) => state.clientConfig?.store?.type,
-          getMulticlusterStatus: () => true,
-        },
-      },
-    },
-  })
-
   return render(DeploymentTypes, {
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
         KPop,

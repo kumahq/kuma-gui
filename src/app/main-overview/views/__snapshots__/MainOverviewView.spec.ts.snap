@@ -1722,7 +1722,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               type="button"
             >
               
@@ -1789,7 +1789,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               type="button"
             >
               
@@ -1856,7 +1856,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button"
-              data-v-6bcbf05d=""
+              data-v-6f773baa=""
               href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >

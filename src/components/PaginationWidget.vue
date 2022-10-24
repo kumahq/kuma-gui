@@ -1,8 +1,7 @@
 <template>
   <div class="pagination">
     <KButton
-      v-if="hasPrevious"
-      ref="paginatePrev"
+      v-if="props.hasPrevious"
       appearance="primary"
       @click="onPreviousButtonClick"
     >
@@ -10,8 +9,7 @@
     </KButton>
 
     <KButton
-      v-if="hasNext"
-      ref="paginateNext"
+      v-if="props.hasNext"
       appearance="primary"
       @click="onNextButtonClick"
     >
@@ -20,42 +18,34 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton } from '@kong/kongponents'
 
 import { datadogLogEvents } from '@/datadogEvents'
 
-export default {
-  name: 'PaginationWidget',
-
-  components: {
-    KButton,
+const props = defineProps({
+  hasPrevious: {
+    type: Boolean,
+    default: false,
   },
 
-  props: {
-    hasPrevious: {
-      type: Boolean,
-      default: false,
-    },
-    hasNext: {
-      type: Boolean,
-      default: false,
-    },
+  hasNext: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  emits: ['next', 'previous'],
+const emit = defineEmits(['next', 'previous'])
 
-  methods: {
-    onNextButtonClick() {
-      this.$emit('next')
-      datadogLogs.logger.info(datadogLogEvents.PAGINATION_NEXT_BUTTON_CLICKED)
-    },
-    onPreviousButtonClick() {
-      this.$emit('previous')
-      datadogLogs.logger.info(datadogLogEvents.PAGINATION_PREVIOUS_BUTTON_CLICKED)
-    },
-  },
+function onNextButtonClick() {
+  emit('next')
+  datadogLogs.logger.info(datadogLogEvents.PAGINATION_NEXT_BUTTON_CLICKED)
+}
+
+function onPreviousButtonClick() {
+  emit('previous')
+  datadogLogs.logger.info(datadogLogEvents.PAGINATION_PREVIOUS_BUTTON_CLICKED)
 }
 </script>
 

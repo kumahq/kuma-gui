@@ -1,10 +1,12 @@
-import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
 
 import Mesh from './Mesh.vue'
+import { store, storeKey } from '@/store/store'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import * as config from '@/services/mock/responses/config.json'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -22,32 +24,15 @@ const router = createRouter({
   ],
 })
 
-function renderComponent() {
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          tagline: 'Kuma',
-          kumaDocsVersion: '1.2.0',
-          clientConfig: {
-            mode: 'global',
-            environment: 'universal',
-          },
-        },
-        getters: {
-          getTagline: (state) => state.tagline,
-          getKumaDocsVersion: (state) => state.kumaDocsVersion,
-          getEnvironment: (state) => state.clientConfig?.environment,
-          getMulticlusterStatus: () => false,
-        },
-      },
-    },
-  })
+function renderComponent(mode = 'standalone') {
+  store.state.config.tagline = 'Kuma'
+  store.state.config.kumaDocsVersion = '1.2.0'
+  const clientConfig: ClientConfigInterface = { ...config, mode }
+  store.state.config.clientConfig = clientConfig
 
   return render(Mesh, {
     global: {
-      plugins: [router, store],
+      plugins: [router, [store, storeKey]],
       components: {
         KAlert,
         KButton,
@@ -85,7 +70,7 @@ describe('Mesh.vue', () => {
   }
 
   it('passes whole wizzard and render yaml', async () => {
-    const { container } = renderComponent()
+    const { container } = renderComponent('global')
 
     const nextButton = screen.getByText(/Next ›/i).closest('button')
 

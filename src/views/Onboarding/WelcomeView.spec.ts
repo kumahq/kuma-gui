@@ -1,34 +1,19 @@
-import { createStore } from 'vuex'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render } from '@testing-library/vue'
 import { KButton, KIcon } from '@kong/kongponents'
 
 import WelcomeView from './WelcomeView.vue'
+import { store, storeKey } from '@/store/store'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import * as config from '@/services/mock/responses/config.json'
 
 function renderComponent(environment: string) {
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          tagline: 'Kuma',
-          clientConfig: {
-            mode: 'global',
-            environment,
-          },
-        },
-        getters: {
-          getTagline: (state) => state.tagline,
-          getEnvironment: (state) => state.clientConfig?.environment,
-          getMulticlusterStatus: () => false,
-        },
-      },
-    },
-  })
+  const clientConfig: ClientConfigInterface = { ...config, environment }
+  store.state.config.clientConfig = clientConfig
 
   return render(WelcomeView, {
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
         KIcon,

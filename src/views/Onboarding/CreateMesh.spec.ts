@@ -1,34 +1,19 @@
-import { createStore } from 'vuex'
+import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import { KButton, KTable } from '@kong/kongponents'
 
-import { flushPromises } from '@vue/test-utils'
 import CreateMesh from './CreateMesh.vue'
+import { store, storeKey } from '@/store/store'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import * as config from '@/services/mock/responses/config.json'
 
-function renderComponent() {
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          clientConfig: {
-            mode: 'global',
-            store: {
-              type: 'memory',
-            },
-          },
-        },
-        getters: {
-          getConfigurationType: (state) => state.clientConfig?.store?.type,
-          getMulticlusterStatus: () => true,
-        },
-      },
-    },
-  })
+function renderComponent(mode = 'standalone') {
+  const clientConfig: ClientConfigInterface = { ...config, mode }
+  store.state.config.clientConfig = clientConfig
 
   return render(CreateMesh, {
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
         KTable,
@@ -53,7 +38,7 @@ describe('CreateMesh.vue', () => {
   })
 
   it('renders multizone next step', () => {
-    renderComponent()
+    renderComponent('global')
 
     expect(screen.getByText('onboarding-multi-zone')).toBeInTheDocument()
   })

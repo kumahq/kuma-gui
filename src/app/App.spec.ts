@@ -2,8 +2,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
 
-import { store, storeKey } from '@/store/store'
 import App from './App.vue'
+import { store, storeKey } from '@/store/store'
 
 const router = createRouter({
   history: createWebHashHistory(),

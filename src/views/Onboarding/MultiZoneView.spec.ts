@@ -1,18 +1,15 @@
-import { createStore } from 'vuex'
 import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import { KButton, KCard } from '@kong/kongponents'
 
 import MultiZoneView from './MultiZoneView.vue'
 import Kuma from '@/services/kuma'
-import { storeConfig } from '@/store/index'
-
-const store = createStore(storeConfig)
+import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
   return render(MultiZoneView, {
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
         KCard,

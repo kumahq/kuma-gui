@@ -1,17 +1,24 @@
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { render, screen } from '@testing-library/vue'
-import { KButton, KClipboardProvider, KIcon, KPop } from '@kong/kongponents'
 
 import EntityURLControl from './EntityURLControl.vue'
+import { store, storeKey } from '@/store/store'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
 
 function renderComponent(props: any) {
   return render(EntityURLControl, {
     global: {
-      components: {
-        KButton,
-        KClipboardProvider,
-        KIcon,
-        KPop,
-      },
+      plugins: [router, [store, storeKey]],
       mocks: {
         $route: {
           params: {

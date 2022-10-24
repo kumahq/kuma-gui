@@ -7,10 +7,6 @@
   </i>
 </template>
 
-<script>
-export default {}
-</script>
-
 <style lang="scss" scoped>
 .icon-success {
   --size: 30px;

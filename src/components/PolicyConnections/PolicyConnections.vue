@@ -43,76 +43,67 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed, onMounted, ref, watch } from 'vue'
+
 import Kuma from '@/services/kuma'
 import LabelList from '@/components/Utils/LabelList.vue'
 
-export default {
-  name: 'PolicyConnections',
-  components: {
-    LabelList,
-  },
-  props: {
-    mesh: {
-      type: String,
-      required: true,
-    },
-    policyType: {
-      type: String,
-      required: true,
-    },
-    policyName: {
-      type: String,
-      required: true,
-    },
+const props = defineProps({
+  mesh: {
+    type: String,
+    required: true,
   },
 
-  data() {
-    return {
-      hasDataplanes: false,
-      isLoading: true,
-      hasError: false,
-      dataplanes: [],
-      searchInput: '',
-    }
-  },
-  computed: {
-    filteredDataplanes() {
-      const lowerCasedInput = this.searchInput.toLowerCase()
-
-      return this.dataplanes.filter(({ dataplane: { name } }) => name.toLowerCase().includes(lowerCasedInput))
-    },
-  },
-  watch: {
-    policyName() {
-      this.fetchPolicyConntections()
-    },
-  },
-  mounted() {
-    this.fetchPolicyConntections()
+  policyType: {
+    type: String,
+    required: true,
   },
 
-  methods: {
-    async fetchPolicyConntections() {
-      this.hasError = false
-      this.isLoading = true
-
-      try {
-        const { items, total } = await Kuma.getPolicyConnections({
-          mesh: this.mesh,
-          policyType: this.policyType,
-          policyName: this.policyName,
-        })
-
-        this.hasDataplanes = total > 0
-
-        this.dataplanes = items
-      } catch (e) {
-        this.hasError = true
-      } finally {
-        this.isLoading = false
-      }
-    },
+  policyName: {
+    type: String,
+    required: true,
   },
+})
+
+const hasDataplanes = ref(false)
+const isLoading = ref(true)
+const hasError = ref(false)
+const dataplanes = ref<any[]>([])
+const searchInput = ref('')
+
+const filteredDataplanes = computed(() => {
+  const lowerCasedInput = searchInput.value.toLowerCase()
+
+  return dataplanes.value.filter(({ dataplane }) => dataplane.name.toLowerCase().includes(lowerCasedInput))
+})
+
+watch(() => props.policyName, function () {
+  fetchPolicyConntections()
+})
+
+onMounted(function () {
+  fetchPolicyConntections()
+})
+
+async function fetchPolicyConntections(): Promise<void> {
+  hasError.value = false
+  isLoading.value = true
+
+  try {
+    const { items, total } = await Kuma.getPolicyConnections({
+      mesh: props.mesh,
+      policyType: props.policyType,
+      policyName: props.policyName,
+    })
+
+    hasDataplanes.value = total > 0
+
+    dataplanes.value = items
+  } catch {
+    hasError.value = true
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>

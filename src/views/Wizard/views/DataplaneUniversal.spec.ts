@@ -1,5 +1,3 @@
-import { flushPromises } from '@vue/test-utils'
-import { createStore } from 'vuex'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { rest } from 'msw'
 import { render } from '@testing-library/vue'
@@ -7,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
+import { store, storeKey } from '@/store/store'
 import { server } from '@/jest-setup'
 
 const router = createRouter({
@@ -37,37 +36,25 @@ describe('DataplaneUniversal.vue', () => {
       ),
     )
 
-    const store = createStore({
-      modules: {
-        config: {
-          namespaced: true,
-          state: {
-            kumaDocsVersion: '1.2.0',
-            tagline: 'Kuma',
-          },
-          getters: {
-            getTagline: (state) => state.tagline,
-            getVersion: () => undefined,
-            getEnvironment: () => undefined,
-          },
-        },
+    store.state.config.tagline = 'Kuma'
+    store.state.meshes.items = [
+      {
+        name: 'testMesh',
+        creationTime: '0001-01-01T00:00:00Z',
+        modificationTime: '0001-01-01T00:00:00Z',
+        type: 'Mesh',
       },
-      state: {
-        meshes: {
-          items: [
-            { name: 'testMesh' },
-            { name: 'testMesh2' },
-          ],
-        },
+      {
+        name: 'testMesh2',
+        creationTime: '0001-01-01T00:00:00Z',
+        modificationTime: '0001-01-01T00:00:00Z',
+        type: 'Mesh',
       },
-      getters: {
-        getMeshList: (state) => state.meshes,
-      },
-    })
+    ]
 
-    const { container, getByText, getByDisplayValue, getByLabelText } = render(DataplaneUniversal, {
+    const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal, {
       global: {
-        plugins: [router, store],
+        plugins: [router, [store, storeKey]],
         components: {
           KAlert,
           KButton,
@@ -110,14 +97,8 @@ describe('DataplaneUniversal.vue', () => {
     await userEvent.click(getByText('Next ›'))
     expect(getByText('Auto-Inject DPP')).toBeInTheDocument()
 
-    // Well this is annoying. Since the code blocks have some timer-based mechanisms (necessary debouncing), we need to wait some ticks. However, we can’t use fake timers here because they seem to conflict with testing library.
-    await flushPromises()
-    await flushPromises()
-    await flushPromises()
-    await flushPromises()
-    const codeBlocks = container.querySelectorAll('.code-block')
-    expect(codeBlocks[0]?.innerHTML).toContain('kumactl')
-    expect(codeBlocks[1]?.innerHTML).toContain('kuma-dp')
+    expect(await findByText(/kumactl/)).toBeInTheDocument()
+    expect(await findByText(/kuma-dp/)).toBeInTheDocument()
 
     expect(container).toMatchSnapshot()
   })

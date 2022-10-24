@@ -31,7 +31,7 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
             <div>
               <a
                 class="small rounded primary k-button warning-button"
-                data-v-6bcbf05d=""
+                data-v-6f773baa=""
                 href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
                 type="button"
               >

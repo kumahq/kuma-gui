@@ -35,7 +35,7 @@
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock
-      v-else-if="hasError"
+      v-else-if="error !== null"
       :error="error"
     />
 
@@ -87,6 +87,11 @@
             >
               <span>{{ rowValue }}</span>
             </div>
+          </template>
+
+          <!-- tags -->
+          <template #tags="{ rowValue }">
+            <TagList :tags="rowValue" />
           </template>
 
           <template #name="{ row, rowValue }">
@@ -208,7 +213,7 @@
                 <KIcon
                   :icon="row.warnings.length > 0 ? 'warning' : 'info'"
                   :color="row.warnings.length > 0 ? 'var(--black-75)' : 'var(--blue-500)'"
-                  :secondary-color="row.warnings.length > 0 ? 'var(--yellow-300)' : null"
+                  :secondary-color="row.warnings.length > 0 ? 'var(--yellow-300)' : undefined"
                   size="20"
                 />
               </template>
@@ -219,7 +224,7 @@
 
         <PaginationWidget
           :has-previous="internalPageOffset > 0"
-          :has-next="next"
+          :has-next="Boolean(next)"
           @next="goToNextPage"
           @previous="goToPreviousPage"
         />
@@ -258,192 +263,158 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed, PropType, ref, useSlots, watch } from 'vue'
 import { KButton, KIcon, KTable } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import { datadogLogEvents } from '@/datadogEvents'
-import PaginationWidget from '@/components/PaginationWidget.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import PaginationWidget from '@/components/PaginationWidget.vue'
+import TagList from '@/app/common/TagList.vue'
+import { TableData } from '@/types'
 
-export default {
-  name: 'DataOverview',
+const slots = useSlots()
 
-  components: {
-    PaginationWidget,
-    EmptyBlock,
-    ErrorBlock,
-    LoadingBlock,
-    KButton,
-    KIcon,
-    KTable,
+const props = defineProps({
+  selectedEntityName: {
+    type: String,
+    required: false,
+    default: '',
   },
 
-  props: {
-    selectedEntityName: {
-      type: String,
-      required: false,
-      default: '',
-    },
-
-    pageSize: {
-      type: Number,
-      default: 12,
-    },
-
-    isLoading: {
-      type: Boolean,
-      default: false,
-    },
-
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-
-    error: {
-      type: [Error, null],
-      required: false,
-      default: null,
-    },
-
-    isEmpty: {
-      type: Boolean,
-      default: false,
-    },
-
-    emptyState: {
-      type: Object,
-      default: null,
-    },
-
-    tableData: {
-      type: Object,
-      default: null,
-    },
-
-    tableDataIsEmpty: {
-      type: Boolean,
-      default: false,
-    },
-
-    showWarnings: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-
-    showDetails: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-
-    next: {
-      type: Boolean,
-      default: false,
-    },
-
-    pageOffset: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
+  pageSize: {
+    type: Number,
+    required: false,
+    default: 12,
   },
 
-  emits: ['table-action', 'refresh', 'load-data'],
-
-  data() {
-    return {
-      selectedRow: '',
-      internalPageOffset: 0,
-    }
+  isLoading: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  computed: {
-    customSlots() {
-      return this.tableData.headers
-        .map(({ key }) => key)
-        .filter((key) => this.$slots[key])
-    },
-
-    tableHeaders() {
-      if (!this.showWarnings) {
-        return this.tableData.headers.filter(({ key }) => key !== 'warnings')
-      } else {
-        return this.tableData.headers
-      }
-    },
-
-    /**
-     * Just changing the table data/headers doesn’t cause the table component to re-render, so by updating its `key` prop when this happens, we force a re-render. This is necessary to get the column visibility toggles and similar operations to work in the data planes list view.
-     *
-     * @returns {string}
-     */
-    tableRecompuationKey() {
-      return `${this.tableData.data.length}-${this.tableHeaders.length}`
-    },
+  error: {
+    type: [Error, null] as PropType<Error | null>,
+    required: false,
+    default: null,
   },
 
-  watch: {
-    isLoading(val) {
-      if (!val && this.tableData.data.length > 0) {
-        this.selectedRow = this.selectedEntityName || this.tableData.data[0].name
-      }
-    },
+  isEmpty: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 
-  created() {
-    this.internalPageOffset = this.pageOffset
+  emptyState: {
+    type: Object,
+    required: false,
+    default: null,
   },
 
-  methods: {
-    /**
-     * @returns {{ data: object[], total: number }}
-     */
-    tableDataFetcher() {
-      return {
-        data: this.tableData.data,
-        total: this.tableData.data.length,
-      }
-    },
-
-    tableRowHandler(_e, row) {
-      this.selectedRow = row.name
-      this.$emit('table-action', row)
-    },
-
-    onRefreshButtonClick() {
-      this.$emit('refresh')
-      this.$emit('load-data', this.internalPageOffset)
-      datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
-    },
-
-    goToPreviousPage() {
-      this.internalPageOffset = this.pageOffset - this.pageSize
-      this.$emit('load-data', this.pageOffset - this.pageSize)
-    },
-
-    goToNextPage() {
-      this.internalPageOffset = this.pageOffset + this.pageSize
-      this.$emit('load-data', this.pageOffset + this.pageSize)
-    },
-
-    getCellAttributes({ headerKey }) {
-      const className = ['warnings'].includes(headerKey) ? 'text-center' : ['details'].includes(headerKey) ? 'text-right' : ''
-
-      return { class: className }
-    },
-
-    getRowAttributes({ name }) {
-      const entityName = this.selectedEntityName || this.tableData.data[0].name
-      const className = name === entityName ? 'is-selected' : ''
-
-      return { class: className }
-    },
+  tableData: {
+    type: Object as PropType<TableData>,
+    required: false,
+    default: null,
   },
+
+  tableDataIsEmpty: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  showWarnings: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  showDetails: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+
+  next: {
+    type: [String, Boolean, null] as PropType<string | boolean | null>,
+    required: false,
+    default: false,
+  },
+
+  pageOffset: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
+})
+
+const emit = defineEmits(['table-action', 'refresh', 'load-data'])
+
+const selectedRow = ref('')
+const internalPageOffset = ref(props.pageOffset)
+
+const tableHeaders = computed(() => {
+  if (!props.showWarnings) {
+    return props.tableData.headers.filter((header) => header.key !== 'warnings')
+  } else {
+    return props.tableData.headers
+  }
+})
+const customSlots = computed(() => props.tableData.headers.map((header) => header.key).filter((key) => slots[key]))
+/**
+ * Just changing the table data/headers doesn’t cause the table component to re-render, so by updating its `key` prop when this happens, we force a re-render. This is necessary to get the column visibility toggles and similar operations to work in the data planes list view.
+ */
+const tableRecompuationKey = computed(() => `${props.tableData.data.length}-${tableHeaders.value.length}`)
+
+watch(() => props.isLoading, function () {
+  if (!props.isLoading && props.tableData.data.length > 0) {
+    selectedRow.value = props.selectedEntityName || props.tableData.data[0].name
+  }
+})
+
+function tableDataFetcher(): { data: object[], total: number } {
+  return {
+    data: props.tableData.data,
+    total: props.tableData.data.length,
+  }
+}
+
+function tableRowHandler(_e: any, row: any): void {
+  selectedRow.value = row.name
+  emit('table-action', row)
+}
+
+function onRefreshButtonClick(): void {
+  emit('refresh')
+  emit('load-data', internalPageOffset.value)
+  datadogLogs.logger.info(datadogLogEvents.TABLE_REFRESH_BUTTON_CLICKED)
+}
+
+function goToPreviousPage(): void {
+  internalPageOffset.value = props.pageOffset - props.pageSize
+  emit('load-data', props.pageOffset - props.pageSize)
+}
+
+function goToNextPage(): void {
+  internalPageOffset.value = props.pageOffset + props.pageSize
+  emit('load-data', props.pageOffset + props.pageSize)
+}
+
+function getCellAttributes({ headerKey }: any): Record<string, string> {
+  const className = ['warnings'].includes(headerKey) ? 'text-center' : ['details'].includes(headerKey) ? 'text-right' : ''
+
+  return { class: className }
+}
+
+function getRowAttributes({ name }: any): Record<string, string> {
+  const entityName = props.selectedEntityName || props.tableData.data[0].name
+  const className = name === entityName ? 'is-selected' : ''
+
+  return { class: className }
 }
 </script>
 
