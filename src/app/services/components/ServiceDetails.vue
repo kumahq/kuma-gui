@@ -28,9 +28,9 @@ import { ExternalService, ServiceInsight } from '@/types'
 import Kuma from '@/services/kuma'
 import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
 import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
-import EmptyBlock from '@/components/EmptyBlock.vue'
-import ErrorBlock from '@/components/ErrorBlock.vue'
-import LoadingBlock from '@/components/LoadingBlock.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 const props = defineProps({
   serviceType: {

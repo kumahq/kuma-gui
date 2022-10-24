@@ -4,37 +4,29 @@
   </ul>
 </template>
 
-<script>
-export default {
-  name: 'AccordionList',
-  provide() {
-    return { parentAccordion: this.parentAccordion }
-  },
-  props: {
-    initiallyOpen: {
-      type: [Number, Array],
-      default: null,
-    },
-    multipleOpen: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    let active
-    if (this.initiallyOpen !== null) {
-      active = this.initiallyOpen
-    } else {
-      active = this.multipleOpen ? [] : null
-    }
+<script lang="ts" setup>
+import { PropType, provide, ref } from 'vue'
 
-    return {
-      parentAccordion: {
-        count: 0,
-        active,
-        multipleOpen: this.multipleOpen,
-      },
-    }
+const props = defineProps({
+  initiallyOpen: {
+    type: [Number, Array] as PropType<number | number[]>,
+    required: false,
+    default: null,
   },
-}
+
+  multipleOpen: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+})
+
+const count = ref(0)
+const active = ref(props.initiallyOpen !== null ? props.initiallyOpen : props.multipleOpen ? [] : null)
+
+provide('parentAccordion', {
+  multipleOpen: props.multipleOpen,
+  active,
+  count,
+})
 </script>

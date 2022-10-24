@@ -24,9 +24,9 @@
 <script>
 import { KCard } from '@kong/kongponents'
 
-import EmptyBlock from '../EmptyBlock.vue'
-import ErrorBlock from '../ErrorBlock.vue'
-import LoadingBlock from '../LoadingBlock.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 export default {
   name: 'LabelList',

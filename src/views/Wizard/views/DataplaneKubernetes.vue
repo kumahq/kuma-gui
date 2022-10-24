@@ -628,7 +628,7 @@ networking:
 import { mapGetters } from 'vuex'
 import Kuma from '@/services/kuma'
 import { kebabCase } from '@/helpers'
-import CodeBlock from '@/components/CodeBlock.vue'
+import CodeBlock from '@/app/common/CodeBlock.vue'
 import FormatForCLI from '@/mixins/FormatForCLI'
 import FormFragment from '@/views/Wizard/components/FormFragment.vue'
 import StepSkeleton from '@/views/Wizard/components/StepSkeleton.vue'

@@ -142,7 +142,7 @@ import Kuma from '@/services/kuma'
 import LabelList from '@/components/Utils/LabelList.vue'
 import PolicyConnections from '@/components/PolicyConnections/PolicyConnections.vue'
 import TabsWidget from '@/components/Utils/TabsWidget.vue'
-import YamlView from '@/components/Skeletons/YamlView.vue'
+import YamlView from '@/app/common/YamlView.vue'
 import { PolicyEntity, TableHeader } from '@/types'
 
 const tabs = [

@@ -73,7 +73,7 @@
 import { mapGetters } from 'vuex'
 
 import Kuma from '@/services/kuma'
-import LoadingBox from '@/components/LoadingBox.vue'
+import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '@/views/Onboarding/components/OnboardingNavigation.vue'
 import OnboardingHeading from '@/views/Onboarding/components/OnboardingHeading.vue'
 import OnboardingPage from '@/views/Onboarding/components/OnboardingPage.vue'

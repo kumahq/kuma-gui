@@ -33,13 +33,7 @@
     <section v-if="dataPlaneTags.length > 0">
       <h4>Tags</h4>
 
-      <div class="tag-list">
-        <EntityTag
-          v-for="(tag, index) in dataPlaneTags"
-          :key="index"
-          :tag="tag"
-        />
-      </div>
+      <TagList :tags="dataPlaneTags" />
     </section>
 
     <section v-if="dependencies.length > 0">
@@ -143,8 +137,8 @@ import { KIcon } from '@kong/kongponents'
 import { DataPlaneOverview, DataPlaneStatus } from '@/types'
 import { STATUS } from '@/consts'
 import { rawReadableDate } from '@/helpers'
-import EntityTag from '@/components/EntityTag/EntityTag.vue'
-import YamlView from '@/components/Skeletons/YamlView.vue'
+import TagList from '@/app/common/TagList.vue'
+import YamlView from '@/app/common/YamlView.vue'
 import { dpTags, getStatus, getVersions } from '@/dataplane'
 
 const props = defineProps({
@@ -294,12 +288,6 @@ h5 {
 .entity-title {
   display: flex;
   gap: var(--spacing-md);
-}
-
-.tag-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xxs);
 }
 
 .definition {

@@ -1,34 +1,18 @@
-import { createStore } from 'vuex'
 import { RouterLinkStub } from '@vue/test-utils'
 import { rest } from 'msw'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
-import { KBadge, KCard, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import DataplanePolicies from './DataplanePolicies.vue'
-import Kuma from '@/services/kuma'
+import { store, storeKey } from '@/store/store'
 import { server } from '@/jest-setup'
 
 async function renderComponent(props = {}) {
-  const { policies } = await Kuma.getPolicyDefinitions()
-
-  const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
-  const store = createStore({
-    state: {
-      policiesByType,
-    },
-  })
+  await store.dispatch('fetchPolicies')
 
   return render(DataplanePolicies, {
     global: {
-      plugins: [store],
-      components: {
-        KBadge,
-        KCard,
-        KEmptyState,
-        KIcon,
-        KPop,
-      },
+      plugins: [[store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },
@@ -40,8 +24,11 @@ async function renderComponent(props = {}) {
 describe('DataplanePolicies.vue', () => {
   it('renders snapshot', async () => {
     const { container } = await renderComponent({
-      mesh: 'foo',
-      dppName: 'dataplane-test-456',
+      dataPlane: {
+        mesh: 'foo',
+        name: 'dataplane-test-456',
+        networking: {},
+      },
     })
 
     await userEvent.click(await screen.findByText('web'))
@@ -57,8 +44,11 @@ describe('DataplanePolicies.vue', () => {
     )
 
     await renderComponent({
-      mesh: 'foo',
-      dppName: 'dataplane-test-456',
+      dataPlane: {
+        mesh: 'foo',
+        name: 'dataplane-test-456',
+        networking: {},
+      },
     })
 
     expect(screen.getByTestId('loading-block')).toBeInTheDocument()
@@ -74,8 +64,11 @@ describe('DataplanePolicies.vue', () => {
     )
 
     await renderComponent({
-      mesh: 'default',
-      dppName: 'dataplane-test-456',
+      dataPlane: {
+        mesh: 'foo',
+        name: 'dataplane-test-456',
+        networking: {},
+      },
     })
 
     expect((await screen.findAllByText(/An error has occurred while trying to load this data./))[0]).toBeInTheDocument()
@@ -89,8 +82,11 @@ describe('DataplanePolicies.vue', () => {
     )
 
     await renderComponent({
-      mesh: 'default',
-      dppName: 'dataplane-test-456',
+      dataPlane: {
+        mesh: 'foo',
+        name: 'dataplane-test-456',
+        networking: {},
+      },
     })
 
     expect(await screen.findByText(/There is no data to display./)).toBeInTheDocument()

@@ -1,50 +1,62 @@
 <template>
-  <span class="entity-tag">
+  <span class="tag-list">
     <span
-      class="entity-tag__label"
-      :class="{ 'entity-tag__label--is-kuma-io-label': isKumaIoLabel }"
+      v-for="(tag, index) in props.tags"
+      :key="index"
+      class="tag"
     >
-      {{ tag.label }}
-    </span>
+      <span
+        class="tag__label"
+        :class="{
+          'tag__label--is-kuma-io-label': tag.label.toLowerCase().includes('kuma.io/'),
+        }"
+      >
+        {{ tag.label }}
+      </span>
 
-    <span class="entity-tag__value">
-      {{ tag.value }}
+      <span class="tag__value">
+        {{ tag.value }}
+      </span>
     </span>
   </span>
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
+import { PropType } from 'vue'
 
 import { LabelValue } from '@/types'
 
 const props = defineProps({
-  tag: {
-    type: Object as PropType<LabelValue>,
+  tags: {
+    type: Object as PropType<LabelValue[]>,
     required: true,
   },
 })
-
-const isKumaIoLabel = computed(() => props.tag.label.toLowerCase().includes('kuma.io/'))
 </script>
 
 <style lang="scss" scoped>
 $border-radius: 5px;
 
-.entity-tag {
+.tag-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xxs);
+}
+
+.tag {
   display: inline-flex;
   align-items: stretch;
   font-size: var(--type-xs);
   border-radius: $border-radius;
 }
 
-.entity-tag__label,
-.entity-tag__value {
+.tag__label,
+.tag__value {
   border: 1px solid transparent;
   padding: 0.1em 0.5em;
 }
 
-.entity-tag__label {
+.tag__label {
   border-right: none;
   border-top-left-radius: $border-radius;
   border-bottom-left-radius: $border-radius;
@@ -52,11 +64,11 @@ $border-radius: 5px;
   background-color: var(--blue-1);
 }
 
-.entity-tag__label--is-kuma-io-label {
+.tag__label--is-kuma-io-label {
   background-color: var(--brand-color-6);
 }
 
-.entity-tag__value {
+.tag__value {
   border-color: var(--grey-400);
   border-left: none;
   border-top-right-radius: $border-radius;

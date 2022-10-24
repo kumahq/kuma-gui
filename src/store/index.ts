@@ -321,17 +321,17 @@ export const storeConfig: StoreOptions<State> = {
           const params = {
             callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
           }
-
           const response = await fetchAllResources(params)
+          const meshesData = []
 
-          const meshesData = [
-            {
+          if (response.items.length > 0) {
+            meshesData.push({
               category: 'Mesh',
               value: response.items.length,
               tooltipDisabled: true,
               labelDisabled: true,
-            },
-          ]
+            })
+          }
 
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: meshesData })
           commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', response)

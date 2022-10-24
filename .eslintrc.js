@@ -1,5 +1,47 @@
 /** @typedef {import('eslint').ESLint.ConfigData} Config */
 
+// Taken from https://github.com/vuejs/eslint-plugin-vue/blob/master/lib/utils/inline-non-void-elements.json.
+const INLINE_NON_VOID_ELEMENTS = [
+  'a',
+  'abbr',
+  'audio',
+  'b',
+  'bdi',
+  'bdo',
+  'canvas',
+  'cite',
+  'code',
+  'data',
+  'del',
+  'dfn',
+  'em',
+  'i',
+  'iframe',
+  'ins',
+  'kbd',
+  'label',
+  'map',
+  'mark',
+  'noscript',
+  'object',
+  'output',
+  'picture',
+  'q',
+  'ruby',
+  's',
+  'samp',
+  'small',
+  'span',
+  'strong',
+  'sub',
+  'sup',
+  'svg',
+  'time',
+  'u',
+  'var',
+  'video',
+]
+
 /** @type {Config} */ const config = {
   root: true,
   parserOptions: {
@@ -25,6 +67,16 @@
     }],
   },
   overrides: [
+    {
+      files: ['*.vue'],
+      rules: {
+        'vue/singleline-html-element-content-newline': ['error', {
+          ignoreWhenNoAttributes: true,
+          ignoreWhenEmpty: true,
+          ignores: ['router-link', 'pre', ...INLINE_NON_VOID_ELEMENTS],
+        }],
+      },
+    },
     {
       files: ['*.ts', '*.vue'],
       rules: {

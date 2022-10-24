@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import CodeBlock from '../CodeBlock.vue'
 import Kuma from '@/services/kuma'
+import CodeBlock from '@/app/common/CodeBlock.vue'
 import StatusInfo from '@/components/Utils/StatusInfo.vue'
 
 export default {

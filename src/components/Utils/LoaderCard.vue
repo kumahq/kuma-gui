@@ -22,9 +22,9 @@
 <script>
 import { KCard } from '@kong/kongponents'
 
-import EmptyBlock from '@/components/EmptyBlock.vue'
-import ErrorBlock from '@/components/ErrorBlock.vue'
-import LoadingBlock from '@/components/LoadingBlock.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
 export default {
   name: 'LoaderCard',

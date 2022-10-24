@@ -11,7 +11,8 @@
         "tags": {
           "kuma.io/service": "gateway",
           "kuma.io/zone": "cluster-1"
-        }
+        },
+        "type": "BUILTIN"
       },
       "outbound": [
         {

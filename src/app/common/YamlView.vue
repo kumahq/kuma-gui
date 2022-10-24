@@ -47,10 +47,10 @@ import json2yaml from '@appscode/json2yaml'
 import { KTabs } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import CodeBlock from '../CodeBlock.vue'
-import EmptyBlock from '../EmptyBlock.vue'
-import ErrorBlock from '../ErrorBlock.vue'
-import LoadingBlock from '../LoadingBlock.vue'
+import CodeBlock from './CodeBlock.vue'
+import EmptyBlock from './EmptyBlock.vue'
+import ErrorBlock from './ErrorBlock.vue'
+import LoadingBlock from './LoadingBlock.vue'
 
 const store = useStore()
 

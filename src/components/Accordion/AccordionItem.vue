@@ -1,14 +1,14 @@
 <template>
   <li
-    class="accordion-item"
-    :class="accordionItemClasses"
+    class="accordion-item relative border-b"
+    :class="{ active: visible }"
   >
     <button
       class="accordion-item-header"
-      :aria-expanded="visible"
+      type="button"
+      :aria-expanded="visible ? 'true' : 'false'"
       @click="open"
     >
-      <!-- This slot will display header -->
       <slot name="accordion-header" />
     </button>
 
@@ -22,66 +22,77 @@
         v-if="visible"
         class="px-4"
       >
-        <!-- This slot will display whole content -->
         <slot name="accordion-content" />
       </div>
     </transition>
   </li>
 </template>
 
-<script>
-export default {
-  name: 'AccordionItem',
-  inject: ['parentAccordion'],
-  data() {
-    return {
-      index: null,
-    }
-  },
-  computed: {
-    visible() {
-      if (this.parentAccordion.multipleOpen) {
-        return this.parentAccordion.active.includes(this.index)
-      }
+<script lang="ts" setup>
+import { computed, inject, Ref, ref } from 'vue'
 
-      return this.index === this.parentAccordion.active
-    },
-    accordionItemClasses() {
-      return ['relative border-b py-2', { active: this.visible }]
-    },
-  },
-  created() {
-    this.index = this.parentAccordion.count++
-  },
-  methods: {
-    hideItem() {
-      if (this.parentAccordion.multipleOpen) {
-        this.parentAccordion.active.splice(this.parentAccordion.active.indexOf(this.index), 1)
-      } else {
-        this.parentAccordion.active = null
-      }
-    },
-    showItem() {
-      if (this.parentAccordion.multipleOpen) {
-        this.parentAccordion.active.push(this.index)
-      } else {
-        this.parentAccordion.active = this.index
-      }
-    },
-    open() {
-      if (this.visible) {
-        this.hideItem()
-      } else {
-        this.showItem()
-      }
-    },
-    start(el) {
-      el.style.height = `${el.scrollHeight}px`
-    },
-    end(el) {
-      el.style.height = 'auto'
-    },
-  },
+const parentAccordion = inject<{
+  multipleOpen: boolean
+  active: Ref<number | number[] | null>
+  count: Ref<number>
+}>('parentAccordion')
+
+const index = ref<number | null>(null)
+
+const visible = computed(() => {
+  if (parentAccordion === undefined) {
+    return false
+  }
+
+  if (parentAccordion.multipleOpen && Array.isArray(parentAccordion.active.value) && index.value !== null) {
+    return parentAccordion.active.value.includes(index.value)
+  }
+
+  return index.value === parentAccordion.active.value
+})
+
+if (parentAccordion !== undefined) {
+  index.value = parentAccordion.count.value++
+}
+
+function open(): void {
+  if (visible.value) {
+    hideItem()
+  } else {
+    showItem()
+  }
+}
+
+function hideItem(): void {
+  if (parentAccordion === undefined) {
+    return
+  }
+
+  if (parentAccordion.multipleOpen && Array.isArray(parentAccordion.active.value) && index.value !== null) {
+    parentAccordion.active.value.splice(parentAccordion.active.value.indexOf(index.value), 1)
+  } else {
+    parentAccordion.active.value = null
+  }
+}
+
+function showItem(): void {
+  if (parentAccordion === undefined) {
+    return
+  }
+
+  if (parentAccordion.multipleOpen && Array.isArray(parentAccordion.active.value) && index.value !== null) {
+    parentAccordion.active.value.push(index.value)
+  } else {
+    parentAccordion.active.value = index.value
+  }
+}
+
+function start(el: HTMLElement): void {
+  el.style.height = `${el.scrollHeight}px`
+}
+
+function end(el: HTMLElement): void {
+  el.style.height = 'auto'
 }
 </script>
 
@@ -105,6 +116,7 @@ export default {
 
 .active {
   .accordion-item-header::after {
+    margin-left: var(--spacing-sm);
     transform: rotate(-180deg) translateY(-50%);
     top: calc(50% - 4px);
   }
