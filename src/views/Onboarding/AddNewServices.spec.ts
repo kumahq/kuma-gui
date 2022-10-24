@@ -1,34 +1,15 @@
-import { createStore } from 'vuex'
 import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { KButton } from '@kong/kongponents'
 
 import AddNewServices from './AddNewServices.vue'
+import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  const store = createStore({
-    modules: {
-      onboarding: {
-        namespaced: true,
-        state: {
-          mode: 'demo',
-        },
-        getters: {
-          getMode: (state) => state.mode,
-        },
-        mutations: {
-          UPDATE_MODE: (state, mode) => {
-            state.mode = mode
-          },
-        },
-      },
-    },
-  })
-
   return render(AddNewServices, {
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
       },

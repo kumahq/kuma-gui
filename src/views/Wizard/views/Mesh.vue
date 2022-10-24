@@ -480,7 +480,6 @@
                 {{ productName }} will automatically detect when the new entity has been created.
               </p>
               <TabsWidget
-                :loaders="false"
                 :tabs="tabs"
                 :initial-tab-override="environment"
                 @on-tab-change="onTabChange"

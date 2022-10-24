@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { datadogLogs } from '@datadog/browser-logs'
-import { KButton } from '@kong/kongponents'
 
 import PaginationWidget from './PaginationWidget.vue'
 
@@ -9,11 +8,6 @@ jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
   return render(PaginationWidget, {
-    global: {
-      components: {
-        KButton,
-      },
-    },
     props,
   })
 }

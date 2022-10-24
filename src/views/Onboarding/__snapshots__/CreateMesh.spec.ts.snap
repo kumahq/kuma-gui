@@ -182,7 +182,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           data-v-6f773baa=""
           type="button"
         >
-          onboarding-multi-zone
+          onboarding-configuration-types
         </a>
         <div>
           <button

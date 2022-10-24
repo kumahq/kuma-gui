@@ -10,6 +10,11 @@ export type TableHeader = {
   useSortHandlerFn?: boolean
 }
 
+export type TableData = {
+  headers: TableHeader[]
+  data: any
+}
+
 export type Info = {
   hostname: string
   tagline: string

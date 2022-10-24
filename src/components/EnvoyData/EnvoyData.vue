@@ -1,129 +1,117 @@
 <template>
   <StatusInfo
     class="envoy-data"
-    :has-error="error !== null"
+    :has-error="error !== undefined"
     :is-loading="isLoading"
     :error="error"
   >
     <CodeBlock
       :id="`code-block-${dataPath}`"
       language="json"
-      :code="content"
+      :code="code"
       is-searchable
       :query-key="queryKey ?? `code-block-${dataPath}`"
     />
   </StatusInfo>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { onMounted, PropType, ref, watch } from 'vue'
+
 import Kuma from '@/services/kuma'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import StatusInfo from '@/components/Utils/StatusInfo.vue'
 
-export default {
-  name: 'EnvoyData',
-
-  components: {
-    CodeBlock,
-    StatusInfo,
+const props = defineProps({
+  dataPath: {
+    type: String as PropType<'xds' | 'stats' | 'clusters'>,
+    required: true,
   },
 
-  props: {
-    dataPath: {
-      type: String,
-      required: true,
-    },
-
-    queryKey: {
-      type: String,
-      required: false,
-      default: null,
-    },
-
-    mesh: {
-      type: String,
-      required: false,
-      default: '',
-    },
-
-    dppName: {
-      type: String,
-      required: false,
-      default: '',
-    },
-
-    zoneIngressName: {
-      type: String,
-      required: false,
-      default: '',
-    },
-
-    zoneEgressName: {
-      type: String,
-      required: false,
-      default: '',
-    },
+  queryKey: {
+    type: String,
+    required: false,
+    default: null,
   },
 
-  data() {
-    return {
-      isLoading: true,
-      error: null,
+  mesh: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  dppName: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  zoneIngressName: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  zoneEgressName: {
+    type: String,
+    required: false,
+    default: '',
+  },
+})
+
+const isLoading = ref(true)
+const error = ref<Error | undefined>(undefined)
+const code = ref('')
+
+watch(() => props.dppName, function () {
+  fetchContent()
+})
+watch(() => props.zoneIngressName, function () {
+  fetchContent()
+})
+watch(() => props.zoneEgressName, function () {
+  fetchContent()
+})
+
+onMounted(function () {
+  fetchContent()
+})
+
+async function fetchContent() {
+  error.value = undefined
+  isLoading.value = true
+
+  try {
+    let content = ''
+
+    if (props.mesh !== '' && props.dppName !== '') {
+      content = await Kuma.getDataplaneData({
+        dataPath: props.dataPath,
+        mesh: props.mesh,
+        dppName: props.dppName,
+      })
+    } else if (props.zoneIngressName !== '') {
+      content = await Kuma.getZoneIngressData({
+        dataPath: props.dataPath,
+        zoneIngressName: props.zoneIngressName,
+      })
+    } else if (props.zoneEgressName !== '') {
+      content = await Kuma.getZoneEgressData({
+        dataPath: props.dataPath,
+        zoneEgressName: props.zoneEgressName,
+      })
     }
-  },
 
-  watch: {
-    dppName() {
-      this.fetchContent()
-    },
-
-    zoneIngressName() {
-      this.fetchContent()
-    },
-
-    zoneEgressName() {
-      this.fetchContent()
-    },
-  },
-
-  mounted() {
-    this.fetchContent()
-  },
-
-  methods: {
-    async fetchContent() {
-      this.error = null
-      this.isLoading = true
-
-      try {
-        let content = ''
-
-        if (this.mesh !== '' && this.dppName !== '') {
-          content = await Kuma.getDataplaneData({
-            dataPath: this.dataPath,
-            mesh: this.mesh,
-            dppName: this.dppName,
-          })
-        } else if (this.zoneIngressName !== '') {
-          content = await Kuma.getZoneIngressData({
-            dataPath: this.dataPath,
-            zoneIngressName: this.zoneIngressName,
-          })
-        } else if (this.zoneEgressName !== '') {
-          content = await Kuma.getZoneEgressData({
-            dataPath: this.dataPath,
-            zoneEgressName: this.zoneEgressName,
-          })
-        }
-
-        this.content = typeof content === 'string' ? content : JSON.stringify(content, null, 2)
-      } catch (error) {
-        this.error = error
-      } finally {
-        this.isLoading = false
-      }
-    },
-  },
+    code.value = typeof content === 'string' ? content : JSON.stringify(content, null, 2)
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 

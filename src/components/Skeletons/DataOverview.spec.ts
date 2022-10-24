@@ -2,7 +2,6 @@ import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import { datadogLogs } from '@datadog/browser-logs'
 import userEvent from '@testing-library/user-event'
-import { KButton, KEmptyState, KIcon, KTable } from '@kong/kongponents'
 
 import DataOverview from './DataOverview.vue'
 
@@ -11,12 +10,6 @@ jest.mock('@datadog/browser-logs')
 function renderComponent(props = {}) {
   return render(DataOverview, {
     global: {
-      components: {
-        KButton,
-        KEmptyState,
-        KIcon,
-        KTable,
-      },
       stubs: {
         'router-link': RouterLinkStub,
       },

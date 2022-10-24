@@ -1,10 +1,24 @@
-import { createStore } from 'vuex'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import ZoneIngresses from './ZoneIngresses.vue'
+import { store, storeKey } from '@/store/store'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import * as config from '@/services/mock/responses/config.json'
+
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'home',
+      component: { template: 'TestComponent' },
+    },
+  ],
+})
 
 jest.mock('@/helpers', () => {
   const originalModule = jest.requireActual('@/helpers')
@@ -17,26 +31,13 @@ jest.mock('@/helpers', () => {
   }
 })
 
-function renderComponent() {
-  const store = createStore({
-    modules: {
-      config: {
-        namespaced: true,
-        state: {
-          clientConfig: {
-            mode: 'global',
-          },
-        },
-        getters: {
-          getMulticlusterStatus: () => true,
-        },
-      },
-    },
-  })
+function renderComponent(mode = 'standalone') {
+  const clientConfig: ClientConfigInterface = { ...config, mode }
+  store.state.config.clientConfig = clientConfig
 
   return render(ZoneIngresses, {
     global: {
-      plugins: [store],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },
@@ -60,7 +61,7 @@ describe('ZoneIngresses.vue', () => {
   })
 
   it('renders snapshot when multizone', async () => {
-    const { container } = renderComponent()
+    const { container } = renderComponent('global')
 
     await flushPromises()
 
@@ -70,7 +71,7 @@ describe('ZoneIngresses.vue', () => {
   })
 
   it('renders zoneingress insights', async () => {
-    renderComponent()
+    renderComponent('global')
 
     await screen.findByText(/ZoneIngressOverview/)
 

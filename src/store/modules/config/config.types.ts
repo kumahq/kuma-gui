@@ -339,7 +339,7 @@ export interface ClientConfigInterface {
   diagnostics: Diagnostics
   dnsServer: DnsServer
   dpServer: DpServer
-  environment: 'universal' | 'kubernetes'
+  environment: string
   general: General
   experimental: {}
   guiServer: GuiServer
@@ -349,7 +349,6 @@ export interface ClientConfigInterface {
   multizone: Multizone
   reports: Reports
   runtime: Runtime
-  sdsServer: SdsServer
   store: Store
   xdsServer: XdsServer
 }

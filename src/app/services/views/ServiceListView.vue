@@ -4,7 +4,6 @@
       <DataOverview
         :page-size="PAGE_SIZE"
         :error="error"
-        :has-error="error !== null"
         :is-loading="isLoading"
         :empty-state="EMPTY_STATE"
         :table-data="tableData"
@@ -106,9 +105,9 @@ async function loadData(offset: number): Promise<void> {
 
     if (err instanceof Error) {
       error.value = err
+    } else {
+      console.error(err)
     }
-
-    console.error(error)
   } finally {
     isLoading.value = false
   }

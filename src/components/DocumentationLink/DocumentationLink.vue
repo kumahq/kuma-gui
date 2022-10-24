@@ -3,17 +3,20 @@
     class="docs-link"
     appearance="outline"
     target="_blank"
-    :to="href"
+    :to="props.href"
   >
     <template #icon>
       <KIcon icon="externalLink" />
     </template>
+
     Documentation
   </KButton>
 </template>
 
 <script lang="ts" setup>
-defineProps({
+import { KButton, KIcon } from '@kong/kongponents'
+
+const props = defineProps({
   href: {
     type: String,
     required: true,

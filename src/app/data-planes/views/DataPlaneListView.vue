@@ -4,8 +4,8 @@
       <DataOverview
         :selected-entity-name="dataPlaneOverview?.name"
         :page-size="PAGE_SIZE"
-        :has-error="hasError"
         :is-loading="isLoading"
+        :error="error"
         :empty-state="getEmptyState()"
         :table-data="filteredTableData"
         :table-data-is-empty="tableDataIsEmpty"
@@ -174,7 +174,7 @@ const props = defineProps({
 const visibleTableHeaderKeys = ref(defaultVisibleTableHeaderKeys)
 const isLoading = ref(true)
 const isEmpty = ref(false)
-const hasError = ref(false)
+const error = ref<Error | null>(null)
 const tableDataIsEmpty = ref(false)
 const tableData = ref<{ headers: TableHeader[], data: any }>({
   headers: [],
@@ -237,7 +237,7 @@ watch(() => route.params.mesh, function () {
   // Ensures basic state is reset when switching meshes using the mesh selector.
   isLoading.value = true
   isEmpty.value = false
-  hasError.value = false
+  error.value = null
   tableDataIsEmpty.value = false
 
   loadData(0)
@@ -454,10 +454,13 @@ async function loadData(offset: number): Promise<void> {
       isEmpty.value = true
     }
   } catch (err) {
-    hasError.value = true
-    isEmpty.value = true
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
 
-    console.error(err)
+    isEmpty.value = true
   } finally {
     isLoading.value = false
   }

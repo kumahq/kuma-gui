@@ -6,8 +6,8 @@
     <FrameSkeleton v-else>
       <DataOverview
         :page-size="pageSize"
-        :has-error="hasError"
         :is-loading="isLoading"
+        :error="error"
         :empty-state="empty_state"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
@@ -34,7 +34,7 @@
       </DataOverview>
       <TabsWidget
         v-if="isEmpty === false"
-        :has-error="hasError"
+        :has-error="error"
         :is-loading="isLoading"
         :tabs="filterTabs()"
         initial-tab-override="overview"
@@ -163,7 +163,7 @@ export default {
     return {
       isLoading: true,
       isEmpty: false,
-      hasError: false,
+      error: null,
       entityIsLoading: true,
       entityIsEmpty: false,
       entityHasError: false,
@@ -223,7 +223,7 @@ export default {
       // Ensures basic state is reset when switching meshes using the mesh selector.
       this.isLoading = true
       this.isEmpty = false
-      this.hasError = false
+      this.error = null
       this.entityIsLoading = true
       this.entityIsEmpty = false
       this.entityHasError = false
@@ -344,11 +344,14 @@ export default {
           this.isEmpty = true
           this.entityIsEmpty = true
         }
-      } catch (error) {
-        this.hasError = true
-        this.isEmpty = true
+      } catch (err) {
+        if (err instanceof Error) {
+          error.value = err
+        } else {
+          console.error(err)
+        }
 
-        console.error(error)
+        this.isEmpty = true
       } finally {
         this.isLoading = false
       }

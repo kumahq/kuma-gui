@@ -5,6 +5,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
   class="tab-container"
   data-testid="tab-container"
 >
+  
   <header
     class="tab__header"
   >
@@ -1397,9 +1398,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
       </div>
       
     </div>
-    <div>
-      <!--v-if-->
-    </div>
   </div>
+  
 </div>
 `;

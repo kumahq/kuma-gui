@@ -134,6 +134,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                       class="tab-container"
                       data-testid="tab-container"
                     >
+                      
                       <!--v-if-->
                       <div
                         class="tab__content-container"
@@ -898,8 +899,8 @@ metrics:
                           </div>
                           
                         </div>
-                        <!--v-if-->
                       </div>
+                      
                     </div>
                   </div>
                   <div

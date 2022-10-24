@@ -1,19 +1,16 @@
-import { createStore } from 'vuex'
 import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 import { KButton } from '@kong/kongponents'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
-import { storeConfig } from '@/store/index'
-
-const store = createStore(storeConfig)
+import { store, storeKey } from '@/store/store'
 
 function renderComponent(props: any) {
   return render(OnboardingNavigation, {
     props,
     global: {
-      plugins: [store],
+      plugins: [[store, storeKey]],
       components: {
         KButton,
       },

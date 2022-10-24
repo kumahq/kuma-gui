@@ -25,7 +25,6 @@
     <FrameSkeleton>
       <DataOverview
         :page-size="PAGE_SIZE_DEFAULT"
-        :has-error="error !== null"
         :error="error"
         :is-loading="isLoading"
         :empty-state="{
@@ -168,7 +167,7 @@ const props = defineProps({
 
 const isLoading = ref(true)
 const isEmpty = ref(false)
-const error = ref<any>(null)
+const error = ref<Error | null>(null)
 const entityIsLoading = ref(true)
 const entityIsEmpty = ref(false)
 const entityHasError = ref(false)
@@ -257,7 +256,12 @@ async function loadData(offset: number = 0): Promise<void> {
       entityIsEmpty.value = true
     }
   } catch (err) {
-    error.value = err
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
+
     isEmpty.value = true
   } finally {
     isLoading.value = false
