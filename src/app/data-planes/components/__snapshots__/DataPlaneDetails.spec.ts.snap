@@ -474,24 +474,23 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                   <div
                     class="k-code-block code-block"
                     data-testid="k-code-block"
-                    data-v-254017d9=""
+                    data-v-6da4a89e=""
                     id="code-block-data-plane"
                     style="--maxLineNumberWidth: 2ch;"
                     tabindex="0"
                   >
                     <div
                       class="k-code-block-actions"
-                      data-v-254017d9=""
+                      data-v-6da4a89e=""
                     >
-                      <!---->
                       <div
-                        class="k-code-block-search-container"
-                        data-v-254017d9=""
+                        class="k-search-container"
+                        data-v-6da4a89e=""
                       >
                         <span
                           class="k-search-icon kong-icon-search kong-icon"
                           data-testid="k-code-block-search-icon"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -520,27 +519,28 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <label
                           class="k-code-block-search-label"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                           for="code-block-data-plane-search-input"
                         >
                           <span
                             class="k-visually-hidden"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
-                            Highlight
+                            Search
                           </span>
                         </label>
                         <input
                           class="k-code-block-search-input"
                           data-testid="k-code-block-search-input"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                           id="code-block-data-plane-search-input"
                           type="text"
                         />
+                        <!---->
                         <span
                           class="k-is-processing-icon kong-icon-spinner kong-icon"
                           data-testid="k-code-block-is-processing-icon"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -577,210 +577,223 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <!---->
                       </div>
-                      <button
-                        aria-pressed="false"
-                        class="small outline k-button k-regexp-mode-button"
-                        data-testid="k-code-block-regexp-mode-button"
-                        data-v-254017d9=""
-                        data-v-6f773baa=""
-                        title="Use regular expression (Alt+R)"
-                        type="button"
+                      <p
+                        class="k-code-block-search-results"
+                        data-v-6da4a89e=""
                       >
                         
-                        <!---->
+                         No results 
                         
-                        
-                        <span
-                          class="k-visually-hidden"
-                          data-v-254017d9=""
-                        >
-                          RegExp mode enabled
-                        </span>
-                         .* 
-                        
-                        <!---->
-                      </button>
-                      <button
-                        aria-pressed="false"
-                        class="small outline k-button k-filter-mode-button"
-                        data-testid="k-code-block-filter-mode-button"
-                        data-v-254017d9=""
-                        data-v-6f773baa=""
-                        title="Filter results (Alt+F)"
-                        type="button"
+                      </p>
+                      <div
+                        class="k-search-actions"
+                        data-v-6da4a89e=""
                       >
-                        
-                        <span
-                          class="k-button-icon kong-icon-filter kong-icon"
-                          data-v-254017d9=""
-                          data-v-71cfcfc4=""
+                        <button
+                          aria-pressed="false"
+                          class="small outline k-button k-regexp-mode-button"
+                          data-testid="k-code-block-regexp-mode-button"
+                          data-v-6da4a89e=""
+                          data-v-6f773baa=""
+                          title="Use regular expression (Alt+R)"
+                          type="button"
                         >
-                          <svg
-                            height="11"
-                            viewBox="0 0 14 11"
-                            width="14"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Filter
-                            </title>
-                            
-  
-                            <path
-                              d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
-                              fill="#A3BBCC"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
                           
-
-                        </span>
-                        
-                        
-                        <span
-                          class="k-visually-hidden"
-                          data-v-254017d9=""
-                        >
-                          Filter mode enabled
-                        </span>
-                        
-                        <!---->
-                      </button>
-                      <button
-                        class="small outline k-button k-previous-match-button"
-                        data-testid="k-code-block-previous-match-button"
-                        data-v-254017d9=""
-                        data-v-6f773baa=""
-                        disabled=""
-                        title="Previous match (Shift+F3)"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="k-button-icon kong-icon-chevronUp kong-icon"
-                          data-v-254017d9=""
-                          data-v-71cfcfc4=""
-                        >
-                          <svg
-                            fill="none"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
+                          <!---->
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                            data-v-6da4a89e=""
                           >
-                            
+                            RegExp mode enabled
+                          </span>
+                           .* 
+                          
+                          <!---->
+                        </button>
+                        <button
+                          aria-pressed="false"
+                          class="small outline k-button k-filter-mode-button"
+                          data-testid="k-code-block-filter-mode-button"
+                          data-v-6da4a89e=""
+                          data-v-6f773baa=""
+                          title="Filter results (Alt+F)"
+                          type="button"
+                        >
+                          
+                          <span
+                            class="k-button-icon kong-icon-filter kong-icon"
+                            data-v-6da4a89e=""
+                            data-v-71cfcfc4=""
+                          >
+                            <svg
+                              height="11"
+                              viewBox="0 0 14 11"
+                              width="14"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
   
-                            <title>
-                              Collapse
-                            </title>
-                            
+                              <title>
+                                Filter
+                              </title>
+                              
   
-                            <path
-                              d="M15 12 9.8 7l-5.2 5"
+                              <path
+                                d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
+                                fill="#A3BBCC"
+                                fill-rule="evenodd"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                            data-v-6da4a89e=""
+                          >
+                            Filter mode enabled
+                          </span>
+                          
+                          <!---->
+                        </button>
+                        <button
+                          class="small outline k-button k-previous-match-button"
+                          data-testid="k-code-block-previous-match-button"
+                          data-v-6da4a89e=""
+                          data-v-6f773baa=""
+                          disabled=""
+                          title="Previous match (Shift+F3)"
+                          type="button"
+                        >
+                          
+                          <span
+                            class="k-button-icon kong-icon-chevronUp kong-icon"
+                            data-v-6da4a89e=""
+                            data-v-71cfcfc4=""
+                          >
+                            <svg
                               fill="none"
-                              stroke="#A3BBCC"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                            />
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Collapse
+                              </title>
+                              
+  
+                              <path
+                                d="M15 12 9.8 7l-5.2 5"
+                                fill="none"
+                                stroke="#A3BBCC"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              
+
+                            </svg>
                             
 
-                          </svg>
+                          </span>
                           
-
-                        </span>
-                        
-                        
-                        <span
-                          class="k-visually-hidden"
-                          data-v-254017d9=""
-                        >
-                          Previous match
-                        </span>
-                        
-                        <!---->
-                      </button>
-                      <button
-                        class="small outline k-button k-next-match-button"
-                        data-testid="k-code-block-next-match-button"
-                        data-v-254017d9=""
-                        data-v-6f773baa=""
-                        disabled=""
-                        title="Next match (F3)"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="k-button-icon kong-icon-chevronDown kong-icon"
-                          data-v-254017d9=""
-                          data-v-71cfcfc4=""
-                        >
-                          <svg
-                            fill="none"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
+                          
+                          <span
+                            class="k-visually-hidden"
+                            data-v-6da4a89e=""
                           >
-                            
-  
-                            <title>
-                              Expand
-                            </title>
-                            
-  
-                            <path
-                              d="m4.6 7 5.2 5L15 7"
-                              fill="none"
-                              stroke="#A3BBCC"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                            />
-                            
-
-                          </svg>
+                            Previous match
+                          </span>
                           
-
-                        </span>
-                        
-                        
-                        <span
-                          class="k-visually-hidden"
-                          data-v-254017d9=""
+                          <!---->
+                        </button>
+                        <button
+                          class="small outline k-button k-next-match-button"
+                          data-testid="k-code-block-next-match-button"
+                          data-v-6da4a89e=""
+                          data-v-6f773baa=""
+                          disabled=""
+                          title="Next match (F3)"
+                          type="button"
                         >
-                          Next match
-                        </span>
-                        
-                        <!---->
-                      </button>
+                          
+                          <span
+                            class="k-button-icon kong-icon-chevronDown kong-icon"
+                            data-v-6da4a89e=""
+                            data-v-71cfcfc4=""
+                          >
+                            <svg
+                              fill="none"
+                              viewBox="0 0 20 20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              
+  
+                              <title>
+                                Expand
+                              </title>
+                              
+  
+                              <path
+                                d="m4.6 7 5.2 5L15 7"
+                                fill="none"
+                                stroke="#A3BBCC"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                              />
+                              
+
+                            </svg>
+                            
+
+                          </span>
+                          
+                          
+                          <span
+                            class="k-visually-hidden"
+                            data-v-6da4a89e=""
+                          >
+                            Next match
+                          </span>
+                          
+                          <!---->
+                        </button>
+                      </div>
                     </div>
                     <div
                       class="k-code-block-content"
-                      data-v-254017d9=""
+                      data-v-6da4a89e=""
                     >
                       <pre
                         class="k-highlighted-code-block language-yaml"
                         data-testid="k-code-block-highlighted-code-block"
-                        data-v-254017d9=""
+                        data-v-6da4a89e=""
                         tabindex="0"
                       >
                         <span
                           class="k-line-number-rows"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                         >
                           
         
                           
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L1"
                             >
                               1
@@ -790,13 +803,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L2"
                             >
                               2
@@ -806,13 +819,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L3"
                             >
                               3
@@ -822,13 +835,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L4"
                             >
                               4
@@ -838,13 +851,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L5"
                             >
                               5
@@ -854,13 +867,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L6"
                             >
                               6
@@ -870,13 +883,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L7"
                             >
                               7
@@ -886,13 +899,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L8"
                             >
                               8
@@ -902,13 +915,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L9"
                             >
                               9
@@ -918,13 +931,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L10"
                             >
                               10
@@ -934,13 +947,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L11"
                             >
                               11
@@ -950,13 +963,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L12"
                             >
                               12
@@ -966,13 +979,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L13"
                             >
                               13
@@ -982,13 +995,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L14"
                             >
                               14
@@ -998,13 +1011,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L15"
                             >
                               15
@@ -1014,13 +1027,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-254017d9=""
+                            data-v-6da4a89e=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-254017d9=""
+                              data-v-6da4a89e=""
                               id="code-block-data-plane-L16"
                             >
                               16
@@ -1034,7 +1047,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <code
                           class="language-yaml"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                         >
                           <span
                             class="token key atrule"
@@ -1268,7 +1281,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       <button
                         class="small outline k-button k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
-                        data-v-254017d9=""
+                        data-v-6da4a89e=""
                         data-v-6f773baa=""
                         title="Copy (Alt+C)"
                         type="button"
@@ -1279,7 +1292,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         
                         <span
                           class="kong-icon-copy kong-icon"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -1307,7 +1320,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <span
                           class="k-visually-hidden"
-                          data-v-254017d9=""
+                          data-v-6da4a89e=""
                         >
                           Copy
                         </span>
