@@ -62,8 +62,8 @@
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
 
-import DonutChart from '@/components/DonutChart.vue'
-import VersionsDonutChart from '@/components/VersionsDonutChart.vue'
+import DonutChart from '@/app/common/charts/DonutChart.vue'
+import VersionsDonutChart from '@/app/common/charts/VersionsDonutChart.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
 import { useStore } from '@/store/store'
 

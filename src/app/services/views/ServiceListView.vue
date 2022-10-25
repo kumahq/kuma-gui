@@ -30,7 +30,7 @@ import { ref, watch } from 'vue'
 import { useRoute, RouteLocationRaw } from 'vue-router'
 
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
-import DataOverview from '@/components/Skeletons/DataOverview.vue'
+import DataOverview from '@/app/common/DataOverview.vue'
 import ServiceDetails from '../components/ServiceDetails.vue'
 import Kuma from '@/services/kuma'
 import { STATUS } from '@/consts'

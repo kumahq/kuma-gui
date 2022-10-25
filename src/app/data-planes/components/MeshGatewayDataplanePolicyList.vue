@@ -97,8 +97,8 @@
 import { PropType } from 'vue'
 import { KBadge } from '@kong/kongponents'
 
-import AccordionList from '@/components/Accordion/AccordionList.vue'
-import AccordionItem from '@/components/Accordion/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
+import AccordionItem from '@/app/common/AccordionItem.vue'
 import { MeshGatewayDataplane, MeshGatewayListenerEntry, MeshGatewayRoutePolicy } from '@/types'
 
 const props = defineProps({

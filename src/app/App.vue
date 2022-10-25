@@ -61,7 +61,7 @@ import AppHeader from './AppHeader.vue'
 import AppLoadingBar from './AppLoadingBar.vue'
 import AppOnboardingNotification from './AppOnboardingNotification.vue'
 import AppSidebar from './AppSidebar.vue'
-import NotificationManager from '@/components/NotificationManager/NotificationManager.vue'
+import NotificationManager from '@/app/notification-manager/components/NotificationManager.vue'
 
 const store = useStore()
 const route = useRoute()
@@ -73,7 +73,7 @@ const isLoading = ref(true)
  *
  * Is always set to `'NONE'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
  * However, in some scenarios, we want Vue to re-render a route’s components
- * (e.g. `src/app/policies/PolicyView.vue` which is used by some dozen policy routes).
+ * (e.g. `src/app/policies/views/PolicyView.vue` which is used by some dozen policy routes).
  */
 const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'NONE')
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')

@@ -62,7 +62,7 @@ import { useRoute } from 'vue-router'
 import { ServiceInsight } from '@/types'
 import { stripTimes } from '@/helpers'
 import { STATUS } from '@/consts'
-import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
+import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import YamlView from '@/app/common/YamlView.vue'
 
 const route = useRoute()

@@ -123,7 +123,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
-import DataOverview from '@/components/Skeletons/DataOverview.vue'
+import DataOverview from '@/app/common/DataOverview.vue'
 import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders } from '../constants'

@@ -96,8 +96,8 @@
 import { PropType } from 'vue'
 import { KPop, KIcon, KBadge } from '@kong/kongponents'
 
-import AccordionList from '@/components/Accordion/AccordionList.vue'
-import AccordionItem from '@/components/Accordion/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
+import AccordionItem from '@/app/common/AccordionItem.vue'
 import { SidecarDataplanePolicy } from '@/types'
 
 const POLICY_TYPE_SUBTITLE: Record<string, string> = {
