@@ -1,3 +1,3 @@
-# Kuma community code of conduct
+# Kuma Community Code of Conduct
 
-Kuma follows the [CNCF Community Code of Conduct v1.2](https://github.com/cncf/foundation/blob/main/code-of-conduct.md).
+Kuma follows the [CNCF Code of Conduct](https://github.com/cncf/foundation/blob/master/code-of-conduct.md).
