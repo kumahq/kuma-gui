@@ -22,7 +22,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton } from '@kong/kongponents'
 
-import { datadogLogEvents } from '@/datadogEvents'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 
 const props = defineProps({
   hasPrevious: {

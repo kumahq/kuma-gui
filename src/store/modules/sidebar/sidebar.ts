@@ -4,8 +4,8 @@ import { State } from '../../index'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
 
-import Kuma from '@/services/kuma'
-import { MeshInsight } from '@/types'
+import { kumaApi } from '@/api/kumaApi'
+import { MeshInsight } from '@/types/index.d'
 
 const initialSidebarState: SidebarInterface = {
   insights: {
@@ -47,7 +47,7 @@ const actions: ActionTree<SidebarInterface, State> = {
     let meshInsights
 
     try {
-      const response = await Kuma.getMeshInsights({ name: rootState.selectedMesh })
+      const response = await kumaApi.getMeshInsights({ name: rootState.selectedMesh })
       meshInsightsRawData = { items: [response], total: 1 }
 
       meshInsights = calculateMeshInsights(meshInsightsRawData)
@@ -59,7 +59,7 @@ const actions: ActionTree<SidebarInterface, State> = {
   },
 
   async getGlobalInsights({ commit }) {
-    const globalInsightsRawData = await Kuma.getGlobalInsights()
+    const globalInsightsRawData = await kumaApi.getGlobalInsights()
 
     const globalInsights = calculateGlobalInsights(globalInsightsRawData)
 

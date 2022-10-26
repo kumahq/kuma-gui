@@ -7,7 +7,7 @@ import 'isomorphic-fetch'
 import dotenv from 'dotenv'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
-import { setupMockServer } from '@/services/setupMockServer'
+import { setupMockServer } from '../src/api/setupMockServer'
 
 /**
  * Ensures the tests run with the project’s environment variables being available.

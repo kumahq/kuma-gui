@@ -121,11 +121,11 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { getTableData } from '@/utils/tableDataUtils'
-import { getSome } from '@/helpers'
-import Kuma from '@/services/kuma'
-import { getItemStatusFromInsight } from '@/dataplane'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
+import { getTableData } from '@/utilities/tableDataUtils'
+import { getSome } from '@/utilities/helpers'
+import { kumaApi } from '@/api/kumaApi'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
@@ -241,8 +241,8 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getAllEntities: Kuma.getAllZoneIngressOverviews.bind(Kuma),
-          getSingleEntity: Kuma.getZoneIngressOverview.bind(Kuma),
+          getAllEntities: kumaApi.getAllZoneIngressOverviews.bind(kumaApi),
+          getSingleEntity: kumaApi.getZoneIngressOverview.bind(kumaApi),
           size: this.pageSize,
           offset,
           query,

@@ -48,7 +48,7 @@ the GUI has moved to `:5681/gui/`.
 
 NOTE:
 
-⚠️ This release will require a force-refresh in your browser if you are coming from a previous version of Kuma. This is due to optimization efforts to the JS and CSS files being namespaced instead of using auto-generated filenames.
+⚠️ This release will require a force-refresh in your browser if you are coming from a previous version of kumaApi. This is due to optimization efforts to the JS and CSS files being namespaced instead of using auto-generated filenames.
 
 ## [0.5.1]
 

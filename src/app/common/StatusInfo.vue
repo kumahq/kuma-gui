@@ -19,7 +19,7 @@
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { ApiError } from '@/services/ApiError'
+import { ApiError } from '@/api/ApiError'
 
 defineProps({
   isLoading: {

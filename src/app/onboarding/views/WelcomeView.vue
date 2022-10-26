@@ -39,7 +39,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 import ItemStatus from '../components/ItemStatus.vue'
 import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'

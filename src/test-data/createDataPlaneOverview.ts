@@ -1,4 +1,4 @@
-import { DataPlaneOverview } from '@/types'
+import { DataPlaneOverview } from '@/types/index.d'
 
 export function createDataPlaneOverview(): DataPlaneOverview {
   return {

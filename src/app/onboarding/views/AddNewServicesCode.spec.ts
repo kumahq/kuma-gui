@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/vue'
 import { KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
@@ -42,7 +42,7 @@ describe('AddNewServicesCode.vue', () => {
 
   it('refetch resources if any not available', async () => {
     jest
-      .spyOn(Kuma, 'getAllDataplanes')
+      .spyOn(kumaApi, 'getAllDataplanes')
       .mockResolvedValueOnce({
         total: 0,
       })
@@ -58,6 +58,6 @@ describe('AddNewServicesCode.vue', () => {
     await flushPromises()
 
     expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
-    expect(Kuma.getAllDataplanes).toHaveBeenCalledTimes(2)
+    expect(kumaApi.getAllDataplanes).toHaveBeenCalledTimes(2)
   })
 })

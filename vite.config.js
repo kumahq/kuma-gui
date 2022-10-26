@@ -16,7 +16,7 @@ export default defineConfig({
   resolve: {
     alias: {
       /**
-       * Used to import files using, for example, '@/services/kuma'.
+       * Used to import files using, for example, '@/api/kumaApi'.
        */
       '@': path.resolve('./src'),
     },

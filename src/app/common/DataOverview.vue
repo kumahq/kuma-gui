@@ -268,13 +268,13 @@ import { computed, PropType, ref, useSlots, watch } from 'vue'
 import { KButton, KIcon, KTable } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
 
-import { datadogLogEvents } from '@/datadogEvents'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import EmptyBlock from './EmptyBlock.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import LoadingBlock from './LoadingBlock.vue'
 import PaginationWidget from './PaginationWidget.vue'
 import TagList from './TagList.vue'
-import { TableData } from '@/types'
+import { TableData } from '@/types/index.d'
 
 const slots = useSlots()
 

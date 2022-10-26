@@ -98,7 +98,7 @@ import { KPop, KIcon, KBadge } from '@kong/kongponents'
 
 import AccordionList from '@/app/common/AccordionList.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
-import { SidecarDataplanePolicy } from '@/types'
+import { SidecarDataplanePolicy } from '@/types/index.d'
 
 const POLICY_TYPE_SUBTITLE: Record<string, string> = {
   inbound: 'Policies applied on incoming connection on address',

@@ -30,8 +30,8 @@
     "jsx": "preserve"
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.vue"
+    "**/*.ts",
+    "**/*.vue"
   ],
   "exclude": [
     "node_modules"

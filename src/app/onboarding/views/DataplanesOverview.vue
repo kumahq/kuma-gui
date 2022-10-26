@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import { PRODUCT_NAME, OFFLINE } from '@/consts'
-import { getItemStatusFromInsight } from '@/dataplane'
-import Kuma from '@/services/kuma'
+import { PRODUCT_NAME, OFFLINE } from '@/constants'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
@@ -121,13 +121,13 @@ export default {
       const result = []
 
       try {
-        const dataplanes = await Kuma.getAllDataplanes({ size: 10 })
+        const dataplanes = await kumaApi.getAllDataplanes({ size: 10 })
         const items = dataplanes.items
 
         for (let i = 0; i < items.length; i++) {
           const { name, mesh } = items[i]
 
-          const { status } = await Kuma.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
+          const { status } = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
             getItemStatusFromInsight(response.dataplaneInsight),
           )
 

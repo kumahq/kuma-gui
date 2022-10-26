@@ -6,7 +6,7 @@ import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, K
 import Mesh from './Mesh.vue'
 import { store, storeKey } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
-import * as config from '@/services/mock/responses/config.json'
+import * as config from '@/api/mock-data/config.json'
 
 const router = createRouter({
   history: createWebHashHistory(),

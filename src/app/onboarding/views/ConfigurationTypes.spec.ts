@@ -4,7 +4,7 @@ import { KButton, KPop, KRadio } from '@kong/kongponents'
 import ConfigurationTypes from './ConfigurationTypes.vue'
 import { store, storeKey } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
-import * as config from '@/services/mock/responses/config.json'
+import * as config from '@/api/mock-data/config.json'
 
 function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }

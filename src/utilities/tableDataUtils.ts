@@ -1,5 +1,5 @@
 import { TableDataParams, TableItem } from './tableDataUtils.types'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 
 function sortEntities(items: TableItem[]): TableItem[] {
   return [...items].sort((a, b) => (a.name > b.name ? 1 : a.name === b.name ? (a.mesh > b.mesh ? 1 : -1) : -1))

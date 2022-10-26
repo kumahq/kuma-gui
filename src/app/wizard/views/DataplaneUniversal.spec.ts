@@ -6,7 +6,7 @@ import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, K
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
 import { store, storeKey } from '@/store/store'
-import { server } from '@/jest-setup'
+import { server } from '@/../jest/jest-setup'
 
 const router = createRouter({
   history: createWebHashHistory(),

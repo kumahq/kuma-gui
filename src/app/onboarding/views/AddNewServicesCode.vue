@@ -80,9 +80,9 @@ import { mapGetters } from 'vuex'
 import json2yaml from '@appscode/json2yaml'
 import { KCard } from '@kong/kongponents'
 
-import Kuma from '@/services/kuma'
-import { PRODUCT_NAME } from '@/consts'
-import { kumaDpServerUrl } from '@/configUrl'
+import { kumaApi } from '@/api/kumaApi'
+import { PRODUCT_NAME } from '@/constants'
+import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
@@ -154,7 +154,7 @@ export default {
   methods: {
     async getDPPs() {
       try {
-        const { total } = await Kuma.getAllDataplanes()
+        const { total } = await kumaApi.getAllDataplanes()
 
         this.hasDPPs = total > 0
       } catch (e) {

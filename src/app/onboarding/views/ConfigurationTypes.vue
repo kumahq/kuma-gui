@@ -42,7 +42,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 import KubernetesGraph from '../components/graphs/KubernetesGraph.vue'
 import PostgresGraph from '../components/graphs/PostgresGraph.vue'
 import MemoryGraph from '../components/graphs/MemoryGraph.vue'

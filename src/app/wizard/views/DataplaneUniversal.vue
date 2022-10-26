@@ -401,9 +401,9 @@ networking:
 import { mapGetters } from 'vuex'
 import json2yaml from '@appscode/json2yaml'
 
-import Kuma from '@/services/kuma'
-import { kumaDpServerUrl } from '@/configUrl'
-import { kebabCase } from '@/helpers'
+import { kumaApi } from '@/api/kumaApi'
+import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
+import { kebabCase } from '@/utilities/helpers'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import FormFragment from '../components/FormFragment.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
@@ -413,7 +413,7 @@ import EntityScanner from '../components/EntityScanner.vue'
 
 // schema for building code output
 import dataplaneSchema from './DataplaneUniversalSchema'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 
 export default {
   name: 'DataplaneWizardUniversal',
@@ -657,7 +657,7 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!meshName || !univDataplaneId) return
 
-      Kuma.getDataplaneFromMesh({ mesh: meshName, name: univDataplaneId })
+      kumaApi.getDataplaneFromMesh({ mesh: meshName, name: univDataplaneId })
         .then((response) => {
           if (response?.name?.length > 0) {
             this.isRunning = true

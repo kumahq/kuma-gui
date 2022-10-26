@@ -24,8 +24,8 @@
 <script lang="ts" setup>
 import { ref, watch, PropType } from 'vue'
 
-import { ExternalService, ServiceInsight } from '@/types'
-import Kuma from '@/services/kuma'
+import { ExternalService, ServiceInsight } from '@/types/index.d'
+import { kumaApi } from '@/api/kumaApi'
 import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
 import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
@@ -76,9 +76,9 @@ async function loadEntity() {
 
   try {
     if (props.serviceType === 'external') {
-      externalService.value = await Kuma.getExternalService({ mesh, name })
+      externalService.value = await kumaApi.getExternalService({ mesh, name })
     } else {
-      serviceInsight.value = await Kuma.getServiceInsight({ mesh, name })
+      serviceInsight.value = await kumaApi.getServiceInsight({ mesh, name })
     }
   } catch (err) {
     if (err instanceof Error) {

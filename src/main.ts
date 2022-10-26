@@ -3,11 +3,11 @@ import { addLicense, useTheme } from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import App from './app/App.vue'
-import { registerKongponents } from './register-kongponents'
+import { registerKongponents } from './utilities/registerKongponents'
 import { setupRouter } from './router/router'
 import { storeKey, store } from './store/store'
-import { setupDatadog } from './datadog'
-import Kuma from './services/kuma'
+import { setupDatadog } from './utilities/setupDatadog'
+import { kumaApi } from './api/kumaApi'
 
 import '@kong/kongponents/dist/style.css'
 import '@kong/kongponents/dist/_variables.scss'
@@ -39,9 +39,9 @@ async function initializeVue() {
   if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
     // The combination of reading the environment variable and using dynamic import
     // ensures that msw isn’t actually bundled with the production application.
-    const { setupMockWorker } = await import('./services/setupMockWorker')
+    const { setupMockWorker } = await import('./api/setupMockWorker')
 
-    setupMockWorker(Kuma.url)
+    setupMockWorker(kumaApi.url)
   }
 
   const app = createApp(App)

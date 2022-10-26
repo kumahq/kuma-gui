@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/vue'
 import { rest } from 'msw'
 
 import EnvoyData from './EnvoyData.vue'
-import { server } from '@/jest-setup'
+import { server } from '@/../jest/jest-setup'
 
 function renderComponent(props = {}) {
   return render(EnvoyData, {

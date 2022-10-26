@@ -131,18 +131,18 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useStore } from '@/store/store'
-import { getSome, stripTimes } from '@/helpers'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
+import { getSome, stripTimes } from '@/utilities/helpers'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import LabelList from '@/app/common/LabelList.vue'
 import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { PolicyEntity, TableHeader } from '@/types'
+import { PolicyEntity, TableHeader } from '@/types/index.d'
 
 const tabs = [
   {
@@ -225,7 +225,7 @@ async function loadData(offset: number = 0): Promise<void> {
     let items: PolicyEntity[]
 
     if (mesh !== null && name !== null) {
-      const item = await Kuma.getSinglePolicyEntity({ mesh, path, name })
+      const item = await kumaApi.getSinglePolicyEntity({ mesh, path, name })
       items = [item]
       nextUrl.value = null
     } else {
@@ -233,7 +233,7 @@ async function loadData(offset: number = 0): Promise<void> {
         size: PAGE_SIZE_DEFAULT,
         offset,
       }
-      const response = await Kuma.getAllPolicyEntitiesFromMesh({ mesh, path }, params)
+      const response = await kumaApi.getAllPolicyEntitiesFromMesh({ mesh, path }, params)
       items = response.items
       nextUrl.value = response.next
     }
@@ -294,7 +294,7 @@ async function getEntity(entity: any): Promise<void> {
 
   if (entity) {
     try {
-      const item = await Kuma.getSinglePolicyEntity({ mesh: entity.mesh, path: policy.value.path, name: entity.name })
+      const item = await kumaApi.getSinglePolicyEntity({ mesh: entity.mesh, path: policy.value.path, name: entity.name })
 
       if (item) {
         const selected = ['type', 'name', 'mesh']

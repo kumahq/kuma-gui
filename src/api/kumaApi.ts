@@ -1,5 +1,5 @@
-import { RestClient } from '@/services/RestClient'
-import { ApiListResponse, ApiKindListResponse } from '@/api'
+import { RestClient } from './RestClient'
+import { ApiListResponse, ApiKindListResponse } from '@/types/api.d'
 import {
   DataPlane,
   DataPlaneOverview,
@@ -14,7 +14,7 @@ import {
   SidecarDataplane,
   Zone,
   ZoneOverview,
-} from '@/types'
+} from '@/types/index.d'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 
 const defaultOptions = {
@@ -30,7 +30,7 @@ interface ApiDefaultOptions {
 
 type ApiDefaultPolicyOptions = ApiDefaultOptions & { path: string }
 
-class Kuma {
+class KumaApi {
   private client: RestClient
 
   public constructor() {
@@ -225,4 +225,4 @@ class Kuma {
   }
 }
 
-export default new Kuma()
+export const kumaApi = new KumaApi()

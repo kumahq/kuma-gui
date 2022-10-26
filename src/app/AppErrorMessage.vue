@@ -17,7 +17,7 @@
 
     <template #message>
       <p>
-        Please double check to make sure it is up and running <span v-if="Kuma.url">, and it is reachable at <code>{{ Kuma.url }}</code></span>
+        Please double check to make sure it is up and running <span v-if="kumaApi.url">, and it is reachable at <code>{{ kumaApi.url }}</code></span>
       </p>
     </template>
   </KEmptyState>
@@ -26,5 +26,5 @@
 <script lang="ts" setup>
 import { KEmptyState, KIcon } from '@kong/kongponents'
 
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 </script>

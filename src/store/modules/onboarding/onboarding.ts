@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { State } from '../../index'
 import { OnboardingInterface } from './onboarding.types'
-import { ClientStorage } from '@/utils/ClientStorage'
+import { ClientStorage } from '@/utilities/ClientStorage'
 
 const initialOnboardingState: OnboardingInterface = {
   isCompleted: ClientStorage.get('onboardingIsCompleted') === 'true',

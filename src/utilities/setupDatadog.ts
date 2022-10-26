@@ -1,9 +1,9 @@
 import { datadogLogs } from '@datadog/browser-logs'
 
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 
 export async function setupDatadog() {
-  const config = await Kuma.getConfig()
+  const config = await kumaApi.getConfig()
 
   if (config.reports.enabled) {
     datadogLogs.init({

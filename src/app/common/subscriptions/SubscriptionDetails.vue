@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { humanReadableDate, camelCaseToWords } from '@/helpers'
+import { humanReadableDate, camelCaseToWords } from '@/utilities/helpers'
 
 export default {
   name: 'SubscriptionDetails',

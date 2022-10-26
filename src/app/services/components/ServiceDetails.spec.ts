@@ -1,7 +1,7 @@
 import { flushPromises, shallowMount } from '@vue/test-utils'
 
 import ServiceDetails from './ServiceDetails.vue'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import { createExternalService } from '@/test-data/createExternalService'
 import { createServiceInsight } from '@/test-data/createServiceInsight'
 
@@ -16,8 +16,8 @@ function renderComponent(props = {}) {
 
 describe('ServiceDetails', () => {
   beforeAll(() => {
-    jest.spyOn(Kuma, 'getExternalService').mockImplementation(() => Promise.resolve(externalService))
-    jest.spyOn(Kuma, 'getServiceInsight').mockImplementation(() => Promise.resolve(serviceInsight))
+    jest.spyOn(kumaApi, 'getExternalService').mockImplementation(() => Promise.resolve(externalService))
+    jest.spyOn(kumaApi, 'getServiceInsight').mockImplementation(() => Promise.resolve(serviceInsight))
   })
 
   test.each([

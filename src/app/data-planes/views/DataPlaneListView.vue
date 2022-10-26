@@ -114,8 +114,8 @@
 
 <script lang="ts" setup>
 /** @typedef {import('../constants').ColumnDropdownItem} ColumnDropdownItem */
-/** @typedef {import('@/types').DataplaneOverview} DataplaneOverview */
-/** @typedef {import('@/types').ZoneOverview} ZoneOverview */
+/** @typedef {import('@/types/index.d').DataplaneOverview} DataplaneOverview */
+/** @typedef {import('@/types/index.d').ZoneOverview} ZoneOverview */
 
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -128,11 +128,11 @@ import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntity
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders } from '../constants'
 import { useStore } from '@/store/store'
-import { ClientStorage } from '@/utils/ClientStorage'
-import { patchQueryParam } from '@/utils/patchQueryParam'
-import Kuma from '@/services/kuma'
-import { humanReadableDate } from '@/helpers'
-import { datadogLogEvents } from '@/datadogEvents'
+import { ClientStorage } from '@/utilities/ClientStorage'
+import { patchQueryParam } from '@/utilities/patchQueryParam'
+import { kumaApi } from '@/api/kumaApi'
+import { humanReadableDate } from '@/utilities/helpers'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
   compatibilityKind,
   dpTags,
@@ -142,9 +142,9 @@ import {
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
-} from '@/dataplane'
-import { DataPlaneOverview, TableHeader } from '@/types'
-import { KUMA_ZONE_TAG_NAME } from '@/consts'
+} from '@/utilities/dataplane'
+import { DataPlaneOverview, TableHeader } from '@/types/index.d'
+import { KUMA_ZONE_TAG_NAME } from '@/constants'
 
 const PAGE_SIZE = 50
 const dataPlaneTypes = [
@@ -428,7 +428,7 @@ async function loadData(offset: number): Promise<void> {
   const size = PAGE_SIZE
 
   try {
-    const { items, next } = await Kuma.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset })
+    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset })
 
     if (Array.isArray(items) && items.length > 0) {
       items.sort(function (overviewA, overviewB) {

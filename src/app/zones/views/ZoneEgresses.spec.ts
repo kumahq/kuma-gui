@@ -7,7 +7,7 @@ import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon,
 import ZoneEgresses from './ZoneEgresses.vue'
 import { store, storeKey } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
-import * as config from '@/services/mock/responses/config.json'
+import * as config from '@/api/mock-data/config.json'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -20,8 +20,8 @@ const router = createRouter({
   ],
 })
 
-jest.mock('@/helpers', () => {
-  const originalModule = jest.requireActual('@/helpers')
+jest.mock('@/utilities/helpers', () => {
+  const originalModule = jest.requireActual('@/utilities/helpers')
 
   return {
     __esModule: true,

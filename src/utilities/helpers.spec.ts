@@ -1,6 +1,6 @@
-import { DISABLED } from '@/consts'
-import { getZoneDpServerAuthType, fetchAllResources } from '@/helpers'
-import { ZoneOverview } from '@/types'
+import { DISABLED } from '@/constants'
+import { getZoneDpServerAuthType, fetchAllResources } from './helpers'
+import { ZoneOverview } from '@/types/index.d'
 
 describe('helpers', () => {
   describe('getZoneDpServerAuthType', () => {

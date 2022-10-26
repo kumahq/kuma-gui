@@ -115,11 +115,11 @@
 </template>
 
 <script>
-import { getItemStatusFromInsight } from '@/dataplane'
-import { getSome } from '@/helpers'
-import { getTableData } from '@/utils/tableDataUtils'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
-import Kuma from '@/services/kuma'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { getSome } from '@/utilities/helpers'
+import { getTableData } from '@/utilities/tableDataUtils'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { kumaApi } from '@/api/kumaApi'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
@@ -226,8 +226,8 @@ export default {
 
       try {
         const { data, next } = await getTableData({
-          getAllEntities: Kuma.getAllZoneEgressOverviews.bind(Kuma),
-          getSingleEntity: Kuma.getZoneEgressOverview.bind(Kuma),
+          getAllEntities: kumaApi.getAllZoneEgressOverviews.bind(kumaApi),
+          getSingleEntity: kumaApi.getZoneEgressOverview.bind(kumaApi),
           size: this.pageSize,
           offset,
           query,

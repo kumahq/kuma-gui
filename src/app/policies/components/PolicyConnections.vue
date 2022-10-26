@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue'
 
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import LabelList from '@/app/common/LabelList.vue'
 
 const props = defineProps({
@@ -91,7 +91,7 @@ async function fetchPolicyConntections(): Promise<void> {
   isLoading.value = true
 
   try {
-    const { items, total } = await Kuma.getPolicyConnections({
+    const { items, total } = await kumaApi.getPolicyConnections({
       mesh: props.mesh,
       policyType: props.policyType,
       policyName: props.policyName,

@@ -213,7 +213,7 @@ import {
   Compatibility,
   DataPlane,
   DataPlaneOverview,
-} from '@/types'
+} from '@/types/index.d'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -223,9 +223,9 @@ import {
   INCOMPATIBLE_WRONG_FORMAT,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
-} from '@/dataplane'
-import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/consts'
-import { stripTimes } from '@/helpers'
+} from '@/utilities/dataplane'
+import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/constants'
+import { stripTimes } from '@/utilities/helpers'
 import { useStore } from '@/store/store'
 import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'

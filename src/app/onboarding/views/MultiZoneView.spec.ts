@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/vue'
 import { KButton, KCard } from '@kong/kongponents'
 
 import MultiZoneView from './MultiZoneView.vue'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
@@ -36,7 +36,7 @@ describe('MultiZoneView.vue', () => {
 
   it('refetch resources if any not available', async () => {
     jest
-      .spyOn(Kuma, 'getAllZoneIngressOverviews')
+      .spyOn(kumaApi, 'getAllZoneIngressOverviews')
       .mockResolvedValueOnce({
         total: 0,
       })
@@ -53,6 +53,6 @@ describe('MultiZoneView.vue', () => {
     await flushPromises()
 
     expect(await screen.findByTestId('zone-ingress-connected')).toBeInTheDocument()
-    expect(Kuma.getAllZoneIngressOverviews).toHaveBeenCalledTimes(2)
+    expect(kumaApi.getAllZoneIngressOverviews).toHaveBeenCalledTimes(2)
   })
 })

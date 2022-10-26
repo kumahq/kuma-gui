@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, NavigationGuard, RouteRecordRaw } from 'vue-router'
 
 import { store } from '@/store/store'
-import { PolicyDefinition } from '@/types'
-import { ClientStorage } from '@/utils/ClientStorage'
+import { PolicyDefinition } from '@/types/index.d'
+import { ClientStorage } from '@/utilities/ClientStorage'
 
 function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   return policies.map((policy) => ({

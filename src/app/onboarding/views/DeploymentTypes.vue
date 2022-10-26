@@ -41,7 +41,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 import MultizoneGraph from '../components/graphs/MultizoneGraph.vue'
 import StandaloneGraph from '../components/graphs/StandaloneGraph.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'

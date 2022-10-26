@@ -2,7 +2,7 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 import { State } from '../../index'
 import { NotificationsInterface, NotificationItem, MeshNotificationItem } from './notifications.types'
-import { Mesh } from '@/types'
+import { Mesh } from '@/types/index.d'
 
 const initialNotificationsState: NotificationsInterface = {
   isOpen: false,

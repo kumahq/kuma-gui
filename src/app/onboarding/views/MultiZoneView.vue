@@ -72,7 +72,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
@@ -119,7 +119,7 @@ export default {
   methods: {
     async getZones() {
       try {
-        const { total } = await Kuma.getZones()
+        const { total } = await kumaApi.getZones()
 
         this.hasZones = total > 0
       } catch (e) {
@@ -132,7 +132,7 @@ export default {
     },
     async getZoneIngresses() {
       try {
-        const { total } = await Kuma.getAllZoneIngressOverviews()
+        const { total } = await kumaApi.getAllZoneIngressOverviews()
 
         this.hasZoneIngresses = total > 0
       } catch (e) {

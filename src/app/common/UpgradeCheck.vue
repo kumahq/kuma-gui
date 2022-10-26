@@ -32,7 +32,7 @@ import { computed, ref } from 'vue'
 import compare from 'semver-compare'
 import { KAlert, KButton } from '@kong/kongponents'
 
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import { useStore } from '@/store/store'
 
 const URL = `${import.meta.env.VITE_INSTALL_URL}${import.meta.env.VITE_UTM}`
@@ -49,7 +49,7 @@ checkVersion()
 
 async function checkVersion(): Promise<void> {
   try {
-    latestVersion.value = await Kuma.getLatestVersion()
+    latestVersion.value = await kumaApi.getLatestVersion()
   } catch (error) {
     showNotice.value = false
 

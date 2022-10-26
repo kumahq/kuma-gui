@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 export default {
   name: 'MultizoneInfo',
   data() {

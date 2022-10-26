@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event'
 
 import DataplanePolicies from './DataplanePolicies.vue'
 import { store, storeKey } from '@/store/store'
-import { server } from '@/jest-setup'
+import { server } from '@/../jest/jest-setup'
 
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicies')

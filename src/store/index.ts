@@ -4,19 +4,19 @@ import { ConfigInterface } from './modules/config/config.types'
 import { NotificationsInterface } from './modules/notifications/notifications.types'
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
 import { SidebarInterface } from './modules/sidebar/sidebar.types'
-import { getItemStatusFromInsight } from '@/dataplane'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import config from '@/store/modules/config/config'
 import notifications from '@/store/modules/notifications/notifications'
 import onboarding from '@/store/modules/onboarding/onboarding'
 import sidebar from '@/store/modules/sidebar/sidebar'
 
-import { fetchAllResources } from '@/helpers'
+import { fetchAllResources } from '@/utilities/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
-import Kuma from '@/services/kuma'
-import { ApiListResponse } from '@/api'
-import { ClientStorage } from '@/utils/ClientStorage'
-import { Mesh, PolicyDefinition } from '@/types'
+import { kumaApi } from '@/api/kumaApi'
+import { ApiListResponse } from '@/types/api.d'
+import { ClientStorage } from '@/utilities/ClientStorage'
+import { Mesh, PolicyDefinition } from '@/types/index.d'
 
 type TODO = any
 
@@ -256,7 +256,7 @@ export const storeConfig: StoreOptions<State> = {
       }
 
       try {
-        const response = await Kuma.getAllMeshes(params)
+        const response = await kumaApi.getAllMeshes(params)
 
         if (Array.isArray(response.items)) {
           response.items.sort((meshA, meshB) => {
@@ -289,7 +289,7 @@ export const storeConfig: StoreOptions<State> = {
 
     // get total clusters (Zones) when in multicluster (or "Multi-Zone") mode
     fetchTotalClusterCount({ commit }) {
-      return Kuma.getZones().then(response => {
+      return kumaApi.getZones().then(response => {
         const total = response.total
 
         commit('SET_TOTAL_CLUSTER_COUNT', total)
@@ -300,7 +300,7 @@ export const storeConfig: StoreOptions<State> = {
     fetchDataplaneTotalCount({ commit }) {
       const params = { size: 1 }
 
-      return Kuma.getAllDataplanes(params)
+      return kumaApi.getAllDataplanes(params)
         .then(response => {
           const total = response.total
 
@@ -319,7 +319,7 @@ export const storeConfig: StoreOptions<State> = {
       try {
         if (mesh === undefined) {
           const params = {
-            callEndpoint: Kuma.getAllMeshInsights.bind(Kuma),
+            callEndpoint: kumaApi.getAllMeshInsights.bind(kumaApi),
           }
           const response = await fetchAllResources(params)
           const meshesData = []
@@ -336,7 +336,7 @@ export const storeConfig: StoreOptions<State> = {
           commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: meshesData })
           commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', response)
         } else {
-          commit('SET_MESH_INSIGHT', await Kuma.getMeshInsights({ name: mesh }))
+          commit('SET_MESH_INSIGHT', await kumaApi.getMeshInsights({ name: mesh }))
         }
       } catch {
         commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: [] })
@@ -355,8 +355,8 @@ export const storeConfig: StoreOptions<State> = {
         const params = {
           callEndpoint:
             mesh === undefined
-              ? Kuma.getAllServiceInsights.bind(Kuma)
-              : Kuma.getAllServiceInsightsFromMesh.bind(Kuma, { mesh }),
+              ? kumaApi.getAllServiceInsights.bind(kumaApi)
+              : kumaApi.getAllServiceInsightsFromMesh.bind(kumaApi, { mesh }),
         }
 
         commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
@@ -374,8 +374,8 @@ export const storeConfig: StoreOptions<State> = {
         const params = {
           callEndpoint:
             mesh === undefined
-              ? Kuma.getAllExternalServices.bind(Kuma)
-              : Kuma.getAllExternalServicesFromMesh.bind(Kuma, { mesh }),
+              ? kumaApi.getAllExternalServices.bind(kumaApi)
+              : kumaApi.getAllExternalServicesFromMesh.bind(kumaApi, { mesh }),
         }
 
         commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
@@ -400,7 +400,7 @@ export const storeConfig: StoreOptions<State> = {
       try {
         if (multicluster) {
           const params = {
-            callEndpoint: Kuma.getAllZoneOverviews.bind(Kuma),
+            callEndpoint: kumaApi.getAllZoneOverviews.bind(kumaApi),
           }
 
           const data = await fetchAllResources(params)
@@ -437,7 +437,7 @@ export const storeConfig: StoreOptions<State> = {
     },
 
     async fetchPolicies({ commit }) {
-      const { policies } = await Kuma.getPolicyDefinitions()
+      const { policies } = await kumaApi.getPolicyDefinitions()
       const policiesByPath = policies.reduce((obj, policy) => Object.assign(obj, { [policy.path]: policy }), {})
       const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
 

@@ -1,7 +1,5 @@
 import { RouteLocationRaw } from 'vue-router'
 
-export type TODO = any
-
 export type TableHeader = {
   key: string
   label: string

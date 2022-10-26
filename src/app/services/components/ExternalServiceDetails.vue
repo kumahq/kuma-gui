@@ -48,8 +48,8 @@
 import { computed, PropType } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { ExternalService } from '@/types'
-import { stripTimes } from '@/helpers'
+import { ExternalService } from '@/types/index.d'
+import { stripTimes } from '@/utilities/helpers'
 import TagList from '@/app/common/TagList.vue'
 import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import YamlView from '@/app/common/YamlView.vue'

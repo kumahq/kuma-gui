@@ -392,7 +392,7 @@
 </template>
 
 <script>
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 export default {
   name: 'MemoryGraph',
   data() {

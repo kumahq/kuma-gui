@@ -42,7 +42,7 @@
     '**/src/**/*.spec.(js|ts)',
   ],
   setupFilesAfterEnv: [
-    '<rootDir>/src/jest-setup.ts',
+    '<rootDir>/jest/jest-setup.ts',
   ],
 }
 

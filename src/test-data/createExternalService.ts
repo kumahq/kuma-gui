@@ -1,4 +1,4 @@
-import { ExternalService } from '@/types'
+import { ExternalService } from '@/types/index.d'
 
 export function createExternalService(): ExternalService {
   return {

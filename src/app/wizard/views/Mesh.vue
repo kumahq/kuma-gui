@@ -587,19 +587,19 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import Kuma from '@/services/kuma'
-import { kebabCase } from '@/helpers'
+import { kumaApi } from '@/api/kumaApi'
+import { kebabCase } from '@/utilities/helpers'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import { formatForCLI } from '../formatForCLI'
 import FormFragment from '../components/FormFragment.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
 import EntityScanner from '../components/EntityScanner.vue'
-import { ClientStorage } from '@/utils/ClientStorage'
+import { ClientStorage } from '@/utilities/ClientStorage'
 
 // schema for building code output
 import meshSchema from './MeshSchema'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 
 function getInitialMeshData() {
   return {
@@ -987,7 +987,7 @@ export default {
       // do nothing if there's nothing found
       if (!entity) return
 
-      Kuma.getMesh({ name: entity })
+      kumaApi.getMesh({ name: entity })
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

@@ -1,4 +1,4 @@
-import { PolicyDefinition } from '@/types'
+import { PolicyDefinition } from '@/types/index.d'
 
 interface NavItem {
   name: string

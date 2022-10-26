@@ -33,7 +33,7 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
-} from '@/dataplane'
+} from '@/utilities/dataplane'
 
 export default {
   name: 'WarningsWidget',

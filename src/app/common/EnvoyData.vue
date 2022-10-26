@@ -18,7 +18,7 @@
 <script lang="ts" setup>
 import { onMounted, PropType, ref, watch } from 'vue'
 
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import CodeBlock from './CodeBlock.vue'
 import StatusInfo from './StatusInfo.vue'
 
@@ -85,18 +85,18 @@ async function fetchContent() {
     let content = ''
 
     if (props.mesh !== '' && props.dppName !== '') {
-      content = await Kuma.getDataplaneData({
+      content = await kumaApi.getDataplaneData({
         dataPath: props.dataPath,
         mesh: props.mesh,
         dppName: props.dppName,
       })
     } else if (props.zoneIngressName !== '') {
-      content = await Kuma.getZoneIngressData({
+      content = await kumaApi.getZoneIngressData({
         dataPath: props.dataPath,
         zoneIngressName: props.zoneIngressName,
       })
     } else if (props.zoneEgressName !== '') {
-      content = await Kuma.getZoneEgressData({
+      content = await kumaApi.getZoneEgressData({
         dataPath: props.dataPath,
         zoneEgressName: props.zoneEgressName,
       })

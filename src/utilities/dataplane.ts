@@ -1,5 +1,5 @@
-import { humanReadableDate } from '@/helpers'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/consts'
+import { humanReadableDate } from '@/utilities/helpers'
+import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/constants'
 import {
   Compatibility,
   DataPlaneEntityMtls,
@@ -10,7 +10,7 @@ import {
   DiscoverySubscription,
   LabelValue,
   Version,
-} from '@/types'
+} from '@/types/index.d'
 
 type TODO = any
 

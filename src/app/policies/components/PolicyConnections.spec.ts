@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
-import { server } from '@/jest-setup'
+import { server } from '@/../jest/jest-setup'
 
 function renderComponent(props = {}) {
   return render(PolicyConnections, {

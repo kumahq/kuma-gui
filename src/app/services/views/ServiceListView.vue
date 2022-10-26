@@ -32,9 +32,9 @@ import { useRoute, RouteLocationRaw } from 'vue-router'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import ServiceDetails from '../components/ServiceDetails.vue'
-import Kuma from '@/services/kuma'
-import { STATUS } from '@/consts'
-import { ServiceInsight, TableHeader } from '@/types'
+import { kumaApi } from '@/api/kumaApi'
+import { STATUS } from '@/constants'
+import { ServiceInsight, TableHeader } from '@/types/index.d'
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },
@@ -81,7 +81,7 @@ async function loadData(offset: number): Promise<void> {
   const size = PAGE_SIZE
 
   try {
-    const { items = [], next } = await Kuma.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
+    const { items = [], next } = await kumaApi.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
     nextUrl.value = next
 
     if (Array.isArray(items) && items.length > 0) {

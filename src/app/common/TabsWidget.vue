@@ -54,7 +54,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { KIcon, KTabs } from '@kong/kongponents'
 
-import { datadogLogEvents } from '@/datadogEvents'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import { computed, PropType, ref } from 'vue'

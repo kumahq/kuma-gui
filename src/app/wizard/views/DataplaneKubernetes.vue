@@ -626,8 +626,8 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
-import Kuma from '@/services/kuma'
-import { kebabCase } from '@/helpers'
+import { kumaApi } from '@/api/kumaApi'
+import { kebabCase } from '@/utilities/helpers'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import { formatForCLI } from '../formatForCLI'
 import FormFragment from '../components/FormFragment.vue'
@@ -637,7 +637,7 @@ import EntityScanner from '../components/EntityScanner.vue'
 
 // schema for building code output (TBD)
 import dataplaneSchema from './DataplaneKubernetesSchema'
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 
 export default {
   name: 'DataplaneWizardKubernetes',
@@ -790,7 +790,7 @@ export default {
       // do nothing if there is no Mesh nor Dataplane found
       if (!mesh || !dataplane) return
 
-      Kuma.getDataplaneFromMesh({ mesh, name: dataplane })
+      kumaApi.getDataplaneFromMesh({ mesh, name: dataplane })
         .then((response) => {
           if (response && response.name.length > 0) {
             this.isRunning = true

@@ -1,7 +1,7 @@
-import { DISABLED, PAGE_REQUEST_SIZE_DEFAULT } from '@/consts'
-import { ApiListResponse } from '@/api'
-import { ZoneOverview } from '@/types'
-import { get } from '@/utils/get'
+import { DISABLED, PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
+import { ApiListResponse } from '@/types/api.d'
+import { ZoneOverview } from '@/types/index.d'
+import { get } from '@/utilities/get'
 
 type TODO = any
 

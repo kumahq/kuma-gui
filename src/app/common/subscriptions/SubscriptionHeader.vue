@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { rawReadableDate } from '@/helpers'
+import { rawReadableDate } from '@/utilities/helpers'
 
 export default {
   name: 'SubscriptionHeader',

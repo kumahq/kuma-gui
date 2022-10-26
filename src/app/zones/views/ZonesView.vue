@@ -123,11 +123,11 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/helpers'
-import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/dataplane'
-import { getTableData } from '@/utils/tableDataUtils'
-import { PAGE_SIZE_DEFAULT } from '@/consts'
-import Kuma from '@/services/kuma'
+import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
+import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
+import { getTableData } from '@/utilities/tableDataUtils'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { kumaApi } from '@/api/kumaApi'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
@@ -312,17 +312,17 @@ export default {
       try {
         const [{ data, next }, { items: zoneIngresses }, { items: zoneEgresses }] = await Promise.all([
           getTableData({
-            getSingleEntity: Kuma.getZoneOverview.bind(Kuma),
-            getAllEntities: Kuma.getAllZoneOverviews.bind(Kuma),
+            getSingleEntity: kumaApi.getZoneOverview.bind(kumaApi),
+            getAllEntities: kumaApi.getAllZoneOverviews.bind(kumaApi),
             size: this.pageSize,
             offset,
             query,
           }),
           fetchAllResources({
-            callEndpoint: Kuma.getAllZoneIngressOverviews.bind(Kuma),
+            callEndpoint: kumaApi.getAllZoneIngressOverviews.bind(kumaApi),
           }),
           fetchAllResources({
-            callEndpoint: Kuma.getAllZoneEgressOverviews.bind(Kuma),
+            callEndpoint: kumaApi.getAllZoneEgressOverviews.bind(kumaApi),
           }),
         ])
 
@@ -373,7 +373,7 @@ export default {
 
         try {
           // get the Zone details from the Zone Insights endpoint
-          const response = await Kuma.getZoneOverview({ name: entity.name })
+          const response = await kumaApi.getZoneOverview({ name: entity.name })
           const subscriptions = response.zoneInsight?.subscriptions ?? []
 
           this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
