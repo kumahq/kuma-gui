@@ -6,7 +6,7 @@ import { store, storeKey } from '@/store/store'
 
 describe('UpgradeCheck.vue', () => {
   it('renders snapshot', async () => {
-    store.state.config.tagline = 'Kuma'
+    store.state.config.tagline = import.meta.env.VITE_NAMESPACE
 
     const { container, findByText } = render(UpgradeCheck, {
       global: {

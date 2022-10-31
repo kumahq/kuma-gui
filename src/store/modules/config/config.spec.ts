@@ -77,7 +77,7 @@ describe('config module', () => {
       ],
       [
         {
-          tagline: 'Kuma',
+          tagline: import.meta.env.VITE_NAMESPACE,
           version: '1.5.3',
           basedOnKuma: '1.5.1',
           hostname: '',
@@ -85,21 +85,21 @@ describe('config module', () => {
           clusterId: '',
         },
         {
-          tagline: 'Kuma',
+          tagline: import.meta.env.VITE_NAMESPACE,
           version: '1.5.3',
           kumaDocsVersion: '1.5.x',
         },
       ],
       [
         {
-          tagline: 'Kuma',
+          tagline: import.meta.env.VITE_NAMESPACE,
           version: '1.5.3',
           hostname: '',
           instanceId: '',
           clusterId: '',
         },
         {
-          tagline: 'Kuma',
+          tagline: import.meta.env.VITE_NAMESPACE,
           version: '1.5.3',
           kumaDocsVersion: '1.5.x',
         },

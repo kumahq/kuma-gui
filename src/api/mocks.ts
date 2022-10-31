@@ -8,13 +8,15 @@ async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
   return fileModule.default
 }
 
-const BASE_INFO: Info = {
-  hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
-  tagline: 'Kuma',
-  version: '1.7.1',
-  basedOnKuma: '1.7.1',
-  instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
-  clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
+function getBaseInfo(): Info {
+  return {
+    hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
+    tagline: import.meta.env.VITE_NAMESPACE,
+    version: '1.7.1',
+    basedOnKuma: '1.7.1',
+    instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
+    clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
+  }
 }
 
 const mockFileImports: Array<[string, () => Promise<any>]> = [
@@ -166,7 +168,7 @@ export function setupHandlers(url: string): RestHandler[] {
     return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
   })
 
-  handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(BASE_INFO))))
+  handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(getBaseInfo()))))
 
   handlers.push(
     rest.get(getApiPath('dataplanes+insights'), async (req, res, ctx) => {

@@ -18,7 +18,7 @@ const router = createRouter({
 
 function renderComponent(status: string) {
   store.state.globalLoading = true
-  store.state.config.tagline = 'Kuma'
+  store.state.config.tagline = import.meta.env.VITE_NAMESPACE
   store.state.config.status = status
 
   return render(App, {

@@ -36,7 +36,7 @@ describe('DataplaneUniversal.vue', () => {
       ),
     )
 
-    store.state.config.tagline = 'Kuma'
+    store.state.config.tagline = import.meta.env.VITE_NAMESPACE
     store.state.meshes.items = [
       {
         name: 'testMesh',
