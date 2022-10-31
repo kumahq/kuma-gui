@@ -748,7 +748,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/17/2021
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -885,7 +885,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/19/2021
+                      February 19, 2021
                       
                     </td>
                     <td
@@ -1022,7 +1022,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/19/2021
+                      February 19, 2021
                       
                     </td>
                     <td
@@ -1159,7 +1159,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/19/2021
+                      February 19, 2021
                       
                     </td>
                     <td
@@ -1296,7 +1296,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/19/2021
+                      February 19, 2021
                       
                     </td>
                     <td
@@ -1433,7 +1433,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      10/24/2019
+                      October 24, 2019
                       
                     </td>
                     <td
@@ -1570,7 +1570,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/17/2021
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1707,7 +1707,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      2/17/2021
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1883,7 +1883,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-222fefa6=""
                     >
                       
-                      10/24/2019
+                      October 24, 2019
                       
                     </td>
                     <td
@@ -2248,7 +2248,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                 Connect time:
               </span>
               <span>
-                February 17, 2021 @ 7:33:36
+                February 17, 2021 at 7:33:36 AM
               </span>
             </div>
             <div
@@ -2333,7 +2333,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                 Connect time:
               </span>
               <span>
-                February 17, 2021 @ 7:33:36
+                February 17, 2021 at 7:33:36 AM
               </span>
             </div>
             <div
@@ -2344,7 +2344,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                 Disconnect time:
               </span>
               <span>
-                February 17, 2021 @ 7:33:36
+                February 17, 2021 at 7:33:36 AM
               </span>
             </div>
             <div

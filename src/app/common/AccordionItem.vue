@@ -20,7 +20,7 @@
     >
       <div
         v-if="visible"
-        class="px-4"
+        class="px-4 py-1"
       >
         <slot name="accordion-content" />
       </div>

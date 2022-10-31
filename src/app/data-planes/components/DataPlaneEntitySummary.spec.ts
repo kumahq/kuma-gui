@@ -1,4 +1,4 @@
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'
 import { store, storeKey } from '@/store/store'
@@ -22,8 +22,10 @@ function renderComponent(props = {}) {
 }
 
 describe('DataPlaneEntitySummary', () => {
-  test('matches snapshot', () => {
+  test('matches snapshot', async () => {
     const wrapper = renderComponent()
+
+    await flushPromises()
 
     expect(wrapper.element).toMatchSnapshot()
   })
@@ -35,7 +37,7 @@ describe('DataPlaneEntitySummary', () => {
     expect(statusBadge.html()).toContain('online')
 
     const connectTime = wrapper.find('[data-testid^="data-plane-connect-time-"]')
-    expect(connectTime.html()).toContain('February 17, 2021 @ 7:33:36')
+    expect(connectTime.html()).toContain('February 17, 2021 at 7:33:36')
 
     const subscriptionStatus = wrapper.find('[data-testid^="data-plane-subscription-status-"]')
     expect(subscriptionStatus.html()).toContain('1 / 1')

@@ -157,7 +157,6 @@ h4 {
 
 .policy-wrapper {
   --columns: 2;
-  margin-top: var(--spacing-md);
   display: grid;
   gap: var(--spacing-sm);
   grid-template-columns: repeat(var(--columns), 1fr);
@@ -179,7 +178,7 @@ h4 {
 <style lang="scss">
 .mesh-gateway-policy-list .accordion-item-header {
   padding-left: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
 }
 </style>

@@ -25,12 +25,10 @@
           >
             <router-link
               :to="{
-                name: 'data-plane-list-view',
-                query: {
-                  ns: dataplane.dataplane.name,
-                },
+                name: 'data-plane-detail-view',
                 params: {
                   mesh: dataplane.dataplane.mesh,
+                  dataPlane: dataplane.dataplane.name,
                 },
               }"
             >

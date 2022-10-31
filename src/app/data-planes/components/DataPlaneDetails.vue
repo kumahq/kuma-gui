@@ -188,7 +188,7 @@
           <template #alertMessage>
             This data plane proxy does not yet have mTLS configured —
             <a
-              :href="`https://kuma.io/docs/${kumaDocsVersion}/documentation/security/#certificates`"
+              :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/mutual-tls/`"
               class="external-link"
               target="_blank"
             >
@@ -316,7 +316,7 @@ const insightSubscriptions = computed(() => {
 })
 
 const kumaDocsVersion = computed(() => {
-  const storedVersion = store.getters.getKumaDocsVersion
+  const storedVersion = store.getters['config/getKumaDocsVersion']
 
   return storedVersion !== null ? storedVersion : 'latest'
 })

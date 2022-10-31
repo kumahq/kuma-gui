@@ -25,7 +25,7 @@ const router = createRouter({
 })
 
 function renderComponent(mode = 'standalone') {
-  store.state.config.tagline = 'Kuma'
+  store.state.config.tagline = import.meta.env.VITE_NAMESPACE
   store.state.config.kumaDocsVersion = '1.2.0'
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig

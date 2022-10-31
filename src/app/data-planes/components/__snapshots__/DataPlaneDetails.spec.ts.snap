@@ -40,6 +40,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
             >
               <svg
                 height="16"
+                role="img"
                 viewBox="0 0 32 32"
                 width="16"
                 xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +54,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
   
                 <path
                   d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                  fill="#A3BBCC"
+                  fill="var(--KButtonOutlineColor, var(--blue-500, color(blue-500)))"
                 />
                 
 
@@ -494,8 +495,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           data-v-71cfcfc4=""
                         >
                           <svg
-                            fill="none"
+                            data-testid="k-code-block-search-icon"
+                            fill="currentColor"
+                            height="20"
+                            role="img"
                             viewBox="0 0 24 24"
+                            width="20"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
@@ -508,7 +513,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             <path
                               d="M10.88 18.75a7.88 7.88 0 1 0 0-15.75 7.88 7.88 0 0 0 0 15.75ZM16.44 16.44 21 21"
                               fill="none"
-                              stroke="#A3BBCC"
+                              stroke="currentColor"
                               stroke-width="3"
                             />
                             
@@ -544,8 +549,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           data-v-71cfcfc4=""
                         >
                           <svg
-                            fill="none"
+                            data-testid="k-code-block-is-processing-icon"
+                            fill="var(--grey-400)"
+                            height="24"
+                            role="img"
                             viewBox="0 0 20 20"
+                            width="24"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
@@ -561,7 +570,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               <path
                                 d="M5 10a5 5 0 1 0 5-5"
                                 fill="none"
-                                stroke="#A3BBCC"
+                                stroke="var(--grey-400)"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
@@ -628,21 +637,22 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             data-v-71cfcfc4=""
                           >
                             <svg
-                              height="11"
+                              height="16"
+                              role="img"
                               viewBox="0 0 14 11"
-                              width="14"
+                              width="16"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
   
                               <title>
-                                Filter
+                                Filter results (Alt+F)
                               </title>
                               
   
                               <path
                                 d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
-                                fill="#A3BBCC"
+                                fill="currentColor"
                                 fill-rule="evenodd"
                               />
                               
@@ -678,21 +688,24 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             data-v-71cfcfc4=""
                           >
                             <svg
-                              fill="none"
+                              fill="currentColor"
+                              height="16"
+                              role="img"
                               viewBox="0 0 20 20"
+                              width="16"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
   
                               <title>
-                                Collapse
+                                Previous match (Shift+F3)
                               </title>
                               
   
                               <path
                                 d="M15 12 9.8 7l-5.2 5"
                                 fill="none"
-                                stroke="#A3BBCC"
+                                stroke="currentColor"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
@@ -730,21 +743,24 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             data-v-71cfcfc4=""
                           >
                             <svg
-                              fill="none"
+                              fill="currentColor"
+                              height="16"
+                              role="img"
                               viewBox="0 0 20 20"
+                              width="16"
                               xmlns="http://www.w3.org/2000/svg"
                             >
                               
   
                               <title>
-                                Expand
+                                Next match (F3)
                               </title>
                               
   
                               <path
                                 d="m4.6 7 5.2 5L15 7"
                                 fill="none"
-                                stroke="#A3BBCC"
+                                stroke="currentColor"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
@@ -1297,6 +1313,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           <svg
                             height="16"
+                            role="img"
                             viewBox="0 0 32 32"
                             width="16"
                             xmlns="http://www.w3.org/2000/svg"
@@ -1304,13 +1321,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             
   
                             <title>
-                              Copy
+                              Copy (Alt+C)
                             </title>
                             
   
                             <path
                               d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                              fill="#A3BBCC"
+                              fill="currentColor"
                             />
                             
 

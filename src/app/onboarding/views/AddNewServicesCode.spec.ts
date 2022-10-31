@@ -26,8 +26,10 @@ function renderComponent() {
 }
 
 describe('AddNewServicesCode.vue', () => {
-  it('renders snapshot', () => {
+  it('renders snapshot', async () => {
     const { container } = renderComponent()
+
+    await flushPromises()
 
     expect(container).toMatchSnapshot()
   })

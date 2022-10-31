@@ -48,6 +48,10 @@ async function initializeVue() {
 
   app.use(store, storeKey)
 
+  // Fetches basic resources before setting up the router and mounting the application.
+  // This is mainly needed to properly redirect users to the onboarding flow in the appropriate scenarios.
+  await store.dispatch('bootstrap')
+
   const router = await setupRouter()
 
   app.use(router)

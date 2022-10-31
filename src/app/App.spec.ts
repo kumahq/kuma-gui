@@ -17,6 +17,8 @@ const router = createRouter({
 })
 
 function renderComponent(status: string) {
+  store.state.globalLoading = true
+  store.state.config.tagline = import.meta.env.VITE_NAMESPACE
   store.state.config.status = status
 
   return render(App, {
@@ -32,6 +34,7 @@ function renderComponent(status: string) {
 describe('App.vue', () => {
   it('renders main view when successful', async () => {
     renderComponent('OK')
+    store.dispatch('bootstrap')
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 
@@ -40,6 +43,7 @@ describe('App.vue', () => {
 
   it('fails to renders basic view', async () => {
     const { container } = renderComponent('ERROR')
+    store.dispatch('bootstrap')
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 

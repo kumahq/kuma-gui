@@ -5,6 +5,9 @@ import { get } from '@/utilities/get'
 
 type TODO = any
 
+const dateFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
+const dateTimeFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'long', timeStyle: 'medium' })
+
 /**
  * Outputs a friendly human-readable timeframe between now and the date string entered.
  */
@@ -57,23 +60,13 @@ export function humanReadableDate(tdate: string): string {
     return '1 week ago'
   }
 
-  return systemDate.toLocaleDateString()
+  return dateFormat.format(systemDate)
 }
 
-/**
- * rawReadableDate
- */
-export function rawReadableDate(date: string) {
-  const rawDate = new Date(Date.parse(date))
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }
-  const formattedDate = rawDate.toLocaleDateString('en-US', options)
-  const formattedTime = `${rawDate.getHours()}:${rawDate.getMinutes()}:${rawDate.getSeconds()}`
+export function rawReadableDate(date: string): string {
+  const parsedDate = new Date(Date.parse(date))
 
-  return `${formattedDate} @ ${formattedTime}`
+  return dateTimeFormat.format(parsedDate)
 }
 
 /**

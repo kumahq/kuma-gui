@@ -1537,7 +1537,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                     persisted="false"
                   >
                     <div
-                      class="px-4"
+                      class="px-4 py-1"
                     >
                       
                       <div>
