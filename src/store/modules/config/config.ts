@@ -78,17 +78,16 @@ const actions: ActionTree<ConfigInterface, State> = {
         commit('SET_TAGLINE', response.tagline)
         commit('SET_VERSION', response.version)
 
-        let kumaDocsVersion = 'latest'
-        if (response.basedOnKuma) {
-          const suffixIndex = response.basedOnKuma.indexOf('-preview.')
-          if (suffixIndex !== -1) {
-            const basedOnKumaStripped = response.basedOnKuma.substring(0, suffixIndex)
+        let kumaDocsVersion: string
+        const version = response.basedOnKuma ?? response.version
+        const suffixIndex = version.indexOf('-preview.')
+        if (suffixIndex !== -1) {
+          const basedOnKumaStripped = version.substring(0, suffixIndex)
 
-            kumaDocsVersion = basedOnKumaStripped === '0.0.0' ? 'dev' : basedOnKumaStripped.replace(/\.\d+$/, '.x')
-          } else {
-            // Replaces the patch version number with `x` because that’s the URL path segment used on the documentation website.
-            kumaDocsVersion = response.basedOnKuma.replace(/\.\d+$/, '.x')
-          }
+          kumaDocsVersion = basedOnKumaStripped === '0.0.0' ? 'dev' : basedOnKumaStripped.replace(/\.\d+$/, '.x')
+        } else {
+          // Replaces the patch version number with `x` because that’s the URL path segment used on the documentation website.
+          kumaDocsVersion = version.replace(/\.\d+$/, '.x')
         }
 
         commit('SET_KUMA_DOCS_VERSION', kumaDocsVersion)
