@@ -64,7 +64,7 @@ describe('DataPlaneListView.vue', () => {
     expect(tableRowHtml).toContain('default')
     expect(tableRowHtml).toContain('Standard')
     expect(tableRowHtml).toContain('http')
-    expect(tableRowHtml).toContain('2/17/2021')
+    expect(tableRowHtml).toContain('February 17, 2021')
     expect(tableRowHtml).toContain('1.0.7')
   })
 

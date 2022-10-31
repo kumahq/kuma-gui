@@ -35,7 +35,7 @@ describe('DataPlaneEntitySummary', () => {
     expect(statusBadge.html()).toContain('online')
 
     const connectTime = wrapper.find('[data-testid^="data-plane-connect-time-"]')
-    expect(connectTime.html()).toContain('February 17, 2021 @ 7:33:36')
+    expect(connectTime.html()).toContain('February 17, 2021 at 7:33:36')
 
     const subscriptionStatus = wrapper.find('[data-testid^="data-plane-subscription-status-"]')
     expect(subscriptionStatus.html()).toContain('1 / 1')

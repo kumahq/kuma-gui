@@ -101,7 +101,7 @@ describe('config module', () => {
         {
           tagline: 'Kuma',
           version: '1.5.3',
-          kumaDocsVersion: 'latest',
+          kumaDocsVersion: '1.5.x',
         },
       ],
     ])('tests getInfo action', async (getInfoResponse, expectedState) => {
