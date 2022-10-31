@@ -42,6 +42,8 @@ describe('DataPlaneDetails', () => {
   test('matches snapshot', async () => {
     const wrapper = await renderComponent()
 
+    await flushPromises()
+
     expect(wrapper.element).toMatchSnapshot()
   })
 

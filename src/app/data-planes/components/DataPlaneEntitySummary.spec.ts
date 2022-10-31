@@ -1,4 +1,4 @@
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'
 import { store, storeKey } from '@/store/store'
@@ -22,8 +22,10 @@ function renderComponent(props = {}) {
 }
 
 describe('DataPlaneEntitySummary', () => {
-  test('matches snapshot', () => {
+  test('matches snapshot', async () => {
     const wrapper = renderComponent()
+
+    await flushPromises()
 
     expect(wrapper.element).toMatchSnapshot()
   })

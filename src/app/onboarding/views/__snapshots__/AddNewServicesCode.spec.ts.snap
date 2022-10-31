@@ -110,6 +110,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   >
                     <svg
                       height="16"
+                      role="img"
                       viewBox="0 0 32 32"
                       width="16"
                       xmlns="http://www.w3.org/2000/svg"
@@ -117,13 +118,13 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                       
   
                       <title>
-                        Copy
+                        Copy (Alt+C)
                       </title>
                       
   
                       <path
                         d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                        fill="#A3BBCC"
+                        fill="currentColor"
                       />
                       
 
@@ -203,26 +204,13 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
             >
                DPPs status: 
               <span
-                class="text-red-500"
-                data-testid="dpps-disconnected"
+                class="text-green-500"
+                data-testid="dpps-connected"
               >
-                Disconeccted
+                Connected
               </span>
             </p>
-            <div
-              class="flex justify-center"
-            >
-              <div
-                class="loading"
-                data-testid="loading"
-              >
-                <div />
-                <div />
-                <div />
-                <div />
-                <div />
-              </div>
-            </div>
+            <!--v-if-->
           </div>
           
         </div>
@@ -259,12 +247,11 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
             <!---->
           </button>
           <span
-            class="inline-block cursor-not-allowed"
+            class="inline-block"
           >
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
               data-v-6f773baa=""
-              disabled="true"
               type="button"
             >
               
