@@ -5,6 +5,7 @@
     <!-- Zone CPs information for when Multicluster is enabled -->
     <FrameSkeleton v-else>
       <DataOverview
+        :selected-entity-name="entity?.name"
         :page-size="pageSize"
         :is-loading="isLoading"
         :error="error"

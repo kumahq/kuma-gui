@@ -2,6 +2,7 @@
   <ContentWrapper>
     <template #content>
       <DataOverview
+        :selected-entity-name="serviceInsight?.name"
         :page-size="PAGE_SIZE"
         :error="error"
         :is-loading="isLoading"
