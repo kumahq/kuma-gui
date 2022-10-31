@@ -24,6 +24,7 @@
 
     <FrameSkeleton>
       <DataOverview
+        :selected-entity-name="entity.name"
         :page-size="PAGE_SIZE_DEFAULT"
         :error="error"
         :is-loading="isLoading"
@@ -287,30 +288,28 @@ function processEntity(entity: PolicyEntity): any {
   return processedEntity
 }
 
-async function getEntity(entity: any): Promise<void> {
+async function getEntity(selectedEntity: any): Promise<void> {
   entityHasError.value = false
   entityIsLoading.value = true
   entityIsEmpty.value = false
 
-  if (entity) {
-    try {
-      const item = await kumaApi.getSinglePolicyEntity({ mesh: entity.mesh, path: policy.value.path, name: entity.name })
+  try {
+    const item = await kumaApi.getSinglePolicyEntity({ mesh: selectedEntity.mesh, path: policy.value.path, name: selectedEntity.name })
 
-      if (item) {
-        const selected = ['type', 'name', 'mesh']
+    if (item) {
+      const selected = ['type', 'name', 'mesh']
 
-        entity.value = getSome(item, selected)
-        rawEntity.value = stripTimes(item)
-      } else {
-        entity.value = {}
-        entityIsEmpty.value = true
-      }
-    } catch (err) {
-      entityHasError.value = true
-      console.error(err)
-    } finally {
-      entityIsLoading.value = false
+      entity.value = getSome(item, selected)
+      rawEntity.value = stripTimes(item)
+    } else {
+      entity.value = {}
+      entityIsEmpty.value = true
     }
+  } catch (err) {
+    entityHasError.value = true
+    console.error(err)
+  } finally {
+    entityIsLoading.value = false
   }
 }
 </script>
