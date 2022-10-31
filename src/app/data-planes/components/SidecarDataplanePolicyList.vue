@@ -146,7 +146,6 @@ const props = defineProps({
 
 .policy-wrapper {
   --columns: 2;
-  margin-top: var(--spacing-md);
   display: grid;
   gap: var(--spacing-sm);
   grid-template-columns: repeat(var(--columns), 1fr);
