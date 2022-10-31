@@ -66,7 +66,7 @@ import NotificationManager from '@/app/notification-manager/components/Notificat
 const store = useStore()
 const route = useRoute()
 
-const isLoading = ref(true)
+const isLoading = ref(store.state.globalLoading)
 
 /**
  * The `router-view`’s `key` attribute value.
@@ -92,8 +92,6 @@ watch(() => route.meta.title, function (pageTitle) {
 watch(() => store.state.pageTitle, function (pageTitle) {
   setDocumentTitle(pageTitle)
 })
-
-store.dispatch('bootstrap')
 
 function setDocumentTitle(title: string | undefined): void {
   const siteTitle = `${import.meta.env.VITE_NAMESPACE} Manager`
