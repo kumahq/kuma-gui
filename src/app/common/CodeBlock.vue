@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, PropType } from 'vue'
+import { computed, ref, PropType, nextTick } from 'vue'
 import { KCodeBlock } from '@kong/kongponents'
 import { CodeBlockEventData } from '@kong/kongponents/dist/types/components/KCodeBlock/KCodeBlock.vue.d'
 
@@ -75,9 +75,10 @@ const isProcessing = ref(false)
 
 const reformattedCode = computed(() => props.language === 'yaml' ? reformatYaml(props.code) : props.code)
 
-function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): void {
+async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
   isProcessing.value = true
 
+  await nextTick()
   highlightElement(preElement, codeElement, code, language as AvailableLanguages)
 
   isProcessing.value = false
