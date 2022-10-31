@@ -2,6 +2,7 @@
   <div class="zoneegresses">
     <FrameSkeleton>
       <DataOverview
+        :selected-entity-name="entity?.name"
         :page-size="pageSize"
         :is-loading="isLoading"
         :error="error"
