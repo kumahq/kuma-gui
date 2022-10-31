@@ -31,14 +31,14 @@
 import { PropType, ref, watch } from 'vue'
 
 import { useStore } from '@/store/store'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 
-import { DataPlane, MeshGatewayDataplane, MeshGatewayListenerEntry, MeshGatewayRouteEntry, MeshGatewayRoutePolicy, PolicyType, SidecarDataplane, SidecarDataplaneMatchedPolicy, SidecarDataplanePolicy } from '@/types'
+import { DataPlane, MeshGatewayDataplane, MeshGatewayListenerEntry, MeshGatewayRouteEntry, MeshGatewayRoutePolicy, PolicyType, SidecarDataplane, SidecarDataplaneMatchedPolicy, SidecarDataplanePolicy } from '@/types/index.d'
 
 const store = useStore()
 
@@ -73,7 +73,7 @@ async function fetchPolicies(): Promise<void> {
     const isMeshGatewayDataplane = props.dataPlane.networking.gateway?.type?.toUpperCase() === 'BUILTIN'
 
     if (isMeshGatewayDataplane) {
-      meshGatewayDataplane.value = await Kuma.getMeshGatewayDataplane({
+      meshGatewayDataplane.value = await kumaApi.getMeshGatewayDataplane({
         mesh: props.dataPlane.mesh,
         name: props.dataPlane.name,
       })
@@ -81,7 +81,7 @@ async function fetchPolicies(): Promise<void> {
       meshGatewayListenerEntries.value = getMeshGatewayListenerEntries(meshGatewayDataplane.value)
       meshGatewayRoutePolicies.value = getPolicyRoutes(meshGatewayDataplane.value.policies)
     } else {
-      const { items } = await Kuma.getSidecarDataplanePolicies({
+      const { items } = await kumaApi.getSidecarDataplanePolicies({
         mesh: props.dataPlane.mesh,
         name: props.dataPlane.name,
       })

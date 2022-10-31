@@ -102,12 +102,12 @@ import { KBadge } from '@kong/kongponents'
 
 import MeshCharts from '../components/MeshCharts.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
-import LabelList from '@/components/Utils/LabelList.vue'
-import TabsWidget from '@/components/Utils/TabsWidget.vue'
+import LabelList from '@/app/common/LabelList.vue'
+import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import Kuma from '@/services/kuma'
-import { Mesh, MeshInsight } from '@/types'
-import { humanReadableDate, stripTimes } from '@/helpers'
+import { kumaApi } from '@/api/kumaApi'
+import { Mesh, MeshInsight } from '@/types/index.d'
+import { humanReadableDate, stripTimes } from '@/utilities/helpers'
 import { useStore } from '@/store/store'
 
 const route = useRoute()
@@ -203,8 +203,8 @@ async function loadMesh(): Promise<void> {
   const name = route.params.mesh as string
 
   try {
-    mesh.value = await Kuma.getMesh({ name })
-    meshInsights.value = await Kuma.getMeshInsights({ name })
+    mesh.value = await kumaApi.getMesh({ name })
+    meshInsights.value = await kumaApi.getMeshInsights({ name })
   } catch (error) {
     hasError.value = true
     isEmpty.value = true

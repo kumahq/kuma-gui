@@ -35,7 +35,7 @@
 import { ref } from 'vue'
 import { KAlert, KButton } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 
 const alertClosed = ref(false)
 

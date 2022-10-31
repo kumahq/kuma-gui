@@ -1,4 +1,4 @@
-import { ServiceInsight } from '@/types'
+import { ServiceInsight } from '@/types/index.d'
 
 export function createServiceInsight(): ServiceInsight {
   return {

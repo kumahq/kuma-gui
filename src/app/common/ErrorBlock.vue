@@ -60,7 +60,7 @@
 import { computed } from 'vue'
 import { KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 
-import { ApiError } from '@/services/ApiError'
+import { ApiError } from '@/api/ApiError'
 
 const props = defineProps({
   error: {

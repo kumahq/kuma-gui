@@ -2,8 +2,8 @@ import { createStore } from 'vuex'
 import { rest } from 'msw'
 
 import { storeConfig, State } from '../../index'
-import { server } from '@/jest-setup'
-import Kuma from '@/services/kuma'
+import { server } from '@/../jest/jest-setup'
+import { kumaApi } from '@/api/kumaApi'
 import { ClientConfigInterface } from './config.types'
 
 const store = createStore<State>(storeConfig)
@@ -105,7 +105,7 @@ describe('config module', () => {
         },
       ],
     ])('tests getInfo action', async (getInfoResponse, expectedState) => {
-      jest.spyOn(Kuma, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
+      jest.spyOn(kumaApi, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
 
       await store.dispatch('config/getInfo')
 

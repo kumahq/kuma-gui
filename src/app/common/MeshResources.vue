@@ -82,7 +82,7 @@
 import { computed } from 'vue'
 import { KButton, KCard } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/consts'
+import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 
 const store = useStore()

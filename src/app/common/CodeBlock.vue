@@ -18,9 +18,9 @@ import { computed, ref, PropType } from 'vue'
 import { KCodeBlock } from '@kong/kongponents'
 import { CodeBlockEventData } from '@kong/kongponents/dist/types/components/KCodeBlock/KCodeBlock.vue.d'
 
-import { highlightElement, AvailableLanguages } from '@/utils/highlightElement'
-import { ClientStorage } from '@/utils/ClientStorage'
-import { reformatYaml } from '@/utils/reformatYaml'
+import { highlightElement, AvailableLanguages } from '@/utilities/highlightElement'
+import { ClientStorage } from '@/utilities/ClientStorage'
+import { reformatYaml } from '@/utilities/reformatYaml'
 
 const props = defineProps({
   /**

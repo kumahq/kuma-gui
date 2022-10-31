@@ -25,7 +25,7 @@
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 
 import { useStore } from '@/store/store'
-import { poll } from '@/utils/poll'
+import { poll } from '@/utilities/poll'
 import AppMeshSelector from './AppMeshSelector.vue'
 import AppNavItem from './AppNavItem.vue'
 import { getNavItems } from './getNavItems'

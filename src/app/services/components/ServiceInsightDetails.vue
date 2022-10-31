@@ -59,10 +59,10 @@
 import { computed, PropType } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { ServiceInsight } from '@/types'
-import { stripTimes } from '@/helpers'
-import { STATUS } from '@/consts'
-import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
+import { ServiceInsight } from '@/types/index.d'
+import { stripTimes } from '@/utilities/helpers'
+import { STATUS } from '@/constants'
+import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import YamlView from '@/app/common/YamlView.vue'
 
 const route = useRoute()

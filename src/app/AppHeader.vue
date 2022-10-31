@@ -56,8 +56,8 @@ import { computed } from 'vue'
 import { KButton, KIcon, KPop } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import NotificationIcon from '@/components/Global/NotificationIcon.vue'
-import UpgradeCheck from '@/components/Utils/UpgradeCheck.vue'
+import NotificationIcon from './common/NotificationIcon.vue'
+import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const store = useStore()
 

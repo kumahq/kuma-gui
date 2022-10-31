@@ -1,8 +1,8 @@
 import { createRouter, createWebHashHistory, NavigationGuard, RouteRecordRaw } from 'vue-router'
 
 import { store } from '@/store/store'
-import { PolicyDefinition } from '@/types'
-import { ClientStorage } from '@/utils/ClientStorage'
+import { PolicyDefinition } from '@/types/index.d'
+import { ClientStorage } from '@/utilities/ClientStorage'
 
 function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   return policies.map((policy) => ({
@@ -15,7 +15,7 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
     props: {
       policyPath: policy.path,
     },
-    component: () => import('@/app/policies/PolicyView.vue'),
+    component: () => import('@/app/policies/views/PolicyView.vue'),
   }))
 }
 
@@ -32,7 +32,7 @@ export async function setupRouter() {
       meta: {
         title: 'Item not found',
       },
-      component: () => import('@/views/NotFound.vue'),
+      component: () => import('@/app/AppNotFoundView.vue'),
     },
     {
       path: '/',
@@ -48,7 +48,7 @@ export async function setupRouter() {
       meta: {
         title: 'Diagnostics',
       },
-      component: () => import('@/app/diagnostics/DiagnosticsView.vue'),
+      component: () => import('@/app/diagnostics/views/DiagnosticsView.vue'),
     },
     {
       path: '/zones',
@@ -56,7 +56,7 @@ export async function setupRouter() {
       meta: {
         title: 'Zones',
       },
-      component: () => import('@/views/Entities/ZonesView.vue'),
+      component: () => import('@/app/zones/views/ZonesView.vue'),
     },
     {
       path: '/zone-ingresses',
@@ -64,7 +64,7 @@ export async function setupRouter() {
       meta: {
         title: 'Zone ingresses',
       },
-      component: () => import('@/views/Entities/ZoneIngresses.vue'),
+      component: () => import('@/app/zones/views/ZoneIngresses.vue'),
     },
     {
       path: '/zoneegresses',
@@ -72,7 +72,7 @@ export async function setupRouter() {
       meta: {
         title: 'Zone egresses',
       },
-      component: () => import('@/views/Entities/ZoneEgresses.vue'),
+      component: () => import('@/app/zones/views/ZoneEgresses.vue'),
     },
     {
       path: '/mesh/:mesh',
@@ -163,7 +163,7 @@ export async function setupRouter() {
       redirect: {
         name: 'onboarding-welcome',
       },
-      component: () => import('@/views/ShellEmpty.vue'),
+      component: () => import('@/app/onboarding/views/ShellEmpty.vue'),
       children: [
         {
           path: 'welcome',
@@ -172,7 +172,7 @@ export async function setupRouter() {
             title: `Welcome to ${import.meta.env.VITE_NAMESPACE}!`,
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/WelcomeView.vue'),
+          component: () => import('@/app/onboarding/views/WelcomeView.vue'),
         },
         {
           path: 'deployment-types',
@@ -181,7 +181,7 @@ export async function setupRouter() {
             title: 'Deployment Types',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/DeploymentTypes.vue'),
+          component: () => import('@/app/onboarding/views/DeploymentTypes.vue'),
         },
         {
           path: 'configuration-types',
@@ -190,7 +190,7 @@ export async function setupRouter() {
             title: 'Configuration Types',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/ConfigurationTypes.vue'),
+          component: () => import('@/app/onboarding/views/ConfigurationTypes.vue'),
         },
         {
           path: 'multi-zone',
@@ -199,7 +199,7 @@ export async function setupRouter() {
             title: 'Multizone',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/MultiZoneView.vue'),
+          component: () => import('@/app/onboarding/views/MultiZoneView.vue'),
         },
         {
           path: 'create-mesh',
@@ -208,7 +208,7 @@ export async function setupRouter() {
             title: 'Create the Mesh',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/CreateMesh.vue'),
+          component: () => import('@/app/onboarding/views/CreateMesh.vue'),
         },
         {
           path: 'add-services',
@@ -217,7 +217,7 @@ export async function setupRouter() {
             title: 'Add new services',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/AddNewServices.vue'),
+          component: () => import('@/app/onboarding/views/AddNewServices.vue'),
         },
         {
           path: 'add-services-code',
@@ -226,7 +226,7 @@ export async function setupRouter() {
             title: 'Add new services',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/AddNewServicesCode.vue'),
+          component: () => import('@/app/onboarding/views/AddNewServicesCode.vue'),
         },
         {
           path: 'dataplanes-overview',
@@ -235,7 +235,7 @@ export async function setupRouter() {
             title: 'Data plane overview',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/DataplanesOverview.vue'),
+          component: () => import('@/app/onboarding/views/DataplanesOverview.vue'),
         },
         {
           path: 'completed',
@@ -244,7 +244,7 @@ export async function setupRouter() {
             title: 'Completed',
             onboardingProcess: true,
           },
-          component: () => import('@/views/Onboarding/CompletedView.vue'),
+          component: () => import('@/app/onboarding/views/CompletedView.vue'),
         },
       ],
     },
@@ -259,7 +259,7 @@ export async function setupRouter() {
             title: 'Create a new mesh',
             wizardProcess: true,
           },
-          component: () => import('@/views/Wizard/views/Mesh.vue'),
+          component: () => import('@/app/wizard/views/Mesh.vue'),
         },
         {
           path: 'kubernetes-dataplane',
@@ -268,7 +268,7 @@ export async function setupRouter() {
             title: 'Create a new data plane proxy on Kubernetes',
             wizardProcess: true,
           },
-          component: () => import('@/views/Wizard/views/DataplaneKubernetes.vue'),
+          component: () => import('@/app/wizard/views/DataplaneKubernetes.vue'),
         },
         {
           path: 'universal-dataplane',
@@ -277,7 +277,7 @@ export async function setupRouter() {
             title: 'Create a new data plane proxy on Universal',
             wizardProcess: true,
           },
-          component: () => import('@/views/Wizard/views/DataplaneUniversal.vue'),
+          component: () => import('@/app/wizard/views/DataplaneUniversal.vue'),
         },
       ],
     },

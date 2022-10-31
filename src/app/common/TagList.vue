@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 
-import { LabelValue } from '@/types'
+import { LabelValue } from '@/types/index.d'
 
 const props = defineProps({
   tags: {

@@ -29,7 +29,7 @@ import { computed, PropType } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { useStore } from '@/store/store'
-import { Mesh } from '@/types'
+import { Mesh } from '@/types/index.d'
 
 const route = useRoute()
 const router = useRouter()

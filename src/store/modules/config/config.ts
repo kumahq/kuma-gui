@@ -2,7 +2,7 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 import { State } from '../../index'
 import { ConfigInterface, ClientConfigInterface } from './config.types'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 
 const initialConfigState: ConfigInterface = {
   status: null,
@@ -59,22 +59,22 @@ const actions: ActionTree<ConfigInterface, State> = {
   },
   // get the general Kuma config (this differs from the API config endpoint)
   getConfig({ commit }) {
-    return Kuma.getConfig().then(response => {
+    return kumaApi.getConfig().then((response) => {
       commit('SET_CONFIG_DATA', response)
     })
   },
 
   // get the status of the API
   getStatus({ commit }) {
-    return Kuma.getStatus().then(response => {
+    return kumaApi.getStatus().then((response) => {
       commit('SET_STATUS', response)
     })
   },
 
   // get the current tagline and version
   getInfo({ commit }) {
-    return Kuma.getInfo()
-      .then(response => {
+    return kumaApi.getInfo()
+      .then((response) => {
         commit('SET_TAGLINE', response.tagline)
         commit('SET_VERSION', response.version)
 

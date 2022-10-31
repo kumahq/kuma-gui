@@ -213,7 +213,7 @@ import {
   Compatibility,
   DataPlane,
   DataPlaneOverview,
-} from '@/types'
+} from '@/types/index.d'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -223,22 +223,22 @@ import {
   INCOMPATIBLE_WRONG_FORMAT,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
-} from '@/dataplane'
-import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/consts'
-import { stripTimes } from '@/helpers'
+} from '@/utilities/dataplane'
+import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/constants'
+import { stripTimes } from '@/utilities/helpers'
 import { useStore } from '@/store/store'
 import DataplanePolicies from './DataplanePolicies.vue'
-import AccordionItem from '@/components/Accordion/AccordionItem.vue'
-import AccordionList from '@/components/Accordion/AccordionList.vue'
-import EntityURLControl from '@/components/Utils/EntityURLControl.vue'
-import EnvoyData from '@/components/EnvoyData/EnvoyData.vue'
-import LabelList from '@/components/Utils/LabelList.vue'
-import StatusInfo from '@/components/Utils/StatusInfo.vue'
-import SubscriptionDetails from '@/views/Entities/components/SubscriptionDetails.vue'
-import SubscriptionHeader from '@/views/Entities/components/SubscriptionHeader.vue'
-import TabsWidget from '@/components/Utils/TabsWidget.vue'
-import WarningsWidget from '@/views/Entities/components/WarningsWidget.vue'
+import AccordionItem from '@/app/common/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
+import EntityURLControl from '@/app/common/EntityURLControl.vue'
+import EnvoyData from '@/app/common/EnvoyData.vue'
+import LabelList from '@/app/common/LabelList.vue'
+import StatusInfo from '@/app/common/StatusInfo.vue'
+import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
+import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
+import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
+import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 
 const store = useStore()
 

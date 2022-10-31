@@ -96,9 +96,9 @@
 import { PropType } from 'vue'
 import { KPop, KIcon, KBadge } from '@kong/kongponents'
 
-import AccordionList from '@/components/Accordion/AccordionList.vue'
-import AccordionItem from '@/components/Accordion/AccordionItem.vue'
-import { SidecarDataplanePolicy } from '@/types'
+import AccordionList from '@/app/common/AccordionList.vue'
+import AccordionItem from '@/app/common/AccordionItem.vue'
+import { SidecarDataplanePolicy } from '@/types/index.d'
 
 const POLICY_TYPE_SUBTITLE: Record<string, string> = {
   inbound: 'Policies applied on incoming connection on address',

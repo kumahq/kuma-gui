@@ -39,10 +39,10 @@
 import { computed, PropType } from 'vue'
 import { useRoute, useRouter, RouteLocationNamedRaw } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
-import { datadogLogEvents } from '@/datadogEvents'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 
 import { useStore } from '@/store/store'
-import { get } from '@/utils/get'
+import { get } from '@/utilities/get'
 
 const currentRoute = useRoute()
 const router = useRouter()

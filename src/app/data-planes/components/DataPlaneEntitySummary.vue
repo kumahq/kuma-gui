@@ -134,12 +134,12 @@
 import { computed, PropType } from 'vue'
 import { KIcon } from '@kong/kongponents'
 
-import { DataPlaneOverview, DataPlaneStatus } from '@/types'
-import { STATUS } from '@/consts'
-import { rawReadableDate } from '@/helpers'
+import { DataPlaneOverview, DataPlaneStatus } from '@/types/index.d'
+import { STATUS } from '@/constants'
+import { rawReadableDate } from '@/utilities/helpers'
 import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { dpTags, getStatus, getVersions } from '@/dataplane'
+import { dpTags, getStatus, getVersions } from '@/utilities/dataplane'
 
 const props = defineProps({
   dataPlaneOverview: {

@@ -21,9 +21,9 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { DataPlane, DataPlaneOverview } from '@/types'
+import { DataPlane, DataPlaneOverview } from '@/types/index.d'
 import { useStore } from '@/store/store'
-import Kuma from '@/services/kuma'
+import { kumaApi } from '@/api/kumaApi'
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
@@ -45,8 +45,8 @@ async function loadData() {
   const name = route.params.dataPlane as string
 
   try {
-    dataPlane.value = await Kuma.getDataplaneFromMesh({ mesh, name })
-    dataPlaneOverview.value = await Kuma.getDataplaneOverviewFromMesh({ mesh, name })
+    dataPlane.value = await kumaApi.getDataplaneFromMesh({ mesh, name })
+    dataPlaneOverview.value = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
   } catch (err) {
     dataPlane.value = null
 

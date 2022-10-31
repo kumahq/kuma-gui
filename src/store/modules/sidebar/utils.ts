@@ -1,4 +1,4 @@
-import { MeshInsight, GlobalInsights } from '@/types'
+import { MeshInsight, GlobalInsights } from '@/types/index.d'
 
 export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] }) {
   const meshInsight = rawMeshInsights.items.reduce(
