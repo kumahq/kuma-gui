@@ -6,6 +6,7 @@
         :description="description"
       />
     </template>
+
     <template #content>
       <div
         v-if="!tableData.data.length"
@@ -13,12 +14,14 @@
       >
         <LoadingBox />
       </div>
+
       <div v-else>
         <div class="flex justify-center mt-10 mb-16 pb-16">
           <div class="w-full sm:w-3/5 p-4">
             <p class="font-bold mb-4">
               Found {{ tableData.data.length }} DPPs:
             </p>
+
             <KTable
               class="onboarding-dataplane-table"
               :fetcher="() => tableData"
@@ -56,6 +59,8 @@
 </template>
 
 <script>
+import { KTable } from '@kong/kongponents'
+
 import { PRODUCT_NAME, OFFLINE } from '@/constants'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { kumaApi } from '@/api/kumaApi'
@@ -71,6 +76,7 @@ export default {
     OnboardingHeading,
     OnboardingPage,
     LoadingBox,
+    KTable,
   },
   metaInfo() {
     return {

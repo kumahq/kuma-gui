@@ -9,6 +9,7 @@
     >
       Back
     </KButton>
+
     <div>
       <KButton
         v-if="showSkip"
@@ -19,6 +20,7 @@
       >
         Skip Setup
       </KButton>
+
       <span :class="['inline-block', {'cursor-not-allowed': !shouldAllowNext} ]">
         <KButton
           :disabled="!shouldAllowNext"
@@ -36,9 +38,15 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { KButton } from '@kong/kongponents'
 
 export default {
   name: 'OnboardingNavigation',
+
+  components: {
+    KButton,
+  },
+
   props: {
     shouldAllowNext: {
       type: Boolean,

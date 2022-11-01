@@ -3,6 +3,7 @@
     <span class="color-green-400">
       Connect time: {{ rawReadableDateFilter(details.connectTime) }}
     </span>
+
     <span
       v-if="details.disconnectTime"
       class="ml-4 color-red-400"

@@ -130,6 +130,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { KAlert, KButton } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
 import { getSome, stripTimes } from '@/utilities/helpers'

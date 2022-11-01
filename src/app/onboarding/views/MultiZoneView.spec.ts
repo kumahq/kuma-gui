@@ -1,6 +1,5 @@
 import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
-import { KButton, KCard } from '@kong/kongponents'
 
 import MultiZoneView from './MultiZoneView.vue'
 import { kumaApi } from '@/api/kumaApi'
@@ -10,10 +9,6 @@ function renderComponent() {
   return render(MultiZoneView, {
     global: {
       plugins: [[store, storeKey]],
-      components: {
-        KButton,
-        KCard,
-      },
     },
   })
 }

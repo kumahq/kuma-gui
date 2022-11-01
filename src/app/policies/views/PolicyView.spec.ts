@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
-import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import PolicyView from './PolicyView.vue'
 import { store, storeKey } from '@/store/store'
@@ -28,7 +27,6 @@ async function createWrapper(props = {}) {
       stubs: {
         'router-link': RouterLinkStub,
       },
-      components: { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
     },
   })
 }

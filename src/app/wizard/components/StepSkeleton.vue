@@ -79,7 +79,13 @@
 </template>
 
 <script>
+import { KButton } from '@kong/kongponents'
+
 export default {
+  components: {
+    KButton,
+  },
+
   props: {
     steps: {
       type: Array,

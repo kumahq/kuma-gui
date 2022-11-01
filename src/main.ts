@@ -3,7 +3,6 @@ import { addLicense, useTheme } from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import App from './app/App.vue'
-import { registerKongponents } from './utilities/registerKongponents'
 import { setupRouter } from './router/router'
 import { storeKey, store } from './store/store'
 import { setupDatadog } from './utilities/setupDatadog'
@@ -55,8 +54,6 @@ async function initializeVue() {
   const router = await setupRouter()
 
   app.use(router)
-
-  registerKongponents(app)
 
   app.mount('#app')
 }

@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
-import { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs } from '@kong/kongponents'
 
 import ZoneIngresses from './ZoneIngresses.vue'
 import { store, storeKey } from '@/store/store'
@@ -41,7 +40,6 @@ function renderComponent(mode = 'standalone') {
       stubs: {
         'router-link': RouterLinkStub,
       },
-      components: { KAlert, KBadge, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTable, KTabs },
       mocks: {
         $route: {
           query: {},

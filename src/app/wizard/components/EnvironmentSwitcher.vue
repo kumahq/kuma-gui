@@ -82,9 +82,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KButton, KEmptyState } from '@kong/kongponents'
 
 export default {
   name: 'EnvironmentSwitcher',
+  components: {
+    KButton,
+    KEmptyState,
+  },
   data() {
     return {
       wizardRoutes: {

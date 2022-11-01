@@ -28,3 +28,7 @@
     </KEmptyState>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
+</script>

@@ -1,7 +1,6 @@
 import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
-import { KButton } from '@kong/kongponents'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
 import { store, storeKey } from '@/store/store'
@@ -11,9 +10,6 @@ function renderComponent(props: any) {
     props,
     global: {
       plugins: [[store, storeKey]],
-      components: {
-        KButton,
-      },
       stubs: {
         'router-link': RouterLinkStub,
       },

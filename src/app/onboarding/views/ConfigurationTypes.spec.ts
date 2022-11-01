@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/vue'
-import { KButton, KPop, KRadio } from '@kong/kongponents'
 
 import ConfigurationTypes from './ConfigurationTypes.vue'
 import { store, storeKey } from '@/store/store'
@@ -13,11 +12,6 @@ function renderComponent(mode = 'standalone') {
   return render(ConfigurationTypes, {
     global: {
       plugins: [[store, storeKey]],
-      components: {
-        KButton,
-        KPop,
-        KRadio,
-      },
       stubs: {
         'router-link': {
           props: ['to'],

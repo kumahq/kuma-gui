@@ -626,6 +626,8 @@ networking:
 
 <script>
 import { mapGetters } from 'vuex'
+import { KAlert, KButton, KCard } from '@kong/kongponents'
+
 import { kumaApi } from '@/api/kumaApi'
 import { kebabCase } from '@/utilities/helpers'
 import CodeBlock from '@/app/common/CodeBlock.vue'
@@ -648,6 +650,9 @@ export default {
     StepSkeleton,
     EnvironmentSwitcher,
     EntityScanner,
+    KAlert,
+    KButton,
+    KCard,
   },
 
   data() {

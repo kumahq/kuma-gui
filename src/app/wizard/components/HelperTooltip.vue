@@ -4,6 +4,7 @@
     class="help-icon"
   >
     <a>?</a>
+
     <template #content>
       <div>
         <slot />
@@ -12,9 +13,6 @@
   </KPop>
 </template>
 
-<script>
-export default {}
+<script lang="ts" setup>
+import { KPop } from '@kong/kongponents'
 </script>
-
-<style>
-</style>

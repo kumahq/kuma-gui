@@ -60,12 +60,15 @@
 </template>
 
 <script>
+import { KEmptyState, KIcon } from '@kong/kongponents'
 import IconSuccess from '@/app/common/IconSuccess.vue'
 
 export default {
   name: 'EntityScanner',
   components: {
     IconSuccess,
+    KEmptyState,
+    KIcon,
   },
   props: {
     interval: {

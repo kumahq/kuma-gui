@@ -724,9 +724,17 @@
 </template>
 
 <script>
+import { KPop } from '@kong/kongponents'
+
 import { PRODUCT_NAME } from '@/constants'
+
 export default {
   name: 'PostgresGraph',
+
+  components: {
+    KPop,
+  },
+
   data() {
     return {
       productName: PRODUCT_NAME,

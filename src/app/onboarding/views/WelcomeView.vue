@@ -5,6 +5,7 @@
         <h1 class="welcome-title">
           Welcome to {{ productName }}
         </h1>
+
         <p class="welcome-description">
           Congratulations on downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
         </p>

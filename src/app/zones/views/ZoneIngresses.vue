@@ -121,6 +121,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KButton, KCard } from '@kong/kongponents'
 
 import { getTableData } from '@/utilities/tableDataUtils'
 import { getSome } from '@/utilities/helpers'
@@ -154,6 +155,8 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     TabsWidget,
+    KButton,
+    KCard,
   },
 
   data() {

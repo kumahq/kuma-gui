@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import { KAlert, KCard } from '@kong/kongponents'
+
 import WarningDefault from './WarningDefault.vue'
 import WarningEnvoyIncompatible from './WarningEnvoyIncompatible.vue'
 import WarningZoneAndKumaDPVersionsIncompatible from './WarningZoneAndKumaDPVersionsIncompatible.vue'
@@ -37,6 +39,12 @@ import {
 
 export default {
   name: 'WarningsWidget',
+
+  components: {
+    KAlert,
+    KCard,
+  },
+
   props: {
     warnings: {
       type: Array,

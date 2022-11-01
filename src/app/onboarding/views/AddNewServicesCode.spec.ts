@@ -1,6 +1,5 @@
 import { flushPromises, RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
-import { KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop } from '@kong/kongponents'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
 import { kumaApi } from '@/api/kumaApi'
@@ -10,14 +9,6 @@ function renderComponent() {
   return render(AddNewServicesCode, {
     global: {
       plugins: [[store, storeKey]],
-      components: {
-        KButton,
-        KCard,
-        KClipboardProvider,
-        KEmptyState,
-        KIcon,
-        KPop,
-      },
       stubs: {
         'router-link': RouterLinkStub,
       },
