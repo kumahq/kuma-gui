@@ -22,7 +22,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
         
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          data-v-86245c6c=""
+          data-v-0eaad51f=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
@@ -72,13 +72,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-86245c6c=""
+            data-v-0eaad51f=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-86245c6c=""
+              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -86,7 +86,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-86245c6c=""
+                data-v-0eaad51f=""
               >
                 
                 <p>
@@ -475,23 +475,23 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                   <div
                     class="k-code-block code-block"
                     data-testid="k-code-block"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                     id="code-block-data-plane"
                     style="--maxLineNumberWidth: 2ch;"
                     tabindex="0"
                   >
                     <div
                       class="k-code-block-actions"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       <div
                         class="k-search-container"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                       >
                         <span
                           class="k-search-icon kong-icon-search kong-icon"
                           data-testid="k-code-block-search-icon"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -524,12 +524,12 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <label
                           class="k-code-block-search-label"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           for="code-block-data-plane-search-input"
                         >
                           <span
                             class="k-visually-hidden"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             Search
                           </span>
@@ -537,7 +537,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         <input
                           class="k-code-block-search-input"
                           data-testid="k-code-block-search-input"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           id="code-block-data-plane-search-input"
                           type="text"
                         />
@@ -545,7 +545,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         <span
                           class="k-is-processing-icon kong-icon-spinner kong-icon"
                           data-testid="k-code-block-is-processing-icon"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -588,7 +588,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       </div>
                       <p
                         class="k-code-block-search-results"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                       >
                         
                          No results 
@@ -596,13 +596,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       </p>
                       <div
                         class="k-search-actions"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                       >
                         <button
                           aria-pressed="false"
                           class="small outline k-button k-regexp-mode-button"
                           data-testid="k-code-block-regexp-mode-button"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-6f773baa=""
                           title="Use regular expression (Alt+R)"
                           type="button"
@@ -613,7 +613,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-visually-hidden"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             RegExp mode enabled
                           </span>
@@ -625,7 +625,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           aria-pressed="false"
                           class="small outline k-button k-filter-mode-button"
                           data-testid="k-code-block-filter-mode-button"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-6f773baa=""
                           title="Filter results (Alt+F)"
                           type="button"
@@ -633,7 +633,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-button-icon kong-icon-filter kong-icon"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                             data-v-71cfcfc4=""
                           >
                             <svg
@@ -665,7 +665,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-visually-hidden"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             Filter mode enabled
                           </span>
@@ -675,7 +675,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         <button
                           class="small outline k-button k-previous-match-button"
                           data-testid="k-code-block-previous-match-button"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-6f773baa=""
                           disabled=""
                           title="Previous match (Shift+F3)"
@@ -684,7 +684,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-button-icon kong-icon-chevronUp kong-icon"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                             data-v-71cfcfc4=""
                           >
                             <svg
@@ -720,7 +720,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-visually-hidden"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             Previous match
                           </span>
@@ -730,7 +730,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         <button
                           class="small outline k-button k-next-match-button"
                           data-testid="k-code-block-next-match-button"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-6f773baa=""
                           disabled=""
                           title="Next match (F3)"
@@ -739,7 +739,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-button-icon kong-icon-chevronDown kong-icon"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                             data-v-71cfcfc4=""
                           >
                             <svg
@@ -775,7 +775,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           
                           <span
                             class="k-visually-hidden"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             Next match
                           </span>
@@ -786,30 +786,30 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                     </div>
                     <div
                       class="k-code-block-content"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       <pre
                         class="k-highlighted-code-block language-yaml"
                         data-testid="k-code-block-highlighted-code-block"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         tabindex="0"
                       >
                         <span
                           class="k-line-number-rows"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                         >
                           
         
                           
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L1"
                             >
                               1
@@ -819,13 +819,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L2"
                             >
                               2
@@ -835,13 +835,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L3"
                             >
                               3
@@ -851,13 +851,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L4"
                             >
                               4
@@ -867,13 +867,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L5"
                             >
                               5
@@ -883,13 +883,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L6"
                             >
                               6
@@ -899,13 +899,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L7"
                             >
                               7
@@ -915,13 +915,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L8"
                             >
                               8
@@ -931,13 +931,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L9"
                             >
                               9
@@ -947,13 +947,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L10"
                             >
                               10
@@ -963,13 +963,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L11"
                             >
                               11
@@ -979,13 +979,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L12"
                             >
                               12
@@ -995,13 +995,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L13"
                             >
                               13
@@ -1011,13 +1011,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L14"
                             >
                               14
@@ -1027,13 +1027,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L15"
                             >
                               15
@@ -1043,13 +1043,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-6da4a89e=""
+                            data-v-034f9b55=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-6da4a89e=""
+                              data-v-034f9b55=""
                               id="code-block-data-plane-L16"
                             >
                               16
@@ -1063,7 +1063,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <code
                           class="language-yaml"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                         >
                           <span
                             class="token key atrule"
@@ -1297,7 +1297,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       <button
                         class="small outline k-button k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         data-v-6f773baa=""
                         title="Copy (Alt+C)"
                         type="button"
@@ -1308,7 +1308,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         
                         <span
                           class="kong-icon-copy kong-icon"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -1337,7 +1337,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <span
                           class="k-visually-hidden"
-                          data-v-6da4a89e=""
+                          data-v-034f9b55=""
                         >
                           Copy
                         </span>

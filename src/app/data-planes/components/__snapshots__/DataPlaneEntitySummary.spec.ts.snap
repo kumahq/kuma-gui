@@ -361,7 +361,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
             <div
               class="k-code-block code-block"
               data-testid="k-code-block"
-              data-v-6da4a89e=""
+              data-v-034f9b55=""
               id="code-block-data-plane-summary"
               style="--maxLineNumberWidth: 2ch; --KCodeBlockMaxHeight: 250px;"
               tabindex="0"
@@ -369,30 +369,30 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
               <!---->
               <div
                 class="k-code-block-content"
-                data-v-6da4a89e=""
+                data-v-034f9b55=""
               >
                 <pre
                   class="k-highlighted-code-block language-yaml"
                   data-testid="k-code-block-highlighted-code-block"
-                  data-v-6da4a89e=""
+                  data-v-034f9b55=""
                   tabindex="0"
                 >
                   <span
                     class="k-line-number-rows"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                   >
                     
         
                     
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L1"
                       >
                         1
@@ -402,13 +402,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L2"
                       >
                         2
@@ -418,13 +418,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L3"
                       >
                         3
@@ -434,13 +434,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L4"
                       >
                         4
@@ -450,13 +450,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L5"
                       >
                         5
@@ -466,13 +466,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L6"
                       >
                         6
@@ -482,13 +482,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L7"
                       >
                         7
@@ -498,13 +498,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L8"
                       >
                         8
@@ -514,13 +514,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L9"
                       >
                         9
@@ -530,13 +530,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L10"
                       >
                         10
@@ -546,13 +546,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L11"
                       >
                         11
@@ -562,13 +562,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L12"
                       >
                         12
@@ -578,13 +578,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L13"
                       >
                         13
@@ -594,13 +594,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L14"
                       >
                         14
@@ -610,13 +610,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L15"
                       >
                         15
@@ -626,13 +626,13 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                     </span>
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-data-plane-summary-L16"
                       >
                         16
@@ -646,7 +646,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                   </span>
                   <code
                     class="language-yaml"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                   >
                     <span
                       class="token key atrule"
@@ -880,7 +880,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                 <button
                   class="small outline k-button k-code-block-copy-button"
                   data-testid="k-code-block-copy-button"
-                  data-v-6da4a89e=""
+                  data-v-034f9b55=""
                   data-v-6f773baa=""
                   title="Copy (Alt+C)"
                   type="button"
@@ -891,7 +891,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                   
                   <span
                     class="kong-icon-copy kong-icon"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                     data-v-71cfcfc4=""
                   >
                     <svg
@@ -920,7 +920,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                   </span>
                   <span
                     class="k-visually-hidden"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                   >
                     Copy
                   </span>
