@@ -1,15 +1,15 @@
-import { RouterLinkStub } from '@vue/test-utils'
 import { render } from '@testing-library/vue'
 
 import CompletedView from './CompletedView.vue'
+import { createRouter } from '@/router/router'
+
+const router = createRouter()
 
 describe('CompletedView.vue', () => {
   it('renders snapshot', () => {
     const { container } = render(CompletedView, {
       global: {
-        stubs: {
-          'router-link': RouterLinkStub,
-        },
+        plugins: [router],
       },
     })
 

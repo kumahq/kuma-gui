@@ -1,27 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import Mesh from './Mesh.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-    {
-      path: '/create-mesh',
-      name: 'create-mesh',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 function renderComponent(mode = 'standalone') {
   store.state.config.tagline = import.meta.env.VITE_NAMESPACE

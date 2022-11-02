@@ -1,31 +1,15 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import { render, screen } from '@testing-library/vue'
 
 import EntityURLControl from './EntityURLControl.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 function renderComponent(props: any) {
   return render(EntityURLControl, {
     global: {
       plugins: [router, [store, storeKey]],
-      mocks: {
-        $route: {
-          params: {
-            mesh: 'test-mesh',
-          },
-        },
-      },
     },
     props,
   })

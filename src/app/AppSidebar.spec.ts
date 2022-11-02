@@ -1,26 +1,12 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import { RouterLinkStub } from '@vue/test-utils'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import AppSidebar from './AppSidebar.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-    {
-      path: '/mesh/:mesh',
-      name: 'mesh-detail-view',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 async function renderComponent() {
   await store.dispatch('fetchPolicies')

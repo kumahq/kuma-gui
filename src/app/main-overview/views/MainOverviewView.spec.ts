@@ -1,32 +1,13 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
-import { createRouter, createWebHashHistory } from 'vue-router'
 
 import MainOverviewView from './MainOverviewView.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
+
+const router = createRouter()
 
 describe('MainOverviewView.vue', () => {
   it('renders basic snapshot', () => {
-    const router = createRouter({
-      history: createWebHashHistory(),
-      routes: [
-        {
-          path: '/',
-          name: 'home',
-          component: { template: 'TestComponent' },
-        },
-        {
-          path: '/zones',
-          name: 'zones',
-          component: { template: 'TestComponent' },
-        },
-        {
-          path: '/mesh/:mesh/data-planes',
-          name: 'data-plane-list-view',
-          component: { template: 'TestComponent' },
-        },
-      ],
-    })
-
     const wrapper = mount(MainOverviewView, {
       // This is necessary to correctly suppress the amcharts “Chart was not disposed” warning.
       // Its detection logic relies on finding an elements root node

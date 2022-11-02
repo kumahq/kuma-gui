@@ -1,24 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import { mount } from '@vue/test-utils'
 
 import AppNavItem from './AppNavItem.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-    {
-      path: '/mesh/:mesh/data-planes',
-      name: 'data-plane-list-view',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 function renderComponent() {
   return mount(AppNavItem, {

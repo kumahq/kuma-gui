@@ -4,15 +4,18 @@ import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import DataplanePolicies from './DataplanePolicies.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { server } from '@/../jest/jest-setup'
+
+const router = createRouter()
 
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicies')
 
   return render(DataplanePolicies, {
     global: {
-      plugins: [[store, storeKey]],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },

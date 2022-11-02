@@ -3,20 +3,18 @@ import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
+
+const router = createRouter()
 
 function renderComponent(props: any) {
   return render(OnboardingNavigation, {
     props,
     global: {
-      plugins: [[store, storeKey]],
+      plugins: [router, [store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
-      },
-      mocks: {
-        $router: {
-          push: () => undefined,
-        },
       },
     },
   })

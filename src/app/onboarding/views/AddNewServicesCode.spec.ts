@@ -1,17 +1,17 @@
-import { flushPromises, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
 import { kumaApi } from '@/api/kumaApi'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
+
+const router = createRouter()
 
 function renderComponent() {
   return render(AddNewServicesCode, {
     global: {
-      plugins: [[store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
+      plugins: [router, [store, storeKey]],
     },
   })
 }

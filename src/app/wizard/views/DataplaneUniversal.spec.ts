@@ -1,27 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import { rest } from 'msw'
 import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { server } from '@/../jest/jest-setup'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-    {
-      path: '/create-mesh',
-      name: 'create-mesh',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 describe('DataplaneUniversal.vue', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, NavigationGuard, RouteRecordRaw } from 'vue-router'
+import { createRouter as createVueRouter, createWebHistory, NavigationGuard, Router, RouteRecordRaw } from 'vue-router'
 
 import { store } from '@/store/store'
 import { PolicyDefinition } from '@/types/index.d'
@@ -19,10 +19,8 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   }))
 }
 
-export async function setupRouter() {
-  // Loads available policies in order to populate the necessary routes.
-  await store.dispatch('fetchPolicies')
-  const policyRoutes = getPolicyRoutes(store.state.policies)
+export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router {
+  const policyRoutes = getPolicyRoutes(policyDefinitions)
 
   const routes: readonly RouteRecordRaw[] = [
     {
@@ -283,8 +281,8 @@ export async function setupRouter() {
     },
   ]
 
-  const router = createRouter({
-    history: createWebHashHistory(import.meta.env.BASE_URL),
+  const router = createVueRouter({
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes,
   })
 

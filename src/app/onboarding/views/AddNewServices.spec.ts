@@ -1,17 +1,16 @@
-import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import AddNewServices from './AddNewServices.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
+
+const router = createRouter()
 
 function renderComponent() {
   return render(AddNewServices, {
     global: {
-      plugins: [[store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
+      plugins: [router, [store, storeKey]],
     },
   })
 }

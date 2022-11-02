@@ -22,19 +22,7 @@ dotenv.config()
 Object.defineProperty(window, 'SVGPathElement', { value: class extends HTMLElement { } })
 
 /**
- * Kongponents v6 uses a call to `crypto.getRandomValues` which isn’t implemented in jsdom by default.
- * To make the tests run, we supply it via Node’s `crypto` library.
- *
- * See: https://github.com/jsdom/jsdom/issues/1612
- */
-Object.defineProperty(global.self, 'crypto', {
-  value: {
-    getRandomValues: (array: []) => require('crypto').randomBytes(array.length),
-  },
-})
-
-/**
- * Kongponents v6 uses generated UUIDs for several attribute values.
+ * Kongponents uses generated UUIDs for several attribute values.
  * This breaks the project’s snapshot tests since they’re based on fully-mounted components
  * which also includes those from external sources like Kongponents.
  *

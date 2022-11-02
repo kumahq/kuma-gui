@@ -1,17 +1,17 @@
-import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
+import { createRouter } from '@/router/router'
 import { server } from '@/../jest/jest-setup'
+
+const router = createRouter()
 
 function renderComponent(props = {}) {
   return render(PolicyConnections, {
     global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
+      plugins: [router],
     },
     props,
   })

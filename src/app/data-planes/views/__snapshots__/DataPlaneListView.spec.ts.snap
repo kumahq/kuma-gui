@@ -417,6 +417,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
           class="medium rounded primary k-button add-dp-button"
           data-testid="data-plane-create-data-plane-button"
           data-v-6f773baa=""
+          href="/wizard/kubernetes-dataplane"
           type="button"
         >
           
@@ -703,7 +704,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/backend"
+                      >
                         backend
                       </a>
                       
@@ -713,7 +717,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -731,7 +738,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/backend"
+                      >
                         backend
                       </a>
                       
@@ -772,6 +782,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/backend"
                         type="button"
                       >
                         
@@ -840,7 +851,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                      >
                         cluster-1.backend-02
                       </a>
                       
@@ -850,7 +864,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -868,7 +885,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/backend"
+                      >
                         backend
                       </a>
                       
@@ -909,6 +929,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/cluster-1.backend-02"
                         type="button"
                       >
                         
@@ -977,7 +998,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                      >
                         cluster-1.backend-03
                       </a>
                       
@@ -987,7 +1011,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1005,7 +1032,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/backend"
+                      >
                         backend
                       </a>
                       
@@ -1046,6 +1076,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/cluster-1.backend-03"
                         type="button"
                       >
                         
@@ -1114,7 +1145,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.gateway-01"
+                      >
                         cluster-1.gateway-01
                       </a>
                       
@@ -1124,7 +1158,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1142,7 +1179,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/gateway"
+                      >
                         gateway
                       </a>
                       
@@ -1183,6 +1223,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/cluster-1.gateway-01"
                         type="button"
                       >
                         
@@ -1251,7 +1292,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                      >
                         cluster-1.ingress-02
                       </a>
                       
@@ -1261,7 +1305,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1279,7 +1326,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/ingress"
+                      >
                         ingress
                       </a>
                       
@@ -1320,6 +1370,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/cluster-1.ingress-02"
                         type="button"
                       >
                         
@@ -1388,7 +1439,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/dataplane-test-456"
+                      >
                         dataplane-test-456
                       </a>
                       
@@ -1398,7 +1452,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1416,7 +1473,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/kuma-example-backend"
+                      >
                         kuma-example-backend
                       </a>
                       
@@ -1457,6 +1517,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/dataplane-test-456"
                         type="button"
                       >
                         
@@ -1525,7 +1586,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/db"
+                      >
                         db
                       </a>
                       
@@ -1535,7 +1599,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1553,7 +1620,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/db"
+                      >
                         db
                       </a>
                       
@@ -1594,6 +1664,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/db"
                         type="button"
                       >
                         
@@ -1662,7 +1733,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/frontend"
+                      >
                         frontend
                       </a>
                       
@@ -1672,7 +1746,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1690,7 +1767,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/frontend"
+                      >
                         frontend
                       </a>
                       
@@ -1731,6 +1811,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/frontend"
                         type="button"
                       >
                         
@@ -1838,7 +1919,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                      >
                         ingress-dp-test-123
                       </a>
                       
@@ -1848,7 +1932,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -1866,7 +1953,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/kuma-example-backend"
+                      >
                         kuma-example-backend
                       </a>
                       
@@ -1907,6 +1997,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/ingress-dp-test-123"
                         type="button"
                       >
                         
@@ -1975,7 +2066,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/no-subscriptions"
+                      >
                         no-subscriptions
                       </a>
                       
@@ -1985,7 +2079,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default"
+                      >
                         default
                       </a>
                       
@@ -2003,7 +2100,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/services/no-subscriptions"
+                      >
                         no-subscriptions
                       </a>
                       
@@ -2044,6 +2144,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         data-v-6f773baa=""
+                        href="/mesh/default/data-planes/no-subscriptions"
                         type="button"
                       >
                         
@@ -2133,7 +2234,10 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
           >
             Data plane proxy:
           </span>
-          <a>
+          <a
+            class=""
+            href="/mesh/default/data-planes/backend"
+          >
             backend
           </a>
           <div

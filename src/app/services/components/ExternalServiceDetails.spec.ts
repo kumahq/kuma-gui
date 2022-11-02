@@ -1,22 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 
 import ExternalServiceDetails from './ExternalServiceDetails.vue'
+import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { createExternalService } from '@/test-data/createExternalService'
 
 const externalService = createExternalService()
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 function renderComponent(props = {}) {
   return shallowMount(ExternalServiceDetails, {
@@ -26,9 +17,6 @@ function renderComponent(props = {}) {
     },
     global: {
       plugins: [router, [store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }

@@ -13,7 +13,10 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
       >
         Data plane proxy:
       </span>
-      <a>
+      <a
+        class=""
+        href="/mesh/test-mesh/data-planes/backend"
+      >
         backend
       </a>
       <div

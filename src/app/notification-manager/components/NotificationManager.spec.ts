@@ -1,19 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import { mount } from '@vue/test-utils'
 
-import { store, storeKey } from '@/store/store'
 import NotificationManager from './NotificationManager.vue'
+import { createRouter } from '@/router/router'
+import { store, storeKey } from '@/store/store'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+const router = createRouter()
 
 function renderComponent({ meshes, selectedMesh }: { meshes: any, selectedMesh: string }) {
   store.state.meshes = meshes
