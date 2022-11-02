@@ -1,5 +1,4 @@
 import { render } from '@testing-library/vue'
-import { KAlert, KButton } from '@kong/kongponents'
 
 import UpgradeCheck from './UpgradeCheck.vue'
 import { store, storeKey } from '@/store/store'
@@ -11,10 +10,6 @@ describe('UpgradeCheck.vue', () => {
     const { container, findByText } = render(UpgradeCheck, {
       global: {
         plugins: [[store, storeKey]],
-        components: {
-          KAlert,
-          KButton,
-        },
       },
     })
 

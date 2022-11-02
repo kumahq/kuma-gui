@@ -586,6 +586,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KAlert, KButton, KCard } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
 import { kebabCase } from '@/utilities/helpers'
@@ -642,6 +643,9 @@ export default {
     TabsWidget,
     StepSkeleton,
     EntityScanner,
+    KAlert,
+    KButton,
+    KCard,
   },
 
   data() {

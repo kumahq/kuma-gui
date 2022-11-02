@@ -3,6 +3,7 @@
     <template #header>
       <OnboardingHeading title="Create the mesh" />
     </template>
+
     <template #content>
       <p class="text-center mb-4">
         When you install, {{ productName }} creates a <i>default</i> mesh, but you can add as many meshes as you need.
@@ -35,6 +36,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KTable } from '@kong/kongponents'
+
 import { PRODUCT_NAME } from '@/constants'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
@@ -42,10 +45,12 @@ import OnboardingPage from '../components/OnboardingPage.vue'
 
 export default {
   name: 'CreateMesh',
+
   components: {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
+    KTable,
   },
 
   data() {

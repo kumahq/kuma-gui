@@ -3,6 +3,7 @@
     <template #header>
       <OnboardingHeading title="Add zones" />
     </template>
+
     <template #content>
       <p class="text-center mb-4">
         A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
@@ -31,12 +32,14 @@
             class="text-green-500"
             data-testid="zone-connected"
           >Connected</span>
+
           <span
             v-else
             class="text-red-500"
             data-testid="zone-disconnected"
           >Disconnected</span>
         </p>
+
         <p class="text-center mt-4 mb-10">
           Zone ingress status:
           <span
@@ -44,12 +47,14 @@
             class="text-green-500"
             data-testid="zone-ingress-connected"
           >Connected</span>
+
           <span
             v-else
             class="text-red-500"
             data-testid="zone-ingress-disconnected"
           >Disconnected</span>
         </p>
+
         <div
           v-if="!hasZoneIngresses || !hasZones"
           class="flex justify-center"
@@ -71,6 +76,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KCard } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '@/app/common/LoadingBox.vue'
@@ -87,6 +93,7 @@ export default {
     OnboardingHeading,
     OnboardingPage,
     LoadingBox,
+    KCard,
   },
   data() {
     return {

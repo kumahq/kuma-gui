@@ -9,11 +9,13 @@
 
       <p>{{ productName }} is running in Standalone mode.</p>
     </template>
+
     <template #message>
       <p>
         To access this page, you must be running in <strong>Multi-Zone</strong> mode.
       </p>
     </template>
+
     <template #cta>
       <KButton
         :to="`https://kuma.io/docs/${kumaDocsVersion}/documentation/deployments/`"
@@ -28,14 +30,25 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
+
 import { PRODUCT_NAME } from '@/constants'
+
 export default {
   name: 'MultizoneInfo',
+
+  components: {
+    KButton,
+    KEmptyState,
+    KIcon,
+  },
+
   data() {
     return {
       productName: PRODUCT_NAME,
     }
   },
+
   computed: {
     ...mapGetters({
       kumaDocsVersion: 'config/getKumaDocsVersion',

@@ -3,10 +3,12 @@
     <template #header>
       <OnboardingHeading title="Learn about configuration storage" />
     </template>
+
     <template #content>
       <div class="h-full w-full flex items-center justify-center mb-10">
         <component :is="currentGraph" />
       </div>
+
       <div class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto configuration-type-radio-buttons">
         <KRadio
           v-model="mode"
@@ -15,6 +17,7 @@
         >
           Kubernetes
         </KRadio>
+
         <KRadio
           v-model="mode"
           name="deployment"
@@ -22,6 +25,7 @@
         >
           Postgres
         </KRadio>
+
         <KRadio
           v-model="mode"
           name="deployment"
@@ -31,6 +35,7 @@
         </KRadio>
       </div>
     </template>
+
     <template #navigation>
       <OnboardingNavigation
         :next-step="nextStep"
@@ -42,6 +47,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KRadio } from '@kong/kongponents'
+
 import { PRODUCT_NAME } from '@/constants'
 import KubernetesGraph from '../components/graphs/KubernetesGraph.vue'
 import PostgresGraph from '../components/graphs/PostgresGraph.vue'
@@ -59,6 +66,7 @@ export default {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
+    KRadio,
   },
   data() {
     return { mode: 'kubernetes', productName: PRODUCT_NAME }

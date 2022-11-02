@@ -1,6 +1,5 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { KCard } from '@kong/kongponents'
 
 import MainOverviewView from './MainOverviewView.vue'
 import { store, storeKey } from '@/store/store'
@@ -37,9 +36,6 @@ describe('MainOverviewView.vue', () => {
         plugins: [router, [store, storeKey]],
         stubs: {
           'router-link': RouterLinkStub,
-        },
-        components: {
-          KCard,
         },
       },
     })

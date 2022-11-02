@@ -1,6 +1,5 @@
 import { RouterLinkStub } from '@vue/test-utils'
 import { render } from '@testing-library/vue'
-import { KButton, KIcon } from '@kong/kongponents'
 
 import WelcomeView from './WelcomeView.vue'
 import { store, storeKey } from '@/store/store'
@@ -14,10 +13,6 @@ function renderComponent(environment: string) {
   return render(WelcomeView, {
     global: {
       plugins: [[store, storeKey]],
-      components: {
-        KButton,
-        KIcon,
-      },
       stubs: {
         routerLink: RouterLinkStub,
       },

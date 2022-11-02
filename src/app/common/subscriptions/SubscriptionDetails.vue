@@ -62,9 +62,15 @@
 
 <script>
 import { humanReadableDate, camelCaseToWords } from '@/utilities/helpers'
+import { KAlert, KIcon } from '@kong/kongponents'
 
 export default {
   name: 'SubscriptionDetails',
+
+  components: {
+    KAlert,
+    KIcon,
+  },
 
   props: {
     details: {

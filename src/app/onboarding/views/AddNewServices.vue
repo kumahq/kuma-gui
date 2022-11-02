@@ -3,6 +3,7 @@
     <template #header>
       <OnboardingHeading title="Add services" />
     </template>
+
     <template #content>
       <div class="h-full w-full flex justify-evenly items-center">
         <ServiceBox
@@ -12,14 +13,17 @@
         >
           <div>
             <img src="@/assets/images/new-service-demo.svg?url">
+
             <div class="ml-3">
               <p class="uppercase font-bold tracking-wider">
                 Demo app
               </p>
+
               <p>Counter application</p>
             </div>
           </div>
         </ServiceBox>
+
         <ServiceBox
           :active="mode === 'manually'"
           class="cursor-pointer"
@@ -27,16 +31,19 @@
         >
           <div class="cursor-pointer">
             <img src="@/assets/images/new-service-manually.svg?url">
+
             <div class="ml-3">
               <p class="uppercase font-bold tracking-wider">
                 Manually
               </p>
+
               <p>After this wizard</p>
             </div>
           </div>
         </ServiceBox>
       </div>
     </template>
+
     <template #navigation>
       <OnboardingNavigation
         :next-step="nextStep"

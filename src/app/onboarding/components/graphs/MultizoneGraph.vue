@@ -934,9 +934,17 @@
 </template>
 
 <script>
+import { KPop } from '@kong/kongponents'
+
 import { PRODUCT_NAME } from '@/constants'
+
 export default {
   name: 'MultizoneGraph',
+
+  components: {
+    KPop,
+  },
+
   data() {
     return {
       productName: PRODUCT_NAME,

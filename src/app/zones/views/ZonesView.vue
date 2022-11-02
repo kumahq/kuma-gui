@@ -123,6 +123,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { KBadge, KButton, KCard } from '@kong/kongponents'
 
 import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
@@ -158,6 +159,9 @@ export default {
     SubscriptionHeader,
     TabsWidget,
     WarningsWidget,
+    KBadge,
+    KButton,
+    KCard,
   },
 
   data() {

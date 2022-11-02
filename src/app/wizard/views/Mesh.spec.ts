@@ -1,7 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
-import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
 
 import Mesh from './Mesh.vue'
 import { store, storeKey } from '@/store/store'
@@ -33,16 +32,6 @@ function renderComponent(mode = 'standalone') {
   return render(Mesh, {
     global: {
       plugins: [router, [store, storeKey]],
-      components: {
-        KAlert,
-        KButton,
-        KCard,
-        KClipboardProvider,
-        KEmptyState,
-        KIcon,
-        KPop,
-        KTabs,
-      },
     },
   })
 }

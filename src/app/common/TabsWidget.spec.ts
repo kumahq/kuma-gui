@@ -1,17 +1,10 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
-import { KIcon, KTabs } from '@kong/kongponents'
 
 import TabsWidget from './TabsWidget.vue'
 
 function renderComponent(props: any) {
   return render(TabsWidget, {
-    global: {
-      components: {
-        KIcon,
-        KTabs,
-      },
-    },
     props,
     slots: {
       universal: '<div>Universal</div>',

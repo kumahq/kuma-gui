@@ -2,7 +2,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import { rest } from 'msw'
 import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
-import { KAlert, KButton, KCard, KClipboardProvider, KEmptyState, KIcon, KPop, KTabs } from '@kong/kongponents'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
 import { store, storeKey } from '@/store/store'
@@ -55,16 +54,6 @@ describe('DataplaneUniversal.vue', () => {
     const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal, {
       global: {
         plugins: [router, [store, storeKey]],
-        components: {
-          KAlert,
-          KButton,
-          KCard,
-          KClipboardProvider,
-          KEmptyState,
-          KIcon,
-          KPop,
-          KTabs,
-        },
       },
     })
 

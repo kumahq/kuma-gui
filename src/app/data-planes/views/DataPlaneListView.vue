@@ -113,10 +113,6 @@
 </template>
 
 <script lang="ts" setup>
-/** @typedef {import('../constants').ColumnDropdownItem} ColumnDropdownItem */
-/** @typedef {import('@/types/index.d').DataplaneOverview} DataplaneOverview */
-/** @typedef {import('@/types/index.d').ZoneOverview} ZoneOverview */
-
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
@@ -126,7 +122,7 @@ import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders } from '../constants'
+import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders, ColumnDropdownItem } from '../constants'
 import { useStore } from '@/store/store'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import { patchQueryParam } from '@/utilities/patchQueryParam'
@@ -212,10 +208,8 @@ const filteredTableData = computed(() => {
     headers,
   }
 })
-/**
- * @type {ColumnDropdownItem[]}
- */
-const filteredColumnsDropdownItems = computed(() => {
+
+const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
   return columnsDropdownItems
     .filter((item) => multicluster.value ? true : item.tableHeaderKey !== 'zone')
     .map((item) => {

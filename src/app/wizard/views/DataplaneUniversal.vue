@@ -12,10 +12,12 @@
           <h3>
             Create Universal Dataplane
           </h3>
+
           <p>
             Welcome to the wizard to create a new Dataplane resource in {{ title }}.
             We will be providing you with a few steps that will get you started.
           </p>
+
           <p>
             As you know, the {{ productName }} GUI is read-only.
           </p>
@@ -64,10 +66,12 @@
                     </option>
                   </select>
                 </div>
+
                 <div>
                   <label class="k-input-label mr-4">
                     or
                   </label>
+
                   <KButton
                     :to="{ name: 'create-mesh' }"
                     appearance="secondary"
@@ -79,10 +83,12 @@
             </template>
           </KCard>
         </template>
+
         <template #topology>
           <h3>
             Setup Dataplane Mode
           </h3>
+
           <p>
             You can create a data plane for a service or a data plane for a Gateway.
           </p>
@@ -105,10 +111,12 @@
                   value="dataplane-type-service"
                   checked
                 >
+
                 <span>
                   Service Dataplane
                 </span>
               </label>
+
               <label for="gateway-dataplane">
                 <input
                   id="gateway-dataplane"
@@ -118,6 +126,7 @@
                   name="dataplane-type"
                   value="dataplane-type-gateway"
                 >
+
                 <span>
                   Gateway Dataplane
                 </span>
@@ -138,6 +147,7 @@
               class="k-input w-100 mr-4"
             >
           </FormFragment>
+
           <FormFragment
             all-inline
             title="Dataplane ID"
@@ -152,6 +162,7 @@
                 :disabled="validate.univDataplaneCustomIdDisabled"
               >
             </div>
+
             <div>
               <KButton
                 appearance="secondary"
@@ -159,24 +170,29 @@
               >
                 Edit
               </KButton>
+
               <HelperTooltip>
                 This is a unique ID for the Dataplane instance.
               </HelperTooltip>
             </div>
           </FormFragment>
         </template>
+
         <template #networking>
           <h3>
             Networking
           </h3>
+
           <p>
             It's time to now configure the networking settings so that the Dataplane
             can connect to the local service, and other data planes can consume
             your service.
           </p>
+
           <p>
             <strong>All fields below are required to proceed.</strong>
           </p>
+
           <!-- network address -->
           <FormFragment
             all-inline
@@ -189,10 +205,12 @@
               type="text"
               class="k-input w-100"
             >
+
             <HelperTooltip>
               The IP address that other services will use to consume this data plane.
             </HelperTooltip>
           </FormFragment>
+
           <!-- data plane port -->
           <FormFragment
             all-inline
@@ -206,10 +224,12 @@
               type="text"
               class="k-input w-100"
             >
+
             <HelperTooltip>
               The data plane port (that other services will use to consume this service).
             </HelperTooltip>
           </FormFragment>
+
           <!-- service address -->
           <FormFragment
             all-inline
@@ -222,10 +242,12 @@
               type="text"
               class="k-input w-100"
             >
+
             <HelperTooltip>
               The address where your service is listening on the machine.
             </HelperTooltip>
           </FormFragment>
+
           <!-- service port -->
           <FormFragment
             all-inline
@@ -238,10 +260,12 @@
               type="text"
               class="k-input w-100"
             >
+
             <HelperTooltip>
               The port where your service is listening on the machine.
             </HelperTooltip>
           </FormFragment>
+
           <!-- protocol -->
           <FormFragment
             all-inline
@@ -263,6 +287,7 @@
                 {{ option }}
               </option>
             </select>
+
             <HelperTooltip>
               The protocol of the service.
             </HelperTooltip>
@@ -298,6 +323,7 @@
                 :code="startDpCodeOutput"
               />
             </div>
+
             <EntityScanner
               :loader-function="scanForEntity"
               :should-start="true"
@@ -309,13 +335,16 @@
               <template #loading-title>
                 <h3>Searching&hellip;</h3>
               </template>
+
               <template #loading-content>
                 <p>We are looking for your dataplane.</p>
               </template>
+
               <!-- complete -->
               <template #complete-title>
                 <h3>Done!</h3>
               </template>
+
               <template #complete-content>
                 <p>
                   Your Dataplane
@@ -324,10 +353,12 @@
                   </strong>
                   was found!
                 </p>
+
                 <p>
                   Proceed to the next step where we will show you
                   your new Dataplane.
                 </p>
+
                 <p>
                   <KButton
                     appearance="primary"
@@ -337,15 +368,18 @@
                   </KButton>
                 </p>
               </template>
+
               <!-- error -->
               <template #error-title>
                 <h3>Dataplane not found</h3>
               </template>
+
               <template #error-content>
                 <p>We were unable to find your dataplane.</p>
               </template>
             </EntityScanner>
           </div>
+
           <KAlert
             v-else
             appearance="danger"
@@ -362,6 +396,7 @@
         <!-- sidebar content -->
         <template #dataplane>
           <h3>Dataplane</h3>
+
           <p>
             In {{ title }}, a Dataplane resource represents a data plane proxy running
             alongside one of your services. Data plane proxies can be added in any Mesh
@@ -372,9 +407,11 @@
 
         <template #example>
           <h3>Example</h3>
+
           <p>
             Below is an example of a Dataplane resource output:
           </p>
+
           <code class="block">
             <pre>type: Dataplane
 mesh: default
@@ -388,6 +425,7 @@ networking:
       kuma.io/service: echo</pre>
           </code>
         </template>
+
         <template #switch>
           <!-- wizard switcher -- based on environment -->
           <EnvironmentSwitcher />
@@ -400,6 +438,7 @@ networking:
 <script>
 import { mapGetters } from 'vuex'
 import json2yaml from '@appscode/json2yaml'
+import { KAlert, KButton, KCard } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
 import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
@@ -425,6 +464,9 @@ export default {
     EnvironmentSwitcher,
     HelperTooltip,
     EntityScanner,
+    KAlert,
+    KButton,
+    KCard,
   },
   data() {
     return {

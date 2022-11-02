@@ -116,6 +116,8 @@
 </template>
 
 <script>
+import { KButton, KCard } from '@kong/kongponents'
+
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { getSome } from '@/utilities/helpers'
 import { getTableData } from '@/utilities/tableDataUtils'
@@ -146,6 +148,8 @@ export default {
     SubscriptionDetails,
     SubscriptionHeader,
     TabsWidget,
+    KButton,
+    KCard,
   },
 
   data() {

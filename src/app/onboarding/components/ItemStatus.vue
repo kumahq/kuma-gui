@@ -13,8 +13,15 @@
 </template>
 
 <script>
+import { KIcon } from '@kong/kongponents'
+
 export default {
   name: 'ItemStatus',
+
+  components: {
+    KIcon,
+  },
+
   props: {
     name: {
       type: String,

@@ -1,6 +1,5 @@
 import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
-import { KButton, KTable } from '@kong/kongponents'
 
 import CreateMesh from './CreateMesh.vue'
 import { store, storeKey } from '@/store/store'
@@ -14,10 +13,6 @@ function renderComponent(mode = 'standalone') {
   return render(CreateMesh, {
     global: {
       plugins: [[store, storeKey]],
-      components: {
-        KButton,
-        KTable,
-      },
       stubs: {
         routerLink: {
           props: ['to'],
