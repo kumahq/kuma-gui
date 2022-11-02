@@ -41,7 +41,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
             <div
               class="k-code-block code-block"
               data-testid="k-code-block"
-              data-v-6da4a89e=""
+              data-v-034f9b55=""
               id="code-block-clone-command"
               style="--maxLineNumberWidth: 1ch;"
               tabindex="0"
@@ -49,30 +49,30 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               <!---->
               <div
                 class="k-code-block-content"
-                data-v-6da4a89e=""
+                data-v-034f9b55=""
               >
                 <pre
                   class="k-highlighted-code-block language-bash"
                   data-testid="k-code-block-highlighted-code-block"
-                  data-v-6da4a89e=""
+                  data-v-034f9b55=""
                   tabindex="0"
                 >
                   <span
                     class="k-line-number-rows"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                   >
                     
         
                     
                     <span
                       class="k-line"
-                      data-v-6da4a89e=""
+                      data-v-034f9b55=""
                     >
                       
           
                       <a
                         class="k-line-anchor"
-                        data-v-6da4a89e=""
+                        data-v-034f9b55=""
                         id="code-block-clone-command-L1"
                       >
                         1
@@ -86,7 +86,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   </span>
                   <code
                     class="language-bash"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                   >
                     https://github.com/kumahq/kuma-counter-demo/
                   </code>
@@ -94,7 +94,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 <button
                   class="small outline k-button k-code-block-copy-button"
                   data-testid="k-code-block-copy-button"
-                  data-v-6da4a89e=""
+                  data-v-034f9b55=""
                   data-v-6f773baa=""
                   title="Copy (Alt+C)"
                   type="button"
@@ -105,7 +105,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   
                   <span
                     class="kong-icon-copy kong-icon"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                     data-v-71cfcfc4=""
                   >
                     <svg
@@ -134,7 +134,7 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                   </span>
                   <span
                     class="k-visually-hidden"
-                    data-v-6da4a89e=""
+                    data-v-034f9b55=""
                   >
                     Copy
                   </span>

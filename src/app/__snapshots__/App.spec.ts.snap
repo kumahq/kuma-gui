@@ -33,7 +33,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          data-v-86245c6c=""
+          data-v-0eaad51f=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
@@ -55,13 +55,13 @@ exports[`App.vue fails to renders basic view 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-86245c6c=""
+            data-v-0eaad51f=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-86245c6c=""
+              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 280px; max-width: 350px; max-height: auto; display: none;"
@@ -69,7 +69,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-86245c6c=""
+                data-v-0eaad51f=""
               >
                 
                 <p>
