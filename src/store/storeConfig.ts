@@ -20,6 +20,9 @@ import { Mesh, PolicyDefinition } from '@/types/index.d'
 
 type TODO = any
 
+/**
+ * The root state of the application’s Vuex store minus all module state.
+ */
 interface BareRootState {
   menu: null
   globalLoading: boolean
@@ -124,10 +127,12 @@ const initialState: BareRootState = {
   policiesByType: {},
 }
 
+/**
+ * The root state of the application’s Vuex store including all module state.
+ *
+ * Module state is explicitly added because creating a store using modules needs it. By default, Vuex’s types for stores with namespaced modules will be incorrect.
+ */
 export interface State extends BareRootState {
-  /**
-   * Explicitly adds the types for all modules here because the created store doesn’t have module types at all.
-   */
   config: ConfigInterface
   sidebar: SidebarInterface
   notifications: NotificationsInterface
@@ -141,7 +146,7 @@ export const storeConfig: StoreOptions<State> = {
     notifications,
     onboarding,
   },
-  // Note: *Technically*, `initialState` here doesn’t hold all properties from `State`. All module state is missing. However, the module state MUST NOT be made optional in `State` as otherwise, it will be considered as optional when accessing, for example, `store.state.config.status`.
+  // Explicitly asserts `initialState` to be of type `State` (which includes module state) even though `initialSate` doesn’t include module state. This is necessary because otherwise the result of creating a store from `storeConfig` and `State` will be a store (i.e. `Store<State>`) that, according to its type, is missing all module state which it actually doesn’t. Vuex’s types aren’t complete and don’t account for this scenario. Without this workaround, accessing module state without a type guard would always produce a TypeScript error.
   state: () => initialState as State,
   getters: {
     globalLoading: state => state.globalLoading,
@@ -165,8 +170,6 @@ export const storeConfig: StoreOptions<State> = {
     SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
     SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
     SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
-
-    // NEW
     SET_INTERNAL_SERVICE_SUMMARY: (state, { items = [] } = {}) => {
       const { serviceSummary } = state
 

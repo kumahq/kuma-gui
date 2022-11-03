@@ -69,6 +69,7 @@ describe('config module', () => {
           hostname: '',
           instanceId: '',
           clusterId: '',
+          gui: '',
         },
         {
           tagline: 'Other',
@@ -84,6 +85,7 @@ describe('config module', () => {
           hostname: '',
           instanceId: '',
           clusterId: '',
+          gui: '',
         },
         {
           tagline: 'Other',
@@ -99,6 +101,7 @@ describe('config module', () => {
           hostname: '',
           instanceId: '',
           clusterId: '',
+          gui: '',
         },
         {
           tagline: import.meta.env.VITE_NAMESPACE,
@@ -113,6 +116,7 @@ describe('config module', () => {
           hostname: '',
           instanceId: '',
           clusterId: '',
+          gui: '',
         },
         {
           tagline: import.meta.env.VITE_NAMESPACE,

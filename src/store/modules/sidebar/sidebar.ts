@@ -1,6 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { State } from '../../index'
+import { State } from '../../storeConfig'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
 

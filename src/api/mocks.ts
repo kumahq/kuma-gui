@@ -10,12 +10,13 @@ async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
 
 function getBaseInfo(): Info {
   return {
-    hostname: 'Tomaszs-MacBook-Pro-16-inch-2019',
+    hostname: 'control-plane-5d94cb99c6-rzr96',
     tagline: import.meta.env.VITE_NAMESPACE,
     version: '1.7.1',
     basedOnKuma: '1.7.1',
-    instanceId: 'Tomaszs-MacBook-Pro-16-inch-2019-c2a8',
-    clusterId: 'ea1c9d9d-9722-4fda-8051-67e6fe0ad1b4',
+    instanceId: 'control-plane-5d94cb99c6-rzr96-ca19',
+    clusterId: 'b3c42481-0681-4da7-a276-c1fd4ed3c7a1',
+    gui: 'The gui is available at /gui',
   }
 }
 

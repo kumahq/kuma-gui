@@ -20,6 +20,7 @@ export type Info = {
   basedOnKuma?: string
   instanceId: string
   clusterId: string
+  gui: string
 }
 
 export interface KDSSubscription {

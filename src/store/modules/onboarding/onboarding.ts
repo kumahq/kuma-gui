@@ -1,5 +1,5 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
-import { State } from '../../index'
+import { State } from '../../storeConfig'
 import { OnboardingInterface } from './onboarding.types'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
