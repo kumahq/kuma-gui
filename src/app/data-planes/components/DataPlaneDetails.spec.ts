@@ -1,7 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneDetails from './DataPlaneDetails.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { createDataPlane } from '@/test-data/createDataPlane'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 
@@ -16,9 +16,6 @@ async function renderComponent(props = {}) {
       dataPlane,
       dataPlaneOverview,
       ...props,
-    },
-    global: {
-      plugins: [[store, storeKey]],
     },
   })
 }

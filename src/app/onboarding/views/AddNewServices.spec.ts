@@ -2,14 +2,9 @@ import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import AddNewServices from './AddNewServices.vue'
-import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  return render(AddNewServices, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
-  })
+  return render(AddNewServices)
 }
 
 describe('AddNewServices.vue', () => {

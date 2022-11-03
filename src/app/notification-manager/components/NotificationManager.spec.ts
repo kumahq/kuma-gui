@@ -1,17 +1,13 @@
 import { mount } from '@vue/test-utils'
 
 import NotificationManager from './NotificationManager.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 
 function renderComponent({ meshes, selectedMesh }: { meshes: any, selectedMesh: string }) {
   store.state.meshes = meshes
   store.state.selectedMesh = selectedMesh
 
-  return mount(NotificationManager, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
-  })
+  return mount(NotificationManager)
 }
 
 describe('NotificationManager.vue', () => {

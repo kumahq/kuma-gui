@@ -8,13 +8,19 @@ import { config } from '@vue/test-utils'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { createRouter } from '../src/router/router'
+import { store, storeKey } from '../src/store/store'
 import { setupMockServer } from '../src/api/setupMockServer'
 
 /**
- * Adds the application’s router to vue test utils so that tests don’t have to set-up a new router instance on their own.
+ * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
  */
 const router = createRouter()
 config.global.plugins.push(router)
+
+/**
+ * Adds the application’s Vuex store to vue test utils. This way tests don’t have to set-up a new store instance on their own.
+ */
+config.global.plugins.push([store, storeKey])
 
 /**
  * amcharts need SVGPathElement defined for our tests to work.

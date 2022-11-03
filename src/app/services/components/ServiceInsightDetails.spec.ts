@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 
 import ServiceInsightDetails from './ServiceInsightDetails.vue'
-import { store, storeKey } from '@/store/store'
 import { createServiceInsight } from '@/test-data/createServiceInsight'
 
 const serviceInsight = createServiceInsight()
@@ -12,9 +11,6 @@ function renderComponent(props = {}) {
     props: {
       serviceInsight,
       ...props,
-    },
-    global: {
-      plugins: [[store, storeKey]],
     },
   })
 }

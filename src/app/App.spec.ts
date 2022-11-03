@@ -1,7 +1,7 @@
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
 
 import App from './App.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 
 function renderComponent(status: string) {
   store.state.globalLoading = true
@@ -10,7 +10,6 @@ function renderComponent(status: string) {
 
   return render(App, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         // Let’s not unnecessarily render all that chart markup.
         DonutChart: true,

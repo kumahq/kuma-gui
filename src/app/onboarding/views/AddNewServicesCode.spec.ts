@@ -3,14 +3,9 @@ import { render, screen } from '@testing-library/vue'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
 import { kumaApi } from '@/api/kumaApi'
-import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  return render(AddNewServicesCode, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
-  })
+  return render(AddNewServicesCode)
 }
 
 describe('AddNewServicesCode.vue', () => {

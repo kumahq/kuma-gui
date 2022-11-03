@@ -3,13 +3,12 @@ import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 
 function renderComponent(props: any) {
   return render(OnboardingNavigation, {
     props,
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },

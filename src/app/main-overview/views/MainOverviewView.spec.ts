@@ -1,7 +1,6 @@
 import { mount, RouterLinkStub } from '@vue/test-utils'
 
 import MainOverviewView from './MainOverviewView.vue'
-import { store, storeKey } from '@/store/store'
 
 describe('MainOverviewView.vue', () => {
   it('renders basic snapshot', () => {
@@ -11,7 +10,6 @@ describe('MainOverviewView.vue', () => {
       // which is only possible if the element is actually in the DOM.
       attachTo: document.body,
       global: {
-        plugins: [[store, storeKey]],
         stubs: {
           'router-link': RouterLinkStub,
         },

@@ -3,14 +3,9 @@ import { render, screen } from '@testing-library/vue'
 
 import MultiZoneView from './MultiZoneView.vue'
 import { kumaApi } from '@/api/kumaApi'
-import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  return render(MultiZoneView, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
-  })
+  return render(MultiZoneView)
 }
 
 describe('MultiZoneView.vue', () => {

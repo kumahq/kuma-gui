@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 
 import AppNavItem from './AppNavItem.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 
 function renderComponent() {
   return mount(AppNavItem, {
@@ -10,9 +10,6 @@ function renderComponent() {
       routeName: 'data-plane-list-view',
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
-    },
-    global: {
-      plugins: [[store, storeKey]],
     },
   })
 }

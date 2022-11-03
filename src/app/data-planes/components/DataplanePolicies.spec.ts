@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import DataplanePolicies from './DataplanePolicies.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { server } from '@/../jest/jest-setup-after-env'
 
 async function renderComponent(props = {}) {
@@ -12,7 +12,6 @@ async function renderComponent(props = {}) {
 
   return render(DataplanePolicies, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },

@@ -1,7 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
 import PolicyView from './PolicyView.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { router } from '@/../jest/jest-setup-after-env'
 
 async function createWrapper(props = {}) {
@@ -11,9 +11,6 @@ async function createWrapper(props = {}) {
 
   return mount(PolicyView, {
     props,
-    global: {
-      plugins: [[store, storeKey]],
-    },
   })
 }
 

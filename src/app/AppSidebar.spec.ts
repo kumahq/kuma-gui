@@ -3,14 +3,13 @@ import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import AppSidebar from './AppSidebar.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 
 async function renderComponent() {
   await store.dispatch('fetchPolicies')
 
   return render(AppSidebar, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         'router-link': RouterLinkStub,
       },

@@ -3,12 +3,10 @@ import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import DeploymentTypes from './DeploymentTypes.vue'
-import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
   return render(DeploymentTypes, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         routerLink: RouterLinkStub,
       },

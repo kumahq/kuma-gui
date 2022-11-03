@@ -1,7 +1,7 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { router } from '@/../jest/jest-setup-after-env'
 
 async function renderComponent() {
@@ -10,11 +10,7 @@ async function renderComponent() {
 
   await store.dispatch('fetchPolicies')
 
-  const wrapper = mount(DataPlaneListView, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
-  })
+  const wrapper = mount(DataPlaneListView)
 
   await flushPromises()
 

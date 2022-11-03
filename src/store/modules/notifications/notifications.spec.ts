@@ -1,6 +1,3 @@
-// import { createStore } from 'vuex'
-
-// import { storeConfig, State } from '../../index'
 import notificationsModule from './notifications'
 
 describe('notifications module', () => {

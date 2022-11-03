@@ -3,7 +3,7 @@ import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { server } from '@/../jest/jest-setup-after-env'
 
 describe('DataplaneUniversal.vue', () => {
@@ -34,11 +34,7 @@ describe('DataplaneUniversal.vue', () => {
       },
     ]
 
-    const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal, {
-      global: {
-        plugins: [[store, storeKey]],
-      },
-    })
+    const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal)
 
     const select = <HTMLInputElement>getByDisplayValue('Select an existing Mesh…')
     const nextButton = getByText(/Next ›/i).closest('button')

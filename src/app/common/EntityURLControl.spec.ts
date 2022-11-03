@@ -1,13 +1,9 @@
 import { render, screen } from '@testing-library/vue'
 
 import EntityURLControl from './EntityURLControl.vue'
-import { store, storeKey } from '@/store/store'
 
-function renderComponent(props: any) {
+function renderComponent(props = {}) {
   return render(EntityURLControl, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
     props,
   })
 }
