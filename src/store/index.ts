@@ -126,8 +126,7 @@ const initialState: BareRootState = {
 
 export interface State extends BareRootState {
   /**
-   * Explicitly adds the types for all modules here
-   * because the created store for some reason doesn’t have module types at all.
+   * Explicitly adds the types for all modules here because the created store doesn’t have module types at all.
    */
   config: ConfigInterface
   sidebar: SidebarInterface
@@ -143,11 +142,10 @@ export const storeConfig: StoreOptions<State> = {
     onboarding,
   },
   // Note: *Technically*, `initialState` here doesn’t hold all properties from `State`. All module state is missing. However, the module state MUST NOT be made optional in `State` as otherwise, it will be considered as optional when accessing, for example, `store.state.config.status`.
-  state: initialState as State,
+  state: () => initialState as State,
   getters: {
     globalLoading: state => state.globalLoading,
     getMeshList: state => state.meshes,
-
     getItemQueryNamespace: state => state.itemQueryNamespace,
     getMeshInsight: state => state.meshInsight,
     getMeshInsightsFetching: state => state.meshInsightsFetching,

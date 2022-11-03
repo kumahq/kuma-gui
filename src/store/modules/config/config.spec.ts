@@ -1,33 +1,39 @@
-import { createStore } from 'vuex'
 import { rest } from 'msw'
 
-import { storeConfig, State } from '../../index'
-import { server } from '@/../jest/jest-setup'
+import configModule from './config'
+import { server } from '@/../jest/jest-setup-after-env'
 import { kumaApi } from '@/api/kumaApi'
-import { ClientConfigInterface } from './config.types'
-
-const store = createStore<State>(storeConfig)
 
 describe('config module', () => {
   describe('getters', () => {
     it('tests getStatus getter', () => {
-      store.state.config.status = 'foo'
+      const state: any = {
+        status: 'foo',
+      }
 
-      expect(store.getters['config/getStatus']).toBe('foo')
+      const result = configModule.getters.getStatus(state, {}, {} as any, {})
+
+      expect(result).toBe('foo')
     })
 
     it('tests getMulticlusterStatus getter when global mode', () => {
-      store.state.config.clientConfig = {} as ClientConfigInterface
-      store.state.config.clientConfig.mode = 'global'
+      const getters = {
+        getMode: 'global',
+      }
 
-      expect(store.getters['config/getMulticlusterStatus']).toBe(true)
+      const result = configModule.getters.getMulticlusterStatus({} as any, getters, {} as any, {})
+
+      expect(result).toBe(true)
     })
 
     it('tests getMulticlusterStatus getter when standalone', () => {
-      store.state.config.clientConfig = {} as ClientConfigInterface
-      store.state.config.clientConfig.mode = 'standalone'
+      const getters = {
+        getMode: 'standalone',
+      }
 
-      expect(store.getters['config/getMulticlusterStatus']).toBe(false)
+      const result = configModule.getters.getMulticlusterStatus({} as any, getters, {} as any, {})
+
+      expect(result).toBe(false)
     })
   })
 
@@ -39,9 +45,19 @@ describe('config module', () => {
     it('tests getStatus action', async () => {
       server.use(rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL, (req, res, ctx) => res(ctx.status(200))))
 
-      await store.dispatch('config/getStatus')
+      const state: any = {
+        status: null,
+      }
 
-      expect(store.getters['config/getStatus']).toBe('OK')
+      function commit(type: string, status: any): void {
+        configModule.mutations[type](state, status)
+      }
+
+      // @ts-ignore I can’t be bothered to battle Vuex’s loose types right now.
+      await configModule.actions.getStatus({ commit })
+      const result = configModule.getters.getStatus(state, {}, {} as any, {})
+
+      expect(result).toBe('OK')
     })
 
     it.each([
@@ -107,11 +123,22 @@ describe('config module', () => {
     ])('tests getInfo action', async (getInfoResponse, expectedState) => {
       jest.spyOn(kumaApi, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
 
-      await store.dispatch('config/getInfo')
+      const state: any = {
+        tagline: null,
+        version: null,
+        kumaDocsVersion: null,
+      }
 
-      expect(store.state.config.tagline).toBe(expectedState.tagline)
-      expect(store.state.config.version).toBe(expectedState.version)
-      expect(store.state.config.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
+      function commit(type: string, status: any): void {
+        configModule.mutations[type](state, status)
+      }
+
+      // @ts-ignore I can’t be bothered to battle Vuex’s loose types right now.
+      await configModule.actions.getInfo({ commit })
+
+      expect(state.tagline).toBe(expectedState.tagline)
+      expect(state.version).toBe(expectedState.version)
+      expect(state.kumaDocsVersion).toBe(expectedState.kumaDocsVersion)
     })
   })
 
@@ -119,9 +146,15 @@ describe('config module', () => {
     it('tests SET_CONFIG_DATA mutation', () => {
       const userConfig = { foo: 'bar' }
 
-      store.commit('config/SET_CONFIG_DATA', userConfig)
+      const state: any = {
+        clientConfig: null,
+      }
 
-      expect(store.getters['config/getConfig']).toEqual(userConfig)
+      configModule.mutations.SET_CONFIG_DATA(state, userConfig)
+
+      const result = configModule.getters.getConfig(state, {}, {} as any, {})
+
+      expect(result).toEqual(userConfig)
     })
   })
 })

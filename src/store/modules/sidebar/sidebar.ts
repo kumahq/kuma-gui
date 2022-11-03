@@ -69,7 +69,7 @@ const actions: ActionTree<SidebarInterface, State> = {
 
 const sidebarModule = {
   namespaced: true,
-  state: initialSidebarState,
+  state: () => initialSidebarState,
   getters,
   mutations,
   actions,

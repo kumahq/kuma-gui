@@ -1,15 +1,26 @@
-import { createStore } from 'vuex'
-
-import { storeConfig, State } from '../../index'
+import sidebarModule from './sidebar'
 
 describe('sidebar module', () => {
   describe('actions', () => {
     it('tests getInsights action', async () => {
-      const store = createStore<State>(storeConfig)
+      const rootState: any = {
+        selectedMesh: 'default',
+      }
+      const state: any = sidebarModule.state()
 
-      await store.dispatch('sidebar/getInsights')
+      function commit(type: string, status: any): void {
+        sidebarModule.mutations[type](state, status)
+      }
 
-      expect(store.state.sidebar).toMatchInlineSnapshot(`
+      function dispatch(type: string): void {
+        // @ts-ignore I can’t be bothered to battle Vuex’s loose types right now.
+        return sidebarModule.actions[type]({ commit, state, rootState })
+      }
+
+      // @ts-ignore I can’t be bothered to battle Vuex’s loose types right now.
+      await sidebarModule.actions.getInsights({ dispatch })
+
+      expect(state).toMatchInlineSnapshot(`
 {
   "insights": {
     "global": {

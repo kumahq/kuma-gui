@@ -31,10 +31,10 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
              We've detected that you don't have any data plane proxies running yet. We've created an onboarding process to help you! 
           </div>
           <div>
-            <router-link
+            <a
               class="small rounded primary k-button action-button"
               data-v-6f773baa=""
-              to="[object Object]"
+              href="/onboarding/welcome"
               type="button"
             >
               
@@ -44,7 +44,7 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
                Get started 
               
               <!---->
-            </router-link>
+            </a>
           </div>
         </div>
         

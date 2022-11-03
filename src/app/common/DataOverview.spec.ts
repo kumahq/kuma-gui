@@ -4,17 +4,11 @@ import { datadogLogs } from '@datadog/browser-logs'
 import userEvent from '@testing-library/user-event'
 
 import DataOverview from './DataOverview.vue'
-import { createRouter } from '@/router/router'
-
-const router = createRouter()
 
 jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
   return render(DataOverview, {
-    global: {
-      plugins: [router],
-    },
     props,
     slots: {
       custom: `

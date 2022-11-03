@@ -3,16 +3,10 @@ import userEvent from '@testing-library/user-event'
 import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
-import { createRouter } from '@/router/router'
-import { server } from '@/../jest/jest-setup'
-
-const router = createRouter()
+import { server } from '@/../jest/jest-setup-after-env'
 
 function renderComponent(props = {}) {
   return render(PolicyConnections, {
-    global: {
-      plugins: [router],
-    },
     props,
   })
 }

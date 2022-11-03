@@ -2,12 +2,9 @@ import userEvent from '@testing-library/user-event'
 import { render, screen } from '@testing-library/vue'
 
 import Mesh from './Mesh.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
-
-const router = createRouter()
 
 function renderComponent(mode = 'standalone') {
   store.state.config.tagline = import.meta.env.VITE_NAMESPACE
@@ -17,7 +14,7 @@ function renderComponent(mode = 'standalone') {
 
   return render(Mesh, {
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }

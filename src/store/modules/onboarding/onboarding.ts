@@ -47,7 +47,7 @@ const actions: ActionTree<OnboardingInterface, State> = {
 
 const onboardingModule = {
   namespaced: true,
-  state: initialOnboardingState,
+  state: () => initialOnboardingState,
   getters,
   mutations,
   actions,

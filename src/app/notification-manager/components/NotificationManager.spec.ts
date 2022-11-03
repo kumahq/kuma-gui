@@ -1,10 +1,7 @@
 import { mount } from '@vue/test-utils'
 
 import NotificationManager from './NotificationManager.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-
-const router = createRouter()
 
 function renderComponent({ meshes, selectedMesh }: { meshes: any, selectedMesh: string }) {
   store.state.meshes = meshes
@@ -12,7 +9,7 @@ function renderComponent({ meshes, selectedMesh }: { meshes: any, selectedMesh: 
 
   return mount(NotificationManager, {
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }

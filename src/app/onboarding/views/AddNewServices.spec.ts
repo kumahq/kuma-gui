@@ -2,15 +2,12 @@ import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import AddNewServices from './AddNewServices.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-
-const router = createRouter()
 
 function renderComponent() {
   return render(AddNewServices, {
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }

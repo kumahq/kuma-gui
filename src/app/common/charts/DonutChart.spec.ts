@@ -1,16 +1,10 @@
 import { render, screen } from '@testing-library/vue'
 
 import DonutChart from './DonutChart.vue'
-import { createRouter } from '@/router/router'
-
-const router = createRouter()
 
 describe('DonutChart.vue', () => {
   it('renders chart', async () => {
     render(DonutChart, {
-      global: {
-        plugins: [router],
-      },
       props: {
         data: [
           {

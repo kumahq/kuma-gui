@@ -100,7 +100,7 @@ const actions: ActionTree<NotificationsInterface, State> = {
 
 const notificationsModule = {
   namespaced: true,
-  state: initialNotificationsState,
+  state: () => initialNotificationsState,
   getters,
   mutations,
   actions,

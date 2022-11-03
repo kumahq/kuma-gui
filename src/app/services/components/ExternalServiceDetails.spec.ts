@@ -1,13 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
 
 import ExternalServiceDetails from './ExternalServiceDetails.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { createExternalService } from '@/test-data/createExternalService'
 
 const externalService = createExternalService()
-
-const router = createRouter()
 
 function renderComponent(props = {}) {
   return shallowMount(ExternalServiceDetails, {
@@ -16,7 +13,7 @@ function renderComponent(props = {}) {
       ...props,
     },
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }

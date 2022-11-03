@@ -1,19 +1,18 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-
-const router = createRouter()
+import { router } from '@/../jest/jest-setup-after-env'
 
 async function renderComponent() {
   router.currentRoute.value.name = 'home'
   router.currentRoute.value.params.mesh = 'default'
+
   await store.dispatch('fetchPolicies')
 
   const wrapper = mount(DataPlaneListView, {
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 

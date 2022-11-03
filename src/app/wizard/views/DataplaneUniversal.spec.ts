@@ -3,11 +3,8 @@ import { render } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-import { server } from '@/../jest/jest-setup'
-
-const router = createRouter()
+import { server } from '@/../jest/jest-setup-after-env'
 
 describe('DataplaneUniversal.vue', () => {
   beforeEach(() => {
@@ -39,7 +36,7 @@ describe('DataplaneUniversal.vue', () => {
 
     const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal, {
       global: {
-        plugins: [router, [store, storeKey]],
+        plugins: [[store, storeKey]],
       },
     })
 

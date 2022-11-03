@@ -1,10 +1,7 @@
 import { mount } from '@vue/test-utils'
 
 import AppNavItem from './AppNavItem.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-
-const router = createRouter()
 
 function renderComponent() {
   return mount(AppNavItem, {
@@ -15,7 +12,7 @@ function renderComponent() {
       insightsFieldAccessor: 'mesh.dataplanes.total',
     },
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }

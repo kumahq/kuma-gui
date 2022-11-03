@@ -1,15 +1,12 @@
 import { render, screen } from '@testing-library/vue'
 
 import EntityURLControl from './EntityURLControl.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-
-const router = createRouter()
 
 function renderComponent(props: any) {
   return render(EntityURLControl, {
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
     props,
   })

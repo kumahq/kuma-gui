@@ -3,15 +3,12 @@ import { render, screen } from '@testing-library/vue'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
 import { kumaApi } from '@/api/kumaApi'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
-
-const router = createRouter()
 
 function renderComponent() {
   return render(AddNewServicesCode, {
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }

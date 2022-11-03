@@ -1,13 +1,10 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'
-import { createRouter } from '@/router/router'
 import { store, storeKey } from '@/store/store'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 
 const dataPlaneOverview = createDataPlaneOverview()
-
-const router = createRouter()
 
 function renderComponent(props = {}) {
   return mount(DataPlaneEntitySummary, {
@@ -16,7 +13,7 @@ function renderComponent(props = {}) {
       ...props,
     },
     global: {
-      plugins: [router, [store, storeKey]],
+      plugins: [[store, storeKey]],
     },
   })
 }
