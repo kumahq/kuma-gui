@@ -5,8 +5,7 @@ import { store } from '@/store/store'
 import { router } from '@/../jest/jest-setup-after-env'
 
 async function createWrapper(props = {}) {
-  router.currentRoute.value.name = 'home'
-  router.currentRoute.value.params.mesh = 'default'
+  router.push({ name: 'mesh-detail-view', params: { mesh: 'default' } })
   await store.dispatch('fetchPolicies')
 
   return mount(PolicyView, {

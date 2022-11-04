@@ -29,17 +29,33 @@ describe('DataPlaneDetails', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('shows correct content', async () => {
+  test('has expected content and UI elements', async () => {
+    const expectedOverviewStrings = ['DPP: backend', 'test-mesh', 'Online', 'kuma.io/service: backend', 'kuma.io/protocol: http', 'envoy', '1.16.2', 'kumaDp', '1.0.7', 'coredns', '1.8.3']
+    const expectedInsightStrings = ['Connect time: February 17, 2021 at 7:33:36 AM', 'Control Plane Instance ID', 'Disconnect time: February 17, 2021 at 7:33:36 AM']
+    const expectedPoliciesStrings = ['web', 'inbound 192.168.0.1:80:81', 'backend', 'outbound 192.168.0.2:8080']
+
     const wrapper = await renderComponent()
 
-    expect(wrapper.html()).toContain('DPP: backend')
+    let html = wrapper.html()
+    for (const string of expectedOverviewStrings) {
+      expect(html).toContain(string)
+    }
 
-    const policiesTab = wrapper.find('#dpp-policies-tab')
-    await policiesTab.trigger('click')
+    await wrapper.find('#insights-tab').trigger('click')
+
+    html = wrapper.html()
+    for (const string of expectedInsightStrings) {
+      expect(html).toContain(string)
+    }
+
+    await wrapper.find('#dpp-policies-tab').trigger('click')
 
     // Justification: the underlying DataplanePolicies component loads additional data on mount.
     await flushPromises()
 
-    expect(wrapper.html()).toContain('192.168.0.1:80:81')
+    html = wrapper.html()
+    for (const string of expectedPoliciesStrings) {
+      expect(html).toContain(string)
+    }
   })
 })

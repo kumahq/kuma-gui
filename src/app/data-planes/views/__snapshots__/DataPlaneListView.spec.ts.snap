@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`DataPlaneListView.vue matches snapshot 1`] = `
+exports[`DataPlaneListView matches snapshot 1`] = `
 <div
   class="content-wrapper"
 >
@@ -437,6 +437,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
         
         <button
           class="medium rounded primary k-button refresh-button"
+          data-testid="refresh-button"
           data-v-6f773baa=""
           type="button"
         >
@@ -718,7 +719,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -865,7 +866,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1012,7 +1013,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1159,7 +1160,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1306,7 +1307,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1453,7 +1454,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1600,7 +1601,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1747,7 +1748,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -1933,7 +1934,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -2080,7 +2081,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     >
                       
                       <a
-                        class=""
+                        class="router-link-active"
                         href="/mesh/default"
                       >
                         default
@@ -2228,6 +2229,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
       <section>
         <h3
           class="entity-title"
+          data-testid="data-plane-proxy-title"
         >
           <span
             class="kutil-sr-only"

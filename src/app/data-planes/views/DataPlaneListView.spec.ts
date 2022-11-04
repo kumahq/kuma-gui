@@ -1,54 +1,63 @@
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import { store } from '@/store/store'
 import { router } from '@/../jest/jest-setup-after-env'
 
 async function renderComponent() {
-  router.currentRoute.value.name = 'home'
-  router.currentRoute.value.params.mesh = 'default'
-
-  await store.dispatch('fetchPolicies')
+  await router.push({ name: 'data-plane-list-view', params: { mesh: 'default' } })
 
   const wrapper = mount(DataPlaneListView)
-
   await flushPromises()
 
   return wrapper
 }
 
-describe('DataPlaneListView.vue', () => {
+describe('DataPlaneListView', () => {
   test('matches snapshot', async () => {
     const wrapper = await renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('shows UI elements', async () => {
+  test('has expected content and UI elements', async () => {
     const wrapper = await renderComponent()
 
-    const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tr')
-    // The number of dataplanes (10) plus the table header row
-    expect(tableRows.length).toBe(11)
+    const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
+    expect(dataPlaneTypeFilter.findAll('option').length).toBe(4)
 
     const createDataPlaneButton = wrapper.find('[data-testid="data-plane-create-data-plane-button"]')
-    expect(createDataPlaneButton.exists()).toBe(true)
+    expect(createDataPlaneButton.attributes('href')).toBe('/wizard/kubernetes-dataplane')
 
     const nsBackButton = wrapper.find('[data-testid="data-plane-ns-back-button"]')
     expect(nsBackButton.exists()).toBe(false)
+
+    const refreshButton = wrapper.find('[data-testid="refresh-button"]')
+    expect(refreshButton.exists()).toBe(true)
+
+    const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
+    expect(tableRows.length).toBe(10)
+
+    const firstTableRowHtml = tableRows[0].html()
+    const expectedTableRowStrings = ['backend', 'default', 'Standard', 'http', 'February 17, 2021', '1.0.7']
+    for (const string of expectedTableRowStrings) {
+      expect(firstTableRowHtml).toContain(string)
+    }
   })
 
-  test('has expected table data', async () => {
+  test('can filter data plane proxies by type', async () => {
     const wrapper = await renderComponent()
 
-    const tableRowHtml = wrapper.findAll('[data-testid="data-overview-table"] tr')[1].html()
-    expect(tableRowHtml).toContain('Online')
-    expect(tableRowHtml).toContain('backend')
-    expect(tableRowHtml).toContain('default')
-    expect(tableRowHtml).toContain('Standard')
-    expect(tableRowHtml).toContain('http')
-    expect(tableRowHtml).toContain('February 17, 2021')
-    expect(tableRowHtml).toContain('1.0.7')
+    const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
+    await dataPlaneTypeFilter.setValue('Gateway (builtin)')
+
+    const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
+    expect(tableRows.length).toBe(1)
+
+    const firstTableRowHtml = tableRows[0].html()
+    const expectedTableRowStrings = ['cluster-1.gateway-01', 'default', 'Gateway (BUILTIN)', 'gateway', 'February 19, 2021', '1.0.0-rc2-211-g823fe8ce']
+    for (const string of expectedTableRowStrings) {
+      expect(firstTableRowHtml).toContain(string)
+    }
   })
 
   test('shows correct default table columns', async () => {
@@ -71,5 +80,24 @@ describe('DataPlaneListView.vue', () => {
       const tableHeadHtml = tableHeads[i].html()
       expect(tableHeadHtml).toContain(expectedColumnHeaders[i])
     }
+  })
+
+  test('shows information of selected DPP', async () => {
+    const dppName = 'cluster-1.backend-02'
+    const wrapper = await renderComponent()
+
+    const secondTableRow = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')[1]
+    expect(secondTableRow.html()).toContain(dppName)
+
+    expect(secondTableRow.element.classList.contains('is-selected')).toBe(false)
+    expect(wrapper.find('[data-testid="data-plane-proxy-title"]').html()).toContain('backend')
+    expect(window.location.search.includes('name=backend'))
+
+    // The click event listener for selecting a table row is unfortunately added to table cells instead of rows so we need to trigger a click on a cell instead of the row.
+    await secondTableRow.find('td').trigger('click')
+
+    expect(secondTableRow.element.classList.contains('is-selected')).toBe(true)
+    expect(wrapper.find('[data-testid="data-plane-proxy-title"]').html()).toContain(dppName)
+    expect(window.location.search.includes(`name=${dppName}`))
   })
 })
