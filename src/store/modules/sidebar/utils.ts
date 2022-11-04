@@ -43,7 +43,7 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
   return meshInsight
 }
 
-export function calculateGlobalInsights(globalInsights: GlobalInsights) {
+export function calculateGlobalInsights(globalInsights: GlobalInsights): Record<string, number> {
   return Object.entries(globalInsights.resources).reduce((acc: Record<string, number>, [key, value]) => {
     if (!acc[key]) {
       acc[key] = 0

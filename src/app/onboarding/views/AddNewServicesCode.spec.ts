@@ -29,10 +29,14 @@ describe('AddNewServicesCode.vue', () => {
     jest
       .spyOn(kumaApi, 'getAllDataplanes')
       .mockResolvedValueOnce({
+        items: [],
         total: 0,
+        next: null,
       })
       .mockResolvedValueOnce({
+        items: [],
         total: 1,
+        next: null,
       })
 
     renderComponent()
