@@ -49,6 +49,9 @@ function createNetworkError(error: unknown): Error {
   return new Error(requestErrorMessage)
 }
 
+/**
+ * Creates an appropriate `ApiError` object. It handles the API’s standard error format (e.g. `{ "title": "Error", "code": "error_code" }`).
+ */
 function createApiError(response: Response, data: any): ApiError {
   let title = null
   let message = 'An error has occurred while trying to load this data.'
