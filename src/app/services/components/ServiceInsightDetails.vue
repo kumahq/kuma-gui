@@ -15,10 +15,6 @@
         {{ status.title.toLowerCase() }}
       </div>
 
-      <EntityURLControl
-        v-if="route.name !== serviceInsightRoute.name"
-        :route="serviceInsightRoute"
-      />
     </h3>
 
     <section>
@@ -62,7 +58,6 @@ import { useRoute } from 'vue-router'
 import { ServiceInsight } from '@/types/index.d'
 import { stripTimes } from '@/utilities/helpers'
 import { STATUS } from '@/constants'
-import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import YamlView from '@/app/common/YamlView.vue'
 
 const route = useRoute()

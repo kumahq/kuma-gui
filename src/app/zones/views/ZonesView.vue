@@ -44,9 +44,6 @@
           <div>
             <h3> Zone: {{ entity.name }}</h3>
           </div>
-          <div>
-            <EntityURLControl :name="entity.name" />
-          </div>
         </template>
         <template #overview>
           <LabelList
@@ -134,7 +131,6 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import MultizoneInfo from '../components/MultizoneInfo.vue'
@@ -151,7 +147,6 @@ export default {
     AccordionList,
     CodeBlock,
     DataOverview,
-    EntityURLControl,
     FrameSkeleton,
     LabelList,
     MultizoneInfo,
