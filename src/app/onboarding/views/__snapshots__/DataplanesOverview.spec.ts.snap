@@ -46,40 +46,41 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                    Found 10 DPPs: 
                 </p>
                 <div
-                  class="onboarding-dataplane-table"
-                  data-v-222fefa6=""
+                  class="k-table-container onboarding-dataplane-table"
+                  data-v-4f741344=""
                   is-small=""
                 >
+                  <!---->
                   <section
                     class="k-table-wrapper"
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                   >
                     <table
                       class="has-hover k-table"
                       data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <thead
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         <tr
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <th
                             class=""
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             <span
                               class="d-flex align-items-center"
-                              data-v-222fefa6=""
+                              data-v-4f741344=""
                             >
                               
                               <span
                                 class=""
-                                data-v-222fefa6=""
+                                data-v-4f741344=""
                               >
                                 Mesh
                               </span>
@@ -89,16 +90,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </th>
                           <th
                             class=""
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             <span
                               class="d-flex align-items-center"
-                              data-v-222fefa6=""
+                              data-v-4f741344=""
                             >
                               
                               <span
                                 class=""
-                                data-v-222fefa6=""
+                                data-v-4f741344=""
                               >
                                 Name
                               </span>
@@ -108,16 +109,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           </th>
                           <th
                             class=""
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             <span
                               class="d-flex align-items-center"
-                              data-v-222fefa6=""
+                              data-v-4f741344=""
                             >
                               
                               <span
                                 class=""
-                                data-v-222fefa6=""
+                                data-v-4f741344=""
                               >
                                 Status
                               </span>
@@ -129,29 +130,29 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </tr>
                       </thead>
                       <tbody
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             backend
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -166,25 +167,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             frontend
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -199,25 +200,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             db
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -232,25 +233,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             no-subscriptions
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -265,25 +266,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             cluster-1.backend-02
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -298,25 +299,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             cluster-1.backend-03
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -331,25 +332,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             cluster-1.gateway-01
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -364,25 +365,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             cluster-1.ingress-02
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -397,25 +398,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             dataplane-test-456
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
@@ -430,25 +431,25 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                           
                         </tr>
                         <tr
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             default
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             ingress-dp-test-123
                             
                           </td>
                           <td
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             
                             <div
