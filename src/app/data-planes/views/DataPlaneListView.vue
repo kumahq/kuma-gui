@@ -147,7 +147,7 @@ const dataPlaneTypes = [
   'All',
   'Standard',
   'Gateway (builtin)',
-  'Gateway (provided)',
+  'Gateway (delegated)',
 ]
 
 const route = useRoute()

@@ -129,7 +129,7 @@ export type DataPlaneNetworking = {
   }[]
   gateway?: {
     tags: Record<string, string>
-    type?: 'builtin' | 'provided' | undefined
+    type?: 'builtin' | 'delegated' | undefined
   },
 }
 

@@ -195,7 +195,7 @@ export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEn
 }
 
 /**
- * @returns `'Standard' | 'Gateway' | 'Gateway (builtin)' | 'Gateway (provided)'`
+ * @returns `'Standard' | 'Gateway' | 'Gateway (builtin)' | 'Gateway (delegated)'`
  */
 export function getDataplaneType(dataplane: { networking: DataPlaneNetworking }): string {
   const { gateway } = dataplane.networking
