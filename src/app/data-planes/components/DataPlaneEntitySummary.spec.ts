@@ -1,7 +1,6 @@
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'
-import { store, storeKey } from '@/store/store'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 
 const dataPlaneOverview = createDataPlaneOverview()
@@ -11,12 +10,6 @@ function renderComponent(props = {}) {
     props: {
       dataPlaneOverview,
       ...props,
-    },
-    global: {
-      plugins: [[store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }

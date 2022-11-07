@@ -78,7 +78,7 @@ const isLoading = ref(store.state.globalLoading)
 const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'NONE')
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
-const shouldShowNotificationManager = computed(() => !shouldSuggestOnboarding.value && store.getters['notifications/amountOfActions'] > 0)
+const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view', 'service-list-view'].includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {

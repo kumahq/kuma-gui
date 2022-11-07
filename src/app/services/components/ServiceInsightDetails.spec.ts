@@ -1,22 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import ServiceInsightDetails from './ServiceInsightDetails.vue'
-import { store, storeKey } from '@/store/store'
 import { createServiceInsight } from '@/test-data/createServiceInsight'
 
 const serviceInsight = createServiceInsight()
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
 
 function renderComponent(props = {}) {
   return mount(ServiceInsightDetails, {
@@ -24,12 +11,6 @@ function renderComponent(props = {}) {
     props: {
       serviceInsight,
       ...props,
-    },
-    global: {
-      plugins: [router, [store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }

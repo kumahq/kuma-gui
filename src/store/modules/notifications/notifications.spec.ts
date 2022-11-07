@@ -1,23 +1,35 @@
-import { createStore } from 'vuex'
-
-import { storeConfig, State } from '../../index'
-
-const store = createStore<State>(storeConfig)
+import notificationsModule from './notifications'
 
 describe('notifications module', () => {
   describe('getters', () => {
     it('tests singleMeshNotificationItems getter ', () => {
-      store.state.meshes.items = [
-        {
-          name: 'web-to-backend.kuma-system',
-          creationTime: '0001-01-01T00:00:00Z',
-          modificationTime: '0001-01-01T00:00:00Z',
-          type: 'Mesh',
+      const rootState: any = {
+        selectedMesh: 'web-to-backend.kuma-system',
+        meshes: {
+          items: [
+            {
+              name: 'web-to-backend.kuma-system',
+              creationTime: '0001-01-01T00:00:00Z',
+              modificationTime: '0001-01-01T00:00:00Z',
+              type: 'Mesh',
+            },
+          ],
         },
-      ]
-      store.state.selectedMesh = 'web-to-backend.kuma-system'
+      }
+      const getters = {
+        meshNotificationItemMap: {
+          'web-to-backend.kuma-system': {
+            hasLogging: false,
+            hasMtls: false,
+            hasMetrics: false,
+            hasTracing: false,
+          },
+        },
+      }
 
-      expect(store.getters['notifications/singleMeshNotificationItems']).toMatchInlineSnapshot(`
+      const result = notificationsModule.getters.singleMeshNotificationItems(notificationsModule.state(), getters, rootState, undefined)
+
+      expect(result).toMatchInlineSnapshot(`
 [
   {
     "component": "MetricsNotification",
@@ -44,27 +56,44 @@ describe('notifications module', () => {
     })
 
     it('tests meshNotificationItemMapWithAction getter', () => {
-      store.state.meshes.items = [
-        {
-          name: 'test-1',
-          creationTime: '0001-01-01T00:00:00Z',
-          modificationTime: '0001-01-01T00:00:00Z',
-          type: 'Mesh',
-          logging: {},
-          mtls: {},
-          tracing: {},
-          metrics: {},
+      const rootState: any = {
+        meshes: {
+          items: [
+            {
+              name: 'test-1',
+              creationTime: '0001-01-01T00:00:00Z',
+              modificationTime: '0001-01-01T00:00:00Z',
+              type: 'Mesh',
+              logging: {},
+              mtls: {},
+              tracing: {},
+              metrics: {},
+            },
+            {
+              name: 'test-2',
+              creationTime: '0001-01-01T00:00:00Z',
+              modificationTime: '0001-01-01T00:00:00Z',
+              type: 'Mesh',
+              mtls: {},
+            },
+          ],
         },
-        {
-          name: 'test-2',
-          creationTime: '0001-01-01T00:00:00Z',
-          modificationTime: '0001-01-01T00:00:00Z',
-          type: 'Mesh',
-          mtls: {},
-        },
-      ]
+      }
 
-      expect(store.getters['notifications/meshNotificationItemMapWithAction']).toMatchInlineSnapshot(`
+      const getters = {
+        meshNotificationItemMap: {
+          'test-2': {
+            hasLogging: false,
+            hasMtls: true,
+            hasMetrics: false,
+            hasTracing: false,
+          },
+        },
+      }
+
+      const result = notificationsModule.getters.meshNotificationItemMapWithAction(notificationsModule.state(), getters, rootState, undefined)
+
+      expect(result).toMatchInlineSnapshot(`
 {
   "test-2": {
     "hasLogging": false,
@@ -77,24 +106,47 @@ describe('notifications module', () => {
     })
 
     it('tests amountOfActions getter', () => {
-      store.state.meshes.items = [
-        {
-          name: 'test-1',
-          creationTime: '0001-01-01T00:00:00Z',
-          modificationTime: '0001-01-01T00:00:00Z',
-          type: 'Mesh',
-          logging: {},
+      const rootState: any = {
+        meshes: {
+          items: [
+            {
+              name: 'test-1',
+              creationTime: '0001-01-01T00:00:00Z',
+              modificationTime: '0001-01-01T00:00:00Z',
+              type: 'Mesh',
+              logging: {},
+            },
+            {
+              name: 'test-2',
+              creationTime: '0001-01-01T00:00:00Z',
+              modificationTime: '0001-01-01T00:00:00Z',
+              type: 'Mesh',
+              mtls: {},
+            },
+          ],
         },
-        {
-          name: 'test-2',
-          creationTime: '0001-01-01T00:00:00Z',
-          modificationTime: '0001-01-01T00:00:00Z',
-          type: 'Mesh',
-          mtls: {},
-        },
-      ]
+      }
 
-      expect(store.getters['notifications/amountOfActions']).toBe(2)
+      const getters = {
+        meshNotificationItemMapWithAction: {
+          'test-1': {
+            hasLogging: false,
+            hasMetrics: false,
+            hasMtls: false,
+            hasTracing: false,
+          },
+          'test-2': {
+            hasLogging: false,
+            hasMetrics: false,
+            hasMtls: true,
+            hasTracing: false,
+          },
+        },
+      }
+
+      const result = notificationsModule.getters.amountOfActions(notificationsModule.state(), getters, rootState, undefined)
+
+      expect(result).toBe(2)
     })
   })
 })

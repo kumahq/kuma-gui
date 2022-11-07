@@ -1,24 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
 import { mount } from '@vue/test-utils'
 
 import AppNavItem from './AppNavItem.vue'
-import { store, storeKey } from '@/store/store'
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-    {
-      path: '/mesh/:mesh/data-planes',
-      name: 'data-plane-list-view',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+import { store } from '@/store/store'
 
 function renderComponent() {
   return mount(AppNavItem, {
@@ -27,9 +10,6 @@ function renderComponent() {
       routeName: 'data-plane-list-view',
       usesMeshParam: true,
       insightsFieldAccessor: 'mesh.dataplanes.total',
-    },
-    global: {
-      plugins: [router, [store, storeKey]],
     },
   })
 }

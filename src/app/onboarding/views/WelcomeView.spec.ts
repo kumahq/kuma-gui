@@ -2,7 +2,7 @@ import { RouterLinkStub } from '@vue/test-utils'
 import { render } from '@testing-library/vue'
 
 import WelcomeView from './WelcomeView.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
@@ -12,9 +12,8 @@ function renderComponent(environment: string) {
 
   return render(WelcomeView, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
-        routerLink: RouterLinkStub,
+        'router-link': RouterLinkStub,
       },
     },
   })

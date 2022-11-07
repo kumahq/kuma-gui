@@ -41,8 +41,11 @@
   testMatch: [
     '**/src/**/*.spec.(js|ts)',
   ],
-  setupFilesAfterEnv: [
+  setupFiles: [
     '<rootDir>/jest/jest-setup.ts',
+  ],
+  setupFilesAfterEnv: [
+    '<rootDir>/jest/jest-setup-after-env.ts',
   ],
 }
 

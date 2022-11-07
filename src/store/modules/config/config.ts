@@ -1,6 +1,6 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { State } from '../../index'
+import { State } from '../../storeConfig'
 import { ConfigInterface, ClientConfigInterface } from './config.types'
 import { kumaApi } from '@/api/kumaApi'
 
@@ -29,24 +29,16 @@ const getters: GetterTree<ConfigInterface, State> = {
   getVersion: state => state.version,
   getKumaDocsVersion: state => state.kumaDocsVersion,
   getConfigurationType: state => state.clientConfig?.store?.type,
-
   getMulticlusterStatus: (_state, getters) => {
-    // is Kuma running in Multi-Zone mode?
-
-    let status
-
     if (import.meta.env.DEV && import.meta.env.VITE_FAKE_MULTIZONE === 'true') {
-      status = true
-
       console.warn(
         '%c ✨You are currently faking Multi-Zone mode.',
         'background: black; color: white; display: block; padding: 0.25rem;',
       )
-    } else {
-      status = getters.getMode === 'global'
+      return true
     }
 
-    return status
+    return getters.getMode === 'global'
   },
 }
 
@@ -57,6 +49,7 @@ const actions: ActionTree<ConfigInterface, State> = {
 
     return Promise.all([infoPromise, configPromise])
   },
+
   // get the general Kuma config (this differs from the API config endpoint)
   getConfig({ commit }) {
     return kumaApi.getConfig().then((response) => {
@@ -100,7 +93,7 @@ const actions: ActionTree<ConfigInterface, State> = {
 
 const configModule = {
   namespaced: true,
-  state: initialConfigState,
+  state: () => initialConfigState,
   getters,
   mutations,
   actions,

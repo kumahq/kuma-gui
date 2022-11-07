@@ -1,33 +1,16 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import { store, storeKey } from '@/store/store'
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: '<TestComponent>' },
-    },
-  ],
-})
+import { store } from '@/store/store'
+import { router } from '@/../jest/jest-setup-after-env'
 
 async function renderComponent() {
   router.currentRoute.value.name = 'home'
   router.currentRoute.value.params.mesh = 'default'
+
   await store.dispatch('fetchPolicies')
 
-  const wrapper = mount(DataPlaneListView, {
-    global: {
-      plugins: [router, [store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
-    },
-  })
+  const wrapper = mount(DataPlaneListView)
 
   await flushPromises()
 

@@ -1,4 +1,4 @@
-import { flushPromises, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 import { datadogLogs } from '@datadog/browser-logs'
 import userEvent from '@testing-library/user-event'
@@ -9,11 +9,6 @@ jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
   return render(DataOverview, {
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
-    },
     props,
     slots: {
       custom: `

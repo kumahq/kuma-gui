@@ -1,19 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import PolicyView from './PolicyView.vue'
-import { store, storeKey } from '@/store/store'
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+import { store } from '@/store/store'
+import { router } from '@/../jest/jest-setup-after-env'
 
 async function createWrapper(props = {}) {
   router.currentRoute.value.name = 'home'
@@ -22,12 +11,6 @@ async function createWrapper(props = {}) {
 
   return mount(PolicyView, {
     props,
-    global: {
-      plugins: [router, [store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
-    },
   })
 }
 

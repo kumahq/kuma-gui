@@ -3,7 +3,7 @@ import { addLicense, useTheme } from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import App from './app/App.vue'
-import { setupRouter } from './router/router'
+import { createRouter } from './router/router'
 import { storeKey, store } from './store/store'
 import { setupDatadog } from './utilities/setupDatadog'
 import { kumaApi } from './api/kumaApi'
@@ -47,11 +47,14 @@ async function initializeVue() {
 
   app.use(store, storeKey)
 
-  // Fetches basic resources before setting up the router and mounting the application.
-  // This is mainly needed to properly redirect users to the onboarding flow in the appropriate scenarios.
-  await store.dispatch('bootstrap')
+  await Promise.all([
+    // Fetches basic resources before setting up the router and mounting the application. This is mainly needed to properly redirect users to the onboarding flow in the appropriate scenarios.
+    store.dispatch('bootstrap'),
+    // Loads available policies in order to populate the necessary routes.
+    store.dispatch('fetchPolicies'),
+  ])
 
-  const router = await setupRouter()
+  const router = await createRouter(store.state.policies)
 
   app.use(router)
 

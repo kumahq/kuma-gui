@@ -2,7 +2,7 @@ import { flushPromises } from '@vue/test-utils'
 import { render, screen } from '@testing-library/vue'
 
 import CreateMesh from './CreateMesh.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
@@ -12,7 +12,6 @@ function renderComponent(mode = 'standalone') {
 
   return render(CreateMesh, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         routerLink: {
           props: ['to'],

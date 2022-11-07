@@ -45,7 +45,10 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
                       class="my-1"
                       data-testid="dataplane-name"
                     >
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/backend"
+                      >
                         backend
                       </a>
                     </p>
@@ -53,7 +56,10 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
                       class="my-1"
                       data-testid="dataplane-name"
                     >
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/db"
+                      >
                         db
                       </a>
                     </p>
@@ -61,7 +67,10 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
                       class="my-1"
                       data-testid="dataplane-name"
                     >
-                      <a>
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/frontend"
+                      >
                         frontend
                       </a>
                     </p>

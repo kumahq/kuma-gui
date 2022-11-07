@@ -36,7 +36,7 @@
         {{ store.state.config.tagline }} <b>{{ store.state.config.version }}</b> on <b>{{ environmentName }}</b> ({{ mode }})
       </p>
 
-      <NotificationIcon />
+      <NotificationIcon v-if="shouldShowNotificationManager" />
 
       <router-link :to="{ name: 'diagnostics' }">
         <KIcon
@@ -61,6 +61,7 @@ import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const store = useStore()
 
+const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 const environmentName = computed(() => {
   const environment = store.getters['config/getEnvironment']
 

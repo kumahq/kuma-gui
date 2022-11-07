@@ -133,10 +133,10 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       <div
         class="mt-4 flex items-center flex-col sm:flex-row justify-between"
       >
-        <router-link
+        <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
           data-v-6f773baa=""
-          to="[object Object]"
+          href="/onboarding/configuration-types"
           type="button"
         >
           
@@ -146,7 +146,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
            Back 
           
           <!---->
-        </router-link>
+        </a>
         <div>
           <button
             class="small rounded btn-link k-button skip-button"
@@ -164,11 +164,11 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           <span
             class="inline-block cursor-not-allowed"
           >
-            <router-link
+            <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
               data-v-6f773baa=""
               disabled="true"
-              to="[object Object]"
+              href="/onboarding/create-mesh"
               type="button"
             >
               
@@ -178,7 +178,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
               Next
               
               <!---->
-            </router-link>
+            </a>
           </span>
         </div>
       </div>

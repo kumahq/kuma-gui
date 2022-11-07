@@ -1,21 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneDetails from './DataPlaneDetails.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { createDataPlane } from '@/test-data/createDataPlane'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
 
 const dataPlane = createDataPlane()
 const dataPlaneOverview = createDataPlaneOverview()
@@ -28,12 +16,6 @@ async function renderComponent(props = {}) {
       dataPlane,
       dataPlaneOverview,
       ...props,
-    },
-    global: {
-      plugins: [router, [store, storeKey]],
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }

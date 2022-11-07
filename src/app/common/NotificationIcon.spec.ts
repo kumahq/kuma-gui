@@ -1,14 +1,9 @@
 import { mount } from '@vue/test-utils'
 
 import NotificationIcon from './NotificationIcon.vue'
-import { store, storeKey } from '@/store/store'
 
 function renderComponent() {
-  return mount(NotificationIcon, {
-    global: {
-      plugins: [[store, storeKey]],
-    },
-  })
+  return mount(NotificationIcon)
 }
 
 describe('NotificationIcon.vue', () => {

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/vue'
 
 import ConfigurationTypes from './ConfigurationTypes.vue'
-import { store, storeKey } from '@/store/store'
+import { store } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
@@ -11,7 +11,6 @@ function renderComponent(mode = 'standalone') {
 
   return render(ConfigurationTypes, {
     global: {
-      plugins: [[store, storeKey]],
       stubs: {
         'router-link': {
           props: ['to'],

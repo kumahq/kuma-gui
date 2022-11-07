@@ -7,7 +7,7 @@ exports[`AppNavItem.vue renders snapshot with link to selected mesh 1`] = `
 >
   <a
     class="nav-link"
-    href="#/mesh/default/data-planes"
+    href="/mesh/default/data-planes"
   >
     All 
     <span

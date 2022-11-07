@@ -93,6 +93,7 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
         <a
           class="medium rounded primary k-button navigation-button navigation-button--back"
           data-v-6f773baa=""
+          href="/onboarding/create-mesh"
           type="button"
         >
           
@@ -123,6 +124,7 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
               data-v-6f773baa=""
+              href="/onboarding/add-services-code"
               type="button"
             >
               

@@ -1,20 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import { RouterLinkStub } from '@vue/test-utils'
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
 
 import App from './App.vue'
-import { store, storeKey } from '@/store/store'
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: { template: 'TestComponent' },
-    },
-  ],
-})
+import { store } from '@/store/store'
 
 function renderComponent(status: string) {
   store.state.globalLoading = true
@@ -23,9 +10,9 @@ function renderComponent(status: string) {
 
   return render(App, {
     global: {
-      plugins: [router, [store, storeKey]],
       stubs: {
-        'router-link': RouterLinkStub,
+        // Let’s not unnecessarily render all that chart markup.
+        DonutChart: true,
       },
     },
   })
@@ -38,7 +25,7 @@ describe('App.vue', () => {
 
     await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
 
-    expect(screen.getByText('TestComponent')).toBeInTheDocument()
+    expect(screen.getByText('Create a virtual mesh')).toBeInTheDocument()
   })
 
   it('fails to renders basic view', async () => {
