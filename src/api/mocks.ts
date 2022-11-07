@@ -32,13 +32,13 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['service-insights', () => import('./mock-data/service-insights.json')],
 
   ['zones', () => import('./mock-data/zones.json')],
-  ['zones+insights', () => import('./mock-data/zones+insights.json')],
-  ['zones+insights/zone-1', () => import('./mock-data/zones+insights/zone-1.json')],
-  ['zones+insights/zone-2', () => import('./mock-data/zones+insights/zone-2.json')],
-  ['zones+insights/zone-3', () => import('./mock-data/zones+insights/zone-3.json')],
-  ['zones+insights/cluster-1', () => import('./mock-data/zones+insights/cluster-1.json')],
+  ['zones\\+insights', () => import('./mock-data/zones+insights.json')],
+  ['zones\\+insights/zone-1', () => import('./mock-data/zones+insights/zone-1.json')],
+  ['zones\\+insights/zone-2', () => import('./mock-data/zones+insights/zone-2.json')],
+  ['zones\\+insights/zone-3', () => import('./mock-data/zones+insights/zone-3.json')],
+  ['zones\\+insights/cluster-1', () => import('./mock-data/zones+insights/cluster-1.json')],
   ['zoneingresses/:zoneIngressName/xds', () => import('./mock-data/dataplane-xds.json')],
-  ['zoneingresses+insights', () => import('./mock-data/zoneingresses+insights.json')],
+  ['zoneingresses\\+insights', () => import('./mock-data/zoneingresses+insights.json')],
   ['zoneegresses/:zoneEgressName/xds', () => import('./mock-data/dataplane-xds.json')],
   ['zoneegressoverviews', () => import('./mock-data/zoneegressoverviews.json')],
 
@@ -64,17 +64,17 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/dataplanes/frontend', () => import('./mock-data/meshes/default/dataplanes/frontend.json')],
   ['meshes/default/dataplanes/ingress-dp-test-123', () => import('./mock-data/meshes/default/dataplanes/ingress-dp-test-123.json')],
   ['meshes/default/dataplanes/no-subscriptions', () => import('./mock-data/meshes/default/dataplanes/no-subscriptions.json')],
-  ['meshes/default/dataplanes+insights', () => import('./mock-data/meshes/default/dataplanes+insights.json')],
-  ['meshes/default/dataplanes+insights/backend', () => import('./mock-data/meshes/default/dataplanes+insights/backend.json')],
-  ['meshes/default/dataplanes+insights/cluster-1.backend-02', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.backend-02.json')],
-  ['meshes/default/dataplanes+insights/cluster-1.backend-03', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.backend-03.json')],
-  ['meshes/default/dataplanes+insights/cluster-1.gateway-01', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.gateway-01.json')],
-  ['meshes/default/dataplanes+insights/cluster-1.ingress-02', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.ingress-02.json')],
-  ['meshes/default/dataplanes+insights/dataplane-test-456', () => import('./mock-data/meshes/default/dataplanes+insights/dataplane-test-456.json')],
-  ['meshes/default/dataplanes+insights/db', () => import('./mock-data/meshes/default/dataplanes+insights/db.json')],
-  ['meshes/default/dataplanes+insights/frontend', () => import('./mock-data/meshes/default/dataplanes+insights/frontend.json')],
-  ['meshes/default/dataplanes+insights/ingress-dp-test-123', () => import('./mock-data/meshes/default/dataplanes+insights/ingress-dp-test-123.json')],
-  ['meshes/default/dataplanes+insights/no-subscriptions', () => import('./mock-data/meshes/default/dataplanes+insights/no-subscriptions.json')],
+  ['meshes/default/dataplanes\\+insights', () => import('./mock-data/meshes/default/dataplanes+insights.json')],
+  ['meshes/default/dataplanes\\+insights/backend', () => import('./mock-data/meshes/default/dataplanes+insights/backend.json')],
+  ['meshes/default/dataplanes\\+insights/cluster-1.backend-02', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.backend-02.json')],
+  ['meshes/default/dataplanes\\+insights/cluster-1.backend-03', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.backend-03.json')],
+  ['meshes/default/dataplanes\\+insights/cluster-1.gateway-01', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.gateway-01.json')],
+  ['meshes/default/dataplanes\\+insights/cluster-1.ingress-02', () => import('./mock-data/meshes/default/dataplanes+insights/cluster-1.ingress-02.json')],
+  ['meshes/default/dataplanes\\+insights/dataplane-test-456', () => import('./mock-data/meshes/default/dataplanes+insights/dataplane-test-456.json')],
+  ['meshes/default/dataplanes\\+insights/db', () => import('./mock-data/meshes/default/dataplanes+insights/db.json')],
+  ['meshes/default/dataplanes\\+insights/frontend', () => import('./mock-data/meshes/default/dataplanes+insights/frontend.json')],
+  ['meshes/default/dataplanes\\+insights/ingress-dp-test-123', () => import('./mock-data/meshes/default/dataplanes+insights/ingress-dp-test-123.json')],
+  ['meshes/default/dataplanes\\+insights/no-subscriptions', () => import('./mock-data/meshes/default/dataplanes+insights/no-subscriptions.json')],
   ['meshes/default/service-insights/backend', () => import('./mock-data/meshes/default/service-insights/backend.json')],
   ['meshes/default/service-insights/ingress', () => import('./mock-data/meshes/default/service-insights/ingress.json')],
   ['meshes/default/service-insights/redis', () => import('./mock-data/meshes/default/service-insights/redis.json')],
@@ -116,7 +116,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
 
   ['meshes/hello-world', () => import('./mock-data/meshes/hello-world.json')],
   ['meshes/hello-world/dataplanes', () => import('./mock-data/meshes/hello-world/dataplanes.json')],
-  ['meshes/hello-world/dataplanes+insights', () => import('./mock-data/meshes/hello-world/dataplanes+insights.json')],
+  ['meshes/hello-world/dataplanes\\+insights', () => import('./mock-data/meshes/hello-world/dataplanes+insights.json')],
   ['meshes/hello-world/health-checks/hello-health-check', () => import('./mock-data/meshes/hello-world/health-checks/hello-health-check.json')],
   ['meshes/hello-world/proxytemplates', () => import('./mock-data/meshes/hello-world/proxytemplates.json')],
   ['meshes/hello-world/proxytemplates/pt-123', () => import('./mock-data/meshes/hello-world/proxytemplates/pt-123.json')],
@@ -127,7 +127,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
 
   ['meshes/kong-mania-12', () => import('./mock-data/meshes/kong-mania-12.json')],
   ['meshes/kong-mania-12/dataplanes', () => import('./mock-data/meshes/kong-mania-12/dataplanes.json')],
-  ['meshes/kong-mania-12/dataplanes+insights', () => import('./mock-data/meshes/kong-mania-12/dataplanes+insights.json')],
+  ['meshes/kong-mania-12/dataplanes\\+insights', () => import('./mock-data/meshes/kong-mania-12/dataplanes+insights.json')],
   ['meshes/kong-mania-12/external-services', () => import('./mock-data/meshes/kong-mania-12/external-services.json')],
   ['meshes/kong-mania-12/health-checks/testing-health-checks', () => import('./mock-data/meshes/kong-mania-12/health-checks/testing-health-checks.json')],
   ['meshes/kong-mania-12/health-checks/web-to-banana', () => import('./mock-data/meshes/kong-mania-12/health-checks/web-to-banana.json')],
@@ -160,7 +160,7 @@ export function setupHandlers(url: string): RestHandler[] {
   const origin = url.replace(/\/+$/, '')
 
   function getApiPath(path: string = '') {
-    const escapedPath = path.replace(/\+/g, '\\+').replace(/\?/g, '\\?').replace(/^\/+/, '')
+    const escapedPath = path.replace(/^\/+/, '')
 
     return [origin, escapedPath].filter((segment) => segment !== '').join('/')
   }
@@ -172,7 +172,7 @@ export function setupHandlers(url: string): RestHandler[] {
   handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(getBaseInfo()))))
 
   handlers.push(
-    rest.get(getApiPath('dataplanes+insights'), async (req, res, ctx) => {
+    rest.get(getApiPath('dataplanes\\+insights'), async (req, res, ctx) => {
       const gateway = req.url.searchParams.get('gateway')
 
       let data
