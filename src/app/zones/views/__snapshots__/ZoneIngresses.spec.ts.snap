@@ -61,41 +61,42 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
             class="data-overview-table"
           >
             <div
-              class=""
+              class="k-table-container"
               data-testid="data-overview-table"
-              data-v-222fefa6=""
+              data-v-4f741344=""
               is-clickable=""
             >
+              <!---->
               <section
                 class="k-table-wrapper"
-                data-v-222fefa6=""
+                data-v-4f741344=""
               >
                 <table
                   class="has-hover is-clickable k-table"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  data-v-222fefa6=""
+                  data-v-4f741344=""
                 >
                   <thead
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                   >
                     <tr
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <th
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <span
                             class="sr-only"
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             actions
                           </span>
@@ -105,16 +106,16 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <span
                             class=""
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             Status
                           </span>
@@ -124,16 +125,16 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           
                           <span
                             class=""
-                            data-v-222fefa6=""
+                            data-v-4f741344=""
                           >
                             Name
                           </span>
@@ -145,19 +146,19 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                     </tr>
                   </thead>
                   <tbody
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                   >
                     
                     <tr
                       class="is-selected"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                       role="link"
                       tabindex="0"
                     >
                       
                       <td
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         
@@ -165,7 +166,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       </td>
                       <td
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <div
@@ -179,7 +180,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       </td>
                       <td
                         class=""
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         

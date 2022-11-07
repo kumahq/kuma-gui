@@ -475,41 +475,42 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
           class="data-overview-table"
         >
           <div
-            class=""
+            class="k-table-container"
             data-testid="data-overview-table"
-            data-v-222fefa6=""
+            data-v-4f741344=""
             is-clickable=""
           >
+            <!---->
             <section
               class="k-table-wrapper"
-              data-v-222fefa6=""
+              data-v-4f741344=""
             >
               <table
                 class="has-hover is-clickable k-table"
                 data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-222fefa6=""
+                data-v-4f741344=""
               >
                 <thead
                   class=""
-                  data-v-222fefa6=""
+                  data-v-4f741344=""
                 >
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                   >
                     
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Status
                         </span>
@@ -519,16 +520,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Name
                         </span>
@@ -538,16 +539,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Mesh
                         </span>
@@ -557,16 +558,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Type
                         </span>
@@ -576,16 +577,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Service
                         </span>
@@ -595,16 +596,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Protocol
                         </span>
@@ -614,16 +615,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Last Updated
                         </span>
@@ -633,16 +634,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class=""
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Kuma DP version
                         </span>
@@ -652,16 +653,16 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </th>
                     <th
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       <span
                         class="d-flex align-items-center"
-                        data-v-222fefa6=""
+                        data-v-4f741344=""
                       >
                         
                         <span
                           class="sr-only"
-                          data-v-222fefa6=""
+                          data-v-4f741344=""
                         >
                           Details
                         </span>
@@ -673,19 +674,19 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                 </thead>
                 <tbody
-                  data-v-222fefa6=""
+                  data-v-4f741344=""
                 >
                   
                   <tr
                     class="is-selected"
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -699,7 +700,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -709,7 +710,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -719,7 +720,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -727,7 +728,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -737,7 +738,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       http
@@ -745,7 +746,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 17, 2021
@@ -753,7 +754,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -765,7 +766,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -815,14 +816,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -836,7 +837,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -846,7 +847,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -856,7 +857,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -864,7 +865,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -874,7 +875,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -882,7 +883,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 19, 2021
@@ -890,7 +891,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -902,7 +903,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -952,14 +953,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -973,7 +974,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -983,7 +984,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -993,7 +994,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1001,7 +1002,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1011,7 +1012,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -1019,7 +1020,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 19, 2021
@@ -1027,7 +1028,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1039,7 +1040,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1089,14 +1090,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1110,7 +1111,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1120,7 +1121,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1130,7 +1131,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Gateway (BUILTIN)
@@ -1138,7 +1139,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1148,7 +1149,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -1156,7 +1157,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 19, 2021
@@ -1164,7 +1165,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1176,7 +1177,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1226,14 +1227,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1247,7 +1248,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1257,7 +1258,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1267,7 +1268,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1275,7 +1276,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1285,7 +1286,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -1293,7 +1294,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 19, 2021
@@ -1301,7 +1302,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1313,7 +1314,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1363,14 +1364,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1384,7 +1385,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1394,7 +1395,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1404,7 +1405,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1412,7 +1413,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1422,7 +1423,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -1430,7 +1431,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       October 24, 2019
@@ -1438,7 +1439,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1450,7 +1451,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1500,14 +1501,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1521,7 +1522,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1531,7 +1532,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1541,7 +1542,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1549,7 +1550,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1559,7 +1560,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       http
@@ -1567,7 +1568,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 17, 2021
@@ -1575,7 +1576,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1587,7 +1588,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1637,14 +1638,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1658,7 +1659,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1668,7 +1669,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1678,7 +1679,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1686,7 +1687,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1696,7 +1697,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       http
@@ -1704,7 +1705,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       February 17, 2021
@@ -1712,7 +1713,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1724,7 +1725,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1813,14 +1814,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1834,7 +1835,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1844,7 +1845,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1854,7 +1855,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1862,7 +1863,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1872,7 +1873,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -1880,7 +1881,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       October 24, 2019
@@ -1888,7 +1889,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1900,7 +1901,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a
@@ -1950,14 +1951,14 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                   </tr>
                   <tr
                     class=""
-                    data-v-222fefa6=""
+                    data-v-4f741344=""
                     role="link"
                     tabindex="0"
                   >
                     
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -1971,7 +1972,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1981,7 +1982,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -1991,7 +1992,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       Standard
@@ -1999,7 +2000,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a>
@@ -2009,7 +2010,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       http
@@ -2017,7 +2018,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       —
@@ -2025,7 +2026,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class=""
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <div
@@ -2037,7 +2038,7 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
                     </td>
                     <td
                       class="text-right"
-                      data-v-222fefa6=""
+                      data-v-4f741344=""
                     >
                       
                       <a

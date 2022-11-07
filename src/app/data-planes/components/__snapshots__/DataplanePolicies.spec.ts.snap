@@ -106,32 +106,44 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  FaultInjection
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    FaultInjection
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  TrafficPermission
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    TrafficPermission
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
@@ -298,17 +310,23 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  Timeout
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    Timeout
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
@@ -421,17 +439,23 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  HealthCheck
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    HealthCheck
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
@@ -544,17 +568,23 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  HealthCheck
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    HealthCheck
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
@@ -667,17 +697,23 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  HealthCheck
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    HealthCheck
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
@@ -790,17 +826,23 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  HealthCheck
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    HealthCheck
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
@@ -913,17 +955,23 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-                data-v-48edac5b=""
+                data-v-37d3a284=""
                 style=""
+                tabindex="0"
               >
-                <span
+                <div
                   class="k-badge-text truncate"
-                  data-v-48edac5b=""
+                  data-v-37d3a284=""
                 >
-                  
-                  TrafficTrace
-                  
-                </span>
+                  <div
+                    class="k-badge-text truncate"
+                    data-v-37d3a284=""
+                  >
+                    
+                    TrafficTrace
+                    
+                  </div>
+                </div>
                 <!---->
               </div>
               
