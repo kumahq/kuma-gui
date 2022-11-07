@@ -44,9 +44,9 @@ exports[`DataPlaneListView.vue matches snapshot 1`] = `
               Gateway (builtin)
             </option>
             <option
-              value="Gateway (provided)"
+              value="Gateway (delegated)"
             >
-              Gateway (provided)
+              Gateway (delegated)
             </option>
             
           </select>
