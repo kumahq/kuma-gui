@@ -286,10 +286,22 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
     routes,
   })
 
+  router.beforeEach(redirectOldHashHistoryUrlPaths)
   router.beforeEach(updateSelectedMeshGuard)
   router.beforeEach(onboardingRouteGuard)
 
   return router
+}
+
+/**
+ * Redirects navigations to old hash history-style URL paths.
+ */
+const redirectOldHashHistoryUrlPaths: NavigationGuard = function (to, _from, next) {
+  if (to.fullPath.startsWith('/#/')) {
+    next(to.fullPath.substring(2))
+  } else {
+    next()
+  }
 }
 
 /**
