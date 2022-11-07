@@ -87,4 +87,6 @@ jobs:
           labels: ci/skip-test
           body: |
             Bumps ${{ github.repository }} to version  [${{ github.ref_name }}@${{ github.sha }}](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+            
+            > Changelog: chore(deps): use latest ${{github.repository}}
           draft: false
