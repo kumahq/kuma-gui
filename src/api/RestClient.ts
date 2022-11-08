@@ -15,7 +15,16 @@ export class RestClient {
    * @param basePath **Default: `''`**. A base path under which the client’s API is served (e.g. `'api'`). Leading and trailing slashes will be ignored.
    */
   public constructor(basePath: string = '') {
-    const origin = import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL
+    let origin
+
+    if (import.meta.env.PROD) {
+      // Determines the API base path as the URL up to the first `/gui` path segment. This is important because users can run the GUI from an arbitrary URL path (e.g. https://example.com/more/path/segments/gui for which the expected API base path is `https://example.com/more/path/segments`).
+      const apiBasePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/gui'))
+      origin = window.location.origin + apiBasePath
+    } else {
+      origin = import.meta.env.VITE_KUMA_API_SERVER_URL
+    }
+
     this._origin = trimTrailingSlashes(origin)
     this._basePath = trimBoundarySlashes(basePath)
   }
