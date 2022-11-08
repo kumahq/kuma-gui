@@ -44,6 +44,8 @@ jobs:
 
       - name: Lint
         run: yarn run lint
+        env:
+          LINTER_MODE: strict
 
       - name: Test
         run: yarn run test

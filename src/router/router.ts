@@ -3,6 +3,7 @@ import { createRouter as createVueRouter, createWebHistory, NavigationGuard, Rou
 import { store } from '@/store/store'
 import { PolicyDefinition } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
+import { getAppGuiPath } from '@/utilities/getAppGuiPath'
 
 function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   return policies.map((policy) => ({
@@ -281,8 +282,10 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
     },
   ]
 
+  const appGuiPath = getAppGuiPath(window.location)
+
   const router = createVueRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: createWebHistory(appGuiPath),
     routes,
   })
 
