@@ -9,7 +9,6 @@
           DPP: {{ dataPlane.name }}
         </h3>
       </div>
-
     </template>
 
     <template #overview>

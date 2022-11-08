@@ -43,7 +43,6 @@
           <div>
             <h3> Zone Ingress: {{ entity.name }}</h3>
           </div>
-
         </template>
         <template #overview>
           <LabelList>

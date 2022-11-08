@@ -71,7 +71,6 @@
               {{ policy.singularDisplayName }}: {{ entity.name }}
             </h3>
           </div>
-
         </template>
 
         <template #overview>
