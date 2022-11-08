@@ -14,7 +14,6 @@
       >
         {{ status.title.toLowerCase() }}
       </div>
-
     </h3>
 
     <section>
@@ -53,14 +52,11 @@
 
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
-import { useRoute } from 'vue-router'
 
 import { ServiceInsight } from '@/types/index.d'
 import { stripTimes } from '@/utilities/helpers'
 import { STATUS } from '@/constants'
 import YamlView from '@/app/common/YamlView.vue'
-
-const route = useRoute()
 
 const props = defineProps({
   serviceInsight: {
