@@ -10,7 +10,7 @@
     "dev:real-api": "vite",
     "preview": "vite preview",
     "build": "vite build",
-    "build:ci": "cross-env VITE_MOCK_API_ENABLED=true VITE_FAKE_MULTIZONE=true yarn run build --mode development",
+    "build:ci": "cross-env VITE_MOCK_API_ENABLED=true VITE_FAKE_MULTIZONE=true yarn run build",
     "lint": "eslint --ext .js,.ts,.vue --fix .",
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn --validate-https",
     "test": "cross-env TZ=UTC jest",
