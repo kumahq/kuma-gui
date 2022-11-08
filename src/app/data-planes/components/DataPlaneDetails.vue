@@ -9,13 +9,6 @@
           DPP: {{ dataPlane.name }}
         </h3>
       </div>
-
-      <div>
-        <EntityURLControl
-          :name="dataPlane.name"
-          :mesh="dataPlane.mesh"
-        />
-      </div>
     </template>
 
     <template #overview>
@@ -230,7 +223,6 @@ import { useStore } from '@/store/store'
 import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'

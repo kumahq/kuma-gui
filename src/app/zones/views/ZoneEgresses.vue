@@ -40,9 +40,6 @@
           <div>
             <h3> Zone Egress: {{ entity.name }}</h3>
           </div>
-          <div>
-            <EntityURLControl :name="entity.name" />
-          </div>
         </template>
         <template #overview>
           <LabelList>
@@ -126,7 +123,6 @@ import { kumaApi } from '@/api/kumaApi'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
@@ -141,7 +137,6 @@ export default {
     AccordionItem,
     AccordionList,
     DataOverview,
-    EntityURLControl,
     EnvoyData,
     FrameSkeleton,
     LabelList,

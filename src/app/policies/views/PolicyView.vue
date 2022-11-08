@@ -71,13 +71,6 @@
               {{ policy.singularDisplayName }}: {{ entity.name }}
             </h3>
           </div>
-
-          <div>
-            <EntityURLControl
-              :name="entity.name"
-              :mesh="entity.mesh"
-            />
-          </div>
         </template>
 
         <template #overview>
@@ -137,7 +130,6 @@ import { getSome, stripTimes } from '@/utilities/helpers'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
-import EntityURLControl from '@/app/common/EntityURLControl.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import { kumaApi } from '@/api/kumaApi'
 import LabelList from '@/app/common/LabelList.vue'
