@@ -10,6 +10,7 @@
       </router-link>
 
       <GithubButton
+        class="gh-star"
         href="https://github.com/kumahq/kuma"
         aria-label="Star kumahq/kuma on GitHub"
       >
@@ -102,6 +103,9 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
 
 .logo-image {
   max-height: 36px;
+}
+.gh-star {
+  height: 20px;
 }
 
 .horizontal-list {

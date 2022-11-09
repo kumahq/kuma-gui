@@ -21,6 +21,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       </a>
       <github-button-stub
         aria-label="Star kumahq/kuma on GitHub"
+        class="gh-star"
         href="https://github.com/kumahq/kuma"
       />
       <div
