@@ -90,7 +90,7 @@ const INLINE_NON_VOID_ELEMENTS = [
         '@typescript-eslint/func-call-spacing': 'error',
 
         'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': ['warn', {
+        '@typescript-eslint/no-unused-vars': [process.env.LINTER_MODE === 'strict' ? 'error' : 'warn', {
           argsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],

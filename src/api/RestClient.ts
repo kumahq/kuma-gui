@@ -1,3 +1,4 @@
+import { getAppBaseUrl } from '@/utilities/getAppBaseUrl'
 import { makeRequest } from './makeRequest'
 
 export class RestClient {
@@ -18,9 +19,7 @@ export class RestClient {
     let origin
 
     if (import.meta.env.PROD) {
-      // Determines the API base path as the URL up to the first `/gui` path segment. This is important because users can run the GUI from an arbitrary URL path (e.g. https://example.com/more/path/segments/gui for which the expected API base path is `https://example.com/more/path/segments`).
-      const apiBasePath = window.location.pathname.substring(0, window.location.pathname.indexOf('/gui'))
-      origin = window.location.origin + apiBasePath
+      origin = getAppBaseUrl(window.location)
     } else {
       origin = import.meta.env.VITE_KUMA_API_SERVER_URL
     }
