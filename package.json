@@ -13,7 +13,7 @@
     "build:ci": "cross-env VITE_MOCK_API_ENABLED=true VITE_FAKE_MULTIZONE=true yarn run build",
     "lint": "eslint --ext .js,.ts,.vue --fix .",
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn --validate-https",
-    "test": "cross-env TZ=UTC jest",
+    "test": "cross-env TZ=UTC jest -i ./src/app/App.spec.ts",
     "test:watch": "yarn run test --watch"
   },
   "engines": {
@@ -30,6 +30,7 @@
     "semver-compare": "^1.0.0",
     "tailwindcss": "^3.2.2",
     "vue": "^3.2.41",
+    "vue-github-button": "^3.1.0",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
   },

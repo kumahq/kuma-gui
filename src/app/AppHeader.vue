@@ -9,6 +9,13 @@
         >
       </router-link>
 
+      <GithubButton
+        href="https://github.com/kumahq/kuma"
+        aria-label="Star kumahq/kuma on GitHub"
+      >
+        Star
+      </GithubButton>
+
       <div class="upgrade-check-wrapper">
         <UpgradeCheck />
       </div>
@@ -54,6 +61,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { KButton, KIcon, KPop } from '@kong/kongponents'
+import GithubButton from 'vue-github-button'
 
 import { useStore } from '@/store/store'
 import NotificationIcon from './common/NotificationIcon.vue'
