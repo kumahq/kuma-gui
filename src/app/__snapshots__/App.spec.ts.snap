@@ -19,6 +19,10 @@ exports[`App.vue fails to renders basic view 1`] = `
           class="logo-image"
         />
       </a>
+      <github-button-stub
+        aria-label="Star kumahq/kuma on GitHub"
+        href="https://github.com/kumahq/kuma"
+      />
       <div
         class="upgrade-check-wrapper"
       >
