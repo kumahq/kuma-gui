@@ -9,19 +9,19 @@
 # The people you choose as code owners must have write permissions for the repository.
 
 # When the code owner is a team, that team must have write permissions,
-# even if all the individual members of the team already have write permissions directly, 
+# even if all the individual members of the team already have write permissions directly,
 # through organization membership, or through another team membership.
 
 # Each CODEOWNERS file assigns the code owners for a single branch in the repository.
 
 # For code owners to receive review requests, the CODEOWNERS file must be on the base branch of the pull request.
 
-# A CODEOWNERS file uses a pattern that follows the same rules used in gitignore files. 
+# A CODEOWNERS file uses a pattern that follows the same rules used in gitignore files.
 # The pattern is followed by one or more GitHub usernames or team names using the standard @username or @org/team-name format.
 # You can also refer to a user by an email address that has been added to their GitHub account, for example user@example.com.
 
 
 # These owners will be the default owners for everything in this repo.
-# Unless a later match takes precedence, @kumahq/kuma-maintainers will be requested for
+# Unless a later match takes precedence, @kumahq/kuma-frontend will be requested for
 # review when someone opens a pull request.
-*       @kumahq/kuma-maintainers
+*       @kumahq/kuma-frontend
