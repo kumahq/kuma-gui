@@ -7,6 +7,7 @@
       class="accordion-item-header"
       type="button"
       :aria-expanded="visible ? 'true' : 'false'"
+      data-testid="accordion-item-button"
       @click="open"
     >
       <slot name="accordion-header" />
@@ -21,6 +22,7 @@
       <div
         v-if="visible"
         class="px-4 py-1"
+        data-testid="accordion-item-content"
       >
         <slot name="accordion-content" />
       </div>

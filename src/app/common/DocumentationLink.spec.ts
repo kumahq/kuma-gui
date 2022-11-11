@@ -1,15 +1,19 @@
-import { render } from '@testing-library/vue'
+import { mount } from '@vue/test-utils'
 
 import DocumentationLink from './DocumentationLink.vue'
 
+function renderComponent() {
+  return mount(DocumentationLink, {
+    props: {
+      href: 'https://kuma.io/docs/1.3.2/policies/timeout/',
+    },
+  })
+}
+
 describe('DocumentationLink.vue', () => {
   it('renders snapshot', () => {
-    const { container } = render(DocumentationLink, {
-      props: {
-        href: 'https://kuma.io/docs/1.3.2/policies/timeout/',
-      },
-    })
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

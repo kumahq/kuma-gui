@@ -1,5 +1,4 @@
-import userEvent from '@testing-library/user-event'
-import { render, screen } from '@testing-library/vue'
+import { DOMWrapper, flushPromises, mount, VueWrapper } from '@vue/test-utils'
 
 import Mesh from './Mesh.vue'
 import { store } from '@/store/store'
@@ -12,59 +11,52 @@ function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig
 
-  return render(Mesh)
+  return mount(Mesh)
+}
+
+async function doStep(wrapper: VueWrapper<any>, nextButton: DOMWrapper<any>, enabledTestId: string, testIds: string[]): Promise<void> {
+  expect(nextButton.attributes('disabled')).toBe(undefined)
+
+  const enabledRadioButton = wrapper.find<HTMLInputElement>(`[data-testid="${enabledTestId}"]`)
+  enabledRadioButton.element.checked = true
+  await enabledRadioButton.trigger('change')
+  await flushPromises()
+
+  expect(nextButton.attributes('disabled')).toBe('')
+
+  for (const testId of testIds) {
+    await wrapper.find(`[data-testid="${testId}"]`).setValue('fake-name')
+  }
+
+  expect(nextButton.attributes('disabled')).toBe(undefined)
+
+  await nextButton.trigger('click')
 }
 
 describe('Mesh.vue', () => {
-  const doStep = async (button: any, target: string | string[]) => {
-    const targetNames = Array.isArray(target) ? target : [target]
-    // Begin step
-
-    expect(button).not.toHaveAttribute('disabled')
-
-    // Check extended validation
-
-    await userEvent.click(screen.getByText('Enabled'))
-
-    expect(button).toHaveAttribute('disabled')
-
-    for (const targetName of targetNames) {
-      await userEvent.type(screen.getByLabelText(targetName), 'fake-name')
-    }
-
-    expect(button).not.toHaveAttribute('disabled')
-
-    await userEvent.click(screen.getByText('Next ›'))
-  }
-
   it('passes whole wizzard and render yaml', async () => {
-    const { container } = renderComponent('global')
+    const wrapper = renderComponent('global')
 
-    const nextButton = screen.getByText(/Next ›/i).closest('button')
+    const nextButton = wrapper.find('[data-testid="next-step-button"]')
+    expect(nextButton.attributes('disabled')).toBe('')
 
-    // basic validation on first step
-    expect(nextButton).toHaveAttribute('disabled')
+    await wrapper.find('[data-testid="mesh-name"]').setValue('default')
 
-    await userEvent.type(screen.getByLabelText('Mesh name:'), 'default')
-
-    // 1 step cd.
-
-    await doStep(nextButton, 'Certificate name:')
+    // 1 step
+    await doStep(wrapper, nextButton, 'mesh-mtls-enabled', ['mesh-certificate-name'])
 
     // 2 Step
-
-    await doStep(nextButton, 'Backend name:')
+    await doStep(wrapper, nextButton, 'mesh-logging-enabled', ['mesh-logging-backend-name'])
 
     // 3 Step
-
-    await doStep(nextButton, ['Backend name:', 'URL:'])
+    await doStep(wrapper, nextButton, 'mesh-tracing-enabled', ['mesh-tracing-backend-name', 'mesh-tracing-url'])
 
     // 4 Step
+    await doStep(wrapper, nextButton, 'mesh-metrics-enabled', ['mesh-metrics-backend-name'])
 
-    await doStep(nextButton, 'Backend name:')
+    await flushPromises()
+    expect(wrapper.html()).toContain('kumactl apply')
 
-    await screen.findByText(/kumactl apply/)
-
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

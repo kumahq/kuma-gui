@@ -1,11 +1,10 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { mount } from '@vue/test-utils'
 
 import AccordionList from './AccordionList.vue'
 import AccordionItem from './AccordionItem.vue'
 
 function renderComponent(props = {}) {
-  return render(AccordionList, {
+  return mount(AccordionList, {
     global: {
       stubs: {
         AccordionItem,
@@ -43,56 +42,41 @@ function renderComponent(props = {}) {
 
 describe('AccordionList.vue', () => {
   it('renders snapshot at the beginning', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders with opened second panel and switch opened panel on click', async () => {
-    renderComponent({ initiallyOpen: 1 })
+    const wrapper = renderComponent({ initiallyOpen: 1 })
 
-    expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
-    expect(screen.getByText(/Content 2/)).toHaveStyle('display: block')
+    expect(wrapper.find('[data-testid="accordion-item-content"]').html()).toContain('Content 2')
 
-    await userEvent.click(screen.getByText(/Header 1/))
+    const button = wrapper.find('[data-testid="accordion-item-button"]')
+    expect(button.html()).toContain('Header 1')
+    await button.trigger('click')
 
-    expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
-    expect(screen.queryByText(/Content 2/)).not.toBeInTheDocument()
+    expect(wrapper.find('[data-testid="accordion-item-content"]').html()).toContain('Content 1')
   })
 
   it('renders initally two opened accordion', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       initiallyOpen: [0, 1],
       multipleOpen: true,
     })
 
-    expect(screen.getByText(/Content 1/)).toHaveStyle('display: block')
-    expect(screen.getByText(/Content 2/)).toHaveStyle('display: block')
+    expect(wrapper.findAll('[data-testid="accordion-item-content"]').length).toBe(2)
   })
 
   it('renders initally two closed accordions and open it', async () => {
-    renderComponent({ multipleOpen: true })
+    const wrapper = renderComponent({ multipleOpen: true })
 
-    expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
-    expect(screen.queryByText(/Content 2/)).not.toBeInTheDocument()
+    expect(wrapper.findAll('[data-testid="accordion-item-content"]').length).toBe(0)
+    const buttons = wrapper.findAll('[data-testid="accordion-item-button"]')
+    for (const button of buttons) {
+      await button.trigger('click')
+    }
 
-    await userEvent.click(screen.getByText(/Header 1/))
-    await userEvent.click(screen.getByText(/Header 2/))
-
-    expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
-    expect(await screen.findByText(/Content 2/)).toHaveStyle('display: block')
-  })
-
-  it('checks keyboard accessebility', async () => {
-    renderComponent({ multipleOpen: true })
-
-    expect(screen.queryByText(/Content 1/)).not.toBeInTheDocument()
-
-    await userEvent.tab()
-    expect(screen.queryByText(/Header 1/)).toHaveFocus()
-
-    await userEvent.keyboard('[Enter]')
-
-    expect(await screen.findByText(/Content 1/)).toHaveStyle('display: block')
+    expect(wrapper.findAll('[data-testid="accordion-item-content"]').length).toBe(2)
   })
 })

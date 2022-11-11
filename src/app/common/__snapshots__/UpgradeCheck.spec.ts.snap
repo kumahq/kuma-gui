@@ -1,57 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`UpgradeCheck.vue renders snapshot 1`] = `
-<div>
+<div
+  class="upgrade-check"
+>
   <div
-    class="upgrade-check"
+    class="warning small none k-alert"
+    data-v-1910ef98=""
+    role="alert"
   >
+    <!---->
+    <!---->
     <div
-      class="warning small none k-alert"
+      class="k-alert-msg-text"
       data-v-1910ef98=""
-      role="alert"
     >
       <!---->
-      <!---->
       <div
-        class="k-alert-msg-text"
+        class="k-alert-msg"
         data-v-1910ef98=""
       >
-        <!---->
+        
         <div
-          class="k-alert-msg"
-          data-v-1910ef98=""
+          class="alert-content"
         >
-          
-          <div
-            class="alert-content"
-          >
-            <div>
-              Kuma update available 
-            </div>
-            <div>
-              <a
-                class="small rounded primary k-button warning-button"
-                data-v-6f773baa=""
-                href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                type="button"
-              >
-                
-                <!---->
-                
-                
-                 Update 
-                
-                <!---->
-              </a>
-            </div>
+          <div>
+            Kuma update available 
           </div>
-          
+          <div>
+            <a
+              class="small rounded primary k-button warning-button"
+              data-v-6f773baa=""
+              href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Update 
+              
+              <!---->
+            </a>
+          </div>
         </div>
-        <!---->
+        
       </div>
       <!---->
-      <!---->
     </div>
+    <!---->
+    <!---->
   </div>
 </div>
 `;

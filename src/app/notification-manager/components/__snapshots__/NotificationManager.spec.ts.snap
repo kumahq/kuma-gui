@@ -61,6 +61,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                data-testid="accordion-item-button"
                 type="button"
               >
                 
@@ -156,6 +157,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                data-testid="accordion-item-button"
                 type="button"
               >
                 
@@ -251,6 +253,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                data-testid="accordion-item-button"
                 type="button"
               >
                 
@@ -346,6 +349,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               <button
                 aria-expanded="false"
                 class="accordion-item-header"
+                data-testid="accordion-item-button"
                 type="button"
               >
                 

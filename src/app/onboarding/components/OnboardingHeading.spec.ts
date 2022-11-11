@@ -1,16 +1,20 @@
-import { render } from '@testing-library/vue'
+import { mount } from '@vue/test-utils'
 
 import OnboardingHeading from './OnboardingHeading.vue'
 
+function renderComponent() {
+  return mount(OnboardingHeading, {
+    props: {
+      title: 'title',
+      description: 'description',
+    },
+  })
+}
+
 describe('OnboardingHeading.vue', () => {
   it('renders snapshot', () => {
-    const { container } = render(OnboardingHeading, {
-      props: {
-        title: 'title',
-        description: 'description',
-      },
-    })
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

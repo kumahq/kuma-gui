@@ -1,556 +1,555 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
-<div>
+<div
+  class="wizard"
+>
   <div
-    class="wizard"
+    class="wizard__content"
   >
     <div
-      class="wizard__content"
+      class="wizard-steps"
     >
       <div
-        class="wizard-steps"
+        class="wizard-steps__content-wrapper"
       >
-        <div
-          class="wizard-steps__content-wrapper"
+        <header
+          class="wizard-steps__indicator"
         >
-          <header
-            class="wizard-steps__indicator"
+          <ul
+            aria-label="steptabs"
+            class="wizard-steps__indicator__controls"
+            role="tablist"
           >
-            <ul
-              aria-label="steptabs"
-              class="wizard-steps__indicator__controls"
-              role="tablist"
+            
+            <li
+              aria-controls="wizard-steps__content__item--0"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                General
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--1"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Topology
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--2"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Networking
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--3"
+              aria-selected="true"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Install
+              </span>
+            </li>
+            
+          </ul>
+        </header>
+        <div
+          class="wizard-steps__content"
+        >
+          <form
+            autocomplete="off"
+          >
+            
+            <div
+              aria-labelledby="wizard-steps__content__item--0"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--1"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--2"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--3"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--3"
+              role="tabpanel"
+              tabindex="0"
             >
               
-              <li
-                aria-controls="wizard-steps__content__item--0"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  General
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--1"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Topology
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--2"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Networking
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--3"
-                aria-selected="true"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Install
-                </span>
-              </li>
-              
-            </ul>
-          </header>
-          <div
-            class="wizard-steps__content"
-          >
-            <form
-              autocomplete="off"
-            >
-              
-              <div
-                aria-labelledby="wizard-steps__content__item--0"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--0"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--1"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--1"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--2"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--2"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--3"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--3"
-                role="tabpanel"
-                tabindex="0"
-              >
-                
+              <div>
                 <div>
-                  <div>
-                    <h3>
-                       Auto-Inject DPP 
-                    </h3>
-                    <p>
-                       It's time to first generate the credentials so that Kuma will allow the Dataplane to successfully authenticate itself with the control plane, and then finally install the Dataplane process (powered by Envoy). 
-                    </p>
-                    <h4>
-                      Generate Dataplane Token
-                    </h4>
+                  <h3>
+                     Auto-Inject DPP 
+                  </h3>
+                  <p>
+                     It's time to first generate the credentials so that Kuma will allow the Dataplane to successfully authenticate itself with the control plane, and then finally install the Dataplane process (powered by Envoy). 
+                  </p>
+                  <h4>
+                    Generate Dataplane Token
+                  </h4>
+                  <div
+                    class="k-code-block code-block"
+                    data-testid="k-code-block"
+                    data-v-034f9b55=""
+                    id="code-block-generate-token-command"
+                    style="--maxLineNumberWidth: 1ch;"
+                    tabindex="0"
+                  >
+                    <!---->
                     <div
-                      class="k-code-block code-block"
-                      data-testid="k-code-block"
+                      class="k-code-block-content"
                       data-v-034f9b55=""
-                      id="code-block-generate-token-command"
-                      style="--maxLineNumberWidth: 1ch;"
-                      tabindex="0"
                     >
-                      <!---->
-                      <div
-                        class="k-code-block-content"
+                      <pre
+                        class="k-highlighted-code-block language-bash"
+                        data-testid="k-code-block-highlighted-code-block"
                         data-v-034f9b55=""
+                        tabindex="0"
                       >
-                        <pre
-                          class="k-highlighted-code-block language-bash"
-                          data-testid="k-code-block-highlighted-code-block"
+                        <span
+                          class="k-line-number-rows"
                           data-v-034f9b55=""
-                          tabindex="0"
                         >
+                          
+        
+                          
                           <span
-                            class="k-line-number-rows"
+                            class="k-line"
                             data-v-034f9b55=""
                           >
                             
-        
-                            
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
           
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-generate-token-command-L1"
-                              >
-                                1
-                              </a>
-                              
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-generate-token-command-L1"
+                            >
+                              1
+                            </a>
+                            
         
-                            </span>
-                            
-                            
+                          </span>
+                          
+                          
       
-                          </span>
-                          <code
-                            class="language-bash"
-                            data-v-034f9b55=""
-                          >
-                            kumactl generate dataplane-token 
-                            <span
-                              class="token parameter variable"
-                            >
-                              --name
-                            </span>
-                            <span
-                              class="token operator"
-                            >
-                              =
-                            </span>
-                            testMesh-4fzzzxtestMesh 
-                            <span
-                              class="token operator"
-                            >
-                              &gt;
-                            </span>
-                             kuma-token-testMesh-4fzzzxtestMesh
-                          </code>
-                        </pre>
-                        <button
-                          class="small outline k-button k-code-block-copy-button"
-                          data-testid="k-code-block-copy-button"
+                        </span>
+                        <code
+                          class="language-bash"
                           data-v-034f9b55=""
-                          data-v-6f773baa=""
-                          title="Copy (Alt+C)"
-                          type="button"
                         >
-                          
-                          <!---->
-                          
-                          
+                          kumactl generate dataplane-token 
                           <span
-                            class="kong-icon-copy kong-icon"
-                            data-v-034f9b55=""
-                            data-v-71cfcfc4=""
+                            class="token parameter variable"
                           >
-                            <svg
-                              height="16"
-                              role="img"
-                              viewBox="0 0 32 32"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              
+                            --name
+                          </span>
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          testMesh 
+                          <span
+                            class="token operator"
+                          >
+                            &gt;
+                          </span>
+                           kuma-token-testMesh
+                        </code>
+                      </pre>
+                      <button
+                        class="small outline k-button k-code-block-copy-button"
+                        data-testid="k-code-block-copy-button"
+                        data-v-034f9b55=""
+                        data-v-6f773baa=""
+                        title="Copy (Alt+C)"
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                        <span
+                          class="kong-icon-copy kong-icon"
+                          data-v-034f9b55=""
+                          data-v-71cfcfc4=""
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 32 32"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
   
-                              <title>
-                                Copy (Alt+C)
-                              </title>
-                              
+                            <title>
+                              Copy (Alt+C)
+                            </title>
+                            
   
-                              <path
-                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                fill="currentColor"
-                              />
-                              
-
-                            </svg>
+                            <path
+                              d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                              fill="currentColor"
+                            />
                             
 
-                          </span>
-                          <span
-                            class="k-visually-hidden"
-                            data-v-034f9b55=""
-                          >
-                            Copy
-                          </span>
+                          </svg>
                           
-                          <!---->
-                        </button>
-                      </div>
+
+                        </span>
+                        <span
+                          class="k-visually-hidden"
+                          data-v-034f9b55=""
+                        >
+                          Copy
+                        </span>
+                        
+                        <!---->
+                      </button>
                     </div>
-                    <h4>
-                      Start Dataplane Process
-                    </h4>
+                  </div>
+                  <h4>
+                    Start Dataplane Process
+                  </h4>
+                  <div
+                    class="k-code-block code-block"
+                    data-testid="k-code-block"
+                    data-v-034f9b55=""
+                    id="code-block-stard-dp-command"
+                    style="--maxLineNumberWidth: 2ch;"
+                    tabindex="0"
+                  >
+                    <!---->
                     <div
-                      class="k-code-block code-block"
-                      data-testid="k-code-block"
+                      class="k-code-block-content"
                       data-v-034f9b55=""
-                      id="code-block-stard-dp-command"
-                      style="--maxLineNumberWidth: 2ch;"
-                      tabindex="0"
                     >
-                      <!---->
-                      <div
-                        class="k-code-block-content"
+                      <pre
+                        class="k-highlighted-code-block language-bash"
+                        data-testid="k-code-block-highlighted-code-block"
                         data-v-034f9b55=""
+                        tabindex="0"
                       >
-                        <pre
-                          class="k-highlighted-code-block language-bash"
-                          data-testid="k-code-block-highlighted-code-block"
+                        <span
+                          class="k-line-number-rows"
                           data-v-034f9b55=""
-                          tabindex="0"
                         >
+                          
+        
+                          
                           <span
-                            class="k-line-number-rows"
+                            class="k-line"
                             data-v-034f9b55=""
                           >
                             
-        
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L1"
+                            >
+                              1
+                            </a>
                             
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L1"
-                              >
-                                1
-                              </a>
-                              
         
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L2"
-                              >
-                                2
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L3"
-                              >
-                                3
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L4"
-                              >
-                                4
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L5"
-                              >
-                                5
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L6"
-                              >
-                                6
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L7"
-                              >
-                                7
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L8"
-                              >
-                                8
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L9"
-                              >
-                                9
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L10"
-                              >
-                                10
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L11"
-                              >
-                                11
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L12"
-                              >
-                                12
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L13"
-                              >
-                                13
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L14"
-                              >
-                                14
-                              </a>
-                              
-        
-                            </span>
-                            <span
-                              class="k-line"
-                              data-v-034f9b55=""
-                            >
-                              
-          
-                              <a
-                                class="k-line-anchor"
-                                data-v-034f9b55=""
-                                id="code-block-stard-dp-command-L15"
-                              >
-                                15
-                              </a>
-                              
-        
-                            </span>
-                            
-                            
-      
                           </span>
-                          <code
-                            class="language-bash"
+                          <span
+                            class="k-line"
                             data-v-034f9b55=""
                           >
-                            kuma-dp run 
-                            <span
-                              class="token punctuation"
-                            >
-                              \\
-                            </span>
                             
-      --cp-address
-                            <span
-                              class="token operator"
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L2"
                             >
-                              =
-                            </span>
-                            https://localhost:5678/ 
-                            <span
-                              class="token punctuation"
-                            >
-                              \\
-                            </span>
+                              2
+                            </a>
                             
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L3"
+                            >
+                              3
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L4"
+                            >
+                              4
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L5"
+                            >
+                              5
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L6"
+                            >
+                              6
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L7"
+                            >
+                              7
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L8"
+                            >
+                              8
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L9"
+                            >
+                              9
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L10"
+                            >
+                              10
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L11"
+                            >
+                              11
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L12"
+                            >
+                              12
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L13"
+                            >
+                              13
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L14"
+                            >
+                              14
+                            </a>
+                            
+        
+                          </span>
+                          <span
+                            class="k-line"
+                            data-v-034f9b55=""
+                          >
+                            
+          
+                            <a
+                              class="k-line-anchor"
+                              data-v-034f9b55=""
+                              id="code-block-stard-dp-command-L15"
+                            >
+                              15
+                            </a>
+                            
+        
+                          </span>
+                          
+                          
       
-                            <span
-                              class="token parameter variable"
-                            >
-                              --dataplane
-                            </span>
-                            <span
-                              class="token operator"
-                            >
-                              =
-                            </span>
-                            <span
-                              class="token string"
-                            >
-                              "type: Dataplane
+                        </span>
+                        <code
+                          class="language-bash"
+                          data-v-034f9b55=""
+                        >
+                          kuma-dp run 
+                          <span
+                            class="token punctuation"
+                          >
+                            \\
+                          </span>
+                          
+      --cp-address
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          https://localhost:5678/ 
+                          <span
+                            class="token punctuation"
+                          >
+                            \\
+                          </span>
+                          
+      
+                          <span
+                            class="token parameter variable"
+                          >
+                            --dataplane
+                          </span>
+                          <span
+                            class="token operator"
+                          >
+                            =
+                          </span>
+                          <span
+                            class="token string"
+                          >
+                            "type: Dataplane
 mesh: testMesh
-name: testMesh-4fzzzxtestMesh
+name: testMesh
 networking: 
   address: 12
   inbound: 
@@ -560,252 +559,254 @@ networking:
       tags: 
         kuma.io/service: testMesh
         kuma.io/protocol: tcp"
-                            </span>
-                             
-                            <span
-                              class="token punctuation"
-                            >
-                              \\
-                            </span>
-                            
+                          </span>
+                           
+                          <span
+                            class="token punctuation"
+                          >
+                            \\
+                          </span>
+                          
       --dataplane-token-file
-                            <span
-                              class="token operator"
-                            >
-                              =
-                            </span>
-                            kuma-token-testMesh-4fzzzxtestMesh
-                          </code>
-                        </pre>
-                        <button
-                          class="small outline k-button k-code-block-copy-button"
-                          data-testid="k-code-block-copy-button"
-                          data-v-034f9b55=""
-                          data-v-6f773baa=""
-                          title="Copy (Alt+C)"
-                          type="button"
-                        >
-                          
-                          <!---->
-                          
-                          
                           <span
-                            class="kong-icon-copy kong-icon"
-                            data-v-034f9b55=""
-                            data-v-71cfcfc4=""
+                            class="token operator"
                           >
-                            <svg
-                              height="16"
-                              role="img"
-                              viewBox="0 0 32 32"
-                              width="16"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              
-  
-                              <title>
-                                Copy (Alt+C)
-                              </title>
-                              
-  
-                              <path
-                                d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                fill="currentColor"
-                              />
-                              
-
-                            </svg>
-                            
-
+                            =
                           </span>
-                          <span
-                            class="k-visually-hidden"
-                            data-v-034f9b55=""
-                          >
-                            Copy
-                          </span>
-                          
-                          <!---->
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="scanner"
-                  >
-                    <div
-                      class="scanner-content"
-                    >
-                      <!-- loading state -->
-                      <section
-                        class="empty-state-wrapper"
-                        data-v-5b55eb64=""
+                          kuma-token-testMesh
+                        </code>
+                      </pre>
+                      <button
+                        class="small outline k-button k-code-block-copy-button"
+                        data-testid="k-code-block-copy-button"
+                        data-v-034f9b55=""
+                        data-v-6f773baa=""
+                        title="Copy (Alt+C)"
+                        type="button"
                       >
-                        <div
-                          class="empty-state-title"
-                          data-v-5b55eb64=""
+                        
+                        <!---->
+                        
+                        
+                        <span
+                          class="kong-icon-copy kong-icon"
+                          data-v-034f9b55=""
+                          data-v-71cfcfc4=""
                         >
-                          <!---->
-                          <div
-                            class="k-empty-state-title-header mt-4 mb-4"
-                            data-v-5b55eb64=""
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 32 32"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
                             
-                            <div
-                              class="card-icon mb-3"
-                            >
-                              <span
-                                class="kong-icon-spinner kong-icon"
-                                data-v-71cfcfc4=""
-                              >
-                                <svg
-                                  fill="rgba(0, 0, 0, 0.1)"
-                                  height="42"
-                                  role="img"
-                                  viewBox="0 0 20 20"
-                                  width="42"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  
   
-                                  <title>
-                                    Loading
-                                  </title>
-                                  
+                            <title>
+                              Copy (Alt+C)
+                            </title>
+                            
   
-                                  <g>
-                                    
-    
-                                    <path
-                                      d="M5 10a5 5 0 1 0 5-5"
-                                      fill="none"
-                                      stroke="rgba(0, 0, 0, 0.1)"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                    />
-                                    
-  
-                                  </g>
-                                  
+                            <path
+                              d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                              fill="currentColor"
+                            />
+                            
 
-                                </svg>
-                                
+                          </svg>
+                          
 
-                              </span>
-                            </div>
-                            <!--v-if-->
-                            
-                            <h3>
-                              Searching…
-                            </h3>
-                            
-                            <!--v-if-->
-                            
-                          </div>
-                        </div>
-                        <div
-                          class="empty-state-content"
-                          data-v-5b55eb64=""
+                        </span>
+                        <span
+                          class="k-visually-hidden"
+                          data-v-034f9b55=""
                         >
-                          <div
-                            class="k-empty-state-message mb-6"
-                            data-v-5b55eb64=""
-                          >
-                            
-                            
-                            <p>
-                              We are looking for your dataplane.
-                            </p>
-                            
-                            <!--v-if-->
-                            
-                          </div>
-                          <div
-                            class="k-empty-state-cta"
-                            data-v-5b55eb64=""
-                          >
-                            
-                            <!---->
-                            
-                          </div>
-                        </div>
-                      </section>
+                          Copy
+                        </span>
+                        
+                        <!---->
+                      </button>
                     </div>
                   </div>
                 </div>
-                
+                <div
+                  class="scanner"
+                >
+                  <div
+                    class="scanner-content"
+                  >
+                    <!-- loading state -->
+                    <section
+                      class="empty-state-wrapper"
+                      data-v-5b55eb64=""
+                    >
+                      <div
+                        class="empty-state-title"
+                        data-v-5b55eb64=""
+                      >
+                        <!---->
+                        <div
+                          class="k-empty-state-title-header mt-4 mb-4"
+                          data-v-5b55eb64=""
+                        >
+                          
+                          <div
+                            class="card-icon mb-3"
+                          >
+                            <span
+                              class="kong-icon-spinner kong-icon"
+                              data-v-71cfcfc4=""
+                            >
+                              <svg
+                                fill="rgba(0, 0, 0, 0.1)"
+                                height="42"
+                                role="img"
+                                viewBox="0 0 20 20"
+                                width="42"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                
+  
+                                <title>
+                                  Loading
+                                </title>
+                                
+  
+                                <g>
+                                  
+    
+                                  <path
+                                    d="M5 10a5 5 0 1 0 5-5"
+                                    fill="none"
+                                    stroke="rgba(0, 0, 0, 0.1)"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                  />
+                                  
+  
+                                </g>
+                                
+
+                              </svg>
+                              
+
+                            </span>
+                          </div>
+                          <!--v-if-->
+                          
+                          <h3>
+                            Searching…
+                          </h3>
+                          
+                          <!--v-if-->
+                          
+                        </div>
+                      </div>
+                      <div
+                        class="empty-state-content"
+                        data-v-5b55eb64=""
+                      >
+                        <div
+                          class="k-empty-state-message mb-6"
+                          data-v-5b55eb64=""
+                        >
+                          
+                          
+                          <p>
+                            We are looking for your dataplane.
+                          </p>
+                          
+                          <!--v-if-->
+                          
+                        </div>
+                        <div
+                          class="k-empty-state-cta"
+                          data-v-5b55eb64=""
+                        >
+                          
+                          <!---->
+                          
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </div>
               </div>
               
-            </form>
-          </div>
-          <footer
-            class="wizard-steps__footer"
-          >
-            <button
-              class="medium rounded outline k-button"
-              data-v-6f773baa=""
-              style=""
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               ‹ Previous 
-              
-              <!---->
-            </button>
-            <button
-              class="medium rounded primary k-button"
-              data-v-6f773baa=""
-              style="display: none;"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Next › 
-              
-              <!---->
-            </button>
-          </footer>
+            </div>
+            
+          </form>
         </div>
-        <aside
-          class="wizard-steps__sidebar"
+        <footer
+          class="wizard-steps__footer"
         >
-          <div
-            class="wizard-steps__sidebar__content"
+          <button
+            class="medium rounded outline k-button"
+            data-testid="next-previous-button"
+            data-v-6f773baa=""
+            style=""
+            type="button"
           >
             
-            <div
-              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--0"
+            <!---->
+            
+            
+             ‹ Previous 
+            
+            <!---->
+          </button>
+          <button
+            class="medium rounded primary k-button"
+            data-testid="next-step-button"
+            data-v-6f773baa=""
+            style="display: none;"
+            type="button"
+          >
+            
+            <!---->
+            
+            
+             Next › 
+            
+            <!---->
+          </button>
+        </footer>
+      </div>
+      <aside
+        class="wizard-steps__sidebar"
+      >
+        <div
+          class="wizard-steps__sidebar__content"
+        >
+          
+          <div
+            class="wizard-steps__sidebar__item wizard-steps__sidebar__item--0"
+          >
+            
+            <h3>
+              Dataplane
+            </h3>
+            <p>
+               In Kuma, a Dataplane resource represents a data plane proxy running alongside one of your services. Data plane proxies can be added in any Mesh that you may have created, and in Kubernetes, they will be auto-injected by Kuma. 
+            </p>
+            
+          </div>
+          <div
+            class="wizard-steps__sidebar__item wizard-steps__sidebar__item--1"
+          >
+            
+            <h3>
+              Example
+            </h3>
+            <p>
+               Below is an example of a Dataplane resource output: 
+            </p>
+            <code
+              class="block"
             >
-              
-              <h3>
-                Dataplane
-              </h3>
-              <p>
-                 In Kuma, a Dataplane resource represents a data plane proxy running alongside one of your services. Data plane proxies can be added in any Mesh that you may have created, and in Kubernetes, they will be auto-injected by Kuma. 
-              </p>
-              
-            </div>
-            <div
-              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--1"
-            >
-              
-              <h3>
-                Example
-              </h3>
-              <p>
-                 Below is an example of a Dataplane resource output: 
-              </p>
-              <code
-                class="block"
-              >
-                <pre>
-                  type: Dataplane
+              <pre>
+                type: Dataplane
 mesh: default
 name: dp-echo-1
 networking:
@@ -815,136 +816,135 @@ networking:
     servicePort: 9000
     tags:
       kuma.io/service: echo
-                </pre>
-              </code>
-              
-            </div>
+              </pre>
+            </code>
+            
+          </div>
+          <div
+            class="wizard-steps__sidebar__item wizard-steps__sidebar__item--2"
+          >
+            
+            <!-- wizard switcher -- based on environment -->
             <div
-              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--2"
+              class="wizard-switcher"
             >
-              
-              <!-- wizard switcher -- based on environment -->
-              <div
-                class="wizard-switcher"
+              <section
+                class="is-error empty-state-wrapper my-6 wizard-empty-state"
+                data-v-5b55eb64=""
               >
-                <section
-                  class="is-error empty-state-wrapper my-6 wizard-empty-state"
+                <div
+                  class="empty-state-title"
                   data-v-5b55eb64=""
                 >
                   <div
-                    class="empty-state-title"
+                    class="warning-icon k-empty-state-icon card-icon mb-3"
                     data-v-5b55eb64=""
                   >
-                    <div
-                      class="warning-icon k-empty-state-icon card-icon mb-3"
+                    <span
+                      class="kong-icon-warning kong-icon"
                       data-v-5b55eb64=""
+                      data-v-71cfcfc4=""
                     >
-                      <span
-                        class="kong-icon-warning kong-icon"
-                        data-v-5b55eb64=""
-                        data-v-71cfcfc4=""
+                      <svg
+                        height="50"
+                        role="img"
+                        version="1.1"
+                        viewBox="0 0 48 42"
+                        width="50"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
-                        <svg
-                          height="50"
-                          role="img"
-                          version="1.1"
-                          viewBox="0 0 48 42"
-                          width="50"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                        
+  
+                        <title>
+                          Warning
+                        </title>
+                        
+  
+                        <g
+                          fill="var(--black-70)"
+                          fill-rule="evenodd"
+                          id="Page-1"
+                          stroke="none"
+                          stroke-width="1"
                         >
                           
-  
-                          <title>
-                            Warning
-                          </title>
-                          
-  
+    
                           <g
-                            fill="var(--black-70)"
-                            fill-rule="evenodd"
-                            id="Page-1"
-                            stroke="none"
-                            stroke-width="1"
+                            id="icn-warning-64x"
                           >
                             
-    
-                            <g
-                              id="icn-warning-64x"
-                            >
-                              
       
-                              <path
-                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                fill="var(--black-70)"
-                                fill-rule="nonzero"
-                                id="Triangle"
-                              />
-                              
-      
-                              <path
-                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                fill="var(--yellow-400)"
-                                fill-rule="nonzero"
-                                id="Path"
-                                type="secondary"
-                              />
-                              
-      
-                              <path
-                                d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                fill="var(--black-70)"
-                                id="!"
-                              />
-                              
-    
-                            </g>
+                            <path
+                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                              fill="var(--black-70)"
+                              fill-rule="nonzero"
+                              id="Triangle"
+                            />
                             
-  
+      
+                            <path
+                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                              fill="var(--yellow-400)"
+                              fill-rule="nonzero"
+                              id="Path"
+                              type="secondary"
+                            />
+                            
+      
+                            <path
+                              d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                              fill="var(--black-70)"
+                              id="!"
+                            />
+                            
+    
                           </g>
                           
-
-                        </svg>
+  
+                        </g>
                         
 
-                      </span>
-                    </div>
-                    <div
-                      class="k-empty-state-title-header mt-4 mb-4"
-                      data-v-5b55eb64=""
-                    >
+                      </svg>
                       
-                      
-                    </div>
+
+                    </span>
                   </div>
                   <div
-                    class="empty-state-content"
+                    class="k-empty-state-title-header mt-4 mb-4"
                     data-v-5b55eb64=""
                   >
-                    <div
-                      class="k-empty-state-message mb-6"
-                      data-v-5b55eb64=""
-                    >
-                      
-                      
-                    </div>
-                    <div
-                      class="k-empty-state-cta"
-                      data-v-5b55eb64=""
-                    >
-                      
-                      <!---->
-                      
-                    </div>
+                    
+                    
                   </div>
-                </section>
-              </div>
-              
+                </div>
+                <div
+                  class="empty-state-content"
+                  data-v-5b55eb64=""
+                >
+                  <div
+                    class="k-empty-state-message mb-6"
+                    data-v-5b55eb64=""
+                  >
+                    
+                    
+                  </div>
+                  <div
+                    class="k-empty-state-cta"
+                    data-v-5b55eb64=""
+                  >
+                    
+                    <!---->
+                    
+                  </div>
+                </div>
+              </section>
             </div>
             
           </div>
-        </aside>
-      </div>
+          
+        </div>
+      </aside>
     </div>
   </div>
 </div>

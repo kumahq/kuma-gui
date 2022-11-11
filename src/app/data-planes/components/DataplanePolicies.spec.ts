@@ -1,7 +1,5 @@
-import { RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { rest } from 'msw'
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
 
 import DataplanePolicies from './DataplanePolicies.vue'
 import { store } from '@/store/store'
@@ -10,19 +8,19 @@ import { server } from '@/../jest/jest-setup-after-env'
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicies')
 
-  return render(DataplanePolicies, {
+  return mount(DataplanePolicies, {
+    props,
     global: {
       stubs: {
         'router-link': RouterLinkStub,
       },
     },
-    props,
   })
 }
 
 describe('DataplanePolicies.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = await renderComponent({
+    const wrapper = await renderComponent({
       dataPlane: {
         mesh: 'foo',
         name: 'dataplane-test-456',
@@ -30,9 +28,11 @@ describe('DataplanePolicies.vue', () => {
       },
     })
 
-    await userEvent.click(await screen.findByText('web'))
+    await flushPromises()
 
-    expect(container).toMatchSnapshot()
+    await wrapper.find('[data-testid="accordion-item-button"]').trigger('click')
+
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders loading', async () => {
@@ -42,7 +42,7 @@ describe('DataplanePolicies.vue', () => {
       ),
     )
 
-    await renderComponent({
+    const wrapper = await renderComponent({
       dataPlane: {
         mesh: 'foo',
         name: 'dataplane-test-456',
@@ -50,7 +50,7 @@ describe('DataplanePolicies.vue', () => {
       },
     })
 
-    expect(screen.getByTestId('loading-block')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
 
   it('renders error', async () => {
@@ -62,7 +62,7 @@ describe('DataplanePolicies.vue', () => {
       ),
     )
 
-    await renderComponent({
+    const wrapper = await renderComponent({
       dataPlane: {
         mesh: 'foo',
         name: 'dataplane-test-456',
@@ -70,7 +70,9 @@ describe('DataplanePolicies.vue', () => {
       },
     })
 
-    expect((await screen.findAllByText(/An error has occurred while trying to load this data./))[0]).toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.html()).toContain('An error has occurred while trying to load this data.')
   })
 
   it('renders no item', async () => {
@@ -80,7 +82,7 @@ describe('DataplanePolicies.vue', () => {
       ),
     )
 
-    await renderComponent({
+    const wrapper = await renderComponent({
       dataPlane: {
         mesh: 'foo',
         name: 'dataplane-test-456',
@@ -88,6 +90,8 @@ describe('DataplanePolicies.vue', () => {
       },
     })
 
-    expect(await screen.findByText(/There is no data to display./)).toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.html()).toContain('There is no data to display.')
   })
 })

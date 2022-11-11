@@ -24,47 +24,45 @@ exports[`PaginationWidget.vue calls buttons 1`] = `
 `;
 
 exports[`PaginationWidget.vue renders nothing if no next or prev props provided 1`] = `
-<div>
-  <div
-    class="pagination"
-  >
-    <!--v-if-->
-    <!--v-if-->
-  </div>
+<div
+  class="pagination"
+>
+  <!--v-if-->
+  <!--v-if-->
 </div>
 `;
 
 exports[`PaginationWidget.vue renders pagination 1`] = `
-<div>
-  <div
-    class="pagination"
+<div
+  class="pagination"
+>
+  <button
+    class="medium rounded primary k-button"
+    data-testid="pagination-previous-button"
+    data-v-6f773baa=""
+    type="button"
   >
-    <button
-      class="medium rounded primary k-button"
-      data-v-6f773baa=""
-      type="button"
-    >
-      
-      <!---->
-      
-      
-       ‹ Previous 
-      
-      <!---->
-    </button>
-    <button
-      class="medium rounded primary k-button"
-      data-v-6f773baa=""
-      type="button"
-    >
-      
-      <!---->
-      
-      
-       Next › 
-      
-      <!---->
-    </button>
-  </div>
+    
+    <!---->
+    
+    
+     ‹ Previous 
+    
+    <!---->
+  </button>
+  <button
+    class="medium rounded primary k-button"
+    data-testid="pagination-next-button"
+    data-v-6f773baa=""
+    type="button"
+  >
+    
+    <!---->
+    
+    
+     Next › 
+    
+    <!---->
+  </button>
 </div>
 `;

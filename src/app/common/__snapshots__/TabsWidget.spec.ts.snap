@@ -1,95 +1,93 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TabsWidget.vue renders basic snapshot 1`] = `
-<div>
+<div
+  class="tab-container"
+  data-testid="tab-container"
+>
+  
+  <!--v-if-->
   <div
-    class="tab-container"
-    data-testid="tab-container"
+    class="tab__content-container"
   >
-    
-    <!--v-if-->
     <div
-      class="tab__content-container"
+      class="k-tabs"
+      data-v-b0b5f6ae=""
     >
-      <div
-        class="k-tabs"
+      <ul
+        aria-label="Tabs"
         data-v-b0b5f6ae=""
+        role="tablist"
       >
-        <ul
-          aria-label="Tabs"
-          data-v-b0b5f6ae=""
-          role="tablist"
-        >
-          
-          <li
-            aria-controls="panel-0"
-            aria-selected="true"
-            class="active tab-item"
-            data-v-b0b5f6ae=""
-            id="universal-tab"
-            role="tab"
-            tabindex="0"
-          >
-            <a
-              class="tab-link"
-              data-v-b0b5f6ae=""
-            >
-              
-              Universal
-              
-            </a>
-          </li>
-          <li
-            aria-controls="panel-1"
-            aria-selected="false"
-            class="tab-item"
-            data-v-b0b5f6ae=""
-            id="kubernetes-tab"
-            role="tab"
-            tabindex="0"
-          >
-            <a
-              class="tab-link"
-              data-v-b0b5f6ae=""
-            >
-              
-              Kubernetes
-              
-            </a>
-          </li>
-          
-        </ul>
         
-        <div
-          aria-labelledby="universal-tab"
-          class="tab-container"
+        <li
+          aria-controls="panel-0"
+          aria-selected="true"
+          class="active tab-item"
           data-v-b0b5f6ae=""
-          id="panel-0"
-          role="tabpanel"
+          id="universal-tab"
+          role="tab"
           tabindex="0"
         >
-          
-          
-          <div>
+          <a
+            class="tab-link"
+            data-v-b0b5f6ae=""
+          >
+            
             Universal
-          </div>
-          
-          
-        </div>
-        <div
-          aria-labelledby="kubernetes-tab"
-          class="tab-container"
+            
+          </a>
+        </li>
+        <li
+          aria-controls="panel-1"
+          aria-selected="false"
+          class="tab-item"
           data-v-b0b5f6ae=""
-          id="panel-1"
-          role="tabpanel"
+          id="kubernetes-tab"
+          role="tab"
           tabindex="0"
         >
-          <!---->
+          <a
+            class="tab-link"
+            data-v-b0b5f6ae=""
+          >
+            
+            Kubernetes
+            
+          </a>
+        </li>
+        
+      </ul>
+      
+      <div
+        aria-labelledby="universal-tab"
+        class="tab-container"
+        data-v-b0b5f6ae=""
+        id="panel-0"
+        role="tabpanel"
+        tabindex="0"
+      >
+        
+        
+        <div>
+          Universal
         </div>
+        
         
       </div>
+      <div
+        aria-labelledby="kubernetes-tab"
+        class="tab-container"
+        data-v-b0b5f6ae=""
+        id="panel-1"
+        role="tabpanel"
+        tabindex="0"
+      >
+        <!---->
+      </div>
+      
     </div>
-    
   </div>
+  
 </div>
 `;

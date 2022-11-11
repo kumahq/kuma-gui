@@ -93,434 +93,430 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
 `;
 
 exports[`DataOverview.vue renders all custom templates for data 1`] = `
-<div>
+<div
+  class="data-overview"
+  data-testid="data-overview"
+>
   <div
-    class="data-overview"
-    data-testid="data-overview"
+    class="data-table-controls mb-2"
   >
-    <div
-      class="data-table-controls mb-2"
+    
+    
+    <button
+      class="medium rounded primary k-button refresh-button"
+      data-testid="data-overview-refresh-button"
+      data-v-6f773baa=""
+      type="button"
     >
       
+      <!---->
       
-      <button
-        class="medium rounded primary k-button refresh-button"
-        data-testid="refresh-button"
-        data-v-6f773baa=""
-        type="button"
+      
+      <span
+        class="refresh-icon custom-control-icon"
       >
-        
-        <!---->
-        
-        
-        <span
-          class="refresh-icon custom-control-icon"
+        <svg
+          viewBox="0 0 36 36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            viewBox="0 0 36 36"
-            xmlns="http://www.w3.org/2000/svg"
+          <g
+            fill="#fff"
+            fill-rule="nonzero"
           >
-            <g
-              fill="#fff"
-              fill-rule="nonzero"
-            >
-              <path
-                d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
-              />
-            </g>
-          </svg>
-        </span>
-        <span>
-          Refresh
-        </span>
-        
-        <!---->
-      </button>
-    </div>
+            <path
+              d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
+            />
+          </g>
+        </svg>
+      </span>
+      <span>
+        Refresh
+      </span>
+      
+      <!---->
+    </button>
+  </div>
+  <div
+    class="data-overview-content"
+  >
+    <!-- data -->
     <div
-      class="data-overview-content"
+      class="data-overview-table"
     >
-      <!-- data -->
       <div
-        class="data-overview-table"
+        class="k-table-container"
+        data-testid="data-overview-table"
+        data-v-4f741344=""
+        is-clickable=""
       >
-        <div
-          class="k-table-container"
-          data-testid="data-overview-table"
+        <!---->
+        <section
+          class="k-table-wrapper"
           data-v-4f741344=""
-          is-clickable=""
         >
-          <!---->
-          <section
-            class="k-table-wrapper"
+          <table
+            class="has-hover is-clickable k-table"
+            data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             data-v-4f741344=""
           >
-            <table
-              class="has-hover is-clickable k-table"
-              data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+            <thead
+              class=""
               data-v-4f741344=""
             >
-              <thead
+              <tr
                 class=""
                 data-v-4f741344=""
               >
-                <tr
+                
+                <th
+                  class=""
+                  data-v-4f741344=""
+                >
+                  <span
+                    class="d-flex align-items-center"
+                    data-v-4f741344=""
+                  >
+                    
+                    <span
+                      class="sr-only"
+                      data-v-4f741344=""
+                    >
+                      actions
+                    </span>
+                    
+                    <!---->
+                  </span>
+                </th>
+                <th
+                  class=""
+                  data-v-4f741344=""
+                >
+                  <span
+                    class="d-flex align-items-center"
+                    data-v-4f741344=""
+                  >
+                    
+                    <span
+                      class=""
+                      data-v-4f741344=""
+                    >
+                      Status
+                    </span>
+                    
+                    <!---->
+                  </span>
+                </th>
+                <th
+                  class=""
+                  data-v-4f741344=""
+                >
+                  <span
+                    class="d-flex align-items-center"
+                    data-v-4f741344=""
+                  >
+                    
+                    <span
+                      class=""
+                      data-v-4f741344=""
+                    >
+                      Total Updates
+                    </span>
+                    
+                    <!---->
+                  </span>
+                </th>
+                <th
+                  class=""
+                  data-v-4f741344=""
+                >
+                  <span
+                    class="d-flex align-items-center"
+                    data-v-4f741344=""
+                  >
+                    
+                    <span
+                      class=""
+                      data-v-4f741344=""
+                    >
+                      Kuma DP version
+                    </span>
+                    
+                    <!---->
+                  </span>
+                </th>
+                <th
+                  class=""
+                  data-v-4f741344=""
+                >
+                  <span
+                    class="d-flex align-items-center"
+                    data-v-4f741344=""
+                  >
+                    
+                    <span
+                      class=""
+                      data-v-4f741344=""
+                    >
+                      Envoy version
+                    </span>
+                    
+                    <!---->
+                  </span>
+                </th>
+                <th
+                  class=""
+                  data-v-4f741344=""
+                >
+                  <span
+                    class="d-flex align-items-center"
+                    data-v-4f741344=""
+                  >
+                    
+                    <span
+                      class="sr-only"
+                      data-v-4f741344=""
+                    >
+                      warnings
+                    </span>
+                    
+                    <!---->
+                  </span>
+                </th>
+                
+              </tr>
+            </thead>
+            <tbody
+              data-v-4f741344=""
+            >
+              
+              <tr
+                class="is-selected"
+                data-v-4f741344=""
+                role="link"
+                tabindex="0"
+              >
+                
+                <td
                   class=""
                   data-v-4f741344=""
                 >
                   
-                  <th
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    <span
-                      class="d-flex align-items-center"
-                      data-v-4f741344=""
-                    >
-                      
-                      <span
-                        class="sr-only"
-                        data-v-4f741344=""
-                      >
-                        actions
-                      </span>
-                      
-                      <!---->
-                    </span>
-                  </th>
-                  <th
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    <span
-                      class="d-flex align-items-center"
-                      data-v-4f741344=""
-                    >
-                      
-                      <span
-                        class=""
-                        data-v-4f741344=""
-                      >
-                        Status
-                      </span>
-                      
-                      <!---->
-                    </span>
-                  </th>
-                  <th
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    <span
-                      class="d-flex align-items-center"
-                      data-v-4f741344=""
-                    >
-                      
-                      <span
-                        class=""
-                        data-v-4f741344=""
-                      >
-                        Total Updates
-                      </span>
-                      
-                      <!---->
-                    </span>
-                  </th>
-                  <th
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    <span
-                      class="d-flex align-items-center"
-                      data-v-4f741344=""
-                    >
-                      
-                      <span
-                        class=""
-                        data-v-4f741344=""
-                      >
-                        Kuma DP version
-                      </span>
-                      
-                      <!---->
-                    </span>
-                  </th>
-                  <th
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    <span
-                      class="d-flex align-items-center"
-                      data-v-4f741344=""
-                    >
-                      
-                      <span
-                        class=""
-                        data-v-4f741344=""
-                      >
-                        Envoy version
-                      </span>
-                      
-                      <!---->
-                    </span>
-                  </th>
-                  <th
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    <span
-                      class="d-flex align-items-center"
-                      data-v-4f741344=""
-                    >
-                      
-                      <span
-                        class="sr-only"
-                        data-v-4f741344=""
-                      >
-                        warnings
-                      </span>
-                      
-                      <!---->
-                    </span>
-                  </th>
                   
-                </tr>
-              </thead>
-              <tbody
-                data-v-4f741344=""
-              >
-                
-                <tr
-                  class="is-selected"
+                  
+                </td>
+                <td
+                  class=""
                   data-v-4f741344=""
-                  role="link"
-                  tabindex="0"
                 >
                   
-                  <td
-                    class=""
-                    data-v-4f741344=""
+                  <div
+                    class="entity-status is-offline"
                   >
-                    
-                    
-                    
-                  </td>
-                  <td
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    
-                    <div
-                      class="entity-status is-offline"
-                    >
-                      <span>
-                        offline
-                      </span>
-                    </div>
-                    
-                  </td>
-                  <td
-                    class=""
-                    data-v-4f741344=""
-                  >
-                    
                     <span>
-                      1
+                      offline
                     </span>
-                    
-                  </td>
-                  <td
+                  </div>
+                  
+                </td>
+                <td
+                  class=""
+                  data-v-4f741344=""
+                >
+                  
+                  <span>
+                    1
+                  </span>
+                  
+                </td>
+                <td
+                  class=""
+                  data-v-4f741344=""
+                >
+                  
+                  <div
                     class=""
-                    data-v-4f741344=""
                   >
-                    
-                    <div
-                      class=""
-                    >
-                      foo
-                    </div>
-                    
-                  </td>
-                  <td
+                    foo
+                  </div>
+                  
+                </td>
+                <td
+                  class=""
+                  data-v-4f741344=""
+                >
+                  
+                  <div
                     class=""
-                    data-v-4f741344=""
                   >
-                    
-                    <div
-                      class=""
-                    >
-                      1.2
-                    </div>
-                    
-                  </td>
-                  <td
-                    class="text-center"
-                    data-v-4f741344=""
+                    1.2
+                  </div>
+                  
+                </td>
+                <td
+                  class="text-center"
+                  data-v-4f741344=""
+                >
+                  
+                  <span
+                    class="mr-1 kong-icon-warning kong-icon"
+                    data-v-71cfcfc4=""
                   >
-                    
-                    <span
-                      class="mr-1 kong-icon-warning kong-icon"
-                      data-v-71cfcfc4=""
+                    <svg
+                      height="20"
+                      role="img"
+                      version="1.1"
+                      viewBox="0 0 48 42"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
                     >
-                      <svg
-                        height="20"
-                        role="img"
-                        version="1.1"
-                        viewBox="0 0 48 42"
-                        width="20"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      
+  
+                      <title>
+                        Warning
+                      </title>
+                      
+  
+                      <g
+                        fill="var(--black-75)"
+                        fill-rule="evenodd"
+                        id="Page-1"
+                        stroke="none"
+                        stroke-width="1"
                       >
                         
-  
-                        <title>
-                          Warning
-                        </title>
-                        
-  
+    
                         <g
-                          fill="var(--black-75)"
-                          fill-rule="evenodd"
-                          id="Page-1"
-                          stroke="none"
-                          stroke-width="1"
+                          id="icn-warning-64x"
                         >
                           
-    
-                          <g
-                            id="icn-warning-64x"
-                          >
-                            
       
-                            <path
-                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                              fill="var(--black-75)"
-                              fill-rule="nonzero"
-                              id="Triangle"
-                            />
-                            
-      
-                            <path
-                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                              fill="var(--yellow-300)"
-                              fill-rule="nonzero"
-                              id="Path"
-                              type="secondary"
-                            />
-                            
-      
-                            <path
-                              d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                              fill="var(--black-75)"
-                              id="!"
-                            />
-                            
-    
-                          </g>
+                          <path
+                            d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                            fill="var(--black-75)"
+                            fill-rule="nonzero"
+                            id="Triangle"
+                          />
                           
-  
+      
+                          <path
+                            d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                            fill="var(--yellow-300)"
+                            fill-rule="nonzero"
+                            id="Path"
+                            type="secondary"
+                          />
+                          
+      
+                          <path
+                            d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                            fill="var(--black-75)"
+                            id="!"
+                          />
+                          
+    
                         </g>
                         
-
-                      </svg>
+  
+                      </g>
                       
 
-                    </span>
+                    </svg>
                     
-                  </td>
+
+                  </span>
                   
-                </tr>
+                </td>
                 
-              </tbody>
-            </table>
-            <!---->
-          </section>
-        </div>
-        <div
-          class="pagination"
-        >
-          <!--v-if-->
-          <!--v-if-->
-        </div>
+              </tr>
+              
+            </tbody>
+          </table>
+          <!---->
+        </section>
       </div>
-      <!--v-if-->
-      <!--v-if-->
+      <div
+        class="pagination"
+      >
+        <!--v-if-->
+        <!--v-if-->
+      </div>
     </div>
+    <!--v-if-->
+    <!--v-if-->
   </div>
 </div>
 `;
 
 exports[`DataOverview.vue renders basic snapshot 1`] = `
-<div>
+<div
+  class="data-overview"
+  data-testid="data-overview"
+>
   <div
-    class="data-overview"
-    data-testid="data-overview"
+    class="data-table-controls mb-2"
   >
-    <div
-      class="data-table-controls mb-2"
+    
+    
+    <button
+      class="medium rounded primary k-button refresh-button"
+      data-testid="data-overview-refresh-button"
+      data-v-6f773baa=""
+      type="button"
     >
       
+      <!---->
       
-      <button
-        class="medium rounded primary k-button refresh-button"
-        data-testid="refresh-button"
-        data-v-6f773baa=""
-        type="button"
+      
+      <span
+        class="refresh-icon custom-control-icon"
       >
-        
-        <!---->
-        
-        
-        <span
-          class="refresh-icon custom-control-icon"
+        <svg
+          viewBox="0 0 36 36"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            viewBox="0 0 36 36"
-            xmlns="http://www.w3.org/2000/svg"
+          <g
+            fill="#fff"
+            fill-rule="nonzero"
           >
-            <g
-              fill="#fff"
-              fill-rule="nonzero"
-            >
-              <path
-                d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
-              />
-            </g>
-          </svg>
-        </span>
-        <span>
-          Refresh
-        </span>
-        
-        <!---->
-      </button>
-    </div>
+            <path
+              d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
+            />
+          </g>
+        </svg>
+      </span>
+      <span>
+        Refresh
+      </span>
+      
+      <!---->
+    </button>
+  </div>
+  <div
+    class="data-overview-content"
+  >
+    <!-- data -->
     <div
-      class="data-overview-content"
+      class="data-overview-table"
     >
-      <!-- data -->
       <div
-        class="data-overview-table"
+        class="k-table-container"
+        data-testid="data-overview-table"
+        data-v-4f741344=""
+        is-clickable=""
       >
-        <div
-          class="k-table-container"
-          data-testid="data-overview-table"
-          data-v-4f741344=""
-          is-clickable=""
-        >
-          <!---->
-          <!---->
-        </div>
-        <div
-          class="pagination"
-        >
-          <!--v-if-->
-          <!--v-if-->
-        </div>
+        <!---->
+        <!---->
       </div>
-      <!--v-if-->
-      <!--v-if-->
+      <div
+        class="pagination"
+      >
+        <!--v-if-->
+        <!--v-if-->
+      </div>
     </div>
+    <!--v-if-->
+    <!--v-if-->
   </div>
 </div>
 `;

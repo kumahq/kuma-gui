@@ -12,7 +12,6 @@
     "sourceMap": true,
     "types": [
       "jest",
-      "testing-library__jest-dom",
       "vite/client"
     ],
     "baseUrl": ".",

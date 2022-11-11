@@ -52,7 +52,7 @@
                       disabled
                       value=""
                     >
-                      Select an existing Mesh&hellip;
+                      Select an existing Mesh…
                     </option>
                     <option
                       v-for="item in meshes.items"

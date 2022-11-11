@@ -3,6 +3,7 @@
     <KButton
       v-if="props.hasPrevious"
       appearance="primary"
+      data-testid="pagination-previous-button"
       @click="onPreviousButtonClick"
     >
       &lsaquo; Previous
@@ -11,6 +12,7 @@
     <KButton
       v-if="props.hasNext"
       appearance="primary"
+      data-testid="pagination-next-button"
       @click="onNextButtonClick"
     >
       Next &rsaquo;

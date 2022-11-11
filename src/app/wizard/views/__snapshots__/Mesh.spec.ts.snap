@@ -1,753 +1,752 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
-<div>
+<div
+  class="wizard"
+>
   <div
-    class="wizard"
+    class="wizard__content"
   >
     <div
-      class="wizard__content"
+      class="wizard-steps"
     >
       <div
-        class="wizard-steps"
+        class="wizard-steps__content-wrapper"
       >
-        <div
-          class="wizard-steps__content-wrapper"
+        <header
+          class="wizard-steps__indicator"
         >
-          <header
-            class="wizard-steps__indicator"
+          <ul
+            aria-label="steptabs"
+            class="wizard-steps__indicator__controls"
+            role="tablist"
           >
-            <ul
-              aria-label="steptabs"
-              class="wizard-steps__indicator__controls"
-              role="tablist"
+            
+            <li
+              aria-controls="wizard-steps__content__item--0"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                General & Security
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--1"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Logging
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--2"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Tracing
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--3"
+              aria-selected="false"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Metrics
+              </span>
+            </li>
+            <li
+              aria-controls="wizard-steps__content__item--4"
+              aria-selected="true"
+              class="is-complete wizard-steps__indicator__item"
+            >
+              <span>
+                Install
+              </span>
+            </li>
+            
+          </ul>
+        </header>
+        <div
+          class="wizard-steps__content"
+        >
+          <form
+            autocomplete="off"
+          >
+            
+            <div
+              aria-labelledby="wizard-steps__content__item--0"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--1"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--2"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--3"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--3"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!--v-if-->
+            </div>
+            <div
+              aria-labelledby="wizard-steps__content__item--4"
+              class="wizard-steps__content__item"
+              id="wizard-steps__content__item--4"
+              role="tabpanel"
+              tabindex="0"
             >
               
-              <li
-                aria-controls="wizard-steps__content__item--0"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  General & Security
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--1"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Logging
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--2"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Tracing
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--3"
-                aria-selected="false"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Metrics
-                </span>
-              </li>
-              <li
-                aria-controls="wizard-steps__content__item--4"
-                aria-selected="true"
-                class="is-complete wizard-steps__indicator__item"
-              >
-                <span>
-                  Install
-                </span>
-              </li>
-              
-            </ul>
-          </header>
-          <div
-            class="wizard-steps__content"
-          >
-            <form
-              autocomplete="off"
-            >
-              
-              <div
-                aria-labelledby="wizard-steps__content__item--0"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--0"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--1"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--1"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--2"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--2"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--3"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--3"
-                role="tabpanel"
-                tabindex="0"
-              >
-                <!--v-if-->
-              </div>
-              <div
-                aria-labelledby="wizard-steps__content__item--4"
-                class="wizard-steps__content__item"
-                id="wizard-steps__content__item--4"
-                role="tabpanel"
-                tabindex="0"
-              >
-                
+              <div>
                 <div>
-                  <div>
-                    <h3>
-                       Install a new Mesh 
-                    </h3>
-                    <p>
-                       Since the Kuma GUI is read-only mode to follow Ops best practices, please execute the following command in your shell to create the entity. Kuma will automatically detect when the new entity has been created. 
-                    </p>
+                  <h3>
+                     Install a new Mesh 
+                  </h3>
+                  <p>
+                     Since the Kuma GUI is read-only mode to follow Ops best practices, please execute the following command in your shell to create the entity. Kuma will automatically detect when the new entity has been created. 
+                  </p>
+                  <div
+                    class="tab-container"
+                    data-testid="tab-container"
+                  >
+                    
+                    <!--v-if-->
                     <div
-                      class="tab-container"
-                      data-testid="tab-container"
+                      class="tab__content-container"
                     >
-                      
-                      <!--v-if-->
                       <div
-                        class="tab__content-container"
+                        class="k-tabs"
+                        data-v-b0b5f6ae=""
                       >
-                        <div
-                          class="k-tabs"
+                        <ul
+                          aria-label="Tabs"
                           data-v-b0b5f6ae=""
+                          role="tablist"
                         >
-                          <ul
-                            aria-label="Tabs"
+                          
+                          <li
+                            aria-controls="panel-0"
+                            aria-selected="false"
+                            class="tab-item"
                             data-v-b0b5f6ae=""
-                            role="tablist"
+                            id="kubernetes-tab"
+                            role="tab"
+                            tabindex="0"
                           >
-                            
-                            <li
-                              aria-controls="panel-0"
-                              aria-selected="false"
-                              class="tab-item"
+                            <a
+                              class="tab-link"
                               data-v-b0b5f6ae=""
-                              id="kubernetes-tab"
-                              role="tab"
-                              tabindex="0"
                             >
-                              <a
-                                class="tab-link"
-                                data-v-b0b5f6ae=""
-                              >
-                                
-                                Kubernetes
-                                
-                              </a>
-                            </li>
-                            <li
-                              aria-controls="panel-1"
-                              aria-selected="true"
-                              class="active tab-item"
+                              
+                              Kubernetes
+                              
+                            </a>
+                          </li>
+                          <li
+                            aria-controls="panel-1"
+                            aria-selected="true"
+                            class="active tab-item"
+                            data-v-b0b5f6ae=""
+                            id="universal-tab"
+                            role="tab"
+                            tabindex="0"
+                          >
+                            <a
+                              class="tab-link"
                               data-v-b0b5f6ae=""
-                              id="universal-tab"
-                              role="tab"
-                              tabindex="0"
                             >
-                              <a
-                                class="tab-link"
-                                data-v-b0b5f6ae=""
-                              >
-                                
-                                Universal
-                                
-                              </a>
-                            </li>
-                            
-                          </ul>
+                              
+                              Universal
+                              
+                            </a>
+                          </li>
+                          
+                        </ul>
+                        
+                        <div
+                          aria-labelledby="kubernetes-tab"
+                          class="tab-container"
+                          data-v-b0b5f6ae=""
+                          id="panel-0"
+                          role="tabpanel"
+                          tabindex="0"
+                        >
+                          <!---->
+                        </div>
+                        <div
+                          aria-labelledby="universal-tab"
+                          class="tab-container"
+                          data-v-b0b5f6ae=""
+                          id="panel-1"
+                          role="tabpanel"
+                          tabindex="0"
+                        >
+                          
                           
                           <div
-                            aria-labelledby="kubernetes-tab"
-                            class="tab-container"
-                            data-v-b0b5f6ae=""
-                            id="panel-0"
-                            role="tabpanel"
+                            class="k-code-block code-block"
+                            data-testid="k-code-block"
+                            data-v-034f9b55=""
+                            id="code-block-universal-command"
+                            style="--maxLineNumberWidth: 2ch;"
                             tabindex="0"
                           >
                             <!---->
-                          </div>
-                          <div
-                            aria-labelledby="universal-tab"
-                            class="tab-container"
-                            data-v-b0b5f6ae=""
-                            id="panel-1"
-                            role="tabpanel"
-                            tabindex="0"
-                          >
-                            
-                            
                             <div
-                              class="k-code-block code-block"
-                              data-testid="k-code-block"
+                              class="k-code-block-content"
                               data-v-034f9b55=""
-                              id="code-block-universal-command"
-                              style="--maxLineNumberWidth: 2ch;"
-                              tabindex="0"
                             >
-                              <!---->
-                              <div
-                                class="k-code-block-content"
+                              <pre
+                                class="k-highlighted-code-block language-bash"
+                                data-testid="k-code-block-highlighted-code-block"
                                 data-v-034f9b55=""
+                                tabindex="0"
                               >
-                                <pre
-                                  class="k-highlighted-code-block language-bash"
-                                  data-testid="k-code-block-highlighted-code-block"
+                                <span
+                                  class="k-line-number-rows"
                                   data-v-034f9b55=""
-                                  tabindex="0"
+                                >
+                                  
+        
+                                  
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L1"
+                                    >
+                                      1
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L2"
+                                    >
+                                      2
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L3"
+                                    >
+                                      3
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L4"
+                                    >
+                                      4
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L5"
+                                    >
+                                      5
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L6"
+                                    >
+                                      6
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L7"
+                                    >
+                                      7
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L8"
+                                    >
+                                      8
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L9"
+                                    >
+                                      9
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L10"
+                                    >
+                                      10
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L11"
+                                    >
+                                      11
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L12"
+                                    >
+                                      12
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L13"
+                                    >
+                                      13
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L14"
+                                    >
+                                      14
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L15"
+                                    >
+                                      15
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L16"
+                                    >
+                                      16
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L17"
+                                    >
+                                      17
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L18"
+                                    >
+                                      18
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L19"
+                                    >
+                                      19
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L20"
+                                    >
+                                      20
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L21"
+                                    >
+                                      21
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L22"
+                                    >
+                                      22
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L23"
+                                    >
+                                      23
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L24"
+                                    >
+                                      24
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L25"
+                                    >
+                                      25
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L26"
+                                    >
+                                      26
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L27"
+                                    >
+                                      27
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L28"
+                                    >
+                                      28
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L29"
+                                    >
+                                      29
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L30"
+                                    >
+                                      30
+                                    </a>
+                                    
+        
+                                  </span>
+                                  <span
+                                    class="k-line"
+                                    data-v-034f9b55=""
+                                  >
+                                    
+          
+                                    <a
+                                      class="k-line-anchor"
+                                      data-v-034f9b55=""
+                                      id="code-block-universal-command-L31"
+                                    >
+                                      31
+                                    </a>
+                                    
+        
+                                  </span>
+                                  
+                                  
+      
+                                </span>
+                                <code
+                                  class="language-bash"
+                                  data-v-034f9b55=""
                                 >
                                   <span
-                                    class="k-line-number-rows"
-                                    data-v-034f9b55=""
+                                    class="token builtin class-name"
                                   >
-                                    
-        
-                                    
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L1"
-                                      >
-                                        1
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L2"
-                                      >
-                                        2
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L3"
-                                      >
-                                        3
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L4"
-                                      >
-                                        4
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L5"
-                                      >
-                                        5
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L6"
-                                      >
-                                        6
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L7"
-                                      >
-                                        7
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L8"
-                                      >
-                                        8
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L9"
-                                      >
-                                        9
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L10"
-                                      >
-                                        10
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L11"
-                                      >
-                                        11
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L12"
-                                      >
-                                        12
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L13"
-                                      >
-                                        13
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L14"
-                                      >
-                                        14
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L15"
-                                      >
-                                        15
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L16"
-                                      >
-                                        16
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L17"
-                                      >
-                                        17
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L18"
-                                      >
-                                        18
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L19"
-                                      >
-                                        19
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L20"
-                                      >
-                                        20
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L21"
-                                      >
-                                        21
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L22"
-                                      >
-                                        22
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L23"
-                                      >
-                                        23
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L24"
-                                      >
-                                        24
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L25"
-                                      >
-                                        25
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L26"
-                                      >
-                                        26
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L27"
-                                      >
-                                        27
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L28"
-                                      >
-                                        28
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L29"
-                                      >
-                                        29
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L30"
-                                      >
-                                        30
-                                      </a>
-                                      
-        
-                                    </span>
-                                    <span
-                                      class="k-line"
-                                      data-v-034f9b55=""
-                                    >
-                                      
-          
-                                      <a
-                                        class="k-line-anchor"
-                                        data-v-034f9b55=""
-                                        id="code-block-universal-command-L31"
-                                      >
-                                        31
-                                      </a>
-                                      
-        
-                                    </span>
-                                    
-                                    
-      
+                                    echo
                                   </span>
-                                  <code
-                                    class="language-bash"
-                                    data-v-034f9b55=""
+                                   
+                                  <span
+                                    class="token string"
                                   >
-                                    <span
-                                      class="token builtin class-name"
-                                    >
-                                      echo
-                                    </span>
-                                     
-                                    <span
-                                      class="token string"
-                                    >
-                                      "type: Mesh
+                                    "type: Mesh
 name: default
 mtls: 
   enabledBackend: fake-name
@@ -767,54 +766,54 @@ logging:
   backends: 
     - name: fake-name
       format: '{ start_time: "
-                                    </span>
-                                    %START_TIME%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", source: "
-                                    </span>
-                                    %KUMA_SOURCE_SERVICE%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", destination: "
-                                    </span>
-                                    %KUMA_DESTINATION_SERVICE%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", source_address: "
-                                    </span>
-                                    %KUMA_SOURCE_ADDRESS_WITHOUT_PORT%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", destination_address: "
-                                    </span>
-                                    %UPSTREAM_HOST%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", duration_millis: "
-                                    </span>
-                                    %DURATION%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", bytes_received: "
-                                    </span>
-                                    %BYTES_RECEIVED%
-                                    <span
-                                      class="token string"
-                                    >
-                                      ", bytes_sent: "
-                                    </span>
-                                    %BYTES_SENT%
-                                    <span
-                                      class="token string"
-                                    >
-                                      " }'
+                                  </span>
+                                  %START_TIME%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", source: "
+                                  </span>
+                                  %KUMA_SOURCE_SERVICE%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", destination: "
+                                  </span>
+                                  %KUMA_DESTINATION_SERVICE%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", source_address: "
+                                  </span>
+                                  %KUMA_SOURCE_ADDRESS_WITHOUT_PORT%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", destination_address: "
+                                  </span>
+                                  %UPSTREAM_HOST%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", duration_millis: "
+                                  </span>
+                                  %DURATION%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", bytes_received: "
+                                  </span>
+                                  %BYTES_RECEIVED%
+                                  <span
+                                    class="token string"
+                                  >
+                                    ", bytes_sent: "
+                                  </span>
+                                  %BYTES_SENT%
+                                  <span
+                                    class="token string"
+                                  >
+                                    " }'
       type: tcp
       conf: 
         address: '127.0.0.1:5000'
@@ -826,268 +825,269 @@ metrics:
       conf: 
         port: 5670
         path: /metrics"
-                                    </span>
-                                     
-                                    <span
-                                      class="token operator"
-                                    >
-                                      |
-                                    </span>
-                                     kumactl apply 
-                                    <span
-                                      class="token parameter variable"
-                                    >
-                                      -f
-                                    </span>
-                                     -
-                                  </code>
-                                </pre>
-                                <button
-                                  class="small outline k-button k-code-block-copy-button"
-                                  data-testid="k-code-block-copy-button"
-                                  data-v-034f9b55=""
-                                  data-v-6f773baa=""
-                                  title="Copy (Alt+C)"
-                                  type="button"
-                                >
-                                  
-                                  <!---->
-                                  
-                                  
+                                  </span>
+                                   
                                   <span
-                                    class="kong-icon-copy kong-icon"
-                                    data-v-034f9b55=""
-                                    data-v-71cfcfc4=""
+                                    class="token operator"
                                   >
-                                    <svg
-                                      height="16"
-                                      role="img"
-                                      viewBox="0 0 32 32"
-                                      width="16"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      
+                                    |
+                                  </span>
+                                   kumactl apply 
+                                  <span
+                                    class="token parameter variable"
+                                  >
+                                    -f
+                                  </span>
+                                   -
+                                </code>
+                              </pre>
+                              <button
+                                class="small outline k-button k-code-block-copy-button"
+                                data-testid="k-code-block-copy-button"
+                                data-v-034f9b55=""
+                                data-v-6f773baa=""
+                                title="Copy (Alt+C)"
+                                type="button"
+                              >
+                                
+                                <!---->
+                                
+                                
+                                <span
+                                  class="kong-icon-copy kong-icon"
+                                  data-v-034f9b55=""
+                                  data-v-71cfcfc4=""
+                                >
+                                  <svg
+                                    height="16"
+                                    role="img"
+                                    viewBox="0 0 32 32"
+                                    width="16"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    
   
-                                      <title>
-                                        Copy (Alt+C)
-                                      </title>
-                                      
+                                    <title>
+                                      Copy (Alt+C)
+                                    </title>
+                                    
   
-                                      <path
-                                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
-                                        fill="currentColor"
-                                      />
-                                      
-
-                                    </svg>
+                                    <path
+                                      d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                                      fill="currentColor"
+                                    />
                                     
 
-                                  </span>
-                                  <span
-                                    class="k-visually-hidden"
-                                    data-v-034f9b55=""
-                                  >
-                                    Copy
-                                  </span>
+                                  </svg>
                                   
-                                  <!---->
-                                </button>
-                              </div>
+
+                                </span>
+                                <span
+                                  class="k-visually-hidden"
+                                  data-v-034f9b55=""
+                                >
+                                  Copy
+                                </span>
+                                
+                                <!---->
+                              </button>
                             </div>
-                            
-                            
                           </div>
+                          
+                          
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div
+                  class="scanner"
+                >
+                  <div
+                    class="scanner-content"
+                  >
+                    <!-- loading state -->
+                    <section
+                      class="empty-state-wrapper"
+                      data-v-5b55eb64=""
+                    >
+                      <div
+                        class="empty-state-title"
+                        data-v-5b55eb64=""
+                      >
+                        <!---->
+                        <div
+                          class="k-empty-state-title-header mt-4 mb-4"
+                          data-v-5b55eb64=""
+                        >
+                          
+                          <div
+                            class="card-icon mb-3"
+                          >
+                            <span
+                              class="kong-icon-spinner kong-icon"
+                              data-v-71cfcfc4=""
+                            >
+                              <svg
+                                fill="rgba(0, 0, 0, 0.1)"
+                                height="42"
+                                role="img"
+                                viewBox="0 0 20 20"
+                                width="42"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                
+  
+                                <title>
+                                  Loading
+                                </title>
+                                
+  
+                                <g>
+                                  
+    
+                                  <path
+                                    d="M5 10a5 5 0 1 0 5-5"
+                                    fill="none"
+                                    stroke="rgba(0, 0, 0, 0.1)"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                  />
+                                  
+  
+                                </g>
+                                
+
+                              </svg>
+                              
+
+                            </span>
+                          </div>
+                          <!--v-if-->
+                          
+                          <h3>
+                            Searching…
+                          </h3>
+                          
+                          <!--v-if-->
                           
                         </div>
                       </div>
-                      
-                    </div>
-                  </div>
-                  <div
-                    class="scanner"
-                  >
-                    <div
-                      class="scanner-content"
-                    >
-                      <!-- loading state -->
-                      <section
-                        class="empty-state-wrapper"
+                      <div
+                        class="empty-state-content"
                         data-v-5b55eb64=""
                       >
                         <div
-                          class="empty-state-title"
+                          class="k-empty-state-message mb-6"
                           data-v-5b55eb64=""
                         >
-                          <!---->
-                          <div
-                            class="k-empty-state-title-header mt-4 mb-4"
-                            data-v-5b55eb64=""
-                          >
-                            
-                            <div
-                              class="card-icon mb-3"
-                            >
-                              <span
-                                class="kong-icon-spinner kong-icon"
-                                data-v-71cfcfc4=""
-                              >
-                                <svg
-                                  fill="rgba(0, 0, 0, 0.1)"
-                                  height="42"
-                                  role="img"
-                                  viewBox="0 0 20 20"
-                                  width="42"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  
-  
-                                  <title>
-                                    Loading
-                                  </title>
-                                  
-  
-                                  <g>
-                                    
-    
-                                    <path
-                                      d="M5 10a5 5 0 1 0 5-5"
-                                      fill="none"
-                                      stroke="rgba(0, 0, 0, 0.1)"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                    />
-                                    
-  
-                                  </g>
-                                  
-
-                                </svg>
-                                
-
-                              </span>
-                            </div>
-                            <!--v-if-->
-                            
-                            <h3>
-                              Searching…
-                            </h3>
-                            
-                            <!--v-if-->
-                            
-                          </div>
+                          
+                          
+                          <p>
+                            We are looking for your mesh.
+                          </p>
+                          
+                          <!--v-if-->
+                          
                         </div>
                         <div
-                          class="empty-state-content"
+                          class="k-empty-state-cta"
                           data-v-5b55eb64=""
                         >
-                          <div
-                            class="k-empty-state-message mb-6"
-                            data-v-5b55eb64=""
-                          >
-                            
-                            
-                            <p>
-                              We are looking for your mesh.
-                            </p>
-                            
-                            <!--v-if-->
-                            
-                          </div>
-                          <div
-                            class="k-empty-state-cta"
-                            data-v-5b55eb64=""
-                          >
-                            
-                            <!---->
-                            
-                          </div>
+                          
+                          <!---->
+                          
                         </div>
-                      </section>
-                    </div>
+                      </div>
+                    </section>
                   </div>
                 </div>
-                
               </div>
               
-            </form>
-          </div>
-          <footer
-            class="wizard-steps__footer"
-          >
-            <button
-              class="medium rounded outline k-button"
-              data-v-6f773baa=""
-              style=""
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               ‹ Previous 
-              
-              <!---->
-            </button>
-            <button
-              class="medium rounded primary k-button"
-              data-v-6f773baa=""
-              style="display: none;"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-               Next › 
-              
-              <!---->
-            </button>
-          </footer>
+            </div>
+            
+          </form>
         </div>
-        <aside
-          class="wizard-steps__sidebar"
+        <footer
+          class="wizard-steps__footer"
         >
-          <div
-            class="wizard-steps__sidebar__content"
+          <button
+            class="medium rounded outline k-button"
+            data-testid="next-previous-button"
+            data-v-6f773baa=""
+            style=""
+            type="button"
           >
             
-            <div
-              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--0"
-            >
-              
-              <h3>
-                Mesh
-              </h3>
-              <p>
-                 In Kuma, a Mesh resource allows you to define an isolated environment for your data-planes and policies. It's isolated because the mTLS CA you choose can be different from the one configured for our Meshes. Ideally, you will have either a large Mesh with all the workloads, or one Mesh per application for better isolation. 
-              </p>
-              <p>
-                <a
-                  href="https://kuma.io/docs/1.2.0/policies/mesh/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                  target="_blank"
-                >
-                   Learn More 
-                </a>
-              </p>
-              
-            </div>
-            <div
-              class="wizard-steps__sidebar__item wizard-steps__sidebar__item--1"
-            >
-              
-              <h3>
-                Did You Know?
-              </h3>
-              <p>
-                 As you know, the GUI is read-only, but it will be providing instructions to create a new Mesh and verify everything worked well. 
-              </p>
-              
-            </div>
+            <!---->
+            
+            
+             ‹ Previous 
+            
+            <!---->
+          </button>
+          <button
+            class="medium rounded primary k-button"
+            data-testid="next-step-button"
+            data-v-6f773baa=""
+            style="display: none;"
+            type="button"
+          >
+            
+            <!---->
+            
+            
+             Next › 
+            
+            <!---->
+          </button>
+        </footer>
+      </div>
+      <aside
+        class="wizard-steps__sidebar"
+      >
+        <div
+          class="wizard-steps__sidebar__content"
+        >
+          
+          <div
+            class="wizard-steps__sidebar__item wizard-steps__sidebar__item--0"
+          >
+            
+            <h3>
+              Mesh
+            </h3>
+            <p>
+               In Kuma, a Mesh resource allows you to define an isolated environment for your data-planes and policies. It's isolated because the mTLS CA you choose can be different from the one configured for our Meshes. Ideally, you will have either a large Mesh with all the workloads, or one Mesh per application for better isolation. 
+            </p>
+            <p>
+              <a
+                href="https://kuma.io/docs/1.2.0/policies/mesh/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                target="_blank"
+              >
+                 Learn More 
+              </a>
+            </p>
             
           </div>
-        </aside>
-      </div>
+          <div
+            class="wizard-steps__sidebar__item wizard-steps__sidebar__item--1"
+          >
+            
+            <h3>
+              Did You Know?
+            </h3>
+            <p>
+               As you know, the GUI is read-only, but it will be providing instructions to create a new Mesh and verify everything worked well. 
+            </p>
+            
+          </div>
+          
+        </div>
+      </aside>
     </div>
   </div>
 </div>

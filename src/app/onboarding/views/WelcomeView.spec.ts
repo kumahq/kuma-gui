@@ -1,5 +1,4 @@
-import { RouterLinkStub } from '@vue/test-utils'
-import { render } from '@testing-library/vue'
+import { mount } from '@vue/test-utils'
 
 import WelcomeView from './WelcomeView.vue'
 import { store } from '@/store/store'
@@ -10,25 +9,19 @@ function renderComponent(environment: string) {
   const clientConfig: ClientConfigInterface = { ...config, environment }
   store.state.config.clientConfig = clientConfig
 
-  return render(WelcomeView, {
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
-    },
-  })
+  return mount(WelcomeView)
 }
 
 describe('WelcomeView.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderComponent('universal')
+    const wrapper = renderComponent('universal')
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders Kubernetess', () => {
-    const { getByText } = renderComponent('kubernetess')
+    const wrapper = renderComponent('kubernetess')
 
-    expect(getByText(/Kubernetess/)).toBeInTheDocument()
+    expect(wrapper.html()).toContain('Kubernetes')
   })
 })

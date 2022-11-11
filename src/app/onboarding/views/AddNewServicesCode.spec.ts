@@ -1,31 +1,33 @@
-import { flushPromises } from '@vue/test-utils'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
 import { kumaApi } from '@/api/kumaApi'
 
 function renderComponent() {
-  return render(AddNewServicesCode)
+  return mount(AddNewServicesCode)
 }
 
 describe('AddNewServicesCode.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
     await flushPromises()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('detects resources on call and allow to proceed', async () => {
-    renderComponent()
+    const wrapper = renderComponent()
 
-    expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
-    expect(screen.queryByText(/Next/)).toBeInTheDocument()
-    expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.find('[data-testid="dpps-connected"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="onboarding-next-button"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="loading"]').exists()).toBe(false)
   })
 
   it('refetch resources if any not available', async () => {
+    jest.useFakeTimers()
     jest
       .spyOn(kumaApi, 'getAllDataplanes')
       .mockResolvedValueOnce({
@@ -39,14 +41,18 @@ describe('AddNewServicesCode.vue', () => {
         next: null,
       })
 
-    renderComponent()
+    const wrapper = renderComponent()
 
-    expect(screen.queryByTestId('loading')).toBeInTheDocument()
-    expect(screen.queryByTestId('dpps-disconnected')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="loading"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="dpps-disconnected"]').exists()).toBe(true)
 
     await flushPromises()
+    jest.runAllTimers()
+    await flushPromises()
 
-    expect(await screen.findByTestId('dpps-connected')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="dpps-connected"]').exists()).toBe(true)
     expect(kumaApi.getAllDataplanes).toHaveBeenCalledTimes(2)
+
+    jest.useRealTimers()
   })
 })

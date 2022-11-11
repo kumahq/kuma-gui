@@ -1,10 +1,9 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { mount } from '@vue/test-utils'
 
 import TabsWidget from './TabsWidget.vue'
 
 function renderComponent(props: any) {
-  return render(TabsWidget, {
+  return mount(TabsWidget, {
     props,
     slots: {
       universal: '<div>Universal</div>',
@@ -15,7 +14,7 @@ function renderComponent(props: any) {
 
 describe('TabsWidget.vue', () => {
   it('renders basic snapshot', () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       tabs: [
         {
           hash: '#universal',
@@ -28,11 +27,13 @@ describe('TabsWidget.vue', () => {
       ],
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.find('#panel-0').html()).toContain('Universal')
+    expect(wrapper.find('#panel-1').html()).not.toContain('Kubernetes')
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('switches tabs on click', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       tabs: [
         {
           hash: '#universal',
@@ -45,13 +46,14 @@ describe('TabsWidget.vue', () => {
       ],
     })
 
-    await userEvent.click(screen.getByText('Kubernetes'))
+    await wrapper.find('#kubernetes-tab').trigger('click')
 
-    expect(screen.getAllByText(/Kubernetes/).length).toBe(2)
+    expect(wrapper.find('#panel-0').html()).not.toContain('Universal')
+    expect(wrapper.find('#panel-1').html()).toContain('Kubernetes')
   })
 
   it('renders with initally selected tab', () => {
-    renderComponent({
+    const wrapper = renderComponent({
       tabs: [
         {
           hash: '#universal',
@@ -65,6 +67,7 @@ describe('TabsWidget.vue', () => {
       initialTabOverride: 'kubernetes',
     })
 
-    expect(screen.getAllByText(/Kubernetes/).length).toBe(2)
+    expect(wrapper.find('#panel-0').html()).not.toContain('Universal')
+    expect(wrapper.find('#panel-1').html()).toContain('Kubernetes')
   })
 })

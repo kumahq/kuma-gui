@@ -1,53 +1,55 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
 import { server } from '@/../jest/jest-setup-after-env'
 
 function renderComponent(props = {}) {
-  return render(PolicyConnections, {
-    props,
-  })
+  return mount(PolicyConnections, { props })
 }
 
 describe('PolicyConnections.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
       policyName: 'foo',
     })
 
-    await screen.findByText('frontend')
+    await flushPromises()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.html()).toContain('frontend')
+
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('filters result', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
       policyName: 'foo',
     })
 
-    await screen.findByText('frontend')
+    await flushPromises()
 
-    expect(screen.getAllByTestId('dataplane-name').length).toBe(3)
+    expect(wrapper.html()).toContain('frontend')
 
-    await userEvent.type(screen.getByRole('textbox'), 'b')
+    expect(wrapper.findAll('[data-testid="dataplane-name"]').length).toBe(3)
 
-    expect(screen.getAllByTestId('dataplane-name').length).toBe(2)
+    const input = wrapper.find('[data-testid="dataplane-search-input"]')
+    await input.setValue('b')
+
+    expect(wrapper.findAll('[data-testid="dataplane-name"]').length).toBe(2)
   })
 
   it('renders loading', () => {
-    renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
       policyName: 'foo',
     })
 
-    expect(screen.getByTestId('loading-block')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
 
   it('renders error', async () => {
@@ -57,13 +59,15 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
       policyName: 'foo',
     })
 
-    expect(await screen.findByText(/An error has occurred while trying to load this data./)).toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.html()).toContain('An error has occurred while trying to load this data.')
   })
 
   it('renders no item', async () => {
@@ -73,12 +77,14 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
       policyName: 'foo',
     })
 
-    expect(await screen.findByText(/There is no data to display./)).toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.html()).toContain('There is no data to display.')
   })
 })

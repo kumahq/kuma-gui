@@ -55,7 +55,7 @@
                       disabled
                       value=""
                     >
-                      Select an existing Mesh&hellip;
+                      Select an existing Mesh…
                     </option>
                     <option
                       v-for="item in meshes.items"
@@ -160,12 +160,14 @@
                 type="text"
                 class="k-input w-100"
                 :disabled="validate.univDataplaneCustomIdDisabled"
+                data-testid="dataplane-id"
               >
             </div>
 
             <div>
               <KButton
                 appearance="secondary"
+                data-testid="edit-button"
                 @click="validate.univDataplaneCustomIdDisabled = false"
               >
                 Edit
@@ -204,6 +206,7 @@
               v-model="validate.univDataplaneNetworkAddress"
               type="text"
               class="k-input w-100"
+              data-testid="network-address"
             >
 
             <HelperTooltip>
@@ -223,6 +226,7 @@
               v-model="validate.univDataplaneNetworkDPPort"
               type="text"
               class="k-input w-100"
+              data-testid="network-dataplane-port"
             >
 
             <HelperTooltip>
@@ -259,6 +263,7 @@
               v-model="validate.univDataplaneNetworkServicePort"
               type="text"
               class="k-input w-100"
+              data-testid="service-port"
             >
 
             <HelperTooltip>

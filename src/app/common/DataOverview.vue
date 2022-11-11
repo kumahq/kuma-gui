@@ -10,7 +10,7 @@
         class="refresh-button"
         appearance="primary"
         :disabled="isLoading"
-        data-testid="refresh-button"
+        data-testid="data-overview-refresh-button"
         @click="onRefreshButtonClick"
       >
         <span

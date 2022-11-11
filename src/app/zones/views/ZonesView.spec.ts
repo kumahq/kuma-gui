@@ -1,60 +1,56 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import ZonesView from './ZonesView.vue'
 import { store } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
-jest.mock('@/utilities/helpers', () => {
-  const originalModule = jest.requireActual('@/utilities/helpers')
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    humanReadableDate: (data: string) => data,
-    rawReadableDate: (data: string) => data,
-  }
-})
-
 function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig
 
-  return render(ZonesView)
+  return mount(ZonesView)
 }
 
 describe('ZonesView.vue', () => {
-  it('renders snapshot when no multizone', () => {
-    const { container } = renderComponent()
+  it('renders snapshot when no multizone', async () => {
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    await flushPromises()
+
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders snapshot when multizone', async () => {
-    const { container } = renderComponent('global')
+    const wrapper = renderComponent('global')
 
-    await screen.findByText(/cluster-1/)
-    await screen.findByText(/dpToken/)
+    await flushPromises()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.html()).toContain('cluster-1')
+    expect(wrapper.html()).toContain('dpToken')
+
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders config of multizone', async () => {
-    renderComponent('global')
+    const wrapper = renderComponent('global')
 
-    await screen.findByText(/dpToken/)
+    await flushPromises()
 
-    await userEvent.click(screen.getByText('Config'))
-    expect(await screen.findByText(/adminAccessLogPath/)).toBeInTheDocument()
+    expect(wrapper.html()).toContain('dpToken')
+
+    await wrapper.find('#config-tab').trigger('click')
+    expect(wrapper.html()).toContain('adminAccessLogPath')
   })
 
   it('renders zone insights', async () => {
-    renderComponent('global')
+    const wrapper = renderComponent('global')
 
-    await screen.findByText(/dpToken/)
+    await flushPromises()
 
-    await userEvent.click(screen.getByText(/Zone Insights/))
-    expect(screen.getByTestId('tab-container')).toMatchSnapshot()
+    expect(wrapper.html()).toContain('dpToken')
+
+    await wrapper.find('#insights-tab').trigger('click')
+    expect(wrapper.find('[data-testid="tab-container"]').element).toMatchSnapshot()
   })
 })

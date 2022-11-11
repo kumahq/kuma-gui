@@ -19,6 +19,7 @@
           v-model="mode"
           name="mode"
           selected-value="standalone"
+          data-testid="onboarding-standalone-radio-button"
         >
           Standalone deployment
         </KRadio>
@@ -27,6 +28,7 @@
           v-model="mode"
           name="mode"
           selected-value="multi-zone"
+          data-testid="onboarding-multi-zone-radio-button"
         >
           Multi-zone deployment
         </KRadio>

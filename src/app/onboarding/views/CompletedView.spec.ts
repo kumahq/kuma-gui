@@ -1,11 +1,15 @@
-import { render } from '@testing-library/vue'
+import { mount } from '@vue/test-utils'
 
 import CompletedView from './CompletedView.vue'
 
+function renderComponent() {
+  return mount(CompletedView)
+}
+
 describe('CompletedView.vue', () => {
   it('renders snapshot', () => {
-    const { container } = render(CompletedView)
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

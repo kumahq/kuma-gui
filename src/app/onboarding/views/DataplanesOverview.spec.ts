@@ -1,24 +1,22 @@
-import { RouterLinkStub } from '@vue/test-utils'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import DataplanesOverview from './DataplanesOverview.vue'
 
+function renderComponent() {
+  return mount(DataplanesOverview)
+}
+
 describe('DataplanesOverview.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = render(DataplanesOverview, {
-      global: {
-        stubs: {
-          routerLink: RouterLinkStub,
-        },
-      },
-    })
+    const wrapper = renderComponent()
 
-    expect(screen.getByTestId('loading')).toBeInTheDocument()
-    expect(screen.getByText(/Waiting for DPPs/)).toBeInTheDocument()
-    expect(screen.getByText(/Next/).closest('a')).toHaveAttribute('disabled')
+    expect(wrapper.find('[data-testid="loading"]').exists()).toBe(true)
+    expect(wrapper.find('h1').html()).toContain('Waiting for DPPs')
+    expect(wrapper.find('[data-testid="onboarding-next-button"]').attributes('disabled')).toBe('true')
 
-    await screen.findByText(/dataplane-test-456/)
+    await flushPromises()
+    expect(wrapper.html()).toContain('dataplane-test-456')
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

@@ -9,6 +9,7 @@
         id="mesh-selector"
         class="mesh-selector"
         name="mesh-selector"
+        data-testid="mesh-selector"
         @change="changeMesh"
       >
         <option
