@@ -21,45 +21,23 @@ const sumDataplanes = (curr: DataPlaneStats = {}, next: DataPlaneStats = {}) => 
 }
 
 export const getInitialPolicies = () => ({
-  CircuitBreaker: {
-    total: 0,
-  },
-  FaultInjection: {
-    total: 0,
-  },
-  HealthCheck: {
-    total: 0,
-  },
-  ProxyTemplate: {
-    total: 0,
-  },
-  TrafficLog: {
-    total: 0,
-  },
-  TrafficPermission: {
-    total: 0,
-  },
-  TrafficRoute: {
-    total: 0,
-  },
-  TrafficTrace: {
-    total: 0,
-  },
-  RateLimit: {
-    total: 0,
-  },
-  Retry: {
-    total: 0,
-  },
-  Timeout: {
-    total: 0,
-  },
-  MeshGateway: {
-    total: 0,
-  },
-  MeshGatewayRoute: {
-    total: 0,
-  },
+  CircuitBreaker: { total: 0 },
+  FaultInjection: { total: 0 },
+  HealthCheck: { total: 0 },
+  MeshAccessLog: { total: 0 },
+  MeshGateway: { total: 0 },
+  MeshGatewayRoute: { total: 0 },
+  MeshTrace: { total: 0 },
+  MeshTrafficPermission: { total: 0 },
+  ProxyTemplate: { total: 0 },
+  RateLimit: { total: 0 },
+  Retry: { total: 0 },
+  Timeout: { total: 0 },
+  TrafficLog: { total: 0 },
+  TrafficPermission: { total: 0 },
+  TrafficRoute: { total: 0 },
+  TrafficTrace: { total: 0 },
+  VirtualOutbound: { total: 0 },
 })
 
 const sumPolicies = (curr: any = getInitialPolicies(), next: any = {}) =>
