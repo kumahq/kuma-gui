@@ -155,6 +155,24 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
       
       <div
         class="nav-item"
+        data-testid="meshaccesslogs"
+        title="false"
+      >
+        <a
+          class="nav-link"
+        >
+          Mesh Access Logs 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
+        </a>
+      </div>
+      
+      
+      <div
+        class="nav-item"
         data-testid="meshgatewayroutes"
         title="false"
       >
@@ -180,6 +198,42 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
           class="nav-link"
         >
           Mesh Gateways 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
+        </a>
+      </div>
+      
+      
+      <div
+        class="nav-item"
+        data-testid="meshtraces"
+        title="false"
+      >
+        <a
+          class="nav-link"
+        >
+          Mesh Traces 
+          <span
+            class="amount amount--empty"
+          >
+            0
+          </span>
+        </a>
+      </div>
+      
+      
+      <div
+        class="nav-item"
+        data-testid="meshtrafficpermissions"
+        title="false"
+      >
+        <a
+          class="nav-link"
+        >
+          Mesh Traffic Permissions 
           <span
             class="amount amount--empty"
           >

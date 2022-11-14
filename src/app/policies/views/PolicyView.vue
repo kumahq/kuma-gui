@@ -238,11 +238,11 @@ async function loadData(offset: number = 0): Promise<void> {
       tableDataIsEmpty.value = false
       isEmpty.value = false
 
-      const selected = ['type', 'name', 'mesh']
-      const selectedEntity = items[0]
-
-      entity.value = getSome(selectedEntity, selected)
-      rawEntity.value = stripTimes(selectedEntity)
+      await getEntity({
+        mesh: items[0].mesh,
+        name: items[0].name,
+        path,
+      })
     } else {
       tableData.value.data = []
       tableDataIsEmpty.value = true
@@ -281,7 +281,7 @@ function processEntity(entity: PolicyEntity): any {
   return processedEntity
 }
 
-async function getEntity(selectedEntity: any): Promise<void> {
+async function getEntity(selectedEntity: { mesh: string, path: string, name: string }): Promise<void> {
   entityHasError.value = false
   entityIsLoading.value = true
   entityIsEmpty.value = false
