@@ -1723,6 +1723,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             <a
               class="medium rounded primary k-button"
               data-v-6f773baa=""
+              href="/wizard/mesh"
               type="button"
             >
               
@@ -1790,6 +1791,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             <a
               class="medium rounded primary k-button"
               data-v-6f773baa=""
+              href="/wizard/kubernetes-dataplane"
               type="button"
             >
               

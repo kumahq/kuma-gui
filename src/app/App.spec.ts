@@ -1,4 +1,4 @@
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import App from './App.vue'
 import { store } from '@/store/store'
@@ -8,7 +8,7 @@ function renderComponent(status: string) {
   store.state.config.tagline = import.meta.env.VITE_NAMESPACE
   store.state.config.status = status
 
-  return render(App, {
+  return mount(App, {
     global: {
       stubs: {
         // Let’s not unnecessarily render all that chart markup.
@@ -20,20 +20,24 @@ function renderComponent(status: string) {
 
 describe('App.vue', () => {
   it('renders main view when successful', async () => {
-    renderComponent('OK')
+    const wrapper = renderComponent('OK')
     store.dispatch('bootstrap')
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
+    expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(true)
+    await flushPromises()
+    expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(false)
 
-    expect(screen.getByText('Create a virtual mesh')).toBeInTheDocument()
+    expect(wrapper.html()).toContain('Create a virtual mesh')
   })
 
   it('fails to renders basic view', async () => {
-    const { container } = renderComponent('ERROR')
+    const wrapper = renderComponent('ERROR')
     store.dispatch('bootstrap')
 
-    await waitForElementToBeRemoved(() => screen.queryByRole('progressbar'))
+    expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(true)
+    await flushPromises()
+    expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(false)
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

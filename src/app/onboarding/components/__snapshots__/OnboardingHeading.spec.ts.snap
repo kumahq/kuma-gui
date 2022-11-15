@@ -1,20 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OnboardingHeading.vue renders snapshot 1`] = `
-<div>
-  <div
-    class="relative"
+<div
+  class="relative"
+>
+  <h1
+    class="onboarding-title"
   >
-    <h1
-      class="onboarding-title"
-    >
-      title
-    </h1>
-    <p
-      class="text-center text-lg mt-3"
-    >
-      description
-    </p>
-  </div>
+    title
+  </h1>
+  <p
+    class="text-center text-lg mt-3"
+  >
+    description
+  </p>
 </div>
 `;

@@ -1,23 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppLoadingBar renders snapshot at the beginning 1`] = `
-<div>
+<div
+  class="full-screen"
+>
   <div
-    class="full-screen"
+    class="loading-container"
   >
+    <img />
     <div
-      class="loading-container"
+      class="progress"
     >
-      <img />
       <div
-        class="progress"
-      >
-        <div
-          class="progress-bar"
-          role="progressbar"
-          style="width: 10%;"
-        />
-      </div>
+        class="progress-bar"
+        data-testid="app-progress-bar"
+        role="progressbar"
+        style="width: 10%;"
+      />
     </div>
   </div>
 </div>

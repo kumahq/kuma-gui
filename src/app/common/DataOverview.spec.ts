@@ -1,14 +1,12 @@
-import { flushPromises } from '@vue/test-utils'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 import { datadogLogs } from '@datadog/browser-logs'
-import userEvent from '@testing-library/user-event'
 
 import DataOverview from './DataOverview.vue'
 
 jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
-  return render(DataOverview, {
+  return mount(DataOverview, {
     props,
     slots: {
       custom: `
@@ -26,18 +24,18 @@ describe('DataOverview.vue', () => {
   })
 
   it('renders basic snapshot', () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       tableData: {
         headers: [],
         data: [],
       },
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders additional scoped slot', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       tableData: {
         headers: [
           { key: 'custom', hideLabel: true },
@@ -52,11 +50,11 @@ describe('DataOverview.vue', () => {
 
     await flushPromises()
 
-    expect(screen.getByRole('table')).toMatchSnapshot()
+    expect(wrapper.find('table').element).toMatchSnapshot()
   })
 
   it('renders pagination and react on click', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       next: true,
       tableData: {
         headers: [],
@@ -64,26 +62,26 @@ describe('DataOverview.vue', () => {
       },
     })
 
-    const next = screen.getByText(/Next/)
+    const next = wrapper.find('[data-testid="pagination-next-button"]')
 
-    expect(next).toBeInTheDocument()
-    expect(screen.queryByText(/Previous/)).not.toBeInTheDocument()
+    expect(next.exists()).toBe(true)
+    expect(wrapper.find('[data-testid="pagination-previous-button"]').exists()).toBe(false)
 
-    await userEvent.click(next)
+    await next.trigger('click')
 
-    const back = screen.queryByText(/Previous/)
+    const previous = wrapper.find('[data-testid="pagination-previous-button"]')
 
-    expect(next).toBeInTheDocument()
-    expect(back).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="pagination-next-button"]').exists()).toBe(true)
+    expect(previous.exists()).toBe(true)
 
-    await userEvent.click(back as HTMLElement)
+    await previous.trigger('click')
 
-    expect(next).toBeInTheDocument()
-    expect(back).not.toBeInTheDocument()
+    expect(wrapper.find('[data-testid="pagination-next-button"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="pagination-previous-button"]').exists()).toBe(false)
   })
 
   it('refresh page on second page', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       next: true,
       tableData: {
         headers: [],
@@ -91,19 +89,19 @@ describe('DataOverview.vue', () => {
       },
     })
 
-    const next = screen.getByText(/Next/)
-    const refresh = screen.getByText(/Refresh/)
+    const next = wrapper.find('[data-testid="pagination-next-button"]')
+    const refresh = wrapper.find('[data-testid="data-overview-refresh-button"]')
 
-    expect(next).toBeInTheDocument()
+    expect(next.exists()).toBe(true)
 
-    await userEvent.click(next)
-    await userEvent.click(refresh)
+    await next.trigger('click')
+    await refresh.trigger('click')
 
     expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 
   it('renders all custom templates for data', async () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       showWarnings: true,
       tableData: {
         headers: [
@@ -128,6 +126,6 @@ describe('DataOverview.vue', () => {
 
     await flushPromises()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

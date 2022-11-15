@@ -1,5 +1,4 @@
-import { flushPromises } from '@vue/test-utils'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import CreateMesh from './CreateMesh.vue'
 import { store } from '@/store/store'
@@ -10,7 +9,7 @@ function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig
 
-  return render(CreateMesh, {
+  return mount(CreateMesh, {
     global: {
       stubs: {
         routerLink: {
@@ -24,16 +23,16 @@ function renderComponent(mode = 'standalone') {
 
 describe('CreateMesh.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
     await flushPromises()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders multizone next step', () => {
-    renderComponent('global')
+    const wrapper = renderComponent('global')
 
-    expect(screen.getByText('onboarding-multi-zone')).toBeInTheDocument()
+    expect(wrapper.html()).toContain('onboarding-multi-zone')
   })
 })

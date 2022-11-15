@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App.vue fails to renders basic view 1`] = `
-<div>
+<div
+  data-v-app=""
+>
   
   <header
     class="app-header"
@@ -240,6 +242,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             </span>
             <select
               class="mesh-selector"
+              data-testid="mesh-selector"
               id="mesh-selector"
               name="mesh-selector"
             >
@@ -461,7 +464,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               displayamchartslogo="false"
               emptysubtitle="NO"
               hideslicelabels="false"
-              isloading="true"
+              isloading="false"
               reversetitles="false"
               savechart="false"
               title="[object Object]"
@@ -472,7 +475,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               displayamchartslogo="false"
               emptysubtitle="NO"
               hideslicelabels="false"
-              isloading="true"
+              isloading="false"
               reversetitles="false"
               savechart="true"
               title="[object Object]"
@@ -483,7 +486,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               displayamchartslogo="false"
               emptysubtitle="NO"
               hideslicelabels="false"
-              isloading="true"
+              isloading="false"
               reversetitles="false"
               savechart="false"
               title="[object Object]"
@@ -494,7 +497,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               displayamchartslogo="false"
               emptysubtitle="NOT FOUND"
               hideslicelabels="false"
-              isloading="true"
+              isloading="false"
               reversetitles="true"
               savechart="false"
               subtitleprops="[object Object]"
@@ -507,7 +510,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               displayamchartslogo="true"
               emptysubtitle="NOT FOUND"
               hideslicelabels="false"
-              isloading="true"
+              isloading="false"
               reversetitles="true"
               savechart="false"
               subtitleprops="[object Object]"

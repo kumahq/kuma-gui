@@ -1,11 +1,12 @@
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import EnvoyData from './EnvoyData.vue'
 import { server } from '@/../jest/jest-setup-after-env'
 
 function renderComponent(props = {}) {
-  return render(EnvoyData, {
+  return mount(EnvoyData, {
+    attachTo: document.body,
     props: {
       dataPath: 'clusters',
       ...props,
@@ -14,6 +15,11 @@ function renderComponent(props = {}) {
 }
 
 describe('EnvoyData.vue', () => {
+  afterEach(() => {
+    // Clears `document.body` because we mount the component using `attachTo: document.body`.
+    document.body.innerHTML = ''
+  })
+
   it('renders snapshot', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
@@ -21,12 +27,12 @@ describe('EnvoyData.vue', () => {
       ),
     )
 
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       dppName: 'dataplane-test-456',
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders loading', () => {
@@ -36,12 +42,13 @@ describe('EnvoyData.vue', () => {
       ),
     )
 
-    renderComponent({
+    const wrapper = renderComponent({
       mesh: 'foo',
       dppName: 'dataplane-test-456',
     })
 
-    expect(screen.getByTestId('loading-block')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
+    wrapper.unmount()
   })
 
   it('renders error', async () => {
@@ -51,11 +58,13 @@ describe('EnvoyData.vue', () => {
       ),
     )
 
-    renderComponent({
+    const wrapper = renderComponent({
       mesh: 'test-mesh',
       dppName: 'dataplane-test-456',
     })
 
-    expect((await screen.findAllByText(/An error has occurred while trying to load this data./))[0]).toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.html()).toContain('An error has occurred while trying to load this data.')
   })
 })

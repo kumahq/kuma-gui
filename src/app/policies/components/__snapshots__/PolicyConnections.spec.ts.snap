@@ -3,88 +3,87 @@
 exports[`PolicyConnections.vue renders snapshot 1`] = `
 <div>
   <div>
-    <div>
-      <div
-        class="label-list-content"
+    <div
+      class="label-list-content"
+    >
+      <section
+        aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+        class="noBorder kong-card"
+        data-v-1f0d90ac=""
       >
-        <section
-          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          class="noBorder kong-card"
+        <!---->
+        <!---->
+        <div
+          class="k-card-content d-flex"
           data-v-1f0d90ac=""
         >
-          <!---->
-          <!---->
           <div
-            class="k-card-content d-flex"
+            class="k-card-body"
             data-v-1f0d90ac=""
+            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
+            
             <div
-              class="k-card-body"
-              data-v-1f0d90ac=""
-              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              class="label-list__col-wrapper multi-col"
             >
               
-              <div
-                class="label-list__col-wrapper multi-col"
-              >
-                
-                <ul>
-                  <li>
-                    <h4>
-                      Dataplanes
-                    </h4>
-                    <input
-                      class="k-input mb-4"
-                      id="dataplane-search"
-                      placeholder="Filter by name"
-                      required=""
-                      type="text"
-                    />
-                    
-                    <p
-                      class="my-1"
-                      data-testid="dataplane-name"
+              <ul>
+                <li>
+                  <h4>
+                    Dataplanes
+                  </h4>
+                  <input
+                    class="k-input mb-4"
+                    data-testid="dataplane-search-input"
+                    id="dataplane-search"
+                    placeholder="Filter by name"
+                    required=""
+                    type="text"
+                  />
+                  
+                  <p
+                    class="my-1"
+                    data-testid="dataplane-name"
+                  >
+                    <a
+                      class=""
+                      href="/mesh/default/data-planes/backend"
                     >
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/backend"
-                      >
-                        backend
-                      </a>
-                    </p>
-                    <p
-                      class="my-1"
-                      data-testid="dataplane-name"
+                      backend
+                    </a>
+                  </p>
+                  <p
+                    class="my-1"
+                    data-testid="dataplane-name"
+                  >
+                    <a
+                      class=""
+                      href="/mesh/default/data-planes/db"
                     >
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/db"
-                      >
-                        db
-                      </a>
-                    </p>
-                    <p
-                      class="my-1"
-                      data-testid="dataplane-name"
+                      db
+                    </a>
+                  </p>
+                  <p
+                    class="my-1"
+                    data-testid="dataplane-name"
+                  >
+                    <a
+                      class=""
+                      href="/mesh/default/data-planes/frontend"
                     >
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/frontend"
-                      >
-                        frontend
-                      </a>
-                    </p>
-                    
-                  </li>
-                </ul>
-                
-              </div>
+                      frontend
+                    </a>
+                  </p>
+                  
+                </li>
+              </ul>
               
             </div>
-            <!---->
+            
           </div>
-        </section>
-      </div>
+          <!---->
+        </div>
+      </section>
     </div>
   </div>
 </div>

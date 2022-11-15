@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { mount } from '@vue/test-utils'
 import { datadogLogs } from '@datadog/browser-logs'
 
 import PaginationWidget from './PaginationWidget.vue'
@@ -7,35 +6,35 @@ import PaginationWidget from './PaginationWidget.vue'
 jest.mock('@datadog/browser-logs')
 
 function renderComponent(props = {}) {
-  return render(PaginationWidget, {
+  return mount(PaginationWidget, {
     props,
   })
 }
 
 describe('PaginationWidget.vue', () => {
   it('renders nothing if no next or prev props provided', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders pagination', () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       hasPrevious: true,
       hasNext: true,
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('calls buttons', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       hasPrevious: true,
       hasNext: true,
     })
 
-    await userEvent.click(screen.getByText(/Previous/))
-    await userEvent.click(screen.getByText(/Next/))
+    await wrapper.find('[data-testid="pagination-previous-button"]').trigger('click')
+    await wrapper.find('[data-testid="pagination-next-button"]').trigger('click')
     expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 })

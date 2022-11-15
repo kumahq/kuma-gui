@@ -2,73 +2,72 @@
 
 exports[`CompletedView.vue renders snapshot 1`] = `
 <div>
-  <div>
+  <div
+    class="onboarding-container"
+  >
     <div
-      class="onboarding-container"
+      class="onboarding-container__header"
     >
-      <div
-        class="onboarding-container__header"
-      >
-        
-        <div
-          class="relative"
-        >
-          <h1
-            class="onboarding-title"
-          >
-            Go to the dashboard
-          </h1>
-          <!--v-if-->
-        </div>
-        
-      </div>
-      <div
-        class="onboarding-container__content"
-      >
-        <div
-          class="w-full"
-        >
-          
-          <div
-            class="flex justify-center"
-          >
-            <img />
-          </div>
-          
-        </div>
-      </div>
       
       <div
-        class="mt-4 flex items-center flex-col sm:flex-row justify-center"
+        class="relative"
       >
+        <h1
+          class="onboarding-title"
+        >
+          Go to the dashboard
+        </h1>
         <!--v-if-->
-        <div>
-          <!--v-if-->
-          <span
-            class="inline-block"
-          >
-            <a
-              class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6f773baa=""
-              href="/"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-              Completed
-              
-              <!---->
-            </a>
-          </span>
-        </div>
       </div>
       
     </div>
     <div
-      class="background-image"
-    />
+      class="onboarding-container__content"
+    >
+      <div
+        class="w-full"
+      >
+        
+        <div
+          class="flex justify-center"
+        >
+          <img />
+        </div>
+        
+      </div>
+    </div>
+    
+    <div
+      class="mt-4 flex items-center flex-col sm:flex-row justify-center"
+    >
+      <!--v-if-->
+      <div>
+        <!--v-if-->
+        <span
+          class="inline-block"
+        >
+          <a
+            class="medium rounded primary k-button navigation-button navigation-button--next"
+            data-testid="onboarding-next-button"
+            data-v-6f773baa=""
+            href="/"
+            type="button"
+          >
+            
+            <!---->
+            
+            
+            Completed
+            
+            <!---->
+          </a>
+        </span>
+      </div>
+    </div>
+    
   </div>
+  <div
+    class="background-image"
+  />
 </div>
 `;

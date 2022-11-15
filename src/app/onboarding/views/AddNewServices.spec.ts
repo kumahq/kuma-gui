@@ -1,32 +1,31 @@
-import { render, screen } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
+import { mount } from '@vue/test-utils'
 
 import AddNewServices from './AddNewServices.vue'
 
 function renderComponent() {
-  return render(AddNewServices)
+  return mount(AddNewServices)
 }
 
 describe('AddNewServices.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('changes selected box', async () => {
-    renderComponent()
+    const wrapper = renderComponent()
 
-    const demoRadio = screen.getAllByTestId('box')[0]
-    const manuallyRadio = screen.getAllByTestId('box')[1]
+    const boxes = wrapper.findAll('[data-testid="box"]')
+    const demoBox = boxes[0]
+    expect(demoBox.element.classList.contains('box--active')).toBe(true)
 
-    expect(demoRadio.className).toMatch('box--active')
-    expect(manuallyRadio.className).not.toMatch('box--active')
+    const manuallyBox = boxes[1]
+    expect(manuallyBox.element.classList.contains('box--active')).toBe(false)
 
-    await userEvent.click(screen.getByText(/After this wizard/))
-
-    expect(demoRadio.className).not.toMatch('box--active')
-
-    expect(manuallyRadio.className).toMatch('box--active')
+    expect(manuallyBox.html()).toContain('After this wizard')
+    await manuallyBox.trigger('click')
+    expect(demoBox.element.classList.contains('box--active')).toBe(false)
+    expect(manuallyBox.element.classList.contains('box--active')).toBe(true)
   })
 })

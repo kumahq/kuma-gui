@@ -1,411 +1,409 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AppSidebar.vue renders snapshot 1`] = `
-<div>
-  <div
-    class="app-sidebar-wrapper"
+<div
+  class="app-sidebar-wrapper"
+>
+  <aside
+    class="app-sidebar"
   >
-    <aside
-      class="app-sidebar"
+    
+    
+    <div
+      class="nav-item nav-item--has-bottom-offset"
+      data-testid="home"
     >
-      
-      
-      <div
-        class="nav-item nav-item--has-bottom-offset"
-        data-testid="home"
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
-        >
-          Home 
-          <!--v-if-->
-        </a>
-      </div>
-      
-      
+        Home 
+        <!--v-if-->
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item nav-item--is-category nav-item--is-primary-category"
+      data-testid=""
+    >
       <div
-        class="nav-item nav-item--is-category nav-item--is-primary-category"
-        data-testid=""
+        class="nav-category"
       >
-        <div
-          class="nav-category"
-        >
-          Mesh
-        </div>
+        Mesh
       </div>
-      
-      
-      
-      <!--v-if-->
-      
-      
-      
+    </div>
+    
+    
+    
+    <!--v-if-->
+    
+    
+    
+    <div
+      class="nav-item"
+      data-testid="mesh-detail-view"
+    >
+      <a
+        class="nav-link"
+      >
+        Overview 
+        <!--v-if-->
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="service-list-view"
+    >
+      <a
+        class="nav-link"
+      >
+        Services 
+        <span
+          class="amount amount--empty"
+        >
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="data-plane-list-view"
+    >
+      <a
+        class="nav-link"
+      >
+        Data Plane Proxies 
+        <span
+          class="amount amount--empty"
+        >
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item nav-item--is-category nav-item--is-secondary-category"
+      data-testid=""
+    >
       <div
-        class="nav-item"
-        data-testid="mesh-detail-view"
+        class="nav-category"
       >
-        <a
-          class="nav-link"
-        >
-          Overview 
-          <!--v-if-->
-        </a>
+        Policies
       </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="service-list-view"
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="circuit-breakers"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Circuit Breakers 
+        <span
+          class="amount amount--empty"
         >
-          Services 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="data-plane-list-view"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="fault-injections"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Fault Injections 
+        <span
+          class="amount amount--empty"
         >
-          Data Plane Proxies 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item nav-item--is-category nav-item--is-secondary-category"
-        data-testid=""
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="health-checks"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <div
-          class="nav-category"
+        Health Checks 
+        <span
+          class="amount amount--empty"
         >
-          Policies
-        </div>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="circuit-breakers"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="meshaccesslogs"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Mesh Access Logs 
+        <span
+          class="amount amount--empty"
         >
-          Circuit Breakers 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="fault-injections"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="meshgatewayroutes"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Mesh Gateway Routes 
+        <span
+          class="amount amount--empty"
         >
-          Fault Injections 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="health-checks"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="meshgateways"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Mesh Gateways 
+        <span
+          class="amount amount--empty"
         >
-          Health Checks 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="meshaccesslogs"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="meshtraces"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Mesh Traces 
+        <span
+          class="amount amount--empty"
         >
-          Mesh Access Logs 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="meshgatewayroutes"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="meshtrafficpermissions"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Mesh Traffic Permissions 
+        <span
+          class="amount amount--empty"
         >
-          Mesh Gateway Routes 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="meshgateways"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="proxytemplates"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Proxy Templates 
+        <span
+          class="amount amount--empty"
         >
-          Mesh Gateways 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="meshtraces"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="rate-limits"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Rate Limits 
+        <span
+          class="amount amount--empty"
         >
-          Mesh Traces 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="meshtrafficpermissions"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="retries"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Retries 
+        <span
+          class="amount amount--empty"
         >
-          Mesh Traffic Permissions 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="proxytemplates"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="timeouts"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Timeouts 
+        <span
+          class="amount amount--empty"
         >
-          Proxy Templates 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="rate-limits"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="traffic-logs"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Traffic Logs 
+        <span
+          class="amount amount--empty"
         >
-          Rate Limits 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="retries"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="traffic-permissions"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Traffic Permissions 
+        <span
+          class="amount amount--empty"
         >
-          Retries 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="timeouts"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="traffic-routes"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Traffic Routes 
+        <span
+          class="amount amount--empty"
         >
-          Timeouts 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="traffic-logs"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="traffic-traces"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Traffic Traces 
+        <span
+          class="amount amount--empty"
         >
-          Traffic Logs 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="traffic-permissions"
-        title="false"
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
+      data-testid="virtual-outbounds"
+      title="false"
+    >
+      <a
+        class="nav-link"
       >
-        <a
-          class="nav-link"
+        Virtual Outbounds 
+        <span
+          class="amount amount--empty"
         >
-          Traffic Permissions 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="traffic-routes"
-        title="false"
-      >
-        <a
-          class="nav-link"
-        >
-          Traffic Routes 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="traffic-traces"
-        title="false"
-      >
-        <a
-          class="nav-link"
-        >
-          Traffic Traces 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-      <div
-        class="nav-item"
-        data-testid="virtual-outbounds"
-        title="false"
-      >
-        <a
-          class="nav-link"
-        >
-          Virtual Outbounds 
-          <span
-            class="amount amount--empty"
-          >
-            0
-          </span>
-        </a>
-      </div>
-      
-      
-    </aside>
-  </div>
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+  </aside>
 </div>
 `;

@@ -1,10 +1,13 @@
+import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
-import { render } from '@testing-library/vue'
-import userEvent from '@testing-library/user-event'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
 import { store } from '@/store/store'
 import { server } from '@/../jest/jest-setup-after-env'
+
+function renderComponent() {
+  return mount(DataplaneUniversal)
+}
 
 describe('DataplaneUniversal.vue', () => {
   beforeEach(() => {
@@ -34,40 +37,40 @@ describe('DataplaneUniversal.vue', () => {
       },
     ]
 
-    const { container, getByText, getByDisplayValue, getByLabelText, findByText } = render(DataplaneUniversal)
+    const wrapper = renderComponent()
 
-    const select = <HTMLInputElement>getByDisplayValue('Select an existing Mesh…')
-    const nextButton = getByText(/Next ›/i).closest('button')
+    const meshSelect = wrapper.find<HTMLSelectElement>('[data-testid="mesh-select"]')
+    const nextButton = wrapper.find('[data-testid="next-step-button"]')
 
-    expect(select.value).toBe('')
-    expect(nextButton).toHaveAttribute('disabled')
+    expect(meshSelect.element.value).toBe('')
+    expect(nextButton.attributes('disabled')).toBe('')
 
-    await userEvent.selectOptions(select, 'testMesh')
-    await userEvent.click(getByText('Next ›'))
+    await meshSelect.setValue('testMesh')
+    await nextButton.trigger('click')
+    await flushPromises()
 
-    expect(nextButton).toHaveAttribute('disabled')
+    expect(nextButton.attributes('disabled')).toBe('')
 
-    await userEvent.type(getByLabelText('Service name:'), 'testMesh')
+    await wrapper.find('[data-testid="service-name"]').setValue('testMesh')
 
-    await userEvent.click(getByText(/Edit/))
-    const dataplaneId = <HTMLInputElement>getByLabelText('Dataplane ID:')
+    await wrapper.find('[data-testid="edit-button"]').trigger('click')
+    await wrapper.find('[data-testid="dataplane-id"]').setValue('testMesh')
 
-    dataplaneId.setSelectionRange(0, dataplaneId.value.length)
-    await userEvent.type(dataplaneId, 'testMesh')
+    await nextButton.trigger('click')
+    await flushPromises()
 
-    await userEvent.click(getByText('Next ›'))
+    expect(nextButton.attributes('disabled')).toBe('')
 
-    expect(nextButton).toHaveAttribute('disabled')
+    await wrapper.find('[data-testid="service-port"]').setValue('1')
+    await wrapper.find('[data-testid="network-address"]').setValue('12')
+    await wrapper.find('[data-testid="network-dataplane-port"]').setValue('1')
+    await nextButton.trigger('click')
+    await flushPromises()
 
-    await userEvent.type(getByLabelText('Service Port:'), '1')
-    await userEvent.type(getByLabelText('Data Plane IP Address:'), '12')
-    await userEvent.type(getByLabelText('Data Plane Port:'), '1')
-    await userEvent.click(getByText('Next ›'))
-    expect(getByText('Auto-Inject DPP')).toBeInTheDocument()
+    expect(wrapper.html()).toContain('Auto-Inject DPP')
+    expect(wrapper.html()).toContain('kumactl')
+    expect(wrapper.html()).toContain('kuma-dp')
 
-    expect(await findByText(/kumactl/)).toBeInTheDocument()
-    expect(await findByText(/kuma-dp/)).toBeInTheDocument()
-
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

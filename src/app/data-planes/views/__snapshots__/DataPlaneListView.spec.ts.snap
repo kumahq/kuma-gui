@@ -437,7 +437,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
         
         <button
           class="medium rounded primary k-button refresh-button"
-          data-testid="refresh-button"
+          data-testid="data-overview-refresh-button"
           data-v-6f773baa=""
           type="button"
         >
@@ -2200,6 +2200,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
             <!--v-if-->
             <button
               class="medium rounded primary k-button"
+              data-testid="pagination-next-button"
               data-v-6f773baa=""
               type="button"
             >

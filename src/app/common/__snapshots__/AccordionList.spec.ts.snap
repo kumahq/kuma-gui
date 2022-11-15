@@ -1,58 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AccordionList.vue renders snapshot at the beginning 1`] = `
-<div>
-  <ul
-    class="accordion"
+<ul
+  class="accordion"
+>
+  
+  
+  <li
+    class="accordion-item relative border-b"
   >
-    
-    
-    <li
-      class="accordion-item relative border-b"
+    <button
+      aria-expanded="false"
+      class="accordion-item-header"
+      data-testid="accordion-item-button"
+      type="button"
     >
-      <button
-        aria-expanded="false"
-        class="accordion-item-header"
-        type="button"
-      >
-        
-         Header 1 
-        
-      </button>
-      <transition-stub
-        appear="false"
-        css="true"
-        name="accordion"
-        persisted="false"
-      >
-        <!--v-if-->
-      </transition-stub>
-    </li>
-    
-    
-    <li
-      class="accordion-item relative border-b"
+      
+       Header 1 
+      
+    </button>
+    <transition-stub
+      appear="false"
+      css="true"
+      name="accordion"
+      persisted="false"
     >
-      <button
-        aria-expanded="false"
-        class="accordion-item-header"
-        type="button"
-      >
-        
-         Header 2 
-        
-      </button>
-      <transition-stub
-        appear="false"
-        css="true"
-        name="accordion"
-        persisted="false"
-      >
-        <!--v-if-->
-      </transition-stub>
-    </li>
-    
-    
-  </ul>
-</div>
+      <!--v-if-->
+    </transition-stub>
+  </li>
+  
+  
+  <li
+    class="accordion-item relative border-b"
+  >
+    <button
+      aria-expanded="false"
+      class="accordion-item-header"
+      data-testid="accordion-item-button"
+      type="button"
+    >
+      
+       Header 2 
+      
+    </button>
+    <transition-stub
+      appear="false"
+      css="true"
+      name="accordion"
+      persisted="false"
+    >
+      <!--v-if-->
+    </transition-stub>
+  </li>
+  
+  
+</ul>
 `;

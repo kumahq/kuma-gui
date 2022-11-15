@@ -60,6 +60,7 @@
                   v-model="validate.meshName"
                   type="text"
                   class="k-input w-100"
+                  data-testid="mesh-name"
                   placeholder="your-mesh-name"
                   required
                 >
@@ -83,6 +84,7 @@
                     name="mtls"
                     type="radio"
                     class="k-input mr-2"
+                    data-testid="mesh-mtls-disabled"
                   >
                   <span>Disabled</span>
                 </label>
@@ -94,6 +96,7 @@
                     name="mtls"
                     type="radio"
                     class="k-input mr-2"
+                    data-testid="mesh-mtls-enabled"
                   >
                   <span>Enabled</span>
                 </label>
@@ -111,6 +114,7 @@
                   type="text"
                   class="k-input w-100"
                   placeholder="your-certificate-name"
+                  data-testid="mesh-certificate-name"
                 >
               </FormFragment>
 
@@ -165,6 +169,7 @@
                     name="logging"
                     type="radio"
                     class="k-input mr-2"
+                    data-testid="mesh-logging-disabled"
                   >
                   <span>Disabled</span>
                 </label>
@@ -176,6 +181,7 @@
                     name="logging"
                     type="radio"
                     class="k-input mr-2"
+                    data-testid="mesh-logging-enabled"
                   >
                   <span>Enabled</span>
                 </label>
@@ -192,6 +198,7 @@
                   type="text"
                   class="k-input w-100"
                   placeholder="your-backend-name"
+                  data-testid="mesh-logging-backend-name"
                 >
               </FormFragment>
               <div v-if="validate.loggingEnabled === 'enabled'">
@@ -294,6 +301,7 @@
                     name="tracing"
                     type="radio"
                     class="k-input mr-2"
+                    data-testid="mesh-tracing-enabled"
                   >
                   <span>Enabled</span>
                 </label>
@@ -311,6 +319,7 @@
                   type="text"
                   class="k-input w-100"
                   placeholder="your-tracing-backend-name"
+                  data-testid="mesh-tracing-backend-name"
                 >
               </FormFragment>
 
@@ -361,6 +370,7 @@
                   type="text"
                   class="k-input w-100"
                   placeholder="http://zipkin.url:1234"
+                  data-testid="mesh-tracing-url"
                 >
               </FormFragment>
             </template>
@@ -400,6 +410,7 @@
                     name="metrics"
                     type="radio"
                     class="k-input mr-2"
+                    data-testid="mesh-metrics-enabled"
                   >
                   <span>Enabled</span>
                 </label>
@@ -416,6 +427,7 @@
                   type="text"
                   class="k-input w-100"
                   placeholder="your-metrics-backend-name"
+                  data-testid="mesh-metrics-backend-name"
                 >
               </FormFragment>
               <FormFragment

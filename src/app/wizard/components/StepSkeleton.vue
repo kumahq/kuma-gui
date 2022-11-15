@@ -49,6 +49,7 @@
         <KButton
           v-show="!indexCanReverse"
           appearance="outline"
+          data-testid="next-previous-button"
           @click="goToPrevStep"
         >
           &lsaquo; Previous
@@ -57,6 +58,7 @@
           v-show="!indexCanAdvance"
           :disabled="nextDisabled"
           appearance="primary"
+          data-testid="next-step-button"
           @click="goToNextStep"
         >
           Next &rsaquo;

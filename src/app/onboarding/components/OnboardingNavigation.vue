@@ -5,6 +5,7 @@
       appearance="primary"
       class="navigation-button navigation-button--back"
       :to="{ name: previousStep }"
+      data-testid="onboarding-previous-button"
       @click="changeStep(previousStep)"
     >
       Back
@@ -16,6 +17,7 @@
         class="skip-button"
         appearance="btn-link"
         size="small"
+        data-testid="onboarding-skip-button"
         @click="skipOnboarding"
       >
         Skip Setup
@@ -27,6 +29,7 @@
           class="navigation-button navigation-button--next"
           appearance="primary"
           :to="{ name: nextStep }"
+          data-testid="onboarding-next-button"
           @click="lastStep ? skipOnboarding() : changeStep(nextStep)"
         >
           {{ nextStepTitle }}

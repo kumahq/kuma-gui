@@ -3,8 +3,8 @@
 /** @type {Config} */ const config = {
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
-    // Workaround for the “ReferenceError: Vue is not defined” introduced by @testing-library.
-    // See: https://stackoverflow.com/a/72608494/2036825
+    // Workaround for the “ReferenceError: Vue is not defined” when importing `config` from `@vue/test-utils`.
+    // See: https://github.com/vuejs/vue-jest/issues/479
     customExportConditions: ['node', 'node-addons'],
   },
   moduleFileExtensions: [

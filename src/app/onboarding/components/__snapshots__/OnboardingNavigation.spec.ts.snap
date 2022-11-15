@@ -1,12 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`OnboardingNavigation.vue renders snapshot 1`] = `
-<div>
-  <div
-    class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+<div
+  class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+>
+  <a
+    class="medium rounded primary k-button navigation-button navigation-button--back"
+    data-testid="onboarding-previous-button"
+    data-v-6f773baa=""
+    type="button"
   >
-    <a
-      class="medium rounded primary k-button navigation-button navigation-button--back"
+    
+    <!---->
+    
+    
+     Back 
+    
+    <!---->
+  </a>
+  <div>
+    <button
+      class="small rounded btn-link k-button skip-button"
+      data-testid="onboarding-skip-button"
       data-v-6f773baa=""
       type="button"
     >
@@ -14,13 +29,16 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
       <!---->
       
       
-       Back 
+       Skip Setup 
       
       <!---->
-    </a>
-    <div>
-      <button
-        class="small rounded btn-link k-button skip-button"
+    </button>
+    <span
+      class="inline-block"
+    >
+      <a
+        class="medium rounded primary k-button navigation-button navigation-button--next"
+        data-testid="onboarding-next-button"
         data-v-6f773baa=""
         type="button"
       >
@@ -28,28 +46,11 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
         <!---->
         
         
-         Skip Setup 
+        Next
         
         <!---->
-      </button>
-      <span
-        class="inline-block"
-      >
-        <a
-          class="medium rounded primary k-button navigation-button navigation-button--next"
-          data-v-6f773baa=""
-          type="button"
-        >
-          
-          <!---->
-          
-          
-          Next
-          
-          <!---->
-        </a>
-      </span>
-    </div>
+      </a>
+    </span>
   </div>
 </div>
 `;

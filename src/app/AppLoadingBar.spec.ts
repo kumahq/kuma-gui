@@ -1,24 +1,32 @@
-import { flushPromises } from '@vue/test-utils'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, shallowMount } from '@vue/test-utils'
 
 import AppLoadingBar from './AppLoadingBar.vue'
 
-jest.useFakeTimers()
+function renderComponent() {
+  return shallowMount(AppLoadingBar)
+}
 
 describe('AppLoadingBar', () => {
-  it('renders snapshot at the beginning', () => {
-    const { container } = render(AppLoadingBar)
+  beforeAll(() => {
+    jest.useFakeTimers()
+  })
 
-    expect(container).toMatchSnapshot()
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
+  it('renders snapshot at the beginning', () => {
+    const wrapper = renderComponent()
+
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('checks if width is max of 100% size', async () => {
-    render(AppLoadingBar)
+    const wrapper = renderComponent()
 
-    jest.advanceTimersByTime(2500)
-
+    jest.advanceTimersByTime(1500)
     await flushPromises()
 
-    expect(screen.getByRole('progressbar')).toHaveAttribute('style', 'width: 100%;')
+    expect(wrapper.find('[data-testid="app-progress-bar"]').attributes('style')).toBe('width: 100%;')
   })
 })

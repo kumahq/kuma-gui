@@ -1,30 +1,32 @@
-import { flushPromises } from '@vue/test-utils'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import MultiZoneView from './MultiZoneView.vue'
 import { kumaApi } from '@/api/kumaApi'
 
 function renderComponent() {
-  return render(MultiZoneView)
+  return mount(MultiZoneView)
 }
 
 describe('MultiZoneView.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('detects resources on call and allow to proceed', async () => {
-    renderComponent()
+    const wrapper = renderComponent()
 
-    expect(await screen.findByTestId('zone-connected')).toBeInTheDocument()
-    expect(await screen.findByTestId('zone-ingress-connected')).toBeInTheDocument()
-    expect(screen.queryByText(/Next/)).toBeInTheDocument()
-    expect(screen.queryByTestId('loading')).not.toBeInTheDocument()
+    await flushPromises()
+
+    expect(wrapper.find('[data-testid="zone-connected"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="zone-ingress-connected"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="onboarding-next-button"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="loading"]').exists()).toBe(false)
   })
 
   it('refetch resources if any not available', async () => {
+    jest.useFakeTimers()
     jest
       .spyOn(kumaApi, 'getAllZoneIngressOverviews')
       .mockResolvedValueOnce({
@@ -34,15 +36,19 @@ describe('MultiZoneView.vue', () => {
         total: 1,
       })
 
-    renderComponent()
-
-    expect(await screen.findByTestId('zone-connected')).toBeInTheDocument()
-    expect(screen.queryByTestId('loading')).toBeInTheDocument()
-    expect(screen.queryByTestId('zone-ingress-disconnected')).toBeInTheDocument()
+    const wrapper = renderComponent()
 
     await flushPromises()
 
-    expect(await screen.findByTestId('zone-ingress-connected')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="zone-connected"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="zone-ingress-disconnected"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="loading"]').exists()).toBe(true)
+
+    jest.runAllTimers()
+    await flushPromises()
+
+    expect(wrapper.find('[data-testid="zone-ingress-connected"]').exists()).toBe(true)
     expect(kumaApi.getAllZoneIngressOverviews).toHaveBeenCalledTimes(2)
+    jest.useRealTimers()
   })
 })

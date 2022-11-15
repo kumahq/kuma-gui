@@ -2,147 +2,148 @@
 
 exports[`AddNewServices.vue renders snapshot 1`] = `
 <div>
-  <div>
+  <div
+    class="onboarding-container"
+  >
     <div
-      class="onboarding-container"
+      class="onboarding-container__header"
     >
-      <div
-        class="onboarding-container__header"
-      >
-        
-        <div
-          class="relative"
-        >
-          <h1
-            class="onboarding-title"
-          >
-            Add services
-          </h1>
-          <!--v-if-->
-        </div>
-        
-      </div>
-      <div
-        class="onboarding-container__content"
-      >
-        <div
-          class="w-full"
-        >
-          
-          <div
-            class="h-full w-full flex justify-evenly items-center"
-          >
-            <div
-              class="box box--active cursor-pointer"
-              data-testid="box"
-            >
-              
-              <div>
-                <img
-                  src="[object Object]"
-                />
-                <div
-                  class="ml-3"
-                >
-                  <p
-                    class="uppercase font-bold tracking-wider"
-                  >
-                     Demo app 
-                  </p>
-                  <p>
-                    Counter application
-                  </p>
-                </div>
-              </div>
-              
-            </div>
-            <div
-              class="box cursor-pointer"
-              data-testid="box"
-            >
-              
-              <div
-                class="cursor-pointer"
-              >
-                <img
-                  src="[object Object]"
-                />
-                <div
-                  class="ml-3"
-                >
-                  <p
-                    class="uppercase font-bold tracking-wider"
-                  >
-                     Manually 
-                  </p>
-                  <p>
-                    After this wizard
-                  </p>
-                </div>
-              </div>
-              
-            </div>
-          </div>
-          
-        </div>
-      </div>
       
       <div
-        class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+        class="relative"
       >
-        <a
-          class="medium rounded primary k-button navigation-button navigation-button--back"
+        <h1
+          class="onboarding-title"
+        >
+          Add services
+        </h1>
+        <!--v-if-->
+      </div>
+      
+    </div>
+    <div
+      class="onboarding-container__content"
+    >
+      <div
+        class="w-full"
+      >
+        
+        <div
+          class="h-full w-full flex justify-evenly items-center"
+        >
+          <div
+            class="box box--active cursor-pointer"
+            data-testid="box"
+          >
+            
+            <div>
+              <img
+                src="[object Object]"
+              />
+              <div
+                class="ml-3"
+              >
+                <p
+                  class="uppercase font-bold tracking-wider"
+                >
+                   Demo app 
+                </p>
+                <p>
+                  Counter application
+                </p>
+              </div>
+            </div>
+            
+          </div>
+          <div
+            class="box cursor-pointer"
+            data-testid="box"
+          >
+            
+            <div
+              class="cursor-pointer"
+            >
+              <img
+                src="[object Object]"
+              />
+              <div
+                class="ml-3"
+              >
+                <p
+                  class="uppercase font-bold tracking-wider"
+                >
+                   Manually 
+                </p>
+                <p>
+                  After this wizard
+                </p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <div
+      class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+    >
+      <a
+        class="medium rounded primary k-button navigation-button navigation-button--back"
+        data-testid="onboarding-previous-button"
+        data-v-6f773baa=""
+        href="/onboarding/create-mesh"
+        type="button"
+      >
+        
+        <!---->
+        
+        
+         Back 
+        
+        <!---->
+      </a>
+      <div>
+        <button
+          class="small rounded btn-link k-button skip-button"
+          data-testid="onboarding-skip-button"
           data-v-6f773baa=""
-          href="/onboarding/create-mesh"
           type="button"
         >
           
           <!---->
           
           
-           Back 
+           Skip Setup 
           
           <!---->
-        </a>
-        <div>
-          <button
-            class="small rounded btn-link k-button skip-button"
+        </button>
+        <span
+          class="inline-block"
+        >
+          <a
+            class="medium rounded primary k-button navigation-button navigation-button--next"
+            data-testid="onboarding-next-button"
             data-v-6f773baa=""
+            href="/onboarding/add-services-code"
             type="button"
           >
             
             <!---->
             
             
-             Skip Setup 
+            Next
             
             <!---->
-          </button>
-          <span
-            class="inline-block"
-          >
-            <a
-              class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6f773baa=""
-              href="/onboarding/add-services-code"
-              type="button"
-            >
-              
-              <!---->
-              
-              
-              Next
-              
-              <!---->
-            </a>
-          </span>
-        </div>
+          </a>
+        </span>
       </div>
-      
     </div>
-    <div
-      class="background-image"
-    />
+    
   </div>
+  <div
+    class="background-image"
+  />
 </div>
 `;

@@ -31,7 +31,7 @@ describe('DataPlaneListView', () => {
     const nsBackButton = wrapper.find('[data-testid="data-plane-ns-back-button"]')
     expect(nsBackButton.exists()).toBe(false)
 
-    const refreshButton = wrapper.find('[data-testid="refresh-button"]')
+    const refreshButton = wrapper.find('[data-testid="data-overview-refresh-button"]')
     expect(refreshButton.exists()).toBe(true)
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')

@@ -1,12 +1,10 @@
-import { RouterLinkStub } from '@vue/test-utils'
-import userEvent from '@testing-library/user-event'
-import { render, screen } from '@testing-library/vue'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
 import { store } from '@/store/store'
 
-function renderComponent(props: any) {
-  return render(OnboardingNavigation, {
+function renderComponent(props = {}) {
+  return mount(OnboardingNavigation, {
     props,
     global: {
       stubs: {
@@ -18,64 +16,64 @@ function renderComponent(props: any) {
 
 describe('OnboardingNavigation.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderComponent({
+    const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
     })
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('displays different next step title', () => {
-    renderComponent({
+    const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
       nextStepTitle: 'nextStepTitle',
     })
 
-    expect(screen.getByText(/nextStepTitle/)).toBeInTheDocument()
+    expect(wrapper.html()).toContain('nextStepTitle')
   })
 
   it('display disabled next button', () => {
-    renderComponent({
+    const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
       shouldAllowNext: false,
     })
 
-    expect(screen.getByText(/Next/).closest('a')).toHaveAttribute('disabled')
+    expect(wrapper.find('[data-testid="onboarding-next-button"]').attributes('disabled')).toBe('true')
   })
 
   it('doesn\'t display previous step', () => {
-    renderComponent({
+    const wrapper = renderComponent({
       nextStep: 'bar',
     })
 
-    expect(screen.queryByText(/Back/)).not.toBeInTheDocument()
+    expect(wrapper.html()).not.toContain('Back')
   })
 
   it('changes step to previous', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
     })
 
     expect(store.state.onboarding.step).toBe('onboarding-welcome')
 
-    await userEvent.click(screen.getByText(/Back/))
+    await wrapper.find('[data-testid="onboarding-previous-button"]').trigger('click')
 
     expect(store.state.onboarding.step).toBe('foo')
   })
 
   it('calls skip onboarding', async () => {
-    renderComponent({
+    const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
     })
 
     expect(store.state.onboarding.isCompleted).toBe(false)
 
-    await userEvent.click(screen.getByText(/Skip Setup/))
+    await wrapper.find('[data-testid="onboarding-skip-button"]').trigger('click')
 
     expect(store.state.onboarding.isCompleted).toBe(true)
   })

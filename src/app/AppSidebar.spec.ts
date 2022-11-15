@@ -1,6 +1,4 @@
-import { RouterLinkStub } from '@vue/test-utils'
-import userEvent from '@testing-library/user-event'
-import { render, screen } from '@testing-library/vue'
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 
 import AppSidebar from './AppSidebar.vue'
 import { store } from '@/store/store'
@@ -8,7 +6,7 @@ import { store } from '@/store/store'
 async function renderComponent() {
   await store.dispatch('fetchPolicies')
 
-  return render(AppSidebar, {
+  return mount(AppSidebar, {
     global: {
       stubs: {
         'router-link': RouterLinkStub,
@@ -19,16 +17,16 @@ async function renderComponent() {
 
 describe('AppSidebar.vue', () => {
   it('renders snapshot', async () => {
-    const { container } = await renderComponent()
+    const wrapper = await renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('renders mesh gateways', async () => {
-    await renderComponent()
+    const wrapper = await renderComponent()
 
-    expect(screen.getByTestId('meshgateways')).toBeInTheDocument()
-    expect(screen.getByTestId('meshgatewayroutes')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="meshgateways"]').exists()).toBe(true)
+    expect(wrapper.find('[data-testid="meshgatewayroutes"]').exists()).toBe(true)
   })
 
   it('refetch data after change of mesh', async () => {
@@ -43,11 +41,14 @@ describe('AppSidebar.vue', () => {
       },
     ]
 
-    await renderComponent()
+    const wrapper = await renderComponent()
 
-    await userEvent.selectOptions(screen.getByRole('combobox'), 'default')
-    const node = await screen.findByText(/10/)
+    const meshSelector = wrapper.find('[data-testid="mesh-selector"]')
+    await meshSelector.setValue('default')
+    await flushPromises()
 
-    expect(node.parentNode).toHaveTextContent('Data Plane Proxies 10')
+    const navItem = wrapper.find('[data-testid="data-plane-list-view"]')
+    expect(navItem.html()).toContain('Data Plane Proxies')
+    expect(navItem.html()).toContain('10')
   })
 })

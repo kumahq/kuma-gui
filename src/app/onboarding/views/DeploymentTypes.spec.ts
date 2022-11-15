@@ -1,31 +1,25 @@
-import { RouterLinkStub } from '@vue/test-utils'
-import userEvent from '@testing-library/user-event'
-import { render, screen } from '@testing-library/vue'
+import { mount } from '@vue/test-utils'
 
 import DeploymentTypes from './DeploymentTypes.vue'
 
 function renderComponent() {
-  return render(DeploymentTypes, {
-    global: {
-      stubs: {
-        routerLink: RouterLinkStub,
-      },
-    },
+  return mount(DeploymentTypes, {
   })
 }
 
 describe('DeploymentTypes.vue', () => {
   it('renders snapshot', () => {
-    const { container } = renderComponent()
+    const wrapper = renderComponent()
 
-    expect(container).toMatchSnapshot()
+    expect(wrapper.element).toMatchSnapshot()
   })
 
   it('changes selected graph', async () => {
-    renderComponent()
+    const wrapper = renderComponent()
 
-    await userEvent.click(screen.getByText(/Multi-zone deployment/))
+    const multiZoneRadioButton = wrapper.find('[data-testid="onboarding-multi-zone-radio-button"]')
+    await multiZoneRadioButton.trigger('click')
 
-    expect(screen.getByTestId('multizone-graph')).toBeInTheDocument()
+    expect(wrapper.find('[data-testid="multizone-graph"]').exists()).toBe(true)
   })
 })

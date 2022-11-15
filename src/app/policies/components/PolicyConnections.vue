@@ -16,6 +16,7 @@
             class="k-input mb-4"
             placeholder="Filter by name"
             required
+            data-testid="dataplane-search-input"
           >
           <p
             v-for="(dataplane, key) in filteredDataplanes"

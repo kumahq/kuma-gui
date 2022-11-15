@@ -2,485 +2,501 @@
 
 exports[`DataplanesOverview.vue renders snapshot 1`] = `
 <div>
-  <div>
+  <div
+    class="onboarding-container"
+  >
     <div
-      class="onboarding-container"
+      class="onboarding-container__header"
+    >
+      
+      <div
+        class="relative"
+      >
+        <h1
+          class="onboarding-title"
+        >
+          Success
+        </h1>
+        <p
+          class="text-center text-lg mt-3"
+        >
+          The following data plane proxies (DPPs) are connected to the control plane:
+        </p>
+      </div>
+      
+    </div>
+    <div
+      class="onboarding-container__content"
     >
       <div
-        class="onboarding-container__header"
+        class="w-full"
       >
         
-        <div
-          class="relative"
-        >
-          <h1
-            class="onboarding-title"
+        <div>
+          <div
+            class="flex justify-center mt-10 mb-16 pb-16"
           >
-            Success
-          </h1>
-          <p
-            class="text-center text-lg mt-3"
-          >
-            The following data plane proxies (DPPs) are connected to the control plane:
-          </p>
-        </div>
-        
-      </div>
-      <div
-        class="onboarding-container__content"
-      >
-        <div
-          class="w-full"
-        >
-          
-          <div>
             <div
-              class="flex justify-center mt-10 mb-16 pb-16"
+              class="w-full sm:w-3/5 p-4"
             >
-              <div
-                class="w-full sm:w-3/5 p-4"
+              <p
+                class="font-bold mb-4"
               >
-                <p
-                  class="font-bold mb-4"
-                >
-                   Found 10 DPPs: 
-                </p>
-                <div
-                  class="k-table-container onboarding-dataplane-table"
+                 Found 10 DPPs: 
+              </p>
+              <div
+                class="k-table-container onboarding-dataplane-table"
+                data-v-4f741344=""
+                is-small=""
+              >
+                <!---->
+                <section
+                  class="k-table-wrapper"
                   data-v-4f741344=""
-                  is-small=""
                 >
-                  <!---->
-                  <section
-                    class="k-table-wrapper"
+                  <table
+                    class="has-hover k-table"
+                    data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     data-v-4f741344=""
                   >
-                    <table
-                      class="has-hover k-table"
-                      data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                    <thead
+                      class=""
                       data-v-4f741344=""
                     >
-                      <thead
+                      <tr
                         class=""
                         data-v-4f741344=""
                       >
-                        <tr
+                        
+                        <th
                           class=""
                           data-v-4f741344=""
                         >
-                          
-                          <th
-                            class=""
+                          <span
+                            class="d-flex align-items-center"
                             data-v-4f741344=""
                           >
+                            
                             <span
-                              class="d-flex align-items-center"
+                              class=""
                               data-v-4f741344=""
                             >
-                              
-                              <span
-                                class=""
-                                data-v-4f741344=""
-                              >
-                                Mesh
-                              </span>
-                              
-                              <!---->
+                              Mesh
                             </span>
-                          </th>
-                          <th
-                            class=""
+                            
+                            <!---->
+                          </span>
+                        </th>
+                        <th
+                          class=""
+                          data-v-4f741344=""
+                        >
+                          <span
+                            class="d-flex align-items-center"
                             data-v-4f741344=""
                           >
+                            
                             <span
-                              class="d-flex align-items-center"
+                              class=""
                               data-v-4f741344=""
                             >
-                              
-                              <span
-                                class=""
-                                data-v-4f741344=""
-                              >
-                                Name
-                              </span>
-                              
-                              <!---->
+                              Name
                             </span>
-                          </th>
-                          <th
-                            class=""
+                            
+                            <!---->
+                          </span>
+                        </th>
+                        <th
+                          class=""
+                          data-v-4f741344=""
+                        >
+                          <span
+                            class="d-flex align-items-center"
                             data-v-4f741344=""
                           >
+                            
                             <span
-                              class="d-flex align-items-center"
+                              class=""
                               data-v-4f741344=""
                             >
-                              
-                              <span
-                                class=""
-                                data-v-4f741344=""
-                              >
-                                Status
-                              </span>
-                              
-                              <!---->
+                              Status
                             </span>
-                          </th>
-                          
-                        </tr>
-                      </thead>
-                      <tbody
+                            
+                            <!---->
+                          </span>
+                        </th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody
+                      data-v-4f741344=""
+                    >
+                      
+                      <tr
                         data-v-4f741344=""
                       >
                         
-                        <tr
+                        <td
                           data-v-4f741344=""
                         >
                           
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            backend
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
+                          default
                           
-                        </tr>
-                        <tr
+                        </td>
+                        <td
                           data-v-4f741344=""
                         >
                           
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            frontend
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
+                          backend
                           
-                        </tr>
-                        <tr
+                        </td>
+                        <td
                           data-v-4f741344=""
                         >
                           
-                          <td
-                            data-v-4f741344=""
+                          <div
+                            class="entity-status is-online"
                           >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            db
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
+                            <span>
+                              Online
+                            </span>
+                          </div>
                           
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            no-subscriptions
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-offline"
-                            >
-                              <span>
-                                Offline
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            cluster-1.backend-02
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            cluster-1.backend-03
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            cluster-1.gateway-01
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            cluster-1.ingress-02
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            dataplane-test-456
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
-                        <tr
-                          data-v-4f741344=""
-                        >
-                          
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            default
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            ingress-dp-test-123
-                            
-                          </td>
-                          <td
-                            data-v-4f741344=""
-                          >
-                            
-                            <div
-                              class="entity-status is-online"
-                            >
-                              <span>
-                                Online
-                              </span>
-                            </div>
-                            
-                          </td>
-                          
-                        </tr>
+                        </td>
                         
-                      </tbody>
-                    </table>
-                    <!---->
-                  </section>
-                </div>
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          frontend
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          db
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          no-subscriptions
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-offline"
+                          >
+                            <span>
+                              Offline
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          cluster-1.backend-02
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          cluster-1.backend-03
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          cluster-1.gateway-01
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          cluster-1.ingress-02
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          dataplane-test-456
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      <tr
+                        data-v-4f741344=""
+                      >
+                        
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          default
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          ingress-dp-test-123
+                          
+                        </td>
+                        <td
+                          data-v-4f741344=""
+                        >
+                          
+                          <div
+                            class="entity-status is-online"
+                          >
+                            <span>
+                              Online
+                            </span>
+                          </div>
+                          
+                        </td>
+                        
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  <!---->
+                </section>
               </div>
             </div>
           </div>
-          
         </div>
+        
       </div>
-      
-      <div
-        class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+    </div>
+    
+    <div
+      class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+    >
+      <a
+        class="medium rounded primary k-button navigation-button navigation-button--back"
+        data-testid="onboarding-previous-button"
+        data-v-6f773baa=""
+        href="/onboarding/add-services-code"
+        type="button"
       >
-        <a
-          class="medium rounded primary k-button navigation-button navigation-button--back"
+        
+        <!---->
+        
+        
+         Back 
+        
+        <!---->
+      </a>
+      <div>
+        <button
+          class="small rounded btn-link k-button skip-button"
+          data-testid="onboarding-skip-button"
           data-v-6f773baa=""
           type="button"
         >
@@ -488,48 +504,35 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
           <!---->
           
           
-           Back 
+           Skip Setup 
           
           <!---->
-        </a>
-        <div>
-          <button
-            class="small rounded btn-link k-button skip-button"
+        </button>
+        <span
+          class="inline-block"
+        >
+          <a
+            class="medium rounded primary k-button navigation-button navigation-button--next"
+            data-testid="onboarding-next-button"
             data-v-6f773baa=""
+            href="/onboarding/completed"
             type="button"
           >
             
             <!---->
             
             
-             Skip Setup 
+            Next
             
             <!---->
-          </button>
-          <span
-            class="inline-block"
-          >
-            <a
-              class="medium rounded primary k-button navigation-button navigation-button--next"
-              data-v-6f773baa=""
-              type="button"
-            >
-              
-              <!---->
-              
-              
-              Next
-              
-              <!---->
-            </a>
-          </span>
-        </div>
+          </a>
+        </span>
       </div>
-      
     </div>
-    <div
-      class="background-image"
-    />
+    
   </div>
+  <div
+    class="background-image"
+  />
 </div>
 `;

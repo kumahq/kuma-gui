@@ -8,6 +8,7 @@
           :style="{ width: `${progress}%` }"
           class="progress-bar"
           role="progressbar"
+          data-testid="app-progress-bar"
         />
       </div>
     </div>
