@@ -182,17 +182,8 @@ const filteredDataPlaneType = ref('All')
 const pageOffset = ref(props.offset)
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 
-const environment = computed(() => store.getters['config/getEnvironment'])
-const multicluster = computed(() => store.getters['config/getMulticlusterStatus'])
-const dataplaneWizardRoute = computed(() => {
-  // we change the route to the Dataplane
-  // wizard based on environment.
-  if (environment.value === 'universal') {
-    return { name: 'universal-dataplane' }
-  } else {
-    return { name: 'kubernetes-dataplane' }
-  }
-})
+const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
+const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
 const filteredTableData = computed(() => {
   const data = tableData.value.data.filter((row: any) => {
     if (filteredDataPlaneType.value === 'All') {
@@ -201,7 +192,7 @@ const filteredTableData = computed(() => {
       return row.type.toLowerCase() === filteredDataPlaneType.value.toLowerCase()
     }
   })
-  const headers = getDataPlaneTableHeaders(multicluster.value, visibleTableHeaderKeys.value)
+  const headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
 
   return {
     data,
@@ -211,7 +202,7 @@ const filteredTableData = computed(() => {
 
 const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
   return columnsDropdownItems
-    .filter((item) => multicluster.value ? true : item.tableHeaderKey !== 'zone')
+    .filter((item) => isMultiZoneMode.value ? true : item.tableHeaderKey !== 'zone')
     .map((item) => {
       const isChecked = visibleTableHeaderKeys.value.includes(item.tableHeaderKey)
 
@@ -229,7 +220,6 @@ watch(() => route.params.mesh, function () {
   }
 
   // Ensures basic state is reset when switching meshes using the mesh selector.
-  isLoading.value = true
   isEmpty.value = false
   error.value = null
   tableDataIsEmpty.value = false
@@ -293,9 +283,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     },
   }
 
-  /**
-       * Handle our tag collections based on the dataplane type.
-       */
+  // Handles our tag collections based on the dataplane type.
   const importantDataPlaneTagLabels = [
     'kuma.io/protocol',
     'kuma.io/service',
@@ -399,7 +387,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     }
   }
 
-  if (multicluster.value && summary.dpVersion) {
+  if (isMultiZoneMode.value && summary.dpVersion) {
     const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
 
     if (zoneTag && typeof summary.version.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
@@ -413,7 +401,6 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
 
 async function loadData(offset: number): Promise<void> {
   isLoading.value = true
-
   pageOffset.value = offset
 
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.

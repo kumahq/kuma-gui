@@ -5,17 +5,17 @@ export class RestClient {
   /**
    * The API origin. **Never has a trailing slash**.
    */
-  private _origin: string
+  _origin: string
 
   /**
    * The base API path relative to the API origin. **Never has a leading or trailing slash**.
    */
-  private _basePath: string
+  _basePath: string
 
   /**
    * @param basePath **Default: `''`**. A base path under which the client’s API is served (e.g. `'api'`). Leading and trailing slashes will be ignored.
    */
-  public constructor(basePath: string = '') {
+  constructor(basePath: string = '') {
     let origin
 
     if (import.meta.env.PROD) {
@@ -31,24 +31,24 @@ export class RestClient {
   /**
    * The absolute API URL used in all requests. Includes its base path segment if one is set.
    */
-  public get url() {
+  get url() {
     return [this._origin, this.basePath].filter((segment) => segment !== '').join('/')
   }
 
-  public get basePath() {
+  get basePath() {
     return this._basePath
   }
 
-  public set basePath(basePath: string) {
+  set basePath(basePath: string) {
     this._basePath = trimBoundarySlashes(basePath)
   }
 
   /**
    * Performs a network request using the GET method.
    *
-   * @returns the response’s de-serialized data (when applicable).
+   * @returns the response’s de-serialized data.
    */
-  public async get(path: string, options?: RequestInit & { params?: any }) {
+  async get(path: string, options?: RequestInit & { params?: any }): Promise<any> {
     const processedOptions: RequestInit & { params?: any } = options ?? {}
     processedOptions.method = 'GET'
 
@@ -62,7 +62,7 @@ export class RestClient {
    *
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
-  public async raw(path: string, options?: RequestInit & { params?: any }) {
+  async raw(path: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
     const url = path.startsWith('http') ? path : `${this.url}/${path}`
 
     return makeRequest(url, options)

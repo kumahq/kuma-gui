@@ -105,6 +105,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
       
       <button
         class="medium rounded primary k-button refresh-button"
+        data-testid="refresh-button"
         data-v-6f773baa=""
         type="button"
       >
@@ -462,6 +463,7 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
       
       <button
         class="medium rounded primary k-button refresh-button"
+        data-testid="refresh-button"
         data-v-6f773baa=""
         type="button"
       >
