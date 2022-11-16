@@ -499,7 +499,7 @@
                 <template #kubernetes>
                   <CodeBlock
                     id="code-block-kubernetes-command"
-                    data-test-codeblock="kubernetes"
+                    data-testid="kubernetes"
                     language="bash"
                     :code="codeOutput"
                   />
@@ -507,7 +507,7 @@
                 <template #universal>
                   <CodeBlock
                     id="code-block-universal-command"
-                    data-test-codeblock="universal"
+                    data-testid="universal"
                     language="bash"
                     :code="codeOutput"
                   />

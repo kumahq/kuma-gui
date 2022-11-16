@@ -61,12 +61,12 @@ describe('Mesh.vue', () => {
     // test that the cli command is correct depending
     // on which tab you clicked
     const kubeTab = wrapper.find('#kubernetes-tab a')
-    const uniCode = wrapper.find('[data-test-codeblock="universal"]')
+    const uniCode = wrapper.find('[data-testid="universal"]')
     expect(uniCode.html()).toContain('kumactl')
 
     await kubeTab.trigger('click')
 
-    const kubeCode = wrapper.find('[data-test-codeblock="kubernetes"]')
+    const kubeCode = wrapper.find('[data-testid="kubernetes"]')
     expect(kubeCode.html()).toContain('kubectl')
   })
 })
