@@ -98,5 +98,5 @@
       }
     }
   ],
-  "next": null
+  "next": "http://localhost:5681/meshes/default/circuit-breakers?offset=1"
 }

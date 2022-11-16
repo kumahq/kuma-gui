@@ -35,6 +35,7 @@
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :next="nextUrl"
+        :page-offset="pageOffset"
         @table-action="getEntity"
         @load-data="loadData"
       >
@@ -137,6 +138,7 @@ import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import { PolicyEntity, TableHeader } from '@/types/index.d'
+import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const tabs = [
   {
@@ -157,6 +159,12 @@ const props = defineProps({
     type: String,
     required: true,
   },
+
+  offset: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
 })
 
 const isLoading = ref(true)
@@ -169,6 +177,7 @@ const tableDataIsEmpty = ref(false)
 const entity = ref<any>({})
 const rawEntity = ref<Omit<PolicyEntity, 'creationTime' | 'modificationTime'> | null>(null)
 const nextUrl = ref<string | null>(null)
+const pageOffset = ref(props.offset)
 
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers: [
@@ -202,12 +211,16 @@ watch(() => route.params.mesh, function () {
   tableDataIsEmpty.value = false
   error.value = null
 
-  loadData()
+  loadData(0)
 })
 
-loadData()
+loadData(props.offset)
 
-async function loadData(offset: number = 0): Promise<void> {
+async function loadData(offset: number): Promise<void> {
+  pageOffset.value = offset
+  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+  patchQueryParam('offset', offset > 0 ? offset : null)
+
   isLoading.value = true
   error.value = null
 

@@ -13,8 +13,9 @@
         :table-data="tableData"
         :table-data-is-empty="isEmpty"
         :next="next"
+        :page-offset="pageOffset"
         @table-action="tableAction"
-        @load-data="loadData($event)"
+        @load-data="loadData"
       >
         <template #additionalControls>
           <KButton
@@ -134,6 +135,7 @@ import MultizoneInfo from '../components/MultizoneInfo.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 export default {
   name: 'ZoneIngresses',
@@ -151,6 +153,14 @@ export default {
     TabsWidget,
     KButton,
     KCard,
+  },
+
+  props: {
+    offset: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
   },
 
   data() {
@@ -198,13 +208,16 @@ export default {
       pageSize: PAGE_SIZE_DEFAULT,
       next: null,
       subscriptionsReversed: [],
+      pageOffset: this.offset,
     }
   },
+
   computed: {
     ...mapGetters({
       multicluster: 'config/getMulticlusterStatus',
     }),
   },
+
   watch: {
     $route() {
       // Ensures basic state is reset when switching meshes using the mesh selector.
@@ -212,16 +225,18 @@ export default {
       this.isEmpty = false
       this.error = null
 
-      this.init()
+      this.init(0)
     },
   },
+
   beforeMount() {
-    this.init()
+    this.init(this.offset)
   },
+
   methods: {
-    init() {
+    init(offset) {
       if (this.multicluster) {
-        this.loadData()
+        this.loadData(offset)
       }
     },
     tableAction(ev) {
@@ -231,7 +246,11 @@ export default {
       this.getEntity(data)
     },
 
-    async loadData(offset = '0') {
+    async loadData(offset) {
+      this.pageOffset = offset
+      // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+      patchQueryParam('offset', offset > 0 ? offset : null)
+
       this.isLoading = true
       this.isEmpty = false
 

@@ -10,6 +10,7 @@
         :table-data="tableData"
         :table-data-is-empty="tableData.data.length === 0"
         :next="nextUrl"
+        :page-offset="pageOffset"
         @table-action="setActiveServiceInsight"
         @load-data="loadData"
       />
@@ -36,6 +37,7 @@ import ServiceDetails from '../components/ServiceDetails.vue'
 import { kumaApi } from '@/api/kumaApi'
 import { STATUS } from '@/constants'
 import { ServiceInsight, TableHeader } from '@/types/index.d'
+import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },
@@ -54,9 +56,18 @@ const EMPTY_STATE = {
 
 const route = useRoute()
 
+const props = defineProps({
+  offset: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
+})
+
 const isLoading = ref(true)
 const error = ref<Error | null>(null)
 const nextUrl = ref<string | null>(null)
+const pageOffset = ref(props.offset)
 const serviceInsight = ref<{ name: string, mesh: string, serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' } | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers,
@@ -72,9 +83,13 @@ watch(() => route.params.mesh, function () {
   loadData(0)
 })
 
-loadData(0)
+loadData(props.offset)
 
 async function loadData(offset: number): Promise<void> {
+  pageOffset.value = offset
+  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+  patchQueryParam('offset', offset > 0 ? offset : null)
+
   isLoading.value = true
   error.value = null
 

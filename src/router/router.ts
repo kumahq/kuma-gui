@@ -1,5 +1,6 @@
 import { createRouter as createVueRouter, createWebHistory, NavigationGuard, Router, RouteRecordRaw } from 'vue-router'
 
+import { getLastNumberParameter } from './getLastParameter'
 import { store } from '@/store/store'
 import { PolicyDefinition } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
@@ -13,9 +14,10 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
       shouldReRender: true,
       title: policy.pluralDisplayName,
     },
-    props: {
+    props: (route) => ({
       policyPath: policy.path,
-    },
+      offset: getLastNumberParameter(route.query.offset),
+    }),
     component: () => import('@/app/policies/views/PolicyView.vue'),
   }))
 }
@@ -55,6 +57,9 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
       meta: {
         title: 'Zones',
       },
+      props: (route) => ({
+        offset: getLastNumberParameter(route.query.offset),
+      }),
       component: () => import('@/app/zones/views/ZonesView.vue'),
     },
     {
@@ -63,6 +68,9 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
       meta: {
         title: 'Zone ingresses',
       },
+      props: (route) => ({
+        offset: getLastNumberParameter(route.query.offset),
+      }),
       component: () => import('@/app/zones/views/ZoneIngresses.vue'),
     },
     {
@@ -71,6 +79,9 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
       meta: {
         title: 'Zone egresses',
       },
+      props: (route) => ({
+        offset: getLastNumberParameter(route.query.offset),
+      }),
       component: () => import('@/app/zones/views/ZoneEgresses.vue'),
     },
     {
@@ -93,15 +104,10 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
               meta: {
                 title: 'Data plane proxies',
               },
-              props(route) {
-                const offsets = Array.isArray(route.query.offset) ? route.query.offset : [route.query.offset]
-                const offset = parseInt(offsets[offsets.length - 1] ?? '0') || 0
-
-                return {
-                  name: route.query.name,
-                  offset,
-                }
-              },
+              props: (route) => ({
+                name: route.query.name,
+                offset: getLastNumberParameter(route.query.offset),
+              }),
               component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
             },
             {
@@ -125,6 +131,9 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
               meta: {
                 title: 'Services',
               },
+              props: (route) => ({
+                offset: getLastNumberParameter(route.query.offset),
+              }),
               component: () => import('@/app/services/views/ServiceListView.vue'),
             },
             {
