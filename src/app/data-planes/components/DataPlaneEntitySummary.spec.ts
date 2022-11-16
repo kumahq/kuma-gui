@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneEntitySummary from './DataPlaneEntitySummary.vue'

@@ -1,3 +1,5 @@
+import { describe, expect, test } from '@jest/globals'
+
 import { mergeInsightsReducer, parseInsightReducer } from './mesh-insights'
 
 describe('mesh-insights', () => {
@@ -45,19 +47,19 @@ describe('mesh-insights', () => {
     },
   }
 
-  it('calls parseInsightReducer without any data', () => {
+  test('calls parseInsightReducer without any data', () => {
     expect(parseInsightReducer()).toMatchSnapshot()
   })
 
-  it('calls parseInsightReducer with mesh insights', () => {
+  test('calls parseInsightReducer with mesh insights', () => {
     expect(parseInsightReducer(meshInsightObject)).toMatchSnapshot()
   })
 
-  it('calls mergeInsightsReducer with an empty array', () => {
+  test('calls mergeInsightsReducer with an empty array', () => {
     expect(mergeInsightsReducer([])).toMatchSnapshot()
   })
 
-  it('calls mergeInsightsReducer with mesh insights array', () => {
+  test('calls mergeInsightsReducer with mesh insights array', () => {
     expect(
       mergeInsightsReducer([
         meshInsightObject,

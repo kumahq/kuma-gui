@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DonutChart from './DonutChart.vue'
@@ -24,7 +25,7 @@ describe('DonutChart.vue', () => {
     document.body.innerHTML = ''
   })
 
-  it('renders chart', async () => {
+  test('renders chart', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()

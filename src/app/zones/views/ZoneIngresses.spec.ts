@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import ZoneIngresses from './ZoneIngresses.vue'
@@ -13,7 +14,7 @@ function renderComponent(mode = 'standalone') {
 }
 
 describe('ZoneIngresses.vue', () => {
-  it('renders snapshot when no multizone', async () => {
+  test('renders snapshot when no multizone', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -21,7 +22,7 @@ describe('ZoneIngresses.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders snapshot when multizone', async () => {
+  test('renders snapshot when multizone', async () => {
     const wrapper = renderComponent('global')
 
     await flushPromises()
@@ -31,7 +32,7 @@ describe('ZoneIngresses.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders zoneingress insights', async () => {
+  test('renders zoneingress insights', async () => {
     const wrapper = renderComponent('global')
 
     await flushPromises()

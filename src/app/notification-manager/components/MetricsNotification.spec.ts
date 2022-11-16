@@ -1,9 +1,10 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import MetricsNotification from './MetricsNotification.vue'
 
 describe('MetricsNotification.vue', () => {
-  it('renders snapshot', () => {
+  test('renders snapshot', () => {
     const wrapper = mount(MetricsNotification)
 
     expect(wrapper.element).toMatchSnapshot()

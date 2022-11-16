@@ -1,3 +1,4 @@
+import { beforeAll, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, shallowMount } from '@vue/test-utils'
 
 import ServiceDetails from './ServiceDetails.vue'

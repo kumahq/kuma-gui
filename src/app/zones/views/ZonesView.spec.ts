@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import ZonesView from './ZonesView.vue'
@@ -13,7 +14,7 @@ function renderComponent(mode = 'standalone') {
 }
 
 describe('ZonesView.vue', () => {
-  it('renders snapshot when no multizone', async () => {
+  test('renders snapshot when no multizone', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -21,7 +22,7 @@ describe('ZonesView.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders snapshot when multizone', async () => {
+  test('renders snapshot when multizone', async () => {
     const wrapper = renderComponent('global')
 
     await flushPromises()
@@ -32,7 +33,7 @@ describe('ZonesView.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders config of multizone', async () => {
+  test('renders config of multizone', async () => {
     const wrapper = renderComponent('global')
 
     await flushPromises()
@@ -43,7 +44,7 @@ describe('ZonesView.vue', () => {
     expect(wrapper.html()).toContain('adminAccessLogPath')
   })
 
-  it('renders zone insights', async () => {
+  test('renders zone insights', async () => {
     const wrapper = renderComponent('global')
 
     await flushPromises()

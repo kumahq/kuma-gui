@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import CreateMesh from './CreateMesh.vue'
@@ -22,7 +23,7 @@ function renderComponent(mode = 'standalone') {
 }
 
 describe('CreateMesh.vue', () => {
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -30,7 +31,7 @@ describe('CreateMesh.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders multizone next step', () => {
+  test('renders multizone next step', () => {
     const wrapper = renderComponent('global')
 
     expect(wrapper.html()).toContain('onboarding-multi-zone')

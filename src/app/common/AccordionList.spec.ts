@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import AccordionList from './AccordionList.vue'
@@ -41,13 +42,13 @@ function renderComponent(props = {}) {
 }
 
 describe('AccordionList.vue', () => {
-  it('renders snapshot at the beginning', () => {
+  test('renders snapshot at the beginning', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders with opened second panel and switch opened panel on click', async () => {
+  test('renders with opened second panel and switch opened panel on click', async () => {
     const wrapper = renderComponent({ initiallyOpen: 1 })
 
     expect(wrapper.find('[data-testid="accordion-item-content"]').html()).toContain('Content 2')
@@ -59,7 +60,7 @@ describe('AccordionList.vue', () => {
     expect(wrapper.find('[data-testid="accordion-item-content"]').html()).toContain('Content 1')
   })
 
-  it('renders initally two opened accordion', async () => {
+  test('renders initally two opened accordion', async () => {
     const wrapper = renderComponent({
       initiallyOpen: [0, 1],
       multipleOpen: true,
@@ -68,7 +69,7 @@ describe('AccordionList.vue', () => {
     expect(wrapper.findAll('[data-testid="accordion-item-content"]').length).toBe(2)
   })
 
-  it('renders initally two closed accordions and open it', async () => {
+  test('renders initally two closed accordions and open it', async () => {
     const wrapper = renderComponent({ multipleOpen: true })
 
     expect(wrapper.findAll('[data-testid="accordion-item-content"]').length).toBe(0)

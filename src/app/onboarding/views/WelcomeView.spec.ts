@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import WelcomeView from './WelcomeView.vue'
@@ -13,13 +14,13 @@ function renderComponent(environment: string) {
 }
 
 describe('WelcomeView.vue', () => {
-  it('renders snapshot', () => {
+  test('renders snapshot', () => {
     const wrapper = renderComponent('universal')
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders Kubernetess', () => {
+  test('renders Kubernetess', () => {
     const wrapper = renderComponent('kubernetess')
 
     expect(wrapper.html()).toContain('Kubernetes')

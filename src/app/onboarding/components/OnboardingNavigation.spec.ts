@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount, RouterLinkStub } from '@vue/test-utils'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
@@ -15,7 +16,7 @@ function renderComponent(props = {}) {
 }
 
 describe('OnboardingNavigation.vue', () => {
-  it('renders snapshot', () => {
+  test('renders snapshot', () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
@@ -24,7 +25,7 @@ describe('OnboardingNavigation.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('displays different next step title', () => {
+  test('displays different next step title', () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
@@ -34,7 +35,7 @@ describe('OnboardingNavigation.vue', () => {
     expect(wrapper.html()).toContain('nextStepTitle')
   })
 
-  it('display disabled next button', () => {
+  test('display disabled next button', () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
@@ -44,7 +45,7 @@ describe('OnboardingNavigation.vue', () => {
     expect(wrapper.find('[data-testid="onboarding-next-button"]').attributes('disabled')).toBe('true')
   })
 
-  it('doesn\'t display previous step', () => {
+  test('doesn\'t display previous step', () => {
     const wrapper = renderComponent({
       nextStep: 'bar',
     })
@@ -52,7 +53,7 @@ describe('OnboardingNavigation.vue', () => {
     expect(wrapper.html()).not.toContain('Back')
   })
 
-  it('changes step to previous', async () => {
+  test('changes step to previous', async () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',
@@ -65,7 +66,7 @@ describe('OnboardingNavigation.vue', () => {
     expect(store.state.onboarding.step).toBe('foo')
   })
 
-  it('calls skip onboarding', async () => {
+  test('calls skip onboarding', async () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
       nextStep: 'bar',

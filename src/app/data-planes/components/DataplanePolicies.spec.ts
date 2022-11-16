@@ -1,3 +1,4 @@
+import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { rest } from 'msw'
 
@@ -19,7 +20,7 @@ async function renderComponent(props = {}) {
 }
 
 describe('DataplanePolicies.vue', () => {
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     const wrapper = await renderComponent({
       dataPlane: {
         mesh: 'foo',
@@ -35,7 +36,7 @@ describe('DataplanePolicies.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders loading', async () => {
+  test('renders loading', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
@@ -53,7 +54,7 @@ describe('DataplanePolicies.vue', () => {
     expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
 
-  it('renders error', async () => {
+  test('renders error', async () => {
     jest.spyOn(console, 'error').mockImplementation(() => { }) // silence console errors
 
     server.use(
@@ -75,7 +76,7 @@ describe('DataplanePolicies.vue', () => {
     expect(wrapper.html()).toContain('An error has occurred while trying to load this data.')
   })
 
-  it('renders no item', async () => {
+  test('renders no item', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),

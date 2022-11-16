@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import AppNavItem from './AppNavItem.vue'
@@ -15,13 +16,13 @@ function renderComponent() {
 }
 
 describe('AppNavItem.vue', () => {
-  it('renders snapshot with link to selected mesh', () => {
+  test('renders snapshot with link to selected mesh', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it.each([
+  test.each([
     [0, '0'],
     [20, '20'],
     [200, '99+'],

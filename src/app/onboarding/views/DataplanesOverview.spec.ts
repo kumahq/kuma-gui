@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataplanesOverview from './DataplanesOverview.vue'
@@ -7,7 +8,7 @@ function renderComponent() {
 }
 
 describe('DataplanesOverview.vue', () => {
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     const wrapper = renderComponent()
 
     expect(wrapper.find('[data-testid="loading"]').exists()).toBe(true)

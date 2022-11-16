@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
@@ -20,7 +21,7 @@ describe('EnvoyData.vue', () => {
     document.body.innerHTML = ''
   })
 
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
@@ -35,7 +36,7 @@ describe('EnvoyData.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders loading', () => {
+  test('renders loading', () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
@@ -51,7 +52,7 @@ describe('EnvoyData.vue', () => {
     wrapper.unmount()
   })
 
-  it('renders error', async () => {
+  test('renders error', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(500), ctx.json('')),

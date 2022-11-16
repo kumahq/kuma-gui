@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 
 import AppSidebar from './AppSidebar.vue'
@@ -16,20 +17,20 @@ async function renderComponent() {
 }
 
 describe('AppSidebar.vue', () => {
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     const wrapper = await renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders mesh gateways', async () => {
+  test('renders mesh gateways', async () => {
     const wrapper = await renderComponent()
 
     expect(wrapper.find('[data-testid="meshgateways"]').exists()).toBe(true)
     expect(wrapper.find('[data-testid="meshgatewayroutes"]').exists()).toBe(true)
   })
 
-  it('refetch data after change of mesh', async () => {
+  test('refetch data after change of mesh', async () => {
     store.state.selectedMesh = 'hello-world'
     store.state.meshes.total = 1
     store.state.meshes.items = [

@@ -1,3 +1,4 @@
+import { describe, expect, jest, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 import { datadogLogs } from '@datadog/browser-logs'
 
@@ -12,13 +13,13 @@ function renderComponent(props = {}) {
 }
 
 describe('PaginationWidget.vue', () => {
-  it('renders nothing if no next or prev props provided', () => {
+  test('renders nothing if no next or prev props provided', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders pagination', () => {
+  test('renders pagination', () => {
     const wrapper = renderComponent({
       hasPrevious: true,
       hasNext: true,
@@ -27,7 +28,7 @@ describe('PaginationWidget.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('calls buttons', async () => {
+  test('calls buttons', async () => {
     const wrapper = renderComponent({
       hasPrevious: true,
       hasNext: true,

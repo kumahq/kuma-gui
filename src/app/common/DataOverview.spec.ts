@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 import { datadogLogs } from '@datadog/browser-logs'
 
@@ -23,7 +24,7 @@ describe('DataOverview.vue', () => {
     (datadogLogs.logger.info as jest.MockedFunction<any>).mockClear()
   })
 
-  it('renders basic snapshot', () => {
+  test('renders basic snapshot', () => {
     const wrapper = renderComponent({
       tableData: {
         headers: [],
@@ -34,7 +35,7 @@ describe('DataOverview.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders additional scoped slot', async () => {
+  test('renders additional scoped slot', async () => {
     const wrapper = renderComponent({
       tableData: {
         headers: [
@@ -53,7 +54,7 @@ describe('DataOverview.vue', () => {
     expect(wrapper.find('table').element).toMatchSnapshot()
   })
 
-  it('renders pagination and react on click', async () => {
+  test('renders pagination and react on click', async () => {
     const wrapper = renderComponent({
       next: true,
       tableData: {
@@ -80,7 +81,7 @@ describe('DataOverview.vue', () => {
     expect(wrapper.find('[data-testid="pagination-previous-button"]').exists()).toBe(false)
   })
 
-  it('refresh page on second page', async () => {
+  test('refresh page on second page', async () => {
     const wrapper = renderComponent({
       next: true,
       tableData: {
@@ -100,7 +101,7 @@ describe('DataOverview.vue', () => {
     expect(datadogLogs.logger.info).toMatchSnapshot()
   })
 
-  it('renders all custom templates for data', async () => {
+  test('renders all custom templates for data', async () => {
     const wrapper = renderComponent({
       showWarnings: true,
       tableData: {

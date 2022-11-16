@@ -1,3 +1,4 @@
+import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import MultiZoneView from './MultiZoneView.vue'
@@ -8,13 +9,13 @@ function renderComponent() {
 }
 
 describe('MultiZoneView.vue', () => {
-  it('renders snapshot', () => {
+  test('renders snapshot', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('detects resources on call and allow to proceed', async () => {
+  test('detects resources on call and allow to proceed', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -25,7 +26,7 @@ describe('MultiZoneView.vue', () => {
     expect(wrapper.find('[data-testid="loading"]').exists()).toBe(false)
   })
 
-  it('refetch resources if any not available', async () => {
+  test('refetch resources if any not available', async () => {
     jest.useFakeTimers()
     jest
       .spyOn(kumaApi, 'getAllZoneIngressOverviews')

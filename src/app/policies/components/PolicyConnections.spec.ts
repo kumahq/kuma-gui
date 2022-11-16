@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
@@ -9,7 +10,7 @@ function renderComponent(props = {}) {
 }
 
 describe('PolicyConnections.vue', () => {
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
@@ -23,7 +24,7 @@ describe('PolicyConnections.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('filters result', async () => {
+  test('filters result', async () => {
     const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
@@ -42,7 +43,7 @@ describe('PolicyConnections.vue', () => {
     expect(wrapper.findAll('[data-testid="dataplane-name"]').length).toBe(2)
   })
 
-  it('renders loading', () => {
+  test('renders loading', () => {
     const wrapper = renderComponent({
       mesh: 'foo',
       policyType: 'foo',
@@ -52,7 +53,7 @@ describe('PolicyConnections.vue', () => {
     expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
 
-  it('renders error', async () => {
+  test('renders error', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
@@ -70,7 +71,7 @@ describe('PolicyConnections.vue', () => {
     expect(wrapper.html()).toContain('An error has occurred while trying to load this data.')
   })
 
-  it('renders no item', async () => {
+  test('renders no item', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/:policyType/:policyName/dataplanes', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
