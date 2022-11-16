@@ -499,6 +499,7 @@
                 <template #kubernetes>
                   <CodeBlock
                     id="code-block-kubernetes-command"
+                    data-testid="kubernetes"
                     language="bash"
                     :code="codeOutput"
                   />
@@ -506,6 +507,7 @@
                 <template #universal>
                   <CodeBlock
                     id="code-block-universal-command"
+                    data-testid="universal"
                     language="bash"
                     :code="codeOutput"
                   />
@@ -866,8 +868,11 @@ export default {
       // Mesh yaml creation
       let meshYaml
 
+      let ctl
+
       if (this.selectedTab === '#kubernetes') {
         // Kubernetes
+        ctl = 'kubectl'
         meshYaml = {
           apiVersion: 'kuma.io/v1alpha1',
           kind: 'Mesh',
@@ -881,6 +886,7 @@ export default {
         }
       } else {
         // Universal
+        ctl = 'kumactl'
         meshYaml = {
           type: 'Mesh',
           name: newData.meshName,
@@ -888,7 +894,7 @@ export default {
         }
       }
 
-      return formatForCLI(meshYaml, '" | kumactl apply -f -')
+      return formatForCLI(meshYaml, `" | ${ctl} apply -f -`)
     },
     nextDisabled() {
       const {
