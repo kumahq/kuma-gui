@@ -55,8 +55,18 @@ describe('Mesh.vue', () => {
     await doStep(wrapper, nextButton, 'mesh-metrics-enabled', ['mesh-metrics-backend-name'])
 
     await flushPromises()
-    expect(wrapper.html()).toContain('kumactl apply')
 
     expect(wrapper.element).toMatchSnapshot()
+
+    // test that the cli command is correct depending
+    // on which tab you clicked
+    const kubeTab = wrapper.find('#kubernetes-tab a')
+    const uniCode = wrapper.find('[data-test-codeblock="universal"]')
+    expect(uniCode.html()).toContain('kumactl')
+
+    await kubeTab.trigger('click')
+
+    const kubeCode = wrapper.find('[data-test-codeblock="kubernetes"]')
+    expect(kubeCode.html()).toContain('kubectl')
   })
 })
