@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import AddNewServices from './AddNewServices.vue'
@@ -7,13 +8,13 @@ function renderComponent() {
 }
 
 describe('AddNewServices.vue', () => {
-  it('renders snapshot', () => {
+  test('renders snapshot', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('changes selected box', async () => {
+  test('changes selected box', async () => {
     const wrapper = renderComponent()
 
     const boxes = wrapper.findAll('[data-testid="box"]')

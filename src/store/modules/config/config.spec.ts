@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+
 import { rest } from 'msw'
 
 import configModule from './config'
@@ -6,7 +8,7 @@ import { kumaApi } from '@/api/kumaApi'
 
 describe('config module', () => {
   describe('getters', () => {
-    it('tests getStatus getter', () => {
+    test('tests getStatus getter', () => {
       const state: any = {
         status: 'foo',
       }
@@ -16,7 +18,7 @@ describe('config module', () => {
       expect(result).toBe('foo')
     })
 
-    it('tests getMulticlusterStatus getter when global mode', () => {
+    test('tests getMulticlusterStatus getter when global mode', () => {
       const getters = {
         getMode: 'global',
       }
@@ -26,7 +28,7 @@ describe('config module', () => {
       expect(result).toBe(true)
     })
 
-    it('tests getMulticlusterStatus getter when standalone', () => {
+    test('tests getMulticlusterStatus getter when standalone', () => {
       const getters = {
         getMode: 'standalone',
       }
@@ -42,7 +44,7 @@ describe('config module', () => {
       jest.restoreAllMocks()
     })
 
-    it('tests getStatus action', async () => {
+    test('tests getStatus action', async () => {
       server.use(rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL, (req, res, ctx) => res(ctx.status(200))))
 
       const state: any = {
@@ -60,7 +62,7 @@ describe('config module', () => {
       expect(result).toBe('OK')
     })
 
-    it.each([
+    test.each([
       [
         {
           tagline: 'Other',
@@ -147,7 +149,7 @@ describe('config module', () => {
   })
 
   describe('mutations', () => {
-    it('tests SET_CONFIG_DATA mutation', () => {
+    test('tests SET_CONFIG_DATA mutation', () => {
       const userConfig = { foo: 'bar' }
 
       const state: any = {

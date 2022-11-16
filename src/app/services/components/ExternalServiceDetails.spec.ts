@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 
 import ExternalServiceDetails from './ExternalServiceDetails.vue'

@@ -1,3 +1,5 @@
+import { describe, expect, test } from '@jest/globals'
+
 import { _highlightCode, highlightElement, AvailableLanguages } from './highlightElement'
 
 const highlightCodeTestCases: Array<[{ language: AvailableLanguages, code: string }, string]> = [

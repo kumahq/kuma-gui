@@ -1,8 +1,10 @@
+import { describe, expect, test } from '@jest/globals'
+
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 
 describe('sidebar utils', () => {
   describe('calculateMeshInsights', () => {
-    it('when no item', async () => {
+    test('when no item', async () => {
       const meshInsight = calculateMeshInsights({ items: [] })
 
       expect(meshInsight).toMatchInlineSnapshot(`
@@ -21,7 +23,7 @@ describe('sidebar utils', () => {
 }
 `)
     })
-    it('when several items', async () => {
+    test('when several items', async () => {
       const meshInsight = calculateMeshInsights({
         items: [
           {
@@ -173,7 +175,7 @@ describe('sidebar utils', () => {
   })
 
   describe('calculateGlobalInsights', () => {
-    it('when no item', async () => {
+    test('when no item', async () => {
       const meshInsight = calculateGlobalInsights({
         type: 'GlobalInsights',
         creationTime: '123',
@@ -183,7 +185,7 @@ describe('sidebar utils', () => {
       expect(meshInsight).toMatchInlineSnapshot('{}')
     })
 
-    it('when several items', async () => {
+    test('when several items', async () => {
       const meshInsight = calculateGlobalInsights({
         type: 'GlobalInsights',
         creationTime: '2018-07-17T16:05:36.995Z',

@@ -1,16 +1,18 @@
+import { describe, expect, jest, test } from '@jest/globals'
+
 import { DISABLED } from '@/constants'
 import { getZoneDpServerAuthType, fetchAllResources } from './helpers'
 import { ZoneOverview } from '@/types/index.d'
 
 describe('helpers', () => {
   describe('getZoneDpServerAuthType', () => {
-    it(`returns ${DISABLED} when no subscriptions`, () => {
+    test(`returns ${DISABLED} when no subscriptions`, () => {
       expect(getZoneDpServerAuthType(({ zoneInsight: { subscriptions: [] } } as unknown) as ZoneOverview)).toBe(
         DISABLED,
       )
     })
 
-    it(`returns ${DISABLED} when subscription does not have auth in config`, () => {
+    test(`returns ${DISABLED} when subscription does not have auth in config`, () => {
       expect(
         getZoneDpServerAuthType(({
           zoneInsight: {
@@ -24,7 +26,7 @@ describe('helpers', () => {
       ).toBe(DISABLED)
     })
 
-    it('returns dp auth type when subscriptions available', () => {
+    test('returns dp auth type when subscriptions available', () => {
       const type = 'authType'
 
       expect(
@@ -40,7 +42,7 @@ describe('helpers', () => {
       ).toBe(type)
     })
 
-    it(`returns ${DISABLED} type when subscriptions available but no config`, () => {
+    test(`returns ${DISABLED} type when subscriptions available but no config`, () => {
       const type = DISABLED
 
       expect(
@@ -54,28 +56,29 @@ describe('helpers', () => {
   })
 
   describe('fetchAllResources', () => {
-    it('throws an error when broken call', () => {
-      const brokenRequest = jest.fn().mockImplementation(() => {
+    test('throws an error when broken call', () => {
+      const brokenRequest = jest.fn(() => {
         throw new Error()
       })
 
       expect(() => fetchAllResources({ callEndpoint: brokenRequest })).rejects.toThrow(Error)
     })
 
-    it('returns aggregared data', async () => {
+    test('returns aggregared data', async () => {
       const request = jest
         .fn()
-        .mockResolvedValueOnce({
+        .mockReturnValueOnce(Promise.resolve({
           next: true,
           items: new Array(500).fill(''),
           total: 501,
-        })
-        .mockResolvedValueOnce({
+        }))
+        .mockReturnValueOnce(Promise.resolve({
           next: false,
           items: [''],
           total: 501,
-        })
+        }))
 
+      // @ts-expect-error
       const response = (await fetchAllResources({ callEndpoint: request }))
 
       expect(response.items.length).toBe(501)

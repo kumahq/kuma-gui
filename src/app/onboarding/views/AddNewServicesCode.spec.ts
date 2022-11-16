@@ -1,3 +1,4 @@
+import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
@@ -8,7 +9,7 @@ function renderComponent() {
 }
 
 describe('AddNewServicesCode.vue', () => {
-  it('renders snapshot', async () => {
+  test('renders snapshot', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -16,7 +17,7 @@ describe('AddNewServicesCode.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('detects resources on call and allow to proceed', async () => {
+  test('detects resources on call and allow to proceed', async () => {
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -26,7 +27,7 @@ describe('AddNewServicesCode.vue', () => {
     expect(wrapper.find('[data-testid="loading"]').exists()).toBe(false)
   })
 
-  it('refetch resources if any not available', async () => {
+  test('refetch resources if any not available', async () => {
     jest.useFakeTimers()
     jest
       .spyOn(kumaApi, 'getAllDataplanes')

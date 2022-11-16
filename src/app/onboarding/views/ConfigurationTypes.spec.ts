@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import ConfigurationTypes from './ConfigurationTypes.vue'
@@ -22,13 +23,13 @@ function renderComponent(mode = 'standalone') {
 }
 
 describe('ConfigurationTypes.vue', () => {
-  it('renders snapshot', () => {
+  test('renders snapshot', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('renders multizone previous step', () => {
+  test('renders multizone previous step', () => {
     const wrapper = renderComponent('global')
 
     expect(wrapper.html()).toContain('onboarding-multi-zone')

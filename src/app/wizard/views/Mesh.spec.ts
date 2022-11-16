@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { DOMWrapper, flushPromises, mount, VueWrapper } from '@vue/test-utils'
 
 import Mesh from './Mesh.vue'
@@ -34,7 +35,7 @@ async function doStep(wrapper: VueWrapper<any>, nextButton: DOMWrapper<any>, ena
 }
 
 describe('Mesh.vue', () => {
-  it('passes whole wizzard and render yaml', async () => {
+  test('passes whole wizzard and render yaml', async () => {
     const wrapper = renderComponent('global')
 
     const nextButton = wrapper.find('[data-testid="next-step-button"]')

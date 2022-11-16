@@ -1,3 +1,4 @@
+import { afterAll, beforeAll, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, shallowMount } from '@vue/test-utils'
 
 import AppLoadingBar from './AppLoadingBar.vue'
@@ -15,13 +16,13 @@ describe('AppLoadingBar', () => {
     jest.useRealTimers()
   })
 
-  it('renders snapshot at the beginning', () => {
+  test('renders snapshot at the beginning', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('checks if width is max of 100% size', async () => {
+  test('checks if width is max of 100% size', async () => {
     const wrapper = renderComponent()
 
     jest.advanceTimersByTime(1500)

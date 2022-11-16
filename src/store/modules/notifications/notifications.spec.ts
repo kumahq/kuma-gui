@@ -1,8 +1,10 @@
+import { describe, expect, test } from '@jest/globals'
+
 import notificationsModule from './notifications'
 
 describe('notifications module', () => {
   describe('getters', () => {
-    it('tests singleMeshNotificationItems getter ', () => {
+    test('tests singleMeshNotificationItems getter ', () => {
       const rootState: any = {
         selectedMesh: 'web-to-backend.kuma-system',
         meshes: {
@@ -55,7 +57,7 @@ describe('notifications module', () => {
 `)
     })
 
-    it('tests meshNotificationItemMapWithAction getter', () => {
+    test('tests meshNotificationItemMapWithAction getter', () => {
       const rootState: any = {
         meshes: {
           items: [
@@ -105,7 +107,7 @@ describe('notifications module', () => {
 `)
     })
 
-    it('tests amountOfActions getter', () => {
+    test('tests amountOfActions getter', () => {
       const rootState: any = {
         meshes: {
           items: [

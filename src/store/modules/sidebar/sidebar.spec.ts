@@ -1,8 +1,10 @@
+import { describe, expect, test } from '@jest/globals'
+
 import sidebarModule from './sidebar'
 
 describe('sidebar module', () => {
   describe('actions', () => {
-    it('tests getInsights action', async () => {
+    test('tests getInsights action', async () => {
       const rootState: any = {
         selectedMesh: 'default',
       }

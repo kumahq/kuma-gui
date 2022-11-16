@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import NotificationManager from './NotificationManager.vue'
@@ -11,7 +12,7 @@ function renderComponent({ meshes, selectedMesh }: { meshes: any, selectedMesh: 
 }
 
 describe('NotificationManager.vue', () => {
-  it('renders snapshot with information that there are actions which user may take', () => {
+  test('renders snapshot with information that there are actions which user may take', () => {
     const wrapper = renderComponent({
       selectedMesh: 'test-mesh',
       meshes: {
@@ -22,7 +23,7 @@ describe('NotificationManager.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it("doesn't render notification info after it's closed", async () => {
+  test("doesn't render notification info after it's closed", async () => {
     const wrapper = renderComponent({
       selectedMesh: 'test-mesh',
       meshes: {
@@ -34,7 +35,7 @@ describe('NotificationManager.vue', () => {
     expect(wrapper.find('[data-testid="notification-info"]').exists()).toBe(false)
   })
 
-  it('renders single mesh notification modal', async () => {
+  test('renders single mesh notification modal', async () => {
     const wrapper = renderComponent({
       selectedMesh: 'test-mesh',
       meshes: {

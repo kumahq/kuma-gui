@@ -1,3 +1,4 @@
+import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import App from './App.vue'
@@ -25,9 +26,8 @@ function renderComponent(status: string) {
   })
 }
 
-
 describe('App.vue', () => {
-  it('renders main view when successful', async () => {
+  test('renders main view when successful', async () => {
     const wrapper = renderComponent('OK')
     store.dispatch('bootstrap')
 
@@ -38,7 +38,7 @@ describe('App.vue', () => {
     expect(wrapper.html()).toContain('Create a virtual mesh')
   })
 
-  it('fails to renders basic view', async () => {
+  test('fails to renders basic view', async () => {
     const wrapper = renderComponent('ERROR')
     store.dispatch('bootstrap')
 

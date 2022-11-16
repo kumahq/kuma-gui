@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
+
 import { getTableData } from './tableDataUtils'
 import { TableDataParams } from './tableDataUtils.types'
 
@@ -6,10 +8,10 @@ describe('tableDataUtils', () => {
 
   beforeEach(() => {
     params = {
-      getSingleEntity: jest.fn().mockResolvedValue({}),
-      getAllEntities: jest.fn().mockResolvedValue({}),
-      getAllEntitiesFromPath: jest.fn().mockResolvedValue({}),
-      getAllEntitiesFromMesh: jest.fn().mockResolvedValue({}),
+      getSingleEntity: jest.fn().mockReturnValue(Promise.resolve({})),
+      getAllEntities: jest.fn().mockReturnValue(Promise.resolve({})),
+      getAllEntitiesFromPath: jest.fn().mockReturnValue(Promise.resolve({})),
+      getAllEntitiesFromMesh: jest.fn().mockReturnValue(Promise.resolve({})),
       query: null,
       size: 10,
       offset: null,
@@ -17,25 +19,25 @@ describe('tableDataUtils', () => {
   })
 
   describe('calls proper function based on parameters', () => {
-    it('calls getAllEntities', () => {
+    test('calls getAllEntities', () => {
       getTableData(params)
 
       expect(params.getAllEntities).toHaveBeenCalled()
     })
 
-    it('calls getAllEntities when no mesh provided', () => {
+    test('calls getAllEntities when no mesh provided', () => {
       getTableData({ ...params, mesh: undefined })
 
       expect(params.getAllEntities).toHaveBeenCalled()
     })
 
-    it('calls getAllEntitiesFromMesh', () => {
+    test('calls getAllEntitiesFromMesh', () => {
       getTableData({ ...params, mesh: 'test-mesh' })
 
       expect(params.getAllEntitiesFromMesh).toHaveBeenCalled()
     })
 
-    it('calls getSingleEntity', () => {
+    test('calls getSingleEntity', () => {
       getTableData({ ...params, query: 'foo', mesh: 'test-mesh' })
 
       expect(params.getSingleEntity).toHaveBeenCalled()
@@ -43,7 +45,7 @@ describe('tableDataUtils', () => {
   })
 
   describe('handles reponses', () => {
-    it('when no corresponding function provided', async () => {
+    test('when no corresponding function provided', async () => {
       const response = await getTableData({
         ...params,
         mesh: 'test-mesh',
@@ -59,7 +61,7 @@ describe('tableDataUtils', () => {
 `)
     })
 
-    it('without data', async () => {
+    test('without data', async () => {
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
@@ -72,8 +74,8 @@ describe('tableDataUtils', () => {
 `)
     })
 
-    it('with single data', async () => {
-      params.getAllEntities = jest.fn().mockResolvedValue({ mesh: 'foo', name: 'bar' })
+    test('with single data', async () => {
+      params.getAllEntities = jest.fn().mockReturnValue(Promise.resolve({ mesh: 'foo', name: 'bar' }))
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
@@ -89,15 +91,15 @@ describe('tableDataUtils', () => {
 `)
     })
 
-    it('with multiple data', async () => {
-      params.getAllEntities = jest.fn().mockResolvedValue({
+    test('with multiple data', async () => {
+      params.getAllEntities = jest.fn().mockReturnValue(Promise.resolve({
         items: [
           { mesh: 'foo', name: 'bar' },
           { mesh: 'bar', name: 'foo' },
         ],
         total: 2,
         next: 'http://?offset=2',
-      })
+      }))
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`
@@ -117,12 +119,12 @@ describe('tableDataUtils', () => {
 `)
     })
 
-    it('with empty array of items', async () => {
-      params.getAllEntities = jest.fn().mockResolvedValue({
+    test('with empty array of items', async () => {
+      params.getAllEntities = jest.fn().mockReturnValue(Promise.resolve({
         items: [],
         total: 0,
         next: null,
-      })
+      }))
       const response = await getTableData(params)
 
       expect(response).toMatchInlineSnapshot(`

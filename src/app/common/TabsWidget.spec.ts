@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import TabsWidget from './TabsWidget.vue'
@@ -13,7 +14,7 @@ function renderComponent(props: any) {
 }
 
 describe('TabsWidget.vue', () => {
-  it('renders basic snapshot', () => {
+  test('renders basic snapshot', () => {
     const wrapper = renderComponent({
       tabs: [
         {
@@ -32,7 +33,7 @@ describe('TabsWidget.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  it('switches tabs on click', async () => {
+  test('switches tabs on click', async () => {
     const wrapper = renderComponent({
       tabs: [
         {
@@ -52,7 +53,7 @@ describe('TabsWidget.vue', () => {
     expect(wrapper.find('#panel-1').html()).toContain('Kubernetes')
   })
 
-  it('renders with initally selected tab', () => {
+  test('renders with initally selected tab', () => {
     const wrapper = renderComponent({
       tabs: [
         {

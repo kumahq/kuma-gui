@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
@@ -14,7 +15,7 @@ describe('DataplaneUniversal.vue', () => {
     jest.spyOn(global.Math, 'random').mockReturnValue(0.123456789)
   })
 
-  it('passes whole wizzard and render yaml', async () => {
+  test('passes whole wizzard and render yaml', async () => {
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ name: 'hi' })),

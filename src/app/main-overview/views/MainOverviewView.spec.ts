@@ -1,3 +1,4 @@
+import { afterEach, describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import MainOverviewView from './MainOverviewView.vue'
@@ -15,7 +16,7 @@ describe('MainOverviewView.vue', () => {
     document.body.innerHTML = ''
   })
 
-  it('renders basic snapshot', () => {
+  test('renders basic snapshot', () => {
     const wrapper = renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()
