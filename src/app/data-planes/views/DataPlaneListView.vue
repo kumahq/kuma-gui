@@ -400,11 +400,12 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
 }
 
 async function loadData(offset: number): Promise<void> {
-  isLoading.value = true
   pageOffset.value = offset
-
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
   patchQueryParam('offset', offset > 0 ? offset : null)
+
+  isLoading.value = true
+
   const mesh = route.params.mesh as string
   const size = PAGE_SIZE
 
