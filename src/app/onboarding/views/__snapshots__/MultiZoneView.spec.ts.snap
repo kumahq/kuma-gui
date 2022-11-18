@@ -127,7 +127,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
-        href="/onboarding/configuration-types"
+        href="#/onboarding/configuration-types"
         type="button"
       >
         
@@ -159,7 +159,7 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             class="medium rounded primary k-button navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
             disabled="true"
-            href="/onboarding/create-mesh"
+            href="#/onboarding/create-mesh"
             type="button"
           >
             

@@ -6,9 +6,12 @@ describe('getAppBaseUrl', () => {
   test.each([
     ['https://example.com/gui', 'https://example.com'],
     ['https://example.com/gui/', 'https://example.com'],
+    ['https://example.com/gui/mesh/default', 'https://example.com'],
     ['https://gui.example.com/gui/', 'https://gui.example.com'],
+    ['https://gui.example.com/gui/mesh/default', 'https://gui.example.com'],
     ['https://example.com/dev/gui', 'https://example.com/dev'],
     ['https://example.com/dev/gui/', 'https://example.com/dev'],
+    ['https://example.com/dev/gui/mesh/default', 'https://example.com/dev'],
     ['https://gui.example.com/dev/gui/', 'https://gui.example.com/dev'],
     ['https://example.com/guillermo/dev/gui', 'https://example.com/guillermo/dev'],
     ['https://example.com/guillermo/dev/gui/', 'https://example.com/guillermo/dev'],

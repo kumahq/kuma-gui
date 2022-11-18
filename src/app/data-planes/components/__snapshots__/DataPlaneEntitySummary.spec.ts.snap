@@ -16,7 +16,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
       </span>
       <a
         class=""
-        href="/mesh/test-mesh/data-planes/backend"
+        href="#/mesh/test-mesh/data-planes/backend"
       >
         backend
       </a>

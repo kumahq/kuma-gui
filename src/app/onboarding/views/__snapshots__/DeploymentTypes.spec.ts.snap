@@ -640,7 +640,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
-        href="/onboarding/welcome"
+        href="#/onboarding/welcome"
         type="button"
       >
         
@@ -671,7 +671,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
           <a
             class="medium rounded primary k-button navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
-            href="/onboarding/configuration-types"
+            href="#/onboarding/configuration-types"
             type="button"
           >
             

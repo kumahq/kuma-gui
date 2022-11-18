@@ -27,7 +27,7 @@ describe('DataPlaneListView', () => {
     expect(dataPlaneTypeFilter.findAll('option').length).toBe(4)
 
     const createDataPlaneButton = wrapper.find('[data-testid="data-plane-create-data-plane-button"]')
-    expect(createDataPlaneButton.attributes('href')).toBe('/wizard/kubernetes-dataplane')
+    expect(createDataPlaneButton.attributes('href')).toBe('#/wizard/kubernetes-dataplane')
 
     const nsBackButton = wrapper.find('[data-testid="data-plane-ns-back-button"]')
     expect(nsBackButton.exists()).toBe(false)

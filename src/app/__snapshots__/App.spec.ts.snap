@@ -12,7 +12,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       <a
         aria-current="page"
         class="router-link-active router-link-exact-active"
-        href="/"
+        href="#/"
       >
         <img
           alt="Kuma Logo"
@@ -148,7 +148,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       </button>
       <a
         class=""
-        href="/diagnostics"
+        href="#/diagnostics"
       >
         <span
           class="kong-icon-gearFilled kong-icon"
@@ -204,7 +204,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           <a
             aria-current="page"
             class="router-link-active router-link-exact-active nav-link nav-link--is-active"
-            href="/"
+            href="#/"
           >
             Home 
             <!--v-if-->
@@ -276,7 +276,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default"
+            href="#/mesh/default"
           >
             Overview 
             <!--v-if-->
@@ -290,7 +290,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default/services"
+            href="#/mesh/default/services"
           >
             Services 
             <span
@@ -308,7 +308,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default/data-planes"
+            href="#/mesh/default/data-planes"
           >
             Data Plane Proxies 
             <span
@@ -555,7 +555,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="medium rounded primary k-button"
-                      href="/wizard/mesh"
+                      href="#/wizard/mesh"
                       type="button"
                     >
                       
@@ -614,7 +614,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="medium rounded primary k-button"
-                      href="/wizard/universal-dataplane"
+                      href="#/wizard/universal-dataplane"
                       type="button"
                     >
                       

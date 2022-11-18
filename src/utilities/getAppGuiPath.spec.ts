@@ -6,9 +6,12 @@ describe('getAppGuiPath', () => {
   test.each([
     ['https://example.com/gui', '/gui'],
     ['https://example.com/gui/', '/gui'],
+    ['https://example.com/gui/mesh/default', '/gui'],
     ['https://gui.example.com/gui/', '/gui'],
+    ['https://gui.example.com/gui/mesh/default', '/gui'],
     ['https://example.com/dev/gui', '/dev/gui'],
     ['https://example.com/dev/gui/', '/dev/gui'],
+    ['https://example.com/dev/gui/mesh/default', '/dev/gui'],
     ['https://gui.example.com/dev/gui/', '/dev/gui'],
     ['https://example.com/guillermo/dev/gui', '/guillermo/dev/gui'],
     ['https://example.com/guillermo/dev/gui/', '/guillermo/dev/gui'],

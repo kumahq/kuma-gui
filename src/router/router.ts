@@ -1,4 +1,4 @@
-import { createRouter as createVueRouter, createWebHistory, NavigationGuard, Router, RouteRecordRaw } from 'vue-router'
+import { createRouter as createVueRouter, createWebHashHistory, NavigationGuard, Router, RouteRecordRaw } from 'vue-router'
 
 import { getLastNumberParameter } from './getLastParameter'
 import { store } from '@/store/store'
@@ -294,7 +294,7 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
   const appGuiPath = getAppGuiPath(window.location)
 
   const router = createVueRouter({
-    history: createWebHistory(appGuiPath),
+    history: createWebHashHistory(appGuiPath),
     routes,
   })
 

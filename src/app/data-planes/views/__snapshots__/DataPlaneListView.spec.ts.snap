@@ -359,7 +359,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
         <a
           class="medium rounded primary k-button add-dp-button"
           data-testid="data-plane-create-data-plane-button"
-          href="/wizard/kubernetes-dataplane"
+          href="#/wizard/kubernetes-dataplane"
           type="button"
         >
           
@@ -595,7 +595,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/backend"
+                        href="#/mesh/default/data-planes/backend"
                       >
                         backend
                       </a>
@@ -614,7 +614,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/backend"
+                        href="#/mesh/default/services/backend"
                       >
                         backend
                       </a>
@@ -651,7 +651,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/backend"
+                        href="#/mesh/default/data-planes/backend"
                         type="button"
                       >
                         
@@ -718,7 +718,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                        href="#/mesh/default/data-planes/cluster-1.backend-02"
                       >
                         cluster-1.backend-02
                       </a>
@@ -737,7 +737,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/backend"
+                        href="#/mesh/default/services/backend"
                       >
                         backend
                       </a>
@@ -774,7 +774,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                        href="#/mesh/default/data-planes/cluster-1.backend-02"
                         type="button"
                       >
                         
@@ -841,7 +841,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                        href="#/mesh/default/data-planes/cluster-1.backend-03"
                       >
                         cluster-1.backend-03
                       </a>
@@ -860,7 +860,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/backend"
+                        href="#/mesh/default/services/backend"
                       >
                         backend
                       </a>
@@ -897,7 +897,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                        href="#/mesh/default/data-planes/cluster-1.backend-03"
                         type="button"
                       >
                         
@@ -964,7 +964,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.gateway-01"
+                        href="#/mesh/default/data-planes/cluster-1.gateway-01"
                       >
                         cluster-1.gateway-01
                       </a>
@@ -983,7 +983,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/gateway"
+                        href="#/mesh/default/services/gateway"
                       >
                         gateway
                       </a>
@@ -1020,7 +1020,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.gateway-01"
+                        href="#/mesh/default/data-planes/cluster-1.gateway-01"
                         type="button"
                       >
                         
@@ -1087,7 +1087,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                        href="#/mesh/default/data-planes/cluster-1.ingress-02"
                       >
                         cluster-1.ingress-02
                       </a>
@@ -1106,7 +1106,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/ingress"
+                        href="#/mesh/default/services/ingress"
                       >
                         ingress
                       </a>
@@ -1143,7 +1143,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                        href="#/mesh/default/data-planes/cluster-1.ingress-02"
                         type="button"
                       >
                         
@@ -1210,7 +1210,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/dataplane-test-456"
+                        href="#/mesh/default/data-planes/dataplane-test-456"
                       >
                         dataplane-test-456
                       </a>
@@ -1229,7 +1229,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/kuma-example-backend"
+                        href="#/mesh/default/services/kuma-example-backend"
                       >
                         kuma-example-backend
                       </a>
@@ -1266,7 +1266,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/dataplane-test-456"
+                        href="#/mesh/default/data-planes/dataplane-test-456"
                         type="button"
                       >
                         
@@ -1333,7 +1333,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/db"
+                        href="#/mesh/default/data-planes/db"
                       >
                         db
                       </a>
@@ -1352,7 +1352,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/db"
+                        href="#/mesh/default/services/db"
                       >
                         db
                       </a>
@@ -1389,7 +1389,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/db"
+                        href="#/mesh/default/data-planes/db"
                         type="button"
                       >
                         
@@ -1456,7 +1456,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/frontend"
+                        href="#/mesh/default/data-planes/frontend"
                       >
                         frontend
                       </a>
@@ -1475,7 +1475,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/frontend"
+                        href="#/mesh/default/services/frontend"
                       >
                         frontend
                       </a>
@@ -1512,7 +1512,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/frontend"
+                        href="#/mesh/default/data-planes/frontend"
                         type="button"
                       >
                         
@@ -1618,7 +1618,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                        href="#/mesh/default/data-planes/ingress-dp-test-123"
                       >
                         ingress-dp-test-123
                       </a>
@@ -1637,7 +1637,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/kuma-example-backend"
+                        href="#/mesh/default/services/kuma-example-backend"
                       >
                         kuma-example-backend
                       </a>
@@ -1674,7 +1674,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                        href="#/mesh/default/data-planes/ingress-dp-test-123"
                         type="button"
                       >
                         
@@ -1741,7 +1741,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/no-subscriptions"
+                        href="#/mesh/default/data-planes/no-subscriptions"
                       >
                         no-subscriptions
                       </a>
@@ -1760,7 +1760,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/no-subscriptions"
+                        href="#/mesh/default/services/no-subscriptions"
                       >
                         no-subscriptions
                       </a>
@@ -1797,7 +1797,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/no-subscriptions"
+                        href="#/mesh/default/data-planes/no-subscriptions"
                         type="button"
                       >
                         
@@ -1889,7 +1889,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           </span>
           <a
             class=""
-            href="/mesh/default/data-planes/backend"
+            href="#/mesh/default/data-planes/backend"
           >
             backend
           </a>
