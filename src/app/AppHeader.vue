@@ -130,7 +130,7 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
 <style lang="scss" scoped>
 .app-header {
   position: fixed;
-  z-index: 3;
+  z-index: 11;
   top: 0;
   left: 0;
   width: 100%;
