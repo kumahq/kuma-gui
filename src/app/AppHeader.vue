@@ -55,7 +55,7 @@
         <template #items>
           <KDropdownItem>
             <a
-              :href="docsLink"
+              :href="`${env('KUMA_DOCS_URL')}?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -64,7 +64,7 @@
           </KDropdownItem>
           <KDropdownItem>
             <a
-              href="https://github.com/kumahq/kuma/issues/new/choose"
+              :href="env('KUMA_FEEDBACK_URL')"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -105,18 +105,12 @@ import {
 import GithubButton from 'vue-github-button'
 
 import { useStore } from '@/store/store'
+import { useEnv } from '@/composables'
 import NotificationIcon from './common/NotificationIcon.vue'
 import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const store = useStore()
-
-const docsLink = computed(() => {
-  const kumaDocsVersion = store.getters['config/getKumaDocsVersion']
-  if (!kumaDocsVersion) {
-    return ''
-  }
-  return `https://kuma.io/docs/${kumaDocsVersion}/${import.meta.env.VITE_UTM}`
-})
+const env = useEnv({ version: store.getters['config/getKumaDocsVersion'] })
 
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 const environmentName = computed(() => {
