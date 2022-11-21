@@ -78,6 +78,15 @@
         icon="gearFilled"
         button-appearance="btn-link"
       >
+        <template #icon>
+          <KIcon
+            icon="gearFilled"
+            class="k-button-icon"
+            size="16"
+            color="currentColor"
+            hide-title
+          />
+        </template>
         <span class="visually-hidden">Diagnostics</span>
       </KButton>
     </div>
@@ -90,6 +99,7 @@ import {
   KButton,
   KDropdownMenu,
   KDropdownItem,
+  KIcon,
   KPop,
 } from '@kong/kongponents'
 import GithubButton from 'vue-github-button'
