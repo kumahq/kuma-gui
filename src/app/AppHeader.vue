@@ -46,29 +46,61 @@
 
       <NotificationIcon v-if="shouldShowNotificationManager" />
 
-      <router-link :to="{ name: 'diagnostics' }">
-        <KIcon
-          icon="gearFilled"
-          color="currentColor"
-          title="Diagnostics"
-        />
-
+      <KDropdownMenu
+        v-if="env('KUMA_VERSION') !== ''"
+        class="help-menu"
+        icon="help"
+        button-appearance="outline"
+      >
+        <template #items>
+          <KDropdownItem>
+            <a
+              :href="`${env('KUMA_DOCS_URL')}?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Documentation
+            </a>
+          </KDropdownItem>
+          <KDropdownItem>
+            <a
+              :href="env('KUMA_FEEDBACK_URL')"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Feedback
+            </a>
+          </KDropdownItem>
+        </template>
+      </KDropdownMenu>
+      <KButton
+        :to="{ name: 'diagnostics' }"
+        icon="gearFilled"
+        button-appearance="btn-link"
+      >
         <span class="visually-hidden">Diagnostics</span>
-      </router-link>
+      </KButton>
     </div>
   </header>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { KButton, KIcon, KPop } from '@kong/kongponents'
+import {
+  KButton,
+  KDropdownMenu,
+  KDropdownItem,
+  KPop,
+} from '@kong/kongponents'
 import GithubButton from 'vue-github-button'
 
 import { useStore } from '@/store/store'
+import { useEnv } from '@/composables'
 import NotificationIcon from './common/NotificationIcon.vue'
 import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const store = useStore()
+const env = useEnv({ version: store.getters['config/getKumaDocsVersion'] })
 
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 const environmentName = computed(() => {
@@ -82,6 +114,7 @@ const environmentName = computed(() => {
 })
 
 const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Multi-Zone' : 'Standalone')
+
 </script>
 
 <style lang="scss" scoped>
