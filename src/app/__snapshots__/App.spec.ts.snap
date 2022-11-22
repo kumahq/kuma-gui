@@ -304,6 +304,24 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         <div
           class="nav-item"
+          data-testid="gateway-list-view"
+        >
+          <a
+            class="nav-link"
+            href="/mesh/default/gateways"
+          >
+            Gateways 
+            <span
+              class="amount"
+            >
+              1
+            </span>
+          </a>
+        </div>
+        
+        
+        <div
+          class="nav-item"
           data-testid="data-plane-list-view"
         >
           <a
@@ -314,7 +332,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <span
               class="amount"
             >
-              10
+              9
             </span>
           </a>
         </div>

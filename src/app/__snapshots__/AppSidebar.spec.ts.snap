@@ -71,6 +71,23 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
     
     <div
       class="nav-item"
+      data-testid="gateway-list-view"
+    >
+      <a
+        class="nav-link"
+      >
+        Gateways 
+        <span
+          class="amount amount--empty"
+        >
+          0
+        </span>
+      </a>
+    </div>
+    
+    
+    <div
+      class="nav-item"
       data-testid="data-plane-list-view"
     >
       <a
