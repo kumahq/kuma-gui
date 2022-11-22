@@ -7,7 +7,7 @@ type EnvVars = {
 export const useEnv = ({ version = '' }) => {
   const env: EnvVars = {
     KUMA_VERSION: version,
-    KUMA_DOCS_URL: `${import.meta.env.VITE_DOCS_ROOT}${version}/`,
+    KUMA_DOCS_URL: `${import.meta.env.VITE_DOCS_BASE_URL}/${version}/`,
     // remove the ? for now incase we need to append to an already query
     // param'ed URL
     KUMA_UTM_QUERY_PARAMS: import.meta.env.VITE_UTM.substring(1),
