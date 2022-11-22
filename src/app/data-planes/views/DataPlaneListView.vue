@@ -16,7 +16,7 @@
         @load-data="loadData($event)"
       >
         <template #additionalControls>
-          <div>
+          <div v-if="route.meta.type === 'gateway'">
             <label
               for="data-planes-type-filter"
               class="mr-2"
@@ -132,7 +132,6 @@ import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
   compatibilityKind,
   dpTags,
-  getDataplaneType,
   getStatus,
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
@@ -145,14 +144,12 @@ import { KUMA_ZONE_TAG_NAME } from '@/constants'
 const PAGE_SIZE = 50
 const dataPlaneTypes = [
   'All',
-  'Standard',
-  'Gateway (builtin)',
-  'Gateway (delegated)',
+  'Builtin',
+  'Delegated',
 ]
 
 const route = useRoute()
 const store = useStore()
-
 const props = defineProps({
   name: {
     type: String,
@@ -181,18 +178,23 @@ const nextUrl = ref<string | null>(null)
 const filteredDataPlaneType = ref('All')
 const pageOffset = ref(props.offset)
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
-
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
 const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
+
+const isGateway = (item: {dataplane: {networking: {gateway?: string}}}) => {
+  return typeof item.dataplane.networking.gateway !== 'undefined'
+}
 const filteredTableData = computed(() => {
-  const data = tableData.value.data.filter((row: any) => {
-    if (filteredDataPlaneType.value === 'All') {
-      return true
-    } else {
-      return row.type.toLowerCase() === filteredDataPlaneType.value.toLowerCase()
-    }
-  })
-  const headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
+  let data = tableData.value.data.filter((row: any) => isGateway(row.overview) === (route.meta.type === 'gateway'))
+
+  // only for gatways filter by user selected value
+  if (route.meta.type === 'gateway' && dataPlaneTypes.includes(filteredDataPlaneType.value)) {
+    data = data.filter((row: any) => filteredDataPlaneType.value === 'All' || row.type.toLowerCase() === filteredDataPlaneType.value.toLowerCase())
+  }
+  let headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
+  if (route.meta.type === 'standard') {
+    headers = headers.filter(item => item.key !== 'type')
+  }
 
   return {
     data,
@@ -202,6 +204,12 @@ const filteredTableData = computed(() => {
 
 const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
   return columnsDropdownItems
+    .filter((item) => {
+      if (route.meta.type === 'standard') {
+        return item.tableHeaderKey !== 'type'
+      }
+      return true
+    })
     .filter((item) => isMultiZoneMode.value ? true : item.tableHeaderKey !== 'zone')
     .map((item) => {
       const isChecked = visibleTableHeaderKeys.value.includes(item.tableHeaderKey)
@@ -268,9 +276,10 @@ function getEmptyState() {
 async function parseData(dataPlaneOverview: DataPlaneOverview) {
   const mesh = dataPlaneOverview.mesh
   const name = dataPlaneOverview.name
+  const type = dataPlaneOverview.dataplane.networking.gateway?.type || 'STANDARD'
 
   const nameRoute = {
-    name: 'data-plane-detail-view',
+    name: type === 'STANDARD' ? 'data-plane-detail-view' : 'gateway-detail-view',
     params: {
       mesh,
       dataPlane: name,
@@ -352,6 +361,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     nameRoute,
     mesh,
     meshRoute,
+    type,
     zone: zone ?? '—',
     service: service ?? '—',
     serviceInsightRoute,
@@ -367,7 +377,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     kumaDpAndKumaCpMismatch: false,
     lastUpdated: summary.selectedUpdateTime ? humanReadableDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
     lastConnected: summary.selectedTime ? humanReadableDate(new Date(summary.selectedTime).toUTCString()) : '—',
-    type: getDataplaneType(dataPlaneOverview.dataplane),
+    overview: dataPlaneOverview,
   }
 
   if (summary.version) {

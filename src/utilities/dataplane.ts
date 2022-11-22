@@ -194,19 +194,6 @@ export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEn
   }
 }
 
-/**
- * @returns `'Standard' | 'Gateway' | 'Gateway (builtin)' | 'Gateway (delegated)'`
- */
-export function getDataplaneType(dataplane: { networking: DataPlaneNetworking }): string {
-  const { gateway } = dataplane.networking
-
-  if (gateway) {
-    return 'Gateway' + (gateway.type !== undefined ? ` (${gateway.type})` : '')
-  } else {
-    return 'Standard'
-  }
-}
-
 export function compatibilityKind(version: Version): Compatibility {
   const isKumaCpCompatible = version.kumaDp?.kumaCpCompatible ?? true
 
