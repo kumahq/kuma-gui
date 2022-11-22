@@ -48,8 +48,10 @@ describe('AppSidebar.vue', () => {
     await meshSelector.setValue('default')
     await flushPromises()
 
+    expect(wrapper.find('[data-testid="gateway-list-view"]').html()).toContain('1')
+
     const navItem = wrapper.find('[data-testid="data-plane-list-view"]')
     expect(navItem.html()).toContain('Data Plane Proxies')
-    expect(navItem.html()).toContain('10')
+    expect(navItem.html()).toContain('9')
   })
 })

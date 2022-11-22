@@ -4,8 +4,19 @@ import { flushPromises, mount } from '@vue/test-utils'
 import DataPlaneListView from './DataPlaneListView.vue'
 import { router } from '@/../jest/jest-setup-after-env'
 
-async function renderComponent() {
-  await router.push({ name: 'data-plane-list-view', params: { mesh: 'default' } })
+async function renderComponent(props?: Record<string, unknown>) {
+  await router.push(
+    {
+      ...{
+        name: 'data-plane-list-view',
+        params: { mesh: 'default' },
+        meta: {
+          type: 'standard',
+        },
+      },
+      ...props || {},
+    },
+  )
 
   const wrapper = mount(DataPlaneListView)
   await flushPromises()
@@ -23,9 +34,6 @@ describe('DataPlaneListView', () => {
   test('has expected content and UI elements', async () => {
     const wrapper = await renderComponent()
 
-    const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
-    expect(dataPlaneTypeFilter.findAll('option').length).toBe(4)
-
     const createDataPlaneButton = wrapper.find('[data-testid="data-plane-create-data-plane-button"]')
     expect(createDataPlaneButton.attributes('href')).toBe('/wizard/kubernetes-dataplane')
 
@@ -36,32 +44,78 @@ describe('DataPlaneListView', () => {
     expect(refreshButton.exists()).toBe(true)
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
-    expect(tableRows.length).toBe(10)
+    expect(tableRows.length).toBe(9)
 
     const firstTableRowHtml = tableRows[0].html()
-    const expectedTableRowStrings = ['backend', 'default', 'Standard', 'http', 'February 17, 2021', '1.0.7']
+    const expectedTableRowStrings = ['backend', 'default', 'http', 'February 17, 2021', '1.0.7']
     for (const string of expectedTableRowStrings) {
       expect(firstTableRowHtml).toContain(string)
     }
   })
 
-  test('can filter data plane proxies by type', async () => {
-    const wrapper = await renderComponent()
+  test('gateway listing has expected content and UI elements', async () => {
+    const wrapper = await renderComponent({
+      name: 'gateway-list-view',
+      meta: {
+        type: 'gateway',
+      },
+    })
 
     const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
-    await dataPlaneTypeFilter.setValue('Gateway (builtin)')
+    expect(dataPlaneTypeFilter.findAll('option').length).toBe(3)
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
     expect(tableRows.length).toBe(1)
 
     const firstTableRowHtml = tableRows[0].html()
-    const expectedTableRowStrings = ['cluster-1.gateway-01', 'default', 'Gateway (BUILTIN)', 'gateway', 'February 19, 2021', '1.0.0-rc2-211-g823fe8ce']
+    const expectedTableRowStrings = ['cluster-1.gateway-01', 'default', 'BUILTIN']
     for (const string of expectedTableRowStrings) {
       expect(firstTableRowHtml).toContain(string)
     }
   })
 
-  test('shows correct default table columns', async () => {
+  test('can filter gateway proxies by type', async () => {
+    const wrapper = await renderComponent({
+      name: 'gateway-list-view',
+      meta: {
+        type: 'gateway',
+      },
+    })
+
+    const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
+    await dataPlaneTypeFilter.setValue('Builtin)')
+
+    const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
+    expect(tableRows.length).toBe(1)
+
+    const firstTableRowHtml = tableRows[0].html()
+    const expectedTableRowStrings = ['cluster-1.gateway-01', 'default', 'BUILTIN', 'gateway']
+    for (const string of expectedTableRowStrings) {
+      expect(firstTableRowHtml).toContain(string)
+    }
+  })
+
+  test('shows correct default table columns for proxies', async () => {
+    const expectedColumnHeaders = [
+      'Status',
+      'Name',
+      'Mesh',
+      'Service',
+      'Protocol',
+      'Last Updated',
+      'Kuma DP version',
+      'Details',
+    ]
+    const wrapper = await renderComponent()
+
+    const tableHeads = wrapper.findAll('[data-testid="data-overview-table"] th')
+
+    for (let i = 0; i < tableHeads.length; i++) {
+      const tableHeadHtml = tableHeads[i].html()
+      expect(tableHeadHtml).toContain(expectedColumnHeaders[i])
+    }
+  })
+  test('shows correct default table columns for gateways', async () => {
     const expectedColumnHeaders = [
       'Status',
       'Name',
@@ -72,7 +126,12 @@ describe('DataPlaneListView', () => {
       'Kuma DP version',
       'Details',
     ]
-    const wrapper = await renderComponent()
+    const wrapper = await renderComponent({
+      name: 'gateway-list-view',
+      meta: {
+        type: 'gateway',
+      },
+    })
 
     const tableHeads = wrapper.findAll('[data-testid="data-overview-table"] th')
 
