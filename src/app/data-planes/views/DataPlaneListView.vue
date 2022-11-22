@@ -181,7 +181,7 @@ const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
 const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
 
-const isGateway = (item: {dataplane: {networking: {gateway?: string}}}) => {
+const isGateway = (item: DataPlaneOverview) => {
   return typeof item.dataplane.networking.gateway !== 'undefined'
 }
 const filteredTableData = computed(() => {
@@ -460,7 +460,8 @@ async function loadData(offset: number): Promise<void> {
 
 function selectDataPlaneOverview(name: string | null): void {
   if (name && rawData.value.length > 0) {
-    dataPlaneOverview.value = rawData.value.find((data) => data.name === name) ?? rawData.value[0]
+    const items = rawData.value.filter((data) => isGateway(data) === (route.meta.type === 'gateway'))
+    dataPlaneOverview.value = items.find((data) => data.name === name) ?? items[0]
     patchQueryParam('name', dataPlaneOverview.value.name)
   } else {
     dataPlaneOverview.value = null
