@@ -96,6 +96,34 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
           component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
         },
         {
+          path: 'gateways',
+          children: [
+            {
+              path: '',
+              name: 'gateway-list-view',
+              meta: {
+                title: 'Gateways',
+                type: 'gateway',
+              },
+              props: (route) => ({
+                name: route.query.name,
+                offset: getLastNumberParameter(route.query.offset),
+              }),
+              component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
+            },
+            {
+              path: ':dataPlane',
+              name: 'gateway-detail-view',
+              meta: {
+                title: 'Gateway',
+                parent: 'gateway-list-view',
+                breadcrumbTitleParam: 'dataPlane',
+              },
+              component: () => import('@/app/data-planes/views/DataPlaneDetailView.vue'),
+            },
+          ],
+        },
+        {
           path: 'data-planes',
           children: [
             {
@@ -103,6 +131,7 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
               name: 'data-plane-list-view',
               meta: {
                 title: 'Data plane proxies',
+                type: 'standard',
               },
               props: (route) => ({
                 name: route.query.name,
