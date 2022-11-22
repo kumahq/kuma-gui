@@ -51,6 +51,7 @@
         class="help-menu"
         icon="help"
         button-appearance="outline"
+        :kpop-attributes="{ placement: 'bottomEnd' }"
       >
         <template #items>
           <KDropdownItem>
