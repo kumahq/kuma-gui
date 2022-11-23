@@ -121,7 +121,6 @@ describe('DataPlaneListView', () => {
       'Name',
       'Type',
       'Service',
-      'Protocol',
       'Last Updated',
       'Kuma DP version',
       'Details',

@@ -194,6 +194,8 @@ const filteredTableData = computed(() => {
   let headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
   if (route.meta.type === 'standard') {
     headers = headers.filter(item => item.key !== 'type')
+  } else {
+    headers = headers.filter(item => item.key !== 'protocol')
   }
 
   return {
@@ -207,8 +209,9 @@ const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
     .filter((item) => {
       if (route.meta.type === 'standard') {
         return item.tableHeaderKey !== 'type'
+      } else {
+        return item.tableHeaderKey !== 'protocol'
       }
-      return true
     })
     .filter((item) => isMultiZoneMode.value ? true : item.tableHeaderKey !== 'zone')
     .map((item) => {
