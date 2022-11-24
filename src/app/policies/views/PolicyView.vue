@@ -183,7 +183,6 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers: [
     { label: 'Actions', key: 'actions', hideLabel: true },
     { label: 'Name', key: 'name' },
-    { label: 'Mesh', key: 'mesh' },
     { label: 'Type', key: 'type' },
   ],
   data: [],
