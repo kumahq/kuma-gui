@@ -182,7 +182,7 @@ const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStat
 const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
 
 const isGateway = (item: DataPlaneOverview) => {
-  return typeof item.dataplane.networking.gateway !== 'undefined'
+  return item.dataplane.networking.gateway !== undefined
 }
 const filteredTableData = computed(() => {
   let data = tableData.value.data.filter((row: any) => isGateway(row.overview) === (route.meta.type === 'gateway'))
