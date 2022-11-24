@@ -88,7 +88,7 @@
           <KButton
             v-if="route.query.ns"
             appearance="primary"
-            :to="{ name: 'data-plane-list-view' }"
+            :to="{ name: route.name }"
             data-testid="data-plane-ns-back-button"
           >
             <span class="custom-control-icon">
@@ -226,7 +226,7 @@ const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'data-plane-list-view') {
+  if (route.name !== 'data-plane-list-view' && route.name !== 'gateway-list-view') {
     return
   }
 
@@ -462,8 +462,8 @@ async function loadData(offset: number): Promise<void> {
 }
 
 function selectDataPlaneOverview(name: string | null): void {
-  if (name && rawData.value.length > 0) {
-    const items = rawData.value.filter((data) => isGateway(data) === (route.meta.type === 'gateway'))
+  const items = rawData.value.filter((data) => isGateway(data) === (route.meta.type === 'gateway'))
+  if (name && items.length > 0) {
     dataPlaneOverview.value = items.find((data) => data.name === name) ?? items[0]
     patchQueryParam('name', dataPlaneOverview.value.name)
   } else {
