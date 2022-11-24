@@ -37,7 +37,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           aria-label="See the documentation for options to install:"
           class="noBorder kong-card"
-          data-v-1f0d90ac=""
         >
           <div
             class="k-card-header d-flex mb-3"
@@ -71,7 +70,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           >
             <div
               class="k-card-body"
-              data-v-1f0d90ac=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               

@@ -1672,7 +1672,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Create a virtual mesh"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1706,7 +1705,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           
@@ -1744,7 +1742,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Connect data plane proxies"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1778,7 +1775,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           
@@ -1812,7 +1808,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Apply null policies"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1846,7 +1841,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           
@@ -1880,7 +1874,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Resources"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1914,7 +1907,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           

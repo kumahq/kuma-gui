@@ -57,7 +57,6 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                   <table
                     class="has-hover k-table"
                     data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                    data-v-4f741344=""
                   >
                     <thead
                       class=""

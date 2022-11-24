@@ -9,7 +9,6 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
       <section
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         class="noBorder kong-card"
-        data-v-1f0d90ac=""
       >
         <!---->
         <!---->
@@ -19,7 +18,6 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
         >
           <div
             class="k-card-body"
-            data-v-1f0d90ac=""
             id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           >
             

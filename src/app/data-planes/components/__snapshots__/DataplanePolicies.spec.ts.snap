@@ -36,7 +36,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -74,13 +73,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -88,7 +86,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on incoming connection on address
@@ -106,17 +104,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   FaultInjection
@@ -127,17 +125,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             </div>
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   TrafficPermission
@@ -242,7 +240,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -280,13 +277,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -294,7 +290,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on outgoing connection to the address
@@ -312,17 +308,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   Timeout
@@ -372,7 +368,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -410,13 +405,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -424,7 +418,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on outgoing connections to service
@@ -442,17 +436,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   HealthCheck
@@ -502,7 +496,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -540,13 +533,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -554,7 +546,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on outgoing connections to service
@@ -572,17 +564,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   HealthCheck
@@ -632,7 +624,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -670,13 +661,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -684,7 +674,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on outgoing connections to service
@@ -702,17 +692,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   HealthCheck
@@ -762,7 +752,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -800,13 +789,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -814,7 +802,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on outgoing connections to service
@@ -832,17 +820,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   HealthCheck
@@ -892,7 +880,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               
               <div
                 aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-0eaad51f=""
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="button"
               >
@@ -930,13 +917,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 <transition-stub
                   appear="false"
                   css="true"
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                   name="fade"
                   persisted="false"
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 300px; max-width: 350px; max-height: auto; display: none;"
@@ -944,7 +930,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                     <!---->
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Policies applied on all incoming and outgoing connections to the selected data plane proxy
@@ -962,17 +948,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
             
             <div
               class="k-badge-default k-badge-rounded k-badge d-inline-flex"
-              data-v-37d3a284=""
+              data-v-5fa2851a=""
               style=""
               tabindex="0"
             >
               <div
                 class="k-badge-text truncate"
-                data-v-37d3a284=""
+                data-v-5fa2851a=""
               >
                 <div
                   class="k-badge-text truncate"
-                  data-v-37d3a284=""
+                  data-v-5fa2851a=""
                 >
                   
                   TrafficTrace

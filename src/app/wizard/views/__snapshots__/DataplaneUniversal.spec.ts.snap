@@ -117,7 +117,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                   <div
                     class="k-code-block code-block"
                     data-testid="k-code-block"
-                    data-v-034f9b55=""
+                    data-v-37a155b9=""
                     id="code-block-generate-token-command"
                     style="--maxLineNumberWidth: 1ch;"
                     tabindex="0"
@@ -125,30 +125,30 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                     <!---->
                     <div
                       class="k-code-block-content"
-                      data-v-034f9b55=""
+                      data-v-37a155b9=""
                     >
                       <pre
                         class="k-highlighted-code-block language-bash"
                         data-testid="k-code-block-highlighted-code-block"
-                        data-v-034f9b55=""
+                        data-v-37a155b9=""
                         tabindex="0"
                       >
                         <span
                           class="k-line-number-rows"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                         >
                           
         
                           
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-generate-token-command-L1"
                             >
                               1
@@ -162,7 +162,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         </span>
                         <code
                           class="language-bash"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                         >
                           kumactl generate dataplane-token 
                           <span
@@ -187,7 +187,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                       <button
                         class="small outline k-button k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
-                        data-v-034f9b55=""
+                        data-v-37a155b9=""
                         data-v-6f773baa=""
                         title="Copy (Alt+C)"
                         type="button"
@@ -198,7 +198,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         
                         <span
                           class="kong-icon-copy kong-icon"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -227,7 +227,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         </span>
                         <span
                           class="k-visually-hidden"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                         >
                           Copy
                         </span>
@@ -242,7 +242,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                   <div
                     class="k-code-block code-block"
                     data-testid="k-code-block"
-                    data-v-034f9b55=""
+                    data-v-37a155b9=""
                     id="code-block-stard-dp-command"
                     style="--maxLineNumberWidth: 2ch;"
                     tabindex="0"
@@ -250,30 +250,30 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                     <!---->
                     <div
                       class="k-code-block-content"
-                      data-v-034f9b55=""
+                      data-v-37a155b9=""
                     >
                       <pre
                         class="k-highlighted-code-block language-bash"
                         data-testid="k-code-block-highlighted-code-block"
-                        data-v-034f9b55=""
+                        data-v-37a155b9=""
                         tabindex="0"
                       >
                         <span
                           class="k-line-number-rows"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                         >
                           
         
                           
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L1"
                             >
                               1
@@ -283,13 +283,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L2"
                             >
                               2
@@ -299,13 +299,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L3"
                             >
                               3
@@ -315,13 +315,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L4"
                             >
                               4
@@ -331,13 +331,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L5"
                             >
                               5
@@ -347,13 +347,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L6"
                             >
                               6
@@ -363,13 +363,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L7"
                             >
                               7
@@ -379,13 +379,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L8"
                             >
                               8
@@ -395,13 +395,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L9"
                             >
                               9
@@ -411,13 +411,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L10"
                             >
                               10
@@ -427,13 +427,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L11"
                             >
                               11
@@ -443,13 +443,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L12"
                             >
                               12
@@ -459,13 +459,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L13"
                             >
                               13
@@ -475,13 +475,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L14"
                             >
                               14
@@ -491,13 +491,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                           <span
                             class="k-line"
-                            data-v-034f9b55=""
+                            data-v-37a155b9=""
                           >
                             
           
                             <a
                               class="k-line-anchor"
-                              data-v-034f9b55=""
+                              data-v-37a155b9=""
                               id="code-block-stard-dp-command-L15"
                             >
                               15
@@ -511,7 +511,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         </span>
                         <code
                           class="language-bash"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                         >
                           kuma-dp run 
                           <span
@@ -579,7 +579,7 @@ networking:
                       <button
                         class="small outline k-button k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
-                        data-v-034f9b55=""
+                        data-v-37a155b9=""
                         data-v-6f773baa=""
                         title="Copy (Alt+C)"
                         type="button"
@@ -590,7 +590,7 @@ networking:
                         
                         <span
                           class="kong-icon-copy kong-icon"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                           data-v-71cfcfc4=""
                         >
                           <svg
@@ -619,7 +619,7 @@ networking:
                         </span>
                         <span
                           class="k-visually-hidden"
-                          data-v-034f9b55=""
+                          data-v-37a155b9=""
                         >
                           Copy
                         </span>

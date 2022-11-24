@@ -136,7 +136,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
             />
             <g
               aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="button"
             >
@@ -168,25 +167,24 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
               </g>
               
               <div
-                data-v-0eaad51f=""
+                data-v-4dbcd696=""
               >
                 <foreignobject
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-0eaad51f=""
+                        data-v-4dbcd696=""
                       >
                         
                         Kuma
@@ -196,7 +194,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                        The control plane provides the config for all services in the mesh. 
@@ -209,7 +207,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
             </g>
             <g
               aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="button"
             >
@@ -241,25 +238,24 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
               </g>
               
               <div
-                data-v-0eaad51f=""
+                data-v-4dbcd696=""
               >
                 <foreignobject
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-0eaad51f=""
+                        data-v-4dbcd696=""
                       >
                         
                         Data Plane Proxy (DPP)
@@ -269,7 +265,7 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                       Kuma attaches a data plane proxy sidecar to each service in your mesh. This sidecar handles the mesh configuration for the service. 
@@ -613,33 +609,45 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
         >
           <label
             class="k-radio"
-            data-v-37af04dc=""
+            data-v-372ea01c=""
           >
             <input
               class="k-input"
               data-testid="onboarding-standalone-radio-button"
-              data-v-37af04dc=""
+              data-v-372ea01c=""
               name="mode"
               type="radio"
             />
-            
-             Standalone deployment 
-            
+            <span
+              class="k-radio-label"
+              data-v-372ea01c=""
+            >
+              
+               Standalone deployment 
+              
+            </span>
+            <!---->
           </label>
           <label
             class="k-radio"
-            data-v-37af04dc=""
+            data-v-372ea01c=""
           >
             <input
               class="k-input"
               data-testid="onboarding-multi-zone-radio-button"
-              data-v-37af04dc=""
+              data-v-372ea01c=""
               name="mode"
               type="radio"
             />
-            
-             Multi-zone deployment 
-            
+            <span
+              class="k-radio-label"
+              data-v-372ea01c=""
+            >
+              
+               Multi-zone deployment 
+              
+            </span>
+            <!---->
           </label>
         </div>
         

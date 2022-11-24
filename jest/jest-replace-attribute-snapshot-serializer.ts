@@ -33,6 +33,13 @@ export function replaceAttributesSnapshotSerializer(
         }
       }
 
+      // Removes “data-v-*” attributes.
+      for (const attribute of value.attributes) {
+        if (attribute.name.startsWith('data-v-')) {
+          value.removeAttribute(attribute.name)
+        }
+      }
+
       processedValues.add(value)
 
       return printer(value, config, indentation, depth, refs)

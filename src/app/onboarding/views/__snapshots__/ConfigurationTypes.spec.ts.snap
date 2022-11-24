@@ -161,7 +161,6 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             </g>
             <g
               aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="button"
             >
@@ -193,25 +192,24 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               
               <div
-                data-v-0eaad51f=""
+                data-v-4dbcd696=""
               >
                 <foreignobject
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-0eaad51f=""
+                        data-v-4dbcd696=""
                       >
                         
                         Yaml
@@ -221,7 +219,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                        Configuration for all Kuma resources is specified in YAML config files. The config files can be stored in an external datastore. 
@@ -234,7 +232,6 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             </g>
             <g
               aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="button"
             >
@@ -266,25 +263,24 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               
               <div
-                data-v-0eaad51f=""
+                data-v-4dbcd696=""
               >
                 <foreignobject
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-0eaad51f=""
+                        data-v-4dbcd696=""
                       >
                         
                         Kuma
@@ -294,7 +290,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                        In Kubernetes mode, the Kuma control plane listens to the Kubernetes API to fetch the right resources and configure the service mesh. 
@@ -307,7 +303,6 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
             </g>
             <g
               aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="button"
             >
@@ -339,25 +334,24 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               </g>
               
               <div
-                data-v-0eaad51f=""
+                data-v-4dbcd696=""
               >
                 <foreignobject
-                  data-v-0eaad51f=""
+                  data-v-4dbcd696=""
                 >
                   <div
                     class="k-popover"
-                    data-v-0eaad51f=""
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     role="region"
                     style="width: 200px; max-width: 350px; max-height: auto; display: none;"
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-0eaad51f=""
+                        data-v-4dbcd696=""
                       >
                         
                         Kubernetes
@@ -367,7 +361,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-0eaad51f=""
+                      data-v-4dbcd696=""
                     >
                       
                        You can store the YAML config files for Kuma in etcd, the native datastore for Kubernetes. 
@@ -915,45 +909,63 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
         >
           <label
             class="k-radio"
-            data-v-37af04dc=""
+            data-v-372ea01c=""
           >
             <input
               class="k-input"
-              data-v-37af04dc=""
+              data-v-372ea01c=""
               name="deployment"
               type="radio"
             />
-            
-             Kubernetes 
-            
+            <span
+              class="k-radio-label"
+              data-v-372ea01c=""
+            >
+              
+               Kubernetes 
+              
+            </span>
+            <!---->
           </label>
           <label
             class="k-radio"
-            data-v-37af04dc=""
+            data-v-372ea01c=""
           >
             <input
               class="k-input"
-              data-v-37af04dc=""
+              data-v-372ea01c=""
               name="deployment"
               type="radio"
             />
-            
-             Postgres 
-            
+            <span
+              class="k-radio-label"
+              data-v-372ea01c=""
+            >
+              
+               Postgres 
+              
+            </span>
+            <!---->
           </label>
           <label
             class="k-radio"
-            data-v-37af04dc=""
+            data-v-372ea01c=""
           >
             <input
               class="k-input"
-              data-v-37af04dc=""
+              data-v-372ea01c=""
               name="deployment"
               type="radio"
             />
-            
-             Memory 
-            
+            <span
+              class="k-radio-label"
+              data-v-372ea01c=""
+            >
+              
+               Memory 
+              
+            </span>
+            <!---->
           </label>
         </div>
         

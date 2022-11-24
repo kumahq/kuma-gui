@@ -21,7 +21,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           class="logo-image"
         />
       </a>
-      <github-button-stub
+      <span
         aria-label="Star kumahq/kuma on GitHub"
         class="gh-star"
         href="https://github.com/kumahq/kuma"
@@ -44,7 +44,6 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          data-v-0eaad51f=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
@@ -66,13 +65,12 @@ exports[`App.vue fails to renders basic view 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-0eaad51f=""
+            data-v-4dbcd696=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 280px; max-width: 350px; max-height: auto; display: none;"
@@ -80,7 +78,7 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-0eaad51f=""
+                data-v-4dbcd696=""
               >
                 
                 <p>
@@ -530,7 +528,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Create a virtual mesh"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -564,7 +561,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -602,7 +598,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Connect data plane proxies"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -636,7 +631,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -670,7 +664,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Apply Kuma policies"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -704,7 +697,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -738,7 +730,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Resources"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -772,7 +763,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   

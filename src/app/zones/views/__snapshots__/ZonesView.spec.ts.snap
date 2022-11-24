@@ -74,7 +74,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
               <table
                 class="has-hover is-clickable k-table"
                 data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                data-v-4f741344=""
               >
                 <thead
                   class=""
@@ -914,7 +913,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 <section
                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   class="noBorder kong-card"
-                  data-v-1f0d90ac=""
                 >
                   <!---->
                   <!---->
@@ -924,7 +922,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                   >
                     <div
                       class="k-card-body"
-                      data-v-1f0d90ac=""
                       id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                     >
                       
@@ -1317,7 +1314,6 @@ exports[`ZonesView.vue renders zone insights 1`] = `
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           class="noBorder kong-card"
-          data-v-1f0d90ac=""
         >
           <!---->
           <!---->
@@ -1327,7 +1323,6 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           >
             <div
               class="k-card-body"
-              data-v-1f0d90ac=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               

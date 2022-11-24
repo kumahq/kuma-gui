@@ -27,7 +27,6 @@ exports[`DataOverview.vue renders additional scoped slot 1`] = `
 <table
   class="has-hover is-clickable k-table"
   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-  data-v-4f741344=""
 >
   <thead
     class=""
@@ -157,7 +156,6 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
           <table
             class="has-hover is-clickable k-table"
             data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-            data-v-4f741344=""
           >
             <thead
               class=""
