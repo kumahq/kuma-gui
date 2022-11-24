@@ -12,7 +12,6 @@ export type ColumnDropdownItem = {
 export const availableTableHeaders: TableHeader[] = [
   { key: 'status', label: 'Status' },
   { key: 'name', label: 'Name' },
-  { key: 'mesh', label: 'Mesh' },
   { key: 'type', label: 'Type' },
   { key: 'service', label: 'Service' },
   { key: 'protocol', label: 'Protocol' },
@@ -44,7 +43,6 @@ export const columnsDropdownItems: ColumnDropdownItem[] = availableTableHeaders
 export const defaultVisibleTableHeaderKeys = [
   'status',
   'name',
-  'mesh',
   'type',
   'service',
   'protocol',

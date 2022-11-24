@@ -41,7 +41,6 @@ import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },
-  { label: 'Mesh', key: 'mesh' },
   { label: 'Type', key: 'serviceType' },
   { label: 'Address', key: 'address' },
   { label: 'Status', key: 'status' },
@@ -106,9 +105,8 @@ async function loadData(offset: number): Promise<void> {
           return 1
         } else if (itemA.name < itemB.name) {
           return -1
-        } else {
-          return itemA.mesh.localeCompare(itemB.mesh)
         }
+        return 0
       })
       setActiveServiceInsight(items[0])
       tableData.value.data = items.map((item) => processItem(item))

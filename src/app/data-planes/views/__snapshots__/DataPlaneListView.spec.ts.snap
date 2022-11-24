@@ -178,7 +178,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </li>
                       <li
                         class="k-dropdown-item w-100 table-header-selector-item"
-                        data-testid="k-dropdown-item-Mesh"
+                        data-testid="k-dropdown-item-Type"
                         data-v-a0c39af6=""
                       >
                         <div
@@ -194,31 +194,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                             <input
                               class="k-input"
                               id="data-plane-table-header-checkbox-1"
-                              type="checkbox"
-                            />
-                             Mesh
-                          </label>
-                          
-                        </div>
-                      </li>
-                      <li
-                        class="k-dropdown-item w-100 table-header-selector-item"
-                        data-testid="k-dropdown-item-Type"
-                        data-v-a0c39af6=""
-                      >
-                        <div
-                          class="k-dropdown-item-trigger"
-                          data-testid="k-dropdown-item-trigger"
-                          data-v-a0c39af6=""
-                        >
-                          
-                          <label
-                            class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-2"
-                          >
-                            <input
-                              class="k-input"
-                              id="data-plane-table-header-checkbox-2"
                               type="checkbox"
                             />
                              Type
@@ -239,11 +214,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-3"
+                            for="data-plane-table-header-checkbox-2"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-3"
+                              id="data-plane-table-header-checkbox-2"
                               type="checkbox"
                             />
                              Service
@@ -264,11 +239,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-4"
+                            for="data-plane-table-header-checkbox-3"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-4"
+                              id="data-plane-table-header-checkbox-3"
                               type="checkbox"
                             />
                              Protocol
@@ -289,11 +264,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-5"
+                            for="data-plane-table-header-checkbox-4"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-5"
+                              id="data-plane-table-header-checkbox-4"
                               type="checkbox"
                             />
                              Last Connected
@@ -314,11 +289,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-6"
+                            for="data-plane-table-header-checkbox-5"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-6"
+                              id="data-plane-table-header-checkbox-5"
                               type="checkbox"
                             />
                              Last Updated
@@ -339,11 +314,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-7"
+                            for="data-plane-table-header-checkbox-6"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-7"
+                              id="data-plane-table-header-checkbox-6"
                               type="checkbox"
                             />
                              Total Updates
@@ -364,11 +339,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-8"
+                            for="data-plane-table-header-checkbox-7"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-8"
+                              id="data-plane-table-header-checkbox-7"
                               type="checkbox"
                             />
                              Kuma DP version
@@ -389,11 +364,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-9"
+                            for="data-plane-table-header-checkbox-8"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-9"
+                              id="data-plane-table-header-checkbox-8"
                               type="checkbox"
                             />
                              Envoy version
@@ -534,25 +509,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           data-v-4f741344=""
                         >
                           Name
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                        data-v-4f741344=""
-                      >
-                        
-                        <span
-                          class=""
-                          data-v-4f741344=""
-                        >
-                          Mesh
                         </span>
                         
                         <!---->
@@ -718,19 +674,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
                       Standard
                       
                     </td>
@@ -857,19 +800,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         href="/mesh/default/data-planes/cluster-1.backend-02"
                       >
                         cluster-1.backend-02
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
                       </a>
                       
                     </td>
@@ -1012,19 +942,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
                       Standard
                       
                     </td>
@@ -1151,19 +1068,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         href="/mesh/default/data-planes/cluster-1.gateway-01"
                       >
                         cluster-1.gateway-01
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
                       </a>
                       
                     </td>
@@ -1306,19 +1210,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
                       Standard
                       
                     </td>
@@ -1445,19 +1336,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         href="/mesh/default/data-planes/dataplane-test-456"
                       >
                         dataplane-test-456
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
                       </a>
                       
                     </td>
@@ -1600,19 +1478,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
                       Standard
                       
                     </td>
@@ -1739,19 +1604,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         href="/mesh/default/data-planes/frontend"
                       >
                         frontend
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
                       </a>
                       
                     </td>
@@ -1933,19 +1785,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       data-v-4f741344=""
                     >
                       
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
                       Standard
                       
                     </td>
@@ -2072,19 +1911,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         href="/mesh/default/data-planes/no-subscriptions"
                       >
                         no-subscriptions
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                      data-v-4f741344=""
-                    >
-                      
-                      <a
-                        class="router-link-active"
-                        href="/mesh/default"
-                      >
-                        default
                       </a>
                       
                     </td>
