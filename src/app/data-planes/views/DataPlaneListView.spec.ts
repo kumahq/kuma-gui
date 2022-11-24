@@ -99,7 +99,6 @@ describe('DataPlaneListView', () => {
     const expectedColumnHeaders = [
       'Status',
       'Name',
-      'Mesh',
       'Service',
       'Protocol',
       'Last Updated',
