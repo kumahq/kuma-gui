@@ -125,7 +125,6 @@ import { KBadge, KButton, KCard } from '@kong/kongponents'
 
 import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
-import { getTableData } from '@/utilities/tableDataUtils'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { kumaApi } from '@/api/kumaApi'
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -327,23 +326,14 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const query = this.$route.query.ns || null
+      const name = this.$route.query.ns || null
+      const size = this.pageSize
 
       try {
         const [{ data, next }, { items: zoneIngresses }, { items: zoneEgresses }] = await Promise.all([
-          getTableData({
-            getSingleEntity: kumaApi.getZoneOverview.bind(kumaApi),
-            getAllEntities: kumaApi.getAllZoneOverviews.bind(kumaApi),
-            size: this.pageSize,
-            offset,
-            query,
-          }),
-          fetchAllResources({
-            callEndpoint: kumaApi.getAllZoneIngressOverviews.bind(kumaApi),
-          }),
-          fetchAllResources({
-            callEndpoint: kumaApi.getAllZoneEgressOverviews.bind(kumaApi),
-          }),
+          this.getZoneOverviews(name, size, offset),
+          fetchAllResources(kumaApi.getAllZoneIngressOverviews.bind(kumaApi)),
+          fetchAllResources(kumaApi.getAllZoneEgressOverviews.bind(kumaApi)),
         ])
 
         // set pagination
@@ -366,7 +356,7 @@ export default {
         }
       } catch (err) {
         if (err instanceof Error) {
-          error.value = err
+          this.error = err
         } else {
           console.error(err)
         }
@@ -376,6 +366,7 @@ export default {
         this.isLoading = false
       }
     },
+
     async getEntity(entity) {
       this.entityIsLoading = true
       this.entityIsEmpty = true
@@ -432,6 +423,30 @@ export default {
       }
 
       this.entityIsLoading = false
+    },
+
+    /**
+     * @param {string | null} name
+     * @param {number} size
+     * @param {number} offset
+     * @returns {Promise<{ data: ZoneOverview[], next: string | null }>}
+     */
+    async getZoneOverviews(name, size, offset) {
+      if (name) {
+        const zoneOverview = await kumaApi.getZoneOverview({ name }, { size, offset })
+
+        return {
+          data: [zoneOverview],
+          next: null,
+        }
+      } else {
+        const { items, next } = await kumaApi.getAllZoneOverviews({ size, offset })
+
+        return {
+          data: items,
+          next,
+        }
+      }
     },
   },
 }

@@ -61,7 +61,7 @@ describe('helpers', () => {
         throw new Error()
       })
 
-      expect(() => fetchAllResources({ callEndpoint: brokenRequest })).rejects.toThrow(Error)
+      expect(() => fetchAllResources(brokenRequest)).rejects.toThrow(Error)
     })
 
     test('returns aggregared data', async () => {
@@ -79,7 +79,7 @@ describe('helpers', () => {
         }))
 
       // @ts-expect-error
-      const response = (await fetchAllResources({ callEndpoint: request }))
+      const response = await fetchAllResources(request)
 
       expect(response.items.length).toBe(501)
       expect(response.items[0]).toBe('')

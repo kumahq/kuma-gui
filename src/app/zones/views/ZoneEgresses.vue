@@ -118,7 +118,6 @@ import { KButton, KCard } from '@kong/kongponents'
 
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { getSome } from '@/utilities/helpers'
-import { getTableData } from '@/utilities/tableDataUtils'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { kumaApi } from '@/api/kumaApi'
 import AccordionItem from '@/app/common/AccordionItem.vue'
@@ -237,16 +236,11 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const query = this.$route.query.ns || null
+      const name = this.$route.query.ns || null
+      const size = this.pageSize
 
       try {
-        const { data, next } = await getTableData({
-          getAllEntities: kumaApi.getAllZoneEgressOverviews.bind(kumaApi),
-          getSingleEntity: kumaApi.getZoneEgressOverview.bind(kumaApi),
-          size: this.pageSize,
-          offset,
-          query,
-        })
+        const { data, next } = await this.getZoneEgressOverviews(name, size, offset)
 
         // set pagination
         this.next = next
@@ -268,7 +262,7 @@ export default {
         }
       } catch (err) {
         if (err instanceof Error) {
-          error.value = err
+          this.error = err
         } else {
           console.error(err)
         }
@@ -278,6 +272,7 @@ export default {
         this.isLoading = false
       }
     },
+
     getEntity(entity) {
       const selected = ['type', 'name']
       const item = this.rawData.find((data) => data.name === entity.name)
@@ -287,6 +282,30 @@ export default {
       this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
       this.entity = getSome(item, selected)
+    },
+
+    /**
+     * @param {string | null} name
+     * @param {number} size
+     * @param {number} offset
+     * @returns {Promise<{ data: ZoneEgressOverview[], next: string | null }>}
+     */
+    async getZoneEgressOverviews(name, size, offset) {
+      if (name) {
+        const zoneEgressOverview = await kumaApi.getZoneEgressOverview({ name }, { size, offset })
+
+        return {
+          data: [zoneEgressOverview],
+          next: null,
+        }
+      } else {
+        const { items, next } = await kumaApi.getAllZoneEgressOverviews({ size, offset })
+
+        return {
+          data: items,
+          next,
+        }
+      }
     },
   },
 }
