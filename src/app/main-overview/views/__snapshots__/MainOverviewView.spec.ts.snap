@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MainOverviewView.vue renders basic snapshot 1`] = `
-<div
-  data-v-app=""
->
+<div>
   
   <div
     class="chart-container mt-16"
@@ -1672,20 +1670,15 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Create a virtual mesh"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
-        data-v-1f0d90ac=""
       >
         <!---->
         <div
           class="k-card-title mb-3"
-          data-v-1f0d90ac=""
         >
-          <h4
-            data-v-1f0d90ac=""
-          >
+          <h4>
             
             Create a virtual mesh
             
@@ -1693,7 +1686,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
         </div>
         <div
           class="k-card-actions"
-          data-v-1f0d90ac=""
         >
           
           
@@ -1702,11 +1694,9 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       <!---->
       <div
         class="k-card-content d-flex"
-        data-v-1f0d90ac=""
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           
@@ -1722,7 +1712,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button"
-              data-v-6f773baa=""
               href="/wizard/mesh"
               type="button"
             >
@@ -1744,20 +1733,15 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Connect data plane proxies"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
-        data-v-1f0d90ac=""
       >
         <!---->
         <div
           class="k-card-title mb-3"
-          data-v-1f0d90ac=""
         >
-          <h4
-            data-v-1f0d90ac=""
-          >
+          <h4>
             
             Connect data plane proxies
             
@@ -1765,7 +1749,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
         </div>
         <div
           class="k-card-actions"
-          data-v-1f0d90ac=""
         >
           
           
@@ -1774,11 +1757,9 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       <!---->
       <div
         class="k-card-content d-flex"
-        data-v-1f0d90ac=""
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           
@@ -1790,7 +1771,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button"
-              data-v-6f773baa=""
               href="/wizard/kubernetes-dataplane"
               type="button"
             >
@@ -1812,20 +1792,15 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Apply null policies"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
-        data-v-1f0d90ac=""
       >
         <!---->
         <div
           class="k-card-title mb-3"
-          data-v-1f0d90ac=""
         >
-          <h4
-            data-v-1f0d90ac=""
-          >
+          <h4>
             
             Apply null policies
             
@@ -1833,7 +1808,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
         </div>
         <div
           class="k-card-actions"
-          data-v-1f0d90ac=""
         >
           
           
@@ -1842,11 +1816,9 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       <!---->
       <div
         class="k-card-content d-flex"
-        data-v-1f0d90ac=""
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           
@@ -1858,7 +1830,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="medium rounded primary k-button"
-              data-v-6f773baa=""
               href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >
@@ -1880,20 +1851,15 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Resources"
       class="border kong-card"
-      data-v-1f0d90ac=""
     >
       <div
         class="k-card-header d-flex mb-3"
-        data-v-1f0d90ac=""
       >
         <!---->
         <div
           class="k-card-title mb-3"
-          data-v-1f0d90ac=""
         >
-          <h4
-            data-v-1f0d90ac=""
-          >
+          <h4>
             
             Resources
             
@@ -1901,7 +1867,6 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
         </div>
         <div
           class="k-card-actions"
-          data-v-1f0d90ac=""
         >
           
           
@@ -1910,11 +1875,9 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       <!---->
       <div
         class="k-card-content d-flex"
-        data-v-1f0d90ac=""
       >
         <div
           class="k-card-body"
-          data-v-1f0d90ac=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
         >
           

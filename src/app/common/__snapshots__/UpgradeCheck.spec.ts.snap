@@ -6,19 +6,16 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
 >
   <div
     class="warning small none k-alert"
-    data-v-1910ef98=""
     role="alert"
   >
     <!---->
     <!---->
     <div
       class="k-alert-msg-text"
-      data-v-1910ef98=""
     >
       <!---->
       <div
         class="k-alert-msg"
-        data-v-1910ef98=""
       >
         
         <div
@@ -30,7 +27,6 @@ exports[`UpgradeCheck.vue renders snapshot 1`] = `
           <div>
             <a
               class="small rounded primary k-button warning-button"
-              data-v-6f773baa=""
               href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >

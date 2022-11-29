@@ -6,27 +6,22 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
   aria-modal="true"
   class="k-modal modal"
   data-testid="notification-modal"
-  data-v-442f114b=""
   role="dialog"
 >
   <div
     class="k-modal-backdrop modal-backdrop"
-    data-v-442f114b=""
   >
     <div
       class="k-modal-dialog modal-dialog"
-      data-v-442f114b=""
     >
       <!---->
       <div
         class="k-modal-content modal-content"
-        data-v-442f114b=""
       >
         <!---->
         <div
           aria-level="2"
           class="header-left mb-5 k-modal-header modal-header"
-          data-v-442f114b=""
           role="heading"
         >
           
@@ -47,7 +42,6 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
         </div>
         <div
           class="content-left k-modal-body modal-body"
-          data-v-442f114b=""
         >
           
           <ul
@@ -70,7 +64,6 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 >
                   <span
                     class="mr-4 kong-icon-warning kong-icon"
-                    data-v-71cfcfc4=""
                   >
                     <svg
                       height="20"
@@ -166,7 +159,6 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 >
                   <span
                     class="mr-4 kong-icon-warning kong-icon"
-                    data-v-71cfcfc4=""
                   >
                     <svg
                       height="20"
@@ -262,7 +254,6 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 >
                   <span
                     class="mr-4 kong-icon-warning kong-icon"
-                    data-v-71cfcfc4=""
                   >
                     <svg
                       height="20"
@@ -358,7 +349,6 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                 >
                   <span
                     class="mr-4 kong-icon-warning kong-icon"
-                    data-v-71cfcfc4=""
                   >
                     <svg
                       height="20"
@@ -446,13 +436,11 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
         </div>
         <div
           class="k-modal-footer modal-footer d-flex"
-          data-v-442f114b=""
         >
           
           <button
             class="medium rounded outline k-button"
             data-testid="close-modal-button"
-            data-v-6f773baa=""
             type="button"
           >
             
@@ -476,19 +464,16 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
   <div
     class="info icon k-alert mb-4"
     data-testid="notification-info"
-    data-v-1910ef98=""
     role="alert"
   >
     <!---->
     <!---->
     <div
       class="k-alert-msg-text has-dismiss-icon"
-      data-v-1910ef98=""
     >
       <!---->
       <div
         class="k-alert-msg"
-        data-v-1910ef98=""
       >
         
         <div
@@ -505,7 +490,6 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
           <button
             class="medium rounded outline k-button"
             data-testid="open-modal-button"
-            data-v-6f773baa=""
             type="button"
           >
             
@@ -524,13 +508,10 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
     <button
       aria-label="Close"
       class="close"
-      data-v-1910ef98=""
       type="button"
     >
       <span
         class="info kong-icon-close kong-icon"
-        data-v-1910ef98=""
-        data-v-71cfcfc4=""
       >
         <svg
           fill="none"
@@ -559,7 +540,6 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
     </button>
     <div
       class="info k-alert-action"
-      data-v-1910ef98=""
     >
       <!---->
       <!---->

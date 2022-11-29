@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App.vue fails to renders basic view 1`] = `
-<div
-  data-v-app=""
->
+<div>
   
   <header
     class="app-header"
@@ -21,7 +19,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           class="logo-image"
         />
       </a>
-      <github-button-stub
+      <span
         aria-label="Star kumahq/kuma on GitHub"
         class="gh-star"
         href="https://github.com/kumahq/kuma"
@@ -44,14 +42,12 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         <div
           aria-controls="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          data-v-0eaad51f=""
           id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           role="button"
         >
           
           <button
             class="medium rounded outline k-button"
-            data-v-6f773baa=""
             type="button"
           >
             
@@ -66,13 +62,11 @@ exports[`App.vue fails to renders basic view 1`] = `
           <transition-stub
             appear="false"
             css="true"
-            data-v-0eaad51f=""
             name="fade"
             persisted="false"
           >
             <div
               class="k-popover"
-              data-v-0eaad51f=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 280px; max-width: 350px; max-height: auto; display: none;"
@@ -80,7 +74,6 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-popover-content"
-                data-v-0eaad51f=""
               >
                 
                 <p>
@@ -120,7 +113,6 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         <span
           class="kong-icon-notificationBell kong-icon"
-          data-v-71cfcfc4=""
         >
           <svg
             fill="var(--yellow-300)"
@@ -160,7 +152,6 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         <span
           class="kong-icon-gearFilled kong-icon"
-          data-v-71cfcfc4=""
         >
           <svg
             height="16"
@@ -351,19 +342,16 @@ exports[`App.vue fails to renders basic view 1`] = `
         <div
           class="info icon k-alert mb-4"
           data-testid="notification-info"
-          data-v-1910ef98=""
           role="alert"
         >
           <!---->
           <!---->
           <div
             class="k-alert-msg-text has-dismiss-icon"
-            data-v-1910ef98=""
           >
             <!---->
             <div
               class="k-alert-msg"
-              data-v-1910ef98=""
             >
               
               <div
@@ -380,7 +368,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                 <button
                   class="medium rounded outline k-button"
                   data-testid="open-modal-button"
-                  data-v-6f773baa=""
                   type="button"
                 >
                   
@@ -399,13 +386,10 @@ exports[`App.vue fails to renders basic view 1`] = `
           <button
             aria-label="Close"
             class="close"
-            data-v-1910ef98=""
             type="button"
           >
             <span
               class="info kong-icon-close kong-icon"
-              data-v-1910ef98=""
-              data-v-71cfcfc4=""
             >
               <svg
                 fill="info"
@@ -437,7 +421,6 @@ exports[`App.vue fails to renders basic view 1`] = `
           </button>
           <div
             class="info k-alert-action"
-            data-v-1910ef98=""
           >
             <!---->
             <!---->
@@ -530,20 +513,15 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Create a virtual mesh"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
-                data-v-1f0d90ac=""
               >
                 <!---->
                 <div
                   class="k-card-title mb-3"
-                  data-v-1f0d90ac=""
                 >
-                  <h4
-                    data-v-1f0d90ac=""
-                  >
+                  <h4>
                     
                     Create a virtual mesh
                     
@@ -551,7 +529,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-1f0d90ac=""
                 >
                   
                   
@@ -560,11 +537,9 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-1f0d90ac=""
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -580,7 +555,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="medium rounded primary k-button"
-                      data-v-6f773baa=""
                       href="/wizard/mesh"
                       type="button"
                     >
@@ -602,20 +576,15 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Connect data plane proxies"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
-                data-v-1f0d90ac=""
               >
                 <!---->
                 <div
                   class="k-card-title mb-3"
-                  data-v-1f0d90ac=""
                 >
-                  <h4
-                    data-v-1f0d90ac=""
-                  >
+                  <h4>
                     
                     Connect data plane proxies
                     
@@ -623,7 +592,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-1f0d90ac=""
                 >
                   
                   
@@ -632,11 +600,9 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-1f0d90ac=""
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -648,7 +614,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="medium rounded primary k-button"
-                      data-v-6f773baa=""
                       href="/wizard/universal-dataplane"
                       type="button"
                     >
@@ -670,20 +635,15 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Apply Kuma policies"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
-                data-v-1f0d90ac=""
               >
                 <!---->
                 <div
                   class="k-card-title mb-3"
-                  data-v-1f0d90ac=""
                 >
-                  <h4
-                    data-v-1f0d90ac=""
-                  >
+                  <h4>
                     
                     Apply Kuma policies
                     
@@ -691,7 +651,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-1f0d90ac=""
                 >
                   
                   
@@ -700,11 +659,9 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-1f0d90ac=""
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
@@ -716,7 +673,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="medium rounded primary k-button"
-                      data-v-6f773baa=""
                       href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
                       type="button"
                     >
@@ -738,20 +694,15 @@ exports[`App.vue fails to renders basic view 1`] = `
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Resources"
               class="border kong-card"
-              data-v-1f0d90ac=""
             >
               <div
                 class="k-card-header d-flex mb-3"
-                data-v-1f0d90ac=""
               >
                 <!---->
                 <div
                   class="k-card-title mb-3"
-                  data-v-1f0d90ac=""
                 >
-                  <h4
-                    data-v-1f0d90ac=""
-                  >
+                  <h4>
                     
                     Resources
                     
@@ -759,7 +710,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                 </div>
                 <div
                   class="k-card-actions"
-                  data-v-1f0d90ac=""
                 >
                   
                   
@@ -768,11 +718,9 @@ exports[`App.vue fails to renders basic view 1`] = `
               <!---->
               <div
                 class="k-card-content d-flex"
-                data-v-1f0d90ac=""
               >
                 <div
                   class="k-card-body"
-                  data-v-1f0d90ac=""
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   

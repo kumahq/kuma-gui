@@ -319,10 +319,7 @@ export const storeConfig: StoreOptions<State> = {
 
       try {
         if (mesh === undefined) {
-          const params = {
-            callEndpoint: kumaApi.getAllMeshInsights.bind(kumaApi),
-          }
-          const response = await fetchAllResources(params)
+          const response = await fetchAllResources(kumaApi.getAllMeshInsights.bind(kumaApi))
           const meshesData = []
 
           if (response.items.length > 0) {
@@ -353,14 +350,11 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_SERVICE_INSIGHTS_FETCHING', true)
 
       try {
-        const params = {
-          callEndpoint:
+        const endpoint =
             mesh === undefined
               ? kumaApi.getAllServiceInsights.bind(kumaApi)
-              : kumaApi.getAllServiceInsightsFromMesh.bind(kumaApi, { mesh }),
-        }
-
-        commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
+              : kumaApi.getAllServiceInsightsFromMesh.bind(kumaApi, { mesh })
+        commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(endpoint))
       } catch {
         commit('SET_INTERNAL_SERVICE_SUMMARY')
       }
@@ -372,14 +366,11 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_EXTERNAL_SERVICES_FETCHING', true)
 
       try {
-        const params = {
-          callEndpoint:
-            mesh === undefined
-              ? kumaApi.getAllExternalServices.bind(kumaApi)
-              : kumaApi.getAllExternalServicesFromMesh.bind(kumaApi, { mesh }),
-        }
+        const endpoint = mesh === undefined
+          ? kumaApi.getAllExternalServices.bind(kumaApi)
+          : kumaApi.getAllExternalServicesFromMesh.bind(kumaApi, { mesh })
 
-        commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(params))
+        commit('SET_EXTERNAL_SERVICE_SUMMARY', await fetchAllResources(endpoint))
       } catch {
         commit('SET_EXTERNAL_SERVICE_SUMMARY')
       }
@@ -400,11 +391,7 @@ export const storeConfig: StoreOptions<State> = {
 
       try {
         if (multicluster) {
-          const params = {
-            callEndpoint: kumaApi.getAllZoneOverviews.bind(kumaApi),
-          }
-
-          const data = await fetchAllResources(params)
+          const data = await fetchAllResources(kumaApi.getAllZoneOverviews.bind(kumaApi))
 
           dispatch('setOverviewZonesChartData', data)
           dispatch('setOverviewZonesCPVersionsChartData', data)

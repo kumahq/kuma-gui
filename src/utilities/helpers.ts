@@ -135,11 +135,7 @@ export function kebabCase(value: string) {
   return newValue
 }
 
-export async function fetchAllResources<T = Object>({
-  callEndpoint,
-}: {
-  callEndpoint: (params: Object) => Promise<ApiListResponse<T>>
-}): Promise<{ items: T[]; total: number }> {
+export async function fetchAllResources<T = Object>(endpoint: (params: Object) => Promise<ApiListResponse<T>>): Promise<{ items: T[]; total: number }> {
   try {
     let allTotal = null
     let offset = 0
@@ -147,7 +143,7 @@ export async function fetchAllResources<T = Object>({
 
     while (true) {
       const params = { size: PAGE_REQUEST_SIZE_DEFAULT, offset }
-      const { total, items, next } = await callEndpoint(params)
+      const { total, items, next } = await endpoint(params)
 
       if (items) {
         allItems = allItems.concat(items)

@@ -120,7 +120,6 @@
 import { mapGetters } from 'vuex'
 import { KButton, KCard } from '@kong/kongponents'
 
-import { getTableData } from '@/utilities/tableDataUtils'
 import { getSome } from '@/utilities/helpers'
 import { kumaApi } from '@/api/kumaApi'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
@@ -254,16 +253,11 @@ export default {
       this.isLoading = true
       this.isEmpty = false
 
-      const query = this.$route.query.ns || null
+      const name = this.$route.query.ns || null
+      const size = this.pageSize
 
       try {
-        const { data, next } = await getTableData({
-          getAllEntities: kumaApi.getAllZoneIngressOverviews.bind(kumaApi),
-          getSingleEntity: kumaApi.getZoneIngressOverview.bind(kumaApi),
-          size: this.pageSize,
-          offset,
-          query,
-        })
+        const { data, next } = await this.getZoneIngressOverviews(name, size, offset)
 
         // set pagination
         this.next = next
@@ -295,6 +289,7 @@ export default {
         this.isLoading = false
       }
     },
+
     getEntity(entity) {
       const selected = ['type', 'name']
       const item = this.rawData.find((data) => data.name === entity.name)
@@ -304,6 +299,30 @@ export default {
       this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
       this.entity = getSome(item, selected)
+    },
+
+    /**
+     * @param {string | null} name
+     * @param {number} size
+     * @param {number} offset
+     * @returns {Promise<{ data: ZoneIngressOverview[], next: string | null }>}
+     */
+    async getZoneIngressOverviews(name, size, offset) {
+      if (name) {
+        const zoneIngressOverview = await kumaApi.getZoneIngressOverview({ name }, { size, offset })
+
+        return {
+          data: [zoneIngressOverview],
+          next: null,
+        }
+      } else {
+        const { items, next } = await kumaApi.getAllZoneIngressOverviews({ size, offset })
+
+        return {
+          data: items,
+          next,
+        }
+      }
     },
   },
 }

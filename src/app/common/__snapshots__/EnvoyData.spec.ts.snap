@@ -7,16 +7,13 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
   <section
     class="empty-state-wrapper"
     data-testid="loading-block"
-    data-v-5b55eb64=""
   >
     <div
       class="empty-state-title"
-      data-v-5b55eb64=""
     >
       <!---->
       <div
         class="k-empty-state-title-header mt-4 mb-4"
-        data-v-5b55eb64=""
       >
         
         <div
@@ -24,7 +21,6 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
         >
           <span
             class="kong-icon-spinner kong-icon"
-            data-v-71cfcfc4=""
           >
             <svg
               fill="none"
@@ -69,18 +65,15 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
     </div>
     <div
       class="empty-state-content"
-      data-v-5b55eb64=""
     >
       <div
         class="k-empty-state-message mb-6"
-        data-v-5b55eb64=""
       >
         
         
       </div>
       <div
         class="k-empty-state-cta"
-        data-v-5b55eb64=""
       >
         
         <!---->

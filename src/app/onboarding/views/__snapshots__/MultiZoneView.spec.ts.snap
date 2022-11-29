@@ -37,20 +37,15 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           aria-label="See the documentation for options to install:"
           class="noBorder kong-card"
-          data-v-1f0d90ac=""
         >
           <div
             class="k-card-header d-flex mb-3"
-            data-v-1f0d90ac=""
           >
             <!---->
             <div
               class="k-card-title mb-3"
-              data-v-1f0d90ac=""
             >
-              <h4
-                data-v-1f0d90ac=""
-              >
+              <h4>
                 
                 See the documentation for options to install:
                 
@@ -58,7 +53,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             </div>
             <div
               class="k-card-actions"
-              data-v-1f0d90ac=""
             >
               
               
@@ -67,11 +61,9 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           <!---->
           <div
             class="k-card-content d-flex"
-            data-v-1f0d90ac=""
           >
             <div
               class="k-card-body"
-              data-v-1f0d90ac=""
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
               
@@ -135,7 +127,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
-        data-v-6f773baa=""
         href="/onboarding/configuration-types"
         type="button"
       >
@@ -151,7 +142,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
         <button
           class="small rounded btn-link k-button skip-button"
           data-testid="onboarding-skip-button"
-          data-v-6f773baa=""
           type="button"
         >
           
@@ -168,7 +158,6 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
           <a
             class="medium rounded primary k-button navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
-            data-v-6f773baa=""
             disabled="true"
             href="/onboarding/create-mesh"
             type="button"

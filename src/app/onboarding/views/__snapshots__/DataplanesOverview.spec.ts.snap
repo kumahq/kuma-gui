@@ -46,40 +46,32 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
               </p>
               <div
                 class="k-table-container onboarding-dataplane-table"
-                data-v-4f741344=""
                 is-small=""
               >
                 <!---->
                 <section
                   class="k-table-wrapper"
-                  data-v-4f741344=""
                 >
                   <table
                     class="has-hover k-table"
                     data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                    data-v-4f741344=""
                   >
                     <thead
                       class=""
-                      data-v-4f741344=""
                     >
                       <tr
                         class=""
-                        data-v-4f741344=""
                       >
                         
                         <th
                           class=""
-                          data-v-4f741344=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-4f741344=""
                           >
                             
                             <span
                               class=""
-                              data-v-4f741344=""
                             >
                               Mesh
                             </span>
@@ -89,16 +81,13 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </th>
                         <th
                           class=""
-                          data-v-4f741344=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-4f741344=""
                           >
                             
                             <span
                               class=""
-                              data-v-4f741344=""
                             >
                               Name
                             </span>
@@ -108,16 +97,13 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </th>
                         <th
                           class=""
-                          data-v-4f741344=""
                         >
                           <span
                             class="d-flex align-items-center"
-                            data-v-4f741344=""
                           >
                             
                             <span
                               class=""
-                              data-v-4f741344=""
                             >
                               Status
                             </span>
@@ -128,31 +114,21 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         
                       </tr>
                     </thead>
-                    <tbody
-                      data-v-4f741344=""
-                    >
+                    <tbody>
                       
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           backend
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -165,27 +141,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           frontend
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -198,27 +166,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           db
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -231,27 +191,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           no-subscriptions
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-offline"
@@ -264,27 +216,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           cluster-1.backend-02
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -297,27 +241,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           cluster-1.backend-03
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -330,27 +266,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           cluster-1.gateway-01
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -363,27 +291,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           cluster-1.ingress-02
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -396,27 +316,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           dataplane-test-456
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -429,27 +341,19 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         
                       </tr>
-                      <tr
-                        data-v-4f741344=""
-                      >
+                      <tr>
                         
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           default
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           ingress-dp-test-123
                           
                         </td>
-                        <td
-                          data-v-4f741344=""
-                        >
+                        <td>
                           
                           <div
                             class="entity-status is-online"
@@ -481,7 +385,6 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
-        data-v-6f773baa=""
         href="/onboarding/add-services-code"
         type="button"
       >
@@ -497,7 +400,6 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
         <button
           class="small rounded btn-link k-button skip-button"
           data-testid="onboarding-skip-button"
-          data-v-6f773baa=""
           type="button"
         >
           
@@ -514,7 +416,6 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
           <a
             class="medium rounded primary k-button navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
-            data-v-6f773baa=""
             href="/onboarding/completed"
             type="button"
           >
