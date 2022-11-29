@@ -2,7 +2,10 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import { router } from '@/../jest/jest-setup-after-env'
+import { router, useMock } from '@/../jest/jest-setup-after-env'
+import response from '@/api/mock-data/meshes/default/dataplanes+insights.json'
+
+const mock = useMock('/meshes/default/dataplanes+insights', response)
 
 async function renderComponent(props?: Record<string, unknown>) {
   await router.push(
@@ -44,7 +47,8 @@ describe('DataPlaneListView', () => {
     expect(refreshButton.exists()).toBe(true)
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
-    expect(tableRows.length).toBe(9)
+
+    expect(tableRows.length).toBe(10)
 
     const firstTableRowHtml = tableRows[0].html()
     const expectedTableRowStrings = ['backend', 'default', 'http', 'February 17, 2021', '1.0.7']
@@ -54,6 +58,18 @@ describe('DataPlaneListView', () => {
   })
 
   test('gateway listing has expected content and UI elements', async () => {
+    mock({}, (req, resp) => {
+      const gateway = req.url.searchParams.get('gateway')
+      expect(gateway).toEqual('true')
+      resp.total = '1'
+      const gw = resp.items.find((item: any) => item.name === 'cluster-1.gateway-01')
+      if (gw) {
+        resp.items = [
+          gw,
+        ]
+      }
+      return resp
+    })
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
       meta: {
@@ -82,8 +98,22 @@ describe('DataPlaneListView', () => {
       },
     })
 
+    mock({}, (req, resp) => {
+      const gateway = req.url.searchParams.get('gateway')
+      expect(gateway).toEqual('builtin')
+      resp.total = '1'
+      const gw = resp.items.find((item: any) => item.name === 'cluster-1.gateway-01')
+      if (gw) {
+        resp.items = [
+          gw,
+        ]
+      }
+      return resp
+    })
+
     const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
-    await dataPlaneTypeFilter.setValue('Builtin)')
+    await dataPlaneTypeFilter.setValue('Builtin')
+    await flushPromises()
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
     expect(tableRows.length).toBe(1)
@@ -140,7 +170,7 @@ describe('DataPlaneListView', () => {
   })
 
   test('shows information of selected DPP', async () => {
-    const dppName = 'cluster-1.backend-02'
+    const dppName = 'frontend'
     const wrapper = await renderComponent()
 
     const secondTableRow = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')[1]
