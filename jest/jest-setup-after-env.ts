@@ -9,6 +9,9 @@ import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-sn
 import { createRouter } from '../src/router/router'
 import { store, storeKey } from '../src/store/store'
 import { setupMockServer } from '../src/api/setupMockServer'
+import { rest, MockedRequest as Request } from 'msw'
+
+type MockFunction = (_opts: Record<string, unknown>, cb: (req: Request, resp: Record <string, any>) => Record<string, unknown>) => void
 
 /**
  * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
@@ -54,4 +57,15 @@ afterEach(() => server.resetHandlers())
 // Clean up after the tests are finished.
 afterAll(() => server.close())
 
-export { router, server }
+// add a utility to easily setup/mock out API endpoints
+const useMock = (url: string, response: Record<string, unknown>):MockFunction => {
+  return (_opts, cb) => {
+    server.use(
+      rest.get(`${import.meta.env.VITE_KUMA_API_SERVER_URL.slice(0, -1)}${url.replace(/\+/g, '\\+')}`, (req, res, ctx) => {
+        return res(ctx.json(cb(req, JSON.parse(JSON.stringify(response)))))
+      }),
+    )
+  }
+}
+
+export { router, server, useMock }
