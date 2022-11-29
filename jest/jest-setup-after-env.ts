@@ -58,10 +58,12 @@ afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 // add a utility to easily setup/mock out API endpoints
+const re = /\+/g
+
 const useMock = (url: string, response: Record<string, unknown>):MockFunction => {
   return (_opts, cb) => {
     server.use(
-      rest.get(`${import.meta.env.VITE_KUMA_API_SERVER_URL.slice(0, -1)}${url.replace(/\+/g, '\\+')}`, (req, res, ctx) => {
+      rest.get(`${import.meta.env.VITE_KUMA_API_SERVER_URL.slice(0, -1)}${url.replace(re, '\\+')}`, (req, res, ctx) => {
         return res(ctx.json(cb(req, JSON.parse(JSON.stringify(response)))))
       }),
     )
