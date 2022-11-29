@@ -146,7 +146,9 @@ const dataPlaneTypes = [
   'All',
   'Builtin',
   'Delegated',
-]
+] as const
+
+type DataPlaneType = typeof dataPlaneTypes[number]
 
 const route = useRoute()
 const store = useStore()
@@ -175,7 +177,7 @@ const tableData = ref<{ headers: TableHeader[], data: any }>({
 })
 const rawData = ref<DataPlaneOverview[]>([])
 const nextUrl = ref<string | null>(null)
-const filteredDataPlaneType = ref('All')
+const filteredDataPlaneType = ref<DataPlaneType>('All')
 const pageOffset = ref(props.offset)
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
@@ -185,12 +187,6 @@ const isGateway = (item: DataPlaneOverview) => {
   return item.dataplane.networking.gateway !== undefined
 }
 const filteredTableData = computed(() => {
-  let data = tableData.value.data.filter((row: any) => isGateway(row.overview) === (route.meta.type === 'gateway'))
-
-  // only for gatways filter by user selected value
-  if (route.meta.type === 'gateway' && dataPlaneTypes.includes(filteredDataPlaneType.value)) {
-    data = data.filter((row: any) => filteredDataPlaneType.value === 'All' || row.type.toLowerCase() === filteredDataPlaneType.value.toLowerCase())
-  }
   let headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
   if (route.meta.type === 'standard') {
     headers = headers.filter(item => item.key !== 'type')
@@ -199,7 +195,7 @@ const filteredTableData = computed(() => {
   }
 
   return {
-    data,
+    data: tableData.value.data,
     headers,
   }
 })
@@ -234,7 +230,13 @@ watch(() => route.params.mesh, function () {
   isEmpty.value = false
   error.value = null
   tableDataIsEmpty.value = false
+  loadData(0)
+})
 
+watch(filteredDataPlaneType, function () {
+  isEmpty.value = false
+  error.value = null
+  tableDataIsEmpty.value = false
   loadData(0)
 })
 
@@ -423,16 +425,23 @@ async function loadData(offset: number): Promise<void> {
   const size = PAGE_SIZE
 
   try {
-    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset })
+    // Depending on what dataplane types we are viewing
+    // send the correct params to the API
+    const map: Record<DataPlaneType, string> = {
+      All: 'true',
+      Builtin: 'builtin',
+      Delegated: 'delegated',
+    }
+
+    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, {
+      size,
+      offset,
+      gateway: route.meta.type !== 'gateway'
+        ? false
+        : map[filteredDataPlaneType.value],
+    })
 
     if (Array.isArray(items) && items.length > 0) {
-      items.sort(function (overviewA, overviewB) {
-        if (overviewA.name === overviewB.name) {
-          return overviewA.mesh > overviewB.mesh ? 1 : -1
-        } else {
-          return overviewA.name.localeCompare(overviewB.name)
-        }
-      })
       nextUrl.value = next
       rawData.value = items
       selectDataPlaneOverview(props.name ?? items[0].name)
@@ -462,7 +471,7 @@ async function loadData(offset: number): Promise<void> {
 }
 
 function selectDataPlaneOverview(name: string | null): void {
-  const items = rawData.value.filter((data) => isGateway(data) === (route.meta.type === 'gateway'))
+  const items = rawData.value
   if (name && items.length > 0) {
     dataPlaneOverview.value = items.find((data) => data.name === name) ?? items[0]
     patchQueryParam('name', dataPlaneOverview.value.name)
