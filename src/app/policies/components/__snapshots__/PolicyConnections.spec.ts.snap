@@ -14,7 +14,6 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
         <!---->
         <div
           class="k-card-content d-flex"
-          data-v-1f0d90ac=""
         >
           <div
             class="k-card-body"

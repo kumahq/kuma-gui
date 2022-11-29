@@ -46,7 +46,6 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
           >
             <span
               class="kong-icon-check kong-icon"
-              data-v-71cfcfc4=""
             >
               <svg
                 fill="none"
@@ -136,7 +135,6 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
           <button
             class="small rounded btn-link k-button skip-button"
             data-testid="onboarding-skip-button"
-            data-v-6f773baa=""
             type="button"
           >
             
@@ -153,7 +151,6 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
             <a
               class="medium rounded primary k-button navigation-button navigation-button--next"
               data-testid="onboarding-next-button"
-              data-v-6f773baa=""
               href="/onboarding/deployment-types"
               type="button"
             >

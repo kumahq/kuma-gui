@@ -6,19 +6,16 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
 >
   <div
     class="success icon k-alert dismissible"
-    data-v-1910ef98=""
     role="alert"
   >
     <!---->
     <!---->
     <div
       class="k-alert-msg-text has-dismiss-icon"
-      data-v-1910ef98=""
     >
       <!---->
       <div
         class="k-alert-msg"
-        data-v-1910ef98=""
       >
         
         <div
@@ -33,7 +30,6 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
           <div>
             <a
               class="small rounded primary k-button action-button"
-              data-v-6f773baa=""
               href="/onboarding/welcome"
               type="button"
             >
@@ -54,13 +50,10 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
     <button
       aria-label="Close"
       class="close"
-      data-v-1910ef98=""
       type="button"
     >
       <span
         class="success kong-icon-close kong-icon"
-        data-v-1910ef98=""
-        data-v-71cfcfc4=""
       >
         <svg
           fill="none"
@@ -89,7 +82,6 @@ exports[`AppOnboardingNotification renders snapshot 1`] = `
     </button>
     <div
       class="success k-alert-action"
-      data-v-1910ef98=""
     >
       <!---->
       <!---->

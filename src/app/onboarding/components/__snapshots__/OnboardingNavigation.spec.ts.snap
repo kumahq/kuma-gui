@@ -7,7 +7,6 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
   <a
     class="medium rounded primary k-button navigation-button navigation-button--back"
     data-testid="onboarding-previous-button"
-    data-v-6f773baa=""
     type="button"
   >
     
@@ -22,7 +21,6 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
     <button
       class="small rounded btn-link k-button skip-button"
       data-testid="onboarding-skip-button"
-      data-v-6f773baa=""
       type="button"
     >
       
@@ -39,7 +37,6 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--next"
         data-testid="onboarding-next-button"
-        data-v-6f773baa=""
         type="button"
       >
         

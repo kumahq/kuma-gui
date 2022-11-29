@@ -45,13 +45,11 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           >
             <div
               class="k-table-container"
-              data-v-4f741344=""
               is-small=""
             >
               <!---->
               <section
                 class="k-table-wrapper"
-                data-v-4f741344=""
               >
                 <table
                   class="has-hover k-table"
@@ -59,25 +57,20 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                 >
                   <thead
                     class=""
-                    data-v-4f741344=""
                   >
                     <tr
                       class=""
-                      data-v-4f741344=""
                     >
                       
                       <th
                         class=""
-                        data-v-4f741344=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-4f741344=""
                         >
                           
                           <span
                             class=""
-                            data-v-4f741344=""
                           >
                             Name
                           </span>
@@ -87,16 +80,13 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-4f741344=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-4f741344=""
                         >
                           
                           <span
                             class=""
-                            data-v-4f741344=""
                           >
                             Services
                           </span>
@@ -106,16 +96,13 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                       </th>
                       <th
                         class=""
-                        data-v-4f741344=""
                       >
                         <span
                           class="d-flex align-items-center"
-                          data-v-4f741344=""
                         >
                           
                           <span
                             class=""
-                            data-v-4f741344=""
                           >
                             DPPs
                           </span>
@@ -126,31 +113,21 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
                       
                     </tr>
                   </thead>
-                  <tbody
-                    data-v-4f741344=""
-                  >
+                  <tbody>
                     
-                    <tr
-                      data-v-4f741344=""
-                    >
+                    <tr>
                       
-                      <td
-                        data-v-4f741344=""
-                      >
+                      <td>
                         
                         default
                         
                       </td>
-                      <td
-                        data-v-4f741344=""
-                      >
+                      <td>
                         
                         0
                         
                       </td>
-                      <td
-                        data-v-4f741344=""
-                      >
+                      <td>
                         
                         0
                         
@@ -180,7 +157,6 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
-        data-v-6f773baa=""
         type="button"
       >
         onboarding-configuration-types
@@ -189,7 +165,6 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
         <button
           class="small rounded btn-link k-button skip-button"
           data-testid="onboarding-skip-button"
-          data-v-6f773baa=""
           type="button"
         >
           
@@ -206,7 +181,6 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           <a
             class="medium rounded primary k-button navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
-            data-v-6f773baa=""
             type="button"
           >
             onboarding-add-services

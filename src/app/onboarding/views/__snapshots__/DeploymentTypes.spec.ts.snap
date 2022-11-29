@@ -166,12 +166,8 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                 />
               </g>
               
-              <div
-                data-v-4dbcd696=""
-              >
-                <foreignobject
-                  data-v-4dbcd696=""
-                >
+              <div>
+                <foreignobject>
                   <div
                     class="k-popover"
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
@@ -180,11 +176,9 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-4dbcd696=""
                       >
                         
                         Kuma
@@ -194,7 +188,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-4dbcd696=""
                     >
                       
                        The control plane provides the config for all services in the mesh. 
@@ -237,12 +230,8 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                 />
               </g>
               
-              <div
-                data-v-4dbcd696=""
-              >
-                <foreignobject
-                  data-v-4dbcd696=""
-                >
+              <div>
+                <foreignobject>
                   <div
                     class="k-popover"
                     id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
@@ -251,11 +240,9 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                   >
                     <div
                       class="k-popover-header d-flex"
-                      data-v-4dbcd696=""
                     >
                       <div
                         class="k-popover-title"
-                        data-v-4dbcd696=""
                       >
                         
                         Data Plane Proxy (DPP)
@@ -265,7 +252,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
                     </div>
                     <div
                       class="k-popover-content"
-                      data-v-4dbcd696=""
                     >
                       
                       Kuma attaches a data plane proxy sidecar to each service in your mesh. This sidecar handles the mesh configuration for the service. 
@@ -609,18 +595,15 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
         >
           <label
             class="k-radio"
-            data-v-372ea01c=""
           >
             <input
               class="k-input"
               data-testid="onboarding-standalone-radio-button"
-              data-v-372ea01c=""
               name="mode"
               type="radio"
             />
             <span
               class="k-radio-label"
-              data-v-372ea01c=""
             >
               
                Standalone deployment 
@@ -630,18 +613,15 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
           </label>
           <label
             class="k-radio"
-            data-v-372ea01c=""
           >
             <input
               class="k-input"
               data-testid="onboarding-multi-zone-radio-button"
-              data-v-372ea01c=""
               name="mode"
               type="radio"
             />
             <span
               class="k-radio-label"
-              data-v-372ea01c=""
             >
               
                Multi-zone deployment 
@@ -660,7 +640,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
       <a
         class="medium rounded primary k-button navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
-        data-v-6f773baa=""
         href="/onboarding/welcome"
         type="button"
       >
@@ -676,7 +655,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
         <button
           class="small rounded btn-link k-button skip-button"
           data-testid="onboarding-skip-button"
-          data-v-6f773baa=""
           type="button"
         >
           
@@ -693,7 +671,6 @@ exports[`DeploymentTypes.vue renders snapshot 1`] = `
           <a
             class="medium rounded primary k-button navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
-            data-v-6f773baa=""
             href="/onboarding/configuration-types"
             type="button"
           >
