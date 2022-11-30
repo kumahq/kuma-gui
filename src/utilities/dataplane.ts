@@ -74,7 +74,7 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
 /*
 getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
  */
-export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight = { subscriptions: [] }): { status: DataPlaneStatus, reason: string[] } {
+export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight | undefined = { subscriptions: [] }): { status: DataPlaneStatus, reason: string[] } {
   const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
 
   const errors = inbounds
@@ -112,8 +112,8 @@ export function getStatus(dataplane: { networking: DataPlaneNetworking }, datapl
 getStatus takes DataplaneInsight and returns map of versions
  */
 
-export function getVersions(dataPlaneInsight: DataPlaneInsight): Record<string, string> | null {
-  if (dataPlaneInsight.subscriptions.length === 0) {
+export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Record<string, string> | null {
+  if (dataPlaneInsight === undefined || dataPlaneInsight.subscriptions.length === 0) {
     return null
   }
 
@@ -145,33 +145,22 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight): Record<string, 
 /*
 getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
  */
-export function getItemStatusFromInsight(item: TODO = {}): { status: typeof ONLINE | typeof OFFLINE } {
-  const { subscriptions = [] } = item
-
-  const proxyOnline = subscriptions.some(
-    (item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime,
-  )
-
-  const status = () => {
-    if (proxyOnline) {
-      return ONLINE
-    }
-
-    return OFFLINE
+export function getItemStatusFromInsight(dataPlaneInsight: DataPlaneInsight | undefined): { status: typeof ONLINE | typeof OFFLINE } {
+  if (dataPlaneInsight === undefined) {
+    return { status: OFFLINE }
   }
 
-  return {
-    status: status(),
-  }
+  const proxyOnline = dataPlaneInsight.subscriptions.some((subscription) => subscription.connectTime && subscription.connectTime.length && !subscription.disconnectTime)
+
+  return { status: proxyOnline ? ONLINE : OFFLINE }
 }
 
 export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {
-  const { mTLS } = dataPlaneOverview.dataplaneInsight
-
-  if (mTLS === undefined) {
+  if (dataPlaneOverview.dataplaneInsight === undefined || dataPlaneOverview.dataplaneInsight.mTLS === undefined) {
     return null
   }
 
+  const { mTLS } = dataPlaneOverview.dataplaneInsight
   const rawExpDate = new Date(mTLS.certificateExpirationTime)
   // this prevents any weird date shifting
   const fixedExpDate = new Date(rawExpDate.getTime() + rawExpDate.getTimezoneOffset() * 60000)
