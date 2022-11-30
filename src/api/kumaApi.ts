@@ -25,17 +25,17 @@ class KumaApi {
     this.client = new RestClient()
   }
 
-  get url() {
-    return this.client.url
+  get baseUrl() {
+    return this.client.baseUrl
   }
 
   /**
-   * Sets the API base path for all network requests.
+   * Sets the API base URL for all network requests.
    *
-   * URLs for requests will be constructed in the form `${origin}/${basePath}/${path}`.
+   * URLs for requests will be constructed in the form `${baseUrl}/${path}`.
    */
-  setBasePath(basePath: string): void {
-    this.client.basePath = basePath
+  setBaseUrl(baseUrl: string): void {
+    this.client.baseUrl = baseUrl
   }
 
   getInfo(): Promise<Info> {
@@ -53,9 +53,7 @@ class KumaApi {
   }
 
   async getLatestVersion(): Promise<string> {
-    const url = String(import.meta.env.VITE_VERSION_URL)
-
-    return this.client.get(url)
+    return this.client.get(import.meta.env.VITE_VERSION_URL)
   }
 
   getConfig(): Promise<ClientConfigInterface> {

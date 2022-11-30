@@ -1,9 +1,6 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
-import { rest } from 'msw'
-
 import configModule from './config'
-import { server } from '@/../jest/jest-setup-after-env'
 import { kumaApi } from '@/api/kumaApi'
 
 describe('config module', () => {
@@ -45,8 +42,6 @@ describe('config module', () => {
     })
 
     test('tests getStatus action', async () => {
-      server.use(rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL, (req, res, ctx) => res(ctx.status(200))))
-
       const state: any = {
         status: null,
       }

@@ -10,7 +10,7 @@
     "dev:real-api": "vite",
     "preview": "vite preview",
     "build": "vite build",
-    "build:ci": "cross-env VITE_MOCK_API_ENABLED=true VITE_FAKE_MULTIZONE=true yarn run build",
+    "build:ci": "cross-env VITE_MOCK_API_ENABLED=true VITE_FAKE_MULTIZONE=true yarn run build --mode preview",
     "lint": "eslint --ext .js,.ts,.vue --fix .",
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn --validate-https",
     "test": "cross-env TZ=UTC jest",
@@ -73,6 +73,7 @@
     "ts-jest": "^29.0.3",
     "typescript": "~4.9.3",
     "vite": "^3.2.4",
+    "vite-plugin-html": "^3.2.0",
     "vite-plugin-rewrite-all": "^1.0.0",
     "vite-svg-loader": "^3.6.0"
   },

@@ -1,46 +1,30 @@
-import { getAppBaseUrl } from '@/utilities/getAppBaseUrl'
 import { makeRequest } from './makeRequest'
+
+const DEFAULT_BASE_URL = import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL
 
 export class RestClient {
   /**
-   * The API origin. **Never has a trailing slash**.
+   * The API base URL. **Will always be stored without a trailing slash**.
    */
-  _origin: string
+  _baseUrl: string = DEFAULT_BASE_URL
 
   /**
-   * The base API path relative to the API origin. **Never has a leading or trailing slash**.
+   * The absolute API base URL used in all requests. Includes its base path segment if one is set.
    */
-  _basePath: string
+  get baseUrl() {
+    return this._baseUrl
+  }
 
   /**
-   * @param basePath **Default: `''`**. A base path under which the client’s API is served (e.g. `'api'`). Leading and trailing slashes will be ignored.
+   * @param baseUrlOrPath the API base URL or the API base path
    */
-  constructor(basePath: string = '') {
-    let origin
-
-    if (import.meta.env.PROD) {
-      origin = getAppBaseUrl(window.location)
+  set baseUrl(baseUrlOrPath: string) {
+    if (baseUrlOrPath.startsWith('http')) {
+      this._baseUrl = trimTrailingSlashes(baseUrlOrPath)
     } else {
-      origin = import.meta.env.VITE_KUMA_API_SERVER_URL
+      const basePath = trimSlashes(baseUrlOrPath)
+      this._baseUrl = [DEFAULT_BASE_URL, basePath].filter((segment) => segment !== '').join('/')
     }
-
-    this._origin = trimTrailingSlashes(origin)
-    this._basePath = trimBoundarySlashes(basePath)
-  }
-
-  /**
-   * The absolute API URL used in all requests. Includes its base path segment if one is set.
-   */
-  get url() {
-    return [this._origin, this.basePath].filter((segment) => segment !== '').join('/')
-  }
-
-  get basePath() {
-    return this._basePath
-  }
-
-  set basePath(basePath: string) {
-    this._basePath = trimBoundarySlashes(basePath)
   }
 
   /**
@@ -62,8 +46,8 @@ export class RestClient {
    *
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
-  async raw(path: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
-    const url = path.startsWith('http') ? path : `${this.url}/${path}`
+  async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
+    const url = urlOrPath.startsWith('http') ? urlOrPath : [this.baseUrl, urlOrPath].join('/')
 
     return makeRequest(url, options)
   }
@@ -73,6 +57,10 @@ function trimTrailingSlashes(str: string): string {
   return str.replace(/\/+$/, '')
 }
 
-function trimBoundarySlashes(str: string): string {
-  return str.replace(/^\/+/, '').replace(/\/+$/, '')
+function trimLeadingSlashes(str: string): string {
+  return str.replace(/^\/+/, '')
+}
+
+function trimSlashes(str: string): string {
+  return trimTrailingSlashes(trimLeadingSlashes(str))
 }

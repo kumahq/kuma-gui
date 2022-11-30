@@ -4,7 +4,6 @@ import { getLastNumberParameter } from './getLastParameter'
 import { store } from '@/store/store'
 import { PolicyDefinition } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { getAppGuiPath } from '@/utilities/getAppGuiPath'
 
 function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   return policies.map((policy) => ({
@@ -22,7 +21,7 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
   }))
 }
 
-export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router {
+export function createRouter(baseGuiPath: string = '/', policyDefinitions: PolicyDefinition[] = []): Router {
   const policyRoutes = getPolicyRoutes(policyDefinitions)
 
   const routes: readonly RouteRecordRaw[] = [
@@ -291,10 +290,8 @@ export function createRouter(policyDefinitions: PolicyDefinition[] = []): Router
     },
   ]
 
-  const appGuiPath = getAppGuiPath(window.location)
-
   const router = createVueRouter({
-    history: createWebHistory(appGuiPath),
+    history: createWebHistory(baseGuiPath),
     routes,
   })
 
