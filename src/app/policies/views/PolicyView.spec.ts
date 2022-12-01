@@ -21,15 +21,12 @@ describe('PolicyView', () => {
     await flushPromises()
 
     const documentationLink = wrapper.find('[data-testid="policy-documentation-link"]')
-
     expect(documentationLink.exists()).toBe(true)
 
     const singleEntity = wrapper.find('[data-testid="policy-single-entity"]')
-
     expect(singleEntity.html()).toContain('Circuit Breaker: cb1')
 
     const policyOverview = wrapper.find('[data-testid="policy-overview-tab"]')
-
     expect(policyOverview.html()).toContain('CircuitBreaker')
   })
 })

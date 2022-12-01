@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals'
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { rest } from 'msw'
 
@@ -37,12 +37,6 @@ describe('DataplanePolicies.vue', () => {
   })
 
   test('renders loading', async () => {
-    server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({ total: 0, items: [] })),
-      ),
-    )
-
     const wrapper = await renderComponent({
       dataPlane: {
         mesh: 'foo',
@@ -55,10 +49,8 @@ describe('DataplanePolicies.vue', () => {
   })
 
   test('renders error', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => { }) // silence console errors
-
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
@@ -78,7 +70,7 @@ describe('DataplanePolicies.vue', () => {
 
   test('renders no item', async () => {
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),
       ),
     )

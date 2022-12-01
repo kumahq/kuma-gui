@@ -1,10 +1,8 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
-import { rest } from 'msw'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
 import { store } from '@/store/store'
-import { server } from '@/../jest/jest-setup-after-env'
 
 function renderComponent() {
   return mount(DataplaneUniversal)
@@ -16,12 +14,6 @@ describe('DataplaneUniversal.vue', () => {
   })
 
   test('passes whole wizzard and render yaml', async () => {
-    server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + 'meshes/:mesh/dataplanes/:dataplaneName', (req, res, ctx) =>
-        res(ctx.status(200), ctx.json({ name: 'hi' })),
-      ),
-    )
-
     store.state.config.tagline = import.meta.env.VITE_NAMESPACE
     store.state.meshes.items = [
       {

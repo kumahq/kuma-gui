@@ -156,7 +156,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock-data/dataplane-xds.json')],
 ]
 
-export function setupHandlers(url: string): RestHandler[] {
+export function setupHandlers(url: string = ''): RestHandler[] {
   const origin = url.replace(/\/+$/, '')
 
   function getApiPath(path: string = '') {

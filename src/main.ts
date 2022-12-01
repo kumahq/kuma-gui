@@ -2,11 +2,13 @@ import { createApp } from 'vue'
 import { addLicense, useTheme } from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
-import App from './app/App.vue'
 import { createRouter } from './router/router'
-import { storeKey, store } from './store/store'
-import { setupDatadog } from './utilities/setupDatadog'
 import { kumaApi } from './api/kumaApi'
+import { PATH_CONFIG_DEFAULT } from './pathConfigDefault'
+import { PathConfig } from './types/index'
+import { setupDatadog } from './utilities/setupDatadog'
+import { storeKey, store } from './store/store'
+import App from './app/App.vue'
 
 import '@kong/kongponents/dist/style.css'
 import '@kong/kongponents/dist/_variables.scss'
@@ -35,12 +37,15 @@ useTheme(am4themesAnimated)
 async function initializeVue() {
   document.title = import.meta.env.VITE_NAMESPACE + ' Manager'
 
+  const pathConfig = readPathConfigFromDom()
+  kumaApi.setBaseUrl(pathConfig.apiUrl)
+
   if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
     // The combination of reading the environment variable and using dynamic import
     // ensures that msw isn’t actually bundled with the production application.
     const { setupMockWorker } = await import('./api/setupMockWorker')
 
-    setupMockWorker(kumaApi.url)
+    setupMockWorker(kumaApi.baseUrl)
   }
 
   const app = createApp(App)
@@ -54,11 +59,29 @@ async function initializeVue() {
     store.dispatch('fetchPolicies'),
   ])
 
-  const router = await createRouter(store.state.policies)
+  const router = await createRouter(pathConfig.baseGuiPath, store.state.policies)
 
   app.use(router)
 
   app.mount('#app')
+}
+
+/**
+ * Reads the path config object from a JSON string found in a special script tag that’s populated during server-side rendering of the Vue application’s index.html file.
+ */
+function readPathConfigFromDom(): PathConfig {
+  const pathConfigNode = document.querySelector('#kuma-config')
+
+  if (pathConfigNode instanceof HTMLScriptElement) {
+    try {
+      return JSON.parse(pathConfigNode.innerText.trim())
+    } catch {
+      // Handled by falling back to a default value.
+    }
+  }
+
+  // Falls back to a sensible default when encountering a malformed JSON payload or non-replaced template.
+  return PATH_CONFIG_DEFAULT
 }
 
 initializeVue()

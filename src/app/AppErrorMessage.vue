@@ -17,7 +17,7 @@
 
     <template #message>
       <p>
-        Please double check to make sure it is up and running <span v-if="kumaApi.url">, and it is reachable at <code>{{ kumaApi.url }}</code></span>
+        Please double check to make sure it is up and running <span v-if="kumaApi.baseUrl">, and it is reachable at <code>{{ kumaApi.baseUrl }}</code></span>
       </p>
     </template>
   </KEmptyState>
