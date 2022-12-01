@@ -5,19 +5,16 @@ import DataPlaneListView from './DataPlaneListView.vue'
 import { router, useMock } from '@/../jest/jest-setup-after-env'
 import response from '@/api/mock-data/meshes/default/dataplanes+insights.json'
 
+import { RouteLocationNamedRaw } from 'vue-router'
+
 const mock = useMock('/meshes/default/dataplanes+insights', response)
 
-async function renderComponent(props?: Record<string, unknown>) {
+async function renderComponent(routeLocation: RouteLocationNamedRaw = {}) {
   await router.push(
     {
-      ...{
-        name: 'data-plane-list-view',
-        params: { mesh: 'default' },
-        meta: {
-          type: 'standard',
-        },
-      },
-      ...props || {},
+      name: 'data-plane-list-view',
+      params: { mesh: 'default' },
+      ...routeLocation,
     },
   )
 
@@ -72,9 +69,6 @@ describe('DataPlaneListView', () => {
     })
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
-      meta: {
-        type: 'gateway',
-      },
     })
 
     const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
@@ -93,9 +87,6 @@ describe('DataPlaneListView', () => {
   test('can filter gateway proxies by type', async () => {
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
-      meta: {
-        type: 'gateway',
-      },
     })
 
     mock({}, (req, resp) => {
@@ -156,9 +147,6 @@ describe('DataPlaneListView', () => {
     ]
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
-      meta: {
-        type: 'gateway',
-      },
     })
 
     const tableHeads = wrapper.findAll('[data-testid="data-overview-table"] th')
