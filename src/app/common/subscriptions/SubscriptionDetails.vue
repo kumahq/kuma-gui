@@ -122,7 +122,7 @@ export default {
 <style lang="scss" scoped>
 .overview-tertiary-title {
   font-size: var(--type-sm);
-  font-weight: 500;
+  font-weight: bold;
   text-transform: uppercase;
   color: var(--gray-3);
   margin: var(--spacing-xs) 0;

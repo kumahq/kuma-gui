@@ -66,21 +66,3 @@ const breadcrumbItems = computed(() => {
   return Array.from(items.values())
 })
 </script>
-
-<style lang="scss">
-.krumbs {
-  font-size: var(--type-lg);
-
-  .krumb-item {
-    a {
-      color: #000 !important;
-      text-decoration: none;
-      font-weight: 400;
-    }
-  }
-
-  @media (min-width: 701px) {
-    font-size: var(--type-xl);
-  }
-}
-</style>

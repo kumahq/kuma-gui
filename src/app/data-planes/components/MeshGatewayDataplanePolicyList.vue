@@ -170,7 +170,7 @@ h4 {
   margin-bottom: var(--spacing-xs);
   text-transform: uppercase;
   font-size: var(--type-sm);
-  font-weight: 500;
+  font-weight: normal;
   color: var(--gray-3);
 }
 </style>

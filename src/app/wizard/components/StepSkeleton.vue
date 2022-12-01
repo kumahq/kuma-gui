@@ -185,7 +185,7 @@ export default {
 
   h4 {
     font-size: inherit !important;
-    font-weight: 700;
+    font-weight: bold;
     text-align: center;
     text-transform: uppercase;
     margin: 0 0 5px 0 !important;

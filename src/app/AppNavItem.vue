@@ -197,14 +197,10 @@ function onNavItemClick() {
   background-color: var(--grey-300);
 }
 
-.nav-link--is-active {
-  font-weight: 500;
-}
-
 .nav-category {
   padding-top: var(--spacing-xs);
   padding-bottom: var(--spacing-xs);
-  font-weight: 500;
+  font-weight: bold;
 }
 
 .amount {
@@ -221,7 +217,7 @@ function onNavItemClick() {
   border: 1px solid var(--white);
   border-radius: 0.25rem;
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: normal;
   background-color: var(--purple-100);
 }
 
