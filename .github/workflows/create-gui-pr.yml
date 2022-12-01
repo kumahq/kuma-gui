@@ -84,7 +84,7 @@ jobs:
           branch: chore/update-gui
           delete-branch: true
           title: "chore(deps): bump ${{ github.repository }} to ${{ github.sha }}"
-          labels: ci/skip-test
+          labels: ci/skip-e2e-test
           body: |
             Bumps ${{ github.repository }} to version  [${{ github.ref_name }}@${{ github.sha }}](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
             
