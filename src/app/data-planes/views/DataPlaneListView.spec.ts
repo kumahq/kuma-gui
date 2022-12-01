@@ -45,7 +45,7 @@ describe('DataPlaneListView', () => {
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
 
-    expect(tableRows.length).toBe(10)
+    expect(tableRows.length).toBe(9)
 
     const firstTableRowHtml = tableRows[0].html()
     const expectedTableRowStrings = ['backend', 'default', 'http', 'February 17, 2021', '1.0.7']
