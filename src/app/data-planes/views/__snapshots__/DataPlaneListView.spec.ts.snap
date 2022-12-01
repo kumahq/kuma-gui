@@ -1674,8 +1674,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               http
             </span>
           </span>
-          <span
+          <a
             class="tag"
+            href="/mesh/default/services?ns=backend"
           >
             <span
               class="tag__label tag__label--is-kuma-io-label"
@@ -1687,7 +1688,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
             >
               backend
             </span>
-          </span>
+          </a>
           
         </span>
       </section>

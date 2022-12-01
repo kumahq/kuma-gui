@@ -98,7 +98,7 @@ async function fetchPolicyConntections(): Promise<void> {
 
     hasDataplanes.value = total > 0
 
-    dataplanes.value = items
+    dataplanes.value = items ?? []
   } catch {
     hasError.value = true
   } finally {

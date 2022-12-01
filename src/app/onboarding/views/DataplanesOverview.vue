@@ -127,25 +127,26 @@ export default {
       const result = []
 
       try {
-        const dataplanes = await kumaApi.getAllDataplanes({ size: 10 })
-        const items = dataplanes.items
+        const { items } = await kumaApi.getAllDataplanes({ size: 10 })
 
-        for (let i = 0; i < items.length; i++) {
-          const { name, mesh } = items[i]
+        if (Array.isArray(items)) {
+          for (let i = 0; i < items.length; i++) {
+            const { name, mesh } = items[i]
 
-          const { status } = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
-            getItemStatusFromInsight(response.dataplaneInsight),
-          )
+            const { status } = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
+              getItemStatusFromInsight(response.dataplaneInsight),
+            )
 
-          if (status === OFFLINE) {
-            shouldRefetch = true
+            if (status === OFFLINE) {
+              shouldRefetch = true
+            }
+
+            result.push({
+              status,
+              name,
+              mesh,
+            })
           }
-
-          result.push({
-            status,
-            name,
-            mesh,
-          })
         }
       } catch (e) {
         console.error(e)

@@ -1,5 +1,5 @@
 import { DISABLED, PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
-import { ApiListResponse } from '@/types/api.d'
+import { PaginatedApiListResponse } from '@/types/api.d'
 import { ZoneOverview } from '@/types/index.d'
 import { get } from '@/utilities/get'
 
@@ -135,17 +135,17 @@ export function kebabCase(value: string) {
   return newValue
 }
 
-export async function fetchAllResources<T = Object>(endpoint: (params: Object) => Promise<ApiListResponse<T>>): Promise<{ items: T[]; total: number }> {
+export async function fetchAllResources<T = Object>(endpoint: (params: Object) => Promise<PaginatedApiListResponse<T>>): Promise<{ items: T[]; total: number }> {
   try {
     let allTotal = null
     let offset = 0
-    let allItems: TODO[] = []
+    let allItems: T[] = []
 
     while (true) {
       const params = { size: PAGE_REQUEST_SIZE_DEFAULT, offset }
       const { total, items, next } = await endpoint(params)
 
-      if (items) {
+      if (Array.isArray(items)) {
         allItems = allItems.concat(items)
       }
 

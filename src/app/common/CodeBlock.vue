@@ -7,6 +7,7 @@
     :language="language"
     :is-processing="isProcessing"
     :is-searchable="isSearchable"
+    :show-copy-button="showCopyButton"
     :query="query"
     @code-block-render="handleCodeBlockRenderEvent"
     @query-change="updateStoredQuery"
@@ -14,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, PropType, nextTick } from 'vue'
+import { computed, ref, PropType } from 'vue'
 import { KCodeBlock } from '@kong/kongponents'
 import { CodeBlockEventData } from '@kong/kongponents/dist/types/components/KCodeBlock/KCodeBlock.vue.d'
 
@@ -23,37 +24,31 @@ import { ClientStorage } from '@/utilities/ClientStorage'
 import { reformatYaml } from '@/utilities/reformatYaml'
 
 const props = defineProps({
-  /**
-   * ID value used for form elements like the search input and its label.
-   */
   id: {
     type: String,
     required: true,
   },
 
-  /**
-   * The code that will be rendered as a text node inside of a `<pre><code></code></pre>` fragment.
-   */
   code: {
     type: String,
     required: true,
   },
 
-  /**
-   * The syntax language of `props.code` (e.g. `'json'`).
-   */
   language: {
     type: String as PropType<AvailableLanguages>,
     required: true,
   },
 
-  /**
-   * Shows an actions bar with a search input and related action buttons.
-   */
   isSearchable: {
     type: Boolean,
     required: false,
     default: false,
+  },
+
+  showCopyButton: {
+    type: Boolean,
+    required: false,
+    default: true,
   },
 
   queryKey: {
@@ -78,7 +73,6 @@ const reformattedCode = computed(() => props.language === 'yaml' ? reformatYaml(
 async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
   isProcessing.value = true
 
-  await nextTick()
   highlightElement(preElement, codeElement, code, language as AvailableLanguages)
 
   isProcessing.value = false

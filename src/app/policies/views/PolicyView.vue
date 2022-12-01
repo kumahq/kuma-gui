@@ -68,9 +68,9 @@
       >
         <template #tabHeader>
           <div>
-            <h3 data-testid="policy-single-entity">
+            <h1 data-testid="policy-single-entity">
               {{ policy.singularDisplayName }}: {{ entity.name }}
-            </h3>
+            </h1>
           </div>
         </template>
 
@@ -240,7 +240,7 @@ async function loadData(offset: number): Promise<void> {
         offset,
       }
       const response = await kumaApi.getAllPolicyEntitiesFromMesh({ mesh, path }, params)
-      items = response.items
+      items = response.items ?? []
       nextUrl.value = response.next
     }
 

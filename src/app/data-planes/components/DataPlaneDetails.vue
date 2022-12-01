@@ -5,9 +5,9 @@
   >
     <template #tabHeader>
       <div>
-        <h3>
+        <h1>
           DPP: {{ dataPlane.name }}
-        </h3>
+        </h1>
       </div>
     </template>
 

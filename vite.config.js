@@ -24,7 +24,13 @@ export default defineConfig(function ({ mode }) {
        * Issue: https://github.com/vitejs/vite/issues/2415.
        */
       pluginRewriteAll(),
-      vue(),
+      vue({
+        template: {
+          compilerOptions: {
+            whitespace: 'preserve',
+          },
+        },
+      }),
       svgLoader(),
       createHtmlPlugin({
         inject: {

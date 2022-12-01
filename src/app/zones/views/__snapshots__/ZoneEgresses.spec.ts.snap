@@ -194,9 +194,9 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
       >
         
         <div>
-          <h3>
-             Zone Egress: zoneegress-1
-          </h3>
+          <h1>
+            Zone Egress: zoneegress-1
+          </h1>
         </div>
         
       </header>
@@ -599,9 +599,9 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
       >
         
         <div>
-          <h3>
-             Zone Egress: zoneegress-1
-          </h3>
+          <h1>
+            Zone Egress: zoneegress-1
+          </h1>
         </div>
         
       </header>
@@ -821,9 +821,9 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
   >
     
     <div>
-      <h3>
-         Zone Egress: zoneegress-1
-      </h3>
+      <h1>
+        Zone Egress: zoneegress-1
+      </h1>
     </div>
     
   </header>

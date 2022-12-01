@@ -96,7 +96,7 @@ async function loadData(offset: number): Promise<void> {
   const size = PAGE_SIZE
 
   try {
-    const { items = [], next } = await kumaApi.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
+    const { items, next } = await kumaApi.getAllServiceInsightsFromMesh({ mesh }, { size, offset })
     nextUrl.value = next
 
     if (Array.isArray(items) && items.length > 0) {
@@ -108,7 +108,17 @@ async function loadData(offset: number): Promise<void> {
         }
         return 0
       })
-      setActiveServiceInsight(items[0])
+
+      let activeServiceInsight = items[0]
+      if (route.query.ns) {
+        const serviceInsight = items.find((item) => item.name === route.query.ns)
+
+        if (serviceInsight !== undefined) {
+          activeServiceInsight = serviceInsight
+        }
+      }
+      setActiveServiceInsight(activeServiceInsight)
+
       tableData.value.data = items.map((item) => processItem(item))
     } else {
       serviceInsight.value = null

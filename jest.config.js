@@ -25,7 +25,7 @@
     ],
     '^.+\\.js$': 'babel-jest',
     '^.+\\.svg(\\?(url|raw))?$': 'jest-transform-stub',
-    '^.+\\.(css|png|gif)?$': 'jest-transform-stub',
+    '^.+\\.(css|png|gif|jpg)?$': 'jest-transform-stub',
   },
   transformIgnorePatterns: [
     // Not transforming amcharts speeds up the the tests significantly.

@@ -134,6 +134,19 @@
             </template>
           </template>
 
+          <template #zone="{ row, rowValue }">
+            <router-link
+              v-if="row.zoneRoute"
+              :to="row.zoneRoute"
+            >
+              {{ rowValue }}
+            </router-link>
+
+            <template v-else>
+              {{ rowValue }}
+            </template>
+          </template>
+
           <!--- total Updates --->
           <template #totalUpdates="{ row }">
             <span>

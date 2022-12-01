@@ -11,9 +11,9 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
   >
     
     <div>
-      <h3>
+      <h1>
          DPP: backend
-      </h3>
+      </h1>
     </div>
     
   </header>

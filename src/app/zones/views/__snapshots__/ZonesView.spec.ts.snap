@@ -659,9 +659,9 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
       >
         
         <div>
-          <h3>
-             Zone: cluster-1
-          </h3>
+          <h1>
+            Zone: cluster-1
+          </h1>
         </div>
         
       </header>
@@ -1030,9 +1030,9 @@ exports[`ZonesView.vue renders zone insights 1`] = `
   >
     
     <div>
-      <h3>
-         Zone: cluster-1
-      </h3>
+      <h1>
+        Zone: cluster-1
+      </h1>
     </div>
     
   </header>

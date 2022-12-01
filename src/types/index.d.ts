@@ -1,4 +1,4 @@
-import { RouteLocationRaw } from 'vue-router'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 export type PathConfig = {
   /**
@@ -244,15 +244,32 @@ export interface DataPlaneOverview extends MeshEntity {
   dataplaneInsight?: DataPlaneInsight
 }
 
+export interface DataplaneRule {
+  type: 'clientSubset' | 'destinationSubset' | 'singleItem',
+  name: string
+  service: string
+  policyType: string
+  subset?: Record<string, string>
+  conf: Record<string, unknown>
+  origins: Array<{ mesh: string, name: string }>
+}
+
+export type PolicyMatch = {
+  match: {
+    'kuma.io/service': string
+    [key: string]: string
+  }
+}
+
 export interface PolicyType extends MeshEntity {
-  sources?: Array<{ match: Record<string, string> }>
-  destinations?: Array<{ match: Record<string, string> }>
+  sources?: PolicyMatch[]
+  destinations?: PolicyMatch[]
   selectors?: Array<{ match: Record<string, string> }>
   conf?: any
 }
 
 export interface SidecarDataplane {
-  type: string
+  type: 'inbound' | 'outbound' | 'service' | 'dataplane'
   service: string
   name: string
   matchedPolicies: Record<string, PolicyType[]>
@@ -291,30 +308,37 @@ export interface MeshGatewayDataplane {
   policies?: Record<string, PolicyType>
 }
 
-export type SidecarDataplaneMatchedPolicy = {
+export type PolicyTypeEntryOrigin = {
   name: string
-  pluralName: string
-  policies: Array<{
-    name: string
-    route: RouteLocationRaw
-  }>
+  route: RouteLocationNamedRaw
 }
 
-export type SidecarDataplanePolicy = {
-  name: string
+export type PolicyTypeEntryConnection = {
+  sourceTags: LabelValue[] | null
+  destinationTags: LabelValue[] | null
+  name: string | null
+  origins: PolicyTypeEntryOrigin[]
+  config: string | null
+}
+
+export type PolicyTypeEntry = {
   type: string
-  service: string
-  matchedPolicies: SidecarDataplaneMatchedPolicy[]
+  connections: PolicyTypeEntryConnection[]
+}
+
+export type SidecarDataplaneRuleEntry = {
+  rule: DataplaneRule
+  policyRoutes: Map<{ name: string, route: RouteLocationNamedRaw }>
 }
 
 export type MeshGatewayRoutePolicy = {
   type: string
   name: string
-  route: RouteLocationRaw
+  route: RouteLocationNamedRaw
 }
 
 export type MeshGatewayRouteEntry = {
-  route: RouteLocationRaw
+  route: RouteLocationNamedRaw
   routeName: string
   service: string
   policies: MeshGatewayRoutePolicy[]

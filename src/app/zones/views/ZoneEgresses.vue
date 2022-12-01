@@ -39,7 +39,7 @@
       >
         <template #tabHeader>
           <div>
-            <h3> Zone Egress: {{ entity.name }}</h3>
+            <h1>Zone Egress: {{ entity.name }}</h1>
           </div>
         </template>
         <template #overview>
@@ -302,7 +302,7 @@ export default {
         const { items, next } = await kumaApi.getAllZoneEgressOverviews({ size, offset })
 
         return {
-          data: items,
+          data: items ?? [],
           next,
         }
       }
