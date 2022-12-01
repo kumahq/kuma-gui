@@ -306,6 +306,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
   }
 
   const { status } = getStatus(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
+  const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
 
   const initialData: any = {
     totalUpdates: 0,
@@ -317,7 +318,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     version: null,
   }
 
-  const summary = dataPlaneOverview.dataplaneInsight.subscriptions.reduce(
+  const summary = subscriptions.reduce(
     (acc, subscription) => {
       if (subscription.connectTime) {
         const connectDate = Date.parse(subscription.connectTime)

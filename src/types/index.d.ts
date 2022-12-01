@@ -218,7 +218,7 @@ export interface DataPlaneOverview extends MeshEntity {
   dataplane: {
     networking: DataPlaneNetworking
   }
-  dataplaneInsight: DataPlaneInsight
+  dataplaneInsight?: DataPlaneInsight
 }
 
 export interface PolicyType extends MeshEntity {

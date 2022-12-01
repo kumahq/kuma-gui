@@ -300,7 +300,7 @@ const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dat
 const rawDataPlane = computed(() => stripTimes(props.dataPlane))
 const mtlsData = computed(() => parseMTLSData(props.dataPlaneOverview))
 const insightSubscriptions = computed(() => {
-  const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight.subscriptions)
+  const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? [])
 
   subscriptions.reverse()
 
@@ -316,7 +316,7 @@ const kumaDocsVersion = computed(() => {
 const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)
 
 function setWarnings() {
-  const subscriptions = props.dataPlaneOverview.dataplaneInsight.subscriptions
+  const subscriptions = props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
 
   if (subscriptions.length === 0 || !('version' in subscriptions[0])) {
     return

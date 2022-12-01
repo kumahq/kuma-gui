@@ -171,7 +171,7 @@ const dataPlane = computed(() => {
 const dataPlaneTags = computed(() => dpTags(props.dataPlaneOverview.dataplane))
 
 const subscriptionWrappers = computed(() => {
-  const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight.subscriptions)
+  const subscriptions = Array.from(props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? [])
 
   subscriptions.reverse()
 
@@ -218,7 +218,7 @@ const dependencies = computed(() => {
 })
 
 const warnings = computed(() => {
-  const { subscriptions } = props.dataPlaneOverview.dataplaneInsight
+  const subscriptions = props.dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
 
   if (subscriptions.length === 0) {
     return []
