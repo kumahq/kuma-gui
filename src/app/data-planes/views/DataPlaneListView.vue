@@ -16,7 +16,7 @@
         @load-data="loadData($event)"
       >
         <template #additionalControls>
-          <div>
+          <div v-if="route.meta.type === 'gateway'">
             <label
               for="data-planes-type-filter"
               class="mr-2"
@@ -88,7 +88,7 @@
           <KButton
             v-if="route.query.ns"
             appearance="primary"
-            :to="{ name: 'data-plane-list-view' }"
+            :to="{ name: route.name }"
             data-testid="data-plane-ns-back-button"
           >
             <span class="custom-control-icon">
@@ -132,7 +132,6 @@ import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
   compatibilityKind,
   dpTags,
-  getDataplaneType,
   getStatus,
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
@@ -145,14 +144,14 @@ import { KUMA_ZONE_TAG_NAME } from '@/constants'
 const PAGE_SIZE = 50
 const dataPlaneTypes = [
   'All',
-  'Standard',
-  'Gateway (builtin)',
-  'Gateway (delegated)',
-]
+  'Builtin',
+  'Delegated',
+] as const
+
+type DataPlaneType = typeof dataPlaneTypes[number]
 
 const route = useRoute()
 const store = useStore()
-
 const props = defineProps({
   name: {
     type: String,
@@ -178,30 +177,35 @@ const tableData = ref<{ headers: TableHeader[], data: any }>({
 })
 const rawData = ref<DataPlaneOverview[]>([])
 const nextUrl = ref<string | null>(null)
-const filteredDataPlaneType = ref('All')
+const filteredDataPlaneType = ref<DataPlaneType>('All')
 const pageOffset = ref(props.offset)
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
-
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
 const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
+
 const filteredTableData = computed(() => {
-  const data = tableData.value.data.filter((row: any) => {
-    if (filteredDataPlaneType.value === 'All') {
-      return true
-    } else {
-      return row.type.toLowerCase() === filteredDataPlaneType.value.toLowerCase()
-    }
-  })
-  const headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
+  let headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
+  if (route.meta.type === 'standard') {
+    headers = headers.filter(item => item.key !== 'type')
+  } else {
+    headers = headers.filter(item => item.key !== 'protocol')
+  }
 
   return {
-    data,
+    data: tableData.value.data,
     headers,
   }
 })
 
 const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
   return columnsDropdownItems
+    .filter((item) => {
+      if (route.meta.type === 'standard') {
+        return item.tableHeaderKey !== 'type'
+      } else {
+        return item.tableHeaderKey !== 'protocol'
+      }
+    })
     .filter((item) => isMultiZoneMode.value ? true : item.tableHeaderKey !== 'zone')
     .map((item) => {
       const isChecked = visibleTableHeaderKeys.value.includes(item.tableHeaderKey)
@@ -215,7 +219,7 @@ const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'data-plane-list-view') {
+  if (route.name !== 'data-plane-list-view' && route.name !== 'gateway-list-view') {
     return
   }
 
@@ -223,7 +227,13 @@ watch(() => route.params.mesh, function () {
   isEmpty.value = false
   error.value = null
   tableDataIsEmpty.value = false
+  loadData(0)
+})
 
+watch(filteredDataPlaneType, function () {
+  isEmpty.value = false
+  error.value = null
+  tableDataIsEmpty.value = false
   loadData(0)
 })
 
@@ -268,9 +278,10 @@ function getEmptyState() {
 async function parseData(dataPlaneOverview: DataPlaneOverview) {
   const mesh = dataPlaneOverview.mesh
   const name = dataPlaneOverview.name
+  const type = dataPlaneOverview.dataplane.networking.gateway?.type || 'STANDARD'
 
   const nameRoute = {
-    name: 'data-plane-detail-view',
+    name: type === 'STANDARD' ? 'data-plane-detail-view' : 'gateway-detail-view',
     params: {
       mesh,
       dataPlane: name,
@@ -353,6 +364,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     nameRoute,
     mesh,
     meshRoute,
+    type,
     zone: zone ?? '—',
     service: service ?? '—',
     serviceInsightRoute,
@@ -368,7 +380,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     kumaDpAndKumaCpMismatch: false,
     lastUpdated: summary.selectedUpdateTime ? humanReadableDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
     lastConnected: summary.selectedTime ? humanReadableDate(new Date(summary.selectedTime).toUTCString()) : '—',
-    type: getDataplaneType(dataPlaneOverview.dataplane),
+    overview: dataPlaneOverview,
   }
 
   if (summary.version) {
@@ -411,16 +423,23 @@ async function loadData(offset: number): Promise<void> {
   const size = PAGE_SIZE
 
   try {
-    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset })
+    // Depending on what dataplane types we are viewing
+    // send the correct params to the API
+    const map: Record<DataPlaneType, string> = {
+      All: 'true',
+      Builtin: 'builtin',
+      Delegated: 'delegated',
+    }
+
+    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, {
+      size,
+      offset,
+      gateway: route.meta.type !== 'gateway'
+        ? false
+        : map[filteredDataPlaneType.value],
+    })
 
     if (Array.isArray(items) && items.length > 0) {
-      items.sort(function (overviewA, overviewB) {
-        if (overviewA.name === overviewB.name) {
-          return overviewA.mesh > overviewB.mesh ? 1 : -1
-        } else {
-          return overviewA.name.localeCompare(overviewB.name)
-        }
-      })
       nextUrl.value = next
       rawData.value = items
       selectDataPlaneOverview(props.name ?? items[0].name)
@@ -450,8 +469,9 @@ async function loadData(offset: number): Promise<void> {
 }
 
 function selectDataPlaneOverview(name: string | null): void {
-  if (name && rawData.value.length > 0) {
-    dataPlaneOverview.value = rawData.value.find((data) => data.name === name) ?? rawData.value[0]
+  const items = rawData.value
+  if (name && items.length > 0) {
+    dataPlaneOverview.value = items.find((data) => data.name === name) ?? items[0]
     patchQueryParam('name', dataPlaneOverview.value.name)
   } else {
     dataPlaneOverview.value = null

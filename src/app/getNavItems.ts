@@ -72,10 +72,16 @@ export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boole
       usesMeshParam: true,
     },
     {
+      name: 'Gateways',
+      routeName: 'gateway-list-view',
+      usesMeshParam: true,
+      insightsFieldAccessor: 'mesh.dataplanes.gateway',
+    },
+    {
       name: 'Data Plane Proxies',
       routeName: 'data-plane-list-view',
       usesMeshParam: true,
-      insightsFieldAccessor: 'mesh.dataplanes.total',
+      insightsFieldAccessor: 'mesh.dataplanes.standard',
     },
     {
       name: 'Policies',

@@ -16,41 +16,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
         class="data-table-controls mb-2"
       >
         
-        <div>
-          <label
-            class="mr-2"
-            for="data-planes-type-filter"
-          >
-             Type: 
-          </label>
-          <select
-            data-testid="data-planes-type-filter"
-            id="data-planes-type-filter"
-          >
-            
-            <option
-              value="All"
-            >
-              All
-            </option>
-            <option
-              value="Standard"
-            >
-              Standard
-            </option>
-            <option
-              value="Gateway (builtin)"
-            >
-              Gateway (builtin)
-            </option>
-            <option
-              value="Gateway (delegated)"
-            >
-              Gateway (delegated)
-            </option>
-            
-          </select>
-        </div>
+        <!--v-if-->
         <div
           class="k-dropdown k-dropdown-menu"
         >
@@ -162,7 +128,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </li>
                       <li
                         class="k-dropdown-item w-100 table-header-selector-item"
-                        data-testid="k-dropdown-item-Type"
+                        data-testid="k-dropdown-item-Service"
                       >
                         <div
                           class="k-dropdown-item-trigger"
@@ -176,29 +142,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                             <input
                               class="k-input"
                               id="data-plane-table-header-checkbox-1"
-                              type="checkbox"
-                            />
-                             Type
-                          </label>
-                          
-                        </div>
-                      </li>
-                      <li
-                        class="k-dropdown-item w-100 table-header-selector-item"
-                        data-testid="k-dropdown-item-Service"
-                      >
-                        <div
-                          class="k-dropdown-item-trigger"
-                          data-testid="k-dropdown-item-trigger"
-                        >
-                          
-                          <label
-                            class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-2"
-                          >
-                            <input
-                              class="k-input"
-                              id="data-plane-table-header-checkbox-2"
                               type="checkbox"
                             />
                              Service
@@ -217,11 +160,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-3"
+                            for="data-plane-table-header-checkbox-2"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-3"
+                              id="data-plane-table-header-checkbox-2"
                               type="checkbox"
                             />
                              Protocol
@@ -240,11 +183,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-4"
+                            for="data-plane-table-header-checkbox-3"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-4"
+                              id="data-plane-table-header-checkbox-3"
                               type="checkbox"
                             />
                              Last Connected
@@ -263,11 +206,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-5"
+                            for="data-plane-table-header-checkbox-4"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-5"
+                              id="data-plane-table-header-checkbox-4"
                               type="checkbox"
                             />
                              Last Updated
@@ -286,11 +229,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-6"
+                            for="data-plane-table-header-checkbox-5"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-6"
+                              id="data-plane-table-header-checkbox-5"
                               type="checkbox"
                             />
                              Total Updates
@@ -309,11 +252,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-7"
+                            for="data-plane-table-header-checkbox-6"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-7"
+                              id="data-plane-table-header-checkbox-6"
                               type="checkbox"
                             />
                              Kuma DP version
@@ -332,11 +275,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <label
                             class="k-checkbox table-header-selector-item-checkbox"
-                            for="data-plane-table-header-checkbox-8"
+                            for="data-plane-table-header-checkbox-7"
                           >
                             <input
                               class="k-input"
-                              id="data-plane-table-header-checkbox-8"
+                              id="data-plane-table-header-checkbox-7"
                               type="checkbox"
                             />
                              Envoy version
@@ -479,22 +422,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         <span
                           class=""
                         >
-                          Type
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
                           Service
                         </span>
                         
@@ -599,13 +526,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         backend
                       </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
                       
                     </td>
                     <td
@@ -718,755 +638,10 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.backend-02"
-                      >
-                        cluster-1.backend-02
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/services/backend"
-                      >
-                        backend
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      —
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      February 19, 2021
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class=""
-                      >
-                        1.0.0-rc2-211-g823fe8ce
-                      </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.backend-02"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon-info kong-icon"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Information
-                            </title>
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class="entity-status is-online"
-                      >
-                        <span>
-                          Online
-                        </span>
-                      </div>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/cluster-1.backend-03"
-                      >
-                        cluster-1.backend-03
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/services/backend"
-                      >
-                        backend
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      —
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      February 19, 2021
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class=""
-                      >
-                        1.0.0-rc2-211-g823fe8ce
-                      </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.backend-03"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon-info kong-icon"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Information
-                            </title>
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class="entity-status is-online"
-                      >
-                        <span>
-                          Online
-                        </span>
-                      </div>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/cluster-1.gateway-01"
-                      >
-                        cluster-1.gateway-01
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Gateway (BUILTIN)
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/services/gateway"
-                      >
-                        gateway
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      —
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      February 19, 2021
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class=""
-                      >
-                        1.0.0-rc2-211-g823fe8ce
-                      </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.gateway-01"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon-info kong-icon"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Information
-                            </title>
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class="entity-status is-online"
-                      >
-                        <span>
-                          Online
-                        </span>
-                      </div>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/cluster-1.ingress-02"
-                      >
-                        cluster-1.ingress-02
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/services/ingress"
-                      >
-                        ingress
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      —
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      February 19, 2021
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class=""
-                      >
-                        1.0.0-rc2-211-g823fe8ce
-                      </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/cluster-1.ingress-02"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon-info kong-icon"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Information
-                            </title>
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class="entity-status is-online"
-                      >
-                        <span>
-                          Online
-                        </span>
-                      </div>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/dataplane-test-456"
-                      >
-                        dataplane-test-456
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/services/kuma-example-backend"
-                      >
-                        kuma-example-backend
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      —
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      October 24, 2019
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class=""
-                      >
-                        —
-                      </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/dataplane-test-456"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon-info kong-icon"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Information
-                            </title>
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class="entity-status is-online"
-                      >
-                        <span>
-                          Online
-                        </span>
-                      </div>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/data-planes/db"
-                      >
-                        db
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
-                        href="/mesh/default/services/db"
-                      >
-                        db
-                      </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      http
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      February 17, 2021
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class=""
-                      >
-                        unknown
-                      </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/db"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon-info kong-icon"
-                        >
-                          <svg
-                            height="20"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            <title>
-                              Information
-                            </title>
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <div
-                        class="entity-status is-online"
-                      >
-                        <span>
-                          Online
-                        </span>
-                      </div>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      <a
-                        class=""
                         href="/mesh/default/data-planes/frontend"
                       >
                         frontend
                       </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
                       
                     </td>
                     <td
@@ -1618,17 +793,10 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                        href="/mesh/default/data-planes/db"
                       >
-                        ingress-dp-test-123
+                        db
                       </a>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Standard
                       
                     </td>
                     <td
@@ -1637,9 +805,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/kuma-example-backend"
+                        href="/mesh/default/services/db"
                       >
-                        kuma-example-backend
+                        db
                       </a>
                       
                     </td>
@@ -1647,14 +815,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      http
                       
                     </td>
                     <td
                       class=""
                     >
                       
-                      October 24, 2019
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1664,7 +832,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        —
+                        unknown
                       </div>
                       
                     </td>
@@ -1674,7 +842,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="medium rounded btn-link k-button detail-link"
-                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                        href="/mesh/default/data-planes/db"
                         type="button"
                       >
                         
@@ -1751,13 +919,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      Standard
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
                       <a
                         class=""
                         href="/mesh/default/services/no-subscriptions"
@@ -1798,6 +959,586 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <a
                         class="medium rounded btn-link k-button detail-link"
                         href="/mesh/default/data-planes/no-subscriptions"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class="entity-status is-online"
+                      >
+                        <span>
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                      >
+                        cluster-1.backend-02
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/backend"
+                      >
+                        backend
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 19, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class="entity-status is-online"
+                      >
+                        <span>
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                      >
+                        cluster-1.backend-03
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/backend"
+                      >
+                        backend
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 19, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class="entity-status is-online"
+                      >
+                        <span>
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                      >
+                        cluster-1.ingress-02
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/ingress"
+                      >
+                        ingress
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 19, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.0-rc2-211-g823fe8ce
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class="entity-status is-online"
+                      >
+                        <span>
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/dataplane-test-456"
+                      >
+                        dataplane-test-456
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/kuma-example-backend"
+                      >
+                        kuma-example-backend
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      October 24, 2019
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        —
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        href="/mesh/default/data-planes/dataplane-test-456"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon-info kong-icon"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Information
+                            </title>
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class="entity-status is-online"
+                      >
+                        <span>
+                          Online
+                        </span>
+                      </div>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                      >
+                        ingress-dp-test-123
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/kuma-example-backend"
+                      >
+                        kuma-example-backend
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      —
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      October 24, 2019
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        —
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="medium rounded btn-link k-button detail-link"
+                        href="/mesh/default/data-planes/ingress-dp-test-123"
                         type="button"
                       >
                         
