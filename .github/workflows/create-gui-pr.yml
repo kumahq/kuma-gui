@@ -24,7 +24,7 @@ jobs:
       - name: Generate GitHub App token
         # https://github.com/tibdex/github-app-token
         # Note: Specifically references https://github.com/tibdex/github-app-token/commit/f717b5ecd4534d3c4df4ce9b5c1c2214f0f7cd06 (v1.6.0) to ensure that this exact version of the workflow action is used. This is a security precaution as automatically opting into newer versions of the action could leak or get the app token stolen.
-        uses: tibdex/github-app-token@f717b5ecd4534d3c4df4ce9b5c1c2214f0f7cd06
+        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c
         id: generate-token
         with:
           app_id: ${{ secrets.APP_ID }}
