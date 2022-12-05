@@ -236,7 +236,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     >
                       
                       <a
-                        href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://kuma.io/docs/dev/?utm_source=Kuma&utm_medium=Kuma-GUI"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
