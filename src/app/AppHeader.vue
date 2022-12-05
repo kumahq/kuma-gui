@@ -105,12 +105,12 @@ import {
 import GithubButton from 'vue-github-button'
 
 import { useStore } from '@/store/store'
-import { useEnv } from '@/composables'
+import { useEnv } from '@/utilities'
 import NotificationIcon from './common/NotificationIcon.vue'
 import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const store = useStore()
-const env = useEnv({ version: store.getters['config/getKumaDocsVersion'] })
+const env = useEnv()
 
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 const environmentName = computed(() => {

@@ -4,10 +4,9 @@ import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import { createRouter } from './router/router'
 import { kumaApi } from './api/kumaApi'
-import { PATH_CONFIG_DEFAULT } from './pathConfigDefault'
-import { PathConfig } from './types/index'
 import { setupDatadog } from './utilities/setupDatadog'
 import { storeKey, store } from './store/store'
+import { useEnv } from '@/utilities'
 import App from './app/App.vue'
 
 if (import.meta.env.PROD) {
@@ -22,10 +21,10 @@ useTheme(am4themesAnimated)
  * This is a good place to run operations that should ideally be initiated or completed before the Vue application instance exists.
  */
 async function initializeVue() {
-  document.title = import.meta.env.VITE_NAMESPACE + ' Manager'
+  const env = useEnv()
 
-  const pathConfig = readPathConfigFromDom()
-  kumaApi.setBaseUrl(pathConfig.apiUrl)
+  document.title = `${env('KUMA_NAME')} Manager`
+  kumaApi.setBaseUrl(env('KUMA_API_URL'))
 
   if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
     // The combination of reading the environment variable and using dynamic import
@@ -49,29 +48,11 @@ async function initializeVue() {
     store.dispatch('fetchPolicies'),
   ])
 
-  const router = await createRouter(pathConfig.baseGuiPath)
+  const router = await createRouter(env('KUMA_BASE_PATH'))
 
   app.use(router)
 
   app.mount('#app')
-}
-
-/**
- * Reads the path config object from a JSON string found in a special script tag that’s populated during server-side rendering of the Vue application’s index.html file.
- */
-function readPathConfigFromDom(): PathConfig {
-  const pathConfigNode = document.querySelector('#kuma-config')
-
-  if (pathConfigNode instanceof HTMLScriptElement) {
-    try {
-      return JSON.parse(pathConfigNode.innerText.trim())
-    } catch {
-      // Handled by falling back to a default value.
-    }
-  }
-
-  // Falls back to a sensible default when encountering a malformed JSON payload or non-replaced template.
-  return PATH_CONFIG_DEFAULT
 }
 
 initializeVue()
