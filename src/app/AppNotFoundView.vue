@@ -3,7 +3,7 @@
     <KEmptyState>
       <template #title>
         <KIcon
-          class="kong-icon--centered"
+          class="mb-3"
           icon="warning"
           color="var(--black-75)"
           secondary-color="var(--yellow-300)"

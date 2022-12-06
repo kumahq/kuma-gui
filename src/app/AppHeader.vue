@@ -53,7 +53,7 @@
           title="Diagnostics"
         />
 
-        <span class="kutil-sr-only">Diagnostics</span>
+        <span class="visually-hidden">Diagnostics</span>
       </router-link>
     </div>
   </header>
@@ -91,7 +91,7 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
   top: 0;
   left: 0;
   width: 100%;
-  height: var(--topbar-height);
+  height: var(--AppHeaderHeight);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -115,7 +115,7 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
 }
 
 .app-status--desktop {
-  color: var(--gray-3);
+  color: var(--grey-500);
   display: none;
 
   @media screen and (min-width: 900px) {

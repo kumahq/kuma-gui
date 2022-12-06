@@ -76,10 +76,10 @@ function fetchInsights() {
 }
 
 .app-sidebar {
-  width: var(--subnavWidth);
+  width: var(--AppSidebarWidth);
   position: fixed;
   z-index: 10;
-  top: var(--topbar-height);
+  top: var(--AppHeaderHeight);
   bottom: 0;
   left: 0;
   overflow-y: auto;

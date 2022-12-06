@@ -26,7 +26,7 @@
           </h3>
 
           <KCard
-            class="my-6 k-card--small"
+            class="my-6"
             title="Mesh Information"
             has-shadow
           >
@@ -155,7 +155,7 @@
             if you wish.
           </p>
           <KCard
-            class="my-6 k-card--small"
+            class="my-6"
             title="Logging Configuration"
             has-shadow
           >
@@ -276,7 +276,7 @@
             manually as you wish.
           </p>
           <KCard
-            class="my-6 k-card--small"
+            class="my-6"
             title="Tracing Configuration"
             has-shadow
           >
@@ -385,7 +385,7 @@
             and port that a metrics service, like Prometheus, can use to fetch them.
           </p>
           <KCard
-            class="my-6 k-card--small"
+            class="my-6"
             title="Metrics Configuration"
             has-shadow
           >
@@ -1030,3 +1030,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.code-sample {
+  font-family: var(--code-font-family);
+}
+</style>

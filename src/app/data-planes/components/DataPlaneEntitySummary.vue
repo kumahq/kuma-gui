@@ -5,7 +5,7 @@
         class="entity-title"
         data-testid="data-plane-proxy-title"
       >
-        <span class="kutil-sr-only">Data plane proxy:</span>
+        <span class="visually-hidden">Data plane proxy:</span>
 
         <router-link
           :to="{

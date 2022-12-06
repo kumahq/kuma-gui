@@ -10,7 +10,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
       data-testid="data-plane-proxy-title"
     >
       <span
-        class="kutil-sr-only"
+        class="visually-hidden"
       >
         Data plane proxy:
       </span>

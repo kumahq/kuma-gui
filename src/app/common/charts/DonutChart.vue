@@ -11,9 +11,9 @@ import { PieChart } from '@amcharts/amcharts4/charts'
 const TitleLabelClassName = 'DonutChart--titleLabel'
 const SubTitleLabelClassName = 'DonutChart--sumLabel'
 const defaultLabelsColor = 'rgba(41, 11, 83, 0.75)'
-const onlineColor = '#19A654'
-const offlineColor = '#BF1330'
-const partiallyDegradedColor = '#F2A230'
+const onlineColor = '#19a654'
+const offlineColor = '#bf1330'
+const partiallyDegradedColor = '#f2a230'
 
 const getEmptyData = () => [
   {

@@ -184,6 +184,7 @@ export type PolicyDefinition = {
   readOnly: boolean
 }
 
+export type Status = 'Online' | 'Offline' | 'Partially degraded' | 'Not available'
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
 
 export type DataPlaneEntityMtls = {

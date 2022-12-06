@@ -181,7 +181,7 @@ export default {
   margin: 30px auto;
   font-size: 12px;
   font-family: monospace;
-  background: #eee;
+  background: var(--grey-300);
 
   h4 {
     font-size: inherit !important;
@@ -205,7 +205,7 @@ export default {
   li {
     display: block;
     padding: 5px 0;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--grey-400);
   }
 
   .not-set {
@@ -314,7 +314,7 @@ $bp-max-width: 1219px;
 }
 
 .wizard-steps__sidebar {
-  background-color: var(--sidebar-bg-color);
+  background-color: var(--grey-100);
   border: 1px solid #e6e7e8;
 }
 
@@ -328,10 +328,10 @@ $bp-max-width: 1219px;
 }
 
 .wizard-steps__indicator__controls {
-  --wizard-tab-bg: var(--WizardTabBGColor);
-  --wizard-tab-text-selected-color: var(--WizardTabTextColor);
+  --wizard-tab-bg: var(--logo-purple);
+  --wizard-tab-text-selected-color: var(--white);
 
-  border: 1px solid var(--gray-4);
+  border: 1px solid var(--grey-300);
   margin-bottom: 2rem;
   overflow: hidden;
   border-radius: 6px;
@@ -340,7 +340,6 @@ $bp-max-width: 1219px;
     display: block;
     color: var(--blue-base);
     padding: var(--spacing-md);
-    background-color: var(--gray-med);
     user-select: none;
   }
 
@@ -397,7 +396,7 @@ $bp-max-width: 1219px;
   justify-content: center;
   padding: var(--spacing-md) 0;
   margin: var(--spacing-xl) 0;
-  border-top: 1px solid var(--grey-88);
+  border-top: 1px solid var(--grey-100);
 
   > *:first-of-type {
     margin-right: auto;

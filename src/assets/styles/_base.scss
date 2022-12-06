@@ -1,0 +1,38 @@
+body {
+  padding-top: var(--AppHeaderHeight, initial);
+  font-family: var(--base-font-family);
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:link,
+a:visited {
+  color: var(--logo-purple);
+}
+
+a:hover,
+a:active,
+a:focus {
+  color: var(--logo-purple-light);
+}
+
+img {
+  // Restores the sensible default which is overridden by Tailwind.
+  display: inline-block;
+}
+
+select {
+  appearance: none;
+  border: 1px solid var(--grey-400);
+  border-radius: 3px;
+  font-size: 16px;
+  color: var(--logo-purple);
+  line-height: 20px;
+  padding: 10px 30px 10px 13px;
+  background-color: var(--white);
+  background-image: url('@/assets/images/chevron-down.svg?url');
+  background-position: calc(100% - 13px) 50%;
+  background-repeat: no-repeat;
+}

@@ -110,15 +110,16 @@ $border-radius: 5px;
 .tag__label {
   border-top-left-radius: $border-radius;
   border-bottom-left-radius: $border-radius;
-  color: #fff;
-  background-color: var(--blue-1);
+  color: var(--white);
+  background-color: var(--blue-400);
 }
 
 .tag__label--is-kuma-io-label {
-  background-color: var(--brand-color-6);
+  background-color: var(--logo-purple);
 }
 
 .tag__value {
+  color: var(--black-75);
   border-color: var(--grey-400);
   border-left-color: transparent;
   border-top-right-radius: $border-radius;

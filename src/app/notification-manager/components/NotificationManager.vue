@@ -99,8 +99,8 @@ function closeModal(): void {
 
 <style lang="scss" scoped>
 .modal {
-  @apply mx-4;
-
   --KModalMaxWidth: 800px;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 </style>

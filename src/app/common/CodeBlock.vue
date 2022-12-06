@@ -107,9 +107,10 @@ function updateStoredQuery(queryValue: string): void {
   display: block !important;
 }
 
-.k-code-block-actions {
+// Makes code block actions sticky
+.code-block .k-code-block-actions {
   position: sticky;
   z-index: 4;
-  top: var(--topbar-height);
+  top: var(--AppHeaderHeight);
 }
 </style>

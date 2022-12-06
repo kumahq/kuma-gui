@@ -98,29 +98,39 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
       type="button"
     >
       
-      <!---->
-      
-      
       <span
-        class="refresh-icon custom-control-icon"
+        class="k-button-icon kong-icon-redo kong-icon"
       >
         <svg
-          viewBox="0 0 36 36"
+          fill="white"
+          height="16"
+          role="img"
+          viewBox="0 0 17 14"
+          width="16"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g
-            fill="#fff"
-            fill-rule="nonzero"
-          >
-            <path
-              d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
-            />
-          </g>
+          
+  
+          <title>
+            Redo
+          </title>
+          
+  
+          <path
+            clip-rule="evenodd"
+            d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+            fill="white"
+            fill-rule="evenodd"
+          />
+          
+
         </svg>
+        
+
       </span>
-      <span>
-        Refresh
-      </span>
+      
+      
+       Refresh 
       
       <!---->
     </button>
@@ -133,7 +143,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
       class="data-overview-table"
     >
       <div
-        class="k-table-container"
+        class="k-table-container data-overview-table"
         data-testid="data-overview-table"
         is-clickable=""
       >
@@ -271,7 +281,7 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                 >
                   
                   <div
-                    class="entity-status is-offline"
+                    class="entity-status"
                   >
                     <span>
                       offline
@@ -420,29 +430,38 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
       type="button"
     >
       
-      <!---->
-      
-      
       <span
-        class="refresh-icon custom-control-icon"
+        class="k-button-icon kong-icon-redo kong-icon"
       >
         <svg
-          viewBox="0 0 36 36"
+          fill="none"
+          height="14"
+          viewBox="0 0 17 14"
+          width="17"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g
-            fill="#fff"
-            fill-rule="nonzero"
-          >
-            <path
-              d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z"
-            />
-          </g>
+          
+  
+          <title>
+            Redo
+          </title>
+          
+  
+          <path
+            clip-rule="evenodd"
+            d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+            fill="#A3BBCC"
+            fill-rule="evenodd"
+          />
+          
+
         </svg>
+        
+
       </span>
-      <span>
-        Refresh
-      </span>
+      
+      
+       Refresh 
       
       <!---->
     </button>
@@ -455,7 +474,7 @@ exports[`DataOverview.vue renders basic snapshot 1`] = `
       class="data-overview-table"
     >
       <div
-        class="k-table-container"
+        class="k-table-container data-overview-table"
         data-testid="data-overview-table"
         is-clickable=""
       >

@@ -119,30 +119,24 @@ function switchTab(newTab: string): void {
 }
 </script>
 
-<style>
-.k-tabs ul .tab-link {
-  text-decoration: none !important;
-}
-</style>
-
 <style lang="scss" scoped>
 .tab-container {
   --tab-container-margin: var(--spacing-lg) 0 0 0;
   --tab-header-margin: 0 0 var(--spacing-md) 0;
   --tab-header-padding: 0 var(--spacing-md);
   --tab-header-title-font-size: var(--type-md);
-  --tab-header-title-font-weight: normal;
-  --tab-nav-border-bottom: 1px solid var(--gray-4);
+  --tab-header-title-font-weight: bold;
+  --tab-nav-border-bottom: 1px solid var(--grey-300);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
   --tab-link-gap: var(--spacing-sm);
-  --tab-link-active-text-color: var(--blue-4);
-  --tab-active-background-color: var(--gray-7);
-  --tab-link-background-color: #fff;
-  --tab-link-border: 1px solid var(--gray-4);
-  --tab-active-border-color: var(--gray-4);
+  --tab-link-active-text-color: var(--blue-300);
+  --tab-active-background-color: var(--grey-100);
+  --tab-link-background-color: var(--white);
+  --tab-link-border: 1px solid var(--grey-300);
+  --tab-active-border-color: var(--grey-300);
   --tab-panel-padding: var(--spacing-sm);
-  --tab-panel-border: 1px solid var(--gray-4);
+  --tab-panel-border: 1px solid var(--grey-300);
   --tab-panel-radius: 0 0 3px 3px;
 
   margin: var(--tab-container-margin);

@@ -9,7 +9,7 @@
         <template #title>
           <div
             v-if="isRunning"
-            class="card-icon mb-3"
+            class="mb-3"
           >
             <KIcon
               icon="spinner"
@@ -19,7 +19,7 @@
           </div>
           <div
             v-if="isComplete && hasError === false && isRunning === false"
-            class="card-icon mb-3"
+            class="mb-3"
           >
             <IconSuccess />
           </div>
@@ -152,38 +152,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
-// style override for the KEmptyState content
-.scanner-content {
-  .empty-state-wrapper p {
-    max-width: 100% !important;
-  }
-}
-</style>
-
 <style lang="scss" scoped>
-.scanner {
-}
-
-.scanner-content {
-  p {
-    border: 1px solid red;
-    margin: 0;
-  }
-
-  .card-icon {
-    text-align: center;
-
-    img,
-    svg {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-
-  .empty-state-wrapper.empty-state-wrapper p {
-    max-width: 100% !important;
-  }
+.scanner-content p {
+  border: 1px solid red;
+  margin: 0;
 }
 </style>

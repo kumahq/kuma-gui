@@ -179,7 +179,7 @@ exports[`App.vue fails to renders basic view 1`] = `
 
         </span>
         <span
-          class="kutil-sr-only"
+          class="visually-hidden"
         >
           Diagnostics
         </span>
@@ -232,7 +232,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             for="mesh-selector"
           >
             <span
-              class="kutil-sr-only"
+              class="visually-hidden"
             >
                Filter by mesh: 
             </span>

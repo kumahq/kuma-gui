@@ -1,7 +1,7 @@
 <template>
   <div class="mesh-selector-container">
     <label for="mesh-selector">
-      <span class="kutil-sr-only">
+      <span class="visually-hidden">
         Filter by mesh:
       </span>
 
@@ -64,15 +64,6 @@ function changeMesh(event: Event): void {
 }
 
 .mesh-selector {
-  display: block;
   width: 100%;
-  color: var(--MeshSelectorInputTextColor);
-  border-color: var(--MeshSelectorInputBorderColor);
-  outline: none;
-
-  &:focus,
-  &:active {
-    border-color: var(--MeshSelectorInputBorderColorFocus);
-  }
 }
 </style>

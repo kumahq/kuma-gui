@@ -417,18 +417,12 @@
             Below is an example of a Dataplane resource output:
           </p>
 
-          <code class="block">
-            <pre>type: Dataplane
-mesh: default
-name: dp-echo-1
-networking:
-  address: 10.0.0.1
-  inbound:
-  - port: 10000
-    servicePort: 9000
-    tags:
-      kuma.io/service: echo</pre>
-          </code>
+          <CodeBlock
+            id="onboarding-dpp-universal-example"
+            class="mt-3"
+            :code="$options.EXAMPLE_CODE"
+            language="yaml"
+          />
         </template>
 
         <template #switch>
@@ -459,8 +453,21 @@ import EntityScanner from '../components/EntityScanner.vue'
 import dataplaneSchema from './DataplaneUniversalSchema'
 import { PRODUCT_NAME } from '@/constants'
 
+const EXAMPLE_CODE = `type: Dataplane
+mesh: default
+name: dp-echo-1
+networking:
+  address: 10.0.0.1
+  inbound:
+  - port: 10000
+    servicePort: 9000
+    tags:
+      kuma.io/service: echo`
+
 export default {
   name: 'DataplaneWizardUniversal',
+
+  EXAMPLE_CODE,
 
   components: {
     CodeBlock,
@@ -735,3 +742,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.code-block {
+  --KCodeBlockBackgroundColor: var(--white);
+}
+</style>

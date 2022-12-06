@@ -1,10 +1,10 @@
 <template>
   <div class="wizard-switcher">
-    <KEmptyState
+    <KCard
       ref="emptyState"
       cta-is-hidden
       :is-error="!environment"
-      class="my-6 wizard-empty-state"
+      class="my-6"
     >
       <template
         v-if="environment === 'kubernetes' || environment === 'universal'"
@@ -12,7 +12,8 @@
       >
         Running on <span class="capitalize">{{ environment }}</span>
       </template>
-      <template #message>
+
+      <template #body>
         <div v-if="environment === 'kubernetes'">
           <div v-if="$route.name === wizardRoutes.kubernetes">
             <p>
@@ -20,12 +21,13 @@
               and we are going to be showing you instructions for Kubernetes unless you
               decide to visualize the instructions for Universal.
             </p>
-            <p>
+            <p class="text-center">
               <KButton
                 :to="{ name: wizardRoutes.universal }"
                 appearance="secondary"
               >
-                Switch to Universal instructions
+                Switch to<br>
+                Universal instructions
               </KButton>
             </p>
           </div>
@@ -34,7 +36,7 @@
               We have detected that you are running on a <strong>Kubernetes environment</strong>,
               but you are viewing instructions for Universal.
             </p>
-            <p>
+            <p class="text-center">
               <KButton
                 :to="{ name: wizardRoutes.kubernetes }"
                 appearance="secondary"
@@ -50,7 +52,7 @@
               We have detected that you are running on a <strong>Universal environment</strong>,
               but you are viewing instructions for Kubernetes.
             </p>
-            <p>
+            <p class="text-center">
               <KButton
                 :to="{ name: wizardRoutes.universal }"
                 appearance="secondary"
@@ -65,30 +67,31 @@
               and we are going to be showing you instructions for Universal unless you
               decide to visualize the instructions for Kubernetes.
             </p>
-            <p>
+            <p class="text-center">
               <KButton
                 :to="{ name: wizardRoutes.kubernetes }"
                 appearance="secondary"
               >
-                Switch to Kubernetes instructions
+                Switch to
+                Kubernetes instructions
               </KButton>
             </p>
           </div>
         </div>
       </template>
-    </KEmptyState>
+    </KCard>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { KButton, KEmptyState } from '@kong/kongponents'
+import { KButton, KCard } from '@kong/kongponents'
 
 export default {
   name: 'EnvironmentSwitcher',
   components: {
     KButton,
-    KEmptyState,
+    KCard,
   },
   data() {
     return {
@@ -111,3 +114,10 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.capitalize {
+  display: inline-block;
+  text-transform: capitalize;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <i
-    class="card-icon icon-success mb-3"
+    class="icon-success mb-3"
     role="img"
   >
     &#x2713;
@@ -8,20 +8,18 @@
 </template>
 
 <style lang="scss" scoped>
-.icon-success {
-  --size: 30px;
-  --font-size: 13px;
-  --color: var(--logo-green);
+$size: 30px;
 
+.icon-success {
   display: block;
-  width: var(--size);
-  height: var(--size);
-  line-height: var(--size);
+  width: #{$size};
+  height: #{$size};
+  line-height: #{$size};
   border-radius: 50%;
-  background-color: var(--color);
+  background-color: var(--logo-green);
   margin: 0 auto;
-  color: #fff;
-  font-size: var(--font-size);
+  color: var(--white);
+  font-size: 13px;
   text-align: center;
 }
 </style>

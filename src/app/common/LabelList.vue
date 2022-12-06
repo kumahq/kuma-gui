@@ -63,7 +63,7 @@ const props = defineProps({
     font-size: var(--type-sm);
     font-weight: bold;
     text-transform: uppercase;
-    color: var(--gray-3);
+    color: var(--grey-500);
     margin-bottom: var(--spacing-xs);
   }
 
@@ -123,7 +123,7 @@ const props = defineProps({
       display: inline-block;
       content: '/';
       margin: 0 3px 0 1px;
-      color: #999;
+      color: var(--grey-500);
     }
   }
 }

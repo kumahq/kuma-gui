@@ -1,5 +1,5 @@
 <template>
-  <h2 class="kutil-sr-only">
+  <h2 class="visually-hidden">
     Policies
   </h2>
 

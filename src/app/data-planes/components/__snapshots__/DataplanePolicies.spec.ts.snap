@@ -6,7 +6,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
 >
   
   <h2
-    class="kutil-sr-only"
+    class="visually-hidden"
   >
      Policies 
   </h2>

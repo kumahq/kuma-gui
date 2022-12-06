@@ -1,5 +1,5 @@
 <template>
-  <div class="status-info">
+  <div>
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock
@@ -44,15 +44,3 @@ defineProps({
   },
 })
 </script>
-
-<style lang="scss">
-.k-empty-state-message {
-  text-align: left;
-}
-</style>
-
-<style lang="scss" scoped>
-.status-info {
-  position: relative;
-}
-</style>
