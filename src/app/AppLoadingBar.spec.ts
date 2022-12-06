@@ -25,7 +25,7 @@ describe('AppLoadingBar', () => {
   test('checks if width is max of 100% size', async () => {
     const wrapper = renderComponent()
 
-    jest.advanceTimersByTime(1500)
+    jest.advanceTimersByTime(2500)
     await flushPromises()
 
     expect(wrapper.find('[data-testid="app-progress-bar"]').attributes('style')).toBe('width: 100%;')

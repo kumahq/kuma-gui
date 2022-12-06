@@ -10,19 +10,6 @@ import { setupDatadog } from './utilities/setupDatadog'
 import { storeKey, store } from './store/store'
 import App from './app/App.vue'
 
-import '@kong/kongponents/dist/style.css'
-import '@kong/kongponents/dist/_variables.scss'
-
-import '@/assets/styles/third-party/tailwind.css'
-import '@/assets/styles/variables.scss'
-import '@/assets/styles/utilities.scss'
-import '@/assets/styles/fonts.scss'
-import '@/assets/styles/main.scss'
-import '@/assets/styles/typography.scss'
-import '@/assets/styles/inputs.scss'
-import '@/assets/styles/components.scss'
-import '@/assets/styles/transitions.scss'
-
 if (import.meta.env.PROD) {
   setupDatadog()
 }

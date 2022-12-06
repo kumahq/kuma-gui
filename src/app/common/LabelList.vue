@@ -61,7 +61,7 @@ const props = defineProps({
   h5,
   h6 {
     font-size: var(--type-sm);
-    font-weight: 500;
+    font-weight: bold;
     text-transform: uppercase;
     color: var(--gray-3);
     margin-bottom: var(--spacing-xs);
@@ -100,21 +100,15 @@ const props = defineProps({
 .tag-cols {
   display: grid;
   grid-auto-flow: column dense;
-  // grid-gap: 10px;
   grid-template-columns: 1fr 2fr;
 
   span {
     display: inline-block;
     padding: var(--spacing-xs);
-    // border-bottom: 1px solid var(--gray-4);
   }
 
   span:first-of-type {
-    // min-width: 80px;
-    font-weight: 700;
-  }
-
-  span:last-of-type {
+    font-weight: bold;
   }
 }
 

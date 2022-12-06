@@ -75,12 +75,4 @@ function changeMesh(event: Event): void {
     border-color: var(--MeshSelectorInputBorderColorFocus);
   }
 }
-
-.menu-title {
-  display: block;
-  font-size: var(--type-sm);
-  font-weight: 500;
-  color: var(--MeshSelectorTitleColor);
-  margin: 0 0 5px 0;
-}
 </style>

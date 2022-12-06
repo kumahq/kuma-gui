@@ -9,3 +9,14 @@ button,
 [type=submit] {
   -webkit-appearance: none;
 }
+
+@import '/node_modules/@kong/kongponents/dist/style.css';
+@import '/node_modules/@kong/kongponents/dist/_variables.scss';
+@import 'third-party/tailwind.css';
+@import 'variables.scss';
+@import 'utilities.scss';
+@import 'fonts.scss';
+@import 'typography.scss';
+@import 'inputs.scss';
+@import 'components.scss';
+@import 'transitions.scss';
