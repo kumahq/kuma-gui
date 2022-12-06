@@ -17,7 +17,12 @@
             "sources": [
               {
                 "match": {
-                  "kuma.io/service": "*"
+                  "kuma.io/service": "service-a"
+                }
+              },
+              {
+                "match": {
+                  "kuma.io/service": "service-b"
                 }
               }
             ],

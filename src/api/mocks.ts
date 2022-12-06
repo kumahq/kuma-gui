@@ -152,6 +152,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   // Define routes with dynamic segments last so they don’t match before more specific routes.
   ['meshes/:mesh/:policyType/:policyName/dataplanes', () => import('./mock-data/policy-connections.json')],
   ['meshes/:mesh/dataplanes/:dataplaneName/policies', () => import('./mock-data/dataplane-policies.json')],
+  ['meshes/:mesh/dataplanes/:dataplaneName/rules', () => import('./mock-data/dataplane-rules.json')],
   ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock-data/dataplane-xds.json')],
 ]
 

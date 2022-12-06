@@ -42,7 +42,7 @@
       >
         <template #tabHeader>
           <div>
-            <h3> Zone Ingress: {{ entity.name }}</h3>
+            <h1>Zone Ingress: {{ entity.name }}</h1>
           </div>
         </template>
         <template #overview>
@@ -319,7 +319,7 @@ export default {
         const { items, next } = await kumaApi.getAllZoneIngressOverviews({ size, offset })
 
         return {
-          data: items,
+          data: items ?? [],
           next,
         }
       }

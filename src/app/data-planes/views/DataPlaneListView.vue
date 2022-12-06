@@ -114,7 +114,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 
@@ -287,7 +287,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
       dataPlane: name,
     },
   }
-  const meshRoute = {
+  const meshRoute: RouteLocationNamedRaw = {
     name: 'mesh-detail-view',
     params: {
       mesh,
@@ -305,13 +305,22 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
   const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
   const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
 
-  let serviceInsightRoute
+  let serviceInsightRoute: RouteLocationNamedRaw | undefined
   if (service !== undefined) {
     serviceInsightRoute = {
       name: 'service-insight-detail-view',
       params: {
         mesh,
         service,
+      },
+    }
+  }
+  let zoneRoute: RouteLocationNamedRaw | undefined
+  if (zone !== undefined) {
+    zoneRoute = {
+      name: 'zones',
+      query: {
+        ns: zone,
       },
     }
   }
@@ -366,6 +375,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     meshRoute,
     type,
     zone: zone ?? '—',
+    zoneRoute,
     service: service ?? '—',
     serviceInsightRoute,
     protocol: protocol ?? '—',

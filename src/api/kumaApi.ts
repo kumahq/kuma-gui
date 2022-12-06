@@ -1,8 +1,9 @@
 import { RestClient } from './RestClient'
-import { ApiListResponse, ApiKindListResponse } from '@/types/api.d'
+import { ApiListResponse, ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
 import {
   DataPlane,
   DataPlaneOverview,
+  DataplaneRule,
   ExternalService,
   GlobalInsights,
   Info,
@@ -71,7 +72,7 @@ class KumaApi {
     return this.client.get('global-insights')
   }
 
-  getZones(params?: any): Promise<ApiListResponse<Zone>> {
+  getZones(params?: any): Promise<PaginatedApiListResponse<Zone>> {
     return this.client.get('zones', { params })
   }
 
@@ -79,7 +80,7 @@ class KumaApi {
     return this.client.get(`zones/${name}`, { params })
   }
 
-  getAllZoneOverviews(params?: any): Promise<ApiListResponse<ZoneOverview>> {
+  getAllZoneOverviews(params?: any): Promise<PaginatedApiListResponse<ZoneOverview>> {
     return this.client.get('zones+insights', { params })
   }
 
@@ -117,7 +118,7 @@ class KumaApi {
     return this.client.get(`zoneegressoverviews/${name}`, { params })
   }
 
-  getAllMeshes(params?: any): Promise<ApiListResponse<Mesh>> {
+  getAllMeshes(params?: any): Promise<PaginatedApiListResponse<Mesh>> {
     return this.client.get('meshes', { params })
   }
 
@@ -125,7 +126,7 @@ class KumaApi {
     return this.client.get(`meshes/${name}`, { params })
   }
 
-  getAllMeshInsights(params?: any): Promise<ApiListResponse<MeshInsight>> {
+  getAllMeshInsights(params?: any): Promise<PaginatedApiListResponse<MeshInsight>> {
     return this.client.get('mesh-insights', { params })
   }
 
@@ -133,7 +134,7 @@ class KumaApi {
     return this.client.get(`mesh-insights/${name}`, { params })
   }
 
-  getAllDataplanes(params?: any): Promise<ApiListResponse<DataPlane>> {
+  getAllDataplanes(params?: any): Promise<PaginatedApiListResponse<DataPlane>> {
     return this.client.get('dataplanes', { params })
   }
 
@@ -141,11 +142,11 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/dataplanes/${name}`, { params })
   }
 
-  getAllDataplaneOverviews(params?: any): Promise<ApiListResponse<DataPlaneOverview>> {
+  getAllDataplaneOverviews(params?: any): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
     return this.client.get('dataplanes+insights', { params })
   }
 
-  getAllDataplaneOverviewsFromMesh({ mesh }: { mesh: string }, params?: any): Promise<ApiListResponse<DataPlaneOverview>> {
+  getAllDataplaneOverviewsFromMesh({ mesh }: { mesh: string }, params?: any): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
     return this.client.get(`meshes/${mesh}/dataplanes+insights`, { params })
   }
 
@@ -161,6 +162,10 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/dataplanes/${name}/policies`, { params })
   }
 
+  getDataplaneRules({ mesh, name }: { mesh: string; name: string }, params?: any): Promise<ApiListResponse<DataplaneRule>> {
+    return this.client.get(`meshes/${mesh}/dataplanes/${name}/rules`, { params })
+  }
+
   /**
    * Fetches additional data like xDS configuration, envoy stats, or envoy clusters.
    */
@@ -168,11 +173,11 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/dataplanes/${dppName}/${dataPath}`, { params })
   }
 
-  getAllServiceInsights(params?: any): Promise<ApiListResponse<ServiceInsight>> {
+  getAllServiceInsights(params?: any): Promise<PaginatedApiListResponse<ServiceInsight>> {
     return this.client.get('service-insights', { params })
   }
 
-  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: any): Promise<ApiListResponse<ServiceInsight>> {
+  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: any): Promise<PaginatedApiListResponse<ServiceInsight>> {
     return this.client.get(`meshes/${mesh}/service-insights`, { params })
   }
 
@@ -180,11 +185,11 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/service-insights/${name}`, { params })
   }
 
-  getAllExternalServices(params?: any): Promise<ApiListResponse<ExternalService>> {
+  getAllExternalServices(params?: any): Promise<PaginatedApiListResponse<ExternalService>> {
     return this.client.get('external-services', { params })
   }
 
-  getAllExternalServicesFromMesh({ mesh }: { mesh: string }, params?: any): Promise<ApiListResponse<ExternalService>> {
+  getAllExternalServicesFromMesh({ mesh }: { mesh: string }, params?: any): Promise<PaginatedApiListResponse<ExternalService>> {
     return this.client.get(`meshes/${mesh}/external-services`, { params })
   }
 
@@ -192,15 +197,15 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/external-services/${name}`, { params })
   }
 
-  getPolicyConnections({ mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string }, params?: any): Promise<ApiListResponse<any>> {
+  getPolicyConnections({ mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string }, params?: any): Promise<PaginatedApiListResponse<any>> {
     return this.client.get(`meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
   }
 
-  getAllPolicyEntities({ path }: { path: string }, params?: any): Promise<ApiListResponse<PolicyEntity>> {
+  getAllPolicyEntities({ path }: { path: string }, params?: any): Promise<PaginatedApiListResponse<PolicyEntity>> {
     return this.client.get(path, { params })
   }
 
-  getAllPolicyEntitiesFromMesh({ mesh, path }: { mesh: string, path: string }, params?: any): Promise<ApiListResponse<PolicyEntity>> {
+  getAllPolicyEntitiesFromMesh({ mesh, path }: { mesh: string, path: string }, params?: any): Promise<PaginatedApiListResponse<PolicyEntity>> {
     return this.client.get(`meshes/${mesh}/${path}`, { params })
   }
 

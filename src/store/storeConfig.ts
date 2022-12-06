@@ -14,7 +14,6 @@ import sidebar from '@/store/modules/sidebar/sidebar'
 import { fetchAllResources } from '@/utilities/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import { kumaApi } from '@/api/kumaApi'
-import { ApiListResponse } from '@/types/api.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import { Mesh, PolicyDefinition } from '@/types/index.d'
 
@@ -27,7 +26,11 @@ interface BareRootState {
   menu: null
   globalLoading: boolean
   pageTitle: string
-  meshes: ApiListResponse<Mesh>
+  meshes: {
+    items: Mesh[]
+    total: number
+    next: string | null
+  }
   selectedMesh: string | null
   totalDataplaneCount: number
   version: string
@@ -270,6 +273,8 @@ export const storeConfig: StoreOptions<State> = {
 
             return meshA.name.localeCompare(meshB.name)
           })
+        } else {
+          response.items = []
         }
 
         commit('SET_MESHES', response)

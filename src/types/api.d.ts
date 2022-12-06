@@ -7,14 +7,15 @@
  * Promise<ApiListResponse<ExternalService>>
  * ```
  */
-export type ApiListResponse<ResourceType> = {
-  items: ResourceType[]
+export interface ApiListResponse<ResourceType> {
+  items: ResourceType[] | null
   total: number
-  next: string | null
 }
 
-export type ApiKindListResponse<ResourceType> = {
-  items: ResourceType[]
-  total: number
+export interface ApiKindListResponse<ResourceType> extends ApiListResponse<ResourceType> {
   kind: string
+}
+
+export interface PaginatedApiListResponse<ResourceType> extends ApiListResponse<ResourceType> {
+  next: string | null
 }

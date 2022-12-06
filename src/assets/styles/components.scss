@@ -216,3 +216,10 @@
     margin-right: auto;
   }
 }
+
+// Resets the margin for buttons within tables which for some reason get a negative margin in Kongponents.
+.k-table tbody td button,
+.k-table tbody td .k-button {
+  margin-top: 0;
+  margin-bottom: 0;
+}

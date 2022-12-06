@@ -196,9 +196,9 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
       >
         
         <div>
-          <h3>
-             Zone Ingress: zone-ingress-1
-          </h3>
+          <h1>
+            Zone Ingress: zone-ingress-1
+          </h1>
         </div>
         
       </header>
@@ -511,9 +511,9 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
   >
     
     <div>
-      <h3>
-         Zone Ingress: zone-ingress-1
-      </h3>
+      <h1>
+        Zone Ingress: zone-ingress-1
+      </h1>
     </div>
     
   </header>
