@@ -78,14 +78,14 @@ const filteredDataplanes = computed(() => {
 })
 
 watch(() => props.policyName, function () {
-  fetchPolicyConntections()
+  fetchPolicyConnections()
 })
 
 onMounted(function () {
-  fetchPolicyConntections()
+  fetchPolicyConnections()
 })
 
-async function fetchPolicyConntections(): Promise<void> {
+async function fetchPolicyConnections(): Promise<void> {
   hasError.value = false
   isLoading.value = true
 
