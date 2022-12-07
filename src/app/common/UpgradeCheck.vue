@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import compare from 'semver-compare'
+import compare from 'semver/functions/compare'
 import { KAlert, KButton } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
@@ -59,12 +59,7 @@ async function checkVersion(): Promise<void> {
       // compare the latest version to the currently running version
       // but only if we were able to set the latest version in the first place.
       const comparison = compare(latestVersion.value, currentVersion.value || '')
-
-      if (comparison === 1) {
-        showNotice.value = true
-      } else {
-        showNotice.value = false
-      }
+      showNotice.value = comparison === 1
     } else {
       const timespan = 3 // months
       const today = new Date()
@@ -72,11 +67,7 @@ async function checkVersion(): Promise<void> {
       const later = new Date(refDate.getFullYear(), refDate.getMonth() + timespan, refDate.getDate())
 
       // compare dates and handle the notice accordingly
-      if (today.getTime() >= later.getTime()) {
-        showNotice.value = true
-      } else {
-        showNotice.value = false
-      }
+      showNotice.value = today.getTime() >= later.getTime()
     }
   }
 }
