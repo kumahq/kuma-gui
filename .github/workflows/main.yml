@@ -40,12 +40,15 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Lint lock file
-        run: npm run lint:lockfile
+        run: yarn run lint:lockfile
 
       - name: Lint
         run: yarn run lint
         env:
           LINTER_MODE: strict
+
+      - name: Lint TS
+        run: yarn run lint:ts
 
       - name: Test
         run: yarn run test
