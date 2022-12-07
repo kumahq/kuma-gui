@@ -22,17 +22,7 @@
               <h4>{{ prop }}</h4>
 
               <div v-if="prop === 'status' && typeof value !== 'string'">
-                <div
-                  class="entity-status"
-                  :class="{
-                    'is-offline': value.status.toLowerCase() === 'offline',
-                    'is-online': value.status.toLowerCase() === 'online',
-                    'is-degraded': value.status.toLowerCase() === 'partially degraded',
-                    'is-not-available': value.status.toLowerCase() === 'not available',
-                  }"
-                >
-                  <span>{{ value.status }}</span>
-                </div>
+                <EntityStatus :status="value.status" />
 
                 <div
                   v-for="(reason, index) in value.reason"
@@ -223,6 +213,7 @@ import { useStore } from '@/store/store'
 import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
+import EntityStatus from '@/app/common/EntityStatus.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'

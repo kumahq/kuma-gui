@@ -157,19 +157,3 @@ const yamlContent = computed(() => {
   return items
 })
 </script>
-
-<style lang="scss" scoped>
-.empty-state-title .card-icon {
-  text-align: center;
-
-  img,
-  svg {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-.env-name {
-  text-transform: capitalize;
-}
-</style>

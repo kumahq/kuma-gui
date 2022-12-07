@@ -2,15 +2,13 @@
   <div class="error-block">
     <KEmptyState cta-is-hidden>
       <template #title>
-        <div class="card-icon mb-3">
-          <KIcon
-            class="kong-icon--centered"
-            icon="warning"
-            color="var(--black-75)"
-            secondary-color="var(--yellow-300)"
-            size="42"
-          />
-        </div>
+        <KIcon
+          class="mb-3"
+          icon="warning"
+          color="var(--black-75)"
+          secondary-color="var(--yellow-300)"
+          size="42"
+        />
 
         <p>An error has occurred while trying to load this data.</p>
       </template>
@@ -19,7 +17,7 @@
         v-if="isErrorObject || causes.length > 0"
         #message
       >
-        <details>
+        <details class="error-block-details">
           <summary>Details</summary>
 
           <p v-if="isErrorObject">
@@ -77,6 +75,10 @@ const causes = computed(() => props.error instanceof ApiError ? props.error.caus
 <style scoped>
 .error-block {
   position: relative;
+}
+
+.error-block-details {
+  text-align: left;
 }
 
 .badge-list {

@@ -2,7 +2,7 @@
   <KEmptyState>
     <template #title>
       <KIcon
-        class="kong-icon--centered"
+        class="mb-3"
         icon="dangerCircleOutline"
         size="42"
       />

@@ -125,7 +125,11 @@ function end(el: HTMLElement): void {
 }
 
 .accordion-item-header {
-  @apply block py-2 px-4 cursor-pointer relative w-full text-left;
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: var(--spacing-xs) var(--spacing-sm);
 
   &::after {
     position: absolute;

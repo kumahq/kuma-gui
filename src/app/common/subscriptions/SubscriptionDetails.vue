@@ -124,7 +124,7 @@ export default {
   font-size: var(--type-sm);
   font-weight: bold;
   text-transform: uppercase;
-  color: var(--gray-3);
+  color: var(--grey-500);
   margin: var(--spacing-xs) 0;
 }
 

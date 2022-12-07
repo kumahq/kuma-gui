@@ -73,29 +73,23 @@
 
           <KButton
             class="add-dp-button"
-            appearance="primary"
+            appearance="creation"
             :to="dataplaneWizardRoute"
+            icon="plus"
             data-testid="data-plane-create-data-plane-button"
             @click="onCreateClick"
           >
-            <span class="custom-control-icon">
-              +
-            </span>
-
             Create data plane proxy
           </KButton>
 
           <KButton
             v-if="route.query.ns"
             appearance="primary"
+            icon="arrowLeft"
             :to="{ name: route.name }"
             data-testid="data-plane-ns-back-button"
           >
-            <span class="custom-control-icon">
-              ←
-            </span>
-
-            View All
+            View all
           </KButton>
         </template>
       </DataOverview>
@@ -504,6 +498,7 @@ function selectDataPlaneOverview(name: string | null): void {
 
 <style lang="scss">
 .table-header-selector-item .k-dropdown-item-trigger {
+  // Removes the paddings from the dropdown items so that the items are interactive for their full visual size.
   padding: 0 !important;
 }
 </style>

@@ -19,14 +19,10 @@
             v-if="$route.query.ns"
             class="back-button"
             appearance="primary"
-            :to="{
-              name: 'zoneegresses'
-            }"
+            icon="arrowLeft"
+            :to="{ name: 'zoneegresses' }"
           >
-            <span class="custom-control-icon">
-              &larr;
-            </span>
-            View All
+            View all
           </KButton>
         </template>
       </DataOverview>

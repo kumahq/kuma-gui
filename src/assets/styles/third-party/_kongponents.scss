@@ -1,0 +1,35 @@
+.k-button.outline {
+  // Makes sure buttons don’t have duplicate outlines
+  outline: none;
+}
+
+.k-button .kong-icon {
+  // Centers icons inside buttons vertically
+  align-items: center;
+}
+
+.k-dropdown-popover {
+  // The *wrapping* element of the dropdown for some reason is a fake button with role=button and “cursor: pointer” so this needs to be reset for the dropdown list.
+  cursor: initial;
+}
+
+.k-modal .k-modal-body.content-left {
+  // Overrides an “auto” margin that unnecessarily shrinks modal content.
+  margin-right: 0 !important;
+}
+
+.k-table td {
+  // Allows wrapping of table cells
+  white-space: normal !important;
+}
+
+.k-table .k-button {
+  // Resets the margin for buttons within tables which get a negative margin in the table component.
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.k-tabs .tab-link {
+  // Removes underline from the tab headers which functionally aren’t really links.
+  text-decoration: none;
+}

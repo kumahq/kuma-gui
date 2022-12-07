@@ -519,6 +519,7 @@
 
               <CodeBlock
                 id="code-block-kubernetes-command"
+                class="mt-3"
                 language="bash"
                 :code="codeOutput"
               />
@@ -597,23 +598,12 @@
           <p>
             Below is an example of a Dataplane resource output:
           </p>
-          <code class="block">
-            <pre>apiVersion: 'kuma.io/v1alpha1'
-kind: Dataplane
-mesh: default
-metadata:
-  name: dp-echo-1
-  annotations:
-    kuma.io/sidecar-injection: enabled
-    kuma.io/mesh: default
-networking:
-  address: 10.0.0.1
-  inbound:
-  - port: 10000
-    servicePort: 9000
-    tags:
-      kuma.io/service: echo</pre>
-          </code>
+
+          <CodeBlock
+            id="onboarding-dpp-kubernetes-example"
+            :code="$options.EXAMPLE_CODE"
+            language="yaml"
+          />
         </template>
         <template #switch>
           <!-- wizard switcher -- based on environment -->
@@ -641,8 +631,26 @@ import EntityScanner from '../components/EntityScanner.vue'
 import dataplaneSchema from './DataplaneKubernetesSchema'
 import { PRODUCT_NAME } from '@/constants'
 
+const EXAMPLE_CODE = `apiVersion: 'kuma.io/v1alpha1'
+kind: Dataplane
+mesh: default
+metadata:
+  name: dp-echo-1
+  annotations:
+    kuma.io/sidecar-injection: enabled
+    kuma.io/mesh: default
+networking:
+  address: 10.0.0.1
+  inbound:
+  - port: 10000
+    servicePort: 9000
+    tags:
+      kuma.io/service: echo`
+
 export default {
   name: 'DataplaneWizardKubernetes',
+
+  EXAMPLE_CODE,
 
   components: {
     CodeBlock,
@@ -829,6 +837,10 @@ export default {
 
 <style lang="scss" scoped>
 input:disabled + span {
-  color: #999;
+  color: var(--grey-500);
+}
+
+.code-block {
+  --KCodeBlockBackgroundColor: var(--white);
 }
 </style>

@@ -60,11 +60,11 @@ onUnmounted(function () {
   .progress {
     margin-top: 1rem;
     width: 130%;
-    background-color: #e6e6e6;
+    background-color: var(--grey-300);
 
     .progress-bar {
       height: 5px;
-      background-color: var(--LoaderProgressBarBG);
+      background-color: var(--logo-purple-light);
     }
   }
 }

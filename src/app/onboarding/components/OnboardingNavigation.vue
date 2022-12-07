@@ -108,7 +108,7 @@ export default {
   --KButtonRadius: 25px;
 
   &--back {
-    color: #646464 !important;
+    color: var(--grey-600) !important;
     --KButtonPrimaryBase: var(--OnboardingBackButton);
     --KButtonPrimaryHover: var(--OnboardingBackButtonHover);
     --KButtonPrimaryActive: var(--OnboardingBackButtonHover);

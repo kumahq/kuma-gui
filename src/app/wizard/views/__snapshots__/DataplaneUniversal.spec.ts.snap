@@ -596,7 +596,7 @@ networking:
                         >
                           
                           <div
-                            class="card-icon mb-3"
+                            class="mb-3"
                           >
                             <span
                               class="kong-icon-spinner kong-icon"
@@ -741,22 +741,378 @@ networking:
             <p>
                Below is an example of a Dataplane resource output: 
             </p>
-            <code
-              class="block"
+            <div
+              class="k-code-block code-block mt-3"
+              data-testid="k-code-block"
+              id="onboarding-dpp-universal-example"
+              style="--maxLineNumberWidth: 2ch;"
+              tabindex="0"
             >
-              <pre>
-                type: Dataplane
-mesh: default
-name: dp-echo-1
-networking:
-  address: 10.0.0.1
-  inbound:
-  - port: 10000
-    servicePort: 9000
-    tags:
-      kuma.io/service: echo
-              </pre>
-            </code>
+              <!---->
+              <div
+                class="k-code-block-content"
+              >
+                <pre
+                  class="k-highlighted-code-block language-yaml"
+                  data-testid="k-code-block-highlighted-code-block"
+                  tabindex="0"
+                >
+                  <span
+                    class="k-line-number-rows"
+                  >
+                    
+        
+                    
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L1"
+                      >
+                        1
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L2"
+                      >
+                        2
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L3"
+                      >
+                        3
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L4"
+                      >
+                        4
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L5"
+                      >
+                        5
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L6"
+                      >
+                        6
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L7"
+                      >
+                        7
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L8"
+                      >
+                        8
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L9"
+                      >
+                        9
+                      </a>
+                      
+        
+                    </span>
+                    <span
+                      class="k-line"
+                    >
+                      
+          
+                      <a
+                        class="k-line-anchor"
+                        id="onboarding-dpp-universal-example-L10"
+                      >
+                        10
+                      </a>
+                      
+        
+                    </span>
+                    
+                    
+      
+                  </span>
+                  <code
+                    class="language-yaml"
+                  >
+                    <span
+                      class="token key atrule"
+                    >
+                      type
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     Dataplane
+
+                    <span
+                      class="token key atrule"
+                    >
+                      mesh
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     default
+
+                    <span
+                      class="token key atrule"
+                    >
+                      name
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     dp
+                    <span
+                      class="token punctuation"
+                    >
+                      -
+                    </span>
+                    echo
+                    <span
+                      class="token punctuation"
+                    >
+                      -
+                    </span>
+                    <span
+                      class="token number"
+                    >
+                      1
+                    </span>
+                    
+
+                    <span
+                      class="token key atrule"
+                    >
+                      networking
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                    
+  
+                    <span
+                      class="token key atrule"
+                    >
+                      address
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     10.0.0.1
+  
+                    <span
+                      class="token key atrule"
+                    >
+                      inbound
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                    
+  
+                    <span
+                      class="token punctuation"
+                    >
+                      -
+                    </span>
+                     
+                    <span
+                      class="token key atrule"
+                    >
+                      port
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+                    <span
+                      class="token number"
+                    >
+                      10000
+                    </span>
+                    
+    
+                    <span
+                      class="token key atrule"
+                    >
+                      servicePort
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     
+                    <span
+                      class="token number"
+                    >
+                      9000
+                    </span>
+                    
+    
+                    <span
+                      class="token key atrule"
+                    >
+                      tags
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                    
+      
+                    <span
+                      class="token key atrule"
+                    >
+                      kuma.io/service
+                    </span>
+                    <span
+                      class="token punctuation"
+                    >
+                      :
+                    </span>
+                     echo
+                  </code>
+                </pre>
+                <button
+                  class="small outline k-button k-code-block-copy-button"
+                  data-testid="k-code-block-copy-button"
+                  title="Copy (Alt+C)"
+                  type="button"
+                >
+                  
+                  <!---->
+                  
+                  
+                  <span
+                    class="kong-icon-copy kong-icon"
+                  >
+                    <svg
+                      height="16"
+                      role="img"
+                      viewBox="0 0 32 32"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      
+  
+                      <title>
+                        Copy (Alt+C)
+                      </title>
+                      
+  
+                      <path
+                        d="M25.313 28v-18.688h-14.625v18.688h14.625zM25.313 6.688c1.438 0 2.688 1.188 2.688 2.625v18.688c0 1.438-1.25 2.688-2.688 2.688h-14.625c-1.438 0-2.688-1.25-2.688-2.688v-18.688c0-1.438 1.25-2.625 2.688-2.625h14.625zM21.313 1.313v2.688h-16v18.688h-2.625v-18.688c0-1.438 1.188-2.688 2.625-2.688h16z"
+                        fill="currentColor"
+                      />
+                      
+
+                    </svg>
+                    
+
+                  </span>
+                  <span
+                    class="k-visually-hidden"
+                  >
+                    Copy
+                  </span>
+                  
+                  <!---->
+                </button>
+              </div>
+            </div>
             
           </div>
           <div
@@ -768,105 +1124,25 @@ networking:
               class="wizard-switcher"
             >
               <section
-                class="is-error empty-state-wrapper my-6 wizard-empty-state"
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                class="border kong-card my-6"
+                cta-is-hidden=""
+                is-error="true"
               >
+                <!---->
+                <!---->
                 <div
-                  class="empty-state-title"
+                  class="k-card-content d-flex"
                 >
                   <div
-                    class="warning-icon k-empty-state-icon card-icon mb-3"
-                  >
-                    <span
-                      class="kong-icon-warning kong-icon"
-                    >
-                      <svg
-                        height="50"
-                        role="img"
-                        version="1.1"
-                        viewBox="0 0 48 42"
-                        width="50"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlns:xlink="http://www.w3.org/1999/xlink"
-                      >
-                        
-  
-                        <title>
-                          Warning
-                        </title>
-                        
-  
-                        <g
-                          fill="var(--black-70)"
-                          fill-rule="evenodd"
-                          id="Page-1"
-                          stroke="none"
-                          stroke-width="1"
-                        >
-                          
-    
-                          <g
-                            id="icn-warning-64x"
-                          >
-                            
-      
-                            <path
-                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                              fill="var(--black-70)"
-                              fill-rule="nonzero"
-                              id="Triangle"
-                            />
-                            
-      
-                            <path
-                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                              fill="var(--yellow-400)"
-                              fill-rule="nonzero"
-                              id="Path"
-                              type="secondary"
-                            />
-                            
-      
-                            <path
-                              d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                              fill="var(--black-70)"
-                              id="!"
-                            />
-                            
-    
-                          </g>
-                          
-  
-                        </g>
-                        
-
-                      </svg>
-                      
-
-                    </span>
-                  </div>
-                  <div
-                    class="k-empty-state-title-header mt-4 mb-4"
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                   >
                     
                     
-                  </div>
-                </div>
-                <div
-                  class="empty-state-content"
-                >
-                  <div
-                    class="k-empty-state-message mb-6"
-                  >
-                    
                     
                   </div>
-                  <div
-                    class="k-empty-state-cta"
-                  >
-                    
-                    <!---->
-                    
-                  </div>
+                  <!---->
                 </div>
               </section>
             </div>

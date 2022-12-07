@@ -841,7 +841,7 @@ metrics:
                         >
                           
                           <div
-                            class="card-icon mb-3"
+                            class="mb-3"
                           >
                             <span
                               class="kong-icon-spinner kong-icon"

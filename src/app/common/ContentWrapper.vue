@@ -47,7 +47,7 @@ const slots = useSlots()
   @media (min-height: 1200px) and (min-width: 1400px) {
     // Makes sidebar stick to the viewport while taking the height of the fixed top bar into account.
     position: sticky;
-    top: calc(var(--topbar-height) + var(--spacing-lg));
+    top: calc(var(--AppHeaderHeight) + var(--spacing-lg));
     bottom: 0;
   }
 }

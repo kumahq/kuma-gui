@@ -103,7 +103,7 @@ function setDocumentTitle(title: string | undefined): void {
 <style lang="scss" scoped>
 .app-content-container {
   display: grid;
-  grid-template-columns: var(--subnavWidth) 1fr;
+  grid-template-columns: var(--AppSidebarWidth) 1fr;
 }
 
 .app-main-content {
@@ -112,7 +112,7 @@ function setDocumentTitle(title: string | undefined): void {
 
 .app-main-content--narrow {
   width: 100%;
-  max-width: var(--global-content-max-width);
+  max-width: 100rem;
   margin-right: auto;
   margin-left: auto;
 }

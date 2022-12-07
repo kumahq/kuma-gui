@@ -2,14 +2,13 @@
   <KEmptyState cta-is-hidden>
     <template #title>
       <slot name="title">
-        <div class="card-icon mb-3">
-          <KIcon
-            icon="warning"
-            color="var(--black-75)"
-            secondary-color="var(--yellow-300)"
-            size="42"
-          />
-        </div>
+        <KIcon
+          class="mb-3"
+          icon="warning"
+          color="var(--black-75)"
+          secondary-color="var(--yellow-300)"
+          size="42"
+        />
 
         <p>There is no data to display.</p>
       </slot>

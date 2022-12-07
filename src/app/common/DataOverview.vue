@@ -10,26 +10,11 @@
         class="refresh-button"
         appearance="primary"
         :disabled="isLoading"
+        icon="redo"
         data-testid="data-overview-refresh-button"
         @click="onRefreshButtonClick"
       >
-        <span
-          class="refresh-icon custom-control-icon"
-          :class="{ 'is-spinning': isLoading }"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 36 36"
-          >
-            <g
-              fill="#fff"
-              fill-rule="nonzero"
-            >
-              <path d="M18 5.5a12.465 12.465 0 00-8.118 2.995 1.5 1.5 0 001.847 2.363l.115-.095A9.437 9.437 0 0118 8.5l.272.004a9.487 9.487 0 019.07 7.75l.04.246H25a.5.5 0 00-.416.777l4 6a.5.5 0 00.832 0l4-6 .04-.072A.5.5 0 0033 16.5h-2.601l-.017-.15C29.567 10.2 24.294 5.5 18 5.5zM2.584 18.723l-.04.072A.5.5 0 003 19.5h2.6l.018.15C6.433 25.8 11.706 30.5 18 30.5c3.013 0 5.873-1.076 8.118-2.995a1.5 1.5 0 00-1.847-2.363l-.115.095A9.437 9.437 0 0118 27.5l-.272-.004a9.487 9.487 0 01-9.07-7.75l-.041-.246H11a.5.5 0 00.416-.777l-4-6a.5.5 0 00-.832 0l-4 6z" />
-            </g>
-          </svg>
-        </span>
-        <span>Refresh</span>
+        Refresh
       </KButton>
     </div>
 
@@ -53,6 +38,7 @@
       >
         <KTable
           :key="tableRecompuationKey"
+          class="data-overview-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
           :fetcher="tableDataFetcher"
           :headers="tableHeaders"
@@ -77,17 +63,14 @@
 
           <!-- status -->
           <template #status="{ rowValue }">
-            <div
-              class="entity-status"
-              :class="{
-                'is-offline': rowValue.toLowerCase() === 'offline' || rowValue === false,
-                'is-online': rowValue.toLowerCase() === 'online',
-                'is-degraded': rowValue.toLowerCase() === 'partially degraded',
-                'is-not-available': rowValue.toLowerCase() === 'not available',
-              }"
-            >
-              <span>{{ rowValue }}</span>
-            </div>
+            <EntityStatus
+              v-if="typeof rowValue !== 'boolean'"
+              :status="rowValue"
+            />
+
+            <template v-else>
+              —
+            </template>
           </template>
 
           <!-- tags -->
@@ -246,9 +229,10 @@
 
       <EmptyBlock v-if="tableDataIsEmpty && tableData">
         <template #title>
-          <div class="card-icon mb-3">
-            <img src="@/assets/images/icon-empty-table.svg?url">
-          </div>
+          <img
+            class="mb-3"
+            src="@/assets/images/icon-empty-table.svg?url"
+          >
 
           <p v-if="emptyState.title">
             {{ emptyState.title }}
@@ -284,6 +268,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import EmptyBlock from './EmptyBlock.vue'
+import EntityStatus from '@/app/common/EntityStatus.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import LoadingBlock from './LoadingBlock.vue'
 import PaginationWidget from './PaginationWidget.vue'
@@ -475,20 +460,14 @@ function getRowAttributes({ name }: any): Record<string, string> {
   border-radius: 50%;
   background-color: var(--logo-green);
   margin: 0 0 0 var(--spacing-xxs);
-  color: #fff;
+  color: var(--white);
   font-size: 13px;
   text-align: center;
 }
 </style>
 
 <style lang="scss">
-.k-table {
-  tr.is-selected {
-    background-color: var(--grey-100);
-  }
-
-  th {
-    background-color: var(--gray-7);
-  }
+.data-overview-table .is-selected {
+  background-color: var(--grey-100);
 }
 </style>

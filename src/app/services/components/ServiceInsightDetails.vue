@@ -1,7 +1,7 @@
 <template>
   <div class="entity-summary entity-section-list">
     <h3 class="entity-title">
-      <span class="kutil-sr-only">Service:</span>
+      <span class="visually-hidden">Service:</span>
 
       <router-link :to="serviceInsightRoute">
         {{ serviceInsight.name }}

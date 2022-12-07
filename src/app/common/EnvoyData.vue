@@ -115,12 +115,6 @@ async function fetchContent() {
 }
 </script>
 
-<style lang="scss">
-.code-container .k-card-body {
-  position: relative;
-}
-</style>
-
 <style lang="scss" scoped>
 .envoy-data {
   padding: var(--spacing-md);

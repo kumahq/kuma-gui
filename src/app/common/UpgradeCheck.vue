@@ -2,6 +2,7 @@
   <div class="upgrade-check">
     <KAlert
       v-if="showNotice"
+      class="upgrade-check-alert"
       appearance="warning"
       size="small"
     >
@@ -74,10 +75,9 @@ async function checkVersion(): Promise<void> {
 </script>
 
 <style lang="scss" scoped>
-.upgrade-check {
-  .k-alert.k-alert {
-    padding: var(--spacing-xxs) var(--spacing-xs);
-  }
+.upgrade-check-alert.k-alert.small {
+  // Uses smaller paddings for this particular alert.
+  padding: var(--spacing-xxs) var(--spacing-xs);
 }
 
 .alert-content {
@@ -87,14 +87,6 @@ async function checkVersion(): Promise<void> {
 
   > *:first-of-type {
     margin-right: var(--spacing-sm);
-  }
-
-  .k-button {
-    text-decoration: none;
-
-    &:after {
-      display: none;
-    }
   }
 }
 
