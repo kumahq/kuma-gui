@@ -5,12 +5,27 @@ import { rest } from 'msw'
 import DataplanePolicies from './DataplanePolicies.vue'
 import { store } from '@/store/store'
 import { server } from '@/../jest/jest-setup-after-env'
+import {
+  DataPlane,
+} from '@/types/index.d'
 
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicies')
-
+  const dataPlane:DataPlane = {
+    type: 'Dataplane',
+    mesh: 'foo',
+    name: 'dataplane-test-456',
+    creationTime: '',
+    modificationTime: '',
+    networking: {
+      address: '',
+    },
+  }
   return mount(DataplanePolicies, {
-    props,
+    props: {
+      dataPlane,
+      ...props,
+    },
     global: {
       stubs: {
         'router-link': RouterLinkStub,
@@ -21,13 +36,7 @@ async function renderComponent(props = {}) {
 
 describe('DataplanePolicies.vue', () => {
   test('renders snapshot', async () => {
-    const wrapper = await renderComponent({
-      dataPlane: {
-        mesh: 'foo',
-        name: 'dataplane-test-456',
-        networking: {},
-      },
-    })
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -37,31 +46,19 @@ describe('DataplanePolicies.vue', () => {
   })
 
   test('renders loading', async () => {
-    const wrapper = await renderComponent({
-      dataPlane: {
-        mesh: 'foo',
-        name: 'dataplane-test-456',
-        networking: {},
-      },
-    })
+    const wrapper = await renderComponent()
 
     expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
 
   test('renders error', async () => {
     server.use(
-      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
+      rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/policies', (_req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
       ),
     )
 
-    const wrapper = await renderComponent({
-      dataPlane: {
-        mesh: 'foo',
-        name: 'dataplane-test-456',
-        networking: {},
-      },
-    })
+    const wrapper = await renderComponent()
 
     await flushPromises()
 
@@ -75,13 +72,7 @@ describe('DataplanePolicies.vue', () => {
       ),
     )
 
-    const wrapper = await renderComponent({
-      dataPlane: {
-        mesh: 'foo',
-        name: 'dataplane-test-456',
-        networking: {},
-      },
-    })
+    const wrapper = await renderComponent()
 
     await flushPromises()
 

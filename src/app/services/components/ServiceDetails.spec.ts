@@ -11,7 +11,11 @@ const serviceInsight = createServiceInsight()
 
 function renderComponent(props = {}) {
   return shallowMount(ServiceDetails, {
-    props,
+    props: {
+      name: 'wrong-name',
+      mesh: 'wrong-mesh',
+      ...props,
+    },
   })
 }
 

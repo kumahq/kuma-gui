@@ -6,7 +6,10 @@ import { store } from '@/store/store'
 
 function renderComponent(props = {}) {
   return mount(OnboardingNavigation, {
-    props,
+    props: {
+      nextStep: 'bar',
+      ...props,
+    },
     global: {
       stubs: {
         'router-link': RouterLinkStub,
@@ -19,7 +22,6 @@ describe('OnboardingNavigation.vue', () => {
   test('renders snapshot', () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
-      nextStep: 'bar',
     })
 
     expect(wrapper.element).toMatchSnapshot()
@@ -28,7 +30,6 @@ describe('OnboardingNavigation.vue', () => {
   test('displays different next step title', () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
-      nextStep: 'bar',
       nextStepTitle: 'nextStepTitle',
     })
 
@@ -38,7 +39,6 @@ describe('OnboardingNavigation.vue', () => {
   test('display disabled next button', () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
-      nextStep: 'bar',
       shouldAllowNext: false,
     })
 
@@ -46,9 +46,7 @@ describe('OnboardingNavigation.vue', () => {
   })
 
   test('doesn\'t display previous step', () => {
-    const wrapper = renderComponent({
-      nextStep: 'bar',
-    })
+    const wrapper = renderComponent()
 
     expect(wrapper.html()).not.toContain('Back')
   })
@@ -56,7 +54,6 @@ describe('OnboardingNavigation.vue', () => {
   test('changes step to previous', async () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
-      nextStep: 'bar',
     })
 
     expect(store.state.onboarding.step).toBe('onboarding-welcome')
@@ -69,7 +66,6 @@ describe('OnboardingNavigation.vue', () => {
   test('calls skip onboarding', async () => {
     const wrapper = renderComponent({
       previousStep: 'foo',
-      nextStep: 'bar',
     })
 
     expect(store.state.onboarding.isCompleted).toBe(false)
