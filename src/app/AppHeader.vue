@@ -46,22 +46,62 @@
 
       <NotificationIcon v-if="shouldShowNotificationManager" />
 
-      <router-link :to="{ name: 'diagnostics' }">
-        <KIcon
-          icon="gearFilled"
-          color="currentColor"
-          title="Diagnostics"
-        />
-
+      <KDropdownMenu
+        class="help-menu"
+        icon="help"
+        button-appearance="outline"
+        :kpop-attributes="{ placement: 'bottomEnd' }"
+      >
+        <template #items>
+          <KDropdownItem>
+            <a
+              :href="docsLink"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Documentation
+            </a>
+          </KDropdownItem>
+          <KDropdownItem>
+            <a
+              href="https://github.com/kumahq/kuma/issues/new/choose"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Feedback
+            </a>
+          </KDropdownItem>
+        </template>
+      </KDropdownMenu>
+      <KButton
+        :to="{ name: 'diagnostics' }"
+        icon="gearFilled"
+        button-appearance="btn-link"
+      >
+        <template #icon>
+          <KIcon
+            icon="gearFilled"
+            class="k-button-icon"
+            size="16"
+            color="currentColor"
+            hide-title
+          />
+        </template>
         <span class="visually-hidden">Diagnostics</span>
-      </router-link>
+      </KButton>
     </div>
   </header>
 </template>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { KButton, KIcon, KPop } from '@kong/kongponents'
+import {
+  KButton,
+  KDropdownMenu,
+  KDropdownItem,
+  KIcon,
+  KPop,
+} from '@kong/kongponents'
 import GithubButton from 'vue-github-button'
 
 import { useStore } from '@/store/store'
@@ -69,6 +109,14 @@ import NotificationIcon from './common/NotificationIcon.vue'
 import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const store = useStore()
+
+const docsLink = computed(() => {
+  const kumaDocsVersion = store.getters['config/getKumaDocsVersion']
+  if (!kumaDocsVersion) {
+    return ''
+  }
+  return `https://kuma.io/docs/${kumaDocsVersion}/${import.meta.env.VITE_UTM}`
+})
 
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 const environmentName = computed(() => {
@@ -82,12 +130,13 @@ const environmentName = computed(() => {
 })
 
 const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Multi-Zone' : 'Standalone')
+
 </script>
 
 <style lang="scss" scoped>
 .app-header {
   position: fixed;
-  z-index: 3;
+  z-index: 11;
   top: 0;
   left: 0;
   width: 100%;
