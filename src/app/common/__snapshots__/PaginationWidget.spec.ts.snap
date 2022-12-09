@@ -46,6 +46,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     
     
     <span
+      aria-hidden="true"
       class="kong-icon-chevronLeft kong-icon"
     >
       <svg
@@ -89,6 +90,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     
      Next 
     <span
+      aria-hidden="true"
       class="kong-icon-chevronRight kong-icon"
     >
       <svg

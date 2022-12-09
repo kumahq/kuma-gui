@@ -1621,9 +1621,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               
                Next 
               <span
+                aria-hidden="true"
                 class="kong-icon-chevronRight kong-icon"
               >
                 <svg
+                  aria-hidden="true"
                   fill="currentColor"
                   height="16"
                   role="img"
