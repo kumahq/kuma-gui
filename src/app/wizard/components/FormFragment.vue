@@ -73,7 +73,7 @@ $first-col-width: 30%;
   margin: #{math.div($padding, 2)} - #{$padding};
 
   .code-sample {
-    font-family: var(--code-font-family);
+    font-family: var(--font-family-mono);
     white-space: pre-line !important;
   }
 

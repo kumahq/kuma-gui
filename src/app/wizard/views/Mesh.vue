@@ -1033,6 +1033,6 @@ export default {
 
 <style lang="scss" scoped>
 .code-sample {
-  font-family: var(--code-font-family);
+  font-family: var(--font-family-mono);
 }
 </style>
