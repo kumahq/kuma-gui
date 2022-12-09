@@ -52,7 +52,14 @@
           data-testid="next-previous-button"
           @click="goToPrevStep"
         >
-          &lsaquo; Previous
+          <KIcon
+            icon="chevronLeft"
+            color="currentColor"
+            size="16"
+            hide-title
+          />
+
+          Previous
         </KButton>
         <KButton
           v-show="!indexCanAdvance"
@@ -61,7 +68,14 @@
           data-testid="next-step-button"
           @click="goToNextStep"
         >
-          Next &rsaquo;
+          Next
+
+          <KIcon
+            icon="chevronRight"
+            color="currentColor"
+            size="16"
+            hide-title
+          />
         </KButton>
       </footer>
     </div>
@@ -81,11 +95,12 @@
 </template>
 
 <script>
-import { KButton } from '@kong/kongponents'
+import { KButton, KIcon } from '@kong/kongponents'
 
 export default {
   components: {
     KButton,
+    KIcon,
   },
 
   props: {

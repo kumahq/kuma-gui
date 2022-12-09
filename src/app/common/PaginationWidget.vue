@@ -6,7 +6,15 @@
       data-testid="pagination-previous-button"
       @click="onPreviousButtonClick"
     >
-      &lsaquo; Previous
+      <KIcon
+        icon="chevronLeft"
+        color="currentColor"
+        size="16"
+        hide-title
+        aria-hidden="true"
+      />
+
+      Previous
     </KButton>
 
     <KButton
@@ -15,14 +23,22 @@
       data-testid="pagination-next-button"
       @click="onNextButtonClick"
     >
-      Next &rsaquo;
+      Next
+
+      <KIcon
+        icon="chevronRight"
+        color="currentColor"
+        size="16"
+        hide-title
+        aria-hidden="true"
+      />
     </KButton>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
-import { KButton } from '@kong/kongponents'
+import { KButton, KIcon } from '@kong/kongponents'
 
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 

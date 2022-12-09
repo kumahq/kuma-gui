@@ -137,29 +137,6 @@
             </span>
           </template>
 
-          <template #selected="{row}">
-            <a
-              class="data-table-action-link"
-              :class="{ 'is-active': selectedRow === row.name }"
-            >
-              <span
-                v-if="selectedRow === row.name"
-                class="action-link__active-state"
-              >
-                ✓
-
-                <span class="sr-only">Selected</span>
-              </span>
-
-              <span
-                v-else
-                class="action-link__normal-state"
-              >
-                View
-              </span>
-            </a>
-          </template>
-
           <!--- dp Version --->
           <template #dpVersion="{ row, rowValue }">
             <div
@@ -211,7 +188,8 @@
                   :icon="row.warnings.length > 0 ? 'warning' : 'info'"
                   :color="row.warnings.length > 0 ? 'var(--black-75)' : 'var(--blue-500)'"
                   :secondary-color="row.warnings.length > 0 ? 'var(--yellow-300)' : undefined"
-                  size="20"
+                  size="16"
+                  hide-title
                 />
               </template>
               Details
@@ -444,25 +422,6 @@ function getRowAttributes({ name }: any): Record<string, string> {
 
 .with-warnings {
   color: var(--yellow-500);
-}
-
-.data-table-action-link {
-  padding: 0;
-}
-
-.action-link__active-state {
-  --size: 18px;
-
-  display: block;
-  width: var(--size);
-  height: var(--size);
-  line-height: var(--size);
-  border-radius: 50%;
-  background-color: var(--logo-green);
-  margin: 0 0 0 var(--spacing-xxs);
-  color: var(--white);
-  font-size: 13px;
-  text-align: center;
 }
 </style>
 

@@ -45,7 +45,37 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     <!---->
     
     
-     ‹ Previous 
+    <span
+      aria-hidden="true"
+      class="kong-icon-chevronLeft kong-icon"
+    >
+      <svg
+        fill="none"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        
+  
+        <title>
+          Back
+        </title>
+        
+  
+        <path
+          d="m12.3 14.7-5-5.2 5-5.2"
+          fill="none"
+          stroke="#A3BBCC"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        
+
+      </svg>
+      
+
+    </span>
+     Previous 
     
     <!---->
   </button>
@@ -58,7 +88,37 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     <!---->
     
     
-     Next › 
+     Next 
+    <span
+      aria-hidden="true"
+      class="kong-icon-chevronRight kong-icon"
+    >
+      <svg
+        fill="none"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        
+  
+        <title>
+          Forward
+        </title>
+        
+  
+        <path
+          d="m7.3 14.7 5-5.2-5-5.2"
+          fill="none"
+          stroke="#A3BBCC"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+        />
+        
+
+      </svg>
+      
+
+    </span>
     
     <!---->
   </button>
