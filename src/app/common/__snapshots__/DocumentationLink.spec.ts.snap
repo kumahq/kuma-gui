@@ -8,6 +8,9 @@ exports[`DocumentationLink.vue renders snapshot 1`] = `
   type="button"
 >
   
+  <!---->
+  
+  
   <span
     class="kong-icon-externalLink kong-icon"
   >
@@ -35,8 +38,6 @@ exports[`DocumentationLink.vue renders snapshot 1`] = `
     
 
   </span>
-  
-  
    Documentation 
   
   <!---->

@@ -5,9 +5,12 @@
     target="_blank"
     :to="props.href"
   >
-    <template #icon>
-      <KIcon icon="externalLink" />
-    </template>
+    <KIcon
+      icon="externalLink"
+      color="currentColor"
+      size="16"
+      hide-title
+    />
 
     Documentation
   </KButton>

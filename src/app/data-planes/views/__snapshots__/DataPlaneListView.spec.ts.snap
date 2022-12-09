@@ -626,17 +626,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -742,19 +739,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-warning kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             version="1.1"
                             viewBox="0 0 48 42"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink"
                           >
                             
   
-                            <title>
-                              Warning
-                            </title>
                             
   
                             <g
@@ -897,17 +891,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1013,17 +1004,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1129,17 +1117,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1245,17 +1230,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1361,17 +1343,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1477,17 +1456,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1593,17 +1569,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class="kong-icon-info kong-icon"
                         >
                           <svg
-                            height="20"
+                            height="16"
                             role="img"
                             viewBox="0 0 16 16"
-                            width="20"
+                            width="16"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
   
-                            <title>
-                              Information
-                            </title>
                             
   
                             <path
@@ -1646,7 +1619,36 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               <!---->
               
               
-               Next › 
+               Next 
+              <span
+                class="kong-icon-chevronRight kong-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="16"
+                  role="img"
+                  viewBox="0 0 20 20"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  
+  
+                  
+  
+                  <path
+                    d="m7.3 14.7 5-5.2-5-5.2"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                  />
+                  
+
+                </svg>
+                
+
+              </span>
               
               <!---->
             </button>
