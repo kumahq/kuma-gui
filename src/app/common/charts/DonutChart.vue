@@ -242,6 +242,8 @@ function createChart(): any {
   chart = createFromConfig(createDefaultConfig(), chartNode.value, PieChart)
 
   if (props.saveChart) {
+    // We declare these properties on globalThis in index.d.ts
+    // once these are gone we can also remove those declarations
     window.chart = chart
     window.series = series
   }

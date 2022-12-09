@@ -10,13 +10,16 @@ async function createWrapper(props = {}) {
   await store.dispatch('fetchPolicies')
 
   return mount(PolicyView, {
-    props,
+    props: {
+      policyPath: 'circuit-breakers',
+      ...props,
+    },
   })
 }
 
 describe('PolicyView', () => {
   test('renders default view correctly', async () => {
-    const wrapper = await createWrapper({ policyPath: 'circuit-breakers' })
+    const wrapper = await createWrapper()
 
     await flushPromises()
 

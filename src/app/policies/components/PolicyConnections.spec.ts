@@ -6,16 +6,19 @@ import PolicyConnections from './PolicyConnections.vue'
 import { server } from '@/../jest/jest-setup-after-env'
 
 function renderComponent(props = {}) {
-  return mount(PolicyConnections, { props })
+  return mount(PolicyConnections, {
+    props: {
+      mesh: 'foo',
+      policyType: 'foo',
+      policyName: 'foo',
+      ...props,
+    },
+  })
 }
 
 describe('PolicyConnections.vue', () => {
   test('renders snapshot', async () => {
-    const wrapper = renderComponent({
-      mesh: 'foo',
-      policyType: 'foo',
-      policyName: 'foo',
-    })
+    const wrapper = renderComponent()
 
     await flushPromises()
 
@@ -25,11 +28,7 @@ describe('PolicyConnections.vue', () => {
   })
 
   test('filters result', async () => {
-    const wrapper = renderComponent({
-      mesh: 'foo',
-      policyType: 'foo',
-      policyName: 'foo',
-    })
+    const wrapper = renderComponent()
 
     await flushPromises()
 
@@ -44,11 +43,7 @@ describe('PolicyConnections.vue', () => {
   })
 
   test('renders loading', () => {
-    const wrapper = renderComponent({
-      mesh: 'foo',
-      policyType: 'foo',
-      policyName: 'foo',
-    })
+    const wrapper = renderComponent()
 
     expect(wrapper.find('[data-testid="loading-block"]').exists()).toBe(true)
   })
@@ -60,11 +55,7 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    const wrapper = renderComponent({
-      mesh: 'foo',
-      policyType: 'foo',
-      policyName: 'foo',
-    })
+    const wrapper = renderComponent()
 
     await flushPromises()
 
@@ -78,11 +69,7 @@ describe('PolicyConnections.vue', () => {
       ),
     )
 
-    const wrapper = renderComponent({
-      mesh: 'foo',
-      policyType: 'foo',
-      policyName: 'foo',
-    })
+    const wrapper = renderComponent()
 
     await flushPromises()
 
