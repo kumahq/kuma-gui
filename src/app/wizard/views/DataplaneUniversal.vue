@@ -338,7 +338,7 @@
             >
               <!-- loading -->
               <template #loading-title>
-                <h3>Searching&hellip;</h3>
+                <h3>Searching…</h3>
               </template>
 
               <template #loading-content>
@@ -419,7 +419,7 @@
 
           <CodeBlock
             id="onboarding-dpp-universal-example"
-            class="mt-3"
+            class="sample-code-block mt-3"
             :code="$options.EXAMPLE_CODE"
             language="yaml"
           />
@@ -744,7 +744,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.code-block {
+.sample-code-block {
   --KCodeBlockBackgroundColor: var(--white);
 }
 </style>

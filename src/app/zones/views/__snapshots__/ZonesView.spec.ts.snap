@@ -680,11 +680,11 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
         class="tab__header"
       >
         
-        <div>
-          <h1>
-            Zone: cluster-1
-          </h1>
-        </div>
+        <h1
+          class="entity-heading"
+        >
+           Zone: cluster-1
+        </h1>
         
       </header>
       <div
@@ -1051,11 +1051,11 @@ exports[`ZonesView.vue renders zone insights 1`] = `
     class="tab__header"
   >
     
-    <div>
-      <h1>
-        Zone: cluster-1
-      </h1>
-    </div>
+    <h1
+      class="entity-heading"
+    >
+       Zone: cluster-1
+    </h1>
     
   </header>
   <div
@@ -1242,12 +1242,12 @@ exports[`ZonesView.vue renders zone insights 1`] = `
             >
               
               <ul
-                class="accordion"
+                class="accordion-list"
               >
                 
                 
                 <li
-                  class="accordion-item relative border-b active"
+                  class="accordion-item active"
                 >
                   <button
                     aria-expanded="true"
@@ -1784,7 +1784,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                   </transition-stub>
                 </li>
                 <li
-                  class="accordion-item relative border-b"
+                  class="accordion-item"
                 >
                   <button
                     aria-expanded="false"

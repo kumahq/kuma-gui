@@ -66,7 +66,7 @@ $padding: 16px;
 $first-col-width: 30%;
 
 .form-line-wrapper {
-  overflow: hidden;
+  margin-top: var(--spacing-sm);
 }
 
 .form-line {
@@ -123,15 +123,10 @@ $first-col-width: 30%;
     &.has-equal-cols {
       > * {
         flex: 1 0 0;
-        margin: 0 8px;
       }
 
       .form-line__col {
         text-align: left;
-      }
-
-      :slotted(input + span) {
-        margin-left: 8px;
       }
     }
   }

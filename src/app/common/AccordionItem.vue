@@ -1,6 +1,6 @@
 <template>
   <li
-    class="accordion-item relative border-b"
+    class="accordion-item"
     :class="{ active: visible }"
   >
     <button
@@ -99,6 +99,11 @@ function end(el: HTMLElement): void {
 </script>
 
 <style lang="scss" scoped>
+.accordion-item {
+  position: relative;
+  border-bottom: 1px solid var(--grey-300);
+}
+
 .accordion-item:last-child {
   border-bottom: none;
 }

@@ -149,11 +149,6 @@ const rawService = computed(() => stripTimes(props.externalService ?? props.serv
 </script>
 
 <style lang="scss" scoped>
-h1 {
-  margin-bottom: var(--spacing-xs);
-  font-size: 1.4em;
-}
-
 .entity-summary {
   padding: var(--spacing-md);
 }

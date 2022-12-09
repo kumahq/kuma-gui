@@ -86,11 +86,12 @@
         initial-tab-override="overview"
       >
         <template #tabHeader>
-          <div>
-            <h1 data-testid="policy-single-entity">
-              {{ policy.singularDisplayName }}: {{ entity.name }}
-            </h1>
-          </div>
+          <h1
+            class="entity-heading"
+            data-testid="policy-single-entity"
+          >
+            {{ policy.singularDisplayName }}: {{ entity.name }}
+          </h1>
         </template>
 
         <template #overview>
@@ -363,6 +364,12 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
 .policy-type-empty {
   color: var(--grey-400);
 }
+
+.entity-heading {
+  font-size: inherit;
+  font-weight: normal;
+}
+
 .config-wrapper {
   padding-right: var(--spacing-md);
   padding-left: var(--spacing-md);

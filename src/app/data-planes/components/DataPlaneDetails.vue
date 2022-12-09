@@ -4,11 +4,9 @@
     initial-tab-override="overview"
   >
     <template #tabHeader>
-      <div>
-        <h1>
-          DPP: {{ dataPlane.name }}
-        </h1>
-      </div>
+      <h1 class="entity-heading">
+        DPP: {{ dataPlane.name }}
+      </h1>
     </template>
 
     <template #overview>
@@ -342,6 +340,11 @@ setWarnings()
 </script>
 
 <style lang="scss" scoped>
+.entity-heading {
+  font-size: inherit;
+  font-weight: normal;
+}
+
 .reason {
   margin-left: var(--spacing-md);
   margin-bottom: var(--spacing-xxs);

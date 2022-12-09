@@ -2,12 +2,12 @@
 
 exports[`AccordionList.vue renders snapshot at the beginning 1`] = `
 <ul
-  class="accordion"
+  class="accordion-list"
 >
   
   
   <li
-    class="accordion-item relative border-b"
+    class="accordion-item"
   >
     <button
       aria-expanded="false"
@@ -31,7 +31,7 @@ exports[`AccordionList.vue renders snapshot at the beginning 1`] = `
   
   
   <li
-    class="accordion-item relative border-b"
+    class="accordion-item"
   >
     <button
       aria-expanded="false"

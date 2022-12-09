@@ -178,48 +178,6 @@
               </template>
             </KCard>
 
-            <!-- <KCard
-              v-if="validate.k8sServices === 'individual-services'"
-              class="my-6"
-              has-shadow
-            >
-              <template v-slot:body>
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
-                >
-                  <label for="k8s-deployment-existing">
-                    <input
-                      id="k8s-deployment-existing"
-                      v-model="validate.k8sServiceDeployment"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-deployment"
-                      value="existing-deployment"
-                      checked
-                    >
-                    <span>
-                      Existing Deployment
-                    </span>
-                  </label>
-                  <label for="k8s-deployment-new">
-                    <input
-                      id="k8s-deployment-new"
-                      v-model="validate.k8sServiceDeployment"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-deployment"
-                      value="new-deployment"
-                    >
-                    <span>
-                      New Deployment
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard> -->
-
             <KCard
               v-if="validate.k8sServices === 'individual-services'"
               class="my-6"
@@ -230,29 +188,6 @@
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
                 >
-                  <!-- <select
-                    v-if="validate.k8sServiceDeployment === 'existing-deployment'"
-                    id="k8s-service-deployment-selection"
-                    v-model="validate.k8sServiceDeploymentSelection"
-                    class="k-input w-100"
-                    name="k8s-deployment-selection"
-                  >
-                    <option
-                      disabled
-                      value=""
-                    >
-                      Select a Deployment&hellip;
-                    </option>
-                    <option value="deployment-1">
-                      Deployment-1
-                    </option>
-                    <option value="deployment-2">
-                      Deployment-2
-                    </option>
-                    <option value="deployment-3">
-                      Deployment-3
-                    </option>
-                  </select> -->
                   <input
                     id="k8s-service-deployment-new"
                     v-model="validate.k8sServiceDeploymentSelection"
@@ -265,48 +200,6 @@
               </template>
             </KCard>
 
-            <!-- namespace selection options -->
-            <!-- <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template v-slot:body>
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
-                >
-                  <label for="k8s-namespace-existing">
-                    <input
-                      id="k8s-namespace-existing"
-                      v-model="validate.k8sNamespace"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-namespace"
-                      value="existing-namespace"
-                      checked
-                    >
-                    <span>
-                      Existing Namespace
-                    </span>
-                  </label>
-                  <label for="k8s-namespace-new">
-                    <input
-                      id="k8s-namespace-new"
-                      v-model="validate.k8sNamespace"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-namespace"
-                      value="new-namespace"
-                    >
-                    <span>
-                      New Namespace
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard> -->
-
             <!-- namespace selection -->
             <KCard
               class="my-6"
@@ -317,29 +210,6 @@
                   title="Namespace"
                   for-attr="k8s-namespace-selection"
                 >
-                  <!-- <select
-                    v-if="validate.k8sNamespace === 'existing-namespace'"
-                    id="k8s-namespace-selection"
-                    v-model="validate.k8sNamespaceSelection"
-                    class="k-input w-100"
-                    name="k8s-namespace-selection"
-                  >
-                    <option
-                      disabled
-                      value=""
-                    >
-                      Select a Namespace&hellip;
-                    </option>
-                    <option value="namespace-1">
-                      Namespace-1
-                    </option>
-                    <option value="namespace-2">
-                      Namespace-2
-                    </option>
-                    <option value="namespace-3">
-                      Namespace-3
-                    </option>
-                  </select> -->
                   <input
                     id="k8s-namespace-new"
                     v-model="validate.k8sNamespaceSelection"
@@ -354,52 +224,6 @@
           </div>
 
           <div v-if="validate.k8sDataplaneType === 'dataplane-type-ingress'">
-            <!-- <p>
-              Is this a new Ingress that you want to deploy, or an existing one?
-            </p> -->
-
-            <!-- ingress type selection -->
-            <!-- <KCard
-              class="my-6"
-              has-shadow
-            >
-              <template v-slot:body>
-                <FormFragment
-                  all-inline
-                  equal-cols
-                  hide-label-col
-                >
-                  <label for="k8s-ingress-existing">
-                    <input
-                      id="k8s-ingress-existing"
-                      v-model="validate.k8sIngressType"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-ingress-type"
-                      value="existing-ingress"
-                      checked
-                    >
-                    <span>
-                      Existing Ingress
-                    </span>
-                  </label>
-                  <label for="k8s-ingress-new">
-                    <input
-                      id="k8s-ingress-new"
-                      v-model="validate.k8sIngressType"
-                      class="k-input"
-                      type="radio"
-                      name="k8s-ingress-type"
-                      value="new-ingress"
-                    >
-                    <span>
-                      New Ingress
-                    </span>
-                  </label>
-                </FormFragment>
-              </template>
-            </KCard> -->
-
             <p>
               {{ title }} natively supports the Kong Ingress. Do you want to deploy
               Kong or another Ingress?
@@ -455,29 +279,6 @@
                   title="Deployments"
                   for-attr="k8s-deployment-selection"
                 >
-                  <!-- <select
-                    v-if="validate.k8sIngressType === 'existing-ingress'"
-                    id="k8s-ingress-deployment-selection"
-                    v-model="validate.k8sIngressDeploymentSelection"
-                    class="k-input w-100"
-                    name="k8s-ingress-selection"
-                  >
-                    <option
-                      disabled
-                      value=""
-                    >
-                      Select an Ingress&hellip;
-                    </option>
-                    <option value="ingress-1">
-                      Ingress-1
-                    </option>
-                    <option value="ingress-2">
-                      Ingress-2
-                    </option>
-                    <option value="ingress-3">
-                      Ingress-3
-                    </option>
-                  </select> -->
                   <input
                     id="k8s-ingress-deployment-new"
                     v-model="validate.k8sIngressDeployment"
@@ -496,8 +297,7 @@
             >
               <template #alertMessage>
                 <p>
-                  Please go ahead and deploy the Ingress first, then restart this
-                  wizard and select &quot;Existing Ingress&quot;.
+                  Please go ahead and deploy the Ingress first, then restart this wizard and select “Existing Ingress”.
                 </p>
               </template>
             </KAlert>
@@ -511,8 +311,7 @@
               </h3>
 
               <p>
-                You can now execute the following commands to automatically inject
-                the sidecar proxy in every Pod, and by doing so creating the Dataplane.
+                You can now execute the following commands to automatically inject the sidecar proxy in every Pod, and by doing so creating the Dataplane.
               </p>
 
               <h4>Kubernetes</h4>
@@ -532,7 +331,7 @@
               @hide-siblings="hideSiblings"
             >
               <template #loading-title>
-                <h3>Searching&hellip;</h3>
+                <h3>Searching…</h3>
               </template>
               <template #loading-content>
                 <p>We are looking for your dataplane.</p>
@@ -601,6 +400,7 @@
 
           <CodeBlock
             id="onboarding-dpp-kubernetes-example"
+            class="sample-code-block"
             :code="$options.EXAMPLE_CODE"
             language="yaml"
           />
@@ -840,7 +640,7 @@ input:disabled + span {
   color: var(--grey-500);
 }
 
-.code-block {
+.sample-code-block {
   --KCodeBlockBackgroundColor: var(--white);
 }
 </style>

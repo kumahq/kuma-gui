@@ -49,8 +49,4 @@ const props = defineProps({
 h2 {
   margin-bottom: var(--spacing-xs);
 }
-
-h2 {
-  font-size: 1.5em;
-}
 </style>

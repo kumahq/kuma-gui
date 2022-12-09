@@ -208,11 +208,11 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
         class="tab__header"
       >
         
-        <div>
-          <h1>
-            Zone Ingress: zone-ingress-1
-          </h1>
-        </div>
+        <h1
+          class="entity-heading"
+        >
+           Zone Ingress: zone-ingress-1
+        </h1>
         
       </header>
       <div
@@ -523,11 +523,11 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
     class="tab__header"
   >
     
-    <div>
-      <h1>
-        Zone Ingress: zone-ingress-1
-      </h1>
-    </div>
+    <h1
+      class="entity-heading"
+    >
+       Zone Ingress: zone-ingress-1
+    </h1>
     
   </header>
   <div
@@ -657,12 +657,12 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
             >
               
               <ul
-                class="accordion"
+                class="accordion-list"
               >
                 
                 
                 <li
-                  class="accordion-item relative border-b active"
+                  class="accordion-item active"
                 >
                   <button
                     aria-expanded="true"

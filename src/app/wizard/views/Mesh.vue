@@ -149,10 +149,7 @@
             Setup Logging
           </h3>
           <p>
-            You can setup as many logging backends as you need that you can later
-            use to log traffic via the &quot;TrafficLog&quot; policy. In this wizard,
-            we allow you to configure one backend, but you can add more manually
-            if you wish.
+            You can setup as many logging backends as you need that you can later use to log traffic via the “TrafficLog” policy. In this wizard, we allow you to configure one backend, but you can add more manually if you wish.
           </p>
           <KCard
             class="my-6"
@@ -270,10 +267,7 @@
             Setup Tracing
           </h3>
           <p>
-            You can setup as many tracing backends as you need that you can later
-            use to log traffic via the &quot;TrafficTrace&quot; policy. In this
-            wizard we allow you to configure one backend, but you can add more
-            manually as you wish.
+            You can setup as many tracing backends as you need that you can later use to log traffic via the “TrafficTrace” policy. In this wizard we allow you to configure one backend, but you can add more manually as you wish.
           </p>
           <KCard
             class="my-6"
@@ -523,7 +517,7 @@
             >
               <!-- loading -->
               <template #loading-title>
-                <h3>Searching&hellip;</h3>
+                <h3>Searching…</h3>
               </template>
               <template #loading-content>
                 <p>We are looking for your mesh.</p>

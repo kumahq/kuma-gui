@@ -47,35 +47,19 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-.label-list-content {
-  .kong-card {
-    margin-bottom: 0 !important;
-  }
+.label-list-content .kong-card {
+  margin-bottom: 0 !important;
 }
 
 .label-list__col-wrapper {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: var(--type-sm);
-    font-weight: bold;
+  h4 {
+    margin-bottom: var(--spacing-xs);
     text-transform: uppercase;
     color: var(--grey-500);
-    margin-bottom: var(--spacing-xs);
   }
 
-  ul {
-    li {
-      display: block;
-      overflow: hidden;
-
-      &:not(:last-of-type) {
-        margin-bottom: var(--spacing-md);
-      }
-    }
+  li:not(:first-child) {
+    margin-top: var(--spacing-md);
   }
 
   @media screen and (min-width: 1024px) {
@@ -83,7 +67,6 @@ const props = defineProps({
       display: flex;
 
       > * {
-        // flex: 1 0 0;
         flex-grow: 1;
         flex-basis: 33.333333%;
 
