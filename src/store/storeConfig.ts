@@ -238,10 +238,14 @@ export const storeConfig: StoreOptions<State> = {
           dispatch('sidebar/getInsights'),
         ])
 
-        // Updates the selected mesh if one wasn’t read earlier or if it’s not an existing mesh.
-        const newStoredMesh = ClientStorage.get('selectedMesh')
-        if (newStoredMesh === null || !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
-          dispatch('updateSelectedMesh', state.meshes.items[0].name)
+        if (state.meshes.items.length === 0) {
+          dispatch('updateSelectedMesh', null)
+        } else {
+          // Updates the selected mesh if one wasn’t read earlier or if it’s not an existing mesh.
+          const newStoredMesh = ClientStorage.get('selectedMesh')
+          if (newStoredMesh === null || !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
+            dispatch('updateSelectedMesh', state.meshes.items[0].name)
+          }
         }
       }
 
