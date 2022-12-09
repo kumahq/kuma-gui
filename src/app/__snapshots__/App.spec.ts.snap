@@ -124,6 +124,9 @@ exports[`App.vue fails to renders basic view 1`] = `
           >
             
   
+            <title>
+              Notifications
+            </title>
             
   
             <path

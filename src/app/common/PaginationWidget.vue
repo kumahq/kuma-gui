@@ -11,6 +11,7 @@
         color="currentColor"
         size="16"
         hide-title
+        aria-hidden="true"
       />
 
       Previous
@@ -29,6 +30,7 @@
         color="currentColor"
         size="16"
         hide-title
+        aria-hidden="true"
       />
     </KButton>
   </div>

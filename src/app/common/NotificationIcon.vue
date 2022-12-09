@@ -7,7 +7,6 @@
     <KIcon
       icon="notificationBell"
       color="var(--yellow-300)"
-      hide-title
     />
 
     <span
