@@ -225,10 +225,9 @@ export const storeConfig: StoreOptions<State> = {
 
       // only dispatch these actions if the Kuma is online
       if (getters['config/getStatus'] === 'OK') {
+        // Sets selected mesh from client storage.
         const storedMesh = ClientStorage.get('selectedMesh')
-
-        // Sets selected mesh from client storage. Ignores “all” mesh because it’s being deprecated.
-        if (storedMesh && storedMesh !== 'all') {
+        if (storedMesh) {
           dispatch('updateSelectedMesh', storedMesh)
         }
 
@@ -239,12 +238,10 @@ export const storeConfig: StoreOptions<State> = {
           dispatch('sidebar/getInsights'),
         ])
 
-        // Updates the selected mesh if one wasn’t read earlier.
+        // Updates the selected mesh if one wasn’t read earlier or if it’s not an existing mesh.
         const newStoredMesh = ClientStorage.get('selectedMesh')
-        if ((newStoredMesh === null || newStoredMesh === 'all') && state.meshes.items.length > 0) {
+        if (newStoredMesh === null || !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
           dispatch('updateSelectedMesh', state.meshes.items[0].name)
-        } else if (newStoredMesh !== null && !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
-          dispatch('updateSelectedMesh', null)
         }
       }
 
