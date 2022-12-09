@@ -243,6 +243,8 @@ export const storeConfig: StoreOptions<State> = {
         const newStoredMesh = ClientStorage.get('selectedMesh')
         if ((newStoredMesh === null || newStoredMesh === 'all') && state.meshes.items.length > 0) {
           dispatch('updateSelectedMesh', state.meshes.items[0].name)
+        } else if (newStoredMesh !== null && !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
+          dispatch('updateSelectedMesh', null)
         }
       }
 
@@ -284,8 +286,13 @@ export const storeConfig: StoreOptions<State> = {
     },
 
     // update the selected mesh
-    updateSelectedMesh({ commit }, mesh) {
-      ClientStorage.set('selectedMesh', mesh)
+    updateSelectedMesh({ commit }, mesh: string | null) {
+      if (mesh !== null) {
+        ClientStorage.set('selectedMesh', mesh)
+      } else {
+        ClientStorage.remove('selectedMesh')
+      }
+
       commit('SET_SELECTED_MESH', mesh)
     },
 
