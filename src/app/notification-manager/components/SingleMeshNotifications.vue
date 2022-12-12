@@ -8,7 +8,7 @@
         <div class="flex items-center">
           <KIcon
             v-if="item.isCompleted"
-            color="var(--green-400)"
+            color="var(--green-500)"
             icon="check"
             size="20"
             class="mr-4"

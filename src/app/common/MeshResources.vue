@@ -8,8 +8,9 @@
 
         <div class="resource-list-actions mt-4">
           <KButton
+            icon="plus"
+            appearance="creation"
             :to="{ name: 'create-mesh' }"
-            appearance="primary"
           >
             Create mesh
           </KButton>

@@ -46,7 +46,7 @@ const entityStatusClassNames = computed(() => {
 }
 
 .entity-status.is-online {
-  color: var(--green-400);
+  color: var(--green-500);
 }
 
 .entity-status.is-offline {
@@ -54,7 +54,7 @@ const entityStatusClassNames = computed(() => {
 }
 
 .entity-status.is-degraded {
-  color: var(--custom-orange);
+  color: #ff8040;
 }
 
 .entity-status.is-not-available {

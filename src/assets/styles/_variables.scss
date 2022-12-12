@@ -1,20 +1,8 @@
-$logo-purple: #290b53;
-
 :root {
   --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   --font-family-mono: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 
-  --logo-purple: #{$logo-purple};
-  --logo-purple-light: #{rgba($logo-purple, 0.75)};
-  --logo-purple-lighter: #{rgba($logo-purple, 0.08)};
-  --logo-green: #3db664;
-  --custom-orange: #ff8040;
-
   // COMPONENTS
   --AppHeaderHeight: 60px;
   --AppSidebarWidth: 280px;
-
-  // KONGPONENTS OVERRIDES
-  --KButtonPrimaryBase: var(--logo-purple);
-  --KButtonPrimaryHover: var(--logo-purple-light);
 }

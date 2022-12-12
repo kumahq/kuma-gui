@@ -16,7 +16,7 @@ $size: 30px;
   height: #{$size};
   line-height: #{$size};
   border-radius: 50%;
-  background-color: var(--logo-green);
+  background-color: var(--green-500);
   margin: 0 auto;
   color: var(--white);
   font-size: 13px;

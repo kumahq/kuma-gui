@@ -110,7 +110,7 @@ h3 {
 }
 
 .status--success {
-  color: var(--green-400);
+  color: var(--green-500);
 }
 
 .status--warning {

@@ -9,13 +9,13 @@ a {
 
 a:link,
 a:visited {
-  color: var(--logo-purple);
+  color: var(--blue-700);
 }
 
 a:hover,
 a:active,
 a:focus {
-  color: var(--logo-purple-light);
+  color: var(--blue-500);
 }
 
 img {
@@ -25,10 +25,9 @@ img {
 
 select {
   appearance: none;
-  border: 1px solid var(--grey-400);
+  border: 1px solid var(--grey-300);
   border-radius: 3px;
   font-size: 16px;
-  color: var(--logo-purple);
   line-height: 20px;
   padding: 10px 30px 10px 13px;
   background-color: var(--white);

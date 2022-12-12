@@ -107,7 +107,7 @@ const policy = computed(() => POLICIES[props.policyType])
 
 <style lang="scss" scoped>
 .policy-type-tag {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--spacing-xs);
 }

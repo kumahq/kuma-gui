@@ -300,7 +300,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           
         </div>
         <a
-          class="medium rounded creation k-button add-dp-button"
+          class="medium rounded creation k-button"
           data-testid="data-plane-create-data-plane-button"
           href="/wizard/kubernetes-dataplane"
           type="button"
