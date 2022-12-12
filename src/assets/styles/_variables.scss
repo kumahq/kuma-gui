@@ -1,8 +1,8 @@
 $logo-purple: #290b53;
 
 :root {
-  --base-font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --code-font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-family-mono: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 
   --logo-purple: #{$logo-purple};
   --logo-purple-light: #{rgba($logo-purple, 0.75)};

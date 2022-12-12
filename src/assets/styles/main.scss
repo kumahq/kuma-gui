@@ -1,9 +1,8 @@
 @import '/node_modules/@kong/kongponents/dist/style.css';
 @import '/node_modules/@kong/kongponents/dist/_variables.scss';
 @import 'third-party/tailwind.css';
-@import 'third-party/kongponents';
-@import 'fonts';
 @import 'variables';
 @import 'base';
+@import 'kongponents-overrides';
 @import 'components';
 @import 'utilities';
