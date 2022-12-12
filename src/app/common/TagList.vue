@@ -115,7 +115,7 @@ $border-radius: 5px;
 }
 
 .tag__label--is-kuma-io-label {
-  background-color: var(--logo-purple);
+  background-color: var(--blue-700);
 }
 
 .tag__value {

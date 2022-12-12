@@ -343,7 +343,7 @@ $bp-max-width: 1219px;
 }
 
 .wizard-steps__indicator__controls {
-  --wizard-tab-bg: var(--logo-purple);
+  --wizard-tab-bg: var(--blue-700);
   --wizard-tab-text-selected-color: var(--white);
 
   border: 1px solid var(--grey-300);

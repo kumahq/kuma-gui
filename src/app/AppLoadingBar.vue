@@ -64,7 +64,7 @@ onUnmounted(function () {
 
     .progress-bar {
       height: 5px;
-      background-color: var(--logo-purple-light);
+      background-color: var(--blue-400);
     }
   }
 }

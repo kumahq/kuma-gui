@@ -72,7 +72,6 @@
           </KDropdownMenu>
 
           <KButton
-            class="add-dp-button"
             appearance="creation"
             :to="dataplaneWizardRoute"
             icon="plus"
@@ -485,10 +484,6 @@ function selectDataPlaneOverview(name: string | null): void {
 </script>
 
 <style lang="scss" scoped>
-.add-dp-button.add-dp-button {
-  background-color: var(--logo-green);
-}
-
 .table-header-selector-item-checkbox {
   padding: var(--spacing-md) var(--spacing-lg);
   display: flex;
