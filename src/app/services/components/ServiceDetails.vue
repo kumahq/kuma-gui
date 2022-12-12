@@ -1,99 +1,48 @@
 <template>
-  <div class="service-details">
-    <LoadingBlock v-if="isLoading" />
-
-    <ErrorBlock
-      v-else-if="error !== null"
-      :error="error"
-    />
-
-    <ServiceInsightDetails
-      v-else-if="serviceInsight !== null"
-      :service-insight="serviceInsight"
-    />
-
-    <ExternalServiceDetails
-      v-else-if="externalService !== null"
+  <div class="component-frame">
+    <ServiceSummary
+      :service="props.service"
       :external-service="externalService"
     />
-
-    <EmptyBlock v-else />
   </div>
+
+  <DataPlaneList
+    v-if="props.dataPlaneOverviews !== null"
+    class="mt-4"
+    :data-plane-overviews="props.dataPlaneOverviews"
+    @load-data="loadData"
+  />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, PropType } from 'vue'
+import { PropType } from 'vue'
 
-import { ExternalService, ServiceInsight } from '@/types/index.d'
-import { kumaApi } from '@/api/kumaApi'
-import ExternalServiceDetails from '../components/ExternalServiceDetails.vue'
-import ServiceInsightDetails from '../components/ServiceInsightDetails.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import ErrorBlock from '@/app/common/ErrorBlock.vue'
-import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
+import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
+import ServiceSummary from './ServiceSummary.vue'
+
+const emit = defineEmits(['load-data'])
 
 const props = defineProps({
-  serviceType: {
-    type: String as PropType<'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'>,
+  service: {
+    type: Object as PropType<ServiceInsight>,
+    required: true,
+  },
+
+  externalService: {
+    type: Object as PropType<ExternalService | null>,
     required: false,
-    default: 'internal',
+    default: null,
   },
 
-  name: {
-    type: String,
-    required: true,
-  },
-
-  mesh: {
-    type: String,
-    required: true,
+  dataPlaneOverviews: {
+    type: Array as PropType<DataPlaneOverview[] | null>,
+    required: false,
+    default: null,
   },
 })
 
-const serviceInsight = ref<ServiceInsight | null>(null)
-const externalService = ref<ExternalService | null>(null)
-const isLoading = ref(true)
-const error = ref<Error | null>(null)
-
-watch(() => props.mesh, function () {
-  loadEntity()
-})
-
-watch(() => props.name, function () {
-  loadEntity()
-})
-
-loadEntity()
-
-async function loadEntity() {
-  isLoading.value = true
-  error.value = null
-  serviceInsight.value = null
-  externalService.value = null
-
-  const mesh = props.mesh
-  const name = props.name
-
-  try {
-    if (props.serviceType === 'external') {
-      externalService.value = await kumaApi.getExternalService({ mesh, name })
-    } else {
-      serviceInsight.value = await kumaApi.getServiceInsight({ mesh, name })
-    }
-  } catch (err) {
-    if (err instanceof Error) {
-      error.value = err
-    } else {
-      console.error(err)
-    }
-  } finally {
-    isLoading.value = false
-  }
+function loadData(offset: number): void {
+  emit('load-data', offset)
 }
 </script>
-
-<style lang="scss" scoped>
-.service-details {
-  padding: var(--spacing-md);
-}
-</style>

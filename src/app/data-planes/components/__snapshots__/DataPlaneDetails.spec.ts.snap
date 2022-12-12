@@ -206,13 +206,23 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             status
                           </h4>
                           <div>
-                            <div
-                              class="entity-status is-online"
+                            <span
+                              class="status status--with-title status--success"
+                              data-testid="status-badge"
                             >
-                              <span>
-                                Online
+                              <span
+                                class=""
+                              >
+                                online
                               </span>
-                            </div>
+                            </span>
+                          </div>
+                        </li>
+                        <li>
+                          <h4>
+                            reason
+                          </h4>
+                          <div>
                             
                             
                           </div>
@@ -221,74 +231,86 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       </ul>
                     </div>
                     <div>
-                      
-                      <h4>
-                        Tags
-                      </h4>
-                      <p>
-                        
-                        <span
-                          class="tag-cols"
-                        >
-                          <span>
-                            kuma.io/protocol: 
+                      <ul>
+                        <li>
+                          <h4>
+                            Tags
+                          </h4>
+                          <span
+                            class="tag-list"
+                          >
+                            
+                            <span
+                              class="tag"
+                            >
+                              <span
+                                class="tag__label tag__label--is-kuma-io-label"
+                              >
+                                kuma.io/protocol
+                              </span>
+                              <span
+                                class="tag__value"
+                              >
+                                http
+                              </span>
+                            </span>
+                            <span
+                              class="tag"
+                            >
+                              <span
+                                class="tag__label tag__label--is-kuma-io-label"
+                              >
+                                kuma.io/service
+                              </span>
+                              <span
+                                class="tag__value"
+                              >
+                                backend
+                              </span>
+                            </span>
+                            
                           </span>
-                          <span>
-                            http
-                          </span>
-                        </span>
-                        <span
-                          class="tag-cols"
-                        >
-                          <span>
-                            kuma.io/service: 
-                          </span>
-                          <span>
-                            backend
-                          </span>
-                        </span>
-                        
-                      </p>
-                      
-                      
-                      <h4>
-                        Versions
-                      </h4>
-                      <p>
-                        
-                        <span
-                          class="tag-cols"
-                        >
-                          <span>
-                            envoy: 
-                          </span>
-                          <span>
-                            1.16.2
-                          </span>
-                        </span>
-                        <span
-                          class="tag-cols"
-                        >
-                          <span>
-                            kumaDp: 
-                          </span>
-                          <span>
-                            1.0.7
-                          </span>
-                        </span>
-                        <span
-                          class="tag-cols"
-                        >
-                          <span>
-                            coredns: 
-                          </span>
-                          <span>
-                            1.8.3
-                          </span>
-                        </span>
-                        
-                      </p>
-                      
+                        </li>
+                        <li>
+                          <h4>
+                            Versions
+                          </h4>
+                          <p>
+                            
+                            <span
+                              class="tag-cols"
+                            >
+                              <span>
+                                envoy: 
+                              </span>
+                              <span>
+                                1.16.2
+                              </span>
+                            </span>
+                            <span
+                              class="tag-cols"
+                            >
+                              <span>
+                                kumaDp: 
+                              </span>
+                              <span>
+                                1.0.7
+                              </span>
+                            </span>
+                            <span
+                              class="tag-cols"
+                            >
+                              <span>
+                                coredns: 
+                              </span>
+                              <span>
+                                1.8.3
+                              </span>
+                            </span>
+                            
+                          </p>
+                        </li>
+                      </ul>
                     </div>
                     
                   </div>

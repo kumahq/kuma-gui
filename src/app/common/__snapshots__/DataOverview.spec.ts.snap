@@ -280,13 +280,16 @@ exports[`DataOverview.vue renders all custom templates for data 1`] = `
                   class=""
                 >
                   
-                  <div
-                    class="entity-status"
+                  <span
+                    class="status status--with-title status--danger"
+                    data-testid="status-badge"
                   >
-                    <span>
+                    <span
+                      class=""
+                    >
                       offline
                     </span>
-                  </div>
+                  </span>
                   
                 </td>
                 <td

@@ -1,14 +1,14 @@
 import { humanReadableDate } from '@/utilities/helpers'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED } from '@/constants'
+import { STATUS } from '@/constants'
 import {
   Compatibility,
   DataPlaneEntityMtls,
   DataPlaneInsight,
   DataPlaneNetworking,
   DataPlaneOverview,
-  DataPlaneStatus,
   DiscoverySubscription,
   LabelValue,
+  Status,
   Version,
 } from '@/types/index.d'
 
@@ -74,7 +74,7 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
 /*
 getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
  */
-export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight | undefined = { subscriptions: [] }): { status: DataPlaneStatus, reason: string[] } {
+export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight | undefined = { subscriptions: [] }): { status: Status, reason: string[] } {
   const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
 
   const errors = inbounds
@@ -87,23 +87,18 @@ export function getStatus(dataplane: { networking: DataPlaneNetworking }, datapl
     (item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime,
   )
 
-  const status = () => {
-    const allInboundsOffline = errors.length === inbounds.length
-    const allInboundsOnline = errors.length === 0
+  let status = 'online'
 
-    if (!proxyOnline || allInboundsOffline) {
-      return OFFLINE
-    }
+  if (!proxyOnline || errors.length === inbounds.length) {
+    status = 'offline'
+  }
 
-    if (!allInboundsOnline) {
-      return PARTIALLY_DEGRADED
-    }
-
-    return ONLINE
+  if (errors.length > 0) {
+    status = 'partially_degraded'
   }
 
   return {
-    status: status(),
+    status: STATUS[status],
     reason: errors,
   }
 }
@@ -145,14 +140,14 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
 /*
 getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
  */
-export function getItemStatusFromInsight(dataPlaneInsight: DataPlaneInsight | undefined): { status: typeof ONLINE | typeof OFFLINE } {
+export function getItemStatusFromInsight(dataPlaneInsight: DataPlaneInsight | undefined): Status {
   if (dataPlaneInsight === undefined) {
-    return { status: OFFLINE }
+    return STATUS.offline
   }
 
   const proxyOnline = dataPlaneInsight.subscriptions.some((subscription) => subscription.connectTime && subscription.connectTime.length && !subscription.disconnectTime)
 
-  return { status: proxyOnline ? ONLINE : OFFLINE }
+  return STATUS[proxyOnline ? 'online' : 'offline']
 }
 
 export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {

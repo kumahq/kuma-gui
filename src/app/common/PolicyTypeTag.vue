@@ -20,8 +20,10 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { KIcon } from '@kong/kongponents'
 
+import { useStore } from '@/store/store'
 import CircuitBreakerIconUrl from '@/assets/images/policies/CircuitBreaker.png'
 import FaultInjectionIconUrl from '@/assets/images/policies/FaultInjection.png'
 import HealthCheckIconUrl from '@/assets/images/policies/HealthCheck.png'
@@ -34,9 +36,12 @@ import TrafficPermissionIconUrl from '@/assets/images/policies/TrafficPermission
 import TrafficRouteIconUrl from '@/assets/images/policies/TrafficRoute.png'
 import TrafficTraceIconUrl from '@/assets/images/policies/TrafficTrace.png'
 import VirtualOutboundIconUrl from '@/assets/images/policies/VirtualOutbound.png'
-import { computed } from 'vue'
 
-const POLICIES: Record<string, { iconUrl: string | null }> = {
+const store = useStore()
+
+type PolicyTagDefinition = { iconUrl: string | null }
+
+const POLICIES: Record<string, PolicyTagDefinition> = {
   CircuitBreaker: {
     iconUrl: CircuitBreakerIconUrl,
   },
@@ -102,7 +107,17 @@ const props = defineProps({
   },
 })
 
-const policy = computed(() => POLICIES[props.policyType])
+const policyTagDefinitions = computed<Record<string, PolicyTagDefinition>>(() => {
+  const policyTagDefinitionEntries: [string, PolicyTagDefinition][] = store.state.policies.map((policyDefinition) => {
+    const policyTagDefinition = POLICIES[policyDefinition.name] ?? { iconUrl: null }
+
+    return [policyDefinition.name, policyTagDefinition]
+  })
+
+  return Object.fromEntries(policyTagDefinitionEntries)
+})
+
+const policy = computed(() => policyTagDefinitions.value[props.policyType])
 </script>
 
 <style lang="scss" scoped>

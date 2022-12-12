@@ -115,7 +115,7 @@ describe('DataOverview.vue', () => {
         ],
         data: [
           {
-            status: 'offline',
+            status: { title: 'offline', appearance: 'danger' },
             totalUpdates: 1,
             dpVersion: 'foo',
             envoyVersion: '1.2',

@@ -1,3 +1,5 @@
+import { Status } from './types/index'
+
 export const PRODUCT_NAME = import.meta.env.VITE_NAMESPACE
 export const PAGE_SIZE_DEFAULT = 12
 export const PAGE_REQUEST_SIZE_DEFAULT = 500
@@ -12,7 +14,7 @@ export const KUMA_ZONE_TAG_NAME = 'kuma.io/zone'
 
 export const FEATURE_FLAG = {}
 
-export const STATUS: Record<string, { title: string, appearance: string }> = {
+export const STATUS: Record<string, Status> = {
   not_available: {
     title: 'Not available',
     appearance: 'warning',

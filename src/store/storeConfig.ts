@@ -459,9 +459,9 @@ export const storeConfig: StoreOptions<State> = {
       let online = 0
 
       items.forEach((item: any): void => {
-        const { status } = getItemStatusFromInsight(item.zoneInsight)
+        const status = getItemStatusFromInsight(item.zoneInsight)
 
-        if (status === ONLINE) {
+        if (status.title === ONLINE) {
           online++
         }
       })

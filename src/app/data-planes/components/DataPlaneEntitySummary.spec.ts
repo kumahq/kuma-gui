@@ -27,7 +27,7 @@ describe('DataPlaneEntitySummary', () => {
   test('shows correct content', () => {
     const wrapper = renderComponent()
 
-    const statusBadge = wrapper.find('[data-testid="data-plane-status-badge"]')
+    const statusBadge = wrapper.find('[data-testid="status-badge"]')
     expect(statusBadge.html()).toContain('online')
 
     const connectTime = wrapper.find('[data-testid^="data-plane-connect-time-"]')

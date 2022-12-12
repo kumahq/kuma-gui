@@ -1,5 +1,11 @@
 import { RestClient } from './RestClient'
-import { ApiListResponse, ApiKindListResponse, PaginatedApiListResponse } from '@/types/api.d'
+import {
+  ApiKindListResponse,
+  ApiListResponse,
+  DataPlaneOverviewParameters,
+  PaginatedApiListResponse,
+  PaginationParameters,
+} from '@/types/api.d'
 import {
   DataPlane,
   DataPlaneOverview,
@@ -72,7 +78,7 @@ class KumaApi {
     return this.client.get('global-insights')
   }
 
-  getZones(params?: any): Promise<PaginatedApiListResponse<Zone>> {
+  getZones(params?: PaginationParameters): Promise<PaginatedApiListResponse<Zone>> {
     return this.client.get('zones', { params })
   }
 
@@ -80,11 +86,11 @@ class KumaApi {
     return this.client.get(`zones/${name}`, { params })
   }
 
-  getAllZoneOverviews(params?: any): Promise<PaginatedApiListResponse<ZoneOverview>> {
+  getAllZoneOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneOverview>> {
     return this.client.get('zones+insights', { params })
   }
 
-  getZoneOverview({ name }: { name: string }, params?: any): Promise<ZoneOverview> {
+  getZoneOverview({ name }: { name: string }, params?: PaginationParameters): Promise<ZoneOverview> {
     return this.client.get(`zones+insights/${name}`, { params })
   }
 
@@ -95,11 +101,11 @@ class KumaApi {
     return this.client.get(`zoneingresses/${zoneIngressName}/${dataPath}`, { params })
   }
 
-  getAllZoneIngressOverviews(params?: any): Promise<any> {
+  getAllZoneIngressOverviews(params?: PaginationParameters): Promise<any> {
     return this.client.get('zoneingresses+insights', { params })
   }
 
-  getZoneIngressOverview({ name }: { name: string }, params?: any): Promise<any> {
+  getZoneIngressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<any> {
     return this.client.get(`zoneingresses+insights/${name}`, { params })
   }
 
@@ -110,15 +116,15 @@ class KumaApi {
     return this.client.get(`zoneegresses/${zoneEgressName}/${dataPath}`, { params })
   }
 
-  getAllZoneEgressOverviews(params?: any): Promise<any> {
+  getAllZoneEgressOverviews(params?: PaginationParameters): Promise<any> {
     return this.client.get('zoneegressoverviews', { params })
   }
 
-  getZoneEgressOverview({ name }: { name: string }, params?: any): Promise<any> {
+  getZoneEgressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<any> {
     return this.client.get(`zoneegressoverviews/${name}`, { params })
   }
 
-  getAllMeshes(params?: any): Promise<PaginatedApiListResponse<Mesh>> {
+  getAllMeshes(params?: PaginationParameters): Promise<PaginatedApiListResponse<Mesh>> {
     return this.client.get('meshes', { params })
   }
 
@@ -126,7 +132,7 @@ class KumaApi {
     return this.client.get(`meshes/${name}`, { params })
   }
 
-  getAllMeshInsights(params?: any): Promise<PaginatedApiListResponse<MeshInsight>> {
+  getAllMeshInsights(params?: PaginationParameters): Promise<PaginatedApiListResponse<MeshInsight>> {
     return this.client.get('mesh-insights', { params })
   }
 
@@ -134,7 +140,7 @@ class KumaApi {
     return this.client.get(`mesh-insights/${name}`, { params })
   }
 
-  getAllDataplanes(params?: any): Promise<PaginatedApiListResponse<DataPlane>> {
+  getAllDataplanes(params?: PaginationParameters): Promise<PaginatedApiListResponse<DataPlane>> {
     return this.client.get('dataplanes', { params })
   }
 
@@ -142,11 +148,11 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/dataplanes/${name}`, { params })
   }
 
-  getAllDataplaneOverviews(params?: any): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
+  getAllDataplaneOverviews(params?: DataPlaneOverviewParameters): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
     return this.client.get('dataplanes+insights', { params })
   }
 
-  getAllDataplaneOverviewsFromMesh({ mesh }: { mesh: string }, params?: any): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
+  getAllDataplaneOverviewsFromMesh({ mesh }: { mesh: string }, params?: DataPlaneOverviewParameters): Promise<PaginatedApiListResponse<DataPlaneOverview>> {
     return this.client.get(`meshes/${mesh}/dataplanes+insights`, { params })
   }
 
@@ -173,11 +179,11 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/dataplanes/${dppName}/${dataPath}`, { params })
   }
 
-  getAllServiceInsights(params?: any): Promise<PaginatedApiListResponse<ServiceInsight>> {
+  getAllServiceInsights(params?: PaginationParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
     return this.client.get('service-insights', { params })
   }
 
-  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: any): Promise<PaginatedApiListResponse<ServiceInsight>> {
+  getAllServiceInsightsFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<ServiceInsight>> {
     return this.client.get(`meshes/${mesh}/service-insights`, { params })
   }
 
@@ -185,11 +191,11 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/service-insights/${name}`, { params })
   }
 
-  getAllExternalServices(params?: any): Promise<PaginatedApiListResponse<ExternalService>> {
+  getAllExternalServices(params?: PaginationParameters): Promise<PaginatedApiListResponse<ExternalService>> {
     return this.client.get('external-services', { params })
   }
 
-  getAllExternalServicesFromMesh({ mesh }: { mesh: string }, params?: any): Promise<PaginatedApiListResponse<ExternalService>> {
+  getAllExternalServicesFromMesh({ mesh }: { mesh: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<ExternalService>> {
     return this.client.get(`meshes/${mesh}/external-services`, { params })
   }
 
@@ -197,15 +203,15 @@ class KumaApi {
     return this.client.get(`meshes/${mesh}/external-services/${name}`, { params })
   }
 
-  getPolicyConnections({ mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string }, params?: any): Promise<PaginatedApiListResponse<any>> {
+  getPolicyConnections({ mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<any>> {
     return this.client.get(`meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
   }
 
-  getAllPolicyEntities({ path }: { path: string }, params?: any): Promise<PaginatedApiListResponse<PolicyEntity>> {
+  getAllPolicyEntities({ path }: { path: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyEntity>> {
     return this.client.get(path, { params })
   }
 
-  getAllPolicyEntitiesFromMesh({ mesh, path }: { mesh: string, path: string }, params?: any): Promise<PaginatedApiListResponse<PolicyEntity>> {
+  getAllPolicyEntitiesFromMesh({ mesh, path }: { mesh: string, path: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<PolicyEntity>> {
     return this.client.get(`meshes/${mesh}/${path}`, { params })
   }
 

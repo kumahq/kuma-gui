@@ -1,46 +1,42 @@
-import { beforeAll, describe, expect, jest, test } from '@jest/globals'
-import { flushPromises, shallowMount } from '@vue/test-utils'
+import { describe, expect, test } from '@jest/globals'
+import { mount } from '@vue/test-utils'
 
 import ServiceDetails from './ServiceDetails.vue'
-import { kumaApi } from '@/api/kumaApi'
+import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 import { createExternalService } from '@/test-data/createExternalService'
+import { createExternalServiceInsight } from '@/test-data/createExternalServiceInsight'
 import { createServiceInsight } from '@/test-data/createServiceInsight'
 
-const externalService = createExternalService()
-const serviceInsight = createServiceInsight()
-
-function renderComponent(props = {}) {
-  return shallowMount(ServiceDetails, {
-    props: {
-      name: 'wrong-name',
-      mesh: 'wrong-mesh',
-      ...props,
-    },
+function renderComponent(props: any = {}) {
+  return mount(ServiceDetails, {
+    props,
   })
 }
 
 describe('ServiceDetails', () => {
-  beforeAll(() => {
-    jest.spyOn(kumaApi, 'getExternalService').mockImplementation(() => Promise.resolve(externalService))
-    jest.spyOn(kumaApi, 'getServiceInsight').mockImplementation(() => Promise.resolve(serviceInsight))
-  })
-
-  test.each([
-    [externalService, 'ExternalServiceDetails'],
-    [serviceInsight, 'ServiceInsightDetails'],
-  ])('shows correct content when loading a ServiceInsight entity', async (entity, detailsComponentName) => {
+  test('shows correct content for ServiceInsights', async () => {
     const wrapper = renderComponent({
-      serviceType: entity.type === 'ExternalService' ? 'external' : 'internal',
-      name: entity.name,
-      mesh: entity.mesh,
+      service: createServiceInsight(),
+      externalService: null,
+      dataPlaneOverviews: [createDataPlaneOverview()],
     })
 
-    expect(wrapper.findComponent({ name: 'LoadingBlock' }).exists()).toBe(true)
-    expect(wrapper.findComponent({ name: detailsComponentName }).exists()).toBe(false)
+    const html = wrapper.html()
+    expect(html).toContain('partially degraded')
+    expect(html).toContain('Data plane proxies')
+    expect(html).toContain('1 online / 2 total')
+    expect(html).toContain('status')
+  })
 
-    await flushPromises()
+  test('shows correct content for ExternalServices', async () => {
+    const wrapper = renderComponent({
+      service: createExternalServiceInsight(),
+      externalService: createExternalService(),
+      dataPlaneOverviews: null,
+    })
 
-    expect(wrapper.findComponent({ name: 'LoadingBlock' }).exists()).toBe(false)
-    expect(wrapper.findComponent({ name: detailsComponentName }).exists()).toBe(true)
+    const html = wrapper.html()
+    expect(html).toContain('httpbin.org:80')
+    expect(html).toContain('Enabled')
   })
 })

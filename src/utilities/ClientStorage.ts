@@ -4,7 +4,8 @@ type StorageKeyValues =
   'onboardingIsCompleted' |
   'createMeshData' |
   'selectedMesh' |
-  'codeBlockQueries'
+  'codeBlockQueries' |
+  'hideCheckMeshAlert'
 
 /**
  * Utility object for accessing `window.localStorage` or `window.sessionStorage`.

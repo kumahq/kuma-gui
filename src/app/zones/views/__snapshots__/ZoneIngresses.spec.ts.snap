@@ -159,13 +159,16 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -672,7 +675,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                       class="text-lg font-medium"
                     >
                       <span
-                        class="color-green-400"
+                        class="color-green-500"
                       >
                          Connect time: July 13, 2021 at 8:41:04 AM
                       </span>

@@ -2,7 +2,7 @@
   <ContentWrapper>
     <template #content>
       <DataOverview
-        :selected-entity-name="serviceInsight?.name"
+        :selected-entity-name="service?.name"
         :page-size="PAGE_SIZE"
         :error="error"
         :is-loading="isLoading"
@@ -11,17 +11,16 @@
         :table-data-is-empty="tableData.data.length === 0"
         :next="nextUrl"
         :page-offset="pageOffset"
-        @table-action="setActiveServiceInsight"
+        @table-action="loadService"
         @load-data="loadData"
       />
     </template>
 
     <template #sidebar>
-      <ServiceDetails
-        v-if="serviceInsight !== null"
-        :name="serviceInsight.name"
-        :mesh="serviceInsight.mesh"
-        :service-type="serviceInsight.serviceType"
+      <ServiceSummary
+        v-if="service !== null"
+        :service="service"
+        :external-service="externalService"
       />
     </template>
   </ContentWrapper>
@@ -29,20 +28,20 @@
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import { useRoute, RouteLocationRaw } from 'vue-router'
+import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import ServiceDetails from '../components/ServiceDetails.vue'
+import ServiceSummary from '../components/ServiceSummary.vue'
 import { kumaApi } from '@/api/kumaApi'
 import { STATUS } from '@/constants'
-import { ServiceInsight, TableHeader } from '@/types/index.d'
+import { ExternalService, ServiceInsight, Status, TableHeader } from '@/types/index.d'
 import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },
   { label: 'Type', key: 'serviceType' },
-  { label: 'Address', key: 'address' },
+  { label: 'Address', key: 'addressPort' },
   { label: 'Status', key: 'status' },
   { label: 'DP proxies (online / total)', key: 'dpProxiesStatus' },
 ]
@@ -56,6 +55,12 @@ const EMPTY_STATE = {
 const route = useRoute()
 
 const props = defineProps({
+  name: {
+    type: String,
+    required: false,
+    default: null,
+  },
+
   offset: {
     type: Number,
     required: false,
@@ -67,7 +72,8 @@ const isLoading = ref(true)
 const error = ref<Error | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
-const serviceInsight = ref<{ name: string, mesh: string, serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated' } | null>(null)
+const service = ref<ServiceInsight | null>(null)
+const externalService = ref<ExternalService | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers,
   data: [],
@@ -109,24 +115,14 @@ async function loadData(offset: number): Promise<void> {
         return 0
       })
 
-      let activeServiceInsight = items[0]
-      if (route.query.ns) {
-        const serviceInsight = items.find((item) => item.name === route.query.ns)
-
-        if (serviceInsight !== undefined) {
-          activeServiceInsight = serviceInsight
-        }
-      }
-      setActiveServiceInsight(activeServiceInsight)
-
       tableData.value.data = items.map((item) => processItem(item))
+
+      const activeServiceName = props.name ?? items[0].name
+      await loadService({ name: activeServiceName, mesh })
     } else {
-      serviceInsight.value = null
       tableData.value.data = []
     }
   } catch (err) {
-    serviceInsight.value = null
-
     if (err instanceof Error) {
       error.value = err
     } else {
@@ -141,18 +137,18 @@ type ProcessedServiceInsight = Pick<ServiceInsight, 'name' | 'mesh' | 'serviceTy
   nameRoute: RouteLocationRaw
   meshRoute: RouteLocationRaw
   dpProxiesStatus: string
-  status: string
+  status: Status | null
 }
 
 function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
-  const nameRoute = {
-    name: serviceInsight.serviceType === 'external' ? 'external-service-detail-view' : 'service-insight-detail-view',
+  const nameRoute: RouteLocationNamedRaw = {
+    name: 'service-detail-view',
     params: {
       mesh: serviceInsight.mesh,
       service: serviceInsight.name,
     },
   }
-  const meshRoute = {
+  const meshRoute: RouteLocationNamedRaw = {
     name: 'mesh-detail-view',
     params: {
       mesh: serviceInsight.mesh,
@@ -165,9 +161,11 @@ function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
     dpProxiesStatus = `${online} / ${total}`
   }
 
-  let status = '—'
+  const addressPort = serviceInsight.addressPort
+
+  let status: Status | null = null
   if (serviceInsight.status) {
-    status = STATUS[serviceInsight.status].title
+    status = STATUS[serviceInsight.status]
   }
 
   const serviceType = serviceInsight.serviceType ?? 'internal'
@@ -178,11 +176,18 @@ function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
     nameRoute,
     meshRoute,
     dpProxiesStatus,
+    addressPort,
     status,
   }
 }
 
-function setActiveServiceInsight(activeServiceInsight: typeof serviceInsight.value): void {
-  serviceInsight.value = activeServiceInsight
+async function loadService({ mesh, name }: { mesh: string, name: string }): Promise<void> {
+  service.value = await kumaApi.getServiceInsight({ mesh, name })
+
+  if (service.value.serviceType === 'external') {
+    externalService.value = await kumaApi.getExternalService({ mesh, name })
+  }
+
+  patchQueryParam('name', name)
 }
 </script>
