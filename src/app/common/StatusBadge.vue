@@ -16,7 +16,9 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
 
-const STATUS = {
+import { StatusKeyword } from '@/types/index.d'
+
+const STATUS: Record<StatusKeyword, { title: string, appearance: string }> = {
   not_available: {
     title: 'not available',
     appearance: 'warning',
@@ -33,11 +35,11 @@ const STATUS = {
     title: 'online',
     appearance: 'success',
   },
-} as const
+}
 
 const props = defineProps({
   status: {
-    type: String as PropType<keyof typeof STATUS>,
+    type: String as PropType<StatusKeyword>,
     required: true,
   },
 
