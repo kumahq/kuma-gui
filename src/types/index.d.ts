@@ -44,10 +44,7 @@ export type TableData = {
   data: any
 }
 
-export type Status = {
-  title: 'Online' | 'Offline' | 'Partially degraded' | 'Not available'
-  appearance: 'warning' | 'danger' | 'success'
-}
+export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
 
 export type Info = {
   hostname: string
@@ -371,7 +368,7 @@ export interface ServiceInsight extends MeshEntity {
   type: 'ServiceInsight'
   serviceType?: 'internal' | 'external'
   addressPort?: string
-  status?: 'online' | 'offline' | 'partially_degraded' | 'not_available'
+  status?: StatusKeyword
   dataplanes?: {
     total: number
     online?: number

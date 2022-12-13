@@ -3,12 +3,12 @@
     class="status"
     :class="{
       'status--with-title': !props.shouldHideTitle,
-      [appearanceClassName]: true,
+      [`status--${statusObject.appearance}`]: true,
     }"
     data-testid="status-badge"
   >
     <span :class="{ 'visually-hidden': props.shouldHideTitle }">
-      {{ props.status.title.toLowerCase() }}
+      {{ statusObject.title }}
     </span>
   </span>
 </template>
@@ -16,11 +16,28 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
 
-import { Status } from '@/types/index'
+const STATUS = {
+  not_available: {
+    title: 'not available',
+    appearance: 'warning',
+  },
+  partially_degraded: {
+    title: 'partially degraded',
+    appearance: 'warning',
+  },
+  offline: {
+    title: 'offline',
+    appearance: 'danger',
+  },
+  online: {
+    title: 'online',
+    appearance: 'success',
+  },
+} as const
 
 const props = defineProps({
   status: {
-    type: Object as PropType<Status>,
+    type: String as PropType<keyof typeof STATUS>,
     required: true,
   },
 
@@ -31,7 +48,7 @@ const props = defineProps({
   },
 })
 
-const appearanceClassName = computed(() => `status--${props.status.appearance}`)
+const statusObject = computed(() => STATUS[props.status])
 </script>
 
 <style lang="scss" scoped>

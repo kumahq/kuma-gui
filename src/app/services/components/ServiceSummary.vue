@@ -13,7 +13,7 @@
             </span>
 
             <StatusBadge
-              v-if="status !== null"
+              v-if="status"
               :status="status"
             />
           </h1>
@@ -76,7 +76,6 @@ import { computed, PropType } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
 import { ExternalService, ServiceInsight } from '@/types/index.d'
-import { STATUS } from '@/constants'
 import { stripTimes } from '@/utilities/helpers'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
@@ -134,7 +133,7 @@ const status = computed(() => {
   if (props.service.serviceType === 'external') {
     return null
   } else {
-    return props.service.status ? STATUS[props.service.status] : null
+    return props.service.status ?? null
   }
 })
 

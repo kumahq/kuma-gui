@@ -21,22 +21,30 @@
             >
               <h4>{{ prop }}</h4>
 
-              <div v-if="(prop === 'status' && typeof value !== 'string' && !Array.isArray(value))">
-                <StatusBadge :status="value" />
+              <div>
+                {{ value }}
               </div>
+            </li>
 
-              <div v-else-if="(prop === 'reason' && Array.isArray(value))">
+            <li v-if="statusWithReason.status">
+              <h4>Status</h4>
+
+              <div>
+                <StatusBadge :status="statusWithReason.status" />
+              </div>
+            </li>
+
+            <li v-if="statusWithReason.reason.length > 0">
+              <h4>Reason</h4>
+
+              <div>
                 <div
-                  v-for="(reason, index) in value"
+                  v-for="(reason, index) in statusWithReason.reason"
                   :key="index"
                   class="reason"
                 >
                   {{ reason }}
                 </div>
-              </div>
-
-              <div v-else>
-                {{ value }}
               </div>
             </li>
           </ul>
@@ -267,17 +275,15 @@ const warnings = ref<Compatibility[]>([])
 
 const processedDataPlane = computed(() => {
   const { type, name, mesh } = props.dataPlane
-  const { status, reason } = getStatus(props.dataPlane, props.dataPlaneOverview.dataplaneInsight)
 
   return {
     type,
     name,
     mesh,
-    status,
-    reason,
   }
 })
 
+const statusWithReason = computed(() => getStatus(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataPlane))
 const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dataplaneInsight))
 const rawDataPlane = computed(() => stripTimes(props.dataPlane))

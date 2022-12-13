@@ -34,8 +34,7 @@ import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import ServiceSummary from '../components/ServiceSummary.vue'
 import { kumaApi } from '@/api/kumaApi'
-import { STATUS } from '@/constants'
-import { ExternalService, ServiceInsight, Status, TableHeader } from '@/types/index.d'
+import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
 import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const headers: TableHeader[] = [
@@ -133,11 +132,10 @@ async function loadData(offset: number): Promise<void> {
   }
 }
 
-type ProcessedServiceInsight = Pick<ServiceInsight, 'name' | 'mesh' | 'serviceType' | 'addressPort'> & {
+type ProcessedServiceInsight = Pick<ServiceInsight, 'name' | 'mesh' | 'serviceType' | 'addressPort' | 'status'> & {
   nameRoute: RouteLocationRaw
   meshRoute: RouteLocationRaw
   dpProxiesStatus: string
-  status: Status | null
 }
 
 function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
@@ -162,12 +160,6 @@ function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
   }
 
   const addressPort = serviceInsight.addressPort
-
-  let status: Status | null = null
-  if (serviceInsight.status) {
-    status = STATUS[serviceInsight.status]
-  }
-
   const serviceType = serviceInsight.serviceType ?? 'internal'
 
   return {
@@ -177,7 +169,6 @@ function processItem(serviceInsight: ServiceInsight): ProcessedServiceInsight {
     meshRoute,
     dpProxiesStatus,
     addressPort,
-    status,
   }
 }
 

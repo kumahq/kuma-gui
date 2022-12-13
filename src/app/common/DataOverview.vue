@@ -64,7 +64,7 @@
           <!-- status -->
           <template #status="{ rowValue }">
             <StatusBadge
-              v-if="rowValue !== null"
+              v-if="rowValue"
               :status="rowValue"
             />
 

@@ -201,9 +201,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             test-mesh
                           </div>
                         </li>
+                        
                         <li>
                           <h4>
-                            status
+                            Status
                           </h4>
                           <div>
                             <span
@@ -218,16 +219,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             </span>
                           </div>
                         </li>
-                        <li>
-                          <h4>
-                            reason
-                          </h4>
-                          <div>
-                            
-                            
-                          </div>
-                        </li>
-                        
+                        <!--v-if-->
                       </ul>
                     </div>
                     <div>

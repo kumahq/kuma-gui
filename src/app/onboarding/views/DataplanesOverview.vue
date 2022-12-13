@@ -31,7 +31,7 @@
             >
               <template #status="{ rowValue }">
                 <StatusBadge
-                  v-if="rowValue !== null"
+                  v-if="rowValue"
                   :status="rowValue"
                 />
 
@@ -58,7 +58,7 @@
 <script>
 import { KTable } from '@kong/kongponents'
 
-import { PRODUCT_NAME, OFFLINE } from '@/constants'
+import { PRODUCT_NAME } from '@/constants'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '@/app/common/LoadingBox.vue'
@@ -135,7 +135,7 @@ export default {
             const dataPlaneOverview = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
             const status = getItemStatusFromInsight(dataPlaneOverview.dataplaneInsight)
 
-            if (status.title === OFFLINE) {
+            if (status === 'offline') {
               shouldRefetch = true
             }
 
