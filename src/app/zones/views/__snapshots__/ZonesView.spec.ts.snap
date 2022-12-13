@@ -239,13 +239,16 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -377,13 +380,16 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -449,13 +455,16 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -587,13 +596,16 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1248,7 +1260,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                       class="text-lg font-medium"
                     >
                       <span
-                        class="color-green-400"
+                        class="color-green-500"
                       >
                          Connect time: February 19, 2021 at 7:11:15 AM
                       </span>
@@ -1785,12 +1797,12 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                       class="text-lg font-medium"
                     >
                       <span
-                        class="color-green-400"
+                        class="color-green-500"
                       >
                          Connect time: July 28, 2020 at 4:18:09 PM
                       </span>
                       <span
-                        class="ml-4 color-red-400"
+                        class="ml-4 color-red-600"
                       >
                          Disconnect time: July 28, 2020 at 4:18:09 PM
                       </span>

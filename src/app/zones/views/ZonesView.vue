@@ -286,9 +286,11 @@ export default {
         })
       }
 
+      const status = getItemStatusFromInsight(zoneInsight)
+
       return {
         ...entity,
-        status: getItemStatusFromInsight(zoneInsight).status,
+        status,
         zoneCpVersion,
         storeType,
         hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',

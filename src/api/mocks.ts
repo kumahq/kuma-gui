@@ -75,6 +75,8 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/dataplanes\\+insights/ingress-dp-test-123', () => import('./mock-data/meshes/default/dataplanes+insights/ingress-dp-test-123.json')],
   ['meshes/default/dataplanes\\+insights/no-subscriptions', () => import('./mock-data/meshes/default/dataplanes+insights/no-subscriptions.json')],
   ['meshes/default/service-insights/backend', () => import('./mock-data/meshes/default/service-insights/backend.json')],
+  ['meshes/default/service-insights/httpbin', () => import('./mock-data/meshes/default/service-insights/httpbin.json')],
+  ['meshes/default/service-insights/httpbin2', () => import('./mock-data/meshes/default/service-insights/httpbin2.json')],
   ['meshes/default/service-insights/ingress', () => import('./mock-data/meshes/default/service-insights/ingress.json')],
   ['meshes/default/service-insights/redis', () => import('./mock-data/meshes/default/service-insights/redis.json')],
   ['meshes/default/external-services', () => import('./mock-data/meshes/default/external-services.json')],

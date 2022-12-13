@@ -70,8 +70,10 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
       }
       case 'kuma.io/service': {
         return router.resolve({
-          name: 'service-list-view',
-          query: { ns: tag.value },
+          name: 'service-detail-view',
+          params: {
+            service: tag.value,
+          },
         })
       }
       default: {

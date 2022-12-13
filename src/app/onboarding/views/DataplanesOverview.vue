@@ -30,17 +30,14 @@
               is-small
             >
               <template #status="{ rowValue }">
-                <div
-                  class="entity-status"
-                  :class="{
-                    'is-offline': rowValue.toLowerCase() === 'offline' || rowValue === false,
-                    'is-online': rowValue.toLowerCase() === 'online',
-                    'is-degraded': rowValue.toLowerCase() === 'partially degraded',
-                    'is-not-available': rowValue.toLowerCase() === 'not available',
-                  }"
-                >
-                  <span>{{ rowValue }}</span>
-                </div>
+                <StatusBadge
+                  v-if="rowValue"
+                  :status="rowValue"
+                />
+
+                <template v-else>
+                  —
+                </template>
               </template>
             </KTable>
           </div>
@@ -61,10 +58,11 @@
 <script>
 import { KTable } from '@kong/kongponents'
 
-import { PRODUCT_NAME, OFFLINE } from '@/constants'
+import { PRODUCT_NAME } from '@/constants'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '@/app/common/LoadingBox.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
@@ -76,6 +74,7 @@ export default {
     OnboardingHeading,
     OnboardingPage,
     LoadingBox,
+    StatusBadge,
     KTable,
   },
   metaInfo() {
@@ -130,14 +129,13 @@ export default {
         const { items } = await kumaApi.getAllDataplanes({ size: 10 })
 
         if (Array.isArray(items)) {
-          for (let i = 0; i < items.length; i++) {
-            const { name, mesh } = items[i]
+          for (const dataPlane of items) {
+            const { name, mesh } = dataPlane
 
-            const { status } = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name }).then((response) =>
-              getItemStatusFromInsight(response.dataplaneInsight),
-            )
+            const dataPlaneOverview = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
+            const status = getItemStatusFromInsight(dataPlaneOverview.dataplaneInsight)
 
-            if (status === OFFLINE) {
+            if (status === 'offline') {
               shouldRefetch = true
             }
 
@@ -148,8 +146,8 @@ export default {
             })
           }
         }
-      } catch (e) {
-        console.error(e)
+      } catch (error) {
+        console.error(error)
       }
 
       this.tableData.data = result

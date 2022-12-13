@@ -19,3 +19,25 @@ export interface ApiKindListResponse<ResourceType> extends ApiListResponse<Resou
 export interface PaginatedApiListResponse<ResourceType> extends ApiListResponse<ResourceType> {
   next: string | null
 }
+
+export interface PaginationParameters {
+  size?: number
+  offset?: number
+}
+
+export interface DataPlaneOverviewParameters extends PaginationParameters {
+  /**
+   * **Example**: `?gateway=delegated`
+   */
+  gateway?: 'builtin' | 'delegated' | boolean
+
+  /**
+   * **Example**: `?namePrefix=gateway`
+   */
+  namePrefix?: string
+
+  /**
+   * **Example**: `?tag=kuma.io/service:foo&tag=version:v1`
+   */
+  tag?: string | string[]
+}

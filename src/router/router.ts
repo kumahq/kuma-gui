@@ -102,11 +102,11 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
               name: 'gateway-list-view',
               meta: {
                 title: 'Gateways',
-                type: 'gateway',
               },
               props: (route) => ({
                 name: route.query.name,
                 offset: getLastNumberParameter(route.query.offset),
+                isGatewayView: true,
               }),
               component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
             },
@@ -130,7 +130,6 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
               name: 'data-plane-list-view',
               meta: {
                 title: 'Data plane proxies',
-                type: 'standard',
               },
               props: (route) => ({
                 name: route.query.name,
@@ -160,34 +159,20 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
                 title: 'Services',
               },
               props: (route) => ({
+                name: route.query.name,
                 offset: getLastNumberParameter(route.query.offset),
               }),
               component: () => import('@/app/services/views/ServiceListView.vue'),
             },
             {
               path: ':service',
-              name: 'service-insight-detail-view',
+              name: 'service-detail-view',
               meta: {
                 title: 'Internal service',
                 parent: 'service-list-view',
                 breadcrumbTitleParam: 'service',
               },
-              component: () => import('@/app/services/views/ServiceInsightDetailView.vue'),
-            },
-          ],
-        },
-        {
-          path: 'external-services',
-          children: [
-            {
-              path: ':service',
-              name: 'external-service-detail-view',
-              meta: {
-                title: 'External service',
-                parent: 'service-list-view',
-                breadcrumbTitleParam: 'service',
-              },
-              component: () => import('@/app/services/views/ExternalServiceDetailView.vue'),
+              component: () => import('@/app/services/views/ServiceDetailView.vue'),
             },
           ],
         },

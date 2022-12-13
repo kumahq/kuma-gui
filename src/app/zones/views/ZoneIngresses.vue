@@ -266,8 +266,9 @@ export default {
 
           this.tableData.data = data.map((item) => {
             const { zoneIngressInsight = {} } = item
+            const status = getItemStatusFromInsight(zoneIngressInsight)
 
-            return { ...item, ...getItemStatusFromInsight(zoneIngressInsight) }
+            return { ...item, status }
           })
         } else {
           this.tableData.data = []

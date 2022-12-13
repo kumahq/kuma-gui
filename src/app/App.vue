@@ -63,6 +63,13 @@ import AppOnboardingNotification from './AppOnboardingNotification.vue'
 import AppSidebar from './AppSidebar.vue'
 import NotificationManager from '@/app/notification-manager/components/NotificationManager.vue'
 
+const WIDE_CONTENT_ROUTE_NAMES = [
+  'data-plane-list-view',
+  'gateway-list-view',
+  'service-list-view',
+  'service-detail-view',
+]
+
 const store = useStore()
 const route = useRoute()
 
@@ -79,7 +86,7 @@ const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'NONE')
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
-const isWideContent = computed(() => typeof route.name === 'string' && ['data-plane-list-view', 'gateway-list-view', 'service-list-view'].includes(route.name))
+const isWideContent = computed(() => typeof route.name === 'string' && WIDE_CONTENT_ROUTE_NAMES.includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   isLoading.value = globalLoading

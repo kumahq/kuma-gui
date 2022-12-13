@@ -66,11 +66,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { KAlert, KButton, KModal } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
 import SingleMeshNotifications from './SingleMeshNotifications.vue'
+import { ClientStorage } from '@/utilities/ClientStorage'
 
 const store = useStore()
 
@@ -84,8 +85,16 @@ const hasAnyAction = computed(() => {
   }
 })
 
+onMounted(function () {
+  const hideCheckMeshAlert = ClientStorage.get('hideCheckMeshAlert')
+
+  isShowingAlert.value = hideCheckMeshAlert !== 'yes'
+})
+
 function closeAlert(): void {
   isShowingAlert.value = false
+
+  ClientStorage.set('hideCheckMeshAlert', 'yes')
 }
 
 function openModal(): void {

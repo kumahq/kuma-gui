@@ -130,13 +130,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -155,13 +158,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -180,13 +186,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -205,13 +214,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-offline"
+                          <span
+                            class="status status--with-title status--danger"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Offline
+                            <span
+                              class=""
+                            >
+                              offline
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -230,13 +242,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -255,13 +270,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -280,13 +298,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -305,13 +326,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -330,13 +354,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         
@@ -355,13 +382,16 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                         </td>
                         <td>
                           
-                          <div
-                            class="entity-status is-online"
+                          <span
+                            class="status status--with-title status--success"
+                            data-testid="status-badge"
                           >
-                            <span>
-                              Online
+                            <span
+                              class=""
+                            >
+                              online
                             </span>
-                          </div>
+                          </span>
                           
                         </td>
                         

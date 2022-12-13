@@ -5,7 +5,7 @@ import { NotificationsInterface } from './modules/notifications/notifications.ty
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
 import { SidebarInterface } from './modules/sidebar/sidebar.types'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { ONLINE, OFFLINE, PARTIALLY_DEGRADED, PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
+import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import config from '@/store/modules/config/config'
 import notifications from '@/store/modules/notifications/notifications'
 import onboarding from '@/store/modules/onboarding/onboarding'
@@ -16,6 +16,10 @@ import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/st
 import { kumaApi } from '@/api/kumaApi'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import { Mesh, PolicyDefinition } from '@/types/index.d'
+
+const ONLINE = 'Online'
+const OFFLINE = 'Offline'
+const PARTIALLY_DEGRADED = 'Partially degraded'
 
 type TODO = any
 
@@ -459,9 +463,9 @@ export const storeConfig: StoreOptions<State> = {
       let online = 0
 
       items.forEach((item: any): void => {
-        const { status } = getItemStatusFromInsight(item.zoneInsight)
+        const status = getItemStatusFromInsight(item.zoneInsight)
 
-        if (status === ONLINE) {
+        if (status === 'online') {
           online++
         }
       })

@@ -1,6 +1,7 @@
-import { describe, expect, test } from '@jest/globals'
+import { describe, expect, jest, test } from '@jest/globals'
 
 import { RestClient } from './RestClient'
+import * as MakeRequestModule from './makeRequest'
 
 describe('RestClient', () => {
   test('has expected initial base URL', () => {
@@ -24,5 +25,68 @@ describe('RestClient', () => {
     restClient.baseUrl = newBaseUrl
 
     expect(restClient.baseUrl).toBe(expectedBaseUrl)
+  })
+
+  test.each([
+    [
+      undefined,
+      {},
+    ],
+    [
+      {
+        tag: 'kuma.io/service:backend',
+      },
+      {
+        params: [['tag', 'kuma.io/service:backend']],
+      },
+    ],
+    [
+      {
+        tag: ['kuma.io/service:backend', 'version:v1'],
+      },
+      {
+        params: [
+          ['tag', 'kuma.io/service:backend'],
+          ['tag', 'version:v1'],
+        ],
+      },
+    ],
+    [
+      {
+        gateway: true,
+        tag: ['kuma.io/service:backend', 'version:v1'],
+      },
+      {
+        params: [
+          ['gateway', true],
+          ['tag', 'kuma.io/service:backend'],
+          ['tag', 'version:v1'],
+        ],
+      },
+    ],
+    [
+      [
+        ['gateway', true],
+        ['tag', 'kuma.io/service:backend'],
+        ['tag', 'version:v1'],
+      ],
+      {
+        params: [
+          ['gateway', true],
+          ['tag', 'kuma.io/service:backend'],
+          ['tag', 'version:v1'],
+        ],
+      },
+    ],
+  ])('processes query parameters correctly', (params, expectedOptions) => {
+    jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
+      response: new Response(),
+      data: null,
+    }))
+
+    const restClient = new RestClient()
+    restClient.raw('path', { params })
+
+    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions)
   })
 })

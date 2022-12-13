@@ -453,7 +453,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         <span
                           class=""
                         >
-                          Name
+                          DPP
                         </span>
                         
                         <!---->
@@ -554,13 +554,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -667,13 +670,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -819,13 +825,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -932,13 +941,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-offline"
+                      <span
+                        class="status status--with-title status--danger"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Offline
+                        <span
+                          class=""
+                        >
+                          offline
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1045,13 +1057,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1158,13 +1173,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1271,13 +1289,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1384,13 +1405,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1497,13 +1521,16 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      <div
-                        class="entity-status is-online"
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
                       >
-                        <span>
-                          Online
+                        <span
+                          class=""
+                        >
+                          online
                         </span>
-                      </div>
+                      </span>
                       
                     </td>
                     <td
@@ -1670,124 +1697,131 @@ exports[`DataPlaneListView matches snapshot 1`] = `
       class="entity-summary entity-section-list"
     >
       <section>
-        <h3
-          class="entity-title"
-          data-testid="data-plane-proxy-title"
+        <div
+          class="block-list"
         >
-          <span
-            class="visually-hidden"
-          >
-            Data plane proxy:
-          </span>
-          <a
-            class=""
-            href="/mesh/default/data-planes/backend"
-          >
-            backend
-          </a>
-          <div
-            class="status status--success"
-            data-testid="data-plane-status-badge"
-          >
-            online
+          <div>
+            <h3
+              class="entity-title"
+              data-testid="data-plane-proxy-title"
+            >
+              <span>
+                 DPP: 
+                <a
+                  class=""
+                  href="/mesh/default/data-planes/backend"
+                >
+                  backend
+                </a>
+              </span>
+              <span
+                class="status status--with-title status--success"
+                data-testid="status-badge"
+              >
+                <span
+                  class=""
+                >
+                  online
+                </span>
+              </span>
+            </h3>
+            <div
+              class="definition"
+            >
+              <span>
+                Mesh:
+              </span>
+              <span>
+                default
+              </span>
+            </div>
           </div>
-        </h3>
-        <div
-          class="definition"
-        >
-          <span>
-            Mesh:
-          </span>
-          <span>
-            default
-          </span>
+          <div>
+            <h4>
+              Tags
+            </h4>
+            <span
+              class="tag-list"
+            >
+              
+              <span
+                class="tag"
+              >
+                <span
+                  class="tag__label tag__label--is-kuma-io-label"
+                >
+                  kuma.io/protocol
+                </span>
+                <span
+                  class="tag__value"
+                >
+                  http
+                </span>
+              </span>
+              <a
+                class="tag"
+                href="/mesh/default/services/backend"
+              >
+                <span
+                  class="tag__label tag__label--is-kuma-io-label"
+                >
+                  kuma.io/service
+                </span>
+                <span
+                  class="tag__value"
+                >
+                  backend
+                </span>
+              </a>
+              
+            </span>
+          </div>
+          <div>
+            <h4>
+              Dependencies
+            </h4>
+            
+            <div
+              class="definition"
+            >
+              <span>
+                envoy:
+              </span>
+              <span>
+                1.16.2
+              </span>
+            </div>
+            <div
+              class="definition"
+            >
+              <span>
+                kumaDp:
+              </span>
+              <span>
+                1.0.7
+              </span>
+            </div>
+            <div
+              class="definition"
+            >
+              <span>
+                coredns:
+              </span>
+              <span>
+                1.8.3
+              </span>
+            </div>
+            
+            <!--v-if-->
+          </div>
         </div>
       </section>
-      <section>
-        <h4>
-          Tags
-        </h4>
-        <span
-          class="tag-list"
-        >
-          
-          <span
-            class="tag"
-          >
-            <span
-              class="tag__label tag__label--is-kuma-io-label"
-            >
-              kuma.io/protocol
-            </span>
-            <span
-              class="tag__value"
-            >
-              http
-            </span>
-          </span>
-          <a
-            class="tag"
-            href="/mesh/default/services?ns=backend"
-          >
-            <span
-              class="tag__label tag__label--is-kuma-io-label"
-            >
-              kuma.io/service
-            </span>
-            <span
-              class="tag__value"
-            >
-              backend
-            </span>
-          </a>
-          
-        </span>
-      </section>
-      <section>
-        <h4>
-          Dependencies
-        </h4>
-        
-        <div
-          class="definition"
-        >
-          <span>
-            envoy:
-          </span>
-          <span>
-            1.16.2
-          </span>
-        </div>
-        <div
-          class="definition"
-        >
-          <span>
-            kumaDp:
-          </span>
-          <span>
-            1.0.7
-          </span>
-        </div>
-        <div
-          class="definition"
-        >
-          <span>
-            coredns:
-          </span>
-          <span>
-            1.8.3
-          </span>
-        </div>
-        
-        <!--v-if-->
-      </section>
-      
       <section>
         <h4>
           Insights
         </h4>
         <div
-          class="entity-section-list"
+          class="block-list"
         >
           
           <div>
@@ -1817,7 +1851,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               class="definition"
             >
               <span>
-                Control plane instance ID:
+                CP instance ID:
               </span>
               <span>
                 foo
@@ -1902,7 +1936,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               class="definition"
             >
               <span>
-                Control plane instance ID:
+                CP instance ID:
               </span>
               <span>
                 foo
@@ -1963,7 +1997,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           
         </div>
       </section>
-      <section>
+      <section
+        class="config-section"
+      >
         <div
           class="yaml-view"
         >
@@ -2560,7 +2596,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           </div>
         </div>
       </section>
-      
     </div>
     
   </div>

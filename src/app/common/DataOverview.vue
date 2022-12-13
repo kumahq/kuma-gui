@@ -63,8 +63,8 @@
 
           <!-- status -->
           <template #status="{ rowValue }">
-            <EntityStatus
-              v-if="typeof rowValue !== 'boolean'"
+            <StatusBadge
+              v-if="rowValue"
               :status="rowValue"
             />
 
@@ -246,10 +246,10 @@ import { datadogLogs } from '@datadog/browser-logs'
 
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import EmptyBlock from './EmptyBlock.vue'
-import EntityStatus from '@/app/common/EntityStatus.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import LoadingBlock from './LoadingBlock.vue'
 import PaginationWidget from './PaginationWidget.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from './TagList.vue'
 import { TableData } from '@/types/index.d'
 

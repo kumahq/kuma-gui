@@ -21,65 +21,63 @@
             >
               <h4>{{ prop }}</h4>
 
-              <div v-if="prop === 'status' && typeof value !== 'string'">
-                <EntityStatus :status="value.status" />
+              <div>
+                {{ value }}
+              </div>
+            </li>
 
+            <li v-if="statusWithReason.status">
+              <h4>Status</h4>
+
+              <div>
+                <StatusBadge :status="statusWithReason.status" />
+              </div>
+            </li>
+
+            <li v-if="statusWithReason.reason.length > 0">
+              <h4>Reason</h4>
+
+              <div>
                 <div
-                  v-for="(reason, index) in value.reason"
+                  v-for="(reason, index) in statusWithReason.reason"
                   :key="index"
                   class="reason"
                 >
                   {{ reason }}
                 </div>
               </div>
-
-              <div v-else>
-                {{ value }}
-              </div>
             </li>
           </ul>
         </div>
 
         <div>
-          <template v-if="dataPlaneTags.length > 0">
-            <h4>Tags</h4>
+          <ul>
+            <li v-if="dataPlaneTags.length > 0">
+              <h4>Tags</h4>
 
-            <p>
-              <span
-                v-for="(tag, index) in dataPlaneTags"
-                :key="index"
-                class="tag-cols"
-              >
-                <span>
-                  {{ tag.label }}:
+              <TagList :tags="dataPlaneTags" />
+            </li>
+
+            <li v-if="dataPlaneVersions">
+              <h4>Versions</h4>
+
+              <p>
+                <span
+                  v-for="(version, dependency) in dataPlaneVersions"
+                  :key="dependency"
+                  class="tag-cols"
+                >
+                  <span>
+                    {{ dependency }}:
+                  </span>
+
+                  <span>
+                    {{ version }}
+                  </span>
                 </span>
-
-                <span>
-                  {{ tag.value }}
-                </span>
-              </span>
-            </p>
-          </template>
-
-          <template v-if="dataPlaneVersions">
-            <h4>Versions</h4>
-
-            <p>
-              <span
-                v-for="(version, dependency) in dataPlaneVersions"
-                :key="dependency"
-                class="tag-cols"
-              >
-                <span>
-                  {{ dependency }}:
-                </span>
-
-                <span>
-                  {{ version }}
-                </span>
-              </span>
-            </p>
-          </template>
+              </p>
+            </li>
+          </ul>
         </div>
       </LabelList>
 
@@ -213,11 +211,12 @@ import { useStore } from '@/store/store'
 import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
-import EntityStatus from '@/app/common/EntityStatus.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
 import LabelList from '@/app/common/LabelList.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
@@ -276,16 +275,15 @@ const warnings = ref<Compatibility[]>([])
 
 const processedDataPlane = computed(() => {
   const { type, name, mesh } = props.dataPlane
-  const status = getStatus(props.dataPlane, props.dataPlaneOverview.dataplaneInsight)
 
   return {
     type,
     name,
     mesh,
-    status,
   }
 })
 
+const statusWithReason = computed(() => getStatus(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataPlane))
 const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dataplaneInsight))
 const rawDataPlane = computed(() => stripTimes(props.dataPlane))

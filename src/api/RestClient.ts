@@ -33,10 +33,10 @@ export class RestClient {
    * @returns the response’s de-serialized data.
    */
   async get(path: string, options?: RequestInit & { params?: any }): Promise<any> {
-    const processedOptions: RequestInit & { params?: any } = options ?? {}
-    processedOptions.method = 'GET'
+    const normalizedOptions = normalizeParameters(options)
+    normalizedOptions.method = 'GET'
 
-    const { data } = await this.raw(path, processedOptions)
+    const { data } = await this.raw(path, normalizedOptions)
 
     return data
   }
@@ -47,9 +47,10 @@ export class RestClient {
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
   async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
+    const normalizedOptions = normalizeParameters(options)
     const url = urlOrPath.startsWith('http') ? urlOrPath : [this.baseUrl, urlOrPath].join('/')
 
-    return makeRequest(url, options)
+    return makeRequest(url, normalizedOptions)
   }
 }
 
@@ -63,4 +64,27 @@ function trimLeadingSlashes(str: string): string {
 
 function trimSlashes(str: string): string {
   return trimTrailingSlashes(trimLeadingSlashes(str))
+}
+
+function normalizeParameters(options?: RequestInit & { params?: any }): RequestInit & { params?: any } {
+  const normalizedOptions: RequestInit & { params?: any } = options ?? {}
+
+  // Turns parameter records (e.g. `{ tag: ['a', 'b'] }`) into parameter entries (e.g. `[['tag', 'a'], ['tag', 'b']]`) so they can be used to construct an appropriate `URLSearchParams` object. Without this normalization, the record form would produce `'tag=a%2Cb'` (i.e. comma-separated list of values) when we want `'tag=a&tag=b'` (i.e. one query parameter per value).
+  if (normalizedOptions.params && !Array.isArray(normalizedOptions.params)) {
+    const params = []
+
+    for (const [param, value] of Object.entries(normalizedOptions.params)) {
+      if (Array.isArray(value)) {
+        for (const singleValue of value) {
+          params.push([param, singleValue])
+        }
+      } else {
+        params.push([param, value])
+      }
+    }
+
+    normalizedOptions.params = params
+  }
+
+  return normalizedOptions
 }

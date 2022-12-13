@@ -123,7 +123,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 import { KAlert, KButton } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
@@ -282,7 +282,7 @@ function processEntity(entity: PolicyEntity): any {
 
   const processedEntity: any = entity
 
-  const meshRoute = {
+  const meshRoute: RouteLocationNamedRaw = {
     name: 'mesh-detail-view',
     params: {
       mesh: entity.mesh,

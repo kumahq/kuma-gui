@@ -1,15 +1,13 @@
 {
   "type": "ServiceInsight",
-  "serviceType": "internal",
+  "serviceType": "external",
   "mesh": "default",
-  "name": "backend",
+  "name": "httpbin",
   "creationTime": "2021-02-19T08:06:15.14624+01:00",
   "modificationTime": "2021-02-19T08:07:37.539229+01:00",
-  "addressPort": "backend.mesh:80",
-  "status": "partially_degraded",
+  "addressPort": "httpbin.org:80",
+  "status": "not_available",
   "dataplanes": {
-    "total": 8,
-    "online": 7,
-    "offline": 1
+    "total": 1
   }
 }

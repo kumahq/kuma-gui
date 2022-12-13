@@ -1,12 +1,12 @@
 <template>
   <h4 class="text-lg font-medium">
-    <span class="color-green-400">
+    <span class="color-green-500">
       Connect time: {{ rawReadableDateFilter(details.connectTime) }}
     </span>
 
     <span
       v-if="details.disconnectTime"
-      class="ml-4 color-red-400"
+      class="ml-4 color-red-600"
     >
       Disconnect time: {{ rawReadableDateFilter(details.disconnectTime) }}
     </span>

@@ -44,6 +44,8 @@ export type TableData = {
   data: any
 }
 
+export type StatusKeyword = 'online' | 'offline' | 'partially_degraded' | 'not_available'
+
 export type Info = {
   hostname: string
   tagline: string
@@ -192,7 +194,6 @@ export type PolicyDefinition = {
   readOnly: boolean
 }
 
-export type Status = 'Online' | 'Offline' | 'Partially degraded' | 'Not available'
 export type DataPlaneStatus = 'Online' | 'Offline' | 'Partially degraded'
 
 export type DataPlaneEntityMtls = {
@@ -365,9 +366,9 @@ export type MeshGatewayListenerEntry = {
  */
 export interface ServiceInsight extends MeshEntity {
   type: 'ServiceInsight'
-  serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
+  serviceType?: 'internal' | 'external'
   addressPort?: string
-  status?: 'online' | 'offline' | 'partially_degraded'
+  status?: StatusKeyword
   dataplanes?: {
     total: number
     online?: number

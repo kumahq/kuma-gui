@@ -10,15 +10,17 @@ import { RouteLocationNamedRaw } from 'vue-router'
 const mock = useMock('/meshes/default/dataplanes+insights', response)
 
 async function renderComponent(routeLocation: RouteLocationNamedRaw = {}) {
-  await router.push(
-    {
-      name: 'data-plane-list-view',
-      params: { mesh: 'default' },
-      ...routeLocation,
-    },
-  )
+  await router.push({
+    name: 'data-plane-list-view',
+    params: { mesh: 'default' },
+    ...routeLocation,
+  })
 
-  const wrapper = mount(DataPlaneListView)
+  const wrapper = mount(DataPlaneListView, {
+    props: {
+      isGatewayView: routeLocation.name === 'gateway-list-view',
+    },
+  })
   await flushPromises()
 
   return wrapper
@@ -119,7 +121,7 @@ describe('DataPlaneListView', () => {
   test('shows correct default table columns for proxies', async () => {
     const expectedColumnHeaders = [
       'Status',
-      'Name',
+      'DPP',
       'Service',
       'Protocol',
       'Last Updated',
@@ -138,7 +140,7 @@ describe('DataPlaneListView', () => {
   test('shows correct default table columns for gateways', async () => {
     const expectedColumnHeaders = [
       'Status',
-      'Name',
+      'DPP',
       'Type',
       'Service',
       'Last Updated',
