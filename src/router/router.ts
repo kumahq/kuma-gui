@@ -188,13 +188,16 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
         {
           path: 'policies',
           name: 'policies',
-          redirect: (_to: RouteLocation): RouteLocationRaw => {
+          redirect: (to: RouteLocation): RouteLocationRaw => {
             let item = store.state.policies
               .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
             if (item === undefined) {
               item = store.state.policies[0]
             }
-            return item.path
+            return {
+              name: item.path,
+              params: to.params,
+            }
           },
         },
         ...policyRoutes,
