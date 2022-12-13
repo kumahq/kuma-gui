@@ -6,18 +6,20 @@ import { PolicyDefinition } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
 function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
-  return policies.map((policy) => ({
-    path: policy.path,
-    name: policy.path,
-    meta: {
-      title: policy.pluralDisplayName,
-    },
-    props: (route) => ({
-      policyPath: policy.path,
-      offset: getLastNumberParameter(route.query.offset),
-    }),
-    component: () => import('@/app/policies/views/PolicyView.vue'),
-  }))
+  return policies.map((policy) => {
+    return {
+      path: policy.path,
+      name: policy.path,
+      meta: {
+        title: policy.pluralDisplayName,
+      },
+      props: (route) => ({
+        policyPath: policy.path,
+        offset: getLastNumberParameter(route.query.offset),
+      }),
+      component: () => import('@/app/policies/views/PolicyView.vue'),
+    }
+  })
 }
 
 export function createRouter(baseGuiPath: string = '/', policyDefinitions: PolicyDefinition[] = []): Router {

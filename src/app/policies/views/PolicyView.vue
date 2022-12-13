@@ -41,6 +41,25 @@
       >
         >
         <template #additionalControls>
+          <KDropdownMenu
+            button-appearance="outline"
+            :show-caret="true"
+            :kpop-attributes="{ placement: 'bottomEnd' }"
+            :label="`Type: ${selectedType?.pluralDisplayName}`"
+          >
+            <template #items>
+              <template
+                v-for="item in policies"
+                :key="item.path"
+              >
+                <KDropdownItem
+                  @click="changePolicyType(item)"
+                >
+                  {{ item.pluralDisplayName }}
+                </KDropdownItem>
+              </template>
+            </template>
+          </KDropdownMenu>
           <DocumentationLink
             :href="docsURL"
             data-testid="policy-documentation-link"
@@ -123,8 +142,13 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
-import { KAlert, KButton } from '@kong/kongponents'
+import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
+import {
+  KDropdownMenu,
+  KDropdownItem,
+  KAlert,
+  KButton,
+} from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
 import { getSome, stripTimes } from '@/utilities/helpers'
@@ -137,7 +161,7 @@ import LabelList from '@/app/common/LabelList.vue'
 import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { PolicyEntity, TableHeader } from '@/types/index.d'
+import { PolicyEntity, TableHeader, PolicyDefinition } from '@/types/index.d'
 import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const tabs = [
@@ -151,6 +175,7 @@ const tabs = [
   },
 ]
 
+const router = useRouter()
 const route = useRoute()
 const store = useStore()
 
@@ -189,6 +214,14 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
 })
 
 const policy = computed(() => store.state.policiesByPath[props.policyPath])
+const policies = computed(() => {
+  return store.state.policies.map((item) => {
+    return {
+      length: store.state.sidebar.insights.mesh.policies[item.name],
+      ...item,
+    }
+  }).sort((a, b) => (a.name < b.name ? -1 : 1))
+})
 const docsURL = computed(() => {
   const kumaDocsVersion = store.getters['config/getKumaDocsVersion']
 
@@ -214,6 +247,8 @@ watch(() => route.params.mesh, function () {
 })
 
 loadData(props.offset)
+
+const selectedType = ref<PolicyDefinition>(store.state.policies.find((item: PolicyDefinition) => item.path === policy.value.path) || store.state.policies[0])
 
 async function loadData(offset: number): Promise<void> {
   pageOffset.value = offset
@@ -275,6 +310,12 @@ async function loadData(offset: number): Promise<void> {
   }
 }
 
+function changePolicyType(item: PolicyDefinition) {
+  selectedType.value = item
+  router.push({
+    name: item.path,
+  })
+}
 function processEntity(entity: PolicyEntity): any {
   if (!entity.mesh) {
     return entity

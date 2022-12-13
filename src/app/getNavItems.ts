@@ -11,16 +11,6 @@ interface NavItem {
 }
 
 export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boolean): NavItem[] {
-  const policyItems: NavItem[] = policies.map((policy) => ({
-    name: policy.pluralDisplayName,
-    routeName: policy.path,
-    title: false,
-    usesMeshParam: true,
-    insightsFieldAccessor: `mesh.policies.${policy.name}`,
-  }))
-
-  policyItems.sort((policyItemA, policyItemB) => (policyItemA.name < policyItemB.name ? -1 : 1))
-
   const zoneItems: NavItem[] = !isMultizoneMode
     ? []
     : [
@@ -85,8 +75,8 @@ export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boole
     },
     {
       name: 'Policies',
-      categoryTier: 'secondary',
+      routeName: 'circuit-breakers',
+      usesMeshParam: true,
     },
-    ...policyItems,
   ]
 }
