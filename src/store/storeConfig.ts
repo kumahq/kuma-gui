@@ -216,7 +216,7 @@ export const storeConfig: StoreOptions<State> = {
 
       state.overviewCharts[chartName].data = data
     },
-    SET_POLICIES: (state, policies) => (state.policies = policies),
+    SET_POLICIES: (state, policies) => (state.policies = policies.sort((a: PolicyDefinition, b: PolicyDefinition) => (a.name < b.name ? -1 : 1))),
     SET_POLICIES_BY_PATH: (state, policiesByPath) => (state.policiesByPath = policiesByPath),
     SET_POLICIES_BY_TYPE: (state, policiesByType) => (state.policiesByType = policiesByType),
   },

@@ -465,7 +465,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         <div
           class="nav-item"
-          data-testid="circuit-breakers"
+          data-testid="policies"
         >
           <a
             class="nav-link"

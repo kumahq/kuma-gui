@@ -105,7 +105,7 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
     
     <div
       class="nav-item"
-      data-testid="circuit-breakers"
+      data-testid="policies"
     >
       <a
         class="nav-link"

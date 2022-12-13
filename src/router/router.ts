@@ -1,4 +1,12 @@
-import { createRouter as createVueRouter, createWebHistory, NavigationGuard, Router, RouteRecordRaw } from 'vue-router'
+import {
+  createRouter as createVueRouter,
+  createWebHistory,
+  NavigationGuard,
+  Router,
+  RouteRecordRaw,
+  RouteLocation,
+  RouteLocationRaw,
+} from 'vue-router'
 
 import { getLastNumberParameter } from './getLastParameter'
 import { store } from '@/store/store'
@@ -176,6 +184,18 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
               component: () => import('@/app/services/views/ServiceDetailView.vue'),
             },
           ],
+        },
+        {
+          path: 'policies',
+          name: 'policies',
+          redirect: (_to: RouteLocation): RouteLocationRaw => {
+            let item = store.state.policies
+              .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
+            if (item === undefined) {
+              item = store.state.policies[0]
+            }
+            return item.path
+          },
         },
         ...policyRoutes,
       ],

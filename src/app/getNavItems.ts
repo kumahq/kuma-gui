@@ -75,7 +75,7 @@ export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boole
     },
     {
       name: 'Policies',
-      routeName: 'circuit-breakers',
+      routeName: 'policies',
       usesMeshParam: true,
     },
   ]

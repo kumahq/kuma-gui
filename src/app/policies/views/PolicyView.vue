@@ -220,7 +220,7 @@ const policies = computed(() => {
       length: store.state.sidebar.insights.mesh.policies[item.name],
       ...item,
     }
-  }).sort((a, b) => (a.name < b.name ? -1 : 1))
+  })
 })
 const docsURL = computed(() => {
   const kumaDocsVersion = store.getters['config/getKumaDocsVersion']
