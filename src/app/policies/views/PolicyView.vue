@@ -41,25 +41,19 @@
       >
         >
         <template #additionalControls>
-          <KDropdownMenu
-            button-appearance="outline"
-            :show-caret="true"
-            :kpop-attributes="{ placement: 'bottomEnd' }"
-            :label="`Type: ${selectedType?.pluralDisplayName}`"
+          <KSelect
+            label=""
+            :items="policies"
+            :overlay-label="true"
+            appearance="select"
+            :enable-filtering="true"
+            @selected="changePolicyType"
           >
-            <template #items>
-              <template
-                v-for="item in policies"
-                :key="item.path"
-              >
-                <KDropdownItem
-                  @click="changePolicyType(item)"
-                >
-                  {{ item.pluralDisplayName }}
-                </KDropdownItem>
-              </template>
+            <template #item-template="{ item }">
+              {{ item.label }}
             </template>
-          </KDropdownMenu>
+          </KSelect>
+
           <DocumentationLink
             :href="docsURL"
             data-testid="policy-documentation-link"
@@ -144,8 +138,7 @@
 import { computed, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 import {
-  KDropdownMenu,
-  KDropdownItem,
+  KSelect,
   KAlert,
   KButton,
 } from '@kong/kongponents'
@@ -161,7 +154,7 @@ import LabelList from '@/app/common/LabelList.vue'
 import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { PolicyEntity, TableHeader, PolicyDefinition } from '@/types/index.d'
+import { PolicyEntity, TableHeader } from '@/types/index.d'
 import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const tabs = [
@@ -217,8 +210,12 @@ const policy = computed(() => store.state.policiesByPath[props.policyPath])
 const policies = computed(() => {
   return store.state.policies.map((item) => {
     return {
-      length: store.state.sidebar.insights.mesh.policies[item.name],
-      ...item,
+      /* length: store.state.sidebar.insights.mesh.policies[item.name], */
+      label: item.pluralDisplayName,
+      value: item.path,
+      ...(item.path === route.name) && {
+        selected: true,
+      },
     }
   })
 })
@@ -247,8 +244,6 @@ watch(() => route.params.mesh, function () {
 })
 
 loadData(props.offset)
-
-const selectedType = ref<PolicyDefinition>(store.state.policies.find((item: PolicyDefinition) => item.path === policy.value.path) || store.state.policies[0])
 
 async function loadData(offset: number): Promise<void> {
   pageOffset.value = offset
@@ -310,12 +305,12 @@ async function loadData(offset: number): Promise<void> {
   }
 }
 
-function changePolicyType(item: PolicyDefinition) {
-  selectedType.value = item
+function changePolicyType(item: {value: string}) {
   router.push({
-    name: item.path,
+    name: item.value,
   })
 }
+
 function processEntity(entity: PolicyEntity): any {
   if (!entity.mesh) {
     return entity
