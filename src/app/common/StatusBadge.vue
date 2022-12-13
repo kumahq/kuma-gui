@@ -52,7 +52,7 @@ const appearanceClassName = computed(() => `status--${props.status.appearance}`)
 }
 
 .status--warning {
-  color: #ff8040;
+  color: var(--yellow-500);
 }
 
 .status--danger {
