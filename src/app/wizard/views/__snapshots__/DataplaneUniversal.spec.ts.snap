@@ -178,7 +178,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         </code>
                       </pre>
                       <button
-                        class="small outline k-button k-code-block-copy-button"
+                        class="k-button small outline k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
                         title="Copy (Alt+C)"
                         type="button"
@@ -188,7 +188,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                         
                         
                         <span
-                          class="kong-icon-copy kong-icon"
+                          class="kong-icon kong-icon-copy"
                         >
                           <svg
                             height="16"
@@ -530,7 +530,7 @@ networking:
                         </code>
                       </pre>
                       <button
-                        class="small outline k-button k-code-block-copy-button"
+                        class="k-button small outline k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
                         title="Copy (Alt+C)"
                         type="button"
@@ -540,7 +540,7 @@ networking:
                         
                         
                         <span
-                          class="kong-icon-copy kong-icon"
+                          class="kong-icon kong-icon-copy"
                         >
                           <svg
                             height="16"
@@ -599,7 +599,7 @@ networking:
                             class="mb-3"
                           >
                             <span
-                              class="kong-icon-spinner kong-icon"
+                              class="kong-icon kong-icon-spinner"
                             >
                               <svg
                                 fill="rgba(0, 0, 0, 0.1)"
@@ -683,7 +683,7 @@ networking:
           class="wizard-steps__footer"
         >
           <button
-            class="medium rounded outline k-button"
+            class="k-button medium rounded outline"
             data-testid="next-previous-button"
             style=""
             type="button"
@@ -693,7 +693,7 @@ networking:
             
             
             <span
-              class="kong-icon-chevronLeft kong-icon"
+              class="kong-icon kong-icon-chevronLeft"
             >
               <svg
                 fill="currentColor"
@@ -726,7 +726,7 @@ networking:
             <!---->
           </button>
           <button
-            class="medium rounded primary k-button"
+            class="k-button medium rounded primary"
             data-testid="next-step-button"
             style="display: none;"
             type="button"
@@ -737,7 +737,7 @@ networking:
             
              Next 
             <span
-              class="kong-icon-chevronRight kong-icon"
+              class="kong-icon kong-icon-chevronRight"
             >
               <svg
                 fill="currentColor"
@@ -1125,7 +1125,7 @@ networking:
                   </code>
                 </pre>
                 <button
-                  class="small outline k-button k-code-block-copy-button"
+                  class="k-button small outline k-code-block-copy-button"
                   data-testid="k-code-block-copy-button"
                   title="Copy (Alt+C)"
                   type="button"
@@ -1135,7 +1135,7 @@ networking:
                   
                   
                   <span
-                    class="kong-icon-copy kong-icon"
+                    class="kong-icon kong-icon-copy"
                   >
                     <svg
                       height="16"
@@ -1183,7 +1183,7 @@ networking:
             >
               <section
                 aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                class="border kong-card my-6"
+                class="kong-card border my-6"
                 cta-is-hidden=""
                 is-error="true"
               >

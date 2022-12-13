@@ -31,7 +31,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
         <li
           aria-controls="panel-0"
           aria-selected="true"
-          class="active tab-item"
+          class="tab-item active"
           id="overview-tab"
           role="tab"
           tabindex="0"
@@ -158,7 +158,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           >
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              class="noBorder kong-card"
+              class="kong-card noBorder"
             >
               <!---->
               <!---->
@@ -319,7 +319,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                   <li
                     aria-controls="panel-0"
                     aria-selected="true"
-                    class="active tab-item"
+                    class="tab-item active"
                     id="universal-tab"
                     role="tab"
                     tabindex="0"
@@ -373,7 +373,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         class="k-search-container"
                       >
                         <span
-                          class="k-search-icon kong-icon-search kong-icon"
+                          class="k-search-icon kong-icon kong-icon-search"
                           data-testid="k-code-block-search-icon"
                         >
                           <svg
@@ -422,7 +422,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         />
                         <!---->
                         <span
-                          class="k-is-processing-icon kong-icon-spinner kong-icon"
+                          class="k-is-processing-icon kong-icon kong-icon-spinner"
                           data-testid="k-code-block-is-processing-icon"
                         >
                           <svg
@@ -475,7 +475,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       >
                         <button
                           aria-pressed="false"
-                          class="small outline k-button k-regexp-mode-button"
+                          class="k-button small outline k-regexp-mode-button"
                           data-testid="k-code-block-regexp-mode-button"
                           title="Use regular expression (Alt+R)"
                           type="button"
@@ -495,14 +495,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </button>
                         <button
                           aria-pressed="false"
-                          class="small outline k-button k-filter-mode-button"
+                          class="k-button small outline k-filter-mode-button"
                           data-testid="k-code-block-filter-mode-button"
                           title="Filter results (Alt+F)"
                           type="button"
                         >
                           
                           <span
-                            class="k-button-icon kong-icon-filter kong-icon"
+                            class="k-button-icon kong-icon kong-icon-filter"
                           >
                             <svg
                               height="16"
@@ -540,7 +540,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           <!---->
                         </button>
                         <button
-                          class="small outline k-button k-previous-match-button"
+                          class="k-button small outline k-previous-match-button"
                           data-testid="k-code-block-previous-match-button"
                           disabled=""
                           title="Previous match (Shift+F3)"
@@ -548,7 +548,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           
                           <span
-                            class="k-button-icon kong-icon-chevronUp kong-icon"
+                            class="k-button-icon kong-icon kong-icon-chevronUp"
                           >
                             <svg
                               fill="currentColor"
@@ -590,7 +590,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           <!---->
                         </button>
                         <button
-                          class="small outline k-button k-next-match-button"
+                          class="k-button small outline k-next-match-button"
                           data-testid="k-code-block-next-match-button"
                           disabled=""
                           title="Next match (F3)"
@@ -598,7 +598,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           
                           <span
-                            class="k-button-icon kong-icon-chevronDown kong-icon"
+                            class="k-button-icon kong-icon kong-icon-chevronDown"
                           >
                             <svg
                               fill="currentColor"
@@ -1116,7 +1116,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </code>
                       </pre>
                       <button
-                        class="small outline k-button k-code-block-copy-button"
+                        class="k-button small outline k-code-block-copy-button"
                         data-testid="k-code-block-copy-button"
                         title="Copy (Alt+C)"
                         type="button"
@@ -1126,7 +1126,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         
                         
                         <span
-                          class="kong-icon-copy kong-icon"
+                          class="kong-icon kong-icon-copy"
                         >
                           <svg
                             height="16"

@@ -21,7 +21,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
         <!---->
         <div
           aria-level="2"
-          class="header-left mb-5 k-modal-header modal-header"
+          class="k-modal-header modal-header header-left mb-5"
           role="heading"
         >
           
@@ -41,7 +41,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
           
         </div>
         <div
-          class="content-left k-modal-body modal-body"
+          class="k-modal-body modal-body content-left"
         >
           
           <ul
@@ -63,7 +63,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon-warning kong-icon"
+                    class="mr-4 kong-icon kong-icon-warning"
                   >
                     <svg
                       height="20"
@@ -158,7 +158,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon-warning kong-icon"
+                    class="mr-4 kong-icon kong-icon-warning"
                   >
                     <svg
                       height="20"
@@ -253,7 +253,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon-warning kong-icon"
+                    class="mr-4 kong-icon kong-icon-warning"
                   >
                     <svg
                       height="20"
@@ -348,7 +348,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
                   class="flex items-center"
                 >
                   <span
-                    class="mr-4 kong-icon-warning kong-icon"
+                    class="mr-4 kong-icon kong-icon-warning"
                   >
                     <svg
                       height="20"
@@ -439,7 +439,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
         >
           
           <button
-            class="medium rounded outline k-button"
+            class="k-button medium rounded outline"
             data-testid="close-modal-button"
             type="button"
           >
@@ -462,7 +462,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
 exports[`NotificationManager.vue renders snapshot with information that there are actions which user may take 1`] = `
 <div>
   <div
-    class="info icon k-alert mb-4"
+    class="k-alert info icon mb-4"
     data-testid="notification-info"
     role="alert"
   >
@@ -488,7 +488,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
              You might want to adjust your mesh configuration 
           </span>
           <button
-            class="medium rounded outline k-button"
+            class="k-button medium rounded outline"
             data-testid="open-modal-button"
             type="button"
           >
@@ -511,7 +511,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
       type="button"
     >
       <span
-        class="info kong-icon-close kong-icon"
+        class="info kong-icon kong-icon-close"
       >
         <svg
           fill="none"
@@ -539,7 +539,7 @@ exports[`NotificationManager.vue renders snapshot with information that there ar
       </span>
     </button>
     <div
-      class="info k-alert-action"
+      class="k-alert-action info"
     >
       <!---->
       <!---->

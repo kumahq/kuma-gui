@@ -47,7 +47,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           
           <button
-            class="medium rounded outline k-button"
+            class="k-button medium rounded outline"
             type="button"
           >
             
@@ -112,7 +112,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         type="button"
       >
         <span
-          class="kong-icon-notificationBell kong-icon"
+          class="kong-icon kong-icon-notificationBell"
         >
           <svg
             fill="var(--yellow-300)"
@@ -165,13 +165,13 @@ exports[`App.vue fails to renders basic view 1`] = `
             
             <div>
               <button
-                class="medium rounded outline k-button k-dropdown-btn"
+                class="k-button medium rounded outline k-dropdown-btn"
                 data-testid="k-dropdown-btn"
                 type="button"
               >
                 
                 <span
-                  class="k-button-icon kong-icon-help kong-icon"
+                  class="k-button-icon kong-icon kong-icon-help"
                 >
                   <svg
                     fill="var(--KButtonOutlineColor, var(--blue-500, color(blue-500)))"
@@ -215,7 +215,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             persisted="false"
           >
             <div
-              class="k-dropdown-popover mt-1 undefined hide-caret k-popover"
+              class="k-popover k-dropdown-popover mt-1 undefined hide-caret"
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -280,13 +280,13 @@ exports[`App.vue fails to renders basic view 1`] = `
       </div>
       <a
         button-appearance="btn-link"
-        class="medium rounded outline k-button"
+        class="k-button medium rounded outline"
         href="/diagnostics"
         type="button"
       >
         
         <span
-          class="k-button-icon kong-icon-gearFilled kong-icon"
+          class="k-button-icon kong-icon kong-icon-gearFilled"
         >
           <svg
             height="16"
@@ -494,7 +494,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       <!--v-if-->
       <div>
         <div
-          class="info icon k-alert mb-4"
+          class="k-alert info icon mb-4"
           data-testid="notification-info"
           role="alert"
         >
@@ -520,7 +520,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                    You might want to adjust your mesh configuration 
                 </span>
                 <button
-                  class="medium rounded outline k-button"
+                  class="k-button medium rounded outline"
                   data-testid="open-modal-button"
                   type="button"
                 >
@@ -543,7 +543,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             type="button"
           >
             <span
-              class="info kong-icon-close kong-icon"
+              class="info kong-icon kong-icon-close"
             >
               <svg
                 fill="info"
@@ -574,7 +574,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             </span>
           </button>
           <div
-            class="info k-alert-action"
+            class="k-alert-action info"
           >
             <!---->
             <!---->
@@ -666,7 +666,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Create a virtual mesh"
-              class="border kong-card"
+              class="kong-card border"
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -708,13 +708,13 @@ exports[`App.vue fails to renders basic view 1`] = `
                     class="resource-list-actions mt-4"
                   >
                     <a
-                      class="medium rounded creation k-button"
+                      class="k-button medium rounded creation"
                       href="/wizard/mesh"
                       type="button"
                     >
                       
                       <span
-                        class="k-button-icon kong-icon-plus kong-icon"
+                        class="k-button-icon kong-icon kong-icon-plus"
                       >
                         <svg
                           fill="white"
@@ -771,7 +771,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Connect data plane proxies"
-              class="border kong-card"
+              class="kong-card border"
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -809,7 +809,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     class="resource-list-actions mt-4"
                   >
                     <a
-                      class="medium rounded primary k-button"
+                      class="k-button medium rounded primary"
                       href="/wizard/universal-dataplane"
                       type="button"
                     >
@@ -830,7 +830,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Apply Kuma policies"
-              class="border kong-card"
+              class="kong-card border"
             >
               <div
                 class="k-card-header d-flex mb-3"
@@ -868,7 +868,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     class="resource-list-actions mt-4"
                   >
                     <a
-                      class="medium rounded primary k-button"
+                      class="k-button medium rounded primary"
                       href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
                       type="button"
                     >
@@ -889,7 +889,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               aria-label="Resources"
-              class="border kong-card"
+              class="kong-card border"
             >
               <div
                 class="k-card-header d-flex mb-3"

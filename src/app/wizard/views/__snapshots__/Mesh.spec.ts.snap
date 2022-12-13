@@ -165,7 +165,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                           <li
                             aria-controls="panel-1"
                             aria-selected="true"
-                            class="active tab-item"
+                            class="tab-item active"
                             id="universal-tab"
                             role="tab"
                             tabindex="0"
@@ -767,7 +767,7 @@ metrics:
                                 </code>
                               </pre>
                               <button
-                                class="small outline k-button k-code-block-copy-button"
+                                class="k-button small outline k-code-block-copy-button"
                                 data-testid="k-code-block-copy-button"
                                 title="Copy (Alt+C)"
                                 type="button"
@@ -777,7 +777,7 @@ metrics:
                                 
                                 
                                 <span
-                                  class="kong-icon-copy kong-icon"
+                                  class="kong-icon kong-icon-copy"
                                 >
                                   <svg
                                     height="16"
@@ -844,7 +844,7 @@ metrics:
                             class="mb-3"
                           >
                             <span
-                              class="kong-icon-spinner kong-icon"
+                              class="kong-icon kong-icon-spinner"
                             >
                               <svg
                                 fill="rgba(0, 0, 0, 0.1)"
@@ -928,7 +928,7 @@ metrics:
           class="wizard-steps__footer"
         >
           <button
-            class="medium rounded outline k-button"
+            class="k-button medium rounded outline"
             data-testid="next-previous-button"
             style=""
             type="button"
@@ -938,7 +938,7 @@ metrics:
             
             
             <span
-              class="kong-icon-chevronLeft kong-icon"
+              class="kong-icon kong-icon-chevronLeft"
             >
               <svg
                 fill="currentColor"
@@ -971,7 +971,7 @@ metrics:
             <!---->
           </button>
           <button
-            class="medium rounded primary k-button"
+            class="k-button medium rounded primary"
             data-testid="next-step-button"
             style="display: none;"
             type="button"
@@ -982,7 +982,7 @@ metrics:
             
              Next 
             <span
-              class="kong-icon-chevronRight kong-icon"
+              class="kong-icon kong-icon-chevronRight"
             >
               <svg
                 fill="currentColor"

@@ -6,7 +6,7 @@ exports[`NotificationIcon.vue renders snapshot 1`] = `
   type="button"
 >
   <span
-    class="kong-icon-notificationBell kong-icon"
+    class="kong-icon kong-icon-notificationBell"
   >
     <svg
       fill="none"

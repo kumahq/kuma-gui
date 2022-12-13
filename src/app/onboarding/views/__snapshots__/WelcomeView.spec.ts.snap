@@ -45,7 +45,7 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
             class="circle"
           >
             <span
-              class="kong-icon-check kong-icon"
+              class="kong-icon kong-icon-check"
             >
               <svg
                 fill="none"
@@ -133,7 +133,7 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
         <!--v-if-->
         <div>
           <button
-            class="small rounded btn-link k-button skip-button"
+            class="k-button small rounded btn-link skip-button"
             data-testid="onboarding-skip-button"
             type="button"
           >
@@ -149,7 +149,7 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
             class="inline-block"
           >
             <a
-              class="medium rounded primary k-button navigation-button navigation-button--next"
+              class="k-button medium rounded primary navigation-button navigation-button--next"
               data-testid="onboarding-next-button"
               href="/onboarding/deployment-types"
               type="button"
