@@ -71,6 +71,7 @@ async function loadData() {
   const mesh = route.params.mesh as string
   const name = route.params.service as string
   const tag = `kuma.io/service:${name}`
+  const gateway = false
 
   try {
     service.value = await kumaApi.getServiceInsight({ mesh, name })
@@ -78,7 +79,7 @@ async function loadData() {
     if (service.value.serviceType === 'external') {
       externalService.value = await kumaApi.getExternalService({ mesh, name })
     } else {
-      const dataPlaneOverviewsResponse = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { tag })
+      const dataPlaneOverviewsResponse = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { gateway, tag })
       dataPlaneOverviews.value = dataPlaneOverviewsResponse.items ?? []
     }
   } catch (err) {
