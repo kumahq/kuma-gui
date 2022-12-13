@@ -64,7 +64,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 class="k-table-wrapper"
               >
                 <table
-                  class="has-hover k-table"
+                  class="k-table has-hover"
                   data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   <thead

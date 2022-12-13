@@ -5,7 +5,7 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
   class="mt-4 flex items-center flex-col sm:flex-row justify-between"
 >
   <a
-    class="medium rounded primary k-button navigation-button navigation-button--back"
+    class="k-button medium rounded primary navigation-button navigation-button--back"
     data-testid="onboarding-previous-button"
     type="button"
   >
@@ -19,7 +19,7 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
   </a>
   <div>
     <button
-      class="small rounded btn-link k-button skip-button"
+      class="k-button small rounded btn-link skip-button"
       data-testid="onboarding-skip-button"
       type="button"
     >
@@ -35,7 +35,7 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
       class="inline-block"
     >
       <a
-        class="medium rounded primary k-button navigation-button navigation-button--next"
+        class="k-button medium rounded primary navigation-button navigation-button--next"
         data-testid="onboarding-next-button"
         type="button"
       >

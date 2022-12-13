@@ -1669,7 +1669,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Create a virtual mesh"
-      class="border kong-card"
+      class="kong-card border"
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1711,13 +1711,13 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             class="resource-list-actions mt-4"
           >
             <a
-              class="medium rounded creation k-button"
+              class="k-button medium rounded creation"
               href="/wizard/mesh"
               type="button"
             >
               
               <span
-                class="k-button-icon kong-icon-plus kong-icon"
+                class="k-button-icon kong-icon kong-icon-plus"
               >
                 <svg
                   fill="none"
@@ -1773,7 +1773,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Connect data plane proxies"
-      class="border kong-card"
+      class="kong-card border"
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1811,7 +1811,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             class="resource-list-actions mt-4"
           >
             <a
-              class="medium rounded primary k-button"
+              class="k-button medium rounded primary"
               href="/wizard/kubernetes-dataplane"
               type="button"
             >
@@ -1832,7 +1832,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Apply null policies"
-      class="border kong-card"
+      class="kong-card border"
     >
       <div
         class="k-card-header d-flex mb-3"
@@ -1870,7 +1870,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             class="resource-list-actions mt-4"
           >
             <a
-              class="medium rounded primary k-button"
+              class="k-button medium rounded primary"
               href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >
@@ -1891,7 +1891,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
       aria-label="Resources"
-      class="border kong-card"
+      class="kong-card border"
     >
       <div
         class="k-card-header d-flex mb-3"

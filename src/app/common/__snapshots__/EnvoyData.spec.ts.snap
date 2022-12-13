@@ -17,7 +17,7 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
       >
         
         <span
-          class="mb-3 kong-icon-spinner kong-icon"
+          class="mb-3 kong-icon kong-icon-spinner"
         >
           <svg
             fill="none"

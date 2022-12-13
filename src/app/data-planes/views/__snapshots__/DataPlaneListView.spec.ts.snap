@@ -36,13 +36,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               
               <div>
                 <button
-                  class="medium rounded outline k-button k-dropdown-btn"
+                  class="k-button medium rounded outline k-dropdown-btn"
                   data-testid="k-dropdown-btn"
                   type="button"
                 >
                   
                   <span
-                    class="k-button-icon kong-icon-cogwheel kong-icon"
+                    class="k-button-icon kong-icon kong-icon-cogwheel"
                   >
                     <svg
                       fill="var(--KButtonOutlineColor, var(--blue-500, color(blue-500)))"
@@ -86,7 +86,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               persisted="false"
             >
               <div
-                class="k-dropdown-popover mt-1 undefined hide-caret k-popover"
+                class="k-popover k-dropdown-popover mt-1 undefined hide-caret"
                 id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 role="region"
                 style="width: 200px; max-width: 350px; max-height: auto; display: none;"
@@ -300,14 +300,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           
         </div>
         <a
-          class="medium rounded creation k-button"
+          class="k-button medium rounded creation"
           data-testid="data-plane-create-data-plane-button"
           href="/wizard/kubernetes-dataplane"
           type="button"
         >
           
           <span
-            class="k-button-icon kong-icon-plus kong-icon"
+            class="k-button-icon kong-icon kong-icon-plus"
           >
             <svg
               fill="white"
@@ -358,13 +358,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
         <!--v-if-->
         
         <button
-          class="medium rounded primary k-button refresh-button"
+          class="k-button medium rounded primary refresh-button"
           data-testid="data-overview-refresh-button"
           type="button"
         >
           
           <span
-            class="k-button-icon kong-icon-redo kong-icon"
+            class="k-button-icon kong-icon kong-icon-redo"
           >
             <svg
               fill="white"
@@ -417,7 +417,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               class="k-table-wrapper"
             >
               <table
-                class="has-hover is-clickable k-table"
+                class="k-table has-hover is-clickable"
                 data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
                 <thead
@@ -617,13 +617,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/backend"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -730,13 +730,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/frontend"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-warning kong-icon"
+                          class="kong-icon kong-icon-warning"
                         >
                           <svg
                             height="16"
@@ -882,13 +882,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/db"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -995,13 +995,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/no-subscriptions"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -1108,13 +1108,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/cluster-1.backend-02"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -1221,13 +1221,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/cluster-1.backend-03"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -1334,13 +1334,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/cluster-1.ingress-02"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -1447,13 +1447,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/dataplane-test-456"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -1560,13 +1560,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <a
-                        class="medium rounded btn-link k-button detail-link"
+                        class="k-button medium rounded btn-link detail-link"
                         href="/mesh/default/data-planes/ingress-dp-test-123"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon-info kong-icon"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
@@ -1611,7 +1611,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           >
             <!--v-if-->
             <button
-              class="medium rounded primary k-button"
+              class="k-button medium rounded primary"
               data-testid="pagination-next-button"
               type="button"
             >
@@ -1622,7 +1622,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                Next 
               <span
                 aria-hidden="true"
-                class="kong-icon-chevronRight kong-icon"
+                class="kong-icon kong-icon-chevronRight"
               >
                 <svg
                   aria-hidden="true"
@@ -1981,7 +1981,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                 <li
                   aria-controls="panel-0"
                   aria-selected="true"
-                  class="active tab-item"
+                  class="tab-item active"
                   id="universal-tab"
                   role="tab"
                   tabindex="0"
@@ -2498,7 +2498,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </code>
                     </pre>
                     <button
-                      class="small outline k-button k-code-block-copy-button"
+                      class="k-button small outline k-code-block-copy-button"
                       data-testid="k-code-block-copy-button"
                       title="Copy (Alt+C)"
                       type="button"
@@ -2508,7 +2508,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       
                       <span
-                        class="kong-icon-copy kong-icon"
+                        class="kong-icon kong-icon-copy"
                       >
                         <svg
                           height="16"

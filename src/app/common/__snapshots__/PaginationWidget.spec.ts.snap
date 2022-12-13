@@ -37,7 +37,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
   class="pagination"
 >
   <button
-    class="medium rounded primary k-button"
+    class="k-button medium rounded primary"
     data-testid="pagination-previous-button"
     type="button"
   >
@@ -47,7 +47,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     
     <span
       aria-hidden="true"
-      class="kong-icon-chevronLeft kong-icon"
+      class="kong-icon kong-icon-chevronLeft"
     >
       <svg
         fill="none"
@@ -80,7 +80,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
     <!---->
   </button>
   <button
-    class="medium rounded primary k-button"
+    class="k-button medium rounded primary"
     data-testid="pagination-next-button"
     type="button"
   >
@@ -91,7 +91,7 @@ exports[`PaginationWidget.vue renders pagination 1`] = `
      Next 
     <span
       aria-hidden="true"
-      class="kong-icon-chevronRight kong-icon"
+      class="kong-icon kong-icon-chevronRight"
     >
       <svg
         fill="none"

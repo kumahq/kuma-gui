@@ -8,7 +8,7 @@ exports[`PolicyConnections.vue renders snapshot 1`] = `
     >
       <section
         aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-        class="noBorder kong-card"
+        class="kong-card noBorder"
       >
         <!---->
         <!---->

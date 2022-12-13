@@ -21,7 +21,7 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
         <li
           aria-controls="panel-0"
           aria-selected="true"
-          class="active tab-item"
+          class="tab-item active"
           id="universal-tab"
           role="tab"
           tabindex="0"

@@ -47,7 +47,7 @@ exports[`CompletedView.vue renders snapshot 1`] = `
           class="inline-block"
         >
           <a
-            class="medium rounded primary k-button navigation-button navigation-button--next"
+            class="k-button medium rounded primary navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
             href="/"
             type="button"

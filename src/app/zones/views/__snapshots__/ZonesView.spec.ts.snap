@@ -20,13 +20,13 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
         
         
         <button
-          class="medium rounded primary k-button refresh-button"
+          class="k-button medium rounded primary refresh-button"
           data-testid="data-overview-refresh-button"
           type="button"
         >
           
           <span
-            class="k-button-icon kong-icon-redo kong-icon"
+            class="k-button-icon kong-icon kong-icon-redo"
           >
             <svg
               fill="white"
@@ -79,7 +79,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
               class="k-table-wrapper"
             >
               <table
-                class="has-hover is-clickable k-table"
+                class="k-table has-hover is-clickable"
                 data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
                 <thead
@@ -290,7 +290,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     >
                       
                       <span
-                        class="mr-1 kong-icon-warning kong-icon"
+                        class="mr-1 kong-icon kong-icon-warning"
                       >
                         <svg
                           height="20"
@@ -500,7 +500,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     >
                       
                       <span
-                        class="mr-1 kong-icon-warning kong-icon"
+                        class="mr-1 kong-icon kong-icon-warning"
                       >
                         <svg
                           height="20"
@@ -689,7 +689,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
             <li
               aria-controls="panel-0"
               aria-selected="true"
-              class="active tab-item"
+              class="tab-item active"
               id="overview-tab"
               role="tab"
               tabindex="0"
@@ -750,7 +750,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                   class="flex items-center with-warnings"
                 >
                   <span
-                    class="mr-1 kong-icon-warning kong-icon"
+                    class="mr-1 kong-icon kong-icon-warning"
                   >
                     <svg
                       height="16"
@@ -841,7 +841,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
               >
                 <section
                   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  class="noBorder kong-card"
+                  class="kong-card noBorder"
                 >
                   <!---->
                   <!---->
@@ -953,7 +953,7 @@ exports[`ZonesView.vue renders snapshot when no multizone 1`] = `
       >
         
         <span
-          class="mb-3 kong-icon-dangerCircleOutline kong-icon"
+          class="mb-3 kong-icon kong-icon-dangerCircleOutline"
         >
           <svg
             fill="none"
@@ -1009,7 +1009,7 @@ exports[`ZonesView.vue renders snapshot when no multizone 1`] = `
       >
         
         <a
-          class="medium rounded primary k-button"
+          class="k-button medium rounded primary"
           href="https://kuma.io/docs/latest/documentation/deployments/"
           target="_blank"
           type="button"
@@ -1076,7 +1076,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
         <li
           aria-controls="panel-1"
           aria-selected="true"
-          class="active tab-item"
+          class="tab-item active"
           id="insights-tab"
           role="tab"
           tabindex="0"
@@ -1121,7 +1121,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
               class="flex items-center with-warnings"
             >
               <span
-                class="mr-1 kong-icon-warning kong-icon"
+                class="mr-1 kong-icon kong-icon-warning"
               >
                 <svg
                   height="16"
@@ -1217,7 +1217,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
         
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          class="noBorder kong-card"
+          class="kong-card noBorder"
         >
           <!---->
           <!---->

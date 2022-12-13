@@ -2,7 +2,7 @@
 
 exports[`DocumentationLink.vue renders snapshot 1`] = `
 <a
-  class="medium rounded outline k-button docs-link"
+  class="k-button medium rounded outline docs-link"
   href="https://kuma.io/docs/1.3.2/policies/timeout/"
   target="_blank"
   type="button"
@@ -12,7 +12,7 @@ exports[`DocumentationLink.vue renders snapshot 1`] = `
   
   
   <span
-    class="kong-icon-externalLink kong-icon"
+    class="kong-icon kong-icon-externalLink"
   >
     <svg
       height="12"

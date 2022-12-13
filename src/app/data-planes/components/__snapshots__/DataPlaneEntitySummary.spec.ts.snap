@@ -315,7 +315,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
             <li
               aria-controls="panel-0"
               aria-selected="true"
-              class="active tab-item"
+              class="tab-item active"
               id="universal-tab"
               role="tab"
               tabindex="0"
@@ -838,7 +838,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                   </code>
                 </pre>
                 <button
-                  class="small outline k-button k-code-block-copy-button"
+                  class="k-button small outline k-code-block-copy-button"
                   data-testid="k-code-block-copy-button"
                   title="Copy (Alt+C)"
                   type="button"
@@ -848,7 +848,7 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                   
                   
                   <span
-                    class="kong-icon-copy kong-icon"
+                    class="kong-icon kong-icon-copy"
                   >
                     <svg
                       height="16"
