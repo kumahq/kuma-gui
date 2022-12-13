@@ -9,11 +9,7 @@ exports[`App.vue fails to renders basic view 1`] = `
     <div
       class="horizontal-list"
     >
-      <a
-        aria-current="page"
-        class="router-link-active router-link-exact-active"
-        href="/"
-      >
+      <a>
         <img
           alt="Kuma Logo"
           class="logo-image"
@@ -281,7 +277,6 @@ exports[`App.vue fails to renders basic view 1`] = `
       <a
         button-appearance="btn-link"
         class="k-button medium rounded outline"
-        href="/diagnostics"
         type="button"
       >
         
@@ -338,9 +333,7 @@ exports[`App.vue fails to renders basic view 1`] = `
           data-testid="home"
         >
           <a
-            aria-current="page"
-            class="router-link-active router-link-exact-active nav-link nav-link--is-active"
-            href="/"
+            class="nav-link nav-link--is-active"
           >
             Home 
             <!--v-if-->
@@ -412,7 +405,6 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default"
           >
             Overview 
             <!--v-if-->
@@ -426,7 +418,6 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default/services"
           >
             Services 
             <span
@@ -444,7 +435,6 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default/gateways"
           >
             Gateways 
             <span
@@ -462,7 +452,6 @@ exports[`App.vue fails to renders basic view 1`] = `
         >
           <a
             class="nav-link"
-            href="/mesh/default/data-planes"
           >
             Data Plane Proxies 
             <span
@@ -475,14 +464,15 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item nav-item--is-category nav-item--is-secondary-category"
-          data-testid=""
+          class="nav-item"
+          data-testid="circuit-breakers"
         >
-          <div
-            class="nav-category"
+          <a
+            class="nav-link"
           >
-            Policies
-          </div>
+            Policies 
+            <!--v-if-->
+          </a>
         </div>
         
         
@@ -709,7 +699,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="k-button medium rounded creation"
-                      href="/wizard/mesh"
                       type="button"
                     >
                       
@@ -810,7 +799,6 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="k-button medium rounded primary"
-                      href="/wizard/universal-dataplane"
                       type="button"
                     >
                       
