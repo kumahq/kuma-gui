@@ -71,7 +71,7 @@
     "sass": "^1.56.1",
     "standard": "^17.0.0",
     "ts-jest": "^29.0.3",
-    "typescript": "~4.9.3",
+    "typescript": "~4.9.4",
     "vite": "^3.2.5",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-rewrite-all": "^1.0.0",
