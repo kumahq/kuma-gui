@@ -1,4 +1,12 @@
-import { createRouter as createVueRouter, createWebHistory, NavigationGuard, Router, RouteRecordRaw } from 'vue-router'
+import {
+  createRouter as createVueRouter,
+  createWebHistory,
+  NavigationGuard,
+  Router,
+  RouteRecordRaw,
+  RouteLocation,
+  RouteLocationRaw,
+} from 'vue-router'
 
 import { getLastNumberParameter } from './getLastParameter'
 import { store } from '@/store/store'
@@ -6,18 +14,21 @@ import { PolicyDefinition } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
 function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
-  return policies.map((policy) => ({
-    path: policy.path,
-    name: policy.path,
-    meta: {
-      title: policy.pluralDisplayName,
-    },
-    props: (route) => ({
-      policyPath: policy.path,
-      offset: getLastNumberParameter(route.query.offset),
-    }),
-    component: () => import('@/app/policies/views/PolicyView.vue'),
-  }))
+  return policies.map((policy) => {
+    return {
+      path: policy.path,
+      name: policy.path,
+      meta: {
+        title: policy.pluralDisplayName,
+        parent: 'policies',
+      },
+      props: (route) => ({
+        policyPath: policy.path,
+        offset: getLastNumberParameter(route.query.offset),
+      }),
+      component: () => import('@/app/policies/views/PolicyView.vue'),
+    }
+  })
 }
 
 export function createRouter(baseGuiPath: string = '/', policyDefinitions: PolicyDefinition[] = []): Router {
@@ -174,6 +185,24 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
               component: () => import('@/app/services/views/ServiceDetailView.vue'),
             },
           ],
+        },
+        {
+          path: 'policies',
+          name: 'policies',
+          meta: {
+            title: 'Policies',
+          },
+          redirect: (to: RouteLocation): RouteLocationRaw => {
+            let item = store.state.policies
+              .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
+            if (item === undefined) {
+              item = store.state.policies[0]
+            }
+            return {
+              ...to,
+              name: item.path,
+            }
+          },
         },
         ...policyRoutes,
       ],

@@ -41,6 +41,25 @@
       >
         >
         <template #additionalControls>
+          <KSelect
+            label="Policies"
+            :items="policies"
+            :label-attributes="{ class: 'visually-hidden' }"
+            appearance="select"
+            :enable-filtering="true"
+            @selected="changePolicyType"
+          >
+            <template #item-template="{ item }">
+              <span
+                :class="{
+                  'policy-type-empty': item.length === 0
+                }"
+              >
+                {{ item.label }}
+              </span>
+            </template>
+          </KSelect>
+
           <DocumentationLink
             :href="docsURL"
             data-testid="policy-documentation-link"
@@ -123,8 +142,12 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
-import { KAlert, KButton } from '@kong/kongponents'
+import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
+import {
+  KSelect,
+  KAlert,
+  KButton,
+} from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
 import { getSome, stripTimes } from '@/utilities/helpers'
@@ -151,6 +174,7 @@ const tabs = [
   },
 ]
 
+const router = useRouter()
 const route = useRoute()
 const store = useStore()
 
@@ -189,6 +213,16 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
 })
 
 const policy = computed(() => store.state.policiesByPath[props.policyPath])
+const policies = computed(() => {
+  return store.state.policies.map((item) => {
+    return {
+      length: store.state.sidebar.insights.mesh.policies[item.name],
+      label: item.pluralDisplayName,
+      value: item.path,
+      selected: item.path === route.name,
+    }
+  })
+})
 const docsURL = computed(() => {
   const kumaDocsVersion = store.getters['config/getKumaDocsVersion']
 
@@ -275,6 +309,12 @@ async function loadData(offset: number): Promise<void> {
   }
 }
 
+function changePolicyType(item: {value: string}) {
+  router.push({
+    name: item.value,
+  })
+}
+
 function processEntity(entity: PolicyEntity): any {
   if (!entity.mesh) {
     return entity
@@ -320,6 +360,9 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
 </script>
 
 <style lang="scss" scoped>
+.policy-type-empty {
+  color: var(--grey-400);
+}
 .config-wrapper {
   padding-right: var(--spacing-md);
   padding-left: var(--spacing-md);

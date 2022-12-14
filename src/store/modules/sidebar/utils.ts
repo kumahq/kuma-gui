@@ -39,7 +39,9 @@ export function calculateMeshInsights(rawMeshInsights: { items: MeshInsight[] })
       policies: {},
     },
   )
-
+  meshInsight.policies.total = Object.values(meshInsight.policies).reduce((prev: number, value) => {
+    return prev + (value as number)
+  }, 0)
   return meshInsight
 }
 

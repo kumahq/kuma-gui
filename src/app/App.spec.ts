@@ -1,5 +1,5 @@
 import { describe, expect, jest, test } from '@jest/globals'
-import { flushPromises, mount } from '@vue/test-utils'
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 
 import App from './App.vue'
 import { store } from '@/store/store'
@@ -21,6 +21,7 @@ function renderComponent(status: string) {
         // keeps the github-button as a <github-button> instead of a span in
         // the snapshot so its as close to actual usage as possible
         GithubButton: true,
+        'router-link': RouterLinkStub,
       },
     },
   })

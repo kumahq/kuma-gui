@@ -14,7 +14,9 @@ describe('sidebar utils', () => {
     "standard": 0,
     "total": 0,
   },
-  "policies": {},
+  "policies": {
+    "total": 0,
+  },
   "services": {
     "external": 0,
     "internal": 0,
@@ -163,6 +165,7 @@ describe('sidebar utils', () => {
     "Secret": 8,
     "TrafficPermission": 5,
     "TrafficRoute": 7,
+    "total": 20,
   },
   "services": {
     "external": 6,

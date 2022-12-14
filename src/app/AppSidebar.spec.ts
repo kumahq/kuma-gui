@@ -23,13 +23,6 @@ describe('AppSidebar.vue', () => {
     expect(wrapper.element).toMatchSnapshot()
   })
 
-  test('renders mesh gateways', async () => {
-    const wrapper = await renderComponent()
-
-    expect(wrapper.find('[data-testid="meshgateways"]').exists()).toBe(true)
-    expect(wrapper.find('[data-testid="meshgatewayroutes"]').exists()).toBe(true)
-  })
-
   test('refetch data after change of mesh', async () => {
     store.state.selectedMesh = 'hello-world'
     store.state.meshes.total = 1

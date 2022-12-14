@@ -34,7 +34,7 @@ const POLLING_INTERVAL_IN_SECONDS = 10
 
 const store = useStore()
 
-const navItems = computed(() => getNavItems(store.state.policies, store.getters['config/getMulticlusterStatus']))
+const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus']))
 const meshes = computed(() => store.state.meshes.items)
 
 watch(() => store.state.selectedMesh, () => {
