@@ -42,9 +42,8 @@
         >
         <template #additionalControls>
           <KSelect
-            label=""
-            :items="policies"
-            :overlay-label="true"
+            label="Policies"
+            :label-attributes="{ class: 'visually-hidden' }"
             appearance="select"
             :enable-filtering="true"
             @selected="changePolicyType"
