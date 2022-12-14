@@ -10,7 +10,7 @@ interface NavItem {
   shouldOffsetFromFollowingItems?: boolean
 }
 
-export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boolean): NavItem[] {
+export function getNavItems(isMultizoneMode: boolean): NavItem[] {
   const zoneItems: NavItem[] = !isMultizoneMode
     ? []
     : [
