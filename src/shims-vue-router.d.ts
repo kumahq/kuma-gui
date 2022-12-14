@@ -26,10 +26,5 @@ declare module 'vue-router' {
      * Whether a route is part of a wizard (e.g. “Create mesh” or “Create data plane proxy”).
      */
     wizardProcess?: boolean
-
-    /**
-     * Indicates that a router-view rendering this route should be re-rendered on a path change via an updated `key` attribute (see `src/app/App.vue` for an implementation example).
-     */
-    shouldReRender?: boolean
   }
 }

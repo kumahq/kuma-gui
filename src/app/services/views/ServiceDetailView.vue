@@ -42,7 +42,7 @@ const error = ref<Error | null>(null)
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'service-insights-detail-view') {
+  if (route.name !== 'service-detail-view') {
     return
   }
 
@@ -51,7 +51,7 @@ watch(() => route.params.mesh, function () {
 
 watch(() => route.params.name, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'service-insights-detail-view') {
+  if (route.name !== 'service-detail-view') {
     return
   }
 

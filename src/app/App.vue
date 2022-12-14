@@ -78,11 +78,16 @@ const isLoading = ref(store.state.globalLoading)
 /**
  * The `router-view`’s `key` attribute value.
  *
- * Is always set to `'NONE'` (i.e. will never trigger an explicit re-render via Vue’s `key` mechanism).
- * However, in some scenarios, we want Vue to re-render a route’s components
- * (e.g. `src/app/policies/views/PolicyView.vue` which is used by some dozen policy routes).
+ * Set to the current `route.path` to trigger an explicit re-render via Vue’s `key` mechanism when navigating between routes that only change in dynamic path segments while matching the same route definition.
+ *
+ * **Example**:
+ *
+ * From: /mesh/default/services/backend
+ * To: /mesh/default/services/ingress
+ *
+ * Both routes resolve to the same route definition and the router’s default behavior is to not re-render the component in such navigations.
  */
-const routeKey = computed(() => route.meta.shouldReRender ? route.path : 'NONE')
+const routeKey = computed(() => route.path)
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
