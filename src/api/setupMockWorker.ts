@@ -14,6 +14,7 @@ export function setupMockWorker(url: string): void {
   )
 
   worker.start({
+    quiet: true,
     onUnhandledRequest(req: MockedRequest) {
       // Ignores warnings about unhandled requests.
       if (

@@ -10,7 +10,6 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
     path: policy.path,
     name: policy.path,
     meta: {
-      shouldReRender: true,
       title: policy.pluralDisplayName,
     },
     props: (route) => ({
