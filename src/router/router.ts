@@ -20,6 +20,7 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
       name: policy.path,
       meta: {
         title: policy.pluralDisplayName,
+        parent: 'policies',
       },
       props: (route) => ({
         policyPath: policy.path,
@@ -188,6 +189,9 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
         {
           path: 'policies',
           name: 'policies',
+          meta: {
+            title: 'Policies',
+          },
           redirect: (to: RouteLocation): RouteLocationRaw => {
             let item = store.state.policies
               .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
