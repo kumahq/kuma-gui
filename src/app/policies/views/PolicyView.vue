@@ -50,7 +50,13 @@
             @selected="changePolicyType"
           >
             <template #item-template="{ item }">
-              {{ item.label }}
+              <span
+                :class="{
+                  'policy-type-empty': item.length === 0
+                }"
+              >
+                {{ item.label }}
+              </span>
             </template>
           </KSelect>
 
@@ -210,7 +216,7 @@ const policy = computed(() => store.state.policiesByPath[props.policyPath])
 const policies = computed(() => {
   return store.state.policies.map((item) => {
     return {
-      /* length: store.state.sidebar.insights.mesh.policies[item.name], */
+      length: store.state.sidebar.insights.mesh.policies[item.name],
       label: item.pluralDisplayName,
       value: item.path,
       ...(item.path === route.name) && {
@@ -356,6 +362,9 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
 </script>
 
 <style lang="scss" scoped>
+.policy-type-empty {
+  color: var(--grey-400);
+}
 .config-wrapper {
   padding-right: var(--spacing-md);
   padding-left: var(--spacing-md);
