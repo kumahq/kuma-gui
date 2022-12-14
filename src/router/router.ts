@@ -195,8 +195,8 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
               item = store.state.policies[0]
             }
             return {
+              ...to,
               name: item.path,
-              params: to.params,
             }
           },
         },
