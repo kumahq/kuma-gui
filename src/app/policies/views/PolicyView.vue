@@ -219,9 +219,7 @@ const policies = computed(() => {
       length: store.state.sidebar.insights.mesh.policies[item.name],
       label: item.pluralDisplayName,
       value: item.path,
-      ...(item.path === route.name) && {
-        selected: true,
-      },
+      selected: item.path === route.name,
     }
   })
 })
