@@ -471,7 +471,11 @@ exports[`App.vue fails to renders basic view 1`] = `
             class="nav-link"
           >
             Policies 
-            <!--v-if-->
+            <span
+              class="amount"
+            >
+              27
+            </span>
           </a>
         </div>
         

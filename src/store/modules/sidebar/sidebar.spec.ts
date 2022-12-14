@@ -54,6 +54,7 @@ describe('sidebar module', () => {
         "TrafficRoute": 1,
         "TrafficTrace": 3,
         "VirtualOutbound": 0,
+        "total": 27,
       },
       "services": {
         "external": 2,

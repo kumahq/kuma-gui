@@ -111,7 +111,11 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
         class="nav-link"
       >
         Policies 
-        <!--v-if-->
+        <span
+          class="amount amount--empty"
+        >
+          0
+        </span>
       </a>
     </div>
     
