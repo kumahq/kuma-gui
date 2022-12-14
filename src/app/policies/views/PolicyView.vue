@@ -43,6 +43,7 @@
         <template #additionalControls>
           <KSelect
             label="Policies"
+            :items="policies"
             :label-attributes="{ class: 'visually-hidden' }"
             appearance="select"
             :enable-filtering="true"
