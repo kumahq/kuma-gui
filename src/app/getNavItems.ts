@@ -77,6 +77,7 @@ export function getNavItems(policies: PolicyDefinition[], isMultizoneMode: boole
       name: 'Policies',
       routeName: 'policies',
       usesMeshParam: true,
+      insightsFieldAccessor: 'mesh.policies.total',
     },
   ]
 }
