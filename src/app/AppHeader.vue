@@ -55,7 +55,7 @@
         <template #items>
           <KDropdownItem>
             <a
-              :href="`${env('KUMA_DOCS_URL')}?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              :href="`${env('KUMA_DOCS_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
               rel="noopener noreferrer"
             >

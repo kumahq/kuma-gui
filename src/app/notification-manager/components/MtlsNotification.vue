@@ -9,7 +9,7 @@
     <ul class="list-disc pl-4">
       <li>
         <a
-          :href="`https://kuma.io/docs/${kumaDocsVersion}/security/certificates/`"
+          :href="`${env('KUMA_DOCS_URL')}/security/certificates/?${env('KUMA_UTM_QUERY_PARAMS')}`"
           target="_blank"
         >
           Secure access across services
@@ -17,7 +17,7 @@
       </li>
       <li>
         <a
-          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/mutual-tls/`"
+          :href="`${env('KUMA_DOCS_URL')}/policies/mutual-tls/?${env('KUMA_UTM_QUERY_PARAMS')}`"
           target="_blank"
         >
           Mutual TLS
@@ -25,7 +25,7 @@
       </li>
       <li>
         <a
-          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/traffic-permissions/`"
+          :href="`${env('KUMA_DOCS_URL')}/policies/traffic-permissions/?${env('KUMA_UTM_QUERY_PARAMS')}`"
           target="_blank"
         >
           Traffic Permissions policy documentation
@@ -36,10 +36,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useStore } from '@/store/store'
-
-const store = useStore()
-
-const kumaDocsVersion = computed(() => store.getters['config/getKumaDocsVersion'])
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 </script>

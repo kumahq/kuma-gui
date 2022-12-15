@@ -17,9 +17,9 @@
           <a
             target="_blank"
             class="external-link-code-block"
-            :href="documentationLink"
+            :href="`${env('KUMA_DOCS_URL')}/deployments/multi-zone/?${env('KUMA_UTM_QUERY_PARAMS')}#zone-control-plane`"
           >
-            {{ documentationLink }}
+            {{ env('KUMA_DOCS_URL') }}/deployments/multi-zone/#zone-control-plane
           </a>
         </template>
       </KCard>
@@ -83,6 +83,8 @@ import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 
 const LONG_POOLING_INTERVAL = 1000
 
@@ -97,6 +99,7 @@ export default {
   },
   data() {
     return {
+      env,
       hasZones: false,
       hasZoneIngresses: false,
       zoneTimeout: null,

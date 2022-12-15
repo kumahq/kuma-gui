@@ -18,7 +18,7 @@
 
     <template #cta>
       <KButton
-        :to="`https://kuma.io/docs/${kumaDocsVersion}/documentation/deployments/`"
+        :to="`${env('KUMA_DOCS_URL')}/documentation/deployments/?${env('KUMA_UTM_QUERY_PARAMS')}`"
         target="_blank"
         appearance="primary"
       >
@@ -29,10 +29,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 
 export default {
   name: 'MultizoneInfo',
@@ -45,14 +46,9 @@ export default {
 
   data() {
     return {
+      env,
       productName: PRODUCT_NAME,
     }
-  },
-
-  computed: {
-    ...mapGetters({
-      kumaDocsVersion: 'config/getKumaDocsVersion',
-    }),
   },
 }
 </script>
