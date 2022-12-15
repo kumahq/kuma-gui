@@ -54,6 +54,10 @@ const statusObject = computed(() => STATUS[props.status])
 </script>
 
 <style lang="scss" scoped>
+.status {
+  white-space: nowrap;
+}
+
 .status::before {
   content: '';
   display: inline-block;
