@@ -296,12 +296,6 @@ const insightSubscriptions = computed(() => {
   return subscriptions
 })
 
-const kumaDocsVersion = computed(() => {
-  const storedVersion = store.getters['config/getKumaDocsVersion']
-
-  return storedVersion !== null ? storedVersion : 'latest'
-})
-
 const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)
 
 function setWarnings() {
