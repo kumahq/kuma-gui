@@ -7,7 +7,7 @@
         size="42"
       />
 
-      <p>{{ productName }} is running in Standalone mode.</p>
+      <p>{{ $options.productName }} is running in Standalone mode.</p>
     </template>
 
     <template #message>
@@ -18,7 +18,7 @@
 
     <template #cta>
       <KButton
-        :to="`${env('KUMA_DOCS_URL')}/documentation/deployments/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+        :to="`${$options.env('KUMA_DOCS_URL')}/documentation/deployments/?${$options.env('KUMA_UTM_QUERY_PARAMS')}`"
         target="_blank"
         appearance="primary"
       >
@@ -37,6 +37,8 @@ const env = useEnv()
 
 export default {
   name: 'MultizoneInfo',
+  env,
+  productName: PRODUCT_NAME,
 
   components: {
     KButton,
@@ -44,11 +46,5 @@ export default {
     KIcon,
   },
 
-  data() {
-    return {
-      env,
-      productName: PRODUCT_NAME,
-    }
-  },
 }
 </script>
