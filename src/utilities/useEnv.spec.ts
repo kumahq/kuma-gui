@@ -1,16 +1,23 @@
 import { describe, expect, test } from '@jest/globals'
 
-import { semver } from './useEnv'
+import container from '@/services/container'
+import Env from '@/services/env'
+import { useEnv } from './useEnv'
 
 describe('useEnv', () => {
-  describe('semver', () => {
-    test('it works', () => {
-      expect(semver('1.1.1').patch).toBe('1.1.1')
-      expect(semver('0.0.0-preview.1').patch).toBe('0.0.0')
-      expect(semver('0.0.1-rc.1').patch).toBe('0.0.1')
-      expect(semver('10.10.1').major).toBe('10')
-      expect(semver('0.9.1').minor).toBe('0.9')
-      expect(semver('0.9.1-rc.10').pre).toBe('0.9.1-rc.10')
-    })
+  test('it works', () => {
+    container.set('env', new Env({
+      KUMA_NAME: 'kuma',
+      KUMA_VERSION: '100.1.1',
+      KUMA_API_URL: 'http://somewhere',
+      KUMA_BASE_PATH: 'http://somewhere/else',
+      KUMA_DOCS_URL: 'http://somewhere/docs/0.0.x/',
+      KUMA_UTM_QUERY_PARAMS: 'utm=click',
+      KUMA_FEEDBACK_URL: 'https://kuma.io',
+      KUMA_CHAT_URL: 'https://kuma.io/chat',
+    }))
+
+    const env = useEnv()
+    expect(env('KUMA_VERSION')).toBe('100.1.1')
   })
 })
