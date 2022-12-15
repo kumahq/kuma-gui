@@ -1022,7 +1022,7 @@ exports[`ZonesView.vue renders snapshot when no multizone 1`] = `
         
         <a
           class="k-button medium rounded primary"
-          href="https://kuma.io/docs/dev/documentation/deployments/?utm_source=Kuma&utm_medium=Kuma-GUI"
+          href="https://kuma.io/docs/1.7.x/documentation/deployments/?utm_source=Kuma&utm_medium=Kuma-GUI"
           target="_blank"
           type="button"
         >

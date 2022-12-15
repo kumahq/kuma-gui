@@ -1871,7 +1871,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="k-button medium rounded primary"
-              href="https://kuma.io/docs/dev/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+              href="https://kuma.io/docs/1.7.x/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >
               
@@ -1928,7 +1928,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           <ul>
             <li>
               <a
-                href="https://kuma.io/docs/dev/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
               >
                 Kuma Documentation 
               </a>

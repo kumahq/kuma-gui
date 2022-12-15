@@ -26,49 +26,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         <div
           class="upgrade-check"
         >
-          <div
-            class="k-alert warning small none upgrade-check-alert"
-            role="alert"
-          >
-            <!---->
-            <!---->
-            <div
-              class="k-alert-msg-text"
-            >
-              <!---->
-              <div
-                class="k-alert-msg"
-              >
-                
-                <div
-                  class="alert-content"
-                >
-                  <div>
-                    Kuma update available 
-                  </div>
-                  <div>
-                    <a
-                      class="k-button small rounded primary warning-button"
-                      href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                      type="button"
-                    >
-                      
-                      <!---->
-                      
-                      
-                       Update 
-                      
-                      <!---->
-                    </a>
-                  </div>
-                </div>
-                
-              </div>
-              <!---->
-            </div>
-            <!---->
-            <!---->
-          </div>
+          <!--v-if-->
         </div>
       </div>
     </div>
@@ -278,7 +236,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     >
                       
                       <a
-                        href="https://kuma.io/docs/dev/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
@@ -903,7 +861,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="k-button medium rounded primary"
-                      href="https://kuma.io/docs/dev/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                      href="https://kuma.io/docs/1.7.x/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
                       type="button"
                     >
                       
@@ -960,7 +918,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   <ul>
                     <li>
                       <a
-                        href="https://kuma.io/docs/dev/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
                       >
                         Kuma Documentation 
                       </a>

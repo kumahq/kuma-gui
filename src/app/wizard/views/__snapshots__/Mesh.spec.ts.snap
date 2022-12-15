@@ -1034,7 +1034,7 @@ metrics:
             </p>
             <p>
               <a
-                href="https://kuma.io/docs/dev/policies/mesh/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                href="https://kuma.io/docs/1.7.x/policies/mesh/?utm_source=Kuma&utm_medium=Kuma-GUI"
                 target="_blank"
               >
                  Learn More 
