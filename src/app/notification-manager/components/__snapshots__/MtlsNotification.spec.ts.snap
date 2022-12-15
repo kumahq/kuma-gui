@@ -14,7 +14,7 @@ exports[`MtlsNotification.vue renders snapshot 1`] = `
   >
     <li>
       <a
-        href="https://kuma.io/docs/latest/security/certificates/"
+        href="https://kuma.io/docs/dev/security/certificates/?utm_source=Kuma&utm_medium=Kuma-GUI"
         target="_blank"
       >
          Secure access across services 
@@ -22,7 +22,7 @@ exports[`MtlsNotification.vue renders snapshot 1`] = `
     </li>
     <li>
       <a
-        href="https://kuma.io/docs/latest/policies/mutual-tls/"
+        href="https://kuma.io/docs/dev/policies/mutual-tls/?utm_source=Kuma&utm_medium=Kuma-GUI"
         target="_blank"
       >
          Mutual TLS 
@@ -30,7 +30,7 @@ exports[`MtlsNotification.vue renders snapshot 1`] = `
     </li>
     <li>
       <a
-        href="https://kuma.io/docs/latest/policies/traffic-permissions/"
+        href="https://kuma.io/docs/dev/policies/traffic-permissions/?utm_source=Kuma&utm_medium=Kuma-GUI"
         target="_blank"
       >
          Traffic Permissions policy documentation 

@@ -14,7 +14,7 @@ exports[`LoggingNotification.vue renders snapshot 1`] = `
   >
     <li>
       <a
-        href="https://kuma.io/docs/latest/policies/traffic-log/"
+        href="https://kuma.io/docs/dev/policies/traffic-log/?utm_source=Kuma&utm_medium=Kuma-GUI"
         target="_blank"
       >
          Traffic Log policy documentation 

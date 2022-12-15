@@ -1831,7 +1831,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     </section>
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-      aria-label="Apply null policies"
+      aria-label="Apply Kuma policies"
       class="kong-card border"
     >
       <div
@@ -1843,7 +1843,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
         >
           <h4>
             
-            Apply null policies
+            Apply Kuma policies
             
           </h4>
         </div>
@@ -1871,7 +1871,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="k-button medium rounded primary"
-              href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+              href="https://kuma.io/docs/dev/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
               type="button"
             >
               
@@ -1926,32 +1926,27 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
              Join the Kuma community and ask questions: 
           </p>
           <ul>
-            
             <li>
               <a
-                href="https://kuma.io/docs/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                target="_blank"
+                href="https://kuma.io/docs/dev/?utm_source=Kuma&utm_medium=Kuma-GUI"
               >
-                Kuma Documentation
+                Kuma Documentation 
               </a>
             </li>
             <li>
               <a
                 href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                target="_blank"
               >
-                Kuma Community Chat
+                Kuma Community Chat 
               </a>
             </li>
             <li>
               <a
                 href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
-                target="_blank"
               >
-                Kuma GitHub Repository
+                Kuma GitHub Repository 
               </a>
             </li>
-            
           </ul>
           
         </div>

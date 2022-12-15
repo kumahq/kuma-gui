@@ -14,7 +14,7 @@ exports[`TracingNotification.vue renders snapshot 1`] = `
   >
     <li>
       <a
-        href="https://kuma.io/docs/latest/policies/traffic-trace/"
+        href="https://kuma.io/docs/dev/policies/traffic-trace/?utm_source=Kuma&utm_medium=Kuma-GUI"
         target="_blank"
       >
          Traffic Trace policy documentation 

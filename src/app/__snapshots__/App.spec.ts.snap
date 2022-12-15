@@ -26,7 +26,49 @@ exports[`App.vue fails to renders basic view 1`] = `
         <div
           class="upgrade-check"
         >
-          <!--v-if-->
+          <div
+            class="k-alert warning small none upgrade-check-alert"
+            role="alert"
+          >
+            <!---->
+            <!---->
+            <div
+              class="k-alert-msg-text"
+            >
+              <!---->
+              <div
+                class="k-alert-msg"
+              >
+                
+                <div
+                  class="alert-content"
+                >
+                  <div>
+                    Kuma update available 
+                  </div>
+                  <div>
+                    <a
+                      class="k-button small rounded primary warning-button"
+                      href="https://kuma.io/install/latest/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                      type="button"
+                    >
+                      
+                      <!---->
+                      
+                      
+                       Update 
+                      
+                      <!---->
+                    </a>
+                  </div>
+                </div>
+                
+              </div>
+              <!---->
+            </div>
+            <!---->
+            <!---->
+          </div>
         </div>
       </div>
     </div>
@@ -861,7 +903,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="k-button medium rounded primary"
-                      href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                      href="https://kuma.io/docs/dev/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
                       type="button"
                     >
                       
@@ -916,32 +958,27 @@ exports[`App.vue fails to renders basic view 1`] = `
                      Join the Kuma community and ask questions: 
                   </p>
                   <ul>
-                    
                     <li>
                       <a
-                        href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                        target="_blank"
+                        href="https://kuma.io/docs/dev/?utm_source=Kuma&utm_medium=Kuma-GUI"
                       >
-                        Kuma Documentation
+                        Kuma Documentation 
                       </a>
                     </li>
                     <li>
                       <a
                         href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
-                        target="_blank"
                       >
-                        Kuma Community Chat
+                        Kuma Community Chat 
                       </a>
                     </li>
                     <li>
                       <a
                         href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
-                        target="_blank"
                       >
-                        Kuma GitHub Repository
+                        Kuma GitHub Repository 
                       </a>
                     </li>
-                    
                   </ul>
                   
                 </div>
