@@ -45,6 +45,7 @@
           <KButton
             :to="`${env('KUMA_DOCS_URL')}/policies/?${env('KUMA_UTM_QUERY_PARAMS')}`"
             appearance="primary"
+            target="_blank"
           >
             Explore policies
           </KButton>
@@ -64,6 +65,7 @@
           <li>
             <a
               :href="`${env('KUMA_DOCS_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              target="_blank"
             >
               {{ env('KUMA_NAME') }} Documentation
             </a>
@@ -71,6 +73,7 @@
           <li>
             <a
               :href="`${env('KUMA_CHAT_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              target="_blank"
             >
               {{ env('KUMA_NAME') }}  Community Chat
             </a>
@@ -78,6 +81,7 @@
           <li>
             <a
               :href="`https://github.com/kumahq/kuma?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              target="_blank"
             >
               {{ env('KUMA_NAME') }} GitHub Repository
             </a>
