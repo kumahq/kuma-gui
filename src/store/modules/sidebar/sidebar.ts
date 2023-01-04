@@ -56,6 +56,20 @@ const actions: ActionTree<SidebarInterface, State> = {
     }
 
     commit('SET_MESH_INSIGHTS', meshInsights)
+
+    commit('SET_OVERVIEW_CHART_DATA', {
+      chartName: 'policies',
+      data: [{
+        category: 'Policy',
+        value: meshInsights.policies.total,
+        tooltipDisabled: true,
+        labelDisabled: true,
+      }],
+    },
+    {
+      root: true,
+    },
+    )
   },
 
   async getGlobalInsights({ commit }) {

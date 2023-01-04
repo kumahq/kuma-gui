@@ -16,6 +16,14 @@
       :is-loading="isLoadingMeshInsights"
     />
 
+    <DonutChart
+      class="chart chart-1/4"
+      :title="{ singular: 'POLICY', plural: 'POLICIES' }"
+      :data="policiesChart.data"
+      :url="{ name: 'policies', params: { mesh: store.state.selectedMesh } }"
+      :is-loading="isLoadingMeshInsights"
+    />
+
     <VersionsDonutChart
       class="chart chart-1/4"
       title="KUMA DP"
@@ -46,6 +54,7 @@ const isLoadingServices = computed(() => store.getters.getServiceResourcesFetchi
 const isLoadingMeshInsights = computed(() => store.getters.getMeshInsightsFetching)
 const servicesChart = computed(() => store.getters.getChart('services'))
 const dataplanesChart = computed(() => store.getters.getChart('dataplanes'))
+const policiesChart = computed(() => store.getters.getChart('policies'))
 const kumaDPVersionsChart = computed(() => store.getters.getChart('kumaDPVersions'))
 const envoyVersionsChart = computed(() => store.getters.getChart('envoyVersions'))
 
@@ -73,7 +82,7 @@ function loadData() {
 }
 
 .chart-1\/4 {
-  flex-basis: 25%;
+  flex-basis: 20%;
 }
 </style>
 

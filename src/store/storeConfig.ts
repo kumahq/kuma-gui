@@ -111,6 +111,9 @@ const initialState: BareRootState = {
     services: {
       data: [],
     },
+    policies: {
+      data: [],
+    },
     zones: {
       data: [],
     },
