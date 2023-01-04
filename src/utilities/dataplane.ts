@@ -140,7 +140,7 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
 getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
  */
 export function getItemStatusFromInsight(dataPlaneInsight: DataPlaneInsight | undefined): StatusKeyword {
-  if (dataPlaneInsight === undefined) {
+  if (dataPlaneInsight === undefined || dataPlaneInsight.subscriptions === undefined) {
     return 'offline'
   }
 
