@@ -71,29 +71,28 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
 }
 
 /*
-getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
+getItemStatusFromInsight takes object with subscriptions and returns the status 'online' | 'offline'
  */
-export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
+export function getItemStatusFromInsight(insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
+  const proxyOnline = (insight.subscriptions ?? []).some((subscription) => subscription.connectTime?.length && !subscription.disconnectTime)
+  return proxyOnline ? 'online' : 'offline'
+}
+/*
+getStatusAndReason takes Dataplane and DataplaneInsight and returns a {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
+ */
+export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
+  let status = getItemStatusFromInsight(insight)
   const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
-
   const errors = inbounds
     .filter((item: TODO) => item.health && !item.health.ready)
     .map((item: TODO) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
 
-  const subscriptions = dataplaneInsight.subscriptions ? dataplaneInsight.subscriptions : []
-
-  const proxyOnline = subscriptions.some(
-    (item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime,
-  )
-
-  let status: StatusKeyword = 'online'
-
-  if (!proxyOnline || errors.length === inbounds.length) {
-    status = 'offline'
-  }
-
   if (errors.length > 0) {
     status = 'partially_degraded'
+  }
+
+  if (errors.length === inbounds.length) {
+    status = 'offline'
   }
 
   return {
@@ -134,19 +133,6 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
   }
 
   return versions
-}
-
-/*
-getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
- */
-export function getItemStatusFromInsight(dataPlaneInsight: DataPlaneInsight | undefined): StatusKeyword {
-  if (dataPlaneInsight === undefined || dataPlaneInsight.subscriptions === undefined) {
-    return 'offline'
-  }
-
-  const proxyOnline = dataPlaneInsight.subscriptions.some((subscription) => subscription.connectTime && subscription.connectTime.length && !subscription.disconnectTime)
-
-  return proxyOnline ? 'online' : 'offline'
 }
 
 export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {
