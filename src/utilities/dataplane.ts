@@ -82,8 +82,8 @@ export function getItemStatusFromInsight(insight: { subscriptions: DiscoverySubs
 export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
   const inbound = dataplane.networking.inbound ?? []
   const errors = inbound
-    .filter((item: TODO) => item.health && !item.health.ready)
-    .map((item: TODO) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
+    .filter(item => item.health && !item.health.ready)
+    .map(item => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
 
   let status: StatusKeyword
   switch (true) {
