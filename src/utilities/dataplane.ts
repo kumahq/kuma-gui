@@ -70,14 +70,14 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
 
 // getItemStatusFromInsight takes object with subscriptions and returns a
 // status 'online' | 'offline'
-export function getItemStatusFromInsight(insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
+export function getItemStatusFromInsight(insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
   const proxyOnline = (insight.subscriptions ?? []).some((subscription) => subscription.connectTime?.length && !subscription.disconnectTime)
   return proxyOnline ? 'online' : 'offline'
 }
 
 // getStatusAndReason takes Dataplane and DataplaneInsight and returns a
 // {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
-export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
+export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
   const inbound = dataplane.networking.inbound ?? []
   const errors = inbound
     .filter(item => item.health && !item.health.ready)
@@ -85,6 +85,9 @@ export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking 
 
   let status: StatusKeyword
   switch (true) {
+    case inbound.length === 0:
+      status = 'online'
+      break
     // if errors and inbounds are equal, even if they are both 0
     // then we are offline
     case errors.length === inbound.length:
