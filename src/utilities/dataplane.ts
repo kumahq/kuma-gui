@@ -70,31 +70,36 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
     .map(([label, value]) => ({ label, value }))
 }
 
-/*
-getItemStatusFromInsight takes object with subscriptions and returns the status 'online' | 'offline'
- */
+// getItemStatusFromInsight takes object with subscriptions and returns a
+// status 'online' | 'offline'
 export function getItemStatusFromInsight(insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
   const proxyOnline = (insight.subscriptions ?? []).some((subscription) => subscription.connectTime?.length && !subscription.disconnectTime)
   return proxyOnline ? 'online' : 'offline'
 }
-/*
-getStatusAndReason takes Dataplane and DataplaneInsight and returns a {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
- */
+
+// getStatusAndReason takes Dataplane and DataplaneInsight and returns a
+// {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
 export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
-  let status = getItemStatusFromInsight(insight)
-  const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
-  const errors = inbounds
+  const inbound = dataplane.networking.inbound ?? []
+  const errors = inbound
     .filter((item: TODO) => item.health && !item.health.ready)
     .map((item: TODO) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
 
-  if (errors.length > 0) {
-    status = 'partially_degraded'
+  let status: StatusKeyword
+  switch (true) {
+    // if errors and inbounds are equal, even if they are both 0
+    // then we are offline
+    case errors.length === inbound.length:
+      status = 'offline'
+      break
+    // otherwise any errors at all, we are degraded
+    case errors.length > 0:
+      status = 'partially_degraded'
+      break
+    default:
+      // otherwise run the normal getter
+      status = getItemStatusFromInsight(insight)
   }
-
-  if (errors.length === inbounds.length) {
-    status = 'offline'
-  }
-
   return {
     status,
     reason: errors,
