@@ -216,7 +216,7 @@ const policy = computed(() => store.state.policiesByPath[props.policyPath])
 const policies = computed(() => {
   return store.state.policies.map((item) => {
     return {
-      length: store.state.sidebar.insights.mesh.policies[item.name],
+      length: store.state.sidebar.insights.mesh.policies[item.name] ?? 0,
       label: item.pluralDisplayName,
       value: item.path,
       selected: item.path === route.name,
