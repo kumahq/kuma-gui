@@ -141,7 +141,7 @@ import { rawReadableDate } from '@/utilities/helpers'
 import TagList from '@/app/common/TagList.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { dpTags, getStatus, getVersions } from '@/utilities/dataplane'
+import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'
 
 const props = defineProps({
   dataPlaneOverview: {
@@ -195,7 +195,7 @@ const subscriptionWrappers = computed(() => {
 })
 
 const status = computed(() => {
-  const { status } = getStatus(props.dataPlaneOverview.dataplane, props.dataPlaneOverview.dataplaneInsight)
+  const { status } = getStatusAndReason(props.dataPlaneOverview.dataplane, props.dataPlaneOverview.dataplaneInsight)
 
   return status
 })
