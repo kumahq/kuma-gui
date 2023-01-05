@@ -10,17 +10,20 @@ describe('sidebar module', () => {
       }
       const state: any = sidebarModule.state()
 
-      function commit(type: string, status: any): void {
-        sidebarModule.mutations[type](state, status)
+      function commit(type: string, status: any, options?: { root: boolean }): void {
+        // only call local mutations
+        if (!options?.root) {
+          sidebarModule.mutations[type](state, status)
+        }
       }
 
       function dispatch(type: string): void {
-        // @ts-ignore I can’t be bothered to battle Vuex’s loose types right now.
-        return sidebarModule.actions[type]({ commit, state, rootState })
+        const action = sidebarModule.actions[type] as Function
+        return action({ commit, state, rootState })
       }
 
-      // @ts-ignore I can’t be bothered to battle Vuex’s loose types right now.
-      await sidebarModule.actions.getInsights({ dispatch })
+      const action = sidebarModule.actions.getInsights as Function
+      await action({ dispatch })
 
       expect(state).toMatchInlineSnapshot(`
 {
