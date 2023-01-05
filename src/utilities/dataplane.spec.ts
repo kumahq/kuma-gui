@@ -27,7 +27,7 @@ describe('utilities/dataplane', () => {
           subscriptions: [
             {
               connectTime: '1',
-            } as DiscoverySubscription,
+            },
           ],
         }],
         expected: 'online',
@@ -39,7 +39,7 @@ describe('utilities/dataplane', () => {
             {
               connectTime: '1',
               disconnectTime: '2',
-            } as DiscoverySubscription,
+            },
           ],
         }],
         expected: 'offline',
@@ -50,11 +50,11 @@ describe('utilities/dataplane', () => {
           subscriptions: [
             {
               connectTime: '1',
-            } as DiscoverySubscription,
+            },
             {
               connectTime: '1',
               disconnectTime: '2',
-            } as DiscoverySubscription,
+            },
           ],
         }],
         expected: 'online',
