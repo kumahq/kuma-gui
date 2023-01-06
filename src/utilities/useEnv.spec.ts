@@ -15,6 +15,7 @@ describe('useEnv', () => {
       KUMA_UTM_QUERY_PARAMS: 'utm=click',
       KUMA_FEEDBACK_URL: 'https://kuma.io',
       KUMA_CHAT_URL: 'https://kuma.io/chat',
+      KUMA_INSTALL_URL: 'https://kuma.io/install',
     }))
 
     const env = useEnv()
