@@ -474,7 +474,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             <span
               class="amount"
             >
-              27
+              21
             </span>
           </a>
         </div>
