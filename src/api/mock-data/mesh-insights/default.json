@@ -63,9 +63,6 @@
     },
     "VirtualOutbound": {
       "total": 0
-    },
-    "Secret": {
-      "total": 6
     }
   },
   "dpVersions": {
