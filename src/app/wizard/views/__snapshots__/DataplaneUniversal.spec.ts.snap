@@ -115,7 +115,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                     Generate Dataplane Token
                   </h4>
                   <div
-                    class="k-code-block code-block"
+                    class="k-code-block theme-light code-block"
                     data-testid="k-code-block"
                     id="code-block-generate-token-command"
                     style="--maxLineNumberWidth: 1ch;"
@@ -191,10 +191,10 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           class="kong-icon kong-icon-copy"
                         >
                           <svg
-                            height="16"
+                            height="18"
                             role="img"
                             viewBox="0 0 32 32"
-                            width="16"
+                            width="18"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
@@ -228,7 +228,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                     Start Dataplane Process
                   </h4>
                   <div
-                    class="k-code-block code-block"
+                    class="k-code-block theme-light code-block"
                     data-testid="k-code-block"
                     id="code-block-stard-dp-command"
                     style="--maxLineNumberWidth: 2ch;"
@@ -543,10 +543,10 @@ networking:
                           class="kong-icon kong-icon-copy"
                         >
                           <svg
-                            height="16"
+                            height="18"
                             role="img"
                             viewBox="0 0 32 32"
-                            width="16"
+                            width="18"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             
@@ -800,7 +800,7 @@ networking:
                Below is an example of a Dataplane resource output: 
             </p>
             <div
-              class="k-code-block code-block mt-3"
+              class="k-code-block theme-light code-block mt-3"
               data-testid="k-code-block"
               id="onboarding-dpp-universal-example"
               style="--maxLineNumberWidth: 2ch;"
@@ -1138,10 +1138,10 @@ networking:
                     class="kong-icon kong-icon-copy"
                   >
                     <svg
-                      height="16"
+                      height="18"
                       role="img"
                       viewBox="0 0 32 32"
-                      width="16"
+                      width="18"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       

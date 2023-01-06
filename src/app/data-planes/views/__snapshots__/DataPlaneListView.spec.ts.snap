@@ -2058,7 +2058,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
               >
                 
                 <div
-                  class="k-code-block code-block"
+                  class="k-code-block theme-light code-block"
                   data-testid="k-code-block"
                   id="code-block-data-plane-summary"
                   style="--maxLineNumberWidth: 2ch; --KCodeBlockMaxHeight: 250px;"
@@ -2547,10 +2547,10 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         class="kong-icon kong-icon-copy"
                       >
                         <svg
-                          height="16"
+                          height="18"
                           role="img"
                           viewBox="0 0 32 32"
-                          width="16"
+                          width="18"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           

@@ -374,7 +374,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                 >
                   
                   <div
-                    class="k-code-block code-block"
+                    class="k-code-block theme-light code-block"
                     data-testid="k-code-block"
                     id="code-block-data-plane"
                     style="--maxLineNumberWidth: 2ch;"
@@ -383,6 +383,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                     <div
                       class="k-code-block-actions"
                     >
+                      <p
+                        class="k-code-block-search-results"
+                      >
+                        
+                           
+                        
+                      </p>
                       <div
                         class="k-search-container"
                       >
@@ -392,7 +399,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           <svg
                             data-testid="k-code-block-search-icon"
-                            fill="currentColor"
+                            fill="var(--steel-500)"
                             height="20"
                             role="img"
                             viewBox="0 0 24 24"
@@ -409,7 +416,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             <path
                               d="M10.88 18.75a7.88 7.88 0 1 0 0-15.75 7.88 7.88 0 0 0 0 15.75ZM16.44 16.44 21 21"
                               fill="none"
-                              stroke="currentColor"
+                              stroke="var(--steel-500)"
                               stroke-width="3"
                             />
                             
@@ -441,7 +448,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         >
                           <svg
                             data-testid="k-code-block-is-processing-icon"
-                            fill="var(--grey-400)"
+                            fill="var(--steel-500)"
                             height="24"
                             role="img"
                             viewBox="0 0 20 20"
@@ -461,7 +468,7 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               <path
                                 d="M5 10a5 5 0 1 0 5-5"
                                 fill="none"
-                                stroke="var(--grey-400)"
+                                stroke="var(--steel-500)"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
@@ -477,13 +484,6 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         </span>
                         <!---->
                       </div>
-                      <p
-                        class="k-code-block-search-results"
-                      >
-                        
-                         No results 
-                        
-                      </p>
                       <div
                         class="k-search-actions"
                       >
@@ -1143,10 +1143,10 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           class="kong-icon kong-icon-copy"
                         >
                           <svg
-                            height="16"
+                            height="18"
                             role="img"
                             viewBox="0 0 32 32"
-                            width="16"
+                            width="18"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             

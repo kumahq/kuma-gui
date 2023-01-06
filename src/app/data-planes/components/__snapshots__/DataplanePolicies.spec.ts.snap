@@ -227,7 +227,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       >
                         
                         <div
-                          class="k-code-block code-block"
+                          class="k-code-block theme-light code-block"
                           data-testid="k-code-block"
                           id="policies-0-0-code-block"
                           style="--maxLineNumberWidth: 1ch;"
@@ -430,7 +430,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       >
                         
                         <div
-                          class="k-code-block code-block"
+                          class="k-code-block theme-light code-block"
                           data-testid="k-code-block"
                           id="policies-0-1-code-block"
                           style="--maxLineNumberWidth: 1ch;"
@@ -633,7 +633,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                       >
                         
                         <div
-                          class="k-code-block code-block"
+                          class="k-code-block theme-light code-block"
                           data-testid="k-code-block"
                           id="policies-0-2-code-block"
                           style="--maxLineNumberWidth: 1ch;"
