@@ -10,6 +10,7 @@ export type EnvVars = {
   KUMA_UTM_QUERY_PARAMS: string
   KUMA_FEEDBACK_URL: string
   KUMA_CHAT_URL: string
+  KUMA_INSTALL_URL: string
 }
 export default class Env {
   env: EnvVars
@@ -26,6 +27,7 @@ export default class Env {
 const config = readPathConfigFromDom()
 const version = semver(config.version)
 
+const utm = `utm_source=${import.meta.env.VITE_NAMESPACE}&utm_medium=${import.meta.env.VITE_NAMESPACE}-GUI`
 export const env = new Env({
   KUMA_NAME: `${import.meta.env.VITE_NAMESPACE}`,
   KUMA_VERSION: version.pre,
@@ -35,9 +37,10 @@ export const env = new Env({
   KUMA_DOCS_URL: `${import.meta.env.VITE_DOCS_BASE_URL}/${version.patch === '0.0.0' ? 'dev' : version.patch.replace(/\.\d+$/, '.x')}`,
   // remove the ? for now incase we need to append to an already query
   // param'ed URL
-  KUMA_UTM_QUERY_PARAMS: import.meta.env.VITE_UTM.substring(1),
+  KUMA_UTM_QUERY_PARAMS: utm,
   KUMA_FEEDBACK_URL: import.meta.env.VITE_FEEDBACK_URL,
   KUMA_CHAT_URL: import.meta.env.VITE_CHAT_URL,
+  KUMA_INSTALL_URL: `${import.meta.env.VITE_INSTALL_URL}?${utm}`,
 })
 
 export function semver(version: string): { major: string, minor: string, patch: string, pre: string } {

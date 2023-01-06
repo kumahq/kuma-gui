@@ -17,7 +17,7 @@
               class="warning-button"
               appearance="primary"
               size="small"
-              :to="URL"
+              :to="env('KUMA_INSTALL_URL')"
             >
               Update
             </KButton>
@@ -36,8 +36,6 @@ import { KAlert, KButton } from '@kong/kongponents'
 import { kumaApi } from '@/api/kumaApi'
 import { useEnv } from '@/utilities/useEnv'
 const env = useEnv()
-
-const URL = `${import.meta.env.VITE_INSTALL_URL}${import.meta.env.VITE_UTM}`
 
 const latestVersion = ref('')
 const showNotice = ref(false)
