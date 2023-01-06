@@ -200,7 +200,7 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                           
                           
                           <div
-                            class="k-code-block code-block"
+                            class="k-code-block theme-light code-block"
                             data-testid="universal"
                             id="code-block-universal-command"
                             style="--maxLineNumberWidth: 2ch;"
@@ -780,10 +780,10 @@ metrics:
                                   class="kong-icon kong-icon-copy"
                                 >
                                   <svg
-                                    height="16"
+                                    height="18"
                                     role="img"
                                     viewBox="0 0 32 32"
-                                    width="16"
+                                    width="18"
                                     xmlns="http://www.w3.org/2000/svg"
                                   >
                                     
