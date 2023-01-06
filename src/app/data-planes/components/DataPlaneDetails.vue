@@ -199,7 +199,7 @@ import {
   compatibilityKind,
   COMPATIBLE,
   dpTags,
-  getStatus,
+  getStatusAndReason,
   getVersions,
   INCOMPATIBLE_WRONG_FORMAT,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
@@ -283,7 +283,7 @@ const processedDataPlane = computed(() => {
   }
 })
 
-const statusWithReason = computed(() => getStatus(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
+const statusWithReason = computed(() => getStatusAndReason(props.dataPlane, props.dataPlaneOverview.dataplaneInsight))
 const dataPlaneTags = computed(() => dpTags(props.dataPlane))
 const dataPlaneVersions = computed(() => getVersions(props.dataPlaneOverview.dataplaneInsight))
 const rawDataPlane = computed(() => stripTimes(props.dataPlane))

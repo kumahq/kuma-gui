@@ -124,7 +124,7 @@ import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
   compatibilityKind,
   dpTags,
-  getStatus,
+  getStatusAndReason,
   COMPATIBLE,
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
@@ -355,7 +355,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
     }
   }
 
-  const { status } = getStatus(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
+  const { status } = getStatusAndReason(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
   const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
 
   const initialData: any = {

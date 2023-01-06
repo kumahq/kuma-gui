@@ -11,8 +11,6 @@ import {
   Version,
 } from '@/types/index.d'
 
-type TODO = any
-
 /**
  * Takes a data plane and constructs the list of tags. It removes duplicate tags so we don't display them twice. Note that tags are only considered a duplicate if both their key and their value are the same.
  *
@@ -70,32 +68,39 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
     .map(([label, value]) => ({ label, value }))
 }
 
-/*
-getStatus takes Dataplane and DataplaneInsight and returns the status 'Online' or 'Offline'
- */
-export function getStatus(dataplane: { networking: DataPlaneNetworking }, dataplaneInsight: DataPlaneInsight | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
-  const inbounds: TODO = dataplane.networking.inbound ? dataplane.networking.inbound : [{ health: { ready: true } }]
+// getItemStatusFromInsight takes object with subscriptions and returns a
+// status 'online' | 'offline'
+export function getItemStatusFromInsight(insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
+  const proxyOnline = (insight.subscriptions ?? []).some((subscription) => subscription.connectTime?.length && !subscription.disconnectTime)
+  return proxyOnline ? 'online' : 'offline'
+}
 
-  const errors = inbounds
-    .filter((item: TODO) => item.health && !item.health.ready)
-    .map((item: TODO) => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
+// getStatusAndReason takes Dataplane and DataplaneInsight and returns a
+// {status: 'online' | 'offline' | 'partially_degraded', reason: errors[]}
+export function getStatusAndReason(dataplane: { networking: DataPlaneNetworking }, insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): { status: StatusKeyword, reason: string[] } {
+  const inbound = dataplane.networking.inbound ?? []
+  const errors = inbound
+    .filter(item => item.health && !item.health.ready)
+    .map(item => `Inbound on port ${item.port} is not ready (kuma.io/service: ${item.tags['kuma.io/service']})`)
 
-  const subscriptions = dataplaneInsight.subscriptions ? dataplaneInsight.subscriptions : []
-
-  const proxyOnline = subscriptions.some(
-    (item: TODO) => item.connectTime && item.connectTime.length && !item.disconnectTime,
-  )
-
-  let status: StatusKeyword = 'online'
-
-  if (!proxyOnline || errors.length === inbounds.length) {
-    status = 'offline'
+  let status: StatusKeyword
+  switch (true) {
+    case inbound.length === 0:
+      status = 'online'
+      break
+    // if errors and inbounds are equal, even if they are both 0
+    // then we are offline
+    case errors.length === inbound.length:
+      status = 'offline'
+      break
+    // otherwise any errors at all, we are degraded
+    case errors.length > 0:
+      status = 'partially_degraded'
+      break
+    default:
+      // otherwise run the normal getter
+      status = getItemStatusFromInsight(insight)
   }
-
-  if (errors.length > 0) {
-    status = 'partially_degraded'
-  }
-
   return {
     status,
     reason: errors,
@@ -134,19 +139,6 @@ export function getVersions(dataPlaneInsight: DataPlaneInsight | undefined): Rec
   }
 
   return versions
-}
-
-/*
-getItemStatusFromInsight takes object with subscriptions and returns the status 'Online' or 'Offline'
- */
-export function getItemStatusFromInsight(dataPlaneInsight: DataPlaneInsight | undefined): StatusKeyword {
-  if (dataPlaneInsight === undefined || dataPlaneInsight.subscriptions === undefined) {
-    return 'offline'
-  }
-
-  const proxyOnline = dataPlaneInsight.subscriptions.some((subscription) => subscription.connectTime && subscription.connectTime.length && !subscription.disconnectTime)
-
-  return proxyOnline ? 'online' : 'offline'
 }
 
 export function parseMTLSData(dataPlaneOverview: DataPlaneOverview): DataPlaneEntityMtls | null {
