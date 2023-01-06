@@ -133,7 +133,7 @@ describe('utilities/dataplane', () => {
         }],
         expected: {
           status: 'offline',
-          reason: [''],
+          reason: [`Inbound on port ${1} is not ready (kuma.io/service: ${'service'})`],
         },
       },
       {
@@ -159,13 +159,12 @@ describe('utilities/dataplane', () => {
         }],
         expected: {
           status: 'partially_degraded',
-          reason: [''],
+          reason: [`Inbound on port ${1} is not ready (kuma.io/service: ${'service'})`],
         },
       },
     ] as TestCases))('$message', (item) => {
       const actual = getStatusAndReason(...item.args)
-      expect(actual.status).toBe(item.expected.status)
-      expect(actual.reason.length).toBe(item.expected.reason.length)
+      expect(actual).toStrictEqual(item.expected)
     })
   })
 })
