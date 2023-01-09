@@ -24,6 +24,7 @@ function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
       },
       props: (route) => ({
         policyPath: policy.path,
+        selectedPolicyName: route.query.policy,
         offset: getLastNumberParameter(route.query.offset),
       }),
       component: () => import('@/app/policies/views/PolicyView.vue'),
@@ -67,6 +68,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
         title: 'Zones',
       },
       props: (route) => ({
+        selectedZoneName: route.query.zone,
         offset: getLastNumberParameter(route.query.offset),
       }),
       component: () => import('@/app/zones/views/ZonesView.vue'),
@@ -78,6 +80,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
         title: 'Zone ingresses',
       },
       props: (route) => ({
+        selectedZoneIngressName: route.query.zoneIngress,
         offset: getLastNumberParameter(route.query.offset),
       }),
       component: () => import('@/app/zones/views/ZoneIngresses.vue'),
@@ -89,6 +92,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
         title: 'Zone egresses',
       },
       props: (route) => ({
+        selectedZoneEgressName: route.query.zoneEgress,
         offset: getLastNumberParameter(route.query.offset),
       }),
       component: () => import('@/app/zones/views/ZoneEgresses.vue'),

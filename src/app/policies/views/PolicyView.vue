@@ -180,6 +180,12 @@ const route = useRoute()
 const store = useStore()
 
 const props = defineProps({
+  selectedPolicyName: {
+    type: String,
+    required: false,
+    default: null,
+  },
+
   policyPath: {
     type: String,
     required: true,
@@ -285,11 +291,9 @@ async function loadData(offset: number): Promise<void> {
       tableDataIsEmpty.value = false
       isEmpty.value = false
 
-      await getEntity({
-        mesh: items[0].mesh,
-        name: items[0].name,
-        path,
-      })
+      const selectedPolicyName = props.selectedPolicyName ?? items[0].name
+
+      await getEntity({ name: selectedPolicyName, mesh, path })
     } else {
       tableData.value.data = []
       tableDataIsEmpty.value = true
@@ -346,6 +350,7 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
       const selected = ['type', 'name', 'mesh']
 
       entity.value = getSome(item, selected)
+      patchQueryParam('policy', entity.value.name)
       rawEntity.value = stripTimes(item)
     } else {
       entity.value = {}

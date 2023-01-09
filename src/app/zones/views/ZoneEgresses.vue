@@ -145,6 +145,12 @@ export default {
   },
 
   props: {
+    selectedZoneEgressName: {
+      type: String,
+      required: false,
+      default: null,
+    },
+
     offset: {
       type: Number,
       required: false,
@@ -245,7 +251,7 @@ export default {
         if (data.length) {
           this.isEmpty = false
           this.rawData = data
-          this.getEntity({ name: data[0].name })
+          this.getEntity({ name: this.selectedZoneEgressName ?? data[0].name })
 
           this.tableData.data = data.map((item) => {
             const { zoneEgressInsight = {} } = item
@@ -279,6 +285,7 @@ export default {
       this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
       this.entity = getSome(item, selected)
+      patchQueryParam('zoneEgress', this.entity.name)
     },
 
     /**
