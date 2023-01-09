@@ -1,7 +1,7 @@
 <template>
-  <div class="chart-container mt-16">
+  <div class="chart-container mt-24">
     <DonutChart
-      class="chart chart-1/4"
+      class="chart"
       :title="{ singular: 'SERVICE', plural: 'SERVICES' }"
       :data="servicesChart.data"
       :is-loading="isLoadingServices"
@@ -9,22 +9,30 @@
     />
 
     <DonutChart
-      class="chart chart-1/4"
+      class="chart"
       :title="{ singular: 'DP PROXY', plural: 'DP PROXIES' }"
       :data="dataplanesChart.data"
       :url="{ name: 'data-plane-list-view', params: { mesh: store.state.selectedMesh } }"
       :is-loading="isLoadingMeshInsights"
     />
 
+    <DonutChart
+      class="chart"
+      :title="{ singular: 'POLICY', plural: 'POLICIES' }"
+      :data="policiesChart.data"
+      :url="{ name: 'policies', params: { mesh: store.state.selectedMesh } }"
+      :is-loading="isLoadingMeshInsights"
+    />
+
     <VersionsDonutChart
-      class="chart chart-1/4"
+      class="chart"
       title="KUMA DP"
       :data="kumaDPVersionsChart.data"
       :is-loading="isLoadingMeshInsights"
     />
 
     <VersionsDonutChart
-      class="chart chart-1/4"
+      class="chart"
       title="ENVOY"
       :data="envoyVersionsChart.data"
       :is-loading="isLoadingMeshInsights"
@@ -46,6 +54,7 @@ const isLoadingServices = computed(() => store.getters.getServiceResourcesFetchi
 const isLoadingMeshInsights = computed(() => store.getters.getMeshInsightsFetching)
 const servicesChart = computed(() => store.getters.getChart('services'))
 const dataplanesChart = computed(() => store.getters.getChart('dataplanes'))
+const policiesChart = computed(() => store.getters.getChart('policies'))
 const kumaDPVersionsChart = computed(() => store.getters.getChart('kumaDPVersions'))
 const envoyVersionsChart = computed(() => store.getters.getChart('envoyVersions'))
 
@@ -64,17 +73,13 @@ function loadData() {
 <style lang="scss" scoped>
 .chart-container {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .chart {
-  margin-top: var(--spacing-lg);
   height: 200px;
+  flex-basis: 20%;
 }
 
-.chart-1\/4 {
-  flex-basis: 25%;
-}
 </style>
 
 <style lang="scss">

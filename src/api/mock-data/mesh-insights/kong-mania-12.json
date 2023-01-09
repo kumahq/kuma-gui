@@ -26,9 +26,6 @@
     },
     "TrafficTrace": {
       "total": 1
-    },
-    "Secret": {
-      "total": 1
     }
   },
   "dpVersions": {
