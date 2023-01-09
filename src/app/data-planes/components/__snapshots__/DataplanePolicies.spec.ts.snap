@@ -11,12 +11,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
      Policies 
   </h2>
   <ul
-    class="accordion"
+    class="accordion-list"
   >
     
     
     <li
-      class="accordion-item relative border-b active"
+      class="accordion-item active"
     >
       <button
         aria-expanded="true"
@@ -25,7 +25,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         type="button"
       >
         
-        <h3>
+        <h3
+          class="policy-type-heading"
+        >
           <span
             class="policy-type-tag"
           >
@@ -785,7 +787,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       </transition-stub>
     </li>
     <li
-      class="accordion-item relative border-b"
+      class="accordion-item"
     >
       <button
         aria-expanded="false"
@@ -794,7 +796,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         type="button"
       >
         
-        <h3>
+        <h3
+          class="policy-type-heading"
+        >
           <span
             class="policy-type-tag"
           >
@@ -820,7 +824,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       </transition-stub>
     </li>
     <li
-      class="accordion-item relative border-b"
+      class="accordion-item"
     >
       <button
         aria-expanded="false"
@@ -829,7 +833,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         type="button"
       >
         
-        <h3>
+        <h3
+          class="policy-type-heading"
+        >
           <span
             class="policy-type-tag"
           >
@@ -855,7 +861,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       </transition-stub>
     </li>
     <li
-      class="accordion-item relative border-b"
+      class="accordion-item"
     >
       <button
         aria-expanded="false"
@@ -864,7 +870,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         type="button"
       >
         
-        <h3>
+        <h3
+          class="policy-type-heading"
+        >
           <span
             class="policy-type-tag"
           >
@@ -890,7 +898,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       </transition-stub>
     </li>
     <li
-      class="accordion-item relative border-b"
+      class="accordion-item"
     >
       <button
         aria-expanded="false"
@@ -899,7 +907,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         type="button"
       >
         
-        <h3>
+        <h3
+          class="policy-type-heading"
+        >
           <span
             class="policy-type-tag"
           >
@@ -934,12 +944,12 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
       Rules
     </h2>
     <ul
-      class="accordion"
+      class="accordion-list"
     >
       
       
       <li
-        class="accordion-item relative border-b"
+        class="accordion-item"
       >
         <button
           aria-expanded="false"
@@ -948,7 +958,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           type="button"
         >
           
-          <h3>
+          <h3
+            class="policy-type-heading"
+          >
             <span
               class="policy-type-tag"
             >
@@ -974,7 +986,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         </transition-stub>
       </li>
       <li
-        class="accordion-item relative border-b"
+        class="accordion-item"
       >
         <button
           aria-expanded="false"
@@ -983,7 +995,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           type="button"
         >
           
-          <h3>
+          <h3
+            class="policy-type-heading"
+          >
             <span
               class="policy-type-tag"
             >
@@ -1009,7 +1023,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         </transition-stub>
       </li>
       <li
-        class="accordion-item relative border-b"
+        class="accordion-item"
       >
         <button
           aria-expanded="false"
@@ -1018,7 +1032,9 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
           type="button"
         >
           
-          <h3>
+          <h3
+            class="policy-type-heading"
+          >
             <span
               class="policy-type-tag"
             >

@@ -8,7 +8,7 @@
       :key="index"
     >
       <template #accordion-header>
-        <h3>
+        <h3 class="policy-type-heading">
           <PolicyTypeTag :policy-type="policyEntry.type">
             {{ policyEntry.type }} ({{ policyEntry.connections.length }})
           </PolicyTypeTag>
@@ -137,6 +137,11 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 </script>
 
 <style lang="scss" scoped>
+.policy-type-heading {
+  font-size: inherit;
+  font-weight: normal;
+}
+
 .policy-list {
   display: flex;
   flex-direction: column;

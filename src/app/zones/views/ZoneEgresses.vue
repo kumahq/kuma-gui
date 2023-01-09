@@ -34,9 +34,9 @@
         initial-tab-override="overview"
       >
         <template #tabHeader>
-          <div>
-            <h1>Zone Egress: {{ entity.name }}</h1>
-          </div>
+          <h1 class="entity-heading">
+            Zone Egress: {{ entity.name }}
+          </h1>
         </template>
         <template #overview>
           <LabelList>

@@ -1,5 +1,5 @@
 <template>
-  <ul class="accordion">
+  <ul class="accordion-list">
     <slot />
   </ul>
 </template>
@@ -30,3 +30,10 @@ provide('parentAccordion', {
   count,
 })
 </script>
+
+<style lang="scss" scoped>
+.accordion-list {
+  list-style: none;
+  padding-left: 0;
+}
+</style>

@@ -800,7 +800,7 @@ networking:
                Below is an example of a Dataplane resource output: 
             </p>
             <div
-              class="k-code-block theme-light code-block mt-3"
+              class="k-code-block theme-light code-block sample-code-block mt-3"
               data-testid="k-code-block"
               id="onboarding-dpp-universal-example"
               style="--maxLineNumberWidth: 2ch;"

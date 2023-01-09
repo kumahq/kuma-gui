@@ -124,14 +124,6 @@ h3, h4 {
   margin-bottom: var(--spacing-xs);
 }
 
-h3 {
-  font-size: 1.4em;
-}
-
-h4 {
-  font-size: 1.25em;
-}
-
 .policy-list {
   padding-left: 1.5rem;
   list-style: disc;

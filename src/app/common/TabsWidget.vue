@@ -147,21 +147,6 @@ function switchTab(newTab: string): void {
   align-items: center;
   margin: var(--tab-header-margin);
   padding: var(--tab-header-padding);
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: var(--tab-header-title-font-size);
-    font-weight: var(--tab-header-title-font-weight);
-  }
-
-  > div,
-  > h3 {
-    padding: 0 10px;
-  }
 }
 
 .tab__header > :not(:first-child) {

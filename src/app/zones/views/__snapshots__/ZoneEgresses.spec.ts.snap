@@ -206,11 +206,11 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
         class="tab__header"
       >
         
-        <div>
-          <h1>
-            Zone Egress: zoneegress-1
-          </h1>
-        </div>
+        <h1
+          class="entity-heading"
+        >
+           Zone Egress: zoneegress-1
+        </h1>
         
       </header>
       <div
@@ -624,11 +624,11 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
         class="tab__header"
       >
         
-        <div>
-          <h1>
-            Zone Egress: zoneegress-1
-          </h1>
-        </div>
+        <h1
+          class="entity-heading"
+        >
+           Zone Egress: zoneegress-1
+        </h1>
         
       </header>
       <div
@@ -846,11 +846,11 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
     class="tab__header"
   >
     
-    <div>
-      <h1>
-        Zone Egress: zoneegress-1
-      </h1>
-    </div>
+    <h1
+      class="entity-heading"
+    >
+       Zone Egress: zoneegress-1
+    </h1>
     
   </header>
   <div
@@ -980,12 +980,12 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
             >
               
               <ul
-                class="accordion"
+                class="accordion-list"
               >
                 
                 
                 <li
-                  class="accordion-item relative border-b active"
+                  class="accordion-item active"
                 >
                   <button
                     aria-expanded="true"

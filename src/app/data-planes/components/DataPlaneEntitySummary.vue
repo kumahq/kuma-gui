@@ -248,18 +248,6 @@ h3, h4, h5 {
   margin-bottom: var(--spacing-xs);
 }
 
-h3 {
-  font-size: 1.4em;
-}
-
-h4 {
-  font-size: 1.25em;
-}
-
-h5 {
-  font-size: 1.1em;
-}
-
 .heading-with-icon {
   display: flex;
   align-items: center;

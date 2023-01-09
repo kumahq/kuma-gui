@@ -232,23 +232,8 @@ export default {
 
 .wizard-steps__content {
   p,
-  h2,
-  h3,
-  h4,
   .code-block {
     margin-bottom: var(--spacing-md);
-  }
-
-  h2 {
-    font-size: var(--type-xxl);
-  }
-
-  h3 {
-    font-size: var(--type-xl);
-  }
-
-  h4 {
-    font-size: var(--type-lg);
   }
 }
 
@@ -259,73 +244,29 @@ export default {
     border-bottom: 1px solid #e6e7e8;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: var(--type-lg);
-    margin: 0 0 var(--spacing-sm) 0;
-  }
-
-  p {
-    &:not(:last-of-type) {
-      margin-bottom: var(--spacing-sm);
-    }
+  p:not(:last-of-type) {
+    margin-bottom: var(--spacing-sm);
   }
 }
 </style>
 
 <style lang="scss" scoped>
-$sidebar-width: 320px; // was 240px
-$bp-min-width: 1220px;
-$bp-lg-min-width: 1760px;
-$bp-max-width: 1219px;
-
 .wizard-steps {
-  @media screen and (min-width: $bp-min-width) {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    margin-right: calc(320px - 44px);
-
-    .wizard-steps__content-wrapper {
-      width: 800px;
-      padding: 0 16px;
-    }
-
-    .wizard-steps__sidebar {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding-top: 80px;
-    }
-
-    .wizard-steps__sidebar__content {
-      width: $sidebar-width;
-      height: calc(100vh - 80px);
-      overflow-y: auto;
-      overflow-x: hidden;
+  @media (max-width: 999.98px) {
+    > :not(:first-child) {
+      margin-top: var(--spacing-md);
     }
   }
 
-  @media screen and (min-width: $bp-lg-min-width) {
-    .wizard-steps__content-wrapper {
-      width: 1000px;
-      padding: 0 16px;
-    }
+  @media (min-width: 1000px) {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-lg);
   }
+}
 
-  @media screen and (max-width: $bp-max-width) {
-    > * {
-      margin-bottom: 16px;
-    }
-
-    .wizard-steps__sidebar {
-      border-radius: 6px;
-    }
-  }
+.wizard-steps__sidebar {
+  border-radius: 6px;
 }
 
 .wizard-steps__sidebar {

@@ -45,12 +45,12 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
         >
           
           <ul
-            class="accordion"
+            class="accordion-list"
           >
             
             
             <li
-              class="accordion-item relative border-b"
+              class="accordion-item"
             >
               <button
                 aria-expanded="false"
@@ -145,7 +145,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="accordion-item relative border-b"
+              class="accordion-item"
             >
               <button
                 aria-expanded="false"
@@ -240,7 +240,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="accordion-item relative border-b"
+              class="accordion-item"
             >
               <button
                 aria-expanded="false"
@@ -335,7 +335,7 @@ exports[`NotificationManager.vue renders single mesh notification modal 1`] = `
               </transition-stub>
             </li>
             <li
-              class="accordion-item relative border-b"
+              class="accordion-item"
             >
               <button
                 aria-expanded="false"

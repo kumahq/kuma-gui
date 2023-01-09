@@ -1,7 +1,34 @@
-body {
-  padding-top: var(--AppHeaderHeight, initial);
-  font-family: var(--font-family-sans);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+  padding-top: var(--AppHeaderHeight, initial);
+  tab-size: 2;
+  font-size: 1em;
+  font-family: var(--font-family-sans);
+  line-height: 1.5;
+}
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
 
 a {
   text-decoration: underline;
@@ -18,9 +45,67 @@ a:focus {
   color: var(--blue-500);
 }
 
+b,
+strong {
+  font-weight: bolder;
+}
+
+small {
+  font-size: 0.8em;
+}
+
+code,
+kbd,
+pre {
+  font-size: 1em;
+}
+
+textarea {
+  resize: vertical;
+}
+
+// Backwards compatibility with old Tailwind styles. We shouldn’t reset this, but many components currently rely on it.
+ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+svg,
+iframe {
+  vertical-align: middle;
+}
+
 img {
-  // Restores the sensible default which is overridden by Tailwind.
-  display: inline-block;
+  max-width: 100%;
+  height: auto;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+button,
+input,
+optgroup,
+select {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  line-height: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
 }
 
 select {
