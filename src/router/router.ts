@@ -118,7 +118,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
                 title: 'Gateways',
               },
               props: (route) => ({
-                selectedDppName: route.query.dpp,
+                selectedDppName: route.query.gateway,
                 offset: getLastNumberParameter(route.query.offset),
                 isGatewayView: true,
               }),

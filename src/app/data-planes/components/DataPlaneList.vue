@@ -298,10 +298,10 @@ async function initializeData(): Promise<void> {
 function selectDataPlaneOverview(name: string | null): void {
   if (name && props.dataPlaneOverviews.length > 0) {
     dataPlaneOverview.value = props.dataPlaneOverviews.find((data) => data.name === name) ?? props.dataPlaneOverviews[0]
-    patchQueryParam('dpp', dataPlaneOverview.value.name)
+    patchQueryParam(props.isGatewayView ? 'gateway' : 'dpp', dataPlaneOverview.value.name)
   } else {
     dataPlaneOverview.value = null
-    patchQueryParam('dpp', null)
+    patchQueryParam(props.isGatewayView ? 'gateway' : 'dpp', null)
   }
 }
 
