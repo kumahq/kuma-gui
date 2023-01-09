@@ -14,6 +14,7 @@
       :service="service"
       :data-plane-overviews="dataPlaneOverviews"
       :external-service="externalService"
+      :selected-dpp-name="props.selectedDppName"
       @load-data="loadData"
     />
   </div>
@@ -33,6 +34,14 @@ import ServiceDetails from '../components/ServiceDetails.vue'
 
 const route = useRoute()
 const store = useStore()
+
+const props = defineProps({
+  selectedDppName: {
+    type: String,
+    required: false,
+    default: null,
+  },
+})
 
 const service = ref<ServiceInsight | null>(null)
 const externalService = ref<ExternalService | null>(null)

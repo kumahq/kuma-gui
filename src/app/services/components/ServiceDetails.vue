@@ -10,6 +10,7 @@
     v-if="props.dataPlaneOverviews !== null"
     class="mt-4"
     :data-plane-overviews="props.dataPlaneOverviews"
+    :selected-dpp-name="props.selectedDppName"
     @load-data="loadData"
   />
 </template>
@@ -37,6 +38,12 @@ const props = defineProps({
 
   dataPlaneOverviews: {
     type: Array as PropType<DataPlaneOverview[] | null>,
+    required: false,
+    default: null,
+  },
+
+  selectedDppName: {
+    type: String,
     required: false,
     default: null,
   },

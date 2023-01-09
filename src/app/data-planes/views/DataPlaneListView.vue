@@ -5,6 +5,7 @@
     :error="error"
     :next-url="nextUrl"
     :page-offset="pageOffset"
+    :selected-dpp-name="props.selectedDppName"
     :is-gateway-view="props.isGatewayView"
     @gateway-type-change="($event) => loadData(0, $event)"
     @load-data="loadData"
@@ -30,7 +31,7 @@ const GATEWAY_TYPES = {
 
 const route = useRoute()
 const props = defineProps({
-  name: {
+  selectedDppName: {
     type: String,
     required: false,
     default: null,

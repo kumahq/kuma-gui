@@ -114,7 +114,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
                 title: 'Gateways',
               },
               props: (route) => ({
-                name: route.query.name,
+                selectedDppName: route.query.dpp,
                 offset: getLastNumberParameter(route.query.offset),
                 isGatewayView: true,
               }),
@@ -142,7 +142,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
                 title: 'Data plane proxies',
               },
               props: (route) => ({
-                name: route.query.name,
+                selectedDppName: route.query.dpp,
                 offset: getLastNumberParameter(route.query.offset),
               }),
               component: () => import('@/app/data-planes/views/DataPlaneListView.vue'),
@@ -169,7 +169,7 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
                 title: 'Services',
               },
               props: (route) => ({
-                name: route.query.name,
+                selectedServiceName: route.query.service,
                 offset: getLastNumberParameter(route.query.offset),
               }),
               component: () => import('@/app/services/views/ServiceListView.vue'),
@@ -182,6 +182,9 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
                 parent: 'service-list-view',
                 breadcrumbTitleParam: 'service',
               },
+              props: (route) => ({
+                selectedDppName: route.query.dpp,
+              }),
               component: () => import('@/app/services/views/ServiceDetailView.vue'),
             },
           ],
