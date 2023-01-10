@@ -13,9 +13,18 @@
         :next="props.nextUrl !== null"
         :page-offset="props.pageOffset"
         @table-action="($event: any) => selectDataPlaneOverview($event.name)"
-        @load-data="loadData(props.pageOffset)"
+        @load-data="loadData"
       >
         <template #additionalControls>
+          <KFilterBar
+            id="data-plane-proxy-filter"
+            class="data-plane-proxy-filter"
+            :placeholder="filterBarPlaceholder"
+            :query="filterQuery"
+            :fields="props.dppFilterFields"
+            @fields-change="handleFieldsChange"
+          />
+
           <div v-if="props.isGatewayView">
             <label
               for="data-planes-type-filter"
@@ -111,16 +120,8 @@ import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 
-import ContentWrapper from '@/app/common/ContentWrapper.vue'
-import DataOverview from '@/app/common/DataOverview.vue'
-import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders, ColumnDropdownItem } from '../constants'
-import { useStore } from '@/store/store'
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { patchQueryParam } from '@/utilities/patchQueryParam'
-import { humanReadableDate } from '@/utilities/helpers'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders, ColumnDropdownItem } from '../constants'
 import {
   compatibilityKind,
   dpTags,
@@ -130,10 +131,28 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import { DataPlaneOverview, TableHeader } from '@/types/index.d'
+import { DataPlaneOverviewParameters } from '@/types/api.d'
+import { humanReadableDate } from '@/utilities/helpers'
 import { KUMA_ZONE_TAG_NAME } from '@/constants'
+import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import { useStore } from '@/store/store'
+import ContentWrapper from '@/app/common/ContentWrapper.vue'
+import DataOverview from '@/app/common/DataOverview.vue'
+import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
 
 const PAGE_SIZE = 50
+
+const GATEWAY_TYPES = {
+  All: 'true',
+  Builtin: 'builtin',
+  Delegated: 'delegated',
+} as const
+
 const dataPlaneTypes = [
   'All',
   'Builtin',
@@ -190,19 +209,38 @@ const props = defineProps({
     required: false,
     default: false,
   },
+
+  dppFilterFields: {
+    type: Object as PropType<FilterFields>,
+    required: true,
+  },
 })
 
-const emit = defineEmits(['gateway-type-change', 'load-data'])
+const emit = defineEmits<{
+  (event: 'load-data', offset: number, params: DataPlaneOverviewParameters): void
+}>()
 
 const visibleTableHeaderKeys = ref(defaultVisibleTableHeaderKeys)
 const tableData = ref<{ headers: TableHeader[], data: any }>({
   headers: [],
   data: [],
 })
+const filterQuery = ref(QueryParameter.get('filterQuery') ?? '')
 const filteredDataPlaneType = ref<DataPlaneType>('All')
+const dppParams = ref<DataPlaneOverviewParameters>({})
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
 const dataplaneWizardRoute = computed(() => ({ name: store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane' }))
+
+const filterBarPlaceholder = computed(() => {
+  if ('tag' in props.dppFilterFields) {
+    return 'tag: "kuma.io/protocol: http"'
+  } else if ('name' in props.dppFilterFields) {
+    return 'name: cluster'
+  } else {
+    return 'field: value'
+  }
+})
 
 const filteredTableData = computed(() => {
   let headers = getDataPlaneTableHeaders(isMultiZoneMode.value, visibleTableHeaderKeys.value)
@@ -239,22 +277,43 @@ const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
 })
 
 watch(filteredDataPlaneType, function () {
-  emit('gateway-type-change', filteredDataPlaneType.value)
+  emitLoadDataEvent(0)
+})
+
+watch(dppParams, function () {
+  emitLoadDataEvent(0)
 })
 
 watch(() => props.dataPlaneOverviews, function () {
   initializeData()
 })
 
-const storedVisibleTableHeaderKeys = ClientStorage.get('dpVisibleTableHeaderKeys')
-if (Array.isArray(storedVisibleTableHeaderKeys)) {
-  visibleTableHeaderKeys.value = storedVisibleTableHeaderKeys
+function start() {
+  // Reads the visible table headers from client storage.
+  const storedVisibleTableHeaderKeys = ClientStorage.get('dpVisibleTableHeaderKeys')
+  if (Array.isArray(storedVisibleTableHeaderKeys)) {
+    visibleTableHeaderKeys.value = storedVisibleTableHeaderKeys
+  }
+
+  initializeData()
 }
 
-initializeData()
+start()
 
 function loadData(offset: number): void {
-  emit('load-data', offset)
+  emitLoadDataEvent(offset)
+}
+
+function emitLoadDataEvent(offset: number): void {
+  const params: DataPlaneOverviewParameters = {
+    ...dppParams.value,
+  }
+
+  if (!('gateway' in params)) {
+    params.gateway = GATEWAY_TYPES[filteredDataPlaneType.value]
+  }
+
+  emit('load-data', offset, params)
 }
 
 /**
@@ -298,10 +357,10 @@ async function initializeData(): Promise<void> {
 function selectDataPlaneOverview(name: string | null): void {
   if (name && props.dataPlaneOverviews.length > 0) {
     dataPlaneOverview.value = props.dataPlaneOverviews.find((data) => data.name === name) ?? props.dataPlaneOverviews[0]
-    patchQueryParam(props.isGatewayView ? 'gateway' : 'dpp', dataPlaneOverview.value.name)
+    QueryParameter.set(props.isGatewayView ? 'gateway' : 'dpp', dataPlaneOverview.value.name)
   } else {
     dataPlaneOverview.value = null
-    patchQueryParam(props.isGatewayView ? 'gateway' : 'dpp', null)
+    QueryParameter.set(props.isGatewayView ? 'gateway' : 'dpp', null)
   }
 }
 
@@ -451,9 +510,33 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
 
   return item
 }
+
+function handleFieldsChange({ fields, query }: FilterBarEventData): void {
+  const filterFields = QueryParameter.get('filterFields')
+  const existingParams = filterFields !== null ? JSON.parse(filterFields) as DataPlaneOverviewParameters : {}
+  const existingParamsStringified = JSON.stringify(existingParams)
+
+  const newParams = Object.fromEntries(normalizeFilterFields(fields)) as DataPlaneOverviewParameters
+  const newParamsStringified = JSON.stringify(newParams)
+
+  // Persists the filter query and fields in the URL.
+  QueryParameter.set('filterQuery', query || null)
+  QueryParameter.set('filterFields', newParamsStringified)
+
+  // Avoids setting the parameters when they haven’t changed. This avoids loading the same data repeatedly.
+  if (existingParamsStringified !== newParamsStringified) {
+    dppParams.value = newParams
+  }
+}
 </script>
 
 <style lang="scss" scoped>
+.data-plane-proxy-filter {
+  flex-basis: 350px;
+  flex-grow: 1;
+  margin-right: auto;
+}
+
 .table-header-selector-item-checkbox {
   padding: var(--spacing-md) var(--spacing-lg);
   display: flex;

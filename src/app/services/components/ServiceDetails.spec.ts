@@ -19,6 +19,7 @@ describe('ServiceDetails', () => {
       service: createServiceInsight(),
       externalService: null,
       dataPlaneOverviews: [createDataPlaneOverview()],
+      dppFilterFields: {},
     })
 
     const html = wrapper.html()
@@ -33,6 +34,7 @@ describe('ServiceDetails', () => {
       service: createExternalServiceInsight(),
       externalService: createExternalService(),
       dataPlaneOverviews: null,
+      dppFilterFields: {},
     })
 
     const html = wrapper.html()

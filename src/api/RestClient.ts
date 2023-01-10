@@ -74,6 +74,11 @@ function normalizeParameters(options?: RequestInit & { params?: any }): RequestI
     const params = []
 
     for (const [param, value] of Object.entries(normalizedOptions.params)) {
+      // Ignores `undefined` parameters. To represent an empty or absent value, a query parameter should either be the empty string (i.e. resulting in `param=`) or `null` (i.e. resulting in `param=null`) depending on use case.
+      if (value === undefined) {
+        continue
+      }
+
       if (Array.isArray(value)) {
         for (const singleValue of value) {
           params.push([param, singleValue])

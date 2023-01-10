@@ -12,7 +12,7 @@
         :next="next"
         :page-offset="pageOffset"
         @table-action="tableAction"
-        @load-data="loadData($event)"
+        @load-data="loadData"
       >
         <template #additionalControls>
           <KButton
@@ -114,8 +114,9 @@ import { KButton, KCard } from '@kong/kongponents'
 
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { getSome } from '@/utilities/helpers'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { kumaApi } from '@/api/kumaApi'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { QueryParameter } from '@/utilities/QueryParameter'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
@@ -125,7 +126,6 @@ import LabelList from '@/app/common/LabelList.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
-import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 export default {
   name: 'ZoneEgresses',
@@ -233,7 +233,7 @@ export default {
     async loadData(offset) {
       this.pageOffset = offset
       // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-      patchQueryParam('offset', offset > 0 ? offset : null)
+      QueryParameter.set('offset', offset > 0 ? offset : null)
 
       this.isLoading = true
       this.isEmpty = false
@@ -285,7 +285,7 @@ export default {
       this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
       this.entity = getSome(item, selected)
-      patchQueryParam('zoneEgress', this.entity.name)
+      QueryParameter.set('zoneEgress', this.entity.name)
     },
 
     /**

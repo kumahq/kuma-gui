@@ -10,6 +10,7 @@
     v-if="props.dataPlaneOverviews !== null"
     class="mt-4"
     :data-plane-overviews="props.dataPlaneOverviews"
+    :dpp-filter-fields="props.dppFilterFields"
     :selected-dpp-name="props.selectedDppName"
     @load-data="loadData"
   />
@@ -19,10 +20,10 @@
 import { PropType } from 'vue'
 
 import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
+import { DataPlaneOverviewParameters } from '@/types/api.d'
+import { FilterFields } from '@/app/common/KFilterBar.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
 import ServiceSummary from './ServiceSummary.vue'
-
-const emit = defineEmits(['load-data'])
 
 const props = defineProps({
   service: {
@@ -42,6 +43,11 @@ const props = defineProps({
     default: null,
   },
 
+  dppFilterFields: {
+    type: Object as PropType<FilterFields>,
+    required: true,
+  },
+
   selectedDppName: {
     type: String,
     required: false,
@@ -49,7 +55,11 @@ const props = defineProps({
   },
 })
 
-function loadData(offset: number): void {
-  emit('load-data', offset)
+const emit = defineEmits<{
+  (event: 'load-dataplane-overviews', offset: number, params: DataPlaneOverviewParameters): void
+}>()
+
+function loadData(offset: number, params: DataPlaneOverviewParameters): void {
+  emit('load-dataplane-overviews', offset, params)
 }
 </script>

@@ -5,4 +5,8 @@
   // COMPONENTS
   --AppHeaderHeight: 60px;
   --AppSidebarWidth: 280px;
+
+  // KONGPONENTS
+  // Reduces the excessive vertical padding.
+  --KPopPaddingY: var(--spacing-xs);
 }

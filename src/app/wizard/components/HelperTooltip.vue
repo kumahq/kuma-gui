@@ -1,9 +1,17 @@
 <template>
   <KPop
     class="help-icon"
-    trigger="hover"
+    trigger="click"
+    width="100%"
+    max-width="300"
+    :placement="props.placement"
   >
-    <a>?</a>
+    <KIcon
+      icon="info"
+      color="var(--grey-500)"
+      size="16"
+      hide-title
+    />
 
     <template #content>
       <div>
@@ -14,29 +22,21 @@
 </template>
 
 <script lang="ts" setup>
-import { KPop } from '@kong/kongponents'
+import { KIcon, KPop } from '@kong/kongponents'
+
+const props = defineProps({
+  placement: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
+})
 </script>
 
 <style lang="scss" scoped>
 .help-icon {
-  --size: 22px;
-
-  display: inline-block;
-  margin: 0 8px;
-  width: var(--size);
-}
-
-.help-icon a {
-  display: inline-block;
-  width: var(--size);
-  height: var(--size);
-  line-height: var(--size);
-  border-radius: 100%;
-  color: var(--white);
-  text-decoration: none;
-  text-align: center;
-  font-size: 12px;
-  background-color: var(--grey-500);
-  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-left: var(--spacing-xs);
 }
 </style>
