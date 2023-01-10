@@ -54,7 +54,7 @@ const EMPTY_STATE = {
 const route = useRoute()
 
 const props = defineProps({
-  name: {
+  selectedServiceName: {
     type: String,
     required: false,
     default: null,
@@ -116,7 +116,7 @@ async function loadData(offset: number): Promise<void> {
 
       tableData.value.data = items.map((item) => processItem(item))
 
-      const activeServiceName = props.name ?? items[0].name
+      const activeServiceName = props.selectedServiceName ?? items[0].name
       await loadService({ name: activeServiceName, mesh })
     } else {
       tableData.value.data = []
@@ -179,6 +179,6 @@ async function loadService({ mesh, name }: { mesh: string, name: string }): Prom
     externalService.value = await kumaApi.getExternalService({ mesh, name })
   }
 
-  patchQueryParam('name', name)
+  patchQueryParam('service', name)
 }
 </script>

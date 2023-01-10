@@ -179,7 +179,7 @@ const props = defineProps({
     default: 0,
   },
 
-  name: {
+  selectedDppName: {
     type: String,
     required: false,
     default: null,
@@ -284,7 +284,7 @@ function onCreateClick() {
 async function initializeData(): Promise<void> {
   try {
     if (Array.isArray(props.dataPlaneOverviews) && props.dataPlaneOverviews.length > 0) {
-      selectDataPlaneOverview(props.name ?? props.dataPlaneOverviews[0].name)
+      selectDataPlaneOverview(props.selectedDppName ?? props.dataPlaneOverviews[0].name)
       tableData.value.data = await Promise.all(props.dataPlaneOverviews.map((item) => parseData(item)))
     } else {
       selectDataPlaneOverview(null)
@@ -298,10 +298,10 @@ async function initializeData(): Promise<void> {
 function selectDataPlaneOverview(name: string | null): void {
   if (name && props.dataPlaneOverviews.length > 0) {
     dataPlaneOverview.value = props.dataPlaneOverviews.find((data) => data.name === name) ?? props.dataPlaneOverviews[0]
-    patchQueryParam('name', dataPlaneOverview.value.name)
+    patchQueryParam(props.isGatewayView ? 'gateway' : 'dpp', dataPlaneOverview.value.name)
   } else {
     dataPlaneOverview.value = null
-    patchQueryParam('name', null)
+    patchQueryParam(props.isGatewayView ? 'gateway' : 'dpp', null)
   }
 }
 
