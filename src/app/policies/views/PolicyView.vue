@@ -226,7 +226,7 @@ const policies = computed(() => {
       length: store.state.sidebar.insights.mesh.policies[item.name] ?? 0,
       label: item.pluralDisplayName,
       value: item.path,
-      selected: item.path === route.name,
+      selected: item.path === props.policyPath,
     }
   })
 })
@@ -316,7 +316,11 @@ async function loadData(offset: number): Promise<void> {
 
 function changePolicyType(item: {value: string}) {
   router.push({
-    name: item.value,
+    name: 'policy',
+    params: {
+      ...route.params,
+      policyPath: item.value,
+    },
   })
 }
 

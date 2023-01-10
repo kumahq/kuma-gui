@@ -10,31 +10,9 @@ import {
 
 import { getLastNumberParameter } from './getLastParameter'
 import { store } from '@/store/store'
-import { PolicyDefinition } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
-function getPolicyRoutes(policies: PolicyDefinition[]): RouteRecordRaw[] {
-  return policies.map((policy) => {
-    return {
-      path: policy.path,
-      name: policy.path,
-      meta: {
-        title: policy.pluralDisplayName,
-        parent: 'policies',
-      },
-      props: (route) => ({
-        policyPath: policy.path,
-        selectedPolicyName: route.query.policy,
-        offset: getLastNumberParameter(route.query.offset),
-      }),
-      component: () => import('@/app/policies/views/PolicyView.vue'),
-    }
-  })
-}
-
-export function createRouter(baseGuiPath: string = '/', policyDefinitions: PolicyDefinition[] = []): Router {
-  const policyRoutes = getPolicyRoutes(policyDefinitions)
-
+export function createRouter(baseGuiPath: string = '/'): Router {
   const routes: readonly RouteRecordRaw[] = [
     {
       path: '/404',
@@ -207,11 +185,31 @@ export function createRouter(baseGuiPath: string = '/', policyDefinitions: Polic
             }
             return {
               ...to,
-              name: item.path,
+              params: {
+                ...to.params,
+                policyPath: item.path,
+              },
+              name: 'policy',
             }
           },
         },
-        ...policyRoutes,
+        {
+          path: 'policies/:policyPath',
+          name: 'policy',
+          meta: {
+            parent: 'policies',
+          },
+          component: () => import('@/app/policies/views/PolicyView.vue'),
+          props: (route) => {
+            const policy = store.state.policiesByPath[route.params.policyPath as string]
+            route.meta.title = policy.pluralDisplayName
+            return {
+              policyPath: route.params.policyPath,
+              selectedPolicyName: route.query.policy,
+              offset: getLastNumberParameter(route.query.offset),
+            }
+          },
+        },
       ],
     },
     {
