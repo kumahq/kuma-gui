@@ -70,7 +70,7 @@
             class="back-button"
             appearance="primary"
             icon="arrowLeft"
-            :to="{ name: policy.path }"
+            :to="{ name: 'policy', params: { policyPath: policyPath } }"
           >
             View all
           </KButton>
@@ -243,6 +243,17 @@ watch(() => route.params.mesh, function () {
   }
 
   // Ensures basic state is reset when switching meshes using the mesh selector.
+  isLoading.value = true
+  isEmpty.value = false
+  entityIsLoading.value = true
+  entityIsEmpty.value = false
+  entityHasError.value = false
+  tableDataIsEmpty.value = false
+  error.value = null
+
+  loadData(0)
+})
+watch(() => route.query.ns, function () {
   isLoading.value = true
   isEmpty.value = false
   entityIsLoading.value = true
