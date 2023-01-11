@@ -179,8 +179,11 @@ function getPolicyRoutes(policies: Record<string, PolicyType> | undefined): Mesh
       type: policy.type,
       name: policy.name,
       route: {
-        name: policyDefinition.path,
-        params: { mesh: policy.mesh },
+        name: 'policy',
+        params: {
+          mesh: policy.mesh,
+          policyPath: policyDefinition.path,
+        },
         query: { ns: policy.name },
       },
     })
@@ -234,9 +237,12 @@ function getPolicyEntryConnections(policy: PolicyType, policyDefinition: PolicyD
   const origin: PolicyTypeEntryOrigin = {
     name: policy.name,
     route: {
-      name: policyDefinition.path,
+      name: 'policy',
       query: { ns: policy.name },
-      params: { mesh: policy.mesh },
+      params: {
+        mesh: policy.mesh,
+        policyPath: policyDefinition.path,
+      },
     },
   }
   const origins: PolicyTypeEntryOrigin[] = [origin]
@@ -327,9 +333,12 @@ function getPolicyEntryConnectionsFromRules(rule: DataplaneRule, policyDefinitio
     origins.push({
       name: ruleOrigin.name,
       route: {
-        name: policyDefinition.path,
+        name: 'policy',
         query: { ns: ruleOrigin.name },
-        params: { mesh: ruleOrigin.mesh },
+        params: {
+          mesh: ruleOrigin.mesh,
+          policyPath: policyDefinition.path,
+        },
       },
     })
   }
