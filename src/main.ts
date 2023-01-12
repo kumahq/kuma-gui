@@ -40,13 +40,16 @@ async function initializeVue() {
   app.use(store, storeKey)
 
   await Promise.all([
-    // Fetches basic resources before setting up the router and mounting the application. This is mainly needed to properly redirect users to the onboarding flow in the appropriate scenarios.
+    // Fetches basic resources before setting up the router and mounting the
+    // application. This is mainly needed to properly redirect users to the
+    // onboarding flow in the appropriate scenarios.
     store.dispatch('bootstrap'),
-    // Loads available policies in order to populate the necessary routes.
+    // Loads available policies in order to populate the necessary information
+    // used for titling/breadcrumbing and policy lookups in the app.
     store.dispatch('fetchPolicies'),
   ])
 
-  const router = await createRouter(pathConfig.baseGuiPath, store.state.policies)
+  const router = await createRouter(pathConfig.baseGuiPath)
 
   app.use(router)
 
