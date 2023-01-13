@@ -178,10 +178,10 @@ export function createRouter(baseGuiPath: string = '/'): Router {
             title: 'Policies',
           },
           redirect: (to: RouteLocation): RouteLocationRaw => {
-            let item = store.state.policies
+            let item = store.state.policyTypes
               .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
             if (item === undefined) {
-              item = store.state.policies[0]
+              item = store.state.policyTypes[0]
             }
             return {
               ...to,
@@ -201,8 +201,10 @@ export function createRouter(baseGuiPath: string = '/'): Router {
           },
           component: () => import('@/app/policies/views/PolicyView.vue'),
           props: (route) => {
-            const policy = store.state.policiesByPath[route.params.policyPath as string]
-            route.meta.title = policy.pluralDisplayName
+            const policy = store.state.policyTypesByPath[route.params.policyPath as string]
+
+            route.meta.title = policy.name
+
             return {
               policyPath: route.params.policyPath,
               selectedPolicyName: route.query.policy,

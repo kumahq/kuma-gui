@@ -108,10 +108,10 @@ const props = defineProps({
 })
 
 const policyTagDefinitions = computed<Record<string, PolicyTagDefinition>>(() => {
-  const policyTagDefinitionEntries: [string, PolicyTagDefinition][] = store.state.policies.map((policyDefinition) => {
-    const policyTagDefinition = POLICIES[policyDefinition.name] ?? { iconUrl: null }
+  const policyTagDefinitionEntries: [string, PolicyTagDefinition][] = store.state.policyTypes.map((policyType) => {
+    const policyTagDefinition = POLICIES[policyType.name] ?? { iconUrl: null }
 
-    return [policyDefinition.name, policyTagDefinition]
+    return [policyType.name, policyTagDefinition]
   })
 
   return Object.fromEntries(policyTagDefinitionEntries)

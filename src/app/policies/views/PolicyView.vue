@@ -1,11 +1,11 @@
 <template>
   <div
-    v-if="policy"
+    v-if="policyType"
     class="relative"
-    :class="policy.path"
+    :class="policyType.path"
   >
     <div
-      v-if="policy.isExperimental"
+      v-if="policyType.isExperimental"
       class="mb-4"
     >
       <KAlert appearance="warning">
@@ -30,7 +30,7 @@
         :is-loading="isLoading"
         :empty-state="{
           title: 'No Data',
-          message: `There are no ${policy.pluralDisplayName} present.`,
+          message: `There are no ${policyType.name} policies present.`,
         }"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
@@ -61,7 +61,7 @@
           </KSelect>
 
           <DocumentationLink
-            :href="`${env('KUMA_DOCS_URL')}/policies/${policy.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+            :href="`${env('KUMA_DOCS_URL')}/policies/${policyType.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
             data-testid="policy-documentation-link"
           />
 
@@ -70,7 +70,7 @@
             class="back-button"
             appearance="primary"
             icon="arrowLeft"
-            :to="{ name: 'policy', params: { policyPath: policyPath } }"
+            :to="{ name: 'policy', params: { policyPath: props.policyPath } }"
           >
             View all
           </KButton>
@@ -90,7 +90,7 @@
             class="entity-heading"
             data-testid="policy-single-entity"
           >
-            {{ policy.singularDisplayName }}: {{ entity.name }}
+            {{ policyType.name }}: {{ entity.name }}
           </h1>
         </template>
 
@@ -133,7 +133,7 @@
             v-if="rawEntity !== null"
             :mesh="rawEntity.mesh"
             :policy-name="rawEntity.name"
-            :policy-type="policy.path"
+            :policy-type="policyType.path"
           />
         </template>
       </TabsWidget>
@@ -222,14 +222,14 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   data: [],
 })
 
-const policy = computed(() => store.state.policiesByPath[props.policyPath])
+const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])
 const policies = computed(() => {
-  return store.state.policies.map((item) => {
+  return store.state.policyTypes.map((policyType) => {
     return {
-      length: store.state.sidebar.insights.mesh.policies[item.name] ?? 0,
-      label: item.pluralDisplayName,
-      value: item.path,
-      selected: item.path === props.policyPath,
+      length: store.state.sidebar.insights.mesh.policies[policyType.name] ?? 0,
+      label: policyType.name,
+      value: policyType.path,
+      selected: policyType.path === props.policyPath,
     }
   })
 })
@@ -275,7 +275,7 @@ async function loadData(offset: number): Promise<void> {
 
   const name = route.query.ns as string || null
   const mesh = route.params.mesh as string
-  const path = policy.value.path
+  const path = policyType.value.path
 
   try {
     let items: PolicyEntity[]
@@ -357,7 +357,7 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
   entityIsEmpty.value = false
 
   try {
-    const item = await kumaApi.getSinglePolicyEntity({ mesh: selectedEntity.mesh, path: policy.value.path, name: selectedEntity.name })
+    const item = await kumaApi.getSinglePolicyEntity({ mesh: selectedEntity.mesh, path: policyType.value.path, name: selectedEntity.name })
 
     if (item) {
       const selected = ['type', 'name', 'mesh']

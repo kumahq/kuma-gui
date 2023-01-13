@@ -16,8 +16,8 @@ import {
   Mesh,
   MeshGatewayDataplane,
   MeshInsight,
-  PolicyDefinition,
   PolicyEntity,
+  PolicyType,
   ServiceInsight,
   SidecarDataplane,
   Zone,
@@ -70,7 +70,7 @@ class KumaApi {
   /**
    * Retrieves a list of known policy definitions.
    */
-  getPolicyDefinitions(): Promise<{ policies: PolicyDefinition[] }> {
+  getPolicyTypes(): Promise<{ policies: PolicyType[] }> {
     return this.client.get('policies')
   }
 

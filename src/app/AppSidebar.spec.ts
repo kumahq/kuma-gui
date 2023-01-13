@@ -5,7 +5,7 @@ import AppSidebar from './AppSidebar.vue'
 import { store } from '@/store/store'
 
 async function renderComponent() {
-  await store.dispatch('fetchPolicies')
+  await store.dispatch('fetchPolicyTypes')
 
   return mount(AppSidebar, {
     global: {

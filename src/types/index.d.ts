@@ -169,17 +169,11 @@ export type DataPlaneNetworking = {
 /**
  * A policy definition as returned via the `/policies` endpoint.
  */
-export type PolicyDefinition = {
+export type PolicyType = {
   /**
-   * The policies internal name (e.g. “CircuitBreaker”).
+   * The policy type’s name (e.g. “CircuitBreaker”).
    */
   name: string
-
-  /**
-   * The policies display name. In plural form (e.g. “Circuit Breakers”); a singular form is also provided.
-   */
-  pluralDisplayName: string
-  singularDisplayName: string
 
   /**
    * The associated API path for the policy. Used to look up all set-up policies and policies for specific meshes.
@@ -271,7 +265,7 @@ export type PolicyMatch = {
   }
 }
 
-export interface PolicyType extends MeshEntity {
+export interface MatchedPolicyType extends MeshEntity {
   sources?: PolicyMatch[]
   destinations?: PolicyMatch[]
   selectors?: Array<{ match: Record<string, string> }>
@@ -282,14 +276,14 @@ export interface SidecarDataplane {
   type: 'inbound' | 'outbound' | 'service' | 'dataplane'
   service: string
   name: string
-  matchedPolicies: Record<string, PolicyType[]>
+  matchedPolicies: Record<string, MatchedPolicyType[]>
 }
 
 export type MeshGatewayDataplaneDestination = {
   tags: {
     'kuma.io/service': string
   }
-  policies: Record<string, PolicyType>
+  policies: Record<string, MatchedPolicyType>
 }
 
 export type MeshGatewayDataplaneRoute = {
@@ -315,7 +309,7 @@ export interface MeshGatewayDataplane {
     name: string
   }
   listeners: MeshGatewayDataplaneListener[]
-  policies?: Record<string, PolicyType>
+  policies?: Record<string, MatchedPolicyType>
 }
 
 export type PolicyTypeEntryOrigin = {
