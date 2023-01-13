@@ -12,6 +12,7 @@
     :data-plane-overviews="props.dataPlaneOverviews"
     :dpp-filter-fields="props.dppFilterFields"
     :selected-dpp-name="props.selectedDppName"
+    :is-gateway-view="props.dataPlaneOverviews[0]?.dataplane.networking.gateway !== undefined ?? false"
     @load-data="loadData"
   />
 </template>

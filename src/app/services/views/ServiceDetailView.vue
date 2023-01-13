@@ -134,13 +134,11 @@ async function loadDataplaneOverviews(offset: number, dppParams: DataPlaneOvervi
 function getDataPlaneOverviewParameters(name: string, offset: number, dppParams: DataPlaneOverviewParameters): DataPlaneOverviewParameters {
   const size = 50
   const serviceTag = `kuma.io/service:${name}`
-  const gateway = 'false'
 
   const params: DataPlaneOverviewParameters = {
     ...dppParams,
     offset,
     size,
-    gateway,
   }
 
   // Prunes any service tags from the received parameters because this view always looks-up DPPs by its own service tag
