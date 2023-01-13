@@ -30,12 +30,12 @@
 import { ref, watch } from 'vue'
 import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 
+import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
+import { kumaApi } from '@/api/kumaApi'
+import { QueryParameter } from '@/utilities/QueryParameter'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import ServiceSummary from '../components/ServiceSummary.vue'
-import { kumaApi } from '@/api/kumaApi'
-import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
-import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },
@@ -92,7 +92,7 @@ loadData(props.offset)
 async function loadData(offset: number): Promise<void> {
   pageOffset.value = offset
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  patchQueryParam('offset', offset > 0 ? offset : null)
+  QueryParameter.set('offset', offset > 0 ? offset : null)
 
   isLoading.value = true
   error.value = null
@@ -179,6 +179,6 @@ async function loadService({ mesh, name }: { mesh: string, name: string }): Prom
     externalService.value = await kumaApi.getExternalService({ mesh, name })
   }
 
-  patchQueryParam('service', name)
+  QueryParameter.set('service', name)
 }
 </script>

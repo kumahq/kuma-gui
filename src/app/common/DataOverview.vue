@@ -416,6 +416,7 @@ function getRowAttributes({ name }: any): Record<string, string> {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--spacing-md);
   padding: var(--spacing-sm) var(--spacing-sm) 0 var(--spacing-sm);
 }

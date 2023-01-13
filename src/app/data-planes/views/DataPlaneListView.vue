@@ -7,27 +7,36 @@
     :page-offset="pageOffset"
     :selected-dpp-name="props.selectedDppName"
     :is-gateway-view="props.isGatewayView"
-    @gateway-type-change="($event) => loadData(0, $event)"
+    :dpp-filter-fields="dppFilterFields"
     @load-data="loadData"
   />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { patchQueryParam } from '@/utilities/patchQueryParam'
-import { kumaApi } from '@/api/kumaApi'
 import { DataPlaneOverview } from '@/types/index.d'
+import { DataPlaneOverviewParameters } from '@/types/api'
+import { FilterFields } from '@/app/common/KFilterBar.vue'
+import { kumaApi } from '@/api/kumaApi'
+import { QueryParameter } from '@/utilities/QueryParameter'
 import DataPlaneList from '../components/DataPlaneList.vue'
 
 const PAGE_SIZE = 50
-// Depending on what dataplane types we are viewing send the correct params to the API
-const GATEWAY_TYPES = {
-  All: true,
-  Builtin: 'builtin',
-  Delegated: 'delegated',
-} as const
+
+const BASE_FILTER_FIELDS: FilterFields = {
+  name: { description: 'filter by name or parts of a name' },
+  service: { description: 'filter by “kuma.io/service” value' },
+  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+  zone: { description: 'filter by “kuma.io/zone” value' },
+}
+
+const DPP_FILTER_FIELDS: FilterFields = {
+  protocol: { description: 'filter by “kuma.io/protocol” value' },
+}
+
+const GATEWAY_FILTER_FIELDS: FilterFields = {}
 
 const route = useRoute()
 const props = defineProps({
@@ -56,6 +65,12 @@ const isLoading = ref(true)
 const error = ref<Error | null>(null)
 const nextUrl = ref<string | null>(null)
 const pageOffset = ref(props.offset)
+const dppFilterFields = computed(() => {
+  return {
+    ...BASE_FILTER_FIELDS,
+    ...(props.isGatewayView ? GATEWAY_FILTER_FIELDS : DPP_FILTER_FIELDS),
+  }
+})
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
@@ -66,22 +81,27 @@ watch(() => route.params.mesh, function () {
   loadData(0)
 })
 
-loadData(props.offset)
+function start() {
+  const filterFields = QueryParameter.get('filterFields')
+  const dppParams = filterFields !== null ? JSON.parse(filterFields) as DataPlaneOverviewParameters : {}
 
-async function loadData(offset: number, gatewayType: keyof typeof GATEWAY_TYPES = 'All'): Promise<void> {
+  loadData(props.offset, dppParams)
+}
+
+start()
+
+async function loadData(offset: number, dppParams: DataPlaneOverviewParameters = {}): Promise<void> {
   pageOffset.value = offset
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  patchQueryParam('offset', offset > 0 ? offset : null)
+  QueryParameter.set('offset', offset > 0 ? offset : null)
 
   isLoading.value = true
 
   const mesh = route.params.mesh as string
-  const size = PAGE_SIZE
+  const params = getDataplaneOverviewParameters(dppParams, PAGE_SIZE, offset, props.isGatewayView)
 
   try {
-    const gateway = !props.isGatewayView ? false : GATEWAY_TYPES[gatewayType]
-
-    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { size, offset, gateway })
+    const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, params)
 
     if (Array.isArray(items) && items.length > 0) {
       dataPlaneOverviews.value = items
@@ -102,6 +122,22 @@ async function loadData(offset: number, gatewayType: keyof typeof GATEWAY_TYPES 
   } finally {
     isLoading.value = false
   }
+}
+
+function getDataplaneOverviewParameters(dppParams: DataPlaneOverviewParameters, size: number, offset: number, isGatewayView: boolean): DataPlaneOverviewParameters {
+  const params: DataPlaneOverviewParameters = {
+    ...dppParams,
+    size,
+    offset,
+  }
+
+  if (isGatewayView && (!('gateway' in params) || params.gateway === 'false')) {
+    params.gateway = 'true'
+  } else if (!isGatewayView) {
+    params.gateway = 'false'
+  }
+
+  return params
 }
 </script>
 

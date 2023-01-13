@@ -150,19 +150,19 @@ import {
   KButton,
 } from '@kong/kongponents'
 
-import { useStore } from '@/store/store'
 import { getSome, stripTimes } from '@/utilities/helpers'
+import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { PolicyEntity, TableHeader } from '@/types/index.d'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import { useStore } from '@/store/store'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
-import { kumaApi } from '@/api/kumaApi'
 import LabelList from '@/app/common/LabelList.vue'
 import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { PolicyEntity, TableHeader } from '@/types/index.d'
-import { patchQueryParam } from '@/utilities/patchQueryParam'
 
 const tabs = [
   {
@@ -270,7 +270,7 @@ loadData(props.offset)
 async function loadData(offset: number): Promise<void> {
   pageOffset.value = offset
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-  patchQueryParam('offset', offset > 0 ? offset : null)
+  QueryParameter.set('offset', offset > 0 ? offset : null)
 
   isLoading.value = true
   error.value = null
@@ -365,7 +365,7 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
       const selected = ['type', 'name', 'mesh']
 
       entity.value = getSome(item, selected)
-      patchQueryParam('policy', entity.value.name)
+      QueryParameter.set('policy', entity.value.name)
       rawEntity.value = stripTimes(item)
     } else {
       entity.value = {}

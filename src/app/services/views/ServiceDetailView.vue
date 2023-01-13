@@ -14,8 +14,9 @@
       :service="service"
       :data-plane-overviews="dataPlaneOverviews"
       :external-service="externalService"
+      :dpp-filter-fields="DPP_FILTER_FIELDS"
       :selected-dpp-name="props.selectedDppName"
-      @load-data="loadData"
+      @load-dataplane-overviews="loadDataplaneOverviews"
     />
   </div>
 </template>
@@ -25,12 +26,22 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
+import { DataPlaneOverviewParameters } from '@/types/api.d'
+import { FilterFields } from '@/app/common/KFilterBar.vue'
 import { kumaApi } from '@/api/kumaApi'
+import { QueryParameter } from '@/utilities/QueryParameter'
 import { useStore } from '@/store/store'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ServiceDetails from '../components/ServiceDetails.vue'
+
+const DPP_FILTER_FIELDS: FilterFields = {
+  name: { description: 'filter by name or parts of a name' },
+  protocol: { description: 'filter by “kuma.io/protocol” value' },
+  tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
+  zone: { description: 'filter by “kuma.io/zone” value' },
+}
 
 const route = useRoute()
 const store = useStore()
@@ -55,7 +66,7 @@ watch(() => route.params.mesh, function () {
     return
   }
 
-  loadData()
+  loadData(0)
 })
 
 watch(() => route.params.name, function () {
@@ -64,13 +75,21 @@ watch(() => route.params.name, function () {
     return
   }
 
-  loadData()
+  loadData(0)
 })
 
-store.dispatch('updatePageTitle', route.params.service)
-loadData()
+function start() {
+  store.dispatch('updatePageTitle', route.params.service)
 
-async function loadData() {
+  const filterFields = QueryParameter.get('filterFields')
+  const dppParams = filterFields !== null ? JSON.parse(filterFields) as DataPlaneOverviewParameters : {}
+
+  loadData(0, dppParams)
+}
+
+start()
+
+async function loadData(offset: number, dppParams: DataPlaneOverviewParameters = {}) {
   isLoading.value = true
   error.value = null
   service.value = null
@@ -79,8 +98,6 @@ async function loadData() {
 
   const mesh = route.params.mesh as string
   const name = route.params.service as string
-  const tag = `kuma.io/service:${name}`
-  const gateway = false
 
   try {
     service.value = await kumaApi.getServiceInsight({ mesh, name })
@@ -88,8 +105,7 @@ async function loadData() {
     if (service.value.serviceType === 'external') {
       externalService.value = await kumaApi.getExternalService({ mesh, name })
     } else {
-      const dataPlaneOverviewsResponse = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, { gateway, tag })
-      dataPlaneOverviews.value = dataPlaneOverviewsResponse.items ?? []
+      await loadDataplaneOverviews(offset, dppParams)
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -100,5 +116,53 @@ async function loadData() {
   } finally {
     isLoading.value = false
   }
+}
+
+async function loadDataplaneOverviews(offset: number, dppParams: DataPlaneOverviewParameters): Promise<void> {
+  const mesh = route.params.mesh as string
+  const name = route.params.service as string
+
+  try {
+    const params = getDataPlaneOverviewParameters(name, offset, dppParams)
+    const dataPlaneOverviewsResponse = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, params)
+    dataPlaneOverviews.value = dataPlaneOverviewsResponse.items ?? []
+  } catch (err) {
+    dataPlaneOverviews.value = null
+  }
+}
+
+function getDataPlaneOverviewParameters(name: string, offset: number, dppParams: DataPlaneOverviewParameters): DataPlaneOverviewParameters {
+  const size = 50
+  const serviceTag = `kuma.io/service:${name}`
+  const gateway = 'false'
+
+  const params: DataPlaneOverviewParameters = {
+    ...dppParams,
+    offset,
+    size,
+    gateway,
+  }
+
+  // Prunes any service tags from the received parameters because this view always looks-up DPPs by its own service tag
+  if (params.tag) {
+    const tags = Array.isArray(params.tag) ? params.tag : [params.tag]
+    const serviceTagIndexes = []
+
+    for (const [index, tag] of tags.entries()) {
+      if (tag.startsWith('kuma.io/service:')) {
+        serviceTagIndexes.push(index)
+      }
+    }
+
+    for (let i = serviceTagIndexes.length - 1; i === 0; i--) {
+      tags.splice(serviceTagIndexes[i], 1)
+    }
+
+    params.tag = tags.concat(serviceTag)
+  } else {
+    params.tag = serviceTag
+  }
+
+  return params
 }
 </script>

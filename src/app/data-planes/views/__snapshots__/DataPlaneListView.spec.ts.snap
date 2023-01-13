@@ -16,6 +16,69 @@ exports[`DataPlaneListView matches snapshot 1`] = `
         class="data-table-controls mb-2"
       >
         
+        <div
+          class="k-filter-bar data-plane-proxy-filter"
+          data-testid="k-filter-bar"
+        >
+          <button
+            class="k-focus-filter-input-button"
+            data-testid="k-filter-bar-focus-filter-input-button"
+            title="Focus filter"
+            type="button"
+          >
+            <span
+              class="visually-hidden"
+            >
+              Focus filter
+            </span>
+            <span
+              aria-hidden="true"
+              class="k-filter-icon kong-icon kong-icon-filter"
+              data-testid="k-filter-bar-filter-icon"
+            >
+              <svg
+                aria-hidden="true"
+                data-testid="k-filter-bar-filter-icon"
+                height="20"
+                role="img"
+                viewBox="0 0 14 11"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                
+  
+                
+  
+                <path
+                  d="M8 9v2H6V9h2zm2-3v2H4V6h6zm2-3v2H2V3h10zm2-3v2H0V0h14z"
+                  fill="var(--grey-400)"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+          </button>
+          <label
+            class="visually-hidden"
+            for="data-plane-proxy-filter-filter-bar-input"
+          >
+            
+            Filter by name, service, tag, zone, protocol
+            
+          </label>
+          <input
+            class="k-filter-bar-input"
+            data-testid="k-filter-bar-filter-input"
+            id="data-plane-proxy-filter-filter-bar-input"
+            placeholder="tag: "kuma.io/protocol: http""
+            type="text"
+          />
+          <!--v-if-->
+          <!--v-if-->
+        </div>
         <!--v-if-->
         <div
           class="k-dropdown k-dropdown-menu"

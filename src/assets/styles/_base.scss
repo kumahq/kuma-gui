@@ -108,6 +108,17 @@ button {
   border: none;
 }
 
+input {
+  appearance: none;
+  border: 1px solid var(--grey-300);
+  border-radius: 3px;
+  font: inherit;
+  margin: 0;
+  padding: var(--spacing-xs);
+  color: currentColor;
+  background-color: var(--white);
+}
+
 select {
   appearance: none;
   border: 1px solid var(--grey-300);

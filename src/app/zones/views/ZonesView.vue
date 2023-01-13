@@ -16,7 +16,7 @@
         :next="next"
         :page-offset="pageOffset"
         @table-action="tableAction"
-        @load-data="loadData($event)"
+        @load-data="loadData"
       >
         <template #additionalControls>
           <KButton
@@ -121,9 +121,9 @@ import { KBadge, KButton, KCard } from '@kong/kongponents'
 
 import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
-import { patchQueryParam } from '@/utilities/patchQueryParam'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { kumaApi } from '@/api/kumaApi'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { QueryParameter } from '@/utilities/QueryParameter'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
@@ -325,7 +325,7 @@ export default {
     async loadData(offset) {
       this.pageOffset = offset
       // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-      patchQueryParam('offset', offset > 0 ? offset : null)
+      QueryParameter.set('offset', offset > 0 ? offset : null)
 
       this.isLoading = true
       this.isEmpty = false
@@ -392,7 +392,7 @@ export default {
           const subscriptions = response.zoneInsight?.subscriptions ?? []
 
           this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
-          patchQueryParam('zone', this.entity.name)
+          QueryParameter.set('zone', this.entity.name)
           this.subscriptionsReversed = Array.from(subscriptions).reverse()
 
           if (subscriptions.length) {

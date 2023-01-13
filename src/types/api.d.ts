@@ -29,12 +29,14 @@ export interface DataPlaneOverviewParameters extends PaginationParameters {
   /**
    * **Example**: `?gateway=delegated`
    */
-  gateway?: 'builtin' | 'delegated' | boolean
+  gateway?: 'builtin' | 'delegated' | 'true' | 'false'
 
   /**
-   * **Example**: `?namePrefix=gateway`
+   * Filters objects by their `name` field using “contains” semantic.
+   *
+   * **Example**: `?name=gateway`
    */
-  namePrefix?: string
+  name?: string
 
   /**
    * **Example**: `?tag=kuma.io/service:foo&tag=version:v1`
