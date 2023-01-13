@@ -9,7 +9,7 @@
       <template #alertMessage>
         <div class="alert-content">
           <div>
-            {{ tagline }} update available
+            {{ env('KUMA_NAME') }} update available
           </div>
 
           <div>
@@ -17,7 +17,7 @@
               class="warning-button"
               appearance="primary"
               size="small"
-              :to="URL"
+              :to="env('KUMA_INSTALL_URL')"
             >
               Update
             </KButton>
@@ -29,22 +29,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import compare from 'semver/functions/compare'
 import { KAlert, KButton } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
-import { useStore } from '@/store/store'
-
-const URL = `${import.meta.env.VITE_INSTALL_URL}${import.meta.env.VITE_UTM}`
-
-const store = useStore()
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 
 const latestVersion = ref('')
 const showNotice = ref(false)
-
-const currentVersion = computed(() => store.getters['config/getVersion'])
-const tagline = computed(() => store.getters['config/getTagline'])
 
 checkVersion()
 
@@ -59,7 +53,7 @@ async function checkVersion(): Promise<void> {
     if (latestVersion.value !== '') {
       // compare the latest version to the currently running version
       // but only if we were able to set the latest version in the first place.
-      const comparison = compare(latestVersion.value, currentVersion.value || '')
+      const comparison = compare(latestVersion.value, env('KUMA_VERSION'))
       showNotice.value = comparison === 1
     } else {
       const timespan = 3 // months

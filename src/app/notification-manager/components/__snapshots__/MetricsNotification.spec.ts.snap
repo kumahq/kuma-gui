@@ -14,7 +14,7 @@ exports[`MetricsNotification.vue renders snapshot 1`] = `
   >
     <li>
       <a
-        href="https://kuma.io/docs/latest/policies/traffic-metrics/"
+        href="https://kuma.io/docs/1.7.x/policies/traffic-metrics/?utm_source=Kuma&utm_medium=Kuma-GUI"
         target="_blank"
       >
          Traffic Metrics policy documentation 

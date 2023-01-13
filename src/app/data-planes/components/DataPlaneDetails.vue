@@ -167,11 +167,11 @@
           <template #alertMessage>
             This data plane proxy does not yet have mTLS configured —
             <a
-              :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/mutual-tls/`"
+              :href="`${env('KUMA_DOCS_URL')}/policies/mutual-tls/?${env('KUMA_UTM_QUERY_PARAMS')}`"
               class="external-link"
               target="_blank"
             >
-              Learn About Certificates in {{ PRODUCT_NAME }}
+              Learn About Certificates in {{ env('KUMA_NAME') }}
             </a>
           </template>
         </KAlert>
@@ -203,7 +203,7 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/utilities/dataplane'
-import { KUMA_ZONE_TAG_NAME, PRODUCT_NAME } from '@/constants'
+import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { stripTimes } from '@/utilities/helpers'
 import { useStore } from '@/store/store'
 import DataplanePolicies from './DataplanePolicies.vue'
@@ -219,6 +219,8 @@ import YamlView from '@/app/common/YamlView.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 
 const store = useStore()
 
@@ -292,12 +294,6 @@ const insightSubscriptions = computed(() => {
   subscriptions.reverse()
 
   return subscriptions
-})
-
-const kumaDocsVersion = computed(() => {
-  const storedVersion = store.getters['config/getKumaDocsVersion']
-
-  return storedVersion !== null ? storedVersion : 'latest'
 })
 
 const filteredTabs = computed(() => warnings.value.length === 0 ? tabs.filter((tab) => tab.hash !== '#warnings') : tabs)

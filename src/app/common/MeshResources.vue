@@ -35,16 +35,17 @@
       </template>
     </KCard>
 
-    <KCard :title="`Apply ${tagline} policies`">
+    <KCard :title="`Apply ${ env('KUMA_NAME') } policies`">
       <template #body>
         <p>
-          We can apply {{ PRODUCT_NAME }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
+          We can apply {{ env('KUMA_NAME') }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
         </p>
 
         <div class="resource-list-actions mt-4">
           <KButton
-            :to="policyDocsUrl"
+            :to="`${env('KUMA_DOCS_URL')}/policies/?${env('KUMA_UTM_QUERY_PARAMS')}`"
             appearance="primary"
+            target="_blank"
           >
             Explore policies
           </KButton>
@@ -53,24 +54,36 @@
     </KCard>
 
     <KCard
-      v-if="resourceLinks.length > 0"
       title="Resources"
     >
       <template #body>
         <p>
-          Join the {{ PRODUCT_NAME }} community and ask questions:
+          Join the {{ env('KUMA_NAME') }} community and ask questions:
         </p>
 
         <ul>
-          <li
-            v-for="(item, index) in resourceLinks"
-            :key="index"
-          >
+          <li>
             <a
-              :href="item.link"
+              :href="`${env('KUMA_DOCS_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
             >
-              {{ item.label }}
+              {{ env('KUMA_NAME') }} Documentation
+            </a>
+          </li>
+          <li>
+            <a
+              :href="`${env('KUMA_CHAT_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              target="_blank"
+            >
+              {{ env('KUMA_NAME') }}  Community Chat
+            </a>
+          </li>
+          <li>
+            <a
+              :href="`https://github.com/kumahq/kuma?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              target="_blank"
+            >
+              {{ env('KUMA_NAME') }} GitHub Repository
             </a>
           </li>
         </ul>
@@ -83,39 +96,16 @@
 import { computed } from 'vue'
 import { KButton, KCard } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 
 const store = useStore()
 
-const policyDocsUrl = `https://kuma.io/policies/${import.meta.env.VITE_UTM}`
-const tagline = store.getters['config/getTagline']
 const dataplaneWizardRoute = computed(() => {
   const name = store.getters['config/getEnvironment'] === 'universal' ? 'universal-dataplane' : 'kubernetes-dataplane'
 
   return { name }
-})
-const resourceLinks = computed(() => {
-  const kumaDocsVersion = store.getters['config/getKumaDocsVersion']
-
-  if (!kumaDocsVersion) {
-    return []
-  }
-
-  return [
-    {
-      link: `https://kuma.io/docs/${kumaDocsVersion}/${import.meta.env.VITE_UTM}`,
-      label: `${import.meta.env.VITE_NAMESPACE} Documentation`,
-    },
-    {
-      link: `https://kuma-mesh.slack.com/${import.meta.env.VITE_UTM}`,
-      label: `${import.meta.env.VITE_NAMESPACE} Community Chat`,
-    },
-    {
-      link: `https://github.com/kumahq/kuma${import.meta.env.VITE_UTM}`,
-      label: `${import.meta.env.VITE_NAMESPACE} GitHub Repository`,
-    },
-  ]
 })
 </script>
 

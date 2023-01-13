@@ -573,7 +573,7 @@
           </p>
           <p>
             <a
-              :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/mesh/${utm}`"
+              :href="`${env('KUMA_DOCS_URL')}/policies/mesh/?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
             >
               Learn More
@@ -595,6 +595,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { KAlert, KButton, KCard } from '@kong/kongponents'
+import { useEnv } from '@/utilities/useEnv'
 
 import { kumaApi } from '@/api/kumaApi'
 import { kebabCase } from '@/utilities/helpers'
@@ -609,6 +610,7 @@ import { ClientStorage } from '@/utilities/ClientStorage'
 // schema for building code output
 import meshSchema from './MeshSchema'
 import { PRODUCT_NAME } from '@/constants'
+const env = useEnv()
 
 function getInitialMeshData() {
   return {
@@ -658,6 +660,7 @@ export default {
 
   data() {
     return {
+      env,
       hasStoredMeshData: false,
       productName: PRODUCT_NAME,
       selectedTab: '',
@@ -716,13 +719,11 @@ export default {
       isComplete: false,
       validate: getInitialMeshData(),
       vmsg: [],
-      utm: import.meta.env.VITE_UTM,
     }
   },
   computed: {
     ...mapGetters({
       title: 'config/getTagline',
-      kumaDocsVersion: 'config/getKumaDocsVersion',
       environment: 'config/getEnvironment',
     }),
 

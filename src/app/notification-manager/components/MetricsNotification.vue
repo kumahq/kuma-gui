@@ -7,7 +7,7 @@
     <ul class="list-disc pl-4">
       <li>
         <a
-          :href="`https://kuma.io/docs/${kumaDocsVersion}/policies/traffic-metrics/`"
+          :href="`${env('KUMA_DOCS_URL')}/policies/traffic-metrics/?${env('KUMA_UTM_QUERY_PARAMS')}`"
           target="_blank"
         >
           Traffic Metrics policy documentation
@@ -18,10 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import { useStore } from '@/store/store'
-
-const store = useStore()
-
-const kumaDocsVersion = computed(() => store.getters['config/getKumaDocsVersion'])
+import { useEnv } from '@/utilities/useEnv'
+const env = useEnv()
 </script>

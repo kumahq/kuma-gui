@@ -861,7 +861,8 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="k-button medium rounded primary"
-                      href="https://kuma.io/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                      href="https://kuma.io/docs/1.7.x/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                      target="_blank"
                       type="button"
                     >
                       
@@ -916,13 +917,12 @@ exports[`App.vue fails to renders basic view 1`] = `
                      Join the Kuma community and ask questions: 
                   </p>
                   <ul>
-                    
                     <li>
                       <a
                         href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
                         target="_blank"
                       >
-                        Kuma Documentation
+                        Kuma Documentation 
                       </a>
                     </li>
                     <li>
@@ -930,7 +930,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                         href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
                         target="_blank"
                       >
-                        Kuma Community Chat
+                        Kuma Community Chat 
                       </a>
                     </li>
                     <li>
@@ -938,10 +938,9 @@ exports[`App.vue fails to renders basic view 1`] = `
                         href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
                         target="_blank"
                       >
-                        Kuma GitHub Repository
+                        Kuma GitHub Repository 
                       </a>
                     </li>
-                    
                   </ul>
                   
                 </div>
