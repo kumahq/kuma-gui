@@ -42,62 +42,29 @@ const store = useStore()
 type PolicyTagDefinition = { iconUrl: string | null }
 
 const POLICIES: Record<string, PolicyTagDefinition> = {
-  CircuitBreaker: {
-    iconUrl: CircuitBreakerIconUrl,
-  },
-  FaultInjection: {
-    iconUrl: FaultInjectionIconUrl,
-  },
-  HealthCheck: {
-    iconUrl: HealthCheckIconUrl,
-  },
-  MeshAccessLog: {
-    // TODO: Update with new icon when/if available.
-    iconUrl: TrafficLogIconUrl,
-  },
-  MeshGateway: {
-    // TODO: Update with new icon when/if available.
-    iconUrl: null,
-  },
-  MeshGatewayRoute: {
-    // TODO: Update with new icon when/if available.
-    iconUrl: null,
-  },
-  MeshTrace: {
-    // TODO: Update with new icon when/if available.
-    iconUrl: TrafficTraceIconUrl,
-  },
-  MeshTrafficPermission: {
-    // TODO: Update with new icon when/if available.
-    iconUrl: TrafficPermissionIconUrl,
-  },
-  ProxyTemplate: {
-    iconUrl: ProxyTemplateIconUrl,
-  },
-  RateLimit: {
-    iconUrl: RateLimitIconUrl,
-  },
-  Retry: {
-    iconUrl: RetryIconUrl,
-  },
-  Timeout: {
-    iconUrl: TimeoutIconUrl,
-  },
-  TrafficLog: {
-    iconUrl: TrafficLogIconUrl,
-  },
-  TrafficPermission: {
-    iconUrl: TrafficPermissionIconUrl,
-  },
-  TrafficRoute: {
-    iconUrl: TrafficRouteIconUrl,
-  },
-  TrafficTrace: {
-    iconUrl: TrafficTraceIconUrl,
-  },
-  VirtualOutbound: {
-    iconUrl: VirtualOutboundIconUrl,
-  },
+  CircuitBreaker: { iconUrl: CircuitBreakerIconUrl },
+  FaultInjection: { iconUrl: FaultInjectionIconUrl },
+  HealthCheck: { iconUrl: HealthCheckIconUrl },
+  MeshAccessLog: { iconUrl: TrafficLogIconUrl }, // TODO: Update with new icon when/if available.
+  MeshCircuitBreaker: { iconUrl: CircuitBreakerIconUrl }, // TODO: Update with new icon when/if available.
+  MeshGateway: { iconUrl: null }, // TODO: Update with new icon when/if available.
+  MeshGatewayRoute: { iconUrl: null }, // TODO: Update with new icon when/if available.
+  MeshHealthCheck: { iconUrl: HealthCheckIconUrl }, // TODO: Update with new icon when/if available.
+  MeshProxyPatch: { iconUrl: ProxyTemplateIconUrl }, // TODO: Update with new icon when/if available.
+  MeshRateLimit: { iconUrl: RateLimitIconUrl }, // TODO: Update with new icon when/if available.
+  MeshRetry: { iconUrl: RetryIconUrl }, // TODO: Update with new icon when/if available.
+  MeshTimeout: { iconUrl: TimeoutIconUrl }, // TODO: Update with new icon when/if available.
+  MeshTrace: { iconUrl: TrafficTraceIconUrl }, // TODO: Update with new icon when/if available.
+  MeshTrafficPermission: { iconUrl: TrafficPermissionIconUrl }, // TODO: Update with new icon when/if available.
+  ProxyTemplate: { iconUrl: ProxyTemplateIconUrl },
+  RateLimit: { iconUrl: RateLimitIconUrl },
+  Retry: { iconUrl: RetryIconUrl },
+  Timeout: { iconUrl: TimeoutIconUrl },
+  TrafficLog: { iconUrl: TrafficLogIconUrl },
+  TrafficPermission: { iconUrl: TrafficPermissionIconUrl },
+  TrafficRoute: { iconUrl: TrafficRouteIconUrl },
+  TrafficTrace: { iconUrl: TrafficTraceIconUrl },
+  VirtualOutbound: { iconUrl: VirtualOutboundIconUrl },
 }
 
 const props = defineProps({
