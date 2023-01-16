@@ -60,18 +60,19 @@
             </template>
 
             <template #origins="{ rowValue }">
-              <div
+              <ul
                 v-if="rowValue.length > 0"
                 class="origin-list"
               >
-                <router-link
+                <li
                   v-for="(origin, originIndex) in rowValue"
                   :key="`${index}-${originIndex}`"
-                  :to="origin.route"
                 >
-                  {{ origin.name }}
-                </router-link>
-              </div>
+                  <router-link :to="origin.route">
+                    {{ origin.name }}
+                  </router-link>
+                </li>
+              </ul>
 
               <template v-else>
                 —
@@ -154,8 +155,8 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
 }
 
 .origin-list {
-  display: flex;
-  flex-direction: column;
+  list-style: initial;
+  padding-left: var(--spacing-md);
 }
 </style>
 

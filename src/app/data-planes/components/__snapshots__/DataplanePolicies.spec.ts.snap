@@ -356,15 +356,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <div
+                        <ul
                           class="origin-list"
                         >
                           
-                          <a>
-                            fi1.kuma-system
-                          </a>
+                          <li>
+                            <a>
+                              fi1.kuma-system
+                            </a>
+                          </li>
                           
-                        </div>
+                        </ul>
                         
                       </td>
                       
@@ -564,15 +566,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <div
+                        <ul
                           class="origin-list"
                         >
                           
-                          <a>
-                            fi1.kuma-system
-                          </a>
+                          <li>
+                            <a>
+                              fi1.kuma-system
+                            </a>
+                          </li>
                           
-                        </div>
+                        </ul>
                         
                       </td>
                       
@@ -777,15 +781,17 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <div
+                        <ul
                           class="origin-list"
                         >
                           
-                          <a>
-                            web-to-backend.kuma-system
-                          </a>
+                          <li>
+                            <a>
+                              web-to-backend.kuma-system
+                            </a>
+                          </li>
                           
-                        </div>
+                        </ul>
                         
                       </td>
                       
