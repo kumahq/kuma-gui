@@ -74,7 +74,7 @@
                           name: item.path
                         }"
                       >
-                        {{ item.pluralDisplayName }}: {{ item.length }}
+                        {{ item.name }}: {{ item.length }}
                       </router-link>
                     </li>
                   </template>
@@ -160,9 +160,9 @@ const extendedMesh = computed(() => {
 })
 
 const policyCounts = computed(() => {
-  return store.state.policies.map((policy) => ({
-    ...policy,
-    length: store.state.meshInsight.policies[policy.name]?.total ?? 0,
+  return store.state.policyTypes.map((policyType) => ({
+    ...policyType,
+    length: store.state.meshInsight.policies[policyType.name]?.total ?? 0,
   }))
 })
 

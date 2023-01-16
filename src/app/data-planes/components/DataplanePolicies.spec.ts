@@ -10,7 +10,7 @@ import {
 } from '@/types/index.d'
 
 async function renderComponent(props = {}) {
-  await store.dispatch('fetchPolicies')
+  await store.dispatch('fetchPolicyTypes')
   const dataPlane:DataPlane = {
     type: 'Dataplane',
     mesh: 'foo',

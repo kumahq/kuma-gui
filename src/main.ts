@@ -43,9 +43,8 @@ async function initializeVue() {
     // application. This is mainly needed to properly redirect users to the
     // onboarding flow in the appropriate scenarios.
     store.dispatch('bootstrap'),
-    // Loads available policies in order to populate the necessary information
-    // used for titling/breadcrumbing and policy lookups in the app.
-    store.dispatch('fetchPolicies'),
+    // Loads available policy types in order to populate the necessary information used for titling/breadcrumbing and policy lookups in the app.
+    store.dispatch('fetchPolicyTypes'),
   ])
 
   const router = await createRouter(env('KUMA_BASE_PATH'))

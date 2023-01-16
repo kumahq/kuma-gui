@@ -15,7 +15,7 @@ import { fetchAllResources } from '@/utilities/helpers'
 import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import { kumaApi } from '@/api/kumaApi'
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { Mesh, PolicyDefinition } from '@/types/index.d'
+import { Mesh, PolicyType } from '@/types/index.d'
 
 const ONLINE = 'Online'
 const OFFLINE = 'Offline'
@@ -70,9 +70,9 @@ interface BareRootState {
   serviceInsightsFetching: boolean
   externalServicesFetching: boolean
   zonesInsightsFetching: boolean
-  policies: PolicyDefinition[]
-  policiesByPath: Record<string, PolicyDefinition>
-  policiesByType: Record<string, PolicyDefinition>
+  policyTypes: PolicyType[]
+  policyTypesByPath: Record<string, PolicyType>
+  policyTypesByName: Record<string, PolicyType>
 }
 
 const initialState: BareRootState = {
@@ -132,9 +132,9 @@ const initialState: BareRootState = {
   serviceInsightsFetching: false,
   externalServicesFetching: false,
   zonesInsightsFetching: false,
-  policies: [],
-  policiesByPath: {},
-  policiesByType: {},
+  policyTypes: [],
+  policyTypesByPath: {},
+  policyTypesByName: {},
 }
 
 /**
@@ -219,13 +219,13 @@ export const storeConfig: StoreOptions<State> = {
 
       state.overviewCharts[chartName].data = data
     },
-    SET_POLICIES: (state, policies: PolicyDefinition[]) => {
-      policies.sort((policyDefinitionA, policyDefinitionB) => policyDefinitionA.name.localeCompare(policyDefinitionB.name))
+    SET_POLICY_TYPES: (state, policyTypes: PolicyType[]) => {
+      policyTypes.sort((policyTypeA, policyTypeB) => policyTypeA.name.localeCompare(policyTypeB.name))
 
-      state.policies = policies
+      state.policyTypes = policyTypes
     },
-    SET_POLICIES_BY_PATH: (state, policiesByPath) => (state.policiesByPath = policiesByPath),
-    SET_POLICIES_BY_TYPE: (state, policiesByType) => (state.policiesByType = policiesByType),
+    SET_POLICY_TYPES_BY_PATH: (state, policyTypesByPath) => (state.policyTypesByPath = policyTypesByPath),
+    SET_POLICY_TYPES_BY_NAME: (state, policyTypesByName) => (state.policyTypesByName = policyTypesByName),
   },
   actions: {
     async bootstrap({ commit, dispatch, getters, state }) {
@@ -448,14 +448,14 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_ZONES_INSIGHTS_FETCHING', false)
     },
 
-    async fetchPolicies({ commit }) {
-      const { policies } = await kumaApi.getPolicyDefinitions()
-      const policiesByPath = policies.reduce((obj, policy) => Object.assign(obj, { [policy.path]: policy }), {})
-      const policiesByType = policies.reduce((obj, policy) => Object.assign(obj, { [policy.name]: policy }), {})
+    async fetchPolicyTypes({ commit }) {
+      const { policies: policyTypes } = await kumaApi.getPolicyTypes()
+      const policyTypesByPath = policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.path]: policyType }), {})
+      const policyTypesByName = policyTypes.reduce((obj, policyType) => Object.assign(obj, { [policyType.name]: policyType }), {})
 
-      commit('SET_POLICIES', policies)
-      commit('SET_POLICIES_BY_PATH', policiesByPath)
-      commit('SET_POLICIES_BY_TYPE', policiesByType)
+      commit('SET_POLICY_TYPES', policyTypes)
+      commit('SET_POLICY_TYPES_BY_PATH', policyTypesByPath)
+      commit('SET_POLICY_TYPES_BY_NAME', policyTypesByName)
     },
 
     setChartsFromMeshInsights({ dispatch }) {

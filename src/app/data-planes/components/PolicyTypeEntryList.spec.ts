@@ -8,7 +8,7 @@ import { createPolicyTypeEntries } from '@/test-data/createPolicyTypeEntries'
 const policyTypeEntries = createPolicyTypeEntries()
 
 async function renderComponent(props = {}) {
-  await store.dispatch('fetchPolicies')
+  await store.dispatch('fetchPolicyTypes')
   return mount(PolicyTypeEntryList, {
     props: {
       policyTypeEntries,
