@@ -483,7 +483,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       </aside>
     </div>
     <main
-      class="app-main-content app-main-content--narrow"
+      class="app-main-content"
     >
       <!--v-if-->
       <div>
