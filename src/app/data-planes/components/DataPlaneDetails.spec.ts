@@ -37,7 +37,7 @@ describe('DataPlaneDetails', () => {
 
   test('has expected content and UI elements', async () => {
     const expectedOverviewStrings = ['DPP: backend', 'test-mesh', 'online', 'kuma.io/service', 'backend', 'kuma.io/protocol', 'http', 'envoy', '1.16.2', 'kumaDp', '1.0.7', 'coredns', '1.8.3']
-    const expectedInsightStrings = ['Connect time: February 17, 2021 at 7:33:36 AM', 'Control Plane Instance ID', 'Disconnect time: February 17, 2021 at 7:33:36 AM']
+    const expectedInsightStrings = ['Connect time: February 17, 2021 at 7:33:36 AM', 'Control Plane Instance ID', 'Disconnect time: February 17, 2021 at 7:33:36 AM']
     const expectedPoliciesStrings = ['web', '192.168.0.1:80:81', 'backend', 'fi1.kuma-system', 'web-to-backend.kuma-system']
 
     const wrapper = await renderComponent()

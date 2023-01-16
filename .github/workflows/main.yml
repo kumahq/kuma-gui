@@ -23,7 +23,7 @@ jobs:
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: '18.12'
+          node-version: '18.13'
 
       - name: Cache node_modules and dist
         # https://github.com/actions/cache
