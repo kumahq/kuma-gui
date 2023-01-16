@@ -150,7 +150,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <span
                             class=""
                           >
-                            Origins
+                            Origin policies
                           </span>
                           
                           <!---->

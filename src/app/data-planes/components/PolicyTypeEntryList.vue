@@ -115,7 +115,7 @@ const tableHeaders: TableHeader[] = [
   { label: 'To', key: 'destinationTags' },
   { label: 'On', key: 'name' },
   { label: 'Conf', key: 'config' },
-  { label: 'Origins', key: 'origins' },
+  { label: 'Origin policies', key: 'origins' },
 ]
 
 const props = defineProps({
