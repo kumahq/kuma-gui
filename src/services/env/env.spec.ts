@@ -1,6 +1,6 @@
 import { describe, expect, test } from '@jest/globals'
 
-import { semver } from './env'
+import { semver } from './Env'
 
 describe('env', () => {
   describe('semver', () => {
