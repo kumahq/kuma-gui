@@ -48,12 +48,18 @@ const getters: GetterTree<NotificationsInterface, State> = {
     )
   },
 
-  singleMeshNotificationItems(_state, getters, rootState): NotificationItem[] {
+  singleMeshNotificationItems(_state, getters, rootState, rootGetters): NotificationItem[] {
     if (rootState.selectedMesh === null) {
       return []
     }
 
     const meshItem: MeshNotificationItem = getters.meshNotificationItemMap[rootState.selectedMesh]
+
+    // if MeshAccessLog or MeshTrace are > 0 then we have logging
+    // totals default to zero via the frontend
+    const hasPolicyBasedLogging = Object.entries(rootGetters.getMeshInsight.policies as {total: number}[])
+      .filter(([key, _item]) => ['MeshAccessLog', 'MeshTrace'].includes(key))
+      .some(([_key, item]) => item.total > 0)
 
     const items: NotificationItem[] = [
       {
@@ -64,7 +70,7 @@ const getters: GetterTree<NotificationsInterface, State> = {
       {
         name: 'Logging',
         component: 'LoggingNotification',
-        isCompleted: meshItem.hasLogging,
+        isCompleted: meshItem.hasLogging || hasPolicyBasedLogging,
       },
       {
         name: 'Zero-trust security',
