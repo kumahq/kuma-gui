@@ -14,13 +14,7 @@
     >
       <AppSidebar />
 
-      <main
-        class="app-main-content"
-        :class="{
-          'app-main-content--wide': isWideContent,
-          'app-main-content--narrow': !isWideContent,
-        }"
-      >
+      <main class="app-main-content">
         <AppErrorMessage v-if="shouldShowAppError" />
 
         <NotificationManager v-if="shouldShowNotificationManager" />
@@ -63,13 +57,6 @@ import AppOnboardingNotification from './AppOnboardingNotification.vue'
 import AppSidebar from './AppSidebar.vue'
 import NotificationManager from '@/app/notification-manager/components/NotificationManager.vue'
 
-const WIDE_CONTENT_ROUTE_NAMES = [
-  'data-plane-list-view',
-  'gateway-list-view',
-  'service-list-view',
-  'service-detail-view',
-]
-
 const store = useStore()
 const route = useRoute()
 
@@ -91,7 +78,6 @@ const routeKey = computed(() => route.path)
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
-const isWideContent = computed(() => typeof route.name === 'string' && WIDE_CONTENT_ROUTE_NAMES.includes(route.name))
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   isLoading.value = globalLoading
@@ -120,12 +106,5 @@ function setDocumentTitle(title: string | undefined): void {
 
 .app-main-content {
   padding: var(--spacing-lg);
-}
-
-.app-main-content--narrow {
-  width: 100%;
-  max-width: 100rem;
-  margin-right: auto;
-  margin-left: auto;
 }
 </style>
