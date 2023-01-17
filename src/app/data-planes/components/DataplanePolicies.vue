@@ -141,8 +141,11 @@ function getMeshGatewayListenerEntries(meshGatewayDataplane: MeshGatewayDataplan
           const routeEntry: MeshGatewayRouteEntry = {
             routeName: route.route,
             route: {
-              name: 'meshgatewayroutes',
-              params: { mesh: meshGatewayDataplane.gateway.mesh },
+              name: 'policy',
+              params: {
+                mesh: meshGatewayDataplane.gateway.mesh,
+                policyPath: 'meshgatewayroutes',
+              },
               query: { ns: route.route },
             },
             service: destination.tags['kuma.io/service'],
