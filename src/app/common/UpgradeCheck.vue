@@ -9,7 +9,7 @@
       <template #alertMessage>
         <div class="alert-content">
           <div>
-            {{ env('KUMA_NAME') }} update available
+            {{ env('KUMA_PRODUCT_NAME') }} update available
           </div>
 
           <div>
@@ -34,7 +34,7 @@ import compare from 'semver/functions/compare'
 import { KAlert, KButton } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 
 const latestVersion = ref('')

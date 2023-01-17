@@ -595,7 +595,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { KAlert, KButton, KCard } from '@kong/kongponents'
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 
 import { kumaApi } from '@/api/kumaApi'
 import { kebabCase } from '@/utilities/helpers'
