@@ -71,7 +71,10 @@
                     >
                       <router-link
                         :to="{
-                          name: item.path
+                          name: 'policies',
+                          params: {
+                            policyType: item.path
+                          }
                         }"
                       >
                         {{ item.name }}: {{ item.length }}
