@@ -8,7 +8,7 @@ updates:
       - "dependencies"
 
   - package-ecosystem: "github-actions"
-    directory: "/"    
+    directory: "/"
     schedule:
       interval: "weekly"
     labels:

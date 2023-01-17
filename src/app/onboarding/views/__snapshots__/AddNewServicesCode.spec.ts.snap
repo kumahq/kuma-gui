@@ -49,21 +49,22 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               class="k-code-block-content"
             >
               <pre
-                class="k-highlighted-code-block language-bash"
+                class="k-highlighted-code-block show-copy-button language-bash"
                 data-testid="k-code-block-highlighted-code-block"
                 tabindex="0"
               >
+                        
                 <span
                   class="k-line-number-rows"
                 >
                   
-        
+          
                   
                   <span
                     class="k-line"
                   >
                     
-          
+            
                     <a
                       class="k-line-anchor"
                       id="code-block-clone-command-L1"
@@ -71,17 +72,21 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                       1
                     </a>
                     
-        
+          
                   </span>
                   
                   
-      
+        
                 </span>
+                
+        
                 <code
                   class="language-bash"
                 >
                   https://github.com/kumahq/kuma-counter-demo/
                 </code>
+                
+      
               </pre>
               <button
                 class="k-button small outline k-code-block-copy-button"

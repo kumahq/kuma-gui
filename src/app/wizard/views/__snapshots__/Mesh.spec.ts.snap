@@ -211,21 +211,22 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                               class="k-code-block-content"
                             >
                               <pre
-                                class="k-highlighted-code-block language-bash"
+                                class="k-highlighted-code-block show-copy-button language-bash"
                                 data-testid="k-code-block-highlighted-code-block"
                                 tabindex="0"
                               >
+                                        
                                 <span
                                   class="k-line-number-rows"
                                 >
                                   
-        
+          
                                   
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L1"
@@ -233,13 +234,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       1
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L2"
@@ -247,13 +248,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       2
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L3"
@@ -261,13 +262,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       3
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L4"
@@ -275,13 +276,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       4
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L5"
@@ -289,13 +290,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       5
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L6"
@@ -303,13 +304,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       6
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L7"
@@ -317,13 +318,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       7
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L8"
@@ -331,13 +332,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       8
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L9"
@@ -345,13 +346,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       9
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L10"
@@ -359,13 +360,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       10
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L11"
@@ -373,13 +374,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       11
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L12"
@@ -387,13 +388,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       12
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L13"
@@ -401,13 +402,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       13
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L14"
@@ -415,13 +416,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       14
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L15"
@@ -429,13 +430,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       15
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L16"
@@ -443,13 +444,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       16
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L17"
@@ -457,13 +458,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       17
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L18"
@@ -471,13 +472,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       18
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L19"
@@ -485,13 +486,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       19
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L20"
@@ -499,13 +500,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       20
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L21"
@@ -513,13 +514,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       21
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L22"
@@ -527,13 +528,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       22
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L23"
@@ -541,13 +542,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       23
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L24"
@@ -555,13 +556,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       24
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L25"
@@ -569,13 +570,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       25
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L26"
@@ -583,13 +584,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       26
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L27"
@@ -597,13 +598,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       27
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L28"
@@ -611,13 +612,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       28
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L29"
@@ -625,13 +626,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       29
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L30"
@@ -639,13 +640,13 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       30
                                     </a>
                                     
-        
+          
                                   </span>
                                   <span
                                     class="k-line"
                                   >
                                     
-          
+            
                                     <a
                                       class="k-line-anchor"
                                       id="code-block-universal-command-L31"
@@ -653,12 +654,14 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                       31
                                     </a>
                                     
-        
+          
                                   </span>
                                   
                                   
-      
+        
                                 </span>
+                                
+        
                                 <code
                                   class="language-bash"
                                 >
@@ -765,6 +768,8 @@ metrics:
                                   </span>
                                    -
                                 </code>
+                                
+      
                               </pre>
                               <button
                                 class="k-button small outline k-code-block-copy-button"

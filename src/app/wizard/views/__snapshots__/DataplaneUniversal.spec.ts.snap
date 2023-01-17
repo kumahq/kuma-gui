@@ -126,21 +126,22 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                       class="k-code-block-content"
                     >
                       <pre
-                        class="k-highlighted-code-block language-bash"
+                        class="k-highlighted-code-block show-copy-button language-bash"
                         data-testid="k-code-block-highlighted-code-block"
                         tabindex="0"
                       >
+                                
                         <span
                           class="k-line-number-rows"
                         >
                           
-        
+          
                           
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-generate-token-command-L1"
@@ -148,12 +149,14 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               1
                             </a>
                             
-        
+          
                           </span>
                           
                           
-      
+        
                         </span>
+                        
+        
                         <code
                           class="language-bash"
                         >
@@ -176,6 +179,8 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                           </span>
                            kuma-token-testMesh
                         </code>
+                        
+      
                       </pre>
                       <button
                         class="k-button small outline k-code-block-copy-button"
@@ -239,21 +244,22 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                       class="k-code-block-content"
                     >
                       <pre
-                        class="k-highlighted-code-block language-bash"
+                        class="k-highlighted-code-block show-copy-button language-bash"
                         data-testid="k-code-block-highlighted-code-block"
                         tabindex="0"
                       >
+                                
                         <span
                           class="k-line-number-rows"
                         >
                           
-        
+          
                           
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L1"
@@ -261,13 +267,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               1
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L2"
@@ -275,13 +281,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               2
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L3"
@@ -289,13 +295,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               3
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L4"
@@ -303,13 +309,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               4
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L5"
@@ -317,13 +323,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               5
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L6"
@@ -331,13 +337,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               6
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L7"
@@ -345,13 +351,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               7
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L8"
@@ -359,13 +365,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               8
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L9"
@@ -373,13 +379,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               9
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L10"
@@ -387,13 +393,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               10
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L11"
@@ -401,13 +407,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               11
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L12"
@@ -415,13 +421,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               12
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L13"
@@ -429,13 +435,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               13
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L14"
@@ -443,13 +449,13 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               14
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-stard-dp-command-L15"
@@ -457,12 +463,14 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                               15
                             </a>
                             
-        
+          
                           </span>
                           
                           
-      
+        
                         </span>
+                        
+        
                         <code
                           class="language-bash"
                         >
@@ -528,6 +536,8 @@ networking:
                           </span>
                           kuma-token-testMesh
                         </code>
+                        
+      
                       </pre>
                       <button
                         class="k-button small outline k-code-block-copy-button"
@@ -811,21 +821,22 @@ networking:
                 class="k-code-block-content"
               >
                 <pre
-                  class="k-highlighted-code-block language-yaml"
+                  class="k-highlighted-code-block show-copy-button language-yaml"
                   data-testid="k-code-block-highlighted-code-block"
                   tabindex="0"
                 >
+                          
                   <span
                     class="k-line-number-rows"
                   >
                     
-        
+          
                     
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L1"
@@ -833,13 +844,13 @@ networking:
                         1
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L2"
@@ -847,13 +858,13 @@ networking:
                         2
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L3"
@@ -861,13 +872,13 @@ networking:
                         3
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L4"
@@ -875,13 +886,13 @@ networking:
                         4
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L5"
@@ -889,13 +900,13 @@ networking:
                         5
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L6"
@@ -903,13 +914,13 @@ networking:
                         6
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L7"
@@ -917,13 +928,13 @@ networking:
                         7
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L8"
@@ -931,13 +942,13 @@ networking:
                         8
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L9"
@@ -945,13 +956,13 @@ networking:
                         9
                       </a>
                       
-        
+          
                     </span>
                     <span
                       class="k-line"
                     >
                       
-          
+            
                       <a
                         class="k-line-anchor"
                         id="onboarding-dpp-universal-example-L10"
@@ -959,12 +970,14 @@ networking:
                         10
                       </a>
                       
-        
+          
                     </span>
                     
                     
-      
+        
                   </span>
+                  
+        
                   <code
                     class="language-yaml"
                   >
@@ -1123,6 +1136,8 @@ networking:
                     </span>
                      echo
                   </code>
+                  
+      
                 </pre>
                 <button
                   class="k-button small outline k-code-block-copy-button"

@@ -659,21 +659,22 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                       class="k-code-block-content"
                     >
                       <pre
-                        class="k-highlighted-code-block language-yaml"
+                        class="k-highlighted-code-block show-copy-button language-yaml"
                         data-testid="k-code-block-highlighted-code-block"
                         tabindex="0"
                       >
+                                
                         <span
                           class="k-line-number-rows"
                         >
                           
-        
+          
                           
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L1"
@@ -681,13 +682,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               1
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L2"
@@ -695,13 +696,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               2
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L3"
@@ -709,13 +710,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               3
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L4"
@@ -723,13 +724,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               4
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L5"
@@ -737,13 +738,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               5
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L6"
@@ -751,13 +752,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               6
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L7"
@@ -765,13 +766,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               7
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L8"
@@ -779,13 +780,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               8
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L9"
@@ -793,13 +794,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               9
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L10"
@@ -807,13 +808,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               10
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L11"
@@ -821,13 +822,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               11
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L12"
@@ -835,13 +836,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               12
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L13"
@@ -849,13 +850,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               13
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L14"
@@ -863,13 +864,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               14
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L15"
@@ -877,13 +878,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               15
                             </a>
                             
-        
+          
                           </span>
                           <span
                             class="k-line"
                           >
                             
-          
+            
                             <a
                               class="k-line-anchor"
                               id="code-block-data-plane-L16"
@@ -891,12 +892,14 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                               16
                             </a>
                             
-        
+          
                           </span>
                           
                           
-      
+        
                         </span>
+                        
+        
                         <code
                           class="language-yaml"
                         >
@@ -1128,6 +1131,8 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                           </span>
                            frontend
                         </code>
+                        
+      
                       </pre>
                       <button
                         class="k-button small outline k-code-block-copy-button"
