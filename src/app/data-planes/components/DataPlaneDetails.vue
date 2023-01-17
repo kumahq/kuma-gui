@@ -1,8 +1,5 @@
 <template>
-  <TabsWidget
-    :tabs="filteredTabs"
-    initial-tab-override="overview"
-  >
+  <TabsWidget :tabs="filteredTabs">
     <template #tabHeader>
       <h1 class="entity-heading">
         DPP: {{ dataPlane.name }}

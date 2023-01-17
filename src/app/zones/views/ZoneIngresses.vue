@@ -34,7 +34,6 @@
         :has-error="error !== null"
         :is-loading="isLoading"
         :tabs="tabs"
-        initial-tab-override="overview"
       >
         <template #tabHeader>
           <h1 class="entity-heading">

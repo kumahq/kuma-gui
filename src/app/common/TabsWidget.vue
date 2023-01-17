@@ -20,9 +20,9 @@
 
       <div class="tab__content-container">
         <KTabs
-          v-model="tabState"
+          v-model="activeTabHash"
           :tabs="tabs"
-          @changed="hash => switchTab(hash)"
+          @changed="switchTab"
         >
           <template
             v-for="tab in tabsSlots"
@@ -51,13 +51,14 @@
 </template>
 
 <script lang="ts" setup>
+import { computed, PropType, ref } from 'vue'
 import { datadogLogs } from '@datadog/browser-logs'
 import { KIcon, KTabs } from '@kong/kongponents'
 
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { QueryParameter } from '@/utilities/QueryParameter'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { computed, PropType, ref } from 'vue'
 
 const props = defineProps({
   tabs: {
@@ -102,20 +103,36 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['on-tab-change'])
+const emit = defineEmits<{
+  (event: 'on-tab-change', tabHash: string): void,
+}>()
 
-const tabState = ref(props.initialTabOverride && `#${props.initialTabOverride}`)
+const activeTabHash = ref('')
 
 const tabsSlots = computed(() => props.tabs.map((tab) => tab.hash.replace('#', '')))
 
-function switchTab(newTab: string): void {
+function start() {
+  const tab = QueryParameter.get('tab')
+
+  if (tab !== null) {
+    activeTabHash.value = `#${tab}`
+  } else if (props.initialTabOverride !== null) {
+    activeTabHash.value = `#${props.initialTabOverride}`
+  }
+}
+
+start()
+
+function switchTab(newActiveTabHash: string): void {
+  QueryParameter.set('tab', newActiveTabHash.substring(1))
+
   datadogLogs.logger.info(datadogLogEvents.TABS_TAB_CHANGE, {
     data: {
-      newTab,
+      newActiveTabHash,
     },
   })
 
-  emit('on-tab-change', newTab)
+  emit('on-tab-change', newActiveTabHash)
 }
 </script>
 
