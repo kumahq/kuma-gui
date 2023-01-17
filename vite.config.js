@@ -11,7 +11,7 @@ import { PATH_CONFIG_DEFAULT } from './src/pathConfigDefault'
 dotenv.config()
 
 // https://vitejs.dev/config/
-export default defineConfig(function ({ mode }) {
+export const config = ({ mode }) => {
   return {
     base: './',
     server: {
@@ -53,4 +53,5 @@ export default defineConfig(function ({ mode }) {
       },
     },
   }
-})
+}
+export default defineConfig(({ mode }) => config({ mode }))
