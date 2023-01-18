@@ -28,20 +28,16 @@ export default class Env {
 
     _env = {
       ..._env,
-      ...{
-        KUMA_UTM_QUERY_PARAMS: `utm_source=${env('KUMA_PRODUCT_NAME')}&utm_medium=${env('KUMA_PRODUCT_NAME')}-GUI`,
-      },
+      KUMA_UTM_QUERY_PARAMS: `utm_source=${env('KUMA_PRODUCT_NAME')}&utm_medium=${env('KUMA_PRODUCT_NAME')}-GUI`,
     }
     this.env = {
       ..._env as EnvVars,
-      ...{
-        KUMA_INSTALL_URL: `${env('KUMA_INSTALL_URL')}?${env('KUMA_UTM_QUERY_PARAMS')}`,
-        // TODO(jc): not totally sure we need to use a regex here, maybe just split and join if not
-        KUMA_DOCS_URL: `${env('KUMA_DOCS_URL')}/${version.patch === '0.0.0' ? 'dev' : version.patch.replace(/\.\d+$/, '.x')}`,
-        KUMA_VERSION: version.pre,
-        KUMA_API_URL: env('KUMA_API_URL') ?? config.apiUrl,
-        KUMA_BASE_PATH: env('KUMA_BASE_PATH') ?? config.baseGuiPath,
-      },
+      KUMA_INSTALL_URL: `${env('KUMA_INSTALL_URL')}?${env('KUMA_UTM_QUERY_PARAMS')}`,
+      // TODO(jc): not totally sure we need to use a regex here, maybe just split and join if not
+      KUMA_DOCS_URL: `${env('KUMA_DOCS_URL')}/${version.patch === '0.0.0' ? 'dev' : version.patch.replace(/\.\d+$/, '.x')}`,
+      KUMA_VERSION: version.pre,
+      KUMA_API_URL: env('KUMA_API_URL') ?? config.apiUrl,
+      KUMA_BASE_PATH: env('KUMA_BASE_PATH') ?? config.baseGuiPath,
     }
   }
 
