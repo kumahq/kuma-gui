@@ -35,7 +35,6 @@
         :has-error="error"
         :is-loading="isLoading"
         :tabs="filterTabs()"
-        initial-tab-override="overview"
       >
         <template #tabHeader>
           <h1 class="entity-heading">

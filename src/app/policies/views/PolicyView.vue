@@ -83,7 +83,6 @@
         :error="error"
         :is-loading="isLoading"
         :tabs="tabs"
-        initial-tab-override="overview"
       >
         <template #tabHeader>
           <h1
