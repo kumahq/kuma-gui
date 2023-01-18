@@ -29,7 +29,12 @@ describe('notifications module', () => {
         },
       }
 
-      const result = notificationsModule.getters.singleMeshNotificationItems(notificationsModule.state(), getters, rootState, undefined)
+      const rootGetters = {
+        getMeshInsight: {
+          policies: {},
+        },
+      }
+      const result = notificationsModule.getters.singleMeshNotificationItems(notificationsModule.state(), getters, rootState, rootGetters)
 
       expect(result).toMatchInlineSnapshot(`
 [
