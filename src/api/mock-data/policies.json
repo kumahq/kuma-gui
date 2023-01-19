@@ -2,138 +2,140 @@
   "policies": [
     {
       "name": "CircuitBreaker",
-      "readOnly": false,
       "path": "circuit-breakers",
-      "singularDisplayName": "Circuit Breaker",
-      "pluralDisplayName": "Circuit Breakers",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "FaultInjection",
-      "readOnly": false,
       "path": "fault-injections",
-      "singularDisplayName": "Fault Injection",
-      "pluralDisplayName": "Fault Injections",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "HealthCheck",
-      "readOnly": false,
       "path": "health-checks",
-      "singularDisplayName": "Health Check",
-      "pluralDisplayName": "Health Checks",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "MeshAccessLog",
-      "readOnly": false,
       "path": "meshaccesslogs",
-      "singularDisplayName": "Mesh Access Log",
-      "pluralDisplayName": "Mesh Access Logs",
+      "readOnly": false,
+      "isExperimental": false
+    },
+    {
+      "name": "MeshCircuitBreaker",
+      "path": "meshcircuitbreakers",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "MeshGateway",
-      "readOnly": false,
       "path": "meshgateways",
-      "singularDisplayName": "Mesh Gateway",
-      "pluralDisplayName": "Mesh Gateways",
+      "readOnly": false,
       "isExperimental": true
     },
     {
       "name": "MeshGatewayRoute",
-      "readOnly": false,
       "path": "meshgatewayroutes",
-      "singularDisplayName": "Mesh Gateway Route",
-      "pluralDisplayName": "Mesh Gateway Routes",
+      "readOnly": false,
       "isExperimental": true
     },
     {
-      "name": "MeshTrace",
+      "name": "MeshHealthCheck",
+      "path": "meshhealthchecks",
       "readOnly": false,
+      "isExperimental": false
+    },
+    {
+      "name": "MeshProxyPatch",
+      "path": "meshproxypatches",
+      "readOnly": false,
+      "isExperimental": false
+    },
+    {
+      "name": "MeshRateLimit",
+      "path": "meshratelimits",
+      "readOnly": false,
+      "isExperimental": false
+    },
+    {
+      "name": "MeshRetry",
+      "path": "meshretries",
+      "readOnly": false,
+      "isExperimental": false
+    },
+    {
+      "name": "MeshTimeout",
+      "path": "meshtimeouts",
+      "readOnly": false,
+      "isExperimental": false
+    },
+    {
+      "name": "MeshTrace",
       "path": "meshtraces",
-      "singularDisplayName": "Mesh Trace",
-      "pluralDisplayName": "Mesh Traces",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "MeshTrafficPermission",
-      "readOnly": false,
       "path": "meshtrafficpermissions",
-      "singularDisplayName": "Mesh Traffic Permission",
-      "pluralDisplayName": "Mesh Traffic Permissions",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "ProxyTemplate",
-      "readOnly": false,
       "path": "proxytemplates",
-      "singularDisplayName": "Proxy Template",
-      "pluralDisplayName": "Proxy Templates",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "RateLimit",
-      "readOnly": false,
       "path": "rate-limits",
-      "singularDisplayName": "Rate Limit",
-      "pluralDisplayName": "Rate Limits",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "Retry",
-      "readOnly": false,
       "path": "retries",
-      "singularDisplayName": "Retry",
-      "pluralDisplayName": "Retries",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "Timeout",
-      "readOnly": false,
       "path": "timeouts",
-      "singularDisplayName": "Timeout",
-      "pluralDisplayName": "Timeouts",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "TrafficLog",
-      "readOnly": false,
       "path": "traffic-logs",
-      "singularDisplayName": "Traffic Log",
-      "pluralDisplayName": "Traffic Logs",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "TrafficPermission",
-      "readOnly": false,
       "path": "traffic-permissions",
-      "singularDisplayName": "Traffic Permission",
-      "pluralDisplayName": "Traffic Permissions",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "TrafficRoute",
-      "readOnly": false,
       "path": "traffic-routes",
-      "singularDisplayName": "Traffic Route",
-      "pluralDisplayName": "Traffic Routes",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "TrafficTrace",
-      "readOnly": false,
       "path": "traffic-traces",
-      "singularDisplayName": "Traffic Trace",
-      "pluralDisplayName": "Traffic Traces",
+      "readOnly": false,
       "isExperimental": false
     },
     {
       "name": "VirtualOutbound",
-      "readOnly": false,
       "path": "virtual-outbounds",
-      "singularDisplayName": "Virtual Outbound",
-      "pluralDisplayName": "Virtual Outbounds",
+      "readOnly": false,
       "isExperimental": false
     }
   ]

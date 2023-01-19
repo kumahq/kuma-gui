@@ -318,8 +318,8 @@ export type PolicyTypeEntryOrigin = {
 }
 
 export type PolicyTypeEntryConnection = {
-  sourceTags: LabelValue[] | null
-  destinationTags: LabelValue[] | null
+  sourceTags: LabelValue[]
+  destinationTags: LabelValue[]
   name: string | null
   origins: PolicyTypeEntryOrigin[]
   config: string | null
@@ -328,6 +328,21 @@ export type PolicyTypeEntryConnection = {
 export type PolicyTypeEntry = {
   type: string
   connections: PolicyTypeEntryConnection[]
+}
+
+export type RuleEntryConnection = {
+  type: {
+    sourceTags: LabelValue[]
+    destinationTags: LabelValue[]
+  }
+  name: string | null
+  origins: PolicyTypeEntryOrigin[]
+  config: string | null
+}
+
+export type RuleEntry = {
+  type: string
+  connections: RuleEntryConnection[]
 }
 
 export type SidecarDataplaneRuleEntry = {

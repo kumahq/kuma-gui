@@ -150,7 +150,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <span
                             class=""
                           >
-                            Origins
+                            Origin policies
                           </span>
                           
                           <!---->
@@ -356,15 +356,20 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <div
+                        <ul
                           class="origin-list"
                         >
                           
-                          <a>
-                            fi1.kuma-system
-                          </a>
+                          <li>
+                            <a
+                              class=""
+                              href="/mesh/default/policies/fault-injections?ns=fi1.kuma-system"
+                            >
+                              fi1.kuma-system
+                            </a>
+                          </li>
                           
-                        </div>
+                        </ul>
                         
                       </td>
                       
@@ -564,15 +569,20 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <div
+                        <ul
                           class="origin-list"
                         >
                           
-                          <a>
-                            fi1.kuma-system
-                          </a>
+                          <li>
+                            <a
+                              class=""
+                              href="/mesh/default/policies/fault-injections?ns=fi1.kuma-system"
+                            >
+                              fi1.kuma-system
+                            </a>
+                          </li>
                           
-                        </div>
+                        </ul>
                         
                       </td>
                       
@@ -777,15 +787,20 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                         class="cell-origins"
                       >
                         
-                        <div
+                        <ul
                           class="origin-list"
                         >
                           
-                          <a>
-                            web-to-backend.kuma-system
-                          </a>
+                          <li>
+                            <a
+                              class=""
+                              href="/mesh/default/policies/fault-injections?ns=web-to-backend.kuma-system"
+                            >
+                              web-to-backend.kuma-system
+                            </a>
+                          </li>
                           
-                        </div>
+                        </ul>
                         
                       </td>
                       
@@ -985,7 +1000,81 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 src=""
               />
               
-              MeshAccessLog (1) 
+              MeshCircuitBreaker (9) 
+              
+            </span>
+          </h3>
+          
+        </button>
+        <transition-stub
+          appear="false"
+          css="true"
+          name="accordion"
+          persisted="false"
+        >
+          <!--v-if-->
+        </transition-stub>
+      </li>
+      <li
+        class="accordion-item"
+      >
+        <button
+          aria-expanded="false"
+          class="accordion-item-header"
+          data-testid="accordion-item-button"
+          type="button"
+        >
+          
+          <h3
+            class="policy-type-heading"
+          >
+            <span
+              class="policy-type-tag"
+            >
+              <img
+                alt=""
+                class="policy-type-tag-icon"
+                src=""
+              />
+              
+              MeshRateLimit (2) 
+              
+            </span>
+          </h3>
+          
+        </button>
+        <transition-stub
+          appear="false"
+          css="true"
+          name="accordion"
+          persisted="false"
+        >
+          <!--v-if-->
+        </transition-stub>
+      </li>
+      <li
+        class="accordion-item"
+      >
+        <button
+          aria-expanded="false"
+          class="accordion-item-header"
+          data-testid="accordion-item-button"
+          type="button"
+        >
+          
+          <h3
+            class="policy-type-heading"
+          >
+            <span
+              class="policy-type-tag"
+            >
+              <img
+                alt=""
+                class="policy-type-tag-icon"
+                src=""
+              />
+              
+              MeshRetry (2) 
               
             </span>
           </h3>
@@ -1023,43 +1112,6 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
               />
               
               MeshTrace (1) 
-              
-            </span>
-          </h3>
-          
-        </button>
-        <transition-stub
-          appear="false"
-          css="true"
-          name="accordion"
-          persisted="false"
-        >
-          <!--v-if-->
-        </transition-stub>
-      </li>
-      <li
-        class="accordion-item"
-      >
-        <button
-          aria-expanded="false"
-          class="accordion-item-header"
-          data-testid="accordion-item-button"
-          type="button"
-        >
-          
-          <h3
-            class="policy-type-heading"
-          >
-            <span
-              class="policy-type-tag"
-            >
-              <img
-                alt=""
-                class="policy-type-tag-icon"
-                src=""
-              />
-              
-              MeshTrafficPermission (3) 
               
             </span>
           </h3>
