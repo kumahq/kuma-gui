@@ -9,14 +9,14 @@
   />
 
   <div
-    v-if="policyTypeEntriesFromRules.length > 0"
+    v-if="ruleEntries.length > 0"
     class="mt-2"
   >
     <h2>Rules</h2>
 
-    <PolicyTypeEntryList
+    <RuleEntryList
       id="rules"
-      :policy-type-entries="props.policyTypeEntriesFromRules"
+      :rule-entries="props.ruleEntries"
     />
   </div>
 </template>
@@ -25,7 +25,8 @@
 import { PropType } from 'vue'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
-import { PolicyTypeEntry } from '@/types/index.d'
+import RuleEntryList from './RuleEntryList.vue'
+import { PolicyTypeEntry, RuleEntry } from '@/types/index.d'
 
 const props = defineProps({
   dppName: {
@@ -38,8 +39,8 @@ const props = defineProps({
     required: true,
   },
 
-  policyTypeEntriesFromRules: {
-    type: Array as PropType<PolicyTypeEntry[]>,
+  ruleEntries: {
+    type: Array as PropType<RuleEntry[]>,
     required: true,
   },
 })

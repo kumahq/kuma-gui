@@ -6,7 +6,7 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
       type: 'MeshAccessLog',
       connections: [
         {
-          sourceTags: null,
+          sourceTags: [],
           destinationTags: [
             {
               label: 'kuma.io/service',
@@ -36,8 +36,8 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
       type: 'MeshTrace',
       connections: [
         {
-          sourceTags: null,
-          destinationTags: null,
+          sourceTags: [],
+          destinationTags: [],
           name: null,
           config: "backends: \n  - zipkin: \n      url: 'http://zipkin.internal/api/v2/spans'\ntags: null",
           origins: [

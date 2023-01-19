@@ -13,7 +13,7 @@
     <SidecarDataplanePolicyList
       :dpp-name="dataPlane.name"
       :policy-type-entries="policyTypeEntries"
-      :policy-type-entries-from-rules="policyTypeEntriesFromRules"
+      :rule-entries="ruleEntries"
     />
   </div>
 
@@ -56,6 +56,8 @@ import {
   PolicyTypeEntry,
   PolicyTypeEntryConnection,
   PolicyTypeEntryOrigin,
+  RuleEntry,
+  RuleEntryConnection,
   SidecarDataplane,
 } from '@/types/index.d'
 
@@ -70,7 +72,7 @@ const props = defineProps({
 
 const meshGatewayDataplane = ref<MeshGatewayDataplane | null>(null)
 const policyTypeEntries = ref<PolicyTypeEntry[]>([])
-const policyTypeEntriesFromRules = ref<PolicyTypeEntry[]>([])
+const ruleEntries = ref<RuleEntry[]>([])
 const meshGatewayListenerEntries = ref<MeshGatewayListenerEntry[]>([])
 const meshGatewayRoutePolicies = ref<MeshGatewayRoutePolicy[]>([])
 const isLoading = ref(true)
@@ -86,7 +88,7 @@ async function fetchPolicies(): Promise<void> {
   error.value = null
   isLoading.value = true
   policyTypeEntries.value = []
-  policyTypeEntriesFromRules.value = []
+  ruleEntries.value = []
   meshGatewayListenerEntries.value = []
   meshGatewayRoutePolicies.value = []
 
@@ -114,7 +116,7 @@ async function fetchPolicies(): Promise<void> {
         name: props.dataPlane.name,
       })
 
-      policyTypeEntriesFromRules.value = getPolicyTypeEntriesFromRules(rules ?? [])
+      ruleEntries.value = getRuleEntries(rules ?? [])
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -200,42 +202,42 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
  */
 function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyTypeEntry[] {
   // Uses a `Map` to store entries by type so they can be retrieved and updated while iterating over the `SidecarDataplane` objects.
-  const policyEntriesByType = new Map<string, PolicyTypeEntry>()
+  const policyTypeEntriesByType = new Map<string, PolicyTypeEntry>()
 
   for (const sidecarDataplane of sidecarDataplanes) {
     const { type, service } = sidecarDataplane
 
     // The `service` field, when set, represents the name of the destination service of traffic.
-    const destinationTags: LabelValue[] | null = typeof service === 'string' && service !== '' ? [{ label: 'kuma.io/service', value: service }] : null
+    const destinationTags: LabelValue[] = typeof service === 'string' && service !== '' ? [{ label: 'kuma.io/service', value: service }] : []
     const name = type === 'inbound' || type === 'outbound' ? sidecarDataplane.name : null
 
     for (const [policyTypeName, policies] of Object.entries(sidecarDataplane.matchedPolicies)) {
-      if (!policyEntriesByType.has(policyTypeName)) {
-        policyEntriesByType.set(policyTypeName, {
+      if (!policyTypeEntriesByType.has(policyTypeName)) {
+        policyTypeEntriesByType.set(policyTypeName, {
           type: policyTypeName,
           connections: [],
         })
       }
 
-      const policyEntry = policyEntriesByType.get(policyTypeName) as PolicyTypeEntry
+      const policyTypeEntry = policyTypeEntriesByType.get(policyTypeName) as PolicyTypeEntry
       const policyType = store.state.policyTypesByName[policyTypeName]
 
       for (const policy of policies) {
-        const connections = getPolicyEntryConnections(policy, policyType, sidecarDataplane, destinationTags, name)
+        const connections = getPolicyTypeEntryConnections(policy, policyType, sidecarDataplane, destinationTags, name)
 
-        policyEntry.connections.push(...connections)
+        policyTypeEntry.connections.push(...connections)
       }
     }
   }
 
-  const policyTypeEntries = Array.from(policyEntriesByType.values())
+  const policyTypeEntries = Array.from(policyTypeEntriesByType.values())
 
-  policyTypeEntries.sort((policyEntryA, policyEntryB) => policyEntryA.type.localeCompare(policyEntryB.type))
+  policyTypeEntries.sort((policyTypeEntryA, policyTypeEntryB) => policyTypeEntryA.type.localeCompare(policyTypeEntryB.type))
 
   return policyTypeEntries
 }
 
-function getPolicyEntryConnections(policy: MatchedPolicyType, policyType: PolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[] | null, name: string | null): PolicyTypeEntryConnection[] {
+function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: PolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
   const config = policy.conf && Object.keys(policy.conf).length > 0 ? json2yaml(JSON.stringify(policy.conf, null, 2)) : null
   const origin: PolicyTypeEntryOrigin = {
     name: policy.name,
@@ -250,82 +252,113 @@ function getPolicyEntryConnections(policy: MatchedPolicyType, policyType: Policy
   }
   const origins: PolicyTypeEntryOrigin[] = [origin]
 
-  const policyEntryConnections: PolicyTypeEntryConnection[] = []
+  const policyTypeEntryConnections: PolicyTypeEntryConnection[] = []
 
   if (sidecarDataplane.type === 'inbound' && Array.isArray(policy.sources)) {
     for (const { match } of policy.sources) {
       const sourceTags: LabelValue[] = [{ label: 'kuma.io/service', value: match['kuma.io/service'] }]
       const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
 
-      policyEntryConnections.push(connection)
+      policyTypeEntryConnections.push(connection)
     }
   } else {
-    const sourceTags = null
+    const sourceTags: LabelValue[] = []
     const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
 
-    policyEntryConnections.push(connection)
+    policyTypeEntryConnections.push(connection)
   }
 
-  return policyEntryConnections
+  return policyTypeEntryConnections
 }
 
 /**
- * Transforms `DataplaneRule` objects into policy type entries which are going to be displayed in this view.
+ * Transforms `DataplaneRule` objects into rule entries which are going to be displayed in this view.
  */
-function getPolicyTypeEntriesFromRules(rules: DataplaneRule[]): PolicyTypeEntry[] {
+function getRuleEntries(rules: DataplaneRule[]): RuleEntry[] {
   // Uses a `Map` to store entries by type so they can be retrieved and updated while iterating over the rules.
-  const policyEntriesByType = new Map<string, PolicyTypeEntry>()
+  const policyTypeEntriesByType = new Map<string, RuleEntry>()
 
   for (const rule of rules) {
-    if (!policyEntriesByType.has(rule.policyType)) {
-      policyEntriesByType.set(rule.policyType, {
+    if (!policyTypeEntriesByType.has(rule.policyType)) {
+      policyTypeEntriesByType.set(rule.policyType, {
         type: rule.policyType,
         connections: [],
       })
     }
 
-    const policyEntry = policyEntriesByType.get(rule.policyType) as PolicyTypeEntry
+    const policyTypeEntry = policyTypeEntriesByType.get(rule.policyType) as RuleEntry
     const policyType = store.state.policyTypesByName[rule.policyType]
-    const connections = getPolicyEntryConnectionsFromRules(rule, policyType)
+    const connections = getRuleEntryConnections(rule, policyType)
 
-    policyEntry.connections.push(...connections)
+    policyTypeEntry.connections.push(...connections)
   }
 
-  const policyTypeEntries = Array.from(policyEntriesByType.values())
+  const policyTypeEntries = Array.from(policyTypeEntriesByType.values())
 
-  policyTypeEntries.sort((policyEntryA, policyEntryB) => policyEntryA.type.localeCompare(policyEntryB.type))
+  policyTypeEntries.sort((policyTypeEntryA, policyTypeEntryB) => policyTypeEntryA.type.localeCompare(policyTypeEntryB.type))
 
   return policyTypeEntries
 }
 
-function getPolicyEntryConnectionsFromRules(rule: DataplaneRule, policyType: PolicyType): PolicyTypeEntryConnection[] {
+function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): RuleEntryConnection[] {
   const { type, service, subset, conf } = rule
 
   // Guards against likely API changes. The response currently contains `"subset": {}` instead of omitting the value or setting it to `null`, but that might change in the future.
   const subsetEntries = subset ? Object.entries(subset) : []
-  let sourceTags: LabelValue[] | null
-  let destinationTags: LabelValue[] | null
+  let sourceTags: LabelValue[]
+  let destinationTags: LabelValue[]
 
+  // Determines source tags.
   if (type === 'clientSubset') {
-    // Sets the wildcard service tag for client subsets without subset values.
-    const sourceSubset = subsetEntries.length > 0 ? subsetEntries : [['kuma.io/service', '*']]
-    // For client subsets, the source is represented by `subset` (i.e. tags); for destination subsets and single items, the source is the DPP.
-    sourceTags = sourceSubset.length > 0 ? sourceSubset.map(([label, value]) => ({ label, value })) : null
+    if (subsetEntries.length > 0) {
+    // For client subsets, the source is represented by `subset` (i.e. tags)
+      sourceTags = subsetEntries.map(([label, value]) => ({ label, value }))
+    } else {
+      // Sets the wildcard service tag for client subsets without subset values.
+      sourceTags = [
+        {
+          label: 'kuma.io/service',
+          value: '*',
+        },
+      ]
+    }
   } else {
-    sourceTags = null
+    // For destination subsets and single items, the source is the DPP for which we don’t want to show anything.
+    sourceTags = []
   }
 
-  if (typeof service === 'string' && service !== '') {
+  // Determines destination tags.
+  if (type === 'destinationSubset') {
+    // For destination subsets, the destination is represented by either `subset` (which has priority) or `service`. `subset` is more specific than `service` so it needs to be handled first.
+    if (subsetEntries.length > 0) {
+      destinationTags = subsetEntries.map(([label, value]) => ({ label, value }))
+    } else if (typeof service === 'string' && service !== '') {
+      // The `service` field, when set, represents the name of the destination service of traffic.
+      destinationTags = [
+        {
+          label: 'kuma.io/service',
+          value: service,
+        },
+      ]
+    } else {
+      // For destination subsets with empty or absent `subset` field and empty or absent `service`, we can set the wildcard service tag to indicate that the traffic goes to all services.
+      destinationTags = [
+        {
+          label: 'kuma.io/service',
+          value: '*',
+        },
+      ]
+    }
+  } else if (type === 'clientSubset' && typeof service === 'string' && service !== '') {
     // The `service` field, when set, represents the name of the destination service of traffic.
-    const destinationSubset = [['kuma.io/service', service]]
-    destinationTags = destinationSubset.length > 0 ? destinationSubset.map(([label, value]) => ({ label, value })) : null
-  } else if (type === 'destinationSubset') {
-    // For client subsets and destination subsets, the destination is `service`; for single items, the destination is the DPP.
-    // For destination subsets with empty or absent `subset` field, we can set the wildcard service tag to indicate that the traffic goes to all services.
-    const destinationSubset: [string, string][] = subsetEntries.length > 0 ? subsetEntries : [['kuma.io/service', '*']]
-    destinationTags = destinationSubset.length > 0 ? destinationSubset.map(([label, value]) => ({ label, value })) : null
+    destinationTags = [
+      {
+        label: 'kuma.io/service',
+        value: service,
+      },
+    ]
   } else {
-    destinationTags = null
+    destinationTags = []
   }
 
   const name = type === 'clientSubset' || type === 'destinationSubset' || service ? rule.name : null
@@ -346,7 +379,7 @@ function getPolicyEntryConnectionsFromRules(rule: DataplaneRule, policyType: Pol
     })
   }
 
-  const connection: PolicyTypeEntryConnection = { sourceTags, destinationTags, name, config, origins }
+  const connection: RuleEntryConnection = { type: { sourceTags, destinationTags }, name, config, origins }
 
   return [connection]
 }

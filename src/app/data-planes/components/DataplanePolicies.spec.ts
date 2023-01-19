@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import DataplanePolicies from './DataplanePolicies.vue'
@@ -11,7 +11,7 @@ import {
 
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicyTypes')
-  const dataPlane:DataPlane = {
+  const dataPlane: DataPlane = {
     type: 'Dataplane',
     mesh: 'foo',
     name: 'dataplane-test-456',
@@ -21,15 +21,11 @@ async function renderComponent(props = {}) {
       address: '',
     },
   }
+
   return mount(DataplanePolicies, {
     props: {
       dataPlane,
       ...props,
-    },
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }

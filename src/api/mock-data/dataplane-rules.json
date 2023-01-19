@@ -1,83 +1,311 @@
 {
-  "total": 3,
+  "total": 14,
   "items": [
     {
       "type": "clientSubset",
-      "name": "192.168.0.1:80",
-      "service": "backend",
-      "policyType": "MeshTrafficPermission",
-      "subset": {
-        "kuma.io/service": "client",
-        "kuma.io/zone": "east"
-      },
-      "conf": {
-        "action": "DENY"
-      },
-      "origins": [
-        {
-          "mesh": "default",
-          "name": "mtp-1"
-        }
-      ]
-    },
-    {
-      "type": "clientSubset",
-      "name": "192.168.0.1:80",
-      "service": "backend",
-      "policyType": "MeshTrafficPermission",
+      "name": "10.42.0.6:5000",
+      "service": "demo-app_kuma-demo_svc_5000",
+      "policyType": "MeshCircuitBreaker",
       "subset": {},
       "conf": {
-        "action": "DENY"
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
       },
       "origins": [
         {
           "mesh": "default",
-          "name": "default"
+          "name": "all.kuma-system"
         }
       ]
     },
     {
       "type": "clientSubset",
-      "name": "192.168.0.1:80",
-      "service": "backend",
-      "policyType": "MeshTrafficPermission",
-      "subset": {
-        "kuma.io/service": "client",
-        "kuma.io/zone": "west"
-      },
+      "name": "10.42.0.6:5000",
+      "service": "demo-app_kuma-demo_svc_5000",
+      "policyType": "MeshRateLimit",
+      "subset": {},
       "conf": {
-        "action": "ALLOW"
+        "local": {
+          "http": {
+            "requestRate": {
+              "num": 1,
+              "interval": "10s"
+            },
+            "onRateLimit": {
+              "status": 429,
+              "headers": [
+                {
+                  "key": "x-kuma-rate-limited",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
       },
       "origins": [
         {
           "mesh": "default",
-          "name": "mtp-1"
-        },
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "clientSubset",
+      "name": "10.42.0.6:5001",
+      "service": "demo-app_kuma-demo_svc_5001",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
         {
           "mesh": "default",
-          "name": "mtp-2"
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "clientSubset",
+      "name": "10.42.0.6:5001",
+      "service": "demo-app_kuma-demo_svc_5001",
+      "policyType": "MeshRateLimit",
+      "subset": {},
+      "conf": {
+        "local": {
+          "http": {
+            "requestRate": {
+              "num": 1,
+              "interval": "10s"
+            },
+            "onRateLimit": {
+              "status": 429,
+              "headers": [
+                {
+                  "key": "x-kuma-rate-limited",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
         }
       ]
     },
     {
       "type": "destinationSubset",
-      "name": "192.168.0.2:8080",
-      "service": "redis",
-      "policyType": "MeshAccessLog",
+      "name": "10.43.140.119:6379",
+      "service": "redis_kuma-demo_svc_6379",
+      "policyType": "MeshCircuitBreaker",
       "subset": {},
       "conf": {
-        "backends": [
-          {
-            "file": {
-              "path": "/tmp/access.logs"
-            }
-          }
-        ]
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
       },
       "origins": [
         {
           "mesh": "default",
-          "name": "mal-1"
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "10.43.140.119:6379",
+      "service": "redis_kuma-demo_svc_6379",
+      "policyType": "MeshRetry",
+      "subset": {
+        "kuma.io/service": "redis_kuma-demo_svc_6379"
+      },
+      "conf": {
+        "tcp": {
+          "maxConnectAttempt": 5
+        },
+        "http": {
+          "numRetries": 10
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "10.43.179.174:5000",
+      "service": "demo-app_kuma-demo_svc_5000",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "10.43.179.174:5001",
+      "service": "demo-app_kuma-demo_svc_5001",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "240.0.0.0:80",
+      "service": "demo-app_kuma-demo_svc_5000",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "240.0.0.1:80",
+      "service": "redis_kuma-demo_svc_6379",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "240.0.0.1:80",
+      "service": "redis_kuma-demo_svc_6379",
+      "policyType": "MeshRetry",
+      "subset": {
+        "kuma.io/service": "redis_kuma-demo_svc_6379"
+      },
+      "conf": {
+        "tcp": {
+          "maxConnectAttempt": 5
+        },
+        "http": {
+          "numRetries": 10
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "240.0.0.2:80",
+      "service": "svclb-demo-app-gateway_kuma-demo_svc",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
+        }
+      ]
+    },
+    {
+      "type": "destinationSubset",
+      "name": "240.0.0.3:80",
+      "service": "demo-app_kuma-demo_svc_5001",
+      "policyType": "MeshCircuitBreaker",
+      "subset": {},
+      "conf": {
+        "connectionLimits": {
+          "maxConnections": 1,
+          "maxConnectionPools": 1,
+          "maxPendingRequests": 1,
+          "maxRetries": 1,
+          "maxRequests": 1
+        }
+      },
+      "origins": [
+        {
+          "mesh": "default",
+          "name": "all.kuma-system"
         }
       ]
     },
@@ -91,16 +319,22 @@
         "backends": [
           {
             "zipkin": {
-              "url": "http://zipkin.internal/api/v2/spans"
+              "url": "http://foo.com/trace"
             }
           }
         ],
-        "tags": null
+        "sampling": {},
+        "tags": [
+          {
+            "name": "team",
+            "literal": "core"
+          }
+        ]
       },
       "origins": [
         {
           "mesh": "default",
-          "name": "mal-1"
+          "name": "all.kuma-system"
         }
       ]
     }
