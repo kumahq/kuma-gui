@@ -168,7 +168,7 @@
               class="external-link"
               target="_blank"
             >
-              Learn About Certificates in {{ env('KUMA_NAME') }}
+              Learn About Certificates in {{ env('KUMA_PRODUCT_NAME') }}
             </a>
           </template>
         </KAlert>
@@ -216,7 +216,7 @@ import YamlView from '@/app/common/YamlView.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 
 const store = useStore()

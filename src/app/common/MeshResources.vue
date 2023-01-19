@@ -35,10 +35,10 @@
       </template>
     </KCard>
 
-    <KCard :title="`Apply ${ env('KUMA_NAME') } policies`">
+    <KCard :title="`Apply ${ env('KUMA_PRODUCT_NAME') } policies`">
       <template #body>
         <p>
-          We can apply {{ env('KUMA_NAME') }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
+          We can apply {{ env('KUMA_PRODUCT_NAME') }} policies to secure, observe, route and manage the Mesh and its data plane proxies.
         </p>
 
         <div class="resource-list-actions mt-4">
@@ -58,7 +58,7 @@
     >
       <template #body>
         <p>
-          Join the {{ env('KUMA_NAME') }} community and ask questions:
+          Join the {{ env('KUMA_PRODUCT_NAME') }} community and ask questions:
         </p>
 
         <ul>
@@ -67,7 +67,7 @@
               :href="`${env('KUMA_DOCS_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
             >
-              {{ env('KUMA_NAME') }} Documentation
+              {{ env('KUMA_PRODUCT_NAME') }} Documentation
             </a>
           </li>
           <li>
@@ -75,7 +75,7 @@
               :href="`${env('KUMA_CHAT_URL')}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
             >
-              {{ env('KUMA_NAME') }}  Community Chat
+              {{ env('KUMA_PRODUCT_NAME') }}  Community Chat
             </a>
           </li>
           <li>
@@ -83,7 +83,7 @@
               :href="`https://github.com/kumahq/kuma?${env('KUMA_UTM_QUERY_PARAMS')}`"
               target="_blank"
             >
-              {{ env('KUMA_NAME') }} GitHub Repository
+              {{ env('KUMA_PRODUCT_NAME') }} GitHub Repository
             </a>
           </li>
         </ul>
@@ -97,7 +97,7 @@ import { computed } from 'vue'
 import { KButton, KCard } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 
 const store = useStore()

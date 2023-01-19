@@ -18,6 +18,6 @@
 </template>
 
 <script lang="ts" setup>
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 </script>

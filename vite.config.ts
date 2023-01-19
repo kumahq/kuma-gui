@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import { defineConfig } from 'vite'
+import { defineConfig, UserConfigFn } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import path from 'path'
 import pluginRewriteAll from 'vite-plugin-rewrite-all'
@@ -11,7 +11,7 @@ import { PATH_CONFIG_DEFAULT } from './src/pathConfigDefault'
 dotenv.config()
 
 // https://vitejs.dev/config/
-export default defineConfig(function ({ mode }) {
+export const config:UserConfigFn = ({ mode }) => {
   return {
     base: './',
     server: {
@@ -53,4 +53,5 @@ export default defineConfig(function ({ mode }) {
       },
     },
   }
-})
+}
+export default defineConfig(config)

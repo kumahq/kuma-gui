@@ -163,7 +163,7 @@ import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 
 const tabs = [

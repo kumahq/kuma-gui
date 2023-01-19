@@ -83,7 +83,7 @@ import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 
 const LONG_POOLING_INTERVAL = 1000

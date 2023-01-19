@@ -32,7 +32,7 @@
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
-import { useEnv } from '@/utilities/useEnv'
+import { useEnv } from '@/utilities'
 const env = useEnv()
 
 export default {

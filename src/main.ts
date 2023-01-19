@@ -23,7 +23,7 @@ useTheme(am4themesAnimated)
 async function initializeVue() {
   const env = useEnv()
 
-  document.title = `${env('KUMA_NAME')} Manager`
+  document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
   kumaApi.setBaseUrl(env('KUMA_API_URL'))
 
   if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
