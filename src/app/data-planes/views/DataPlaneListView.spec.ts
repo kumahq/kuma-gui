@@ -2,12 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneListView from './DataPlaneListView.vue'
-import { router, useMock } from '@/../jest/jest-setup-after-env'
-import response from '@/api/mock-data/meshes/default/dataplanes+insights.json'
+import { router } from '@/../jest/jest-setup-after-env'
 
 import { RouteLocationNamedRaw } from 'vue-router'
-
-const mock = useMock('/meshes/default/dataplanes+insights', response)
 
 async function renderComponent(routeLocation: RouteLocationNamedRaw = {}) {
   await router.push({
@@ -57,18 +54,6 @@ describe('DataPlaneListView', () => {
   })
 
   test('gateway listing has expected content and UI elements', async () => {
-    mock({}, (req, resp) => {
-      const gateway = req.url.searchParams.get('gateway')
-      expect(gateway).toEqual('true')
-      resp.total = '1'
-      const gw = resp.items.find((item: any) => item.name === 'cluster-1.gateway-01')
-      if (gw) {
-        resp.items = [
-          gw,
-        ]
-      }
-      return resp
-    })
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
     })
@@ -77,31 +62,22 @@ describe('DataPlaneListView', () => {
     expect(dataPlaneTypeFilter.findAll('option').length).toBe(3)
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
-    expect(tableRows.length).toBe(1)
+    expect(tableRows.length).toBe(2)
 
     const firstTableRowHtml = tableRows[0].html()
-    const expectedTableRowStrings = ['cluster-1.gateway-01', 'default', 'BUILTIN']
-    for (const string of expectedTableRowStrings) {
+    for (const string of ['alarm-gateway-0', 'DELEGATED']) {
       expect(firstTableRowHtml).toContain(string)
+    }
+
+    const secondTableRowHtml = tableRows[1].html()
+    for (const string of ['transmitter-gateway-0', 'BUILTIN']) {
+      expect(secondTableRowHtml).toContain(string)
     }
   })
 
   test('can filter gateway proxies by type', async () => {
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
-    })
-
-    mock({}, (req, resp) => {
-      const gateway = req.url.searchParams.get('gateway')
-      expect(gateway).toEqual('builtin')
-      resp.total = '1'
-      const gw = resp.items.find((item: any) => item.name === 'cluster-1.gateway-01')
-      if (gw) {
-        resp.items = [
-          gw,
-        ]
-      }
-      return resp
     })
 
     const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
@@ -112,9 +88,17 @@ describe('DataPlaneListView', () => {
     expect(tableRows.length).toBe(1)
 
     const firstTableRowHtml = tableRows[0].html()
-    const expectedTableRowStrings = ['cluster-1.gateway-01', 'default', 'BUILTIN', 'gateway']
+    const expectedTableRowStrings = ['transmitter-gateway-0', 'BUILTIN']
     for (const string of expectedTableRowStrings) {
       expect(firstTableRowHtml).toContain(string)
+    }
+
+    await dataPlaneTypeFilter.setValue('Delegated')
+    await flushPromises()
+
+    const firstTableRowHtml2 = tableRows[0].html()
+    for (const string of ['transmitter-gateway-0', 'BUILTIN']) {
+      expect(firstTableRowHtml2).toContain(string)
     }
   })
 
