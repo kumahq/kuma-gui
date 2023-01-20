@@ -37,7 +37,7 @@
         class="data-overview-table"
       >
         <KTable
-          :key="tableRecompuationKey"
+          :key="tableRecomputationKey"
           class="data-overview-table"
           :class="{ 'data-table-is-hidden' : tableDataIsEmpty }"
           :fetcher="tableDataFetcher"
@@ -342,7 +342,7 @@ const tableHeaders = computed(() => {
   }
 })
 const customSlots = computed(() => props.tableData.headers.map((header) => header.key).filter((key) => slots[key]))
-const tableRecompuationKey = ref(0)
+const tableRecomputationKey = ref(0)
 
 watch(() => props.isLoading, function () {
   if (!props.isLoading && props.tableData.data.length > 0) {
@@ -354,7 +354,7 @@ watch(() => props.isLoading, function () {
  * Just changing the table data/headers doesn’t cause the table component to re-render, so by updating its `key` prop when this happens, we force a re-render. This is necessary to get the column visibility toggles and similar operations to work in the data planes list view.
  */
 watch(() => props.tableData, function () {
-  tableRecompuationKey.value++
+  tableRecomputationKey.value++
 })
 
 function tableDataFetcher(): { data: object[], total: number } {
