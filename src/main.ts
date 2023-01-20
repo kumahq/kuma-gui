@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { RouteRecordRaw } from 'vue-router'
 import { addLicense, useTheme } from '@amcharts/amcharts4/core'
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
@@ -6,7 +7,8 @@ import { createRouter } from './router/router'
 import { kumaApi } from './api/kumaApi'
 import { setupDatadog } from './utilities/setupDatadog'
 import { storeKey, store } from './store/store'
-import { useEnv } from '@/utilities'
+import { EnvVars } from '@/services/env/Env'
+import { TOKENS, get } from '@/services'
 import App from './app/App.vue'
 
 if (import.meta.env.PROD) {
@@ -20,9 +22,8 @@ useTheme(am4themesAnimated)
  *
  * This is a good place to run operations that should ideally be initiated or completed before the Vue application instance exists.
  */
-async function initializeVue() {
-  const env = useEnv()
 
+async function initializeVue(env: (key: keyof EnvVars) => string, routes: readonly RouteRecordRaw[]) {
   document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
   kumaApi.setBaseUrl(env('KUMA_API_URL'))
 
@@ -47,14 +48,14 @@ async function initializeVue() {
     store.dispatch('fetchPolicyTypes'),
   ])
 
-  const router = await createRouter(env('KUMA_BASE_PATH'))
+  const router = await createRouter(routes, env('KUMA_BASE_PATH'))
 
   app.use(router)
 
   app.mount('#app')
 }
 
-initializeVue()
+initializeVue(get(TOKENS.env), get(TOKENS.routes))
 
 if (import.meta.env.VITE_AMCHARTS_LICENSE) {
   addLicense(import.meta.env.VITE_AMCHARTS_LICENSE)

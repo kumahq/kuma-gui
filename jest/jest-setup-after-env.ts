@@ -7,6 +7,7 @@ import { config } from '@vue/test-utils'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { createRouter } from '../src/router/router'
+import { TOKENS, get } from '../src/services'
 import { store, storeKey } from '../src/store/store'
 import { setupMockServer } from '../src/api/setupMockServer'
 import { rest, MockedRequest as Request } from 'msw'
@@ -16,7 +17,7 @@ type MockFunction = (_opts: Record<string, unknown>, cb: (req: Request, resp: Re
 /**
  * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
  */
-const router = createRouter()
+const router = createRouter(get(TOKENS.routes))
 config.global.plugins.push(router)
 
 /**
