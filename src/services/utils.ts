@@ -22,9 +22,9 @@ const useInjection = <T extends TokenValue>(token: T, container: Container): Tok
 
 export const createInjections = <T extends TokenValue[]>(
   tokens: T,
-  container: Container,
+  _container: Container = container,
 ): InjectionHooks<T> =>
-  tokens.map((token) => () => useInjection(token, container)) as InjectionHooks<T>
+  tokens.map((token) => () => useInjection(token, _container)) as InjectionHooks<T>
 //
 
 type DependencyDefinition = {
