@@ -99,7 +99,7 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                         <span
                           class="sr-only"
                         >
-                          actions
+                          Actions
                         </span>
                         
                         <!---->

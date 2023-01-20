@@ -1,5 +1,4 @@
 interface ImportMetaEnv {
-  readonly VITE_DATA_TIMEOUT: number
   readonly VITE_INSTALL_URL: string
   readonly VITE_VERSION_URL: string
   readonly VITE_NAMESPACE: string

@@ -143,13 +143,13 @@
         />
       </g>
       <template #content>
-        Configuration for all {{ productName }} resources is specified in YAML config files. The config files can be stored in an external datastore.
+        Configuration for all {{ PRODUCT_NAME }} resources is specified in YAML config files. The config files can be stored in an external datastore.
       </template>
     </KPop>
 
     <KPop
       trigger="hover"
-      :title="productName"
+      :title="PRODUCT_NAME"
       :is-svg="true"
       tag="g"
       placement="rightEnd"
@@ -178,7 +178,7 @@
 
       </g>
       <template #content>
-        In Postgres mode, the {{ productName }} control plane connects to Postgres to fetch the right resources and configure the service mesh.
+        In Postgres mode, the {{ PRODUCT_NAME }} control plane connects to Postgres to fetch the right resources and configure the service mesh.
       </template>
     </KPop>
 
@@ -212,7 +212,7 @@
         />
       </g>
       <template #content>
-        You can store the YAML config files for {{ productName }} in a Postgres database. You can work with a managed Postgres offering or manage your own.
+        You can store the YAML config files for {{ PRODUCT_NAME }} in a Postgres database. You can work with a managed Postgres offering or manage your own.
       </template>
     </KPop>
 
@@ -723,22 +723,8 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { KPop } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
-
-export default {
-  name: 'PostgresGraph',
-
-  components: {
-    KPop,
-  },
-
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-    }
-  },
-}
 </script>

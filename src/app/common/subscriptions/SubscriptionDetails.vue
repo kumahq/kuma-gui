@@ -4,22 +4,26 @@
       <h5 class="overview-tertiary-title">
         General Information:
       </h5>
+
       <ul>
         <li v-if="details.globalInstanceId">
           <strong>Global Instance ID:</strong>&nbsp;
           <span class="mono">{{ details.globalInstanceId }}</span>
         </li>
+
         <li v-if="details.controlPlaneInstanceId">
           <strong>Control Plane Instance ID:</strong>&nbsp;
           <span class="mono">{{ details.controlPlaneInstanceId }}</span>
         </li>
+
         <li v-if="details.connectTime">
           <strong>Last Connected:</strong>&nbsp;
-          {{ readableDate(details.connectTime) }}
+          {{ humanReadableDate(details.connectTime) }}
         </li>
+
         <li v-if="details.disconnectTime">
           <strong>Last Disconnected:</strong>&nbsp;
-          {{ readableDate(details.disconnectTime) }}
+          {{ humanReadableDate(details.disconnectTime) }}
         </li>
       </ul>
     </div>
@@ -31,20 +35,22 @@
           :key="label"
         >
           <h6 class="overview-tertiary-title">
-            {{ humanReadable(label) }}:
+            {{ camelCaseToWords(label) }}:
           </h6>
+
           <ul>
             <li
               v-for="(k, v) in item"
               :key="v"
             >
-              <strong>{{ humanReadable(v) }}:</strong>&nbsp;
+              <strong>{{ camelCaseToWords(v) }}:</strong>&nbsp;
               <span class="mono">{{ formatError(formatValue(k)) }}</span>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+
     <KAlert
       v-else
       appearance="info"
@@ -53,6 +59,7 @@
       <template #alertIcon>
         <KIcon icon="portal" />
       </template>
+
       <template #alertMessage>
         There are no subscription statistics for <strong>{{ details.id }}</strong>
       </template>
@@ -60,62 +67,44 @@
   </div>
 </template>
 
-<script>
-import { humanReadableDate, camelCaseToWords } from '@/utilities/helpers'
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { KAlert, KIcon } from '@kong/kongponents'
 
-export default {
-  name: 'SubscriptionDetails',
+import { humanReadableDate, camelCaseToWords } from '@/utilities/helpers'
 
-  components: {
-    KAlert,
-    KIcon,
+const props = defineProps({
+  details: {
+    type: Object,
+    required: true,
   },
 
-  props: {
-    details: {
-      type: Object,
-      required: true,
-    },
-    isDiscoverySubscription: {
-      type: Boolean,
-      default: false,
-    },
+  isDiscoverySubscription: {
+    type: Boolean,
+    default: false,
   },
+})
 
-  computed: {
-    detailsIterator() {
-      if (this.isDiscoverySubscription) {
-        const { lastUpdateTime, total, ...restDetails } = this.details.status
+const detailsIterator = computed<Record<string, Record<string, any>>>(() => {
+  if (props.isDiscoverySubscription) {
+    const { lastUpdateTime, total, ...restDetails } = props.details.status
 
-        return restDetails
-      }
+    return restDetails
+  }
 
-      return this.details.status?.stat
-    },
-  },
+  return props.details.status?.stat
+})
 
-  methods: {
-    formatValue(value) {
-      return value ? parseInt(value, 10).toLocaleString('en').toString() : 0
-    },
+function formatValue(value: string): string {
+  return value ? parseInt(value, 10).toLocaleString('en').toString() : '0'
+}
 
-    readableDate(value) {
-      return humanReadableDate(value)
-    },
+function formatError(value: string): string {
+  if (value === '--') {
+    return 'error calculating'
+  }
 
-    humanReadable(value) {
-      return camelCaseToWords(value)
-    },
-
-    formatError(value) {
-      if (value === '--') {
-        return 'error calculating'
-      }
-
-      return value
-    },
-  },
+  return value
 }
 </script>
 

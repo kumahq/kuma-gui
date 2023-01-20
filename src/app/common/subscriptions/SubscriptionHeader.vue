@@ -1,35 +1,25 @@
 <template>
   <h4 class="text-lg font-medium">
     <span class="color-green-500">
-      Connect time: {{ rawReadableDateFilter(details.connectTime) }}
+      Connect time: {{ rawReadableDate(props.details.connectTime) }}
     </span>
 
     <span
-      v-if="details.disconnectTime"
+      v-if="props.details.disconnectTime"
       class="ml-4 color-red-600"
     >
-      Disconnect time: {{ rawReadableDateFilter(details.disconnectTime) }}
+      Disconnect time: {{ rawReadableDate(props.details.disconnectTime) }}
     </span>
   </h4>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { rawReadableDate } from '@/utilities/helpers'
 
-export default {
-  name: 'SubscriptionHeader',
-
-  props: {
-    details: {
-      type: Object,
-      required: true,
-    },
+const props = defineProps({
+  details: {
+    type: Object,
+    required: true,
   },
-
-  methods: {
-    rawReadableDateFilter(value) {
-      return rawReadableDate(value)
-    },
-  },
-}
+})
 </script>

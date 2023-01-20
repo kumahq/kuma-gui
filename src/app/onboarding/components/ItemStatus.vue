@@ -2,37 +2,31 @@
   <li class="flex items-center mb-2">
     <span class="circle">
       <KIcon
-        v-if="status"
+        v-if="props.status"
         icon="check"
         size="10"
         color="var(--kuma-purple-1)"
       />
     </span>
-    {{ name }}
+
+    {{ props.name }}
   </li>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { KIcon } from '@kong/kongponents'
 
-export default {
-  name: 'ItemStatus',
-
-  components: {
-    KIcon,
+const props = defineProps({
+  name: {
+    type: String,
+    required: true,
   },
 
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: Boolean,
-      default: false,
-    },
+  status: {
+    type: Boolean,
+    default: false,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

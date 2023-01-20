@@ -96,7 +96,7 @@
       trigger="hover"
       :is-svg="true"
       tag="g"
-      :title="productName"
+      :title="PRODUCT_NAME"
       placement="rightEnd"
       :popover-timeout="5"
     >
@@ -156,7 +156,7 @@
         />
       </g>
       <template #content>
-        {{ productName }} attaches a data plane proxy sidecar to each service in your mesh.
+        {{ PRODUCT_NAME }} attaches a data plane proxy sidecar to each service in your mesh.
         This sidecar handles the mesh configuration for the service.
       </template>
     </KPop>
@@ -467,22 +467,8 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { KPop } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
-
-export default {
-  name: 'StandaloneGraph',
-
-  components: {
-    KPop,
-  },
-
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-    }
-  },
-}
 </script>

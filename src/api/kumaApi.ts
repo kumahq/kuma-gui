@@ -21,6 +21,8 @@ import {
   ServiceInsight,
   SidecarDataplane,
   Zone,
+  ZoneEgressOverview,
+  ZoneIngressOverview,
   ZoneOverview,
 } from '@/types/index.d'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
@@ -101,11 +103,11 @@ class KumaApi {
     return this.client.get(`zoneingresses/${zoneIngressName}/${dataPath}`, { params })
   }
 
-  getAllZoneIngressOverviews(params?: PaginationParameters): Promise<any> {
+  getAllZoneIngressOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneIngressOverview>> {
     return this.client.get('zoneingresses+insights', { params })
   }
 
-  getZoneIngressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<any> {
+  getZoneIngressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<ZoneIngressOverview> {
     return this.client.get(`zoneingresses+insights/${name}`, { params })
   }
 
@@ -116,11 +118,11 @@ class KumaApi {
     return this.client.get(`zoneegresses/${zoneEgressName}/${dataPath}`, { params })
   }
 
-  getAllZoneEgressOverviews(params?: PaginationParameters): Promise<any> {
+  getAllZoneEgressOverviews(params?: PaginationParameters): Promise<PaginatedApiListResponse<ZoneEgressOverview>> {
     return this.client.get('zoneegressoverviews', { params })
   }
 
-  getZoneEgressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<any> {
+  getZoneEgressOverview({ name }: { name: string }, params?: PaginationParameters): Promise<ZoneEgressOverview> {
     return this.client.get(`zoneegressoverviews/${name}`, { params })
   }
 

@@ -3,15 +3,15 @@
     <FrameSkeleton>
       <DataOverview
         :selected-entity-name="entity?.name"
-        :page-size="pageSize"
+        :page-size="PAGE_SIZE_DEFAULT"
         :is-loading="isLoading"
         :error="error"
-        :empty-state="empty_state"
+        :empty-state="EMPTY_STATE"
         :table-data="tableData"
         :table-data-is-empty="isEmpty"
-        :next="next"
+        :next="nextUrl"
         :page-offset="pageOffset"
-        @table-action="tableAction"
+        @table-action="getEntity"
         @load-data="loadData"
       >
         <template #additionalControls>
@@ -26,17 +26,19 @@
           </KButton>
         </template>
       </DataOverview>
+
       <TabsWidget
-        v-if="isEmpty === false"
+        v-if="isEmpty === false && entity !== null"
         :has-error="error !== null"
         :is-loading="isLoading"
-        :tabs="tabs"
+        :tabs="TABS"
       >
         <template #tabHeader>
           <h1 class="entity-heading">
             Zone Egress: {{ entity.name }}
           </h1>
         </template>
+
         <template #overview>
           <LabelList>
             <div>
@@ -56,6 +58,7 @@
             </div>
           </LabelList>
         </template>
+
         <template #insights>
           <KCard border-variant="noBorder">
             <template #body>
@@ -108,11 +111,14 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { onBeforeMount, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { KButton, KCard } from '@kong/kongponents'
 
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { getSome } from '@/utilities/helpers'
+import { TableHeader, ZoneEgressOverview } from '@/types/index.d'
 import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -126,190 +132,156 @@ import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 
-export default {
-  name: 'ZoneEgresses',
+const EMPTY_STATE = {
+  title: 'No Data',
+  message: 'There are no Zone Egresses present.',
+}
 
-  components: {
-    AccordionItem,
-    AccordionList,
-    DataOverview,
-    EnvoyData,
-    FrameSkeleton,
-    LabelList,
-    SubscriptionDetails,
-    SubscriptionHeader,
-    TabsWidget,
-    KButton,
-    KCard,
+const TABS = [
+  {
+    hash: '#overview',
+    title: 'Overview',
+  },
+  {
+    hash: '#insights',
+    title: 'Zone Egress Insights',
+  },
+  {
+    hash: '#xds-configuration',
+    title: 'XDS Configuration',
+  },
+  {
+    hash: '#envoy-stats',
+    title: 'Stats',
+  },
+  {
+    hash: '#envoy-clusters',
+    title: 'Clusters',
+  },
+]
+
+const route = useRoute()
+
+const props = defineProps({
+  selectedZoneEgressName: {
+    type: String,
+    required: false,
+    default: null,
   },
 
-  props: {
-    selectedZoneEgressName: {
-      type: String,
-      required: false,
-      default: null,
-    },
-
-    offset: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
+  offset: {
+    type: Number,
+    required: false,
+    default: 0,
   },
+})
 
-  data() {
-    return {
-      isLoading: true,
-      isEmpty: false,
-      error: null,
+const isLoading = ref(true)
+const isEmpty = ref(false)
+const error = ref<Error | null>(null)
+const tableData = ref<{ headers: TableHeader[], data: any[] }>({
+  headers: [
+    { label: 'Actions', key: 'actions', hideLabel: true },
+    { label: 'Status', key: 'status' },
+    { label: 'Name', key: 'name' },
+  ],
+  data: [],
+})
+const entity = ref<{ type: string, name: string } | null>(null)
+const rawData = ref<ZoneEgressOverview[]>([])
+const nextUrl = ref<string | null>(null)
+const subscriptionsReversed = ref<any[]>([])
+const pageOffset = ref(props.offset)
 
-      empty_state: {
-        title: 'No Data',
-        message: 'There are no Zone Egresses present.',
-      },
-      tableData: {
-        headers: [
-          { key: 'actions', hideLabel: true },
-          { label: 'Status', key: 'status' },
-          { label: 'Name', key: 'name' },
-        ],
-        data: [],
-      },
-      tabs: [
-        {
-          hash: '#overview',
-          title: 'Overview',
-        },
-        {
-          hash: '#insights',
-          title: 'Zone Egress Insights',
-        },
-        {
-          hash: '#xds-configuration',
-          title: 'XDS Configuration',
-        },
-        {
-          hash: '#envoy-stats',
-          title: 'Stats',
-        },
-        {
-          hash: '#envoy-clusters',
-          title: 'Clusters',
-        },
-      ],
-      entity: {},
-      rawData: [],
-      pageSize: PAGE_SIZE_DEFAULT,
-      next: null,
-      subscriptionsReversed: [],
-      pageOffset: this.offset,
+watch(() => route.params.mesh, function () {
+  // Don’t trigger a load when the user is navigating to another route.
+  if (route.name !== 'zoneegresses') {
+    return
+  }
+
+  // Ensures basic state is reset when switching meshes using the mesh selector.
+  isLoading.value = true
+  isEmpty.value = false
+  error.value = null
+
+  loadData(0)
+})
+
+onBeforeMount(function () {
+  loadData(props.offset)
+})
+
+async function loadData(offset: number): Promise<void> {
+  pageOffset.value = offset
+  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+  QueryParameter.set('offset', offset > 0 ? offset : null)
+
+  isLoading.value = true
+  isEmpty.value = false
+
+  const name = route.query.ns as string || null
+  const size = PAGE_SIZE_DEFAULT
+
+  try {
+    const { data, next } = await getZoneEgressOverviews(name, size, offset)
+
+    // set pagination
+    nextUrl.value = next
+
+    // set table data
+    if (data.length) {
+      isEmpty.value = false
+      rawData.value = data
+      getEntity({ name: props.selectedZoneEgressName ?? data[0].name })
+
+      tableData.value.data = data.map((zoneEgressOverview) => {
+        const status = getItemStatusFromInsight(zoneEgressOverview.zoneEgressInsight ?? {})
+
+        return { ...zoneEgressOverview, status }
+      })
+    } else {
+      tableData.value.data = []
+      isEmpty.value = true
     }
-  },
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
 
-  watch: {
-    $route() {
-      // Ensures basic state is reset when switching meshes using the mesh selector.
-      this.isLoading = true
-      this.isEmpty = false
-      this.error = null
+    isEmpty.value = true
+  } finally {
+    isLoading.value = false
+  }
+}
 
-      this.loadData(0)
-    },
-  },
+function getEntity({ name }: { name: string }): void {
+  const item = rawData.value.find((data) => data.name === name)
 
-  beforeMount() {
-    this.loadData(this.offset)
-  },
+  const subscriptions = item?.zoneEgressInsight?.subscriptions ?? []
 
-  methods: {
-    tableAction(ev) {
-      const data = ev
+  subscriptionsReversed.value = Array.from(subscriptions).reverse()
 
-      // load the data into the tabs
-      this.getEntity(data)
-    },
+  entity.value = getSome(item, ['type', 'name'])
+  QueryParameter.set('zoneEgress', name)
+}
 
-    async loadData(offset) {
-      this.pageOffset = offset
-      // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-      QueryParameter.set('offset', offset > 0 ? offset : null)
+async function getZoneEgressOverviews(name: string | null, size: number, offset: number): Promise<{ data: ZoneEgressOverview[], next: string | null }> {
+  if (name) {
+    const zoneEgressOverview = await kumaApi.getZoneEgressOverview({ name }, { size, offset })
 
-      this.isLoading = true
-      this.isEmpty = false
+    return {
+      data: [zoneEgressOverview],
+      next: null,
+    }
+  } else {
+    const { items, next } = await kumaApi.getAllZoneEgressOverviews({ size, offset })
 
-      const name = this.$route.query.ns || null
-      const size = this.pageSize
-
-      try {
-        const { data, next } = await this.getZoneEgressOverviews(name, size, offset)
-
-        // set pagination
-        this.next = next
-
-        // set table data
-        if (data.length) {
-          this.isEmpty = false
-          this.rawData = data
-          this.getEntity({ name: this.selectedZoneEgressName ?? data[0].name })
-
-          this.tableData.data = data.map((item) => {
-            const { zoneEgressInsight = {} } = item
-            const status = getItemStatusFromInsight(zoneEgressInsight)
-
-            return { ...item, status }
-          })
-        } else {
-          this.tableData.data = []
-          this.isEmpty = true
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          this.error = err
-        } else {
-          console.error(err)
-        }
-
-        this.isEmpty = true
-      } finally {
-        this.isLoading = false
-      }
-    },
-
-    getEntity(entity) {
-      const selected = ['type', 'name']
-      const item = this.rawData.find((data) => data.name === entity.name)
-
-      const subscriptions = item?.zoneEgressInsight?.subscriptions ?? []
-
-      this.subscriptionsReversed = Array.from(subscriptions).reverse()
-
-      this.entity = getSome(item, selected)
-      QueryParameter.set('zoneEgress', this.entity.name)
-    },
-
-    /**
-     * @param {string | null} name
-     * @param {number} size
-     * @param {number} offset
-     * @returns {Promise<{ data: ZoneEgressOverview[], next: string | null }>}
-     */
-    async getZoneEgressOverviews(name, size, offset) {
-      if (name) {
-        const zoneEgressOverview = await kumaApi.getZoneEgressOverview({ name }, { size, offset })
-
-        return {
-          data: [zoneEgressOverview],
-          next: null,
-        }
-      } else {
-        const { items, next } = await kumaApi.getAllZoneEgressOverviews({ size, offset })
-
-        return {
-          data: items ?? [],
-          next,
-        }
-      }
-    },
-  },
+    return {
+      data: items ?? [],
+      next,
+    }
+  }
 }
 </script>

@@ -6,6 +6,7 @@ import {
   DataPlaneNetworking,
   DataPlaneOverview,
   DiscoverySubscription,
+  KDSSubscription,
   LabelValue,
   StatusKeyword,
   Version,
@@ -70,7 +71,7 @@ export function dpTags(dataplane: { networking: DataPlaneNetworking }): LabelVal
 
 // getItemStatusFromInsight takes object with subscriptions and returns a
 // status 'online' | 'offline'
-export function getItemStatusFromInsight(insight: { subscriptions?: DiscoverySubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
+export function getItemStatusFromInsight(insight: { subscriptions?: DiscoverySubscription[] | KDSSubscription[] } | undefined = { subscriptions: [] }): StatusKeyword {
   const proxyOnline = (insight.subscriptions ?? []).some((subscription) => subscription.connectTime?.length && !subscription.disconnectTime)
   return proxyOnline ? 'online' : 'offline'
 }

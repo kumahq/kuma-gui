@@ -99,7 +99,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         <span
                           class="sr-only"
                         >
-                          actions
+                          Actions
                         </span>
                         
                         <!---->
@@ -211,7 +211,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                         <span
                           class="sr-only"
                         >
-                          warnings
+                          Warnings
                         </span>
                         
                         <!---->
@@ -886,6 +886,30 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                               </h4>
                               <p>
                                 cluster-1
+                              </p>
+                            </li>
+                            <li>
+                              <h4>
+                                status
+                              </h4>
+                              <p>
+                                <div
+                                  class="k-badge d-inline-flex k-badge-success k-badge-rounded"
+                                  tabindex="0"
+                                >
+                                  <div
+                                    class="k-badge-text truncate"
+                                  >
+                                    <div
+                                      class="k-badge-text truncate"
+                                    >
+                                      
+                                      online
+                                      
+                                    </div>
+                                  </div>
+                                  <!---->
+                                </div>
                               </p>
                             </li>
                             <li>
