@@ -54,10 +54,18 @@
               </div>
             </template>
 
-            <template #name="{ rowValue }">
-              <template v-if="rowValue !== null">
-                {{ rowValue }}
-              </template>
+            <template #addresses="{ rowValue }">
+              <ul
+                v-if="rowValue.length > 0"
+                class="list"
+              >
+                <li
+                  v-for="(address, addressIndex) in rowValue"
+                  :key="`${index}-${addressIndex}`"
+                >
+                  {{ address }}
+                </li>
+              </ul>
 
               <template v-else>
                 —
@@ -67,7 +75,7 @@
             <template #origins="{ rowValue }">
               <ul
                 v-if="rowValue.length > 0"
-                class="origin-list"
+                class="list"
               >
                 <li
                   v-for="(origin, originIndex) in rowValue"
@@ -118,7 +126,7 @@ import { RuleEntry, TableHeader } from '@/types/index'
 
 const tableHeaders: TableHeader[] = [
   { label: 'Type', key: 'type' },
-  { label: 'On', key: 'name' },
+  { label: 'Addresses', key: 'addresses' },
   { label: 'Conf', key: 'config' },
   { label: 'Origin policies', key: 'origins' },
 ]
@@ -164,7 +172,7 @@ function getCellAttributes({ headerKey }: any): Record<string, string> {
   margin-top: var(--spacing-xxs);
 }
 
-.origin-list {
+.list {
   list-style: initial;
   padding-left: var(--spacing-md);
 }
