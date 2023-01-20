@@ -96,8 +96,11 @@ describe('DataPlaneListView', () => {
     await dataPlaneTypeFilter.setValue('Delegated')
     await flushPromises()
 
-    const firstTableRowHtml2 = tableRows[0].html()
-    for (const string of ['transmitter-gateway-0', 'BUILTIN']) {
+    const tableRows2 = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
+    expect(tableRows2.length).toBe(1)
+
+    const firstTableRowHtml2 = tableRows2[0].html()
+    for (const string of ['alarm-gateway-0', 'DELEGATED']) {
       expect(firstTableRowHtml2).toContain(string)
     }
   })
