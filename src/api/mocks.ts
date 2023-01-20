@@ -200,18 +200,24 @@ export function setupHandlers(url: string = ''): RestHandler[] {
   handlers.push(
     rest.get(getApiPath('meshes/default/dataplanes\\+insights'), async (req, res, ctx) => {
       const gateway = req.url.searchParams.get('gateway')
-      const data = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights.json'))))
-      if (gateway !== null && gateway !== 'false') {
-        data.total = '1'
-        data.items = [data.items.find((item: any) => item.name === 'cluster-1.gateway-01')]
-        if (gateway === 'delegated') {
-          data.items[0].dataplane.networking.gateway.type = 'DELEGATED'
-        }
+      let response
+
+      if (gateway === 'true') {
+        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights__gateways-all.json'))))
+      } else if (gateway === 'builtin') {
+        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights__gateways-builtin.json'))))
+      } else if (gateway === 'delegated') {
+        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights__gateways-delegated.json'))))
+      } else if (gateway === 'false') {
+        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights.json'))))
+
+        response.items = response.items.filter((item: any) => item.dataplane.networking.gateway === undefined)
+        response.total = response.items.length
       } else {
-        data.items = data.items.filter((item: any) => item.dataplane.networking.gateway === undefined)
-        data.total = `${data.items.length}`
+        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights.json'))))
       }
-      return res(ctx.json(data))
+
+      return res(ctx.json(response))
     }),
   )
 
