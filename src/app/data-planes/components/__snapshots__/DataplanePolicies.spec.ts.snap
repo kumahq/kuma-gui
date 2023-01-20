@@ -1000,7 +1000,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 src=""
               />
               
-              MeshCircuitBreaker (9) 
+              MeshCircuitBreaker (6) 
               
             </span>
           </h3>
@@ -1037,7 +1037,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                 src=""
               />
               
-              MeshRateLimit (2) 
+              MeshRateLimit (1) 
               
             </span>
           </h3>

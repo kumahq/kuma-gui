@@ -249,11 +249,13 @@ export interface DataPlaneOverview extends MeshEntity {
 }
 
 export interface DataplaneRule {
-  type: 'clientSubset' | 'destinationSubset' | 'singleItem',
+  type: 'ClientSubset' | 'DestinationSubset' | 'SingleItem',
   name: string
-  service: string
+  service?: string
+  addresses?: string[]
   policyType: string
   subset?: Record<string, string>
+  tags?: Record<string, string>
   conf: Record<string, unknown>
   origins: Array<{ mesh: string, name: string }>
 }
@@ -335,7 +337,7 @@ export type RuleEntryConnection = {
     sourceTags: LabelValue[]
     destinationTags: LabelValue[]
   }
-  name: string | null
+  addresses: string[]
   origins: PolicyTypeEntryOrigin[]
   config: string | null
 }

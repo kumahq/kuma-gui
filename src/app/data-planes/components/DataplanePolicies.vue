@@ -309,7 +309,7 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
   let destinationTags: LabelValue[]
 
   // Determines source tags.
-  if (type === 'clientSubset') {
+  if (type === 'ClientSubset') {
     if (subsetEntries.length > 0) {
     // For client subsets, the source is represented by `subset` (i.e. tags)
       sourceTags = subsetEntries.map(([label, value]) => ({ label, value }))
@@ -328,7 +328,7 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
   }
 
   // Determines destination tags.
-  if (type === 'destinationSubset') {
+  if (type === 'DestinationSubset') {
     // For destination subsets, the destination is represented by either `subset` (which has priority) or `service`. `subset` is more specific than `service` so it needs to be handled first.
     if (subsetEntries.length > 0) {
       destinationTags = subsetEntries.map(([label, value]) => ({ label, value }))
@@ -349,7 +349,7 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
         },
       ]
     }
-  } else if (type === 'clientSubset' && typeof service === 'string' && service !== '') {
+  } else if (type === 'ClientSubset' && typeof service === 'string' && service !== '') {
     // The `service` field, when set, represents the name of the destination service of traffic.
     destinationTags = [
       {
@@ -361,7 +361,7 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
     destinationTags = []
   }
 
-  const name = type === 'clientSubset' || type === 'destinationSubset' || service ? rule.name : null
+  const addresses = rule.addresses ?? []
   const config = conf && Object.keys(conf).length > 0 ? json2yaml(JSON.stringify(conf, null, 2)) : null
   const origins: PolicyTypeEntryOrigin[] = []
 
@@ -379,7 +379,7 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
     })
   }
 
-  const connection: RuleEntryConnection = { type: { sourceTags, destinationTags }, name, config, origins }
+  const connection: RuleEntryConnection = { type: { sourceTags, destinationTags }, addresses, config, origins }
 
   return [connection]
 }
