@@ -1,5 +1,6 @@
 import type { Store } from 'vuex'
-import type { State } from '../store/storeConfig'
+
+import type { State } from '@/store/storeConfig'
 import {
   RouteRecordRaw,
   RouteLocation,

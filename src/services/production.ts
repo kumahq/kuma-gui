@@ -1,6 +1,6 @@
 import { service, constant, get, injected } from './utils'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
-import routes from '../router/routes'
+import routes from '@/router/routes'
 import { store } from '@/store/store'
 
 export const TOKENS = {
