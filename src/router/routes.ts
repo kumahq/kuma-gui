@@ -93,6 +93,7 @@ export default (store: Store<State>): readonly RouteRecordRaw[] => {
               },
               props: (route) => ({
                 selectedDppName: route.query.gateway,
+                gatewayType: route.query.gatewayType === 'all' ? 'true' : route.query.gatewayType,
                 offset: getLastNumberParameter(route.query.offset),
                 isGatewayView: true,
               }),

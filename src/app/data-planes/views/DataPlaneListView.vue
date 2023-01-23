@@ -7,6 +7,7 @@
     :page-offset="pageOffset"
     :selected-dpp-name="props.selectedDppName"
     :is-gateway-view="props.isGatewayView"
+    :gateway-type="props.gatewayType"
     :dpp-filter-fields="dppFilterFields"
     @load-data="loadData"
   />
@@ -44,6 +45,12 @@ const props = defineProps({
     type: String,
     required: false,
     default: null,
+  },
+
+  gatewayType: {
+    type: String,
+    required: false,
+    default: 'true',
   },
 
   offset: {
@@ -85,7 +92,10 @@ function start() {
   const filterFields = QueryParameter.get('filterFields')
   const dppParams = filterFields !== null ? JSON.parse(filterFields) as DataPlaneOverviewParameters : {}
 
-  loadData(props.offset, dppParams)
+  loadData(props.offset, {
+    ...dppParams,
+    gateway: props.gatewayType,
+  } as DataPlaneOverviewParameters)
 }
 
 start()
@@ -94,7 +104,7 @@ async function loadData(offset: number, dppParams: DataPlaneOverviewParameters =
   pageOffset.value = offset
   // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
   QueryParameter.set('offset', offset > 0 ? offset : null)
-
+  QueryParameter.set('gatewayType', dppParams.gateway === 'true' ? 'all' : dppParams.gateway)
   isLoading.value = true
 
   const mesh = route.params.mesh as string
