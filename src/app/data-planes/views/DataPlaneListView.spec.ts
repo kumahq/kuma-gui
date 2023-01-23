@@ -81,7 +81,7 @@ describe('DataPlaneListView', () => {
     })
 
     const dataPlaneTypeFilter = wrapper.find('[data-testid="data-planes-type-filter"]')
-    await dataPlaneTypeFilter.setValue('Builtin')
+    await dataPlaneTypeFilter.setValue('builtin')
     await flushPromises()
 
     const tableRows = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')
@@ -93,7 +93,7 @@ describe('DataPlaneListView', () => {
       expect(firstTableRowHtml).toContain(string)
     }
 
-    await dataPlaneTypeFilter.setValue('Delegated')
+    await dataPlaneTypeFilter.setValue('delegated')
     await flushPromises()
 
     const tableRows2 = wrapper.findAll('[data-testid="data-overview-table"] tbody tr')

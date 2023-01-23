@@ -35,15 +35,15 @@
 
             <select
               id="data-planes-type-filter"
-              v-model="filteredDataPlaneType"
+              v-model="filteredGatewayType"
               data-testid="data-planes-type-filter"
             >
               <option
-                v-for="(dataPlaneType, key) in dataPlaneTypes"
+                v-for="(value, key) in GATEWAY_TYPES"
                 :key="key"
-                :value="dataPlaneType"
+                :value="key"
               >
-                {{ dataPlaneType }}
+                {{ value }}
               </option>
             </select>
           </div>
@@ -148,23 +148,17 @@ import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilt
 const PAGE_SIZE = 50
 
 const GATEWAY_TYPES = {
-  All: 'true',
-  Builtin: 'builtin',
-  Delegated: 'delegated',
+  true: 'All',
+  builtin: 'Builtin',
+  delegated: 'Delegated',
 } as const
 
-const dataPlaneTypes = [
-  'All',
-  'Builtin',
-  'Delegated',
-] as const
+type GatewayType = keyof typeof GATEWAY_TYPES
 
 const EMPTY_STATE = {
   title: 'No Data',
   message: 'There are no data plane proxies present.',
 }
-
-type DataPlaneType = typeof dataPlaneTypes[number]
 
 const route = useRoute()
 const store = useStore()
@@ -210,6 +204,12 @@ const props = defineProps({
     default: false,
   },
 
+  gatewayType: {
+    type: String as PropType<String | undefined>,
+    required: false,
+    default: 'true',
+  },
+
   dppFilterFields: {
     type: Object as PropType<FilterFields>,
     required: true,
@@ -226,7 +226,7 @@ const tableData = ref<{ headers: TableHeader[], data: any }>({
   data: [],
 })
 const filterQuery = ref(QueryParameter.get('filterQuery') ?? '')
-const filteredDataPlaneType = ref<DataPlaneType>('All')
+const filteredGatewayType = ref<GatewayType>(props.gatewayType as GatewayType)
 const dppParams = ref<DataPlaneOverviewParameters>({})
 const dataPlaneOverview = ref<DataPlaneOverview | null>(null)
 const isMultiZoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
@@ -276,7 +276,7 @@ const filteredColumnsDropdownItems = computed<ColumnDropdownItem[]>(() => {
     })
 })
 
-watch(filteredDataPlaneType, function () {
+watch(filteredGatewayType, function () {
   emitLoadDataEvent(0)
 })
 
@@ -310,7 +310,7 @@ function emitLoadDataEvent(offset: number): void {
   }
 
   if (!('gateway' in params)) {
-    params.gateway = GATEWAY_TYPES[filteredDataPlaneType.value]
+    params.gateway = filteredGatewayType.value
   }
 
   emit('load-data', offset, params)
