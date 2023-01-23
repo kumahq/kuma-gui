@@ -97,7 +97,7 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                         <span
                           class="sr-only"
                         >
-                          actions
+                          Actions
                         </span>
                         
                         <!---->
@@ -515,7 +515,7 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                         <span
                           class="sr-only"
                         >
-                          actions
+                          Actions
                         </span>
                         
                         <!---->

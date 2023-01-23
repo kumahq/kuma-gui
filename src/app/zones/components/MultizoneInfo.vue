@@ -7,7 +7,7 @@
         size="42"
       />
 
-      <p>{{ $options.productName }} is running in Standalone mode.</p>
+      <p>{{ PRODUCT_NAME }} is running in Standalone mode.</p>
     </template>
 
     <template #message>
@@ -18,7 +18,7 @@
 
     <template #cta>
       <KButton
-        :to="`${$options.env('KUMA_DOCS_URL')}/documentation/deployments/?${$options.env('KUMA_UTM_QUERY_PARAMS')}`"
+        :to="`${env('KUMA_DOCS_URL')}/documentation/deployments/?${env('KUMA_UTM_QUERY_PARAMS')}`"
         target="_blank"
         appearance="primary"
       >
@@ -28,23 +28,11 @@
   </KEmptyState>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { KButton, KEmptyState, KIcon } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
 import { useEnv } from '@/utilities'
+
 const env = useEnv()
-
-export default {
-  name: 'MultizoneInfo',
-  env,
-  productName: PRODUCT_NAME,
-
-  components: {
-    KButton,
-    KEmptyState,
-    KIcon,
-  },
-
-}
 </script>

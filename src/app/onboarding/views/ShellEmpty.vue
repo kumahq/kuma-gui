@@ -12,12 +12,6 @@
   </router-view>
 </template>
 
-<script>
-export default {
-  name: 'ShellEmpty',
-}
-</script>
-
 <style lang="scss" scoped>
 .onboarding-view {
   --kuma-purple-1: #260d50;

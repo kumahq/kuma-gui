@@ -213,6 +213,14 @@ export type Compatibility = {
   }
 }
 
+export type ZoneCompatibility = {
+  kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS
+  payload?: {
+    zoneCpVersion: string
+    globalCpVersion: string
+  }
+}
+
 export interface LabelValue {
   label: string
   value: string
@@ -429,6 +437,18 @@ export interface ZoneOverview extends MeshEntity {
   type: 'ZoneOverview'
   zone: Zone
   zoneInsight: ZoneInsight
+}
+
+export interface ZoneIngressOverview extends MeshEntity {
+  type: 'ZoneIngressOverview'
+  zoneIngress: any
+  zoneIngressInsight: any
+}
+
+export interface ZoneEgressOverview extends MeshEntity {
+  type: 'ZoneEgressOverview'
+  zoneEgress: any
+  zoneEgressInsight: any
 }
 
 /**

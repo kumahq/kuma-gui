@@ -32,9 +32,13 @@ describe('MultiZoneView.vue', () => {
       .spyOn(kumaApi, 'getAllZoneIngressOverviews')
       .mockResolvedValueOnce({
         total: 0,
+        items: [],
+        next: null,
       })
       .mockResolvedValueOnce({
         total: 1,
+        items: [],
+        next: '',
       })
 
     const wrapper = renderComponent()

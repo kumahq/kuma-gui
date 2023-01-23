@@ -1,21 +1,21 @@
 <template>
   <div class="zones">
-    <MultizoneInfo v-if="multicluster === false" />
+    <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
     <!-- Zone CPs information for when Multicluster is enabled -->
     <FrameSkeleton v-else>
       <DataOverview
         :selected-entity-name="entity?.name"
-        :page-size="pageSize"
+        :page-size="PAGE_SIZE_DEFAULT"
         :is-loading="isLoading"
         :error="error"
-        :empty-state="empty_state"
+        :empty-state="EMPTY_STATE"
         :table-data="tableData"
         :table-data-is-empty="tableDataIsEmpty"
         :show-warnings="tableData.data.some((item) => item.withWarnings)"
-        :next="next"
+        :next="nextUrl"
         :page-offset="pageOffset"
-        @table-action="tableAction"
+        @table-action="getEntity"
         @load-data="loadData"
       >
         <template #additionalControls>
@@ -30,9 +30,10 @@
           </KButton>
         </template>
       </DataOverview>
+
       <TabsWidget
-        v-if="isEmpty === false"
-        :has-error="error"
+        v-if="isEmpty === false && entity !== null"
+        :has-error="error !== null"
         :is-loading="isLoading"
         :tabs="filterTabs()"
       >
@@ -41,6 +42,7 @@
             Zone: {{ entity.name }}
           </h1>
         </template>
+
         <template #overview>
           <LabelList
             :has-error="entityHasError"
@@ -56,11 +58,13 @@
                   <h4 v-if="value">
                     {{ key }}
                   </h4>
+
                   <p v-if="key === 'status'">
                     <KBadge :appearance="value === 'Offline' ? 'danger' : 'success'">
                       {{ value }}
                     </KBadge>
                   </p>
+
                   <p v-else>
                     {{ value }}
                   </p>
@@ -69,6 +73,7 @@
             </div>
           </LabelList>
         </template>
+
         <template #insights>
           <KCard border-variant="noBorder">
             <template #body>
@@ -89,6 +94,7 @@
             </template>
           </KCard>
         </template>
+
         <template #config>
           <KCard
             v-if="codeOutput"
@@ -114,8 +120,9 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { onBeforeMount, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { KBadge, KButton, KCard } from '@kong/kongponents'
 
 import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
@@ -123,6 +130,8 @@ import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } f
 import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
+import { KDSSubscription, TableHeader, ZoneCompatibility, ZoneOverview } from '@/types/index.d'
+import { useStore } from '@/store/store'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
@@ -135,323 +144,278 @@ import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vu
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
 
-export default {
-  name: 'ZonesView',
+const EMPTY_STATE = {
+  title: 'No Data',
+  message: 'There are no Zones present.',
+}
 
-  components: {
-    AccordionItem,
-    AccordionList,
-    CodeBlock,
-    DataOverview,
-    FrameSkeleton,
-    LabelList,
-    MultizoneInfo,
-    SubscriptionDetails,
-    SubscriptionHeader,
-    TabsWidget,
-    WarningsWidget,
-    KBadge,
-    KButton,
-    KCard,
+const TABS = [
+  {
+    hash: '#overview',
+    title: 'Overview',
+  },
+  {
+    hash: '#insights',
+    title: 'Zone Insights',
+  },
+  {
+    hash: '#config',
+    title: 'Config',
+  },
+  {
+    hash: '#warnings',
+    title: 'Warnings',
+  },
+]
+
+const route = useRoute()
+const store = useStore()
+
+const props = defineProps({
+  selectedZoneName: {
+    type: String,
+    required: false,
+    default: null,
   },
 
-  props: {
-    selectedZoneName: {
-      type: String,
-      required: false,
-      default: null,
-    },
-
-    offset: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
+  offset: {
+    type: Number,
+    required: false,
+    default: 0,
   },
+})
 
-  data() {
-    return {
-      isLoading: true,
-      isEmpty: false,
-      error: null,
-      entityIsLoading: true,
-      entityIsEmpty: false,
-      entityHasError: false,
-      tableDataIsEmpty: false,
-      empty_state: {
-        title: 'No Data',
-        message: 'There are no Zones present.',
-      },
-      tableData: {
-        headers: [
-          { key: 'actions', hideLabel: true },
-          { label: 'Status', key: 'status' },
-          { label: 'Name', key: 'name' },
-          { label: 'Zone CP Version', key: 'zoneCpVersion' },
-          { label: 'Storage type', key: 'storeType' },
-          { label: 'Ingress', key: 'hasIngress' },
-          { label: 'Egress', key: 'hasEgress' },
-          { key: 'warnings', hideLabel: true },
-        ],
-        data: [],
-      },
-      tabs: [
-        {
-          hash: '#overview',
-          title: 'Overview',
-        },
-        {
-          hash: '#insights',
-          title: 'Zone Insights',
-        },
-        {
-          hash: '#config',
-          title: 'Config',
-        },
-        {
-          hash: '#warnings',
-          title: 'Warnings',
-        },
-      ],
-      entity: {},
-      pageSize: PAGE_SIZE_DEFAULT,
-      next: null,
-      warnings: [],
-      subscriptionsReversed: [],
-      codeOutput: null,
-      zonesWithIngress: new Set(),
-      pageOffset: this.offset,
+const isLoading = ref(true)
+const isEmpty = ref(false)
+const error = ref<Error | null>(null)
+const entityIsLoading = ref(true)
+const entityIsEmpty = ref(false)
+const entityHasError = ref(false)
+const tableDataIsEmpty = ref(false)
+const tableData = ref<{ headers: TableHeader[], data: any[] }>({
+  headers: [
+    { label: 'Actions', key: 'actions', hideLabel: true },
+    { label: 'Status', key: 'status' },
+    { label: 'Name', key: 'name' },
+    { label: 'Zone CP Version', key: 'zoneCpVersion' },
+    { label: 'Storage type', key: 'storeType' },
+    { label: 'Ingress', key: 'hasIngress' },
+    { label: 'Egress', key: 'hasEgress' },
+    { label: 'Warnings', key: 'warnings', hideLabel: true },
+  ],
+  data: [],
+})
+const entity = ref<{ type: string, name: string, status: string, 'Authentication Type': string } | null>(null)
+const nextUrl = ref<string | null>(null)
+const warnings = ref<ZoneCompatibility[]>([])
+const subscriptionsReversed = ref<KDSSubscription[]>([])
+const codeOutput = ref<string | null>(null)
+const pageOffset = ref(props.offset)
+const zonesWithIngress = ref(new Set())
+const zonesWithEgress = ref(new Set())
+
+watch(() => route.params.mesh, function () {
+  // Don’t trigger a load when the user is navigating to another route.
+  if (route.name !== 'zones') {
+    return
+  }
+
+  // Ensures basic state is reset when switching meshes using the mesh selector.
+  isLoading.value = true
+  isEmpty.value = false
+  entityIsLoading.value = true
+  entityIsEmpty.value = false
+  entityHasError.value = false
+  tableDataIsEmpty.value = false
+  error.value = null
+
+  init(0)
+})
+
+onBeforeMount(function () {
+  init(props.offset)
+})
+
+function init(offset: number): void {
+  if (store.getters['config/getMulticlusterStatus']) {
+    loadData(offset)
+  }
+}
+
+function filterTabs() {
+  if (warnings.value.length === 0) {
+    return TABS.filter((tab) => tab.hash !== '#warnings')
+  }
+
+  return TABS
+}
+
+function parseData(zoneOverview: ZoneOverview): any {
+  let zoneCpVersion = '-'
+  let storeType = ''
+  let cpCompat = true
+
+  if (zoneOverview.zoneInsight.subscriptions && zoneOverview.zoneInsight.subscriptions.length > 0) {
+    zoneOverview.zoneInsight.subscriptions.forEach((item: any) => {
+      if (item.version && item.version.kumaCp) {
+        zoneCpVersion = item.version.kumaCp.version
+        const { kumaCpGlobalCompatible = true } = item.version.kumaCp
+
+        cpCompat = kumaCpGlobalCompatible
+        if (item.config) {
+          storeType = JSON.parse(item.config).store.type
+        }
+      }
+    })
+  }
+
+  const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
+
+  return {
+    ...zoneOverview,
+    status,
+    zoneCpVersion,
+    storeType,
+    hasIngress: zonesWithIngress.value.has(zoneOverview.name) ? 'Yes' : 'No',
+    hasEgress: zonesWithEgress.value.has(zoneOverview.name) ? 'Yes' : 'No',
+    withWarnings: !cpCompat,
+  }
+}
+
+function calculateZonesWithIngress(zoneIngresses: any[]): void {
+  const zones = new Set()
+
+  zoneIngresses.forEach(({ zoneIngress: { zone } }) => {
+    zones.add(zone)
+  })
+
+  zonesWithIngress.value = zones
+}
+
+function calculateZonesWithEgress(zoneEgresses: any[]): void {
+  const zones = new Set()
+
+  zoneEgresses.forEach(({ zoneEgress: { zone } }) => {
+    zones.add(zone)
+  })
+
+  zonesWithEgress.value = zones
+}
+
+async function loadData(offset: number): Promise<void> {
+  pageOffset.value = offset
+  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+  QueryParameter.set('offset', offset > 0 ? offset : null)
+
+  isLoading.value = true
+  isEmpty.value = false
+
+  const name = route.query.ns as string || null
+  const size = PAGE_SIZE_DEFAULT
+
+  try {
+    const [{ data, next }, { items: zoneIngresses }, { items: zoneEgresses }] = await Promise.all([
+      getZoneOverviews(name, size, offset),
+      fetchAllResources(kumaApi.getAllZoneIngressOverviews.bind(kumaApi)),
+      fetchAllResources(kumaApi.getAllZoneEgressOverviews.bind(kumaApi)),
+    ])
+
+    // set pagination
+    nextUrl.value = next
+
+    // set table data
+    if (data.length) {
+      calculateZonesWithIngress(zoneIngresses)
+      calculateZonesWithEgress(zoneEgresses)
+      tableData.value.data = data.map(parseData)
+      tableDataIsEmpty.value = false
+      isEmpty.value = false
+
+      await getEntity({ name: props.selectedZoneName ?? data[0].name })
+    } else {
+      tableData.value.data = []
+      tableDataIsEmpty.value = true
+      isEmpty.value = true
+      entityIsEmpty.value = true
     }
-  },
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
 
-  computed: {
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus',
-      globalCpVersion: 'config/getVersion',
-    }),
-  },
+    isEmpty.value = true
+  } finally {
+    isLoading.value = false
+  }
+}
 
-  watch: {
-    $route() {
-      // Ensures basic state is reset when switching meshes using the mesh selector.
-      this.isLoading = true
-      this.isEmpty = false
-      this.error = null
-      this.entityIsLoading = true
-      this.entityIsEmpty = false
-      this.entityHasError = false
-      this.tableDataIsEmpty = false
+async function getEntity({ name }: { name: string }): Promise<void> {
+  entityHasError.value = false
+  entityIsLoading.value = true
+  entityIsEmpty.value = false
+  warnings.value = []
 
-      this.init(0)
-    },
-  },
+  try {
+    // get the Zone details from the Zone Insights endpoint
+    const zoneOverview = await kumaApi.getZoneOverview({ name })
+    const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
+    const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
 
-  beforeMount() {
-    this.init(this.offset)
-  },
+    entity.value = {
+      ...getSome(zoneOverview, ['type', 'name']),
+      status,
+      'Authentication Type': getZoneDpServerAuthType(zoneOverview),
+    }
+    QueryParameter.set('zone', name)
+    subscriptionsReversed.value = Array.from(subscriptions).reverse()
 
-  methods: {
-    init(offset) {
-      if (this.multicluster) {
-        this.loadData(offset)
-      }
-    },
+    if (subscriptions.length > 0) {
+      const lastSubscription = subscriptions[subscriptions.length - 1]
+      const kumaCpVersion = lastSubscription.version.kumaCp.version || '-'
+      const { kumaCpGlobalCompatible = true } = lastSubscription.version.kumaCp
 
-    filterTabs() {
-      if (!this.warnings.length) {
-        return this.tabs.filter((tab) => tab.hash !== '#warnings')
-      }
-
-      return this.tabs
-    },
-
-    tableAction(ev) {
-      const data = ev
-
-      // load the data into the tabs
-      this.getEntity(data)
-    },
-    parseData(entity) {
-      const { zoneInsight = {}, name } = entity
-      let zoneCpVersion = '-'
-      let storeType = ''
-      let cpCompat = true
-
-      if (zoneInsight.subscriptions && zoneInsight.subscriptions.length) {
-        zoneInsight.subscriptions.forEach((item) => {
-          if (item.version && item.version.kumaCp) {
-            zoneCpVersion = item.version.kumaCp.version
-            const { kumaCpGlobalCompatible = true } = item.version.kumaCp
-
-            cpCompat = kumaCpGlobalCompatible
-            if (item.config) {
-              storeType = JSON.parse(item.config).store.type
-            }
-          }
+      if (!kumaCpGlobalCompatible) {
+        warnings.value.push({
+          kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
+          payload: {
+            zoneCpVersion: kumaCpVersion,
+            globalCpVersion: store.getters['config/getVersion'],
+          },
         })
       }
 
-      const status = getItemStatusFromInsight(zoneInsight)
-
-      return {
-        ...entity,
-        status,
-        zoneCpVersion,
-        storeType,
-        hasIngress: this.zonesWithIngress.has(name) ? 'Yes' : 'No',
-        hasEgress: this.zonesWithEgress.has(name) ? 'Yes' : 'No',
-        withWarnings: !cpCompat,
+      if (subscriptions[subscriptions.length - 1].config) {
+        codeOutput.value = JSON.stringify(JSON.parse(subscriptions[subscriptions.length - 1].config), null, 2)
       }
-    },
-    calculateZonesWithIngress(zoneIngresses) {
-      const zones = new Set()
+    }
+  } catch (err) {
+    console.error(err)
 
-      zoneIngresses.forEach(({ zoneIngress: { zone } }) => {
-        zones.add(zone)
-      })
+    entity.value = null
+    entityHasError.value = true
+    entityIsEmpty.value = true
+  } finally {
+    entityIsLoading.value = false
+  }
+}
 
-      this.zonesWithIngress = zones
-    },
-    calculateZonesWithEgress(zoneEgresses) {
-      const zones = new Set()
+async function getZoneOverviews(name: string | null, size: number, offset: number): Promise<{ data: ZoneOverview[], next: string | null }> {
+  if (name) {
+    const zoneOverview = await kumaApi.getZoneOverview({ name }, { size, offset })
 
-      zoneEgresses.forEach(({ zoneEgress: { zone } }) => {
-        zones.add(zone)
-      })
+    return {
+      data: [zoneOverview],
+      next: null,
+    }
+  } else {
+    const { items, next } = await kumaApi.getAllZoneOverviews({ size, offset })
 
-      this.zonesWithEgress = zones
-    },
-    async loadData(offset) {
-      this.pageOffset = offset
-      // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-      QueryParameter.set('offset', offset > 0 ? offset : null)
-
-      this.isLoading = true
-      this.isEmpty = false
-
-      const name = this.$route.query.ns || null
-      const size = this.pageSize
-
-      try {
-        const [{ data, next }, { items: zoneIngresses }, { items: zoneEgresses }] = await Promise.all([
-          this.getZoneOverviews(name, size, offset),
-          fetchAllResources(kumaApi.getAllZoneIngressOverviews.bind(kumaApi)),
-          fetchAllResources(kumaApi.getAllZoneEgressOverviews.bind(kumaApi)),
-        ])
-
-        // set pagination
-        this.next = next
-
-        // set table data
-        if (data.length) {
-          this.calculateZonesWithIngress(zoneIngresses)
-          this.calculateZonesWithEgress(zoneEgresses)
-          this.tableData.data = data.map(this.parseData)
-          this.tableDataIsEmpty = false
-          this.isEmpty = false
-
-          this.getEntity({ name: this.selectedZoneName ?? data[0].name })
-        } else {
-          this.tableData.data = []
-          this.tableDataIsEmpty = true
-          this.isEmpty = true
-          this.entityIsEmpty = true
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          this.error = err
-        } else {
-          console.error(err)
-        }
-
-        this.isEmpty = true
-      } finally {
-        this.isLoading = false
-      }
-    },
-
-    async getEntity(entity) {
-      this.entityIsLoading = true
-      this.entityIsEmpty = true
-
-      const selected = ['type', 'name']
-
-      const timeout = setTimeout(() => {
-        this.entityIsEmpty = true
-        this.entityIsLoading = false
-      }, import.meta.env.VITE_DATA_TIMEOUT)
-
-      if (entity) {
-        this.entityIsEmpty = false
-        this.warnings = []
-
-        try {
-          // get the Zone details from the Zone Insights endpoint
-          const response = await kumaApi.getZoneOverview({ name: entity.name })
-          const subscriptions = response.zoneInsight?.subscriptions ?? []
-
-          this.entity = { ...getSome(response, selected), 'Authentication Type': getZoneDpServerAuthType(response) }
-          QueryParameter.set('zone', this.entity.name)
-          this.subscriptionsReversed = Array.from(subscriptions).reverse()
-
-          if (subscriptions.length) {
-            const { version = {} } = subscriptions[subscriptions.length - 1]
-            const { kumaCp = {} } = version
-
-            const kumaCpVersion = kumaCp.version || '-'
-            const { kumaCpGlobalCompatible = true } = kumaCp
-
-            if (!kumaCpGlobalCompatible) {
-              this.warnings.push({
-                kind: INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
-                payload: {
-                  zoneCpVersion: kumaCpVersion,
-                  globalCpVersion: this.globalCpVersion,
-                },
-              })
-            }
-
-            if (subscriptions[subscriptions.length - 1].config) {
-              this.codeOutput = JSON.stringify(JSON.parse(subscriptions[subscriptions.length - 1].config), null, 2)
-            }
-          }
-        } catch (e) {
-          console.error(e)
-
-          this.entity = {}
-          this.entityHasError = true
-          this.entityIsEmpty = true
-        } finally {
-          clearTimeout(timeout)
-        }
-      }
-
-      this.entityIsLoading = false
-    },
-
-    /**
-     * @param {string | null} name
-     * @param {number} size
-     * @param {number} offset
-     * @returns {Promise<{ data: ZoneOverview[], next: string | null }>}
-     */
-    async getZoneOverviews(name, size, offset) {
-      if (name) {
-        const zoneOverview = await kumaApi.getZoneOverview({ name }, { size, offset })
-
-        return {
-          data: [zoneOverview],
-          next: null,
-        }
-      } else {
-        const { items, next } = await kumaApi.getAllZoneOverviews({ size, offset })
-
-        return {
-          data: items ?? [],
-          next,
-        }
-      }
-    },
-  },
+    return {
+      data: items ?? [],
+      next,
+    }
+  }
 }
 </script>

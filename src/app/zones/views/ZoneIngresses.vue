@@ -1,20 +1,20 @@
 <template>
   <div class="zoneingresses">
-    <MultizoneInfo v-if="multicluster === false" />
+    <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
     <!-- Zone CPs information for when Multicluster is enabled -->
     <FrameSkeleton v-else>
       <DataOverview
         :selected-entity-name="entity?.name"
-        :page-size="pageSize"
+        :page-size="PAGE_SIZE_DEFAULT"
         :is-loading="isLoading"
         :error="error"
-        :empty-state="empty_state"
+        :empty-state="EMPTY_STATE"
         :table-data="tableData"
         :table-data-is-empty="isEmpty"
-        :next="next"
+        :next="nextUrl"
         :page-offset="pageOffset"
-        @table-action="tableAction"
+        @table-action="getEntity"
         @load-data="loadData"
       >
         <template #additionalControls>
@@ -30,10 +30,10 @@
         </template>
       </DataOverview>
       <TabsWidget
-        v-if="isEmpty === false"
+        v-if="isEmpty === false && entity !== null"
         :has-error="error !== null"
         :is-loading="isLoading"
-        :tabs="tabs"
+        :tabs="TABS"
       >
         <template #tabHeader>
           <h1 class="entity-heading">
@@ -111,8 +111,9 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { onBeforeMount, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { KButton, KCard } from '@kong/kongponents'
 
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
@@ -120,6 +121,8 @@ import { getSome } from '@/utilities/helpers'
 import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
+import { TableHeader, ZoneIngressOverview } from '@/types/index.d'
+import { useStore } from '@/store/store'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
@@ -131,202 +134,164 @@ import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 
-export default {
-  name: 'ZoneIngresses',
+const EMPTY_STATE = {
+  title: 'No Data',
+  message: 'There are no Zone Ingresses present.',
+}
 
-  components: {
-    AccordionItem,
-    AccordionList,
-    DataOverview,
-    EnvoyData,
-    FrameSkeleton,
-    LabelList,
-    MultizoneInfo,
-    SubscriptionDetails,
-    SubscriptionHeader,
-    TabsWidget,
-    KButton,
-    KCard,
+const TABS = [
+  {
+    hash: '#overview',
+    title: 'Overview',
+  },
+  {
+    hash: '#insights',
+    title: 'Zone Ingress Insights',
+  },
+  {
+    hash: '#xds-configuration',
+    title: 'XDS Configuration',
+  },
+  {
+    hash: '#envoy-stats',
+    title: 'Stats',
+  },
+  {
+    hash: '#envoy-clusters',
+    title: 'Clusters',
+  },
+]
+
+const route = useRoute()
+const store = useStore()
+
+const props = defineProps({
+  selectedZoneIngressName: {
+    type: String,
+    required: false,
+    default: null,
   },
 
-  props: {
-    selectedZoneIngressName: {
-      type: String,
-      required: false,
-      default: null,
-    },
-
-    offset: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
+  offset: {
+    type: Number,
+    required: false,
+    default: 0,
   },
+})
 
-  data() {
-    return {
-      isLoading: true,
-      isEmpty: false,
-      error: null,
+const isLoading = ref(true)
+const isEmpty = ref(false)
+const error = ref<Error | null>(null)
+const tableData = ref<{ headers: TableHeader[], data: any[] }>({
+  headers: [
+    { label: 'Actions', key: 'actions', hideLabel: true },
+    { label: 'Status', key: 'status' },
+    { label: 'Name', key: 'name' },
+  ],
+  data: [],
+})
+const entity = ref<{ type: string, name: string } | null>(null)
+const rawData = ref<ZoneIngressOverview[]>([])
+const nextUrl = ref<string | null>(null)
+const subscriptionsReversed = ref<any[]>([])
+const pageOffset = ref(props.offset)
 
-      empty_state: {
-        title: 'No Data',
-        message: 'There are no Zone Ingresses present.',
-      },
-      tableData: {
-        headers: [
-          { key: 'actions', hideLabel: true },
-          { label: 'Status', key: 'status' },
-          { label: 'Name', key: 'name' },
-        ],
-        data: [],
-      },
-      tabs: [
-        {
-          hash: '#overview',
-          title: 'Overview',
-        },
-        {
-          hash: '#insights',
-          title: 'Zone Ingress Insights',
-        },
-        {
-          hash: '#xds-configuration',
-          title: 'XDS Configuration',
-        },
-        {
-          hash: '#envoy-stats',
-          title: 'Stats',
-        },
-        {
-          hash: '#envoy-clusters',
-          title: 'Clusters',
-        },
-      ],
-      entity: {},
-      rawData: [],
-      pageSize: PAGE_SIZE_DEFAULT,
-      next: null,
-      subscriptionsReversed: [],
-      pageOffset: this.offset,
+watch(() => route.params.mesh, function () {
+  // Don’t trigger a load when the user is navigating to another route.
+  if (route.name !== 'zoneingresses') {
+    return
+  }
+
+  // Ensures basic state is reset when switching meshes using the mesh selector.
+  isLoading.value = true
+  isEmpty.value = false
+  error.value = null
+
+  loadData(0)
+})
+
+onBeforeMount(function () {
+  init(props.offset)
+})
+
+function init(offset: number): void {
+  if (store.getters['config/getMulticlusterStatus']) {
+    loadData(offset)
+  }
+}
+
+async function loadData(offset: number): Promise<void> {
+  pageOffset.value = offset
+  // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
+  QueryParameter.set('offset', offset > 0 ? offset : null)
+
+  isLoading.value = true
+  isEmpty.value = false
+
+  const name = route.query.ns as string || null
+  const size = PAGE_SIZE_DEFAULT
+
+  try {
+    const { data, next } = await getZoneIngressOverviews(name, size, offset)
+
+    // set pagination
+    nextUrl.value = next
+
+    // set table data
+    if (data.length) {
+      isEmpty.value = false
+      rawData.value = data
+      getEntity({ name: props.selectedZoneIngressName ?? data[0].name })
+
+      tableData.value.data = data.map((item) => {
+        const { zoneIngressInsight = {} } = item
+        const status = getItemStatusFromInsight(zoneIngressInsight)
+
+        return { ...item, status }
+      })
+    } else {
+      tableData.value.data = []
+      isEmpty.value = true
     }
-  },
+  } catch (err) {
+    if (err instanceof Error) {
+      error.value = err
+    } else {
+      console.error(err)
+    }
 
-  computed: {
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus',
-    }),
-  },
+    isEmpty.value = true
+  } finally {
+    isLoading.value = false
+  }
+}
 
-  watch: {
-    $route() {
-      // Ensures basic state is reset when switching meshes using the mesh selector.
-      this.isLoading = true
-      this.isEmpty = false
-      this.error = null
+function getEntity({ name }: { name: string }): void {
+  const item = rawData.value.find((data) => data.name === name)
 
-      this.init(0)
-    },
-  },
+  const subscriptions = item?.zoneIngressInsight?.subscriptions ?? []
 
-  beforeMount() {
-    this.init(this.offset)
-  },
+  subscriptionsReversed.value = Array.from(subscriptions).reverse()
 
-  methods: {
-    init(offset) {
-      if (this.multicluster) {
-        this.loadData(offset)
-      }
-    },
-    tableAction(ev) {
-      const data = ev
+  entity.value = getSome(item, ['type', 'name'])
+  QueryParameter.set('zoneIngress', name)
+}
 
-      // load the data into the tabs
-      this.getEntity(data)
-    },
+async function getZoneIngressOverviews(name: string | null, size: number, offset: number): Promise<{ data: ZoneIngressOverview[], next: string | null }> {
+  if (name) {
+    const zoneIngressOverview = await kumaApi.getZoneIngressOverview({ name }, { size, offset })
 
-    async loadData(offset) {
-      this.pageOffset = offset
-      // Puts the offset parameter in the URL so it can be retrieved when the user reloads the page.
-      QueryParameter.set('offset', offset > 0 ? offset : null)
+    return {
+      data: [zoneIngressOverview],
+      next: null,
+    }
+  } else {
+    const { items, next } = await kumaApi.getAllZoneIngressOverviews({ size, offset })
 
-      this.isLoading = true
-      this.isEmpty = false
-
-      const name = this.$route.query.ns || null
-      const size = this.pageSize
-
-      try {
-        const { data, next } = await this.getZoneIngressOverviews(name, size, offset)
-
-        // set pagination
-        this.next = next
-
-        // set table data
-        if (data.length) {
-          this.isEmpty = false
-          this.rawData = data
-          this.getEntity({ name: this.selectedZoneIngressName ?? data[0].name })
-
-          this.tableData.data = data.map((item) => {
-            const { zoneIngressInsight = {} } = item
-            const status = getItemStatusFromInsight(zoneIngressInsight)
-
-            return { ...item, status }
-          })
-        } else {
-          this.tableData.data = []
-          this.isEmpty = true
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          this.error = err
-        } else {
-          console.error(err)
-        }
-
-        this.isEmpty = true
-      } finally {
-        this.isLoading = false
-      }
-    },
-
-    getEntity(entity) {
-      const selected = ['type', 'name']
-      const item = this.rawData.find((data) => data.name === entity.name)
-
-      const subscriptions = item?.zoneIngressInsight?.subscriptions ?? []
-
-      this.subscriptionsReversed = Array.from(subscriptions).reverse()
-
-      this.entity = getSome(item, selected)
-      QueryParameter.set('zoneIngress', this.entity.name)
-    },
-
-    /**
-     * @param {string | null} name
-     * @param {number} size
-     * @param {number} offset
-     * @returns {Promise<{ data: ZoneIngressOverview[], next: string | null }>}
-     */
-    async getZoneIngressOverviews(name, size, offset) {
-      if (name) {
-        const zoneIngressOverview = await kumaApi.getZoneIngressOverview({ name }, { size, offset })
-
-        return {
-          data: [zoneIngressOverview],
-          next: null,
-        }
-      } else {
-        const { items, next } = await kumaApi.getAllZoneIngressOverviews({ size, offset })
-
-        return {
-          data: items ?? [],
-          next,
-        }
-      }
-    },
-  },
+    return {
+      data: items ?? [],
+      next,
+    }
+  }
 }
 </script>
