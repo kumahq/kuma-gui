@@ -1,5 +1,5 @@
-import { TOKENS, container, createInjections } from '@/services'
+import { TOKENS, createInjections } from '@/services'
 
 export const [
   useEnv,
-] = createInjections([TOKENS.env], container)
+] = createInjections([TOKENS.env])
