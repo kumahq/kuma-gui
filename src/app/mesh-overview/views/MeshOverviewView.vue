@@ -71,9 +71,9 @@
                     >
                       <router-link
                         :to="{
-                          name: 'policies',
+                          name: 'policy',
                           params: {
-                            policyType: item.path
+                            policyPath: item.path
                           }
                         }"
                       >
