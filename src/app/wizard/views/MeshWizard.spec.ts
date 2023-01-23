@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
 import { DOMWrapper, flushPromises, mount, VueWrapper } from '@vue/test-utils'
 
-import Mesh from './Mesh.vue'
+import MeshWizard from './MeshWizard.vue'
 import { store } from '@/store/store'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
@@ -12,31 +12,37 @@ function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig
 
-  return mount(Mesh)
+  return mount(MeshWizard)
 }
 
 async function doStep(wrapper: VueWrapper<any>, nextButton: DOMWrapper<any>, enabledTestId: string, testIds: string[]): Promise<void> {
+  // The next button is initially enabled because no data is enabled unless the user enables the configuration of the step.
   expect(nextButton.attributes('disabled')).toBe(undefined)
 
+  // Let’s enable the configuration for the step.
   const enabledRadioButton = wrapper.find<HTMLInputElement>(`[data-testid="${enabledTestId}"]`)
   enabledRadioButton.element.checked = true
   await enabledRadioButton.trigger('change')
   await flushPromises()
 
+  // Now the next button shouldn’t be enabled anymore because the user has to fill out the configuration.
   expect(nextButton.attributes('disabled')).toBe('')
 
+  // Fill out all fields.
   for (const testId of testIds) {
     await wrapper.find(`[data-testid="${testId}"]`).setValue('fake-name')
   }
 
+  // The next button should be enabled again.
   expect(nextButton.attributes('disabled')).toBe(undefined)
 
   await nextButton.trigger('click')
 }
 
-describe('Mesh.vue', () => {
+describe('MeshWizard', () => {
   test('passes whole wizzard and render yaml', async () => {
     const wrapper = renderComponent('global')
+    await flushPromises()
 
     const nextButton = wrapper.find('[data-testid="next-step-button"]')
     expect(nextButton.attributes('disabled')).toBe('')

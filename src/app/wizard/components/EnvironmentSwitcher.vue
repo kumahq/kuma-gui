@@ -15,7 +15,7 @@
 
       <template #body>
         <div v-if="environment === 'kubernetes'">
-          <div v-if="$route.name === wizardRoutes.kubernetes">
+          <div v-if="route.name === wizardRoutes.kubernetes">
             <p>
               We have detected that you are running on a <strong>Kubernetes environment</strong>,
               and we are going to be showing you instructions for Kubernetes unless you
@@ -31,7 +31,7 @@
               </KButton>
             </p>
           </div>
-          <div v-else-if="$route.name === wizardRoutes.universal">
+          <div v-else-if="route.name === wizardRoutes.universal">
             <p>
               We have detected that you are running on a <strong>Kubernetes environment</strong>,
               but you are viewing instructions for Universal.
@@ -47,7 +47,7 @@
           </div>
         </div>
         <div v-else-if="environment === 'universal'">
-          <div v-if="$route.name === wizardRoutes.kubernetes">
+          <div v-if="route.name === wizardRoutes.kubernetes">
             <p>
               We have detected that you are running on a <strong>Universal environment</strong>,
               but you are viewing instructions for Kubernetes.
@@ -61,7 +61,7 @@
               </KButton>
             </p>
           </div>
-          <div v-else-if="$route.name === wizardRoutes.universal">
+          <div v-else-if="route.name === wizardRoutes.universal">
             <p>
               We have detected that you are running on a <strong>Universal environment</strong>,
               and we are going to be showing you instructions for Universal unless you
@@ -83,36 +83,22 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { KButton, KCard } from '@kong/kongponents'
 
-export default {
-  name: 'EnvironmentSwitcher',
-  components: {
-    KButton,
-    KCard,
-  },
-  data() {
-    return {
-      wizardRoutes: {
-        kubernetes: 'kubernetes-dataplane',
-        universal: 'universal-dataplane',
-      },
-    }
-  },
-  computed: {
-    ...mapGetters({
-      environment: 'config/getEnvironment',
-    }),
-    instructionsCtaText() {
-      return this.environment === 'universal' ? 'Switch to Kubernetes instructions' : 'Switch to Universal instructions'
-    },
-    instructionsCtaRoute() {
-      return this.environment === 'kubernetes' ? { name: 'universal-dataplane' } : { name: 'kubernetes-dataplane' }
-    },
-  },
+import { useStore } from '@/store/store'
+
+const wizardRoutes = {
+  kubernetes: 'kubernetes-dataplane',
+  universal: 'universal-dataplane',
 }
+
+const route = useRoute()
+const store = useStore()
+
+const environment = computed(() => store.getters['config/getEnvironment'])
 </script>
 
 <style lang="scss" scoped>

@@ -8,42 +8,44 @@
           aria-label="steptabs"
         >
           <li
-            v-for="(item, index) in steps"
-            :key="item.slug"
-            :aria-selected="step === item.slug ? 'true' : 'false'"
+            v-for="(step, index) in steps"
+            :key="step.slug"
+            :aria-selected="stepSlug === step.slug ? 'true' : 'false'"
             :aria-controls="`wizard-steps__content__item--${index}`"
-            :class="{ 'is-complete': (index <= start) }"
+            :class="{ 'is-complete': (index <= stepIndex) }"
             class="wizard-steps__indicator__item"
           >
             <span>
-              {{ item.label }}
+              {{ step.label }}
             </span>
           </li>
         </ul>
       </header>
+
       <div class="wizard-steps__content">
         <form
           ref="wizardForm"
           autocomplete="off"
         >
           <div
-            v-for="(item, index) in steps"
+            v-for="(step, index) in steps"
             :id="`wizard-steps__content__item--${index}`"
-            :key="item.slug"
+            :key="step.slug"
             :aria-labelledby="`wizard-steps__content__item--${index}`"
             role="tabpanel"
             tabindex="0"
             class="wizard-steps__content__item"
           >
             <slot
-              v-if="step === item.slug"
-              :name="item.slug"
+              v-if="stepSlug === step.slug"
+              :name="step.slug"
             />
           </div>
         </form>
       </div>
+
       <footer
-        v-if="footerEnabled"
+        v-if="props.footerEnabled"
         class="wizard-steps__footer"
       >
         <KButton
@@ -61,9 +63,10 @@
 
           Previous
         </KButton>
+
         <KButton
           v-show="!indexCanAdvance"
-          :disabled="nextDisabled"
+          :disabled="props.nextDisabled"
           appearance="primary"
           data-testid="next-step-button"
           @click="goToNextStep"
@@ -79,10 +82,11 @@
         </KButton>
       </footer>
     </div>
+
     <aside class="wizard-steps__sidebar">
       <div class="wizard-steps__sidebar__content">
         <div
-          v-for="(item, index) in sidebarContent"
+          v-for="(item, index) in props.sidebarContent"
           :key="item.name"
           class="wizard-steps__sidebar__item"
           :class="`wizard-steps__sidebar__item--${index}`"
@@ -94,99 +98,67 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed, onMounted, PropType, ref } from 'vue'
 import { KButton, KIcon } from '@kong/kongponents'
 
-export default {
-  components: {
-    KButton,
-    KIcon,
+import { QueryParameter } from '@/utilities/QueryParameter'
+
+const props = defineProps({
+  steps: {
+    type: Array as PropType<Array<{ label: string, slug: string }>>,
+    required: true,
   },
 
-  props: {
-    steps: {
-      type: Array,
-      default: () => {},
-    },
-    sidebarContent: {
-      type: Array,
-      required: true,
-      default: () => {},
-    },
-    footerEnabled: {
-      type: Boolean,
-      default: true,
-    },
-    nextDisabled: {
-      type: Boolean,
-      default: true,
-    },
+  sidebarContent: {
+    type: Array as PropType<Array<{ name: string }>>,
+    required: true,
   },
 
-  emits: ['goToStep'],
-
-  data() {
-    return {
-      start: 0,
-    }
-  },
-  computed: {
-    step: {
-      get() {
-        return this.steps[this.start].slug
-      },
-      set(index) {
-        return this.steps[index].slug
-      },
-    },
-    indexCanAdvance() {
-      return this.start >= this.steps.length - 1
-    },
-    indexCanReverse() {
-      return this.start <= 0
-    },
+  footerEnabled: {
+    type: Boolean,
+    default: true,
   },
 
-  mounted() {
-    // this sets the starting step upon load
-    this.setStartingStep()
+  nextDisabled: {
+    type: Boolean,
+    default: true,
   },
+})
 
-  methods: {
-    goToNextStep() {
-      this.start++
-      this.updateQuery('step', this.start)
-      this.$emit('goToStep', this.step)
-    },
-    goToPrevStep() {
-      this.start--
-      this.updateQuery('step', this.start)
-      this.$emit('goToStep', this.step)
-    },
-    updateQuery(query, value) {
-      const router = this.$router
-      const route = this.$route
+const emit = defineEmits<{
+  (event: 'go-to-step', step: number): void
+}>()
 
-      // explanation of hack https://github.com/vuejs/vue-router/issues/2872
-      if (!route.query) {
-        // if the URL contains no current queries, simply add the query and value
-        router.push({
-          query: {
-            [query]: value,
-          },
-        })
-      } else {
-        router.push({
-          query: Object.assign({}, route.query, { [query]: value }),
-        })
-      }
-    },
-    setStartingStep() {
-      const query = this.$route.query.step
+const stepIndex = ref(0)
+const stepSlug = ref<string | null>(null)
 
-      this.start = query || 0
-    },
-  },
+const indexCanAdvance = computed(() => stepIndex.value >= props.steps.length - 1)
+const indexCanReverse = computed(() => stepIndex.value <= 0)
+
+onMounted(function () {
+  const stepParameter = QueryParameter.get('step')
+  stepIndex.value = stepParameter ? parseInt(stepParameter) : 0
+
+  if (stepIndex.value in props.steps) {
+    stepSlug.value = props.steps[stepIndex.value].slug
+  }
+})
+
+function goToNextStep() {
+  stepIndex.value++
+  setStepSlug(stepIndex.value)
+}
+
+function goToPrevStep() {
+  stepIndex.value--
+  setStepSlug(stepIndex.value)
+}
+
+function setStepSlug(stepIndex: number): void {
+  stepSlug.value = props.steps[stepIndex].slug
+  QueryParameter.set('step', stepIndex)
+  emit('go-to-step', stepIndex)
 }
 </script>
 

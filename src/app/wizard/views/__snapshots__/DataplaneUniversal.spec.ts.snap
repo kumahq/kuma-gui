@@ -481,7 +481,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                             \\
                           </span>
                           
-      --cp-address
+  --cp-address
                           <span
                             class="token operator"
                           >
@@ -494,7 +494,7 @@ exports[`DataplaneUniversal.vue passes whole wizzard and render yaml 1`] = `
                             \\
                           </span>
                           
-      
+  
                           <span
                             class="token parameter variable"
                           >
@@ -528,7 +528,7 @@ networking:
                             \\
                           </span>
                           
-      --dataplane-token-file
+  --dataplane-token-file
                           <span
                             class="token operator"
                           >

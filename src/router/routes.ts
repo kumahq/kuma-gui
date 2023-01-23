@@ -312,7 +312,7 @@ export default (store: Store<State>): readonly RouteRecordRaw[] => {
             title: 'Create a new mesh',
             wizardProcess: true,
           },
-          component: () => import('@/app/wizard/views/Mesh.vue'),
+          component: () => import('@/app/wizard/views/MeshWizard.vue'),
         },
         {
           path: 'kubernetes-dataplane',
