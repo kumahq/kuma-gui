@@ -1,7 +1,9 @@
 import { rest, RestHandler } from 'msw'
+import { TOKENS, get } from '@/services'
 
 import { Info } from '@/types/index.d'
 
+const env = get(TOKENS.Env)
 async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
   const fileModule = await importFn()
 
@@ -11,7 +13,7 @@ async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
 function getBaseInfo(): Info {
   return {
     hostname: 'control-plane-5d94cb99c6-rzr96',
-    tagline: import.meta.env.VITE_NAMESPACE,
+    tagline: env.var('KUMA_PRODUCT_NAME'),
     version: '1.7.1',
     basedOnKuma: '1.7.1',
     instanceId: 'control-plane-5d94cb99c6-rzr96-ca19',
@@ -171,6 +173,7 @@ export function setupHandlers(url: string = ''): RestHandler[] {
     return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
   })
 
+  handlers.push(rest.get(env.var('KUMA_VERSION_URL'), (_req, res, ctx) => res(ctx.text('2.0.2'))))
   handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(getBaseInfo()))))
 
   handlers.push(
