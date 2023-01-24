@@ -23,15 +23,19 @@ export function reformatYaml(yaml: string, defaultIndentation: number = 2): stri
     // Determines the indentation of the preceding key.
     const precedingNewlinePos = reformattedYaml.lastIndexOf('\n', start)
     const head = reformattedYaml.substring(precedingNewlinePos + 1, start)
-    const indentationMatch = head.match(/^(\s*)[a-zA-Z]/)
+    const indentationMatch = head.match(/^(\s*)[^\s]/)
 
     if (indentationMatch === null) {
       break
     }
 
     // Wraps the single line segment onto separate lines with an additional level of indentation.
-    const indent = indentationMatch[1] + ' '.repeat(defaultIndentation)
-    const multiLineSegment = singleLineSegment.split('\\n').map((line) => indent + line).join('\n')
+    const isArrayBlock = head.match(/^(\s*)-/) !== null
+    const indent = indentationMatch[1] + ' '.repeat(defaultIndentation + (isArrayBlock ? 2 : 0))
+    const multiLineSegment = singleLineSegment
+      .split('\\n')
+      .map((line) => line !== '' ? indent + line : '')
+      .join('\n')
 
     reformattedYaml = reformattedYaml.substring(0, start) + '|\n' + multiLineSegment + reformattedYaml.substring(end)
   }

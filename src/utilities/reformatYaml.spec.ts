@@ -61,6 +61,55 @@ conf:
       'another: "\'@type\': type.googleapis.com/envoy.api.v2.Cluster"',
       'another: "\'@type\': type.googleapis.com/envoy.api.v2.Cluster"',
     ],
+    [
+      `type: MeshOPA
+mesh: default
+name: opa-1.kong-mesh-system
+spec:
+  targetRef:
+    kind: MeshService
+    name: backend_kuma-demo_svc_3001
+  default:
+    appendPolicies:
+      - inlineString: "package envoy.authz\\n\\nimport input.attributes.request.http as http_request\\n\\ndefault allow = false\\n\\ntoken = {\\"valid\\": valid, \\"payload\\": payload} {\\n    [_, encoded] := split(http_request.headers.authorization, \\" \\")\\n    [valid, _, payload] := io.jwt.decode_verify(encoded, {\\"secret\\": \\"secret\\"})\\n}\\n\\nallow {\\n    is_token_valid\\n    action_allowed\\n}\\n\\nis_token_valid {\\n  token.valid\\n  now := time.now_ns() / 1000000000\\n  token.payload.nbf <= now\\n  now < token.payload.exp\\n}\\n\\naction_allowed {\\n  http_request.method == \\"GET\\"\\n  token.payload.role == \\"admin\\"\\n}\\n"`,
+      `type: MeshOPA
+mesh: default
+name: opa-1.kong-mesh-system
+spec:
+  targetRef:
+    kind: MeshService
+    name: backend_kuma-demo_svc_3001
+  default:
+    appendPolicies:
+      - inlineString: |
+          package envoy.authz
+
+          import input.attributes.request.http as http_request
+
+          default allow = false
+
+          token = {\\"valid\\": valid, \\"payload\\": payload} {
+              [_, encoded] := split(http_request.headers.authorization, \\" \\")
+              [valid, _, payload] := io.jwt.decode_verify(encoded, {\\"secret\\": \\"secret\\"})
+          }
+
+          allow {
+              is_token_valid
+              action_allowed
+          }
+
+          is_token_valid {
+            token.valid
+            now := time.now_ns() / 1000000000
+            token.payload.nbf <= now
+            now < token.payload.exp
+          }
+
+          action_allowed {
+            http_request.method == \\"GET\\"
+            token.payload.role == \\"admin\\"
+          }`,
+    ],
   ])('works', (yaml, expectedFormattedYaml) => {
     expect(reformatYaml(yaml)).toBe(expectedFormattedYaml)
   })
