@@ -173,7 +173,7 @@ export function setupHandlers(url: string = ''): RestHandler[] {
     return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
   })
 
-  handlers.push(rest.get(env.var('KUMA_VERSION_URL'), (_req, res, ctx) => res(ctx.text('2.0.2'))))
+  handlers.push(rest.get(env.var('KUMA_VERSION_URL'), (_req, res, ctx) => res(ctx.text('5.0.2'))))
   handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(getBaseInfo()))))
 
   handlers.push(
