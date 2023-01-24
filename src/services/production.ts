@@ -9,6 +9,7 @@ export const TOKENS = {
     KUMA_FEEDBACK_URL: import.meta.env.VITE_FEEDBACK_URL,
     KUMA_CHAT_URL: import.meta.env.VITE_CHAT_URL,
     KUMA_INSTALL_URL: import.meta.env.VITE_INSTALL_URL,
+    KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
     KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
   } as EnvArgs, { description: 'EnvVars' }),
   Env: service(Env, { description: 'Env' }),
