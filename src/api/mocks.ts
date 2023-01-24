@@ -107,8 +107,8 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/traffic-logs', () => import('./mock-data/meshes/default/traffic-logs.json')],
   ['meshes/default/traffic-logs/tl-1', () => import('./mock-data/meshes/default/traffic-logs/tl-1.json')],
   ['meshes/default/traffic-logs/tl-123', () => import('./mock-data/meshes/default/traffic-logs/tl-123.json')],
-  ['meshes/default/traffic-permissions', () => import('./mock-data/meshes/default/traffic-permissions.json')],
   ['meshes/default/traffic-permissions/tp-1', () => import('./mock-data/meshes/default/traffic-permissions/tp-1.json')],
+  ['meshes/default/traffic-permissions/tp-4', () => import('./mock-data/meshes/default/traffic-permissions/tp-4.json')],
   ['meshes/default/traffic-permissions/tp-1234', () => import('./mock-data/meshes/default/traffic-permissions/tp-1234.json')],
   ['meshes/default/traffic-permissions/tp-alpha-tango-donut', () => import('./mock-data/meshes/default/traffic-permissions/tp-alpha-tango-donut.json')],
   ['meshes/default/traffic-routes', () => import('./mock-data/meshes/default/traffic-routes.json')],
@@ -197,6 +197,20 @@ export function setupHandlers(url: string = ''): RestHandler[] {
       }
 
       return res(ctx.json(data))
+    }),
+  )
+  handlers.push(
+    rest.get(getApiPath('meshes/default/traffic-permissions'), async (req, res, ctx) => {
+      const offset = req.url.searchParams.get('offset')
+
+      let response
+      if (offset === null || offset === '0') {
+        response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions.json'))
+      } else {
+        response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions__page-2.json'))
+      }
+
+      return res(ctx.json(response))
     }),
   )
 
