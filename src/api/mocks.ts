@@ -236,7 +236,3 @@ export function setupHandlers(url: string = ''): RestHandler[] {
 
   return handlers
 }
-
-export const additionalTestHandlers: RestHandler[] = [
-  rest.get('https://kuma.io/latest_version/', (_req, res, ctx) => res(ctx.status(200), ctx.text('1.2.2'))),
-]
