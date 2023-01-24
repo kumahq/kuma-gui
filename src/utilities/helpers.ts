@@ -107,13 +107,33 @@ export function stripTimes<T extends { creationTime?: any, modificationTime?: an
  *
  * @param {String} str
  */
-export function camelCaseToWords(str: string) {
-  const search = /^[a-z]+|[A-Z][a-z]*/g
+export function camelCaseToWords(str: string): string {
+  const result: string[] = []
+  let isPreviousCharUppercase = false
+  let isPreviousCharLowercase = false
 
-  return str
-    .match(search)
-    ?.map((x: string) => x[0].toUpperCase() + x.substr(1).toLowerCase())
-    .join(' ')
+  for (const char of Array.from(str)) {
+    const isUppercase = /[A-Z]/.test(char)
+    const isLowercase = /[a-z]/.test(char)
+
+    if (isUppercase) {
+      if (isPreviousCharLowercase && result.length > 0) {
+        result.push(' ')
+      }
+    } else if (isLowercase) {
+      if (isPreviousCharUppercase && result.length > 1) {
+        const previousChar = result.pop() as string
+        const previousPreviousChar = result[result.length - 1]
+        result.push((/[A-Z]/.test(previousPreviousChar) ? ' ' : '') + previousChar)
+      }
+    }
+
+    result.push(char)
+    isPreviousCharUppercase = isUppercase
+    isPreviousCharLowercase = isLowercase
+  }
+
+  return result.join('')
 }
 
 /**

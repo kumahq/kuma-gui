@@ -1,7 +1,7 @@
 import { describe, expect, jest, test } from '@jest/globals'
 
 import { DISABLED } from '@/constants'
-import { getZoneDpServerAuthType, fetchAllResources } from './helpers'
+import { getZoneDpServerAuthType, fetchAllResources, camelCaseToWords } from './helpers'
 import { ZoneOverview } from '@/types/index.d'
 
 describe('helpers', () => {
@@ -87,6 +87,19 @@ describe('helpers', () => {
       expect(request).toHaveBeenCalledTimes(2)
       expect(request).toHaveBeenNthCalledWith(1, { offset: 0, size: 500 })
       expect(request).toHaveBeenNthCalledWith(2, { offset: 500, size: 500 })
+    })
+  })
+
+  describe('camelCaseToWords', () => {
+    test.each([
+      ['test', 'test'],
+      ['MeshOPAPolicy', 'Mesh OPA Policy'],
+      ['MeshOPA', 'Mesh OPA'],
+      ['MeshCircuitBreaker', 'Mesh Circuit Breaker'],
+      ['Mesh Circuit Breaker', 'Mesh Circuit Breaker'],
+      ['meshCircuitBreaker', 'mesh Circuit Breaker'],
+    ])('works for “%s”', (str, expectedString) => {
+      expect(camelCaseToWords(str)).toBe(expectedString)
     })
   })
 })
