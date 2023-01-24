@@ -109,6 +109,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/default/traffic-logs/tl-123', () => import('./mock-data/meshes/default/traffic-logs/tl-123.json')],
   ['meshes/default/traffic-permissions/tp-1', () => import('./mock-data/meshes/default/traffic-permissions/tp-1.json')],
   ['meshes/default/traffic-permissions/tp-4', () => import('./mock-data/meshes/default/traffic-permissions/tp-4.json')],
+  ['meshes/default/traffic-permissions/tp-5', () => import('./mock-data/meshes/default/traffic-permissions/tp-5.json')],
   ['meshes/default/traffic-permissions/tp-1234', () => import('./mock-data/meshes/default/traffic-permissions/tp-1234.json')],
   ['meshes/default/traffic-permissions/tp-alpha-tango-donut', () => import('./mock-data/meshes/default/traffic-permissions/tp-alpha-tango-donut.json')],
   ['meshes/default/traffic-routes', () => import('./mock-data/meshes/default/traffic-routes.json')],
@@ -206,8 +207,10 @@ export function setupHandlers(url: string = ''): RestHandler[] {
       let response
       if (offset === null || offset === '0') {
         response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions.json'))
-      } else {
+      } else if (offset === '12') {
         response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions__page-2.json'))
+      } else {
+        response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions__page-3.json'))
       }
 
       return res(ctx.json(response))
