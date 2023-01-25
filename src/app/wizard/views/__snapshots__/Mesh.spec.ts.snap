@@ -676,22 +676,22 @@ exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
                                   >
                                     "type: Mesh
 name: default
-mtls: 
+mtls:
   enabledBackend: fake-name
-  backends: 
+  backends:
     - name: fake-name
       type: builtin
   enabled: true
-tracing: 
+tracing:
   defaultBackend: fake-name
-  backends: 
+  backends:
     - name: fake-name
       type: zipkin
       sampling: 99.9
-      conf: 
+      conf:
         url: fake-name
-logging: 
-  backends: 
+logging:
+  backends:
     - name: fake-name
       format: '{ start_time: "
                                   </span>
@@ -743,14 +743,14 @@ logging:
                                   >
                                     " }'
       type: tcp
-      conf: 
-        address: '127.0.0.1:5000'
-metrics: 
+      conf:
+        address: 127.0.0.1:5000
+metrics:
   enabledBackend: fake-name
-  backends: 
+  backends:
     - name: fake-name
       type: prometheus
-      conf: 
+      conf:
         port: 5670
         path: /metrics"
                                   </span>

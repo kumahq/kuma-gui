@@ -223,10 +223,11 @@
           >
             <input
               id="network-dataplane-port"
-              v-model="validate.univDataplaneNetworkDPPort"
+              :value="validate.univDataplaneNetworkDPPort"
               type="text"
               class="k-input w-100"
               data-testid="network-dataplane-port"
+              @input="updateDataPlanePort"
             >
 
             <HelperTooltip>
@@ -260,10 +261,11 @@
           >
             <input
               id="network-service-port"
-              v-model="validate.univDataplaneNetworkServicePort"
+              :value="validate.univDataplaneNetworkServicePort"
               type="text"
               class="k-input w-100"
               data-testid="service-port"
+              @input="updateServicePort"
             >
 
             <HelperTooltip>
@@ -436,12 +438,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import json2yaml from '@appscode/json2yaml'
 import { KAlert, KButton, KCard } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
 import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
 import { kebabCase } from '@/utilities/helpers'
+import { toYaml } from '@/utilities/toYaml'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import FormFragment from '../components/FormFragment.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
@@ -629,7 +631,7 @@ export default {
       const { univDataplaneId } = this.validate
       const cmdStructure = `kuma-dp run \\
       --cp-address=${kumaDpServerUrl()} \\
-      --dataplane=${`"${json2yaml(this.getDataplaneSchema)}"`} \\
+      --dataplane=${`"${toYaml(this.getDataplaneSchema)}"`} \\
       --dataplane-token-file=kuma-token-${univDataplaneId}`
 
       return cmdStructure
@@ -682,20 +684,22 @@ export default {
         this.validate.univDataplaneId = kebabCase(`${value}-${this.randString}`)
       }
     },
-
-    'validate.univDataplaneNetworkServicePort'(value) {
-      const newId = value.replace(/[a-zA-Z]*$/g, '').trim()
-
-      this.validate.univDataplaneNetworkServicePort = newId
-    },
-
-    'validate.univDataplaneNetworkDPPort'(value) {
-      const newId = value.replace(/[a-zA-Z]*$/g, '').trim()
-
-      this.validate.univDataplaneNetworkDPPort = newId
-    },
   },
   methods: {
+    updateDataPlanePort(event) {
+      const input = /** @type {HTMLInputElement} */ (event.target)
+      const portString = input.value.replace(/[a-zA-Z]*$/g, '').trim()
+
+      this.validate.univDataplaneNetworkDPPort = portString === '' ? null : Number(portString)
+    },
+
+    updateServicePort(event) {
+      const input = /** @type {HTMLInputElement} */ (event.target)
+      const portString = input.value.replace(/[a-zA-Z]*$/g, '').trim()
+
+      this.validate.univDataplaneNetworkServicePort = portString === '' ? null : Number(portString)
+    },
+
     hideSiblings() {
       // this triggers when to hide the siblings related to the Scanner
       // component that need to be hidden once the scan succeeds.

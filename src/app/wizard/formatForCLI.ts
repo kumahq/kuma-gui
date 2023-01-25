@@ -1,4 +1,4 @@
-import json2yaml from '@appscode/json2yaml'
+import { toYaml } from '@/utilities/toYaml'
 
 /**
  * Encapsulate the YAML entity code with proper Bash commands and provide the user with an out-of-box, paste-ready snippet to create various entities within Kuma
@@ -8,7 +8,7 @@ import json2yaml from '@appscode/json2yaml'
  */
 export function formatForCLI(content: any, codeClosing: string = '" | kumactl apply -f -'): string {
   const codeOpening = 'echo "'
-  const entity = json2yaml(content)
+  const entity = toYaml(content)
 
   return `${codeOpening}${entity}${codeClosing}`
 }
