@@ -77,12 +77,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import json2yaml from '@appscode/json2yaml'
 import { KCard } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
 import { PRODUCT_NAME } from '@/constants'
 import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
+import { toYaml } from '@/utilities/toYaml'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import LoadingBox from '@/app/common/LoadingBox.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
@@ -130,7 +130,7 @@ export default {
       generateDpTokenCode: 'kumactl generate dataplane-token --name=redis > kuma-token-redis',
       startDpCode: `kuma-dp run \\
   --cp-address=${kumaDpServerUrl()} \\
-  --dataplane=${`"${json2yaml(START_DP_CODE_DATAPLANE)}"`} \\
+  --dataplane=${`"${toYaml(START_DP_CODE_DATAPLANE)}"`} \\
   --dataplane-token-file=kuma-token-example`,
       hasDPPs: false,
       DPPsTimeout: null,

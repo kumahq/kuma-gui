@@ -43,7 +43,6 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import json2yaml from '@appscode/json2yaml'
 import { KTabs } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
@@ -51,6 +50,7 @@ import CodeBlock from './CodeBlock.vue'
 import EmptyBlock from './EmptyBlock.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import LoadingBlock from './LoadingBlock.vue'
+import { toYaml } from '@/utilities/toYaml'
 
 const store = useStore()
 
@@ -150,8 +150,8 @@ const yamlContent = computed(() => {
   }
 
   const items = {
-    universal: json2yaml(props.content),
-    kubernetes: json2yaml(kubernetesObj),
+    universal: toYaml(props.content),
+    kubernetes: toYaml(kubernetesObj),
   }
 
   return items

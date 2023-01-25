@@ -33,16 +33,15 @@
 
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue'
-import json2yaml from '@appscode/json2yaml'
 
 import { useStore } from '@/store/store'
 import { kumaApi } from '@/api/kumaApi'
+import { toYaml } from '@/utilities/toYaml'
 import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-
 import {
   DataPlane,
   DataplaneRule,
@@ -238,7 +237,7 @@ function getPolicyTypeEntries(sidecarDataplanes: SidecarDataplane[]): PolicyType
 }
 
 function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: PolicyType, sidecarDataplane: SidecarDataplane, destinationTags: LabelValue[], name: string | null): PolicyTypeEntryConnection[] {
-  const config = policy.conf && Object.keys(policy.conf).length > 0 ? json2yaml(JSON.stringify(policy.conf, null, 2)) : null
+  const config = policy.conf && Object.keys(policy.conf).length > 0 ? toYaml(policy.conf) : null
   const origin: PolicyTypeEntryOrigin = {
     name: policy.name,
     route: {
@@ -362,7 +361,7 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
   }
 
   const addresses = rule.addresses ?? []
-  const config = conf && Object.keys(conf).length > 0 ? json2yaml(JSON.stringify(conf, null, 2)) : null
+  const config = conf && Object.keys(conf).length > 0 ? toYaml(conf) : null
   const origins: PolicyTypeEntryOrigin[] = []
 
   for (const ruleOrigin of rule.origins) {

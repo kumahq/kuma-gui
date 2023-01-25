@@ -3,7 +3,7 @@
     :id="id"
     class="code-block"
     :style="props.codeMaxHeight ? `--KCodeBlockMaxHeight: ${props.codeMaxHeight}` : undefined"
-    :code="reformattedCode"
+    :code="props.code"
     :language="language"
     :is-processing="isProcessing"
     :is-searchable="isSearchable"
@@ -15,13 +15,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, PropType } from 'vue'
+import { ref, PropType } from 'vue'
 import { KCodeBlock } from '@kong/kongponents'
 import { CodeBlockEventData } from '@kong/kongponents/dist/types/components/KCodeBlock/KCodeBlock.vue.d'
 
 import { highlightElement, AvailableLanguages } from '@/utilities/highlightElement'
 import { ClientStorage } from '@/utilities/ClientStorage'
-import { reformatYaml } from '@/utilities/reformatYaml'
 
 const props = defineProps({
   id: {
@@ -67,8 +66,6 @@ const props = defineProps({
 const query = getStoredQuery()
 
 const isProcessing = ref(false)
-
-const reformattedCode = computed(() => props.language === 'yaml' ? reformatYaml(props.code) : props.code)
 
 async function handleCodeBlockRenderEvent({ preElement, codeElement, language, code }: CodeBlockEventData): Promise<void> {
   isProcessing.value = true
