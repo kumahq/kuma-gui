@@ -92,12 +92,12 @@ describe('helpers', () => {
 
   describe('camelCaseToWords', () => {
     test.each([
-      ['test', 'test'],
+      ['test', 'Test'],
       ['MeshOPAPolicy', 'Mesh OPA Policy'],
       ['MeshOPA', 'Mesh OPA'],
       ['MeshCircuitBreaker', 'Mesh Circuit Breaker'],
       ['Mesh Circuit Breaker', 'Mesh Circuit Breaker'],
-      ['meshCircuitBreaker', 'mesh Circuit Breaker'],
+      ['meshCircuitBreaker', 'Mesh Circuit Breaker'],
     ])('works for “%s”', (str, expectedString) => {
       expect(camelCaseToWords(str)).toBe(expectedString)
     })

@@ -128,7 +128,7 @@ export function camelCaseToWords(str: string): string {
       }
     }
 
-    result.push(char)
+    result.push(result.length === 0 ? char.toUpperCase() : char)
     isPreviousCharUppercase = isUppercase
     isPreviousCharLowercase = isLowercase
   }
