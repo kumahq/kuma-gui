@@ -7,22 +7,22 @@
 
       <ul>
         <li v-if="details.globalInstanceId">
-          <strong>Global Instance ID:</strong>&nbsp;
-          <span class="mono">{{ details.globalInstanceId }}</span>
+          <strong>Global Instance ID:</strong>
+          <span>{{ details.globalInstanceId }}</span>
         </li>
 
         <li v-if="details.controlPlaneInstanceId">
-          <strong>Control Plane Instance ID:</strong>&nbsp;
-          <span class="mono">{{ details.controlPlaneInstanceId }}</span>
+          <strong>Control Plane Instance ID:</strong>
+          <span>{{ details.controlPlaneInstanceId }}</span>
         </li>
 
         <li v-if="details.connectTime">
-          <strong>Last Connected:</strong>&nbsp;
+          <strong>Last Connected:</strong>
           {{ humanReadableDate(details.connectTime) }}
         </li>
 
         <li v-if="details.disconnectTime">
-          <strong>Last Disconnected:</strong>&nbsp;
+          <strong>Last Disconnected:</strong>
           {{ humanReadableDate(details.disconnectTime) }}
         </li>
       </ul>
@@ -35,7 +35,7 @@
           :key="label"
         >
           <h6 class="overview-tertiary-title">
-            {{ camelCaseToWords(label) }}:
+            {{ label }}:
           </h6>
 
           <ul>
@@ -43,8 +43,8 @@
               v-for="(k, v) in item"
               :key="v"
             >
-              <strong>{{ camelCaseToWords(v) }}:</strong>&nbsp;
-              <span class="mono">{{ formatError(formatValue(k)) }}</span>
+              <strong>{{ v }}:</strong>
+              <span>{{ formatError(formatValue(k)) }}</span>
             </li>
           </ul>
         </li>
@@ -71,7 +71,13 @@
 import { computed } from 'vue'
 import { KAlert, KIcon } from '@kong/kongponents'
 
-import { humanReadableDate, camelCaseToWords } from '@/utilities/helpers'
+import { humanReadableDate } from '@/utilities/helpers'
+
+const map: Record<string, string> = {
+  responsesSent: 'Responses Sent',
+  responsesAcknowledged: 'Responses Acknowledged',
+  responsesRejected: 'Responses Rejected',
+}
 
 const props = defineProps({
   details: {
@@ -86,13 +92,29 @@ const props = defineProps({
 })
 
 const detailsIterator = computed<Record<string, Record<string, any>>>(() => {
+  let details
   if (props.isDiscoverySubscription) {
     const { lastUpdateTime, total, ...restDetails } = props.details.status
 
-    return restDetails
+    details = restDetails
   }
 
-  return props.details.status?.stat
+  if (props.details.status?.stat) {
+    details = props.details.status?.stat
+  }
+
+  for (const detailProperty in details) {
+    const detail: any = details[detailProperty]
+
+    for (const prop in detail) {
+      if (prop in map) {
+        detail[map[prop]] = detail[prop]
+        delete detail[prop]
+      }
+    }
+  }
+
+  return details
 })
 
 function formatValue(value: string): string {
@@ -112,7 +134,6 @@ function formatError(value: string): string {
 .overview-tertiary-title {
   font-size: var(--type-sm);
   font-weight: bold;
-  text-transform: uppercase;
   color: var(--grey-500);
   margin: var(--spacing-xs) 0;
 }

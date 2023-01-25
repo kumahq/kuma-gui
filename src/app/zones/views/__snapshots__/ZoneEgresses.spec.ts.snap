@@ -1030,10 +1030,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                               <strong>
                                 Control Plane Instance ID:
                               </strong>
-                                
-                              <span
-                                class="mono"
-                              >
+                              <span>
                                 kuma-control-plane-84f5589874-nmspq-0867
                               </span>
                             </li>
@@ -1041,7 +1038,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                               <strong>
                                 Last Connected:
                               </strong>
-                                July 13, 2021
+                               July 13, 2021
                             </li>
                             <!--v-if-->
                           </ul>
@@ -1055,7 +1052,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Cds: 
+                                cds: 
                               </h6>
                               <ul>
                                 
@@ -1063,10 +1060,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                                   <strong>
                                     Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -1074,10 +1068,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                                   <strong>
                                     Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -1088,7 +1079,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Eds: 
+                                eds: 
                               </h6>
                               <ul>
                                 
@@ -1096,10 +1087,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                                   <strong>
                                     Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     2
                                   </span>
                                 </li>
@@ -1107,10 +1095,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                                   <strong>
                                     Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -1121,7 +1106,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Lds: 
+                                lds: 
                               </h6>
                               <ul>
                                 
@@ -1129,10 +1114,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                                   <strong>
                                     Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -1140,10 +1122,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                                   <strong>
                                     Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -1154,7 +1133,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Rds: 
+                                rds: 
                               </h6>
                               <ul>
                                 
