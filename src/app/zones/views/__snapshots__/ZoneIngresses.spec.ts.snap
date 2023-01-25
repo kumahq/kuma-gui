@@ -707,10 +707,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                               <strong>
                                 Control Plane Instance ID:
                               </strong>
-                                
-                              <span
-                                class="mono"
-                              >
+                              <span>
                                 kuma-control-plane-84f5589874-nmspq-0867
                               </span>
                             </li>
@@ -718,7 +715,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                               <strong>
                                 Last Connected:
                               </strong>
-                                July 13, 2021
+                               July 13, 2021
                             </li>
                             <!--v-if-->
                           </ul>
@@ -738,23 +735,17 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -771,23 +762,17 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     2
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
@@ -804,23 +789,17 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     3
                                   </span>
                                 </li>

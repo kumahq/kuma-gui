@@ -1315,10 +1315,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <strong>
                                 Global Instance ID:
                               </strong>
-                                
-                              <span
-                                class="mono"
-                              >
+                              <span>
                                 MacBook-Pro-Bartlomiej.local-9e52
                               </span>
                             </li>
@@ -1327,7 +1324,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <strong>
                                 Last Connected:
                               </strong>
-                                February 19, 2021
+                               February 19, 2021
                             </li>
                             <!--v-if-->
                           </ul>
@@ -1347,23 +1344,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1380,23 +1371,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1413,23 +1398,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1446,23 +1425,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1479,23 +1452,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1512,23 +1479,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1545,23 +1506,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1578,23 +1533,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1611,23 +1560,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1644,23 +1587,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1677,23 +1614,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1710,23 +1641,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1743,23 +1668,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
@@ -1776,23 +1695,17 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    responsesSent:
+                                    Responses Sent:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
                                 <li>
                                   <strong>
-                                    responsesAcknowledged:
+                                    Responses Acknowledged:
                                   </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
+                                  <span>
                                     1
                                   </span>
                                 </li>
