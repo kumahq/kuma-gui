@@ -1,5 +1,6 @@
 import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
 import { store } from '@/store/store'
@@ -26,9 +27,9 @@ function renderComponent(status: string) {
     },
   })
 }
-
 describe('App.vue', () => {
   test('renders main view when successful', async () => {
+    withVersion('10.2.0')
     const wrapper = renderComponent('OK')
     store.dispatch('bootstrap')
 
@@ -40,6 +41,7 @@ describe('App.vue', () => {
   })
 
   test('fails to renders basic view', async () => {
+    withVersion('10.2.0')
     const wrapper = renderComponent('ERROR')
     store.dispatch('bootstrap')
 

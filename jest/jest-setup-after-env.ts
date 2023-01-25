@@ -1,4 +1,4 @@
-import { afterAll, afterEach, beforeAll, expect } from '@jest/globals'
+import { afterAll, afterEach, beforeAll, beforeEach, expect } from '@jest/globals'
 
 // Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
@@ -7,10 +7,11 @@ import { config } from '@vue/test-utils'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { createRouter } from '../src/router/router'
-import { TOKENS, get } from '../src/services'
+import { TOKENS, get, container, set, injected } from '../src/services'
 import { store, storeKey } from '../src/store/store'
 import { setupMockServer } from '../src/api/setupMockServer'
 import { rest, MockedRequest as Request } from 'msw'
+import Env from '@/services/env/Env'
 
 type MockFunction = (_opts: Record<string, unknown>, cb: (req: Request, resp: Record <string, any>) => Record<string, unknown>) => void
 
@@ -53,6 +54,8 @@ const server = setupMockServer(import.meta.env.VITE_KUMA_API_SERVER_URL)
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
+beforeEach(() => container.capture?.())
+afterEach(() => container.restore?.())
 
 // add a utility to easily setup/mock out API endpoints
 const re = /\+/g
@@ -67,4 +70,17 @@ const useMock = (url: string, response: Record<string, unknown>):MockFunction =>
   }
 }
 
+export const withVersion = (v: string) => {
+  class TestEnv extends Env {
+    var(...rest: Parameters<Env['var']>) {
+      const key = rest[0]
+      if (key === 'KUMA_VERSION') {
+        return v
+      }
+      return super.var(...rest)
+    }
+  }
+  set(TOKENS.Env, TestEnv)
+  injected(TestEnv, TOKENS.EnvVars)
+}
 export { router, server, useMock }

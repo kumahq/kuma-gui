@@ -50,6 +50,12 @@ export const service = <T>(func: UnknownCreator<T>, config: DependencyDefinition
     .inSingletonScope()
   return t as Token<T>
 }
+export const set = <T>(t: Token, func: UnknownCreator<T>) => {
+  const bound = container.bind(t)
+  bound.toInstance(func as Parameters<typeof bound.toInstance>[0])
+    .inSingletonScope()
+  return func
+}
 export const constant = <T>(func: T, config: DependencyDefinition): Token<T> => {
   const t = token<T>(config.description)
   const bound = container.bind(t)

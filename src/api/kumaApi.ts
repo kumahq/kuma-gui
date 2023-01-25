@@ -26,6 +26,8 @@ import {
   ZoneOverview,
 } from '@/types/index.d'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import { TOKENS, get } from '@/services'
+const env = get(TOKENS.Env)
 
 class KumaApi {
   client: RestClient
@@ -62,7 +64,7 @@ class KumaApi {
   }
 
   async getLatestVersion(): Promise<string> {
-    return this.client.get(import.meta.env.VITE_VERSION_URL)
+    return this.client.get(env.var('KUMA_VERSION_URL'))
   }
 
   getConfig(): Promise<ClientConfigInterface> {

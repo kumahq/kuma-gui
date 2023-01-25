@@ -6,6 +6,7 @@ export type EnvArgs = {
   KUMA_FEEDBACK_URL: string
   KUMA_CHAT_URL: string
   KUMA_INSTALL_URL: string
+  KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
 }
 type EnvProps = {
