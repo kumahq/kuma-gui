@@ -35,7 +35,7 @@
           :key="label"
         >
           <h6 class="overview-tertiary-title">
-            {{ camelCaseToWords(label) }}:
+            {{ label }}:
           </h6>
 
           <ul>
@@ -43,7 +43,7 @@
               v-for="(k, v) in item"
               :key="v"
             >
-              <strong>{{ camelCaseToWords(v) }}:</strong>&nbsp;
+              <strong>{{ v }}:</strong>&nbsp;
               <span class="mono">{{ formatError(formatValue(k)) }}</span>
             </li>
           </ul>
@@ -71,7 +71,7 @@
 import { computed } from 'vue'
 import { KAlert, KIcon } from '@kong/kongponents'
 
-import { humanReadableDate, camelCaseToWords } from '@/utilities/helpers'
+import { humanReadableDate } from '@/utilities/helpers'
 
 const props = defineProps({
   details: {
@@ -112,7 +112,6 @@ function formatError(value: string): string {
 .overview-tertiary-title {
   font-size: var(--type-sm);
   font-weight: bold;
-  text-transform: uppercase;
   color: var(--grey-500);
   margin: var(--spacing-xs) 0;
 }

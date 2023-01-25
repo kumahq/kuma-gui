@@ -1341,13 +1341,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Circuit Breaker: 
+                                CircuitBreaker: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1358,7 +1358,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1380,7 +1380,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1391,7 +1391,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1413,7 +1413,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1424,40 +1424,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
-                                  </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
-                                    1
-                                  </span>
-                                </li>
-                                
-                              </ul>
-                            </li>
-                            <li>
-                              <h6
-                                class="overview-tertiary-title"
-                              >
-                                External Service: 
-                              </h6>
-                              <ul>
-                                
-                                <li>
-                                  <strong>
-                                    Responses Sent:
-                                  </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
-                                    1
-                                  </span>
-                                </li>
-                                <li>
-                                  <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1473,13 +1440,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Fault Injection: 
+                                ExternalService: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1490,7 +1457,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1506,13 +1473,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Health Check: 
+                                FaultInjection: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1523,7 +1490,40 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
+                                  </strong>
+                                    
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                HealthCheck: 
+                              </h6>
+                              <ul>
+                                
+                                <li>
+                                  <strong>
+                                    responsesSent:
+                                  </strong>
+                                    
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1545,7 +1545,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1556,7 +1556,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1572,13 +1572,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Proxy Template: 
+                                ProxyTemplate: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1589,7 +1589,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1611,7 +1611,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1622,7 +1622,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1644,7 +1644,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1655,40 +1655,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
-                                  </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
-                                    1
-                                  </span>
-                                </li>
-                                
-                              </ul>
-                            </li>
-                            <li>
-                              <h6
-                                class="overview-tertiary-title"
-                              >
-                                Traffic Log: 
-                              </h6>
-                              <ul>
-                                
-                                <li>
-                                  <strong>
-                                    Responses Sent:
-                                  </strong>
-                                    
-                                  <span
-                                    class="mono"
-                                  >
-                                    1
-                                  </span>
-                                </li>
-                                <li>
-                                  <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1704,13 +1671,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Traffic Permission: 
+                                TrafficLog: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1721,7 +1688,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1737,13 +1704,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Traffic Route: 
+                                TrafficPermission: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1754,7 +1721,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -1770,13 +1737,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Traffic Trace: 
+                                TrafficRoute: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -1787,7 +1754,40 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
+                                  </strong>
+                                    
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                
+                              </ul>
+                            </li>
+                            <li>
+                              <h6
+                                class="overview-tertiary-title"
+                              >
+                                TrafficTrace: 
+                              </h6>
+                              <ul>
+                                
+                                <li>
+                                  <strong>
+                                    responsesSent:
+                                  </strong>
+                                    
+                                  <span
+                                    class="mono"
+                                  >
+                                    1
+                                  </span>
+                                </li>
+                                <li>
+                                  <strong>
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span

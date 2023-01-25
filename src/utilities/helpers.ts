@@ -101,42 +101,6 @@ export function stripTimes<T extends { creationTime?: any, modificationTime?: an
 }
 
 /**
- * camelCaseToWords
- *
- * Converts camelcase to human-readable words in titlecase format
- *
- * @param {String} str
- */
-export function camelCaseToWords(str: string): string {
-  const result: string[] = []
-  let isPreviousCharUppercase = false
-  let isPreviousCharLowercase = false
-
-  for (const char of Array.from(str)) {
-    const isUppercase = /[A-Z]/.test(char)
-    const isLowercase = /[a-z]/.test(char)
-
-    if (isUppercase) {
-      if (isPreviousCharLowercase && result.length > 0) {
-        result.push(' ')
-      }
-    } else if (isLowercase) {
-      if (isPreviousCharUppercase && result.length > 1) {
-        const previousChar = result.pop() as string
-        const previousPreviousChar = result[result.length - 1]
-        result.push((/[A-Z]/.test(previousPreviousChar) ? ' ' : '') + previousChar)
-      }
-    }
-
-    result.push(result.length === 0 ? char.toUpperCase() : char)
-    isPreviousCharUppercase = isUppercase
-    isPreviousCharLowercase = isLowercase
-  }
-
-  return result.join('')
-}
-
-/**
  * kebabCase
  *
  * @param {*} value

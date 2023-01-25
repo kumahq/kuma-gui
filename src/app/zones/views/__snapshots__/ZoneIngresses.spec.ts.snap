@@ -732,13 +732,13 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Cds: 
+                                cds: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -749,7 +749,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -765,13 +765,13 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Eds: 
+                                eds: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -782,7 +782,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -798,13 +798,13 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Lds: 
+                                lds: 
                               </h6>
                               <ul>
                                 
                                 <li>
                                   <strong>
-                                    Responses Sent:
+                                    responsesSent:
                                   </strong>
                                     
                                   <span
@@ -815,7 +815,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 </li>
                                 <li>
                                   <strong>
-                                    Responses Acknowledged:
+                                    responsesAcknowledged:
                                   </strong>
                                     
                                   <span
@@ -831,7 +831,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                               <h6
                                 class="overview-tertiary-title"
                               >
-                                Rds: 
+                                rds: 
                               </h6>
                               <ul>
                                 
