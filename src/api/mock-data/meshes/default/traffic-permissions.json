@@ -58,5 +58,6 @@
         }
       ]
     }
-  ]
+  ],
+  "next": "http://localhost:5681/meshes/default/traffic-permissions?offset=12&size=12"
 }

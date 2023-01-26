@@ -1,0 +1,25 @@
+{
+  "total": 1,
+  "items": [
+    {
+      "type": "TrafficPermission",
+      "mesh": "default",
+      "name": "tp-4",
+      "sources": [
+        {
+          "match": {
+            "service": "backend"
+          }
+        }
+      ],
+      "destinations": [
+        {
+          "match": {
+            "service": "redis"
+          }
+        }
+      ]
+    }
+  ],
+  "next": "http://localhost:5681/meshes/default/traffic-permissions?offset=24&size=12"
+}

@@ -1,0 +1,25 @@
+{
+  "total": 1,
+  "items": [
+    {
+      "type": "TrafficPermission",
+      "mesh": "default",
+      "name": "tp-5",
+      "sources": [
+        {
+          "match": {
+            "service": "backend"
+          }
+        }
+      ],
+      "destinations": [
+        {
+          "match": {
+            "service": "redis"
+          }
+        }
+      ]
+    }
+  ],
+  "next": null
+}

@@ -31,5 +31,6 @@
         "backend": "my-zipkin"
       }
     }
-  ]
+  ],
+  "next": null
 }

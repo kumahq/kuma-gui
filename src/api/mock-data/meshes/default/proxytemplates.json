@@ -13,7 +13,9 @@
         }
       ],
       "conf": {
-        "imports": ["default-proxy"],
+        "imports": [
+          "default-proxy"
+        ],
         "resources": [
           {
             "name": "raw-name",
@@ -23,5 +25,6 @@
         ]
       }
     }
-  ]
+  ],
+  "next": null
 }
