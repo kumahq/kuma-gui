@@ -1,7 +1,5 @@
 import { createApp } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
-import { addLicense, useTheme } from '@amcharts/amcharts4/core'
-import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 
 import { createRouter } from './router/router'
 import { kumaApi } from './api/kumaApi'
@@ -14,8 +12,6 @@ import App from './app/App.vue'
 if (import.meta.env.PROD) {
   setupDatadog()
 }
-
-useTheme(am4themesAnimated)
 
 /**
  * Initializes and mounts the Vue application.
@@ -56,7 +52,3 @@ async function initializeVue(env: (key: keyof EnvVars) => string, routes: readon
 }
 
 initializeVue(get(TOKENS.env), get(TOKENS.routes))
-
-if (import.meta.env.VITE_AMCHARTS_LICENSE) {
-  addLicense(import.meta.env.VITE_AMCHARTS_LICENSE)
-}

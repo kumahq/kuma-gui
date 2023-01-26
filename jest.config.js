@@ -28,8 +28,7 @@
     '^.+\\.(css|png|gif|jpg)?$': 'jest-transform-stub',
   },
   transformIgnorePatterns: [
-    // Not transforming amcharts speeds up the the tests significantly.
-    '[/\\\\]node_modules[/\\\\](?!(@amcharts)\\/).+\\.js$',
+    '[/\\\\]node_modules[/\\\\].+\\.js$',
   ],
   moduleNameMapper: {
     '^@/(.*)\\.svg\\?(url|raw)$': 'jest-transform-stub',

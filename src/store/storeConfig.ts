@@ -1,27 +1,34 @@
 import { StoreOptions } from 'vuex'
+import semverCompare from 'semver/functions/compare'
 
+import { ClientStorage } from '@/utilities/ClientStorage'
 import { ConfigInterface } from './modules/config/config.types'
+import { fetchAllResources } from '@/utilities/helpers'
+import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { kumaApi } from '@/api/kumaApi'
 import { NotificationsInterface } from './modules/notifications/notifications.types'
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
-import { SidebarInterface } from './modules/sidebar/sidebar.types'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
+import { SidebarInterface } from './modules/sidebar/sidebar.types'
+import {
+  ChartDataPoint,
+  DoughnutChartData,
+  KDSSubscription,
+  Mesh,
+  PolicyType,
+  ServiceInsight,
+  StatusKeyword,
+  ZoneOverview,
+} from '@/types/index.d'
 import config from '@/store/modules/config/config'
 import notifications from '@/store/modules/notifications/notifications'
 import onboarding from '@/store/modules/onboarding/onboarding'
 import sidebar from '@/store/modules/sidebar/sidebar'
 
-import { fetchAllResources } from '@/utilities/helpers'
-import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
-import { kumaApi } from '@/api/kumaApi'
-import { ClientStorage } from '@/utilities/ClientStorage'
-import { Mesh, PolicyType } from '@/types/index.d'
-
 const ONLINE = 'Online'
 const OFFLINE = 'Offline'
 const PARTIALLY_DEGRADED = 'Partially degraded'
-
-type TODO = any
 
 /**
  * The root state of the application’s Vuex store minus all module state.
@@ -52,7 +59,7 @@ interface BareRootState {
       total: number
     }
   }
-  overviewCharts: Record<string, { data: any[] }>
+  overviewCharts: Record<string, { data: ChartDataPoint[] }>
   meshInsight: {
     meshesTotal: number
     dataplanes: {
@@ -156,8 +163,10 @@ export const storeConfig: StoreOptions<State> = {
     notifications,
     onboarding,
   },
+
   // Explicitly asserts `initialState` to be of type `State` (which includes module state) even though `initialSate` doesn’t include module state. This is necessary because otherwise the result of creating a store from `storeConfig` and `State` will be a store (i.e. `Store<State>`) that, according to its type, is missing all module state which it actually doesn’t. Vuex’s types aren’t complete and don’t account for this scenario. Without this workaround, accessing module state without a type guard would always produce a TypeScript error.
   state: () => initialState as State,
+
   getters: {
     globalLoading: state => state.globalLoading,
     getMeshList: state => state.meshes,
@@ -170,66 +179,77 @@ export const storeConfig: StoreOptions<State> = {
       meshInsightsFetching || serviceInsightsFetching || externalServicesFetching,
     getServiceResourcesFetching: ({ serviceInsightsFetching, externalServicesFetching }) =>
       serviceInsightsFetching || externalServicesFetching,
-    getChart: ({ overviewCharts }) => (chartName: string) => overviewCharts[chartName],
     getZonesInsightsFetching: ({ zonesInsightsFetching }) => zonesInsightsFetching,
+    getChart: (state) => {
+      return (chartName: string, { title, subtitle = undefined, showTotal = false, isStatusChart = false }: DoughnutChartData) => {
+        return {
+          title,
+          subtitle,
+          showTotal,
+          isStatusChart,
+          dataPoints: state.overviewCharts[chartName].data,
+        }
+      }
+    },
   },
-  mutations: {
-    SET_GLOBAL_LOADING: (state, { globalLoading }) => (state.globalLoading = globalLoading),
-    SET_PAGE_TITLE: (state, pageTitle) => (state.pageTitle = pageTitle),
-    SET_MESHES: (state, meshes) => (state.meshes = meshes),
-    SET_SELECTED_MESH: (state, mesh) => (state.selectedMesh = mesh),
-    SET_TOTAL_DATAPLANE_COUNT: (state, count) => (state.totalDataplaneCount = count),
-    SET_TOTAL_CLUSTER_COUNT: (state, count) => (state.totalClusters = count),
-    SET_INTERNAL_SERVICE_SUMMARY: (state, { items = [] } = {}) => {
-      const { serviceSummary } = state
 
-      const reducer = (acc: TODO, { status = 'offline' }) => ({
+  mutations: {
+    SET_GLOBAL_LOADING: (state, globalLoading: typeof state.globalLoading) => (state.globalLoading = globalLoading),
+    SET_PAGE_TITLE: (state, pageTitle: typeof state.pageTitle) => (state.pageTitle = pageTitle),
+    SET_MESHES: (state, meshes: typeof state.meshes) => (state.meshes = meshes),
+    SET_SELECTED_MESH: (state, mesh: typeof state.selectedMesh) => (state.selectedMesh = mesh),
+    SET_TOTAL_DATAPLANE_COUNT: (state, totalDataplaneCount: typeof state.totalDataplaneCount) => (state.totalDataplaneCount = totalDataplaneCount),
+    SET_TOTAL_CLUSTER_COUNT: (state, totalClusters: typeof state.totalClusters) => (state.totalClusters = totalClusters),
+    SET_INTERNAL_SERVICE_SUMMARY: (state, { items = [] }: { items: ServiceInsight[] }) => {
+      const initialItemsState: Record<StatusKeyword, number> = {
+        online: 0,
+        partially_degraded: 0,
+        offline: 0,
+        not_available: 0,
+      }
+
+      const { online, offline, partially_degraded: partiallyDegraded } = items.reduce((acc, { status = 'offline' }) => ({
         ...acc,
         [status]: acc[status] + 1,
-      })
-
-      const initialItemsState = { online: 0, partially_degraded: 0, offline: 0 }
-
-      const { online, offline, partially_degraded: partiallyDegraded } = items.reduce(reducer, initialItemsState)
+      }), initialItemsState)
 
       const total = online + offline + partiallyDegraded
 
-      serviceSummary.internal = {
-        ...serviceSummary.internal,
+      state.serviceSummary.internal = {
+        ...state.serviceSummary.internal,
         total,
         online,
         partiallyDegraded,
         offline,
       }
 
-      serviceSummary.total = serviceSummary.external.total + total
+      state.serviceSummary.total = state.serviceSummary.external.total + total
     },
-    SET_EXTERNAL_SERVICE_SUMMARY: (state, { total = 0 } = {}) => {
+    SET_EXTERNAL_SERVICE_SUMMARY: (state, { total = 0 }: { total: number }) => {
       state.serviceSummary.external.total = total
       state.serviceSummary.total = state.serviceSummary.internal.total + total
     },
     SET_MESH_INSIGHT: (state, value) => (state.meshInsight = parseInsightReducer(value)),
     SET_MESH_INSIGHT_FROM_ALL_MESHES: (state, value) => (state.meshInsight = mergeInsightsReducer(value.items)),
-    SET_ZONES_INSIGHTS_FETCHING: (state, value) => (state.zonesInsightsFetching = value),
-    SET_MESH_INSIGHTS_FETCHING: (state, value) => (state.meshInsightsFetching = value),
-    SET_SERVICE_INSIGHTS_FETCHING: (state, value) => (state.serviceInsightsFetching = value),
-    SET_EXTERNAL_SERVICES_FETCHING: (state, value) => (state.externalServicesFetching = value),
-    SET_OVERVIEW_CHART_DATA: (state, value: { chartName: string, data: any }) => {
-      const { chartName, data } = value
-
+    SET_ZONES_INSIGHTS_FETCHING: (state, zonesInsightsFetching: typeof state.zonesInsightsFetching) => (state.zonesInsightsFetching = zonesInsightsFetching),
+    SET_MESH_INSIGHTS_FETCHING: (state, meshInsightsFetching: typeof state.meshInsightsFetching) => (state.meshInsightsFetching = meshInsightsFetching),
+    SET_SERVICE_INSIGHTS_FETCHING: (state, serviceInsightsFetching: typeof state.serviceInsightsFetching) => (state.serviceInsightsFetching = serviceInsightsFetching),
+    SET_EXTERNAL_SERVICES_FETCHING: (state, externalServicesFetching: typeof state.externalServicesFetching) => (state.externalServicesFetching = externalServicesFetching),
+    SET_OVERVIEW_CHART_DATA: (state, { chartName, data }: { chartName: string, data: ChartDataPoint[] }) => {
       state.overviewCharts[chartName].data = data
     },
-    SET_POLICY_TYPES: (state, policyTypes: PolicyType[]) => {
+    SET_POLICY_TYPES: (state, policyTypes: typeof state.policyTypes) => {
       policyTypes.sort((policyTypeA, policyTypeB) => policyTypeA.name.localeCompare(policyTypeB.name))
 
       state.policyTypes = policyTypes
     },
-    SET_POLICY_TYPES_BY_PATH: (state, policyTypesByPath) => (state.policyTypesByPath = policyTypesByPath),
-    SET_POLICY_TYPES_BY_NAME: (state, policyTypesByName) => (state.policyTypesByName = policyTypesByName),
+    SET_POLICY_TYPES_BY_PATH: (state, policyTypesByPath: typeof state.policyTypesByPath) => (state.policyTypesByPath = policyTypesByPath),
+    SET_POLICY_TYPES_BY_NAME: (state, policyTypesByName: typeof state.policyTypesByName) => (state.policyTypesByName = policyTypesByName),
   },
+
   actions: {
     async bootstrap({ commit, dispatch, getters, state }) {
-      commit('SET_GLOBAL_LOADING', { globalLoading: true })
+      commit('SET_GLOBAL_LOADING', true)
 
       // check the Kuma status before we do anything else
       await dispatch('config/getStatus')
@@ -268,38 +288,34 @@ export const storeConfig: StoreOptions<State> = {
         }
       }
 
-      commit('SET_GLOBAL_LOADING', { globalLoading: false })
+      commit('SET_GLOBAL_LOADING', false)
     },
 
     updatePageTitle({ commit }, pageTitle: string) {
       commit('SET_PAGE_TITLE', pageTitle)
     },
 
-    // fetch all of the meshes from the Kuma
-    async fetchMeshList({ commit }) {
+    async fetchMeshList({ commit, state }) {
       const params = {
         size: PAGE_REQUEST_SIZE_DEFAULT,
       }
 
       try {
-        const response = await kumaApi.getAllMeshes(params)
+        const { total, items, next } = await kumaApi.getAllMeshes(params)
+        const meshes: typeof state.meshes = { items: items ?? [], total, next }
 
-        if (Array.isArray(response.items)) {
-          response.items.sort((meshA, meshB) => {
-            // Prioritizes the mesh named “default”.
-            if (meshA.name === 'default') {
-              return -1
-            } else if (meshB.name === 'default') {
-              return 1
-            }
+        meshes.items.sort((meshA, meshB) => {
+          // Prioritizes the mesh named “default”.
+          if (meshA.name === 'default') {
+            return -1
+          } else if (meshB.name === 'default') {
+            return 1
+          }
 
-            return meshA.name.localeCompare(meshB.name)
-          })
-        } else {
-          response.items = []
-        }
+          return meshA.name.localeCompare(meshB.name)
+        })
 
-        commit('SET_MESHES', response)
+        commit('SET_MESHES', meshes)
       } catch (error) {
         console.error(error)
       }
@@ -315,35 +331,21 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_SELECTED_MESH', mesh)
     },
 
-    /**
-     * Total Counts (for all items)
-     */
+    async fetchTotalClusterCount({ commit }) {
+      const response = await kumaApi.getZones()
 
-    // get total clusters (Zones) when in multicluster (or "Multi-Zone") mode
-    fetchTotalClusterCount({ commit }) {
-      return kumaApi.getZones().then(response => {
-        const total = response.total
-
-        commit('SET_TOTAL_CLUSTER_COUNT', total)
-      })
+      commit('SET_TOTAL_CLUSTER_COUNT', response.total)
     },
 
-    // get the total number of dataplanes present
-    fetchDataplaneTotalCount({ commit }) {
-      const params = { size: 1 }
+    async fetchDataplaneTotalCount({ commit }) {
+      try {
+        const response = await kumaApi.getAllDataplanes({ size: 1 })
 
-      return kumaApi.getAllDataplanes(params)
-        .then(response => {
-          const total = response.total
-
-          commit('SET_TOTAL_DATAPLANE_COUNT', total)
-        })
-        .catch(error => {
-          console.error(error)
-        })
+        commit('SET_TOTAL_DATAPLANE_COUNT', response.total)
+      } catch (error) {
+        console.error(error)
+      }
     },
-
-    // NEW
 
     async fetchMeshInsights({ commit, dispatch }, mesh: string | undefined) {
       commit('SET_MESH_INSIGHTS_FETCHING', true)
@@ -351,18 +353,16 @@ export const storeConfig: StoreOptions<State> = {
       try {
         if (mesh === undefined) {
           const response = await fetchAllResources(kumaApi.getAllMeshInsights.bind(kumaApi))
-          const meshesData = []
+          const data: ChartDataPoint[] = []
 
           if (response.items.length > 0) {
-            meshesData.push({
-              category: 'Mesh',
-              value: response.items.length,
-              tooltipDisabled: true,
-              labelDisabled: true,
+            data.push({
+              title: 'Mesh',
+              data: response.items.length,
             })
           }
 
-          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data: meshesData })
+          commit('SET_OVERVIEW_CHART_DATA', { chartName: 'meshes', data })
           commit('SET_MESH_INSIGHT_FROM_ALL_MESHES', response)
         } else {
           commit('SET_MESH_INSIGHT', await kumaApi.getMeshInsights({ name: mesh }))
@@ -381,10 +381,10 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_SERVICE_INSIGHTS_FETCHING', true)
 
       try {
-        const endpoint =
-            mesh === undefined
-              ? kumaApi.getAllServiceInsights.bind(kumaApi)
-              : kumaApi.getAllServiceInsightsFromMesh.bind(kumaApi, { mesh })
+        const endpoint = mesh === undefined
+          ? kumaApi.getAllServiceInsights.bind(kumaApi)
+          : kumaApi.getAllServiceInsightsFromMesh.bind(kumaApi, { mesh })
+
         commit('SET_INTERNAL_SERVICE_SUMMARY', await fetchAllResources(endpoint))
       } catch {
         commit('SET_INTERNAL_SERVICE_SUMMARY')
@@ -427,20 +427,23 @@ export const storeConfig: StoreOptions<State> = {
           dispatch('setOverviewZonesChartData', data)
           dispatch('setOverviewZonesCPVersionsChartData', data)
         } else {
-          const zonesData = [
+          const zonesData: ChartDataPoint[] = [
             {
-              category: 'Zone',
-              value: 1,
-              tooltipDisabled: true,
-              labelDisabled: true,
+              title: 'Zone',
+              data: 1,
+              route: {
+                name: 'zones',
+              },
             },
           ]
 
-          const versionsData = [
+          const versionsData: ChartDataPoint[] = [
             {
-              category: getters['config/getVersion'],
-              value: 1,
-              tooltipDisabled: true,
+              title: getters['config/getVersion'],
+              data: 1,
+              route: {
+                name: 'zones',
+              },
             },
           ]
 
@@ -484,18 +487,24 @@ export const storeConfig: StoreOptions<State> = {
         }
       })
 
-      const chartData = []
+      const chartData: ChartDataPoint[] = []
 
       if (total) {
         chartData.push({
-          category: ONLINE,
-          value: online,
+          title: ONLINE,
+          data: online,
+          route: {
+            name: 'zones',
+          },
         })
 
         if (online !== total) {
           chartData.push({
-            category: OFFLINE,
-            value: total - online,
+            title: OFFLINE,
+            data: total - online,
+            route: {
+              name: 'zones',
+            },
           })
         }
       }
@@ -506,13 +515,12 @@ export const storeConfig: StoreOptions<State> = {
     setOverviewServicesChartData({ state, commit }) {
       const { internal, external } = state.serviceSummary
 
-      const data = []
+      const data: ChartDataPoint[] = []
 
       if (internal.total && state.selectedMesh !== null) {
         data.push({
-          category: 'Internal',
-          value: internal.total,
-          minSizeForLabel: 0.16,
+          title: 'Internal',
+          data: internal.total,
           route: {
             name: 'service-list-view',
             params: {
@@ -524,9 +532,8 @@ export const storeConfig: StoreOptions<State> = {
 
       if (external.total && state.selectedMesh !== null) {
         data.push({
-          category: 'External',
-          value: external.total,
-          minSizeForLabel: 0.16,
+          title: 'External',
+          data: external.total,
           route: {
             name: 'service-list-view',
             params: {
@@ -541,28 +548,28 @@ export const storeConfig: StoreOptions<State> = {
 
     setOverviewDataplanesChartData({ state, commit }) {
       const total = state.meshInsight.dataplanes.total
-      const online = state.meshInsight.dataplanes.online ?? 0
-      const partiallyDegraded = state.meshInsight.dataplanes.partiallyDegraded ?? 0
+      const data: ChartDataPoint[] = []
 
-      const data = []
-
-      if (total) {
+      if (total > 0) {
+        const online = state.meshInsight.dataplanes.online ?? 0
         data.push({
-          category: ONLINE,
-          value: online,
+          title: ONLINE,
+          data: online,
         })
 
-        if (partiallyDegraded) {
+        const partiallyDegraded = state.meshInsight.dataplanes.partiallyDegraded ?? 0
+        if (partiallyDegraded > 0) {
           data.push({
-            category: PARTIALLY_DEGRADED,
-            value: partiallyDegraded,
+            title: PARTIALLY_DEGRADED,
+            data: partiallyDegraded,
           })
         }
 
-        if (online + partiallyDegraded !== total) {
+        const offline = total - partiallyDegraded - online
+        if (offline > 0) {
           data.push({
-            category: OFFLINE,
-            value: total - partiallyDegraded - online,
+            title: OFFLINE,
+            data: offline,
           })
         }
       }
@@ -570,37 +577,61 @@ export const storeConfig: StoreOptions<State> = {
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'dataplanes', data })
     },
 
-    setOverviewZonesCPVersionsChartData({ commit }, { items }) {
-      const chartData = items.reduce((acc: TODO, curr: TODO) => {
-        const { subscriptions } = curr.zoneInsight
-
-        if (!subscriptions.length) {
-          return acc
+    setOverviewZonesCPVersionsChartData({ commit }, { items }: { items: ZoneOverview[] }) {
+      const data: ChartDataPoint[] = items.reduce((dataPoints: ChartDataPoint[], curr) => {
+        if (curr.zoneInsight.subscriptions.length === 0) {
+          return dataPoints
         }
 
-        const { version } = curr.zoneInsight.subscriptions.pop()
+        const lastSubscription = curr.zoneInsight.subscriptions.pop() as KDSSubscription
 
-        const item = acc.find(({ category }: { category: TODO }) => category === version?.kumaCp?.version)
+        const existingDataPoint = dataPoints.find((dataPoint) => dataPoint.title === lastSubscription.version?.kumaCp?.version)
 
-        if (!item) {
-          acc.push({ category: version.kumaCp.version, value: 1 })
+        if (!existingDataPoint) {
+          dataPoints.push({
+            title: lastSubscription.version.kumaCp.version,
+            data: 1,
+            route: {
+              name: 'zones',
+            },
+          })
         } else {
-          item.value++
+          existingDataPoint.data++
         }
 
-        return acc
+        return dataPoints
       }, [])
 
-      commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data: chartData })
+      data.sort((dataPointA, dataPointB) => {
+        if (dataPointA.title === 'unknown') {
+          return 1
+        } else if (dataPointB.title === 'unknown') {
+          return -1
+        }
+
+        return semverCompare(dataPointA.title, dataPointB.title)
+      })
+
+      commit('SET_OVERVIEW_CHART_DATA', { chartName: 'zonesCPVersions', data })
     },
 
     setOverviewEnvoyVersionsChartData({ state, commit }) {
       const { envoy } = state.meshInsight.dpVersions
 
-      const data = Object.entries(envoy).map(([version, stats]: [TODO, TODO]) => ({
-        category: version,
-        value: stats.total,
+      const data: ChartDataPoint[] = Object.entries(envoy).map(([version, stats]) => ({
+        title: version,
+        data: stats.total,
       }))
+
+      data.sort((dataPointA, dataPointB) => {
+        if (dataPointA.title === 'unknown') {
+          return 1
+        } else if (dataPointB.title === 'unknown') {
+          return -1
+        }
+
+        return semverCompare(dataPointA.title, dataPointB.title)
+      })
 
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'envoyVersions', data })
     },
@@ -608,10 +639,20 @@ export const storeConfig: StoreOptions<State> = {
     setOverviewKumaDPVersionsChartData({ state, commit }) {
       const { kumaDp } = state.meshInsight.dpVersions
 
-      const data = Object.entries(kumaDp).map(([version, stats]: [TODO, TODO]) => ({
-        category: version,
-        value: stats.total,
+      const data: ChartDataPoint[] = Object.entries(kumaDp).map(([version, stats]) => ({
+        title: version,
+        data: stats.total,
       }))
+
+      data.sort((dataPointA, dataPointB) => {
+        if (dataPointA.title === 'unknown') {
+          return 1
+        } else if (dataPointB.title === 'unknown') {
+          return -1
+        }
+
+        return semverCompare(dataPointA.title, dataPointB.title)
+      })
 
       commit('SET_OVERVIEW_CHART_DATA', { chartName: 'kumaDPVersions', data })
     },

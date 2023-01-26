@@ -1,43 +1,12 @@
 <template>
-  <div class="chart-container mt-24">
-    <DonutChart
-      class="chart"
-      :title="{ singular: 'SERVICE', plural: 'SERVICES' }"
-      :data="servicesChart.data"
-      :is-loading="isLoadingServices"
-      save-chart
-    />
+  <div class="chart-box-list">
+    <DoughnutChart :data="servicesChartData" />
 
-    <DonutChart
-      class="chart"
-      :title="{ singular: 'DP PROXY', plural: 'DP PROXIES' }"
-      :data="dataplanesChart.data"
-      :url="{ name: 'data-plane-list-view', params: { mesh: store.state.selectedMesh } }"
-      :is-loading="isLoadingMeshInsights"
-    />
+    <DoughnutChart :data="dataplanesChartData" />
 
-    <DonutChart
-      class="chart"
-      :title="{ singular: 'POLICY', plural: 'POLICIES' }"
-      :data="policiesChart.data"
-      :url="{ name: 'policies', params: { mesh: store.state.selectedMesh } }"
-      :is-loading="isLoadingMeshInsights"
-    />
+    <DoughnutChart :data="kumaDPVersionsChartData" />
 
-    <VersionsDonutChart
-      class="chart"
-      title="KUMA DP"
-      :data="kumaDPVersionsChart.data"
-      :is-loading="isLoadingMeshInsights"
-    />
-
-    <VersionsDonutChart
-      class="chart"
-      title="ENVOY"
-      :data="envoyVersionsChart.data"
-      :is-loading="isLoadingMeshInsights"
-      display-am-charts-logo
-    />
+    <DoughnutChart :data="envoyVersionsChartData" />
   </div>
 </template>
 
@@ -45,18 +14,27 @@
 import { computed, watch } from 'vue'
 
 import { useStore } from '@/store/store'
-import DonutChart from '@/app/common/charts/DonutChart.vue'
-import VersionsDonutChart from '@/app/common/charts/VersionsDonutChart.vue'
+import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
 
 const store = useStore()
 
-const isLoadingServices = computed(() => store.getters.getServiceResourcesFetching)
-const isLoadingMeshInsights = computed(() => store.getters.getMeshInsightsFetching)
-const servicesChart = computed(() => store.getters.getChart('services'))
-const dataplanesChart = computed(() => store.getters.getChart('dataplanes'))
-const policiesChart = computed(() => store.getters.getChart('policies'))
-const kumaDPVersionsChart = computed(() => store.getters.getChart('kumaDPVersions'))
-const envoyVersionsChart = computed(() => store.getters.getChart('envoyVersions'))
+const servicesChartData = computed(() => store.getters.getChart('services', {
+  title: 'Services',
+  showTotal: true,
+}))
+const dataplanesChartData = computed(() => store.getters.getChart('dataplanes', {
+  title: 'DP Proxies',
+  showTotal: true,
+  isStatusChart: true,
+}))
+const kumaDPVersionsChartData = computed(() => store.getters.getChart('kumaDPVersions', {
+  title: 'Kuma DP',
+  subtitle: 'versions',
+}))
+const envoyVersionsChartData = computed(() => store.getters.getChart('envoyVersions', {
+  title: 'Envoy',
+  subtitle: 'versions',
+}))
 
 watch(() => store.state.selectedMesh, function () {
   loadData()
@@ -71,20 +49,11 @@ function loadData() {
 </script>
 
 <style lang="scss" scoped>
-.chart-container {
+.chart-box-list {
   display: flex;
 }
 
-.chart {
-  height: 200px;
-  flex-basis: 20%;
-}
-
-</style>
-
-<style lang="scss">
-.pie-chart-label {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+.chart-box-list > * {
+  flex-basis: 25%;
 }
 </style>

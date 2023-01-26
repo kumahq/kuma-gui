@@ -6,8 +6,8 @@
   "lastSync": "2021-01-29T06:29:02.314447Z",
   "dataplanes": {
     "total": 10,
-    "online": 9,
-    "partiallyDegraded": 1
+    "online": 6,
+    "partiallyDegraded": 3
   },
   "dataplanesByType": {
     "standard": {
