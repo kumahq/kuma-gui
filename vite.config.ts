@@ -52,6 +52,11 @@ export const config:UserConfigFn = ({ mode }) => {
         '@': path.resolve('./src'),
       },
     },
+    build: {
+      modulePreload: {
+        resolveDependencies: () => [],
+      },
+    },
   }
 }
 export default defineConfig(config)
