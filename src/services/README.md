@@ -57,7 +57,7 @@ import { TOKENS, createInjections } from '@/services'
 
 export const [
   useMyService,
-] = createInjections([TOKENS.myService])
+] = createInjections(TOKENS.myService)
 ```
 
 ```javascript
