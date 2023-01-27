@@ -9,7 +9,7 @@ interface NavItem {
   shouldOffsetFromFollowingItems?: boolean
 }
 
-export function getNavItems(isMultizoneMode: boolean): NavItem[] {
+export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavItem[] {
   const zoneItems: NavItem[] = !isMultizoneMode
     ? []
     : [
@@ -34,6 +34,48 @@ export function getNavItems(isMultizoneMode: boolean): NavItem[] {
       },
     ]
 
+  const meshItems: NavItem[] = !hasMeshes
+    ? []
+    : [
+      {
+        name: 'Mesh',
+        categoryTier: 'primary',
+      },
+      {
+        name: 'Mesh selector',
+        isMeshSelector: true,
+      },
+      {
+        name: 'Overview',
+        routeName: 'mesh-detail-view',
+        usesMeshParam: true,
+      },
+      {
+        name: 'Services',
+        routeName: 'service-list-view',
+        insightsFieldAccessor: 'mesh.services.total',
+        usesMeshParam: true,
+      },
+      {
+        name: 'Gateways',
+        routeName: 'gateway-list-view',
+        usesMeshParam: true,
+        insightsFieldAccessor: 'mesh.dataplanes.gateway',
+      },
+      {
+        name: 'Data Plane Proxies',
+        routeName: 'data-plane-list-view',
+        usesMeshParam: true,
+        insightsFieldAccessor: 'mesh.dataplanes.standard',
+      },
+      {
+        name: 'Policies',
+        routeName: 'policies',
+        usesMeshParam: true,
+        insightsFieldAccessor: 'mesh.policies.total',
+      },
+    ]
+
   return [
     {
       name: 'Home',
@@ -41,42 +83,6 @@ export function getNavItems(isMultizoneMode: boolean): NavItem[] {
       shouldOffsetFromFollowingItems: true,
     },
     ...zoneItems,
-    {
-      name: 'Mesh',
-      categoryTier: 'primary',
-    },
-    {
-      name: 'Mesh selector',
-      isMeshSelector: true,
-    },
-    {
-      name: 'Overview',
-      routeName: 'mesh-detail-view',
-      usesMeshParam: true,
-    },
-    {
-      name: 'Services',
-      routeName: 'service-list-view',
-      insightsFieldAccessor: 'mesh.services.total',
-      usesMeshParam: true,
-    },
-    {
-      name: 'Gateways',
-      routeName: 'gateway-list-view',
-      usesMeshParam: true,
-      insightsFieldAccessor: 'mesh.dataplanes.gateway',
-    },
-    {
-      name: 'Data Plane Proxies',
-      routeName: 'data-plane-list-view',
-      usesMeshParam: true,
-      insightsFieldAccessor: 'mesh.dataplanes.standard',
-    },
-    {
-      name: 'Policies',
-      routeName: 'policies',
-      usesMeshParam: true,
-      insightsFieldAccessor: 'mesh.policies.total',
-    },
+    ...meshItems,
   ]
 }

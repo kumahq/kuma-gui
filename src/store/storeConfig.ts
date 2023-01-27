@@ -255,6 +255,7 @@ export const storeConfig: StoreOptions<State> = {
           // Updates the selected mesh if one wasn’t read earlier or if it’s not an existing mesh.
           const newStoredMesh = ClientStorage.get('selectedMesh')
           if (newStoredMesh === null || !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
+            await dispatch('sidebar/getInsights')
             dispatch('updateSelectedMesh', state.meshes.items[0].name)
           }
         }
@@ -501,7 +502,7 @@ export const storeConfig: StoreOptions<State> = {
 
       const data = []
 
-      if (internal.total) {
+      if (internal.total && state.selectedMesh !== null) {
         data.push({
           category: 'Internal',
           value: internal.total,
@@ -515,7 +516,7 @@ export const storeConfig: StoreOptions<State> = {
         })
       }
 
-      if (external.total) {
+      if (external.total && state.selectedMesh !== null) {
         data.push({
           category: 'External',
           value: external.total,
