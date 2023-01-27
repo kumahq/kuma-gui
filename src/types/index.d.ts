@@ -385,7 +385,7 @@ export type MeshGatewayListenerEntry = {
  */
 export interface ServiceInsight extends MeshEntity {
   type: 'ServiceInsight'
-  serviceType?: 'internal' | 'external'
+  serviceType?: 'internal' | 'external' | 'gateway_builtin' | 'gateway_delegated'
   addressPort?: string
   status?: StatusKeyword
   dataplanes?: {

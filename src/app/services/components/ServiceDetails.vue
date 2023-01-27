@@ -61,6 +61,12 @@ const emit = defineEmits<{
 }>()
 
 function loadData(offset: number, params: DataPlaneOverviewParameters): void {
+  const isGatewayService = props.service.serviceType?.startsWith('gateway') ?? false
+  if (!isGatewayService) {
+    // Never propagate a gateway filter when listing DPPs for services because we use the same table for them.
+    delete params.gateway
+  }
+
   emit('load-dataplane-overviews', offset, params)
 }
 </script>
