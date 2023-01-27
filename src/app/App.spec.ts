@@ -4,6 +4,8 @@ import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
 import { store } from '@/store/store'
+import { TOKENS } from '@/components'
+import { set } from '@/services'
 
 // jest can't import this module properly due to transpiling issues
 // mock this out with a blank element
@@ -14,14 +16,19 @@ function renderComponent(status: string) {
   store.state.config.tagline = import.meta.env.VITE_NAMESPACE
   store.state.config.status = status
 
+  // keeps the github-button as a <github-button> instead of a span in
+  // the snapshot so its as close to actual usage as possible
+  set(TOKENS.GithubButton, () => ({
+    template: '<github-button />',
+    compilerOptions: {
+      isCustomElement: () => true,
+    },
+  }))
   return mount(App, {
     global: {
       stubs: {
         // Let’s not unnecessarily render all that chart markup.
         DonutChart: true,
-        // keeps the github-button as a <github-button> instead of a span in
-        // the snapshot so its as close to actual usage as possible
-        GithubButton: true,
         'router-link': RouterLinkStub,
       },
     },
