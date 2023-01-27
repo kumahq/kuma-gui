@@ -236,27 +236,35 @@ export const storeConfig: StoreOptions<State> = {
 
       // only dispatch these actions if the Kuma is online
       if (getters['config/getStatus'] === 'OK') {
-        // Sets selected mesh from client storage.
-        const storedMesh = ClientStorage.get('selectedMesh')
-        if (storedMesh) {
-          dispatch('updateSelectedMesh', storedMesh)
-        }
-
         await Promise.all([
           dispatch('fetchMeshList'),
           dispatch('fetchDataplaneTotalCount'),
           dispatch('config/bootstrapConfig'),
-          dispatch('sidebar/getInsights'),
         ])
 
-        if (state.meshes.items.length === 0) {
-          dispatch('updateSelectedMesh', null)
-        } else {
-          // Updates the selected mesh if one wasn’t read earlier or if it’s not an existing mesh.
+        // Validates if stored mesh exists and fetches the relevant sidebar data.
+        if (state.meshes.items.length > 0) {
           const newStoredMesh = ClientStorage.get('selectedMesh')
-          if (newStoredMesh === null || !state.meshes.items.some((mesh) => mesh.name === newStoredMesh)) {
-            dispatch('updateSelectedMesh', state.meshes.items[0].name)
+          let mesh: Mesh | undefined
+
+          // If a selected mesh is stored, check if it actually exists and use it only if it does.
+          if (newStoredMesh !== null) {
+            const existingMesh = state.meshes.items.find((mesh) => mesh.name === newStoredMesh)
+
+            if (existingMesh !== undefined) {
+              mesh = existingMesh
+            }
           }
+
+          if (mesh === undefined) {
+            // If the stored mesh doesn’t exist, use the first mesh instead.
+            mesh = state.meshes.items[0]
+          }
+
+          await dispatch('updateSelectedMesh', mesh.name)
+          await dispatch('sidebar/getInsights')
+        } else {
+          await dispatch('updateSelectedMesh', null)
         }
       }
 
@@ -297,7 +305,6 @@ export const storeConfig: StoreOptions<State> = {
       }
     },
 
-    // update the selected mesh
     updateSelectedMesh({ commit }, mesh: string | null) {
       if (mesh !== null) {
         ClientStorage.set('selectedMesh', mesh)
@@ -501,7 +508,7 @@ export const storeConfig: StoreOptions<State> = {
 
       const data = []
 
-      if (internal.total) {
+      if (internal.total && state.selectedMesh !== null) {
         data.push({
           category: 'Internal',
           value: internal.total,
@@ -515,7 +522,7 @@ export const storeConfig: StoreOptions<State> = {
         })
       }
 
-      if (external.total) {
+      if (external.total && state.selectedMesh !== null) {
         data.push({
           category: 'External',
           value: external.total,

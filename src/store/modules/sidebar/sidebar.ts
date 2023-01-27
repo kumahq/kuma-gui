@@ -3,9 +3,7 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 import { State } from '../../storeConfig'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
-
 import { kumaApi } from '@/api/kumaApi'
-import { MeshInsight } from '@/types/index.d'
 
 const initialSidebarState: SidebarInterface = {
   insights: {
@@ -43,16 +41,13 @@ const actions: ActionTree<SidebarInterface, State> = {
       return
     }
 
-    let meshInsightsRawData: { items: MeshInsight[], total: number }
-    let meshInsights
+    let meshInsights = null
 
     try {
       const response = await kumaApi.getMeshInsights({ name: rootState.selectedMesh })
-      meshInsightsRawData = { items: [response], total: 1 }
-
-      meshInsights = calculateMeshInsights(meshInsightsRawData)
+      meshInsights = calculateMeshInsights({ items: [response] })
     } catch {
-      meshInsights = []
+      meshInsights = calculateMeshInsights({ items: [] })
     }
 
     commit('SET_MESH_INSIGHTS', meshInsights)

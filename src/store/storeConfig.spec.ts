@@ -9,6 +9,29 @@ describe('storeConfig', () => {
     jest.restoreAllMocks()
   })
 
+  test('bootstrap clears selected mesh when meshes are empty', async () => {
+    const actions = storeConfig.actions as ActionTree<State, State>
+    const bootstrap = actions.bootstrap as ActionHandler<State, State>
+
+    const commit = jest.fn()
+    const dispatch = jest.fn()
+    const getters = {
+      'config/getStatus': 'OK',
+    }
+    const state = {
+      meshes: {
+        items: [],
+      },
+    }
+
+    jest.spyOn(ClientStorage, 'get').mockImplementation(() => 'default')
+
+    // @ts-ignore go away
+    await bootstrap({ commit, dispatch, getters, state })
+
+    expect(dispatch).toHaveBeenCalledWith('updateSelectedMesh', null)
+  })
+
   test.each([
     [[], null, null],
     [[{ name: 'test' }], null, 'test'],
@@ -34,6 +57,6 @@ describe('storeConfig', () => {
     // @ts-ignore go away
     await bootstrap({ commit, dispatch, getters, state })
 
-    expect(dispatch).toHaveBeenLastCalledWith('updateSelectedMesh', expectedSelectedMesh)
+    expect(dispatch).toHaveBeenCalledWith('updateSelectedMesh', expectedSelectedMesh)
   })
 })
