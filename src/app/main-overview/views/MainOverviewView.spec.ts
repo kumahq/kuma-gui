@@ -4,10 +4,7 @@ import { mount } from '@vue/test-utils'
 import MainOverviewView from './MainOverviewView.vue'
 
 function renderComponent() {
-  return mount(MainOverviewView, {
-    // This is necessary to correctly suppress the amcharts “Chart was not disposed” warning. Its detection logic relies on finding an elements root node which is only possible if the element is actually in the DOM.
-    attachTo: document.body,
-  })
+  return mount(MainOverviewView)
 }
 
 describe('MainOverviewView.vue', () => {

@@ -27,13 +27,6 @@ config.global.plugins.push(router)
 config.global.plugins.push([store, storeKey])
 
 /**
- * amcharts need SVGPathElement defined for our tests to work.
- *
- * See: https://github.com/amcharts/amcharts4/issues/1387
- */
-Object.defineProperty(window, 'SVGPathElement', { value: class extends HTMLElement { } })
-
-/**
  * Kongponents uses generated UUIDs for several attribute values.
  * This breaks the project’s snapshot tests since they’re based on fully-mounted components
  * which also includes those from external sources like Kongponents.

@@ -1,58 +1,40 @@
 <template>
-  <div class="chart-container mt-16">
-    <DonutChart
+  <div class="chart-box-list mt-16">
+    <DoughnutChart
       v-if="isMultizoneMode"
       class="chart chart-1/2 chart-offset-left-1/6"
-      :title="{ singular: 'Zone', plural: 'Zones' }"
-      :data="zonesChart.data"
-      :url="{ name: 'zones' }"
-      :is-loading="isLoadingZonesInsights"
+      :data="zonesChartData"
     />
 
-    <VersionsDonutChart
+    <DoughnutChart
       v-if="isMultizoneMode"
       class="chart chart-1/2 chart-offset-right-1/6"
-      title="ZONE CP"
-      :data="zonesCPVersionsChart.data"
-      :url="{ name: 'zones' }"
-      :is-loading="isLoadingZonesInsights"
+      :data="zonesCPVersionsChartData"
     />
 
-    <DonutChart
+    <DoughnutChart
       class="chart chart-1/3"
-      :title="{ singular: 'Mesh', plural: 'Meshes' }"
-      :data="meshesChart.data"
-      :is-loading="isLoadingMeshInsights"
+      :data="meshesChartData"
     />
 
-    <DonutChart
+    <DoughnutChart
       class="chart chart-1/3"
-      :title="{ singular: 'Service', plural: 'Services' }"
-      :data="servicesChart.data"
-      :is-loading="isLoadingServices"
-      save-chart
+      :data="servicesChartData"
     />
 
-    <DonutChart
+    <DoughnutChart
       class="chart chart-1/3"
-      :title="{ singular: 'DP Proxy', plural: 'DP Proxies' }"
-      :data="dataplanesChart.data"
-      :is-loading="isLoadingMeshInsights"
+      :data="dataplanesChartData"
     />
 
-    <VersionsDonutChart
+    <DoughnutChart
       class="chart chart-1/2 chart-offset-left-1/6"
-      title="KUMA DP"
-      :data="kumaDPVersionsChart.data"
-      :is-loading="isLoadingMeshInsights"
+      :data="kumaDPVersionsChartData"
     />
 
-    <VersionsDonutChart
+    <DoughnutChart
       class="chart chart-1/2 chart-offset-right-1/6"
-      title="ENVOY"
-      :data="envoyVersionsChart.data"
-      :is-loading="isLoadingMeshInsights"
-      display-am-charts-logo
+      :data="envoyVersionsChartData"
     />
   </div>
 
@@ -62,24 +44,44 @@
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
 
-import DonutChart from '@/app/common/charts/DonutChart.vue'
-import VersionsDonutChart from '@/app/common/charts/VersionsDonutChart.vue'
-import MeshResources from '@/app/common/MeshResources.vue'
 import { useStore } from '@/store/store'
+import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
+import MeshResources from '@/app/common/MeshResources.vue'
 
 const store = useStore()
 
 const isMultizoneMode = computed(() => store.getters['config/getMulticlusterStatus'])
-const isLoadingServices = computed(() => store.getters.getServiceResourcesFetching)
-const isLoadingZonesInsights = computed(() => store.getters.getZonesInsightsFetching)
-const isLoadingMeshInsights = computed(() => store.getters.getMeshInsightsFetching)
-const servicesChart = computed(() => store.getters.getChart('services'))
-const dataplanesChart = computed(() => store.getters.getChart('dataplanes'))
-const meshesChart = computed(() => store.getters.getChart('meshes'))
-const zonesChart = computed(() => store.getters.getChart('zones'))
-const zonesCPVersionsChart = computed(() => store.getters.getChart('zonesCPVersions'))
-const kumaDPVersionsChart = computed(() => store.getters.getChart('kumaDPVersions'))
-const envoyVersionsChart = computed(() => store.getters.getChart('envoyVersions'))
+
+const servicesChartData = computed(() => store.getters.getChart('services', {
+  title: 'Services',
+  showTotal: true,
+}))
+const dataplanesChartData = computed(() => store.getters.getChart('dataplanes', {
+  title: 'DP Proxies',
+  showTotal: true,
+  isStatusChart: true,
+}))
+const meshesChartData = computed(() => store.getters.getChart('meshes', {
+  title: 'Meshes',
+  showTotal: true,
+}))
+const zonesChartData = computed(() => store.getters.getChart('zones', {
+  title: 'Zones',
+  showTotal: true,
+  isStatusChart: true,
+}))
+const zonesCPVersionsChartData = computed(() => store.getters.getChart('zonesCPVersions', {
+  title: 'Zone CP',
+  subtitle: 'versions',
+}))
+const kumaDPVersionsChartData = computed(() => store.getters.getChart('kumaDPVersions', {
+  title: 'Kuma DP',
+  subtitle: 'versions',
+}))
+const envoyVersionsChartData = computed(() => store.getters.getChart('envoyVersions', {
+  title: 'Envoy',
+  subtitle: 'versions',
+}))
 
 watch(() => isMultizoneMode.value, function () {
   loadData()
@@ -99,14 +101,13 @@ function loadData() {
 </script>
 
 <style lang="scss" scoped>
-.chart-container {
+.chart-box-list {
   display: flex;
   flex-wrap: wrap;
 }
 
 .chart {
   margin-top: var(--spacing-lg);
-  height: 200px;
 }
 
 .chart-1\/2 {

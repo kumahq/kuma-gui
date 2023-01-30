@@ -1,13 +1,19 @@
 import { RouteLocationNamedRaw } from 'vue-router'
 
-// These are set in DonutChart, but its not super clear what for
-// If they go from Donut Chart they can go here also
-export declare global {
-  interface Window {
-    chart: any;
-    series: any;
-  }
+export type ChartDataPoint = {
+  title: string
+  data: number
+  route?: RouteLocationNamedRaw
 }
+
+export type DoughnutChartData = {
+  title: string
+  subtitle?: string
+  showTotal?: boolean // Default: `false`
+  isStatusChart?: boolean // Default: `false`
+  dataPoints: ChartDataPoint[]
+}
+
 export type PathConfig = {
   /**
    * The base API URL. Won’t include a trailing slash.

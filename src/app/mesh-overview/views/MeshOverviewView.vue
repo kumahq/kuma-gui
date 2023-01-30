@@ -1,8 +1,7 @@
 <template>
-  <MeshCharts />
-  <ContentWrapper
-    class="mt-8"
-  >
+  <MeshCharts class="mt-24" />
+
+  <ContentWrapper class="mt-8">
     <template #content>
       <div
         v-if="mesh !== null"
@@ -59,7 +58,7 @@
             <ul class="policy-counts">
               <li>
                 <h4>
-                  Policies
+                  Policies ({{ totalPolicyCount }})
                 </h4>
                 <ul>
                   <template
@@ -161,6 +160,8 @@ const extendedMesh = computed(() => {
     localityAwareLoadBalancing,
   }
 })
+
+const totalPolicyCount = computed(() => store.state.sidebar.insights.mesh.policies.total)
 
 const policyCounts = computed(() => {
   return store.state.policyTypes.map((policyType) => ({

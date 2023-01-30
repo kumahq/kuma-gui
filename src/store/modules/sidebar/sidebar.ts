@@ -1,4 +1,4 @@
-import { ActionTree, GetterTree, MutationTree } from 'vuex'
+import { ActionTree, MutationTree } from 'vuex'
 
 import { State } from '../../storeConfig'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
@@ -29,8 +29,6 @@ const mutations: MutationTree<SidebarInterface> = {
   SET_MESH_INSIGHTS: (state, meshInsight) => (state.insights.mesh = meshInsight),
 }
 
-const getters: GetterTree<SidebarInterface, State> = {}
-
 const actions: ActionTree<SidebarInterface, State> = {
   getInsights({ dispatch }) {
     return Promise.all([dispatch('getGlobalInsights'), dispatch('getMeshInsights')])
@@ -41,30 +39,17 @@ const actions: ActionTree<SidebarInterface, State> = {
       return
     }
 
-    let meshInsights = null
+    let meshInsights
 
     try {
       const response = await kumaApi.getMeshInsights({ name: rootState.selectedMesh })
+
       meshInsights = calculateMeshInsights({ items: [response] })
     } catch {
       meshInsights = calculateMeshInsights({ items: [] })
     }
 
     commit('SET_MESH_INSIGHTS', meshInsights)
-
-    commit('SET_OVERVIEW_CHART_DATA', {
-      chartName: 'policies',
-      data: [{
-        category: 'Policy',
-        value: meshInsights.policies.total,
-        tooltipDisabled: true,
-        labelDisabled: true,
-      }],
-    },
-    {
-      root: true,
-    },
-    )
   },
 
   async getGlobalInsights({ commit }) {
@@ -79,7 +64,6 @@ const actions: ActionTree<SidebarInterface, State> = {
 const sidebarModule = {
   namespaced: true,
   state: () => initialSidebarState,
-  getters,
   mutations,
   actions,
 }
