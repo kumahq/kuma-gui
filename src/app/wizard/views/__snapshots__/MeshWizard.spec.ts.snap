@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Mesh.vue passes whole wizzard and render yaml 1`] = `
+exports[`MeshWizard passes whole wizzard and render yaml 1`] = `
 <div
   class="wizard"
 >

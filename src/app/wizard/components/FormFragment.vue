@@ -2,22 +2,22 @@
   <div class="form-line-wrapper">
     <div
       class="form-line"
-      :class="{ 'has-equal-cols': equalCols }"
+      :class="{ 'has-equal-cols': props.equalCols }"
     >
       <div
-        v-if="!hideLabelCol"
+        v-if="!props.hideLabelCol"
         class="form-line__col"
       >
         <label
-          :for="forAttr"
+          :for="props.forAttr"
           class="k-input-label"
         >
-          {{ title }}:
+          {{ props.title }}:
         </label>
       </div>
       <div
         class="form-line__col"
-        :class="{ 'is-inline': allInline, 'is-shifted-right': shiftRight }"
+        :class="{ 'is-inline': props.allInline, 'is-shifted-right': props.shiftRight }"
       >
         <slot />
       </div>
@@ -25,38 +25,40 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'FormFragment',
-  props: {
-    title: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    forAttr: {
-      type: String,
-      required: false,
-      default: null,
-    },
-    allInline: {
-      type: Boolean,
-      default: false,
-    },
-    hideLabelCol: {
-      type: Boolean,
-      default: false,
-    },
-    equalCols: {
-      type: Boolean,
-      default: false,
-    },
-    shiftRight: {
-      type: Boolean,
-      default: false,
-    },
+<script lang="ts" setup>
+const props = defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: null,
   },
-}
+
+  forAttr: {
+    type: String,
+    required: false,
+    default: null,
+  },
+
+  allInline: {
+    type: Boolean,
+    default: false,
+  },
+
+  hideLabelCol: {
+    type: Boolean,
+    default: false,
+  },
+
+  equalCols: {
+    type: Boolean,
+    default: false,
+  },
+
+  shiftRight: {
+    type: Boolean,
+    default: false,
+  },
+})
 </script>
 
 <style lang="scss" scoped>

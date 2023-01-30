@@ -2,22 +2,25 @@
   <div class="wizard">
     <div class="wizard__content">
       <StepSkeleton
-        :steps="steps"
-        :sidebar-content="sidebarContent"
+        :steps="STEPS"
+        :sidebar-content="SIDEBAR_CONTENT"
         :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
+        @go-to-step="setStep"
       >
         <!-- step content -->
         <template #general>
           <h3>
             Create Kubernetes Dataplane
           </h3>
+
           <p>
             Welcome to the wizard to create a new Dataplane resource in {{ title }}.
             We will be providing you with a few steps that will get you started.
           </p>
+
           <p>
-            As you know, the {{ productName }} GUI is read-only.
+            As you know, the {{ PRODUCT_NAME }} GUI is read-only.
           </p>
 
           <h3>
@@ -54,8 +57,9 @@
                     >
                       Select an existing Mesh…
                     </option>
+
                     <option
-                      v-for="item in meshes.items"
+                      v-for="item in store.getters['getMeshList'].items"
                       :key="item.name"
                       :value="item.name"
                     >
@@ -63,10 +67,12 @@
                     </option>
                   </select>
                 </div>
+
                 <div>
                   <label class="k-input-label mr-4">
                     or
                   </label>
+
                   <KButton
                     :to="{ name: 'create-mesh' }"
                     appearance="outline"
@@ -78,10 +84,12 @@
             </template>
           </KCard>
         </template>
+
         <template #scope-settings>
           <h3>
             Setup Dataplane Mode
           </h3>
+
           <p>
             You can create a data plane for a service or a data plane for a Gateway.
           </p>
@@ -111,6 +119,7 @@
                     Service Dataplane
                   </span>
                 </label>
+
                 <label for="ingress-dataplane">
                   <input
                     id="ingress-dataplane"
@@ -160,6 +169,7 @@
                       All Services in Namespace
                     </span>
                   </label>
+
                   <label for="k8s-services-individual">
                     <input
                       id="k8s-services-individual"
@@ -253,6 +263,7 @@
                       Kong Ingress
                     </span>
                   </label>
+
                   <label for="k8s-ingress-other">
                     <input
                       id="k8s-ingress-other"
@@ -323,6 +334,7 @@
                 :code="codeOutput"
               />
             </div>
+
             <EntityScanner
               :loader-function="scanForEntity"
               :should-start="true"
@@ -333,9 +345,11 @@
               <template #loading-title>
                 <h3>Searching…</h3>
               </template>
+
               <template #loading-content>
                 <p>We are looking for your dataplane.</p>
               </template>
+
               <template #complete-title>
                 <h3>Done!</h3>
               </template>
@@ -348,27 +362,32 @@
                   </strong>
                   was found!
                 </p>
+
                 <p>
                   Proceed to the next step where we will show you
                   your new Dataplane.
                 </p>
+
                 <p>
                   <KButton
                     appearance="primary"
-                    @click="compeleteDataPlaneSetup"
+                    @click="completeDataPlaneSetup"
                   >
                     View Your Dataplane
                   </KButton>
                 </p>
               </template>
+
               <template #error-title>
                 <h3>Mesh not found</h3>
               </template>
+
               <template #error-content>
                 <p>We were unable to find your mesh.</p>
               </template>
             </EntityScanner>
           </div>
+
           <KAlert
             v-else
             appearance="danger"
@@ -392,6 +411,7 @@
             by {{ title }}.
           </p>
         </template>
+
         <template #example>
           <h3>Example</h3>
           <p>
@@ -401,12 +421,12 @@
           <CodeBlock
             id="onboarding-dpp-kubernetes-example"
             class="sample-code-block"
-            :code="$options.EXAMPLE_CODE"
+            :code="EXAMPLE_CODE"
             language="yaml"
           />
         </template>
+
         <template #switch>
-          <!-- wizard switcher -- based on environment -->
           <EnvironmentSwitcher />
         </template>
       </StepSkeleton>
@@ -414,22 +434,23 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { KAlert, KButton, KCard } from '@kong/kongponents'
 
-import { kumaApi } from '@/api/kumaApi'
-import { kebabCase } from '@/utilities/helpers'
-import CodeBlock from '@/app/common/CodeBlock.vue'
 import { formatForCLI } from '../formatForCLI'
+import { kebabCase } from '@/utilities/helpers'
+import { kumaApi } from '@/api/kumaApi'
+import { PRODUCT_NAME } from '@/constants'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import { useStore } from '@/store/store'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import dataplaneSchema from './DataplaneKubernetesSchema'
+import EntityScanner from '../components/EntityScanner.vue'
+import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
 import FormFragment from '../components/FormFragment.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
-import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
-import EntityScanner from '../components/EntityScanner.vue'
-
-// schema for building code output (TBD)
-import dataplaneSchema from './DataplaneKubernetesSchema'
-import { PRODUCT_NAME } from '@/constants'
 
 const EXAMPLE_CODE = `apiVersion: 'kuma.io/v1alpha1'
 kind: Dataplane
@@ -447,191 +468,145 @@ networking:
     tags:
       kuma.io/service: echo`
 
-export default {
-  name: 'DataplaneWizardKubernetes',
-
-  EXAMPLE_CODE,
-
-  components: {
-    CodeBlock,
-    FormFragment,
-    StepSkeleton,
-    EnvironmentSwitcher,
-    EntityScanner,
-    KAlert,
-    KButton,
-    KCard,
+const STEPS = [
+  {
+    label: 'General',
+    slug: 'general',
   },
+  {
+    label: 'Scope Settings',
+    slug: 'scope-settings',
+  },
+  {
+    label: 'Install',
+    slug: 'complete',
+  },
+]
 
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-      schema: dataplaneSchema,
-      steps: [
-        {
-          label: 'General',
-          slug: 'general',
-        },
-        {
-          label: 'Scope Settings',
-          slug: 'scope-settings',
-        },
-        {
-          label: 'Install',
-          slug: 'complete',
-        },
-      ],
-      tabs: [
-        {
-          hash: '#kubernetes',
-          title: 'Kubernetes',
-        },
-      ],
-      sidebarContent: [
-        {
-          name: 'dataplane',
-        },
-        {
-          name: 'example',
-        },
-        {
-          name: 'switch',
-        },
-      ],
-      startScanner: false,
-      scanFound: false,
-      hideScannerSiblings: false,
-      scanError: false,
-      isComplete: false,
-      validate: {
-        meshName: '',
-        k8sDataplaneType: 'dataplane-type-service',
-        k8sServices: 'all-services',
-        k8sNamespace: '',
-        k8sNamespaceSelection: '',
-        k8sServiceDeployment: '',
-        k8sServiceDeploymentSelection: '',
-        k8sIngressDeployment: '',
-        k8sIngressDeploymentSelection: '',
-        k8sIngressType: '',
-        k8sIngressBrand: 'kong-ingress',
-        k8sIngressSelection: '',
-      },
+const SIDEBAR_CONTENT = [
+  {
+    name: 'dataplane',
+  },
+  {
+    name: 'example',
+  },
+  {
+    name: 'switch',
+  },
+]
+
+const router = useRouter()
+const store = useStore()
+
+const schema = ref(dataplaneSchema)
+const step = ref(0)
+const scanFound = ref(false)
+const hideScannerSiblings = ref(false)
+const scanError = ref(false)
+const isComplete = ref(false)
+const validate = ref({
+  meshName: '',
+  k8sDataplaneType: 'dataplane-type-service',
+  k8sServices: 'all-services',
+  k8sNamespace: '',
+  k8sNamespaceSelection: '',
+  k8sServiceDeployment: '',
+  k8sServiceDeploymentSelection: '',
+  k8sIngressDeployment: '',
+  k8sIngressDeploymentSelection: '',
+  k8sIngressType: '',
+  k8sIngressBrand: 'kong-ingress',
+  k8sIngressSelection: '',
+})
+
+const title = computed(() => store.getters['config/getTagline'])
+const codeOutput = computed(() => {
+  const schemaCopy: any = Object.assign({}, schema.value)
+  const namespace = validate.value.k8sNamespaceSelection
+
+  if (!namespace) {
+    return ''
+  }
+
+  schemaCopy.metadata.name = namespace
+  schemaCopy.metadata.namespace = namespace
+  schemaCopy.metadata.annotations['kuma.io/mesh'] = validate.value.meshName
+
+  const codeClosing = `" | kubectl apply -f - && kubectl delete pod --all -n ${namespace}`
+  const assembledBlock = formatForCLI(schemaCopy, codeClosing)
+
+  return assembledBlock
+})
+
+const nextDisabled = computed(() => {
+  const { k8sNamespaceSelection, meshName } = validate.value
+
+  if (meshName.length === 0) {
+    return true
+  }
+
+  if (step.value === 1) {
+    return !k8sNamespaceSelection
+  }
+
+  return false
+})
+
+watch(() => validate.value.k8sNamespaceSelection, function (value) {
+  validate.value.k8sNamespaceSelection = kebabCase(value)
+})
+
+const stepParameter = QueryParameter.get('step')
+step.value = stepParameter !== null ? parseInt(stepParameter) : 0
+
+function setStep(newStep: number): void {
+  step.value = newStep
+}
+
+function hideSiblings(): void {
+  // this triggers when to hide the siblings related to the Scanner
+  // component that need to be hidden once the scan succeeds.
+  hideScannerSiblings.value = true
+}
+
+async function scanForEntity() {
+  // get our entity from the VueX store
+  const entity = validate.value
+  const mesh = entity.meshName
+  const dataplane = validate.value.k8sNamespaceSelection // this is a placeholder
+
+  // reset things if the user is starting over
+  isComplete.value = false
+  scanError.value = false
+
+  // do nothing if there is no Mesh nor Dataplane found
+  if (!mesh || !dataplane) return
+
+  try {
+    const response = await kumaApi.getDataplaneFromMesh({ mesh, name: dataplane })
+    if (response && response.name.length > 0) {
+      scanFound.value = true
+    } else {
+      scanError.value = true
     }
-  },
-  computed: {
-    ...mapGetters({
-      title: 'config/getTagline',
-      version: 'config/getVersion',
-      environment: 'config/getEnvironment',
-      meshes: 'getMeshList',
-    }),
+  } catch (err) {
+    scanError.value = true
 
-    // Our generated code output
-    codeOutput() {
-      const schema = Object.assign({}, this.schema)
-      const namespace = this.validate.k8sNamespaceSelection
+    console.error(err)
+  } finally {
+    isComplete.value = true
+  }
+}
 
-      // if no namespace is set, do nothing
-      if (!namespace) return
+function completeDataPlaneSetup(): void {
+  store.dispatch('updateSelectedMesh', validate.value.meshName)
 
-      // name and namespace
-      schema.metadata.name = namespace
-      schema.metadata.namespace = namespace
-
-      // selected mesh
-      schema.metadata.annotations['kuma.io/mesh'] = this.validate.meshName
-
-      /**
-       * Finalized output
-       */
-
-      // const codeBlock = { ...meshType, spec: { ...schema } }
-      const codeClosing = `" | kubectl apply -f - && kubectl delete pod --all -n ${namespace}`
-      const assembledBlock = formatForCLI(schema, codeClosing)
-
-      return assembledBlock
+  router.push({
+    name: 'data-plane-list-view',
+    params: {
+      mesh: validate.value.meshName,
     },
-
-    nextDisabled() {
-      const { k8sNamespaceSelection, meshName } = this.validate
-
-      if (!meshName.length) {
-        return true
-      }
-
-      if (this.$route.query.step === '1') {
-        return !k8sNamespaceSelection
-      }
-
-      return false
-    },
-  },
-  watch: {
-    'validate.k8sNamespaceSelection'(value) {
-      this.validate.k8sNamespaceSelection = kebabCase(value)
-    },
-
-    $route() {
-      const step = this.$route.query.step
-
-      if (step === 1) {
-        if (this.validate.k8sNamespaceSelection) {
-          this.nextDisabled = false
-        } else {
-          this.nextDisabled = true
-        }
-      }
-    },
-  },
-  methods: {
-    hideSiblings() {
-      // this triggers when to hide the siblings related to the Scanner
-      // component that need to be hidden once the scan succeeds.
-      this.hideScannerSiblings = true
-    },
-    scanForEntity() {
-      // get our entity from the VueX store
-      const entity = this.validate
-      const mesh = entity.meshName
-      const dataplane = this.validate.k8sNamespaceSelection // this is a placeholder
-
-      // reset things if the user is starting over
-      this.scanComplete = false
-      this.scanError = false
-
-      // do nothing if there is no Mesh nor Dataplane found
-      if (!mesh || !dataplane) return
-
-      kumaApi.getDataplaneFromMesh({ mesh, name: dataplane })
-        .then((response) => {
-          if (response && response.name.length > 0) {
-            this.isRunning = true
-            this.scanFound = true
-          } else {
-            this.scanError = true
-          }
-        })
-        .catch((error) => {
-          this.scanError = true
-
-          console.error(error)
-        })
-        .finally(() => {
-          this.scanComplete = true
-        })
-    },
-    compeleteDataPlaneSetup() {
-      this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
-
-      this.$router.push({
-        name: 'data-plane-list-view',
-        params: {
-          mesh: this.validate.meshName,
-        },
-      })
-    },
-  },
+  })
 }
 </script>
 

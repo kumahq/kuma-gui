@@ -31,14 +31,17 @@ describe('DataplaneUniversal.vue', () => {
     ]
 
     const wrapper = renderComponent()
+    await flushPromises()
 
     const meshSelect = wrapper.find<HTMLSelectElement>('[data-testid="mesh-select"]')
-    const nextButton = wrapper.find('[data-testid="next-step-button"]')
-
     expect(meshSelect.element.value).toBe('')
+
+    const nextButton = wrapper.find('[data-testid="next-step-button"]')
     expect(nextButton.attributes('disabled')).toBe('')
 
     await meshSelect.setValue('testMesh')
+    expect(nextButton.attributes('disabled')).toBe(undefined)
+
     await nextButton.trigger('click')
     await flushPromises()
 

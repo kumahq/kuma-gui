@@ -2,10 +2,11 @@
   <div class="wizard">
     <div class="wizard__content">
       <StepSkeleton
-        :steps="steps"
-        :sidebar-content="sidebarContent"
+        :steps="STEPS"
+        :sidebar-content="SIDEBAR_CONTENT"
         :footer-enabled="hideScannerSiblings === false"
         :next-disabled="nextDisabled"
+        @go-to-step="setStep"
       >
         <!-- step content -->
         <template #general>
@@ -19,7 +20,7 @@
           </p>
 
           <p>
-            As you know, the {{ productName }} GUI is read-only.
+            As you know, the {{ PRODUCT_NAME }} GUI is read-only.
           </p>
 
           <h3>
@@ -58,7 +59,7 @@
                       Select an existing Mesh…
                     </option>
                     <option
-                      v-for="item in meshes.items"
+                      v-for="item in store.getters['getMeshList'].items"
                       :key="item.name"
                       :value="item.name"
                     >
@@ -369,7 +370,7 @@
                 <p>
                   <KButton
                     appearance="primary"
-                    @click="compeleteDataPlaneSetup"
+                    @click="completeDataPlaneSetup"
                   >
                     View Your Dataplane
                   </KButton>
@@ -422,7 +423,7 @@
           <CodeBlock
             id="onboarding-dpp-universal-example"
             class="sample-code-block mt-3"
-            :code="$options.EXAMPLE_CODE"
+            :code="EXAMPLE_CODE"
             language="yaml"
           />
         </template>
@@ -436,24 +437,25 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { KAlert, KButton, KCard } from '@kong/kongponents'
 
+import { kebabCase } from '@/utilities/helpers'
 import { kumaApi } from '@/api/kumaApi'
 import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
-import { kebabCase } from '@/utilities/helpers'
-import { toYaml } from '@/utilities/toYaml'
-import CodeBlock from '@/app/common/CodeBlock.vue'
-import FormFragment from '../components/FormFragment.vue'
-import StepSkeleton from '../components/StepSkeleton.vue'
-import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
-import HelperTooltip from '../components/HelperTooltip.vue'
-import EntityScanner from '../components/EntityScanner.vue'
-
-// schema for building code output
-import dataplaneSchema from './DataplaneUniversalSchema'
 import { PRODUCT_NAME } from '@/constants'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import { toYaml } from '@/utilities/toYaml'
+import { useStore } from '@/store/store'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import dataplaneSchema from './DataplaneUniversalSchema'
+import EntityScanner from '../components/EntityScanner.vue'
+import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
+import FormFragment from '../components/FormFragment.vue'
+import HelperTooltip from '../components/HelperTooltip.vue'
+import StepSkeleton from '../components/StepSkeleton.vue'
 
 const EXAMPLE_CODE = `type: Dataplane
 mesh: default
@@ -466,284 +468,257 @@ networking:
     tags:
       kuma.io/service: echo`
 
-export default {
-  name: 'DataplaneWizardUniversal',
-
-  EXAMPLE_CODE,
-
-  components: {
-    CodeBlock,
-    FormFragment,
-    StepSkeleton,
-    EnvironmentSwitcher,
-    HelperTooltip,
-    EntityScanner,
-    KAlert,
-    KButton,
-    KCard,
+const STEPS = [
+  {
+    label: 'General',
+    slug: 'general',
   },
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-      randString: Math.random().toString(36).substring(2, 8),
-      schema: dataplaneSchema,
-      steps: [
+  {
+    label: 'Topology',
+    slug: 'topology',
+  },
+  {
+    label: 'Networking',
+    slug: 'networking',
+  },
+  {
+    label: 'Install',
+    slug: 'complete',
+  },
+]
+
+const SIDEBAR_CONTENT = [
+  {
+    name: 'dataplane',
+  },
+  {
+    name: 'example',
+  },
+  {
+    name: 'switch',
+  },
+]
+
+const RAND_STRING = Math.random().toString(36).substring(2, 8)
+
+const router = useRouter()
+const store = useStore()
+
+const step = ref(0)
+const scanFound = ref(false)
+const hideScannerSiblings = ref(false)
+const scanError = ref(false)
+const isComplete = ref(false)
+const validate = ref<any>({
+  meshName: '',
+  univDataplaneType: 'dataplane-type-service',
+  univDataplaneServiceName: '',
+  univDataplaneId: '',
+  univDataplaneCustomIdDisabled: true,
+  univDataplaneNetworkAddress: null,
+  univDataplaneNetworkServicePort: null,
+  univDataplaneNetworkServiceAddress: '127.0.0.1',
+  univDataplaneNetworkDPPort: null,
+  univDataplaneNetworkProtocol: 'tcp',
+})
+const formFields = ref({
+  protocols: ['tcp', 'http', 'grpc'],
+})
+
+const title = computed(() => store.getters['config/getTagline'])
+
+const getDataplaneSchema = computed(() => {
+  const schema: any = Object.assign({}, dataplaneSchema)
+
+  const {
+    meshName,
+    univDataplaneType,
+    univDataplaneServiceName,
+    univDataplaneId,
+    univDataplaneNetworkAddress,
+    univDataplaneNetworkServicePort,
+    univDataplaneNetworkServiceAddress,
+    univDataplaneNetworkDPPort,
+    univDataplaneNetworkProtocol,
+  } = validate.value
+
+  if (!meshName) {
+    return ''
+  }
+
+  schema.name = univDataplaneId
+  schema.mesh = meshName
+
+  if (univDataplaneType === 'dataplane-type-service') {
+    if (schema.networking.gateway) {
+      delete schema.networking.gateway
+    }
+
+    schema.networking = {
+      address: univDataplaneNetworkAddress,
+      inbound: [
         {
-          label: 'General',
-          slug: 'general',
-        },
-        {
-          label: 'Topology',
-          slug: 'topology',
-        },
-        {
-          label: 'Networking',
-          slug: 'networking',
-        },
-        {
-          label: 'Install',
-          slug: 'complete',
+          port: univDataplaneNetworkDPPort,
+          servicePort: univDataplaneNetworkServicePort,
+          serviceAddress: univDataplaneNetworkServiceAddress,
+          tags: {
+            'kuma.io/service': univDataplaneServiceName,
+            'kuma.io/protocol': univDataplaneNetworkProtocol,
+          },
         },
       ],
-      tabs: [
-        {
-          hash: '#universal',
-          title: 'Universal',
+    }
+  } else if (univDataplaneType === 'dataplane-type-gateway') {
+    if (schema.networking.inbound) {
+      delete schema.networking.inbound
+    }
+
+    schema.networking = {
+      address: univDataplaneNetworkAddress,
+      gateway: {
+        tags: {
+          'kuma.io/service': univDataplaneServiceName,
         },
-      ],
-      sidebarContent: [
-        {
-          name: 'dataplane',
-        },
-        {
-          name: 'example',
-        },
-        {
-          name: 'switch',
-        },
-      ],
-      startScanner: false,
-      scanFound: false,
-      hideScannerSiblings: false,
-      scanError: false,
-      isComplete: false,
-      validate: {
-        meshName: '',
-        univDataplaneType: 'dataplane-type-service',
-        univDataplaneServiceName: '',
-        univDataplaneId: '',
-        univDataplaneCustomIdDisabled: true,
-        univDataplaneNetworkAddress: null,
-        univDataplaneNetworkServicePort: null,
-        univDataplaneNetworkServiceAddress: '127.0.0.1',
-        univDataplaneNetworkDPPort: null,
-        univDataplaneNetworkProtocol: 'tcp',
-      },
-      formFields: {
-        protocols: ['tcp', 'http', 'grpc'],
       },
     }
-  },
-  computed: {
-    ...mapGetters({
-      title: 'config/getTagline',
-      version: 'config/getVersion',
-      environment: 'config/getEnvironment',
-      meshes: 'getMeshList',
-    }),
+  }
 
-    getDataplaneSchema() {
-      const schema = Object.assign({}, this.schema)
+  return schema
+})
 
-      const {
-        meshName,
-        univDataplaneType,
-        univDataplaneServiceName,
-        univDataplaneId,
-        univDataplaneNetworkAddress,
-        univDataplaneNetworkServicePort,
-        univDataplaneNetworkServiceAddress,
-        univDataplaneNetworkDPPort,
-        univDataplaneNetworkProtocol,
-      } = this.validate
+/**
+ * Part 1 of the last step: Generate the Dataplane Token
+ */
+const generateDpTokenCodeOutput = computed(() => {
+  const { univDataplaneId } = validate.value
 
-      // if no namespace is set, do nothing
-      if (!meshName) return
+  const cmdStructure = `kumactl generate dataplane-token --name=${univDataplaneId} > kuma-token-${univDataplaneId}`
 
-      // namespace and mesh association
-      schema.name = univDataplaneId
-      schema.mesh = meshName
+  return cmdStructure
+})
 
-      // networking
-      if (univDataplaneType === 'dataplane-type-service') {
-        if (schema.networking.gateway) {
-          delete schema.networking.gateway
-        }
+/**
+ * Part 2 of the last step: Install the Dataplane
+ */
+const startDpCodeOutput = computed(() => {
+  const { univDataplaneId } = validate.value
 
-        schema.networking = {
-          address: univDataplaneNetworkAddress,
-          inbound: [
-            {
-              port: univDataplaneNetworkDPPort,
-              servicePort: univDataplaneNetworkServicePort,
-              serviceAddress: univDataplaneNetworkServiceAddress,
-              tags: {
-                'kuma.io/service': univDataplaneServiceName,
-                'kuma.io/protocol': univDataplaneNetworkProtocol,
-              },
-            },
-          ],
-        }
-      } else if (univDataplaneType === 'dataplane-type-gateway') {
-        if (schema.networking.inbound) {
-          delete schema.networking.inbound
-        }
+  const cmdStructure = `kuma-dp run \\
+  --cp-address=${kumaDpServerUrl()} \\
+  --dataplane=${`"${toYaml(getDataplaneSchema.value)}"`} \\
+  --dataplane-token-file=kuma-token-${univDataplaneId}`
 
-        schema.networking = {
-          address: univDataplaneNetworkAddress,
-          gateway: {
-            tags: {
-              'kuma.io/service': univDataplaneServiceName,
-            },
-          },
-        }
-      }
+  return cmdStructure
+})
 
-      return schema
+const nextDisabled = computed(() => {
+  const {
+    meshName,
+    univDataplaneServiceName,
+    univDataplaneId,
+    univDataplaneNetworkAddress,
+    univDataplaneNetworkServicePort,
+    univDataplaneNetworkDPPort,
+    univDataplaneNetworkProtocol,
+  } = validate.value
+
+  if (meshName.length === 0) {
+    return true
+  }
+
+  if (step.value === 1) {
+    return !(univDataplaneServiceName && univDataplaneId)
+  }
+
+  if (step.value === 2) {
+    return !(
+      univDataplaneNetworkAddress &&
+      univDataplaneNetworkServicePort &&
+      univDataplaneNetworkDPPort &&
+      univDataplaneNetworkProtocol
+    )
+  }
+
+  return false
+})
+
+watch(() => validate.value.univDataplaneId, function (value) {
+  validate.value.univDataplaneId = kebabCase(value)
+})
+
+watch(() => validate.value.univDataplaneServiceName, function (value) {
+  validate.value.univDataplaneServiceName = kebabCase(value)
+
+  if (validate.value.univDataplaneServiceName === '') {
+    validate.value.univDataplaneId = ''
+  } else {
+    validate.value.univDataplaneId = kebabCase(`${value}-${RAND_STRING}`)
+  }
+})
+
+const stepParameter = QueryParameter.get('step')
+step.value = stepParameter !== null ? parseInt(stepParameter) : 0
+
+function setStep(newStep: number): void {
+  step.value = newStep
+}
+
+function hideSiblings(): void {
+  // this triggers when to hide the siblings related to the Scanner
+  // component that need to be hidden once the scan succeeds.
+  hideScannerSiblings.value = true
+}
+
+async function scanForEntity(): Promise<void> {
+  const { meshName, univDataplaneId } = validate.value
+
+  // reset things if the user is starting over
+  isComplete.value = false
+  scanError.value = false
+
+  // do nothing if there is no Mesh nor Dataplane found
+  if (!meshName || !univDataplaneId) return
+
+  try {
+    const response = await kumaApi.getDataplaneFromMesh({ mesh: meshName, name: univDataplaneId })
+
+    if (response.name?.length > 0) {
+      scanFound.value = true
+    } else {
+      scanError.value = true
+    }
+  } catch (err) {
+    scanError.value = true
+
+    console.error(err)
+  } finally {
+    isComplete.value = true
+  }
+}
+
+function completeDataPlaneSetup(): void {
+  store.dispatch('updateSelectedMesh', validate.value.meshName)
+
+  router.push({
+    name: 'data-plane-list-view',
+    params: {
+      mesh: validate.value.meshName,
     },
+  })
+}
 
-    /**
-     * Part 1 of the last step: Generate the Dataplane Token
-     */
-    generateDpTokenCodeOutput() {
-      const { univDataplaneId } = this.validate
+function updateDataPlanePort(event: Event): void {
+  const input = event.target as HTMLInputElement
+  const portString = input.value.replace(/[a-zA-Z]*$/g, '').trim()
 
-      const cmdStructure = `kumactl generate dataplane-token --name=${univDataplaneId} > kuma-token-${univDataplaneId}`
+  validate.value.univDataplaneNetworkDPPort = portString === '' ? null : Number(portString)
+}
 
-      return cmdStructure
-    },
+function updateServicePort(event: Event): void {
+  const input = event.target as HTMLInputElement
+  const portString = input.value.replace(/[a-zA-Z]*$/g, '').trim()
 
-    /**
-     * Part 2 of the last step: Install the Dataplane
-     */
-    startDpCodeOutput() {
-      // const cpAddress = this.$store.getters.getConfig.general.advertisedHostname
-      const { univDataplaneId } = this.validate
-      const cmdStructure = `kuma-dp run \\
-      --cp-address=${kumaDpServerUrl()} \\
-      --dataplane=${`"${toYaml(this.getDataplaneSchema)}"`} \\
-      --dataplane-token-file=kuma-token-${univDataplaneId}`
-
-      return cmdStructure
-    },
-
-    nextDisabled() {
-      const {
-        meshName,
-        univDataplaneServiceName,
-        univDataplaneId,
-        univDataplaneNetworkAddress,
-        univDataplaneNetworkServicePort,
-        univDataplaneNetworkDPPort,
-        univDataplaneNetworkProtocol,
-      } = this.validate
-
-      if (!meshName.length) {
-        return true
-      }
-
-      if (this.$route.query.step === '1') {
-        return !(univDataplaneServiceName && univDataplaneId)
-      }
-
-      if (this.$route.query.step === '2') {
-        return !(
-          univDataplaneNetworkAddress &&
-          univDataplaneNetworkServicePort &&
-          univDataplaneNetworkDPPort &&
-          univDataplaneNetworkProtocol
-        )
-      }
-
-      return false
-    },
-  },
-  watch: {
-    'validate.univDataplaneId'(value) {
-      this.validate.univDataplaneId = kebabCase(value)
-    },
-
-    'validate.univDataplaneServiceName'(value) {
-      const newName = kebabCase(value)
-
-      this.validate.univDataplaneServiceName = newName
-
-      if (this.validate.univDataplaneServiceName === '') {
-        this.validate.univDataplaneId = ''
-      } else {
-        this.validate.univDataplaneId = kebabCase(`${value}-${this.randString}`)
-      }
-    },
-  },
-  methods: {
-    updateDataPlanePort(event) {
-      const input = /** @type {HTMLInputElement} */ (event.target)
-      const portString = input.value.replace(/[a-zA-Z]*$/g, '').trim()
-
-      this.validate.univDataplaneNetworkDPPort = portString === '' ? null : Number(portString)
-    },
-
-    updateServicePort(event) {
-      const input = /** @type {HTMLInputElement} */ (event.target)
-      const portString = input.value.replace(/[a-zA-Z]*$/g, '').trim()
-
-      this.validate.univDataplaneNetworkServicePort = portString === '' ? null : Number(portString)
-    },
-
-    hideSiblings() {
-      // this triggers when to hide the siblings related to the Scanner
-      // component that need to be hidden once the scan succeeds.
-      this.hideScannerSiblings = true
-    },
-    scanForEntity() {
-      const { meshName, univDataplaneId } = this.validate
-
-      // reset things if the user is starting over
-      this.scanComplete = false
-      this.scanError = false
-
-      // do nothing if there is no Mesh nor Dataplane found
-      if (!meshName || !univDataplaneId) return
-
-      kumaApi.getDataplaneFromMesh({ mesh: meshName, name: univDataplaneId })
-        .then((response) => {
-          if (response?.name?.length > 0) {
-            this.isRunning = true
-            this.scanFound = true
-          } else {
-            this.scanError = true
-          }
-        })
-        .catch((error) => {
-          this.scanError = true
-
-          console.error(error)
-        })
-        .finally(() => {
-          this.scanComplete = true
-        })
-    },
-    compeleteDataPlaneSetup() {
-      this.$store.dispatch('updateSelectedMesh', this.validate.meshName)
-
-      this.$router.push({
-        name: 'data-plane-list-view',
-        params: {
-          mesh: this.validate.meshName,
-        },
-      })
-    },
-  },
+  validate.value.univDataplaneNetworkServicePort = portString === '' ? null : Number(portString)
 }
 </script>
 
