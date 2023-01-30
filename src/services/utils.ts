@@ -1,5 +1,4 @@
 import {
-  Container,
   createContainer,
   token,
   Token,
@@ -14,18 +13,6 @@ export {
 type InjectionHooks<T extends TokenValue[]> = {
   [K in keyof T]: T[K] extends TokenValue ? () => TokenType<T[K]> : never;
 };
-
-//
-const useInjection = <T extends TokenValue>(token: T, container: Container): TokenType<T> => {
-  return container.get(token/*, conditions */)
-}
-
-export const createInjections = <T extends TokenValue[]>(
-  tokens: T,
-  _container: Container = container,
-): InjectionHooks<T> =>
-  tokens.map((token) => () => useInjection(token, _container)) as InjectionHooks<T>
-//
 
 type DependencyDefinition = {
   description: string
@@ -42,7 +29,15 @@ type UnknownCreator<T = unknown> =
 
 export const container = createContainer()
 
+//
+
 export const get = <T extends TokenValue>(token: T): TokenType<T> => container.get(token)
+export const createInjections = <T extends TokenValue[]>(
+  ...tokens: T
+): InjectionHooks<T> =>
+  tokens.map((token) => () => get(token)) as InjectionHooks<T>
+//
+
 export const service = <T>(func: UnknownCreator<T>, config: DependencyDefinition): Token<T> => {
   const t = token<T>(config.description)
   const bound = container.bind(t)

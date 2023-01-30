@@ -2,11 +2,7 @@
   <header class="app-header">
     <div class="horizontal-list">
       <router-link :to="{ name: 'home' }">
-        <img
-          class="logo-image"
-          src="@/assets/images/product-logo.png"
-          :alt="`${store.state.config.tagline} Logo`"
-        >
+        <KumaLogo />
       </router-link>
 
       <GithubButton
@@ -102,12 +98,24 @@ import {
   KIcon,
   KPop,
 } from '@kong/kongponents'
-import GithubButton from 'vue-github-button'
+
+import {
+  useKumaLogo,
+  useGithubButton,
+} from '@/components'
 
 import { useStore } from '@/store/store'
 import { useEnv } from '@/utilities'
 import NotificationIcon from './common/NotificationIcon.vue'
 import UpgradeCheck from './common/UpgradeCheck.vue'
+
+const [
+  KumaLogo,
+  GithubButton,
+] = [
+  useKumaLogo(),
+  useGithubButton(),
+]
 
 const store = useStore()
 const env = useEnv()
@@ -144,9 +152,6 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
   background-color: var(--white);
 }
 
-.logo-image {
-  max-height: 36px;
-}
 .gh-star {
   height: 20px;
 }

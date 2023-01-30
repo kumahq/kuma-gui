@@ -12,10 +12,9 @@ exports[`App.vue fails to renders basic view 1`] = `
       <a>
         <img
           alt="Kuma Logo"
-          class="logo-image"
         />
       </a>
-      <span
+      <github-button
         aria-label="Star kumahq/kuma on GitHub"
         class="gh-star"
         href="https://github.com/kumahq/kuma"
