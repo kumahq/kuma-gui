@@ -3,15 +3,10 @@ import { RouteRecordRaw } from 'vue-router'
 
 import { createRouter } from './router/router'
 import { kumaApi } from './api/kumaApi'
-import { setupDatadog } from './utilities/setupDatadog'
 import { storeKey, store } from './store/store'
 import { EnvVars } from '@/services/env/Env'
 import { TOKENS, get } from '@/services'
 import App from './app/App.vue'
-
-if (import.meta.env.PROD) {
-  setupDatadog()
-}
 
 /**
  * Initializes and mounts the Vue application.
@@ -19,7 +14,14 @@ if (import.meta.env.PROD) {
  * This is a good place to run operations that should ideally be initiated or completed before the Vue application instance exists.
  */
 
-async function initializeVue(env: (key: keyof EnvVars) => string, routes: readonly RouteRecordRaw[]) {
+async function initializeVue(
+  env: (key: keyof EnvVars) => string,
+  routes: readonly RouteRecordRaw[],
+  logger: {setup: () => void},
+) {
+  if (import.meta.env.PROD) {
+    logger.setup()
+  }
   document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
   kumaApi.setBaseUrl(env('KUMA_API_URL'))
 
@@ -51,4 +53,4 @@ async function initializeVue(env: (key: keyof EnvVars) => string, routes: readon
   app.mount('#app')
 }
 
-initializeVue(get(TOKENS.env), get(TOKENS.routes))
+initializeVue(get(TOKENS.env), get(TOKENS.routes), get(TOKENS.logger))
