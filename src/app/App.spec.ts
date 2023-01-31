@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals'
+import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
 import { withVersion } from '@/../jest/jest-setup-after-env'
 
@@ -6,10 +6,6 @@ import App from './App.vue'
 import { store } from '@/store/store'
 import { TOKENS } from '@/components'
 import { set } from '@/services'
-
-// jest can't import this module properly due to transpiling issues
-// mock this out with a blank element
-jest.mock('vue-github-button', () => ({ template: '<span />' }))
 
 function renderComponent(status: string) {
   store.state.globalLoading = true
