@@ -6,10 +6,12 @@ concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
 
+
+# **Note 1**: You can merge a pull request into a release branch of the below form (e.g. “release-2.1”) in order to create the GUI update PR in the matching release branch of the host repository. For this to work, the name of this repository’s release branch must match that of the host repository exactly.
 on:
   push:
-    branches:
-      master
+      # See “Filter pattern cheat sheet” https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+    branches: [ master, 'release-[0-9]+.[0-9]+' ]
 
 env:
   HOST_REPOSITORY: kumahq/kuma
@@ -59,6 +61,8 @@ jobs:
         with:
           token: ${{ github.token }}
           repository: ${{ env.HOST_REPOSITORY }}
+          # Allows merges into release branches (see note 1 above).
+          ref: ${{ github.ref }}
           path: main-application
 
       - name: Copy dist into main application
@@ -74,6 +78,8 @@ jobs:
           # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
           token: ${{ steps.generate-token.outputs.token }}
           path: main-application
+          # Allows merges into release branches (see note 1 above).
+          base: ${{ github.ref_name }}
           commit-message: |
             chore(deps): bump ${{ github.repository }} to ${{ github.sha }}
 
