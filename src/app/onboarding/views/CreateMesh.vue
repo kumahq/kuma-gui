@@ -1,26 +1,26 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Create the mesh" />
+      <OnboardingHeading>
+        <template #title>
+          Create the mesh
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>
-      <p class="text-center mb-4">
-        When you install, {{ productName }} creates a <i>default</i> mesh, but you can add as many meshes as you need.
+      <p class="mb-4 text-center">
+        When you install, {{ PRODUCT_NAME }} creates a <i>default</i> mesh, but you can add as many meshes as you need.
       </p>
 
-      <div class="flex justify-center mt-10 mb-12 pb-12">
-        <div class="w-full sm:w-3/5 lg:w-2/5 p-4">
-          <KTable
-            :fetcher="() => tableData"
-            :headers="tableHeaders"
-            disable-pagination
-            is-small
-          />
-        </div>
-      </div>
+      <KTable
+        class="table"
+        :fetcher="() => tableData"
+        :headers="TABLE_HEADERS"
+        disable-pagination
+      />
 
-      <p class="text-center">
+      <p class="mt-4 text-center">
         This mesh is empty. Next, you add services and their data plane proxies.
       </p>
     </template>
@@ -34,52 +34,41 @@
   </OnboardingPage>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 import { KTable } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 
-export default {
-  name: 'CreateMesh',
+const TABLE_HEADERS = [
+  { label: 'Name', key: 'name' },
+  { label: 'Services', key: 'servicesAmount' },
+  { label: 'DPPs', key: 'dppsAmount' },
+]
 
-  components: {
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    KTable,
-  },
+const store = useStore()
 
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-      tableHeaders: [
-        { label: 'Name', key: 'name' },
-        { label: 'Services', key: 'servicesAmount' },
-        { label: 'DPPs', key: 'dppsAmount' },
-      ],
-      tableData: {
-        total: 1,
-        data: [
-          {
-            name: 'default',
-            servicesAmount: 0,
-            dppsAmount: 0,
-          },
-        ],
-      },
-    }
-  },
-  computed: {
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus',
-    }),
-    previousStep() {
-      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-configuration-types'
+const tableData = ref<{ total: number, data: any [] }>({
+  total: 1,
+  data: [
+    {
+      name: 'default',
+      servicesAmount: 0,
+      dppsAmount: 0,
     },
-  },
-}
+  ],
+})
+
+const previousStep = computed(() => store.getters['config/getMulticlusterStatus'] ? 'onboarding-multi-zone' : 'onboarding-configuration-types')
 </script>
+
+<style lang="scss" scoped>
+.table {
+  width: 50%;
+  margin: 0 auto;
+}
+</style>

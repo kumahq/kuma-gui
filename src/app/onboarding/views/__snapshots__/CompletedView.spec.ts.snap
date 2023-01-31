@@ -10,12 +10,14 @@ exports[`CompletedView.vue renders snapshot 1`] = `
     >
       
       <div
-        class="relative"
+        class="onboarding-heading"
       >
         <h1
           class="onboarding-title"
         >
-          Go to the dashboard
+          
+           Go to the dashboard 
+          
         </h1>
         <!--v-if-->
       </div>
@@ -25,29 +27,31 @@ exports[`CompletedView.vue renders snapshot 1`] = `
       class="onboarding-container__content"
     >
       <div
-        class="w-full"
+        class="onboarding-container__inner-content"
       >
         
         <div
-          class="flex justify-center"
+          class="gui-preview-image"
         >
           <img />
         </div>
         
       </div>
     </div>
-    
     <div
-      class="mt-4 flex items-center flex-col sm:flex-row justify-center"
+      class="mt-4"
     >
-      <!--v-if-->
-      <div>
+      
+      <div
+        class="onboarding-actions"
+      >
         <!--v-if-->
-        <span
-          class="inline-block"
+        <div
+          class="button-list"
         >
+          <!--v-if-->
           <a
-            class="k-button medium rounded primary navigation-button navigation-button--next"
+            class="k-button medium rounded creation"
             data-testid="onboarding-next-button"
             href="/"
             type="button"
@@ -56,14 +60,14 @@ exports[`CompletedView.vue renders snapshot 1`] = `
             <!---->
             
             
-            Completed
+            Complete
             
             <!---->
           </a>
-        </span>
+        </div>
       </div>
+      
     </div>
-    
   </div>
   <div
     class="background-image"

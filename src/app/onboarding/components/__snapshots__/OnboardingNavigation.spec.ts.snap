@@ -2,11 +2,12 @@
 
 exports[`OnboardingNavigation.vue renders snapshot 1`] = `
 <div
-  class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+  class="onboarding-actions"
 >
   <a
-    class="k-button medium rounded primary navigation-button navigation-button--back"
+    class="k-button medium rounded secondary"
     data-testid="onboarding-previous-button"
+    href="/onboarding/welcome"
     type="button"
   >
     
@@ -17,37 +18,37 @@ exports[`OnboardingNavigation.vue renders snapshot 1`] = `
     
     <!---->
   </a>
-  <div>
-    <button
-      class="k-button small rounded btn-link skip-button"
+  <div
+    class="button-list"
+  >
+    <a
+      class="k-button medium rounded outline"
       data-testid="onboarding-skip-button"
+      href="/"
       type="button"
     >
       
       <!---->
       
       
-       Skip Setup 
+       Skip setup 
       
       <!---->
-    </button>
-    <span
-      class="inline-block"
+    </a>
+    <a
+      class="k-button medium rounded primary"
+      data-testid="onboarding-next-button"
+      href="/onboarding/configuration-types"
+      type="button"
     >
-      <a
-        class="k-button medium rounded primary navigation-button navigation-button--next"
-        data-testid="onboarding-next-button"
-        type="button"
-      >
-        
-        <!---->
-        
-        
-        Next
-        
-        <!---->
-      </a>
-    </span>
+      
+      <!---->
+      
+      
+      Next
+      
+      <!---->
+    </a>
   </div>
 </div>
 `;

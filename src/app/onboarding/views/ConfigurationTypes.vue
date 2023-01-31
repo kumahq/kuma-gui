@@ -1,15 +1,19 @@
 <template>
   <OnboardingPage with-image>
     <template #header>
-      <OnboardingHeading title="Learn about configuration storage" />
+      <OnboardingHeading>
+        <template #title>
+          Learn about configuration storage
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>
-      <div class="h-full w-full flex items-center justify-center mb-10">
-        <component :is="currentGraph" />
+      <div class="graph-list mb-6">
+        <component :is="currentGraphComponent" />
       </div>
 
-      <div class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto configuration-type-radio-buttons">
+      <div class="radio-button-group">
         <KRadio
           v-model="mode"
           name="deployment"
@@ -45,66 +49,57 @@
   </OnboardingPage>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed, onMounted, ref } from 'vue'
 import { KRadio } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import KubernetesGraph from '../components/graphs/KubernetesGraph.vue'
-import PostgresGraph from '../components/graphs/PostgresGraph.vue'
 import MemoryGraph from '../components/graphs/MemoryGraph.vue'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import PostgresGraph from '../components/graphs/PostgresGraph.vue'
 
-export default {
-  name: 'ConfigurationTypes',
-  components: {
-    KubernetesGraph,
-    PostgresGraph,
-    MemoryGraph,
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    KRadio,
-  },
-  data() {
-    return { mode: 'kubernetes', productName: PRODUCT_NAME }
-  },
-  computed: {
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus',
-      configurationType: 'config/getConfigurationType',
-    }),
-    nextStep() {
-      return this.multicluster ? 'onboarding-multi-zone' : 'onboarding-create-mesh'
-    },
-    currentGraph() {
-      switch (this.mode) {
-        case 'kubernetes':
-          return 'KubernetesGraph'
-        case 'postgres':
-          return 'PostgresGraph'
-        case 'memory':
-          return 'MemoryGraph'
-        default:
-          return 'KubernetesGraph'
-      }
-    },
-  },
-  mounted() {
-    this.mode = this.configurationType
-  },
+const componentMap: Record<string, any> = {
+  postgres: PostgresGraph,
+  memory: MemoryGraph,
+  kubernetes: KubernetesGraph,
 }
+
+const store = useStore()
+
+const mode = ref<'kubernetes' | 'postgres' | 'memory'>('kubernetes')
+
+onMounted(function () {
+  mode.value = store.getters['config/getConfigurationType']
+})
+
+const nextStep = computed(() => store.getters['config/getMulticlusterStatus'] ? 'onboarding-multi-zone' : 'onboarding-create-mesh')
+
+const currentGraphComponent = computed(() => componentMap[mode.value])
 </script>
 
 <style lang="scss" scoped>
-.configuration-type-radio-buttons {
+.graph-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.radio-button-group {
   --KRadioPrimary: var(--OnboardingRadio);
+
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   color: var(--OnboardingRadio);
 }
 
-.configuration-type-radio-buttons .k-radio {
+.radio-button-group .k-radio {
   cursor: pointer;
 }
 </style>

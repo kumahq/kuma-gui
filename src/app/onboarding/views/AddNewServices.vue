@@ -1,44 +1,42 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Add services" />
+      <OnboardingHeading>
+        <template #title>
+          Add services
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>
-      <div class="h-full w-full flex justify-evenly items-center">
+      <div class="service-mode-list">
         <ServiceBox
           :active="mode === 'demo'"
-          class="cursor-pointer"
-          @clicked="update('demo')"
+          @clicked="setMode('demo')"
         >
-          <div>
+          <div class="service-box-content">
             <img src="@/assets/images/new-service-demo.svg?url">
 
-            <div class="ml-3">
-              <p class="uppercase font-bold tracking-wider">
-                Demo app
-              </p>
+            <p class="service-mode-title">
+              Demo app
+            </p>
 
-              <p>Counter application</p>
-            </div>
+            <p>Counter application</p>
           </div>
         </ServiceBox>
 
         <ServiceBox
           :active="mode === 'manually'"
-          class="cursor-pointer"
-          @clicked="update('manually')"
+          @clicked="setMode('manually')"
         >
-          <div class="cursor-pointer">
+          <div class="service-box-content">
             <img src="@/assets/images/new-service-manually.svg?url">
 
-            <div class="ml-3">
-              <p class="uppercase font-bold tracking-wider">
-                Manually
-              </p>
+            <p class="service-mode-title">
+              Manually
+            </p>
 
-              <p>After this wizard</p>
-            </div>
+            <p>After this wizard</p>
           </div>
         </ServiceBox>
       </div>
@@ -53,46 +51,46 @@
   </OnboardingPage>
 </template>
 
-<script>
-import { mapGetters, mapMutations } from 'vuex'
+<script lang="ts" setup>
+import { computed, ref, watch } from 'vue'
+
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import ServiceBox from '../components/ServiceBox.vue'
+import { useStore } from '@/store/store'
 
-export default {
-  name: 'AddNewServices',
-  components: {
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    ServiceBox,
-  },
-  computed: {
-    ...mapGetters({
-      onboardingMode: 'onboarding/getMode',
-    }),
+const store = useStore()
 
-    nextStep() {
-      if (this.mode === 'manually') {
-        return 'onboarding-completed'
-      }
+const mode = ref<'demo' | 'manually'>(store.state.onboarding.mode)
+const nextStep = computed(() => mode.value === 'manually' ? 'onboarding-completed' : 'onboarding-add-services-code')
 
-      return 'onboarding-add-services-code'
-    },
-    mode: {
-      get() {
-        return this.onboardingMode
-      },
-      set(value) {
-        this.update(value)
-      },
-    },
-  },
-  methods: {
-    ...mapMutations({
-      update: 'onboarding/UPDATE_MODE',
-    }),
-  },
+watch(() => mode.value, function () {
+  store.dispatch('onboarding/changeMode', mode.value)
+})
+
+function setMode(newMode: typeof mode.value): void {
+  mode.value = newMode
 }
 </script>
+
+<style lang="scss" scoped>
+.service-mode-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.service-box-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.service-mode-title {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+</style>

@@ -1,20 +1,23 @@
 <template>
   <OnboardingPage with-image>
     <template #header>
-      <OnboardingHeading
-        title="Learn about deployments"
-        :description="
-          `${productName} can be deployed in standalone or multi-zone mode.`
-        "
-      />
+      <OnboardingHeading>
+        <template #title>
+          Learn about deployments
+        </template>
+
+        <template #description>
+          <p>{{ PRODUCT_NAME }} can be deployed in standalone or multi-zone mode.</p>
+        </template>
+      </onboardingheading>
     </template>
 
     <template #content>
-      <div class="h-full w-full flex items-center justify-center mb-10">
-        <component :is="currentGraph" />
+      <div class="graph-list mb-6">
+        <component :is="currentGraphComponent" />
       </div>
 
-      <div class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto deployment-type-radio-buttons">
+      <div class="radio-button-group">
         <KRadio
           v-model="mode"
           name="mode"
@@ -44,52 +47,55 @@
   </OnboardingPage>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed, onMounted, ref } from 'vue'
 import { KRadio } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import MultizoneGraph from '../components/graphs/MultizoneGraph.vue'
 import StandaloneGraph from '../components/graphs/StandaloneGraph.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 
-export default {
-  name: 'DeploymentTypes',
-  components: {
-    MultizoneGraph,
-    StandaloneGraph,
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    KRadio,
-  },
-  data() {
-    return { mode: 'standalone', productName: PRODUCT_NAME }
-  },
-
-  computed: {
-    ...mapGetters({
-      multicluster: 'config/getMulticlusterStatus',
-    }),
-    currentGraph() {
-      return this.mode === 'standalone' ? 'StandaloneGraph' : 'MultizoneGraph'
-    },
-  },
-  mounted() {
-    this.mode = this.multicluster ? 'multi-zone' : 'standalone'
-  },
+const componentMap: Record<string, any> = {
+  standalone: StandaloneGraph,
+  'multi-zone': MultizoneGraph,
 }
+
+const store = useStore()
+
+const mode = ref<'standalone' | 'multi-zone'>('standalone')
+
+const currentGraphComponent = computed(() => componentMap[mode.value])
+
+onMounted(function () {
+  mode.value = store.getters['config/getMulticlusterStatus'] ? 'multi-zone' : 'standalone'
+})
 </script>
 
 <style lang="scss" scoped>
-.deployment-type-radio-buttons {
+.graph-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.radio-button-group {
   --KRadioPrimary: var(--OnboardingRadio);
+  color: var(--OnboardingRadio);
+
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
   color: var(--OnboardingRadio);
 }
 
-.deployment-type-radio-buttons .k-radio {
+.radio-button-group .k-radio {
   cursor: pointer;
 }
 </style>

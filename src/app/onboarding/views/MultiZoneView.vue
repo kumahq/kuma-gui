@@ -1,63 +1,61 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Add zones" />
+      <OnboardingHeading>
+        <template #title>
+          Add zones
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>
-      <p class="text-center mb-4">
+      <p class="mb-4 text-center">
         A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately.
       </p>
 
-      <KCard
-        title="See the documentation for options to install:"
-        border-variant="noBorder"
-      >
-        <template #body>
-          <a
-            target="_blank"
-            class="external-link-code-block"
-            :href="`${env('KUMA_DOCS_URL')}/deployments/multi-zone/?${env('KUMA_UTM_QUERY_PARAMS')}#zone-control-plane`"
-          >
-            {{ env('KUMA_DOCS_URL') }}/deployments/multi-zone/#zone-control-plane
-          </a>
-        </template>
-      </KCard>
+      <p class="mb-4 text-center">
+        <b>See <a
+          :href="`${env('KUMA_DOCS_URL')}/deployments/multi-zone/?${env('KUMA_UTM_QUERY_PARAMS')}#zone-control-plane`"
+          target="_blank"
+        >the documentation for options to install</a>.</b>
+      </p>
 
       <div>
-        <p class="text-center my-4">
+        <p class="status-box mt-4">
           Zone status:
+
           <span
             v-if="hasZones"
-            class="text-green-500"
+            class="status--is-connected"
             data-testid="zone-connected"
           >Connected</span>
 
           <span
             v-else
-            class="text-red-500"
+            class="status--is-disconnected"
             data-testid="zone-disconnected"
           >Disconnected</span>
         </p>
 
-        <p class="text-center mt-4 mb-10">
+        <p class="status-box mt-4">
           Zone ingress status:
+
           <span
             v-if="hasZoneIngresses"
-            class="text-green-500"
+            class="status--is-connected"
             data-testid="zone-ingress-connected"
           >Connected</span>
 
           <span
             v-else
-            class="text-red-500"
+            class="status--is-disconnected"
             data-testid="zone-ingress-disconnected"
           >Disconnected</span>
         </p>
 
         <div
           v-if="!hasZoneIngresses || !hasZones"
-          class="flex justify-center"
+          class="status-loading-box mt-4"
         >
           <LoadingBox />
         </div>
@@ -68,91 +66,97 @@
       <OnboardingNavigation
         next-step="onboarding-create-mesh"
         previous-step="onboarding-configuration-types"
-        :should-allow-next="servicesOnline"
+        :should-allow-next="hasZones && hasZoneIngresses"
       />
     </template>
   </OnboardingPage>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import { KCard } from '@kong/kongponents'
+<script lang="ts" setup>
+import { onUnmounted, ref } from 'vue'
 
 import { kumaApi } from '@/api/kumaApi'
-import LoadingBox from '@/app/common/LoadingBox.vue'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
-import OnboardingHeading from '../components/OnboardingHeading.vue'
-import OnboardingPage from '../components/OnboardingPage.vue'
 import { useEnv } from '@/utilities'
+import LoadingBox from '@/app/common/LoadingBox.vue'
+import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
+import OnboardingPage from '../components/OnboardingPage.vue'
+
 const env = useEnv()
 
 const LONG_POOLING_INTERVAL = 1000
 
-export default {
-  name: 'MultiZoneView',
-  components: {
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    LoadingBox,
-    KCard,
-  },
-  data() {
-    return {
-      env,
-      hasZones: false,
-      hasZoneIngresses: false,
-      zoneTimeout: null,
-      zoneIngressTimeout: null,
+const hasZones = ref(false)
+const hasZoneIngresses = ref(false)
+const zoneTimeout = ref<number | null>(null)
+const zoneIngressTimeout = ref<number | null>(null)
+
+onUnmounted(function () {
+  clearZoneTimeout()
+  clearZoneIngressTimeout()
+})
+
+getZones()
+getZoneIngresses()
+
+async function getZones() {
+  try {
+    const { total } = await kumaApi.getZones()
+
+    hasZones.value = total > 0
+  } catch (error) {
+    console.error(error)
+  } finally {
+    if (!hasZones.value) {
+      clearZoneTimeout()
+      zoneTimeout.value = window.setTimeout(getZones, LONG_POOLING_INTERVAL)
     }
-  },
-  computed: {
-    servicesOnline() {
-      return this.hasZoneIngresses && this.hasZones
-    },
-    ...mapGetters({
-      kumaDocsVersion: 'config/getKumaDocsVersion',
-    }),
-    documentationLink() {
-      return `https://kuma.io/docs/${this.kumaDocsVersion}/deployments/multi-zone/#zone-control-plane`
-    },
-  },
+  }
+}
 
-  created() {
-    this.getZoneIngresses()
-    this.getZones()
-  },
-  unmounted() {
-    clearTimeout(this.zoneTimeout)
-    clearTimeout(this.zoneIngressTimeout)
-  },
-  methods: {
-    async getZones() {
-      try {
-        const { total } = await kumaApi.getZones()
+async function getZoneIngresses() {
+  try {
+    const { total } = await kumaApi.getAllZoneIngressOverviews()
 
-        this.hasZones = total > 0
-      } catch (e) {
-        console.error(e)
-      }
+    hasZoneIngresses.value = total > 0
+  } catch (error) {
+    console.error(error)
+  } finally {
+    if (!hasZoneIngresses.value) {
+      clearZoneIngressTimeout()
+      zoneIngressTimeout.value = window.setTimeout(getZoneIngresses, LONG_POOLING_INTERVAL)
+    }
+  }
+}
 
-      if (!this.hasZones) {
-        this.zoneTimeout = setTimeout(() => this.getZones(), LONG_POOLING_INTERVAL)
-      }
-    },
-    async getZoneIngresses() {
-      try {
-        const { total } = await kumaApi.getAllZoneIngressOverviews()
+function clearZoneTimeout() {
+  if (zoneTimeout.value !== null) {
+    window.clearTimeout(zoneTimeout.value)
+  }
+}
 
-        this.hasZoneIngresses = total > 0
-      } catch (e) {
-        console.error(e)
-      }
-
-      if (!this.hasZoneIngresses) {
-        this.zoneIngressTimeout = setTimeout(() => this.getZoneIngresses(), LONG_POOLING_INTERVAL)
-      }
-    },
-  },
+function clearZoneIngressTimeout() {
+  if (zoneIngressTimeout.value !== null) {
+    window.clearTimeout(zoneIngressTimeout.value)
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.status-box {
+  text-align: center;
+}
+
+.status--is-connected {
+  color: var(--green-500);
+}
+
+.status--is-disconnected {
+  color: var(--red-500);
+}
+
+.status-loading-box {
+  display: flex;
+  justify-content: center;
+}
+</style>

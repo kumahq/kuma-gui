@@ -1,5 +1,5 @@
 export interface OnboardingInterface {
   isCompleted: boolean;
   step: string;
-  mode: string
+  mode: 'demo' | 'manually'
 }

@@ -1,47 +1,50 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading
-        :title="title"
-        :description="description"
-      />
+      <OnboardingHeading>
+        <template #title>
+          <p>{{ title }}</p>
+        </template>
+
+        <template
+          v-if="description !== null"
+          #description
+        >
+          <p>{{ description }}</p>
+        </template>
+      </onboardingheading>
     </template>
 
     <template #content>
       <div
-        v-if="!tableData.data.length"
-        class="justify-center flex my-4"
+        v-if="tableData.data.length === 0"
+        class="status-loading-box mb-4"
       >
         <LoadingBox />
       </div>
 
       <div v-else>
-        <div class="flex justify-center mt-10 mb-16 pb-16">
-          <div class="w-full sm:w-3/5 p-4">
-            <p class="font-bold mb-4">
-              Found {{ tableData.data.length }} DPPs:
-            </p>
+        <p class="mb-4">
+          <b>Found {{ tableData.data.length }} DPPs:</b>
+        </p>
 
-            <KTable
-              class="onboarding-dataplane-table"
-              :fetcher="() => tableData"
-              :headers="tableHeaders"
-              disable-pagination
-              is-small
-            >
-              <template #status="{ rowValue }">
-                <StatusBadge
-                  v-if="rowValue"
-                  :status="rowValue"
-                />
+        <KTable
+          class="mb-4"
+          :fetcher="() => tableData"
+          :headers="TABLE_HEADERS"
+          disable-pagination
+        >
+          <template #status="{ rowValue }">
+            <StatusBadge
+              v-if="rowValue"
+              :status="rowValue"
+            />
 
-                <template v-else>
-                  —
-                </template>
-              </template>
-            </KTable>
-          </div>
-        </div>
+            <template v-else>
+              —
+            </template>
+          </template>
+        </KTable>
       </div>
     </template>
 
@@ -55,10 +58,10 @@
   </OnboardingPage>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed, onBeforeUnmount, ref } from 'vue'
 import { KTable } from '@kong/kongponents'
 
-import { PRODUCT_NAME } from '@/constants'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '@/app/common/LoadingBox.vue'
@@ -67,105 +70,75 @@ import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 
-export default {
-  name: 'DataplanesOverview',
-  components: {
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    LoadingBox,
-    StatusBadge,
-    KTable,
-  },
-  metaInfo() {
-    return {
-      title: this.title,
-    }
-  },
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-      tableHeaders: [
-        { label: 'Mesh', key: 'mesh' },
-        { label: 'Name', key: 'name' },
-        { label: 'Status', key: 'status' },
-      ],
-      tableData: {
-        total: 0,
-        data: [],
-      },
-      timeout: null,
-    }
-  },
+const TABLE_HEADERS = [
+  { label: 'Mesh', key: 'mesh' },
+  { label: 'Name', key: 'name' },
+  { label: 'Status', key: 'status' },
+]
 
-  computed: {
-    title() {
-      if (this.tableData.data.length) {
-        return 'Success'
-      }
+const tableData = ref<{ total: number, data: any [] }>({
+  total: 0,
+  data: [],
+})
+const timeout = ref<number | null>(null)
 
-      return 'Waiting for DPPs'
-    },
-    description() {
-      if (this.tableData.data.length) {
-        return 'The following data plane proxies (DPPs) are connected to the control plane:'
-      }
+const title = computed(() => tableData.value.data.length > 0 ? 'Success' : 'Waiting for DPPs')
+const description = computed(() => tableData.value.data.length > 0 ? 'The following data plane proxies (DPPs) are connected to the control plane:' : null)
 
-      return null
-    },
-  },
-  created() {
-    this.getAllDataplanes()
-  },
-  beforeUnmount() {
-    clearTimeout(this.timeout)
-  },
-  methods: {
-    async getAllDataplanes() {
-      let shouldRefetch = false
-      const result = []
+onBeforeUnmount(function () {
+  clearTimeout()
+})
 
-      try {
-        const { items } = await kumaApi.getAllDataplanes({ size: 10 })
+getAllDataplanes()
 
-        if (Array.isArray(items)) {
-          for (const dataPlane of items) {
-            const { name, mesh } = dataPlane
+function clearTimeout() {
+  if (timeout.value !== null) {
+    window.clearTimeout(timeout.value)
+  }
+}
 
-            const dataPlaneOverview = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
-            const status = getItemStatusFromInsight(dataPlaneOverview.dataplaneInsight)
+async function getAllDataplanes() {
+  let shouldRefetch = false
+  const result = []
 
-            if (status === 'offline') {
-              shouldRefetch = true
-            }
+  try {
+    const { items } = await kumaApi.getAllDataplanes({ size: 10 })
 
-            result.push({
-              status,
-              name,
-              mesh,
-            })
-          }
+    if (Array.isArray(items)) {
+      for (const dataPlane of items) {
+        const { name, mesh } = dataPlane
+
+        const dataPlaneOverview = await kumaApi.getDataplaneOverviewFromMesh({ mesh, name })
+        const status = getItemStatusFromInsight(dataPlaneOverview.dataplaneInsight)
+
+        if (status === 'offline') {
+          shouldRefetch = true
         }
-      } catch (error) {
-        console.error(error)
-      }
 
-      this.tableData.data = result
-      this.tableData.total = this.tableData.data.length
-
-      if (shouldRefetch) {
-        this.timeout = setTimeout(() => {
-          this.getAllDataplanes()
-        }, 1000)
+        result.push({
+          status,
+          name,
+          mesh,
+        })
       }
-    },
-  },
+    }
+  } catch (error) {
+    console.error(error)
+  }
+
+  tableData.value.data = result
+  tableData.value.total = tableData.value.data.length
+
+  if (shouldRefetch) {
+    clearTimeout()
+    timeout.value = window.setTimeout(getAllDataplanes, 1000)
+  }
 }
 </script>
 
-<style lang="scss">
-.onboarding-dataplane-table tbody tr {
-  // hack to do not allow shadow overflow on top/bottom
-  box-shadow: -3px 0 0 -1px var(--KTableBorder, var(--steel-200, #dae3f2)) !important;
+<style lang="scss" scoped>
+.status-loading-box {
+  display: flex;
+  justify-content: center;
 }
 </style>

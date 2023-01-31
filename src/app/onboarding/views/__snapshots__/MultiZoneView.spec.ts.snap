@@ -10,12 +10,14 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
     >
       
       <div
-        class="relative"
+        class="onboarding-heading"
       >
         <h1
           class="onboarding-title"
         >
-          Add zones
+          
+           Add zones 
+          
         </h1>
         <!--v-if-->
       </div>
@@ -25,85 +27,53 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
       class="onboarding-container__content"
     >
       <div
-        class="w-full"
+        class="onboarding-container__inner-content"
       >
         
         <p
-          class="text-center mb-4"
+          class="mb-4 text-center"
         >
            A zone requires both the zone control plane and zone ingress. On Kubernetes, you run a single command to create both resources. On Universal, you must create them separately. 
         </p>
-        <section
-          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-          aria-label="See the documentation for options to install:"
-          class="kong-card noBorder"
+        <p
+          class="mb-4 text-center"
         >
-          <div
-            class="k-card-header d-flex mb-3"
-          >
-            <!---->
-            <div
-              class="k-card-title mb-3"
+          <b>
+            See 
+            <a
+              href="https://kuma.io/docs/1.7.x/deployments/multi-zone/?utm_source=Kuma&utm_medium=Kuma-GUI#zone-control-plane"
+              target="_blank"
             >
-              <h4>
-                
-                See the documentation for options to install:
-                
-              </h4>
-            </div>
-            <div
-              class="k-card-actions"
-            >
-              
-              
-            </div>
-          </div>
-          <!---->
-          <div
-            class="k-card-content d-flex"
-          >
-            <div
-              class="k-card-body"
-              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-            >
-              
-              <a
-                class="external-link-code-block"
-                href="https://kuma.io/docs/1.7.x/deployments/multi-zone/?utm_source=Kuma&utm_medium=Kuma-GUI#zone-control-plane"
-                target="_blank"
-              >
-                https://kuma.io/docs/1.7.x/deployments/multi-zone/#zone-control-plane 
-              </a>
-              
-            </div>
-            <!---->
-          </div>
-        </section>
+              the documentation for options to install
+            </a>
+            .
+          </b>
+        </p>
         <div>
           <p
-            class="text-center my-4"
+            class="status-box mt-4"
           >
              Zone status: 
             <span
-              class="text-red-500"
+              class="status--is-disconnected"
               data-testid="zone-disconnected"
             >
               Disconnected
             </span>
           </p>
           <p
-            class="text-center mt-4 mb-10"
+            class="status-box mt-4"
           >
              Zone ingress status: 
             <span
-              class="text-red-500"
+              class="status--is-disconnected"
               data-testid="zone-ingress-disconnected"
             >
               Disconnected
             </span>
           </p>
           <div
-            class="flex justify-center"
+            class="status-loading-box mt-4"
           >
             <div
               class="loading"
@@ -120,43 +90,46 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
         
       </div>
     </div>
-    
     <div
-      class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+      class="mt-4"
     >
-      <a
-        class="k-button medium rounded primary navigation-button navigation-button--back"
-        data-testid="onboarding-previous-button"
-        href="/onboarding/configuration-types"
-        type="button"
+      
+      <div
+        class="onboarding-actions"
       >
-        
-        <!---->
-        
-        
-         Back 
-        
-        <!---->
-      </a>
-      <div>
-        <button
-          class="k-button small rounded btn-link skip-button"
-          data-testid="onboarding-skip-button"
+        <a
+          class="k-button medium rounded secondary"
+          data-testid="onboarding-previous-button"
+          href="/onboarding/configuration-types"
           type="button"
         >
           
           <!---->
           
           
-           Skip Setup 
+           Back 
           
           <!---->
-        </button>
-        <span
-          class="inline-block cursor-not-allowed"
+        </a>
+        <div
+          class="button-list"
         >
           <a
-            class="k-button medium rounded primary navigation-button navigation-button--next"
+            class="k-button medium rounded outline"
+            data-testid="onboarding-skip-button"
+            href="/"
+            type="button"
+          >
+            
+            <!---->
+            
+            
+             Skip setup 
+            
+            <!---->
+          </a>
+          <a
+            class="k-button medium rounded primary"
             data-testid="onboarding-next-button"
             disabled="true"
             href="/onboarding/create-mesh"
@@ -170,10 +143,10 @@ exports[`MultiZoneView.vue renders snapshot 1`] = `
             
             <!---->
           </a>
-        </span>
+        </div>
       </div>
+      
     </div>
-    
   </div>
   <div
     class="background-image"

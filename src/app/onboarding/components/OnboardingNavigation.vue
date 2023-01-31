@@ -1,133 +1,102 @@
 <template>
-  <div :class="classes">
+  <div class="onboarding-actions">
     <KButton
-      v-if="previousStep"
-      appearance="primary"
-      class="navigation-button navigation-button--back"
-      :to="{ name: previousStep }"
+      v-if="props.previousStep"
+      appearance="secondary"
+      :to="{ name: props.previousStep }"
       data-testid="onboarding-previous-button"
-      @click="changeStep(previousStep)"
+      @click="changeStep(props.previousStep)"
     >
       Back
     </KButton>
 
-    <div>
+    <div class="button-list">
       <KButton
-        v-if="showSkip"
-        class="skip-button"
-        appearance="btn-link"
-        size="small"
+        v-if="props.showSkip"
+        appearance="outline"
         data-testid="onboarding-skip-button"
+        :to="{ name: 'home' }"
         @click="skipOnboarding"
       >
-        Skip Setup
+        Skip setup
       </KButton>
 
-      <span :class="['inline-block', {'cursor-not-allowed': !shouldAllowNext} ]">
-        <KButton
-          :disabled="!shouldAllowNext"
-          class="navigation-button navigation-button--next"
-          appearance="primary"
-          :to="{ name: nextStep }"
-          data-testid="onboarding-next-button"
-          @click="lastStep ? skipOnboarding() : changeStep(nextStep)"
-        >
-          {{ nextStepTitle }}
-        </KButton>
-      </span>
+      <KButton
+        :disabled="!props.shouldAllowNext"
+        :appearance="props.lastStep ? 'creation' : 'primary'"
+        :to="{ name: props.lastStep ? 'home' : props.nextStep }"
+        data-testid="onboarding-next-button"
+        @click="props.lastStep ? skipOnboarding() : changeStep(props.nextStep)"
+      >
+        {{ props.nextStepTitle }}
+      </KButton>
     </div>
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script lang="ts" setup>
 import { KButton } from '@kong/kongponents'
 
-export default {
-  name: 'OnboardingNavigation',
+import { useStore } from '@/store/store'
 
-  components: {
-    KButton,
+const store = useStore()
+
+const props = defineProps({
+  shouldAllowNext: {
+    type: Boolean,
+    required: false,
+    default: true,
   },
 
-  props: {
-    shouldAllowNext: {
-      type: Boolean,
-      default: true,
-    },
-    showSkip: {
-      type: Boolean,
-      default: true,
-    },
-    nextStep: {
-      type: String,
-      required: true,
-    },
-    previousStep: {
-      type: String,
-      default: '',
-    },
-    nextStepTitle: {
-      type: String,
-      default: 'Next',
-    },
-    lastStep: {
-      type: Boolean,
-      default: false,
-    },
+  showSkip: {
+    type: Boolean,
+    required: false,
+    default: true,
   },
-  computed: {
-    classes() {
-      return [
-        'mt-4 flex items-center flex-col sm:flex-row',
-        {
-          'justify-center': this.lastStep,
-          'justify-between': this.previousStep && !this.lastStep,
-          'justify-end': !this.previousStep && !this.lastStep,
-        },
-      ]
-    },
-  },
-  methods: {
-    ...mapActions('onboarding', ['completeOnboarding', 'changeStep']),
 
-    skipOnboarding() {
-      this.completeOnboarding()
-      this.$router.push({ name: 'home' })
-    },
+  nextStep: {
+    type: String,
+    required: true,
   },
+
+  previousStep: {
+    type: String,
+    required: false,
+    default: '',
+  },
+
+  nextStepTitle: {
+    type: String,
+    required: false,
+    default: 'Next',
+  },
+
+  lastStep: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+})
+
+function skipOnboarding(): void {
+  store.dispatch('onboarding/completeOnboarding')
+}
+
+function changeStep(step: string): void {
+  store.dispatch('onboarding/changeStep', step)
 }
 </script>
 
 <style lang="scss" scoped>
-.navigation-button {
-  @apply text-lg font-bold;
-
-  --KButtonPaddingY: 12px;
-  --KButtonPaddingX: 48px;
-  --KButtonRadius: 25px;
-
-  &--back {
-    color: var(--grey-600) !important;
-    --KButtonPrimaryBase: var(--OnboardingBackButton);
-    --KButtonPrimaryHover: var(--OnboardingBackButtonHover);
-    --KButtonPrimaryActive: var(--OnboardingBackButtonHover);
-  }
-
-  &--next {
-    --KButtonPrimaryBase: var(--OnboardingNextButton);
-    --KButtonPrimaryHover: var(--OnboardingNextButtonHover);
-    --KButtonPrimaryActive: var(--OnboardingNextButtonHover);
-  }
-
-  &[disabled] {
-    cursor: not-allowed;
-  }
+.onboarding-actions {
+  display: flex;
+  justify-content: space-between;
 }
 
-.skip-button {
-  @apply font-medium mr-8;
-
-  --KButtonBtnLink: var(--OnboardingSkipSetupButton);
+.button-list {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 </style>

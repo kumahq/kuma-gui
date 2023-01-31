@@ -1,10 +1,10 @@
 <template>
-  <li class="flex items-center mb-2">
-    <span class="circle">
+  <li class="item-status mb-2">
+    <span class="circle mr-2">
       <KIcon
         v-if="props.status"
         icon="check"
-        size="10"
+        size="14"
         color="var(--kuma-purple-1)"
       />
     </span>
@@ -30,9 +30,18 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.circle {
-  @apply flex items-center justify-center text-sm w-4 h-4 rounded-full mr-2;
+.item-status {
+  display: flex;
+  align-items: center;
+}
 
-  background-color: rgba(var(--kuma-purple-1-rgb), 0.1);
+.circle {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--grey-300);
 }
 </style>

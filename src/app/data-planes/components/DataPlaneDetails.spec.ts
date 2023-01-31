@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneDetails from './DataPlaneDetails.vue'
 import { store } from '@/store/store'
@@ -17,11 +17,6 @@ async function renderComponent(props = {}) {
       dataPlane,
       dataPlaneOverview,
       ...props,
-    },
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }
