@@ -887,7 +887,8 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto configuration-type-radio-buttons"
         >
           <label
-            class="k-radio"
+            checked="true"
+            class="k-radio k-radio-default"
           >
             <input
               class="k-input"
@@ -902,9 +903,11 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               
             </span>
             <!---->
+            <!---->
           </label>
           <label
-            class="k-radio"
+            checked="false"
+            class="k-radio k-radio-default"
           >
             <input
               class="k-input"
@@ -919,9 +922,11 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
               
             </span>
             <!---->
+            <!---->
           </label>
           <label
-            class="k-radio"
+            checked="false"
+            class="k-radio k-radio-default"
           >
             <input
               class="k-input"
@@ -935,6 +940,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
                Memory 
               
             </span>
+            <!---->
             <!---->
           </label>
         </div>
