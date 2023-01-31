@@ -1,6 +1,6 @@
 import Logger from './DatadogLogger'
 export default class DisabledLogger extends Logger {
-  async setup() {
+  setup(_enabled: boolean) {
     console.log('Logging disabled')
   }
 }
