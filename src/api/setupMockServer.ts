@@ -1,4 +1,4 @@
-import { setupServer, SetupServerApi } from 'msw/node'
+import { setupServer, SetupServer } from 'msw/node'
 
 import { setupHandlers } from './mocks'
 
@@ -7,6 +7,6 @@ import { setupHandlers } from './mocks'
  *
  * **IMPORTANT**: Do not import this file in the regular application. Since it imports `msw/node`, this will cause the application to break because it will try to import (require, actually) Node built-ins which aren’t available in browser environments.
  */
-export function setupMockServer(url: string = ''): SetupServerApi {
+export function setupMockServer(url: string = ''): SetupServer {
   return setupServer(...setupHandlers(url))
 }
