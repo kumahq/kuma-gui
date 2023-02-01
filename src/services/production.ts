@@ -1,5 +1,6 @@
 import { service, constant, get, injected } from './utils'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
+import Logger from '@/services/logger/DatadogLogger'
 import routes from '@/router/routes'
 import { store } from '@/store/store'
 import { getNavItems } from '@/app/getNavItems'
@@ -18,5 +19,8 @@ export const TOKENS = {
   env: service(() => (key: keyof EnvVars) => get(TOKENS.Env).var(key), { description: 'env' }),
   routes: service(() => routes(store), { description: 'routes' }),
   nav: service(() => (multizone: boolean, hasMeshes: boolean) => getNavItems(multizone, hasMeshes), { description: 'nav' }),
+  logger: service(Logger, { description: 'logger' }),
 }
+
 injected(Env, TOKENS.EnvVars)
+injected(Logger, TOKENS.Env)
