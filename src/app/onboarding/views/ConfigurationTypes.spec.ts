@@ -10,16 +10,7 @@ function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig
 
-  return mount(ConfigurationTypes, {
-    global: {
-      stubs: {
-        'router-link': {
-          props: ['to'],
-          template: '<a>{{ to.name }}</a>',
-        },
-      },
-    },
-  })
+  return mount(ConfigurationTypes)
 }
 
 describe('ConfigurationTypes.vue', () => {
@@ -32,6 +23,6 @@ describe('ConfigurationTypes.vue', () => {
   test('renders multizone previous step', () => {
     const wrapper = renderComponent('global')
 
-    expect(wrapper.html()).toContain('onboarding-multi-zone')
+    expect(wrapper.html()).toContain('/onboarding/multi-zone')
   })
 })

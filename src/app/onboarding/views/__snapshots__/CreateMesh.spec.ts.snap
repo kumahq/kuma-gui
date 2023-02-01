@@ -157,9 +157,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       <a
         class="k-button medium rounded primary navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
+        href="/onboarding/configuration-types"
         type="button"
       >
-        onboarding-configuration-types
+        
+        <!---->
+        
+        
+         Back 
+        
+        <!---->
       </a>
       <div>
         <button
@@ -181,9 +188,16 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
           <a
             class="k-button medium rounded primary navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
+            href="/onboarding/add-services"
             type="button"
           >
-            onboarding-add-services
+            
+            <!---->
+            
+            
+            Next
+            
+            <!---->
           </a>
         </span>
       </div>

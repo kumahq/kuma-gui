@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 
 import AppSidebar from './AppSidebar.vue'
 import { store } from '@/store/store'
@@ -7,13 +7,7 @@ import { store } from '@/store/store'
 async function renderComponent() {
   await store.dispatch('fetchPolicyTypes')
 
-  return mount(AppSidebar, {
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
-    },
-  })
+  return mount(AppSidebar)
 }
 
 describe('AppSidebar.vue', () => {
