@@ -49,17 +49,19 @@ import { mapGetters } from 'vuex'
 import { KRadio } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
-import MultizoneGraph from '../components/graphs/MultizoneGraph.vue'
-import StandaloneGraph from '../components/graphs/StandaloneGraph.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import {
+  useMultizoneGraph,
+  useStandaloneGraph,
+} from '@/components'
 
 export default {
   name: 'DeploymentTypes',
   components: {
-    MultizoneGraph,
-    StandaloneGraph,
+    MultizoneGraph: useMultizoneGraph(),
+    StandaloneGraph: useStandaloneGraph(),
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,

@@ -50,19 +50,21 @@ import { mapGetters } from 'vuex'
 import { KRadio } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
-import KubernetesGraph from '../components/graphs/KubernetesGraph.vue'
-import PostgresGraph from '../components/graphs/PostgresGraph.vue'
-import MemoryGraph from '../components/graphs/MemoryGraph.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import {
+  useKubernetesGraph,
+  usePostgresGraph,
+  useMemoryGraph,
+} from '@/components'
 
 export default {
   name: 'ConfigurationTypes',
   components: {
-    KubernetesGraph,
-    PostgresGraph,
-    MemoryGraph,
+    KubernetesGraph: useKubernetesGraph(),
+    PostgresGraph: usePostgresGraph(),
+    MemoryGraph: useMemoryGraph(),
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
