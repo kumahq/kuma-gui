@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
 import { store } from '@/store/store'
@@ -13,11 +13,6 @@ async function renderComponent(props = {}) {
     props: {
       policyTypeEntries,
       ...props,
-    },
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }

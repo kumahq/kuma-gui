@@ -15,6 +15,7 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
     >
       <a
         class="nav-link"
+        href="/"
       >
         Home 
         <!--v-if-->

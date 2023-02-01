@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
@@ -25,11 +25,11 @@ function renderComponent(status: string) {
       stubs: {
         // Let’s not unnecessarily render all that chart markup.
         DonutChart: true,
-        'router-link': RouterLinkStub,
       },
     },
   })
 }
+
 describe('App.vue', () => {
   test('renders main view when successful', async () => {
     withVersion('10.2.0')

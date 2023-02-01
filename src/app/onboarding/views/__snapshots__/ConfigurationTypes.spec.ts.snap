@@ -954,9 +954,16 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
       <a
         class="k-button medium rounded primary navigation-button navigation-button--back"
         data-testid="onboarding-previous-button"
+        href="/onboarding/deployment-types"
         type="button"
       >
-        onboarding-deployment-types
+        
+        <!---->
+        
+        
+         Back 
+        
+        <!---->
       </a>
       <div>
         <button
@@ -978,9 +985,16 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           <a
             class="k-button medium rounded primary navigation-button navigation-button--next"
             data-testid="onboarding-next-button"
+            href="/onboarding/create-mesh"
             type="button"
           >
-            onboarding-create-mesh
+            
+            <!---->
+            
+            
+            Next
+            
+            <!---->
           </a>
         </span>
       </div>

@@ -10,16 +10,7 @@ function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig
 
-  return mount(CreateMesh, {
-    global: {
-      stubs: {
-        routerLink: {
-          props: ['to'],
-          template: '<a>{{ to.name }}</a>',
-        },
-      },
-    },
-  })
+  return mount(CreateMesh)
 }
 
 describe('CreateMesh.vue', () => {
@@ -34,6 +25,6 @@ describe('CreateMesh.vue', () => {
   test('renders multizone next step', () => {
     const wrapper = renderComponent('global')
 
-    expect(wrapper.html()).toContain('onboarding-multi-zone')
+    expect(wrapper.html()).toContain('/onboarding/multi-zone')
   })
 })

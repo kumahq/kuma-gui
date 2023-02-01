@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals'
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
 import { store } from '@/store/store'
@@ -7,13 +7,8 @@ import { store } from '@/store/store'
 function renderComponent(props = {}) {
   return mount(OnboardingNavigation, {
     props: {
-      nextStep: 'bar',
+      nextStep: 'onboarding-configuration-types',
       ...props,
-    },
-    global: {
-      stubs: {
-        'router-link': RouterLinkStub,
-      },
     },
   })
 }
@@ -21,7 +16,7 @@ function renderComponent(props = {}) {
 describe('OnboardingNavigation.vue', () => {
   test('renders snapshot', () => {
     const wrapper = renderComponent({
-      previousStep: 'foo',
+      previousStep: 'onboarding-welcome',
     })
 
     expect(wrapper.element).toMatchSnapshot()
@@ -29,7 +24,7 @@ describe('OnboardingNavigation.vue', () => {
 
   test('displays different next step title', () => {
     const wrapper = renderComponent({
-      previousStep: 'foo',
+      previousStep: 'onboarding-welcome',
       nextStepTitle: 'nextStepTitle',
     })
 
@@ -38,7 +33,7 @@ describe('OnboardingNavigation.vue', () => {
 
   test('display disabled next button', () => {
     const wrapper = renderComponent({
-      previousStep: 'foo',
+      previousStep: 'onboarding-welcome',
       shouldAllowNext: false,
     })
 
@@ -52,20 +47,21 @@ describe('OnboardingNavigation.vue', () => {
   })
 
   test('changes step to previous', async () => {
+    store.state.onboarding.step = 'onboarding-deployment-types'
     const wrapper = renderComponent({
-      previousStep: 'foo',
+      previousStep: 'onboarding-welcome',
     })
 
-    expect(store.state.onboarding.step).toBe('onboarding-welcome')
+    expect(store.state.onboarding.step).toBe('onboarding-deployment-types')
 
     await wrapper.find('[data-testid="onboarding-previous-button"]').trigger('click')
 
-    expect(store.state.onboarding.step).toBe('foo')
+    expect(store.state.onboarding.step).toBe('onboarding-welcome')
   })
 
   test('calls skip onboarding', async () => {
     const wrapper = renderComponent({
-      previousStep: 'foo',
+      previousStep: 'onboarding-welcome',
     })
 
     expect(store.state.onboarding.isCompleted).toBe(false)
