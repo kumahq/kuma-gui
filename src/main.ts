@@ -5,6 +5,7 @@ import { createRouter } from './router/router'
 import { EnvVars } from '@/services/env/Env'
 import { TOKENS, get } from '@/services'
 import App from './app/App.vue'
+import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 
 /**
  * Initializes and mounts the Vue application.
@@ -15,14 +16,14 @@ import App from './app/App.vue'
 async function initializeVue(
   env: (key: keyof EnvVars) => string,
   routes: readonly RouteRecordRaw[],
-  logger: {setup: (enabled: boolean) => void},
+  logger: {setup: (config: ClientConfigInterface) => void},
 ) {
   const store = get(TOKENS.store)
   const kumaApi = get(TOKENS.api)
 
   if (import.meta.env.PROD) {
     const config = await kumaApi.getConfig()
-    logger.setup(config.reports.enabled)
+    logger.setup(config)
   }
   document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
   kumaApi.setBaseUrl(env('KUMA_API_URL'))
