@@ -1,6 +1,6 @@
 import { service, constant, get, injected } from './utils'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
-import Logger from '@/services/logger/Logger'
+import Logger from '@/services/logger/DatadogLogger'
 import routes from '@/router/routes'
 import { store } from '@/store/store'
 import { getNavItems } from '@/app/getNavItems'

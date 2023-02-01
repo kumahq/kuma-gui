@@ -3,7 +3,7 @@ import { datadogLogs } from '@datadog/browser-logs'
 import { kumaApi } from '@/api/kumaApi'
 import type Env from '@/services/env/Env'
 
-export default class Logger {
+export default class DatadogLogger {
   env: Env
   constructor(env: Env) {
     this.env = env
