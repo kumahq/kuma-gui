@@ -1,4 +1,4 @@
-import { afterAll, afterEach, beforeAll, beforeEach, expect } from '@jest/globals'
+import { afterAll, afterEach, beforeAll, beforeEach, expect, jest } from '@jest/globals'
 
 // Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
@@ -14,6 +14,10 @@ import { rest, MockedRequest as Request } from 'msw'
 import Env from '@/services/env/Env'
 
 type MockFunction = (_opts: Record<string, unknown>, cb: (req: Request, resp: Record <string, any>) => Record<string, unknown>) => void
+
+// jest can't import this module properly due to transpiling issues
+// mock this out with a blank element
+jest.mock('vue-github-button', () => ({ template: '<span />' }))
 
 /**
  * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
