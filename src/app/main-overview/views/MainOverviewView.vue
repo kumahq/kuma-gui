@@ -9,5 +9,3 @@ import MeshResources from '@/app/common/MeshResources.vue'
 
 const OverviewCharts = useOverviewCharts()
 </script>
-<style lang="scss" scoped>
-</style>
