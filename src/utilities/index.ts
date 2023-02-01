@@ -2,4 +2,5 @@ import { TOKENS, createInjections } from '@/services'
 
 export const [
   useEnv,
-] = createInjections(TOKENS.env)
+  useNav,
+] = createInjections(TOKENS.env, TOKENS.nav)

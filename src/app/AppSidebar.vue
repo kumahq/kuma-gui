@@ -25,14 +25,15 @@
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 
 import { useStore } from '@/store/store'
+import { useNav } from '@/utilities'
 import { poll } from '@/utilities/poll'
 import AppMeshSelector from './AppMeshSelector.vue'
 import AppNavItem from './AppNavItem.vue'
-import { getNavItems } from './getNavItems'
 
 const POLLING_INTERVAL_IN_SECONDS = 10
 
 const store = useStore()
+const getNavItems = useNav()
 
 const navItems = computed(() => getNavItems(store.getters['config/getMulticlusterStatus'], store.state.meshes.items.length > 0))
 const meshes = computed(() => store.state.meshes.items)
