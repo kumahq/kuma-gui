@@ -33,7 +33,8 @@ export default {
   @apply text-center text-4xl font-bold;
 
   background: linear-gradient(to right, var(--OnboardingTitle));
+  -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 </style>

@@ -127,8 +127,9 @@ export default {
   @apply text-5xl font-bold mb-3;
 
   background: linear-gradient(to right, var(--OnboardingTitle));
+  -webkit-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .welcome-description {
