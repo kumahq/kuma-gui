@@ -21,10 +21,6 @@ async function initializeVue(
   const store = get(TOKENS.store)
   const kumaApi = get(TOKENS.api)
 
-  if (import.meta.env.PROD) {
-    const config = await kumaApi.getConfig()
-    logger.setup(config)
-  }
   document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
   kumaApi.setBaseUrl(env('KUMA_API_URL'))
 
@@ -34,6 +30,13 @@ async function initializeVue(
     const { setupMockWorker } = await import('./api/setupMockWorker')
 
     setupMockWorker(kumaApi.baseUrl)
+  }
+
+  if (import.meta.env.PROD) {
+    (async () => {
+      const config = await kumaApi.getConfig()
+      logger.setup(config)
+    })()
   }
 
   const app = createApp(App)
