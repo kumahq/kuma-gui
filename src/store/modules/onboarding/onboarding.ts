@@ -1,4 +1,5 @@
-import { ActionTree, GetterTree, MutationTree } from 'vuex'
+import { ActionTree, MutationTree } from 'vuex'
+
 import { State } from '../../storeConfig'
 import { OnboardingInterface } from './onboarding.types'
 import { ClientStorage } from '@/utilities/ClientStorage'
@@ -10,27 +11,14 @@ const initialOnboardingState: OnboardingInterface = {
 }
 
 const mutations: MutationTree<OnboardingInterface> = {
-  SET_STEP: (state, step) => (state.step = step),
-  SET_IS_COMPLETED: (state, isCompleted) => (state.isCompleted = isCompleted),
-  UPDATE_MODE: (state, message) => (state.mode = message),
-}
-
-const getters: GetterTree<OnboardingInterface, State> = {
-  getMode: state => state.mode,
-  showOnboarding: (_state, _getters, rootState) => {
-    const hasOnlyDefaultMesh = rootState.meshes.items.length === 1 && rootState.meshes.items[0].name === 'default'
-
-    return rootState.totalDataplaneCount === 0 && hasOnlyDefaultMesh
-  },
+  SET_STEP: (state, step: typeof state.step) => (state.step = step),
+  SET_IS_COMPLETED: (state, isCompleted: typeof state.isCompleted) => (state.isCompleted = isCompleted),
+  UPDATE_MODE: (state, mode: typeof state.mode) => (state.mode = mode),
 }
 
 const actions: ActionTree<OnboardingInterface, State> = {
-  // complete/skip onboarding
   completeOnboarding({ commit, dispatch }) {
-    // fetch the dataplanes
     dispatch('fetchDataplaneTotalCount', null, { root: true })
-
-    // fetch sidebar insights
     dispatch('sidebar/getInsights', null, { root: true })
 
     commit('SET_IS_COMPLETED', true)
@@ -38,17 +26,19 @@ const actions: ActionTree<OnboardingInterface, State> = {
     ClientStorage.remove('onboardingStep')
   },
 
-  // change step in onboarding
   changeStep({ commit }, step) {
     commit('SET_STEP', step)
     ClientStorage.set('onboardingStep', step)
+  },
+
+  changeMode({ commit }, mode) {
+    commit('UPDATE_MODE', mode)
   },
 }
 
 const onboardingModule = {
   namespaced: true,
   state: () => initialOnboardingState,
-  getters,
   mutations,
   actions,
 }
