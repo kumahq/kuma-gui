@@ -1,9 +1,11 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { ActionHandler, ActionTree } from 'vuex'
 
-import { State, storeConfig } from '@/store/storeConfig'
+import { State } from '@/store/storeConfig'
+import { get, TOKENS } from '@/services'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
+const storeConfig = get(TOKENS.storeConfig)
 describe('storeConfig', () => {
   beforeEach(() => {
     jest.restoreAllMocks()
