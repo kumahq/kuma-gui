@@ -4,7 +4,7 @@ import Logger from '@/services/logger/DatadogLogger'
 import KumaApi from '@/services/kuma-api/KumaApi'
 import routes from '@/router/routes'
 import { getNavItems } from '@/app/getNavItems'
-import { storeConfig, State } from '@/store/'
+import { storeConfig, State } from '@/store/storeConfig'
 
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'

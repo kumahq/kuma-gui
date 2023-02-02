@@ -2,7 +2,7 @@ import { ActionTree, MutationTree } from 'vuex'
 
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
-import type { State } from '../../'
+import type { State } from '../../storeConfig'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 
 const initialSidebarState: SidebarInterface = {

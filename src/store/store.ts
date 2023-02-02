@@ -1,7 +1,7 @@
 import { get, TOKENS } from '@/services'
 import { useStore as useVuexStore, Store } from 'vuex'
 
-import type { State } from './'
+import type { State } from './storeConfig'
 
 export const store: Store<State> = get(TOKENS.store)
 
