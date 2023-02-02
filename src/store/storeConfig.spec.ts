@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { ActionHandler, ActionTree } from 'vuex'
 
-import { State } from '@/store/storeConfig'
+import { State } from './storeConfig'
 import { get, TOKENS } from '@/services'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
