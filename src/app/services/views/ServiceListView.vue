@@ -176,7 +176,16 @@ async function loadService({ mesh, name }: { mesh: string, name: string }): Prom
   service.value = await kumaApi.getServiceInsight({ mesh, name })
 
   if (service.value.serviceType === 'external') {
-    externalService.value = await kumaApi.getExternalService({ mesh, name })
+    // The following code is a hotfix for https://github.com/kumahq/kuma-gui/issues/599 until we implement the lookup of `ExternalService` resources by `ServiceInsight` name.
+    const { items } = await kumaApi.getAllExternalServicesFromMesh({ mesh })
+
+    if (Array.isArray(items)) {
+      const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === name)
+
+      if (foundExternalService !== undefined) {
+        externalService.value = foundExternalService
+      }
+    }
   }
 
   QueryParameter.set('service', name)
