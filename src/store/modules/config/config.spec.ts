@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
-import configModule from './config'
-import { kumaApi } from '@/api/kumaApi'
+import { get, TOKENS } from '@/services'
+
+import _configModule from './config'
+const configModule = _configModule(get(TOKENS.api))
 
 describe('config module', () => {
   describe('getters', () => {
@@ -122,7 +124,7 @@ describe('config module', () => {
         },
       ],
     ])('tests getInfo action', async (getInfoResponse, expectedState) => {
-      jest.spyOn(kumaApi, 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
+      jest.spyOn(get(TOKENS.api), 'getInfo').mockImplementation(() => Promise.resolve(getInfoResponse))
 
       const state: any = {
         tagline: null,

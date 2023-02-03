@@ -1,7 +1,8 @@
 import { describe, expect, test } from '@jest/globals'
+import { get, TOKENS } from '@/services'
 
-import sidebarModule from './sidebar'
-
+import _sidebarModule from './sidebar'
+const sidebarModule = _sidebarModule(get(TOKENS.api))
 describe('sidebar module', () => {
   describe('actions', () => {
     test('tests getInsights action', async () => {

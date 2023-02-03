@@ -1,9 +1,9 @@
 import { ActionTree, MutationTree } from 'vuex'
 
-import { State } from '../../storeConfig'
 import { calculateMeshInsights, calculateGlobalInsights } from './utils'
 import { SidebarInterface } from './sidebar.types'
-import { kumaApi } from '@/api/kumaApi'
+import type { State } from '../../storeConfig'
+import type KumaApi from '@/services/kuma-api/KumaApi'
 
 const initialSidebarState: SidebarInterface = {
   insights: {
@@ -29,7 +29,7 @@ const mutations: MutationTree<SidebarInterface> = {
   SET_MESH_INSIGHTS: (state, meshInsight) => (state.insights.mesh = meshInsight),
 }
 
-const actions: ActionTree<SidebarInterface, State> = {
+const actions = (kumaApi: KumaApi): ActionTree<SidebarInterface, State> => ({
   getInsights({ dispatch }) {
     return Promise.all([dispatch('getGlobalInsights'), dispatch('getMeshInsights')])
   },
@@ -59,13 +59,13 @@ const actions: ActionTree<SidebarInterface, State> = {
 
     commit('SET_GLOBAL_INSIGHTS', globalInsights)
   },
-}
+})
 
-const sidebarModule = {
-  namespaced: true,
-  state: () => initialSidebarState,
-  mutations,
-  actions,
+export default (kumaApi: KumaApi) => {
+  return {
+    namespaced: true,
+    state: () => initialSidebarState,
+    mutations,
+    actions: actions(kumaApi),
+  }
 }
-
-export default sidebarModule

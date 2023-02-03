@@ -58,7 +58,7 @@
 import { computed } from 'vue'
 import { KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 
-import { ApiError } from '@/api/ApiError'
+import { ApiError } from '@/services/kuma-api/ApiError'
 
 const props = defineProps({
   error: {
