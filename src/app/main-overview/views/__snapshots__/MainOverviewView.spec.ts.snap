@@ -387,7 +387,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           >
             <a
               class="k-button medium rounded primary"
-              href="https://kuma.io/docs/1.7.x/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+              href="https://kuma.io/docs/1.7.x/policies/?utm_source=Kuma&utm_medium=Kuma"
               target="_blank"
               type="button"
             >
@@ -445,7 +445,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
           <ul>
             <li>
               <a
-                href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                href="https://kuma.io/docs/1.7.x/?utm_source=Kuma&utm_medium=Kuma"
                 target="_blank"
               >
                 Kuma Documentation 
@@ -453,7 +453,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             </li>
             <li>
               <a
-                href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma"
                 target="_blank"
               >
                 Kuma Community Chat 
@@ -461,7 +461,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
             </li>
             <li>
               <a
-                href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
+                href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma"
                 target="_blank"
               >
                 Kuma GitHub Repository 

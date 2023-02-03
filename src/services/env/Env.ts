@@ -27,9 +27,10 @@ export default class Env {
     const config = readPathConfigFromDom()
     const version = semver(env('KUMA_VERSION', config.version))
 
+    const productName = encodeURIComponent(env('KUMA_PRODUCT_NAME'))
     _env = {
       ..._env,
-      KUMA_UTM_QUERY_PARAMS: `utm_source=${env('KUMA_PRODUCT_NAME')}&utm_medium=${env('KUMA_PRODUCT_NAME')}-GUI`,
+      KUMA_UTM_QUERY_PARAMS: `utm_source=${productName}&utm_medium=${productName}`,
     }
     this.env = {
       ..._env as EnvVars,
