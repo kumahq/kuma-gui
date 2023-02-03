@@ -194,6 +194,11 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
           }
         }
       },
+      shouldSuggestOnboarding: (state) => {
+        const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
+
+        return state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
+      },
     },
 
     mutations: {

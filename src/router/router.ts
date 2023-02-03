@@ -52,7 +52,7 @@ const updateSelectedMeshGuard: NavigationGuard = function (to, _from, next) {
 const onboardingRouteGuard: NavigationGuard = function (to, _from, next) {
   const isOnboardingCompleted = store.state.onboarding.isCompleted
   const isOnboardingRoute = to.meta.onboardingProcess
-  const shouldSuggestOnboarding = store.getters['onboarding/showOnboarding']
+  const shouldSuggestOnboarding = store.getters.shouldSuggestOnboarding
 
   if (isOnboardingCompleted && isOnboardingRoute && !shouldSuggestOnboarding) {
     next({ name: 'home' })

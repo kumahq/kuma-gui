@@ -9,7 +9,7 @@
         <ServiceBox
           :active="mode === 'demo'"
           class="cursor-pointer"
-          @clicked="update('demo')"
+          @clicked="setMode('demo')"
         >
           <div>
             <img src="@/assets/images/new-service-demo.svg?url">
@@ -27,7 +27,7 @@
         <ServiceBox
           :active="mode === 'manually'"
           class="cursor-pointer"
-          @clicked="update('manually')"
+          @clicked="setMode('manually')"
         >
           <div class="cursor-pointer">
             <img src="@/assets/images/new-service-manually.svg?url">
@@ -54,7 +54,8 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
+
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
@@ -62,37 +63,28 @@ import ServiceBox from '../components/ServiceBox.vue'
 
 export default {
   name: 'AddNewServices',
+
   components: {
     OnboardingNavigation,
     OnboardingHeading,
     OnboardingPage,
     ServiceBox,
   },
+
   computed: {
-    ...mapGetters({
-      onboardingMode: 'onboarding/getMode',
+    ...mapState({
+      mode: (state) => state.onboarding.mode,
     }),
 
     nextStep() {
-      if (this.mode === 'manually') {
-        return 'onboarding-completed'
-      }
-
-      return 'onboarding-add-services-code'
-    },
-    mode: {
-      get() {
-        return this.onboardingMode
-      },
-      set(value) {
-        this.update(value)
-      },
+      return this.mode === 'manually' ? 'onboarding-completed' : 'onboarding-add-services-code'
     },
   },
+
   methods: {
-    ...mapMutations({
-      update: 'onboarding/UPDATE_MODE',
-    }),
+    setMode(newMode) {
+      this.$store.dispatch('onboarding/changeMode', newMode)
+    },
   },
 }
 </script>

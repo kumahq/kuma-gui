@@ -76,7 +76,7 @@ const isLoading = ref(store.state.globalLoading)
  */
 const routeKey = computed(() => route.path)
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
-const shouldSuggestOnboarding = computed(() => store.getters['onboarding/showOnboarding'])
+const shouldSuggestOnboarding = computed(() => store.getters.shouldSuggestOnboarding)
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
 
 watch(() => store.state.globalLoading, function (globalLoading) {
