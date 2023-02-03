@@ -1,8 +1,13 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Add services" />
+      <OnboardingHeading>
+        <template #title>
+          Add services
+        </template>
+      </OnboardingHeading>
     </template>
+
     <template #content>
       <p class="text-center mb-12">
         The demo application includes two services: a Redis backend to store a counter value,

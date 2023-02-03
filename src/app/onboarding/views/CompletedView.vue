@@ -1,7 +1,11 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Go to the dashboard" />
+      <OnboardingHeading>
+        <template #title>
+          Go to the dashboard
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>

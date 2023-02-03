@@ -1,7 +1,11 @@
 <template>
   <OnboardingPage with-image>
     <template #header>
-      <OnboardingHeading title="Learn about configuration storage" />
+      <OnboardingHeading>
+        <template #title>
+          Learn about configuration storage
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>

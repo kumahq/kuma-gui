@@ -10,12 +10,14 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
     >
       
       <div
-        class="relative"
+        class="onboarding-heading"
       >
         <h1
           class="onboarding-title"
         >
-          Create the mesh
+          
+           Create the mesh 
+          
         </h1>
         <!--v-if-->
       </div>
@@ -25,7 +27,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       class="onboarding-container__content"
     >
       <div
-        class="w-full"
+        class="onboarding-container__inner-content"
       >
         
         <p
@@ -150,43 +152,47 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
         
       </div>
     </div>
-    
     <div
-      class="mt-4 flex items-center flex-col sm:flex-row justify-between"
+      class="mt-4"
     >
-      <a
-        class="k-button medium rounded primary navigation-button navigation-button--back"
-        data-testid="onboarding-previous-button"
-        href="/onboarding/configuration-types"
-        type="button"
+      
+      <div
+        class="onboarding-actions"
       >
-        
-        <!---->
-        
-        
-         Back 
-        
-        <!---->
-      </a>
-      <div>
-        <button
-          class="k-button small rounded btn-link skip-button"
-          data-testid="onboarding-skip-button"
+        <a
+          class="k-button medium rounded secondary"
+          data-testid="onboarding-previous-button"
+          href="/onboarding/configuration-types"
           type="button"
         >
           
           <!---->
           
           
-           Skip Setup 
+           Back 
           
           <!---->
-        </button>
-        <span
-          class="inline-block"
+        </a>
+        <div
+          class="button-list"
         >
           <a
-            class="k-button medium rounded primary navigation-button navigation-button--next"
+            aria-current="page"
+            class="router-link-active router-link-exact-active k-button medium rounded outline"
+            data-testid="onboarding-skip-button"
+            href="/"
+            type="button"
+          >
+            
+            <!---->
+            
+            
+             Skip setup 
+            
+            <!---->
+          </a>
+          <a
+            class="k-button medium rounded primary"
             data-testid="onboarding-next-button"
             href="/onboarding/add-services"
             type="button"
@@ -199,10 +205,10 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
             
             <!---->
           </a>
-        </span>
+        </div>
       </div>
+      
     </div>
-    
   </div>
   <div
     class="background-image"

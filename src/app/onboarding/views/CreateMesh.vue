@@ -1,7 +1,11 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Create the mesh" />
+      <OnboardingHeading>
+        <template #title>
+          Create the mesh
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>

@@ -5,7 +5,7 @@ import OnboardingHeading from './OnboardingHeading.vue'
 
 function renderComponent() {
   return mount(OnboardingHeading, {
-    props: {
+    slots: {
       title: 'title',
       description: 'description',
     },

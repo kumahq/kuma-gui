@@ -1,10 +1,18 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading
-        :title="title"
-        :description="description"
-      />
+      <OnboardingHeading>
+        <template #title>
+          <p>{{ title }}</p>
+        </template>
+
+        <template
+          v-if="description !== null"
+          #description
+        >
+          <p>{{ description }}</p>
+        </template>
+      </onboardingheading>
     </template>
 
     <template #content>

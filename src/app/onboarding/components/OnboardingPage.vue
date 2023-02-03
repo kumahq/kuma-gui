@@ -4,68 +4,79 @@
       <div class="onboarding-container__header">
         <slot name="header" />
       </div>
-      <div :class="classes">
-        <div class="w-full">
+
+      <div
+        class="onboarding-container__content"
+        :class="{ 'onboarding-container__content--with-image': props.withImage }"
+      >
+        <div class="onboarding-container__inner-content">
           <slot name="content" />
         </div>
       </div>
-      <slot name="navigation" />
+
+      <div class="mt-4">
+        <slot name="navigation" />
+      </div>
     </div>
 
     <div class="background-image" />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'OnboardingContainer',
-  props: {
-    withImage: {
-      type: Boolean,
-      default: false,
-    },
+<script lang="ts" setup>
+const props = defineProps({
+  withImage: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-
-  computed: {
-    classes() {
-      return ['onboarding-container__content', this.withImage ? 'onboarding-container__content--with-image' : '']
-    },
-  },
-}
+})
 </script>
 
 <style lang="scss" scoped>
 .onboarding-container {
-  @apply w-full mx-auto my-0 px-4;
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--spacing-md);
 
-  &__header {
-    @apply my-10;
-  }
-
-  &__content {
-    @apply relative flex items-center justify-center p-10 w-full bg-white text-lg;
-    min-height: 500px;
-    box-shadow: var(--OnboardingShadow);
-
-    --KTableHeaderSize: 18px;
-
-    &--with-image {
-      background: var(--OnboardingPageGraphBackground);
-    }
-  }
-
-  @media screen and (min-width: 768px) {
+  @media (min-width: 768px) {
     max-width: 1075px;
   }
 
-  @media screen and (min-height: 950px) {
+  @media (min-height: 950px) {
     width: 100%;
     position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
+    top: 50%;
     left: 0;
     right: 0;
+    transform: translateY(-50%);
   }
+}
+
+.onboarding-container__header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.onboarding-container__content {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 500px;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  background-color: var(--white);
+  box-shadow: var(--OnboardingShadow);
+}
+
+.onboarding-container__content--with-image {
+  background: var(--OnboardingPageGraphBackground);
+}
+
+.onboarding-container__inner-content {
+  width: 100%;
+  padding: var(--spacing-lg);
 }
 
 .background-image {
@@ -78,10 +89,9 @@ export default {
   filter: grayscale(1);
   width: 100vw;
   background: transparent url('@/assets/images/onboarding-background.svg?url') no-repeat scroll 0% 0%;
-
   min-width: 1700px;
 
-  @media screen and (max-width: 1699px) {
+  @media (max-width: 1699px) {
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
