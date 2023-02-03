@@ -87,7 +87,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: true
-          branch: chore/update-gui
+          branch: chore/update-gui-in-${{ github.ref_name }}
           delete-branch: true
           title: "chore(deps): bump ${{ github.repository }} to ${{ github.sha }}"
           labels: ci/skip-e2e-test,ci/auto-merge
