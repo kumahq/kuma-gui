@@ -5,7 +5,7 @@
         v-if="props.status"
         icon="check"
         size="14"
-        color="var(--kuma-purple-1)"
+        color="currentColor"
       />
     </span>
 

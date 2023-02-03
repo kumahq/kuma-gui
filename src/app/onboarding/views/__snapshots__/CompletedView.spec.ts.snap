@@ -31,7 +31,7 @@ exports[`CompletedView.vue renders snapshot 1`] = `
       >
         
         <div
-          class="flex justify-center"
+          class="gui-preview-image"
         >
           <img />
         </div>
@@ -60,7 +60,7 @@ exports[`CompletedView.vue renders snapshot 1`] = `
             <!---->
             
             
-            Completed
+            Complete
             
             <!---->
           </a>

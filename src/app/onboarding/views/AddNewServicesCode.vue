@@ -9,9 +9,8 @@
     </template>
 
     <template #content>
-      <p class="text-center mb-12">
-        The demo application includes two services: a Redis backend to store a counter value,
-        and a frontend web UI to show and increment the counter.
+      <p class="mb-4 text-center">
+        The demo application includes two services: a Redis backend to store a counter value, and a frontend web UI to show and increment the counter.
       </p>
 
       <template v-if="isKubernetes">
@@ -25,51 +24,53 @@
       </template>
 
       <div v-else>
-        <p>Clone the GitHub repository for the demo application:</p>
+        <p class="mb-4 text-center">
+          Clone <a
+            :href="githubLink"
+            target="_blank"
+          >the GitHub repository</a> for the demo application:
+        </p>
 
         <CodeBlock
           id="code-block-clone-command"
           language="bash"
-          :code="githubLink"
+          :code="`git clone ${githubLink}`"
         />
 
-        <KCard
-          title="And follow the instructions in the README"
-          border-variant="noBorder"
-        >
-          <template #body>
-            <a
-              target="_blank"
-              class="external-link-code-block"
-              :href="githubLinkReadme"
-            >
-              {{ githubLinkReadme }}
-            </a>
-          </template>
-        </KCard>
+        <p class="mt-4 text-center">
+          And follow the instructions in <a
+            :href="githubLinkReadme"
+            target="_blank"
+          >the README</a>.
+        </p>
       </div>
+
       <div>
-        <p class="text-center my-4">
+        <p class="status-box mt-4">
           DPPs status:
+
           <span
             v-if="hasDPPs"
-            class="text-green-500"
+            class="status--is-connected"
             data-testid="dpps-connected"
           >Connected</span>
+
           <span
             v-else
-            class="text-red-500"
+            class="status--is-disconnected"
             data-testid="dpps-disconnected"
-          >Disconeccted</span>
+          >Disconnected</span>
         </p>
+
         <div
           v-if="!hasDPPs"
-          class="flex justify-center"
+          class="status-loading-box mt-4"
         >
           <LoadingBox />
         </div>
       </div>
     </template>
+
     <template #navigation>
       <OnboardingNavigation
         next-step="onboarding-dataplanes-overview"
@@ -80,96 +81,73 @@
   </OnboardingPage>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import { KCard } from '@kong/kongponents'
+<script lang="ts" setup>
+import { computed, onUnmounted, ref } from 'vue'
 
 import { kumaApi } from '@/api/kumaApi'
-import { PRODUCT_NAME } from '@/constants'
-import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
-import { toYaml } from '@/utilities/toYaml'
+import { useStore } from '@/store/store'
 import CodeBlock from '@/app/common/CodeBlock.vue'
-import LoadingBox from '@/app/common/LoadingBox.vue'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
+import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+
+const store = useStore()
 
 const LONG_POOLING_INTERVAL = 1000
 
-const START_DP_CODE_DATAPLANE = {
-  type: 'Dataplane',
-  mesh: 'default',
-  name: 'example',
-  networking: {
-    address: 'localhost',
-    inbound: [
-      {
-        port: 7777,
-        servicePort: 7777,
-        serviceAddress: '127.0.0.1',
-        tags: {
-          'kuma.io/service': 'example',
-          'kuma.io/protocol': 'tcp',
-        },
-      },
-    ],
-  },
+const githubLink = 'https://github.com/kumahq/kuma-counter-demo/'
+const githubLinkReadme = 'https://github.com/kumahq/kuma-counter-demo/blob/master/README.md'
+const k8sRunCommand = 'kubectl apply -f https://bit.ly/3Kh2Try'
+
+const hasDPPs = ref(false)
+const dppsTimeout = ref<number | null>(null)
+
+const isKubernetes = computed(() => store.getters['config/getEnvironment'] === 'kubernetes')
+
+getDPPs()
+
+onUnmounted(function () {
+  clearTimeout()
+})
+
+async function getDPPs() {
+  try {
+    const { total } = await kumaApi.getAllDataplanes()
+
+    hasDPPs.value = total > 0
+  } catch (err) {
+    console.error(err)
+  } finally {
+    if (!hasDPPs.value) {
+      clearTimeout()
+      dppsTimeout.value = window.setTimeout(() => getDPPs(), LONG_POOLING_INTERVAL)
+    }
+  }
 }
 
-export default {
-  name: 'AddNewServicesCode',
-  components: {
-    CodeBlock,
-    OnboardingNavigation,
-    OnboardingHeading,
-    OnboardingPage,
-    LoadingBox,
-    KCard,
-  },
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-      githubLink: 'https://github.com/kumahq/kuma-counter-demo/',
-      githubLinkReadme: 'https://github.com/kumahq/kuma-counter-demo/blob/master/README.md',
-      k8sRunCommand: 'kubectl apply -f https://bit.ly/3Kh2Try',
-      generateDpTokenCode: 'kumactl generate dataplane-token --name=redis > kuma-token-redis',
-      startDpCode: `kuma-dp run \\
-  --cp-address=${kumaDpServerUrl()} \\
-  --dataplane=${`"${toYaml(START_DP_CODE_DATAPLANE)}"`} \\
-  --dataplane-token-file=kuma-token-example`,
-      hasDPPs: false,
-      DPPsTimeout: null,
-    }
-  },
-  computed: {
-    ...mapGetters({
-      environment: 'config/getEnvironment',
-    }),
-    isKubernetes() {
-      return this.environment === 'kubernetes'
-    },
-  },
-  created() {
-    this.getDPPs()
-  },
-  unmounted() {
-    clearTimeout(this.DPPsTimeout)
-  },
-
-  methods: {
-    async getDPPs() {
-      try {
-        const { total } = await kumaApi.getAllDataplanes()
-
-        this.hasDPPs = total > 0
-      } catch (e) {
-        console.error(e)
-      }
-
-      if (!this.hasDPPs) {
-        this.DPPsTimeout = setTimeout(() => this.getDPPs(), LONG_POOLING_INTERVAL)
-      }
-    },
-  },
+function clearTimeout(): void {
+  if (dppsTimeout.value !== null) {
+    window.clearTimeout(dppsTimeout.value)
+  }
 }
 </script>
+
+<style lang="scss" scoped>
+.status-box {
+  text-align: center;
+}
+
+.status--is-connected {
+  color: var(--green-500);
+}
+
+.status--is-disconnected {
+  color: var(--red-500);
+}
+
+.status-loading-box {
+  display: flex;
+  justify-content: center;
+}
+</style>

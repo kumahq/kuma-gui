@@ -31,55 +31,45 @@ exports[`AddNewServices.vue renders snapshot 1`] = `
       >
         
         <div
-          class="h-full w-full flex justify-evenly items-center"
+          class="service-mode-list"
         >
           <div
-            class="box box--active cursor-pointer"
-            data-testid="box"
-          >
-            
-            <div>
-              <img
-                src="[object Object]"
-              />
-              <div
-                class="ml-3"
-              >
-                <p
-                  class="uppercase font-bold tracking-wider"
-                >
-                   Demo app 
-                </p>
-                <p>
-                  Counter application
-                </p>
-              </div>
-            </div>
-            
-          </div>
-          <div
-            class="box cursor-pointer"
+            class="box box--active"
             data-testid="box"
           >
             
             <div
-              class="cursor-pointer"
+              class="service-box-content"
             >
-              <img
-                src="[object Object]"
-              />
-              <div
-                class="ml-3"
+              <img />
+              <p
+                class="service-mode-title"
               >
-                <p
-                  class="uppercase font-bold tracking-wider"
-                >
-                   Manually 
-                </p>
-                <p>
-                  After this wizard
-                </p>
-              </div>
+                 Demo app 
+              </p>
+              <p>
+                Counter application
+              </p>
+            </div>
+            
+          </div>
+          <div
+            class="box"
+            data-testid="box"
+          >
+            
+            <div
+              class="service-box-content"
+            >
+              <img />
+              <p
+                class="service-mode-title"
+              >
+                 Manually 
+              </p>
+              <p>
+                After this wizard
+              </p>
             </div>
             
           </div>

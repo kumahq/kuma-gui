@@ -13,6 +13,8 @@
 
 <style lang="scss" scoped>
 .loading {
+  --onboarding-loading: 130, 45, 197;
+
   display: flex;
   justify-content: space-between;
   width: 200px;
@@ -23,8 +25,8 @@
     border-radius: 50%;
     background: linear-gradient(
       90deg,
-      rgba(var(--OnboardingLoading), 0.3) 0%,
-      rgba(var(--OnboardingLoading), 0.3) 107.42%
+      rgba(var(--onboarding-loading), 0.3) 0%,
+      rgba(var(--onboarding-loading), 0.3) 107.42%
     );
     animation: loadingAnimation 0.5s infinite linear alternate;
 
@@ -49,21 +51,21 @@
   50% {
     background: linear-gradient(
       90deg,
-      rgba(var(--OnboardingLoading), 0.3) 0%,
-      rgba(var(--OnboardingLoading), 0.3) 107.42%
+      rgba(var(--onboarding-loading), 0.3) 0%,
+      rgba(var(--onboarding-loading), 0.3) 107.42%
     );
   }
 
   75% {
     background: linear-gradient(
       90deg,
-      rgba(var(--OnboardingLoading), 0.6) 0%,
-      rgba(var(--OnboardingLoading), 0.6) 107.42%
+      rgba(var(--onboarding-loading), 0.6) 0%,
+      rgba(var(--onboarding-loading), 0.6) 107.42%
     );
   }
 
   100% {
-    background: linear-gradient(90deg, rgba(var(--OnboardingLoading), 1) 0%, rgba(var(--OnboardingLoading), 1) 107.42%);
+    background: linear-gradient(90deg, rgba(var(--onboarding-loading), 1) 0%, rgba(var(--onboarding-loading), 1) 107.42%);
   }
 }
 </style>

@@ -31,7 +31,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
       >
         
         <div
-          class="h-full w-full flex items-center justify-center mb-10"
+          class="graph-list mb-6"
         >
           <svg
             fill="none"
@@ -886,7 +886,7 @@ exports[`ConfigurationTypes.vue renders snapshot 1`] = `
           </svg>
         </div>
         <div
-          class="radio flex text-base justify-between w-full sm:w-3/4 md:w-3/5 lg:w-1/2 absolute bottom-0 right-0 left-0 mb-10 mx-auto configuration-type-radio-buttons"
+          class="radio-button-group"
         >
           <label
             checked="true"

@@ -16,11 +16,11 @@
       >
         <stop
           offset="0%"
-          stop-color="#260D50"
+          stop-color="var(--onboarding-accent-dark)"
         />
         <stop
           offset="100%"
-          stop-color="#822DC5"
+          stop-color="var(--onboarding-accent)"
         />
       </linearGradient>
       <linearGradient
@@ -32,11 +32,11 @@
       >
         <stop
           offset="0%"
-          stop-color="#260D50"
+          stop-color="var(--onboarding-accent-dark)"
         />
         <stop
           offset="100%"
-          stop-color="#822DC5"
+          stop-color="var(--onboarding-accent)"
         />
       </linearGradient>
     </defs>
@@ -47,7 +47,7 @@
       transform="translate(-63 -285)"
     >
       <g
-        stroke="#822DC5"
+        stroke="var(--onboarding-accent)"
         stroke-width="6"
       >
         <path
@@ -193,8 +193,8 @@ onMounted(function () {
       top: 0px;
       width: 15px;
       height: 15px;
-      background: #fff;
-      box-shadow: inset 0 0 0 2px #822dc5;
+      background: var(--white);
+      box-shadow: inset 0 0 0 2px var(--onboarding-accent);
       border-radius: 100%;
       offset-distance: 0%;
       transform: scale(0);
@@ -218,11 +218,11 @@ onMounted(function () {
       }
       &:after {
         z-index: 1;
-        background: #fff;
-        box-shadow: inset 0 0 0 2px #822dc5;
+        background: var(--white);
+        box-shadow: inset 0 0 0 2px var(--onboarding-accent);
       }
       &:before {
-        background: #822dc5;
+        background: var(--onboarding-accent);
         z-index: -1;
         @keyframes pulsing {
           50% {

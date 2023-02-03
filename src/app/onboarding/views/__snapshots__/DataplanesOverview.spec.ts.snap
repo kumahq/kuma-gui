@@ -41,376 +41,369 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
       >
         
         <div>
-          <div
-            class="flex justify-center mt-10 mb-16 pb-16"
+          <p
+            class="mb-4"
           >
-            <div
-              class="w-full sm:w-3/5 p-4"
+            <b>
+              Found 10 DPPs:
+            </b>
+          </p>
+          <div
+            class="k-table-container mb-4"
+          >
+            <!---->
+            <section
+              class="k-table-wrapper"
             >
-              <p
-                class="font-bold mb-4"
+              <table
+                class="k-table has-hover"
+                data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               >
-                 Found 10 DPPs: 
-              </p>
-              <div
-                class="k-table-container onboarding-dataplane-table"
-                is-small=""
-              >
-                <!---->
-                <section
-                  class="k-table-wrapper"
+                <thead
+                  class=""
                 >
-                  <table
-                    class="k-table has-hover"
-                    data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  <tr
+                    class=""
                   >
-                    <thead
+                    
+                    <th
                       class=""
                     >
-                      <tr
-                        class=""
+                      <span
+                        class="d-flex align-items-center"
                       >
                         
-                        <th
+                        <span
                           class=""
                         >
-                          <span
-                            class="d-flex align-items-center"
-                          >
-                            
-                            <span
-                              class=""
-                            >
-                              Mesh
-                            </span>
-                            
-                            <!---->
-                          </span>
-                        </th>
-                        <th
-                          class=""
-                        >
-                          <span
-                            class="d-flex align-items-center"
-                          >
-                            
-                            <span
-                              class=""
-                            >
-                              Name
-                            </span>
-                            
-                            <!---->
-                          </span>
-                        </th>
-                        <th
-                          class=""
-                        >
-                          <span
-                            class="d-flex align-items-center"
-                          >
-                            
-                            <span
-                              class=""
-                            >
-                              Status
-                            </span>
-                            
-                            <!---->
-                          </span>
-                        </th>
+                          Mesh
+                        </span>
                         
-                      </tr>
-                    </thead>
-                    <tbody>
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                      >
+                        
+                        <span
+                          class=""
+                        >
+                          Name
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    <th
+                      class=""
+                    >
+                      <span
+                        class="d-flex align-items-center"
+                      >
+                        
+                        <span
+                          class=""
+                        >
+                          Status
+                        </span>
+                        
+                        <!---->
+                      </span>
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  <tr>
+                    
+                    <td>
                       
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          backend
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          frontend
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          db
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          no-subscriptions
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--danger"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              offline
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          cluster-1.backend-02
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          cluster-1.backend-03
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          cluster-1.gateway-01
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          cluster-1.ingress-02
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          dataplane-test-456
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
-                      <tr>
-                        
-                        <td>
-                          
-                          default
-                          
-                        </td>
-                        <td>
-                          
-                          ingress-dp-test-123
-                          
-                        </td>
-                        <td>
-                          
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                          
-                        </td>
-                        
-                      </tr>
+                      default
                       
-                    </tbody>
-                  </table>
-                  <!---->
-                </section>
-              </div>
-            </div>
+                    </td>
+                    <td>
+                      
+                      backend
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      frontend
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      db
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      no-subscriptions
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--danger"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          offline
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      cluster-1.backend-02
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      cluster-1.backend-03
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      cluster-1.gateway-01
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      cluster-1.ingress-02
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      dataplane-test-456
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      default
+                      
+                    </td>
+                    <td>
+                      
+                      ingress-dp-test-123
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  
+                </tbody>
+              </table>
+              <!---->
+            </section>
           </div>
         </div>
         

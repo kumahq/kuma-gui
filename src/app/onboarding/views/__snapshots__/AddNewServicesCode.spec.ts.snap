@@ -31,13 +31,22 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
       >
         
         <p
-          class="text-center mb-12"
+          class="mb-4 text-center"
         >
            The demo application includes two services: a Redis backend to store a counter value, and a frontend web UI to show and increment the counter. 
         </p>
         <div>
-          <p>
-            Clone the GitHub repository for the demo application:
+          <p
+            class="mb-4 text-center"
+          >
+             Clone 
+            <a
+              href="https://github.com/kumahq/kuma-counter-demo/"
+              target="_blank"
+            >
+              the GitHub repository
+            </a>
+             for the demo application: 
           </p>
           <div
             class="k-code-block theme-light code-block"
@@ -85,7 +94,12 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
                 <code
                   class="language-bash"
                 >
-                  https://github.com/kumahq/kuma-counter-demo/
+                  <span
+                    class="token function"
+                  >
+                    git
+                  </span>
+                   clone https://github.com/kumahq/kuma-counter-demo/
                 </code>
                 
       
@@ -137,60 +151,26 @@ exports[`AddNewServicesCode.vue renders snapshot 1`] = `
               </button>
             </div>
           </div>
-          <section
-            aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-            aria-label="And follow the instructions in the README"
-            class="kong-card noBorder"
+          <p
+            class="mt-4 text-center"
           >
-            <div
-              class="k-card-header d-flex mb-3"
+             And follow the instructions in 
+            <a
+              href="https://github.com/kumahq/kuma-counter-demo/blob/master/README.md"
+              target="_blank"
             >
-              <!---->
-              <div
-                class="k-card-title mb-3"
-              >
-                <h4>
-                  
-                  And follow the instructions in the README
-                  
-                </h4>
-              </div>
-              <div
-                class="k-card-actions"
-              >
-                
-                
-              </div>
-            </div>
-            <!---->
-            <div
-              class="k-card-content d-flex"
-            >
-              <div
-                class="k-card-body"
-                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              >
-                
-                <a
-                  class="external-link-code-block"
-                  href="https://github.com/kumahq/kuma-counter-demo/blob/master/README.md"
-                  target="_blank"
-                >
-                  https://github.com/kumahq/kuma-counter-demo/blob/master/README.md
-                </a>
-                
-              </div>
-              <!---->
-            </div>
-          </section>
+              the README
+            </a>
+            . 
+          </p>
         </div>
         <div>
           <p
-            class="text-center my-4"
+            class="status-box mt-4"
           >
              DPPs status: 
             <span
-              class="text-green-500"
+              class="status--is-connected"
               data-testid="dpps-connected"
             >
               Connected
