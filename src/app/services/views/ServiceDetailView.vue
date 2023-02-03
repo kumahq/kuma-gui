@@ -28,7 +28,6 @@ import { useRoute } from 'vue-router'
 import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
-import { getExternalServiceByServiceInsightName } from '../getExternalServiceByServiceInsightName'
 import { kumaApi } from '@/api/kumaApi'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import { useStore } from '@/store/store'
@@ -104,7 +103,7 @@ async function loadData(offset: number, dppParams: DataPlaneOverviewParameters =
     service.value = await kumaApi.getServiceInsight({ mesh, name })
 
     if (service.value.serviceType === 'external') {
-      externalService.value = await getExternalServiceByServiceInsightName(mesh, name)
+      externalService.value = await kumaApi.getExternalServiceByServiceInsightName(mesh, name)
     } else {
       await loadDataplaneOverviews(offset, dppParams)
     }

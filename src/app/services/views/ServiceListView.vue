@@ -31,7 +31,6 @@ import { ref, watch } from 'vue'
 import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 
 import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
-import { getExternalServiceByServiceInsightName } from '../getExternalServiceByServiceInsightName'
 import { kumaApi } from '@/api/kumaApi'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
@@ -177,7 +176,7 @@ async function loadService({ mesh, name }: { mesh: string, name: string }): Prom
   service.value = await kumaApi.getServiceInsight({ mesh, name })
 
   if (service.value.serviceType === 'external') {
-    externalService.value = await getExternalServiceByServiceInsightName(mesh, name)
+    externalService.value = await kumaApi.getExternalServiceByServiceInsightName(mesh, name)
   }
 
   QueryParameter.set('service', name)
