@@ -103,7 +103,7 @@ async function loadData(offset: number, dppParams: DataPlaneOverviewParameters =
     service.value = await kumaApi.getServiceInsight({ mesh, name })
 
     if (service.value.serviceType === 'external') {
-      externalService.value = await kumaApi.getExternalService({ mesh, name })
+      externalService.value = await kumaApi.getExternalServiceByServiceInsightName(mesh, name)
     } else {
       await loadDataplaneOverviews(offset, dppParams)
     }
