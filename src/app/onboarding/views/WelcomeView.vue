@@ -2,17 +2,21 @@
   <div>
     <div class="welcome-container">
       <div class="content">
-        <h1 class="welcome-title">
-          Welcome to {{ productName }}
-        </h1>
+        <OnboardingHeading>
+          <template #title>
+            Welcome to {{ productName }}
+          </template>
 
-        <p class="welcome-description">
-          Congratulations on downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
-        </p>
+          <template #description>
+            <p>
+              Congratulations on downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
+            </p>
 
-        <p class="welcome-description">
-          We have automatically detected that you are running on <strong>{{ enviromentFormatted }}</strong>.
-        </p>
+            <p>
+              We have automatically detected that you are running on <strong>{{ enviromentFormatted }}</strong>.
+            </p>
+          </template>
+        </OnboardingHeading>
 
         <h2 class="welcome-detected">
           Let's get started:
@@ -42,6 +46,7 @@ import { mapGetters } from 'vuex'
 
 import { PRODUCT_NAME } from '@/constants'
 import ItemStatus from '../components/ItemStatus.vue'
+import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import { useWelcomeAnimationSvg } from '@/components'
 
@@ -49,8 +54,10 @@ const WelcomeAnimationSvg = useWelcomeAnimationSvg()
 
 export default {
   name: 'WelcomeView',
+
   components: {
     ItemStatus,
+    OnboardingHeading,
     OnboardingNavigation,
     WelcomeAnimationSvg,
   },
@@ -60,6 +67,7 @@ export default {
       productName: PRODUCT_NAME,
     }
   },
+
   computed: {
     ...mapGetters({
       environment: 'config/getEnvironment',
@@ -123,23 +131,6 @@ export default {
   width: 28rem;
   animation: show 0.75s 0s 1 forwards;
   background-color: var(--white);
-}
-
-.welcome-title {
-  @apply text-5xl font-bold mb-3;
-
-  background: linear-gradient(to right, var(--OnboardingTitle));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.welcome-description {
-  @apply text-base mb-4;
-
-  @media screen and (max-width: 1699px) {
-    @apply mb-2;
-  }
 }
 
 .welcome-detected {

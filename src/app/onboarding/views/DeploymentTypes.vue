@@ -1,12 +1,15 @@
 <template>
   <OnboardingPage with-image>
     <template #header>
-      <OnboardingHeading
-        title="Learn about deployments"
-        :description="
-          `${productName} can be deployed in standalone or multi-zone mode.`
-        "
-      />
+      <OnboardingHeading>
+        <template #title>
+          Learn about deployments
+        </template>
+
+        <template #description>
+          <p>{{ productName }} can be deployed in standalone or multi-zone mode.</p>
+        </template>
+      </onboardingheading>
     </template>
 
     <template #content>

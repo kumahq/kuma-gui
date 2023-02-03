@@ -1,7 +1,7 @@
 <template>
   <svg
-    class="background"
-    :class="svgClasses"
+    class="background svg"
+    :class="{ active: mounted }"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 1920 1080"
   >
@@ -51,74 +51,48 @@
         stroke-width="6"
       >
         <path
-          class="nodepath"
           d="M1444 893h252"
         />
         <path
-          class="nodepath"
           stroke-opacity=".4"
           d="M1529 705h232M1452 603h237"
         />
         <path
-          class="nodepath"
           d="M1754 563l-332 332h-76M1444 935l121 121M263 859l156 156"
         />
         <path
-          class="nodepath"
           stroke-opacity=".4"
           d="M742 781H556"
         />
         <path
-          class="nodepath"
           d="M697 736H513"
         />
         <path
-          class="nodepath"
           stroke-opacity=".4"
           d="M695 783V577"
         />
         <path
-          class="nodepath"
           d="M261 1026V751M509 573V438M1502 415l291 290"
         />
         <path
-          class="nodepath"
           stroke-opacity=".4"
           d="M698 912L26 240M1368 411v540l61 61 95-95M1434 3h267l193 192v354"
         />
         <path
-          class="nodepath"
           d="M517 411h342l138 138M1416 573v242l371 323"
         />
         <path
-          class="nodepath"
           d="M1486 817V612l-146-146M839 243h-97l-83 84v348M1698 1063V817l58-57h122M1069 299L558 810M696 1058H585L468 941V570L322 424"
         />
         <path
-          class="nodepath"
           d="M277 528l160 160 236-236 121 121M632 979h-45l-67-67v-86H0M106 669h275M70 707h331M207 745h210M85 784h356M1417 558h228M1609 634h203M528 946h76M619 604v131M1359 567l125 125M1332 594l156 156M1594 1070V959M381 632L260 753"
         />
         <path
-          class="nodepath"
           stroke-opacity=".4"
           d="M605 817V497M1851 959h-518M944 570H390"
         />
         <path
-          class="nodepath"
           d="M638 912H342M635 1139V912"
-        />
-        <path
-          stroke="url(#a)"
-          d="M1024 573h297v532h-31"
-          class="final"
-          transform="translate(0 3)"
-        />
-        <path
-          fill="url(#b)"
-          fill-rule="nonzero"
-          d="M1024 592a18 18 0 100-36 18 18 0 000 36z"
-          class="final circle"
-          transform="translate(0 3)"
         />
       </g>
       <foreignObject
@@ -158,31 +132,16 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'WelcomeAnimationSvg',
-  data() {
-    return {
-      mounted: false,
-    }
-  },
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue'
 
-  computed: {
-    svgClasses() {
-      return [
-        'svg',
-        {
-          active: this.mounted,
-        },
-      ]
-    },
-  },
-  mounted() {
-    setTimeout(() => {
-      this.mounted = true
-    }, 30)
-  },
-}
+const mounted = ref(false)
+
+onMounted(function () {
+  window.setTimeout(() => {
+    mounted.value = true
+  }, 30)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -336,18 +295,6 @@ export default {
     opacity: 0.3;
     will-change: stroke-dashoffset, filter;
 
-    &.final {
-      stroke-dashoffset: 1000px;
-    }
-    &.circle {
-      opacity: 1;
-      stroke-dasharray: 0 0;
-      stroke-dashoffset: 0;
-      transform: scale(0);
-      transition: #{0.2*$baseSpeed}s ease-in-out;
-      transform-origin: 1022px 570px;
-    }
-
     @for $i from 1 through 5 {
       $length: nth($lengths, $i);
       filter: hue-rotate(40deg) brightness(2) blur(4px);
@@ -394,24 +341,6 @@ export default {
       stroke-dashoffset: 0;
       opacity: 0.3;
       filter: hue-rotate(0deg) brightness(1) blur(0px);
-      @for $i from 1 through 20 {
-        &:nth-of-type(#{$i}) {
-          &.final {
-            opacity: 1;
-            transition: #{0.75*$baseSpeed}s ease-in-out, stroke-dashoffset #{1.5*$baseSpeed}s ease-in-out;
-            transition-delay: #{7*$baseSpeed}s, #{7.15*$baseSpeed}s;
-            &.circle {
-              transition: 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-              transition-delay: #{1*$baseSpeed}s;
-            }
-          }
-        }
-      }
-
-      &.circle {
-        transform: scale(1);
-        opacity: 1;
-      }
     }
     @supports (not (offset-distance: 100%)) {
       foreignObject div {
@@ -421,11 +350,8 @@ export default {
   }
 }
 .background {
-  position: absolute;
+  position: fixed;
   z-index: -1;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  inset: 0;
 }
 </style>

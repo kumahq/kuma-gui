@@ -2,17 +2,21 @@
 
 exports[`OnboardingHeading.vue renders snapshot 1`] = `
 <div
-  class="relative"
+  class="onboarding-heading"
 >
   <h1
     class="onboarding-title"
   >
+    
     title
+    
   </h1>
-  <p
-    class="text-center text-lg mt-3"
+  <div
+    class="onboarding-description"
   >
+    
     description
-  </p>
+    
+  </div>
 </div>
 `;

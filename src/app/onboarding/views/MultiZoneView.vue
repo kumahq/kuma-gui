@@ -1,7 +1,11 @@
 <template>
   <OnboardingPage>
     <template #header>
-      <OnboardingHeading title="Add zones" />
+      <OnboardingHeading>
+        <template #title>
+          Add zones
+        </template>
+      </OnboardingHeading>
     </template>
 
     <template #content>
