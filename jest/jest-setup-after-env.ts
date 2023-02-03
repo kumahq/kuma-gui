@@ -8,6 +8,7 @@ import { config } from '@vue/test-utils'
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { createRouter } from '../src/router/router'
 import { TOKENS, get, container, set, injected } from '../src/services'
+import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { setupMockServer } from '../src/api/setupMockServer'
 import { rest, MockedRequest as Request } from 'msw'
 import Env from '@/services/env/Env'
@@ -50,6 +51,20 @@ const server = setupMockServer(import.meta.env.VITE_KUMA_API_SERVER_URL)
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
+
+// unless we actually use COMPONENT_TOKENS it won't actually get executed
+// probably due to tree shaking/rollup import ordering. This mixed with
+// container capturing/restoring to make our tests isolated means that
+// potentially we can capture an empty container before all the tokens are set,
+// then set the TOKENS/fill the container during a test then the container can
+// get restored to empty whilst we still have TOKENS with now non-existent
+// services accessing TOKENS before we do anything means we set the TOKENS and
+// fill the container with the default services i.e. before we capture if we
+// ever make a test mocking utility to mock out components (similar to
+// withVersion) will will then use COMPONENT_TOKENS here also, which means we
+// can remove the following line
+beforeAll((_ = COMPONENT_TOKENS) => {})
+//
 beforeEach(() => container.capture?.())
 afterEach(() => container.restore?.())
 
