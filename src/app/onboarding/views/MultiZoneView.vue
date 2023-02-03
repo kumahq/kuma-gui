@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { KCard } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
@@ -109,12 +108,6 @@ export default {
   computed: {
     servicesOnline() {
       return this.hasZoneIngresses && this.hasZones
-    },
-    ...mapGetters({
-      kumaDocsVersion: 'config/getKumaDocsVersion',
-    }),
-    documentationLink() {
-      return `https://kuma.io/docs/${this.kumaDocsVersion}/deployments/multi-zone/#zone-control-plane`
     },
   },
 
