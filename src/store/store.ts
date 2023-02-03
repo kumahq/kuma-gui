@@ -1,12 +1,10 @@
-import { InjectionKey } from 'vue'
-import { createStore, useStore as useVuexStore, Store } from 'vuex'
+import { get, TOKENS } from '@/services'
+import { useStore as useVuexStore, Store } from 'vuex'
 
-import { storeConfig, State } from './storeConfig'
+import type { State } from './storeConfig'
 
-export const storeKey: InjectionKey<Store<State>> = Symbol('store')
-
-export const store = createStore<State>(storeConfig)
+export const store: Store<State> = get(TOKENS.store)
 
 export function useStore(): Store<State> {
-  return useVuexStore(storeKey)
+  return useVuexStore(get(TOKENS.storeKey))
 }

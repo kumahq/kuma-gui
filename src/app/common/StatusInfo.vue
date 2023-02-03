@@ -19,7 +19,7 @@
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { ApiError } from '@/api/ApiError'
+import { ApiError } from '@/services/kuma-api/ApiError'
 
 defineProps({
   isLoading: {

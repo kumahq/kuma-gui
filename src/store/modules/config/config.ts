@@ -2,7 +2,7 @@ import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
 import { State } from '../../storeConfig'
 import { ConfigInterface, ClientConfigInterface } from './config.types'
-import { kumaApi } from '@/api/kumaApi'
+import type KumaApi from '@/services/kuma-api/KumaApi'
 
 const initialConfigState: ConfigInterface = {
   status: null,
@@ -42,7 +42,7 @@ const getters: GetterTree<ConfigInterface, State> = {
   },
 }
 
-const actions: ActionTree<ConfigInterface, State> = {
+const actions = (kumaApi: KumaApi): ActionTree<ConfigInterface, State> => ({
   bootstrapConfig({ dispatch }) {
     const infoPromise = dispatch('getInfo')
     const configPromise = dispatch('getConfig')
@@ -89,14 +89,14 @@ const actions: ActionTree<ConfigInterface, State> = {
         console.error(error)
       })
   },
-}
+})
 
-const configModule = {
-  namespaced: true,
-  state: () => initialConfigState,
-  getters,
-  mutations,
-  actions,
+export default (kumaApi: KumaApi) => {
+  return {
+    namespaced: true,
+    state: () => initialConfigState,
+    getters,
+    mutations,
+    actions: actions(kumaApi),
+  }
 }
-
-export default configModule

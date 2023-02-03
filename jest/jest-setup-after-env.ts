@@ -9,7 +9,6 @@ import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-sn
 import { createRouter } from '../src/router/router'
 import { TOKENS, get, container, set, injected } from '../src/services'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { store, storeKey } from '../src/store/store'
 import { setupMockServer } from '../src/api/setupMockServer'
 import { rest, MockedRequest as Request } from 'msw'
 import Env from '@/services/env/Env'
@@ -29,7 +28,7 @@ config.global.plugins.push(router)
 /**
  * Adds the application’s Vuex store to vue test utils. This way tests don’t have to set-up a new store instance on their own.
  */
-config.global.plugins.push([store, storeKey])
+config.global.plugins.push([get(TOKENS.store), get(TOKENS.storeKey)])
 
 /**
  * Kongponents uses generated UUIDs for several attribute values.
