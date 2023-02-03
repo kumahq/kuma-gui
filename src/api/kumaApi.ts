@@ -209,7 +209,7 @@ class KumaApi {
 
   // The following code is a hotfix for https://github.com/kumahq/kuma-gui/issues/599 until we implement the lookup of `ExternalService` resources by `ServiceInsight` name.
   async getExternalServiceByServiceInsightName(mesh: string, name: string): Promise<ExternalService | null> {
-    const { items } = await kumaApi.getAllExternalServicesFromMesh({ mesh })
+    const { items } = await this.getAllExternalServicesFromMesh({ mesh })
 
     if (Array.isArray(items)) {
       const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === name)
