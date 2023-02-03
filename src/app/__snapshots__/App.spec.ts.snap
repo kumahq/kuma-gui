@@ -239,7 +239,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     >
                       
                       <a
-                        href="https://kuma.io/docs/10.2.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://kuma.io/docs/10.2.x/?utm_source=Kuma&utm_medium=Kuma"
                         rel="noopener noreferrer"
                         target="_blank"
                       >
@@ -1069,7 +1069,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   >
                     <a
                       class="k-button medium rounded primary"
-                      href="https://kuma.io/docs/10.2.x/policies/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                      href="https://kuma.io/docs/10.2.x/policies/?utm_source=Kuma&utm_medium=Kuma"
                       target="_blank"
                       type="button"
                     >
@@ -1127,7 +1127,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                   <ul>
                     <li>
                       <a
-                        href="https://kuma.io/docs/10.2.x/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://kuma.io/docs/10.2.x/?utm_source=Kuma&utm_medium=Kuma"
                         target="_blank"
                       >
                         Kuma Documentation 
@@ -1135,7 +1135,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     </li>
                     <li>
                       <a
-                        href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma"
                         target="_blank"
                       >
                         Kuma Community Chat 
@@ -1143,7 +1143,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                     </li>
                     <li>
                       <a
-                        href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma-GUI"
+                        href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma"
                         target="_blank"
                       >
                         Kuma GitHub Repository 
