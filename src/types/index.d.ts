@@ -436,7 +436,7 @@ export interface Zone extends Entity {
 export interface ZoneOverview extends MeshEntity {
   type: 'ZoneOverview'
   zone: Zone
-  zoneInsight: ZoneInsight
+  zoneInsight?: ZoneInsight
 }
 
 export interface ZoneIngressOverview extends MeshEntity {
