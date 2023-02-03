@@ -12,59 +12,7 @@ exports[`mesh-insights calls mergeInsightsReducer with an empty array 1`] = `
     "kumaDp": {},
   },
   "meshesTotal": 0,
-  "policies": {
-    "CircuitBreaker": {
-      "total": 0,
-    },
-    "FaultInjection": {
-      "total": 0,
-    },
-    "HealthCheck": {
-      "total": 0,
-    },
-    "MeshAccessLog": {
-      "total": 0,
-    },
-    "MeshGateway": {
-      "total": 0,
-    },
-    "MeshGatewayRoute": {
-      "total": 0,
-    },
-    "MeshTrace": {
-      "total": 0,
-    },
-    "MeshTrafficPermission": {
-      "total": 0,
-    },
-    "ProxyTemplate": {
-      "total": 0,
-    },
-    "RateLimit": {
-      "total": 0,
-    },
-    "Retry": {
-      "total": 0,
-    },
-    "Timeout": {
-      "total": 0,
-    },
-    "TrafficLog": {
-      "total": 0,
-    },
-    "TrafficPermission": {
-      "total": 0,
-    },
-    "TrafficRoute": {
-      "total": 0,
-    },
-    "TrafficTrace": {
-      "total": 0,
-    },
-    "VirtualOutbound": {
-      "total": 0,
-    },
-  },
+  "policies": {},
 }
 `;
 
@@ -103,62 +51,17 @@ exports[`mesh-insights calls mergeInsightsReducer with mesh insights array 1`] =
   },
   "meshesTotal": 5,
   "policies": {
-    "CircuitBreaker": {
-      "total": 0,
-    },
-    "FaultInjection": {
-      "total": 0,
-    },
-    "HealthCheck": {
-      "total": 0,
-    },
-    "MeshAccessLog": {
-      "total": 0,
-    },
-    "MeshGateway": {
-      "total": 0,
-    },
-    "MeshGatewayRoute": {
-      "total": 0,
-    },
-    "MeshTrace": {
-      "total": 0,
-    },
-    "MeshTrafficPermission": {
-      "total": 0,
-    },
-    "ProxyTemplate": {
-      "total": 0,
-    },
-    "RateLimit": {
-      "total": 0,
-    },
-    "Retry": {
-      "total": 0,
-    },
     "Secret": {
       "total": 12,
     },
     "ServiceInsight": {
       "total": 22,
     },
-    "Timeout": {
-      "total": 0,
-    },
-    "TrafficLog": {
-      "total": 0,
-    },
     "TrafficPermission": {
       "total": 6,
     },
     "TrafficRoute": {
       "total": 10,
-    },
-    "TrafficTrace": {
-      "total": 0,
-    },
-    "VirtualOutbound": {
-      "total": 0,
     },
   },
 }
@@ -199,62 +102,17 @@ exports[`mesh-insights calls parseInsightReducer with mesh insights 1`] = `
   },
   "meshesTotal": 1,
   "policies": {
-    "CircuitBreaker": {
-      "total": 0,
-    },
-    "FaultInjection": {
-      "total": 0,
-    },
-    "HealthCheck": {
-      "total": 0,
-    },
-    "MeshAccessLog": {
-      "total": 0,
-    },
-    "MeshGateway": {
-      "total": 0,
-    },
-    "MeshGatewayRoute": {
-      "total": 0,
-    },
-    "MeshTrace": {
-      "total": 0,
-    },
-    "MeshTrafficPermission": {
-      "total": 0,
-    },
-    "ProxyTemplate": {
-      "total": 0,
-    },
-    "RateLimit": {
-      "total": 0,
-    },
-    "Retry": {
-      "total": 0,
-    },
     "Secret": {
       "total": 6,
     },
     "ServiceInsight": {
       "total": 11,
     },
-    "Timeout": {
-      "total": 0,
-    },
-    "TrafficLog": {
-      "total": 0,
-    },
     "TrafficPermission": {
       "total": 3,
     },
     "TrafficRoute": {
       "total": 5,
-    },
-    "TrafficTrace": {
-      "total": 0,
-    },
-    "VirtualOutbound": {
-      "total": 0,
     },
   },
 }
@@ -272,58 +130,6 @@ exports[`mesh-insights calls parseInsightReducer without any data 1`] = `
     "kumaDp": {},
   },
   "meshesTotal": 1,
-  "policies": {
-    "CircuitBreaker": {
-      "total": 0,
-    },
-    "FaultInjection": {
-      "total": 0,
-    },
-    "HealthCheck": {
-      "total": 0,
-    },
-    "MeshAccessLog": {
-      "total": 0,
-    },
-    "MeshGateway": {
-      "total": 0,
-    },
-    "MeshGatewayRoute": {
-      "total": 0,
-    },
-    "MeshTrace": {
-      "total": 0,
-    },
-    "MeshTrafficPermission": {
-      "total": 0,
-    },
-    "ProxyTemplate": {
-      "total": 0,
-    },
-    "RateLimit": {
-      "total": 0,
-    },
-    "Retry": {
-      "total": 0,
-    },
-    "Timeout": {
-      "total": 0,
-    },
-    "TrafficLog": {
-      "total": 0,
-    },
-    "TrafficPermission": {
-      "total": 0,
-    },
-    "TrafficRoute": {
-      "total": 0,
-    },
-    "TrafficTrace": {
-      "total": 0,
-    },
-    "VirtualOutbound": {
-      "total": 0,
-    },
-  },
+  "policies": {},
 }
 `;

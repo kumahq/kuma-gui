@@ -20,27 +20,7 @@ const sumDataplanes = (curr: DataPlaneStats = {}, next: DataPlaneStats = {}) => 
   }
 }
 
-export const getInitialPolicies = () => ({
-  CircuitBreaker: { total: 0 },
-  FaultInjection: { total: 0 },
-  HealthCheck: { total: 0 },
-  MeshAccessLog: { total: 0 },
-  MeshGateway: { total: 0 },
-  MeshGatewayRoute: { total: 0 },
-  MeshTrace: { total: 0 },
-  MeshTrafficPermission: { total: 0 },
-  ProxyTemplate: { total: 0 },
-  RateLimit: { total: 0 },
-  Retry: { total: 0 },
-  Timeout: { total: 0 },
-  TrafficLog: { total: 0 },
-  TrafficPermission: { total: 0 },
-  TrafficRoute: { total: 0 },
-  TrafficTrace: { total: 0 },
-  VirtualOutbound: { total: 0 },
-})
-
-const sumPolicies = (curr: any = getInitialPolicies(), next: any = {}) =>
+const sumPolicies = (curr: Record<string, {total: string}>, next: any = {}) =>
   Object.entries(next).reduce((acc, [name, stat]) => {
     const currTotal = acc[name] ? acc[name].total : 0
 
@@ -70,7 +50,7 @@ export function getEmptyInsight() {
   return {
     meshesTotal: 0,
     dataplanes: { online: 0, partiallyDegraded: 0, total: 0 },
-    policies: getInitialPolicies(),
+    policies: {},
     dpVersions: { kumaDp: {}, envoy: {} },
   }
 }
@@ -94,7 +74,7 @@ export function mergeInsightsReducer(insights: TODO = []) {
         partiallyDegraded: 0,
         total: 0,
       },
-      policies: getInitialPolicies(),
+      policies: {},
       dpVersions: {
         kumaDp: {},
         envoy: {},
