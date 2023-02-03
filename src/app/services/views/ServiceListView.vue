@@ -31,6 +31,7 @@ import { ref, watch } from 'vue'
 import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 
 import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
+import { getExternalServiceByServiceInsightName } from '../getExternalServiceByServiceInsightName'
 import { kumaApi } from '@/api/kumaApi'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
@@ -176,16 +177,7 @@ async function loadService({ mesh, name }: { mesh: string, name: string }): Prom
   service.value = await kumaApi.getServiceInsight({ mesh, name })
 
   if (service.value.serviceType === 'external') {
-    // The following code is a hotfix for https://github.com/kumahq/kuma-gui/issues/599 until we implement the lookup of `ExternalService` resources by `ServiceInsight` name.
-    const { items } = await kumaApi.getAllExternalServicesFromMesh({ mesh })
-
-    if (Array.isArray(items)) {
-      const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === name)
-
-      if (foundExternalService !== undefined) {
-        externalService.value = foundExternalService
-      }
-    }
+    externalService.value = await getExternalServiceByServiceInsightName(mesh, name)
   }
 
   QueryParameter.set('service', name)
