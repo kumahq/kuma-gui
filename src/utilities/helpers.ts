@@ -155,12 +155,16 @@ export async function fetchAllResources<T = Object>(endpoint: (params: Object) =
 }
 
 export function getZoneDpServerAuthType(zone: ZoneOverview): string {
-  const subscriptionsLength = zone?.zoneInsight?.subscriptions.length ?? 0
+  const subscriptions = zone.zoneInsight?.subscriptions ?? []
 
-  if (subscriptionsLength && zone.zoneInsight.subscriptions[subscriptionsLength - 1].config) {
-    const parsedConfig = JSON.parse(zone.zoneInsight.subscriptions[subscriptionsLength - 1].config)
+  if (subscriptions.length > 0) {
+    const lastSubscription = subscriptions[subscriptions.length - 1]
 
-    return get(parsedConfig, 'dpServer.auth.type', DISABLED)
+    if (lastSubscription.config) {
+      const parsedConfig = JSON.parse(lastSubscription.config)
+
+      return get(parsedConfig, 'dpServer.auth.type', DISABLED)
+    }
   }
 
   return DISABLED
