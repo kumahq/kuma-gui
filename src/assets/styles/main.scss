@@ -1,6 +1,6 @@
-@import '/node_modules/tailwindcss/utilities.css';
-@import '/node_modules/@kong/kongponents/dist/style.css';
-@import '/node_modules/@kong/kongponents/dist/_variables.scss';
+@import 'tailwindcss/utilities.css';
+@import '@kong/kongponents/dist/style.css';
+@import '@kong/kongponents/dist/_variables.scss';
 
 @import 'variables';
 @import 'base';
