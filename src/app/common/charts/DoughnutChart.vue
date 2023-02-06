@@ -191,6 +191,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
 .chart-title {
   pointer-events: initial;
   text-align: center;
+  font-size: 0.9em;
 }
 
 .chart-title__total {
