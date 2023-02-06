@@ -207,6 +207,19 @@ export default class KumaApi {
     return this.client.get(`meshes/${mesh}/external-services/${name}`, { params })
   }
 
+  // The following code is a hotfix for https://github.com/kumahq/kuma-gui/issues/599 until we implement the lookup of `ExternalService` resources by `ServiceInsight` name.
+  async getExternalServiceByServiceInsightName(mesh: string, name: string): Promise<ExternalService | null> {
+    const { items } = await this.getAllExternalServicesFromMesh({ mesh })
+
+    if (Array.isArray(items)) {
+      const foundExternalService = items.find((externalService) => externalService.tags['kuma.io/service'] === name)
+
+      return foundExternalService ?? null
+    } else {
+      return null
+    }
+  }
+
   getPolicyConnections({ mesh, policyType, policyName }: { mesh: string; policyType: string; policyName: string }, params?: PaginationParameters): Promise<PaginatedApiListResponse<any>> {
     return this.client.get(`meshes/${mesh}/${policyType}/${policyName}/dataplanes`, { params })
   }

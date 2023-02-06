@@ -587,11 +587,13 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
       setOverviewZonesCPVersionsChartData({ commit }, { items }: { items: ZoneOverview[] }) {
         const data: ChartDataPoint[] = items.reduce((dataPoints: ChartDataPoint[], curr) => {
-          if (curr.zoneInsight.subscriptions.length === 0) {
+          const subscriptions = curr.zoneInsight?.subscriptions ?? []
+
+          if (subscriptions.length === 0) {
             return dataPoints
           }
 
-          const lastSubscription = curr.zoneInsight.subscriptions.pop() as KDSSubscription
+          const lastSubscription = subscriptions.pop() as KDSSubscription
 
           const existingDataPoint = dataPoints.find((dataPoint) => dataPoint.title === lastSubscription.version?.kumaCp?.version)
 

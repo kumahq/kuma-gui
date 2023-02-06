@@ -176,7 +176,7 @@ async function loadService({ mesh, name }: { mesh: string, name: string }): Prom
   service.value = await kumaApi.getServiceInsight({ mesh, name })
 
   if (service.value.serviceType === 'external') {
-    externalService.value = await kumaApi.getExternalService({ mesh, name })
+    externalService.value = await kumaApi.getExternalServiceByServiceInsightName(mesh, name)
   }
 
   QueryParameter.set('service', name)

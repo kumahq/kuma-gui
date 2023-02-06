@@ -1,7 +1,7 @@
 {
   "type": "ExternalService",
   "mesh": "default",
-  "name": "httpbin",
+  "name": "httpbin2-external-service",
   "creationTime": "2021-02-02T10:59:26.640498+01:00",
   "modificationTime": "2021-02-02T10:59:26.640498+01:00",
   "networking": {
