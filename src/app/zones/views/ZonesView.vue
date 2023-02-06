@@ -255,19 +255,19 @@ function parseData(zoneOverview: ZoneOverview): any {
   let storeType = ''
   let cpCompat = true
 
-  if (zoneOverview.zoneInsight.subscriptions && zoneOverview.zoneInsight.subscriptions.length > 0) {
-    zoneOverview.zoneInsight.subscriptions.forEach((item: any) => {
-      if (item.version && item.version.kumaCp) {
-        zoneCpVersion = item.version.kumaCp.version
-        const { kumaCpGlobalCompatible = true } = item.version.kumaCp
+  const subscriptions = zoneOverview.zoneInsight?.subscriptions ?? []
 
-        cpCompat = kumaCpGlobalCompatible
-        if (item.config) {
-          storeType = JSON.parse(item.config).store.type
-        }
+  subscriptions.forEach((item: any) => {
+    if (item.version && item.version.kumaCp) {
+      zoneCpVersion = item.version.kumaCp.version
+      const { kumaCpGlobalCompatible = true } = item.version.kumaCp
+
+      cpCompat = kumaCpGlobalCompatible
+      if (item.config) {
+        storeType = JSON.parse(item.config).store.type
       }
-    })
-  }
+    }
+  })
 
   const status = getItemStatusFromInsight(zoneOverview.zoneInsight)
 
@@ -386,8 +386,8 @@ async function getEntity({ name }: { name: string }): Promise<void> {
         })
       }
 
-      if (subscriptions[subscriptions.length - 1].config) {
-        codeOutput.value = JSON.stringify(JSON.parse(subscriptions[subscriptions.length - 1].config), null, 2)
+      if (lastSubscription.config) {
+        codeOutput.value = JSON.stringify(JSON.parse(lastSubscription.config), null, 2)
       }
     }
   } catch (err) {
