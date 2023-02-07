@@ -50,98 +50,92 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
           class="onboarding-container__inner-content"
         >
           
-          <h2>
+          <h2
+            class="text-center"
+          >
              Let’s get started: 
           </h2>
-          <ul
-            class="mt-4"
+          <div
+            class="item-status-list-wrapper"
           >
-            
-            <li
-              class="item-status mb-2"
+            <ul
+              class="item-status-list"
             >
-              <span
-                class="circle mr-2"
-              >
+              
+              <li>
                 <span
-                  class="kong-icon kong-icon-check"
+                  class="circle mr-2"
                 >
-                  <svg
-                    fill="none"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    class="kong-icon kong-icon-check"
                   >
-                    
-  
-                    <path
-                      d="m14 7-6 6-3-3"
+                    <svg
                       fill="none"
-                      stroke="#A3BBCC"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2.25"
-                    />
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      
+  
+                      <path
+                        d="m14 7-6 6-3-3"
+                        fill="none"
+                        stroke="#A3BBCC"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.25"
+                      />
+                      
+
+                    </svg>
                     
 
-                  </svg>
-                  
-
+                  </span>
                 </span>
-              </span>
-               Run Kuma control plane
-            </li>
-            <li
-              class="item-status mb-2"
-            >
-              <span
-                class="circle mr-2"
-              >
-                <!--v-if-->
-              </span>
-               Learn about deployments
-            </li>
-            <li
-              class="item-status mb-2"
-            >
-              <span
-                class="circle mr-2"
-              >
-                <!--v-if-->
-              </span>
-               Learn about configuration storage
-            </li>
-            <li
-              class="item-status mb-2"
-            >
-              <span
-                class="circle mr-2"
-              >
-                <!--v-if-->
-              </span>
-               Create the mesh
-            </li>
-            <li
-              class="item-status mb-2"
-            >
-              <span
-                class="circle mr-2"
-              >
-                <!--v-if-->
-              </span>
-               Add services
-            </li>
-            <li
-              class="item-status mb-2"
-            >
-              <span
-                class="circle mr-2"
-              >
-                <!--v-if-->
-              </span>
-               Go to the dashboard
-            </li>
-            
-          </ul>
+                 Run Kuma control plane
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Learn about deployments
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Learn about configuration storage
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Create the mesh
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Add services
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Go to the dashboard
+              </li>
+              
+            </ul>
+          </div>
           
         </div>
       </div>
