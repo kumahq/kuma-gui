@@ -38,6 +38,8 @@ const props = defineProps({
   width: 100%;
   margin: 0 auto;
   padding: var(--spacing-md);
+  background-color: var(--white);
+  box-shadow: var(--onboarding-shadow);
 
   @media (min-width: 768px) {
     max-width: 1075px;
@@ -66,17 +68,14 @@ const props = defineProps({
   min-height: 500px;
   font-size: 1.125rem;
   line-height: 1.75rem;
-  background-color: var(--white);
-  box-shadow: var(--OnboardingShadow);
 }
 
 .onboarding-container__content--with-image {
-  background: var(--OnboardingPageGraphBackground);
+  background-color: var(--blue-100);
 }
 
 .onboarding-container__inner-content {
   width: 100%;
-  padding: var(--spacing-lg);
 }
 
 .background-image {

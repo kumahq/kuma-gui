@@ -32,7 +32,7 @@ const slots = useSlots()
   line-height: 2.5rem;
   font-weight: bold;
   color: transparent;
-  background-image: linear-gradient(to right, var(--OnboardingTitle));
+  background-image: linear-gradient(to right, var(--onboarding-accent-dark), var(--onboarding-accent));
   -webkit-background-clip: text;
   background-clip: text;
 }

@@ -31,7 +31,7 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
       >
         
         <p
-          class="text-center mb-4"
+          class="mb-4 text-center"
         >
            When you install, Kuma creates a 
           <i>
@@ -40,112 +40,103 @@ exports[`CreateMesh.vue renders snapshot 1`] = `
            mesh, but you can add as many meshes as you need. 
         </p>
         <div
-          class="flex justify-center mt-10 mb-12 pb-12"
+          class="k-table-container table"
         >
-          <div
-            class="w-full sm:w-3/5 lg:w-2/5 p-4"
+          <!---->
+          <section
+            class="k-table-wrapper"
           >
-            <div
-              class="k-table-container"
-              is-small=""
+            <table
+              class="k-table has-hover"
+              data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
-              <!---->
-              <section
-                class="k-table-wrapper"
+              <thead
+                class=""
               >
-                <table
-                  class="k-table has-hover"
-                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                <tr
+                  class=""
                 >
-                  <thead
+                  
+                  <th
                     class=""
                   >
-                    <tr
-                      class=""
+                    <span
+                      class="d-flex align-items-center"
                     >
                       
-                      <th
+                      <span
                         class=""
                       >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Name
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            Services
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
-                      <th
-                        class=""
-                      >
-                        <span
-                          class="d-flex align-items-center"
-                        >
-                          
-                          <span
-                            class=""
-                          >
-                            DPPs
-                          </span>
-                          
-                          <!---->
-                        </span>
-                      </th>
+                        Name
+                      </span>
                       
-                    </tr>
-                  </thead>
-                  <tbody>
+                      <!---->
+                    </span>
+                  </th>
+                  <th
+                    class=""
+                  >
+                    <span
+                      class="d-flex align-items-center"
+                    >
+                      
+                      <span
+                        class=""
+                      >
+                        Services
+                      </span>
+                      
+                      <!---->
+                    </span>
+                  </th>
+                  <th
+                    class=""
+                  >
+                    <span
+                      class="d-flex align-items-center"
+                    >
+                      
+                      <span
+                        class=""
+                      >
+                        DPPs
+                      </span>
+                      
+                      <!---->
+                    </span>
+                  </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr>
+                  
+                  <td>
                     
-                    <tr>
-                      
-                      <td>
-                        
-                        default
-                        
-                      </td>
-                      <td>
-                        
-                        0
-                        
-                      </td>
-                      <td>
-                        
-                        0
-                        
-                      </td>
-                      
-                    </tr>
+                    default
                     
-                  </tbody>
-                </table>
-                <!---->
-              </section>
-            </div>
-          </div>
+                  </td>
+                  <td>
+                    
+                    0
+                    
+                  </td>
+                  <td>
+                    
+                    0
+                    
+                  </td>
+                  
+                </tr>
+                
+              </tbody>
+            </table>
+            <!---->
+          </section>
         </div>
         <p
-          class="text-center"
+          class="mt-4 text-center"
         >
            This mesh is empty. Next, you add services and their data plane proxies. 
         </p>

@@ -34,10 +34,10 @@ const emit = defineEmits<{
   padding: var(--spacing-lg);
   border: 3px solid var(--grey-400);
   border-radius: 5px;
-  box-shadow: 4px 4px 14px 4px var(--OnboardingShadow);
+  box-shadow: 4px 4px 14px 4px var(--onboarding-shadow);
 }
 
 .box--active {
-  border-color: var(--OnbordingBoxBorder);
+  border-color: var(--onboarding-accent);
 }
 </style>

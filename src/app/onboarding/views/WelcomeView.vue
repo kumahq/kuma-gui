@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="welcome-container">
-      <div class="content">
+    <OnboardingPage>
+      <template #header>
         <OnboardingHeading>
           <template #title>
-            Welcome to {{ productName }}
+            Welcome to {{ PRODUCT_NAME }}
           </template>
 
           <template #description>
             <p>
-              Congratulations on downloading {{ productName }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
+              Congratulations on downloading {{ PRODUCT_NAME }}! You are just a <strong>few minutes</strong> away from getting your service mesh fully online.
             </p>
 
             <p>
@@ -17,137 +17,114 @@
             </p>
           </template>
         </OnboardingHeading>
+      </template>
 
-        <h2 class="welcome-detected">
-          Let's get started:
+      <template #content>
+        <h2 class="text-center">
+          Let’s get started:
         </h2>
 
-        <ul>
-          <ItemStatus
-            v-for="item in statuses"
-            :key="item.name"
-            :name="item.name"
-            :status="item.status"
-          />
-        </ul>
-      </div>
+        <div class="item-status-list-wrapper">
+          <ul class="item-status-list">
+            <li
+              v-for="item in statuses"
+              :key="item.name"
+            >
+              <span class="circle mr-2">
+                <KIcon
+                  v-if="item.status"
+                  icon="check"
+                  size="14"
+                  color="currentColor"
+                />
+              </span>
 
-      <div class="welcome-navigation">
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+      </template>
+
+      <template #navigation>
         <OnboardingNavigation next-step="onboarding-deployment-types" />
-      </div>
-    </div>
+      </template>
+    </OnboardingPage>
 
-    <WelcomeAnimationSvg :longer="multicluster" />
+    <WelcomeAnimationSvg :longer="isMulticluster" />
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { KIcon } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
-import ItemStatus from '../components/ItemStatus.vue'
+import { useStore } from '@/store/store'
+import { useWelcomeAnimationSvg } from '@/components'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
-import { useWelcomeAnimationSvg } from '@/components'
+import OnboardingPage from '../components/OnboardingPage.vue'
 
 const WelcomeAnimationSvg = useWelcomeAnimationSvg()
 
-export default {
-  name: 'WelcomeView',
+const store = useStore()
 
-  components: {
-    ItemStatus,
-    OnboardingHeading,
-    OnboardingNavigation,
-    WelcomeAnimationSvg,
+const enviromentFormatted = computed(() => {
+  const environment = store.getters['config/getEnvironment']
+  return environment.charAt(0).toUpperCase() + environment.slice(1)
+})
+
+const isMulticluster = computed(() => store.getters['config/getMulticlusterStatus'])
+const statuses = computed(() => [
+  {
+    name: `Run ${PRODUCT_NAME} control plane`,
+    status: true,
   },
-
-  data() {
-    return {
-      productName: PRODUCT_NAME,
-    }
+  {
+    name: 'Learn about deployments',
+    status: false,
   },
-
-  computed: {
-    ...mapGetters({
-      environment: 'config/getEnvironment',
-      multicluster: 'config/getMulticlusterStatus',
-    }),
-    enviromentFormatted() {
-      return this.environment.charAt(0).toUpperCase() + this.environment.slice(1)
-    },
-    multizoneItems() {
-      const multizoneItems = []
-
-      if (this.multicluster) {
-        multizoneItems.push({
-          name: 'Add zones',
-          status: false,
-        })
-      }
-
-      return multizoneItems
-    },
-    statuses() {
-      return [
-        {
-          name: `Run ${this.productName} control plane`,
-          status: true,
-        },
-        {
-          name: 'Learn about deployments',
-          status: false,
-        },
-        {
-          name: 'Learn about configuration storage',
-          status: false,
-        },
-        ...this.multizoneItems,
-        {
-          name: 'Create the mesh',
-          status: false,
-        },
-        {
-          name: 'Add services',
-          status: false,
-        },
-        {
-          name: 'Go to the dashboard',
-          status: false,
-        },
-      ]
-    },
+  {
+    name: 'Learn about configuration storage',
+    status: false,
   },
-}
+  ...isMulticluster.value ? [{ name: 'Add zones', status: false }] : [],
+  {
+    name: 'Create the mesh',
+    status: false,
+  },
+  {
+    name: 'Add services',
+    status: false,
+  },
+  {
+    name: 'Go to the dashboard',
+    status: false,
+  },
+])
 </script>
 
 <style lang="scss" scoped>
-.welcome-container {
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 28rem;
-  animation: show 0.75s 0s 1 forwards;
-  background-color: var(--white);
+.item-status-list-wrapper {
+  display: flex;
+  justify-content: center;
 }
 
-.welcome-detected {
-  @apply text-2xl mb-4 font-bold;
-
-  @media screen and (max-width: 1699px) {
-    @apply text-xl mb-3;
-  }
+.item-status-list {
+  margin-top: var(--spacing-md);
 }
 
-@keyframes show {
-  0% {
-    opacity: 0;
-  }
+.item-status-list > * + * {
+  margin-top: var(--spacing-xs);
+}
 
-  100% {
-    opacity: 1;
-  }
+.circle {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--grey-300);
 }
 </style>

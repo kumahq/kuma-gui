@@ -2,177 +2,190 @@
 
 exports[`WelcomeView.vue renders snapshot 1`] = `
 <div>
-  <div
-    class="welcome-container"
-  >
+  <div>
     <div
-      class="content"
+      class="onboarding-container"
     >
       <div
-        class="onboarding-heading"
+        class="onboarding-container__header"
       >
-        <h1
-          class="onboarding-title"
-        >
-          
-           Welcome to Kuma
-          
-        </h1>
-        <div
-          class="onboarding-description"
-        >
-          
-          <p>
-             Congratulations on downloading Kuma! You are just a 
-            <strong>
-              few minutes
-            </strong>
-             away from getting your service mesh fully online. 
-          </p>
-          <p>
-             We have automatically detected that you are running on 
-            <strong>
-              Universal
-            </strong>
-            . 
-          </p>
-          
-        </div>
-      </div>
-      <h2
-        class="welcome-detected"
-      >
-         Let's get started: 
-      </h2>
-      <ul>
         
-        <li
-          class="item-status mb-2"
+        <div
+          class="onboarding-heading"
         >
-          <span
-            class="circle mr-2"
+          <h1
+            class="onboarding-title"
           >
-            <span
-              class="kong-icon kong-icon-check"
+            
+             Welcome to Kuma
+            
+          </h1>
+          <div
+            class="onboarding-description"
+          >
+            
+            <p>
+               Congratulations on downloading Kuma! You are just a 
+              <strong>
+                few minutes
+              </strong>
+               away from getting your service mesh fully online. 
+            </p>
+            <p>
+               We have automatically detected that you are running on 
+              <strong>
+                Universal
+              </strong>
+              . 
+            </p>
+            
+          </div>
+        </div>
+        
+      </div>
+      <div
+        class="onboarding-container__content"
+      >
+        <div
+          class="onboarding-container__inner-content"
+        >
+          
+          <h2
+            class="text-center"
+          >
+             Let’s get started: 
+          </h2>
+          <div
+            class="item-status-list-wrapper"
+          >
+            <ul
+              class="item-status-list"
             >
-              <svg
-                fill="none"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                
-  
-                <path
-                  d="m14 7-6 6-3-3"
-                  fill="none"
-                  stroke="#A3BBCC"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2.25"
-                />
-                
-
-              </svg>
               
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <span
+                    class="kong-icon kong-icon-check"
+                  >
+                    <svg
+                      fill="none"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      
+  
+                      <path
+                        d="m14 7-6 6-3-3"
+                        fill="none"
+                        stroke="#A3BBCC"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.25"
+                      />
+                      
 
-            </span>
-          </span>
-           Run Kuma control plane
-        </li>
-        <li
-          class="item-status mb-2"
-        >
-          <span
-            class="circle mr-2"
-          >
-            <!--v-if-->
-          </span>
-           Learn about deployments
-        </li>
-        <li
-          class="item-status mb-2"
-        >
-          <span
-            class="circle mr-2"
-          >
-            <!--v-if-->
-          </span>
-           Learn about configuration storage
-        </li>
-        <li
-          class="item-status mb-2"
-        >
-          <span
-            class="circle mr-2"
-          >
-            <!--v-if-->
-          </span>
-           Create the mesh
-        </li>
-        <li
-          class="item-status mb-2"
-        >
-          <span
-            class="circle mr-2"
-          >
-            <!--v-if-->
-          </span>
-           Add services
-        </li>
-        <li
-          class="item-status mb-2"
-        >
-          <span
-            class="circle mr-2"
-          >
-            <!--v-if-->
-          </span>
-           Go to the dashboard
-        </li>
-        
-      </ul>
-    </div>
-    <div
-      class="welcome-navigation"
-    >
-      <div
-        class="onboarding-actions"
-      >
-        <!--v-if-->
-        <div
-          class="button-list"
-        >
-          <a
-            class="k-button medium rounded outline"
-            data-testid="onboarding-skip-button"
-            href="/"
-            type="button"
-          >
-            
-            <!---->
-            
-            
-             Skip setup 
-            
-            <!---->
-          </a>
-          <a
-            class="k-button medium rounded primary"
-            data-testid="onboarding-next-button"
-            href="/onboarding/deployment-types"
-            type="button"
-          >
-            
-            <!---->
-            
-            
-            Next
-            
-            <!---->
-          </a>
+                    </svg>
+                    
+
+                  </span>
+                </span>
+                 Run Kuma control plane
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Learn about deployments
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Learn about configuration storage
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Create the mesh
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Add services
+              </li>
+              <li>
+                <span
+                  class="circle mr-2"
+                >
+                  <!--v-if-->
+                </span>
+                 Go to the dashboard
+              </li>
+              
+            </ul>
+          </div>
+          
         </div>
       </div>
+      <div
+        class="mt-4"
+      >
+        
+        <div
+          class="onboarding-actions"
+        >
+          <!--v-if-->
+          <div
+            class="button-list"
+          >
+            <a
+              class="k-button medium rounded outline"
+              data-testid="onboarding-skip-button"
+              href="/"
+              type="button"
+            >
+              
+              <!---->
+              
+              
+               Skip setup 
+              
+              <!---->
+            </a>
+            <a
+              class="k-button medium rounded primary"
+              data-testid="onboarding-next-button"
+              href="/onboarding/deployment-types"
+              type="button"
+            >
+              
+              <!---->
+              
+              
+              Next
+              
+              <!---->
+            </a>
+          </div>
+        </div>
+        
+      </div>
     </div>
+    <div
+      class="background-image"
+    />
   </div>
   <svg
     class="background svg"
@@ -191,11 +204,11 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
       >
         <stop
           offset="0%"
-          stop-color="#260D50"
+          stop-color="var(--onboarding-accent-dark)"
         />
         <stop
           offset="100%"
-          stop-color="#822DC5"
+          stop-color="var(--onboarding-accent)"
         />
       </lineargradient>
       <lineargradient
@@ -207,11 +220,11 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
       >
         <stop
           offset="0%"
-          stop-color="#260D50"
+          stop-color="var(--onboarding-accent-dark)"
         />
         <stop
           offset="100%"
-          stop-color="#822DC5"
+          stop-color="var(--onboarding-accent)"
         />
       </lineargradient>
     </defs>
@@ -222,7 +235,7 @@ exports[`WelcomeView.vue renders snapshot 1`] = `
       transform="translate(-63 -285)"
     >
       <g
-        stroke="#822DC5"
+        stroke="var(--onboarding-accent)"
         stroke-width="6"
       >
         <path
