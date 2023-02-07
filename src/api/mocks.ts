@@ -22,7 +22,8 @@ function getBaseInfo(): Info {
   }
 }
 
-const mockFileImports: Array<[string, () => Promise<any>]> = [
+export type Mocks = Array<[string, () => Promise<any>]>
+export const mocks: Mocks = [
   ['config', () => import('./mock-data/config.json')],
   ['versions', () => import('./mock-data/versions.json')],
   ['policies', () => import('./mock-data/policies.json')],
@@ -161,7 +162,7 @@ const mockFileImports: Array<[string, () => Promise<any>]> = [
   ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock-data/dataplane-xds.json')],
 ]
 
-export function setupHandlers(url: string = ''): RestHandler[] {
+export function setupHandlers(url: string = '', mocks: Mocks): RestHandler[] {
   const origin = url.replace(/\/+$/, '')
 
   function getApiPath(path: string = '') {
@@ -170,7 +171,7 @@ export function setupHandlers(url: string = ''): RestHandler[] {
     return [origin, escapedPath].filter((segment) => segment !== '').join('/')
   }
 
-  const handlers = mockFileImports.map(([path, importFn]) => {
+  const handlers = mocks.map(([path, importFn]) => {
     return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
   })
 

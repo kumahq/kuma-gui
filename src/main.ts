@@ -22,15 +22,9 @@ async function initializeVue(
   const kumaApi = get(TOKENS.api)
 
   document.title = `${env('KUMA_PRODUCT_NAME')} Manager`
+  // during development setBaseUrl also optionally installs MSW mocking via
+  // MockKumaApi
   kumaApi.setBaseUrl(env('KUMA_API_URL'))
-
-  if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
-    // The combination of reading the environment variable and using dynamic import
-    // ensures that msw isn’t actually bundled with the production application.
-    const { setupMockWorker } = await import('./api/setupMockWorker')
-
-    setupMockWorker(kumaApi.baseUrl)
-  }
 
   if (import.meta.env.PROD) {
     (async () => {
