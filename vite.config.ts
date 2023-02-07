@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { defineConfig, UserConfigFn } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import path from 'path'
+import { fileURLToPath, URL } from 'url'
 import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
 import vue from '@vitejs/plugin-vue'
@@ -49,7 +49,7 @@ export const config:UserConfigFn = ({ mode }) => {
         /**
          * Used to import files using, for example, '@/api/kumaApi'.
          */
-        '@': path.resolve('./src'),
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
     build: {
