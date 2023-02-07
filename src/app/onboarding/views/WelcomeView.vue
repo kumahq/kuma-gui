@@ -20,18 +20,29 @@
       </template>
 
       <template #content>
-        <h2>
+        <h2 class="text-center">
           Let’s get started:
         </h2>
 
-        <ul class="mt-4">
-          <ItemStatus
-            v-for="item in statuses"
-            :key="item.name"
-            :name="item.name"
-            :status="item.status"
-          />
-        </ul>
+        <div class="item-status-list-wrapper">
+          <ul class="item-status-list">
+            <li
+              v-for="item in statuses"
+              :key="item.name"
+            >
+              <span class="circle mr-2">
+                <KIcon
+                  v-if="item.status"
+                  icon="check"
+                  size="14"
+                  color="currentColor"
+                />
+              </span>
+
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
       </template>
 
       <template #navigation>
@@ -45,11 +56,11 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { KIcon } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { useWelcomeAnimationSvg } from '@/components'
-import ItemStatus from '../components/ItemStatus.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
@@ -92,3 +103,28 @@ const statuses = computed(() => [
   },
 ])
 </script>
+
+<style lang="scss" scoped>
+.item-status-list-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.item-status-list {
+  margin-top: var(--spacing-md);
+}
+
+.item-status-list > * + * {
+  margin-top: var(--spacing-xs);
+}
+
+.circle {
+  height: 1rem;
+  width: 1rem;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--grey-300);
+}
+</style>

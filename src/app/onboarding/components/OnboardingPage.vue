@@ -76,7 +76,6 @@ const props = defineProps({
 
 .onboarding-container__inner-content {
   width: 100%;
-  padding: var(--spacing-lg);
 }
 
 .background-image {
