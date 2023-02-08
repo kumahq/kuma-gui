@@ -216,7 +216,7 @@ export default (store: Store<State>): readonly RouteRecordRaw[] => {
       redirect: {
         name: 'onboarding-welcome',
       },
-      component: () => import('@/app/onboarding/views/ShellEmpty.vue'),
+      component: () => import('@/app/onboarding/views/OnboardingView.vue'),
       children: [
         {
           path: 'welcome',
