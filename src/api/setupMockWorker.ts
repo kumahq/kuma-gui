@@ -1,12 +1,10 @@
-import { setupWorker, MockedRequest } from 'msw'
-
-import { setupHandlers } from './mocks'
+import { setupWorker, MockedRequest, RestHandler } from 'msw'
 
 /**
  * Sets up the msw-based mock server.
  */
-export function setupMockWorker(url: string): void {
-  const worker = setupWorker(...setupHandlers(url))
+export function setupMockWorker(handlers: RestHandler[]): void {
+  const worker = setupWorker(...handlers)
 
   console.warn(
     '%c ✨You are mocking api requests.',

@@ -10,6 +10,7 @@ import { createRouter } from '../src/router/router'
 import { TOKENS, get, container, set, injected } from '../src/services'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { setupMockServer } from '../src/api/setupMockServer'
+import { setupHandlers, mocks } from '@/api/mocks'
 import { rest, MockedRequest as Request } from 'msw'
 import Env from '@/services/env/Env'
 
@@ -46,7 +47,7 @@ expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
   'data-tableid',
 ]))
 
-const server = setupMockServer(import.meta.env.VITE_KUMA_API_SERVER_URL)
+const server = setupMockServer(setupHandlers(import.meta.env.VITE_KUMA_API_SERVER_URL, mocks))
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
