@@ -64,8 +64,8 @@ import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 
 const KubernetesGraph = useKubernetesGraph()
-const MemoryGraph = usePostgresGraph()
-const PostgresGraph = useMemoryGraph()
+const MemoryGraph = useMemoryGraph()
+const PostgresGraph = usePostgresGraph()
 
 const componentMap: Record<string, any> = {
   postgres: PostgresGraph,

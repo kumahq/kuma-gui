@@ -60,12 +60,10 @@ import { KIcon } from '@kong/kongponents'
 
 import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
-import { useWelcomeAnimationSvg } from '@/components'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
-
-const WelcomeAnimationSvg = useWelcomeAnimationSvg()
+import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
 
 const store = useStore()
 
