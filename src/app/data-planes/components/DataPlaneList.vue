@@ -175,7 +175,7 @@ const props = defineProps({
   },
 
   error: {
-    type: Error as PropType<Error | null>,
+    type: [Error, null] as PropType<Error | null>,
     required: false,
     default: null,
   },
