@@ -14,13 +14,13 @@
       </template>
 
       <template
-        v-if="isErrorObject || causes.length > 0"
+        v-if="error !== null || causes.length > 0"
         #message
       >
         <details class="error-block-details">
           <summary>Details</summary>
 
-          <p v-if="isErrorObject">
+          <p v-if="error !== null">
             {{ error.message }}
           </p>
 
@@ -55,20 +55,19 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, PropType } from 'vue'
 import { KBadge, KEmptyState, KIcon } from '@kong/kongponents'
 
 import { ApiError } from '@/services/kuma-api/ApiError'
 
 const props = defineProps({
   error: {
-    type: [Error, ApiError],
+    type: [Error, null] as PropType<Error | null>,
     required: false,
     default: null,
   },
 })
 
-const isErrorObject = computed(() => props.error instanceof Error)
 const causes = computed(() => props.error instanceof ApiError ? props.error.causes : [])
 </script>
 

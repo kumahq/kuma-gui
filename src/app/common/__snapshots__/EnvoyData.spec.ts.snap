@@ -4,78 +4,126 @@ exports[`EnvoyData.vue renders snapshot 1`] = `
 <div
   class="envoy-data"
 >
-  <section
-    class="empty-state-wrapper"
-    data-testid="loading-block"
+  <div
+    class="envoy-data-actions"
   >
-    <div
-      class="empty-state-title"
+    <button
+      class="k-button medium rounded primary"
+      data-testid="envoy-data-refresh-button"
+      disabled=""
+      type="button"
     >
-      <!---->
-      <div
-        class="k-empty-state-title-header mt-4 mb-4"
+      
+      <span
+        class="k-button-icon kong-icon kong-icon-redo"
       >
-        
-        <span
-          class="mb-3 kong-icon kong-icon-spinner"
+        <svg
+          fill="none"
+          height="14"
+          viewBox="0 0 17 14"
+          width="17"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <svg
-            fill="none"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            
+          
   
-            <title>
-              Loading
-            </title>
-            
+          <title>
+            Redo
+          </title>
+          
   
-            <g>
-              
-    
-              <path
-                d="M5 10a5 5 0 1 0 5-5"
-                fill="none"
-                stroke="#A3BBCC"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-              />
-              
-  
-            </g>
-            
-
-          </svg>
+          <path
+            clip-rule="evenodd"
+            d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+            fill="#A3BBCC"
+            fill-rule="evenodd"
+          />
           
 
-        </span>
+        </svg>
         
-        <p>
-          Loading data …
-        </p>
-        
-        
-      </div>
-    </div>
-    <div
-      class="empty-state-content"
+
+      </span>
+      
+      
+       Refresh 
+      
+      <!---->
+    </button>
+  </div>
+  <div>
+    <section
+      class="empty-state-wrapper"
+      data-testid="loading-block"
     >
       <div
-        class="k-empty-state-message mb-6"
+        class="empty-state-title"
       >
-        
-        
+        <!---->
+        <div
+          class="k-empty-state-title-header mt-4 mb-4"
+        >
+          
+          <span
+            class="mb-3 kong-icon kong-icon-spinner"
+          >
+            <svg
+              fill="none"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              
+  
+              <title>
+                Loading
+              </title>
+              
+  
+              <g>
+                
+    
+                <path
+                  d="M5 10a5 5 0 1 0 5-5"
+                  fill="none"
+                  stroke="#A3BBCC"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                />
+                
+  
+              </g>
+              
+
+            </svg>
+            
+
+          </span>
+          
+          <p>
+            Loading data …
+          </p>
+          
+          
+        </div>
       </div>
       <div
-        class="k-empty-state-cta"
+        class="empty-state-content"
       >
-        
-        <!---->
-        
+        <div
+          class="k-empty-state-message mb-6"
+        >
+          
+          
+        </div>
+        <div
+          class="k-empty-state-cta"
+        >
+          
+          <!---->
+          
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </div>
 `;

@@ -1,22 +1,36 @@
 <template>
-  <StatusInfo
-    class="envoy-data"
-    :has-error="error !== undefined"
-    :is-loading="isLoading"
-    :error="error"
-  >
-    <CodeBlock
-      :id="`code-block-${dataPath}`"
-      language="json"
-      :code="code"
-      is-searchable
-      :query-key="queryKey ?? `code-block-${dataPath}`"
-    />
-  </StatusInfo>
+  <div class="envoy-data">
+    <div class="envoy-data-actions">
+      <KButton
+        :disabled="isLoading"
+        appearance="primary"
+        icon="redo"
+        data-testid="envoy-data-refresh-button"
+        @click="fetchContent"
+      >
+        Refresh
+      </KButton>
+    </div>
+
+    <StatusInfo
+      :has-error="error !== null"
+      :is-loading="isLoading"
+      :error="error"
+    >
+      <CodeBlock
+        :id="`code-block-${props.dataPath}`"
+        language="json"
+        :code="code"
+        is-searchable
+        :query-key="props.queryKey ?? `code-block-${props.dataPath}`"
+      />
+    </StatusInfo>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, PropType, ref, watch } from 'vue'
+import { KButton } from '@kong/kongponents'
 
 import { kumaApi } from '@/api/kumaApi'
 import CodeBlock from './CodeBlock.vue'
@@ -60,7 +74,7 @@ const props = defineProps({
 })
 
 const isLoading = ref(true)
-const error = ref<Error | undefined>(undefined)
+const error = ref<Error | null>(null)
 const code = ref('')
 
 watch(() => props.dppName, function () {
@@ -78,7 +92,7 @@ onMounted(function () {
 })
 
 async function fetchContent() {
-  error.value = undefined
+  error.value = null
   isLoading.value = true
 
   try {
@@ -120,10 +134,10 @@ async function fetchContent() {
   padding: var(--spacing-md);
 }
 
-.copy-button {
-  position: absolute;
-  top: var(--spacing-md);
-  right: var(--spacing-md);
-  display: block;
+.envoy-data-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
 }
 </style>

@@ -16,10 +16,11 @@
 </template>
 
 <script lang="ts" setup>
+import { PropType } from 'vue'
+
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import { ApiError } from '@/services/kuma-api/ApiError'
 
 defineProps({
   isLoading: {
@@ -38,7 +39,7 @@ defineProps({
   },
 
   error: {
-    type: [Error, ApiError],
+    type: [Error, null] as PropType<Error | null>,
     required: false,
     default: null,
   },
