@@ -9,8 +9,8 @@ const FIELDS = {
   tag: { description: 'filter by tags' },
 }
 
-function renderComponent(props: any = {}) {
-  return mount(KFilterBar, {
+function renderComponent(props: Record<string, any>) {
+  return mount(KFilterBar as any, {
     props: {
       fields: FIELDS,
       ...props,
