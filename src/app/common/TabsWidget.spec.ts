@@ -3,8 +3,8 @@ import { mount } from '@vue/test-utils'
 
 import TabsWidget from './TabsWidget.vue'
 
-function renderComponent(props: any) {
-  return mount(TabsWidget, {
+function renderComponent(props: Record<string, any>) {
+  return mount(TabsWidget as any, {
     props,
     slots: {
       universal: '<div>Universal</div>',
