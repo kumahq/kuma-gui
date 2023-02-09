@@ -31,7 +31,7 @@ describe('env', () => {
       },
     )
     expect(env.var('KUMA_DOCS_URL')).toBe('http://docs.fake/110.127.x')
-    expect(env.var('KUMA_INSTALL_URL')).toBe('http://install.fake?utm_source=product&utm_medium=product')
+    expect(env.var('KUMA_INSTALL_URL')).toBe('http://install.fake?utm_source=product&utm_medium=product-GUI')
     expect(env.var('KUMA_VERSION')).toBe('110.127.30')
     expect(env.var('KUMA_API_URL')).toBe('/somewhere/else/')
     expect(env.var('KUMA_BASE_PATH')).toBe('/not/gui')
