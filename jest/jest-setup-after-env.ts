@@ -23,7 +23,7 @@ jest.mock('vue-github-button', () => ({ template: '<span />' }))
 /**
  * Adds the application’s router to vue test utils. This way tests don’t have to set-up a new router instance on their own.
  */
-const router = createRouter(get(TOKENS.routes))
+const router = createRouter(get(TOKENS.routes), get(TOKENS.store))
 config.global.plugins.push(router)
 
 /**

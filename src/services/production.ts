@@ -5,6 +5,7 @@ import KumaApi from '@/services/kuma-api/KumaApi'
 import routes from '@/router/routes'
 import { getNavItems } from '@/app/getNavItems'
 import { storeConfig, State } from '@/store/storeConfig'
+import { useApp } from '../index'
 
 import { InjectionKey } from 'vue'
 import { createStore, Store } from 'vuex'
@@ -30,6 +31,7 @@ export const TOKENS = {
   nav: service(() => (multizone: boolean, hasMeshes: boolean) => getNavItems(multizone, hasMeshes), { description: 'nav' }),
   routes: service(routes, { description: 'routes' }),
   logger: service(Logger, { description: 'logger' }),
+  app: service(useApp, { description: 'app' }),
 }
 
 injected(Env, TOKENS.EnvVars)
@@ -38,3 +40,4 @@ injected(storeConfig, TOKENS.api)
 injected(createStore<State>, TOKENS.storeConfig)
 injected(routes, TOKENS.store)
 injected(Logger, TOKENS.Env)
+injected(useApp, TOKENS.env, TOKENS.routes, TOKENS.logger, TOKENS.api, TOKENS.store, TOKENS.storeKey)

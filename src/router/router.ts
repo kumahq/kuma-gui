@@ -5,19 +5,20 @@ import {
   Router,
   RouteRecordRaw,
 } from 'vue-router'
+import type { State } from '@/store/storeConfig'
+import type { Store } from 'vuex'
 
-import { store } from '@/store/store'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
-export function createRouter(routes: readonly RouteRecordRaw[], baseGuiPath: string = '/'): Router {
+export function createRouter(routes: readonly RouteRecordRaw[], store: Store<State>, baseGuiPath: string = '/'): Router {
   const router = createVueRouter({
     history: createWebHistory(baseGuiPath),
     routes,
   })
 
-  router.beforeEach(redirectOldHashHistoryUrlPaths)
-  router.beforeEach(updateSelectedMeshGuard)
-  router.beforeEach(onboardingRouteGuard)
+  router.beforeEach(redirectOldHashHistoryUrlPaths())
+  router.beforeEach(updateSelectedMeshGuard(store))
+  router.beforeEach(onboardingRouteGuard(store))
 
   return router
 }
@@ -25,7 +26,7 @@ export function createRouter(routes: readonly RouteRecordRaw[], baseGuiPath: str
 /**
  * Redirects navigations to old hash history-style URL paths.
  */
-const redirectOldHashHistoryUrlPaths: NavigationGuard = function (to, _from, next) {
+const redirectOldHashHistoryUrlPaths = (): NavigationGuard => (to, _from, next) => {
   if (to.fullPath.startsWith('/#/')) {
     next(to.fullPath.substring(2))
   } else {
@@ -36,7 +37,7 @@ const redirectOldHashHistoryUrlPaths: NavigationGuard = function (to, _from, nex
 /**
  * Updates `state.selectedMesh` when navigating to a page associated to a different mesh.
  */
-const updateSelectedMeshGuard: NavigationGuard = function (to, _from, next) {
+const updateSelectedMeshGuard = (store: Store<State>): NavigationGuard => (to, _from, next) => {
   if (to.params.mesh && to.params.mesh !== store.state.selectedMesh) {
     store.dispatch('updateSelectedMesh', to.params.mesh)
   }
@@ -49,7 +50,7 @@ const updateSelectedMeshGuard: NavigationGuard = function (to, _from, next) {
  *
  * Redirects the user to the home view if they’re navigating to an onboarding route while having already completed onboarding. An exception is made when we suggest onboarding for users who don’t have data plane proxies, yet (we show an alert suggesting it and allow going to the onboarding again).
  */
-const onboardingRouteGuard: NavigationGuard = function (to, _from, next) {
+const onboardingRouteGuard = (store: Store<State>): NavigationGuard => (to, _from, next) => {
   const isOnboardingCompleted = store.state.onboarding.isCompleted
   const isOnboardingRoute = to.meta.onboardingProcess
   const shouldSuggestOnboarding = store.getters.shouldSuggestOnboarding
