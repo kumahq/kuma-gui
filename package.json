@@ -4,6 +4,7 @@
   "private": true,
   "description": "Kuma Manager",
   "author": "Kong",
+  "main": "src/index.ts",
   "scripts": {
     "dev": "yarn run dev:mock-api",
     "dev:mock-api": "cross-env VITE_MOCK_API_ENABLED=true vite -c ./vite.config.development.ts",
