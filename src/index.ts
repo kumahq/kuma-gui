@@ -17,7 +17,7 @@ import type { State } from '@/store/storeConfig'
 
 export function useApp(
   env: (key: keyof EnvVars) => string,
-  routes: readonly RouteRecordRaw[],
+  routes: RouteRecordRaw[],
   logger: {setup: (config: ClientConfigInterface) => void},
   kumaApi: KumaApi,
   store: Store<State>,
