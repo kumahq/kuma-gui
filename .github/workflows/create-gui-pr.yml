@@ -1,4 +1,4 @@
-name: Update kuma-gui in kuma
+name: 'Create GUI update PR'
 
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
@@ -11,23 +11,14 @@ concurrency:
 on:
   push:
       # See “Filter pattern cheat sheet” https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
-    branches: [ master, 'release-[0-9]+.[0-9]+' ]
+    branches: [master, 'release-[0-9]+.[0-9]+']
 
 jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
-    name: Create PR
+    name: Create GUI update PR
     runs-on: ubuntu-latest
     steps:
-      - name: Generate GitHub App token
-        # https://github.com/tibdex/github-app-token
-        # Note: Specifically references https://github.com/tibdex/github-app-token/commit/b62528385c34dbc9f38e5f4225ac829252d1ea92 (v1.8.0) to ensure that this exact version of the workflow action is used. This is a security precaution as automatically opting into newer versions of the action could leak or get the app token stolen.
-        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
-        id: generate-token
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Check-out GUI
         uses: actions/checkout@v3
 
@@ -52,6 +43,15 @@ jobs:
       - name: Build dist
         run: yarn run build
 
+      - name: Generate GitHub app token
+        # https://github.com/tibdex/github-app-token
+        # Note: Specifically references https://github.com/tibdex/github-app-token/commit/b62528385c34dbc9f38e5f4225ac829252d1ea92 (v1.8.0) to ensure that this exact version of the workflow action is used. This is a security precaution as automatically opting into newer versions of the action could leak or get the app token stolen.
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        id: github-app-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Check-out main application
         uses: actions/checkout@v3
         with:
@@ -72,7 +72,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         with:
           # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
-          token: ${{ steps.generate-token.outputs.token }}
+          token: ${{ steps.github-app-token.outputs.token }}
           path: main-application
           # Allows merges into release branches (see note 1 above).
           base: ${{ github.ref_name }}
