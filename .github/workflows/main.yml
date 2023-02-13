@@ -31,7 +31,7 @@ jobs:
         with:
           path: |
             **/node_modules
-            dist
+            ${{ vars.DIST_DIRECTORY }}
           key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
