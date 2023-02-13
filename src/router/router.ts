@@ -10,7 +10,7 @@ import type { Store } from 'vuex'
 
 import { ClientStorage } from '@/utilities/ClientStorage'
 
-export function createRouter(routes: readonly RouteRecordRaw[], store: Store<State>, baseGuiPath: string = '/'): Router {
+export function createRouter(routes: RouteRecordRaw[], store: Store<State>, baseGuiPath: string = '/'): Router {
   const router = createVueRouter({
     history: createWebHistory(baseGuiPath),
     routes,

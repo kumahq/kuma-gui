@@ -8,7 +8,7 @@ import {
 } from 'vue-router'
 import { getLastNumberParameter } from '@/router/getLastParameter'
 
-export default (store: Store<State>): readonly RouteRecordRaw[] => {
+export default (store: Store<State>): RouteRecordRaw[] => {
   return [
     {
       path: '/404',
