@@ -1,0 +1,27 @@
+name: 'Dispatch merged PR notification'
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [ master, 'release-[0-9]+.[0-9]+' ]
+
+jobs:
+  dispatch-merged-pr-notififcation:
+    if: github.event.pull_request.merged
+    name: 'Dispatch merged PR notification'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Send repository dispatch event'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.NOTIFY_BOT_PAT_TOKEN }}
+          script: |
+            return github.rest.repos.createDispatchEvent({
+              owner: '${{ vars.NOTIFY_REPO_OWNER }}',
+              repo: '${{ vars.NOTIFY_REPO_NAME }}',
+              event_type: '${{ vars.NOTIFY_EVENT_TYPE }}',
+              client_payload: {
+                branch: context.payload.pull_request.base.ref,
+                pr: context.payload.pull_request.number,
+              },
+            })
