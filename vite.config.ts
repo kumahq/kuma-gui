@@ -11,7 +11,7 @@ import { PATH_CONFIG_DEFAULT } from './src/pathConfigDefault'
 dotenv.config()
 
 // https://vitejs.dev/config/
-export const config:UserConfigFn = ({ mode }) => {
+export const config: UserConfigFn = ({ mode }) => {
   return {
     base: './',
     server: {
