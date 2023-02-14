@@ -7,6 +7,8 @@ import PostgresGraph from '@/app/onboarding/components/graphs/PostgresGraph.vue'
 import MemoryGraph from '@/app/onboarding/components/graphs/MemoryGraph.vue'
 import MultizoneGraph from '@/app/onboarding/components/graphs/MultizoneGraph.vue'
 import StandaloneGraph from '@/app/onboarding/components/graphs/StandaloneGraph.vue'
+import AppSidebar from '@/app/AppSidebar.vue'
+import AppHeader from '@/app/AppHeader.vue'
 
 export const TOKENS = {
   KumaLogo: service(() => KumaLogo, { description: 'KumaLogo' }),
@@ -17,6 +19,8 @@ export const TOKENS = {
   MemoryGraph: service(() => MemoryGraph, { description: 'MemoryGraph' }),
   MultizoneGraph: service(() => MultizoneGraph, { description: 'MultizoneGraph' }),
   StandaloneGraph: service(() => StandaloneGraph, { description: 'StandaloneGraph' }),
+  AppSidebar: service(() => AppSidebar, { description: 'AppSidebar' }),
+  AppHeader: service(() => AppHeader, { description: 'AppHeader' }),
 }
 export const [
   useKumaLogo,
@@ -27,6 +31,8 @@ export const [
   useMemoryGraph,
   useMultizoneGraph,
   useStandaloneGraph,
+  useAppSidebar,
+  useAppHeader,
 ] = createInjections(
   TOKENS.KumaLogo,
   TOKENS.GithubButton,
@@ -36,4 +42,6 @@ export const [
   TOKENS.MemoryGraph,
   TOKENS.MultizoneGraph,
   TOKENS.StandaloneGraph,
+  TOKENS.AppSidebar,
+  TOKENS.AppHeader,
 )

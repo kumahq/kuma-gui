@@ -51,12 +51,21 @@ import { useRoute } from 'vue-router'
 import { useStore } from '@/store/store'
 import AppBreadcrumbs from './AppBreadcrumbs.vue'
 import AppErrorMessage from './AppErrorMessage.vue'
-import AppHeader from './AppHeader.vue'
 import AppLoadingBar from './AppLoadingBar.vue'
 import AppOnboardingNotification from './AppOnboardingNotification.vue'
-import AppSidebar from './AppSidebar.vue'
 import NotificationManager from '@/app/notification-manager/components/NotificationManager.vue'
+import {
+  useAppSidebar,
+  useAppHeader,
+} from '@/components'
 
+const [
+  AppSidebar,
+  AppHeader,
+] = [
+  useAppSidebar(),
+  useAppHeader(),
+]
 const store = useStore()
 const route = useRoute()
 
