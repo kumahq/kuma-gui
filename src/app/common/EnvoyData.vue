@@ -32,9 +32,11 @@
 import { onMounted, PropType, ref, watch } from 'vue'
 import { KButton } from '@kong/kongponents'
 
-import { kumaApi } from '@/api/kumaApi'
 import CodeBlock from './CodeBlock.vue'
 import StatusInfo from './StatusInfo.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const props = defineProps({
   dataPath: {

@@ -441,7 +441,6 @@ import { KAlert, KButton, KCard } from '@kong/kongponents'
 
 import { formatForCLI } from '../formatForCLI'
 import { kebabCase } from '@/utilities/helpers'
-import { kumaApi } from '@/api/kumaApi'
 import { PRODUCT_NAME } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import { useStore } from '@/store/store'
@@ -451,6 +450,9 @@ import EntityScanner from '../components/EntityScanner.vue'
 import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
 import FormFragment from '../components/FormFragment.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const EXAMPLE_CODE = `apiVersion: 'kuma.io/v1alpha1'
 kind: Dataplane

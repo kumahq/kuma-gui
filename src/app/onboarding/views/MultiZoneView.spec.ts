@@ -2,7 +2,9 @@ import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import MultiZoneView from './MultiZoneView.vue'
-import { kumaApi } from '@/api/kumaApi'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 function renderComponent() {
   return mount(MultiZoneView)

@@ -28,13 +28,15 @@ import { useRoute } from 'vue-router'
 import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
-import { kumaApi } from '@/api/kumaApi'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import { useStore } from '@/store/store'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import ServiceDetails from '../components/ServiceDetails.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const DPP_FILTER_FIELDS: FilterFields = {
   name: { description: 'filter by name or parts of a name' },

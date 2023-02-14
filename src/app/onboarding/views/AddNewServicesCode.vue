@@ -84,14 +84,15 @@
 <script lang="ts" setup>
 import { computed, onUnmounted, ref } from 'vue'
 
-import { kumaApi } from '@/api/kumaApi'
 import { useStore } from '@/store/store'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import { useKumaApi } from '@/utilities'
 
+const kumaApi = useKumaApi()
 const store = useStore()
 
 const LONG_POOLING_INTERVAL = 1000

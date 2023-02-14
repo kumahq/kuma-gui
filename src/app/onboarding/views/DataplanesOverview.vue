@@ -63,12 +63,14 @@ import { computed, onBeforeUnmount, ref } from 'vue'
 import { KTable } from '@kong/kongponents'
 
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { kumaApi } from '@/api/kumaApi'
 import LoadingBox from '../components/LoadingBox.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const TABLE_HEADERS = [
   { label: 'Mesh', key: 'mesh' },

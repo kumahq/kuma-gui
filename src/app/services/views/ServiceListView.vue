@@ -29,13 +29,14 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
-
 import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
-import { kumaApi } from '@/api/kumaApi'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import ServiceSummary from '../components/ServiceSummary.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const headers: TableHeader[] = [
   { label: 'Service', key: 'name' },

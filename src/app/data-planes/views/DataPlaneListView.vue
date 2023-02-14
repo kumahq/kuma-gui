@@ -20,9 +20,11 @@ import { useRoute } from 'vue-router'
 import { DataPlaneOverview } from '@/types/index.d'
 import { DataPlaneOverviewParameters } from '@/types/api'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
-import { kumaApi } from '@/api/kumaApi'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import DataPlaneList from '../components/DataPlaneList.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const PAGE_SIZE = 50
 
