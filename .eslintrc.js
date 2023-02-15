@@ -84,15 +84,6 @@ const INLINE_NON_VOID_ELEMENTS = [
         'no-undef': 'off',
         // Turns off some non-TypeScript rules in favor of their specific TypeScript rules to avoid false negatives:
         indent: 'off',
-        '@typescript-eslint/type-annotation-spacing': ['error', {
-          before: false,
-          after: true,
-          overrides: {
-            arrow: {
-              before: true,
-            },
-          },
-        }],
         '@typescript-eslint/indent': ['error', 2],
 
         'func-call-spacing': 'off',
@@ -102,6 +93,15 @@ const INLINE_NON_VOID_ELEMENTS = [
         '@typescript-eslint/no-unused-vars': [process.env.LINTER_MODE === 'strict' ? 'error' : 'warn', {
           argsIgnorePattern: '^_',
           ignoreRestSiblings: true,
+        }],
+        '@typescript-eslint/type-annotation-spacing': ['error', {
+          before: false,
+          after: true,
+          overrides: {
+            arrow: {
+              before: true,
+            },
+          },
         }],
       },
     },
