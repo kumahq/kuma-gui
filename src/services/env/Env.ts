@@ -59,10 +59,11 @@ export default class Env {
     if (pathConfigNode instanceof HTMLScriptElement) {
       try {
         return JSON.parse(pathConfigNode.innerText.trim())
-      } catch {
-        // Handled by falling back to a default value.
+      } catch (e) {
+        console.error(e)
       }
     }
+    console.error('Unable to parse kuma config. Falling back to defaults')
 
     // Falls back to a sensible default when encountering a malformed JSON payload
     // or non-replaced template.
