@@ -2,8 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import NotificationManager from './NotificationManager.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 
+const store = useStore()
 function renderComponent({ meshes, selectedMesh }: { meshes: any, selectedMesh: string }) {
   store.state.meshes = meshes
   store.state.selectedMesh = selectedMesh

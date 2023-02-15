@@ -2,8 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import AppSidebar from './AppSidebar.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 
+const store = useStore()
 async function renderComponent() {
   await store.dispatch('fetchPolicyTypes')
 

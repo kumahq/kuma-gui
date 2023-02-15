@@ -3,13 +3,16 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
-import { store } from '@/store/store'
 import { TOKENS } from '@/components'
 import { set } from '@/services'
+import { useStore, useEnv } from '@/utilities'
+
+const store = useStore()
 
 function renderComponent(status: string) {
+  const env = useEnv()
   store.state.globalLoading = true
-  store.state.config.tagline = import.meta.env.VITE_NAMESPACE
+  store.state.config.tagline = env('KUMA_PRODUCT_NAME')
   store.state.config.status = status
 
   // keeps the github-button as a <github-button> instead of a span in

@@ -2,10 +2,11 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import ConfigurationTypes from './ConfigurationTypes.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
+const store = useStore()
 function renderComponent(mode = 'standalone') {
   const clientConfig: ClientConfigInterface = { ...config, mode }
   store.state.config.clientConfig = clientConfig

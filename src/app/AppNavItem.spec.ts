@@ -2,8 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import AppNavItem from './AppNavItem.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 
+const store = useStore()
 function renderComponent() {
   return mount(AppNavItem, {
     props: {
