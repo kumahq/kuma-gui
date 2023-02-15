@@ -23,12 +23,13 @@ import { useRoute } from 'vue-router'
 
 import { DataPlane, DataPlaneOverview } from '@/types/index.d'
 import { useStore } from '@/store/store'
-import { kumaApi } from '@/api/kumaApi'
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { useKumaApi } from '@/utilities'
 
+const kumaApi = useKumaApi()
 const route = useRoute()
 const store = useStore()
 

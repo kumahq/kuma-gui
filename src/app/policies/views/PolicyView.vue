@@ -150,7 +150,6 @@ import {
 } from '@kong/kongponents'
 
 import { getSome, stripTimes } from '@/utilities/helpers'
-import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { PolicyEntity, TableHeader } from '@/types/index.d'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -163,7 +162,9 @@ import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
 
-import { useEnv } from '@/utilities'
+import { useEnv, useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 const env = useEnv()
 
 const tabs = [

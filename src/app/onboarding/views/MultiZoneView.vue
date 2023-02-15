@@ -75,13 +75,13 @@
 <script lang="ts" setup>
 import { onUnmounted, ref } from 'vue'
 
-import { kumaApi } from '@/api/kumaApi'
-import { useEnv } from '@/utilities'
 import LoadingBox from '../components/LoadingBox.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import { useEnv, useKumaApi } from '@/utilities'
 
+const kumaApi = useKumaApi()
 const env = useEnv()
 
 const LONG_POOLING_INTERVAL = 1000

@@ -111,11 +111,12 @@ import MeshCharts from '../components/MeshCharts.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { kumaApi } from '@/api/kumaApi'
 import { Mesh, MeshInsight } from '@/types/index.d'
 import { humanReadableDate, stripTimes } from '@/utilities/helpers'
 import { useStore } from '@/store/store'
+import { useKumaApi } from '@/utilities'
 
+const kumaApi = useKumaApi()
 const route = useRoute()
 const store = useStore()
 

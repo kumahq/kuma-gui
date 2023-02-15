@@ -26,5 +26,7 @@
 <script lang="ts" setup>
 import { KEmptyState, KIcon } from '@kong/kongponents'
 
-import { kumaApi } from '@/api/kumaApi'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 </script>
