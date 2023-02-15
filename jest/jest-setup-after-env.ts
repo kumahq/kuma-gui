@@ -72,7 +72,7 @@ afterEach(() => container.restore?.())
 // add a utility to easily setup/mock out API endpoints
 const re = /\+/g
 
-const useMock = (url: string, response: Record<string, unknown>):MockFunction => {
+const useMock = (url: string, response: Record<string, unknown>): MockFunction => {
   return (_opts, cb) => {
     server.use(
       rest.get(`${import.meta.env.VITE_KUMA_API_SERVER_URL.slice(0, -1)}${url.replace(re, '\\+')}`, (req, res, ctx) => {
