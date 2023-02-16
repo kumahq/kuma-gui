@@ -2,13 +2,14 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneDetails from './DataPlaneDetails.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 import { createDataPlane } from '@/test-data/createDataPlane'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
 
 const dataPlane = createDataPlane()
 const dataPlaneOverview = createDataPlaneOverview()
 
+const store = useStore()
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicyTypes')
 

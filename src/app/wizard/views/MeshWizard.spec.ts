@@ -2,10 +2,11 @@ import { describe, expect, test } from '@jest/globals'
 import { DOMWrapper, flushPromises, mount, VueWrapper } from '@vue/test-utils'
 
 import MeshWizard from './MeshWizard.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
 
+const store = useStore()
 function renderComponent(mode = 'standalone') {
   store.state.config.tagline = import.meta.env.VITE_NAMESPACE
   store.state.config.kumaDocsVersion = '1.2.0'

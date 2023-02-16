@@ -27,11 +27,6 @@ const router = createRouter(get(TOKENS.routes), get(TOKENS.store))
 config.global.plugins.push(router)
 
 /**
- * Adds the application’s Vuex store to vue test utils. This way tests don’t have to set-up a new store instance on their own.
- */
-config.global.plugins.push([get(TOKENS.store), get(TOKENS.storeKey)])
-
-/**
  * Kongponents uses generated UUIDs for several attribute values.
  * This breaks the project’s snapshot tests since they’re based on fully-mounted components
  * which also includes those from external sources like Kongponents.

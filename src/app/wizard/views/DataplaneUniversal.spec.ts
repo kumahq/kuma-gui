@@ -2,8 +2,9 @@ import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataplaneUniversal from './DataplaneUniversal.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 
+const store = useStore()
 function renderComponent() {
   return mount(DataplaneUniversal)
 }
