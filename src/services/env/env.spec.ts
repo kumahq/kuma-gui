@@ -28,6 +28,7 @@ describe('env', () => {
         KUMA_INSTALL_URL: 'http://install.fake',
         KUMA_VERSION_URL: 'http://version.fake',
         KUMA_DOCS_URL: 'http://docs.fake',
+        KUMA_API_URL: '/somewhere/else/',
       },
     )
     expect(env.var('KUMA_DOCS_URL')).toBe('http://docs.fake/110.127.x')

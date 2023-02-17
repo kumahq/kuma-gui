@@ -5,7 +5,7 @@ import * as MakeRequestModule from './makeRequest'
 
 describe('RestClient', () => {
   test('has expected initial base URL', () => {
-    const restClient = new RestClient()
+    const restClient = new RestClient('http://localhost:5681')
 
     expect(restClient.baseUrl).toBe('http://localhost:5681')
   })
@@ -20,7 +20,7 @@ describe('RestClient', () => {
     ['http://localhost:1234/api', 'http://localhost:1234/api'],
     ['http://localhost:1234/api/', 'http://localhost:1234/api'],
   ])('sets expected base URL for “%s”', (newBaseUrl, expectedBaseUrl) => {
-    const restClient = new RestClient()
+    const restClient = new RestClient('http://localhost:5681')
 
     restClient.baseUrl = newBaseUrl
 
@@ -84,7 +84,7 @@ describe('RestClient', () => {
       data: null,
     }))
 
-    const restClient = new RestClient()
+    const restClient = new RestClient('http://localhost:5681')
     restClient.raw('path', { params })
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions)

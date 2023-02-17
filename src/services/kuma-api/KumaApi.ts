@@ -31,8 +31,9 @@ import Env from '@/services/env/Env'
 export default class KumaApi {
   client: RestClient
   env: Env
+
   constructor(env: Env) {
-    this.client = new RestClient()
+    this.client = new RestClient(env.var('KUMA_API_URL'))
     this.env = env
   }
 

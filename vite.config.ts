@@ -6,12 +6,14 @@ import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
 import vue from '@vitejs/plugin-vue'
 
-import { PATH_CONFIG_DEFAULT } from './src/pathConfigDefault'
+import { getPathConfigDefault } from './src/pathConfigDefault'
 
 dotenv.config()
 
 // https://vitejs.dev/config/
 export const config: UserConfigFn = ({ mode }) => {
+  const pathConfigDefault = getPathConfigDefault(process.env.VITE_KUMA_API_SERVER_URL as string)
+
   return {
     base: './',
     server: {
@@ -38,8 +40,8 @@ export const config: UserConfigFn = ({ mode }) => {
             /**
              * Adds the appropriate GUI base path placeholder to the index.html file. It is going to be replaced using server-side templating when serving the GUI application in production.
              */
-            baseGuiPath: mode === 'production' ? '{{.BaseGuiPath}}' : PATH_CONFIG_DEFAULT.baseGuiPath,
-            config: mode === 'production' ? '{{.}}' : JSON.stringify(PATH_CONFIG_DEFAULT),
+            baseGuiPath: mode === 'production' ? '{{.BaseGuiPath}}' : pathConfigDefault.baseGuiPath,
+            config: mode === 'production' ? '{{.}}' : JSON.stringify(pathConfigDefault),
           },
         },
       }),

@@ -1,4 +1,4 @@
-import { PATH_CONFIG_DEFAULT } from '@/pathConfigDefault'
+import { getPathConfigDefault } from '@/pathConfigDefault'
 import { PathConfig } from '@/types/index'
 
 export type EnvArgs = {
@@ -8,6 +8,7 @@ export type EnvArgs = {
   KUMA_INSTALL_URL: string
   KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
+  KUMA_API_URL: string
 }
 type EnvProps = {
   KUMA_VERSION: string
@@ -65,7 +66,7 @@ export default class Env {
 
     // Falls back to a sensible default when encountering a malformed JSON payload
     // or non-replaced template.
-    return PATH_CONFIG_DEFAULT
+    return getPathConfigDefault(import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL)
   }
 }
 
