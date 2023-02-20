@@ -50,6 +50,10 @@ export default class KumaApi {
     this.client.baseUrl = baseUrl
   }
 
+  setHeader(name: string, value: string): void {
+    this.client.setHeader(name, value)
+  }
+
   getInfo(): Promise<Info> {
     return this.client.get('')
   }
