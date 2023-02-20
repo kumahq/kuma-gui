@@ -1,12 +1,16 @@
 import { makeRequest } from './makeRequest'
 
-const DEFAULT_BASE_URL = import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL
-
 export class RestClient {
   /**
    * The API base URL. **Will always be stored without a trailing slash**.
    */
-  _baseUrl: string = DEFAULT_BASE_URL
+  _baseUrl: string
+  _defaultBaseUrl: string
+
+  constructor(defaultBaseUrl: string) {
+    this._baseUrl = defaultBaseUrl
+    this._defaultBaseUrl = defaultBaseUrl
+  }
 
   /**
    * The absolute API base URL used in all requests. Includes its base path segment if one is set.
@@ -23,7 +27,7 @@ export class RestClient {
       this._baseUrl = trimTrailingSlashes(baseUrlOrPath)
     } else {
       const basePath = trimSlashes(baseUrlOrPath)
-      this._baseUrl = [DEFAULT_BASE_URL, basePath].filter((segment) => segment !== '').join('/')
+      this._baseUrl = [this._defaultBaseUrl, basePath].filter((segment) => segment !== '').join('/')
     }
   }
 
