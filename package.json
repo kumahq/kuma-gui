@@ -30,7 +30,7 @@
     "chart.js": "^4.2.1",
     "prismjs": "^1.29.0",
     "semver": "^7.3.8",
-    "tailwindcss": "^3.2.6",
+    "tailwindcss": "^3.2.7",
     "vue": "^3.2.47",
     "vue-chartjs": "^5.2.0",
     "vue-github-button": "^3.1.0",
