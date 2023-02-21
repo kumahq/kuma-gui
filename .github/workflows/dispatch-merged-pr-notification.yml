@@ -22,6 +22,5 @@ jobs:
               event_type: '${{ vars.NOTIFY_EVENT_TYPE }}',
               client_payload: {
                 branch: context.payload.pull_request.base.ref,
-                pr: context.payload.pull_request.number,
               },
             })
