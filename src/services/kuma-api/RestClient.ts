@@ -6,6 +6,7 @@ export class RestClient {
    */
   _baseUrl: string
   _defaultBaseUrl: string
+  _headers: Headers = new Headers()
 
   constructor(defaultBaseUrl: string) {
     this._baseUrl = defaultBaseUrl
@@ -31,6 +32,14 @@ export class RestClient {
     }
   }
 
+  get headers() {
+    return this._headers
+  }
+
+  setHeader(name: string, value: string) {
+    this.headers.set(name, value)
+  }
+
   /**
    * Performs a network request using the GET method.
    *
@@ -53,6 +62,10 @@ export class RestClient {
   async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
     const normalizedOptions = normalizeParameters(options)
     const url = urlOrPath.startsWith('http') ? urlOrPath : [this.baseUrl, urlOrPath].join('/')
+
+    if (Object.keys(this.headers).length > 0) {
+      normalizedOptions.headers = this.headers
+    }
 
     return makeRequest(url, normalizedOptions)
   }
