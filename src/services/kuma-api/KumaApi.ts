@@ -50,8 +50,13 @@ export default class KumaApi {
     this.client.baseUrl = baseUrl
   }
 
-  setHeader(name: string, value: string): void {
-    this.client.setHeader(name, value)
+  /**
+   * Sets the default options to be used for [the fetch API’s `options` parameter][1].
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
+   */
+  setOptions(options: RequestInit): void {
+    this.client.options = options
   }
 
   getInfo(): Promise<Info> {

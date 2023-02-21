@@ -6,7 +6,7 @@ export class RestClient {
    */
   _baseUrl: string
   _defaultBaseUrl: string
-  _headers: Headers = new Headers()
+  _options: RequestInit = {}
 
   constructor(defaultBaseUrl: string) {
     this._baseUrl = defaultBaseUrl
@@ -32,12 +32,12 @@ export class RestClient {
     }
   }
 
-  get headers() {
-    return this._headers
+  get options() {
+    return this._options
   }
 
-  setHeader(name: string, value: string) {
-    this.headers.set(name, value)
+  set options(options: RequestInit) {
+    this._options = options
   }
 
   /**
@@ -60,12 +60,28 @@ export class RestClient {
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
   async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
-    const normalizedOptions = normalizeParameters(options)
     const url = urlOrPath.startsWith('http') ? urlOrPath : [this.baseUrl, urlOrPath].join('/')
 
-    if (Object.keys(this.headers).length > 0) {
-      normalizedOptions.headers = this.headers
+    const headers = new Headers(this.options.headers)
+
+    if (options !== undefined && 'headers' in options) {
+      // Ensures that we deal with a `Headers` object.
+      const overrideHeaders = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
+
+      // Sets override headers.
+      for (const [key, value] of overrideHeaders) {
+        headers.set(key, value)
+      }
     }
+
+    // Merges default options and override options.
+    const mergedOptions = { ...this.options, ...options }
+
+    if (Object.keys(headers).length > 0) {
+      mergedOptions.headers = headers
+    }
+
+    const normalizedOptions = normalizeParameters(mergedOptions)
 
     return makeRequest(url, normalizedOptions)
   }
