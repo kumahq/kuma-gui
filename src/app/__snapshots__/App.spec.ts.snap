@@ -214,7 +214,7 @@ exports[`App.vue fails to renders basic view 1`] = `
             persisted="false"
           >
             <div
-              class="k-popover k-dropdown-popover mt-1 undefined hide-caret"
+              class="k-popover k-dropdown-popover mt-1 hide-caret"
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
               role="region"
               style="width: 200px; max-width: 350px; max-height: auto; display: none;"

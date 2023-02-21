@@ -1427,9 +1427,9 @@
     "@jridgewell/sourcemap-codec" "1.4.14"
 
 "@kong/kongponents@^8.24.2":
-  version "8.24.2"
-  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.24.2.tgz#f82c4ab660829ea6257979b8d4c34c5cc1fda560"
-  integrity sha512-MPvt9kJcfTOh5bZZEBTfdLMIej+4ILQmnsylZy3H40aEhX5c1Qjg6cx0gBZCjWJEML3Yb5JYMMospROBQcmM+Q==
+  version "8.28.0"
+  resolved "https://registry.yarnpkg.com/@kong/kongponents/-/kongponents-8.28.0.tgz#613223015a02bed0c1d9d59ecdbc5f93573a8afb"
+  integrity sha512-9POz7vINs2rJ6W4zSCXWNY2hBvGLlITlGorE7nb6npcysJGU9r5iJFwbGN7y8yooVNKWXsNHttCqTdDYgOwCuw==
   dependencies:
     axios "^0.27.2"
     date-fns "^2.29.3"
