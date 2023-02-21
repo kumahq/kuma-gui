@@ -10,11 +10,10 @@ import type KumaApi from '@/services/kuma-api/KumaApi'
 import type { State } from '@/store/storeConfig'
 
 /**
- * Initializes and mounts the Vue application.
- *
  * This is a good place to run operations that should ideally be initiated or completed before the Vue application instance exists.
+ *
+ * @returns a factory creating an initialized Vue application with installed store and router without mounting it.
  */
-
 export function useApp(
   env: (key: keyof EnvVars) => string,
   routes: RouteRecordRaw[],
@@ -34,9 +33,12 @@ export function useApp(
       logger.setup(config)
     })()
   }
+
   return async (App: Component) => {
     const app = createApp(App)
+
     app.use(store, storeKey)
+
     await Promise.all([
       // Fetches basic resources before setting up the router and mounting the
       // application. This is mainly needed to properly redirect users to the
@@ -46,8 +48,9 @@ export function useApp(
       store.dispatch('fetchPolicyTypes'),
     ])
     const router = await createRouter(routes, store, env('KUMA_BASE_PATH'))
+
     app.use(router)
-    app.mount('#app')
+
     return app
   }
 }
