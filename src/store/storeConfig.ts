@@ -256,9 +256,11 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
     },
 
     actions: {
-      async bootstrap({ commit, dispatch, getters, state }) {
-        commit('SET_GLOBAL_LOADING', true)
+      updateGlobalLoading({ commit }, isLoading: boolean) {
+        commit('SET_GLOBAL_LOADING', isLoading)
+      },
 
+      async bootstrap({ dispatch, getters, state }) {
         // check the Kuma status before we do anything else
         await dispatch('config/getStatus')
 
@@ -295,8 +297,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             await dispatch('updateSelectedMesh', null)
           }
         }
-
-        commit('SET_GLOBAL_LOADING', false)
       },
 
       updatePageTitle({ commit }, pageTitle: string) {
