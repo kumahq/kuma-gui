@@ -2,15 +2,16 @@ import { makeRequest } from './makeRequest'
 
 export class RestClient {
   /**
-   * The API base URL. **Will always be stored without a trailing slash**.
+   * The API base URL.
    */
   _baseUrl: string
-  _defaultBaseUrl: string
   _options: RequestInit = {}
 
-  constructor(defaultBaseUrl: string) {
-    this._baseUrl = defaultBaseUrl
-    this._defaultBaseUrl = defaultBaseUrl
+  /**
+   * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
+   */
+  constructor(baseUrl: string) {
+    this._baseUrl = baseUrl
   }
 
   /**
@@ -21,15 +22,10 @@ export class RestClient {
   }
 
   /**
-   * @param baseUrlOrPath the API base URL or the API base path
+   * @param baseUrl the absolute API base URL. **Must not have trailing slashes**.
    */
-  set baseUrl(baseUrlOrPath: string) {
-    if (baseUrlOrPath.startsWith('http')) {
-      this._baseUrl = trimTrailingSlashes(baseUrlOrPath)
-    } else {
-      const basePath = trimSlashes(baseUrlOrPath)
-      this._baseUrl = [this._defaultBaseUrl, basePath].filter((segment) => segment !== '').join('/')
-    }
+  set baseUrl(baseUrl: string) {
+    this._baseUrl = baseUrl
   }
 
   get options() {
@@ -85,18 +81,6 @@ export class RestClient {
 
     return makeRequest(url, normalizedOptions)
   }
-}
-
-function trimTrailingSlashes(str: string): string {
-  return str.replace(/\/+$/, '')
-}
-
-function trimLeadingSlashes(str: string): string {
-  return str.replace(/^\/+/, '')
-}
-
-function trimSlashes(str: string): string {
-  return trimTrailingSlashes(trimLeadingSlashes(str))
 }
 
 function normalizeParameters(options?: RequestInit & { params?: any }): RequestInit & { params?: any } {

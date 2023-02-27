@@ -15,14 +15,8 @@ describe('RestClient', () => {
   })
 
   test.each([
-    ['api', 'http://localhost:5681/api'],
-    ['/api', 'http://localhost:5681/api'],
-    ['/api/', 'http://localhost:5681/api'],
-    ['test/api', 'http://localhost:5681/test/api'],
-    ['/test/api', 'http://localhost:5681/test/api'],
-    ['/test/api/', 'http://localhost:5681/test/api'],
     ['http://localhost:1234/api', 'http://localhost:1234/api'],
-    ['http://localhost:1234/api/', 'http://localhost:1234/api'],
+    ['http://localhost:1234/test/api', 'http://localhost:1234/test/api'],
   ])('sets expected base URL for “%s”', (newBaseUrl, expectedBaseUrl) => {
     const restClient = new RestClient('http://localhost:5681')
 

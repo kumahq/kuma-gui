@@ -64,9 +64,14 @@ export default class Env {
     // but we do want them for our users)
     if (pathConfigNode instanceof HTMLScriptElement) {
       try {
-        return JSON.parse(pathConfigNode.innerText.trim())
-      } catch (e) {
-        // console.error(e)
+        const config = JSON.parse(pathConfigNode.innerText.trim()) as PathConfig
+
+        // Ensures the config always has an absolute URL.
+        config.apiUrl = getAbsoluteUrl(window.location.origin, config.apiUrl)
+
+        return config
+      } catch {
+        // Handled by falling back to a default value.
       }
     }
     // console.error('Unable to parse kuma config. Falling back to defaults')
@@ -84,4 +89,20 @@ export function semver(version: string): { major: string, minor: string, patch: 
     patch: `${major}.${minor}.${patch}`,
     pre: `${major}.${minor}.${patch}${pre !== undefined ? `-${pre}` : ''}`,
   }
+}
+
+/**
+ * @returns an absolute URL given the current origin and a base URL or base path string. When a path is provided, it is concatenated to the current origin; when a URL is provided, no concatenation takes place. In both cases, the URL is returned without any trailing slashes.
+ */
+function getAbsoluteUrl(origin: string, baseUrlOrPath: string): string {
+  let baseUrl
+
+  if (baseUrlOrPath.startsWith('http')) {
+    baseUrl = baseUrlOrPath
+  } else {
+    const basePath = baseUrlOrPath.replace(/^\/+/, '')
+    baseUrl = [origin, basePath].filter((segment) => segment !== '').join('/')
+  }
+
+  return baseUrl.replace(/\/+$/, '')
 }
