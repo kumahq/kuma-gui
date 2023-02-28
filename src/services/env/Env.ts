@@ -67,7 +67,7 @@ export default class Env {
         const config = JSON.parse(pathConfigNode.textContent.trim()) as PathConfig
 
         // Ensures the config always has an absolute URL.
-        config.apiUrl = getAbsoluteUrl(window.location.origin, config.apiUrl)
+        config.apiUrl = getNormalizedApiUrl(config.apiUrl)
 
         return config
       } catch {
@@ -76,7 +76,7 @@ export default class Env {
     }
     // console.error('Unable to parse kuma config. Falling back to defaults')
 
-    return getPathConfigDefault(import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL)
+    return getPathConfigDefault(import.meta.env.PROD ? '/' : import.meta.env.VITE_KUMA_API_SERVER_URL)
   }
 }
 
@@ -92,17 +92,13 @@ export function semver(version: string): { major: string, minor: string, patch: 
 }
 
 /**
- * @returns an absolute URL given the current origin and a base URL or base path string. When a path is provided, it is concatenated to the current origin; when a URL is provided, no concatenation takes place. In both cases, the URL is returned without any trailing slashes.
+ * @returns a normalized API URL or URL path without trailing slashes. URL paths will always have a leading slash.
  */
-function getAbsoluteUrl(origin: string, baseUrlOrPath: string): string {
-  let baseUrl
-
+function getNormalizedApiUrl(baseUrlOrPath: string): string {
   if (baseUrlOrPath.startsWith('http')) {
-    baseUrl = baseUrlOrPath
+    return baseUrlOrPath.replace(/\/+$/, '')
   } else {
-    const basePath = baseUrlOrPath.replace(/^\/+/, '')
-    baseUrl = [origin, basePath].filter((segment) => segment !== '').join('/')
+    const basePath = (baseUrlOrPath.startsWith('/') ? '' : '/') + baseUrlOrPath
+    return basePath === '/' ? '/' : basePath.replace(/\/+$/, '')
   }
-
-  return baseUrl.replace(/\/+$/, '')
 }

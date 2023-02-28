@@ -46,9 +46,11 @@ describe('env', () => {
   })
 
   test.each([
-    ['/', 'http://localhost'],
-    ['/api', 'http://localhost/api'],
-    ['/api/', 'http://localhost/api'],
+    ['', '/'],
+    ['api', '/api'],
+    ['/', '/'],
+    ['/api', '/api'],
+    ['/api/', '/api'],
     ['http://example.org', 'http://example.org'],
     ['http://example.org/', 'http://example.org'],
     ['http://example.org/api', 'http://example.org/api'],
