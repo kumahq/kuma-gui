@@ -56,17 +56,21 @@ export default class Env {
   protected getConfig(): PathConfig {
     const pathConfigNode = document.querySelector('#kuma-config')
 
+    // Falls back to a sensible default when encountering a malformed JSON
+    // payload or non-replaced template, or during CLI tests when there is no
+    // HTML file.
+
+    // TODO: Uncomment noisy console errors (we don't want them during testing
+    // but we do want them for our users)
     if (pathConfigNode instanceof HTMLScriptElement) {
       try {
         return JSON.parse(pathConfigNode.innerText.trim())
       } catch (e) {
-        console.error(e)
+        // console.error(e)
       }
     }
-    console.error('Unable to parse kuma config. Falling back to defaults')
+    // console.error('Unable to parse kuma config. Falling back to defaults')
 
-    // Falls back to a sensible default when encountering a malformed JSON payload
-    // or non-replaced template.
     return getPathConfigDefault(import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL)
   }
 }
