@@ -23,7 +23,7 @@
     "yarn": "^1.22.0"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^4.34.1",
+    "@datadog/browser-logs": "^4.34.2",
     "@kong/kongponents": "^8.29.2",
     "brandi": "^5.0.0",
     "js-yaml": "^4.1.0",
