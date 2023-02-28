@@ -62,9 +62,9 @@ export default class Env {
 
     // TODO: Uncomment noisy console errors (we don't want them during testing
     // but we do want them for our users)
-    if (pathConfigNode instanceof HTMLScriptElement) {
+    if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       try {
-        const config = JSON.parse(pathConfigNode.innerText.trim()) as PathConfig
+        const config = JSON.parse(pathConfigNode.textContent.trim()) as PathConfig
 
         // Ensures the config always has an absolute URL.
         config.apiUrl = getAbsoluteUrl(window.location.origin, config.apiUrl)
