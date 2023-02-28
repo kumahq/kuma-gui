@@ -641,10 +641,8 @@ import { ClientStorage } from '@/utilities/ClientStorage'
 import { computed, ref, watch } from 'vue'
 import { formatForCLI } from '../formatForCLI'
 import { kebabCase } from '@/utilities/helpers'
-import { kumaApi } from '@/api/kumaApi'
 import { PRODUCT_NAME } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
-import { useEnv } from '@/utilities'
 import { useStore } from '@/store/store'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import EntityScanner from '../components/EntityScanner.vue'
@@ -652,6 +650,9 @@ import FormFragment from '../components/FormFragment.vue'
 import meshSchema from './MeshSchema'
 import StepSkeleton from '../components/StepSkeleton.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import { useEnv, useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const STEPS = [
   {

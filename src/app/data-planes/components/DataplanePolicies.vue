@@ -35,7 +35,6 @@
 import { PropType, ref, watch } from 'vue'
 
 import { useStore } from '@/store/store'
-import { kumaApi } from '@/api/kumaApi'
 import { toYaml } from '@/utilities/toYaml'
 import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
@@ -59,7 +58,9 @@ import {
   RuleEntryConnection,
   SidecarDataplane,
 } from '@/types/index.d'
+import { useKumaApi } from '@/utilities'
 
+const kumaApi = useKumaApi()
 const store = useStore()
 
 const props = defineProps({

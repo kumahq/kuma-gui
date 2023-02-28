@@ -2,9 +2,10 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 import { createPolicyTypeEntries } from '@/test-data/createPolicyTypeEntries'
 
+const store = useStore()
 const policyTypeEntries = createPolicyTypeEntries()
 
 async function renderComponent(props = {}) {

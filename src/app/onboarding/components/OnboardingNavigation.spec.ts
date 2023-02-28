@@ -2,8 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import OnboardingNavigation from './OnboardingNavigation.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 
+const store = useStore()
 function renderComponent(props = {}) {
   return mount(OnboardingNavigation, {
     props: {

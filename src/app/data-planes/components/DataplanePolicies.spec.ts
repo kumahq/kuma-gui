@@ -3,12 +3,13 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import DataplanePolicies from './DataplanePolicies.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 import { server } from '@/../jest/jest-setup-after-env'
 import {
   DataPlane,
 } from '@/types/index.d'
 
+const store = useStore()
 async function renderComponent(props = {}) {
   await store.dispatch('fetchPolicyTypes')
   const dataPlane: DataPlane = {

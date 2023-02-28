@@ -31,8 +31,9 @@ import Env from '@/services/env/Env'
 export default class KumaApi {
   client: RestClient
   env: Env
+
   constructor(env: Env) {
-    this.client = new RestClient()
+    this.client = new RestClient(env.var('KUMA_API_URL'))
     this.env = env
   }
 
@@ -47,6 +48,15 @@ export default class KumaApi {
    */
   setBaseUrl(baseUrl: string): void {
     this.client.baseUrl = baseUrl
+  }
+
+  /**
+   * Sets the default options to be used for [the fetch API’s `options` parameter][1].
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
+   */
+  setOptions(options: RequestInit): void {
+    this.client.options = options
   }
 
   getInfo(): Promise<Info> {

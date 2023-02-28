@@ -118,7 +118,6 @@ import { KButton, KCard } from '@kong/kongponents'
 
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import { getSome } from '@/utilities/helpers'
-import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import { TableHeader, ZoneIngressOverview } from '@/types/index.d'
@@ -133,6 +132,9 @@ import MultizoneInfo from '../components/MultizoneInfo.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {
   title: 'No Data',

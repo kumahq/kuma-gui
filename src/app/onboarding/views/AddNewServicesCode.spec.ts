@@ -2,7 +2,9 @@ import { describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import AddNewServicesCode from './AddNewServicesCode.vue'
-import { kumaApi } from '@/api/kumaApi'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 function renderComponent() {
   return mount(AddNewServicesCode)

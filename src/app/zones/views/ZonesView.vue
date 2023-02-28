@@ -127,7 +127,6 @@ import { KBadge, KButton, KCard } from '@kong/kongponents'
 
 import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
 import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
-import { kumaApi } from '@/api/kumaApi'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
 import { KDSSubscription, TableHeader, ZoneCompatibility, ZoneOverview } from '@/types/index.d'
@@ -143,6 +142,9 @@ import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const EMPTY_STATE = {
   title: 'No Data',

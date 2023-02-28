@@ -3,13 +3,16 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
-import { store } from '@/store/store'
 import { TOKENS } from '@/components'
 import { set } from '@/services'
+import { useStore, useEnv } from '@/utilities'
+
+const store = useStore()
 
 function renderComponent(status: string) {
+  const env = useEnv()
   store.state.globalLoading = true
-  store.state.config.tagline = import.meta.env.VITE_NAMESPACE
+  store.state.config.tagline = env('KUMA_PRODUCT_NAME')
   store.state.config.status = status
 
   // keeps the github-button as a <github-button> instead of a span in
@@ -34,10 +37,13 @@ describe('App.vue', () => {
   test('renders main view when successful', async () => {
     withVersion('10.2.0')
     const wrapper = renderComponent('OK')
-    store.dispatch('bootstrap')
 
+    await store.dispatch('updateGlobalLoading', true)
+    store.dispatch('bootstrap')
     expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(true)
+
     await flushPromises()
+    await store.dispatch('updateGlobalLoading', false)
     expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(false)
 
     expect(wrapper.html()).toContain('Create a virtual mesh')
@@ -46,10 +52,13 @@ describe('App.vue', () => {
   test('fails to renders basic view', async () => {
     withVersion('10.2.0')
     const wrapper = renderComponent('ERROR')
-    store.dispatch('bootstrap')
 
+    await store.dispatch('updateGlobalLoading', true)
+    store.dispatch('bootstrap')
     expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(true)
+
     await flushPromises()
+    await store.dispatch('updateGlobalLoading', false)
     expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(false)
 
     expect(wrapper.element).toMatchSnapshot()

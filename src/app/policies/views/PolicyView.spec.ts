@@ -2,11 +2,12 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import PolicyView from './PolicyView.vue'
-import { store } from '@/store/store'
+import { useStore } from '@/utilities'
 import { router } from '@/../jest/jest-setup-after-env'
 
+const store = useStore()
 async function createWrapper(props = {}) {
-  router.push({ name: 'mesh-detail-view', params: { mesh: 'default' } })
+  await router.push({ name: 'mesh-detail-view', params: { mesh: 'default' } })
   await store.dispatch('fetchPolicyTypes')
 
   return mount(PolicyView, {

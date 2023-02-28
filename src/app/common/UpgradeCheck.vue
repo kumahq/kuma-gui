@@ -33,8 +33,9 @@ import { ref } from 'vue'
 import compare from 'semver/functions/compare'
 import { KAlert, KButton } from '@kong/kongponents'
 
-import { kumaApi } from '@/api/kumaApi'
-import { useEnv } from '@/utilities'
+import { useEnv, useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 const env = useEnv()
 
 const latestVersion = ref('')

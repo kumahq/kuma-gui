@@ -1,12 +1,17 @@
 import { makeRequest } from './makeRequest'
 
-const DEFAULT_BASE_URL = import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL
-
 export class RestClient {
   /**
    * The API base URL. **Will always be stored without a trailing slash**.
    */
-  _baseUrl: string = DEFAULT_BASE_URL
+  _baseUrl: string
+  _defaultBaseUrl: string
+  _options: RequestInit = {}
+
+  constructor(defaultBaseUrl: string) {
+    this._baseUrl = defaultBaseUrl
+    this._defaultBaseUrl = defaultBaseUrl
+  }
 
   /**
    * The absolute API base URL used in all requests. Includes its base path segment if one is set.
@@ -23,8 +28,16 @@ export class RestClient {
       this._baseUrl = trimTrailingSlashes(baseUrlOrPath)
     } else {
       const basePath = trimSlashes(baseUrlOrPath)
-      this._baseUrl = [DEFAULT_BASE_URL, basePath].filter((segment) => segment !== '').join('/')
+      this._baseUrl = [this._defaultBaseUrl, basePath].filter((segment) => segment !== '').join('/')
     }
+  }
+
+  get options() {
+    return this._options
+  }
+
+  set options(options: RequestInit) {
+    this._options = options
   }
 
   /**
@@ -47,8 +60,28 @@ export class RestClient {
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
   async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
-    const normalizedOptions = normalizeParameters(options)
     const url = urlOrPath.startsWith('http') ? urlOrPath : [this.baseUrl, urlOrPath].join('/')
+
+    const headers = new Headers(this.options.headers)
+
+    if (options !== undefined && 'headers' in options) {
+      // Ensures that we deal with a `Headers` object.
+      const overrideHeaders = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
+
+      // Sets override headers.
+      for (const [key, value] of overrideHeaders) {
+        headers.set(key, value)
+      }
+    }
+
+    // Merges default options and override options.
+    const mergedOptions = { ...this.options, ...options }
+
+    if (Object.keys(headers).length > 0) {
+      mergedOptions.headers = headers
+    }
+
+    const normalizedOptions = normalizeParameters(mergedOptions)
 
     return makeRequest(url, normalizedOptions)
   }

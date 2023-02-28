@@ -45,8 +45,10 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref, watch } from 'vue'
 
-import { kumaApi } from '@/api/kumaApi'
 import LabelList from '@/app/common/LabelList.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const props = defineProps({
   mesh: {

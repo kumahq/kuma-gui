@@ -94,6 +94,15 @@ const INLINE_NON_VOID_ELEMENTS = [
           argsIgnorePattern: '^_',
           ignoreRestSiblings: true,
         }],
+        '@typescript-eslint/type-annotation-spacing': ['error', {
+          before: false,
+          after: true,
+          overrides: {
+            arrow: {
+              before: true,
+            },
+          },
+        }],
       },
     },
   ],

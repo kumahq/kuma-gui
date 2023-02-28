@@ -27,11 +27,6 @@ const router = createRouter(get(TOKENS.routes), get(TOKENS.store))
 config.global.plugins.push(router)
 
 /**
- * Adds the application’s Vuex store to vue test utils. This way tests don’t have to set-up a new store instance on their own.
- */
-config.global.plugins.push([get(TOKENS.store), get(TOKENS.storeKey)])
-
-/**
  * Kongponents uses generated UUIDs for several attribute values.
  * This breaks the project’s snapshot tests since they’re based on fully-mounted components
  * which also includes those from external sources like Kongponents.
@@ -72,7 +67,7 @@ afterEach(() => container.restore?.())
 // add a utility to easily setup/mock out API endpoints
 const re = /\+/g
 
-const useMock = (url: string, response: Record<string, unknown>):MockFunction => {
+const useMock = (url: string, response: Record<string, unknown>): MockFunction => {
   return (_opts, cb) => {
     server.use(
       rest.get(`${import.meta.env.VITE_KUMA_API_SERVER_URL.slice(0, -1)}${url.replace(re, '\\+')}`, (req, res, ctx) => {

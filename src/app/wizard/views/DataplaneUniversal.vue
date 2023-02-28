@@ -443,7 +443,6 @@ import { useRouter } from 'vue-router'
 import { KAlert, KButton, KCard } from '@kong/kongponents'
 
 import { kebabCase } from '@/utilities/helpers'
-import { kumaApi } from '@/api/kumaApi'
 import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
 import { PRODUCT_NAME } from '@/constants'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -456,6 +455,9 @@ import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
 import FormFragment from '../components/FormFragment.vue'
 import HelperTooltip from '../components/HelperTooltip.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const EXAMPLE_CODE = `type: Dataplane
 mesh: default

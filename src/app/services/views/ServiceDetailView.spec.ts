@@ -2,9 +2,11 @@ import { beforeAll, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, shallowMount } from '@vue/test-utils'
 
 import ServiceDetailView from './ServiceDetailView.vue'
-import { kumaApi } from '@/api/kumaApi'
 import { createExternalService } from '@/test-data/createExternalService'
 import { createServiceInsight } from '@/test-data/createServiceInsight'
+import { useKumaApi } from '@/utilities'
+
+const kumaApi = useKumaApi()
 
 const externalService = createExternalService()
 const serviceInsight = createServiceInsight()
