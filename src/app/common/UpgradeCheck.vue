@@ -30,7 +30,6 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import compare from 'semver/functions/compare'
 import { KAlert, KButton } from '@kong/kongponents'
 
 import { useEnv, useKumaApi } from '@/utilities'
@@ -42,6 +41,28 @@ const latestVersion = ref('')
 const showNotice = ref(false)
 
 checkVersion()
+// mostly taken from semver-compare
+const compare = (a: string, b: string) => {
+  const pa = a.split('.')
+  const pb = b.split('.')
+  for (let i = 0; i < 3; i++) {
+    const na = Number(pa[i])
+    const nb = Number(pb[i])
+    if (i === 0) {
+      // if 'major' isn't a number then prefer the alternate
+      if (isNaN(na)) {
+        return 1
+      } else if (isNaN(nb)) {
+        return 0
+      }
+    }
+    if (na > nb) return 1
+    if (nb > na) return -1
+    if (!isNaN(na) && isNaN(nb)) return 1
+    if (isNaN(na) && !isNaN(nb)) return -1
+  }
+  return 0
+}
 
 async function checkVersion(): Promise<void> {
   try {
