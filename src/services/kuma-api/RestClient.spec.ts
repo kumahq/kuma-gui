@@ -133,4 +133,29 @@ describe('RestClient', () => {
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions)
   })
+
+  test.each([
+    ['', 'path', '/path'],
+    ['', '/path', '/path'],
+    ['/', 'path', '/path'],
+    ['/', '/path', '/path'],
+    ['/', 'path/', '/path'],
+    ['/', '/path/', '/path'],
+    ['http://example.org', 'path', 'http://example.org/path'],
+    ['http://example.org', '/path', 'http://example.org/path'],
+    ['http://example.org/', 'path', 'http://example.org/path'],
+    ['http://example.org/', '/path', 'http://example.org/path'],
+    ['http://example.org/', 'path/', 'http://example.org/path'],
+    ['http://example.org/', '/path/', 'http://example.org/path'],
+  ])('sends correct request URL', (baseUrlOrPath, requestPath, expectedRequestUrl) => {
+    jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
+      response: new Response(),
+      data: null,
+    }))
+
+    const restClient = new RestClient(baseUrlOrPath)
+    restClient.raw(requestPath)
+
+    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith(expectedRequestUrl, {})
+  })
 })

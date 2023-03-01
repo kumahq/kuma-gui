@@ -56,7 +56,15 @@ export class RestClient {
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
   async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
-    const url = urlOrPath.startsWith('http') ? urlOrPath : [this.baseUrl, urlOrPath].join('/')
+    let url
+
+    if (urlOrPath.startsWith('http')) {
+      url = urlOrPath
+    } else {
+      url = [this.baseUrl, urlOrPath]
+        .map((pathSegment) => pathSegment.replace(/\/+$/, '').replace(/^\/+/, ''))
+        .join('/')
+    }
 
     const headers = new Headers(this.options.headers)
 
