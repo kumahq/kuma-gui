@@ -82,6 +82,14 @@ export default class Env {
 
 export function semver(version: string): { major: string, minor: string, patch: string, pre: string } {
   const [major, minor, ...patchPre] = version.split('.')
+  if (isNaN(parseInt(major))) {
+    return {
+      major: '0',
+      minor: '0',
+      patch: '0',
+      pre: major,
+    }
+  }
   const [patch, pre] = patchPre.join('.').split('-')
   return {
     major,
