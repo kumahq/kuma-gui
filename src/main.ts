@@ -3,10 +3,8 @@ import App from './app/App.vue'
 
 async function mountVueApplication() {
   const app = await get(TOKENS.app)(App)
-
   app.mount('#app')
-
-  document.dispatchEvent(new CustomEvent('app:ready'))
+  get(TOKENS.bootstrap)()
 }
 
 mountVueApplication()
