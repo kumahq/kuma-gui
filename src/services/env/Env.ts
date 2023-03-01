@@ -84,9 +84,9 @@ export function semver(version: string): { major: string, minor: string, patch: 
   const [major, minor, ...patchPre] = version.split('.')
   if (isNaN(parseInt(major))) {
     return {
-      major: '0',
-      minor: '0',
-      patch: '0',
+      major,
+      minor: major,
+      patch: major,
       pre: major,
     }
   }
