@@ -78,7 +78,7 @@ exports[`App.vue fails to renders basic view 1`] = `
                 <p>
                   Kuma 
                   <b>
-                    1.7.1
+                    10.2.0
                   </b>
                    on 
                   <b>
@@ -98,7 +98,7 @@ exports[`App.vue fails to renders basic view 1`] = `
       >
         Kuma 
         <b>
-          1.7.1
+          10.2.0
         </b>
          on 
         <b>
