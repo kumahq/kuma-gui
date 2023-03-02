@@ -33,6 +33,7 @@ describe('env', () => {
         KUMA_INSTALL_URL: 'http://install.fake',
         KUMA_VERSION_URL: 'http://version.fake',
         KUMA_DOCS_URL: 'http://docs.fake',
+        KUMA_MOCK_API_ENABLED: 'false',
         KUMA_API_URL: '/somewhere/else/',
       },
     )
@@ -67,6 +68,7 @@ describe('env', () => {
       KUMA_INSTALL_URL: 'http://install.fake',
       KUMA_VERSION_URL: 'http://version.fake',
       KUMA_DOCS_URL: 'http://docs.fake',
+      KUMA_MOCK_API_ENABLED: 'false',
       KUMA_API_URL: '',
     })
 

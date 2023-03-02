@@ -12,8 +12,8 @@ export default class MockKumaApi extends KumaApi {
 
   setBaseUrl(baseUrl: string): void {
     super.setBaseUrl(baseUrl)
-    if (import.meta.env.VITE_MOCK_API_ENABLED === 'true') {
-      setupMockWorker(setupHandlers(this.baseUrl, this.mocks))
+    if (this.env.var('KUMA_MOCK_API_ENABLED') === 'true') {
+      setupMockWorker(setupHandlers(this.env.var('KUMA_API_URL'), this.mocks))
     }
   }
 }
