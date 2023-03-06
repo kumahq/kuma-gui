@@ -59,16 +59,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, ref } from 'vue'
 import { KTable } from '@kong/kongponents'
+import { computed, onBeforeUnmount, ref } from 'vue'
 
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
 import LoadingBox from '../components/LoadingBox.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import { useKumaApi } from '@/utilities'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
 
 const kumaApi = useKumaApi()
 

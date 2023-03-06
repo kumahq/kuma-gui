@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
-import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
+import { withVersion } from '@/../jest/jest-setup-after-env'
 import { TOKENS } from '@/components'
 import { set } from '@/services'
 import { useStore, useEnv } from '@/utilities'

@@ -37,8 +37,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
-import { useRouter } from 'vue-router'
 import {
   ArcElement,
   Chart as ChartJS,
@@ -46,7 +44,9 @@ import {
   ChartOptions,
   Tooltip,
 } from 'chart.js'
+import { computed, PropType } from 'vue'
 import { Doughnut } from 'vue-chartjs'
+import { useRouter } from 'vue-router'
 
 import { DoughnutChartData } from '@/types/index.d'
 

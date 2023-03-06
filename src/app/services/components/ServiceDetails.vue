@@ -20,11 +20,11 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 
-import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
-import { DataPlaneOverviewParameters } from '@/types/api.d'
+import ServiceSummary from './ServiceSummary.vue'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
 import DataPlaneList from '@/app/data-planes/components/DataPlaneList.vue'
-import ServiceSummary from './ServiceSummary.vue'
+import { DataPlaneOverviewParameters } from '@/types/api.d'
+import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
 
 const props = defineProps({
   service: {

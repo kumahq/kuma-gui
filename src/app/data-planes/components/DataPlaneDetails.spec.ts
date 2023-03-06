@@ -2,9 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import DataPlaneDetails from './DataPlaneDetails.vue'
-import { useStore } from '@/utilities'
 import { createDataPlane } from '@/test-data/createDataPlane'
 import { createDataPlaneOverview } from '@/test-data/createDataPlaneOverview'
+import { useStore } from '@/utilities'
 
 const dataPlane = createDataPlane()
 const dataPlaneOverview = createDataPlaneOverview()

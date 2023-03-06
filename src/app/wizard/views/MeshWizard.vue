@@ -636,21 +636,21 @@
 
 <script lang="ts" setup>
 import { KAlert, KButton, KCard } from '@kong/kongponents'
-
-import { ClientStorage } from '@/utilities/ClientStorage'
 import { computed, ref, watch } from 'vue'
-import { formatForCLI } from '../formatForCLI'
-import { kebabCase } from '@/utilities/helpers'
-import { PRODUCT_NAME } from '@/constants'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { useStore } from '@/store/store'
-import CodeBlock from '@/app/common/CodeBlock.vue'
+
+import meshSchema from './MeshSchema'
 import EntityScanner from '../components/EntityScanner.vue'
 import FormFragment from '../components/FormFragment.vue'
-import meshSchema from './MeshSchema'
 import StepSkeleton from '../components/StepSkeleton.vue'
+import { formatForCLI } from '../formatForCLI'
+import CodeBlock from '@/app/common/CodeBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import { useEnv, useKumaApi } from '@/utilities'
+import { ClientStorage } from '@/utilities/ClientStorage'
+import { kebabCase } from '@/utilities/helpers'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

@@ -29,12 +29,13 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
-import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
-import { QueryParameter } from '@/utilities/QueryParameter'
+
+import ServiceSummary from '../components/ServiceSummary.vue'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import ServiceSummary from '../components/ServiceSummary.vue'
+import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

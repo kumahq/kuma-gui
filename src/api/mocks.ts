@@ -1,6 +1,6 @@
 import { rest, RestHandler } from 'msw'
-import { TOKENS, get } from '@/services'
 
+import { TOKENS, get } from '@/services'
 import { Info } from '@/types/index.d'
 
 async function loadMockFile(importFn: () => Promise<any>): Promise<any> {

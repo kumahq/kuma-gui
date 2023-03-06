@@ -25,16 +25,16 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
-import { DataPlaneOverviewParameters } from '@/types/api.d'
-import { FilterFields } from '@/app/common/KFilterBar.vue'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { useStore } from '@/store/store'
+import ServiceDetails from '../components/ServiceDetails.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import { FilterFields } from '@/app/common/KFilterBar.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
-import ServiceDetails from '../components/ServiceDetails.vue'
+import { useStore } from '@/store/store'
+import { DataPlaneOverviewParameters } from '@/types/api.d'
+import { DataPlaneOverview, ExternalService, ServiceInsight } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

@@ -1,5 +1,5 @@
 import { Api } from './Api'
-
+import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 import type {
   ApiKindListResponse,
   ApiListResponse,
@@ -26,7 +26,6 @@ import type {
   ZoneIngressOverview,
   ZoneOverview,
 } from '@/types/index.d'
-import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 
 export default class KumaApi extends Api {
   getInfo(): Promise<Info> {

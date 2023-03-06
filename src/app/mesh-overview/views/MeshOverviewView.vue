@@ -102,19 +102,19 @@
 </template>
 
 <script lang="ts" setup>
+import { KBadge } from '@kong/kongponents'
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { KBadge } from '@kong/kongponents'
 
-import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import MeshCharts from '../components/MeshCharts.vue'
-import MeshResources from '@/app/common/MeshResources.vue'
+import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import LabelList from '@/app/common/LabelList.vue'
+import MeshResources from '@/app/common/MeshResources.vue'
 import YamlView from '@/app/common/YamlView.vue'
-import { Mesh, MeshInsight } from '@/types/index.d'
-import { humanReadableDate, stripTimes } from '@/utilities/helpers'
 import { useStore } from '@/store/store'
+import { Mesh, MeshInsight } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { humanReadableDate, stripTimes } from '@/utilities/helpers'
 
 const kumaApi = useKumaApi()
 const route = useRoute()

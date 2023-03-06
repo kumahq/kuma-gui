@@ -26,8 +26,8 @@
 </template>
 
 <script lang="ts" setup>
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 </script>
 

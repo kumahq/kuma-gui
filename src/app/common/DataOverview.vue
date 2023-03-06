@@ -240,18 +240,18 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType, ref, useSlots, watch } from 'vue'
-import { KButton, KIcon, KTable } from '@kong/kongponents'
 import { datadogLogs } from '@datadog/browser-logs'
+import { KButton, KIcon, KTable } from '@kong/kongponents'
+import { computed, PropType, ref, useSlots, watch } from 'vue'
 
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import EmptyBlock from './EmptyBlock.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import LoadingBlock from './LoadingBlock.vue'
 import PaginationWidget from './PaginationWidget.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from './TagList.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
 import { TableData } from '@/types/index.d'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 
 const slots = useSlots()
 

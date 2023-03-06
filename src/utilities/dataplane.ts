@@ -1,4 +1,3 @@
-import { humanReadableDate } from '@/utilities/helpers'
 import {
   Compatibility,
   DataPlaneEntityMtls,
@@ -11,6 +10,7 @@ import {
   StatusKeyword,
   Version,
 } from '@/types/index.d'
+import { humanReadableDate } from '@/utilities/helpers'
 
 /**
  * Takes a data plane and constructs the list of tags. It removes duplicate tags so we don't display them twice. Note that tags are only considered a duplicate if both their key and their value are the same.

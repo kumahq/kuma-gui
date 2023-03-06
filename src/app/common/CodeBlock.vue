@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, PropType } from 'vue'
 import { KCodeBlock } from '@kong/kongponents'
 import { CodeBlockEventData } from '@kong/kongponents/dist/types/components/KCodeBlock/KCodeBlock.vue.d'
+import { ref, PropType } from 'vue'
 
-import { highlightElement, AvailableLanguages } from '@/utilities/highlightElement'
 import { ClientStorage } from '@/utilities/ClientStorage'
+import { highlightElement, AvailableLanguages } from '@/utilities/highlightElement'
 
 const props = defineProps({
   id: {

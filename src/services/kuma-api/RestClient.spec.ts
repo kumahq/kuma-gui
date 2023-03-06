@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
-import { RestClient } from './RestClient'
 import * as MakeRequestModule from './makeRequest'
+import { RestClient } from './RestClient'
 
 describe('RestClient', () => {
   beforeEach(() => {

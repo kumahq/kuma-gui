@@ -36,12 +36,12 @@
 </template>
 
 <script lang="ts" setup>
+import { datadogLogs } from '@datadog/browser-logs'
 import { computed, PropType } from 'vue'
 import { useRoute, useRouter, RouteLocationNamedRaw } from 'vue-router'
-import { datadogLogs } from '@datadog/browser-logs'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 
 import { useStore } from '@/store/store'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import { get } from '@/utilities/get'
 
 const currentRoute = useRoute()

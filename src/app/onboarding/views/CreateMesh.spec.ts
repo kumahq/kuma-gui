@@ -2,9 +2,9 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import CreateMesh from './CreateMesh.vue'
-import { useStore } from '@/utilities'
-import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import * as config from '@/api/mock-data/config.json'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import { useStore } from '@/utilities'
 
 const store = useStore()
 function renderComponent(mode = 'standalone') {

@@ -182,14 +182,30 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, PropType } from 'vue'
 import { KCard, KAlert } from '@kong/kongponents'
+import { computed, ref, PropType } from 'vue'
 
+import DataplanePolicies from './DataplanePolicies.vue'
+import AccordionItem from '@/app/common/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
+import EnvoyData from '@/app/common/EnvoyData.vue'
+import LabelList from '@/app/common/LabelList.vue'
+import StatusBadge from '@/app/common/StatusBadge.vue'
+import StatusInfo from '@/app/common/StatusInfo.vue'
+import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
+import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
+import TabsWidget from '@/app/common/TabsWidget.vue'
+import TagList from '@/app/common/TagList.vue'
+import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
+import YamlView from '@/app/common/YamlView.vue'
+import { KUMA_ZONE_TAG_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import {
   Compatibility,
   DataPlane,
   DataPlaneOverview,
 } from '@/types/index.d'
+import { useEnv } from '@/utilities'
 import {
   compatibilityKind,
   COMPATIBLE,
@@ -200,23 +216,7 @@ import {
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
   parseMTLSData,
 } from '@/utilities/dataplane'
-import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { stripTimes } from '@/utilities/helpers'
-import { useStore } from '@/store/store'
-import DataplanePolicies from './DataplanePolicies.vue'
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
-import EnvoyData from '@/app/common/EnvoyData.vue'
-import LabelList from '@/app/common/LabelList.vue'
-import StatusBadge from '@/app/common/StatusBadge.vue'
-import StatusInfo from '@/app/common/StatusInfo.vue'
-import TabsWidget from '@/app/common/TabsWidget.vue'
-import TagList from '@/app/common/TagList.vue'
-import YamlView from '@/app/common/YamlView.vue'
-import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
-import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
-import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
-import { useEnv } from '@/utilities'
 const env = useEnv()
 
 const store = useStore()

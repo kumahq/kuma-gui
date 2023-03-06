@@ -1,7 +1,7 @@
+import { setupHandlers, Mocks } from '@/api/mocks'
+import { setupMockWorker } from '@/api/setupMockWorker'
 import Env from '@/services/env/Env'
 import KumaApi from '@/services/kuma-api/KumaApi'
-import { setupMockWorker } from '@/api/setupMockWorker'
-import { setupHandlers, Mocks } from '@/api/mocks'
 
 export default class MockKumaApi extends KumaApi {
   mocks: Mocks

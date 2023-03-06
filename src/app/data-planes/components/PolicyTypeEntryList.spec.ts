@@ -2,8 +2,8 @@ import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
 import PolicyTypeEntryList from './PolicyTypeEntryList.vue'
-import { useStore } from '@/utilities'
 import { createPolicyTypeEntries } from '@/test-data/createPolicyTypeEntries'
+import { useStore } from '@/utilities'
 
 const store = useStore()
 const policyTypeEntries = createPolicyTypeEntries()

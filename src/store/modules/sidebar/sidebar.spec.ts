@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
-import { get, TOKENS } from '@/services'
 
 import _sidebarModule from './sidebar'
+import { get, TOKENS } from '@/services'
 const sidebarModule = _sidebarModule(get(TOKENS.api))
 describe('sidebar module', () => {
   describe('actions', () => {

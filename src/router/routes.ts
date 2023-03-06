@@ -1,12 +1,12 @@
-import type { Store } from 'vuex'
-
-import type { State } from '@/store/storeConfig'
 import {
   RouteRecordRaw,
   RouteLocation,
   RouteLocationRaw,
 } from 'vue-router'
+
 import { getLastNumberParameter } from '@/router/getLastParameter'
+import type { State } from '@/store/storeConfig'
+import type { Store } from 'vuex'
 
 export default (store: Store<State>): RouteRecordRaw[] => {
   return [

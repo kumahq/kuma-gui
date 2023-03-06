@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { KAlert, KButton } from '@kong/kongponents'
+import { ref } from 'vue'
 
 import { PRODUCT_NAME } from '@/constants'
 

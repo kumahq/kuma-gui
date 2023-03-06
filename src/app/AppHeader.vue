@@ -90,7 +90,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import {
   KButton,
   KDropdownMenu,
@@ -98,16 +97,16 @@ import {
   KIcon,
   KPop,
 } from '@kong/kongponents'
+import { computed } from 'vue'
 
+import NotificationIcon from './common/NotificationIcon.vue'
+import UpgradeCheck from './common/UpgradeCheck.vue'
 import {
   useKumaLogo,
   useGithubButton,
 } from '@/components'
-
 import { useStore } from '@/store/store'
 import { useEnv } from '@/utilities'
-import NotificationIcon from './common/NotificationIcon.vue'
-import UpgradeCheck from './common/UpgradeCheck.vue'
 
 const [
   KumaLogo,

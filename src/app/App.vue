@@ -48,7 +48,6 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { useStore } from '@/store/store'
 import AppBreadcrumbs from './AppBreadcrumbs.vue'
 import AppErrorMessage from './AppErrorMessage.vue'
 import AppLoadingBar from './AppLoadingBar.vue'
@@ -58,6 +57,7 @@ import {
   useAppSidebar,
   useAppHeader,
 } from '@/components'
+import { useStore } from '@/store/store'
 
 const [
   AppSidebar,

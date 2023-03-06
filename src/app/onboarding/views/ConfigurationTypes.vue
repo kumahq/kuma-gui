@@ -50,18 +50,18 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
 import { KRadio } from '@kong/kongponents'
+import { computed, onMounted, ref } from 'vue'
 
-import { useStore } from '@/store/store'
+import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
+import OnboardingPage from '../components/OnboardingPage.vue'
 import {
   useKubernetesGraph,
   useMemoryGraph,
   usePostgresGraph,
 } from '@/components'
-import OnboardingHeading from '../components/OnboardingHeading.vue'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
-import OnboardingPage from '../components/OnboardingPage.vue'
+import { useStore } from '@/store/store'
 
 const KubernetesGraph = useKubernetesGraph()
 const MemoryGraph = useMemoryGraph()

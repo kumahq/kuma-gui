@@ -75,11 +75,11 @@
 import { computed, PropType } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
-import { ExternalService, ServiceInsight } from '@/types/index.d'
-import { stripTimes } from '@/utilities/helpers'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
+import { ExternalService, ServiceInsight } from '@/types/index.d'
+import { stripTimes } from '@/utilities/helpers'
 
 const props = defineProps({
   service: {

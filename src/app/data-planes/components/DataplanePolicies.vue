@@ -34,13 +34,12 @@
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue'
 
-import { useStore } from '@/store/store'
-import { toYaml } from '@/utilities/toYaml'
-import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
+import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { useStore } from '@/store/store'
 import {
   DataPlane,
   DataplaneRule,
@@ -59,6 +58,7 @@ import {
   SidecarDataplane,
 } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { toYaml } from '@/utilities/toYaml'
 
 const kumaApi = useKumaApi()
 const store = useStore()

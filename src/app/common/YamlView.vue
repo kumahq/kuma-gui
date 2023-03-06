@@ -42,14 +42,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import { KTabs } from '@kong/kongponents'
+import { computed, ref } from 'vue'
 
-import { useStore } from '@/store/store'
 import CodeBlock from './CodeBlock.vue'
 import EmptyBlock from './EmptyBlock.vue'
 import ErrorBlock from './ErrorBlock.vue'
 import LoadingBlock from './LoadingBlock.vue'
+import { useStore } from '@/store/store'
 import { toYaml } from '@/utilities/toYaml'
 
 const store = useStore()
