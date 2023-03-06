@@ -21,6 +21,7 @@ import { RouteLocation, useRouter } from 'vue-router'
 import { KBadge } from '@kong/kongponents'
 
 import { LabelValue } from '@/types/index.d'
+import { getLabels } from '@/utilities/getLabels'
 
 const router = useRouter()
 
@@ -30,13 +31,15 @@ interface LabelValueWithRoute extends LabelValue {
 
 const props = defineProps({
   tags: {
-    type: Object as PropType<LabelValue[]>,
+    type: Object as PropType<LabelValue[] | Record<string, string> | null | undefined>,
     required: true,
   },
 })
 
 const tagList = computed<LabelValueWithRoute[]>(() => {
-  return props.tags.map((tag) => {
+  const labels = Array.isArray(props.tags) ? props.tags : getLabels(props.tags)
+
+  return labels.map((tag) => {
     const { label, value } = tag
     const route = getRoute(tag)
 

@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div v-if="tags.length > 0">
+        <div v-if="tags !== null">
           <h2>Tags</h2>
 
           <TagList :tags="tags" />
@@ -139,9 +139,9 @@ const status = computed(() => {
 
 const tags = computed(() => {
   if (props.service.serviceType === 'external' && props.externalService !== null) {
-    return Object.entries(props.externalService.tags).map(([label, value]) => ({ label, value }))
+    return props.externalService.tags
   } else {
-    return []
+    return null
   }
 })
 
