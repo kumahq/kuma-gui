@@ -25,4 +25,8 @@
   // KONGPONENTS
   // Reduces the excessive vertical padding.
   --KPopPaddingY: var(--spacing-xs);
+  // Sets the font size to the size of body copy as the default of 12 pixels is way too small.
+  --KBadgeFontSize: 1rem;
+  // Removes the default max width of 200 pixels because badges should never be cut-off.
+  --KBadgeMaxWidth: auto;
 }
