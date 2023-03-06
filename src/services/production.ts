@@ -1,7 +1,9 @@
+import {
+  RouteRecordRaw,
+} from 'vue-router'
+import { createStore, StoreOptions, Store } from 'vuex'
 
-import { createStore } from 'vuex'
-
-import { service, constant, get, injected } from './utils'
+import { ServiceDefinition, token, build } from './utils'
 import { useApp, useBootstrap } from '../index'
 import { getNavItems } from '@/app/getNavItems'
 import routes from '@/router/routes'
@@ -10,36 +12,114 @@ import KumaApi from '@/services/kuma-api/KumaApi'
 import Logger from '@/services/logger/DatadogLogger'
 import { storeConfig, State } from '@/store/storeConfig'
 
-export const TOKENS = {
-  EnvVars: constant({
-    KUMA_PRODUCT_NAME: import.meta.env.VITE_NAMESPACE,
-    KUMA_FEEDBACK_URL: import.meta.env.VITE_FEEDBACK_URL,
-    KUMA_CHAT_URL: import.meta.env.VITE_CHAT_URL,
-    KUMA_INSTALL_URL: import.meta.env.VITE_INSTALL_URL,
-    KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
-    KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
-    KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
-  } as EnvArgs, { description: 'EnvVars' }),
-  Env: service(Env, { description: 'Env' }),
-  env: service(() => (key: keyof EnvVars) => get(TOKENS.Env).var(key), { description: 'env' }),
+const $ = {
+  EnvVars: token<EnvVars>('EnvVars'),
+  Env: token<Env>('Env'),
+  env: token<(key: keyof EnvVars) => string>('env'),
 
-  api: service(KumaApi, { description: 'api' }),
+  api: token<KumaApi>('KumaApi'),
 
-  storeConfig: service(storeConfig, { description: 'storeConfig' }),
-  store: service(createStore<State>, { description: 'store' }),
+  storeConfig: token<StoreOptions<State>>('storeOptions'),
+  store: token<Store<State>>('store'),
 
-  nav: service(() => (multizone: boolean, hasMeshes: boolean) => getNavItems(multizone, hasMeshes), { description: 'nav' }),
-  routes: service(routes, { description: 'routes' }),
-  logger: service(Logger, { description: 'logger' }),
-  app: service(useApp, { description: 'app' }),
-  bootstrap: service(useBootstrap, { description: 'bootstrap' }),
+  routes: token<RouteRecordRaw[]>('routes'),
+  nav: token<typeof getNavItems>('nav'),
+
+  logger: token<Logger>('logger'),
+
+  app: token<ReturnType<typeof useApp>>('app'),
+  bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
 }
 
-injected(Env, TOKENS.EnvVars)
-injected(KumaApi, TOKENS.Env)
-injected(storeConfig, TOKENS.api)
-injected(createStore<State>, TOKENS.storeConfig)
-injected(routes, TOKENS.store)
-injected(Logger, TOKENS.Env)
-injected(useApp, TOKENS.env, TOKENS.routes, TOKENS.store)
-injected(useBootstrap, TOKENS.env, TOKENS.logger, TOKENS.api, TOKENS.store)
+export const services: ServiceDefinition[] = [
+
+  // Env
+  [$.EnvVars, {
+    constant: {
+      KUMA_PRODUCT_NAME: import.meta.env.VITE_NAMESPACE,
+      KUMA_FEEDBACK_URL: import.meta.env.VITE_FEEDBACK_URL,
+      KUMA_CHAT_URL: import.meta.env.VITE_CHAT_URL,
+      KUMA_INSTALL_URL: import.meta.env.VITE_INSTALL_URL,
+      KUMA_VERSION_URL: import.meta.env.VITE_VERSION_URL,
+      KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
+      KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
+    } as EnvArgs,
+  }],
+  [$.Env, {
+    service: Env,
+    arguments: [
+      $.EnvVars,
+    ],
+  }],
+  [$.env, {
+    service: (env: Env) => (key: keyof EnvVars) => env.var(key),
+    arguments: [
+      $.Env,
+    ],
+  }],
+
+  // KumaAPI
+  [$.api, {
+    service: KumaApi,
+    arguments: [
+      $.Env,
+    ],
+  }],
+
+  // Logger
+  [$.logger, {
+    service: Logger,
+    arguments: [
+      $.Env,
+    ],
+  }],
+
+  // Store
+  [$.storeConfig, {
+    service: storeConfig,
+    arguments: [
+      $.api,
+    ],
+  }],
+  [$.store, {
+    service: createStore,
+    arguments: [
+      $.storeConfig,
+    ],
+  }],
+
+  // Routes
+  [$.routes, {
+    service: routes,
+    arguments: [
+      $.store,
+    ],
+  }],
+  // Nav
+  [$.nav, {
+    service: () => (multizone: boolean, hasMeshes: boolean) => getNavItems(multizone, hasMeshes),
+  }],
+
+  // App
+  [$.app, {
+    service: useApp,
+    arguments: [
+      $.env,
+      $.routes,
+      $.store,
+    ],
+  }],
+  [$.bootstrap, {
+    service: useBootstrap,
+    arguments: [
+      $.env,
+      $.logger,
+      $.api,
+      $.store,
+    ],
+  }],
+]
+
+build(services)
+
+export const TOKENS = $
