@@ -37,8 +37,7 @@ export function useBootstrap(
 ) {
   return async () => {
     await store.dispatch('updateGlobalLoading', true)
-    // During development setBaseUrl also optionally installs MSW mocking via MockKumaApi
-    kumaApi.setBaseUrl(env('KUMA_API_URL'))
+    kumaApi.baseUrl = env('KUMA_API_URL')
     if (import.meta.env.PROD) {
       kumaApi.getConfig().then((config) => {
         logger.setup(config)
