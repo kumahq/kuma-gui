@@ -88,6 +88,6 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
 }
 
 .tag-badge a {
-  color: currentColor;
+  text-decoration: none;
 }
 </style>
