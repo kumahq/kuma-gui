@@ -41,7 +41,7 @@
     "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.0",
-    "@jest/globals": "^29.4.3",
+    "@jest/globals": "^29.5.0",
     "@types/js-yaml": "^4.0.5",
     "@types/prismjs": "^1.26.0",
     "@types/semver": "^7.3.13",
