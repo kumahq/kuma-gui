@@ -61,6 +61,11 @@ const INLINE_NON_VOID_ELEMENTS = [
   settings: {
     'import/resolver': {
       typescript: true,
+      alias: {
+        map: [
+          ['@', './src'],
+        ],
+      },
     },
   },
   rules: {
