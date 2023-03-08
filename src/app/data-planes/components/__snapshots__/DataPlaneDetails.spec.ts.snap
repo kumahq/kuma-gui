@@ -232,34 +232,50 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                             class="tag-list"
                           >
                             
-                            <span
-                              class="tag"
+                            <div
+                              class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                              tabindex="0"
                             >
-                              <span
-                                class="tag__label tag__label--is-kuma-io-label"
+                              <div
+                                class="k-badge-text truncate"
                               >
-                                kuma.io/protocol
-                              </span>
-                              <span
-                                class="tag__value"
-                              >
-                                http
-                              </span>
-                            </span>
-                            <span
-                              class="tag"
+                                <div
+                                  class="k-badge-text truncate"
+                                >
+                                  
+                                  <span>
+                                    kuma.io/protocol:
+                                    <b>
+                                      http
+                                    </b>
+                                  </span>
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
+                            <div
+                              class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                              tabindex="0"
                             >
-                              <span
-                                class="tag__label tag__label--is-kuma-io-label"
+                              <div
+                                class="k-badge-text truncate"
                               >
-                                kuma.io/service
-                              </span>
-                              <span
-                                class="tag__value"
-                              >
-                                backend
-                              </span>
-                            </span>
+                                <div
+                                  class="k-badge-text truncate"
+                                >
+                                  
+                                  <span>
+                                    kuma.io/service:
+                                    <b>
+                                      backend
+                                    </b>
+                                  </span>
+                                  
+                                </div>
+                              </div>
+                              <!---->
+                            </div>
                             
                           </span>
                         </li>
