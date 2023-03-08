@@ -2,6 +2,7 @@ import { Api } from './Api'
 import { setupHandlers } from '@/api/mocks'
 import { setupMockWorker } from '@/api/setupMockWorker'
 import { get, TOKENS } from '@/services/index'
+import { ClientConfigInterface } from '@/store/modules/config/config.types'
 import type {
   ApiKindListResponse,
   ApiListResponse,
