@@ -34,23 +34,27 @@ export function useBootstrap(
   kumaApi: KumaApi,
   store: Store<State>,
 ) {
-  return async () => {
+  return async (isAllowedToMakeApiCalls: boolean = true) => {
     await store.dispatch('updateGlobalLoading', true)
 
-    if (import.meta.env.PROD) {
-      kumaApi.getConfig().then((config) => {
-        logger.setup(config)
-      })
-    }
+    if (isAllowedToMakeApiCalls) {
+      if (import.meta.env.PROD) {
+        kumaApi.getConfig().then((config) => {
+          logger.setup(config)
+        })
+      }
 
-    await Promise.all([
+      await Promise.all([
       // Fetches basic resources before setting up the router and mounting the
       // application. This is mainly needed to properly redirect users to the
       // onboarding flow in the appropriate scenarios.
-      store.dispatch('bootstrap'),
-      // Loads available policy types in order to populate the necessary information used for titling/breadcrumbing and policy lookups in the app.
-      store.dispatch('fetchPolicyTypes'),
-    ])
+        store.dispatch('bootstrap'),
+        // Loads available policy types in order to populate the necessary information used for titling/breadcrumbing and policy lookups in the app.
+        store.dispatch('fetchPolicyTypes'),
+      ])
+    } else {
+      store.state.config.status = 'OK'
+    }
 
     await store.dispatch('updateGlobalLoading', false)
   }
