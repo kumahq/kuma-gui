@@ -1,13 +1,14 @@
-import { service, constant, get, injected } from './utils'
-import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
-import Logger from '@/services/logger/DatadogLogger'
-import KumaApi from '@/services/kuma-api/KumaApi'
-import routes from '@/router/routes'
-import { getNavItems } from '@/app/getNavItems'
-import { storeConfig, State } from '@/store/storeConfig'
-import { useApp, useBootstrap } from '../index'
 
 import { createStore } from 'vuex'
+
+import { service, constant, get, injected } from './utils'
+import { useApp, useBootstrap } from '../index'
+import { getNavItems } from '@/app/getNavItems'
+import routes from '@/router/routes'
+import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
+import KumaApi from '@/services/kuma-api/KumaApi'
+import Logger from '@/services/logger/DatadogLogger'
+import { storeConfig, State } from '@/store/storeConfig'
 
 export const TOKENS = {
   EnvVars: constant({

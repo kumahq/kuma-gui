@@ -20,10 +20,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { KIcon } from '@kong/kongponents'
+import { computed } from 'vue'
 
-import { useStore } from '@/store/store'
 import CircuitBreakerIconUrl from '@/assets/images/policies/CircuitBreaker.png'
 import FaultInjectionIconUrl from '@/assets/images/policies/FaultInjection.png'
 import HealthCheckIconUrl from '@/assets/images/policies/HealthCheck.png'
@@ -36,6 +35,7 @@ import TrafficPermissionIconUrl from '@/assets/images/policies/TrafficPermission
 import TrafficRouteIconUrl from '@/assets/images/policies/TrafficRoute.png'
 import TrafficTraceIconUrl from '@/assets/images/policies/TrafficTrace.png'
 import VirtualOutboundIconUrl from '@/assets/images/policies/VirtualOutbound.png'
+import { useStore } from '@/store/store'
 
 const store = useStore()
 

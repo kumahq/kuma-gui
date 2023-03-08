@@ -55,8 +55,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
 import { KBadge, KEmptyState, KIcon } from '@kong/kongponents'
+import { computed, PropType } from 'vue'
 
 import { ApiError } from '@/services/kuma-api/ApiError'
 

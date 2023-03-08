@@ -2,8 +2,8 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import PolicyView from './PolicyView.vue'
-import { useStore } from '@/utilities'
 import { router } from '@/../jest/jest-setup-after-env'
+import { useStore } from '@/utilities'
 
 const store = useStore()
 async function createWrapper(props = {}) {

@@ -44,13 +44,13 @@
 <script lang="ts" setup>
 import { KCard, KIcon } from '@kong/kongponents'
 
-import { useStore } from '@/store/store'
-import AccordionList from '@/app/common/AccordionList.vue'
-import AccordionItem from '@/app/common/AccordionItem.vue'
 import LoggingNotification from './LoggingNotification.vue'
 import MetricsNotification from './MetricsNotification.vue'
 import MtlsNotification from './MtlsNotification.vue'
 import TracingNotification from './TracingNotification.vue'
+import AccordionItem from '@/app/common/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
+import { useStore } from '@/store/store'
 
 const store = useStore()
 

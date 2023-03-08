@@ -6,9 +6,9 @@
 </template>
 
 <script lang="ts" setup>
+import { KBreadcrumbs } from '@kong/kongponents'
 import { computed } from 'vue'
 import { useRoute, useRouter, RouteLocation, RouteRecordName } from 'vue-router'
-import { KBreadcrumbs } from '@kong/kongponents'
 
 const route = useRoute()
 const router = useRouter()

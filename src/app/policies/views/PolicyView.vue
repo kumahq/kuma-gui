@@ -141,29 +141,28 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 import {
   KSelect,
   KAlert,
   KButton,
 } from '@kong/kongponents'
-import type { SelectItem } from '@kong/kongponents/dist/types/components/KSelect/KSelect.vue.d'
+import { computed, ref, watch } from 'vue'
+import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
-import { getSome, stripTimes } from '@/utilities/helpers'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { PolicyEntity, TableHeader } from '@/types/index.d'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { useStore } from '@/store/store'
+import PolicyConnections from '../components/PolicyConnections.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
-import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { useStore } from '@/store/store'
+import { PolicyEntity, TableHeader } from '@/types/index.d'
 import { useEnv, useKumaApi } from '@/utilities'
+import { getSome, stripTimes } from '@/utilities/helpers'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import type { SelectItem } from '@kong/kongponents/dist/types/components/KSelect/KSelect.vue.d'
 
 const kumaApi = useKumaApi()
 const env = useEnv()

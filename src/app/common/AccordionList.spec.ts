@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
 
-import AccordionList from './AccordionList.vue'
 import AccordionItem from './AccordionItem.vue'
+import AccordionList from './AccordionList.vue'
 
 function renderComponent(props = {}) {
   return mount(AccordionList, {

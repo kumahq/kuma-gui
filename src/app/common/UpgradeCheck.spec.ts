@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
-import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import UpgradeCheck from './UpgradeCheck.vue'
+import { withVersion } from '@/../jest/jest-setup-after-env'
 
 function renderComponent() {
   return mount(UpgradeCheck)

@@ -1,8 +1,8 @@
 import { describe, expect, test } from '@jest/globals'
 
+import { useEnv } from './index'
 import { container, TOKENS, service, injected } from '@/services'
 import Env from '@/services/env/Env'
-import { useEnv } from './index'
 
 describe('useEnv', () => {
   test('it works', () => {

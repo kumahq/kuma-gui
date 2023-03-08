@@ -1,12 +1,11 @@
 import { Component, createApp } from 'vue'
 import { RouteRecordRaw } from 'vue-router'
+import { Store, storeKey } from 'vuex'
 
 import { createRouter } from './router/router'
-
 import type { EnvVars } from '@/services/env/Env'
-import type { ClientConfigInterface } from '@/store/modules/config/config.types'
-import { Store, storeKey } from 'vuex'
 import type KumaApi from '@/services/kuma-api/KumaApi'
+import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 import type { State } from '@/store/storeConfig'
 
 /**

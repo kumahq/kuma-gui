@@ -1,6 +1,6 @@
+import { datadogLogs } from '@datadog/browser-logs'
 import { describe, expect, jest, test } from '@jest/globals'
 import { mount } from '@vue/test-utils'
-import { datadogLogs } from '@datadog/browser-logs'
 
 import PaginationWidget from './PaginationWidget.vue'
 

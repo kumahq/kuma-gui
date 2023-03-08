@@ -17,12 +17,12 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { DataPlaneOverview } from '@/types/index.d'
-import { DataPlaneOverviewParameters } from '@/types/api'
-import { FilterFields } from '@/app/common/KFilterBar.vue'
-import { QueryParameter } from '@/utilities/QueryParameter'
 import DataPlaneList from '../components/DataPlaneList.vue'
+import { FilterFields } from '@/app/common/KFilterBar.vue'
+import { DataPlaneOverviewParameters } from '@/types/api'
+import { DataPlaneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { State } from '../../storeConfig'
 import { NotificationsInterface, NotificationItem, MeshNotificationItem } from './notifications.types'
+import { State } from '../../storeConfig'
 import { Mesh } from '@/types/index.d'
 
 const initialNotificationsState: NotificationsInterface = {

@@ -99,8 +99,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, PropType, ref } from 'vue'
 import { KButton, KIcon } from '@kong/kongponents'
+import { computed, onMounted, PropType, ref } from 'vue'
 
 import { QueryParameter } from '@/utilities/QueryParameter'
 

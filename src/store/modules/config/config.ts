@@ -1,7 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from 'vuex'
 
-import { State } from '../../storeConfig'
 import { ConfigInterface, ClientConfigInterface } from './config.types'
+import { State } from '../../storeConfig'
 import type KumaApi from '@/services/kuma-api/KumaApi'
 
 const initialConfigState: ConfigInterface = {

@@ -1,17 +1,15 @@
 import { afterAll, afterEach, beforeAll, beforeEach, expect, jest } from '@jest/globals'
-
 // Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
-
 import { config } from '@vue/test-utils'
+import { rest, MockedRequest as Request } from 'msw'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
+import { setupMockServer } from '../src/api/setupMockServer'
+import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { createRouter } from '../src/router/router'
 import { TOKENS, get, container, set, injected } from '../src/services'
-import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { setupMockServer } from '../src/api/setupMockServer'
 import { setupHandlers, mocks } from '@/api/mocks'
-import { rest, MockedRequest as Request } from 'msw'
 import Env from '@/services/env/Env'
 
 type MockFunction = (_opts: Record<string, unknown>, cb: (req: Request, resp: Record <string, any>) => Record<string, unknown>) => void

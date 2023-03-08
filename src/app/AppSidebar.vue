@@ -24,11 +24,11 @@
 <script lang="ts" setup>
 import { computed, onMounted, onUnmounted, watch } from 'vue'
 
+import AppMeshSelector from './AppMeshSelector.vue'
+import AppNavItem from './AppNavItem.vue'
 import { useStore } from '@/store/store'
 import { useNav } from '@/utilities'
 import { poll } from '@/utilities/poll'
-import AppMeshSelector from './AppMeshSelector.vue'
-import AppNavItem from './AppNavItem.vue'
 
 const POLLING_INTERVAL_IN_SECONDS = 10
 

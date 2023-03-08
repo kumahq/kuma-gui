@@ -21,12 +21,12 @@
 import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { DataPlane, DataPlaneOverview } from '@/types/index.d'
-import { useStore } from '@/store/store'
 import DataPlaneDetails from '../components/DataPlaneDetails.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { useStore } from '@/store/store'
+import { DataPlane, DataPlaneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 
 const kumaApi = useKumaApi()

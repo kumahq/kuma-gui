@@ -1,14 +1,15 @@
-import { service, createInjections } from '@/services/utils'
+import GithubButton from 'vue-github-button'
+
+import AppHeader from '@/app/AppHeader.vue'
+import AppSidebar from '@/app/AppSidebar.vue'
 import KumaLogo from '@/app/common/KumaLogo.vue'
 import OverviewCharts from '@/app/main-overview/components/OverviewCharts.vue'
-import GithubButton from 'vue-github-button'
 import KubernetesGraph from '@/app/onboarding/components/graphs/KubernetesGraph.vue'
-import PostgresGraph from '@/app/onboarding/components/graphs/PostgresGraph.vue'
 import MemoryGraph from '@/app/onboarding/components/graphs/MemoryGraph.vue'
 import MultizoneGraph from '@/app/onboarding/components/graphs/MultizoneGraph.vue'
+import PostgresGraph from '@/app/onboarding/components/graphs/PostgresGraph.vue'
 import StandaloneGraph from '@/app/onboarding/components/graphs/StandaloneGraph.vue'
-import AppSidebar from '@/app/AppSidebar.vue'
-import AppHeader from '@/app/AppHeader.vue'
+import { service, createInjections } from '@/services/utils'
 
 export const TOKENS = {
   KumaLogo: service(() => KumaLogo, { description: 'KumaLogo' }),

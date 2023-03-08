@@ -1,7 +1,7 @@
 import { ActionTree, MutationTree } from 'vuex'
 
-import { State } from '../../storeConfig'
 import { OnboardingInterface } from './onboarding.types'
+import { State } from '../../storeConfig'
 import { ClientStorage } from '@/utilities/ClientStorage'
 
 const initialOnboardingState: OnboardingInterface = {

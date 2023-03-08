@@ -94,11 +94,11 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
 import { KBadge } from '@kong/kongponents'
+import { PropType } from 'vue'
 
-import AccordionList from '@/app/common/AccordionList.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
 import { MeshGatewayDataplane, MeshGatewayListenerEntry, MeshGatewayRoutePolicy } from '@/types/index.d'
 
 const props = defineProps({

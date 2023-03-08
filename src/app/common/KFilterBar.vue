@@ -123,8 +123,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 import { KIcon } from '@kong/kongponents'
+import { computed, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
 
 import { clamp } from '@/utilities/clamp'
 import { Command, ShortcutManager } from '@/utilities/ShortcutManager'

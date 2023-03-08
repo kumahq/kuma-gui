@@ -1,10 +1,9 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 import DataPlaneListView from './DataPlaneListView.vue'
 import { router } from '@/../jest/jest-setup-after-env'
-
-import { RouteLocationNamedRaw } from 'vue-router'
 
 async function renderComponent(routeLocation: RouteLocationNamedRaw = {}) {
   await router.push({

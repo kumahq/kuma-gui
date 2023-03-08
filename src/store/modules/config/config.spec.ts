@@ -1,8 +1,7 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
-import { get, TOKENS } from '@/services'
-
 import _configModule from './config'
+import { get, TOKENS } from '@/services'
 const configModule = _configModule(get(TOKENS.api))
 
 describe('config module', () => {

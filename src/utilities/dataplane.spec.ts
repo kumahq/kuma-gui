@@ -1,7 +1,6 @@
 import { describe, expect, test } from '@jest/globals'
 
 import { getStatusAndReason, getItemStatusFromInsight } from './dataplane'
-
 import {
   DiscoverySubscription,
   DataPlaneNetworking,

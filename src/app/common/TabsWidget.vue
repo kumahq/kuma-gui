@@ -51,14 +51,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType, ref } from 'vue'
 import { datadogLogs } from '@datadog/browser-logs'
 import { KIcon, KTabs } from '@kong/kongponents'
+import { computed, PropType, ref } from 'vue'
 
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
-import { QueryParameter } from '@/utilities/QueryParameter'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const props = defineProps({
   tabs: {

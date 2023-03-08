@@ -114,11 +114,11 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
 import { KTable } from '@kong/kongponents'
+import { PropType } from 'vue'
 
-import AccordionList from '@/app/common/AccordionList.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
+import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import PolicyTypeTag from '@/app/common/PolicyTypeTag.vue'
 import TagList from '@/app/common/TagList.vue'

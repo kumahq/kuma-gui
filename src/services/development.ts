@@ -1,9 +1,9 @@
 import { TOKENS } from './production'
 import { injected, set, constant } from './utils'
-import CookiedEnv from '@/services/env/CookiedEnv'
-import DisabledLogger from '@/services/logger/DisabledLogger'
-import MockKumaApi from '@/services/kuma-api/MockKumaApi'
 import { mocks } from '@/api/mocks'
+import CookiedEnv from '@/services/env/CookiedEnv'
+import MockKumaApi from '@/services/kuma-api/MockKumaApi'
+import DisabledLogger from '@/services/logger/DisabledLogger'
 
 export { service, constant, get, set, container, injected, createInjections } from './utils'
 export { TOKENS } from './production'

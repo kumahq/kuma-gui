@@ -22,21 +22,21 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
 import { KAlert, KCard } from '@kong/kongponents'
+import { PropType } from 'vue'
 
 import WarningDefault from './WarningDefault.vue'
 import WarningEnvoyIncompatible from './WarningEnvoyIncompatible.vue'
-import WarningZoneAndKumaDPVersionsIncompatible from './WarningZoneAndKumaDPVersionsIncompatible.vue'
 import WarningUnsupportedKumaDPVersion from './WarningUnsupportedKumaDPVersion.vue'
 import WarningZoneAndGlobalCPSVersionsIncompatible from './WarningZoneAndGlobalCPSVersionsIncompatible.vue'
+import WarningZoneAndKumaDPVersionsIncompatible from './WarningZoneAndKumaDPVersionsIncompatible.vue'
+import { Compatibility, ZoneCompatibility } from '@/types/index.d'
 import {
   INCOMPATIBLE_UNSUPPORTED_ENVOY,
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
-import { Compatibility, ZoneCompatibility } from '@/types/index.d'
 
 const props = defineProps({
   warnings: {

@@ -115,13 +115,23 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
+import { computed, PropType, ref, watch } from 'vue'
+import { RouteLocationNamedRaw, useRoute } from 'vue-router'
 
-import { ClientStorage } from '@/utilities/ClientStorage'
 import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders, ColumnDropdownItem } from '../constants'
+import ContentWrapper from '@/app/common/ContentWrapper.vue'
+import DataOverview from '@/app/common/DataOverview.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
+import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
+import { KUMA_ZONE_TAG_NAME } from '@/constants'
+import { useStore } from '@/store/store'
+import { DataPlaneOverviewParameters } from '@/types/api.d'
+import { DataPlaneOverview, TableHeader } from '@/types/index.d'
+import { ClientStorage } from '@/utilities/ClientStorage'
+import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
   compatibilityKind,
   dpTags,
@@ -131,19 +141,9 @@ import {
   INCOMPATIBLE_UNSUPPORTED_KUMA_DP,
   INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS,
 } from '@/utilities/dataplane'
-import { datadogLogEvents } from '@/utilities/datadogLogEvents'
-import { DataPlaneOverview, TableHeader } from '@/types/index.d'
-import { DataPlaneOverviewParameters } from '@/types/api.d'
 import { humanReadableDate } from '@/utilities/helpers'
-import { KUMA_ZONE_TAG_NAME } from '@/constants'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 import { QueryParameter } from '@/utilities/QueryParameter'
-import { useStore } from '@/store/store'
-import ContentWrapper from '@/app/common/ContentWrapper.vue'
-import DataOverview from '@/app/common/DataOverview.vue'
-import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntitySummary.vue'
-import EmptyBlock from '@/app/common/EmptyBlock.vue'
-import KFilterBar, { FilterBarEventData, FilterFields } from '@/app/common/KFilterBar.vue'
 
 const PAGE_SIZE = 50
 
