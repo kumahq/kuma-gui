@@ -1,8 +1,8 @@
-
 import { createStore } from 'vuex'
 
 import { service, constant, get, injected } from './utils'
 import { useApp, useBootstrap } from '../index'
+import type { Mocks } from '@/api/mocks'
 import { getNavItems } from '@/app/getNavItems'
 import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
@@ -20,14 +20,13 @@ export const TOKENS = {
     KUMA_DOCS_URL: import.meta.env.VITE_DOCS_BASE_URL,
     KUMA_MOCK_API_ENABLED: import.meta.env.VITE_MOCK_API_ENABLED,
   } as EnvArgs, { description: 'EnvVars' }),
+  mocks: constant([] as Mocks, { description: 'mocks' }),
+
   Env: service(Env, { description: 'Env' }),
   env: service(() => (key: keyof EnvVars) => get(TOKENS.Env).var(key), { description: 'env' }),
-
   api: service(KumaApi, { description: 'api' }),
-
   storeConfig: service(storeConfig, { description: 'storeConfig' }),
   store: service(createStore<State>, { description: 'store' }),
-
   nav: service(() => (multizone: boolean, hasMeshes: boolean) => getNavItems(multizone, hasMeshes), { description: 'nav' }),
   routes: service(routes, { description: 'routes' }),
   logger: service(Logger, { description: 'logger' }),

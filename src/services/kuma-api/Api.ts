@@ -21,9 +21,16 @@ export class Api {
   _options: RequestInit = DEFAULT_OPTIONS
 
   constructor(env: Env) {
-    this._baseUrl = env.var('KUMA_API_URL')
     this._env = env
+
+    this._baseUrl = env.var('KUMA_API_URL')
+    this.setupMockWorker()
   }
+
+  /**
+   * To be overridden by API instances like `KumaApi`
+   */
+  setupMockWorker() {}
 
   get baseUrl() {
     return this._baseUrl
@@ -36,6 +43,7 @@ export class Api {
    */
   set baseUrl(baseUrl: string) {
     this._baseUrl = baseUrl
+    this.setupMockWorker()
   }
 
   get env() {
