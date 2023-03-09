@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts" setup>
+import { KBadge } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 import { RouteLocation, useRouter } from 'vue-router'
-import { KBadge } from '@kong/kongponents'
 
 import { LabelValue } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
