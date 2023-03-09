@@ -1,17 +1,29 @@
-import { setupWorker, MockedRequest, RestHandler } from 'msw'
+import { setupWorker, MockedRequest, RestHandler, SetupWorker } from 'msw'
+
+let mockWorker: SetupWorker | undefined
+
+/**
+ * Keeps track of handlers per API.
+ */
+const handlersMap = new Map<string, RestHandler[]>()
 
 /**
  * Sets up the msw-based mock server.
  */
-export function setupMockWorker(handlers: RestHandler[]): void {
-  const worker = setupWorker(...handlers)
+export function setupMockWorker(apiName: string, handlers: RestHandler[] = []) {
+  handlersMap.set(apiName, handlers)
+
+  const allHandlers = Array.from(handlersMap.values()).flat()
+  // Stops an existing service worker so new listeners are being registered. The warning this causes in the dev tools console does **NOT** seem to be accurate.
+  mockWorker?.stop()
+  mockWorker = setupWorker(...allHandlers)
 
   console.warn(
     '%c ✨You are mocking api requests.',
     'background: gray; color: white; display: block; padding: 0.25rem;',
   )
 
-  worker.start({
+  mockWorker.start({
     quiet: true,
     onUnhandledRequest(req: MockedRequest) {
       // Ignores warnings about unhandled requests.
