@@ -32,7 +32,6 @@ const $ = {
 }
 
 export const services: ServiceDefinition[] = [
-
   // Env
   [$.EnvVars, {
     constant: {
@@ -112,7 +111,6 @@ export const services: ServiceDefinition[] = [
   [$.bootstrap, {
     service: useBootstrap,
     arguments: [
-      $.env,
       $.logger,
       $.api,
       $.store,
