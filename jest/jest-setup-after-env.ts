@@ -8,7 +8,7 @@ import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-sn
 import { setupMockServer } from '../src/api/setupMockServer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { createRouter } from '../src/router/router'
-import { TOKENS, get, container, set, injected } from '../src/services'
+import { TOKENS, get, container, build } from '../src/services'
 import { setupHandlers, mocks } from '@/api/mocks'
 import Env from '@/services/env/Env'
 
@@ -85,7 +85,13 @@ export const withVersion = (v: string) => {
       return super.var(...rest)
     }
   }
-  set(TOKENS.Env, TestEnv)
-  injected(TestEnv, TOKENS.EnvVars)
+  build(
+    [
+      [TOKENS.Env, {
+        service: TestEnv,
+        arguments: [TOKENS.EnvVars],
+      }],
+    ],
+  )
 }
 export { router, server, useMock }
