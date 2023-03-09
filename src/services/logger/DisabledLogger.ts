@@ -5,13 +5,9 @@ const c = class {
   }
 }
 export const disabledLogger = function (parent: typeof c) {
-  const name = `Disabled${parent.name}`
-  const disabled = {
-    [name]: class extends parent {
-      setup(_config: ClientConfigInterface) {
-        console.log('Logging disabled')
-      }
-    },
+  return class DisabledLogger extends parent {
+    setup(_config: ClientConfigInterface) {
+      console.log('Logging disabled')
+    }
   }
-  return disabled[name]
 }
