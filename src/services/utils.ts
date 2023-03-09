@@ -11,6 +11,7 @@ import {
 
 export {
   token,
+  token as label,
 } from 'brandi'
 
 type InjectionHooks<T extends TokenValue[]> = {
@@ -32,7 +33,7 @@ type DependencyDefinition = {
   service?: UnknownCreator<unknown>
   arguments?: Array<RequiredToken | OptionalToken>
   shared?: boolean
-  labels?: Array<RequiredToken | OptionalToken>
+  labels?: Token[]
 }
 export type ServiceDefinition = [Token, DependencyDefinition]
 
@@ -54,12 +55,14 @@ export const createInjections = <T extends TokenValue[]>(
 ): InjectionHooks<T> =>
   tokens.map((token) => () => get(token)) as InjectionHooks<T>
 //
+
+const labelMap = new WeakMap()
 export const service = (t: Token, config: DependencyDefinition): void => {
   const bound = container.bind(t)
   switch (true) {
     case 'constant' in config:
       bound.toConstant(config.constant as Parameters<typeof bound.toConstant>[0])
-      return
+      break
     case 'service' in config: {
       const s = bound.toInstance(config.service as Parameters<typeof bound.toInstance>[0])
       if (typeof config.shared === 'undefined' || config.shared === true) {
@@ -67,6 +70,22 @@ export const service = (t: Token, config: DependencyDefinition): void => {
       }
       break
     }
+  }
+  if (typeof config.labels !== 'undefined') {
+    config.labels.forEach((label: Token) => {
+      if (!labelMap.has(label)) {
+        labelMap.set(label, [])
+        service(label, {
+          service: () => {
+            return labelMap.get(label).reduce((prev: unknown[], TOKEN: Token) => {
+              return prev.concat(get(TOKEN))
+            }, [])
+          },
+        })
+      }
+      const tokens = labelMap.get(label)
+      tokens.push(t)
+    })
   }
   if (typeof config.arguments !== 'undefined' && typeof config.service !== 'undefined') {
     injected(...([config.service, ...config.arguments] as Parameters<typeof injected>))
