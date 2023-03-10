@@ -10,8 +10,11 @@ import { KBreadcrumbs } from '@kong/kongponents'
 import { computed } from 'vue'
 import { useRoute, useRouter, RouteLocation, RouteRecordName } from 'vue-router'
 
+import { useStore } from '@/store/store'
+
 const route = useRoute()
 const router = useRouter()
+const store = useStore()
 
 type BreadcrumbItem = {
   to: RouteLocation | string
@@ -50,7 +53,9 @@ const breadcrumbItems = computed(() => {
     if (isCurrentRoute && matchedRoute.meta.breadcrumbExclude !== true && route.name) {
       let title = route.meta.title as string
 
-      if (route.meta.breadcrumbTitleParam && route.params[route.meta.breadcrumbTitleParam]) {
+      if (typeof route.meta.getBreadcrumbTitle === 'function') {
+        title = route.meta.getBreadcrumbTitle(route, store)
+      } else if (route.meta.breadcrumbTitleParam && route.params[route.meta.breadcrumbTitleParam]) {
         title = route.params[route.meta.breadcrumbTitleParam] as string
       }
 
