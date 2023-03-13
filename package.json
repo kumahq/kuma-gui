@@ -24,7 +24,7 @@
     "yarn": "^1.22.0"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^4.34.3",
+    "@datadog/browser-logs": "^4.35.0",
     "@kong/kongponents": "^8.32.1",
     "brandi": "^5.0.0",
     "chart.js": "^4.2.1",
