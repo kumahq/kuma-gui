@@ -75,7 +75,7 @@
     "lockfile-lint": "^4.10.1",
     "msw": "~1.1.0",
     "postcss": "^8.4.21",
-    "sass": "^1.58.3",
+    "sass": "^1.59.2",
     "standard": "^17.0.0",
     "ts-jest": "^29.0.5",
     "typescript": "~4.9.5",
