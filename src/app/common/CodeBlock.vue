@@ -15,8 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KCodeBlock } from '@kong/kongponents'
-import { CodeBlockEventData } from '@kong/kongponents/dist/types/components/KCodeBlock/KCodeBlock.vue.d'
+import { CodeBlockEventData, KCodeBlock } from '@kong/kongponents'
 import { ref, PropType } from 'vue'
 
 import { ClientStorage } from '@/utilities/ClientStorage'
