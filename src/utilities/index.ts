@@ -5,4 +5,4 @@ export const [
   useNav,
   useKumaApi,
   useStore,
-] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store)
+] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.kumaApi, TOKENS.store)

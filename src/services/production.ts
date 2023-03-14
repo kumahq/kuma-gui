@@ -1,9 +1,9 @@
 import { RouteRecordRaw } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
+import { RestClient } from './kuma-api/RestClient'
 import { ServiceDefinition, token, build } from './utils'
 import { useApp, useBootstrap } from '../index'
-import type { Mocks } from '@/api/mocks'
 import { getNavItems } from '@/app/getNavItems'
 import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
@@ -16,8 +16,8 @@ const $ = {
   Env: token<Env>('Env'),
   env: token<(key: keyof EnvVars) => string>('env'),
 
-  mocks: token<Mocks>('mocks'),
-  api: token<KumaApi>('KumaApi'),
+  kumaApiRestClient: token<RestClient>('kumaApiRestClient'),
+  kumaApi: token<KumaApi>('kumaApi'),
 
   storeConfig: token<StoreOptions<State>>('storeOptions'),
   store: token<Store<State>>('store'),
@@ -58,12 +58,16 @@ export const services: ServiceDefinition[] = [
   }],
 
   // KumaAPI
-  [$.mocks, {
-    constant: [],
+  [$.kumaApiRestClient, {
+    service: RestClient,
+    arguments: [
+      $.Env,
+    ],
   }],
-  [$.api, {
+  [$.kumaApi, {
     service: KumaApi,
     arguments: [
+      $.kumaApiRestClient,
       $.Env,
     ],
   }],
@@ -80,7 +84,7 @@ export const services: ServiceDefinition[] = [
   [$.storeConfig, {
     service: storeConfig,
     arguments: [
-      $.api,
+      $.kumaApi,
     ],
   }],
   [$.store, {
@@ -115,7 +119,7 @@ export const services: ServiceDefinition[] = [
     service: useBootstrap,
     arguments: [
       $.logger,
-      $.api,
+      $.kumaApi,
       $.store,
     ],
   }],

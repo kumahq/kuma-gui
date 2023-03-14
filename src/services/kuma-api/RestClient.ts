@@ -1,33 +1,52 @@
+import { RestHandler } from 'msw'
+
 import { makeRequest } from './makeRequest'
+import { Mocks } from '@/api/mocks'
+import { setupMockWorker } from '@/api/setupMockWorker'
+import type Env from '@/services/env/Env'
+
+const DEFAULT_OPTIONS: RequestInit = {
+  credentials: 'include',
+}
 
 export class RestClient {
   /**
    * The API base URL.
    */
   _baseUrl: string
-  _options: RequestInit = {}
+
+  _Env: Env
 
   /**
-   * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
+   * The default options to be used for [the fetch API’s `options` parameter][1].
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
    */
-  constructor(baseUrl: string) {
-    this._baseUrl = baseUrl
+  _options: RequestInit = DEFAULT_OPTIONS
+
+  constructor(Env: Env) {
+    this._baseUrl = Env.var('KUMA_API_URL')
+    this._Env = Env
   }
 
   /**
-   * The absolute API base URL used in all requests. Includes its base path segment if one is set.
+   * The API base URL for all network requests.
+   *
+   * URLs for requests will be constructed in the form `${baseUrl}/${path}`.
    */
   get baseUrl() {
     return this._baseUrl
   }
 
-  /**
-   * @param baseUrl the absolute API base URL. **Must not have trailing slashes**.
-   */
   set baseUrl(baseUrl: string) {
     this._baseUrl = baseUrl
   }
 
+  /**
+   * The default options to be used for [the fetch API’s `options` parameter][1].
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
+   */
   get options() {
     return this._options
   }
@@ -56,6 +75,7 @@ export class RestClient {
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
   async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
+    // Normalizes URL and, for URL paths, concatenates the base URL and the URL path.
     let url
 
     if (urlOrPath.startsWith('http')) {
@@ -64,8 +84,10 @@ export class RestClient {
       url = [this.baseUrl, urlOrPath]
         .map((pathSegment) => pathSegment.replace(/\/+$/, '').replace(/^\/+/, ''))
         .join('/')
+        .replace(/\/+$/, '')
     }
 
+    // Merges headers from stored options and override headers.
     const headers = new Headers(this.options.headers)
 
     if (options !== undefined && 'headers' in options) {
@@ -78,8 +100,8 @@ export class RestClient {
       }
     }
 
-    // Merges default options and override options.
-    const mergedOptions = { ...this.options, ...options }
+    // Merges initial default options, stored options, and override options. Including the initial default options here insures that the options include default options like `credentials: 'include'` unless they’re explicitly overridden.
+    const mergedOptions = { ...DEFAULT_OPTIONS, ...this.options, ...options }
 
     if (Object.keys(headers).length > 0) {
       mergedOptions.headers = headers
@@ -117,4 +139,20 @@ function normalizeParameters(options?: RequestInit & { params?: any }): RequestI
   }
 
   return normalizedOptions
+}
+
+export function createMockedRestClient(mocks: Mocks, setupHandlers: (baseUrl: string, mocks: Mocks) => RestHandler[]) {
+  return class MockedRestClient extends RestClient {
+    get baseUrl() {
+      return super.baseUrl
+    }
+
+    set baseUrl(baseUrl: string) {
+      super.baseUrl = baseUrl
+
+      if (this._Env.var('KUMA_MOCK_API_ENABLED') === 'true') {
+        setupMockWorker('KumaApi', setupHandlers(baseUrl, mocks))
+      }
+    }
+  }
 }

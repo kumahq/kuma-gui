@@ -2,6 +2,20 @@ import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 
 import * as MakeRequestModule from './makeRequest'
 import { RestClient } from './RestClient'
+import Env from '@/services/env/Env'
+
+function getEnv(kumaApiUrl: string) {
+  return new Env({
+    KUMA_PRODUCT_NAME: '',
+    KUMA_FEEDBACK_URL: '',
+    KUMA_CHAT_URL: '',
+    KUMA_INSTALL_URL: '',
+    KUMA_VERSION_URL: '',
+    KUMA_DOCS_URL: '',
+    KUMA_MOCK_API_ENABLED: '',
+    KUMA_API_URL: kumaApiUrl,
+  })
+}
 
 describe('RestClient', () => {
   beforeEach(() => {
@@ -9,32 +23,32 @@ describe('RestClient', () => {
   })
 
   test('has expected initial base URL', () => {
-    const restClient = new RestClient('http://localhost:5681')
+    const client = new RestClient(getEnv('http://localhost:5681'))
 
-    expect(restClient.baseUrl).toBe('http://localhost:5681')
+    expect(client.baseUrl).toBe('http://localhost:5681')
   })
 
-  test.each([
-    ['http://localhost:1234/api', 'http://localhost:1234/api'],
-    ['http://localhost:1234/test/api', 'http://localhost:1234/test/api'],
-  ])('sets expected base URL for “%s”', (newBaseUrl, expectedBaseUrl) => {
-    const restClient = new RestClient('http://localhost:5681')
+  test('sets correct base URL', () => {
+    const client = new RestClient(getEnv('http://localhost:5681'))
 
-    restClient.baseUrl = newBaseUrl
+    client.baseUrl = 'http://localhost:1234/api'
 
-    expect(restClient.baseUrl).toBe(expectedBaseUrl)
+    expect(client.baseUrl).toBe('http://localhost:1234/api')
   })
 
   test.each([
     [
       undefined,
-      {},
+      {
+        credentials: 'include',
+      },
     ],
     [
       {
         tag: 'kuma.io/service:backend',
       },
       {
+        credentials: 'include',
         params: [['tag', 'kuma.io/service:backend']],
       },
     ],
@@ -43,6 +57,7 @@ describe('RestClient', () => {
         tag: ['kuma.io/service:backend', 'version:v1'],
       },
       {
+        credentials: 'include',
         params: [
           ['tag', 'kuma.io/service:backend'],
           ['tag', 'version:v1'],
@@ -55,6 +70,7 @@ describe('RestClient', () => {
         tag: ['kuma.io/service:backend', 'version:v1'],
       },
       {
+        credentials: 'include',
         params: [
           ['gateway', true],
           ['tag', 'kuma.io/service:backend'],
@@ -69,6 +85,7 @@ describe('RestClient', () => {
         ['tag', 'version:v1'],
       ],
       {
+        credentials: 'include',
         params: [
           ['gateway', true],
           ['tag', 'kuma.io/service:backend'],
@@ -82,8 +99,9 @@ describe('RestClient', () => {
       data: null,
     }))
 
-    const restClient = new RestClient('http://localhost:5681')
-    restClient.raw('path', { params })
+    const client = new RestClient(getEnv('http://localhost:5681'))
+
+    client.raw('path', { params })
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions)
   })
@@ -116,6 +134,7 @@ describe('RestClient', () => {
       } as RequestInit,
       {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'text/html',
         },
@@ -127,16 +146,15 @@ describe('RestClient', () => {
       data: null,
     }))
 
-    const restClient = new RestClient('http://localhost:5681')
-    restClient.options = options
-    restClient.get('path')
+    const client = new RestClient(getEnv('http://localhost:5681'))
+
+    client.options = options
+    client.get('path')
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions)
   })
 
   test.each([
-    ['', 'path', '/path'],
-    ['', '/path', '/path'],
     ['/', 'path', '/path'],
     ['/', '/path', '/path'],
     ['/', 'path/', '/path'],
@@ -147,15 +165,18 @@ describe('RestClient', () => {
     ['http://example.org/', '/path', 'http://example.org/path'],
     ['http://example.org/', 'path/', 'http://example.org/path'],
     ['http://example.org/', '/path/', 'http://example.org/path'],
+    ['http://example.org/', '', 'http://example.org'],
+    ['http://example.org/', '/', 'http://example.org'],
   ])('sends correct request URL', (baseUrlOrPath, requestPath, expectedRequestUrl) => {
     jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
       response: new Response(),
       data: null,
     }))
 
-    const restClient = new RestClient(baseUrlOrPath)
-    restClient.raw(requestPath)
+    const client = new RestClient(getEnv(baseUrlOrPath))
 
-    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith(expectedRequestUrl, {})
+    client.raw(requestPath)
+
+    expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith(expectedRequestUrl, { credentials: 'include' })
   })
 })

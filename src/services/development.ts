@@ -1,9 +1,9 @@
+import { createMockedRestClient } from './kuma-api/RestClient'
 import { TOKENS as $, services as prodServices } from './production'
 import { merge, build, ServiceDefinition } from './utils'
-import { mocks } from '@/api/mocks'
+import { mocks, setupHandlers } from '@/api/mocks'
 import CookiedEnv from '@/services/env/CookiedEnv'
 import KumaApi from '@/services/kuma-api/KumaApi'
-import { mockApi } from '@/services/kuma-api/MockKumaApi'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
 
@@ -17,12 +17,16 @@ export const services: ServiceDefinition[] = merge(prodServices, [
       $.EnvVars,
     ],
   }],
-  [$.mocks, {
-    constant: mocks,
-  }],
-  [$.api, {
-    service: mockApi(KumaApi),
+  [$.kumaApiRestClient, {
+    service: createMockedRestClient(mocks, setupHandlers),
     arguments: [
+      $.Env,
+    ],
+  }],
+  [$.kumaApi, {
+    service: KumaApi,
+    arguments: [
+      $.kumaApiRestClient,
       $.Env,
     ],
   }],
