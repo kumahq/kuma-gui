@@ -1,11 +1,21 @@
 import { makeRequest } from './makeRequest'
 
+const DEFAULT_OPTIONS: RequestInit = {
+  credentials: 'include',
+}
+
 export class RestClient {
   /**
    * The API base URL.
    */
   _baseUrl: string
-  _options: RequestInit = {}
+
+  /**
+   * The default options to be used for [the fetch API’s `options` parameter][1].
+   *
+   * [1]: https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
+   */
+  _options: RequestInit = DEFAULT_OPTIONS
 
   /**
    * @param baseUrl an absolute API base URL. **Must not have trailing slashes**.
@@ -36,16 +46,30 @@ export class RestClient {
     this._options = options
   }
 
-  /**
-   * Performs a network request using the GET method.
-   *
-   * @returns the response’s de-serialized data.
-   */
   async get(path: string, options?: RequestInit & { params?: any }): Promise<any> {
-    const normalizedOptions = normalizeParameters(options)
-    normalizedOptions.method = 'GET'
+    const { data } = await this.raw(path, undefined, options, 'GET')
 
-    const { data } = await this.raw(path, normalizedOptions)
+    return data
+  }
+
+  async delete(path: string, options?: RequestInit & { params?: any }): Promise<void> {
+    await this.raw(path, undefined, options, 'DELETE')
+  }
+
+  async post(path: string, payload?: any, options?: RequestInit & { params?: any }): Promise<any> {
+    const { data } = await this.raw(path, payload, options, 'POST')
+
+    return data
+  }
+
+  async put(path: string, payload?: any, options?: RequestInit & { params?: any }): Promise<any> {
+    const { data } = await this.raw(path, payload, options, 'PUT')
+
+    return data
+  }
+
+  async patch(path: string, payload?: any, options?: RequestInit & { params?: any }): Promise<any> {
+    const { data } = await this.raw(path, payload, options, 'PATCH')
 
     return data
   }
@@ -55,7 +79,11 @@ export class RestClient {
    *
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
-  async raw(urlOrPath: string, options?: RequestInit & { params?: any }): Promise<{ response: Response, data: any }> {
+  async raw(urlOrPath: string, payload?: any, rawOptions: RequestInit & { params?: any } = {}, method: string = 'GET'): Promise<{ response: Response, data: any }> {
+    const options = normalizeParameters(rawOptions)
+    options.method = method
+
+    // Normalizes URL and, for URL paths, concatenates the base URL and the URL path.
     let url
 
     if (urlOrPath.startsWith('http')) {
@@ -66,9 +94,12 @@ export class RestClient {
         .join('/')
     }
 
+    url = url === '/' ? url : url.replace(/\/+$/, '')
+
+    // Merges headers from stored options and override headers.
     const headers = new Headers(this.options.headers)
 
-    if (options !== undefined && 'headers' in options) {
+    if ('headers' in options) {
       // Ensures that we deal with a `Headers` object.
       const overrideHeaders = options.headers instanceof Headers ? options.headers : new Headers(options.headers)
 
@@ -78,8 +109,8 @@ export class RestClient {
       }
     }
 
-    // Merges default options and override options.
-    const mergedOptions = { ...this.options, ...options }
+    // Merges initial default options, stored options, and override options. Including the initial default options here insures that the options include default options like `credentials: 'include'` unless they’re explicitly overridden.
+    const mergedOptions = { ...DEFAULT_OPTIONS, ...this.options, ...options }
 
     if (Object.keys(headers).length > 0) {
       mergedOptions.headers = headers
@@ -87,7 +118,7 @@ export class RestClient {
 
     const normalizedOptions = normalizeParameters(mergedOptions)
 
-    return makeRequest(url, normalizedOptions)
+    return makeRequest(url, normalizedOptions, payload)
   }
 }
 
