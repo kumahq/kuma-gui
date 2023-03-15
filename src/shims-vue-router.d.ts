@@ -32,6 +32,11 @@ declare module 'vue-router' {
     /**
      * Whether a route is part of a wizard (e.g. “Create mesh” or “Create data plane proxy”).
      */
-    wizardProcess?: boolean
+    isWizard?: boolean
+
+    /**
+     * Whether to show the breadcrumbs. Defaults to `true`.
+     */
+    shouldShowBreadcrumbs?: boolean
   }
 }

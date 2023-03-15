@@ -24,6 +24,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
       name: 'home',
       meta: {
         title: 'Overview',
+        shouldShowBreadcrumbs: false,
       },
       component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
     },
@@ -79,6 +80,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'mesh-detail-view',
           meta: {
             title: 'Mesh overview',
+            shouldShowBreadcrumbs: false,
           },
           component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
         },
@@ -310,7 +312,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'create-mesh',
           meta: {
             title: 'Create a new mesh',
-            wizardProcess: true,
+            isWizard: true,
           },
           component: () => import('@/app/wizard/views/MeshWizard.vue'),
         },
@@ -319,7 +321,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'kubernetes-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Kubernetes',
-            wizardProcess: true,
+            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneKubernetes.vue'),
         },
@@ -328,7 +330,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'universal-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Universal',
-            wizardProcess: true,
+            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneUniversal.vue'),
         },
