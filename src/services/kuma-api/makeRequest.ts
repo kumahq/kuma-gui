@@ -37,7 +37,7 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
   }
 
   const contentType = response.headers.get('content-type')
-  const isJson = contentType !== null ? contentType.startsWith('application/json') : false
+  const isJson = contentType !== null ? contentType.startsWith('application/json') || contentType.startsWith('application/problem+json') : false
   const data = isJson ? await response.json() : await response.text()
 
   if (response.ok) {
