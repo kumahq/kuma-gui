@@ -1,6 +1,6 @@
 import { ApiError } from './ApiError'
 
-export async function makeRequest(url: string, options: RequestInit & { params?: any } = {}) {
+export async function makeRequest(url: string, options: RequestInit & { params?: any } = {}, payload?: any) {
   const init = options
   const method = init.method ?? 'GET'
 
@@ -14,13 +14,17 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
 
   let completeUrl = url
 
-  if ('params' in options) {
-    if (method === 'GET') {
-      // Turns `params` into query parameters for GET requests.
-      completeUrl += `?${new URLSearchParams(options.params).toString()}`
-    } else if (init.headers.get('content-type')?.startsWith('application/json')) {
-      // Sets the request body to the JSON representation of `params`.
-      init.body = JSON.stringify(options.params)
+  if ('params' in options && method === 'GET') {
+    // Turns `params` into query parameters for GET requests.
+    completeUrl += `?${new URLSearchParams(options.params).toString()}`
+  }
+
+  if (payload !== undefined) {
+    if (init.headers.get('content-type')?.startsWith('application/json')) {
+      // Sets the request body to the JSON representation of `payload`.
+      init.body = JSON.stringify(payload)
+    } else {
+      init.body = payload
     }
   }
 
@@ -33,7 +37,7 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
   }
 
   const contentType = response.headers.get('content-type')
-  const isJson = contentType !== null ? contentType.startsWith('application/json') : false
+  const isJson = contentType !== null ? contentType.startsWith('application/json') || contentType.startsWith('application/problem+json') : false
   const data = isJson ? await response.json() : await response.text()
 
   if (response.ok) {
