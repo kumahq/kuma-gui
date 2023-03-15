@@ -14,7 +14,7 @@ export async function makeRequest(url: string, options: RequestInit & { params?:
 
   let completeUrl = url
 
-  if ('params' in options && method === 'GET') {
+  if ('params' in options && options.params !== undefined && method === 'GET') {
     // Turns `params` into query parameters for GET requests.
     completeUrl += `?${new URLSearchParams(options.params).toString()}`
   }

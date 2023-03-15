@@ -21,7 +21,7 @@
 
         <AppOnboardingNotification v-if="shouldSuggestOnboarding" />
 
-        <AppBreadcrumbs />
+        <AppBreadcrumbs v-if="shouldShowBreadcrumbs" />
 
         <router-view
           :key="routeKey"
@@ -87,6 +87,7 @@ const routeKey = computed(() => route.path)
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters.shouldSuggestOnboarding)
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
+const shouldShowBreadcrumbs = computed(() => route.meta.shouldShowBreadcrumbs !== false)
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   isLoading.value = globalLoading
