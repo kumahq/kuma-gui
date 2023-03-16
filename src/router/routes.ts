@@ -196,7 +196,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           meta: {
             parent: 'policies',
           },
-          component: () => import('@/app/policies/views/PolicyView.vue'),
+          component: () => import('@/app/policies/views/PolicyListView.vue'),
           props: (route) => {
             const policy = store.state.policyTypesByPath[route.params.policyPath as string]
 
@@ -208,6 +208,22 @@ export default (store: Store<State>): RouteRecordRaw[] => {
               offset: getLastNumberParameter(route.query.offset),
             }
           },
+        },
+        {
+          path: 'policies/:policyPath/:policy',
+          name: 'policy-detail-view',
+          meta: {
+            parent: 'policies',
+            breadcrumbTitleParam: 'policy',
+          },
+          props: (route) => {
+            return {
+              mesh: route.params.mesh,
+              policyPath: route.params.policyPath,
+              policyName: route.params.policy,
+            }
+          },
+          component: () => import('@/app/policies/views/PolicyView.vue'),
         },
       ],
     },

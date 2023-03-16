@@ -19,13 +19,11 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
             {
               name: 'mal-1',
               route: {
-                name: 'policy',
-                query: {
-                  ns: 'mal-1',
-                },
+                name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
                   policyPath: 'meshaccesslogs',
+                  policy: 'mal-1',
                 },
               },
             },
@@ -45,13 +43,11 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
             {
               name: 'mal-1',
               route: {
-                name: 'policy',
-                query: {
-                  ns: 'mal-1',
-                },
+                name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
                   policyPath: 'meshtraces',
+                  policy: 'mal-1',
                 },
               },
             },
@@ -85,13 +81,11 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
             {
               name: 'mtp-1',
               route: {
-                name: 'policy',
-                query: {
-                  ns: 'mtp-1',
-                },
+                name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
                   policyPath: 'meshtrafficpermissions',
+                  policy: 'mtp-1',
                 },
               },
             },
@@ -116,13 +110,11 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
             {
               name: 'default',
               route: {
-                name: 'policy',
-                query: {
-                  ns: 'default',
-                },
+                name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
                   policyPath: 'meshtrafficpermissions',
+                  policy: 'default',
                 },
               },
             },
@@ -151,26 +143,22 @@ export function createPolicyTypeEntries(): PolicyTypeEntry[] {
             {
               name: 'mtp-1',
               route: {
-                name: 'policy',
-                query: {
-                  ns: 'mtp-1',
-                },
+                name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
                   policyPath: 'meshtrafficpermissions',
+                  policy: 'mtp-1',
                 },
               },
             },
             {
               name: 'mtp-2',
               route: {
-                name: 'policy',
-                query: {
-                  ns: 'mtp-2',
-                },
+                name: 'policy-detail-view',
                 params: {
                   mesh: 'default',
                   policyPath: 'meshtrafficpermissions',
+                  policy: 'mtp-2',
                 },
               },
             },

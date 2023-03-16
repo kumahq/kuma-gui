@@ -1,7 +1,7 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
-import PolicyView from './PolicyView.vue'
+import PolicyView from './PolicyListView.vue'
 import { router } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
