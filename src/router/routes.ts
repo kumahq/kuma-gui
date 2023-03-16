@@ -223,7 +223,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
               policyName: route.params.policy,
             }
           },
-          component: () => import('@/app/policies/views/PolicyView.vue'),
+          component: () => import('@/app/policies/views/PolicyDetailView.vue'),
         },
       ],
     },
