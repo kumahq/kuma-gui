@@ -119,6 +119,3 @@ async function loadData({ mesh, policyPath, policyName }: { mesh: string, policy
 }
 loadData(props)
 </script>
-
-<style lang="scss" scoped>
-</style>
