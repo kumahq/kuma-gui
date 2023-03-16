@@ -65,6 +65,9 @@
 import { ref } from 'vue'
 
 import PolicyConnections from '../components/PolicyConnections.vue'
+import EmptyBlock from '@/app/common/EmptyBlock.vue'
+import ErrorBlock from '@/app/common/ErrorBlock.vue'
+import LoadingBlock from '@/app/common/LoadingBlock.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
