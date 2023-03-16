@@ -143,12 +143,12 @@ function getMeshGatewayListenerEntries(meshGatewayDataplane: MeshGatewayDataplan
           const routeEntry: MeshGatewayRouteEntry = {
             routeName: route.route,
             route: {
-              name: 'policy',
+              name: 'policy-detail-view',
               params: {
                 mesh: meshGatewayDataplane.gateway.mesh,
                 policyPath: 'meshgatewayroutes',
+                policy: route.route,
               },
-              query: { ns: route.route },
             },
             service: destination.tags['kuma.io/service'],
             policies,
@@ -184,12 +184,12 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
       type: policy.type,
       name: policy.name,
       route: {
-        name: 'policy',
+        name: 'policy-detail-view',
         params: {
           mesh: policy.mesh,
           policyPath: policyType.path,
+          policy: policy.name,
         },
-        query: { ns: policy.name },
       },
     })
   }
@@ -242,11 +242,11 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: Po
   const origin: PolicyTypeEntryOrigin = {
     name: policy.name,
     route: {
-      name: 'policy',
-      query: { ns: policy.name },
+      name: 'policy-detail-view',
       params: {
         mesh: policy.mesh,
         policyPath: policyType.path,
+        policy: policy.name,
       },
     },
   }
@@ -369,11 +369,11 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
     origins.push({
       name: ruleOrigin.name,
       route: {
-        name: 'policy',
-        query: { ns: ruleOrigin.name },
+        name: 'policy-detail-view',
         params: {
           mesh: ruleOrigin.mesh,
           policyPath: policyType.path,
+          policy: ruleOrigin.name,
         },
       },
     })

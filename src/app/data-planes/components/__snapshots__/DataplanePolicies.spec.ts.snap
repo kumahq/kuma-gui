@@ -379,7 +379,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policies/fault-injections?ns=fi1.kuma-system"
+                              href="/mesh/default/policies/fault-injections/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -608,7 +608,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policies/fault-injections?ns=fi1.kuma-system"
+                              href="/mesh/default/policies/fault-injections/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -842,7 +842,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policies/fault-injections?ns=web-to-backend.kuma-system"
+                              href="/mesh/default/policies/fault-injections/web-to-backend.kuma-system"
                             >
                               web-to-backend.kuma-system
                             </a>
