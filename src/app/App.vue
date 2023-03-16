@@ -19,7 +19,7 @@
 
         <NotificationManager v-if="shouldShowNotificationManager" />
 
-        <AppOnboardingNotification v-if="shouldSuggestOnboarding" />
+        <AppOnboardingNotification v-if="shouldShowOnboardingNotification" />
 
         <AppBreadcrumbs v-if="shouldShowBreadcrumbs" />
 
@@ -84,10 +84,10 @@ const isLoading = ref(store.state.globalLoading)
  * Both routes resolve to the same route definition and the router’s default behavior is to not re-render the component in such navigations.
  */
 const routeKey = computed(() => route.path)
-const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
-const shouldSuggestOnboarding = computed(() => store.getters.shouldSuggestOnboarding)
-const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
-const shouldShowBreadcrumbs = computed(() => route.meta.shouldShowBreadcrumbs !== false)
+const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
+const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
+const shouldShowOnboardingNotification = computed(() => store.getters.shouldShowOnboardingNotification)
+const shouldShowBreadcrumbs = computed(() => store.getters.getShouldShowBreadcrumbs(route.meta))
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   isLoading.value = globalLoading

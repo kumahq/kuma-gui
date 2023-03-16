@@ -1,4 +1,5 @@
 import semverCompare from 'semver/functions/compare'
+import { RouteMeta } from 'vue-router'
 import { StoreOptions } from 'vuex'
 
 import { ConfigInterface } from './modules/config/config.types'
@@ -36,6 +37,17 @@ const PARTIALLY_DEGRADED = 'Partially degraded'
 interface BareRootState {
   menu: null
   globalLoading: boolean
+  /**
+   * Controls whether related pieces in the UI *may* be shown.
+   *
+   * For example, setting `state.defaultVisibility.breadcrumbs` to `false` will prevent breadcrumbs from *ever* showing up. Setting it to `true` will *allow* it to show up in principle; however, further checks might be in place to control this. For breadcrumbs, this would be the fact that they can also be hidden on a per-route level.
+   */
+  defaultVisibility: {
+    appError: boolean
+    notificationManager: boolean
+    onboardingNotification: boolean
+    breadcrumbs: boolean
+  }
   pageTitle: string
   meshes: {
     items: Mesh[]
@@ -85,6 +97,12 @@ interface BareRootState {
 const initialState: BareRootState = {
   menu: null,
   globalLoading: true,
+  defaultVisibility: {
+    appError: true,
+    notificationManager: true,
+    onboardingNotification: true,
+    breadcrumbs: true,
+  },
   pageTitle: '',
   meshes: {
     total: 0,
@@ -170,6 +188,22 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
 
     getters: {
       globalLoading: state => state.globalLoading,
+
+      shouldShowAppError: (state) => {
+        return state.defaultVisibility.appError && state.config.status !== 'OK'
+      },
+      shouldShowNotificationManager: (state, getters) => {
+        return state.defaultVisibility.notificationManager && getters['notifications/amountOfActions'] > 0
+      },
+      shouldShowOnboardingNotification: (state) => {
+        const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
+
+        return state.defaultVisibility.onboardingNotification && state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
+      },
+      getShouldShowBreadcrumbs: (state) => {
+        return (routeMeta: RouteMeta) => state.defaultVisibility.breadcrumbs && routeMeta.shouldShowBreadcrumbs !== false
+      },
+
       getMeshList: state => state.meshes,
       getItemQueryNamespace: state => state.itemQueryNamespace,
       getMeshInsight: state => state.meshInsight,
@@ -191,11 +225,6 @@ export const storeConfig = (kumaApi: KumaApi): StoreOptions<State> => {
             dataPoints: state.overviewCharts[chartName].data,
           }
         }
-      },
-      shouldSuggestOnboarding: (state) => {
-        const hasOnlyDefaultMesh = state.meshes.items.length === 1 && state.meshes.items[0].name === 'default'
-
-        return state.totalDataplaneCount === 0 && hasOnlyDefaultMesh
       },
     },
 
