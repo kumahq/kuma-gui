@@ -1,5 +1,5 @@
 <template>
-  <div class="policy-details">
+  <div class="policy-details component-frame">
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock
