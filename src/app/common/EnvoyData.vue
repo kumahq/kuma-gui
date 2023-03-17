@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, PropType, ref, watch } from 'vue'
 import { KButton } from '@kong/kongponents'
+import { onMounted, PropType, ref, watch } from 'vue'
 
 import CodeBlock from './CodeBlock.vue'
 import StatusInfo from './StatusInfo.vue'

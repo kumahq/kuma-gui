@@ -171,20 +171,28 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           class="tag-list"
                         >
                           
-                          <span
-                            class="tag"
+                          <div
+                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            tabindex="0"
                           >
-                            <span
-                              class="tag__label tag__label--is-kuma-io-label"
+                            <div
+                              class="k-badge-text truncate"
                             >
-                              kuma.io/service
-                            </span>
-                            <span
-                              class="tag__value"
-                            >
-                              service-a
-                            </span>
-                          </span>
+                              <div
+                                class="k-badge-text truncate"
+                              >
+                                
+                                <span>
+                                  kuma.io/service:
+                                  <b>
+                                    service-a
+                                  </b>
+                                </span>
+                                
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
                           
                         </span>
                         
@@ -197,20 +205,28 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           class="tag-list"
                         >
                           
-                          <span
-                            class="tag"
+                          <div
+                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            tabindex="0"
                           >
-                            <span
-                              class="tag__label tag__label--is-kuma-io-label"
+                            <div
+                              class="k-badge-text truncate"
                             >
-                              kuma.io/service
-                            </span>
-                            <span
-                              class="tag__value"
-                            >
-                              web
-                            </span>
-                          </span>
+                              <div
+                                class="k-badge-text truncate"
+                              >
+                                
+                                <span>
+                                  kuma.io/service:
+                                  <b>
+                                    web
+                                  </b>
+                                </span>
+                                
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
                           
                         </span>
                         
@@ -363,7 +379,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policies/fault-injections?ns=fi1.kuma-system"
+                              href="/mesh/default/policies/fault-injections/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -384,20 +400,28 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           class="tag-list"
                         >
                           
-                          <span
-                            class="tag"
+                          <div
+                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            tabindex="0"
                           >
-                            <span
-                              class="tag__label tag__label--is-kuma-io-label"
+                            <div
+                              class="k-badge-text truncate"
                             >
-                              kuma.io/service
-                            </span>
-                            <span
-                              class="tag__value"
-                            >
-                              service-b
-                            </span>
-                          </span>
+                              <div
+                                class="k-badge-text truncate"
+                              >
+                                
+                                <span>
+                                  kuma.io/service:
+                                  <b>
+                                    service-b
+                                  </b>
+                                </span>
+                                
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
                           
                         </span>
                         
@@ -410,20 +434,28 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           class="tag-list"
                         >
                           
-                          <span
-                            class="tag"
+                          <div
+                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            tabindex="0"
                           >
-                            <span
-                              class="tag__label tag__label--is-kuma-io-label"
+                            <div
+                              class="k-badge-text truncate"
                             >
-                              kuma.io/service
-                            </span>
-                            <span
-                              class="tag__value"
-                            >
-                              web
-                            </span>
-                          </span>
+                              <div
+                                class="k-badge-text truncate"
+                              >
+                                
+                                <span>
+                                  kuma.io/service:
+                                  <b>
+                                    web
+                                  </b>
+                                </span>
+                                
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
                           
                         </span>
                         
@@ -576,7 +608,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policies/fault-injections?ns=fi1.kuma-system"
+                              href="/mesh/default/policies/fault-injections/fi1.kuma-system"
                             >
                               fi1.kuma-system
                             </a>
@@ -597,20 +629,28 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           class="tag-list"
                         >
                           
-                          <span
-                            class="tag"
+                          <div
+                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            tabindex="0"
                           >
-                            <span
-                              class="tag__label tag__label--is-kuma-io-label"
+                            <div
+                              class="k-badge-text truncate"
                             >
-                              kuma.io/service
-                            </span>
-                            <span
-                              class="tag__value"
-                            >
-                              *
-                            </span>
-                          </span>
+                              <div
+                                class="k-badge-text truncate"
+                              >
+                                
+                                <span>
+                                  kuma.io/service:
+                                  <b>
+                                    *
+                                  </b>
+                                </span>
+                                
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
                           
                         </span>
                         
@@ -623,20 +663,28 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           class="tag-list"
                         >
                           
-                          <span
-                            class="tag"
+                          <div
+                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                            tabindex="0"
                           >
-                            <span
-                              class="tag__label tag__label--is-kuma-io-label"
+                            <div
+                              class="k-badge-text truncate"
                             >
-                              kuma.io/service
-                            </span>
-                            <span
-                              class="tag__value"
-                            >
-                              web
-                            </span>
-                          </span>
+                              <div
+                                class="k-badge-text truncate"
+                              >
+                                
+                                <span>
+                                  kuma.io/service:
+                                  <b>
+                                    web
+                                  </b>
+                                </span>
+                                
+                              </div>
+                            </div>
+                            <!---->
+                          </div>
                           
                         </span>
                         
@@ -794,7 +842,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                           <li>
                             <a
                               class=""
-                              href="/mesh/default/policies/fault-injections?ns=web-to-backend.kuma-system"
+                              href="/mesh/default/policies/fault-injections/web-to-backend.kuma-system"
                             >
                               web-to-backend.kuma-system
                             </a>

@@ -1,7 +1,7 @@
 import { describe, expect, jest, test } from '@jest/globals'
 
-import { DISABLED } from '@/constants'
 import { getZoneDpServerAuthType, fetchAllResources } from './helpers'
+import { DISABLED } from '@/constants'
 import { ZoneOverview } from '@/types/index.d'
 
 describe('helpers', () => {

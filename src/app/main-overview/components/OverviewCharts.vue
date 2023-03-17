@@ -41,6 +41,7 @@
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
+
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
 import { useStore } from '@/store/store'
 

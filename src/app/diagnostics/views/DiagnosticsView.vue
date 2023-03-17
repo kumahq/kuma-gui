@@ -20,12 +20,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { KCard } from '@kong/kongponents'
+import { computed } from 'vue'
 
-import { useStore } from '@/store/store'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { useStore } from '@/store/store'
 
 const store = useStore()
 

@@ -35,14 +35,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import { KTable } from '@kong/kongponents'
+import { computed, ref } from 'vue'
 
+import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
+import OnboardingPage from '../components/OnboardingPage.vue'
 import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
-import OnboardingHeading from '../components/OnboardingHeading.vue'
-import OnboardingPage from '../components/OnboardingPage.vue'
 
 const TABLE_HEADERS = [
   { label: 'Name', key: 'name' },

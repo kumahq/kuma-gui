@@ -435,22 +435,22 @@
 </template>
 
 <script lang="ts" setup>
+import { KAlert, KButton, KCard } from '@kong/kongponents'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { KAlert, KButton, KCard } from '@kong/kongponents'
 
-import { formatForCLI } from '../formatForCLI'
-import { kebabCase } from '@/utilities/helpers'
-import { PRODUCT_NAME } from '@/constants'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { useStore } from '@/store/store'
-import CodeBlock from '@/app/common/CodeBlock.vue'
 import dataplaneSchema from './DataplaneKubernetesSchema'
 import EntityScanner from '../components/EntityScanner.vue'
 import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
 import FormFragment from '../components/FormFragment.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
+import { formatForCLI } from '../formatForCLI'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import { useKumaApi } from '@/utilities'
+import { kebabCase } from '@/utilities/helpers'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

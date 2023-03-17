@@ -112,15 +112,10 @@
 </template>
 
 <script lang="ts" setup>
+import { KButton, KCard } from '@kong/kongponents'
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { KButton, KCard } from '@kong/kongponents'
 
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { getSome } from '@/utilities/helpers'
-import { TableHeader, ZoneEgressOverview } from '@/types/index.d'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { QueryParameter } from '@/utilities/QueryParameter'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
@@ -130,7 +125,12 @@ import LabelList from '@/app/common/LabelList.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { TableHeader, ZoneEgressOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { getSome } from '@/utilities/helpers'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

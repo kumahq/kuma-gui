@@ -55,15 +55,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import { KIcon } from '@kong/kongponents'
+import { computed } from 'vue'
 
-import { PRODUCT_NAME } from '@/constants'
-import { useStore } from '@/store/store'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
 import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import WelcomeAnimationSvg from '../components/WelcomeAnimationSvg.vue'
+import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 
 const store = useStore()
 

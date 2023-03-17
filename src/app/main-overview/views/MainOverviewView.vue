@@ -4,8 +4,8 @@
 </template>
 
 <script lang="ts" setup>
-import { useOverviewCharts } from '@/components'
 import MeshResources from '@/app/common/MeshResources.vue'
+import { useOverviewCharts } from '@/components'
 
 const OverviewCharts = useOverviewCharts()
 </script>

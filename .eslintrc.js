@@ -57,13 +57,35 @@ const INLINE_NON_VOID_ELEMENTS = [
     'dist',
   ],
   plugins: ['vue', 'import', '@typescript-eslint'],
-  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript'],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'standard', '@vue/typescript', 'plugin:import/recommended', 'plugin:import/typescript'],
+  settings: {
+    'import/resolver': {
+      typescript: true,
+      alias: {
+        map: [
+          ['@', './src'],
+        ],
+      },
+    },
+  },
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'space-before-function-paren': ['error', {
       anonymous: 'always',
       named: 'never',
       asyncArrow: 'always',
+    }],
+    'import/no-named-as-default-member': 'off',
+    'import/order': ['error', {
+      groups: [
+        ['builtin', 'external'],
+        ['internal', 'parent', 'sibling', 'index', 'object', 'type'],
+      ],
+      'newlines-between': 'always',
+      alphabetize: {
+        order: 'asc',
+        caseInsensitive: true,
+      },
     }],
   },
   overrides: [

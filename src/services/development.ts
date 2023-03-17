@@ -1,18 +1,36 @@
-import { TOKENS } from './production'
-import { injected, set, constant } from './utils'
-import CookiedEnv from '@/services/env/CookiedEnv'
-import DisabledLogger from '@/services/logger/DisabledLogger'
-import MockKumaApi from '@/services/kuma-api/MockKumaApi'
+import { TOKENS as $, services as prodServices } from './production'
+import { merge, build, ServiceDefinition } from './utils'
 import { mocks } from '@/api/mocks'
+import CookiedEnv from '@/services/env/CookiedEnv'
+import KumaApi from '@/services/kuma-api/KumaApi'
+import { mockApi } from '@/services/kuma-api/MockKumaApi'
+import Logger from '@/services/logger/DatadogLogger'
+import { disabledLogger } from '@/services/logger/DisabledLogger'
 
-export { service, constant, get, set, container, injected, createInjections } from './utils'
+export { constant, get, container, createInjections, build, merge } from './utils'
 export { TOKENS } from './production'
 
-const MOCKS = constant(mocks, { description: 'mocks' })
-
-set(TOKENS.Env, CookiedEnv)
-set(TOKENS.api, MockKumaApi)
-set(TOKENS.logger, DisabledLogger)
-injected(CookiedEnv, TOKENS.EnvVars)
-injected(MockKumaApi, TOKENS.Env, MOCKS)
-injected(DisabledLogger, TOKENS.Env)
+export const services: ServiceDefinition[] = merge(prodServices, [
+  [$.Env, {
+    service: CookiedEnv,
+    arguments: [
+      $.EnvVars,
+    ],
+  }],
+  [$.mocks, {
+    constant: mocks,
+  }],
+  [$.api, {
+    service: mockApi(KumaApi),
+    arguments: [
+      $.Env,
+    ],
+  }],
+  [$.logger, {
+    service: disabledLogger(Logger),
+    arguments: [
+      $.Env,
+    ],
+  }],
+])
+build(services)

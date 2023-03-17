@@ -34,13 +34,12 @@
 <script lang="ts" setup>
 import { PropType, ref, watch } from 'vue'
 
-import { useStore } from '@/store/store'
-import { toYaml } from '@/utilities/toYaml'
-import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import MeshGatewayDataplanePolicyList from './MeshGatewayDataplanePolicyList.vue'
+import SidecarDataplanePolicyList from './SidecarDataplanePolicyList.vue'
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
+import { useStore } from '@/store/store'
 import {
   DataPlane,
   DataplaneRule,
@@ -59,6 +58,7 @@ import {
   SidecarDataplane,
 } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { toYaml } from '@/utilities/toYaml'
 
 const kumaApi = useKumaApi()
 const store = useStore()
@@ -143,12 +143,12 @@ function getMeshGatewayListenerEntries(meshGatewayDataplane: MeshGatewayDataplan
           const routeEntry: MeshGatewayRouteEntry = {
             routeName: route.route,
             route: {
-              name: 'policy',
+              name: 'policy-detail-view',
               params: {
                 mesh: meshGatewayDataplane.gateway.mesh,
                 policyPath: 'meshgatewayroutes',
+                policy: route.route,
               },
-              query: { ns: route.route },
             },
             service: destination.tags['kuma.io/service'],
             policies,
@@ -184,12 +184,12 @@ function getPolicyRoutes(policies: Record<string, MatchedPolicyType> | undefined
       type: policy.type,
       name: policy.name,
       route: {
-        name: 'policy',
+        name: 'policy-detail-view',
         params: {
           mesh: policy.mesh,
           policyPath: policyType.path,
+          policy: policy.name,
         },
-        query: { ns: policy.name },
       },
     })
   }
@@ -242,11 +242,11 @@ function getPolicyTypeEntryConnections(policy: MatchedPolicyType, policyType: Po
   const origin: PolicyTypeEntryOrigin = {
     name: policy.name,
     route: {
-      name: 'policy',
-      query: { ns: policy.name },
+      name: 'policy-detail-view',
       params: {
         mesh: policy.mesh,
         policyPath: policyType.path,
+        policy: policy.name,
       },
     },
   }
@@ -369,11 +369,11 @@ function getRuleEntryConnections(rule: DataplaneRule, policyType: PolicyType): R
     origins.push({
       name: ruleOrigin.name,
       route: {
-        name: 'policy',
-        query: { ns: ruleOrigin.name },
+        name: 'policy-detail-view',
         params: {
           mesh: ruleOrigin.mesh,
           policyPath: policyType.path,
+          policy: ruleOrigin.name,
         },
       },
     })

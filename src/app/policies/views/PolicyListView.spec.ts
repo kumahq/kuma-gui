@@ -1,16 +1,16 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
-import PolicyView from './PolicyView.vue'
-import { useStore } from '@/utilities'
+import PolicyListView from './PolicyListView.vue'
 import { router } from '@/../jest/jest-setup-after-env'
+import { useStore } from '@/utilities'
 
 const store = useStore()
 async function createWrapper(props = {}) {
-  router.push({ name: 'mesh-detail-view', params: { mesh: 'default' } })
+  await router.push({ name: 'mesh-detail-view', params: { mesh: 'default' } })
   await store.dispatch('fetchPolicyTypes')
 
-  return mount(PolicyView, {
+  return mount(PolicyListView, {
     props: {
       policyPath: 'circuit-breakers',
       ...props,
@@ -18,7 +18,7 @@ async function createWrapper(props = {}) {
   })
 }
 
-describe('PolicyView', () => {
+describe('PolicyListView', () => {
   test('renders default view correctly', async () => {
     const wrapper = await createWrapper()
 

@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div v-if="tags.length > 0">
+        <div v-if="tags !== null">
           <h2>Tags</h2>
 
           <TagList :tags="tags" />
@@ -75,11 +75,11 @@
 import { computed, PropType } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
-import { ExternalService, ServiceInsight } from '@/types/index.d'
-import { stripTimes } from '@/utilities/helpers'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
+import { ExternalService, ServiceInsight } from '@/types/index.d'
+import { stripTimes } from '@/utilities/helpers'
 
 const props = defineProps({
   service: {
@@ -139,9 +139,9 @@ const status = computed(() => {
 
 const tags = computed(() => {
   if (props.service.serviceType === 'external' && props.externalService !== null) {
-    return Object.entries(props.externalService.tags).map(([label, value]) => ({ label, value }))
+    return props.externalService.tags
   } else {
-    return []
+    return null
   }
 })
 

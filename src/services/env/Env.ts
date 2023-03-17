@@ -9,6 +9,7 @@ export type EnvArgs = {
   KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
   KUMA_API_URL: string
+  KUMA_MOCK_API_ENABLED: string
 }
 type EnvProps = {
   KUMA_VERSION: string
@@ -56,27 +57,57 @@ export default class Env {
   protected getConfig(): PathConfig {
     const pathConfigNode = document.querySelector('#kuma-config')
 
-    if (pathConfigNode instanceof HTMLScriptElement) {
+    // Falls back to a sensible default when encountering a malformed JSON
+    // payload or non-replaced template, or during CLI tests when there is no
+    // HTML file.
+
+    // TODO: Uncomment noisy console errors (we don't want them during testing
+    // but we do want them for our users)
+    if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       try {
-        return JSON.parse(pathConfigNode.innerText.trim())
+        const config = JSON.parse(pathConfigNode.textContent.trim()) as PathConfig
+
+        // Ensures the config always has an absolute URL.
+        config.apiUrl = getNormalizedApiUrl(config.apiUrl)
+
+        return config
       } catch {
         // Handled by falling back to a default value.
       }
     }
+    // console.error('Unable to parse kuma config. Falling back to defaults')
 
-    // Falls back to a sensible default when encountering a malformed JSON payload
-    // or non-replaced template.
-    return getPathConfigDefault(import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_KUMA_API_SERVER_URL)
+    return getPathConfigDefault(import.meta.env.PROD ? '/' : import.meta.env.VITE_KUMA_API_SERVER_URL)
   }
 }
 
 export function semver(version: string): { major: string, minor: string, patch: string, pre: string } {
   const [major, minor, ...patchPre] = version.split('.')
+  if (isNaN(parseInt(major))) {
+    return {
+      major,
+      minor: major,
+      patch: major,
+      pre: major,
+    }
+  }
   const [patch, pre] = patchPre.join('.').split('-')
   return {
     major,
     minor: `${major}.${minor}`,
     patch: `${major}.${minor}.${patch}`,
     pre: `${major}.${minor}.${patch}${pre !== undefined ? `-${pre}` : ''}`,
+  }
+}
+
+/**
+ * @returns a normalized API URL or URL path without trailing slashes. URL paths will always have a leading slash.
+ */
+function getNormalizedApiUrl(baseUrlOrPath: string): string {
+  if (baseUrlOrPath.startsWith('http')) {
+    return baseUrlOrPath.replace(/\/+$/, '')
+  } else {
+    const basePath = (baseUrlOrPath.startsWith('/') ? '' : '/') + baseUrlOrPath
+    return basePath === '/' ? '/' : basePath.replace(/\/+$/, '')
   }
 }

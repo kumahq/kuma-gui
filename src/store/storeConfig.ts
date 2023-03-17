@@ -1,16 +1,17 @@
-import { StoreOptions } from 'vuex'
 import semverCompare from 'semver/functions/compare'
+import { StoreOptions } from 'vuex'
 
-import { ClientStorage } from '@/utilities/ClientStorage'
 import { ConfigInterface } from './modules/config/config.types'
-import { fetchAllResources } from '@/utilities/helpers'
-import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
-import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import type KumaApi from '@/services/kuma-api/KumaApi'
 import { NotificationsInterface } from './modules/notifications/notifications.types'
 import { OnboardingInterface } from './modules/onboarding/onboarding.types'
-import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
 import { SidebarInterface } from './modules/sidebar/sidebar.types'
+import { PAGE_REQUEST_SIZE_DEFAULT } from '@/constants'
+import type KumaApi from '@/services/kuma-api/KumaApi'
+import config from '@/store/modules/config/config'
+import notifications from '@/store/modules/notifications/notifications'
+import onboarding from '@/store/modules/onboarding/onboarding'
+import sidebar from '@/store/modules/sidebar/sidebar'
+import { getEmptyInsight, mergeInsightsReducer, parseInsightReducer } from '@/store/reducers/mesh-insights'
 import {
   ChartDataPoint,
   DoughnutChartData,
@@ -21,12 +22,9 @@ import {
   StatusKeyword,
   ZoneOverview,
 } from '@/types/index.d'
-
-import config from '@/store/modules/config/config'
-
-import notifications from '@/store/modules/notifications/notifications'
-import onboarding from '@/store/modules/onboarding/onboarding'
-import sidebar from '@/store/modules/sidebar/sidebar'
+import { ClientStorage } from '@/utilities/ClientStorage'
+import { getItemStatusFromInsight } from '@/utilities/dataplane'
+import { fetchAllResources } from '@/utilities/helpers'
 
 const ONLINE = 'Online'
 const OFFLINE = 'Offline'

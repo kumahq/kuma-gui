@@ -1,7 +1,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
-import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 
 import type Env from '@/services/env/Env'
+import type { ClientConfigInterface } from '@/store/modules/config/config.types'
 
 export default class DatadogLogger {
   env: Env

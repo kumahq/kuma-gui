@@ -124,6 +124,7 @@ export async function fetchAllResources<T = Object>(endpoint: (params: Object) =
     let allTotal = null
     let offset = 0
     let allItems: T[] = []
+    let previousNext: string | null = null
 
     while (true) {
       const params = { size: PAGE_REQUEST_SIZE_DEFAULT, offset }
@@ -141,10 +142,11 @@ export async function fetchAllResources<T = Object>(endpoint: (params: Object) =
         throw new Error('Mismatch between "total" values between requests')
       }
 
-      if (!next) {
+      if (!next || previousNext === next) {
         break
       }
 
+      previousNext = next
       offset += PAGE_REQUEST_SIZE_DEFAULT
     }
 

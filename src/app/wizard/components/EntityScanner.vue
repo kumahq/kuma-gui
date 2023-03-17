@@ -67,9 +67,9 @@
 </template>
 
 <script lang="ts" setup>
+import { KEmptyState, KIcon } from '@kong/kongponents'
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
-import { KEmptyState, KIcon } from '@kong/kongponents'
 import IconSuccess from '@/app/common/IconSuccess.vue'
 
 const props = defineProps({

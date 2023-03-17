@@ -4,19 +4,20 @@ import {
   Token,
   TokenType,
   TokenValue,
+  RequiredToken,
+  OptionalToken,
+  injected,
 } from 'brandi'
 
 export {
-  injected,
+  token,
+  token as label,
 } from 'brandi'
 
 type InjectionHooks<T extends TokenValue[]> = {
   [K in keyof T]: T[K] extends TokenValue ? () => TokenType<T[K]> : never;
 };
 
-type DependencyDefinition = {
-  description: string
-}
 type UnknownConstructor<T> = new (
   ...args: never[]
 ) => T;
@@ -27,9 +28,26 @@ type UnknownCreator<T = unknown> =
   | UnknownConstructor<T>
   | UnknownFunction<T>;
 
+type DependencyDefinition = {
+  constant?: unknown
+  service?: UnknownCreator<unknown>
+  arguments?: Array<RequiredToken | OptionalToken>
+  shared?: boolean
+  labels?: Token[]
+}
+export type ServiceDefinition = [Token, DependencyDefinition]
+
 export const container = createContainer()
 
 //
+export const merge = (...definitions: Array<ServiceDefinition[]>): ServiceDefinition[] => {
+  return [...new Map([...definitions.flat()]).entries()]
+}
+export const build = (...entries: Array<ServiceDefinition[]>): ServiceDefinition[] => {
+  const merged = merge(...entries)
+  merged.forEach(item => service(...item))
+  return merged
+}
 
 export const get = <T extends TokenValue>(token: T): TokenType<T> => container.get(token)
 export const createInjections = <T extends TokenValue[]>(
@@ -38,20 +56,42 @@ export const createInjections = <T extends TokenValue[]>(
   tokens.map((token) => () => get(token)) as InjectionHooks<T>
 //
 
-export const service = <T>(func: UnknownCreator<T>, config: DependencyDefinition): Token<T> => {
-  const t = token<T>(config.description)
+const labelMap = new WeakMap()
+export const service = (t: Token, config: DependencyDefinition): void => {
   const bound = container.bind(t)
-  bound.toInstance(func as Parameters<typeof bound.toInstance>[0])
-    .inSingletonScope()
-  return t as Token<T>
+  switch (true) {
+    case 'constant' in config:
+      bound.toConstant(config.constant as Parameters<typeof bound.toConstant>[0])
+      break
+    case 'service' in config: {
+      const s = bound.toInstance(config.service as Parameters<typeof bound.toInstance>[0])
+      if (typeof config.shared === 'undefined' || config.shared === true) {
+        s.inSingletonScope()
+      }
+      break
+    }
+  }
+  if (typeof config.labels !== 'undefined') {
+    config.labels.forEach((label: Token) => {
+      if (!labelMap.has(label)) {
+        labelMap.set(label, [])
+        service(label, {
+          service: () => {
+            return labelMap.get(label).reduce((prev: unknown[], TOKEN: Token) => {
+              return prev.concat(get(TOKEN))
+            }, [])
+          },
+        })
+      }
+      const tokens = labelMap.get(label)
+      tokens.push(t)
+    })
+  }
+  if (typeof config.arguments !== 'undefined' && typeof config.service !== 'undefined') {
+    injected(...([config.service, ...config.arguments] as Parameters<typeof injected>))
+  }
 }
-export const set = <T>(t: Token, func: UnknownCreator<T>) => {
-  const bound = container.bind(t)
-  bound.toInstance(func as Parameters<typeof bound.toInstance>[0])
-    .inSingletonScope()
-  return func
-}
-export const constant = <T>(func: T, config: DependencyDefinition): Token<T> => {
+export const constant = <T>(func: T, config: { description: string }): Token<T> => {
   const t = token<T>(config.description)
   const bound = container.bind(t)
   bound.toConstant(func as Parameters<typeof bound.toConstant>[0])

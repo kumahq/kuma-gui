@@ -1,12 +1,12 @@
-import type { Store } from 'vuex'
-
-import type { State } from '@/store/storeConfig'
 import {
   RouteRecordRaw,
   RouteLocation,
   RouteLocationRaw,
 } from 'vue-router'
+
 import { getLastNumberParameter } from '@/router/getLastParameter'
+import type { State } from '@/store/storeConfig'
+import type { Store } from 'vuex'
 
 export default (store: Store<State>): RouteRecordRaw[] => {
   return [
@@ -24,6 +24,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
       name: 'home',
       meta: {
         title: 'Overview',
+        shouldShowBreadcrumbs: false,
       },
       component: () => import('@/app/main-overview/views/MainOverviewView.vue'),
     },
@@ -79,6 +80,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'mesh-detail-view',
           meta: {
             title: 'Mesh overview',
+            shouldShowBreadcrumbs: false,
           },
           component: () => import('@/app/mesh-overview/views/MeshOverviewView.vue'),
         },
@@ -196,7 +198,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           meta: {
             parent: 'policies',
           },
-          component: () => import('@/app/policies/views/PolicyView.vue'),
+          component: () => import('@/app/policies/views/PolicyListView.vue'),
           props: (route) => {
             const policy = store.state.policyTypesByPath[route.params.policyPath as string]
 
@@ -208,6 +210,22 @@ export default (store: Store<State>): RouteRecordRaw[] => {
               offset: getLastNumberParameter(route.query.offset),
             }
           },
+        },
+        {
+          path: 'policies/:policyPath/:policy',
+          name: 'policy-detail-view',
+          meta: {
+            parent: 'policies',
+            breadcrumbTitleParam: 'policy',
+          },
+          props: (route) => {
+            return {
+              mesh: route.params.mesh,
+              policyPath: route.params.policyPath,
+              policyName: route.params.policy,
+            }
+          },
+          component: () => import('@/app/policies/views/PolicyDetailView.vue'),
         },
       ],
     },
@@ -310,7 +328,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'create-mesh',
           meta: {
             title: 'Create a new mesh',
-            wizardProcess: true,
+            isWizard: true,
           },
           component: () => import('@/app/wizard/views/MeshWizard.vue'),
         },
@@ -319,7 +337,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'kubernetes-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Kubernetes',
-            wizardProcess: true,
+            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneKubernetes.vue'),
         },
@@ -328,7 +346,7 @@ export default (store: Store<State>): RouteRecordRaw[] => {
           name: 'universal-dataplane',
           meta: {
             title: 'Create a new data plane proxy on Universal',
-            wizardProcess: true,
+            isWizard: true,
           },
           component: () => import('@/app/wizard/views/DataplaneUniversal.vue'),
         },

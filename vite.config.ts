@@ -1,10 +1,10 @@
+import vue from '@vitejs/plugin-vue'
 import dotenv from 'dotenv'
+import { fileURLToPath, URL } from 'url'
 import { defineConfig, UserConfigFn } from 'vite'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import { fileURLToPath, URL } from 'url'
 import pluginRewriteAll from 'vite-plugin-rewrite-all'
 import svgLoader from 'vite-svg-loader'
-import vue from '@vitejs/plugin-vue'
 
 import { getPathConfigDefault } from './src/pathConfigDefault'
 

@@ -438,24 +438,24 @@
 </template>
 
 <script lang="ts" setup>
+import { KAlert, KButton, KCard } from '@kong/kongponents'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { KAlert, KButton, KCard } from '@kong/kongponents'
 
-import { kebabCase } from '@/utilities/helpers'
-import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
-import { PRODUCT_NAME } from '@/constants'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { toYaml } from '@/utilities/toYaml'
-import { useStore } from '@/store/store'
-import CodeBlock from '@/app/common/CodeBlock.vue'
 import dataplaneSchema from './DataplaneUniversalSchema'
 import EntityScanner from '../components/EntityScanner.vue'
 import EnvironmentSwitcher from '../components/EnvironmentSwitcher.vue'
 import FormFragment from '../components/FormFragment.vue'
 import HelperTooltip from '../components/HelperTooltip.vue'
 import StepSkeleton from '../components/StepSkeleton.vue'
+import CodeBlock from '@/app/common/CodeBlock.vue'
+import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 import { useKumaApi } from '@/utilities'
+import { kebabCase } from '@/utilities/helpers'
+import { kumaDpServerUrl } from '@/utilities/kumaDpServerUrl'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import { toYaml } from '@/utilities/toYaml'
 
 const kumaApi = useKumaApi()
 

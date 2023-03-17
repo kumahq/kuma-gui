@@ -121,28 +121,28 @@
 </template>
 
 <script lang="ts" setup>
+import { KBadge, KButton, KCard } from '@kong/kongponents'
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { KBadge, KButton, KCard } from '@kong/kongponents'
 
-import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
-import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { KDSSubscription, TableHeader, ZoneCompatibility, ZoneOverview } from '@/types/index.d'
-import { useStore } from '@/store/store'
+import MultizoneInfo from '../components/MultizoneInfo.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
-import MultizoneInfo from '../components/MultizoneInfo.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import WarningsWidget from '@/app/common/warnings/WarningsWidget.vue'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { useStore } from '@/store/store'
+import { KDSSubscription, TableHeader, ZoneCompatibility, ZoneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
+import { getItemStatusFromInsight, INCOMPATIBLE_ZONE_AND_GLOBAL_CPS_VERSIONS } from '@/utilities/dataplane'
+import { fetchAllResources, getSome, getZoneDpServerAuthType } from '@/utilities/helpers'
+import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
 

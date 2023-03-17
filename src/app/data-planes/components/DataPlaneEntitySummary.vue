@@ -133,15 +133,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
 import { KIcon } from '@kong/kongponents'
+import { computed, PropType } from 'vue'
 
-import { DataPlaneOverview } from '@/types/index.d'
-import { rawReadableDate } from '@/utilities/helpers'
-import TagList from '@/app/common/TagList.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
+import TagList from '@/app/common/TagList.vue'
 import YamlView from '@/app/common/YamlView.vue'
+import { DataPlaneOverview } from '@/types/index.d'
 import { dpTags, getStatusAndReason, getVersions } from '@/utilities/dataplane'
+import { rawReadableDate } from '@/utilities/helpers'
 
 const props = defineProps({
   dataPlaneOverview: {

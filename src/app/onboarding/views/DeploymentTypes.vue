@@ -48,18 +48,18 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue'
 import { KRadio } from '@kong/kongponents'
+import { computed, onMounted, ref } from 'vue'
 
-import { PRODUCT_NAME } from '@/constants'
-import { useStore } from '@/store/store'
+import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
+import OnboardingPage from '../components/OnboardingPage.vue'
 import {
   useMultizoneGraph,
   useStandaloneGraph,
 } from '@/components'
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
-import OnboardingHeading from '../components/OnboardingHeading.vue'
-import OnboardingPage from '../components/OnboardingPage.vue'
+import { PRODUCT_NAME } from '@/constants'
+import { useStore } from '@/store/store'
 
 const MultizoneGraph = useMultizoneGraph()
 const StandaloneGraph = useStandaloneGraph()

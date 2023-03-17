@@ -84,9 +84,9 @@
 </template>
 
 <script lang="ts" setup>
+import { KButton, KCard } from '@kong/kongponents'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { KButton, KCard } from '@kong/kongponents'
 
 import { useStore } from '@/store/store'
 

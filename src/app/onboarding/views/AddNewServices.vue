@@ -54,8 +54,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingHeading from '../components/OnboardingHeading.vue'
+import OnboardingNavigation from '../components/OnboardingNavigation.vue'
 import OnboardingPage from '../components/OnboardingPage.vue'
 import ServiceBox from '../components/ServiceBox.vue'
 import { useStore } from '@/store/store'
@@ -86,6 +86,6 @@ function setMode(newMode: typeof store.state.onboarding.mode): void {
 
 .service-mode-title {
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
 }
 </style>

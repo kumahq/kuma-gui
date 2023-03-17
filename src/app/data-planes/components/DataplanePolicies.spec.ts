@@ -3,11 +3,11 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import DataplanePolicies from './DataplanePolicies.vue'
-import { useStore } from '@/utilities'
 import { server } from '@/../jest/jest-setup-after-env'
 import {
   DataPlane,
 } from '@/types/index.d'
+import { useStore } from '@/utilities'
 
 const store = useStore()
 async function renderComponent(props = {}) {

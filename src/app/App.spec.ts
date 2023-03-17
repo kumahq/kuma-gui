@@ -1,10 +1,10 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
-import { withVersion } from '@/../jest/jest-setup-after-env'
 
 import App from './App.vue'
+import { withVersion } from '@/../jest/jest-setup-after-env'
 import { TOKENS } from '@/components'
-import { set } from '@/services'
+import { build } from '@/services'
 import { useStore, useEnv } from '@/utilities'
 
 const store = useStore()
@@ -17,12 +17,18 @@ function renderComponent(status: string) {
 
   // keeps the github-button as a <github-button> instead of a span in
   // the snapshot so its as close to actual usage as possible
-  set(TOKENS.GithubButton, () => ({
-    template: '<github-button />',
-    compilerOptions: {
-      isCustomElement: () => true,
-    },
-  }))
+  build(
+    [
+      [TOKENS.GithubButton, {
+        service: () => ({
+          template: '<github-button />',
+          compilerOptions: {
+            isCustomElement: () => true,
+          },
+        }),
+      }],
+    ],
+  )
   return mount(App, {
     global: {
       stubs: {

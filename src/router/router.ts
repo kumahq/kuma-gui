@@ -5,10 +5,10 @@ import {
   Router,
   RouteRecordRaw,
 } from 'vue-router'
-import type { State } from '@/store/storeConfig'
-import type { Store } from 'vuex'
 
+import type { State } from '@/store/storeConfig'
 import { ClientStorage } from '@/utilities/ClientStorage'
+import type { Store } from 'vuex'
 
 export function createRouter(routes: RouteRecordRaw[], store: Store<State>, baseGuiPath: string = '/'): Router {
   const router = createVueRouter({

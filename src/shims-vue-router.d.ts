@@ -18,6 +18,13 @@ declare module 'vue-router' {
     breadcrumbTitleParam?: string
 
     /**
+     * Allows routes to define their breadcrumb title programmatically based on current route and store data.
+     *
+     * Takes precedence over the `breadcrumbTitleParam` mechanism.
+     */
+    getBreadcrumbTitle?: (route: RouteLocationNormalizedLoaded, store: Store<State>) => string
+
+    /**
      * Whether a route is part of the onboarding pages.
      */
     onboardingProcess?: boolean
@@ -25,6 +32,11 @@ declare module 'vue-router' {
     /**
      * Whether a route is part of a wizard (e.g. “Create mesh” or “Create data plane proxy”).
      */
-    wizardProcess?: boolean
+    isWizard?: boolean
+
+    /**
+     * Whether to show the breadcrumbs. Defaults to `true`.
+     */
+    shouldShowBreadcrumbs?: boolean
   }
 }

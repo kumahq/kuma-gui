@@ -21,7 +21,7 @@
 
         <AppOnboardingNotification v-if="shouldSuggestOnboarding" />
 
-        <AppBreadcrumbs />
+        <AppBreadcrumbs v-if="shouldShowBreadcrumbs" />
 
         <router-view
           :key="routeKey"
@@ -48,7 +48,6 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { useStore } from '@/store/store'
 import AppBreadcrumbs from './AppBreadcrumbs.vue'
 import AppErrorMessage from './AppErrorMessage.vue'
 import AppLoadingBar from './AppLoadingBar.vue'
@@ -58,6 +57,7 @@ import {
   useAppSidebar,
   useAppHeader,
 } from '@/components'
+import { useStore } from '@/store/store'
 
 const [
   AppSidebar,
@@ -87,6 +87,7 @@ const routeKey = computed(() => route.path)
 const shouldShowAppError = computed(() => store.state.config.status !== 'OK')
 const shouldSuggestOnboarding = computed(() => store.getters.shouldSuggestOnboarding)
 const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
+const shouldShowBreadcrumbs = computed(() => route.meta.shouldShowBreadcrumbs !== false)
 
 watch(() => store.state.globalLoading, function (globalLoading) {
   isLoading.value = globalLoading

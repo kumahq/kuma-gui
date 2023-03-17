@@ -43,7 +43,7 @@
         <template #additionalControls>
           <KSelect
             label="Policies"
-            :items="policies"
+            :items="policySelectItems"
             :label-attributes="{ class: 'visually-hidden' }"
             appearance="select"
             :enable-filtering="true"
@@ -52,7 +52,7 @@
             <template #item-template="{ item }">
               <span
                 :class="{
-                  'policy-type-empty': item.length === 0
+                  'policy-type-empty': policyTypeNamesWithNoPolicies.includes(item.label)
                 }"
               >
                 {{ item.label }}
@@ -141,28 +141,28 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 import {
   KSelect,
   KAlert,
   KButton,
 } from '@kong/kongponents'
+import { computed, ref, watch } from 'vue'
+import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 
-import { getSome, stripTimes } from '@/utilities/helpers'
-import { PAGE_SIZE_DEFAULT } from '@/constants'
-import { PolicyEntity, TableHeader } from '@/types/index.d'
-import { QueryParameter } from '@/utilities/QueryParameter'
-import { useStore } from '@/store/store'
+import PolicyConnections from '../components/PolicyConnections.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
 import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
-import PolicyConnections from '../components/PolicyConnections.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'
-
+import { PAGE_SIZE_DEFAULT } from '@/constants'
+import { useStore } from '@/store/store'
+import { PolicyEntity, TableHeader } from '@/types/index.d'
 import { useEnv, useKumaApi } from '@/utilities'
+import { getSome, stripTimes } from '@/utilities/helpers'
+import { QueryParameter } from '@/utilities/QueryParameter'
+import type { SelectItem } from '@kong/kongponents/dist/types/components/KSelect/KSelect.vue.d'
 
 const kumaApi = useKumaApi()
 const env = useEnv()
@@ -223,15 +223,17 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
 })
 
 const policyType = computed(() => store.state.policyTypesByPath[props.policyPath])
-const policies = computed(() => {
-  return store.state.policyTypes.map((policyType) => {
-    return {
-      length: store.state.sidebar.insights.mesh.policies[policyType.name] ?? 0,
-      label: policyType.name,
-      value: policyType.path,
-      selected: policyType.path === props.policyPath,
-    }
-  })
+const policySelectItems = computed<SelectItem[]>(() => {
+  return store.state.policyTypes.map((policyType) => ({
+    label: policyType.name,
+    value: policyType.path,
+    selected: policyType.path === props.policyPath,
+  }))
+})
+const policyTypeNamesWithNoPolicies = computed(() => {
+  return store.state.policyTypes
+    .filter((policyType) => (store.state.sidebar.insights.mesh.policies[policyType.name] ?? 0) === 0)
+    .map((policyType) => policyType.name)
 })
 
 watch(() => route.params.mesh, function () {
