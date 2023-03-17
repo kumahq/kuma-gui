@@ -91,7 +91,7 @@ const props = defineProps({
   }
 
   span:first-of-type {
-    font-weight: bold;
+    font-weight: 600;
   }
 }
 

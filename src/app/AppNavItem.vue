@@ -200,7 +200,7 @@ function onNavItemClick() {
 .nav-category {
   padding-top: var(--spacing-xs);
   padding-bottom: var(--spacing-xs);
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .amount {

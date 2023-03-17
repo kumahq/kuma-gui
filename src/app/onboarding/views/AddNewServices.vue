@@ -86,6 +86,6 @@ function setMode(newMode: typeof store.state.onboarding.mode): void {
 
 .service-mode-title {
   text-transform: uppercase;
-  font-weight: bold;
+  font-weight: 600;
 }
 </style>
