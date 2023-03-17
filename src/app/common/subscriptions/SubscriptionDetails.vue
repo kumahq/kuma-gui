@@ -133,7 +133,7 @@ function formatError(value: string): string {
 <style lang="scss" scoped>
 .overview-tertiary-title {
   font-size: var(--type-sm);
-  font-weight: bold;
+  font-weight: 600;
   color: var(--grey-500);
   margin: var(--spacing-xs) 0;
 }

@@ -142,7 +142,7 @@ function switchTab(newActiveTabHash: string): void {
   --tab-header-margin: 0 0 var(--spacing-md) 0;
   --tab-header-padding: 0 var(--spacing-md);
   --tab-header-title-font-size: var(--type-md);
-  --tab-header-title-font-weight: bold;
+  --tab-header-title-font-weight: 600;
   --tab-nav-border-bottom: 1px solid var(--grey-300);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);

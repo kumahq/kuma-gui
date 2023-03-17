@@ -162,7 +162,7 @@ h3, h4 {
   margin-bottom: var(--spacing-xs);
   text-transform: uppercase;
   font-size: var(--type-sm);
-  font-weight: bold;
+  font-weight: 600;
   color: var(--grey-500);
 }
 </style>
