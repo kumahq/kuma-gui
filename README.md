@@ -2,7 +2,7 @@
 
 [![Tests passing](https://github.com/kumahq/kuma-gui/workflows/main/badge.svg)](https://github.com/kumahq/kuma-gui/actions)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/kumahq/kuma/blob/master/LICENSE)
-[![Slack](https://chat.kuma.io/badge.svg)](https://chat.kuma.io/)
+[![Slack](https://img.shields.io/badge/Slack-4A154B?logo=slack)](https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ)
 [![Twitter](https://img.shields.io/twitter/follow/KumaMesh.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=KumaMesh)
 
 # Kuma GUI
@@ -27,7 +27,7 @@ Built by Envoy contributors at Kong 🦍.
 
 [Installation](https://kuma.io/install) |
 [Documentation](https://kuma.io/docs) |
-[Slack Chat](https://chat.kuma.io) |
+[Slack Chat](https://join.slack.com/t/kuma-mesh/shared_invite/zt-1rcll3y6t-DkV_CAItZUoy0IvCwQ~jlQ) |
 [Community](https://kuma.io/community) |
 [Blog](https://konghq.com/blog) |
 [Kong](https://konghq.com)
