@@ -19,7 +19,7 @@
     </div>
 
     <div
-      v-if="store.state.config.status === 'OK'"
+      v-if="!shouldShowAppError"
       class="horizontal-list"
     >
       <div class="app-status app-status--mobile">
@@ -119,7 +119,8 @@ const [
 const store = useStore()
 const env = useEnv()
 
-const shouldShowNotificationManager = computed(() => store.getters['notifications/amountOfActions'] > 0)
+const shouldShowAppError = computed(() => store.getters.shouldShowAppError)
+const shouldShowNotificationManager = computed(() => store.getters.shouldShowNotificationManager)
 const environmentName = computed(() => {
   const environment = store.getters['config/getEnvironment']
 

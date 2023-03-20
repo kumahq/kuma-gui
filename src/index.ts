@@ -52,7 +52,7 @@ export function useBootstrap(
         store.dispatch('fetchPolicyTypes'),
       ])
     } else {
-      store.state.config.status = 'OK'
+      store.state.defaultVisibility.appError = false
     }
 
     await store.dispatch('updateGlobalLoading', false)
