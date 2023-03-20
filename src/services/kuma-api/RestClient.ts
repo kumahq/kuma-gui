@@ -92,9 +92,9 @@ export class RestClient {
       url = [this.baseUrl, urlOrPath]
         .map((pathSegment) => pathSegment.replace(/\/+$/, '').replace(/^\/+/, ''))
         .join('/')
-    }
 
-    url = url === '/' ? url : url.replace(/\/+$/, '')
+      url = url === '/' ? url : url.replace(/\/+$/, '')
+    }
 
     // Merges headers from stored options and override headers.
     const headers = new Headers(this.options.headers)
