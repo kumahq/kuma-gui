@@ -163,6 +163,8 @@ describe('RestClient', () => {
     ['http://example.org/', '/path/', 'http://example.org/path'],
     ['http://example.org/', '', 'http://example.org'],
     ['http://example.org/', '/', 'http://example.org'],
+    ['http://example.org/', 'http://konghq.tech/path', 'http://konghq.tech/path'],
+    ['http://example.org/', 'http://konghq.tech/path/', 'http://konghq.tech/path/'],
   ])('sends correct request URL', (baseUrlOrPath, requestPath, expectedRequestUrl) => {
     jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
       response: new Response(),
