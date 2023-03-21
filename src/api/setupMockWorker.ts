@@ -19,7 +19,7 @@ export function setupMockWorker(apiName: string, handlers: RestHandler[] = []) {
   mockWorker = setupWorker(...allHandlers)
 
   console.warn(
-    '%c ✨You are mocking api requests.',
+    `%c ✨You are mocking ${apiName} requests.`,
     'background: gray; color: white; display: block; padding: 0.25rem;',
   )
 

@@ -1,27 +1,23 @@
 import { TOKENS as $, services as prodServices } from './production'
-import { merge, build, ServiceDefinition } from './utils'
-import { mocks } from '@/api/mocks'
+import { merge, build } from './utils'
+import { mocks, setupHandlers } from '@/api/mocks'
 import CookiedEnv from '@/services/env/CookiedEnv'
 import KumaApi from '@/services/kuma-api/KumaApi'
-import { mockApi } from '@/services/kuma-api/MockKumaApi'
+import { mockApi } from '@/services/kuma-api/mockApi'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
-
 export { constant, get, container, createInjections, build, merge } from './utils'
 export { TOKENS } from './production'
 
-export const services: ServiceDefinition[] = merge(prodServices, [
+export const services = merge(prodServices, [
   [$.Env, {
     service: CookiedEnv,
     arguments: [
       $.EnvVars,
     ],
   }],
-  [$.mocks, {
-    constant: mocks,
-  }],
-  [$.api, {
-    service: mockApi(KumaApi),
+  [$.kumaApi, {
+    service: mockApi(KumaApi, mocks, setupHandlers),
     arguments: [
       $.Env,
     ],
