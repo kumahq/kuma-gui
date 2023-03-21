@@ -1,30 +1,14 @@
 import { rest, RestHandler } from 'msw'
 
-import { TOKENS, get } from '@/services'
-import { Info } from '@/types/index.d'
-
+import type Env from '@/services/env/Env'
 async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
   const fileModule = await importFn()
 
   return fileModule.default
 }
 
-function getBaseInfo(): Info {
-  const env = get(TOKENS.Env)
-  return {
-    hostname: 'control-plane-5d94cb99c6-rzr96',
-    tagline: env.var('KUMA_PRODUCT_NAME'),
-    version: '1.7.1',
-    basedOnKuma: '1.7.1',
-    instanceId: 'control-plane-5d94cb99c6-rzr96-ca19',
-    clusterId: 'b3c42481-0681-4da7-a276-c1fd4ed3c7a1',
-    gui: 'The gui is available at /gui',
-  }
-}
-
 export type Mocks = Array<[string, () => Promise<any>]>
 export const mocks: Mocks = [
-  ['config', () => import('./mock-data/config.json')],
   ['versions', () => import('./mock-data/versions.json')],
   ['policies', () => import('./mock-data/policies.json')],
   ['status/zones', () => import('./mock-data/status/zones.json')],
@@ -162,7 +146,7 @@ export const mocks: Mocks = [
   ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock-data/dataplane-xds.json')],
 ]
 
-export function setupHandlers(url: string = '', mocks: Mocks): RestHandler[] {
+export function setupHandlers(url: string = '', mocks: Mocks, env: Env): RestHandler[] {
   const origin = url.replace(/\/+$/, '')
 
   function getApiPath(path: string = '') {
@@ -174,10 +158,8 @@ export function setupHandlers(url: string = '', mocks: Mocks): RestHandler[] {
   const handlers = mocks.map(([path, importFn]) => {
     return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
   })
-  const env = get(TOKENS.Env)
 
   handlers.push(rest.get(env.var('KUMA_VERSION_URL'), (_req, res, ctx) => res(ctx.text('5.0.2'))))
-  handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(getBaseInfo()))))
 
   handlers.push(
     rest.get(getApiPath('dataplanes\\+insights'), async (req, res, ctx) => {

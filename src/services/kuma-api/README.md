@@ -12,6 +12,3 @@ const kumaApi = useKumaApi()
 kumaApi.getConfig()
 ```
 
-During development `useKumaApi` returns an instance of `MockKumaApi` which
-additionally/optionally installs a mock service worker to proxy/mock all HTTP
-requests to avoid requiring a real Kuma running in the background.
