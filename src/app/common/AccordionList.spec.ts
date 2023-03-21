@@ -5,7 +5,7 @@ import AccordionItem from './AccordionItem.vue'
 import AccordionList from './AccordionList.vue'
 
 function renderComponent(props = {}) {
-  return mount(AccordionList, {
+  return mount(AccordionList as any, {
     global: {
       stubs: {
         AccordionItem,
