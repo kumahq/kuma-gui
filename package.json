@@ -20,7 +20,7 @@
     "test:watch": "yarn run test --watch"
   },
   "engines": {
-    "node": ">=18.13",
+    "node": ">=18.15",
     "yarn": "^1.22.0"
   },
   "dependencies": {

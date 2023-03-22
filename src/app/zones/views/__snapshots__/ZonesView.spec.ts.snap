@@ -1286,7 +1286,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                       <span
                         class="color-green-500"
                       >
-                         Connect time: February 19, 2021 at 7:11:15 AM
+                         Connect time: February 19, 2021 at 7:11:15 AM
                       </span>
                       <!--v-if-->
                     </h4>
@@ -1736,12 +1736,12 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                       <span
                         class="color-green-500"
                       >
-                         Connect time: July 28, 2020 at 4:18:09 PM
+                         Connect time: July 28, 2020 at 4:18:09 PM
                       </span>
                       <span
                         class="ml-4 color-red-600"
                       >
-                         Disconnect time: July 28, 2020 at 4:18:09 PM
+                         Disconnect time: July 28, 2020 at 4:18:09 PM
                       </span>
                     </h4>
                     

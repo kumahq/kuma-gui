@@ -1000,7 +1000,7 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
                       <span
                         class="color-green-500"
                       >
-                         Connect time: July 13, 2021 at 8:41:04 AM
+                         Connect time: July 13, 2021 at 8:41:04 AM
                       </span>
                       <!--v-if-->
                     </h4>
