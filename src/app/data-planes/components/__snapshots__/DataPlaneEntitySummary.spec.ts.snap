@@ -85,12 +85,15 @@ exports[`DataPlaneEntitySummary matches snapshot 1`] = `
                 class="k-badge-text truncate"
               >
                 
-                <span>
+                <a
+                  class=""
+                  href="/mesh/default/services/backend"
+                >
                   kuma.io/service:
                   <b>
                     backend
                   </b>
-                </span>
+                </a>
                 
               </div>
             </div>
