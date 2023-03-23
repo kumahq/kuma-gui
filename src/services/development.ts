@@ -99,6 +99,7 @@ if (bootstrap) {
   bootstrap[1].service = (...rest: Parameters<typeof useBootstrap>) => {
     const env = get($.Env)
     if (env.var('KUMA_MOCK_API_ENABLED') === 'true') {
+      // this initialises MSW
       get($.msw)
     }
     return useBootstrap(...rest)
