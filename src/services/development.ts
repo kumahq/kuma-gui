@@ -94,7 +94,7 @@ export const services: ServiceDefinition[] = [
 ]
 
 // straight-forwards bootstrap decorator
-const bootstrap: ServiceDefinition | undefined = prodServices.find(([token, _]) => token === $.bootstrap)
+const bootstrap = prodServices.find(([token, _]) => token === $.bootstrap)
 if (bootstrap) {
   bootstrap[1].service = (...rest: Parameters<typeof useBootstrap>) => {
     const env = get($.Env)
