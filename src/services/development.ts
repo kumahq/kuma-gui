@@ -42,6 +42,12 @@ export const services: ServiceDefinition[] = [
   [$.msw, {
     service: (handlers: RestHandler[]) => {
       const worker = setupWorker(...handlers)
+
+      console.warn(
+        '%c ✨You are mocking api requests.',
+        'background: gray; color: white; display: block; padding: 0.25rem;',
+      )
+
       worker.start({
         quiet: true,
         onUnhandledRequest(req: MockedRequest) {

@@ -3,7 +3,7 @@ import { afterAll, afterEach, beforeAll, beforeEach, expect, jest } from '@jest/
 import 'isomorphic-fetch'
 import { config } from '@vue/test-utils'
 import { rest, MockedRequest as Request } from 'msw'
-import { setupServer, SetupServer } from 'msw/node'
+import { setupServer } from 'msw/node'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
@@ -39,7 +39,7 @@ expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
   'data-tableid',
 ]))
 
-const server: SetupServer = setupServer(...get(TOKENS.mswHandlers))
+const server = setupServer(...get(TOKENS.mswHandlers))
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
