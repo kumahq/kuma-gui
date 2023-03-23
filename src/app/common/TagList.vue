@@ -20,10 +20,12 @@ import { KBadge } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 import { RouteLocation, useRouter } from 'vue-router'
 
+import { useStore } from '@/store/store'
 import { LabelValue } from '@/types/index.d'
 import { getLabels } from '@/utilities/getLabels'
 
 const router = useRouter()
+const store = useStore()
 
 interface LabelValueWithRoute extends LabelValue {
   route: RouteLocation | undefined
@@ -65,6 +67,7 @@ function getRoute(tag: LabelValue): RouteLocation | undefined {
         return router.resolve({
           name: 'service-detail-view',
           params: {
+            mesh: store.state.selectedMesh,
             service: tag.value,
           },
         })

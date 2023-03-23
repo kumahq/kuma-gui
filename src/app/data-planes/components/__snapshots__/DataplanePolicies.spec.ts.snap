@@ -182,12 +182,15 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 class="k-badge-text truncate"
                               >
                                 
-                                <span>
+                                <a
+                                  class=""
+                                  href="/mesh/default/services/service-a"
+                                >
                                   kuma.io/service:
                                   <b>
                                     service-a
                                   </b>
-                                </span>
+                                </a>
                                 
                               </div>
                             </div>
@@ -216,12 +219,15 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 class="k-badge-text truncate"
                               >
                                 
-                                <span>
+                                <a
+                                  class=""
+                                  href="/mesh/default/services/web"
+                                >
                                   kuma.io/service:
                                   <b>
                                     web
                                   </b>
-                                </span>
+                                </a>
                                 
                               </div>
                             </div>
@@ -411,12 +417,15 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 class="k-badge-text truncate"
                               >
                                 
-                                <span>
+                                <a
+                                  class=""
+                                  href="/mesh/default/services/service-b"
+                                >
                                   kuma.io/service:
                                   <b>
                                     service-b
                                   </b>
-                                </span>
+                                </a>
                                 
                               </div>
                             </div>
@@ -445,12 +454,15 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 class="k-badge-text truncate"
                               >
                                 
-                                <span>
+                                <a
+                                  class=""
+                                  href="/mesh/default/services/web"
+                                >
                                   kuma.io/service:
                                   <b>
                                     web
                                   </b>
-                                </span>
+                                </a>
                                 
                               </div>
                             </div>
@@ -674,12 +686,15 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
                                 class="k-badge-text truncate"
                               >
                                 
-                                <span>
+                                <a
+                                  class=""
+                                  href="/mesh/default/services/web"
+                                >
                                   kuma.io/service:
                                   <b>
                                     web
                                   </b>
-                                </span>
+                                </a>
                                 
                               </div>
                             </div>
