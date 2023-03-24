@@ -3,13 +3,12 @@ import { afterAll, afterEach, beforeAll, beforeEach, expect, jest } from '@jest/
 import 'isomorphic-fetch'
 import { config } from '@vue/test-utils'
 import { rest, MockedRequest as Request } from 'msw'
+import { setupServer } from 'msw/node'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
-import { setupMockServer } from '../src/api/setupMockServer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
 import { createRouter } from '../src/router/router'
-import { TOKENS, get, container, build } from '../src/services'
-import { setupHandlers, mocks } from '@/api/mocks'
+import { TOKENS, get, container, build } from '../src/services/development'
 import Env from '@/services/env/Env'
 
 type MockFunction = (_opts: Record<string, unknown>, cb: (req: Request, resp: Record <string, any>) => Record<string, unknown>) => void
@@ -40,7 +39,7 @@ expect.addSnapshotSerializer(replaceAttributesSnapshotSerializer([
   'data-tableid',
 ]))
 
-const server = setupMockServer(setupHandlers(import.meta.env.VITE_KUMA_API_SERVER_URL, mocks))
+const server = setupServer(...get(TOKENS.mswHandlers))
 
 beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())

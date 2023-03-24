@@ -13,6 +13,9 @@ export {
   token,
   token as label,
 } from 'brandi'
+export type {
+  TokenType,
+} from 'brandi'
 
 type InjectionHooks<T extends TokenValue[]> = {
   [K in keyof T]: T[K] extends TokenValue ? () => TokenType<T[K]> : never;

@@ -1,30 +1,14 @@
 import { rest, RestHandler } from 'msw'
 
-import { TOKENS, get } from '@/services'
-import { Info } from '@/types/index.d'
-
+import type Env from '@/services/env/Env'
 async function loadMockFile(importFn: () => Promise<any>): Promise<any> {
   const fileModule = await importFn()
 
   return fileModule.default
 }
 
-function getBaseInfo(): Info {
-  const env = get(TOKENS.Env)
-  return {
-    hostname: 'control-plane-5d94cb99c6-rzr96',
-    tagline: env.var('KUMA_PRODUCT_NAME'),
-    version: '1.7.1',
-    basedOnKuma: '1.7.1',
-    instanceId: 'control-plane-5d94cb99c6-rzr96-ca19',
-    clusterId: 'b3c42481-0681-4da7-a276-c1fd4ed3c7a1',
-    gui: 'The gui is available at /gui',
-  }
-}
-
 export type Mocks = Array<[string, () => Promise<any>]>
 export const mocks: Mocks = [
-  ['config', () => import('./mock-data/config.json')],
   ['versions', () => import('./mock-data/versions.json')],
   ['policies', () => import('./mock-data/policies.json')],
   ['status/zones', () => import('./mock-data/status/zones.json')],
@@ -162,7 +146,7 @@ export const mocks: Mocks = [
   ['meshes/:mesh/dataplanes/:dataplaneName/xds', () => import('./mock-data/dataplane-xds.json')],
 ]
 
-export function setupHandlers(url: string = '', mocks: Mocks): RestHandler[] {
+export function setupHandlers(url: string = '', mocks: Mocks, env: Env): RestHandler[] {
   const origin = url.replace(/\/+$/, '')
 
   function getApiPath(path: string = '') {
@@ -174,84 +158,8 @@ export function setupHandlers(url: string = '', mocks: Mocks): RestHandler[] {
   const handlers = mocks.map(([path, importFn]) => {
     return rest.get(getApiPath(path), async (_req, res, ctx) => res(ctx.json(await loadMockFile(importFn))))
   })
-  const env = get(TOKENS.Env)
 
   handlers.push(rest.get(env.var('KUMA_VERSION_URL'), (_req, res, ctx) => res(ctx.text('5.0.2'))))
-  handlers.push(rest.get(getApiPath(), (_req, res, ctx) => res(ctx.json(getBaseInfo()))))
-
-  handlers.push(
-    rest.get(getApiPath('dataplanes\\+insights'), async (req, res, ctx) => {
-      const gateway = req.url.searchParams.get('gateway')
-
-      let data
-      if (gateway === 'false') {
-        data = await loadMockFile(() => import('./mock-data/dataplanes+insights__only-standard.json'))
-      } else if (gateway === 'true') {
-        data = await loadMockFile(() => import('./mock-data/dataplanes+insights__only-gateways.json'))
-      } else {
-        const offset = req.url.searchParams.get('offset')
-        const hasPositiveOffset = offset !== null && parseInt(offset) > 0
-
-        if (hasPositiveOffset) {
-          data = await loadMockFile(() => import('./mock-data/dataplanes+insights-page-2.json'))
-        } else {
-          data = await loadMockFile(() => import('./mock-data/dataplanes+insights.json'))
-        }
-      }
-
-      return res(ctx.json(data))
-    }),
-  )
-  handlers.push(
-    rest.get(getApiPath('meshes/default/traffic-permissions'), async (req, res, ctx) => {
-      const offset = req.url.searchParams.get('offset')
-
-      let response
-      if (offset === null || offset === '0') {
-        response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions.json'))
-      } else if (offset === '12') {
-        response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions__page-2.json'))
-      } else {
-        response = await loadMockFile(() => import('./mock-data/meshes/default/traffic-permissions__page-3.json'))
-      }
-
-      return res(ctx.json(response))
-    }),
-  )
-
-  handlers.push(
-    rest.get(getApiPath('meshes/default/dataplanes\\+insights'), async (req, res, ctx) => {
-      const gateway = req.url.searchParams.get('gateway')
-      let response
-
-      if (gateway === 'true') {
-        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights__gateways-all.json'))))
-      } else if (gateway === 'builtin') {
-        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights__gateways-builtin.json'))))
-      } else if (gateway === 'delegated') {
-        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights__gateways-delegated.json'))))
-      } else if (gateway === 'false') {
-        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights.json'))))
-
-        response.items = response.items.filter((item: any) => item.dataplane.networking.gateway === undefined)
-        response.total = response.items.length
-      } else {
-        response = JSON.parse(JSON.stringify(await loadMockFile(() => import('./mock-data/meshes/default/dataplanes+insights.json'))))
-      }
-
-      return res(ctx.json(response))
-    }),
-  )
-
-  // Basic test for API errors to easily test how errors with title, details, and causes are used in the UI.
-  handlers.push(
-    rest.get(getApiPath('meshes/:mesh/dataplanes/:dataplaneName/stats'), async (_req, res, ctx) =>
-      res(
-        ctx.status(403),
-        ctx.json(await loadMockFile(() => import('./mock-data/permission-error.json'))),
-      ),
-    ),
-  )
 
   return handlers
 }
