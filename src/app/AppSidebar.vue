@@ -86,7 +86,7 @@ function fetchInsights() {
   overflow-y: auto;
   padding-top: var(--spacing-xs);
   padding-right: var(--spacing-xs);
-  border-right: 1px solid var(--black-10);
+  border-right: 1px solid var(--grey-300);
   background-color: var(--white);
 }
 </style>
