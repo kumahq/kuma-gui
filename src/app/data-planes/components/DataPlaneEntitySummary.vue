@@ -59,7 +59,7 @@
                   <KIcon
                     class="ml-1"
                     icon="warning"
-                    color="var(--black-75)"
+                    color="var(--black-500)"
                     secondary-color="var(--yellow-300)"
                     size="20"
                   />
