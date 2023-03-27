@@ -1,139 +1,143 @@
 <template>
-  <div class="entity-summary entity-section-list">
-    <section>
-      <div class="block-list">
-        <div>
-          <h3
-            class="entity-title"
-            data-testid="data-plane-proxy-title"
-          >
-            <span>
-              DPP:
-
-              <router-link
-                :to="{
-                  name: 'data-plane-detail-view',
-                  params: {
-                    mesh: dataPlaneOverview.mesh,
-                    dataPlane: dataPlaneOverview.name,
-                  },
-                }"
+  <KCard border-variant="noBorder">
+    <template #body>
+      <div class="entity-section-list">
+        <section>
+          <div class="block-list">
+            <div>
+              <h3
+                class="entity-title"
+                data-testid="data-plane-proxy-title"
               >
-                {{ dataPlaneOverview.name }}
-              </router-link>
-            </span>
+                <span>
+                  DPP:
 
-            <StatusBadge :status="status" />
-          </h3>
+                  <router-link
+                    :to="{
+                      name: 'data-plane-detail-view',
+                      params: {
+                        mesh: dataPlaneOverview.mesh,
+                        dataPlane: dataPlaneOverview.name,
+                      },
+                    }"
+                  >
+                    {{ dataPlaneOverview.name }}
+                  </router-link>
+                </span>
 
-          <div class="definition">
-            <span>Mesh:</span>
-            <span>{{ dataPlaneOverview.mesh }}</span>
+                <StatusBadge :status="status" />
+              </h3>
+
+              <div class="definition">
+                <span>Mesh:</span>
+                <span>{{ dataPlaneOverview.mesh }}</span>
+              </div>
+            </div>
+
+            <div v-if="dataPlaneTags.length > 0">
+              <h4>Tags</h4>
+
+              <TagList :tags="dataPlaneTags" />
+            </div>
+
+            <div v-if="dependencies.length > 0">
+              <h4>Dependencies</h4>
+
+              <div
+                v-for="(dependency, index) in dependencies"
+                :key="index"
+                class="definition"
+              >
+                <span>{{ dependency.name }}:</span>
+                <span>{{ dependency.version }}</span>
+              </div>
+
+              <template v-if="warnings.length > 0">
+                <h5 class="mt-2 heading-with-icon">
+                  Warnings
+
+                  <KIcon
+                    class="ml-1"
+                    icon="warning"
+                    color="var(--black-75)"
+                    secondary-color="var(--yellow-300)"
+                    size="20"
+                  />
+                </h5>
+
+                <p
+                  v-for="(warning, index) in warnings"
+                  :key="index"
+                >
+                  {{ warning }}
+                </p>
+              </template>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div v-if="dataPlaneTags.length > 0">
-          <h4>Tags</h4>
+        <section v-if="subscriptionWrappers.length > 0">
+          <h4>Insights</h4>
 
-          <TagList :tags="dataPlaneTags" />
-        </div>
-
-        <div v-if="dependencies.length > 0">
-          <h4>Dependencies</h4>
-
-          <div
-            v-for="(dependency, index) in dependencies"
-            :key="index"
-            class="definition"
-          >
-            <span>{{ dependency.name }}:</span>
-            <span>{{ dependency.version }}</span>
-          </div>
-
-          <template v-if="warnings.length > 0">
-            <h5 class="mt-2 heading-with-icon">
-              Warnings
-
-              <KIcon
-                class="ml-1"
-                icon="warning"
-                color="var(--black-75)"
-                secondary-color="var(--yellow-300)"
-                size="20"
-              />
-            </h5>
-
-            <p
-              v-for="(warning, index) in warnings"
+          <div class="block-list">
+            <div
+              v-for="(subscriptionWrapper, index) in subscriptionWrappers"
               :key="index"
             >
-              {{ warning }}
-            </p>
-          </template>
-        </div>
-      </div>
-    </section>
+              <div
+                class="definition"
+                :data-testid="`data-plane-connect-time-${index}`"
+              >
+                <span>Connect time:</span>
+                <span>{{ subscriptionWrapper.formattedConnectDate }}</span>
+              </div>
 
-    <section v-if="subscriptionWrappers.length > 0">
-      <h4>Insights</h4>
+              <div
+                class="definition"
+                :data-testid="`data-plane-disconnect-time-${index}`"
+              >
+                <span>Disconnect time:</span>
+                <span>{{ subscriptionWrapper.formattedDisconnectDate }}</span>
+              </div>
 
-      <div class="block-list">
-        <div
-          v-for="(subscriptionWrapper, index) in subscriptionWrappers"
-          :key="index"
-        >
-          <div
-            class="definition"
-            :data-testid="`data-plane-connect-time-${index}`"
-          >
-            <span>Connect time:</span>
-            <span>{{ subscriptionWrapper.formattedConnectDate }}</span>
-          </div>
+              <div class="definition">
+                <span>CP instance ID:</span>
+                <span>{{ subscriptionWrapper.subscription.controlPlaneInstanceId }}</span>
+              </div>
 
-          <div
-            class="definition"
-            :data-testid="`data-plane-disconnect-time-${index}`"
-          >
-            <span>Disconnect time:</span>
-            <span>{{ subscriptionWrapper.formattedDisconnectDate }}</span>
-          </div>
+              <details v-if="subscriptionWrapper.statuses.length > 0">
+                <summary>
+                  Responses (acknowledged / sent)
+                </summary>
 
-          <div class="definition">
-            <span>CP instance ID:</span>
-            <span>{{ subscriptionWrapper.subscription.controlPlaneInstanceId }}</span>
-          </div>
-
-          <details v-if="subscriptionWrapper.statuses.length > 0">
-            <summary>
-              Responses (acknowledged / sent)
-            </summary>
-
-            <div
-              v-for="(subscriptionStatus, subscriptionStatusIndex) in subscriptionWrapper.statuses"
-              :key="`${index}-${subscriptionStatusIndex}`"
-              class="definition"
-              :data-testid="`data-plane-subscription-status-${index}-${subscriptionStatusIndex}`"
-            >
-              <span>{{ subscriptionStatus.type }}:</span>
-              <span>{{ subscriptionStatus.ratio }}</span>
+                <div
+                  v-for="(subscriptionStatus, subscriptionStatusIndex) in subscriptionWrapper.statuses"
+                  :key="`${index}-${subscriptionStatusIndex}`"
+                  class="definition"
+                  :data-testid="`data-plane-subscription-status-${index}-${subscriptionStatusIndex}`"
+                >
+                  <span>{{ subscriptionStatus.type }}:</span>
+                  <span>{{ subscriptionStatus.ratio }}</span>
+                </div>
+              </details>
             </div>
-          </details>
-        </div>
-      </div>
-    </section>
+          </div>
+        </section>
 
-    <section class="config-section">
-      <YamlView
-        id="code-block-data-plane-summary"
-        :content="dataPlane"
-        code-max-height="250px"
-      />
-    </section>
-  </div>
+        <section class="config-section">
+          <YamlView
+            id="code-block-data-plane-summary"
+            :content="dataPlane"
+            code-max-height="250px"
+          />
+        </section>
+      </div>
+    </template>
+  </KCard>
 </template>
 
 <script lang="ts" setup>
-import { KIcon } from '@kong/kongponents'
+import { KCard, KIcon } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 
 import StatusBadge from '@/app/common/StatusBadge.vue'
@@ -251,10 +255,6 @@ h3, h4, h5 {
 .heading-with-icon {
   display: flex;
   align-items: center;
-}
-
-.entity-summary {
-  padding: var(--spacing-md);
 }
 
 .entity-section-list {

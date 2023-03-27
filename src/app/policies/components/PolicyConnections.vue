@@ -1,45 +1,44 @@
 
 <template>
-  <div>
-    <LabelList
-      :has-error="hasError"
-      :is-loading="isLoading"
-      :is-empty="!hasDataplanes"
-    >
-      <ul>
-        <li>
-          <h4>Dataplanes</h4>
-          <input
-            id="dataplane-search"
-            v-model="searchInput"
-            type="text"
-            class="k-input mb-4"
-            placeholder="Filter by name"
-            required
-            data-testid="dataplane-search-input"
+  <LabelList
+    :has-error="hasError"
+    :is-loading="isLoading"
+    :is-empty="!hasDataplanes"
+  >
+    <ul>
+      <li>
+        <h4>Dataplanes</h4>
+
+        <input
+          id="dataplane-search"
+          v-model="searchInput"
+          type="text"
+          class="k-input mb-4"
+          placeholder="Filter by name"
+          required
+          data-testid="dataplane-search-input"
+        >
+        <p
+          v-for="(dataplane, key) in filteredDataplanes"
+          :key="key"
+          class="my-1"
+          data-testid="dataplane-name"
+        >
+          <router-link
+            :to="{
+              name: 'data-plane-detail-view',
+              params: {
+                mesh: dataplane.dataplane.mesh,
+                dataPlane: dataplane.dataplane.name,
+              },
+            }"
           >
-          <p
-            v-for="(dataplane, key) in filteredDataplanes"
-            :key="key"
-            class="my-1"
-            data-testid="dataplane-name"
-          >
-            <router-link
-              :to="{
-                name: 'data-plane-detail-view',
-                params: {
-                  mesh: dataplane.dataplane.mesh,
-                  dataPlane: dataplane.dataplane.name,
-                },
-              }"
-            >
-              {{ dataplane.dataplane.name }}
-            </router-link>
-          </p>
-        </li>
-      </ul>
-    </LabelList>
-  </div>
+            {{ dataplane.dataplane.name }}
+          </router-link>
+        </p>
+      </li>
+    </ul>
+  </LabelList>
 </template>
 
 <script lang="ts" setup>

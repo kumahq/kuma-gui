@@ -1,28 +1,24 @@
 <template>
-  <KCard border-variant="noBorder">
-    <template #body>
-      <ul>
-        <li
-          v-for="(warning, index) in props.warnings"
-          :key="`${warning.kind}/${index}`"
-          class="mb-1"
-        >
-          <KAlert appearance="warning">
-            <template #alertMessage>
-              <component
-                :is="getWarningComponent(warning.kind)"
-                :payload="warning.payload"
-              />
-            </template>
-          </KAlert>
-        </li>
-      </ul>
-    </template>
-  </KCard>
+  <ul>
+    <li
+      v-for="(warning, index) in props.warnings"
+      :key="`${warning.kind}/${index}`"
+      class="mb-1"
+    >
+      <KAlert appearance="warning">
+        <template #alertMessage>
+          <component
+            :is="getWarningComponent(warning.kind)"
+            :payload="warning.payload"
+          />
+        </template>
+      </KAlert>
+    </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
-import { KAlert, KCard } from '@kong/kongponents'
+import { KAlert } from '@kong/kongponents'
 import { PropType } from 'vue'
 
 import WarningDefault from './WarningDefault.vue'

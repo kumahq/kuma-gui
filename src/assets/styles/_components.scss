@@ -1,4 +1,5 @@
 .component-frame {
-  border: 1px solid var(--grey-300);
+  border: var(--KCardBorder);
   border-radius: 3px;
+  background-color: var(--white);
 }

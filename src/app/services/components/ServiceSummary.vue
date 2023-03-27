@@ -1,77 +1,84 @@
 <template>
-  <div class="entity-summary entity-section-list">
-    <section>
-      <div class="block-list">
-        <div>
-          <h1 class="entity-title">
-            <span>
-              Service:
+  <KCard border-variant="noBorder">
+    <template #body>
+      <div class="entity-section-list">
+        <section>
+          <div class="block-list">
+            <div>
+              <h1 class="entity-title">
+                <span>
+                  Service:
 
-              <router-link :to="serviceRoute">
-                {{ props.service.name }}
-              </router-link>
-            </span>
+                  <router-link :to="serviceRoute">
+                    {{ props.service.name }}
+                  </router-link>
+                </span>
 
-            <StatusBadge
-              v-if="status"
-              :status="status"
-            />
-          </h1>
+                <StatusBadge
+                  v-if="status"
+                  :status="status"
+                />
+              </h1>
 
-          <div class="definition">
-            <span>Mesh:</span>
-            <span>{{ props.service.mesh }}</span>
+              <div class="definition">
+                <span>Mesh:</span>
+                <span>{{ props.service.mesh }}</span>
+              </div>
+
+              <div class="definition">
+                <span>Address:</span>
+                <span>
+                  <template v-if="address !== null">
+                    {{ address }}
+                  </template>
+
+                  <template v-else>—</template>
+                </span>
+              </div>
+
+              <div
+                v-if="tls !== null"
+                class="definition"
+              >
+                <span>TLS:</span>
+                <span>{{ tls }}</span>
+              </div>
+
+              <div
+                v-if="numberOfDataPlaneProxies !== null"
+                class="definition"
+              >
+                <span>Data plane proxies:</span>
+                <span>{{ numberOfDataPlaneProxies }}</span>
+              </div>
+            </div>
+
+            <div v-if="tags !== null">
+              <h2>Tags</h2>
+
+              <TagList :tags="tags" />
+            </div>
           </div>
+        </section>
 
-          <div class="definition">
-            <span>Address:</span>
-            <span>
-              <template v-if="address !== null">
-                {{ address }}
-              </template>
-
-              <template v-else>—</template>
-            </span>
-          </div>
-
-          <div
-            v-if="tls !== null"
-            class="definition"
-          >
-            <span>TLS:</span>
-            <span>{{ tls }}</span>
-          </div>
-
-          <div
-            v-if="numberOfDataPlaneProxies !== null"
-            class="definition"
-          >
-            <span>Data plane proxies:</span>
-            <span>{{ numberOfDataPlaneProxies }}</span>
-          </div>
-        </div>
-
-        <div v-if="tags !== null">
-          <h2>Tags</h2>
-
-          <TagList :tags="tags" />
-        </div>
+        <section
+          v-if="props.service.serviceType === 'external'"
+          class="config-section"
+        >
+          <YamlView
+            id="code-block-service"
+            :content="rawService"
+            is-searchable
+            code-max-height="250px"
+          />
+        </section>
       </div>
-    </section>
-
-    <section class="config-section">
-      <YamlView
-        v-if="props.service.serviceType === 'external'"
-        id="code-block-service"
-        :content="rawService"
-        is-searchable
-        code-max-height="250px"
-      />
-    </section>
-  </div>
+    </template>
+  </KCard>
 </template>
 
 <script lang="ts" setup>
+import { KCard } from '@kong/kongponents'
 import { computed, PropType } from 'vue'
 import { RouteLocationNamedRaw } from 'vue-router'
 
@@ -149,10 +156,6 @@ const rawService = computed(() => stripTimes(props.externalService ?? props.serv
 </script>
 
 <style lang="scss" scoped>
-.entity-summary {
-  padding: var(--spacing-md);
-}
-
 .entity-section-list {
   display: flex;
   flex-wrap: wrap;

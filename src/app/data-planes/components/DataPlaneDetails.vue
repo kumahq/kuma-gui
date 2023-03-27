@@ -76,38 +76,33 @@
         </div>
       </LabelList>
 
-      <div class="config-wrapper">
-        <YamlView
-          id="code-block-data-plane"
-          :content="rawDataPlane"
-          is-searchable
-        />
-      </div>
+      <YamlView
+        id="code-block-data-plane"
+        class="mt-4"
+        :content="rawDataPlane"
+        is-searchable
+      />
     </template>
 
     <template #insights>
       <StatusInfo :is-empty="insightSubscriptions.length === 0">
-        <KCard border-variant="noBorder">
-          <template #body>
-            <AccordionList :initially-open="0">
-              <AccordionItem
-                v-for="(insight, key) in insightSubscriptions"
-                :key="key"
-              >
-                <template #accordion-header>
-                  <SubscriptionHeader :details="insight" />
-                </template>
+        <AccordionList :initially-open="0">
+          <AccordionItem
+            v-for="(insight, key) in insightSubscriptions"
+            :key="key"
+          >
+            <template #accordion-header>
+              <SubscriptionHeader :details="insight" />
+            </template>
 
-                <template #accordion-content>
-                  <SubscriptionDetails
-                    :details="insight"
-                    is-discovery-subscription
-                  />
-                </template>
-              </AccordionItem>
-            </AccordionList>
-          </template>
-        </KCard>
+            <template #accordion-content>
+              <SubscriptionDetails
+                :details="insight"
+                is-discovery-subscription
+              />
+            </template>
+          </AccordionItem>
+        </AccordionList>
       </StatusInfo>
     </template>
 
@@ -182,7 +177,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KCard, KAlert } from '@kong/kongponents'
+import { KAlert } from '@kong/kongponents'
 import { computed, ref, PropType } from 'vue'
 
 import DataplanePolicies from './DataplanePolicies.vue'
@@ -344,9 +339,18 @@ setWarnings()
   margin-top: var(--spacing-xxs);
 }
 
-.config-wrapper {
-  padding-right: var(--spacing-md);
-  padding-left: var(--spacing-md);
-  padding-bottom: var(--spacing-md);
+.tag-cols {
+  display: grid;
+  grid-auto-flow: column dense;
+  grid-template-columns: 1fr 2fr;
+
+  span {
+    display: inline-block;
+    padding: var(--spacing-xs);
+  }
+
+  span:first-of-type {
+    font-weight: 600;
+  }
 }
 </style>

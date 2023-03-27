@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EnvoyData.vue renders snapshot 1`] = `
-<div
-  class="envoy-data"
->
+<div>
   <div
     class="envoy-data-actions"
   >
