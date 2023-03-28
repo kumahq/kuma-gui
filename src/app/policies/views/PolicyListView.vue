@@ -114,17 +114,16 @@
             </div>
           </LabelList>
 
-          <div class="config-wrapper">
-            <YamlView
-              v-if="rawEntity !== null"
-              id="code-block-policy"
-              :has-error="entityHasError"
-              :is-loading="entityIsLoading"
-              :is-empty="entityIsEmpty"
-              :content="rawEntity"
-              is-searchable
-            />
-          </div>
+          <YamlView
+            v-if="rawEntity !== null"
+            id="code-block-policy"
+            class="mt-4"
+            :has-error="entityHasError"
+            :is-loading="entityIsLoading"
+            :is-empty="entityIsEmpty"
+            :content="rawEntity"
+            is-searchable
+          />
         </template>
 
         <template #affected-dpps>
@@ -142,9 +141,9 @@
 
 <script lang="ts" setup>
 import {
-  KSelect,
   KAlert,
   KButton,
+  KSelect,
 } from '@kong/kongponents'
 import { computed, ref, watch } from 'vue'
 import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
@@ -215,7 +214,6 @@ const pageOffset = ref(props.offset)
 
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers: [
-    { label: 'Actions', key: 'actions', hideLabel: true },
     { label: 'Name', key: 'name' },
     { label: 'Type', key: 'type' },
   ],
@@ -388,11 +386,5 @@ async function getEntity(selectedEntity: { mesh: string, path: string, name: str
 .entity-heading {
   font-size: inherit;
   font-weight: normal;
-}
-
-.config-wrapper {
-  padding-right: var(--spacing-md);
-  padding-left: var(--spacing-md);
-  padding-bottom: var(--spacing-md);
 }
 </style>

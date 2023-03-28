@@ -97,22 +97,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="sr-only"
-                        >
-                          Actions
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
                           class=""
                         >
                           Status
@@ -148,13 +132,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
                     tabindex="0"
                   >
                     
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      
-                    </td>
                     <td
                       class=""
                     >
@@ -317,61 +294,59 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
             tabindex="0"
           >
             
-            
-            <div>
+            <section
+              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              class="kong-card noBorder"
+            >
+              <!---->
+              <!---->
               <div
-                class="label-list-content"
+                class="k-card-content d-flex"
               >
-                <section
-                  aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  class="kong-card noBorder"
+                <div
+                  class="k-card-body"
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
-                  <!---->
-                  <!---->
+                  
+                  
                   <div
-                    class="k-card-content d-flex"
+                    class="label-list"
                   >
                     <div
-                      class="k-card-body"
-                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      class="label-list__content"
                     >
                       
-                      <div
-                        class="label-list__col-wrapper multi-col"
-                      >
-                        
-                        <div>
-                          <ul>
-                            
-                            <li>
-                              <h4>
-                                type
-                              </h4>
-                              <p>
-                                ZoneIngressOverview
-                              </p>
-                            </li>
-                            <li>
-                              <h4>
-                                name
-                              </h4>
-                              <p>
-                                zone-ingress-1
-                              </p>
-                            </li>
-                            
-                          </ul>
-                        </div>
-                        
+                      <div>
+                        <ul>
+                          
+                          <li>
+                            <h4>
+                              type
+                            </h4>
+                            <p>
+                              ZoneIngressOverview
+                            </p>
+                          </li>
+                          <li>
+                            <h4>
+                              name
+                            </h4>
+                            <p>
+                              zone-ingress-1
+                            </p>
+                          </li>
+                          
+                        </ul>
                       </div>
                       
                     </div>
-                    <!---->
                   </div>
-                </section>
+                  
+                  
+                </div>
+                <!---->
               </div>
-            </div>
-            
+            </section>
             
           </div>
           <div
@@ -641,7 +616,6 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
         tabindex="0"
       >
         
-        
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           class="kong-card noBorder"
@@ -655,6 +629,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
               class="k-card-body"
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
+              
               
               <ul
                 class="accordion-list"
@@ -690,7 +665,7 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                     persisted="false"
                   >
                     <div
-                      class="px-4 py-1"
+                      class="accordion-item-content"
                       data-testid="accordion-item-content"
                     >
                       
@@ -829,11 +804,11 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                 
               </ul>
               
+              
             </div>
             <!---->
           </div>
         </section>
-        
         
       </div>
       <div

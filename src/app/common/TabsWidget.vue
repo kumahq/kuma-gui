@@ -25,10 +25,15 @@
           @changed="switchTab"
         >
           <template
-            v-for="tab in tabsSlots"
+            v-for="(tab, index) in tabsSlots"
+            :key="index"
             #[tab]
           >
-            <slot :name="tab" />
+            <KCard border-variant="noBorder">
+              <template #body>
+                <slot :name="tab" />
+              </template>
+            </KCard>
           </template>
 
           <template #warnings-anchor>
@@ -52,7 +57,7 @@
 
 <script lang="ts" setup>
 import { datadogLogs } from '@datadog/browser-logs'
-import { KIcon, KTabs } from '@kong/kongponents'
+import { KCard, KIcon, KTabs } from '@kong/kongponents'
 import { computed, PropType, ref } from 'vue'
 
 import ErrorBlock from '@/app/common/ErrorBlock.vue'

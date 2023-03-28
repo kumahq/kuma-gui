@@ -1,5 +1,5 @@
 <template>
-  <div class="envoy-data">
+  <div>
     <div class="envoy-data-actions">
       <KButton
         :disabled="isLoading"
@@ -132,10 +132,6 @@ async function fetchContent() {
 </script>
 
 <style lang="scss" scoped>
-.envoy-data {
-  padding: var(--spacing-md);
-}
-
 .envoy-data-actions {
   display: flex;
   justify-content: flex-end;

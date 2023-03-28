@@ -75,41 +75,31 @@
         </template>
 
         <template #insights>
-          <KCard border-variant="noBorder">
-            <template #body>
-              <AccordionList :initially-open="0">
-                <AccordionItem
-                  v-for="(value, key) in subscriptionsReversed"
-                  :key="key"
-                >
-                  <template #accordion-header>
-                    <SubscriptionHeader :details="value" />
-                  </template>
+          <AccordionList :initially-open="0">
+            <AccordionItem
+              v-for="(value, key) in subscriptionsReversed"
+              :key="key"
+            >
+              <template #accordion-header>
+                <SubscriptionHeader :details="value" />
+              </template>
 
-                  <template #accordion-content>
-                    <SubscriptionDetails :details="value" />
-                  </template>
-                </AccordionItem>
-              </AccordionList>
-            </template>
-          </KCard>
+              <template #accordion-content>
+                <SubscriptionDetails :details="value" />
+              </template>
+            </AccordionItem>
+          </AccordionList>
         </template>
 
         <template #config>
-          <KCard
+          <CodeBlock
             v-if="codeOutput"
-            border-variant="noBorder"
-          >
-            <template #body>
-              <CodeBlock
-                id="code-block-zone-config"
-                language="json"
-                :code="codeOutput"
-                is-searchable
-                query-key="zone-config"
-              />
-            </template>
-          </KCard>
+            id="code-block-zone-config"
+            language="json"
+            :code="codeOutput"
+            is-searchable
+            query-key="zone-config"
+          />
         </template>
 
         <template #warnings>
@@ -121,7 +111,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KBadge, KButton, KCard } from '@kong/kongponents'
+import { KBadge, KButton } from '@kong/kongponents'
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -196,7 +186,6 @@ const entityHasError = ref(false)
 const tableDataIsEmpty = ref(false)
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers: [
-    { label: 'Actions', key: 'actions', hideLabel: true },
     { label: 'Status', key: 'status' },
     { label: 'Name', key: 'name' },
     { label: 'Zone CP Version', key: 'zoneCpVersion' },

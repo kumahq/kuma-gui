@@ -97,22 +97,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       >
                         
                         <span
-                          class="sr-only"
-                        >
-                          Actions
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
                           class=""
                         >
                           Status
@@ -228,13 +212,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     tabindex="0"
                   >
                     
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      
-                    </td>
                     <td
                       class=""
                     >
@@ -373,13 +350,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                       class=""
                     >
                       
-                      
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
                       <span
                         class="status status--with-title status--success"
                         data-testid="status-badge"
@@ -444,13 +414,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     tabindex="0"
                   >
                     
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      
-                    </td>
                     <td
                       class=""
                     >
@@ -585,13 +548,6 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     tabindex="0"
                   >
                     
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      
-                    </td>
                     <td
                       class=""
                     >
@@ -846,93 +802,91 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
             tabindex="0"
           >
             
-            
-            <div>
+            <section
+              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              class="kong-card noBorder"
+            >
+              <!---->
+              <!---->
               <div
-                class="label-list-content"
+                class="k-card-content d-flex"
               >
-                <section
-                  aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                  class="kong-card noBorder"
+                <div
+                  class="k-card-body"
+                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
-                  <!---->
-                  <!---->
+                  
+                  
                   <div
-                    class="k-card-content d-flex"
+                    class="label-list"
                   >
                     <div
-                      class="k-card-body"
-                      id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                      class="label-list__content"
                     >
                       
-                      <div
-                        class="label-list__col-wrapper multi-col"
-                      >
-                        
-                        <div>
-                          <ul>
-                            
-                            <li>
-                              <h4>
-                                type
-                              </h4>
-                              <p>
-                                ZoneOverview
-                              </p>
-                            </li>
-                            <li>
-                              <h4>
-                                name
-                              </h4>
-                              <p>
-                                cluster-1
-                              </p>
-                            </li>
-                            <li>
-                              <h4>
-                                status
-                              </h4>
-                              <p>
+                      <div>
+                        <ul>
+                          
+                          <li>
+                            <h4>
+                              type
+                            </h4>
+                            <p>
+                              ZoneOverview
+                            </p>
+                          </li>
+                          <li>
+                            <h4>
+                              name
+                            </h4>
+                            <p>
+                              cluster-1
+                            </p>
+                          </li>
+                          <li>
+                            <h4>
+                              status
+                            </h4>
+                            <p>
+                              <div
+                                class="k-badge d-inline-flex k-badge-success k-badge-rounded"
+                                tabindex="0"
+                              >
                                 <div
-                                  class="k-badge d-inline-flex k-badge-success k-badge-rounded"
-                                  tabindex="0"
+                                  class="k-badge-text truncate"
                                 >
                                   <div
                                     class="k-badge-text truncate"
                                   >
-                                    <div
-                                      class="k-badge-text truncate"
-                                    >
-                                      
-                                      online
-                                      
-                                    </div>
+                                    
+                                    online
+                                    
                                   </div>
-                                  <!---->
                                 </div>
-                              </p>
-                            </li>
-                            <li>
-                              <h4>
-                                Authentication Type
-                              </h4>
-                              <p>
-                                dpToken
-                              </p>
-                            </li>
-                            
-                          </ul>
-                        </div>
-                        
+                                <!---->
+                              </div>
+                            </p>
+                          </li>
+                          <li>
+                            <h4>
+                              Authentication Type
+                            </h4>
+                            <p>
+                              dpToken
+                            </p>
+                          </li>
+                          
+                        </ul>
                       </div>
                       
                     </div>
-                    <!---->
                   </div>
-                </section>
+                  
+                  
+                </div>
+                <!---->
               </div>
-            </div>
-            
+            </section>
             
           </div>
           <div
@@ -1250,7 +1204,6 @@ exports[`ZonesView.vue renders zone insights 1`] = `
         tabindex="0"
       >
         
-        
         <section
           aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
           class="kong-card noBorder"
@@ -1264,6 +1217,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
               class="k-card-body"
               id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
             >
+              
               
               <ul
                 class="accordion-list"
@@ -1299,7 +1253,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                     persisted="false"
                   >
                     <div
-                      class="px-4 py-1"
+                      class="accordion-item-content"
                       data-testid="accordion-item-content"
                     >
                       
@@ -1759,11 +1713,11 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                 
               </ul>
               
+              
             </div>
             <!---->
           </div>
         </section>
-        
         
       </div>
       <div

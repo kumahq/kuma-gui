@@ -1,87 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PolicyConnections.vue renders snapshot 1`] = `
-<div>
-  <div>
-    <div
-      class="label-list-content"
-    >
-      <section
-        aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-        class="kong-card noBorder"
-      >
-        <!---->
-        <!---->
-        <div
-          class="k-card-content d-flex"
+<div
+  class="label-list"
+>
+  <div
+    class="label-list__content"
+  >
+    
+    <ul>
+      <li>
+        <h4>
+          Dataplanes
+        </h4>
+        <input
+          class="k-input mb-4"
+          data-testid="dataplane-search-input"
+          id="dataplane-search"
+          placeholder="Filter by name"
+          required=""
+          type="text"
+        />
+        
+        <p
+          class="my-1"
+          data-testid="dataplane-name"
         >
-          <div
-            class="k-card-body"
-            id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          <a
+            class=""
+            href="/mesh/default/data-planes/backend"
           >
-            
-            <div
-              class="label-list__col-wrapper multi-col"
-            >
-              
-              <ul>
-                <li>
-                  <h4>
-                    Dataplanes
-                  </h4>
-                  <input
-                    class="k-input mb-4"
-                    data-testid="dataplane-search-input"
-                    id="dataplane-search"
-                    placeholder="Filter by name"
-                    required=""
-                    type="text"
-                  />
-                  
-                  <p
-                    class="my-1"
-                    data-testid="dataplane-name"
-                  >
-                    <a
-                      class=""
-                      href="/mesh/default/data-planes/backend"
-                    >
-                      backend
-                    </a>
-                  </p>
-                  <p
-                    class="my-1"
-                    data-testid="dataplane-name"
-                  >
-                    <a
-                      class=""
-                      href="/mesh/default/data-planes/db"
-                    >
-                      db
-                    </a>
-                  </p>
-                  <p
-                    class="my-1"
-                    data-testid="dataplane-name"
-                  >
-                    <a
-                      class=""
-                      href="/mesh/default/data-planes/frontend"
-                    >
-                      frontend
-                    </a>
-                  </p>
-                  
-                </li>
-              </ul>
-              
-            </div>
-            
-          </div>
-          <!---->
-        </div>
-      </section>
-    </div>
+            backend
+          </a>
+        </p>
+        <p
+          class="my-1"
+          data-testid="dataplane-name"
+        >
+          <a
+            class=""
+            href="/mesh/default/data-planes/db"
+          >
+            db
+          </a>
+        </p>
+        <p
+          class="my-1"
+          data-testid="dataplane-name"
+        >
+          <a
+            class=""
+            href="/mesh/default/data-planes/frontend"
+          >
+            frontend
+          </a>
+        </p>
+        
+      </li>
+    </ul>
+    
   </div>
 </div>
 `;

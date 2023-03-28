@@ -21,6 +21,7 @@
           {{ policy.name }}
         </h1>
       </template>
+
       <template #overview>
         <LabelList>
           <div data-testid="policy-overview-tab">
@@ -41,13 +42,13 @@
             </ul>
           </div>
         </LabelList>
-        <div class="config-wrapper">
-          <YamlView
-            id="code-block-policy"
-            :content="stripTimes(policy)"
-            is-searchable
-          />
-        </div>
+
+        <YamlView
+          id="code-block-policy"
+          class="mt-4"
+          :content="stripTimes(policy)"
+          is-searchable
+        />
       </template>
 
       <template #affected-dpps>

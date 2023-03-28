@@ -29,6 +29,7 @@
           </KButton>
         </template>
       </DataOverview>
+
       <TabsWidget
         v-if="isEmpty === false && entity !== null"
         :has-error="error !== null"
@@ -40,6 +41,7 @@
             Zone Ingress: {{ entity.name }}
           </h1>
         </template>
+
         <template #overview>
           <LabelList>
             <div>
@@ -59,28 +61,25 @@
             </div>
           </LabelList>
         </template>
-        <template #insights>
-          <KCard border-variant="noBorder">
-            <template #body>
-              <AccordionList :initially-open="0">
-                <AccordionItem
-                  v-for="(value, key) in subscriptionsReversed"
-                  :key="key"
-                >
-                  <template #accordion-header>
-                    <SubscriptionHeader :details="value" />
-                  </template>
 
-                  <template #accordion-content>
-                    <SubscriptionDetails
-                      :details="value"
-                      is-discovery-subscription
-                    />
-                  </template>
-                </AccordionItem>
-              </AccordionList>
-            </template>
-          </KCard>
+        <template #insights>
+          <AccordionList :initially-open="0">
+            <AccordionItem
+              v-for="(value, key) in subscriptionsReversed"
+              :key="key"
+            >
+              <template #accordion-header>
+                <SubscriptionHeader :details="value" />
+              </template>
+
+              <template #accordion-content>
+                <SubscriptionDetails
+                  :details="value"
+                  is-discovery-subscription
+                />
+              </template>
+            </AccordionItem>
+          </AccordionList>
         </template>
 
         <template #xds-configuration>
@@ -112,7 +111,7 @@
 </template>
 
 <script lang="ts" setup>
-import { KButton, KCard } from '@kong/kongponents'
+import { KButton } from '@kong/kongponents'
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -186,7 +185,6 @@ const isEmpty = ref(false)
 const error = ref<Error | null>(null)
 const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   headers: [
-    { label: 'Actions', key: 'actions', hideLabel: true },
     { label: 'Status', key: 'status' },
     { label: 'Name', key: 'name' },
   ],

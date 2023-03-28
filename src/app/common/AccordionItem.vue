@@ -21,7 +21,7 @@
     >
       <div
         v-if="visible"
-        class="px-4 py-1"
+        class="accordion-item-content"
         data-testid="accordion-item-content"
       >
         <slot name="accordion-content" />
@@ -134,7 +134,8 @@ function end(el: HTMLElement): void {
   display: block;
   width: 100%;
   text-align: left;
-  padding: var(--spacing-xs) var(--spacing-sm);
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
 
   &::after {
     position: absolute;
@@ -147,5 +148,10 @@ function end(el: HTMLElement): void {
     border-left: 0.325em solid transparent;
     transition: 0.25s ease;
   }
+}
+
+.accordion-item-content {
+  padding-top: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
 }
 </style>

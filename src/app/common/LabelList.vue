@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="label-list">
     <LoadingBlock v-if="props.isLoading" />
 
     <ErrorBlock v-else-if="props.hasError" />
@@ -8,22 +8,14 @@
 
     <div
       v-else
-      class="label-list-content"
+      class="label-list__content"
     >
-      <KCard border-variant="noBorder">
-        <template #body>
-          <div class="label-list__col-wrapper multi-col">
-            <slot />
-          </div>
-        </template>
-      </KCard>
+      <slot />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { KCard } from '@kong/kongponents'
-
 import EmptyBlock from '@/app/common/EmptyBlock.vue'
 import ErrorBlock from '@/app/common/ErrorBlock.vue'
 import LoadingBlock from '@/app/common/LoadingBlock.vue'
@@ -47,67 +39,31 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-.label-list-content .kong-card {
-  margin-bottom: 0 !important;
+.label-list {
+  h2, h3, h4, h5, h6 {
+    margin-bottom: var(--spacing-xs);
+    color: var(--grey-500);
+  }
+
+  h2, h3, h4 {
+    text-transform: uppercase;
+  }
 }
 
-.label-list__col-wrapper {
-  h4 {
-    margin-bottom: var(--spacing-xs);
-    text-transform: uppercase;
-    color: var(--grey-500);
+.label-list__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  row-gap: var(--spacing-lg);
+
+  > * {
+    flex-grow: 999;
+    flex-basis: 0;
+    min-inline-size: 500px;
   }
 
   li:not(:first-child) {
     margin-top: var(--spacing-md);
-  }
-
-  @media screen and (min-width: 1024px) {
-    &.multi-col {
-      display: flex;
-
-      > * {
-        flex-grow: 1;
-        flex-basis: 33.333333%;
-
-        &:not(:last-of-type) {
-          margin-right: var(--spacing-md);
-        }
-      }
-    }
-  }
-}
-
-// Tag columns
-
-.tag-cols {
-  display: grid;
-  grid-auto-flow: column dense;
-  grid-template-columns: 1fr 2fr;
-
-  span {
-    display: inline-block;
-    padding: var(--spacing-xs);
-  }
-
-  span:first-of-type {
-    font-weight: 600;
-  }
-}
-
-// Label columns
-
-.label-cols {
-  display: flex;
-  align-items: stretch;
-
-  span:first-of-type {
-    &:after {
-      display: inline-block;
-      content: '/';
-      margin: 0 3px 0 1px;
-      color: var(--grey-500);
-    }
   }
 }
 </style>

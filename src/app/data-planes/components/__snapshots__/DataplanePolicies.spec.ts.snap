@@ -50,7 +50,7 @@ exports[`DataplanePolicies.vue renders snapshot 1`] = `
         persisted="false"
       >
         <div
-          class="px-4 py-1"
+          class="accordion-item-content"
           data-testid="accordion-item-content"
         >
           

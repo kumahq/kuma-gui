@@ -29,4 +29,6 @@
   --KBadgeFontSize: 1rem;
   // Removes the default max width of 200 pixels because badges should never be cut-off.
   --KBadgeMaxWidth: auto;
+  // Sets a default border style for commonly used component frames/panels.
+  --KCardBorder: 1px solid var(--grey-300);
 }

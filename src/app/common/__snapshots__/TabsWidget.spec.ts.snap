@@ -61,11 +61,30 @@ exports[`TabsWidget.vue renders basic snapshot 1`] = `
         tabindex="0"
       >
         
-        
-        <div>
-          Universal
-        </div>
-        
+        <section
+          aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+          class="kong-card noBorder"
+        >
+          <!---->
+          <!---->
+          <div
+            class="k-card-content d-flex"
+          >
+            <div
+              class="k-card-body"
+              id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+            >
+              
+              
+              <div>
+                Universal
+              </div>
+              
+              
+            </div>
+            <!---->
+          </div>
+        </section>
         
       </div>
       <div
