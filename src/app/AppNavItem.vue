@@ -183,8 +183,9 @@ function onNavItemClick() {
 }
 
 .nav-link {
-  display: flex;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: 5px;
@@ -204,13 +205,8 @@ function onNavItemClick() {
 }
 
 .amount {
-  position: absolute;
-  top: 0;
-  right: 8px;
-  bottom: 0;
   width: 1.5rem;
   height: 1.25rem;
-  margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
