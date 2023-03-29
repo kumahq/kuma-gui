@@ -3,7 +3,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import EnvoyData from './EnvoyData.vue'
-import { server } from '@/../jest/jest-setup-after-env'
+import { useServer } from '@/../jest/jest-setup-after-env'
 
 function renderComponent(props = {}) {
   return mount(EnvoyData, {
@@ -22,6 +22,7 @@ describe('EnvoyData.vue', () => {
   })
 
   test('renders snapshot', async () => {
+    const server = useServer()
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
@@ -37,6 +38,7 @@ describe('EnvoyData.vue', () => {
   })
 
   test('renders loading', () => {
+    const server = useServer()
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(200), ctx.json('')),
@@ -53,6 +55,7 @@ describe('EnvoyData.vue', () => {
   })
 
   test('renders error', async () => {
+    const server = useServer()
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/clusters', (req, res, ctx) =>
         res(ctx.status(500), ctx.json('')),

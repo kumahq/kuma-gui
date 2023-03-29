@@ -635,9 +635,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/backend"
+                        href="/mesh/default/data-planes/capacitor-proxy-0"
                       >
-                        backend
+                        capacitor-proxy-0
                       </a>
                       
                     </td>
@@ -647,9 +647,589 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/backend"
+                        href="/mesh/default/services/monitor"
                       >
-                        backend
+                        monitor
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/capacitor-proxy-0"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/system-proxy-1"
+                      >
+                        system-proxy-1
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/bus"
+                      >
+                        bus
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/system-proxy-1"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/capacitor-proxy-2"
+                      >
+                        capacitor-proxy-2
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/panel"
+                      >
+                        panel
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/capacitor-proxy-2"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/driver-proxy-3"
+                      >
+                        driver-proxy-3
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/transmitter"
+                      >
+                        transmitter
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/driver-proxy-3"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/panel-proxy-4"
+                      >
+                        panel-proxy-4
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/card"
+                      >
+                        card
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/panel-proxy-4"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/bandwidth-proxy-5"
+                      >
+                        bandwidth-proxy-5
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/program"
+                      >
+                        program
                       </a>
                       
                     </td>
@@ -684,7 +1264,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/backend"
+                        href="/mesh/default/data-planes/bandwidth-proxy-5"
                         type="button"
                       >
                         
@@ -751,9 +1331,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/frontend"
+                        href="/mesh/default/data-planes/circuit-proxy-6"
                       >
-                        frontend
+                        circuit-proxy-6
                       </a>
                       
                     </td>
@@ -763,9 +1343,705 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/frontend"
+                        href="/mesh/default/services/program"
                       >
-                        frontend
+                        program
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/circuit-proxy-6"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/interface-proxy-7"
+                      >
+                        interface-proxy-7
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/firewall"
+                      >
+                        firewall
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/interface-proxy-7"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/circuit-proxy-8"
+                      >
+                        circuit-proxy-8
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/pixel"
+                      >
+                        pixel
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/circuit-proxy-8"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/application-proxy-9"
+                      >
+                        application-proxy-9
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/hard%20drive"
+                      >
+                        hard drive
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/application-proxy-9"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/circuit-proxy-10"
+                      >
+                        circuit-proxy-10
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/system"
+                      >
+                        system
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/circuit-proxy-10"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/program-proxy-11"
+                      >
+                        program-proxy-11
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/interface"
+                      >
+                        interface
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/program-proxy-11"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/sensor-proxy-12"
+                      >
+                        sensor-proxy-12
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/array"
+                      >
+                        array
                       </a>
                       
                     </td>
@@ -788,9 +2064,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <div
-                        class="with-warnings"
+                        class=""
                       >
-                        1.0.6
+                        1.0.7
                       </div>
                       
                     </td>
@@ -800,68 +2076,29 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/frontend"
+                        href="/mesh/default/data-planes/sensor-proxy-12"
                         type="button"
                       >
                         
                         <span
-                          class="kong-icon kong-icon-warning"
+                          class="kong-icon kong-icon-info"
                         >
                           <svg
                             height="16"
                             role="img"
-                            version="1.1"
-                            viewBox="0 0 48 42"
+                            viewBox="0 0 16 16"
                             width="16"
                             xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
                           >
                             
   
                             
   
-                            <g
-                              fill="var(--black-75)"
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
                               fill-rule="evenodd"
-                              id="Page-1"
-                              stroke="none"
-                              stroke-width="1"
-                            >
-                              
-    
-                              <g
-                                id="icn-warning-64x"
-                              >
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                  fill="var(--black-75)"
-                                  fill-rule="nonzero"
-                                  id="Triangle"
-                                />
-                                
-      
-                                <path
-                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                  fill="var(--yellow-300)"
-                                  fill-rule="nonzero"
-                                  id="Path"
-                                  type="secondary"
-                                />
-                                
-      
-                                <path
-                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                  fill="var(--black-75)"
-                                  id="!"
-                                />
-                                
-    
-                              </g>
-                              
-  
-                            </g>
+                            />
                             
 
                           </svg>
@@ -906,9 +2143,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/db"
+                        href="/mesh/default/data-planes/capacitor-proxy-13"
                       >
-                        db
+                        capacitor-proxy-13
                       </a>
                       
                     </td>
@@ -918,9 +2155,241 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/db"
+                        href="/mesh/default/services/monitor"
                       >
-                        db
+                        monitor
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/capacitor-proxy-13"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/interface-proxy-14"
+                      >
+                        interface-proxy-14
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/driver"
+                      >
+                        driver
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/interface-proxy-14"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/port-proxy-15"
+                      >
+                        port-proxy-15
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/program"
+                      >
+                        program
                       </a>
                       
                     </td>
@@ -945,7 +2414,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        unknown
+                        1.0.7
                       </div>
                       
                     </td>
@@ -955,7 +2424,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/db"
+                        href="/mesh/default/data-planes/port-proxy-15"
                         type="button"
                       >
                         
@@ -1005,13 +2474,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                     >
                       
                       <span
-                        class="status status--with-title status--danger"
+                        class="status status--with-title status--success"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          offline
+                          online
                         </span>
                       </span>
                       
@@ -1022,9 +2491,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/no-subscriptions"
+                        href="/mesh/default/data-planes/system-proxy-16"
                       >
-                        no-subscriptions
+                        system-proxy-16
                       </a>
                       
                     </td>
@@ -1034,9 +2503,473 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/no-subscriptions"
+                        href="/mesh/default/services/interface"
                       >
-                        no-subscriptions
+                        interface
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/system-proxy-16"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/program-proxy-17"
+                      >
+                        program-proxy-17
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/application"
+                      >
+                        application
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/program-proxy-17"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/panel-proxy-18"
+                      >
+                        panel-proxy-18
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/port"
+                      >
+                        port
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/panel-proxy-18"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/transmitter-proxy-19"
+                      >
+                        transmitter-proxy-19
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/matrix"
+                      >
+                        matrix
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/transmitter-proxy-19"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/bandwidth-proxy-20"
+                      >
+                        bandwidth-proxy-20
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/matrix"
+                      >
+                        matrix
                       </a>
                       
                     </td>
@@ -1051,7 +2984,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1061,7 +2994,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        —
+                        1.0.7
                       </div>
                       
                     </td>
@@ -1071,7 +3004,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/no-subscriptions"
+                        href="/mesh/default/data-planes/bandwidth-proxy-20"
                         type="button"
                       >
                         
@@ -1138,9 +3071,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                        href="/mesh/default/data-planes/alarm-proxy-21"
                       >
-                        cluster-1.backend-02
+                        alarm-proxy-21
                       </a>
                       
                     </td>
@@ -1150,9 +3083,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/backend"
+                        href="/mesh/default/services/program"
                       >
-                        backend
+                        program
                       </a>
                       
                     </td>
@@ -1160,14 +3093,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      http
                       
                     </td>
                     <td
                       class=""
                     >
                       
-                      February 19, 2021
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1177,7 +3110,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        1.0.0-rc2-211-g823fe8ce
+                        1.0.7
                       </div>
                       
                     </td>
@@ -1187,7 +3120,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/cluster-1.backend-02"
+                        href="/mesh/default/data-planes/alarm-proxy-21"
                         type="button"
                       >
                         
@@ -1254,9 +3187,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                        href="/mesh/default/data-planes/bus-proxy-22"
                       >
-                        cluster-1.backend-03
+                        bus-proxy-22
                       </a>
                       
                     </td>
@@ -1266,9 +3199,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/backend"
+                        href="/mesh/default/services/firewall"
                       >
-                        backend
+                        firewall
                       </a>
                       
                     </td>
@@ -1276,14 +3209,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      http
                       
                     </td>
                     <td
                       class=""
                     >
                       
-                      February 19, 2021
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1293,7 +3226,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        1.0.0-rc2-211-g823fe8ce
+                        1.0.7
                       </div>
                       
                     </td>
@@ -1303,7 +3236,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/cluster-1.backend-03"
+                        href="/mesh/default/data-planes/bus-proxy-22"
                         type="button"
                       >
                         
@@ -1370,9 +3303,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                        href="/mesh/default/data-planes/program-proxy-23"
                       >
-                        cluster-1.ingress-02
+                        program-proxy-23
                       </a>
                       
                     </td>
@@ -1382,9 +3315,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/ingress"
+                        href="/mesh/default/services/system"
                       >
-                        ingress
+                        system
                       </a>
                       
                     </td>
@@ -1392,14 +3325,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      tcp
                       
                     </td>
                     <td
                       class=""
                     >
                       
-                      February 19, 2021
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1409,7 +3342,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        1.0.0-rc2-211-g823fe8ce
+                        1.0.7
                       </div>
                       
                     </td>
@@ -1419,7 +3352,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/cluster-1.ingress-02"
+                        href="/mesh/default/data-planes/program-proxy-23"
                         type="button"
                       >
                         
@@ -1486,9 +3419,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/dataplane-test-456"
+                        href="/mesh/default/data-planes/microchip-proxy-24"
                       >
-                        dataplane-test-456
+                        microchip-proxy-24
                       </a>
                       
                     </td>
@@ -1498,9 +3431,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/kuma-example-backend"
+                        href="/mesh/default/services/sensor"
                       >
-                        kuma-example-backend
+                        sensor
                       </a>
                       
                     </td>
@@ -1508,14 +3441,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      http
                       
                     </td>
                     <td
                       class=""
                     >
                       
-                      October 24, 2019
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1525,7 +3458,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        —
+                        1.0.7
                       </div>
                       
                     </td>
@@ -1535,7 +3468,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/dataplane-test-456"
+                        href="/mesh/default/data-planes/microchip-proxy-24"
                         type="button"
                       >
                         
@@ -1602,9 +3535,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                        href="/mesh/default/data-planes/panel-proxy-25"
                       >
-                        ingress-dp-test-123
+                        panel-proxy-25
                       </a>
                       
                     </td>
@@ -1614,9 +3547,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class=""
-                        href="/mesh/default/services/kuma-example-backend"
+                        href="/mesh/default/services/protocol"
                       >
-                        kuma-example-backend
+                        protocol
                       </a>
                       
                     </td>
@@ -1624,14 +3557,14 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       class=""
                     >
                       
-                      —
+                      http
                       
                     </td>
                     <td
                       class=""
                     >
                       
-                      October 24, 2019
+                      February 17, 2021
                       
                     </td>
                     <td
@@ -1641,7 +3574,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       <div
                         class=""
                       >
-                        —
+                        1.0.7
                       </div>
                       
                     </td>
@@ -1651,7 +3584,2791 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       
                       <a
                         class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/ingress-dp-test-123"
+                        href="/mesh/default/data-planes/panel-proxy-25"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/circuit-proxy-26"
+                      >
+                        circuit-proxy-26
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/panel"
+                      >
+                        panel
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/circuit-proxy-26"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/hard%20drive-proxy-27"
+                      >
+                        hard drive-proxy-27
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/system"
+                      >
+                        system
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/hard%20drive-proxy-27"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/bus-proxy-28"
+                      >
+                        bus-proxy-28
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/transmitter"
+                      >
+                        transmitter
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/bus-proxy-28"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/feed-proxy-29"
+                      >
+                        feed-proxy-29
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/protocol"
+                      >
+                        protocol
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/feed-proxy-29"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/system-proxy-30"
+                      >
+                        system-proxy-30
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/hard%20drive"
+                      >
+                        hard drive
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/system-proxy-30"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/card-proxy-31"
+                      >
+                        card-proxy-31
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/driver"
+                      >
+                        driver
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/card-proxy-31"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/microchip-proxy-32"
+                      >
+                        microchip-proxy-32
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/system"
+                      >
+                        system
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/microchip-proxy-32"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/alarm-proxy-33"
+                      >
+                        alarm-proxy-33
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/application"
+                      >
+                        application
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/alarm-proxy-33"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/system-proxy-34"
+                      >
+                        system-proxy-34
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/firewall"
+                      >
+                        firewall
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/system-proxy-34"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/microchip-proxy-35"
+                      >
+                        microchip-proxy-35
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/protocol"
+                      >
+                        protocol
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/microchip-proxy-35"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/bus-proxy-36"
+                      >
+                        bus-proxy-36
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/program"
+                      >
+                        program
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/bus-proxy-36"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/monitor-proxy-37"
+                      >
+                        monitor-proxy-37
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/card"
+                      >
+                        card
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/monitor-proxy-37"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/application-proxy-38"
+                      >
+                        application-proxy-38
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/firewall"
+                      >
+                        firewall
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/application-proxy-38"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/firewall-proxy-39"
+                      >
+                        firewall-proxy-39
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/protocol"
+                      >
+                        protocol
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/firewall-proxy-39"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/microchip-proxy-40"
+                      >
+                        microchip-proxy-40
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/capacitor"
+                      >
+                        capacitor
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/microchip-proxy-40"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/application-proxy-41"
+                      >
+                        application-proxy-41
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/pixel"
+                      >
+                        pixel
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/application-proxy-41"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/protocol-proxy-42"
+                      >
+                        protocol-proxy-42
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/application"
+                      >
+                        application
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/protocol-proxy-42"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/hard%20drive-proxy-43"
+                      >
+                        hard drive-proxy-43
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/matrix"
+                      >
+                        matrix
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      tcp
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/hard%20drive-proxy-43"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/monitor-proxy-44"
+                      >
+                        monitor-proxy-44
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/array"
+                      >
+                        array
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/monitor-proxy-44"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/program-proxy-45"
+                      >
+                        program-proxy-45
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/port"
+                      >
+                        port
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      http
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/program-proxy-45"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/sensor-proxy-46"
+                      >
+                        sensor-proxy-46
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/card"
+                      >
+                        card
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/sensor-proxy-46"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/transmitter-proxy-47"
+                      >
+                        transmitter-proxy-47
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/monitor"
+                      >
+                        monitor
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/transmitter-proxy-47"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/array-proxy-48"
+                      >
+                        array-proxy-48
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/system"
+                      >
+                        system
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      kafka
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/array-proxy-48"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="kong-icon kong-icon-info"
+                        >
+                          <svg
+                            height="16"
+                            role="img"
+                            viewBox="0 0 16 16"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            
+  
+                            <path
+                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
+                              fill="var(--blue-500)"
+                              fill-rule="evenodd"
+                            />
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Details 
+                        
+                        <!---->
+                      </a>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr
+                    class=""
+                    role="link"
+                    tabindex="0"
+                  >
+                    
+                    <td
+                      class=""
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/data-planes/transmitter-proxy-49"
+                      >
+                        transmitter-proxy-49
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <a
+                        class=""
+                        href="/mesh/default/services/transmitter"
+                      >
+                        transmitter
+                      </a>
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      grpc
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      February 17, 2021
+                      
+                    </td>
+                    <td
+                      class=""
+                    >
+                      
+                      <div
+                        class=""
+                      >
+                        1.0.7
+                      </div>
+                      
+                    </td>
+                    <td
+                      class="text-right"
+                    >
+                      
+                      <a
+                        class="k-button medium rounded btn-link detail-link"
+                        href="/mesh/default/data-planes/transmitter-proxy-49"
                         type="button"
                       >
                         
@@ -1786,9 +6503,9 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                        DPP: 
                       <a
                         class=""
-                        href="/mesh/default/data-planes/backend"
+                        href="/mesh/default/data-planes/capacitor-proxy-0"
                       >
-                        backend
+                        capacitor-proxy-0
                       </a>
                     </span>
                     <span
@@ -1835,7 +6552,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           <span>
                             kuma.io/protocol:
                             <b>
-                              http
+                              tcp
                             </b>
                           </span>
                           
@@ -1856,11 +6573,11 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           
                           <a
                             class=""
-                            href="/mesh/default/services/backend"
+                            href="/mesh/default/services/monitor"
                           >
                             kuma.io/service:
                             <b>
-                              backend
+                              monitor
                             </b>
                           </a>
                           
@@ -2430,7 +7147,24 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               >
                                 :
                               </span>
-                               backend
+                               capacitor
+                              <span
+                                class="token punctuation"
+                              >
+                                -
+                              </span>
+                              proxy
+                              <span
+                                class="token punctuation"
+                              >
+                                -
+                              </span>
+                              <span
+                                class="token number"
+                              >
+                                0
+                              </span>
+                              
 
                               <span
                                 class="token key atrule"
@@ -2466,7 +7200,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               >
                                 :
                               </span>
-                               127.0.0.1
+                               32.77.255.37
   
                               <span
                                 class="token key atrule"
@@ -2500,7 +7234,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               <span
                                 class="token number"
                               >
-                                7776
+                                15472
                               </span>
                               
       
@@ -2518,7 +7252,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               <span
                                 class="token number"
                               >
-                                7777
+                                6051
                               </span>
                               
       
@@ -2532,7 +7266,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               >
                                 :
                               </span>
-                               127.0.0.1
+                               101.47.99.88
       
                               <span
                                 class="token key atrule"
@@ -2556,7 +7290,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               >
                                 :
                               </span>
-                               http
+                               tcp
         
                               <span
                                 class="token key atrule"
@@ -2568,7 +7302,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               >
                                 :
                               </span>
-                               backend
+                               monitor
   
                               <span
                                 class="token key atrule"
@@ -2602,7 +7336,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               <span
                                 class="token number"
                               >
-                                10001
+                                26002
                               </span>
                               
       
@@ -2628,7 +7362,17 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                               >
                                 :
                               </span>
-                               frontend
+                               capacitor
+                              <span
+                                class="token punctuation"
+                              >
+                                -
+                              </span>
+                              <span
+                                class="token number"
+                              >
+                                0
+                              </span>
                             </code>
                             
       
