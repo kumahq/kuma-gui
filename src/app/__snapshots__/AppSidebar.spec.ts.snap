@@ -10,7 +10,7 @@ exports[`AppSidebar.vue renders snapshot 1`] = `
     
     
     <div
-      class="nav-item nav-item--has-bottom-offset"
+      class="nav-item"
       data-testid="home"
     >
       <a

@@ -3,7 +3,6 @@
     class="nav-item"
     :class="{
       'nav-item--is-category': targetRoute === null,
-      'nav-item--has-bottom-offset': props.shouldOffsetFromFollowingItems,
       [`nav-item--is-${props.categoryTier}-category`]: props.categoryTier !== null,
     }"
     :data-testid="props.routeName"
@@ -76,12 +75,6 @@ const props = defineProps({
     type: String,
     required: false,
     default: '',
-  },
-
-  shouldOffsetFromFollowingItems: {
-    type: Boolean,
-    required: false,
-    default: false,
   },
 })
 
@@ -168,8 +161,8 @@ function onNavItemClick() {
   text-transform: uppercase;
 }
 
-.nav-item--is-primary-category ~ .nav-item--is-primary-category {
-  margin-top: var(--spacing-md);
+.nav-item--is-primary-category:not(:first-child) {
+  margin-top: var(--spacing-lg);
 }
 
 .nav-item--is-secondary-category {

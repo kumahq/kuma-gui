@@ -333,7 +333,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item nav-item--has-bottom-offset"
+          class="nav-item"
           data-testid="home"
         >
           <a

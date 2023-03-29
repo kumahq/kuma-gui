@@ -6,7 +6,6 @@ interface NavItem {
   usesMeshParam?: boolean
   insightsFieldAccessor?: string
   isMeshSelector?: boolean
-  shouldOffsetFromFollowingItems?: boolean
 }
 
 export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavItem[] {
@@ -80,7 +79,6 @@ export function getNavItems(isMultizoneMode: boolean, hasMeshes: boolean): NavIt
     {
       name: 'Home',
       routeName: 'home',
-      shouldOffsetFromFollowingItems: true,
     },
     ...zoneItems,
     ...meshItems,
