@@ -1,6 +1,7 @@
 <template>
-  <OverviewCharts class="mt-16" />
-  <MeshResources class="mt-8" />
+  <OverviewCharts />
+
+  <MeshResources class="mt-4" />
 </template>
 
 <script lang="ts" setup>

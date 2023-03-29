@@ -1,5 +1,5 @@
 <template>
-  <div class="component-frame">
+  <div class="kcard-border">
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock

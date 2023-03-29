@@ -1,97 +1,97 @@
 <template>
-  <MeshCharts class="mt-24" />
-
-  <ContentWrapper class="mt-8">
-    <template #content>
-      <KCard
-        v-if="mesh !== null"
-        border-variant="noBorder"
-      >
-        <template #body>
-          <LabelList
-            :has-error="hasError"
-            :is-loading="isLoading"
-            :is-empty="isEmpty"
-          >
-            <div>
-              <ul>
-                <li
-                  v-for="(value, key) in basicMesh"
-                  :key="key"
-                >
-                  <h4>{{ key }}</h4>
-
-                  <KBadge
-                    v-if="typeof value === 'boolean'"
-                    :appearance="value ? 'success' : 'danger'"
-                  >
-                    {{ value ? 'Enabled' : 'Disabled' }}
-                  </KBadge>
-
-                  <p v-else>
-                    {{ value }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <ul>
-                <li
-                  v-for="(value, key) in extendedMesh"
-                  :key="key"
-                >
-                  <h4>{{ key }}</h4>
-
-                  <KBadge
-                    v-if="typeof value === 'boolean'"
-                    :appearance="value ? 'success' : 'danger'"
-                  >
-                    {{ value ? 'Enabled' : 'Disabled' }}
-                  </KBadge>
-
-                  <p v-else>
-                    {{ value }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <ul class="policy-counts">
-                <li>
-                  <h4>
-                    Policies ({{ totalPolicyCount }})
-                  </h4>
-                  <ul>
-                    <template
-                      v-for="(item, key) in policyCounts"
-                      :key="key"
-                    >
-                      <li
-                        v-if="item.length !== 0"
-                      >
-                        <router-link
-                          :to="{
-                            name: 'policy',
-                            params: {
-                              policyPath: item.path
-                            }
-                          }"
-                        >
-                          {{ item.name }}: {{ item.length }}
-                        </router-link>
-                      </li>
-                    </template>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </LabelList>
-        </template>
-      </KCard>
+  <KCard>
+    <template #body>
+      <MeshCharts />
     </template>
-  </ContentWrapper>
+  </KCard>
+
+  <KCard
+    v-if="mesh !== null"
+    class="mt-4"
+  >
+    <template #body>
+      <LabelList
+        :has-error="hasError"
+        :is-loading="isLoading"
+        :is-empty="isEmpty"
+      >
+        <div>
+          <ul>
+            <li
+              v-for="(value, key) in basicMesh"
+              :key="key"
+            >
+              <h4>{{ key }}</h4>
+
+              <KBadge
+                v-if="typeof value === 'boolean'"
+                :appearance="value ? 'success' : 'danger'"
+              >
+                {{ value ? 'Enabled' : 'Disabled' }}
+              </KBadge>
+
+              <p v-else>
+                {{ value }}
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <ul>
+            <li
+              v-for="(value, key) in extendedMesh"
+              :key="key"
+            >
+              <h4>{{ key }}</h4>
+
+              <KBadge
+                v-if="typeof value === 'boolean'"
+                :appearance="value ? 'success' : 'danger'"
+              >
+                {{ value ? 'Enabled' : 'Disabled' }}
+              </KBadge>
+
+              <p v-else>
+                {{ value }}
+              </p>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <ul class="policy-counts">
+            <li>
+              <h4>
+                Policies ({{ totalPolicyCount }})
+              </h4>
+              <ul>
+                <template
+                  v-for="(item, key) in policyCounts"
+                  :key="key"
+                >
+                  <li
+                    v-if="item.length !== 0"
+                  >
+                    <router-link
+                      :to="{
+                        name: 'policy',
+                        params: {
+                          policyPath: item.path
+                        }
+                      }"
+                    >
+                      {{ item.name }}: {{ item.length }}
+                    </router-link>
+                  </li>
+                </template>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </LabelList>
+    </template>
+  </KCard>
 
   <KCard
     v-if="rawMesh !== null"
@@ -114,7 +114,6 @@ import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import MeshCharts from '../components/MeshCharts.vue'
-import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import MeshResources from '@/app/common/MeshResources.vue'
 import YamlView from '@/app/common/YamlView.vue'

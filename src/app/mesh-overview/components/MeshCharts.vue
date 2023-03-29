@@ -51,6 +51,8 @@ function loadData() {
 <style lang="scss" scoped>
 .chart-box-list {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: var(--spacing-lg);
 }
 
 .chart-box-list > * {

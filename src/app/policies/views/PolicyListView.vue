@@ -22,7 +22,7 @@
       </KAlert>
     </div>
 
-    <FrameSkeleton>
+    <div class="kcard-border">
       <DataOverview
         :selected-entity-name="entity.name"
         :page-size="PAGE_SIZE_DEFAULT"
@@ -76,7 +76,9 @@
           </KButton>
         </template>
       </DataOverview>
+    </div>
 
+    <div class="kcard-border mt-4">
       <TabsWidget
         v-if="isEmpty === false"
         :has-error="error !== null"
@@ -135,7 +137,7 @@
           />
         </template>
       </TabsWidget>
-    </FrameSkeleton>
+    </div>
   </div>
 </template>
 
@@ -151,7 +153,6 @@ import { RouteLocationNamedRaw, useRoute, useRouter } from 'vue-router'
 import PolicyConnections from '../components/PolicyConnections.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import DocumentationLink from '@/app/common/DocumentationLink.vue'
-import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
 import YamlView from '@/app/common/YamlView.vue'

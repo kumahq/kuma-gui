@@ -3,7 +3,7 @@
 exports[`DataPlaneEntitySummary matches snapshot 1`] = `
 <section
   aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-  class="kong-card noBorder"
+  class="kong-card border"
 >
   <!---->
   <!---->

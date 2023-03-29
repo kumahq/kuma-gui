@@ -1,10 +1,8 @@
 <template>
-  <div class="component-frame">
-    <ServiceSummary
-      :service="props.service"
-      :external-service="externalService"
-    />
-  </div>
+  <ServiceSummary
+    :service="props.service"
+    :external-service="externalService"
+  />
 
   <DataPlaneList
     v-if="props.dataPlaneOverviews !== null"

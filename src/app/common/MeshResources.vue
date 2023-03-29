@@ -53,9 +53,7 @@
       </template>
     </KCard>
 
-    <KCard
-      title="Resources"
-    >
+    <KCard title="Resources">
       <template #body>
         <p>
           Join the {{ env('KUMA_PRODUCT_NAME') }} community and ask questions:
@@ -118,7 +116,7 @@ ul {
 .resource-list {
   display: flex;
   align-items: stretch;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-md);
 }
 
 .resource-list > * {

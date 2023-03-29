@@ -1,12 +1,12 @@
 <template>
   <div class="content-wrapper">
-    <div class="content-wrapper__content component-frame">
+    <div class="content-wrapper__content kcard-border">
       <slot name="content" />
     </div>
 
     <div
       v-if="slots.sidebar"
-      class="content-wrapper__sidebar component-frame"
+      class="content-wrapper__sidebar"
     >
       <slot name="sidebar" />
     </div>
@@ -25,7 +25,7 @@ const slots = useSlots()
   // Allows the contained flex items to wrap when their sizing requirements can’t be satisfied any longer.
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
 }
 
 .content-wrapper__content {

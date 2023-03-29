@@ -7,9 +7,8 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
   
   <!-- Zone CPs information for when Multicluster is enabled -->
   <div
-    class="component-frame"
+    class="kcard-border"
   >
-    
     <div
       class="data-overview"
       data-testid="data-overview"
@@ -176,6 +175,10 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
         <!--v-if-->
       </div>
     </div>
+  </div>
+  <div
+    class="kcard-border mt-4"
+  >
     <div
       class="tab-container"
       data-testid="tab-container"
@@ -390,7 +393,6 @@ exports[`ZoneIngresses.vue renders snapshot when multizone 1`] = `
       </div>
       
     </div>
-    
   </div>
   
 </div>

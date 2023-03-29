@@ -5,9 +5,8 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
   class="zoneegresses"
 >
   <div
-    class="component-frame"
+    class="kcard-border"
   >
-    
     <div
       class="data-overview"
       data-testid="data-overview"
@@ -174,6 +173,10 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
         <!--v-if-->
       </div>
     </div>
+  </div>
+  <div
+    class="kcard-border mt-4"
+  >
     <div
       class="tab-container"
       data-testid="tab-container"
@@ -388,7 +391,6 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
       </div>
       
     </div>
-    
   </div>
 </div>
 `;
@@ -398,9 +400,8 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
   class="zoneegresses"
 >
   <div
-    class="component-frame"
+    class="kcard-border"
   >
-    
     <div
       class="data-overview"
       data-testid="data-overview"
@@ -567,6 +568,10 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
         <!--v-if-->
       </div>
     </div>
+  </div>
+  <div
+    class="kcard-border mt-4"
+  >
     <div
       class="tab-container"
       data-testid="tab-container"
@@ -781,7 +786,6 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
       </div>
       
     </div>
-    
   </div>
 </div>
 `;

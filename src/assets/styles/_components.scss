@@ -1,5 +1,6 @@
-.component-frame {
+// To be used in places where we solely need KCard’s frame properties.
+.kcard-border {
   border: var(--KCardBorder);
-  border-radius: 3px;
-  background-color: var(--white);
+  border-radius: --KCardBorderRadius;
+  background-color: var(--KCardBackground);
 }

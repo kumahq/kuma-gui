@@ -1,6 +1,6 @@
 <template>
   <div class="zoneegresses">
-    <FrameSkeleton>
+    <div class="kcard-border">
       <DataOverview
         :selected-entity-name="entity?.name"
         :page-size="PAGE_SIZE_DEFAULT"
@@ -26,7 +26,9 @@
           </KButton>
         </template>
       </DataOverview>
+    </div>
 
+    <div class="kcard-border mt-4">
       <TabsWidget
         v-if="isEmpty === false && entity !== null"
         :has-error="error !== null"
@@ -103,7 +105,7 @@
           />
         </template>
       </TabsWidget>
-    </FrameSkeleton>
+    </div>
   </div>
 </template>
 
@@ -116,7 +118,6 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
-import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
