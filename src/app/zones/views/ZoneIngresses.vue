@@ -3,7 +3,10 @@
     <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
     <!-- Zone CPs information for when Multicluster is enabled -->
-    <template v-else>
+    <div
+      v-else
+      class="kcard-stack"
+    >
       <div class="kcard-border">
         <DataOverview
           :selected-entity-name="entity?.name"
@@ -32,7 +35,7 @@
         </DataOverview>
       </div>
 
-      <div class="kcard-border mt-4">
+      <div class="kcard-border">
         <TabsWidget
           v-if="isEmpty === false && entity !== null"
           :has-error="error !== null"
@@ -110,7 +113,7 @@
           </template>
         </TabsWidget>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 

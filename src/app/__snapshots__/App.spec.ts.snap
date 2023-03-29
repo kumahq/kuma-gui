@@ -599,314 +599,14 @@ exports[`App.vue fails to renders basic view 1`] = `
         <div
           class="transition-root"
         >
-          
-          <section
-            aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-            class="kong-card border"
-          >
-            <!---->
-            <!---->
-            <div
-              class="k-card-content d-flex"
-            >
-              <div
-                class="k-card-body"
-                id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              >
-                
-                <div
-                  class="chart-box-list"
-                >
-                  <!--v-if-->
-                  <!--v-if-->
-                  <div
-                    class="chart chart chart-1/3"
-                  >
-                    <div
-                      class="chart-canvas-container"
-                    >
-                      <div
-                        class="chart-title-box"
-                      >
-                        <div
-                          class="chart-title"
-                        >
-                          <span
-                            class="chart-title__total"
-                          >
-                            3
-                          </span>
-                           Meshes 
-                          <!--v-if-->
-                        </div>
-                      </div>
-                      <canvas
-                        height="0"
-                        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
-                        width="0"
-                      />
-                    </div>
-                    <div
-                      class="chart-legend"
-                    >
-                      
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #67b7dc;"
-                      >
-                        Mesh (3) 
-                      </div>
-                      
-                    </div>
-                  </div>
-                  <div
-                    class="chart chart chart-1/3"
-                  >
-                    <div
-                      class="chart-canvas-container"
-                    >
-                      <div
-                        class="chart-title-box"
-                      >
-                        <div
-                          class="chart-title"
-                        >
-                          <span
-                            class="chart-title__total"
-                          >
-                            8
-                          </span>
-                           Services 
-                          <!--v-if-->
-                        </div>
-                      </div>
-                      <canvas
-                        height="0"
-                        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
-                        width="0"
-                      />
-                    </div>
-                    <div
-                      class="chart-legend"
-                    >
-                      
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #67b7dc;"
-                      >
-                        Internal (6) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #6771dc;"
-                      >
-                        External (2) 
-                      </div>
-                      
-                    </div>
-                  </div>
-                  <div
-                    class="chart chart chart-1/3"
-                  >
-                    <div
-                      class="chart-canvas-container"
-                    >
-                      <div
-                        class="chart-title-box"
-                      >
-                        <div
-                          class="chart-title"
-                        >
-                          <span
-                            class="chart-title__total"
-                          >
-                            10
-                          </span>
-                           DP Proxies 
-                          <!--v-if-->
-                        </div>
-                      </div>
-                      <canvas
-                        height="0"
-                        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
-                        width="0"
-                      />
-                    </div>
-                    <div
-                      class="chart-legend"
-                    >
-                      
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #19a654;"
-                      >
-                        Online (9) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #f2a230;"
-                      >
-                        Partially degraded (1) 
-                      </div>
-                      
-                    </div>
-                  </div>
-                  <div
-                    class="chart chart chart-1/2 chart-offset-left-1/6"
-                  >
-                    <div
-                      class="chart-canvas-container"
-                    >
-                      <div
-                        class="chart-title-box"
-                      >
-                        <div
-                          class="chart-title"
-                        >
-                          <!--v-if-->
-                           Kuma DP 
-                          <span
-                            class="chart-title__subtitle"
-                          >
-                            versions
-                          </span>
-                        </div>
-                      </div>
-                      <canvas
-                        height="0"
-                        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
-                        width="0"
-                      />
-                    </div>
-                    <div
-                      class="chart-legend"
-                    >
-                      
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #67b7dc;"
-                      >
-                        1.0.0-rc2 (3) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #6771dc;"
-                      >
-                        1.0.4 (5) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #a367dc;"
-                      >
-                        1.0.6 (2) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #dc67ce;"
-                      >
-                        unknown (2) 
-                      </div>
-                      
-                    </div>
-                  </div>
-                  <div
-                    class="chart chart chart-1/2 chart-offset-right-1/6"
-                  >
-                    <div
-                      class="chart-canvas-container"
-                    >
-                      <div
-                        class="chart-title-box"
-                      >
-                        <div
-                          class="chart-title"
-                        >
-                          <!--v-if-->
-                           Envoy 
-                          <span
-                            class="chart-title__subtitle"
-                          >
-                            versions
-                          </span>
-                        </div>
-                      </div>
-                      <canvas
-                        height="0"
-                        style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
-                        width="0"
-                      />
-                    </div>
-                    <div
-                      class="chart-legend"
-                    >
-                      
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #67b7dc;"
-                      >
-                        1.14.0 (7) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #6771dc;"
-                      >
-                        1.15.0 (4) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #a367dc;"
-                      >
-                        1.16.1 (8) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #dc67ce;"
-                      >
-                        1.16.2 (4) 
-                      </div>
-                      <div
-                        class="legend-entry"
-                        style="--data-background-color: #dc6788;"
-                      >
-                        unknown (2) 
-                      </div>
-                      
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-              <!---->
-            </div>
-          </section>
           <div
-            class="resource-list mt-4"
+            class="kcard-stack"
           >
             <section
               aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              aria-label="Create a virtual mesh"
               class="kong-card border"
             >
-              <div
-                class="k-card-header d-flex mb-3"
-              >
-                <!---->
-                <div
-                  class="k-card-title mb-3"
-                >
-                  <h4>
-                    
-                    Create a virtual mesh
-                    
-                  </h4>
-                </div>
-                <div
-                  class="k-card-actions"
-                >
-                  
-                  
-                </div>
-              </div>
+              <!---->
               <!---->
               <div
                 class="k-card-content d-flex"
@@ -916,266 +616,568 @@ exports[`App.vue fails to renders basic view 1`] = `
                   id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
                   
-                  <p>
-                     We can create multiple isolated Mesh resources (i.e. per application/
-                    <wbr />
-                    team/
-                    <wbr />
-                    business unit). 
-                  </p>
                   <div
-                    class="resource-list-actions mt-4"
+                    class="chart-box-list"
                   >
-                    <a
-                      class="k-button medium rounded creation"
-                      href="/wizard/mesh"
-                      type="button"
+                    <!--v-if-->
+                    <!--v-if-->
+                    <div
+                      class="chart chart chart-1/3"
                     >
-                      
-                      <span
-                        class="k-button-icon kong-icon kong-icon-plus"
+                      <div
+                        class="chart-canvas-container"
                       >
-                        <svg
-                          fill="white"
-                          height="16"
-                          role="img"
-                          viewBox="0 0 20 20"
-                          width="16"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="chart-title-box"
                         >
-                          
-  
-                          <title>
-                            Add
-                          </title>
-                          
-  
-                          <rect
-                            fill="white"
-                            height="12"
-                            rx="1"
-                            width="2.77"
-                            x="8.62"
-                            y="4"
-                          />
-                          
-  
-                          <rect
-                            fill="white"
-                            height="12"
-                            rx="1"
-                            transform="rotate(90 16 8.62)"
-                            width="2.77"
-                            x="16"
-                            y="8.62"
-                          />
-                          
-
-                        </svg>
+                          <div
+                            class="chart-title"
+                          >
+                            <span
+                              class="chart-title__total"
+                            >
+                              3
+                            </span>
+                             Meshes 
+                            <!--v-if-->
+                          </div>
+                        </div>
+                        <canvas
+                          height="0"
+                          style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+                          width="0"
+                        />
+                      </div>
+                      <div
+                        class="chart-legend"
+                      >
                         
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #67b7dc;"
+                        >
+                          Mesh (3) 
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div
+                      class="chart chart chart-1/3"
+                    >
+                      <div
+                        class="chart-canvas-container"
+                      >
+                        <div
+                          class="chart-title-box"
+                        >
+                          <div
+                            class="chart-title"
+                          >
+                            <span
+                              class="chart-title__total"
+                            >
+                              8
+                            </span>
+                             Services 
+                            <!--v-if-->
+                          </div>
+                        </div>
+                        <canvas
+                          height="0"
+                          style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+                          width="0"
+                        />
+                      </div>
+                      <div
+                        class="chart-legend"
+                      >
+                        
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #67b7dc;"
+                        >
+                          Internal (6) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #6771dc;"
+                        >
+                          External (2) 
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div
+                      class="chart chart chart-1/3"
+                    >
+                      <div
+                        class="chart-canvas-container"
+                      >
+                        <div
+                          class="chart-title-box"
+                        >
+                          <div
+                            class="chart-title"
+                          >
+                            <span
+                              class="chart-title__total"
+                            >
+                              10
+                            </span>
+                             DP Proxies 
+                            <!--v-if-->
+                          </div>
+                        </div>
+                        <canvas
+                          height="0"
+                          style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+                          width="0"
+                        />
+                      </div>
+                      <div
+                        class="chart-legend"
+                      >
+                        
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #19a654;"
+                        >
+                          Online (9) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #f2a230;"
+                        >
+                          Partially degraded (1) 
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div
+                      class="chart chart chart-1/2 chart-offset-left-1/6"
+                    >
+                      <div
+                        class="chart-canvas-container"
+                      >
+                        <div
+                          class="chart-title-box"
+                        >
+                          <div
+                            class="chart-title"
+                          >
+                            <!--v-if-->
+                             Kuma DP 
+                            <span
+                              class="chart-title__subtitle"
+                            >
+                              versions
+                            </span>
+                          </div>
+                        </div>
+                        <canvas
+                          height="0"
+                          style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+                          width="0"
+                        />
+                      </div>
+                      <div
+                        class="chart-legend"
+                      >
+                        
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #67b7dc;"
+                        >
+                          1.0.0-rc2 (3) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #6771dc;"
+                        >
+                          1.0.4 (5) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #a367dc;"
+                        >
+                          1.0.6 (2) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #dc67ce;"
+                        >
+                          unknown (2) 
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <div
+                      class="chart chart chart-1/2 chart-offset-right-1/6"
+                    >
+                      <div
+                        class="chart-canvas-container"
+                      >
+                        <div
+                          class="chart-title-box"
+                        >
+                          <div
+                            class="chart-title"
+                          >
+                            <!--v-if-->
+                             Envoy 
+                            <span
+                              class="chart-title__subtitle"
+                            >
+                              versions
+                            </span>
+                          </div>
+                        </div>
+                        <canvas
+                          height="0"
+                          style="display: block; box-sizing: border-box; height: 0px; width: 0px;"
+                          width="0"
+                        />
+                      </div>
+                      <div
+                        class="chart-legend"
+                      >
+                        
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #67b7dc;"
+                        >
+                          1.14.0 (7) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #6771dc;"
+                        >
+                          1.15.0 (4) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #a367dc;"
+                        >
+                          1.16.1 (8) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #dc67ce;"
+                        >
+                          1.16.2 (4) 
+                        </div>
+                        <div
+                          class="legend-entry"
+                          style="--data-background-color: #dc6788;"
+                        >
+                          unknown (2) 
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <!---->
+              </div>
+            </section>
+            <div
+              class="kcard-list"
+            >
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                aria-label="Create a virtual mesh"
+                class="kong-card border"
+              >
+                <div
+                  class="k-card-header d-flex mb-3"
+                >
+                  <!---->
+                  <div
+                    class="k-card-title mb-3"
+                  >
+                    <h4>
+                      
+                      Create a virtual mesh
+                      
+                    </h4>
+                  </div>
+                  <div
+                    class="k-card-actions"
+                  >
+                    
+                    
+                  </div>
+                </div>
+                <!---->
+                <div
+                  class="k-card-content d-flex"
+                >
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
+                    
+                    <p>
+                       We can create multiple isolated Mesh resources (i.e. per application/
+                      <wbr />
+                      team/
+                      <wbr />
+                      business unit). 
+                    </p>
+                    <div
+                      class="resource-list-actions mt-4"
+                    >
+                      <a
+                        class="k-button medium rounded creation"
+                        href="/wizard/mesh"
+                        type="button"
+                      >
+                        
+                        <span
+                          class="k-button-icon kong-icon kong-icon-plus"
+                        >
+                          <svg
+                            fill="white"
+                            height="16"
+                            role="img"
+                            viewBox="0 0 20 20"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            
+  
+                            <title>
+                              Add
+                            </title>
+                            
+  
+                            <rect
+                              fill="white"
+                              height="12"
+                              rx="1"
+                              width="2.77"
+                              x="8.62"
+                              y="4"
+                            />
+                            
+  
+                            <rect
+                              fill="white"
+                              height="12"
+                              rx="1"
+                              transform="rotate(90 16 8.62)"
+                              width="2.77"
+                              x="16"
+                              y="8.62"
+                            />
+                            
 
-                      </span>
-                      
-                      
-                       Create mesh 
-                      
-                      <!---->
-                    </a>
+                          </svg>
+                          
+
+                        </span>
+                        
+                        
+                         Create mesh 
+                        
+                        <!---->
+                      </a>
+                    </div>
+                    
                   </div>
-                  
+                  <!---->
                 </div>
-                <!---->
-              </div>
-            </section>
-            <section
-              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              aria-label="Connect data plane proxies"
-              class="kong-card border"
-            >
-              <div
-                class="k-card-header d-flex mb-3"
-              >
-                <!---->
-                <div
-                  class="k-card-title mb-3"
-                >
-                  <h4>
-                    
-                    Connect data plane proxies
-                    
-                  </h4>
-                </div>
-                <div
-                  class="k-card-actions"
-                >
-                  
-                  
-                </div>
-              </div>
-              <!---->
-              <div
-                class="k-card-content d-flex"
+              </section>
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                aria-label="Connect data plane proxies"
+                class="kong-card border"
               >
                 <div
-                  class="k-card-body"
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  class="k-card-header d-flex mb-3"
                 >
-                  
-                  <p>
-                     We need a data plane proxy for each replica of our services within a Mesh resource. 
-                  </p>
+                  <!---->
                   <div
-                    class="resource-list-actions mt-4"
+                    class="k-card-title mb-3"
                   >
-                    <a
-                      class="k-button medium rounded primary"
-                      href="/wizard/universal-dataplane"
-                      type="button"
-                    >
+                    <h4>
                       
-                      <!---->
+                      Connect data plane proxies
                       
-                      
-                       Get started 
-                      
-                      <!---->
-                    </a>
+                    </h4>
                   </div>
-                  
-                </div>
-                <!---->
-              </div>
-            </section>
-            <section
-              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              aria-label="Apply Kuma policies"
-              class="kong-card border"
-            >
-              <div
-                class="k-card-header d-flex mb-3"
-              >
-                <!---->
-                <div
-                  class="k-card-title mb-3"
-                >
-                  <h4>
-                    
-                    Apply Kuma policies
-                    
-                  </h4>
-                </div>
-                <div
-                  class="k-card-actions"
-                >
-                  
-                  
-                </div>
-              </div>
-              <!---->
-              <div
-                class="k-card-content d-flex"
-              >
-                <div
-                  class="k-card-body"
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                >
-                  
-                  <p>
-                     We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies. 
-                  </p>
                   <div
-                    class="resource-list-actions mt-4"
+                    class="k-card-actions"
                   >
-                    <a
-                      class="k-button medium rounded primary"
-                      href="https://kuma.io/docs/10.2.x/policies/?utm_source=Kuma&utm_medium=Kuma"
-                      target="_blank"
-                      type="button"
-                    >
-                      
-                      <!---->
-                      
-                      
-                       Explore policies 
-                      
-                      <!---->
-                    </a>
+                    
+                    
                   </div>
-                  
                 </div>
                 <!---->
-              </div>
-            </section>
-            <section
-              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              aria-label="Resources"
-              class="kong-card border"
-            >
-              <div
-                class="k-card-header d-flex mb-3"
-              >
-                <!---->
                 <div
-                  class="k-card-title mb-3"
+                  class="k-card-content d-flex"
                 >
-                  <h4>
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
                     
-                    Resources
+                    <p>
+                       We need a data plane proxy for each replica of our services within a Mesh resource. 
+                    </p>
+                    <div
+                      class="resource-list-actions mt-4"
+                    >
+                      <a
+                        class="k-button medium rounded primary"
+                        href="/wizard/universal-dataplane"
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                         Get started 
+                        
+                        <!---->
+                      </a>
+                    </div>
                     
-                  </h4>
+                  </div>
+                  <!---->
                 </div>
-                <div
-                  class="k-card-actions"
-                >
-                  
-                  
-                </div>
-              </div>
-              <!---->
-              <div
-                class="k-card-content d-flex"
+              </section>
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                aria-label="Apply Kuma policies"
+                class="kong-card border"
               >
                 <div
-                  class="k-card-body"
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  class="k-card-header d-flex mb-3"
                 >
-                  
-                  <p>
-                     Join the Kuma community and ask questions: 
-                  </p>
-                  <ul>
-                    <li>
-                      <a
-                        href="https://kuma.io/docs/10.2.x/?utm_source=Kuma&utm_medium=Kuma"
-                        target="_blank"
-                      >
-                        Kuma Documentation 
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma"
-                        target="_blank"
-                      >
-                        Kuma Community Chat 
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma"
-                        target="_blank"
-                      >
-                        Kuma GitHub Repository 
-                      </a>
-                    </li>
-                  </ul>
-                  
+                  <!---->
+                  <div
+                    class="k-card-title mb-3"
+                  >
+                    <h4>
+                      
+                      Apply Kuma policies
+                      
+                    </h4>
+                  </div>
+                  <div
+                    class="k-card-actions"
+                  >
+                    
+                    
+                  </div>
                 </div>
                 <!---->
-              </div>
-            </section>
+                <div
+                  class="k-card-content d-flex"
+                >
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
+                    
+                    <p>
+                       We can apply Kuma policies to secure, observe, route and manage the Mesh and its data plane proxies. 
+                    </p>
+                    <div
+                      class="resource-list-actions mt-4"
+                    >
+                      <a
+                        class="k-button medium rounded primary"
+                        href="https://kuma.io/docs/10.2.x/policies/?utm_source=Kuma&utm_medium=Kuma"
+                        target="_blank"
+                        type="button"
+                      >
+                        
+                        <!---->
+                        
+                        
+                         Explore policies 
+                        
+                        <!---->
+                      </a>
+                    </div>
+                    
+                  </div>
+                  <!---->
+                </div>
+              </section>
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                aria-label="Resources"
+                class="kong-card border"
+              >
+                <div
+                  class="k-card-header d-flex mb-3"
+                >
+                  <!---->
+                  <div
+                    class="k-card-title mb-3"
+                  >
+                    <h4>
+                      
+                      Resources
+                      
+                    </h4>
+                  </div>
+                  <div
+                    class="k-card-actions"
+                  >
+                    
+                    
+                  </div>
+                </div>
+                <!---->
+                <div
+                  class="k-card-content d-flex"
+                >
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
+                    
+                    <p>
+                       Join the Kuma community and ask questions: 
+                    </p>
+                    <ul>
+                      <li>
+                        <a
+                          href="https://kuma.io/docs/10.2.x/?utm_source=Kuma&utm_medium=Kuma"
+                          target="_blank"
+                        >
+                          Kuma Documentation 
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://kuma-mesh.slack.com/?utm_source=Kuma&utm_medium=Kuma"
+                          target="_blank"
+                        >
+                          Kuma Community Chat 
+                        </a>
+                      </li>
+                      <li>
+                        <a
+                          href="https://github.com/kumahq/kuma?utm_source=Kuma&utm_medium=Kuma"
+                          target="_blank"
+                        >
+                          Kuma GitHub Repository 
+                        </a>
+                      </li>
+                    </ul>
+                    
+                  </div>
+                  <!---->
+                </div>
+              </section>
+            </div>
           </div>
-          
         </div>
       </transition-stub>
     </main>

@@ -1,6 +1,43 @@
-// To be used in places where we solely need KCard’s frame properties.
+/*
+.kcard-border
+
+To be used in places where we solely need KCard’s frame properties.
+*/
+
 .kcard-border {
   border: var(--KCardBorder);
   border-radius: --KCardBorderRadius;
   background-color: var(--KCardBackground);
+}
+
+/*
+.kcard-stack
+
+For stacking elements with consistent space between.
+
+Adapted from https://every-layout.dev/layouts/stack/.
+*/
+
+.kcard-stack>*+* {
+  margin-block-start: var(--spacing-md);
+}
+
+/*
+.kcard-list
+
+For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will start to wrap.
+
+Adapted from https://every-layout.dev/layouts/switcher/.
+*/
+
+.kcard-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  --threshold: 30rem;
+}
+
+.kcard-list>* {
+  flex-grow: 1;
+  flex-basis: calc((var(--threshold) - 100%) * 999);
 }

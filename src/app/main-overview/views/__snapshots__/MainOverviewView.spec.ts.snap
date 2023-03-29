@@ -1,8 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MainOverviewView.vue renders basic snapshot 1`] = `
-<div>
-  
+<div
+  class="kcard-stack"
+>
   <section
     aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
     class="kong-card border"
@@ -199,7 +200,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     </div>
   </section>
   <div
-    class="resource-list mt-4"
+    class="kcard-list"
   >
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
@@ -493,6 +494,5 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
       </div>
     </section>
   </div>
-  
 </div>
 `;

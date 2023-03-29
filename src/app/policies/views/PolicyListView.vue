@@ -4,139 +4,144 @@
     class="relative"
     :class="policyType.path"
   >
-    <div
-      v-if="policyType.isExperimental"
-      class="mb-4"
-    >
-      <KAlert appearance="warning">
-        <template #alertMessage>
-          <p>
-            <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
-            <a
-              href="https://github.com/kumahq/kuma/issues/new/choose"
-              target="_blank"
-              rel="noopener noreferrer"
-            >issue</a>
-          </p>
-        </template>
-      </KAlert>
-    </div>
-
-    <div class="kcard-border">
-      <DataOverview
-        :selected-entity-name="entity.name"
-        :page-size="PAGE_SIZE_DEFAULT"
-        :error="error"
-        :is-loading="isLoading"
-        :empty-state="{
-          title: 'No Data',
-          message: `There are no ${policyType.name} policies present.`,
-        }"
-        :table-data="tableData"
-        :table-data-is-empty="tableDataIsEmpty"
-        :next="nextUrl"
-        :page-offset="pageOffset"
-        @table-action="getEntity"
-        @load-data="loadData"
-      >
+    <div class="kcard-stack">
+      <div class="kcard-border">
+        <KCard
+          v-if="policyType.isExperimental"
+          border-variant="noBorder"
+          class="mb-4"
         >
-        <template #additionalControls>
-          <KSelect
-            label="Policies"
-            :items="policySelectItems"
-            :label-attributes="{ class: 'visually-hidden' }"
-            appearance="select"
-            :enable-filtering="true"
-            @selected="changePolicyType"
-          >
-            <template #item-template="{ item }">
-              <span
-                :class="{
-                  'policy-type-empty': policyTypeNamesWithNoPolicies.includes(item.label)
-                }"
-              >
-                {{ item.label }}
-              </span>
-            </template>
-          </KSelect>
+          <template #body>
+            <KAlert appearance="warning">
+              <template #alertMessage>
+                <p>
+                  <strong>Warning</strong> This policy is experimental. If you encountered any problem please open an
+                  <a
+                    href="https://github.com/kumahq/kuma/issues/new/choose"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >issue</a>
+                </p>
+              </template>
+            </KAlert>
+          </template>
+        </KCard>
 
-          <DocumentationLink
-            :href="`${env('KUMA_DOCS_URL')}/policies/${policyType.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
-            data-testid="policy-documentation-link"
-          />
-
-          <KButton
-            v-if="$route.query.ns"
-            class="back-button"
-            appearance="primary"
-            icon="arrowLeft"
-            :to="{ name: 'policy', params: { policyPath: props.policyPath } }"
+        <DataOverview
+          :selected-entity-name="entity.name"
+          :page-size="PAGE_SIZE_DEFAULT"
+          :error="error"
+          :is-loading="isLoading"
+          :empty-state="{
+            title: 'No Data',
+            message: `There are no ${policyType.name} policies present.`,
+          }"
+          :table-data="tableData"
+          :table-data-is-empty="tableDataIsEmpty"
+          :next="nextUrl"
+          :page-offset="pageOffset"
+          @table-action="getEntity"
+          @load-data="loadData"
+        >
           >
-            View all
-          </KButton>
-        </template>
-      </DataOverview>
-    </div>
-
-    <div class="kcard-border mt-4">
-      <TabsWidget
-        v-if="isEmpty === false"
-        :has-error="error !== null"
-        :error="error"
-        :is-loading="isLoading"
-        :tabs="tabs"
-      >
-        <template #tabHeader>
-          <h1
-            class="entity-heading"
-            data-testid="policy-single-entity"
-          >
-            {{ policyType.name }}: {{ entity.name }}
-          </h1>
-        </template>
-
-        <template #overview>
-          <LabelList
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-          >
-            <div data-testid="policy-overview-tab">
-              <ul>
-                <li
-                  v-for="(val, key) in entity"
-                  :key="key"
+          <template #additionalControls>
+            <KSelect
+              label="Policies"
+              :items="policySelectItems"
+              :label-attributes="{ class: 'visually-hidden' }"
+              appearance="select"
+              :enable-filtering="true"
+              @selected="changePolicyType"
+            >
+              <template #item-template="{ item }">
+                <span
+                  :class="{
+                    'policy-type-empty': policyTypeNamesWithNoPolicies.includes(item.label)
+                  }"
                 >
-                  <h4>{{ key }}</h4>
-                  <p>
-                    {{ val }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </LabelList>
+                  {{ item.label }}
+                </span>
+              </template>
+            </KSelect>
 
-          <YamlView
-            v-if="rawEntity !== null"
-            id="code-block-policy"
-            class="mt-4"
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-            :content="rawEntity"
-            is-searchable
-          />
-        </template>
+            <DocumentationLink
+              :href="`${env('KUMA_DOCS_URL')}/policies/${policyType.path}/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+              data-testid="policy-documentation-link"
+            />
 
-        <template #affected-dpps>
-          <PolicyConnections
-            v-if="rawEntity !== null"
-            :mesh="rawEntity.mesh"
-            :policy-name="rawEntity.name"
-            :policy-type="policyType.path"
-          />
-        </template>
-      </TabsWidget>
+            <KButton
+              v-if="$route.query.ns"
+              class="back-button"
+              appearance="primary"
+              icon="arrowLeft"
+              :to="{ name: 'policy', params: { policyPath: props.policyPath } }"
+            >
+              View all
+            </KButton>
+          </template>
+        </DataOverview>
+      </div>
+
+      <div class="kcard-border">
+        <TabsWidget
+          v-if="isEmpty === false"
+          :has-error="error !== null"
+          :error="error"
+          :is-loading="isLoading"
+          :tabs="tabs"
+        >
+          <template #tabHeader>
+            <h1
+              class="entity-heading"
+              data-testid="policy-single-entity"
+            >
+              {{ policyType.name }}: {{ entity.name }}
+            </h1>
+          </template>
+
+          <template #overview>
+            <LabelList
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+            >
+              <div data-testid="policy-overview-tab">
+                <ul>
+                  <li
+                    v-for="(val, key) in entity"
+                    :key="key"
+                  >
+                    <h4>{{ key }}</h4>
+                    <p>
+                      {{ val }}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </LabelList>
+
+            <YamlView
+              v-if="rawEntity !== null"
+              id="code-block-policy"
+              class="mt-4"
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+              :content="rawEntity"
+              is-searchable
+            />
+          </template>
+
+          <template #affected-dpps>
+            <PolicyConnections
+              v-if="rawEntity !== null"
+              :mesh="rawEntity.mesh"
+              :policy-name="rawEntity.name"
+              :policy-type="policyType.path"
+            />
+          </template>
+        </TabsWidget>
+      </div>
     </div>
   </div>
 </template>
@@ -144,6 +149,7 @@
 <script lang="ts" setup>
 import {
   KAlert,
+  KCard,
   KButton,
   KSelect,
 } from '@kong/kongponents'

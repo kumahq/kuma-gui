@@ -5,391 +5,395 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
   class="zoneegresses"
 >
   <div
-    class="kcard-border"
+    class="kcard-stack"
   >
     <div
-      class="data-overview"
-      data-testid="data-overview"
+      class="kcard-border"
     >
       <div
-        class="data-table-controls mb-2"
+        class="data-overview"
+        data-testid="data-overview"
       >
-        
-        
-        <button
-          class="k-button medium rounded primary refresh-button"
-          data-testid="data-overview-refresh-button"
-          type="button"
-        >
-          
-          <span
-            class="k-button-icon kong-icon kong-icon-redo"
-          >
-            <svg
-              fill="white"
-              height="16"
-              role="img"
-              viewBox="0 0 17 14"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              
-  
-              <title>
-                Redo
-              </title>
-              
-  
-              <path
-                clip-rule="evenodd"
-                d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
-                fill="white"
-                fill-rule="evenodd"
-              />
-              
-
-            </svg>
-            
-
-          </span>
-          
-          
-           Refresh 
-          
-          <!---->
-        </button>
-      </div>
-      <div
-        class="data-overview-content"
-      >
-        <!-- data -->
         <div
-          class="data-overview-table"
+          class="data-table-controls mb-2"
         >
-          <div
-            class="k-table-container data-overview-table"
-            data-testid="data-overview-table"
-            is-clickable=""
+          
+          
+          <button
+            class="k-button medium rounded primary refresh-button"
+            data-testid="data-overview-refresh-button"
+            type="button"
           >
-            <!---->
-            <section
-              class="k-table-wrapper"
+            
+            <span
+              class="k-button-icon kong-icon kong-icon-redo"
             >
-              <table
-                class="k-table has-hover is-clickable"
-                data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              <svg
+                fill="white"
+                height="16"
+                role="img"
+                viewBox="0 0 17 14"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <thead
-                  class=""
+                
+  
+                <title>
+                  Redo
+                </title>
+                
+  
+                <path
+                  clip-rule="evenodd"
+                  d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+                  fill="white"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+            
+            
+             Refresh 
+            
+            <!---->
+          </button>
+        </div>
+        <div
+          class="data-overview-content"
+        >
+          <!-- data -->
+          <div
+            class="data-overview-table"
+          >
+            <div
+              class="k-table-container data-overview-table"
+              data-testid="data-overview-table"
+              is-clickable=""
+            >
+              <!---->
+              <section
+                class="k-table-wrapper"
+              >
+                <table
+                  class="k-table has-hover is-clickable"
+                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
-                  <tr
+                  <thead
                     class=""
                   >
-                    
-                    <th
+                    <tr
                       class=""
                     >
-                      <span
-                        class="d-flex align-items-center"
+                      
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Status
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Name
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr
+                      class="is-selected"
+                      role="link"
+                      tabindex="0"
+                    >
+                      
+                      <td
+                        class=""
                       >
                         
                         <span
-                          class=""
+                          class="status status--with-title status--success"
+                          data-testid="status-badge"
                         >
-                          Status
+                          <span
+                            class=""
+                          >
+                            online
+                          </span>
                         </span>
                         
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
+                      </td>
+                      <td
+                        class=""
                       >
                         
-                        <span
-                          class=""
-                        >
-                          Name
-                        </span>
                         
-                        <!---->
-                      </span>
-                    </th>
+                        zoneegress-1
+                        
+                        
+                      </td>
+                      
+                    </tr>
                     
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <tr
-                    class="is-selected"
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      zoneegress-1
-                      
-                      
-                    </td>
-                    
-                  </tr>
-                  
-                </tbody>
-              </table>
-              <!---->
-            </section>
+                  </tbody>
+                </table>
+                <!---->
+              </section>
+            </div>
+            <div
+              class="pagination"
+            >
+              <!--v-if-->
+              <!--v-if-->
+            </div>
           </div>
-          <div
-            class="pagination"
-          >
-            <!--v-if-->
-            <!--v-if-->
-          </div>
+          <!--v-if-->
+          <!--v-if-->
         </div>
-        <!--v-if-->
-        <!--v-if-->
       </div>
     </div>
-  </div>
-  <div
-    class="kcard-border mt-4"
-  >
     <div
-      class="tab-container"
-      data-testid="tab-container"
+      class="kcard-border"
     >
-      
-      <header
-        class="tab__header"
-      >
-        
-        <h1
-          class="entity-heading"
-        >
-           Zone Egress: zoneegress-1
-        </h1>
-        
-      </header>
       <div
-        class="tab__content-container"
+        class="tab-container"
+        data-testid="tab-container"
       >
-        <div
-          class="k-tabs"
+        
+        <header
+          class="tab__header"
         >
-          <ul
-            aria-label="Tabs"
-            role="tablist"
-          >
-            
-            <li
-              aria-controls="panel-0"
-              aria-selected="true"
-              class="tab-item active"
-              id="overview-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Overview
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-1"
-              aria-selected="false"
-              class="tab-item"
-              id="insights-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Zone Egress Insights
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-2"
-              aria-selected="false"
-              class="tab-item"
-              id="xds-configuration-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                XDS Configuration
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-3"
-              aria-selected="false"
-              class="tab-item"
-              id="envoy-stats-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Stats
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-4"
-              aria-selected="false"
-              class="tab-item"
-              id="envoy-clusters-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Clusters
-                
-              </a>
-            </li>
-            
-          </ul>
           
-          <div
-            aria-labelledby="overview-tab"
-            class="tab-container"
-            id="panel-0"
-            role="tabpanel"
-            tabindex="0"
+          <h1
+            class="entity-heading"
           >
-            
-            <section
-              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              class="kong-card noBorder"
+             Zone Egress: zoneegress-1
+          </h1>
+          
+        </header>
+        <div
+          class="tab__content-container"
+        >
+          <div
+            class="k-tabs"
+          >
+            <ul
+              aria-label="Tabs"
+              role="tablist"
             >
-              <!---->
-              <!---->
-              <div
-                class="k-card-content d-flex"
+              
+              <li
+                aria-controls="panel-0"
+                aria-selected="true"
+                class="tab-item active"
+                id="overview-tab"
+                role="tab"
+                tabindex="0"
               >
-                <div
-                  class="k-card-body"
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                <a
+                  class="tab-link"
                 >
                   
+                  Overview
                   
-                  <div
-                    class="label-list"
-                  >
-                    <div
-                      class="label-list__content"
-                    >
-                      
-                      <div>
-                        <ul>
-                          
-                          <li>
-                            <h4>
-                              type
-                            </h4>
-                            <p>
-                              ZoneEgressOverview
-                            </p>
-                          </li>
-                          <li>
-                            <h4>
-                              name
-                            </h4>
-                            <p>
-                              zoneegress-1
-                            </p>
-                          </li>
-                          
-                        </ul>
-                      </div>
-                      
-                    </div>
-                  </div>
+                </a>
+              </li>
+              <li
+                aria-controls="panel-1"
+                aria-selected="false"
+                class="tab-item"
+                id="insights-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
                   
+                  Zone Egress Insights
                   
-                </div>
+                </a>
+              </li>
+              <li
+                aria-controls="panel-2"
+                aria-selected="false"
+                class="tab-item"
+                id="xds-configuration-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  XDS Configuration
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-3"
+                aria-selected="false"
+                class="tab-item"
+                id="envoy-stats-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  Stats
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-4"
+                aria-selected="false"
+                class="tab-item"
+                id="envoy-clusters-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  Clusters
+                  
+                </a>
+              </li>
+              
+            </ul>
+            
+            <div
+              aria-labelledby="overview-tab"
+              class="tab-container"
+              id="panel-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                class="kong-card noBorder"
+              >
                 <!---->
-              </div>
-            </section>
+                <!---->
+                <div
+                  class="k-card-content d-flex"
+                >
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
+                    
+                    
+                    <div
+                      class="label-list"
+                    >
+                      <div
+                        class="label-list__content"
+                      >
+                        
+                        <div>
+                          <ul>
+                            
+                            <li>
+                              <h4>
+                                type
+                              </h4>
+                              <p>
+                                ZoneEgressOverview
+                              </p>
+                            </li>
+                            <li>
+                              <h4>
+                                name
+                              </h4>
+                              <p>
+                                zoneegress-1
+                              </p>
+                            </li>
+                            
+                          </ul>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <!---->
+                </div>
+              </section>
+              
+            </div>
+            <div
+              aria-labelledby="insights-tab"
+              class="tab-container"
+              id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="xds-configuration-tab"
+              class="tab-container"
+              id="panel-2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="envoy-stats-tab"
+              class="tab-container"
+              id="panel-3"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="envoy-clusters-tab"
+              class="tab-container"
+              id="panel-4"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
             
           </div>
-          <div
-            aria-labelledby="insights-tab"
-            class="tab-container"
-            id="panel-1"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="xds-configuration-tab"
-            class="tab-container"
-            id="panel-2"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="envoy-stats-tab"
-            class="tab-container"
-            id="panel-3"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="envoy-clusters-tab"
-            class="tab-container"
-            id="panel-4"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          
         </div>
+        
       </div>
-      
     </div>
   </div>
 </div>
@@ -400,391 +404,395 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
   class="zoneegresses"
 >
   <div
-    class="kcard-border"
+    class="kcard-stack"
   >
     <div
-      class="data-overview"
-      data-testid="data-overview"
+      class="kcard-border"
     >
       <div
-        class="data-table-controls mb-2"
+        class="data-overview"
+        data-testid="data-overview"
       >
-        
-        
-        <button
-          class="k-button medium rounded primary refresh-button"
-          data-testid="data-overview-refresh-button"
-          type="button"
-        >
-          
-          <span
-            class="k-button-icon kong-icon kong-icon-redo"
-          >
-            <svg
-              fill="white"
-              height="16"
-              role="img"
-              viewBox="0 0 17 14"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              
-  
-              <title>
-                Redo
-              </title>
-              
-  
-              <path
-                clip-rule="evenodd"
-                d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
-                fill="white"
-                fill-rule="evenodd"
-              />
-              
-
-            </svg>
-            
-
-          </span>
-          
-          
-           Refresh 
-          
-          <!---->
-        </button>
-      </div>
-      <div
-        class="data-overview-content"
-      >
-        <!-- data -->
         <div
-          class="data-overview-table"
+          class="data-table-controls mb-2"
         >
-          <div
-            class="k-table-container data-overview-table"
-            data-testid="data-overview-table"
-            is-clickable=""
+          
+          
+          <button
+            class="k-button medium rounded primary refresh-button"
+            data-testid="data-overview-refresh-button"
+            type="button"
           >
-            <!---->
-            <section
-              class="k-table-wrapper"
+            
+            <span
+              class="k-button-icon kong-icon kong-icon-redo"
             >
-              <table
-                class="k-table has-hover is-clickable"
-                data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              <svg
+                fill="white"
+                height="16"
+                role="img"
+                viewBox="0 0 17 14"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <thead
-                  class=""
+                
+  
+                <title>
+                  Redo
+                </title>
+                
+  
+                <path
+                  clip-rule="evenodd"
+                  d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+                  fill="white"
+                  fill-rule="evenodd"
+                />
+                
+
+              </svg>
+              
+
+            </span>
+            
+            
+             Refresh 
+            
+            <!---->
+          </button>
+        </div>
+        <div
+          class="data-overview-content"
+        >
+          <!-- data -->
+          <div
+            class="data-overview-table"
+          >
+            <div
+              class="k-table-container data-overview-table"
+              data-testid="data-overview-table"
+              is-clickable=""
+            >
+              <!---->
+              <section
+                class="k-table-wrapper"
+              >
+                <table
+                  class="k-table has-hover is-clickable"
+                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
                 >
-                  <tr
+                  <thead
                     class=""
                   >
-                    
-                    <th
+                    <tr
                       class=""
                     >
-                      <span
-                        class="d-flex align-items-center"
+                      
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Status
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Name
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr
+                      class="is-selected"
+                      role="link"
+                      tabindex="0"
+                    >
+                      
+                      <td
+                        class=""
                       >
                         
                         <span
-                          class=""
+                          class="status status--with-title status--success"
+                          data-testid="status-badge"
                         >
-                          Status
+                          <span
+                            class=""
+                          >
+                            online
+                          </span>
                         </span>
                         
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
+                      </td>
+                      <td
+                        class=""
                       >
                         
-                        <span
-                          class=""
-                        >
-                          Name
-                        </span>
                         
-                        <!---->
-                      </span>
-                    </th>
+                        zoneegress-1
+                        
+                        
+                      </td>
+                      
+                    </tr>
                     
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <tr
-                    class="is-selected"
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      zoneegress-1
-                      
-                      
-                    </td>
-                    
-                  </tr>
-                  
-                </tbody>
-              </table>
-              <!---->
-            </section>
+                  </tbody>
+                </table>
+                <!---->
+              </section>
+            </div>
+            <div
+              class="pagination"
+            >
+              <!--v-if-->
+              <!--v-if-->
+            </div>
           </div>
-          <div
-            class="pagination"
-          >
-            <!--v-if-->
-            <!--v-if-->
-          </div>
+          <!--v-if-->
+          <!--v-if-->
         </div>
-        <!--v-if-->
-        <!--v-if-->
       </div>
     </div>
-  </div>
-  <div
-    class="kcard-border mt-4"
-  >
     <div
-      class="tab-container"
-      data-testid="tab-container"
+      class="kcard-border"
     >
-      
-      <header
-        class="tab__header"
-      >
-        
-        <h1
-          class="entity-heading"
-        >
-           Zone Egress: zoneegress-1
-        </h1>
-        
-      </header>
       <div
-        class="tab__content-container"
+        class="tab-container"
+        data-testid="tab-container"
       >
-        <div
-          class="k-tabs"
+        
+        <header
+          class="tab__header"
         >
-          <ul
-            aria-label="Tabs"
-            role="tablist"
-          >
-            
-            <li
-              aria-controls="panel-0"
-              aria-selected="true"
-              class="tab-item active"
-              id="overview-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Overview
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-1"
-              aria-selected="false"
-              class="tab-item"
-              id="insights-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Zone Egress Insights
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-2"
-              aria-selected="false"
-              class="tab-item"
-              id="xds-configuration-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                XDS Configuration
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-3"
-              aria-selected="false"
-              class="tab-item"
-              id="envoy-stats-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Stats
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-4"
-              aria-selected="false"
-              class="tab-item"
-              id="envoy-clusters-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Clusters
-                
-              </a>
-            </li>
-            
-          </ul>
           
-          <div
-            aria-labelledby="overview-tab"
-            class="tab-container"
-            id="panel-0"
-            role="tabpanel"
-            tabindex="0"
+          <h1
+            class="entity-heading"
           >
-            
-            <section
-              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              class="kong-card noBorder"
+             Zone Egress: zoneegress-1
+          </h1>
+          
+        </header>
+        <div
+          class="tab__content-container"
+        >
+          <div
+            class="k-tabs"
+          >
+            <ul
+              aria-label="Tabs"
+              role="tablist"
             >
-              <!---->
-              <!---->
-              <div
-                class="k-card-content d-flex"
+              
+              <li
+                aria-controls="panel-0"
+                aria-selected="true"
+                class="tab-item active"
+                id="overview-tab"
+                role="tab"
+                tabindex="0"
               >
-                <div
-                  class="k-card-body"
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                <a
+                  class="tab-link"
                 >
                   
+                  Overview
                   
-                  <div
-                    class="label-list"
-                  >
-                    <div
-                      class="label-list__content"
-                    >
-                      
-                      <div>
-                        <ul>
-                          
-                          <li>
-                            <h4>
-                              type
-                            </h4>
-                            <p>
-                              ZoneEgressOverview
-                            </p>
-                          </li>
-                          <li>
-                            <h4>
-                              name
-                            </h4>
-                            <p>
-                              zoneegress-1
-                            </p>
-                          </li>
-                          
-                        </ul>
-                      </div>
-                      
-                    </div>
-                  </div>
+                </a>
+              </li>
+              <li
+                aria-controls="panel-1"
+                aria-selected="false"
+                class="tab-item"
+                id="insights-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
                   
+                  Zone Egress Insights
                   
-                </div>
+                </a>
+              </li>
+              <li
+                aria-controls="panel-2"
+                aria-selected="false"
+                class="tab-item"
+                id="xds-configuration-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  XDS Configuration
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-3"
+                aria-selected="false"
+                class="tab-item"
+                id="envoy-stats-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  Stats
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-4"
+                aria-selected="false"
+                class="tab-item"
+                id="envoy-clusters-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  Clusters
+                  
+                </a>
+              </li>
+              
+            </ul>
+            
+            <div
+              aria-labelledby="overview-tab"
+              class="tab-container"
+              id="panel-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                class="kong-card noBorder"
+              >
                 <!---->
-              </div>
-            </section>
+                <!---->
+                <div
+                  class="k-card-content d-flex"
+                >
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
+                    
+                    
+                    <div
+                      class="label-list"
+                    >
+                      <div
+                        class="label-list__content"
+                      >
+                        
+                        <div>
+                          <ul>
+                            
+                            <li>
+                              <h4>
+                                type
+                              </h4>
+                              <p>
+                                ZoneEgressOverview
+                              </p>
+                            </li>
+                            <li>
+                              <h4>
+                                name
+                              </h4>
+                              <p>
+                                zoneegress-1
+                              </p>
+                            </li>
+                            
+                          </ul>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    
+                    
+                  </div>
+                  <!---->
+                </div>
+              </section>
+              
+            </div>
+            <div
+              aria-labelledby="insights-tab"
+              class="tab-container"
+              id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="xds-configuration-tab"
+              class="tab-container"
+              id="panel-2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="envoy-stats-tab"
+              class="tab-container"
+              id="panel-3"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="envoy-clusters-tab"
+              class="tab-container"
+              id="panel-4"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
             
           </div>
-          <div
-            aria-labelledby="insights-tab"
-            class="tab-container"
-            id="panel-1"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="xds-configuration-tab"
-            class="tab-container"
-            id="panel-2"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="envoy-stats-tab"
-            class="tab-container"
-            id="panel-3"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="envoy-clusters-tab"
-            class="tab-container"
-            id="panel-4"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          
         </div>
+        
       </div>
-      
     </div>
   </div>
 </div>

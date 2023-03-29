@@ -1,5 +1,5 @@
 <template>
-  <div class="resource-list">
+  <div class="kcard-list">
     <KCard title="Create a virtual mesh">
       <template #body>
         <p>
@@ -111,16 +111,6 @@ const dataplaneWizardRoute = computed(() => {
 ul {
   padding-left: var(--spacing-lg);
   list-style: disc;
-}
-
-.resource-list {
-  display: flex;
-  align-items: stretch;
-  gap: var(--spacing-md);
-}
-
-.resource-list > * {
-  flex-basis: 25%;
 }
 
 .resource-list-actions {
