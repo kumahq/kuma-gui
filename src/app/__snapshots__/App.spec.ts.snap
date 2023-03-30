@@ -333,7 +333,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item"
+          class="nav-item nav-item-home"
           data-testid="home"
         >
           <a
@@ -348,8 +348,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item nav-item--is-category nav-item--is-primary-category"
-          data-testid=""
+          class="nav-item nav-item- nav-item--is-category nav-item--is-primary-category"
         >
           <div
             class="nav-category"
@@ -406,7 +405,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item"
+          class="nav-item nav-item-mesh-detail-view"
           data-testid="mesh-detail-view"
         >
           <a
@@ -420,7 +419,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item"
+          class="nav-item nav-item-service-list-view"
           data-testid="service-list-view"
         >
           <a
@@ -438,7 +437,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item"
+          class="nav-item nav-item-gateway-list-view"
           data-testid="gateway-list-view"
         >
           <a
@@ -456,7 +455,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item"
+          class="nav-item nav-item-data-plane-list-view"
           data-testid="data-plane-list-view"
         >
           <a
@@ -474,7 +473,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item"
+          class="nav-item nav-item-policies"
           data-testid="policies"
         >
           <a

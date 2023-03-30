@@ -2,10 +2,11 @@
   <div
     class="nav-item"
     :class="{
+      [`nav-item-${props.routeName}`]: true,
       'nav-item--is-category': targetRoute === null,
       [`nav-item--is-${props.categoryTier}-category`]: props.categoryTier !== null,
     }"
-    :data-testid="props.routeName"
+    :data-testid="props.routeName || undefined"
   >
     <router-link
       v-if="targetRoute !== null"

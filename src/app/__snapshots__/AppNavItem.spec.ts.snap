@@ -2,7 +2,7 @@
 
 exports[`AppNavItem.vue renders snapshot with link to selected mesh 1`] = `
 <div
-  class="nav-item"
+  class="nav-item nav-item-data-plane-list-view"
   data-testid="data-plane-list-view"
 >
   <a
