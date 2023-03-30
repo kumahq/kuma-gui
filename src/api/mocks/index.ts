@@ -36,6 +36,8 @@ export type AEnv = Alias<Env['var']>
 export type MockEnvKeys = keyof {
   FAKE_SEED: string
   KUMA_DATAPLANE_COUNT: string
+  KUMA_CIRCUITBREAKER_COUNT: string
+  KUMA_SERVICEINSIGHT_COUNT: string
 }
 export type AppEnvKeys = Parameters<AEnv>[0]
 export type EndpointDependencies = {
