@@ -29,7 +29,10 @@
     </div>
 
     <div v-if="detailsIterator">
-      <ul class="overview-stat-grid">
+      <ul
+        class="columns"
+        style="--columns: 4;"
+      >
         <li
           v-for="(item, label) in detailsIterator"
           :key="label"
@@ -136,15 +139,5 @@ function formatError(value: string): string {
   font-weight: 600;
   color: var(--grey-500);
   margin: var(--spacing-xs) 0;
-}
-
-.overview-stat-grid {
-  display: grid;
-  margin: var(--spacing-md) 0 0 0;
-
-  @media (min-width: 1140px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px 20px;
-  }
 }
 </style>

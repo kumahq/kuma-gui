@@ -23,21 +23,47 @@ Adapted from https://every-layout.dev/layouts/stack/.
 }
 
 /*
-.kcard-list
+.columns
 
-For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will start to wrap.
+For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, the elements will **start** to wrap.
 
 Adapted from https://every-layout.dev/layouts/switcher/.
 */
 
-.kcard-list {
+.columns {
+  --gap: var(--spacing-md);
+  --threshold: 30rem;
+  --columns: 3;
+
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-md);
-  --threshold: 30rem;
+  gap: var(--gap);
 }
 
-.kcard-list>* {
+.columns>* {
+  min-inline-size: min(var(--threshold), 100%);
+  // Accounts for the gaps.
+  inline-size: calc((100% - ((var(--columns) - 1) * var(--gap))) / var(--columns));
+}
+
+/*
+.kcard-switcher
+
+For horizontally listing elements with consistent space between. Once the space defined by `--threshold` is exhausted, **all** elements will wrap.
+
+Adapted from https://every-layout.dev/layouts/switcher/.
+*/
+
+.kcard-switcher {
+  --gap: var(--spacing-md);
+  --threshold: 70rem;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+.kcard-switcher>* {
   flex-grow: 1;
   flex-basis: calc((var(--threshold) - 100%) * 999);
 }
