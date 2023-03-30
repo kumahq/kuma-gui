@@ -6,10 +6,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
     headers: {},
     body: {
       total,
-      items: Array.from({ length: total }).map((_, _i) => {
-      // eslint-disable-next-line no-useless-return, array-callback-return
-        return
-      }),
+      items: Array.from({ length: total }),
       next: null,
     },
   }
