@@ -1,15 +1,21 @@
 import type { EndpointDependencies, MockResponder } from '@/api/mocks/index'
-export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
-  const total = fake.datatype.number(20)
+export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const params = req.params
+  const { offset, total, next, pageTotal } = pager(
+    env('KUMA_DATAPLANE_COUNT', `${fake.datatype.number({ min: 1, max: 1000 })}`),
+    req,
+    `/meshes/${params.mesh}/dataplanes+insights`,
+  )
   return {
     headers: {},
     body: {
       total,
-      items: Array.from({ length: total }).map((_, i) => {
+      items: Array.from({ length: pageTotal }).map((_, i) => {
+        const id = offset + i
         return {
           type: 'DataplaneOverview',
-          mesh: `${fake.hacker.noun()}-${i}`,
-          name: `${fake.hacker.noun()}-${i}`,
+          mesh: `${fake.hacker.noun()}-${id}`,
+          name: `${fake.hacker.noun()}-${id}`,
           creationTime: '2021-02-17T08:33:36.442044+01:00',
           modificationTime: '2021-02-17T08:33:36.442044+01:00',
           dataplane: {
@@ -125,7 +131,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
           },
         }
       }),
-      next: null,
+      next,
     },
   }
 }
