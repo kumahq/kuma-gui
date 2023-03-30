@@ -2,11 +2,11 @@
   <div
     class="nav-item"
     :class="{
+      [`nav-item-${props.routeName}`]: props.routeName !== '',
       'nav-item--is-category': targetRoute === null,
-      'nav-item--has-bottom-offset': props.shouldOffsetFromFollowingItems,
       [`nav-item--is-${props.categoryTier}-category`]: props.categoryTier !== null,
     }"
-    :data-testid="props.routeName"
+    :data-testid="props.routeName || undefined"
   >
     <router-link
       v-if="targetRoute !== null"
@@ -76,12 +76,6 @@ const props = defineProps({
     type: String,
     required: false,
     default: '',
-  },
-
-  shouldOffsetFromFollowingItems: {
-    type: Boolean,
-    required: false,
-    default: false,
   },
 })
 
@@ -168,8 +162,8 @@ function onNavItemClick() {
   text-transform: uppercase;
 }
 
-.nav-item--is-primary-category ~ .nav-item--is-primary-category {
-  margin-top: var(--spacing-md);
+.nav-item--is-primary-category:not(:first-child) {
+  margin-top: var(--spacing-lg);
 }
 
 .nav-item--is-secondary-category {
@@ -183,8 +177,9 @@ function onNavItemClick() {
 }
 
 .nav-link {
-  display: flex;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: var(--spacing-xs) var(--spacing-md);
   border-radius: 5px;
@@ -204,13 +199,8 @@ function onNavItemClick() {
 }
 
 .amount {
-  position: absolute;
-  top: 0;
-  right: 8px;
-  bottom: 0;
   width: 1.5rem;
   height: 1.25rem;
-  margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
