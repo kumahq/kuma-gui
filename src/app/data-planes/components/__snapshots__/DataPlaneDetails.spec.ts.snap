@@ -167,163 +167,199 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
               
               
               <div
-                class="label-list"
+                class="columns"
+                style="--columns: 2;"
               >
-                <div
-                  class="label-list__content"
+                <dl
+                  class="definition-list"
                 >
                   
-                  <div>
-                    <ul>
+                  
+                  <div
+                    class="definition-list-item"
+                  >
+                    <dt
+                      class="definition-list-item__term"
+                    >
+                      Type
+                    </dt>
+                    <dd
+                      class="definition-list-item__details"
+                    >
                       
-                      <li>
-                        <h4>
-                          type
-                        </h4>
-                        <div>
-                          Dataplane
-                        </div>
-                      </li>
-                      <li>
-                        <h4>
-                          name
-                        </h4>
-                        <div>
-                          backend
-                        </div>
-                      </li>
-                      <li>
-                        <h4>
-                          mesh
-                        </h4>
-                        <div>
-                          test-mesh
-                        </div>
-                      </li>
+                      Dataplane
                       
-                      <li>
-                        <h4>
-                          Status
-                        </h4>
-                        <div>
-                          <span
-                            class="status status--with-title status--success"
-                            data-testid="status-badge"
-                          >
-                            <span
-                              class=""
-                            >
-                              online
-                            </span>
-                          </span>
-                        </div>
-                      </li>
-                      <!--v-if-->
-                    </ul>
+                    </dd>
                   </div>
-                  <div>
-                    <ul>
-                      <li>
-                        <h4>
-                          Tags
-                        </h4>
-                        <span
-                          class="tag-list"
-                        >
-                          
-                          <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
-                            tabindex="0"
-                          >
-                            <div
-                              class="k-badge-text truncate"
-                            >
-                              <div
-                                class="k-badge-text truncate"
-                              >
-                                
-                                <span>
-                                  kuma.io/protocol:
-                                  <b>
-                                    http
-                                  </b>
-                                </span>
-                                
-                              </div>
-                            </div>
-                            <!---->
-                          </div>
-                          <div
-                            class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
-                            tabindex="0"
-                          >
-                            <div
-                              class="k-badge-text truncate"
-                            >
-                              <div
-                                class="k-badge-text truncate"
-                              >
-                                
-                                <a
-                                  class=""
-                                  href="/mesh/default/services/backend"
-                                >
-                                  kuma.io/service:
-                                  <b>
-                                    backend
-                                  </b>
-                                </a>
-                                
-                              </div>
-                            </div>
-                            <!---->
-                          </div>
-                          
-                        </span>
-                      </li>
-                      <li>
-                        <h4>
-                          Versions
-                        </h4>
-                        <p>
-                          
-                          <span
-                            class="tag-cols"
-                          >
-                            <span>
-                              envoy: 
-                            </span>
-                            <span>
-                              1.16.2
-                            </span>
-                          </span>
-                          <span
-                            class="tag-cols"
-                          >
-                            <span>
-                              kumaDp: 
-                            </span>
-                            <span>
-                              1.0.7
-                            </span>
-                          </span>
-                          <span
-                            class="tag-cols"
-                          >
-                            <span>
-                              coredns: 
-                            </span>
-                            <span>
-                              1.8.3
-                            </span>
-                          </span>
-                          
-                        </p>
-                      </li>
-                    </ul>
+                  <div
+                    class="definition-list-item"
+                  >
+                    <dt
+                      class="definition-list-item__term"
+                    >
+                      Name
+                    </dt>
+                    <dd
+                      class="definition-list-item__details"
+                    >
+                      
+                      backend
+                      
+                    </dd>
+                  </div>
+                  <div
+                    class="definition-list-item"
+                  >
+                    <dt
+                      class="definition-list-item__term"
+                    >
+                      Mesh
+                    </dt>
+                    <dd
+                      class="definition-list-item__details"
+                    >
+                      
+                      test-mesh
+                      
+                    </dd>
                   </div>
                   
-                </div>
+                  
+                </dl>
+                <dl
+                  class="definition-list"
+                >
+                  
+                  <div
+                    class="definition-list-item"
+                  >
+                    <dt
+                      class="definition-list-item__term"
+                    >
+                      Tags
+                    </dt>
+                    <dd
+                      class="definition-list-item__details"
+                    >
+                      
+                      <span
+                        class="tag-list"
+                      >
+                        
+                        <div
+                          class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                          tabindex="0"
+                        >
+                          <div
+                            class="k-badge-text truncate"
+                          >
+                            <div
+                              class="k-badge-text truncate"
+                            >
+                              
+                              <span>
+                                kuma.io/protocol:
+                                <b>
+                                  http
+                                </b>
+                              </span>
+                              
+                            </div>
+                          </div>
+                          <!---->
+                        </div>
+                        <div
+                          class="k-badge d-inline-flex k-badge-default k-badge-rounded tag-badge"
+                          tabindex="0"
+                        >
+                          <div
+                            class="k-badge-text truncate"
+                          >
+                            <div
+                              class="k-badge-text truncate"
+                            >
+                              
+                              <a
+                                class=""
+                                href="/mesh/default/services/backend"
+                              >
+                                kuma.io/service:
+                                <b>
+                                  backend
+                                </b>
+                              </a>
+                              
+                            </div>
+                          </div>
+                          <!---->
+                        </div>
+                        
+                      </span>
+                      
+                    </dd>
+                  </div>
+                  <div
+                    class="definition-list-item"
+                  >
+                    <dt
+                      class="definition-list-item__term"
+                    >
+                      Status
+                    </dt>
+                    <dd
+                      class="definition-list-item__details"
+                    >
+                      
+                      <span
+                        class="status status--with-title status--success"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          online
+                        </span>
+                      </span>
+                      
+                    </dd>
+                  </div>
+                  <!--v-if-->
+                  <div
+                    class="definition-list-item"
+                  >
+                    <dt
+                      class="definition-list-item__term"
+                    >
+                      Dependencies
+                    </dt>
+                    <dd
+                      class="definition-list-item__details"
+                    >
+                      
+                      <ul>
+                        
+                        <li
+                          class="tag-cols"
+                        >
+                          envoy: 1.16.2
+                        </li>
+                        <li
+                          class="tag-cols"
+                        >
+                          kumaDp: 1.0.7
+                        </li>
+                        <li
+                          class="tag-cols"
+                        >
+                          coredns: 1.8.3
+                        </li>
+                        
+                      </ul>
+                      
+                    </dd>
+                  </div>
+                  
+                </dl>
               </div>
               <div
                 class="yaml-view mt-4"

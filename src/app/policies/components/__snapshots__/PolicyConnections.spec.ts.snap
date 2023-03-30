@@ -1,63 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PolicyConnections.vue renders snapshot 1`] = `
-<div
-  class="label-list"
->
-  <div
-    class="label-list__content"
-  >
+<div>
+  <div>
     
-    <ul>
-      <li>
-        <h4>
-          Dataplanes
-        </h4>
-        <input
-          class="k-input mb-4"
-          data-testid="dataplane-search-input"
-          id="dataplane-search"
-          placeholder="Filter by name"
-          required=""
-          type="text"
-        />
-        
-        <p
-          class="my-1"
-          data-testid="dataplane-name"
-        >
-          <a
-            class=""
-            href="/mesh/default/data-planes/backend"
-          >
-            backend
-          </a>
-        </p>
-        <p
-          class="my-1"
-          data-testid="dataplane-name"
-        >
-          <a
-            class=""
-            href="/mesh/default/data-planes/db"
-          >
-            db
-          </a>
-        </p>
-        <p
-          class="my-1"
-          data-testid="dataplane-name"
-        >
-          <a
-            class=""
-            href="/mesh/default/data-planes/frontend"
-          >
-            frontend
-          </a>
-        </p>
-        
-      </li>
-    </ul>
+    <h2>
+      Dataplanes
+    </h2>
+    <input
+      class="k-input mt-4"
+      data-testid="dataplane-search-input"
+      id="dataplane-search"
+      placeholder="Filter by name"
+      required=""
+      type="text"
+    />
+    
+    <p
+      class="mt-2"
+      data-testid="dataplane-name"
+    >
+      <a
+        class=""
+        href="/mesh/default/data-planes/backend"
+      >
+        backend
+      </a>
+    </p>
+    <p
+      class="mt-2"
+      data-testid="dataplane-name"
+    >
+      <a
+        class=""
+        href="/mesh/default/data-planes/db"
+      >
+        db
+      </a>
+    </p>
+    <p
+      class="mt-2"
+      data-testid="dataplane-name"
+    >
+      <a
+        class=""
+        href="/mesh/default/data-planes/frontend"
+      >
+        frontend
+      </a>
+    </p>
+    
     
   </div>
 </div>

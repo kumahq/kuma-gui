@@ -49,34 +49,28 @@
           </template>
 
           <template #overview>
-            <LabelList
+            <DefinitionList
               :has-error="entityHasError"
               :is-loading="entityIsLoading"
               :is-empty="entityIsEmpty"
             >
-              <div>
-                <ul>
-                  <li
-                    v-for="(value, key) in entity"
-                    :key="key"
-                  >
-                    <h4 v-if="value">
-                      {{ key }}
-                    </h4>
+              <DefinitionListItem
+                v-for="(value, property) in entity"
+                :key="property"
+                :term="property"
+              >
+                <KBadge
+                  v-if="property === 'status'"
+                  :appearance="value === 'Offline' ? 'danger' : 'success'"
+                >
+                  {{ value }}
+                </KBadge>
 
-                    <p v-if="key === 'status'">
-                      <KBadge :appearance="value === 'Offline' ? 'danger' : 'success'">
-                        {{ value }}
-                      </KBadge>
-                    </p>
-
-                    <p v-else>
-                      {{ value }}
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </LabelList>
+                <template v-else>
+                  {{ value }}
+                </template>
+              </DefinitionListItem>
+            </DefinitionList>
           </template>
 
           <template #insights>
@@ -126,7 +120,8 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import LabelList from '@/app/common/LabelList.vue'
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'

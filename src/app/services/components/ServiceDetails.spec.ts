@@ -24,7 +24,7 @@ describe('ServiceDetails', () => {
 
     const html = wrapper.html()
     expect(html).toContain('partially degraded')
-    expect(html).toContain('Data plane proxies')
+    expect(html).toContain('Data Plane Proxies')
     expect(html).toContain('1 online / 2 total')
     expect(html).toContain('status')
   })

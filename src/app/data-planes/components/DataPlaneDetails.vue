@@ -7,74 +7,64 @@
     </template>
 
     <template #overview>
-      <LabelList>
-        <div>
-          <ul>
-            <li
-              v-for="(value, prop) in processedDataPlane"
-              :key="prop"
+      <div
+        class="columns"
+        style="--columns: 2;"
+      >
+        <DefinitionList>
+          <DefinitionListItem
+            v-for="(value, property) in processedDataPlane"
+            :key="property"
+            :term="property"
+          >
+            {{ value }}
+          </DefinitionListItem>
+        </DefinitionList>
+
+        <DefinitionList>
+          <DefinitionListItem
+            v-if="dataPlaneTags.length > 0"
+            term="Tags"
+          >
+            <TagList :tags="dataPlaneTags" />
+          </DefinitionListItem>
+
+          <DefinitionListItem
+            v-if="statusWithReason.status"
+            term="Status"
+          >
+            <StatusBadge :status="statusWithReason.status" />
+          </DefinitionListItem>
+
+          <DefinitionListItem
+            v-if="statusWithReason.reason.length > 0"
+            term="Reason"
+          >
+            <div
+              v-for="(reason, index) in statusWithReason.reason"
+              :key="index"
+              class="reason"
             >
-              <h4>{{ prop }}</h4>
+              {{ reason }}
+            </div>
+          </DefinitionListItem>
 
-              <div>
-                {{ value }}
-              </div>
-            </li>
-
-            <li v-if="statusWithReason.status">
-              <h4>Status</h4>
-
-              <div>
-                <StatusBadge :status="statusWithReason.status" />
-              </div>
-            </li>
-
-            <li v-if="statusWithReason.reason.length > 0">
-              <h4>Reason</h4>
-
-              <div>
-                <div
-                  v-for="(reason, index) in statusWithReason.reason"
-                  :key="index"
-                  class="reason"
-                >
-                  {{ reason }}
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <ul>
-            <li v-if="dataPlaneTags.length > 0">
-              <h4>Tags</h4>
-
-              <TagList :tags="dataPlaneTags" />
-            </li>
-
-            <li v-if="dataPlaneVersions">
-              <h4>Versions</h4>
-
-              <p>
-                <span
-                  v-for="(version, dependency) in dataPlaneVersions"
-                  :key="dependency"
-                  class="tag-cols"
-                >
-                  <span>
-                    {{ dependency }}:
-                  </span>
-
-                  <span>
-                    {{ version }}
-                  </span>
-                </span>
-              </p>
-            </li>
-          </ul>
-        </div>
-      </LabelList>
+          <DefinitionListItem
+            v-if="dataPlaneVersions !== null"
+            term="Dependencies"
+          >
+            <ul>
+              <li
+                v-for="(version, dependency) in dataPlaneVersions"
+                :key="dependency"
+                class="tag-cols"
+              >
+                {{ dependency }}: {{ version }}
+              </li>
+            </ul>
+          </DefinitionListItem>
+        </DefinitionList>
+      </div>
 
       <YamlView
         id="code-block-data-plane"
@@ -138,36 +128,31 @@
     </template>
 
     <template #mtls>
-      <LabelList>
-        <ul v-if="mtlsData !== null">
-          <li
-            v-for="(val, key) in mtlsData"
-            :key="key"
+      <KAlert
+        v-if="mtlsData === null"
+        appearance="danger"
+      >
+        <template #alertMessage>
+          This data plane proxy does not yet have mTLS configured —
+          <a
+            :href="`${env('KUMA_DOCS_URL')}/policies/mutual-tls/?${env('KUMA_UTM_QUERY_PARAMS')}`"
+            class="external-link"
+            target="_blank"
           >
-            <h4>{{ val.label }}</h4>
+            Learn About Certificates in {{ env('KUMA_PRODUCT_NAME') }}
+          </a>
+        </template>
+      </KAlert>
 
-            <p>
-              {{ val.value }}
-            </p>
-          </li>
-        </ul>
-
-        <KAlert
-          v-else
-          appearance="danger"
+      <DefinitionList v-else>
+        <DefinitionListItem
+          v-for="(value, property) in mtlsData"
+          :key="property"
+          :term="property"
         >
-          <template #alertMessage>
-            This data plane proxy does not yet have mTLS configured —
-            <a
-              :href="`${env('KUMA_DOCS_URL')}/policies/mutual-tls/?${env('KUMA_UTM_QUERY_PARAMS')}`"
-              class="external-link"
-              target="_blank"
-            >
-              Learn About Certificates in {{ env('KUMA_PRODUCT_NAME') }}
-            </a>
-          </template>
-        </KAlert>
-      </LabelList>
+          {{ value }}
+        </DefinitionListItem>
+      </DefinitionList>
     </template>
 
     <template #warnings>
@@ -183,8 +168,9 @@ import { computed, ref, PropType } from 'vue'
 import DataplanePolicies from './DataplanePolicies.vue'
 import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
+import DefinitionList from '@/app/common/DefinitionList.vue'
+import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
-import LabelList from '@/app/common/LabelList.vue'
 import StatusBadge from '@/app/common/StatusBadge.vue'
 import StatusInfo from '@/app/common/StatusInfo.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
@@ -212,6 +198,7 @@ import {
   parseMTLSData,
 } from '@/utilities/dataplane'
 import { stripTimes } from '@/utilities/helpers'
+
 const env = useEnv()
 
 const store = useStore()
