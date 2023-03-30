@@ -2,16 +2,12 @@ import { afterAll, afterEach, beforeAll, beforeEach, expect, jest } from '@jest/
 // Polyfills `window.fetch` for Jest because it runs in a Node environment where fetch isn’t available. It initially looked like this would change with Node.js 18, but that is not so.
 import 'isomorphic-fetch'
 import { config } from '@vue/test-utils'
-import { setupServer } from 'msw/node'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { TOKENS, get, container, build, merge, createInjections } from '../src/services/development'
-import { token } from '../src/services/utils'
+import { TOKENS as APP, get, container, build, createInjections } from '../src/services/development'
+import { TOKENS as TEST, services as testing } from '../src/services/testing'
 import Env from '@/services/env/Env'
-import { mocker } from '@/test-support'
-import type { Mocker } from '@/test-support'
-import type { RestHandler } from 'msw'
 
 // jest can't import this module properly due to transpiling issues
 // mock this out with a blank element
@@ -19,32 +15,17 @@ jest.mock('vue-github-button', () => ({ template: '<span />' }))
 //
 
 const $ = {
-  ...TOKENS,
-  mock: token<Mocker>('mocker'),
+  ...APP,
+  ...TEST,
 };
 
 (async () => {
-  const services = merge([
-    [$.msw, {
-      service: (handlers: RestHandler[]) => {
-        return setupServer(...handlers)
-      },
-      arguments: [
-        $.mswHandlers,
-      ],
-    }],
-    [$.mock, {
-      service: mocker,
-      arguments: [
-        $.env,
-        $.msw,
-        $.fakeFS,
-      ],
-    }],
-  ])
-
+  // currently production and development containers
+  // are built within their definition files
   build(
-    services,
+    // production($),
+    // development($),
+    testing($),
   )
 
   /**
@@ -104,7 +85,7 @@ export const withVersion = (v: string) => {
     [
       [$.Env, {
         service: TestEnv,
-        arguments: [TOKENS.EnvVars],
+        arguments: [$.EnvVars],
       }],
     ],
   )
