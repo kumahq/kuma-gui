@@ -3,7 +3,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import DataplanePolicies from './DataplanePolicies.vue'
-import { server } from '@/../jest/jest-setup-after-env'
+import { useServer } from '@/../jest/jest-setup-after-env'
 import {
   DataPlane,
 } from '@/types/index.d'
@@ -49,6 +49,7 @@ describe('DataplanePolicies.vue', () => {
   })
 
   test('renders error', async () => {
+    const server = useServer()
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/policies', (_req, res, ctx) =>
         res(ctx.status(500), ctx.json({})),
@@ -63,6 +64,7 @@ describe('DataplanePolicies.vue', () => {
   })
 
   test('renders no item', async () => {
+    const server = useServer()
     server.use(
       rest.get(import.meta.env.VITE_KUMA_API_SERVER_URL + '/meshes/:mesh/dataplanes/:dataplaneName/policies', (req, res, ctx) =>
         res(ctx.status(200), ctx.json({ total: 0, items: [] })),

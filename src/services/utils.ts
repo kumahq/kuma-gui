@@ -39,6 +39,7 @@ type DependencyDefinition = {
   labels?: Token[]
 }
 export type ServiceDefinition = [Token, DependencyDefinition]
+export type Alias<T extends (...args: never[]) => unknown> = (...rest: Parameters<T>) => ReturnType<T>
 
 export const container = createContainer()
 
@@ -67,7 +68,7 @@ export const service = (t: Token, config: DependencyDefinition): void => {
       bound.toConstant(config.constant as Parameters<typeof bound.toConstant>[0])
       break
     case 'service' in config: {
-      const s = bound.toInstance(config.service as Parameters<typeof bound.toInstance>[0])
+      const s = bound.toInstance(config.service as UnknownCreator<TokenType<typeof t>>)
       if (typeof config.shared === 'undefined' || config.shared === true) {
         s.inSingletonScope()
       }
@@ -81,7 +82,14 @@ export const service = (t: Token, config: DependencyDefinition): void => {
         service(label, {
           service: () => {
             return labelMap.get(label).reduce((prev: unknown[], TOKEN: Token) => {
-              return prev.concat(get(TOKEN))
+              const service = get(TOKEN)
+              if (Array.isArray(service)) {
+                return prev.concat(service)
+              } else if (service instanceof Object) {
+                return { ...prev, ...service }
+              } else {
+                return prev
+              }
             }, [])
           },
         })

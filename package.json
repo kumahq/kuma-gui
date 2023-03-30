@@ -58,6 +58,7 @@
     "babel-plugin-transform-vite-meta-env": "^1.0.3",
     "canvas": "^2.11.0",
     "cross-env": "^7.0.3",
+    "deepmerge": "^4.3.1",
     "dotenv": "^16.0.3",
     "eslint": "^8.36.0",
     "eslint-config-standard": "^17.0.0",

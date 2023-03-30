@@ -5,6 +5,7 @@ import { merge, build, ServiceDefinition, token, get } from './utils'
 import { useBootstrap } from '../index'
 import { mocks, setupHandlers } from '@/api/mocks'
 import { fs, fakeApi } from '@/api/mocks/index'
+import type { FS, FakeEndpoint } from '@/api/mocks/index'
 import CookiedEnv from '@/services/env/CookiedEnv'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
@@ -12,13 +13,28 @@ import type { TokenType } from '@/services/utils'
 
 export { constant, get, container, createInjections, build, merge } from './utils'
 
-type Msw = ReturnType<typeof setupWorker>
+type Msw = {
+  listen: () => void
+  resetHandlers: () => void
+  close: () => void
+} & ReturnType<typeof setupWorker>
+
 const $ = {
   ...PROD_TOKENS,
   msw: token<Msw>('msw'),
   mswKumaHandlers: token<RestHandler[]>('msw.kuma.handlers'),
   mswKumaMocks: token<RestHandler[]>('msw.kuma.mocks'),
+  kumaFS: token<Record<string, FakeEndpoint>>('fake.fs.kuma'),
+  /**
+   * @description
+   * Service Label for labeling MSW handlers for consumption via setupWorker
+   */
   mswHandlers: token<RestHandler[]>('msw.handlers'),
+  /**
+   * @description
+   * Service Label for labeling fake FSs for consumption via MSW
+   */
+  fakeFS: token<FS>('fake.fs'),
 }
 
 type Env = TokenType<typeof $.Env>
@@ -82,10 +98,21 @@ export const services: ServiceDefinition[] = [
   }],
 
   // new style kuma mocks
-  [$.mswKumaHandlers, {
-    service: (env: Env) => fakeApi(env.var('KUMA_API_URL'), fs),
+  [$.kumaFS, {
+    constant: fs,
     arguments: [
       $.Env,
+    ],
+    labels: [
+      $.fakeFS,
+    ],
+  }],
+  // new style kuma mocks
+  [$.mswKumaHandlers, {
+    service: (env: TokenType<typeof $.env>, fs: FS) => fakeApi(env, fs),
+    arguments: [
+      $.env,
+      $.fakeFS,
     ],
     labels: [
       $.mswHandlers,
