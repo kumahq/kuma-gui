@@ -1,5 +1,5 @@
 <template>
-  <KCard border-variant="noBorder">
+  <KCard>
     <template #body>
       <div class="entity-section-list">
         <section>

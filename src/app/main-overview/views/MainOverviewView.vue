@@ -1,6 +1,9 @@
 <template>
-  <OverviewCharts class="mt-16" />
-  <MeshResources class="mt-8" />
+  <div class="kcard-stack">
+    <OverviewCharts />
+
+    <MeshResources />
+  </div>
 </template>
 
 <script lang="ts" setup>

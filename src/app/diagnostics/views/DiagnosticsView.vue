@@ -1,22 +1,18 @@
 <template>
-  <div class="component-frame">
-    <LoadingBlock v-if="code === null" />
+  <KCard>
+    <template #body>
+      <LoadingBlock v-if="code === null" />
 
-    <KCard
-      v-else
-      border-variant="noBorder"
-    >
-      <template #body>
-        <CodeBlock
-          id="code-block-diagnostics"
-          language="json"
-          :code="code"
-          is-searchable
-          query-key="diagnostics"
-        />
-      </template>
-    </KCard>
-  </div>
+      <CodeBlock
+        v-else
+        id="code-block-diagnostics"
+        language="json"
+        :code="code"
+        is-searchable
+        query-key="diagnostics"
+      />
+    </template>
+  </KCard>
 </template>
 
 <script lang="ts" setup>

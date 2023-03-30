@@ -1,109 +1,113 @@
 <template>
   <div class="zoneegresses">
-    <FrameSkeleton>
-      <DataOverview
-        :selected-entity-name="entity?.name"
-        :page-size="PAGE_SIZE_DEFAULT"
-        :is-loading="isLoading"
-        :error="error"
-        :empty-state="EMPTY_STATE"
-        :table-data="tableData"
-        :table-data-is-empty="isEmpty"
-        :next="nextUrl"
-        :page-offset="pageOffset"
-        @table-action="getEntity"
-        @load-data="loadData"
-      >
-        <template #additionalControls>
-          <KButton
-            v-if="$route.query.ns"
-            class="back-button"
-            appearance="primary"
-            icon="arrowLeft"
-            :to="{ name: 'zoneegresses' }"
-          >
-            View all
-          </KButton>
-        </template>
-      </DataOverview>
-
-      <TabsWidget
-        v-if="isEmpty === false && entity !== null"
-        :has-error="error !== null"
-        :is-loading="isLoading"
-        :tabs="TABS"
-      >
-        <template #tabHeader>
-          <h1 class="entity-heading">
-            Zone Egress: {{ entity.name }}
-          </h1>
-        </template>
-
-        <template #overview>
-          <LabelList>
-            <div>
-              <ul>
-                <li
-                  v-for="(value, key) in entity"
-                  :key="key"
-                >
-                  <h4 v-if="value">
-                    {{ key }}
-                  </h4>
-                  <p>
-                    {{ value }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </LabelList>
-        </template>
-
-        <template #insights>
-          <AccordionList :initially-open="0">
-            <AccordionItem
-              v-for="(value, key) in subscriptionsReversed"
-              :key="key"
+    <div class="kcard-stack">
+      <div class="kcard-border">
+        <DataOverview
+          :selected-entity-name="entity?.name"
+          :page-size="PAGE_SIZE_DEFAULT"
+          :is-loading="isLoading"
+          :error="error"
+          :empty-state="EMPTY_STATE"
+          :table-data="tableData"
+          :table-data-is-empty="isEmpty"
+          :next="nextUrl"
+          :page-offset="pageOffset"
+          @table-action="getEntity"
+          @load-data="loadData"
+        >
+          <template #additionalControls>
+            <KButton
+              v-if="$route.query.ns"
+              class="back-button"
+              appearance="primary"
+              icon="arrowLeft"
+              :to="{ name: 'zoneegresses' }"
             >
-              <template #accordion-header>
-                <SubscriptionHeader :details="value" />
-              </template>
+              View all
+            </KButton>
+          </template>
+        </DataOverview>
+      </div>
 
-              <template #accordion-content>
-                <SubscriptionDetails
-                  :details="value"
-                  is-discovery-subscription
-                />
-              </template>
-            </AccordionItem>
-          </AccordionList>
-        </template>
+      <div class="kcard-border">
+        <TabsWidget
+          v-if="isEmpty === false && entity !== null"
+          :has-error="error !== null"
+          :is-loading="isLoading"
+          :tabs="TABS"
+        >
+          <template #tabHeader>
+            <h1 class="entity-heading">
+              Zone Egress: {{ entity.name }}
+            </h1>
+          </template>
 
-        <template #xds-configuration>
-          <EnvoyData
-            data-path="xds"
-            :zone-egress-name="entity.name"
-            query-key="envoy-data-zone-egress"
-          />
-        </template>
+          <template #overview>
+            <LabelList>
+              <div>
+                <ul>
+                  <li
+                    v-for="(value, key) in entity"
+                    :key="key"
+                  >
+                    <h4 v-if="value">
+                      {{ key }}
+                    </h4>
+                    <p>
+                      {{ value }}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </LabelList>
+          </template>
 
-        <template #envoy-stats>
-          <EnvoyData
-            data-path="stats"
-            :zone-egress-name="entity.name"
-            query-key="envoy-data-zone-egress"
-          />
-        </template>
+          <template #insights>
+            <AccordionList :initially-open="0">
+              <AccordionItem
+                v-for="(value, key) in subscriptionsReversed"
+                :key="key"
+              >
+                <template #accordion-header>
+                  <SubscriptionHeader :details="value" />
+                </template>
 
-        <template #envoy-clusters>
-          <EnvoyData
-            data-path="clusters"
-            :zone-egress-name="entity.name"
-            query-key="envoy-data-zone-egress"
-          />
-        </template>
-      </TabsWidget>
-    </FrameSkeleton>
+                <template #accordion-content>
+                  <SubscriptionDetails
+                    :details="value"
+                    is-discovery-subscription
+                  />
+                </template>
+              </AccordionItem>
+            </AccordionList>
+          </template>
+
+          <template #xds-configuration>
+            <EnvoyData
+              data-path="xds"
+              :zone-egress-name="entity.name"
+              query-key="envoy-data-zone-egress"
+            />
+          </template>
+
+          <template #envoy-stats>
+            <EnvoyData
+              data-path="stats"
+              :zone-egress-name="entity.name"
+              query-key="envoy-data-zone-egress"
+            />
+          </template>
+
+          <template #envoy-clusters>
+            <EnvoyData
+              data-path="clusters"
+              :zone-egress-name="entity.name"
+              query-key="envoy-data-zone-egress"
+            />
+          </template>
+        </TabsWidget>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -116,7 +120,6 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
 import EnvoyData from '@/app/common/EnvoyData.vue'
-import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'

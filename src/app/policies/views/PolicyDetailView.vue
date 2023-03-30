@@ -1,5 +1,5 @@
 <template>
-  <div class="policy-details component-frame">
+  <div class="policy-details kcard-border">
     <LoadingBlock v-if="isLoading" />
 
     <ErrorBlock

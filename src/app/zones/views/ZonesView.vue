@@ -2,111 +2,117 @@
   <div class="zones">
     <MultizoneInfo v-if="store.getters['config/getMulticlusterStatus'] === false" />
 
-    <!-- Zone CPs information for when Multicluster is enabled -->
-    <FrameSkeleton v-else>
-      <DataOverview
-        :selected-entity-name="entity?.name"
-        :page-size="PAGE_SIZE_DEFAULT"
-        :is-loading="isLoading"
-        :error="error"
-        :empty-state="EMPTY_STATE"
-        :table-data="tableData"
-        :table-data-is-empty="tableDataIsEmpty"
-        :show-warnings="tableData.data.some((item) => item.withWarnings)"
-        :next="nextUrl"
-        :page-offset="pageOffset"
-        @table-action="getEntity"
-        @load-data="loadData"
-      >
-        <template #additionalControls>
-          <KButton
-            v-if="$route.query.ns"
-            class="back-button"
-            appearance="primary"
-            icon="arrowLeft"
-            :to="{ name: 'zones' }"
-          >
-            View all
-          </KButton>
-        </template>
-      </DataOverview>
-
-      <TabsWidget
-        v-if="isEmpty === false && entity !== null"
-        :has-error="error !== null"
-        :is-loading="isLoading"
-        :tabs="filterTabs()"
-      >
-        <template #tabHeader>
-          <h1 class="entity-heading">
-            Zone: {{ entity.name }}
-          </h1>
-        </template>
-
-        <template #overview>
-          <LabelList
-            :has-error="entityHasError"
-            :is-loading="entityIsLoading"
-            :is-empty="entityIsEmpty"
-          >
-            <div>
-              <ul>
-                <li
-                  v-for="(value, key) in entity"
-                  :key="key"
-                >
-                  <h4 v-if="value">
-                    {{ key }}
-                  </h4>
-
-                  <p v-if="key === 'status'">
-                    <KBadge :appearance="value === 'Offline' ? 'danger' : 'success'">
-                      {{ value }}
-                    </KBadge>
-                  </p>
-
-                  <p v-else>
-                    {{ value }}
-                  </p>
-                </li>
-              </ul>
-            </div>
-          </LabelList>
-        </template>
-
-        <template #insights>
-          <AccordionList :initially-open="0">
-            <AccordionItem
-              v-for="(value, key) in subscriptionsReversed"
-              :key="key"
+    <div
+      v-else
+      class="kcard-stack"
+    >
+      <div class="kcard-border">
+        <DataOverview
+          :selected-entity-name="entity?.name"
+          :page-size="PAGE_SIZE_DEFAULT"
+          :is-loading="isLoading"
+          :error="error"
+          :empty-state="EMPTY_STATE"
+          :table-data="tableData"
+          :table-data-is-empty="tableDataIsEmpty"
+          :show-warnings="tableData.data.some((item) => item.withWarnings)"
+          :next="nextUrl"
+          :page-offset="pageOffset"
+          @table-action="getEntity"
+          @load-data="loadData"
+        >
+          <template #additionalControls>
+            <KButton
+              v-if="$route.query.ns"
+              class="back-button"
+              appearance="primary"
+              icon="arrowLeft"
+              :to="{ name: 'zones' }"
             >
-              <template #accordion-header>
-                <SubscriptionHeader :details="value" />
-              </template>
+              View all
+            </KButton>
+          </template>
+        </DataOverview>
+      </div>
 
-              <template #accordion-content>
-                <SubscriptionDetails :details="value" />
-              </template>
-            </AccordionItem>
-          </AccordionList>
-        </template>
+      <div class="kcard-border">
+        <TabsWidget
+          v-if="isEmpty === false && entity !== null"
+          :has-error="error !== null"
+          :is-loading="isLoading"
+          :tabs="filterTabs()"
+        >
+          <template #tabHeader>
+            <h1 class="entity-heading">
+              Zone: {{ entity.name }}
+            </h1>
+          </template>
 
-        <template #config>
-          <CodeBlock
-            v-if="codeOutput"
-            id="code-block-zone-config"
-            language="json"
-            :code="codeOutput"
-            is-searchable
-            query-key="zone-config"
-          />
-        </template>
+          <template #overview>
+            <LabelList
+              :has-error="entityHasError"
+              :is-loading="entityIsLoading"
+              :is-empty="entityIsEmpty"
+            >
+              <div>
+                <ul>
+                  <li
+                    v-for="(value, key) in entity"
+                    :key="key"
+                  >
+                    <h4 v-if="value">
+                      {{ key }}
+                    </h4>
 
-        <template #warnings>
-          <WarningsWidget :warnings="warnings" />
-        </template>
-      </TabsWidget>
-    </FrameSkeleton>
+                    <p v-if="key === 'status'">
+                      <KBadge :appearance="value === 'Offline' ? 'danger' : 'success'">
+                        {{ value }}
+                      </KBadge>
+                    </p>
+
+                    <p v-else>
+                      {{ value }}
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </LabelList>
+          </template>
+
+          <template #insights>
+            <AccordionList :initially-open="0">
+              <AccordionItem
+                v-for="(value, key) in subscriptionsReversed"
+                :key="key"
+              >
+                <template #accordion-header>
+                  <SubscriptionHeader :details="value" />
+                </template>
+
+                <template #accordion-content>
+                  <SubscriptionDetails :details="value" />
+                </template>
+              </AccordionItem>
+            </AccordionList>
+          </template>
+
+          <template #config>
+            <CodeBlock
+              v-if="codeOutput"
+              id="code-block-zone-config"
+              language="json"
+              :code="codeOutput"
+              is-searchable
+              query-key="zone-config"
+            />
+          </template>
+
+          <template #warnings>
+            <WarningsWidget :warnings="warnings" />
+          </template>
+        </TabsWidget>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,7 +126,6 @@ import AccordionItem from '@/app/common/AccordionItem.vue'
 import AccordionList from '@/app/common/AccordionList.vue'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import FrameSkeleton from '@/app/common/FrameSkeleton.vue'
 import LabelList from '@/app/common/LabelList.vue'
 import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
 import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'

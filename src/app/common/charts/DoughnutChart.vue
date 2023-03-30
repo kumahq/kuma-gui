@@ -181,7 +181,6 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
 .chart-title-box {
   pointer-events: none;
   position: absolute;
-  z-index: -1; // Ensures the tooltips are above this element.
   inset: 0;
   display: flex;
   justify-content: center;

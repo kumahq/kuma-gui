@@ -1,45 +1,50 @@
 <template>
-  <div class="chart-box-list">
-    <DoughnutChart
-      v-if="isMultizoneMode"
-      class="chart chart-1/2 chart-offset-left-1/6"
-      :data="zonesChartData"
-    />
+  <KCard>
+    <template #body>
+      <div class="chart-box-list">
+        <DoughnutChart
+          v-if="isMultizoneMode"
+          class="chart chart-1/2 chart-offset-left-1/6"
+          :data="zonesChartData"
+        />
 
-    <DoughnutChart
-      v-if="isMultizoneMode"
-      class="chart chart-1/2 chart-offset-right-1/6"
-      :data="zonesCPVersionsChartData"
-    />
+        <DoughnutChart
+          v-if="isMultizoneMode"
+          class="chart chart-1/2 chart-offset-right-1/6"
+          :data="zonesCPVersionsChartData"
+        />
 
-    <DoughnutChart
-      class="chart chart-1/3"
-      :data="meshesChartData"
-    />
+        <DoughnutChart
+          class="chart chart-1/3"
+          :data="meshesChartData"
+        />
 
-    <DoughnutChart
-      class="chart chart-1/3"
-      :data="servicesChartData"
-    />
+        <DoughnutChart
+          class="chart chart-1/3"
+          :data="servicesChartData"
+        />
 
-    <DoughnutChart
-      class="chart chart-1/3"
-      :data="dataplanesChartData"
-    />
+        <DoughnutChart
+          class="chart chart-1/3"
+          :data="dataplanesChartData"
+        />
 
-    <DoughnutChart
-      class="chart chart-1/2 chart-offset-left-1/6"
-      :data="kumaDPVersionsChartData"
-    />
+        <DoughnutChart
+          class="chart chart-1/2 chart-offset-left-1/6"
+          :data="kumaDPVersionsChartData"
+        />
 
-    <DoughnutChart
-      class="chart chart-1/2 chart-offset-right-1/6"
-      :data="envoyVersionsChartData"
-    />
-  </div>
+        <DoughnutChart
+          class="chart chart-1/2 chart-offset-right-1/6"
+          :data="envoyVersionsChartData"
+        />
+      </div>
+    </template>
+  </KCard>
 </template>
 
 <script lang="ts" setup>
+import { KCard } from '@kong/kongponents'
 import { computed, watch } from 'vue'
 
 import DoughnutChart from '@/app/common/charts/DoughnutChart.vue'
@@ -101,9 +106,7 @@ function loadData() {
 .chart-box-list {
   display: flex;
   flex-wrap: wrap;
-}
-.chart {
-  margin-top: var(--spacing-lg);
+  row-gap: var(--spacing-lg);
 }
 
 .chart-1\/2 {

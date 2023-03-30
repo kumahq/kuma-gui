@@ -4,926 +4,929 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
 <div
   class="zones"
 >
-  
-  <!-- Zone CPs information for when Multicluster is enabled -->
   <div
-    class="component-frame"
+    class="kcard-stack"
   >
-    
     <div
-      class="data-overview"
-      data-testid="data-overview"
+      class="kcard-border"
     >
       <div
-        class="data-table-controls mb-2"
+        class="data-overview"
+        data-testid="data-overview"
       >
-        
-        
-        <button
-          class="k-button medium rounded primary refresh-button"
-          data-testid="data-overview-refresh-button"
-          type="button"
-        >
-          
-          <span
-            class="k-button-icon kong-icon kong-icon-redo"
-          >
-            <svg
-              fill="white"
-              height="16"
-              role="img"
-              viewBox="0 0 17 14"
-              width="16"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              
-  
-              <title>
-                Redo
-              </title>
-              
-  
-              <path
-                clip-rule="evenodd"
-                d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
-                fill="white"
-                fill-rule="evenodd"
-              />
-              
-
-            </svg>
-            
-
-          </span>
-          
-          
-           Refresh 
-          
-          <!---->
-        </button>
-      </div>
-      <div
-        class="data-overview-content"
-      >
-        <!-- data -->
         <div
-          class="data-overview-table"
+          class="data-table-controls mb-2"
         >
-          <div
-            class="k-table-container data-overview-table"
-            data-testid="data-overview-table"
-            is-clickable=""
+          
+          
+          <button
+            class="k-button medium rounded primary refresh-button"
+            data-testid="data-overview-refresh-button"
+            type="button"
           >
-            <!---->
-            <section
-              class="k-table-wrapper"
+            
+            <span
+              class="k-button-icon kong-icon kong-icon-redo"
             >
-              <table
-                class="k-table has-hover is-clickable"
-                data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+              <svg
+                fill="white"
+                height="16"
+                role="img"
+                viewBox="0 0 17 14"
+                width="16"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <thead
-                  class=""
-                >
-                  <tr
-                    class=""
-                  >
-                    
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
-                          Status
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
-                          Name
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
-                          Zone CP Version
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
-                          Storage type
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
-                          Ingress
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class=""
-                        >
-                          Egress
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class="sr-only"
-                        >
-                          Warnings
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  <tr
-                    class="is-selected"
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      cluster-1
-                      
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      1.0.0-rc2-211-g823fe8ce
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      memory
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      No
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      No
-                      
-                    </td>
-                    <td
-                      class="text-center"
-                    >
-                      
-                      <span
-                        class="mr-1 kong-icon kong-icon-warning"
-                      >
-                        <svg
-                          height="20"
-                          role="img"
-                          version="1.1"
-                          viewBox="0 0 48 42"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                        >
-                          
+                
   
-                          <title>
-                            Warning
-                          </title>
-                          
+                <title>
+                  Redo
+                </title>
+                
   
-                          <g
-                            fill="var(--black-75)"
-                            fill-rule="evenodd"
-                            id="Page-1"
-                            stroke="none"
-                            stroke-width="1"
-                          >
-                            
-    
-                            <g
-                              id="icn-warning-64x"
-                            >
-                              
-      
-                              <path
-                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                fill="var(--black-75)"
-                                fill-rule="nonzero"
-                                id="Triangle"
-                              />
-                              
-      
-                              <path
-                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                fill="var(--yellow-300)"
-                                fill-rule="nonzero"
-                                id="Path"
-                                type="secondary"
-                              />
-                              
-      
-                              <path
-                                d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                fill="var(--black-75)"
-                                id="!"
-                              />
-                              
-    
-                            </g>
-                            
-  
-                          </g>
-                          
+                <path
+                  clip-rule="evenodd"
+                  d="M12.466 12.06a6.868 6.868 0 112.196-5.676l.85-.85a.847.847 0 011.201-.017c.327.327.315.869-.017 1.2L14.233 9.18c-.342.342-.88.35-1.208.023L10.654 6.83c-.324-.324-.314-.859.028-1.2.34-.34.881-.348 1.2-.029l.847.846a4.938 4.938 0 10-1.63 4.245l1.367 1.367z"
+                  fill="white"
+                  fill-rule="evenodd"
+                />
+                
 
-                        </svg>
-                        
+              </svg>
+              
 
-                      </span>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      zone-1
-                      
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      1.0.0-rc2-211-g823fe8ce
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      memory
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Yes
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      Yes
-                      
-                    </td>
-                    <td
-                      class="text-center"
-                    >
-                      
-                      
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      zone-2
-                      
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      1.0.0-rc2-211-g823fe8ce
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      memory
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      No
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      No
-                      
-                    </td>
-                    <td
-                      class="text-center"
-                    >
-                      
-                      <span
-                        class="mr-1 kong-icon kong-icon-warning"
-                      >
-                        <svg
-                          height="20"
-                          role="img"
-                          version="1.1"
-                          viewBox="0 0 48 42"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                        >
-                          
-  
-                          <title>
-                            Warning
-                          </title>
-                          
-  
-                          <g
-                            fill="var(--black-75)"
-                            fill-rule="evenodd"
-                            id="Page-1"
-                            stroke="none"
-                            stroke-width="1"
-                          >
-                            
-    
-                            <g
-                              id="icn-warning-64x"
-                            >
-                              
-      
-                              <path
-                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                                fill="var(--black-75)"
-                                fill-rule="nonzero"
-                                id="Triangle"
-                              />
-                              
-      
-                              <path
-                                d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                                fill="var(--yellow-300)"
-                                fill-rule="nonzero"
-                                id="Path"
-                                type="secondary"
-                              />
-                              
-      
-                              <path
-                                d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                                fill="var(--black-75)"
-                                id="!"
-                              />
-                              
-    
-                            </g>
-                            
-  
-                          </g>
-                          
-
-                        </svg>
-                        
-
-                      </span>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr
-                    class=""
-                    role="link"
-                    tabindex="0"
-                  >
-                    
-                    <td
-                      class=""
-                    >
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      zone-3
-                      
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      1.0.0-rc2-211-g823fe8ce
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      No
-                      
-                    </td>
-                    <td
-                      class=""
-                    >
-                      
-                      No
-                      
-                    </td>
-                    <td
-                      class="text-center"
-                    >
-                      
-                      
-                      
-                    </td>
-                    
-                  </tr>
-                  
-                </tbody>
-              </table>
-              <!---->
-            </section>
-          </div>
-          <div
-            class="pagination"
-          >
-            <!--v-if-->
-            <!--v-if-->
-          </div>
+            </span>
+            
+            
+             Refresh 
+            
+            <!---->
+          </button>
         </div>
-        <!--v-if-->
-        <!--v-if-->
+        <div
+          class="data-overview-content"
+        >
+          <!-- data -->
+          <div
+            class="data-overview-table"
+          >
+            <div
+              class="k-table-container data-overview-table"
+              data-testid="data-overview-table"
+              is-clickable=""
+            >
+              <!---->
+              <section
+                class="k-table-wrapper"
+              >
+                <table
+                  class="k-table has-hover is-clickable"
+                  data-tableid="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                >
+                  <thead
+                    class=""
+                  >
+                    <tr
+                      class=""
+                    >
+                      
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Status
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Name
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Zone CP Version
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Storage type
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Ingress
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class=""
+                          >
+                            Egress
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      <th
+                        class=""
+                      >
+                        <span
+                          class="d-flex align-items-center"
+                        >
+                          
+                          <span
+                            class="sr-only"
+                          >
+                            Warnings
+                          </span>
+                          
+                          <!---->
+                        </span>
+                      </th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    
+                    <tr
+                      class="is-selected"
+                      role="link"
+                      tabindex="0"
+                    >
+                      
+                      <td
+                        class=""
+                      >
+                        
+                        <span
+                          class="status status--with-title status--success"
+                          data-testid="status-badge"
+                        >
+                          <span
+                            class=""
+                          >
+                            online
+                          </span>
+                        </span>
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        
+                        cluster-1
+                        
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        1.0.0-rc2-211-g823fe8ce
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        memory
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        No
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        No
+                        
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        
+                        <span
+                          class="mr-1 kong-icon kong-icon-warning"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            version="1.1"
+                            viewBox="0 0 48 42"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                          >
+                            
+  
+                            <title>
+                              Warning
+                            </title>
+                            
+  
+                            <g
+                              fill="var(--black-75)"
+                              fill-rule="evenodd"
+                              id="Page-1"
+                              stroke="none"
+                              stroke-width="1"
+                            >
+                              
+    
+                              <g
+                                id="icn-warning-64x"
+                              >
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                  fill="var(--black-75)"
+                                  fill-rule="nonzero"
+                                  id="Triangle"
+                                />
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                  fill="var(--yellow-300)"
+                                  fill-rule="nonzero"
+                                  id="Path"
+                                  type="secondary"
+                                />
+                                
+      
+                                <path
+                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                  fill="var(--black-75)"
+                                  id="!"
+                                />
+                                
+    
+                              </g>
+                              
+  
+                            </g>
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                      </td>
+                      
+                    </tr>
+                    <tr
+                      class=""
+                      role="link"
+                      tabindex="0"
+                    >
+                      
+                      <td
+                        class=""
+                      >
+                        
+                        <span
+                          class="status status--with-title status--success"
+                          data-testid="status-badge"
+                        >
+                          <span
+                            class=""
+                          >
+                            online
+                          </span>
+                        </span>
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        
+                        zone-1
+                        
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        1.0.0-rc2-211-g823fe8ce
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        memory
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        Yes
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        Yes
+                        
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        
+                        
+                        
+                      </td>
+                      
+                    </tr>
+                    <tr
+                      class=""
+                      role="link"
+                      tabindex="0"
+                    >
+                      
+                      <td
+                        class=""
+                      >
+                        
+                        <span
+                          class="status status--with-title status--success"
+                          data-testid="status-badge"
+                        >
+                          <span
+                            class=""
+                          >
+                            online
+                          </span>
+                        </span>
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        
+                        zone-2
+                        
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        1.0.0-rc2-211-g823fe8ce
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        memory
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        No
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        No
+                        
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        
+                        <span
+                          class="mr-1 kong-icon kong-icon-warning"
+                        >
+                          <svg
+                            height="20"
+                            role="img"
+                            version="1.1"
+                            viewBox="0 0 48 42"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                          >
+                            
+  
+                            <title>
+                              Warning
+                            </title>
+                            
+  
+                            <g
+                              fill="var(--black-75)"
+                              fill-rule="evenodd"
+                              id="Page-1"
+                              stroke="none"
+                              stroke-width="1"
+                            >
+                              
+    
+                              <g
+                                id="icn-warning-64x"
+                              >
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                                  fill="var(--black-75)"
+                                  fill-rule="nonzero"
+                                  id="Triangle"
+                                />
+                                
+      
+                                <path
+                                  d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                                  fill="var(--yellow-300)"
+                                  fill-rule="nonzero"
+                                  id="Path"
+                                  type="secondary"
+                                />
+                                
+      
+                                <path
+                                  d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                                  fill="var(--black-75)"
+                                  id="!"
+                                />
+                                
+    
+                              </g>
+                              
+  
+                            </g>
+                            
+
+                          </svg>
+                          
+
+                        </span>
+                        
+                      </td>
+                      
+                    </tr>
+                    <tr
+                      class=""
+                      role="link"
+                      tabindex="0"
+                    >
+                      
+                      <td
+                        class=""
+                      >
+                        
+                        <span
+                          class="status status--with-title status--success"
+                          data-testid="status-badge"
+                        >
+                          <span
+                            class=""
+                          >
+                            online
+                          </span>
+                        </span>
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        
+                        zone-3
+                        
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        1.0.0-rc2-211-g823fe8ce
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        No
+                        
+                      </td>
+                      <td
+                        class=""
+                      >
+                        
+                        No
+                        
+                      </td>
+                      <td
+                        class="text-center"
+                      >
+                        
+                        
+                        
+                      </td>
+                      
+                    </tr>
+                    
+                  </tbody>
+                </table>
+                <!---->
+              </section>
+            </div>
+            <div
+              class="pagination"
+            >
+              <!--v-if-->
+              <!--v-if-->
+            </div>
+          </div>
+          <!--v-if-->
+          <!--v-if-->
+        </div>
       </div>
     </div>
     <div
-      class="tab-container"
-      data-testid="tab-container"
+      class="kcard-border"
     >
-      
-      <header
-        class="tab__header"
-      >
-        
-        <h1
-          class="entity-heading"
-        >
-           Zone: cluster-1
-        </h1>
-        
-      </header>
       <div
-        class="tab__content-container"
+        class="tab-container"
+        data-testid="tab-container"
       >
-        <div
-          class="k-tabs"
+        
+        <header
+          class="tab__header"
         >
-          <ul
-            aria-label="Tabs"
-            role="tablist"
+          
+          <h1
+            class="entity-heading"
           >
-            
-            <li
-              aria-controls="panel-0"
-              aria-selected="true"
-              class="tab-item active"
-              id="overview-tab"
-              role="tab"
-              tabindex="0"
+             Zone: cluster-1
+          </h1>
+          
+        </header>
+        <div
+          class="tab__content-container"
+        >
+          <div
+            class="k-tabs"
+          >
+            <ul
+              aria-label="Tabs"
+              role="tablist"
             >
-              <a
-                class="tab-link"
+              
+              <li
+                aria-controls="panel-0"
+                aria-selected="true"
+                class="tab-item active"
+                id="overview-tab"
+                role="tab"
+                tabindex="0"
               >
-                
-                Overview
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-1"
-              aria-selected="false"
-              class="tab-item"
-              id="insights-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Zone Insights
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-2"
-              aria-selected="false"
-              class="tab-item"
-              id="config-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                Config
-                
-              </a>
-            </li>
-            <li
-              aria-controls="panel-3"
-              aria-selected="false"
-              class="tab-item"
-              id="warnings-tab"
-              role="tab"
-              tabindex="0"
-            >
-              <a
-                class="tab-link"
-              >
-                
-                <span
-                  class="flex items-center with-warnings"
+                <a
+                  class="tab-link"
                 >
+                  
+                  Overview
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-1"
+                aria-selected="false"
+                class="tab-item"
+                id="insights-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  Zone Insights
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-2"
+                aria-selected="false"
+                class="tab-item"
+                id="config-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
+                  Config
+                  
+                </a>
+              </li>
+              <li
+                aria-controls="panel-3"
+                aria-selected="false"
+                class="tab-item"
+                id="warnings-tab"
+                role="tab"
+                tabindex="0"
+              >
+                <a
+                  class="tab-link"
+                >
+                  
                   <span
-                    class="mr-1 kong-icon kong-icon-warning"
+                    class="flex items-center with-warnings"
                   >
-                    <svg
-                      height="16"
-                      role="img"
-                      version="1.1"
-                      viewBox="0 0 48 42"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
-                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <span
+                      class="mr-1 kong-icon kong-icon-warning"
                     >
-                      
-  
-                      <title>
-                        Warning
-                      </title>
-                      
-  
-                      <g
-                        fill="var(--black-75)"
-                        fill-rule="evenodd"
-                        id="Page-1"
-                        stroke="none"
-                        stroke-width="1"
+                      <svg
+                        height="16"
+                        role="img"
+                        version="1.1"
+                        viewBox="0 0 48 42"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
                       >
                         
-    
-                        <g
-                          id="icn-warning-64x"
-                        >
-                          
-      
-                          <path
-                            d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
-                            fill="var(--black-75)"
-                            fill-rule="nonzero"
-                            id="Triangle"
-                          />
-                          
-      
-                          <path
-                            d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
-                            fill="var(--yellow-300)"
-                            fill-rule="nonzero"
-                            id="Path"
-                            type="secondary"
-                          />
-                          
-      
-                          <path
-                            d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
-                            fill="var(--black-75)"
-                            id="!"
-                          />
-                          
-    
-                        </g>
+  
+                        <title>
+                          Warning
+                        </title>
                         
   
-                      </g>
-                      
-
-                    </svg>
-                    
-
-                  </span>
-                  <span>
-                    Warnings
-                  </span>
-                </span>
-                
-              </a>
-            </li>
-            
-          </ul>
-          
-          <div
-            aria-labelledby="overview-tab"
-            class="tab-container"
-            id="panel-0"
-            role="tabpanel"
-            tabindex="0"
-          >
-            
-            <section
-              aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-              class="kong-card noBorder"
-            >
-              <!---->
-              <!---->
-              <div
-                class="k-card-content d-flex"
-              >
-                <div
-                  class="k-card-body"
-                  id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
-                >
-                  
-                  
-                  <div
-                    class="label-list"
-                  >
-                    <div
-                      class="label-list__content"
-                    >
-                      
-                      <div>
-                        <ul>
+                        <g
+                          fill="var(--black-75)"
+                          fill-rule="evenodd"
+                          id="Page-1"
+                          stroke="none"
+                          stroke-width="1"
+                        >
                           
-                          <li>
-                            <h4>
-                              type
-                            </h4>
-                            <p>
-                              ZoneOverview
-                            </p>
-                          </li>
-                          <li>
-                            <h4>
-                              name
-                            </h4>
-                            <p>
-                              cluster-1
-                            </p>
-                          </li>
-                          <li>
-                            <h4>
-                              status
-                            </h4>
-                            <p>
-                              <div
-                                class="k-badge d-inline-flex k-badge-success k-badge-rounded"
-                                tabindex="0"
-                              >
+    
+                          <g
+                            id="icn-warning-64x"
+                          >
+                            
+      
+                            <path
+                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z M26.8565586,1.63656862 L47.5511049,37.0538196 C48.4690879,38.6248825 47.9342141,40.6394832 46.3564308,41.5535561 C45.8517121,41.8459599 45.2782053,42 44.6942755,42 L3.30518292,42 C1.4797808,42 3.66949018e-16,40.5265221 0,38.7088951 C0,38.1274525 0.154699044,37.5563885 0.448353557,37.0538196 L21.1428999,1.63656862 C22.0608829,0.0655056975 24.0841012,-0.467089888 25.6618845,0.446983085 C26.1568841,0.733756171 26.5685588,1.14367738 26.8565586,1.63656862 Z"
+                              fill="var(--black-75)"
+                              fill-rule="nonzero"
+                              id="Triangle"
+                            />
+                            
+      
+                            <path
+                              d="M25.129733,2.64556484 C25.0166566,2.45204254 24.8546193,2.29069544 24.6593031,2.17754095 C24.0339615,1.81525556 23.2314423,2.02651215 22.8697255,2.64556484 L2.17517915,38.0628158 C2.06036961,38.2593042 2,38.4821557 2,38.7088951 C2,39.4200371 2.58244376,40 3.30518292,40 L44.6942755,40 C44.9262204,40 45.1538685,39.9388552 45.3538494,39.8229983 C45.9741835,39.4636139 46.1830669,38.6768553 45.8242793,38.0628158 L25.129733,2.64556484 Z"
+                              fill="var(--yellow-300)"
+                              fill-rule="nonzero"
+                              id="Path"
+                              type="secondary"
+                            />
+                            
+      
+                            <path
+                              d="M23,13 L25,13 C25.5522847,13 26,13.4477153 26,14 C26,16 26,18 26,20 C26,22.6594889 25.7904331,25.0570193 25.3712994,27.192591 C25.2792336,27.6616739 24.8680521,28 24.3900199,28 L23.6099609,27.9999816 C23.1319364,27.9999816 22.7207615,27.6616608 22.6286994,27.1925851 C22.2095665,25.0570148 22,22.6594864 22,20 C22,18 22,16 22,14 C22,13.4477153 22.4477153,13 23,13 Z M24,31 C25.1045695,31 26,31.8954305 26,33 C26,34.1045695 25.1045695,35 24,35 C22.8954305,35 22,34.1045695 22,33 C22,31.8954305 22.8954305,31 24,31 Z"
+                              fill="var(--black-75)"
+                              id="!"
+                            />
+                            
+    
+                          </g>
+                          
+  
+                        </g>
+                        
+
+                      </svg>
+                      
+
+                    </span>
+                    <span>
+                      Warnings
+                    </span>
+                  </span>
+                  
+                </a>
+              </li>
+              
+            </ul>
+            
+            <div
+              aria-labelledby="overview-tab"
+              class="tab-container"
+              id="panel-0"
+              role="tabpanel"
+              tabindex="0"
+            >
+              
+              <section
+                aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                class="kong-card noBorder"
+              >
+                <!---->
+                <!---->
+                <div
+                  class="k-card-content d-flex"
+                >
+                  <div
+                    class="k-card-body"
+                    id="aaaabbbb-cccc-dddd-eeee-ffffffffffff"
+                  >
+                    
+                    
+                    <div
+                      class="label-list"
+                    >
+                      <div
+                        class="label-list__content"
+                      >
+                        
+                        <div>
+                          <ul>
+                            
+                            <li>
+                              <h4>
+                                type
+                              </h4>
+                              <p>
+                                ZoneOverview
+                              </p>
+                            </li>
+                            <li>
+                              <h4>
+                                name
+                              </h4>
+                              <p>
+                                cluster-1
+                              </p>
+                            </li>
+                            <li>
+                              <h4>
+                                status
+                              </h4>
+                              <p>
                                 <div
-                                  class="k-badge-text truncate"
+                                  class="k-badge d-inline-flex k-badge-success k-badge-rounded"
+                                  tabindex="0"
                                 >
                                   <div
                                     class="k-badge-text truncate"
                                   >
-                                    
-                                    online
-                                    
+                                    <div
+                                      class="k-badge-text truncate"
+                                    >
+                                      
+                                      online
+                                      
+                                    </div>
                                   </div>
+                                  <!---->
                                 </div>
-                                <!---->
-                              </div>
-                            </p>
-                          </li>
-                          <li>
-                            <h4>
-                              Authentication Type
-                            </h4>
-                            <p>
-                              dpToken
-                            </p>
-                          </li>
-                          
-                        </ul>
+                              </p>
+                            </li>
+                            <li>
+                              <h4>
+                                Authentication Type
+                              </h4>
+                              <p>
+                                dpToken
+                              </p>
+                            </li>
+                            
+                          </ul>
+                        </div>
+                        
                       </div>
-                      
                     </div>
+                    
+                    
                   </div>
-                  
-                  
+                  <!---->
                 </div>
-                <!---->
-              </div>
-            </section>
+              </section>
+              
+            </div>
+            <div
+              aria-labelledby="insights-tab"
+              class="tab-container"
+              id="panel-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="config-tab"
+              class="tab-container"
+              id="panel-2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
+            <div
+              aria-labelledby="warnings-tab"
+              class="tab-container"
+              id="panel-3"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <!---->
+            </div>
             
           </div>
-          <div
-            aria-labelledby="insights-tab"
-            class="tab-container"
-            id="panel-1"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="config-tab"
-            class="tab-container"
-            id="panel-2"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          <div
-            aria-labelledby="warnings-tab"
-            class="tab-container"
-            id="panel-3"
-            role="tabpanel"
-            tabindex="0"
-          >
-            <!---->
-          </div>
-          
         </div>
+        
       </div>
-      
     </div>
-    
   </div>
-  
 </div>
 `;
 
