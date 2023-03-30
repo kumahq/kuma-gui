@@ -2,7 +2,7 @@
   <div
     class="nav-item"
     :class="{
-      [`nav-item-${props.routeName}`]: true,
+      [`nav-item-${props.routeName}`]: props.routeName !== '',
       'nav-item--is-category': targetRoute === null,
       [`nav-item--is-${props.categoryTier}-category`]: props.categoryTier !== null,
     }"

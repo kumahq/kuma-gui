@@ -348,7 +348,7 @@ exports[`App.vue fails to renders basic view 1`] = `
         
         
         <div
-          class="nav-item nav-item- nav-item--is-category nav-item--is-primary-category"
+          class="nav-item nav-item--is-category nav-item--is-primary-category"
         >
           <div
             class="nav-category"
