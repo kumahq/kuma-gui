@@ -33,24 +33,26 @@
         class="columns"
         style="--columns: 4;"
       >
-        <li
+        <template
           v-for="(item, label) in detailsIterator"
           :key="label"
         >
-          <h6 class="overview-tertiary-title">
-            {{ label }}:
-          </h6>
+          <li v-if="Object.keys(item).length > 0">
+            <h6 class="overview-tertiary-title">
+              {{ label }}:
+            </h6>
 
-          <ul>
-            <li
-              v-for="(k, v) in item"
-              :key="v"
-            >
-              <strong>{{ v }}:</strong>
-              <span>{{ formatError(formatValue(k)) }}</span>
-            </li>
-          </ul>
-        </li>
+            <ul>
+              <li
+                v-for="(k, v) in item"
+                :key="v"
+              >
+                <strong>{{ v }}:</strong>
+                <span>{{ formatError(formatValue(k)) }}</span>
+              </li>
+            </ul>
+          </li>
+        </template>
       </ul>
     </div>
 
