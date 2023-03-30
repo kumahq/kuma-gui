@@ -200,7 +200,7 @@ exports[`MainOverviewView.vue renders basic snapshot 1`] = `
     </div>
   </section>
   <div
-    class="kcard-list"
+    class="kcard-switcher"
   >
     <section
       aria-describedby="aaaabbbb-cccc-dddd-eeee-ffffffffffff"

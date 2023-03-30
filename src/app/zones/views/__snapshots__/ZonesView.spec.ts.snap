@@ -1420,8 +1420,10 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                         </div>
                         <div>
                           <ul
-                            class="overview-stat-grid"
+                            class="columns"
+                            style="--columns: 4;"
                           >
+                            
                             
                             <li>
                               <h6
@@ -1450,6 +1452,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1477,6 +1481,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1504,6 +1510,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1531,6 +1539,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1558,6 +1568,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1585,6 +1597,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1612,6 +1626,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1639,6 +1655,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1666,6 +1684,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1693,6 +1713,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1720,6 +1742,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1747,6 +1771,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1774,6 +1800,8 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -1801,6 +1829,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
                             
                           </ul>
                         </div>
