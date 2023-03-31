@@ -115,6 +115,6 @@ function setDocumentTitle(title: string | undefined): void {
 }
 
 .app-main-content {
-  padding: var(--spacing-lg);
+  padding: var(--AppGap);
 }
 </style>

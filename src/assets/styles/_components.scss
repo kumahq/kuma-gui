@@ -19,7 +19,7 @@ Adapted from https://every-layout.dev/layouts/stack/.
 */
 
 .kcard-stack>*+* {
-  margin-block-start: var(--spacing-md);
+  margin-block-start: var(--AppGap);
 }
 
 /*
@@ -31,19 +31,18 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 */
 
 .columns {
-  --gap: var(--spacing-md);
   --threshold: 30rem;
   --columns: 3;
 
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap);
+  gap: var(--AppGap);
 }
 
 .columns>* {
   min-inline-size: min(var(--threshold), 100%);
   // Accounts for the gaps.
-  inline-size: calc((100% - ((var(--columns) - 1) * var(--gap))) / var(--columns));
+  inline-size: calc((100% - ((var(--columns) - 1) * var(--AppGap))) / var(--columns));
 }
 
 /*
@@ -55,12 +54,11 @@ Adapted from https://every-layout.dev/layouts/switcher/.
 */
 
 .kcard-switcher {
-  --gap: var(--spacing-md);
   --threshold: 70rem;
 
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap);
+  gap: var(--AppGap);
 }
 
 .kcard-switcher>* {
