@@ -170,12 +170,6 @@ function onNavItemClick() {
   margin-left: var(--spacing-md);
 }
 
-.nav-item--has-bottom-offset {
-  margin-bottom: var(--spacing-xl);
-  padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--grey-300);
-}
-
 .nav-link {
   width: 100%;
   display: flex;

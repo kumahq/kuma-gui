@@ -168,7 +168,7 @@
               v-if="row.withWarnings"
               class="mr-1"
               icon="warning"
-              color="var(--black-75)"
+              color="var(--black-500)"
               secondary-color="var(--yellow-300)"
               size="20"
             />
@@ -186,7 +186,7 @@
               <template #icon>
                 <KIcon
                   :icon="row.warnings.length > 0 ? 'warning' : 'info'"
-                  :color="row.warnings.length > 0 ? 'var(--black-75)' : 'var(--blue-500)'"
+                  :color="row.warnings.length > 0 ? 'var(--black-500)' : 'var(--blue-500)'"
                   :secondary-color="row.warnings.length > 0 ? 'var(--yellow-300)' : undefined"
                   size="16"
                   hide-title

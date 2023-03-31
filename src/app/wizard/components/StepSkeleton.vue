@@ -259,7 +259,7 @@ function setStepSlug(stepIndex: number): void {
   --wizard-tab-bg: var(--blue-700);
   --wizard-tab-text-selected-color: var(--white);
 
-  border: 1px solid var(--grey-300);
+  border: var(--KCardBorder);
   margin-bottom: 2rem;
   overflow: hidden;
   border-radius: 6px;

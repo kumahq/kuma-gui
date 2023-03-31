@@ -148,7 +148,7 @@ const mode = computed(() => store.getters['config/getMulticlusterStatus'] ? 'Mul
   align-items: center;
   padding-right: var(--spacing-lg);
   padding-left: var(--spacing-lg);
-  border-bottom: 1px solid var(--black-10);
+  border-bottom: var(--KCardBorder);
   background-color: var(--white);
 }
 

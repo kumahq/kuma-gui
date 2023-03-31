@@ -41,7 +41,7 @@
               <KIcon
                 class="mr-1"
                 icon="warning"
-                color="var(--black-75)"
+                color="var(--black-500)"
                 secondary-color="var(--yellow-300)"
                 size="16"
               />
@@ -143,32 +143,14 @@ function switchTab(newActiveTabHash: string): void {
 
 <style lang="scss" scoped>
 .tab-container {
-  --tab-container-margin: var(--spacing-lg) 0 0 0;
-  --tab-header-margin: 0 0 var(--spacing-md) 0;
-  --tab-header-padding: 0 var(--spacing-md);
-  --tab-header-title-font-size: var(--type-md);
-  --tab-header-title-font-weight: 600;
-  --tab-nav-border-bottom: 1px solid var(--grey-300);
-  --tab-link-radius: 3px 3px 0 0;
-  --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
-  --tab-link-gap: var(--spacing-sm);
-  --tab-link-active-text-color: var(--blue-300);
-  --tab-active-background-color: var(--grey-100);
-  --tab-link-background-color: var(--white);
-  --tab-link-border: 1px solid var(--grey-300);
-  --tab-active-border-color: var(--grey-300);
-  --tab-panel-padding: var(--spacing-sm);
-  --tab-panel-border: 1px solid var(--grey-300);
-  --tab-panel-radius: 0 0 3px 3px;
-
-  margin: var(--tab-container-margin);
+  margin: var(--spacing-lg) 0 0 0;
 }
 
 .tab__header {
   display: flex;
   align-items: center;
-  margin: var(--tab-header-margin);
-  padding: var(--tab-header-padding);
+  margin: 0 0 var(--spacing-md) 0;
+  padding: 0 var(--spacing-md);
 }
 
 .tab__header > :not(:first-child) {
