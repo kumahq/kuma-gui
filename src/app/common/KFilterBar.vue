@@ -419,7 +419,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
   display: inline-flex;
   align-items: stretch;
   background-color: var(--white);
-  border: var(--KCardBorder);
+  border: 1px solid var(--grey-300);
   border-radius: 3px;
   transition: border 0.1s ease;
 }
@@ -477,7 +477,7 @@ function areFieldsSemanticallyIdentical(fieldsA: Fields, fieldB: Fields): boolea
 .k-filter-bar-error:not(:last-child),
 .k-submit-query-button:not(:last-child) {
   margin-bottom: var(--spacing-xxs);
-  border-bottom: var(--KCardBorder);
+  border-bottom: 1px solid var(--grey-300);
   padding-bottom: var(--spacing-xxs);
 }
 
