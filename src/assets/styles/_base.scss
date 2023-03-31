@@ -120,7 +120,7 @@ button {
 
 input {
   appearance: none;
-  border: 1px solid var(--grey-300);
+  border: var(--KCardBorder);
   border-radius: 3px;
   font: inherit;
   margin: 0;
@@ -131,7 +131,7 @@ input {
 
 select {
   appearance: none;
-  border: 1px solid var(--grey-300);
+  border: var(--KCardBorder);
   border-radius: 3px;
   font-size: 16px;
   line-height: 20px;

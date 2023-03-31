@@ -173,7 +173,7 @@ function onNavItemClick() {
 .nav-item--has-bottom-offset {
   margin-bottom: var(--spacing-xl);
   padding-bottom: var(--spacing-xs);
-  border-bottom: 1px solid var(--grey-300);
+  border-bottom: var(--KCardBorder);
 }
 
 .nav-link {

@@ -101,7 +101,7 @@ function end(el: HTMLElement): void {
 <style lang="scss" scoped>
 .accordion-item {
   position: relative;
-  border-bottom: 1px solid var(--grey-300);
+  border-bottom: var(--KCardBorder);
 }
 
 .accordion-item:last-child {

@@ -148,17 +148,17 @@ function switchTab(newActiveTabHash: string): void {
   --tab-header-padding: 0 var(--spacing-md);
   --tab-header-title-font-size: var(--type-md);
   --tab-header-title-font-weight: 600;
-  --tab-nav-border-bottom: 1px solid var(--grey-300);
+  --tab-nav-border-bottom: var(--KCardBorder);
   --tab-link-radius: 3px 3px 0 0;
   --tab-link-padding: var(--spacing-sm) var(--spacing-lg);
   --tab-link-gap: var(--spacing-sm);
   --tab-link-active-text-color: var(--blue-300);
   --tab-active-background-color: var(--grey-100);
   --tab-link-background-color: var(--white);
-  --tab-link-border: 1px solid var(--grey-300);
+  --tab-link-border: var(--KCardBorder);
   --tab-active-border-color: var(--grey-300);
   --tab-panel-padding: var(--spacing-sm);
-  --tab-panel-border: 1px solid var(--grey-300);
+  --tab-panel-border: var(--KCardBorder);
   --tab-panel-radius: 0 0 3px 3px;
 
   margin: var(--tab-container-margin);
