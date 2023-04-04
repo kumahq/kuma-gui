@@ -79,7 +79,7 @@
     "postcss": "^8.4.21",
     "sass": "^1.60.0",
     "standard": "^17.0.0",
-    "ts-jest": "^29.0.5",
+    "ts-jest": "^29.1.0",
     "typescript": "~5.0.2",
     "vite": "^4.2.1",
     "vite-plugin-html": "^3.2.0",
