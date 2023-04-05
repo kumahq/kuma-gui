@@ -1,4 +1,4 @@
-import type { EndpointDependencies, MockResponder } from '@/test-support/fake'
+import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
   const total = fake.datatype.number(20)
   return {

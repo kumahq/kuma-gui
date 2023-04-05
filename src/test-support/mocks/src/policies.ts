@@ -1,5 +1,5 @@
-import type { EndpointDependencies } from '@/test-support/fake'
-export default <T extends EndpointDependencies>(_deps: T) => () => {
+import type { EndpointDependencies, MockResponder } from '@/test-support'
+export default (_deps: EndpointDependencies): MockResponder => (_req) => {
   return {
     headers: {},
     body: {

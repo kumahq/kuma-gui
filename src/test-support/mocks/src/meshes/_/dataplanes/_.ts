@@ -1,4 +1,4 @@
-import type { EndpointDependencies, MockResponder } from '@/test-support/fake'
+import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake }: EndpointDependencies): MockResponder => (req) => {
   const params = req.params
   const isGateway = params.name.includes('gateway')

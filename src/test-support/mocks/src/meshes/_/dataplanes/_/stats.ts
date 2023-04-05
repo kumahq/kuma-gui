@@ -1,5 +1,5 @@
-import type { MockResponder } from '@/test-support/fake'
-export default (): MockResponder => (_req) => {
+import type { EndpointDependencies, MockResponder } from '@/test-support'
+export default (_deps: EndpointDependencies): MockResponder => (_req) => {
   return {
     headers: {
       'Status-Code': '403',

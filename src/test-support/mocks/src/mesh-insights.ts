@@ -1,12 +1,16 @@
-import type { EndpointDependencies, MockResponder } from '@/test-support/fake'
-export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
-  const total = fake.datatype.number(1)
+import type { EndpointDependencies, MockResponder } from '@/test-support'
+export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
+  const { total, next, pageTotal } = pager(
+    env('KUMA_MESH_COUNT', `${fake.datatype.number({ min: 1, max: 20 })}`),
+    req,
+    '/meshe-insights',
+  )
 
   return {
     headers: {},
     body: {
       total,
-      items: Array.from({ length: total }).map((_, i) => {
+      items: Array.from({ length: pageTotal }).map((_, i) => {
         const mesh = `${fake.hacker.noun()}-${i}`
         return {
           type: 'MeshInsight',
@@ -137,7 +141,7 @@ export default ({ fake }: EndpointDependencies): MockResponder => (_req) => {
           },
         }
       }),
-      next: null,
+      next,
 
     },
   }

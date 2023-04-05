@@ -52,7 +52,7 @@ import _9 from './src/zoneingresses+insights'
 import _8 from './src/zones'
 import _11 from './src/zones+insights'
 import _12 from './src/zones+insights/_'
-import type { FS } from '@/test-support/fake'
+import type { FS } from '@/test-support'
 
 export const fs: FS = {
   'https://kuma.io/latest_version': _124,

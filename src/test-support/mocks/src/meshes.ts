@@ -1,4 +1,4 @@
-import type { EndpointDependencies, MockResponder } from '@/test-support/fake'
+import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, env, pager }: EndpointDependencies): MockResponder => (req) => {
   const { total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.datatype.number({ min: 1, max: 20 })}`),
