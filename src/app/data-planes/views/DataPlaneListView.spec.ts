@@ -28,9 +28,7 @@ describe('DataPlaneListView', () => {
   const mock = useMock()
 
   test('matches snapshot', async () => {
-    mock('/meshes/:mesh/dataplanes+insights', {
-      FAKE_SEED: '1',
-    })
+    mock('/meshes/:mesh/dataplanes+insights', {})
     const wrapper = await renderComponent()
 
     expect(wrapper.element).toMatchSnapshot()

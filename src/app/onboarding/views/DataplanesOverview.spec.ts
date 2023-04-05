@@ -11,9 +11,7 @@ function renderComponent() {
 describe('DataplanesOverview.vue', () => {
   const mock = useMock()
   test('renders snapshot', async () => {
-    mock('/dataplanes', {
-      FAKE_SEED: '1',
-    }, (merge) => {
+    mock('/dataplanes', {}, (merge) => {
       return merge({
         body: {
           items: [

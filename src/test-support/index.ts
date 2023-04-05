@@ -34,10 +34,9 @@ export const mocker = (env: AEnv, server: Server, fs: FS) => {
   const baseUrl = env('KUMA_API_URL')
 
   return (route: string, opts: Options, cb: Callback = noop) => {
-    // Temporarily set a seed for all test mocks
-    // if (typeof opts.FAKE_SEED !== 'undefined') {
-    dependencies.fake.seed(parseInt('1'))
-    // }
+    // mocks during testing have a consistent seed unless we set a different
+    // one during testing
+    dependencies.fake.seed(typeof opts.FAKE_SEED !== 'undefined' ? parseInt(typeof opts.FAKE_SEED) : 1)
     const endpoint = fs[route]
     return server.use(
       rest.all(`${baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {

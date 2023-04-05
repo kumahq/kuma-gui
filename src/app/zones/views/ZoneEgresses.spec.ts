@@ -14,7 +14,6 @@ describe('ZoneEgresses.vue', () => {
   const store = useStore()
   test('renders snapshot when no multizone', async () => {
     mock('/zoneegressoverviews', {
-      FAKE_SEED: '1',
       KUMA_ZONEEGRESS_COUNT: '1',
     }, (merge) => {
       return merge({
@@ -38,7 +37,6 @@ describe('ZoneEgresses.vue', () => {
 
   test('renders snapshot when multizone', async () => {
     mock('/zoneegressoverviews', {
-      FAKE_SEED: '1',
       KUMA_ZONEEGRESS_COUNT: '1',
     }, (merge) => {
       return merge({
@@ -70,7 +68,6 @@ describe('ZoneEgresses.vue', () => {
 
   test('renders zoneegress insights', async () => {
     mock('/zoneegressoverviews', {
-      FAKE_SEED: '1',
       KUMA_ZONEEGRESS_COUNT: '1',
     }, (merge) => {
       return merge({

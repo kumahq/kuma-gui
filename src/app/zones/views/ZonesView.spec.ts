@@ -22,7 +22,6 @@ describe('ZonesView.vue', () => {
 
   test('renders snapshot when multizone', async () => {
     mock('/zones+insights', {
-      FAKE_SEED: '1',
       KUMA_ZONE_COUNT: '4',
     }, (merge) => {
       return merge({
@@ -64,7 +63,6 @@ describe('ZonesView.vue', () => {
 
   test('renders config of multizone', async () => {
     mock('/zones+insights', {
-      FAKE_SEED: '1',
       KUMA_ZONE_COUNT: '4',
     }, (merge) => {
       return merge({
@@ -106,7 +104,6 @@ describe('ZonesView.vue', () => {
 
   test('renders zone insights', async () => {
     mock('/zones+insights', {
-      FAKE_SEED: '1',
       KUMA_ZONE_COUNT: '4',
     }, (merge) => {
       return merge({
