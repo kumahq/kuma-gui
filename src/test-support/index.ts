@@ -2,8 +2,8 @@ import deepmerge from 'deepmerge'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { dependencies, escapeRoute } from '@/api/mocks/index'
-import type { MockResponse, FS, AEnv, AppEnvKeys, MockEnvKeys } from '@/api/mocks/index'
+import type { MockResponse, FS, AEnv, AppEnvKeys, MockEnvKeys } from '@/test-support/fake'
+import { dependencies, escapeRoute } from '@/test-support/fake'
 import type { ArrayMergeOptions } from 'deepmerge'
 import type { RestRequest } from 'msw'
 
@@ -34,9 +34,10 @@ export const mocker = (env: AEnv, server: Server, fs: FS) => {
   const baseUrl = env('KUMA_API_URL')
 
   return (route: string, opts: Options, cb: Callback = noop) => {
-    if (typeof opts.FAKE_SEED !== 'undefined') {
-      dependencies.fake.seed(parseInt(opts.FAKE_SEED))
-    }
+    // Temporarily set a seed for all test mocks
+    // if (typeof opts.FAKE_SEED !== 'undefined') {
+    dependencies.fake.seed(parseInt('1'))
+    // }
     const endpoint = fs[route]
     return server.use(
       rest.all(`${baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {
