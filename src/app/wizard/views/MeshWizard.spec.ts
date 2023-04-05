@@ -2,17 +2,10 @@ import { describe, expect, test } from '@jest/globals'
 import { DOMWrapper, flushPromises, mount, VueWrapper } from '@vue/test-utils'
 
 import MeshWizard from './MeshWizard.vue'
-import * as config from '@/api/mock-data/config.json'
-import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import { useMock } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
-const store = useStore()
-function renderComponent(mode = 'standalone') {
-  store.state.config.tagline = import.meta.env.VITE_NAMESPACE
-  store.state.config.kumaDocsVersion = '1.2.0'
-  const clientConfig: ClientConfigInterface = { ...config, mode }
-  store.state.config.clientConfig = clientConfig
-
+function renderComponent() {
   return mount(MeshWizard)
 }
 
@@ -41,8 +34,18 @@ async function doStep(wrapper: VueWrapper<any>, nextButton: DOMWrapper<any>, ena
 }
 
 describe('MeshWizard', () => {
+  const mock = useMock()
+  const store = useStore()
   test('passes whole wizzard and render yaml', async () => {
-    const wrapper = renderComponent('global')
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'global',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
     await flushPromises()
 
     const nextButton = wrapper.find('[data-testid="next-step-button"]')

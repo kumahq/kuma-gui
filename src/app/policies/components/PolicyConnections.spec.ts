@@ -3,13 +3,13 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { rest } from 'msw'
 
 import PolicyConnections from './PolicyConnections.vue'
-import { useServer } from '@/../jest/jest-setup-after-env'
+import { useServer, useMock } from '@/../jest/jest-setup-after-env'
 
 function renderComponent(props = {}) {
   return mount(PolicyConnections, {
     props: {
       mesh: 'foo',
-      policyType: 'foo',
+      policyType: 'circuit-breakers',
       policyName: 'foo',
       ...props,
     },
@@ -17,6 +17,7 @@ function renderComponent(props = {}) {
 }
 
 describe('PolicyConnections.vue', () => {
+  const mock = useMock()
   test('renders snapshot', async () => {
     const wrapper = renderComponent()
 
@@ -28,6 +29,29 @@ describe('PolicyConnections.vue', () => {
   })
 
   test('filters result', async () => {
+    mock('/meshes/:mesh/circuit-breakers/:name/dataplanes', {
+      KUMA_DATAPLANE_COUNT: '3',
+    }, (merge) => merge({
+      body: {
+        items: [
+          {
+            dataplane: {
+              name: 'backend',
+            },
+          },
+          {
+            dataplane: {
+              name: 'db',
+            },
+          },
+          {
+            dataplane: {
+              name: 'frontend',
+            },
+          },
+        ],
+      },
+    }))
     const wrapper = renderComponent()
 
     await flushPromises()

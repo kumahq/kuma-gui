@@ -1,11 +1,88 @@
 import { describe, expect, test } from '@jest/globals'
 
 import _sidebarModule from './sidebar'
+import { useMock } from '@/../jest/jest-setup-after-env'
 import { get, TOKENS } from '@/services'
 const sidebarModule = _sidebarModule(get(TOKENS.api))
 describe('sidebar module', () => {
   describe('actions', () => {
+    const mock = useMock()
     test('tests getInsights action', async () => {
+      mock('/global-insights', {
+        KUMA_GLOBALSECRET_COUNT: '0',
+        KUMA_MESH_COUNT: '3',
+        KUMA_ZONE_COUNT: '4',
+        KUMA_ZONEINGRESS_COUNT: '1',
+        KUMA_ZONEEGRESS_COUNT: '1',
+      })
+      mock('/mesh-insights/:mesh', {
+      }, (merge) => {
+        return merge({
+          body: {
+            dataplanes: {
+              total: 10,
+            },
+            dataplanesByType: {
+              standard: {
+                total: 9,
+              },
+              gateway: {
+                total: 1,
+              },
+            },
+            policies: {
+              CircuitBreaker: {
+                total: 2,
+              },
+              FaultInjection: {
+                total: 2,
+              },
+              HealthCheck: {
+                total: 4,
+              },
+              MeshGateway: {
+                total: 1,
+              },
+              MeshGatewayRoute: {
+                total: 1,
+              },
+              ProxyTemplate: {
+                total: 1,
+              },
+              RateLimit: {
+                total: 0,
+              },
+              Retry: {
+                total: 1,
+              },
+              Timeout: {
+                total: 1,
+              },
+              TrafficLog: {
+                total: 1,
+              },
+              TrafficPermission: {
+                total: 3,
+              },
+              TrafficRoute: {
+                total: 1,
+              },
+              TrafficTrace: {
+                total: 3,
+              },
+              VirtualOutbound: {
+                total: 0,
+              },
+
+            },
+            services: {
+              external: 2,
+              internal: 3,
+              total: 5,
+            },
+          },
+        })
+      })
       const rootState: any = {
         selectedMesh: 'default',
       }
@@ -25,7 +102,6 @@ describe('sidebar module', () => {
 
       const action = sidebarModule.actions.getInsights as Function
       await action({ dispatch })
-
       expect(state).toMatchInlineSnapshot(`
 {
   "insights": {
