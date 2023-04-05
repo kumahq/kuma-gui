@@ -45,7 +45,7 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
             class="mb-4"
           >
             <b>
-              Found 10 DPPs:
+              Found 8 DPPs:
             </b>
           </p>
           <div
@@ -123,96 +123,12 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      matrix-0
                       
                     </td>
                     <td>
                       
-                      backend
-                      
-                    </td>
-                    <td>
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    
-                    <td>
-                      
-                      default
-                      
-                    </td>
-                    <td>
-                      
-                      frontend
-                      
-                    </td>
-                    <td>
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    
-                    <td>
-                      
-                      default
-                      
-                    </td>
-                    <td>
-                      
-                      db
-                      
-                    </td>
-                    <td>
-                      
-                      <span
-                        class="status status--with-title status--success"
-                        data-testid="status-badge"
-                      >
-                        <span
-                          class=""
-                        >
-                          online
-                        </span>
-                      </span>
-                      
-                    </td>
-                    
-                  </tr>
-                  <tr>
-                    
-                    <td>
-                      
-                      default
-                      
-                    </td>
-                    <td>
-                      
-                      no-subscriptions
+                      dataplane-test-456
                       
                     </td>
                     <td>
@@ -235,24 +151,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      capacitor-1
                       
                     </td>
                     <td>
                       
-                      cluster-1.backend-02
+                      driver-1
                       
                     </td>
                     <td>
                       
                       <span
-                        class="status status--with-title status--success"
+                        class="status status--with-title status--danger"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          online
+                          offline
                         </span>
                       </span>
                       
@@ -263,24 +179,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      panel-2
                       
                     </td>
                     <td>
                       
-                      cluster-1.backend-03
+                      card-2
                       
                     </td>
                     <td>
                       
                       <span
-                        class="status status--with-title status--success"
+                        class="status status--with-title status--danger"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          online
+                          offline
                         </span>
                       </span>
                       
@@ -291,24 +207,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      matrix-3
                       
                     </td>
                     <td>
                       
-                      cluster-1.gateway-01
+                      panel-3
                       
                     </td>
                     <td>
                       
                       <span
-                        class="status status--with-title status--success"
+                        class="status status--with-title status--danger"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          online
+                          offline
                         </span>
                       </span>
                       
@@ -319,24 +235,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      program-4
                       
                     </td>
                     <td>
                       
-                      cluster-1.ingress-02
+                      bandwidth-4
                       
                     </td>
                     <td>
                       
                       <span
-                        class="status status--with-title status--success"
+                        class="status status--with-title status--danger"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          online
+                          offline
                         </span>
                       </span>
                       
@@ -347,24 +263,24 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      interface-5
                       
                     </td>
                     <td>
                       
-                      dataplane-test-456
+                      microchip-5
                       
                     </td>
                     <td>
                       
                       <span
-                        class="status status--with-title status--success"
+                        class="status status--with-title status--danger"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          online
+                          offline
                         </span>
                       </span>
                       
@@ -375,24 +291,52 @@ exports[`DataplanesOverview.vue renders snapshot 1`] = `
                     
                     <td>
                       
-                      default
+                      interface-6
                       
                     </td>
                     <td>
                       
-                      ingress-dp-test-123
+                      array-6
                       
                     </td>
                     <td>
                       
                       <span
-                        class="status status--with-title status--success"
+                        class="status status--with-title status--danger"
                         data-testid="status-badge"
                       >
                         <span
                           class=""
                         >
-                          online
+                          offline
+                        </span>
+                      </span>
+                      
+                    </td>
+                    
+                  </tr>
+                  <tr>
+                    
+                    <td>
+                      
+                      feed-7
+                      
+                    </td>
+                    <td>
+                      
+                      interface-7
+                      
+                    </td>
+                    <td>
+                      
+                      <span
+                        class="status status--with-title status--danger"
+                        data-testid="status-badge"
+                      >
+                        <span
+                          class=""
+                        >
+                          offline
                         </span>
                       </span>
                       
