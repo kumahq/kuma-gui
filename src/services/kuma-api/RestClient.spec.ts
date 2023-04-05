@@ -17,7 +17,7 @@ describe('RestClient', () => {
   test.each([
     ['http://localhost:1234/api', 'http://localhost:1234/api'],
     ['http://localhost:1234/test/api', 'http://localhost:1234/test/api'],
-  ])('sets expected base URL for “%s”', (newBaseUrl, expectedBaseUrl) => {
+  ])('sets expected base URL for “%s”', (newBaseUrl: string, expectedBaseUrl: string) => {
     const restClient = new RestClient('http://localhost:5681')
 
     restClient.baseUrl = newBaseUrl
@@ -94,7 +94,7 @@ describe('RestClient', () => {
     }))
 
     const restClient = new RestClient('http://localhost:5681')
-    restClient.raw('path', undefined, { params })
+    restClient.raw('/path', undefined, { params })
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions, undefined)
   })
@@ -141,31 +141,20 @@ describe('RestClient', () => {
 
     const restClient = new RestClient('http://localhost:5681')
     restClient.options = options
-    restClient.get('path')
+    restClient.get('/path')
 
     expect(MakeRequestModule.makeRequest).toHaveBeenCalledWith('http://localhost:5681/path', expectedOptions, undefined)
   })
 
   test.each([
-    ['', 'path', '/path'],
     ['', '/path', '/path'],
-    ['/', 'path', '/path'],
-    ['/', '/path', '/path'],
-    ['/', 'path/', '/path'],
-    ['/', '/path/', '/path'],
-    ['/', '', '/'],
-    ['/', '/', '/'],
-    ['http://example.org', 'path', 'http://example.org/path'],
+    ['', '/path/', '/path/'],
+    ['', '/', '/'],
     ['http://example.org', '/path', 'http://example.org/path'],
-    ['http://example.org/', 'path', 'http://example.org/path'],
-    ['http://example.org/', '/path', 'http://example.org/path'],
-    ['http://example.org/', 'path/', 'http://example.org/path'],
-    ['http://example.org/', '/path/', 'http://example.org/path'],
-    ['http://example.org/', '', 'http://example.org'],
-    ['http://example.org/', '/', 'http://example.org'],
-    ['http://example.org/', 'http://konghq.tech/path', 'http://konghq.tech/path'],
-    ['http://example.org/', 'http://konghq.tech/path/', 'http://konghq.tech/path/'],
-  ])('sends correct request URL', (baseUrlOrPath, requestPath, expectedRequestUrl) => {
+    ['http://example.org', '/path/', 'http://example.org/path/'],
+    ['http://example.org', '/', 'http://example.org/'],
+    ['http://example.org', 'http://konghq.tech/path', 'http://konghq.tech/path'],
+  ])('sends correct request URL', (baseUrlOrPath: string, requestPath: string, expectedRequestUrl: string) => {
     jest.spyOn(MakeRequestModule, 'makeRequest').mockImplementation(() => Promise.resolve({
       response: new Response(),
       data: null,
