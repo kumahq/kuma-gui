@@ -3,7 +3,7 @@ export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (r
   const { total, next, pageTotal } = pager(
     env('KUMA_MESH_COUNT', `${fake.datatype.number({ min: 1, max: 20 })}`),
     req,
-    '/meshe-insights',
+    '/mesh-insights',
   )
 
   return {
