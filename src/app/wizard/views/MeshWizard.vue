@@ -11,12 +11,12 @@
         <!-- step content -->
         <template #general>
           <p>
-            Welcome to the wizard for creating a new Mesh resource in {{ productName }}.
+            Welcome to the wizard for creating a new Mesh resource in {{ env('KUMA_PRODUCT_NAME') }}.
             We will be providing you with a few steps that will get you started.
           </p>
 
           <p>
-            As you know, the {{ productName }} GUI is read-only, so at the end of this wizard
+            As you know, the {{ env('KUMA_PRODUCT_NAME') }} GUI is read-only, so at the end of this wizard
             we will be generating the configuration that you can apply with either
             <code>kubectl</code> (if you are running in Kubernetes mode) or
             <code>kumactl</code> / API (if you are running in Universal mode).
@@ -509,9 +509,9 @@
               </h3>
 
               <p>
-                Since the {{ productName }} GUI is read-only mode to follow Ops best practices,
+                Since the {{ env('KUMA_PRODUCT_NAME') }} GUI is read-only mode to follow Ops best practices,
                 please execute the following command in your shell to create the entity.
-                {{ productName }} will automatically detect when the new entity has been created.
+                {{ env('KUMA_PRODUCT_NAME') }} will automatically detect when the new entity has been created.
               </p>
 
               <TabsWidget
@@ -604,7 +604,7 @@
           <h3>Mesh</h3>
 
           <p>
-            In {{ title }}, a Mesh resource allows you to define an isolated environment
+            In {{ env('KUMA_PRODUCT_NAME') }}, a Mesh resource allows you to define an isolated environment
             for your data-planes and policies. It's isolated because the mTLS CA
             you choose can be different from the one configured for our Meshes.
             Ideally, you will have either a large Mesh with all the workloads, or
@@ -645,7 +645,6 @@ import StepSkeleton from '../components/StepSkeleton.vue'
 import { formatForCLI } from '../formatForCLI'
 import CodeBlock from '@/app/common/CodeBlock.vue'
 import TabsWidget from '@/app/common/TabsWidget.vue'
-import { PRODUCT_NAME } from '@/constants'
 import { useStore } from '@/store/store'
 import { useEnv, useKumaApi } from '@/utilities'
 import { ClientStorage } from '@/utilities/ClientStorage'
@@ -733,7 +732,6 @@ function rejectKeys(obj: any, keys: any[]) {
 const store = useStore()
 
 const hasStoredMeshData = ref(false)
-const productName = ref(PRODUCT_NAME)
 const selectedTab = ref('')
 const schema = ref(meshSchema)
 const step = ref(0)
@@ -744,7 +742,6 @@ const isComplete = ref(false)
 const validate = ref(getInitialMeshData())
 const vmsg = ref({ meshName: '' })
 
-const title = computed(() => store.getters['config/getTagline'])
 const environment = computed(() => store.getters['config/getEnvironment'])
 
 // Our generated code output
