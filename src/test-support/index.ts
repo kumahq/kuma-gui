@@ -2,10 +2,13 @@ import deepmerge from 'deepmerge'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import type { MockResponse, FS, AEnv, AppEnvKeys, MockEnvKeys } from '@/test-support/fake'
-import { dependencies, escapeRoute } from '@/test-support/fake'
+import { dependencies, escapeRoute } from './fake'
+import type { MockResponse, FS, AEnv, AppEnvKeys, MockEnvKeys } from './fake'
 import type { ArrayMergeOptions } from 'deepmerge'
 import type { RestRequest } from 'msw'
+
+export { fakeApi } from './fake'
+export type { FS, EndpointDependencies, MockResponder } from './fake'
 
 type Merge = (obj: Partial<MockResponse>) => MockResponse
 type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
@@ -30,6 +33,7 @@ const combineMerge = (target: object[], source: object[], options: ArrayMergeOpt
 
 const noop: Callback = (_merge, _req, response) => response
 const createMerge = (response: MockResponse): Merge => (obj) => deepmerge(response, obj, { arrayMerge: combineMerge })
+
 export const mocker = (env: AEnv, server: Server, fs: FS) => {
   const baseUrl = env('KUMA_API_URL')
 
