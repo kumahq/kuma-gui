@@ -988,17 +988,17 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@datadog/browser-core@4.36.0":
-  version "4.36.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.36.0.tgz#840789b9b9c42a1a48d8c737605c843bee1d6248"
-  integrity sha512-eJIygwTOfkeWN/+V7DcQzSQCZM0Bu7zXXbTkWrgYyWU9a4u/6op1LJtF7ZP/nD7yXg18Tvxx9INPN9ikzjoiiQ==
+"@datadog/browser-core@4.38.0":
+  version "4.38.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-core/-/browser-core-4.38.0.tgz#9140b7ff02e1e5465d4bc02a10fd2b3bb8c58c1e"
+  integrity sha512-KNX9ShWtA1A1xAesE11ydyIBtlgNT6hsQ0xeYIxqDnCYPClLuXDnZefggxcDpppvYS+ymqWjpwSRBf0Oqh7T4w==
 
-"@datadog/browser-logs@^4.36.0":
-  version "4.36.0"
-  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.36.0.tgz#a58997cf996899ae72b993f0090b8dd2a795ba20"
-  integrity sha512-NRs/wnQ4xTM8QQSW7wrHqcxjSXOfkWtpq0pLEGoguF7/AYeZQOeAV8Ty+D9gto9qFhwnsngZEdO9i6sk+5Y7bw==
+"@datadog/browser-logs@^4.38.0":
+  version "4.38.0"
+  resolved "https://registry.yarnpkg.com/@datadog/browser-logs/-/browser-logs-4.38.0.tgz#3594f3acef239d506ebf5b6f216789af8d774e6d"
+  integrity sha512-igon39VGRtapJ1F20oGpWQRgZzOoEQCBRpdhvC952wuAlaumfh9KoeOGRtwWjywaYhMFY7QrWcatr4QN2wvg4w==
   dependencies:
-    "@datadog/browser-core" "4.36.0"
+    "@datadog/browser-core" "4.38.0"
 
 "@esbuild/android-arm64@0.17.12":
   version "0.17.12"
