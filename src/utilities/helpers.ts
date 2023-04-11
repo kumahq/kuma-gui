@@ -138,10 +138,6 @@ export async function fetchAllResources<T = Object>(endpoint: (params: Object) =
         allTotal = total
       }
 
-      // if (total !== allTotal) {
-      //   throw new Error('Mismatch between "total" values between requests')
-      // }
-
       if (!next || previousNext === next) {
         break
       }
