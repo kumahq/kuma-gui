@@ -2,20 +2,30 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import ZoneEgresses from './ZoneEgresses.vue'
-import * as config from '@/api/mock-data/config.json'
-import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import { useMock } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
-const store = useStore()
-function renderComponent(mode = 'standalone') {
-  const clientConfig: ClientConfigInterface = { ...config, mode }
-  store.state.config.clientConfig = clientConfig
-
+function renderComponent() {
   return mount(ZoneEgresses)
 }
 
 describe('ZoneEgresses.vue', () => {
+  const mock = useMock()
+  const store = useStore()
   test('renders snapshot when no multizone', async () => {
+    mock('/zoneegressoverviews', {
+      KUMA_ZONEEGRESS_COUNT: '1',
+    }, (merge) => {
+      return merge({
+        body: {
+          items: [
+            {
+              name: 'zoneegress-1',
+            },
+          ],
+        },
+      })
+    })
     const wrapper = renderComponent()
 
     await flushPromises()
@@ -26,7 +36,28 @@ describe('ZoneEgresses.vue', () => {
   })
 
   test('renders snapshot when multizone', async () => {
-    const wrapper = renderComponent('global')
+    mock('/zoneegressoverviews', {
+      KUMA_ZONEEGRESS_COUNT: '1',
+    }, (merge) => {
+      return merge({
+        body: {
+          items: [
+            {
+              name: 'zoneegress-1',
+            },
+          ],
+        },
+      })
+    })
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'global',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
 
     await flushPromises()
 
@@ -36,7 +67,28 @@ describe('ZoneEgresses.vue', () => {
   })
 
   test('renders zoneegress insights', async () => {
-    const wrapper = renderComponent('global')
+    mock('/zoneegressoverviews', {
+      KUMA_ZONEEGRESS_COUNT: '1',
+    }, (merge) => {
+      return merge({
+        body: {
+          items: [
+            {
+              name: 'zoneegress-1',
+            },
+          ],
+        },
+      })
+    })
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'global',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
 
     await flushPromises()
 

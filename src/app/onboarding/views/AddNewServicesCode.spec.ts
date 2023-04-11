@@ -23,7 +23,6 @@ describe('AddNewServicesCode.vue', () => {
     const wrapper = renderComponent()
 
     await flushPromises()
-
     expect(wrapper.find('[data-testid="dpps-connected"]').exists()).toBe(true)
     expect(wrapper.find('[data-testid="onboarding-next-button"]').exists()).toBe(true)
     expect(wrapper.find('[data-testid="loading"]').exists()).toBe(false)

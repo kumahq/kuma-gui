@@ -2,6 +2,7 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import AppSidebar from './AppSidebar.vue'
+import { useMock } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
 const store = useStore()
@@ -12,6 +13,7 @@ async function renderComponent() {
 }
 
 describe('AppSidebar.vue', () => {
+  const mock = useMock()
   test('renders snapshot', async () => {
     const wrapper = await renderComponent()
 
@@ -29,6 +31,24 @@ describe('AppSidebar.vue', () => {
         modificationTime: '0001-01-01T00:00:00Z',
       },
     ]
+    mock('/mesh-insights/:mesh', {
+    }, (merge) => {
+      return merge({
+        body: {
+          dataplanes: {
+            total: 10,
+          },
+          dataplanesByType: {
+            standard: {
+              total: 9,
+            },
+            gateway: {
+              total: 1,
+            },
+          },
+        },
+      })
+    })
 
     const wrapper = await renderComponent()
 

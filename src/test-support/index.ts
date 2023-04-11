@@ -2,10 +2,13 @@ import deepmerge from 'deepmerge'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { dependencies, escapeRoute } from '@/api/mocks/index'
-import type { MockResponse, FS, AEnv, AppEnvKeys, MockEnvKeys } from '@/api/mocks/index'
+import { dependencies, escapeRoute } from './fake'
+import type { MockResponse, FS, AEnv, AppEnvKeys, MockEnvKeys } from './fake'
 import type { ArrayMergeOptions } from 'deepmerge'
 import type { RestRequest } from 'msw'
+
+export { fakeApi } from './fake'
+export type { FS, EndpointDependencies, MockResponder } from './fake'
 
 type Merge = (obj: Partial<MockResponse>) => MockResponse
 type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
@@ -30,13 +33,14 @@ const combineMerge = (target: object[], source: object[], options: ArrayMergeOpt
 
 const noop: Callback = (_merge, _req, response) => response
 const createMerge = (response: MockResponse): Merge => (obj) => deepmerge(response, obj, { arrayMerge: combineMerge })
+
 export const mocker = (env: AEnv, server: Server, fs: FS) => {
   const baseUrl = env('KUMA_API_URL')
 
   return (route: string, opts: Options, cb: Callback = noop) => {
-    if (typeof opts.FAKE_SEED !== 'undefined') {
-      dependencies.fake.seed(parseInt(opts.FAKE_SEED))
-    }
+    // mocks during testing have a consistent seed unless we set a different
+    // one during testing
+    dependencies.fake.seed(typeof opts.FAKE_SEED !== 'undefined' ? parseInt(typeof opts.FAKE_SEED) : 1)
     const endpoint = fs[route]
     return server.use(
       rest.all(`${baseUrl}${escapeRoute(route)}`, async (req, res, ctx) => {

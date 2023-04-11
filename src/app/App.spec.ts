@@ -2,18 +2,17 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import App from './App.vue'
-import { withVersion } from '@/../jest/jest-setup-after-env'
+import { withVersion, useMock } from '@/../jest/jest-setup-after-env'
 import { TOKENS } from '@/components'
 import { build } from '@/services'
 import { useStore, useEnv } from '@/utilities'
 
 const store = useStore()
 
-function renderComponent(status: string) {
+function renderComponent() {
   const env = useEnv()
   store.state.globalLoading = true
   store.state.config.tagline = env('KUMA_PRODUCT_NAME')
-  store.state.config.status = status
 
   // keeps the github-button as a <github-button> instead of a span in
   // the snapshot so its as close to actual usage as possible
@@ -40,9 +39,10 @@ function renderComponent(status: string) {
 }
 
 describe('App.vue', () => {
+  const mock = useMock()
   test('renders main view when successful', async () => {
     withVersion('10.2.0')
-    const wrapper = renderComponent('OK')
+    const wrapper = renderComponent()
 
     await store.dispatch('updateGlobalLoading', true)
     store.dispatch('bootstrap')
@@ -56,17 +56,25 @@ describe('App.vue', () => {
   })
 
   test('fails to renders basic view', async () => {
+    mock('/', {}, () => {
+      return {
+        headers: {
+          'Status-Code': '500',
+        },
+        body: '',
+      }
+    })
     withVersion('10.2.0')
-    const wrapper = renderComponent('ERROR')
-
     await store.dispatch('updateGlobalLoading', true)
-    store.dispatch('bootstrap')
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
+
     expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(true)
 
     await flushPromises()
     await store.dispatch('updateGlobalLoading', false)
     expect(wrapper.find('[data-testid="app-progress-bar"]').exists()).toBe(false)
 
-    expect(wrapper.element).toMatchSnapshot()
+    expect(wrapper.html()).toContain('Unable to reach the API')
   })
 })

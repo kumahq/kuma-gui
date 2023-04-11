@@ -2,19 +2,16 @@ import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import ZonesView from './ZonesView.vue'
-import * as config from '@/api/mock-data/config.json'
-import { ClientConfigInterface } from '@/store/modules/config/config.types'
+import { useMock } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
-const store = useStore()
-function renderComponent(mode = 'standalone') {
-  const clientConfig: ClientConfigInterface = { ...config, mode }
-  store.state.config.clientConfig = clientConfig
-
+function renderComponent() {
   return mount(ZonesView)
 }
 
 describe('ZonesView.vue', () => {
+  const mock = useMock()
+  const store = useStore()
   test('renders snapshot when no multizone', async () => {
     const wrapper = renderComponent()
 
@@ -24,7 +21,37 @@ describe('ZonesView.vue', () => {
   })
 
   test('renders snapshot when multizone', async () => {
-    const wrapper = renderComponent('global')
+    mock('/zones+insights', {
+      KUMA_ZONE_COUNT: '4',
+    }, (merge) => {
+      return merge({
+        body: {
+          items: [
+            {
+              name: 'cluster-1',
+            },
+            {
+              name: 'zone-1',
+            },
+            {
+              name: 'zone-2',
+            },
+            {
+              name: 'zone-3',
+            },
+          ],
+        },
+      })
+    })
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'global',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
 
     await flushPromises()
 
@@ -35,7 +62,37 @@ describe('ZonesView.vue', () => {
   })
 
   test('renders config of multizone', async () => {
-    const wrapper = renderComponent('global')
+    mock('/zones+insights', {
+      KUMA_ZONE_COUNT: '4',
+    }, (merge) => {
+      return merge({
+        body: {
+          items: [
+            {
+              name: 'cluster-1',
+            },
+            {
+              name: 'zone-1',
+            },
+            {
+              name: 'zone-2',
+            },
+            {
+              name: 'zone-3',
+            },
+          ],
+        },
+      })
+    })
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'global',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
 
     await flushPromises()
 
@@ -46,7 +103,37 @@ describe('ZonesView.vue', () => {
   })
 
   test('renders zone insights', async () => {
-    const wrapper = renderComponent('global')
+    mock('/zones+insights', {
+      KUMA_ZONE_COUNT: '4',
+    }, (merge) => {
+      return merge({
+        body: {
+          items: [
+            {
+              name: 'cluster-1',
+            },
+            {
+              name: 'zone-1',
+            },
+            {
+              name: 'zone-2',
+            },
+            {
+              name: 'zone-3',
+            },
+          ],
+        },
+      })
+    })
+    mock('/config', {}, (merge) => {
+      return merge({
+        body: {
+          mode: 'global',
+        },
+      })
+    })
+    await store.dispatch('bootstrap')
+    const wrapper = renderComponent()
 
     await flushPromises()
 

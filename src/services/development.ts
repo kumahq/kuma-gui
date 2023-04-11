@@ -1,15 +1,16 @@
-import { setupWorker, RestHandler, MockedRequest } from 'msw'
+import { setupWorker, RestHandler, MockedRequest, rest } from 'msw'
 
 import { TOKENS as PROD_TOKENS, services as prodServices } from './production'
 import { merge, build, ServiceDefinition, token, get } from './utils'
 import { useBootstrap } from '../index'
-import { mocks, setupHandlers } from '@/api/mocks'
-import { fs, fakeApi } from '@/api/mocks/index'
-import type { FS, FakeEndpoint } from '@/api/mocks/index'
+import type { TokenType } from '@/services/utils'
+import type { FS } from '@/test-support'
+
 import CookiedEnv from '@/services/env/CookiedEnv'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
-import type { TokenType } from '@/services/utils'
+import { fakeApi } from '@/test-support'
+import { fs } from '@/test-support/mocks/fs'
 
 export { constant, get, container, createInjections, build, merge } from './utils'
 
@@ -22,22 +23,22 @@ type Msw = {
 const $ = {
   ...PROD_TOKENS,
   msw: token<Msw>('msw'),
-  mswKumaHandlers: token<RestHandler[]>('msw.kuma.handlers'),
-  mswKumaMocks: token<RestHandler[]>('msw.kuma.mocks'),
-  kumaFS: token<Record<string, FakeEndpoint>>('fake.fs.kuma'),
   /**
    * @description
    * Service Label for labeling MSW handlers for consumption via setupWorker
    */
   mswHandlers: token<RestHandler[]>('msw.handlers'),
+
   /**
    * @description
    * Service Label for labeling fake FSs for consumption via MSW
    */
   fakeFS: token<FS>('fake.fs'),
+
+  mswFakeApiHandlers: token<RestHandler[]>('msw.fake.handlers'),
+  kumaFS: token<FS>('fake.fs.kuma'),
 }
 
-type Env = TokenType<typeof $.Env>
 export const services: ServiceDefinition[] = [
 
   [$.Env, {
@@ -80,42 +81,27 @@ export const services: ServiceDefinition[] = [
           console.warn('Found an unhandled %s request to %s', req.method, req.url.href)
         },
       })
+      return rest
     },
     arguments: [
       $.mswHandlers,
     ],
   }],
-
-  // old style kuma mocks
-  [$.mswKumaMocks, {
-    service: (env: Env) => setupHandlers(env.var('KUMA_API_URL'), mocks, env),
-    arguments: [
-      $.Env,
-    ],
-    labels: [
-      $.mswHandlers,
-    ],
-  }],
-
-  // new style kuma mocks
-  [$.kumaFS, {
-    constant: fs,
-    arguments: [
-      $.Env,
-    ],
-    labels: [
-      $.fakeFS,
-    ],
-  }],
-  // new style kuma mocks
-  [$.mswKumaHandlers, {
-    service: (env: TokenType<typeof $.env>, fs: FS) => fakeApi(env, fs),
+  [$.mswFakeApiHandlers, {
+    service: (env: TokenType<typeof $.env>, fs: FS) => fakeApi(env, rest, fs),
     arguments: [
       $.env,
       $.fakeFS,
     ],
     labels: [
       $.mswHandlers,
+    ],
+  }],
+
+  [$.kumaFS, {
+    constant: fs,
+    labels: [
+      $.fakeFS,
     ],
   }],
 ]
