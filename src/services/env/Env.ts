@@ -8,7 +8,6 @@ export type EnvArgs = {
   KUMA_INSTALL_URL: string
   KUMA_VERSION_URL: string
   KUMA_DOCS_URL: string
-  KUMA_API_URL: string
   KUMA_MOCK_API_ENABLED: string
 }
 type EnvProps = {
@@ -63,22 +62,34 @@ export default class Env {
 
     // TODO: Uncomment noisy console errors (we don't want them during testing
     // but we do want them for our users)
+    let config!: PathConfig
     if (pathConfigNode instanceof HTMLScriptElement && pathConfigNode.textContent) {
       try {
-        const config = JSON.parse(pathConfigNode.textContent.trim()) as PathConfig
-
-        // Ensures the config always has an absolute URL.
-        config.apiUrl = getNormalizedApiUrl(config.apiUrl)
-
-        return config
+        config = JSON.parse(pathConfigNode.textContent.trim())
       } catch {
         // Handled by falling back to a default value.
       }
     }
+    if (!config) {
+      config = getPathConfigDefault(import.meta.env.PROD ? '/' : import.meta.env.VITE_KUMA_API_SERVER_URL)
     // console.error('Unable to parse kuma config. Falling back to defaults')
-
-    return getPathConfigDefault(import.meta.env.PROD ? '/' : import.meta.env.VITE_KUMA_API_SERVER_URL)
+    }
+    // Ensures the API baseUrl always has an absolute, non-trailing slash URL,
+    // i.e. a base.
+    // Chosen to be done here as this is the closest point to the backend we
+    // can get
+    config.apiUrl = normalizeBaseUrl(config.apiUrl)
+    return config
   }
+}
+function stripTrailingSlashes(url: string): string {
+  return url.endsWith('/') ? stripTrailingSlashes(url.slice(0, -1)) : url
+}
+export function normalizeBaseUrl(url: string): string {
+  // this will likely never happen but if the URL isn't absolute then
+  // make sure it begins with a `/`
+  url = !url.includes('://') && !url.startsWith('/') ? `/${url}` : url
+  return stripTrailingSlashes(url)
 }
 
 export function semver(version: string): { major: string, minor: string, patch: string, pre: string } {
@@ -97,17 +108,5 @@ export function semver(version: string): { major: string, minor: string, patch: 
     minor: `${major}.${minor}`,
     patch: `${major}.${minor}.${patch}`,
     pre: `${major}.${minor}.${patch}${pre !== undefined ? `-${pre}` : ''}`,
-  }
-}
-
-/**
- * @returns a normalized API URL or URL path without trailing slashes. URL paths will always have a leading slash.
- */
-function getNormalizedApiUrl(baseUrlOrPath: string): string {
-  if (baseUrlOrPath.startsWith('http')) {
-    return baseUrlOrPath.replace(/\/+$/, '')
-  } else {
-    const basePath = (baseUrlOrPath.startsWith('/') ? '' : '/') + baseUrlOrPath
-    return basePath === '/' ? '/' : basePath.replace(/\/+$/, '')
   }
 }
