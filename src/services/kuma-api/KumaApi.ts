@@ -34,7 +34,7 @@ export default class KumaApi extends Api {
 
   async getStatus(): Promise<'OK' | null> {
     try {
-      const { response } = await this.client.raw('')
+      const { response } = await this.client.raw('/')
 
       return response.status === 200 ? 'OK' : null
     } catch {
