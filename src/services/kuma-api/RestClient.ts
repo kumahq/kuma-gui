@@ -79,22 +79,9 @@ export class RestClient {
    *
    * @returns the response’s de-serialized data (when applicable) and the raw `Response` object.
    */
-  async raw(urlOrPath: string, payload?: any, rawOptions: RequestInit & { params?: any } = {}, method: string = 'GET'): Promise<{ response: Response, data: any }> {
+  async raw(url: string, payload?: any, rawOptions: RequestInit & { params?: any } = {}, method: string = 'GET'): Promise<{ response: Response, data: any }> {
     const options = normalizeParameters(rawOptions)
     options.method = method
-
-    // Normalizes URL and, for URL paths, concatenates the base URL and the URL path.
-    let url
-
-    if (urlOrPath.startsWith('http')) {
-      url = urlOrPath
-    } else {
-      url = [this.baseUrl, urlOrPath]
-        .map((pathSegment) => pathSegment.replace(/\/+$/, '').replace(/^\/+/, ''))
-        .join('/')
-
-      url = url === '/' ? url : url.replace(/\/+$/, '')
-    }
 
     // Merges headers from stored options and override headers.
     const headers = new Headers(this.options.headers)
@@ -118,7 +105,11 @@ export class RestClient {
 
     const normalizedOptions = normalizeParameters(mergedOptions)
 
-    return makeRequest(url, normalizedOptions, payload)
+    return makeRequest(
+      `${url.startsWith('http') ? '' : this.baseUrl}${url}`,
+      normalizedOptions,
+      payload,
+    )
   }
 }
 
