@@ -71,7 +71,7 @@ export default class Env {
       }
     }
     if (!config) {
-      config = getPathConfigDefault(import.meta.env.PROD ? '/' : import.meta.env.VITE_KUMA_API_SERVER_URL)
+      config = getPathConfigDefault(import.meta.env.PROD ? '' : import.meta.env.VITE_KUMA_API_SERVER_URL)
     // console.error('Unable to parse kuma config. Falling back to defaults')
     }
     // Ensures the API baseUrl always has an absolute, non-trailing slash URL,
