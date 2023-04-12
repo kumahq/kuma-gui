@@ -215,13 +215,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Overview
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-1"
@@ -231,13 +231,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Zone Egress Insights
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-2"
@@ -247,13 +247,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   XDS Configuration
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-3"
@@ -263,13 +263,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Stats
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-4"
@@ -279,13 +279,13 @@ exports[`ZoneEgresses.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Clusters
                   
-                </a>
+                </div>
               </li>
               
             </ul>
@@ -614,13 +614,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Overview
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-1"
@@ -630,13 +630,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Zone Egress Insights
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-2"
@@ -646,13 +646,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   XDS Configuration
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-3"
@@ -662,13 +662,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Stats
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-4"
@@ -678,13 +678,13 @@ exports[`ZoneEgresses.vue renders snapshot when no multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Clusters
                   
-                </a>
+                </div>
               </li>
               
             </ul>
@@ -834,13 +834,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Overview
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-1"
@@ -850,13 +850,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Zone Egress Insights
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-2"
@@ -866,13 +866,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             XDS Configuration
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-3"
@@ -882,13 +882,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Stats
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-4"
@@ -898,13 +898,13 @@ exports[`ZoneEgresses.vue renders zoneegress insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Clusters
             
-          </a>
+          </div>
         </li>
         
       </ul>

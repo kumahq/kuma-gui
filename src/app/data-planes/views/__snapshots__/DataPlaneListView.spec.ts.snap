@@ -6834,13 +6834,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         role="tab"
                         tabindex="0"
                       >
-                        <a
+                        <div
                           class="tab-link"
                         >
                           
                           Universal
                           
-                        </a>
+                        </div>
                       </li>
                       <li
                         aria-controls="panel-1"
@@ -6850,13 +6850,13 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         role="tab"
                         tabindex="0"
                       >
-                        <a
+                        <div
                           class="tab-link"
                         >
                           
                           Kubernetes
                           
-                        </a>
+                        </div>
                       </li>
                       
                     </ul>

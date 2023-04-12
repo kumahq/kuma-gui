@@ -798,13 +798,13 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Overview
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-1"
@@ -814,13 +814,13 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Zone Insights
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-2"
@@ -830,13 +830,13 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
                   Config
                   
-                </a>
+                </div>
               </li>
               <li
                 aria-controls="panel-3"
@@ -846,7 +846,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                 role="tab"
                 tabindex="0"
               >
-                <a
+                <div
                   class="tab-link"
                 >
                   
@@ -925,7 +925,7 @@ exports[`ZonesView.vue renders snapshot when multizone 1`] = `
                     </span>
                   </span>
                   
-                </a>
+                </div>
               </li>
               
             </ul>
@@ -1190,13 +1190,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Overview
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-1"
@@ -1206,13 +1206,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Zone Insights
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-2"
@@ -1222,13 +1222,13 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Config
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-3"
@@ -1238,7 +1238,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
@@ -1317,7 +1317,7 @@ exports[`ZonesView.vue renders zone insights 1`] = `
               </span>
             </span>
             
-          </a>
+          </div>
         </li>
         
       </ul>
