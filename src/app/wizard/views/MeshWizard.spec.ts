@@ -71,7 +71,7 @@ describe('MeshWizard', () => {
 
     // test that the cli command is correct depending
     // on which tab you clicked
-    const kubeTab = wrapper.find('#kubernetes-tab a')
+    const kubeTab = wrapper.find('#kubernetes-tab')
     const uniCode = wrapper.find('[data-testid="universal"]')
     expect(uniCode.html()).toContain('kumactl')
 
