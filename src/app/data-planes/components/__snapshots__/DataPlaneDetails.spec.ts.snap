@@ -36,13 +36,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Overview
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-1"
@@ -52,13 +52,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             DPP Insights
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-2"
@@ -68,13 +68,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Policies
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-3"
@@ -84,13 +84,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             XDS Configuration
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-4"
@@ -100,13 +100,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Stats
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-5"
@@ -116,13 +116,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Clusters
             
-          </a>
+          </div>
         </li>
         <li
           aria-controls="panel-6"
@@ -132,13 +132,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
           role="tab"
           tabindex="0"
         >
-          <a
+          <div
             class="tab-link"
           >
             
             Certificate Insights
             
-          </a>
+          </div>
         </li>
         
       </ul>
@@ -347,13 +347,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         role="tab"
                         tabindex="0"
                       >
-                        <a
+                        <div
                           class="tab-link"
                         >
                           
                           Universal
                           
-                        </a>
+                        </div>
                       </li>
                       <li
                         aria-controls="panel-1"
@@ -363,13 +363,13 @@ exports[`DataPlaneDetails matches snapshot 1`] = `
                         role="tab"
                         tabindex="0"
                       >
-                        <a
+                        <div
                           class="tab-link"
                         >
                           
                           Kubernetes
                           
-                        </a>
+                        </div>
                       </li>
                       
                     </ul>
