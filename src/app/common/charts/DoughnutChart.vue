@@ -92,9 +92,19 @@ const props = defineProps({
 })
 
 const chartData = computed<ChartData<'doughnut'>>(function () {
-  const labels = props.data.dataPoints.map((dataPoint) => dataPoint.title)
-  const data = props.data.dataPoints.map((dataPoint) => dataPoint.data)
-  const backgroundColor = props.data.dataPoints.map((dataPoint, index) => props.data.isStatusChart === true ? STATUS_COLORS[dataPoint.title] : CHART_COLORS[index % CHART_COLORS.length])
+  let labels: string[]
+  let data: number[]
+  let backgroundColor: string[]
+
+  if (props.data.dataPoints.length > 0) {
+    labels = props.data.dataPoints.map((dataPoint) => dataPoint.title)
+    data = props.data.dataPoints.map((dataPoint) => dataPoint.data)
+    backgroundColor = props.data.dataPoints.map((dataPoint, index) => props.data.isStatusChart === true ? STATUS_COLORS[dataPoint.title] : CHART_COLORS[index % CHART_COLORS.length])
+  } else {
+    labels = []
+    data = [1]
+    backgroundColor = ['#e7e7ec']
+  }
 
   return {
     labels,
@@ -125,6 +135,7 @@ const chartOptions = computed<ChartOptions<'doughnut'>>(function () {
         display: false,
       },
       tooltip: {
+        enabled: props.data.dataPoints.length > 0,
         displayColors: false,
         backgroundColor: '#000',
         callbacks: {
