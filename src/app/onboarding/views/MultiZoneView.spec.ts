@@ -1,4 +1,4 @@
-import { describe, expect, jest, test } from '@jest/globals'
+import { beforeEach, describe, expect, jest, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
 import MultiZoneView from './MultiZoneView.vue'
@@ -11,6 +11,17 @@ function renderComponent() {
 }
 
 describe('MultiZoneView.vue', () => {
+  beforeEach(() => {
+    jest.restoreAllMocks()
+    jest
+      .spyOn(kumaApi, 'getZones')
+      .mockResolvedValue({
+        total: 1,
+        items: [],
+        next: null,
+      })
+  })
+
   test('renders snapshot', () => {
     const wrapper = renderComponent()
 

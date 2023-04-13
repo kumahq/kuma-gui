@@ -105,6 +105,8 @@ async function getZones() {
 
     hasZones.value = total > 0
   } catch (error) {
+    hasZones.value = false
+
     console.error(error)
   } finally {
     if (!hasZones.value) {
@@ -120,6 +122,8 @@ async function getZoneIngresses() {
 
     hasZoneIngresses.value = total > 0
   } catch (error) {
+    hasZoneIngresses.value = false
+
     console.error(error)
   } finally {
     if (!hasZoneIngresses.value) {
