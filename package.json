@@ -17,9 +17,7 @@
     "lint:lockfile": "lockfile-lint --path yarn.lock --allowed-hosts yarn --validate-https",
     "lint:ts": "vue-tsc --noEmit",
     "test": "cross-env TZ=UTC jest",
-    "test:watch": "yarn run test --watch",
-    "test:deps": "cypress install",
-    "test:browser": "cypress run"
+    "test:watch": "yarn run test --watch"
   },
   "engines": {
     "node": ">=18.13",
