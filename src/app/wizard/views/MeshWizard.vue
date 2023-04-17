@@ -788,7 +788,6 @@ const codeOutput = computed(() => {
    * mTLS
    */
   if (hasMtls) {
-    schemaNew.mtls.enabled = true
     const mtlsObject = schemaNew.mtls
     const certAuth = validate.value.meshCA
     const certName = validate.value.meshCAName

@@ -656,20 +656,6 @@ exports[`MeshWizard passes whole wizzard and render yaml 1`] = `
                                           
           
                                         </span>
-                                        <span
-                                          class="k-line"
-                                        >
-                                          
-            
-                                          <a
-                                            class="k-line-anchor"
-                                            id="code-block-universal-command-L31"
-                                          >
-                                            31
-                                          </a>
-                                          
-          
-                                        </span>
                                         
                                         
         
@@ -695,7 +681,6 @@ mtls:
   backends:
     - name: fake-name
       type: builtin
-  enabled: true
 tracing:
   defaultBackend: fake-name
   backends:
