@@ -84,7 +84,7 @@ import { useEnv, useKumaApi } from '@/utilities'
 const kumaApi = useKumaApi()
 const env = useEnv()
 
-const LONG_POOLING_INTERVAL = 1000
+const LONG_POLLING_INTERVAL = 1000
 
 const hasZones = ref(false)
 const hasZoneIngresses = ref(false)
@@ -111,7 +111,7 @@ async function getZones() {
   } finally {
     if (!hasZones.value) {
       clearZoneTimeout()
-      zoneTimeout.value = window.setTimeout(getZones, LONG_POOLING_INTERVAL)
+      zoneTimeout.value = window.setTimeout(getZones, LONG_POLLING_INTERVAL)
     }
   }
 }
@@ -128,7 +128,7 @@ async function getZoneIngresses() {
   } finally {
     if (!hasZoneIngresses.value) {
       clearZoneIngressTimeout()
-      zoneIngressTimeout.value = window.setTimeout(getZoneIngresses, LONG_POOLING_INTERVAL)
+      zoneIngressTimeout.value = window.setTimeout(getZoneIngresses, LONG_POLLING_INTERVAL)
     }
   }
 }
