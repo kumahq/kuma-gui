@@ -1,5 +1,5 @@
 <template>
-  <div class="kcard-list">
+  <div class="kcard-switcher">
     <KCard title="Create a virtual mesh">
       <template #body>
         <p>

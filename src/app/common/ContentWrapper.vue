@@ -25,7 +25,7 @@ const slots = useSlots()
   // Allows the contained flex items to wrap when their sizing requirements can’t be satisfied any longer.
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: var(--spacing-md);
+  gap: var(--AppGap);
 }
 
 .content-wrapper__content {

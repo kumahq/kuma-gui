@@ -5,6 +5,7 @@
   // COMPONENTS
   --AppHeaderHeight: 60px;
   --AppSidebarWidth: 280px;
+  --AppGap: var(--spacing-lg);
 
   // ONBOARDING
   --onboarding-accent: #822dc5;
@@ -30,6 +31,8 @@
   // Removes the default max width of 200 pixels because badges should never be cut-off.
   --KBadgeMaxWidth: auto;
   // Sets a default border style for commonly used component frames/panels.
+  --KCardPaddingX: var(--AppGap);
+  --KCardPaddingY: var(--KCardPaddingX);
   --KCardBorderRadius: 3px;
   --KCardBackground: var(--white);
   --KCardBorder: 1px solid var(--grey-300);

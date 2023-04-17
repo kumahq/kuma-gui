@@ -29,25 +29,30 @@
     </div>
 
     <div v-if="detailsIterator">
-      <ul class="overview-stat-grid">
-        <li
+      <ul
+        class="columns"
+        style="--columns: 4;"
+      >
+        <template
           v-for="(item, label) in detailsIterator"
           :key="label"
         >
-          <h6 class="overview-tertiary-title">
-            {{ label }}:
-          </h6>
+          <li v-if="Object.keys(item).length > 0">
+            <h6 class="overview-tertiary-title">
+              {{ label }}:
+            </h6>
 
-          <ul>
-            <li
-              v-for="(k, v) in item"
-              :key="v"
-            >
-              <strong>{{ v }}:</strong>
-              <span>{{ formatError(formatValue(k)) }}</span>
-            </li>
-          </ul>
-        </li>
+            <ul>
+              <li
+                v-for="(k, v) in item"
+                :key="v"
+              >
+                <strong>{{ v }}:</strong>
+                <span>{{ formatError(formatValue(k)) }}</span>
+              </li>
+            </ul>
+          </li>
+        </template>
       </ul>
     </div>
 
@@ -136,15 +141,5 @@ function formatError(value: string): string {
   font-weight: 600;
   color: var(--grey-500);
   margin: var(--spacing-xs) 0;
-}
-
-.overview-stat-grid {
-  display: grid;
-  margin: var(--spacing-md) 0 0 0;
-
-  @media (min-width: 1140px) {
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px 20px;
-  }
 }
 </style>

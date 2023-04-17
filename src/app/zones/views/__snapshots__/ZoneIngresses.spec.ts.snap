@@ -703,8 +703,10 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                         </div>
                         <div>
                           <ul
-                            class="overview-stat-grid"
+                            class="columns"
+                            style="--columns: 4;"
                           >
+                            
                             
                             <li>
                               <h6
@@ -733,6 +735,8 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -760,6 +764,8 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 
                               </ul>
                             </li>
+                            
+                            
                             <li>
                               <h6
                                 class="overview-tertiary-title"
@@ -787,17 +793,10 @@ exports[`ZoneIngresses.vue renders zoneingress insights 1`] = `
                                 
                               </ul>
                             </li>
-                            <li>
-                              <h6
-                                class="overview-tertiary-title"
-                              >
-                                rds: 
-                              </h6>
-                              <ul>
-                                
-                                
-                              </ul>
-                            </li>
+                            
+                            
+                            <!--v-if-->
+                            
                             
                           </ul>
                         </div>
