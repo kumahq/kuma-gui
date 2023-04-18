@@ -1,98 +1,112 @@
-name: Update kuma-gui in kuma
+name: 'Create GUI update PR'
+
+# **Note 1**: You can merge a pull request into a release branch of the form “release-$MAJOR.$MINOR” (e.g. “release-2.1”) in order to create the GUI update PR in the matching release branch of the host repository. For this to work, the name of this repository’s release branch must match that of the host repository exactly.
+# **Note 2**: Since this workflow can be triggered using the `workflow_run` event type, one needs to pay special attention to the context in which runs will be executed based on this workflow. Most importantly, runs will be using the workflow file found **in the project’s default branch**. This means that context variables like `github.ref` and `github.ref_name` will refer to the default branch **and not the branch that caused the workflow_run event to trigger**. Also, it likely means that to change the behavior of the workflow in a release branch, one will actually have to update the workflow file in the default branch, too.
+
+on:
+  # Allows running the workflow manually.
+  workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+        type: string
+        description: The base branch for which to create a GUI PR (default or release branch)
+      sha:
+        required: true
+        type: string
+        description: The commit hash for which to create a GUI PR
+  workflow_run:
+    workflows: ['Tests']
+    types: [completed]
+      # See “Filter pattern cheat sheet” https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+    branches: [master, 'release-[0-9]+.[0-9]+']
 
 # Ensures that we only run one workflow per branch at a time.
 # Already running workflows will be cancelled.
 concurrency:
   cancel-in-progress: true
-  group: ${{ github.workflow }}-${{ github.ref }}
-
-
-# **Note 1**: You can merge a pull request into a release branch of the below form (e.g. “release-2.1”) in order to create the GUI update PR in the matching release branch of the host repository. For this to work, the name of this repository’s release branch must match that of the host repository exactly.
-on:
-  push:
-      # See “Filter pattern cheat sheet” https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
-    branches: [ master, 'release-[0-9]+.[0-9]+' ]
-
-env:
-  HOST_REPOSITORY: kumahq/kuma
-  HOST_DIST_DIRECTORY: "app/kuma-ui/pkg/resources/data"
+  group: ${{ github.workflow }}-${{ github.event.workflow_run.head_branch || inputs.branch }}
 
 jobs:
   # Creates a pull request in the main application to update its GUI.
   create-gui-pr:
-    name: Create PR
+    # Only runs this job when the triggering workflow run was a success (i.e. the “Tests” workflow passes).
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Create GUI update PR
     runs-on: ubuntu-latest
+    env:
+      SHA: ${{ github.event.workflow_run.head_sha || inputs.sha }}
+      BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
     steps:
-      - name: Generate GitHub App token
-        # https://github.com/tibdex/github-app-token
-        # Note: Specifically references https://github.com/tibdex/github-app-token/commit/021a2405c7f990db57f5eae5397423dcc554159c (v1.7.0) to ensure that this exact version of the workflow action is used. This is a security precaution as automatically opting into newer versions of the action could leak or get the app token stolen.
-        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c
-        id: generate-token
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_PRIVATE_KEY }}
-
       - name: Check-out GUI
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18.13"
+          node-version-file: '.nvmrc'
 
-      - name: Cache node_modules and dist
+      - name: Cache node_modules
         uses: actions/cache@v3
-        id: cache
+        id: node-modules-cache
         with:
           path: |
             **/node_modules
-            dist
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
       - name: Build dist
         run: yarn run build
 
+      - name: Generate GitHub app token
+        # https://github.com/tibdex/github-app-token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        id: github-app-token
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Check-out main application
         uses: actions/checkout@v3
         with:
-          token: ${{ github.token }}
-          repository: ${{ env.HOST_REPOSITORY }}
-          # Allows merges into release branches (see note 1 above).
-          ref: ${{ github.ref }}
+          # This needs to be a token that grants read access to `HOST_REPOSITORY`. If that repository is private, it needs general access to the `repo` scope which grants access to read private repositories. Otherwise, you will run into an error telling you that the checkout actions can’t determine the repository’s default branch. This is on account of a lack of access not because it can’t determine the default branch.
+          token: ${{ steps.github-app-token.outputs.token }}
+          repository: ${{ vars.HOST_REPOSITORY }}
+          ref: ${{ env.BRANCH }}
           path: main-application
 
       - name: Copy dist into main application
         run: |
           cd main-application
-          rm -rf ${{ env.HOST_DIST_DIRECTORY }}
-          cp -r ../dist/ ${{ env.HOST_DIST_DIRECTORY }}
+          rm -rf ${{ vars.HOST_DIST_DIRECTORY }}
+          cp -r ../${{ vars.DIST_DIRECTORY }}/ ${{ vars.HOST_DIST_DIRECTORY }}
 
       - name: Create pull request
         # https://github.com/peter-evans/create-pull-request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v5
         with:
           # Note: This token can be a GITHUB_TOKEN if the created PR doesn’t need to trigger workflows `on: push` or `on: pull_request`. However, we definitely need to trigger workflows (e.g. to run test workflows on the PR). Instead, we should use a personal access token (PAT). See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs for a more detailed explanation.
-          token: ${{ steps.generate-token.outputs.token }}
+          token: ${{ steps.github-app-token.outputs.token }}
           path: main-application
-          # Allows merges into release branches (see note 1 above).
-          base: ${{ github.ref_name }}
+          base: ${{ env.BRANCH }}
           commit-message: |
-            chore(deps): bump ${{ github.repository }} to ${{ github.sha }}
+            chore(deps): bump ${{ github.repository }} to ${{ env.SHA }}
 
-            Bumps ${{ github.repository }} to version [${{ github.ref_name }}@${{ github.sha }}](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+            Bumps ${{ github.repository }} to version [${{ env.BRANCH }}@${{ env.SHA }}](https://github.com/${{ github.repository }}/tree/${{ env.SHA }})
           committer: GitHub <noreply@github.com>
           author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
           signoff: true
-          branch: chore/update-gui-in-${{ github.ref_name }}
+          branch: chore/update-gui-in-${{ env.BRANCH }}
           delete-branch: true
-          title: "chore(deps): bump ${{ github.repository }} to ${{ github.sha }}"
+          title: 'chore(deps): bump ${{ github.repository }} to ${{ env.SHA }}'
           labels: ci/skip-e2e-test,ci/auto-merge
           body: |
-            Bumps ${{ github.repository }} to version  [${{ github.ref_name }}@${{ github.sha }}](https://github.com/${{ github.repository }}/tree/${{ github.sha }})
+            Bumps ${{ github.repository }} to version  [${{ env.BRANCH }}@${{ env.SHA }}](https://github.com/${{ github.repository }}/tree/${{ env.SHA }})
 
-            > Changelog: chore(deps): use latest ${{github.repository}}
+            > Changelog: chore(deps): use latest ${{ github.repository }}
           draft: false

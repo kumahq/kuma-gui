@@ -1,17 +1,18 @@
-name: tests-and-build
+name: 'Tests'
+
+# Runs the project’s linter and test scripts.
 
 on:
   push:
-    branches: [ master, 'release-[0-9]+.[0-9]+' ]
+    branches: [master, 'release-[0-9]+.[0-9]+']
   pull_request:
     types: [opened, reopened, synchronize]
 
 jobs:
-  # Runs the project’s linter, unit test, and build scripts.
-  test:
+  install-dependencies:
     # Skip this job if the head commit’s message contains the string “[skip ci]”.
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    name: Tests & build
+    name: 'Install dependencies'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,24 +23,49 @@ jobs:
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v3
         with:
-          node-version: '18.13'
+          node-version-file: '.nvmrc'
 
-      - name: Cache node_modules and dist
+      - name: Cache node_modules
         # https://github.com/actions/cache
         uses: actions/cache@v3
-        id: cache
+        id: node-modules-cache
         with:
           path: |
             **/node_modules
-            dist
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
       - name: Lint lock file
         run: yarn run lint:lockfile
+
+  tests:
+    needs: [install-dependencies]
+    # Skip this job if the head commit’s message contains the string “[skip ci]”.
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    name: 'Tests'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        # https://github.com/actions/checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        # https://github.com/actions/setup-node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Cache node_modules
+        # https://github.com/actions/cache
+        uses: actions/cache@v3
+        id: node-modules-cache
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Lint
         run: yarn run lint
