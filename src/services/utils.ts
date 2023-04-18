@@ -15,6 +15,7 @@ export {
 } from 'brandi'
 export type {
   TokenType,
+  Token,
 } from 'brandi'
 
 type InjectionHooks<T extends TokenValue[]> = {
@@ -40,7 +41,7 @@ type DependencyDefinition = {
   decorates?: Token
 }
 export type ServiceDefinition = [Token, DependencyDefinition]
-export type ServiceConfigurator = <T extends Record<string, Token>>(app: T) => ServiceDefinition[]
+export type ServiceConfigurator<T = Record<string, Token>> = ($: T) => ServiceDefinition[]
 export type Alias<T extends (...args: never[]) => unknown> = (...rest: Parameters<T>) => ReturnType<T>
 export type Decorator<T extends TokenValue> = TokenType<T>
 export type ReturnDecorated<T extends TokenValue> = () => TokenType<T>
@@ -140,6 +141,11 @@ export const service = (t: Token, config: DependencyDefinition): void => {
     })
   }
   if (typeof config.arguments !== 'undefined' && typeof config.service !== 'undefined') {
+    config.arguments.forEach((item, i) => {
+      if (typeof item === 'undefined') {
+        throw new Error(`Unable to find token for argument[${i}]`)
+      }
+    })
     injected(...([config.service, ...config.arguments] as Parameters<typeof injected>))
   }
 }

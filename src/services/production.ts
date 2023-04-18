@@ -1,7 +1,7 @@
+
 import { RouteRecordRaw } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
-import { Alias, ServiceConfigurator, token, get } from './utils'
 import { useApp, useBootstrap } from '../index'
 import { getNavItems } from '@/app/getNavItems'
 import { createRouter } from '@/router/router'
@@ -9,6 +9,8 @@ import routes from '@/router/routes'
 import Env, { EnvArgs, EnvVars } from '@/services/env/Env'
 import KumaApi from '@/services/kuma-api/KumaApi'
 import Logger from '@/services/logger/DatadogLogger'
+import { token, get } from '@/services/utils'
+import type { Alias, ServiceConfigurator } from '@/services/utils'
 import { storeConfig, State } from '@/store/storeConfig'
 import type {
   Router,
@@ -33,8 +35,8 @@ const $ = {
   app: token<ReturnType<typeof useApp>>('app'),
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
 }
-
-export const services: ServiceConfigurator = () => [
+type SupportedTokens = typeof $
+export const services: ServiceConfigurator<SupportedTokens> = ($) => [
   // Env
   [$.EnvVars, {
     constant: {

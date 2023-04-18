@@ -1,10 +1,10 @@
 import { setupWorker, RestHandler, MockedRequest, rest } from 'msw'
 
-import { ServiceConfigurator, ReturnDecorated, Decorator, token, get } from './utils'
 import CookiedEnv from '@/services/env/CookiedEnv'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
-import type { Alias } from '@/services/utils'
+import { token, get } from '@/services/utils'
+import type { ServiceConfigurator, ReturnDecorated, Decorator, Alias, Token } from '@/services/utils'
 import type { FS } from '@/test-support'
 import { fakeApi } from '@/test-support'
 import { fs } from '@/test-support/mocks/fs'
@@ -34,12 +34,20 @@ const $ = {
   mswFakeApiHandlers: token<RestHandler[]>('msw.fake.handlers'),
   kumaFS: token<FS>('fake.fs.kuma'),
 }
+type SupportedTokens = {
+  Env: Token
+  EnvVars: Token
+  logger: Token
+  msw: Token
+  bootstrap: Token
+  env: Token<Alias<CookiedEnv['var']>>
+}
 
-export const services: ServiceConfigurator = (app) => [
+export const services: ServiceConfigurator<SupportedTokens> = (app) => [
 
   [token<Decorator<typeof app.bootstrap>>('bootstrap.with.mockServer'), {
     service: (bootstrap: ReturnDecorated<typeof app.bootstrap>) => {
-      const env = get(app.env) as Alias<CookiedEnv['var']>
+      const env = get(app.env)
       if (env('KUMA_MOCK_API_ENABLED') === 'true') {
         get($.msw)
       }
