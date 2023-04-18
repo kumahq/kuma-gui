@@ -1,4 +1,5 @@
-import { TOKENS, createInjections } from '@/services'
+import { TOKENS } from '@/services/production'
+import { createInjections } from '@/services/utils'
 
 export const [
   useEnv,
