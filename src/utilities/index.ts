@@ -7,4 +7,5 @@ export const [
   useKumaApi,
   useStore,
   useRouter,
-] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router)
+  useBootstrap,
+] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router, TOKENS.bootstrap)
