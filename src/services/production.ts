@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 import { createStore, StoreOptions, Store } from 'vuex'
 
-import { Alias, ServiceDefinition, token, build, get, TokenType } from './utils'
+import { Alias, ServiceConfigurator, token, get } from './utils'
 import { useApp, useBootstrap } from '../index'
 import { getNavItems } from '@/app/getNavItems'
 import { createRouter } from '@/router/router'
@@ -13,6 +13,7 @@ import { storeConfig, State } from '@/store/storeConfig'
 import type {
   Router,
 } from 'vue-router'
+
 const $ = {
   EnvVars: token<EnvVars>('EnvVars'),
   Env: token<Env>('Env'),
@@ -33,7 +34,7 @@ const $ = {
   bootstrap: token<ReturnType<typeof useBootstrap>>('bootstrap'),
 }
 
-export const services: ServiceDefinition[] = [
+export const services: ServiceConfigurator = () => [
   // Env
   [$.EnvVars, {
     constant: {
@@ -53,7 +54,7 @@ export const services: ServiceDefinition[] = [
     ],
   }],
   [$.env, {
-    service: (): TokenType<typeof $.env> => (...rest) => get($.Env).var(...rest),
+    service: (): Alias<Env['var']> => (...rest) => get($.Env).var(...rest),
   }],
 
   // KumaAPI
@@ -124,8 +125,7 @@ export const services: ServiceDefinition[] = [
       $.store,
     ],
   }],
-]
 
-build(services)
+]
 
 export const TOKENS = $

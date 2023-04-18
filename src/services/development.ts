@@ -1,14 +1,11 @@
 import { setupWorker, RestHandler, MockedRequest, rest } from 'msw'
 
-import { TOKENS as PROD_TOKENS, services as prodServices } from './production'
-import { merge, build, ServiceDefinition, token, get } from './utils'
-import { useBootstrap } from '../index'
-import type { TokenType } from '@/services/utils'
-import type { FS } from '@/test-support'
-
+import { ServiceConfigurator, ReturnDecorated, Decorator, token, get } from './utils'
 import CookiedEnv from '@/services/env/CookiedEnv'
 import Logger from '@/services/logger/DatadogLogger'
 import { disabledLogger } from '@/services/logger/DisabledLogger'
+import type { Alias } from '@/services/utils'
+import type { FS } from '@/test-support'
 import { fakeApi } from '@/test-support'
 import { fs } from '@/test-support/mocks/fs'
 
@@ -21,7 +18,6 @@ type Msw = {
 } & ReturnType<typeof setupWorker>
 
 const $ = {
-  ...PROD_TOKENS,
   msw: token<Msw>('msw'),
   /**
    * @description
@@ -39,19 +35,30 @@ const $ = {
   kumaFS: token<FS>('fake.fs.kuma'),
 }
 
-export const services: ServiceDefinition[] = [
+export const services: ServiceConfigurator = (app) => [
 
-  [$.Env, {
+  [token<Decorator<typeof app.bootstrap>>('bootstrap.with.mockServer'), {
+    service: (bootstrap: ReturnDecorated<typeof app.bootstrap>) => {
+      const env = get(app.env) as Alias<CookiedEnv['var']>
+      if (env('KUMA_MOCK_API_ENABLED') === 'true') {
+        get($.msw)
+      }
+      return bootstrap()
+    },
+    decorates: app.bootstrap,
+  }],
+
+  [app.Env, {
     service: CookiedEnv,
     arguments: [
-      $.EnvVars,
+      app.EnvVars,
     ],
   }],
 
-  [$.logger, {
+  [app.logger, {
     service: disabledLogger(Logger),
     arguments: [
-      $.Env,
+      app.Env,
     ],
   }],
 
@@ -88,9 +95,9 @@ export const services: ServiceDefinition[] = [
     ],
   }],
   [$.mswFakeApiHandlers, {
-    service: (env: TokenType<typeof $.env>, fs: FS) => fakeApi(env, rest, fs),
+    service: (env: Alias<CookiedEnv['var']>, fs: FS) => fakeApi(env, rest, fs),
     arguments: [
-      $.env,
+      app.env,
       $.fakeFS,
     ],
     labels: [
@@ -105,18 +112,4 @@ export const services: ServiceDefinition[] = [
     ],
   }],
 ]
-
-// straight-forwards bootstrap decorator
-const bootstrap = prodServices.find(([token, _]) => token === $.bootstrap)
-if (bootstrap) {
-  bootstrap[1].service = (...rest: Parameters<typeof useBootstrap>) => {
-    const env = get($.Env)
-    if (env.var('KUMA_MOCK_API_ENABLED') === 'true') {
-      // this initialises MSW
-      get($.msw)
-    }
-    return useBootstrap(...rest)
-  }
-}
-build(merge(prodServices, services))
 export const TOKENS = $

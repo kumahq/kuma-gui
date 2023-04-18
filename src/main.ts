@@ -1,16 +1,25 @@
-import App from './app/App.vue'
-import { TOKENS, get } from '@/services'
+import { TOKENS as $, services as production } from '@/services/production'
+import { build } from '@/services/utils'
 
 async function mountVueApplication() {
-  const env = get(TOKENS.env)
-  const kumaApi = get(TOKENS.api)
-  // During development setBaseUrl also optionally installs MSW mocking via MockKumaApi
-  kumaApi.setBaseUrl(env('KUMA_API_URL'))
-
-  const app = await get(TOKENS.app)(App)
+  const get = build(
+    // production service container configuration
+    production($),
+    // any DEV-time only service container configuration
+    import.meta.env.DEV
+      ? await (async () => {
+        const dev = await import('@/services/development')
+        return dev.services({
+          ...$,
+          ...dev.TOKENS,
+        })
+      })()
+      : [],
+  )
+  const app = await get($.app)((await import('./app/App.vue')).default)
   app.mount('#app')
 
-  get(TOKENS.bootstrap)()
+  get($.bootstrap)()
 }
 
 mountVueApplication()
