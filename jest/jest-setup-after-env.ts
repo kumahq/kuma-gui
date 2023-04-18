@@ -5,11 +5,11 @@ import { config } from '@vue/test-utils'
 
 import { replaceAttributesSnapshotSerializer } from './jest-replace-attribute-snapshot-serializer'
 import { TOKENS as COMPONENT_TOKENS } from '../src/components'
-import { get, container, build, createInjections } from '@/services/utils'
-import { TOKENS as PROD, services as production } from '@/services/production'
-import { TOKENS as DEV, services as development } from '@/services/development'
 import { TOKENS as TEST, services as testing } from '../src/services/testing'
+import { TOKENS as DEV, services as development } from '@/services/development'
 import Env from '@/services/env/Env'
+import { TOKENS as PROD, services as production } from '@/services/production'
+import { get, container, build, createInjections } from '@/services/utils'
 
 // jest can't import this module properly due to transpiling issues
 // mock this out with a blank element
