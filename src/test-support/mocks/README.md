@@ -94,7 +94,7 @@ export default (_deps: EndpointDependencies): MockResponder => (_req) => {
 }
 ```
 
-A more complicated example can be seen at <./src/meshes/_/dataplanes+insights.ts>
+A more complicated example can be seen at [./src/meshes/_/dataplanes+insights.ts](./src/meshes/_/dataplanes+insights.ts)
 
 The idea behind the approach is based on a traditional template engine and a set
 of JSON templates. The JSON templates also have access to a collection of helper
@@ -143,8 +143,8 @@ reusable as possible, which should err against adding tonnes of them. Additional
 Kuma helpers should be properly considered during review (i.e are they
 necessary? are they generic enough? etc).
 
-`pager` usage can be seen in <./src/meshes/_/circuit-breakers.ts> or any paged
-HTTP API response.
+`pager` usage can be seen in [./src/meshes/_/circuit-breakers.ts](./src/meshes/_/circuit-breakers.ts)
+or any paged HTTP API response.
 
 `env` is similiar to the `env` helper function that we use in the application
 itself, but we have additional flags that we can use to control simple things to
