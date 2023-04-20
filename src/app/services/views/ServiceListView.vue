@@ -3,7 +3,7 @@
     <template #content>
       <DataOverview
         :selected-entity-name="service?.name"
-        :page-size="PAGE_SIZE"
+        :page-size="PAGE_SIZE_DEFAULT"
         :error="error"
         :is-loading="isLoading"
         :empty-state="EMPTY_STATE"
@@ -33,6 +33,7 @@ import { useRoute, RouteLocationRaw, RouteLocationNamedRaw } from 'vue-router'
 import ServiceSummary from '../components/ServiceSummary.vue'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { ExternalService, ServiceInsight, TableHeader } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
@@ -46,8 +47,6 @@ const headers: TableHeader[] = [
   { label: 'Status', key: 'status' },
   { label: 'DP proxies (online / total)', key: 'dpProxiesStatus' },
 ]
-const PAGE_SIZE = 50
-
 const EMPTY_STATE = {
   title: 'No Data',
   message: 'There are no service insights present.',
@@ -100,7 +99,7 @@ async function loadData(offset: number): Promise<void> {
   error.value = null
 
   const mesh = route.params.mesh as string
-  const size = PAGE_SIZE
+  const size = PAGE_SIZE_DEFAULT
 
   try {
     const { items, next } = await kumaApi.getAllServiceInsightsFromMesh({ mesh }, { size, offset })

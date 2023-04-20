@@ -19,14 +19,13 @@ import { useRoute } from 'vue-router'
 
 import DataPlaneList from '../components/DataPlaneList.vue'
 import { FilterFields } from '@/app/common/KFilterBar.vue'
+import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { DataPlaneOverviewParameters } from '@/types/api'
 import { DataPlaneOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
-
-const PAGE_SIZE = 50
 
 const BASE_FILTER_FIELDS: FilterFields = {
   name: { description: 'filter by name or parts of a name' },
@@ -110,7 +109,7 @@ async function loadData(offset: number, dppParams: DataPlaneOverviewParameters =
   isLoading.value = true
 
   const mesh = route.params.mesh as string
-  const params = getDataplaneOverviewParameters(dppParams, PAGE_SIZE, offset, props.isGatewayView)
+  const params = getDataplaneOverviewParameters(dppParams, PAGE_SIZE_DEFAULT, offset, props.isGatewayView)
 
   try {
     const { items, next } = await kumaApi.getAllDataplaneOverviewsFromMesh({ mesh }, params)
