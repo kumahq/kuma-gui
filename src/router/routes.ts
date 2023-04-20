@@ -38,39 +38,84 @@ export default (store: Store<State>): RouteRecordRaw[] => {
     },
     {
       path: '/zones',
-      name: 'zones',
-      meta: {
-        title: 'Zones',
-      },
-      props: (route) => ({
-        selectedZoneName: route.query.zone,
-        offset: getLastNumberParameter(route.query.offset),
-      }),
-      component: () => import('@/app/zones/views/ZonesView.vue'),
+      children: [
+        {
+          path: '',
+          name: 'zone-list-view',
+          meta: {
+            title: 'Zone',
+          },
+          props: (route) => ({
+            selectedZoneName: route.query.zone,
+            offset: getLastNumberParameter(route.query.offset),
+          }),
+          component: () => import('@/app/zones/views/ZonesView.vue'),
+        },
+        {
+          path: ':zone',
+          name: 'zone-detail-view',
+          meta: {
+            title: 'Zone',
+            parent: 'zone-list-view',
+            breadcrumbTitleParam: 'zone',
+          },
+          component: () => ({ name: 'Anonymous', template: '' }),
+        },
+      ],
     },
     {
       path: '/zone-ingresses',
-      name: 'zoneingresses',
-      meta: {
-        title: 'Zone ingresses',
-      },
-      props: (route) => ({
-        selectedZoneIngressName: route.query.zoneIngress,
-        offset: getLastNumberParameter(route.query.offset),
-      }),
-      component: () => import('@/app/zones/views/ZoneIngresses.vue'),
+      children: [
+        {
+          path: '',
+          name: 'zone-ingress-list-view',
+          meta: {
+            title: 'Zone Ingresses',
+          },
+          props: (route) => ({
+            selectedZoneIngressName: route.query.zoneIngress,
+            offset: getLastNumberParameter(route.query.offset),
+          }),
+          component: () => import('@/app/zones/views/ZoneIngresses.vue'),
+        },
+        {
+          path: ':zoneIngress',
+          name: 'zone-ingress-detail-view',
+          meta: {
+            title: 'Zone Ingress',
+            parent: 'zone-ingress-list-view',
+            breadcrumbTitleParam: 'zoneIngress',
+          },
+          component: () => ({ name: 'Anonymous', template: '' }),
+        },
+      ],
     },
     {
-      path: '/zoneegresses',
-      name: 'zoneegresses',
-      meta: {
-        title: 'Zone egresses',
-      },
-      props: (route) => ({
-        selectedZoneEgressName: route.query.zoneEgress,
-        offset: getLastNumberParameter(route.query.offset),
-      }),
-      component: () => import('@/app/zones/views/ZoneEgresses.vue'),
+      path: '/zone-egresses',
+      children: [
+        {
+          path: '',
+          name: 'zone-egress-list-view',
+          meta: {
+            title: 'Zone Egresses',
+          },
+          props: (route) => ({
+            selectedZoneEgressName: route.query.zoneEgress,
+            offset: getLastNumberParameter(route.query.offset),
+          }),
+          component: () => import('@/app/zones/views/ZoneEgresses.vue'),
+        },
+        {
+          path: ':zoneEgress',
+          name: 'zone-egress-detail-view',
+          meta: {
+            title: 'Zone Egress',
+            parent: 'zone-egress-list-view',
+            breadcrumbTitleParam: 'zoneEgress',
+          },
+          component: () => ({ name: 'Anonymous', template: '' }),
+        },
+      ],
     },
     {
       path: '/mesh/:mesh',

@@ -405,7 +405,7 @@ async function parseData(dataPlaneOverview: DataPlaneOverview) {
   let zoneRoute: RouteLocationNamedRaw | undefined
   if (zone !== undefined) {
     zoneRoute = {
-      name: 'zones',
+      name: 'zone-list-view',
       query: {
         ns: zone,
       },

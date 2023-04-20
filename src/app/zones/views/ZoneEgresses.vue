@@ -21,7 +21,7 @@
               class="back-button"
               appearance="primary"
               icon="arrowLeft"
-              :to="{ name: 'zoneegresses' }"
+              :to="{ name: 'zone-egress-list-view' }"
             >
               View all
             </KButton>
@@ -188,7 +188,7 @@ const pageOffset = ref(props.offset)
 
 watch(() => route.params.mesh, function () {
   // Don’t trigger a load when the user is navigating to another route.
-  if (route.name !== 'zoneegresses') {
+  if (route.name !== 'zone-egress-list-view') {
     return
   }
 
