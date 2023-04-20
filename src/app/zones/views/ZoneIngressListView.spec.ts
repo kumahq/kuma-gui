@@ -1,15 +1,15 @@
 import { describe, expect, test } from '@jest/globals'
 import { flushPromises, mount } from '@vue/test-utils'
 
-import ZoneIngresses from './ZoneIngresses.vue'
+import ZoneIngressListView from './ZoneIngressListView.vue'
 import { useMock } from '@/../jest/jest-setup-after-env'
 import { useStore } from '@/utilities'
 
 function renderComponent() {
-  return mount(ZoneIngresses)
+  return mount(ZoneIngressListView)
 }
 
-describe('ZoneIngresses.vue', () => {
+describe('ZoneIngressListView', () => {
   const mock = useMock()
   const store = useStore()
   test('renders snapshot when no multizone', async () => {
