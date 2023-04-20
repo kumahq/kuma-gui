@@ -6,7 +6,7 @@ async function mountVueApplication() {
     // production service container configuration
     production($),
     // any DEV-time only service container configuration
-    import.meta.env.MODE !== 'production'
+    !import.meta.env.PROD
       ? await (async () => {
         const dev = await import('@/services/development')
         return dev.services({
