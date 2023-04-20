@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker'
 import { RestRequest } from 'msw'
 
+import FakeKuma from './FakeKuma'
 import type Env from '@/services/env/Env'
-import FakeKuma from '@/services/kuma-api/FakeKuma'
 import type { Alias } from '@/services/utils'
 import type { rest } from 'msw'
 
