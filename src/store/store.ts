@@ -1,5 +1,6 @@
 import type { State } from './storeConfig'
-import { get, TOKENS } from '@/services'
+import { TOKENS } from '@/services/production'
+import { get } from '@/services/utils'
 import type { Store } from 'vuex'
 
 export function useStore(): Store<State> {

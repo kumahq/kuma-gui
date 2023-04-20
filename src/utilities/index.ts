@@ -1,4 +1,5 @@
-import { TOKENS, createInjections } from '@/services'
+import { TOKENS } from '@/services/production'
+import { createInjections } from '@/services/utils'
 
 export const [
   useEnv,
@@ -6,4 +7,5 @@ export const [
   useKumaApi,
   useStore,
   useRouter,
-] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router)
+  useBootstrap,
+] = createInjections(TOKENS.env, TOKENS.nav, TOKENS.api, TOKENS.store, TOKENS.router, TOKENS.bootstrap)
