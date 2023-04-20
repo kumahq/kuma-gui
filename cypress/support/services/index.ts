@@ -1,14 +1,20 @@
 import { token, ServiceDefinition, createInjections } from '@/services/utils'
-import type { FS, Mocker } from '@/test-support'
+import type { FS, Callback, Options } from '@/test-support'
 import { mocker } from '@/test-support/intercept'
 import { fs } from '@/test-support/mocks/fs'
 
 // this needs to come from production
-const env = () => (_key: string) => {
-  return 'http://localhost:5681'
+const env = () => (key: string, d = '') => {
+  switch (key) {
+    case 'KUMA_API_URL':
+      return 'http://localhost:5681'
+  }
+  return d
 }
 type AEnv = ReturnType<typeof env>
 type Server = typeof cy
+// temporary intercept returning Mocker
+type Mocker = (route: string, opts?: Options, cb?: Callback) => ReturnType<typeof cy['intercept']>
 const $ = {
   env: token<AEnv>('env'),
   fakeFS: token<FS>('fake.fs'),
@@ -25,7 +31,7 @@ export const services = <T extends Record<string, Token>>(app: T): ServiceDefini
   }],
   [app.mockServer, {
     service: (mock: Mocker) => {
-      mock('*')
+      mock('*').as('request')
     },
     arguments: [
       app.mock,

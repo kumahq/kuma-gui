@@ -14,9 +14,11 @@ const console = {
 }
 let env = {}
 let selectors: Record<string, string> = {}
+let urls = new Map()
 Before(() => {
   env = {}
   selectors = {}
+  urls = new Map()
   useServer()
 })
 type Cy = typeof cy;
@@ -45,20 +47,39 @@ Given('the environment', (yaml: string) => {
   }
 })
 Given('the URL {string} responds with', (url: string, yaml: string) => {
+  const now = new Date().getTime()
   const mock = useMock()
+  urls.set(url, `spy-${now}`)
   mock(url, env, (respond) => {
     return respond(YAML.load(yaml) as { headers?: Record<string, string>, body?: Record<string, unknown> })
-  })
+  }).as(urls.get(url))
 })
 
 // act
-When(/^I "(.*)" on the "(.*)" element$/, async (event: string, selector: string) => {
-  $(selector).trigger(event)
+When(/^I "(.*)"(.*)? on the "(.*)" element$/, async (event: string, object: string | number | undefined, selector: string) => {
+  switch (event) {
+    case 'select':
+      if (typeof object === 'undefined') {
+        throw new Error()
+      }
+      $(selector).select(parseInt(object.toString()), { force: true })
+      break
+    default:
+      $(selector).trigger(event, { force: true })
+  }
 })
 
 // assert
 Then('the URL contains {string}', (str: string) => {
   cy.url().should('include', str)
+})
+Then('the URL {string} was requested with', (url: string, yaml: string) => {
+  cy.wait(`@${urls.get(url)}`).then((xhr) => {
+    const data = YAML.load(yaml) as {searchParams: Record<string, string>}
+    Object.entries(data.searchParams).forEach(([key, value]) => {
+      expect(xhr.request.query[key]).to.equal(value)
+    })
+  })
 })
 
 Then(/^the "(.*)" element( does| doesn't| don't)? exist[s]?$/, function (selector: string, assertion: string) {
