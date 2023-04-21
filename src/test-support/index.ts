@@ -10,9 +10,9 @@ import type { RestRequest } from 'msw'
 export { fakeApi } from './fake'
 export type { FS, EndpointDependencies, MockResponder } from './fake'
 
-type Merge = (obj: Partial<MockResponse>) => MockResponse
-type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
-type Options = Record<string, string>
+export type Merge = (obj: Partial<MockResponse>) => MockResponse
+export type Callback = (merge: Merge, req: RestRequest, response: MockResponse) => MockResponse
+export type Options = Record<string, string>
 type Server = ReturnType<typeof setupServer>
 
 // merges objects in array positions rather than replacing
@@ -32,12 +32,12 @@ const combineMerge = (target: object[], source: object[], options: ArrayMergeOpt
 }
 
 const noop: Callback = (_merge, _req, response) => response
-const createMerge = (response: MockResponse): Merge => (obj) => deepmerge(response, obj, { arrayMerge: combineMerge })
+export const createMerge = (response: MockResponse): Merge => (obj) => deepmerge(response, obj, { arrayMerge: combineMerge })
 
 export const mocker = (env: AEnv, server: Server, fs: FS) => {
   const baseUrl = env('KUMA_API_URL')
 
-  return (route: string, opts: Options, cb: Callback = noop) => {
+  return (route: string, opts: Options = {}, cb: Callback = noop) => {
     // mocks during testing have a consistent seed unless we set a different
     // one during testing
     dependencies.fake.seed(typeof opts.FAKE_SEED !== 'undefined' ? parseInt(typeof opts.FAKE_SEED) : 1)

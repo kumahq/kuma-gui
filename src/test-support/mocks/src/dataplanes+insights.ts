@@ -1,10 +1,9 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
 export default ({ fake, pager, env }: EndpointDependencies): MockResponder => (req) => {
-  const params = req.params
   const { offset, total, next, pageTotal } = pager(
     env('KUMA_DATAPLANE_COUNT', `${fake.datatype.number({ min: 1, max: 1000 })}`),
     req,
-    `/meshes/${params.mesh}/dataplanes+insights`,
+    '/dataplanes+insights',
   )
   return {
     headers: {},
