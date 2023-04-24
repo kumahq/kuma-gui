@@ -13,7 +13,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { camelCaseToWords } from '@/utilities/camelCaseToWords'
+import { getTermLabel } from '@/utilities/getTermLabel'
+import { useI18n } from '@/utilities/useI18n'
+
+const i18n = useI18n()
 
 const props = defineProps({
   term: {
@@ -22,8 +25,7 @@ const props = defineProps({
   },
 })
 
-const term = computed(() => camelCaseToWords(props.term))
-
+const term = computed(() => getTermLabel(props.term, i18n))
 </script>
 
 <style lang="scss" scoped>
