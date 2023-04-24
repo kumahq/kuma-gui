@@ -43,36 +43,23 @@ jobs:
 
   lint:
     needs: [install-dependencies]
-    # Skip this job if the head commit’s message contains the string “[skip ci]”.
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
-    name: 'Lint'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        # https://github.com/actions/checkout
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        # https://github.com/actions/setup-node
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-
-      - name: Cache node_modules
-        # https://github.com/actions/cache
-        uses: actions/cache@v3
+      - uses: actions/cache@v3
         id: node-modules-cache
         with:
           path: |
             **/node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
-      - name: Lint
-        run: yarn run lint
-        env:
+      - env:
           LINTER_MODE: strict
-
-      - name: Lint TS
-        run: yarn run lint:ts
+        run: |
+          yarn run lint
+          yarn run lint:ts
   tests:
     needs: [install-dependencies]
     # Skip this job if the head commit’s message contains the string “[skip ci]”.
