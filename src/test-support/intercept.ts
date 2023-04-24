@@ -30,14 +30,14 @@ class Router<T> {
 type Server = typeof cy
 const reEscape = /[/\-\\^$*+?.()|[\]{}]/g
 const noop: Callback = (_merge, _req, response) => response
-export const mocker = (env: (key: AppEnvKeys) => string, cy: Server, fs: FS): Mocker => {
+export const mocker = (env: (key: AppEnvKeys, d?: string) => string, cy: Server, fs: FS): Mocker => {
   const router = new Router(fs)
   return (path, opts = {}, cb = noop) => {
     // if path is `*` then that means mock everything, which currently means
     // changing to `/`
     path = path === '*' ? '/' : path
     const baseUrl = env('KUMA_API_URL')
-    cy.intercept(
+    return cy.intercept(
       {
         url: new RegExp(`${baseUrl}${path.replace(reEscape, '\\$&')}`),
       },
@@ -48,7 +48,7 @@ export const mocker = (env: (key: AppEnvKeys) => string, cy: Server, fs: FS): Mo
           const endpoint = route
           const fetch = endpoint({
             ...dependencies,
-            env: (key/*, d = '' */) => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys),
+            env: (key, d = '') => (opts[key as MockEnvKeys] ?? '') || env(key as AppEnvKeys, d),
           })
           const request = {
             params,

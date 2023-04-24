@@ -1,4 +1,4 @@
-Feature: Dataplane Listing
+Feature: mesh / dataplanes / index
   Background:
     Given the CSS selectors
       | Alias           | Selector                                     |
@@ -39,17 +39,6 @@ Feature: Dataplane Listing
       """
     When I visit the "/mesh/default/data-planes" URL
 
-  Scenario: The Proxy listing has the expected content and UI elements
-    Then the "$button-back" element doesn't exist
-    Then the "$button-refresh" element exists
-    Then the "$table-row" element exists 9 times
-    Then the "$table-row:nth-child(1)" element contains
-      | Value             |
-      | fake-backend      |
-      | http              |
-      | February 18, 2021 |
-      | 1.0.8             |
-
   Scenario: The Proxy listing table has the correct columns
     Then the "$table-header" elements contain
       | Value           |
@@ -61,6 +50,18 @@ Feature: Dataplane Listing
       | Last Updated    |
       | Kuma DP version |
       | Details         |
+
+  Scenario: The Proxy listing has the expected content and UI elements
+    Then the "$button-back" element doesn't exist
+    Then the "$button-refresh" element exists
+    Then the "$table-row" element exists 9 times
+    Then the "$table-row:nth-child(1)" element contains
+      | Value             |
+      | fake-backend      |
+      | http              |
+      | February 18, 2021 |
+      | 1.0.8             |
+
 
   Scenario: The Proxy listing shows information of selected DPP when clicked
     Then the "$dataplane-title" element contains "fake-backend"
