@@ -1,5 +1,5 @@
 import type { EndpointDependencies, MockResponder } from '@/test-support'
-export default <T extends EndpointDependencies>(_deps: T): MockResponder => (_req) => {
+export default ({ env }: EndpointDependencies): MockResponder => (_req) => {
   return {
     headers: {},
     body: {
@@ -114,7 +114,7 @@ export default <T extends EndpointDependencies>(_deps: T): MockResponder => (_re
           subscriptionLimit: 10,
         },
       },
-      mode: 'standalone',
+      mode: env('KUMA_MODE', 'global') === 'global' ? 'global' : 'standalone',
       monitoringAssignmentServer: {
         apiVersions: ['v1'],
         assignmentRefreshInterval: '1s',

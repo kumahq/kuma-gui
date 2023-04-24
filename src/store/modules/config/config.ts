@@ -30,14 +30,6 @@ const getters: GetterTree<ConfigInterface, State> = {
   getKumaDocsVersion: state => state.kumaDocsVersion,
   getConfigurationType: state => state.clientConfig?.store?.type,
   getMulticlusterStatus: (_state, getters) => {
-    if (import.meta.env.VITE_FAKE_MULTIZONE === 'true') {
-      console.warn(
-        '%c ✨You are currently faking Multi-Zone mode.',
-        'background: black; color: white; display: block; padding: 0.25rem;',
-      )
-      return true
-    }
-
     return getters.getMode === 'global'
   },
 }
