@@ -79,4 +79,6 @@ jobs:
         run: yarn run test
 
       - name: Build
-        run: yarn run build
+        run: |
+          yarn run preview &
+          yarn run test:browser

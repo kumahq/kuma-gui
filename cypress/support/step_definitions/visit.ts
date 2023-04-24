@@ -1,7 +1,7 @@
 import { When } from '@badeball/cypress-cucumber-preprocessor'
 
 const config = {
-  BASE_URL: Cypress.env('KUMA_BASE_URL') || 'http://localhost:8080',
+  BASE_URL: Cypress.env('KUMA_BASE_URL') || 'http://localhost:5681/gui',
 }
 
 When('I visit the {string} URL', function (path: string) {
