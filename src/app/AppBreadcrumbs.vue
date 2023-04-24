@@ -26,7 +26,7 @@ type BreadcrumbItem = {
 }
 
 const breadcrumbItems = computed(() => {
-  const items: Map<RouteRecordName, BreadcrumbItem> = new Map()
+  const items = new Map<RouteRecordName, BreadcrumbItem>()
 
   for (const matchedRoute of route.matched) {
     // Ignores the de-facto home page.
@@ -36,28 +36,26 @@ const breadcrumbItems = computed(() => {
 
     // Adds any explicit parent routes of the matched chain.
     if (matchedRoute.meta.parent !== undefined) {
-      const parentRoute = router.resolve({ name: matchedRoute.meta.parent })
+      const parentRoutes = getParentRoutes(matchedRoute.meta.parent)
 
-      if (parentRoute.name) {
-        items.set(parentRoute.name, {
-          to: parentRoute,
-          key: parentRoute.name as string,
-          title: parentRoute.meta.title,
-          text: parentRoute.meta.title,
-        })
+      for (const parentRoute of parentRoutes) {
+        const title = getRouteTitle(parentRoute)
+
+        if (parentRoute.name) {
+          items.set(parentRoute.name, {
+            to: parentRoute,
+            key: parentRoute.name as string,
+            title,
+            text: title,
+          })
+        }
       }
     }
 
     // Adds current route.
     const isCurrentRoute = matchedRoute.name === route.name || matchedRoute.redirect === route.name
     if (isCurrentRoute && matchedRoute.meta.breadcrumbExclude !== true && route.name) {
-      let title = route.meta.title as string
-
-      if (typeof route.meta.getBreadcrumbTitle === 'function') {
-        title = route.meta.getBreadcrumbTitle(route, store)
-      } else if (route.meta.breadcrumbTitleParam && route.params[route.meta.breadcrumbTitleParam]) {
-        title = route.params[route.meta.breadcrumbTitleParam] as string
-      }
+      const title = getRouteTitle(route)
 
       items.set(route.name, {
         to: route,
@@ -70,4 +68,32 @@ const breadcrumbItems = computed(() => {
 
   return Array.from(items.values())
 })
+
+/**
+ * Recursively constructs a list (chain) of parent routes starting with a route’s parent name and working itself upwards the route tree.
+ */
+function getParentRoutes(parentRouteName: string): RouteLocation[] {
+  const parentRoutes: RouteLocation[] = []
+  const parentRoute = router.resolve({ name: parentRouteName })
+
+  if (parentRoute.name) {
+    if (parentRoute.meta.parent !== undefined) {
+      parentRoutes.push(...getParentRoutes(parentRoute.meta.parent))
+    }
+
+    parentRoutes.push(parentRoute)
+  }
+
+  return parentRoutes
+}
+
+function getRouteTitle(route: RouteLocation): string {
+  if (typeof route.meta.getBreadcrumbTitle === 'function') {
+    return route.meta.getBreadcrumbTitle(route, store)
+  } else if (route.meta.breadcrumbTitleParam && route.params[route.meta.breadcrumbTitleParam]) {
+    return route.params[route.meta.breadcrumbTitleParam] as string
+  } else {
+    return route.meta.title as string
+  }
+}
 </script>
