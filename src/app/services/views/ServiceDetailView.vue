@@ -37,6 +37,8 @@ import { useKumaApi } from '@/utilities'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
+const route = useRoute()
+const store = useStore()
 
 const DPP_FILTER_FIELDS: FilterFields = {
   name: { description: 'filter by name or parts of a name' },
@@ -44,9 +46,6 @@ const DPP_FILTER_FIELDS: FilterFields = {
   tag: { description: 'filter by tags (e.g. “tag: version:2”)' },
   zone: { description: 'filter by “kuma.io/zone” value' },
 }
-
-const route = useRoute()
-const store = useStore()
 
 const props = defineProps({
   selectedDppName: {

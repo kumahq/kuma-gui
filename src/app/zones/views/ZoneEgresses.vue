@@ -29,75 +29,11 @@
         </DataOverview>
       </div>
 
-      <div class="kcard-border">
-        <TabsWidget
-          v-if="isEmpty === false && entity !== null"
-          :has-error="error !== null"
-          :is-loading="isLoading"
-          :tabs="TABS"
-        >
-          <template #tabHeader>
-            <h1 class="entity-heading">
-              Zone Egress: {{ entity.name }}
-            </h1>
-          </template>
-
-          <template #overview>
-            <DefinitionList>
-              <DefinitionListItem
-                v-for="(value, property) in entity"
-                :key="property"
-                :term="property"
-              >
-                {{ value }}
-              </DefinitionListItem>
-            </DefinitionList>
-          </template>
-
-          <template #insights>
-            <AccordionList :initially-open="0">
-              <AccordionItem
-                v-for="(value, key) in subscriptionsReversed"
-                :key="key"
-              >
-                <template #accordion-header>
-                  <SubscriptionHeader :details="value" />
-                </template>
-
-                <template #accordion-content>
-                  <SubscriptionDetails
-                    :details="value"
-                    is-discovery-subscription
-                  />
-                </template>
-              </AccordionItem>
-            </AccordionList>
-          </template>
-
-          <template #xds-configuration>
-            <EnvoyData
-              data-path="xds"
-              :zone-egress-name="entity.name"
-              query-key="envoy-data-zone-egress"
-            />
-          </template>
-
-          <template #envoy-stats>
-            <EnvoyData
-              data-path="stats"
-              :zone-egress-name="entity.name"
-              query-key="envoy-data-zone-egress"
-            />
-          </template>
-
-          <template #envoy-clusters>
-            <EnvoyData
-              data-path="clusters"
-              :zone-egress-name="entity.name"
-              query-key="envoy-data-zone-egress"
-            />
-          </template>
-        </TabsWidget>
+      <div
+        v-if="entity !== null"
+        class="kcard-border"
+      >
+        <ZoneEgressDetails :zone-egress-overview="entity" />
       </div>
     </div>
   </div>
@@ -108,20 +44,12 @@ import { KButton } from '@kong/kongponents'
 import { onBeforeMount, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
-import AccordionItem from '@/app/common/AccordionItem.vue'
-import AccordionList from '@/app/common/AccordionList.vue'
+import ZoneEgressDetails from '../components/ZoneEgressDetails.vue'
 import DataOverview from '@/app/common/DataOverview.vue'
-import DefinitionList from '@/app/common/DefinitionList.vue'
-import DefinitionListItem from '@/app/common/DefinitionListItem.vue'
-import EnvoyData from '@/app/common/EnvoyData.vue'
-import SubscriptionDetails from '@/app/common/subscriptions/SubscriptionDetails.vue'
-import SubscriptionHeader from '@/app/common/subscriptions/SubscriptionHeader.vue'
-import TabsWidget from '@/app/common/TabsWidget.vue'
 import { PAGE_SIZE_DEFAULT } from '@/constants'
 import { TableHeader, ZoneEgressOverview } from '@/types/index.d'
 import { useKumaApi } from '@/utilities'
 import { getItemStatusFromInsight } from '@/utilities/dataplane'
-import { getSome } from '@/utilities/helpers'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
 const kumaApi = useKumaApi()
@@ -130,29 +58,6 @@ const EMPTY_STATE = {
   title: 'No Data',
   message: 'There are no Zone Egresses present.',
 }
-
-const TABS = [
-  {
-    hash: '#overview',
-    title: 'Overview',
-  },
-  {
-    hash: '#insights',
-    title: 'Zone Egress Insights',
-  },
-  {
-    hash: '#xds-configuration',
-    title: 'XDS Configuration',
-  },
-  {
-    hash: '#envoy-stats',
-    title: 'Stats',
-  },
-  {
-    hash: '#envoy-clusters',
-    title: 'Clusters',
-  },
-]
 
 const route = useRoute()
 
@@ -180,7 +85,7 @@ const tableData = ref<{ headers: TableHeader[], data: any[] }>({
   ],
   data: [],
 })
-const entity = ref<{ type: string, name: string } | null>(null)
+const entity = ref<ZoneEgressOverview | null>(null)
 const rawData = ref<ZoneEgressOverview[]>([])
 const nextUrl = ref<string | null>(null)
 const subscriptionsReversed = ref<any[]>([])
@@ -252,12 +157,14 @@ async function loadData(offset: number): Promise<void> {
 function getEntity({ name }: { name: string }): void {
   const item = rawData.value.find((data) => data.name === name)
 
-  const subscriptions = item?.zoneEgressInsight?.subscriptions ?? []
+  if (item) {
+    const subscriptions = item.zoneEgressInsight?.subscriptions ?? []
 
-  subscriptionsReversed.value = Array.from(subscriptions).reverse()
+    subscriptionsReversed.value = Array.from(subscriptions).reverse()
 
-  entity.value = getSome(item, ['type', 'name'])
-  QueryParameter.set('zoneEgress', name)
+    entity.value = item
+    QueryParameter.set('zoneEgress', name)
+  }
 }
 
 async function getZoneEgressOverviews(name: string | null, size: number, offset: number): Promise<{ data: ZoneEgressOverview[], next: string | null }> {
