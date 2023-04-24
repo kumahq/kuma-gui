@@ -418,7 +418,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
           
           <!---->
         </a>
-        <!--v-if-->
         
         <button
           class="k-button medium rounded primary refresh-button"
@@ -516,7 +515,7 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                         <span
                           class=""
                         >
-                          DPP
+                          Name
                         </span>
                         
                         <!---->
@@ -581,22 +580,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                           class=""
                         >
                           Kuma DP version
-                        </span>
-                        
-                        <!---->
-                      </span>
-                    </th>
-                    <th
-                      class=""
-                    >
-                      <span
-                        class="d-flex align-items-center"
-                      >
-                        
-                        <span
-                          class="sr-only"
-                        >
-                          Details
                         </span>
                         
                         <!---->
@@ -678,49 +661,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/capacitor-proxy-0"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -792,49 +732,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/system-proxy-1"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -910,49 +807,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/capacitor-proxy-2"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -1024,49 +878,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/driver-proxy-3"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -1142,49 +953,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/panel-proxy-4"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -1256,49 +1024,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/bandwidth-proxy-5"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -1374,49 +1099,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/circuit-proxy-6"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -1488,49 +1170,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/interface-proxy-7"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -1606,49 +1245,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/circuit-proxy-8"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -1720,49 +1316,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/application-proxy-9"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -1838,49 +1391,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/circuit-proxy-10"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -1952,49 +1462,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/program-proxy-11"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -2070,49 +1537,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/sensor-proxy-12"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -2184,49 +1608,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/capacitor-proxy-13"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -2302,49 +1683,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/interface-proxy-14"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -2416,49 +1754,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/port-proxy-15"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -2534,49 +1829,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/system-proxy-16"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -2648,49 +1900,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/program-proxy-17"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -2766,49 +1975,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/panel-proxy-18"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -2880,49 +2046,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/transmitter-proxy-19"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -2998,49 +2121,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/bandwidth-proxy-20"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -3112,49 +2192,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/alarm-proxy-21"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -3230,49 +2267,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/bus-proxy-22"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -3344,49 +2338,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/program-proxy-23"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -3462,49 +2413,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/microchip-proxy-24"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -3576,49 +2484,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/panel-proxy-25"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -3694,49 +2559,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/circuit-proxy-26"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -3808,49 +2630,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/hard%20drive-proxy-27"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -3926,49 +2705,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/bus-proxy-28"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -4040,49 +2776,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/feed-proxy-29"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -4158,49 +2851,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/system-proxy-30"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -4272,49 +2922,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/card-proxy-31"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -4390,49 +2997,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/microchip-proxy-32"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -4504,49 +3068,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/alarm-proxy-33"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -4622,49 +3143,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/system-proxy-34"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -4736,49 +3214,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/microchip-proxy-35"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -4854,49 +3289,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/bus-proxy-36"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -4968,49 +3360,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/monitor-proxy-37"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -5086,49 +3435,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/application-proxy-38"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -5200,49 +3506,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/firewall-proxy-39"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -5318,49 +3581,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/microchip-proxy-40"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -5432,49 +3652,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/application-proxy-41"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -5550,49 +3727,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/protocol-proxy-42"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -5664,49 +3798,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/hard%20drive-proxy-43"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -5782,49 +3873,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/monitor-proxy-44"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -5896,49 +3944,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/program-proxy-45"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -6014,49 +4019,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/sensor-proxy-46"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -6128,49 +4090,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/transmitter-proxy-47"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     
@@ -6246,49 +4165,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       </div>
                       
                     </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/array-proxy-48"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
-                      
-                    </td>
                     
                   </tr>
                   <tr
@@ -6360,49 +4236,6 @@ exports[`DataPlaneListView matches snapshot 1`] = `
                       >
                         1.0.7
                       </div>
-                      
-                    </td>
-                    <td
-                      class="text-right"
-                    >
-                      
-                      <a
-                        class="k-button medium rounded btn-link detail-link"
-                        href="/mesh/default/data-planes/transmitter-proxy-49"
-                        type="button"
-                      >
-                        
-                        <span
-                          class="kong-icon kong-icon-info"
-                        >
-                          <svg
-                            height="16"
-                            role="img"
-                            viewBox="0 0 16 16"
-                            width="16"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            
-  
-                            
-  
-                            <path
-                              d="M16 8c0-4.418278-3.58172-8-8-8S0 3.581722 0 8s3.58172 8 8 8 8-3.581722 8-8zm-1.5 0c0 3.5898509-2.91015 6.5-6.5 6.5S1.5 11.5898509 1.5 8 4.41015 1.5 8 1.5s6.5 2.9101491 6.5 6.5zM6 12h4v-1H9V7H6v1h1v3H6v1zm1-6.5046844C7 5.7740451 7.21404 6 7.50468 6h.99064C8.77405 6 9 5.785965 9 5.4953156v-.9906312C9 4.2259549 8.78596 4 8.49532 4h-.99064C7.22595 4 7 4.214035 7 4.5046844v.9906312z"
-                              fill="var(--blue-500)"
-                              fill-rule="evenodd"
-                            />
-                            
-
-                          </svg>
-                          
-
-                        </span>
-                        
-                        
-                         Details 
-                        
-                        <!---->
-                      </a>
                       
                     </td>
                     

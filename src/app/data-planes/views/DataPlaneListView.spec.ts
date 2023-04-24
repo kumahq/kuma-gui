@@ -44,6 +44,17 @@ describe('DataPlaneListView', () => {
             {
               name: 'fake-backend',
               mesh: 'fake-default',
+              dataplane: {
+                networking: {
+                  inbound: [
+                    {
+                      tags: {
+                        'kuma.io/protocol': 'http',
+                      },
+                    },
+                  ],
+                },
+              },
               dataplaneInsight: {
                 subscriptions: [
                   {
@@ -222,16 +233,16 @@ describe('DataPlaneListView', () => {
   test('shows correct default table columns for proxies', async () => {
     const expectedColumnHeaders = [
       'Status',
-      'DPP',
+      'Name',
       'Service',
       'Protocol',
       'Last Updated',
       'Kuma DP version',
-      'Details',
     ]
     const wrapper = await renderComponent()
 
     const tableHeads = wrapper.findAll('[data-testid="data-overview-table"] th')
+    expect(tableHeads.length).toBe(expectedColumnHeaders.length)
 
     for (let i = 0; i < tableHeads.length; i++) {
       const tableHeadHtml = tableHeads[i].html()
@@ -241,18 +252,18 @@ describe('DataPlaneListView', () => {
   test('shows correct default table columns for gateways', async () => {
     const expectedColumnHeaders = [
       'Status',
-      'DPP',
+      'Name',
       'Type',
       'Service',
       'Last Updated',
       'Kuma DP version',
-      'Details',
     ]
     const wrapper = await renderComponent({
       name: 'gateway-list-view',
     })
 
     const tableHeads = wrapper.findAll('[data-testid="data-overview-table"] th')
+    expect(tableHeads.length).toBe(expectedColumnHeaders.length)
 
     for (let i = 0; i < tableHeads.length; i++) {
       const tableHeadHtml = tableHeads[i].html()
@@ -282,13 +293,11 @@ describe('DataPlaneListView', () => {
 
     expect(secondTableRow.element.classList.contains('is-selected')).toBe(false)
     expect(wrapper.find('[data-testid="data-plane-proxy-title"]').html()).toContain('fake-backend')
-    expect(window.location.search.includes('name=fake-backend'))
 
     // The click event listener for selecting a table row is unfortunately added to table cells instead of rows so we need to trigger a click on a cell instead of the row.
     await secondTableRow.find('td').trigger('click')
 
     expect(secondTableRow.element.classList.contains('is-selected')).toBe(true)
     expect(wrapper.find('[data-testid="data-plane-proxy-title"]').html()).toContain('fake-frontend')
-    expect(window.location.search.includes('name=fake-frontend'))
   })
 })

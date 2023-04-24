@@ -12,7 +12,7 @@
           <DefinitionList
             :has-error="hasError"
             :is-loading="isLoading"
-            :is-empty="isEmpty"
+            :is-empty="mesh === null || meshInsights === null"
           >
             <DefinitionListItem
               v-for="(value, property) in basicMesh"
@@ -112,7 +112,6 @@ const store = useStore()
 
 const isLoading = ref(true)
 const hasError = ref(false)
-const isEmpty = ref(false)
 const mesh = ref<Mesh | null>(null)
 const meshInsights = ref<MeshInsight | null>(null)
 const rawMesh = computed(() => mesh.value !== null ? stripTimes(mesh.value) : null)
@@ -166,10 +165,6 @@ watch(() => route.params.mesh, function () {
   if (route.name !== 'single-mesh-overview') {
     return
   }
-  // Ensures basic state is reset when switching meshes using the mesh selector.
-  isLoading.value = true
-  isEmpty.value = false
-  hasError.value = false
 
   loadMesh()
 })
@@ -178,7 +173,7 @@ loadMesh()
 
 async function loadMesh(): Promise<void> {
   isLoading.value = true
-  isEmpty.value = false
+  hasError.value = false
 
   const name = route.params.mesh as string
 
@@ -187,7 +182,8 @@ async function loadMesh(): Promise<void> {
     meshInsights.value = await kumaApi.getMeshInsights({ name })
   } catch (error) {
     hasError.value = true
-    isEmpty.value = true
+    mesh.value = null
+    meshInsights.value = null
 
     console.error(error)
   } finally {

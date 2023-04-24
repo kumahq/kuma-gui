@@ -11,7 +11,7 @@ export type ColumnDropdownItem = {
  */
 export const availableTableHeaders: TableHeader[] = [
   { key: 'status', label: 'Status' },
-  { key: 'name', label: 'DPP' },
+  { key: 'entity', label: 'Name' },
   { key: 'type', label: 'Type' },
   { key: 'service', label: 'Service' },
   { key: 'protocol', label: 'Protocol' },
@@ -21,12 +21,10 @@ export const availableTableHeaders: TableHeader[] = [
   { key: 'totalUpdates', label: 'Total Updates' },
   { key: 'dpVersion', label: 'Kuma DP version' },
   { key: 'envoyVersion', label: 'Envoy version' },
-  { key: 'details', label: 'Details', hideLabel: true },
 ]
 
 const nonHideableTableHeaderKeys = [
-  'name',
-  'details',
+  'entity',
 ]
 
 export const columnsDropdownItems: ColumnDropdownItem[] = availableTableHeaders
@@ -42,14 +40,13 @@ export const columnsDropdownItems: ColumnDropdownItem[] = availableTableHeaders
  */
 export const defaultVisibleTableHeaderKeys = [
   'status',
-  'name',
+  'entity',
   'type',
   'service',
   'protocol',
   'zone',
   'lastUpdated',
   'dpVersion',
-  'details',
 ]
 
 /**

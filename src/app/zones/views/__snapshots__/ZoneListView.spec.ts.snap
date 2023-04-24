@@ -369,45 +369,9 @@ exports[`ZoneListView renders snapshot when multizone 1`] = `
                         class=""
                       >
                         
-                        
-                        zone-1
-                        
-                        
-                      </td>
-                      <td
-                        class=""
-                      >
-                        
-                        1.0.0-rc2-211-g823fe8ce
-                        
-                      </td>
-                      <td
-                        class=""
-                      >
-                        
-                        memory
-                        
-                      </td>
-                      <td
-                        class=""
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class=""
-                      >
-                        
-                        No
-                        
-                      </td>
-                      <td
-                        class="text-center"
-                      >
-                        
-                        <span
-                          class="mr-1 kong-icon kong-icon-warning"
+                        <a
+                          class=""
+                          href="/zones/zone-1"
                         >
                           zone-1
                         </a>

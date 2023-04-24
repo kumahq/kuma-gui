@@ -9,10 +9,9 @@
         :empty-state="EMPTY_STATE"
         :table-data="filteredTableData"
         :table-data-is-empty="filteredTableData.data.length === 0"
-        show-details
         :next="props.nextUrl !== null"
         :page-offset="props.pageOffset"
-        @table-action="($event: any) => selectDataPlaneOverview($event.name)"
+        @table-action="loadEntity"
         @load-data="loadData"
       >
         <template #additionalControls>
@@ -89,16 +88,6 @@
           >
             Create data plane proxy
           </KButton>
-
-          <KButton
-            v-if="route.query.ns"
-            appearance="primary"
-            icon="arrowLeft"
-            :to="{ name: route.name }"
-            data-testid="data-plane-ns-back-button"
-          >
-            View All
-          </KButton>
         </template>
       </DataOverview>
     </template>
@@ -118,7 +107,7 @@
 import { datadogLogs } from '@datadog/browser-logs'
 import { KButton, KDropdownItem, KDropdownMenu } from '@kong/kongponents'
 import { computed, PropType, ref, watch } from 'vue'
-import { RouteLocationNamedRaw, useRoute } from 'vue-router'
+import { RouteLocationNamedRaw } from 'vue-router'
 
 import { columnsDropdownItems, defaultVisibleTableHeaderKeys, getDataPlaneTableHeaders, ColumnDropdownItem } from '../constants'
 import ContentWrapper from '@/app/common/ContentWrapper.vue'
@@ -129,7 +118,7 @@ import DataPlaneEntitySummary from '@/app/data-planes/components/DataPlaneEntity
 import { KUMA_ZONE_TAG_NAME, PAGE_SIZE_DEFAULT } from '@/constants'
 import { useStore } from '@/store/store'
 import { DataPlaneOverviewParameters } from '@/types/api.d'
-import { DataPlaneOverview, TableHeader } from '@/types/index.d'
+import { DataPlaneOverview, StatusKeyword, TableHeader, Version } from '@/types/index.d'
 import { ClientStorage } from '@/utilities/ClientStorage'
 import { datadogLogEvents } from '@/utilities/datadogLogEvents'
 import {
@@ -145,6 +134,33 @@ import { humanReadableDate } from '@/utilities/helpers'
 import { normalizeFilterFields } from '@/utilities/normalizeFilterFields'
 import { QueryParameter } from '@/utilities/QueryParameter'
 
+type DataPlaneOverviewTableRow = {
+  entity: DataPlaneOverview
+  detailViewRoute: RouteLocationNamedRaw
+  type: string
+  zone: {
+    title: string,
+    route?: RouteLocationNamedRaw | undefined
+  }
+  service: {
+    title: string,
+    route?: RouteLocationNamedRaw | undefined
+  }
+  protocol: string
+  status: StatusKeyword
+  totalUpdates: number
+  totalRejectedUpdates: number
+  dpVersion: string
+  envoyVersion: string
+  warnings: string[]
+  unsupportedEnvoyVersion: boolean
+  unsupportedKumaDPVersion: boolean
+  kumaDpAndKumaCpMismatch: boolean
+  lastUpdated: string
+  lastConnected: string
+  overview: DataPlaneOverview
+}
+
 const GATEWAY_TYPES = {
   true: 'All',
   builtin: 'Builtin',
@@ -158,7 +174,6 @@ const EMPTY_STATE = {
   message: 'There are no data plane proxies present.',
 }
 
-const route = useRoute()
 const store = useStore()
 const props = defineProps({
   dataPlaneOverviews: {
@@ -219,7 +234,7 @@ const emit = defineEmits<{
 }>()
 
 const visibleTableHeaderKeys = ref(defaultVisibleTableHeaderKeys)
-const tableData = ref<{ headers: TableHeader[], data: any }>({
+const tableData = ref<{ headers: TableHeader[], data: DataPlaneOverviewTableRow[] }>({
   headers: [],
   data: [],
 })
@@ -338,21 +353,16 @@ function onCreateClick() {
   datadogLogs.logger.info(datadogLogEvents.CREATE_DATA_PLANE_PROXY_CLICKED)
 }
 
-async function initializeData(): Promise<void> {
+function initializeData() {
   try {
-    if (Array.isArray(props.dataPlaneOverviews) && props.dataPlaneOverviews.length > 0) {
-      selectDataPlaneOverview(props.selectedDppName ?? props.dataPlaneOverviews[0].name)
-      tableData.value.data = await Promise.all(props.dataPlaneOverviews.map((item) => parseData(item)))
-    } else {
-      selectDataPlaneOverview(null)
-      tableData.value.data = []
-    }
+    tableData.value.data = transformToTableData(props.dataPlaneOverviews ?? [])
+    loadEntity({ name: props.selectedDppName ?? props.dataPlaneOverviews[0]?.name })
   } catch (err) {
     console.error(err)
   }
 }
 
-function selectDataPlaneOverview(name: string | null): void {
+function loadEntity({ name }: { name?: string | undefined }) {
   if (name && props.dataPlaneOverviews.length > 0) {
     dataPlaneOverview.value = props.dataPlaneOverviews.find((data) => data.name === name) ?? props.dataPlaneOverviews[0]
     QueryParameter.set(props.isGatewayView ? 'gateway' : 'dpp', dataPlaneOverview.value.name)
@@ -362,151 +372,151 @@ function selectDataPlaneOverview(name: string | null): void {
   }
 }
 
-async function parseData(dataPlaneOverview: DataPlaneOverview) {
-  const mesh = dataPlaneOverview.mesh
-  const name = dataPlaneOverview.name
-  const type = dataPlaneOverview.dataplane.networking.gateway?.type || 'STANDARD'
+function transformToTableData(dataPlaneOverviews: DataPlaneOverview[]): DataPlaneOverviewTableRow[] {
+  return dataPlaneOverviews.map((dataPlaneOverview) => {
+    const mesh = dataPlaneOverview.mesh
+    const name = dataPlaneOverview.name
+    const type = dataPlaneOverview.dataplane.networking.gateway?.type || 'STANDARD'
 
-  const nameRoute: RouteLocationNamedRaw = {
-    name: type === 'STANDARD' ? 'data-plane-detail-view' : 'gateway-detail-view',
-    params: {
-      mesh,
-      dataPlane: name,
-    },
-  }
-  const meshRoute: RouteLocationNamedRaw = {
-    name: 'mesh-detail-view',
-    params: {
-      mesh,
-    },
-  }
-
-  // Handles our tag collections based on the dataplane type.
-  const importantDataPlaneTagLabels = [
-    'kuma.io/protocol',
-    'kuma.io/service',
-    'kuma.io/zone',
-  ]
-  const tags = dpTags(dataPlaneOverview.dataplane).filter((tag) => importantDataPlaneTagLabels.includes(tag.label))
-  const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value
-  const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
-  const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
-
-  let serviceInsightRoute: RouteLocationNamedRaw | undefined
-  if (service !== undefined) {
-    serviceInsightRoute = {
-      name: 'service-detail-view',
+    const detailViewRoute: RouteLocationNamedRaw = {
+      name: type === 'STANDARD' ? 'data-plane-detail-view' : 'gateway-detail-view',
       params: {
         mesh,
-        service,
+        dataPlane: name,
       },
     }
-  }
-  let zoneRoute: RouteLocationNamedRaw | undefined
-  if (zone !== undefined) {
-    zoneRoute = {
-      name: 'zone-list-view',
-      query: {
-        ns: zone,
+
+    // Handles our tag collections based on the dataplane type.
+    const importantDataPlaneTagLabels = [
+      'kuma.io/protocol',
+      'kuma.io/service',
+      'kuma.io/zone',
+    ]
+    const tags = dpTags(dataPlaneOverview.dataplane).filter((tag) => importantDataPlaneTagLabels.includes(tag.label))
+    const service = tags.find((tag) => tag.label === 'kuma.io/service')?.value
+    const protocol = tags.find((tag) => tag.label === 'kuma.io/protocol')?.value
+    const zone = tags.find((tag) => tag.label === 'kuma.io/zone')?.value
+
+    let serviceInsightRoute: RouteLocationNamedRaw | undefined
+    if (service !== undefined) {
+      serviceInsightRoute = {
+        name: 'service-detail-view',
+        params: {
+          mesh,
+          service,
+        },
+      }
+    }
+    let zoneRoute: RouteLocationNamedRaw | undefined
+    if (zone !== undefined) {
+      zoneRoute = {
+        name: 'zone-detail-view',
+        params: {
+          zone,
+        },
+      }
+    }
+
+    const { status } = getStatusAndReason(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
+    const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
+
+    const initialData: {
+      totalUpdates: number
+      totalRejectedUpdates: number
+      dpVersion: string | null
+      envoyVersion: string | null
+      selectedTime: number
+      selectedUpdateTime: number
+      version: Version | null
+    } = {
+      totalUpdates: 0,
+      totalRejectedUpdates: 0,
+      dpVersion: null,
+      envoyVersion: null,
+      selectedTime: NaN,
+      selectedUpdateTime: NaN,
+      version: null,
+    }
+
+    const summary = subscriptions.reduce(
+      (acc, subscription) => {
+        if (subscription.connectTime) {
+          const connectDate = Date.parse(subscription.connectTime)
+          if (!acc.selectedTime || connectDate > acc.selectedTime) {
+            acc.selectedTime = connectDate
+          }
+        }
+
+        const lastUpdateDate = Date.parse(subscription.status.lastUpdateTime)
+        if (lastUpdateDate) {
+          if (!acc.selectedUpdateTime || lastUpdateDate > acc.selectedUpdateTime) {
+            acc.selectedUpdateTime = lastUpdateDate
+          }
+        }
+
+        return {
+          totalUpdates: acc.totalUpdates + parseInt(subscription.status.total.responsesSent ?? '0', 10),
+          totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(subscription.status.total.responsesRejected ?? '0', 10),
+          dpVersion: subscription.version?.kumaDp.version || acc.dpVersion,
+          envoyVersion: subscription.version?.envoy.version || acc.envoyVersion,
+          selectedTime: acc.selectedTime,
+          selectedUpdateTime: acc.selectedUpdateTime,
+          version: subscription.version || acc.version,
+        }
       },
+      initialData,
+    )
+
+    // assemble the table data
+    const item: DataPlaneOverviewTableRow = {
+      entity: dataPlaneOverview,
+      detailViewRoute,
+      type,
+      zone: { title: zone ?? '—', route: zoneRoute },
+      service: { title: service ?? '—', route: serviceInsightRoute },
+      protocol: protocol ?? '—',
+      status,
+      totalUpdates: summary.totalUpdates,
+      totalRejectedUpdates: summary.totalRejectedUpdates,
+      dpVersion: summary.dpVersion ?? '—',
+      envoyVersion: summary.envoyVersion ?? '—',
+      warnings: [],
+      unsupportedEnvoyVersion: false,
+      unsupportedKumaDPVersion: false,
+      kumaDpAndKumaCpMismatch: false,
+      lastUpdated: summary.selectedUpdateTime ? humanReadableDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
+      lastConnected: summary.selectedTime ? humanReadableDate(new Date(summary.selectedTime).toUTCString()) : '—',
+      overview: dataPlaneOverview,
     }
-  }
 
-  const { status } = getStatusAndReason(dataPlaneOverview.dataplane, dataPlaneOverview.dataplaneInsight)
-  const subscriptions = dataPlaneOverview.dataplaneInsight?.subscriptions ?? []
+    if (summary.version) {
+      const { kind } = compatibilityKind(summary.version)
 
-  const initialData: any = {
-    totalUpdates: 0,
-    totalRejectedUpdates: 0,
-    dpVersion: null,
-    envoyVersion: null,
-    selectedTime: NaN,
-    selectedUpdateTime: NaN,
-    version: null,
-  }
-
-  const summary = subscriptions.reduce(
-    (acc, subscription) => {
-      if (subscription.connectTime) {
-        const connectDate = Date.parse(subscription.connectTime)
-        if (!acc.selectedTime || connectDate > acc.selectedTime) {
-          acc.selectedTime = connectDate
-        }
+      if (kind !== COMPATIBLE) {
+        item.warnings.push(kind)
       }
 
-      const lastUpdateDate = Date.parse(subscription.status.lastUpdateTime)
-      if (lastUpdateDate) {
-        if (!acc.selectedUpdateTime || lastUpdateDate > acc.selectedUpdateTime) {
-          acc.selectedUpdateTime = lastUpdateDate
-        }
+      switch (kind) {
+        case INCOMPATIBLE_UNSUPPORTED_ENVOY:
+          item.unsupportedEnvoyVersion = true
+          break
+        case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
+          item.unsupportedKumaDPVersion = true
+          break
       }
+    }
 
-      return {
-        totalUpdates: acc.totalUpdates + parseInt(subscription.status.total.responsesSent ?? '0', 10),
-        totalRejectedUpdates: acc.totalRejectedUpdates + parseInt(subscription.status.total.responsesRejected ?? '0', 10),
-        dpVersion: subscription.version?.kumaDp.version || acc.dpVersion,
-        envoyVersion: subscription.version?.envoy.version || acc.envoyVersion,
-        selectedTime: acc.selectedTime,
-        selectedUpdateTime: acc.selectedUpdateTime,
-        version: subscription.version || acc.version,
+    if (isMultiZoneMode.value && summary.dpVersion) {
+      const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
+
+      if (zoneTag && typeof summary.version?.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
+        item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
+        item.kumaDpAndKumaCpMismatch = true
       }
-    },
-    initialData,
-  )
-
-  // assemble the table data
-  const item = {
-    name,
-    nameRoute,
-    mesh,
-    meshRoute,
-    type,
-    zone: zone ?? '—',
-    zoneRoute,
-    service: service ?? '—',
-    serviceInsightRoute,
-    protocol: protocol ?? '—',
-    status,
-    totalUpdates: summary.totalUpdates,
-    totalRejectedUpdates: summary.totalRejectedUpdates,
-    dpVersion: summary.dpVersion ?? '—',
-    envoyVersion: summary.envoyVersion ?? '—',
-    warnings: [] as string[],
-    unsupportedEnvoyVersion: false,
-    unsupportedKumaDPVersion: false,
-    kumaDpAndKumaCpMismatch: false,
-    lastUpdated: summary.selectedUpdateTime ? humanReadableDate(new Date(summary.selectedUpdateTime).toUTCString()) : '—',
-    lastConnected: summary.selectedTime ? humanReadableDate(new Date(summary.selectedTime).toUTCString()) : '—',
-    overview: dataPlaneOverview,
-  }
-
-  if (summary.version) {
-    const { kind } = compatibilityKind(summary.version)
-
-    if (kind !== COMPATIBLE) {
-      item.warnings.push(kind)
     }
 
-    switch (kind) {
-      case INCOMPATIBLE_UNSUPPORTED_ENVOY:
-        item.unsupportedEnvoyVersion = true
-        break
-      case INCOMPATIBLE_UNSUPPORTED_KUMA_DP:
-        item.unsupportedKumaDPVersion = true
-        break
-    }
-  }
-
-  if (isMultiZoneMode.value && summary.dpVersion) {
-    const zoneTag = tags.find(tag => tag.label === KUMA_ZONE_TAG_NAME)
-
-    if (zoneTag && typeof summary.version.kumaDp.kumaCpCompatible === 'boolean' && !summary.version.kumaDp.kumaCpCompatible) {
-      item.warnings.push(INCOMPATIBLE_ZONE_CP_AND_KUMA_DP_VERSIONS)
-      item.kumaDpAndKumaCpMismatch = true
-    }
-  }
-
-  return item
+    return item
+  })
 }
 
 function handleFieldsChange({ fields, query }: FilterBarEventData): void {
