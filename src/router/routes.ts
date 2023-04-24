@@ -1,8 +1,4 @@
-import {
-  RouteRecordRaw,
-  RouteLocation,
-  RouteLocationRaw,
-} from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
 
 import { getLastNumberParameter } from '@/router/getLastParameter'
 import type { State } from '@/store/storeConfig'
@@ -217,60 +213,67 @@ export default (store: Store<State>): RouteRecordRaw[] => {
         },
         {
           path: 'policies',
-          name: 'policies',
-          meta: {
-            title: 'Policies',
-          },
-          redirect: (to: RouteLocation): RouteLocationRaw => {
-            let item = store.state.policyTypes
-              .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
-            if (item === undefined) {
-              item = store.state.policyTypes[0]
-            }
-            return {
-              ...to,
-              params: {
-                ...to.params,
-                policyPath: item.path,
+          children: [
+            {
+              path: '',
+              name: 'policies',
+              meta: {
+                title: 'Policies',
               },
-              name: 'policy',
-            }
-          },
-        },
-        {
-          path: 'policies/:policyPath',
-          name: 'policy',
-          meta: {
-            parent: 'policies',
-          },
-          component: () => import('@/app/policies/views/PolicyListView.vue'),
-          props: (route) => {
-            const policy = store.state.policyTypesByPath[route.params.policyPath as string]
+              redirect: (to) => {
+                let item = store.state.policyTypes
+                  .find((item) => store.state.sidebar.insights.mesh.policies[item.name] !== 0)
+                if (item === undefined) {
+                  item = store.state.policyTypes[0]
+                }
+                return {
+                  ...to,
+                  params: {
+                    ...to.params,
+                    policyPath: item.path,
+                  },
+                  name: 'policy-list-view',
+                }
+              },
+            },
+            {
+              path: ':policyPath',
+              children: [
+                {
+                  path: '',
+                  name: 'policy-list-view',
+                  meta: {
+                    parent: 'policies',
+                    getBreadcrumbTitle: (route, store) => {
+                      const policyType = store.state.policyTypesByPath[route.params.policyPath as string]
 
-            route.meta.title = policy.name
-
-            return {
-              policyPath: route.params.policyPath,
-              selectedPolicyName: route.query.policy,
-              offset: getLastNumberParameter(route.query.offset),
-            }
-          },
-        },
-        {
-          path: 'policies/:policyPath/:policy',
-          name: 'policy-detail-view',
-          meta: {
-            parent: 'policies',
-            breadcrumbTitleParam: 'policy',
-          },
-          props: (route) => {
-            return {
-              mesh: route.params.mesh,
-              policyPath: route.params.policyPath,
-              policyName: route.params.policy,
-            }
-          },
-          component: () => import('@/app/policies/views/PolicyDetailView.vue'),
+                      return policyType.name
+                    },
+                  },
+                  component: () => import('@/app/policies/views/PolicyListView.vue'),
+                  props: (route) => ({
+                    policyPath: route.params.policyPath,
+                    selectedPolicyName: route.query.policy,
+                    offset: getLastNumberParameter(route.query.offset),
+                  }),
+                },
+                {
+                  path: ':policy',
+                  name: 'policy-detail-view',
+                  meta: {
+                    parent: 'policy-list-view',
+                    breadcrumbTitleParam: 'policy',
+                  },
+                  props: (route) => ({
+                    mesh: route.params.mesh,
+                    policyPath: route.params.policyPath,
+                    policyName: route.params.policy,
+                  }),
+                  component: () => import('@/app/policies/views/PolicyDetailView.vue'),
+                },
+              ],
+            },
+          ],
         },
       ],
     },

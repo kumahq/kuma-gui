@@ -63,7 +63,7 @@
                   <li v-if="item.length !== 0">
                     <router-link
                       :to="{
-                        name: 'policy',
+                        name: 'policy-list-view',
                         params: {
                           policyPath: item.path
                         }
