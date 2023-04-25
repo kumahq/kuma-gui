@@ -83,5 +83,19 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/yarn.lock') }}
       - run: |
           yarn build:staging
-          # yarn preview:built &
-          # yarn run test:browser
+          yarn preview:built &
+          yarn run test:browser
+  post-checks:
+    name: Tests
+    needs:
+      - pre-checks
+      - cli-tests
+      - browser-tests
+    runs-on: ubuntu-latest
+    if: |
+      (always() && !cancelled()) &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'skipped') &&
+      !contains(needs.*.result, 'cancelled')
+    steps:
+      - run: echo "Tests passed"
